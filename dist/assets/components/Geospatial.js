@@ -1,0 +1,3736 @@
+/* X_ITE v7.0.0-4553 */ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+
+// UNUSED EXPORTS: default
+
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components");
+var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Fields");
+var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Base/X3DFieldDefinition");
+var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Base/FieldDefinitionArray");
+var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DCoordinateNode\")"
+const X3DCoordinateNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Rendering/X3DCoordinateNode");
+var X3DCoordinateNode_default = /*#__PURE__*/__webpack_require__.n(X3DCoordinateNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Base/X3DConstants");
+var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Spheroid3.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+function Spheroid3 (semiMajorAxis, semiMinorAxis)
+{
+   switch (arguments .length)
+   {
+      case 0:
+         this .semiMajorAxis = 0; // a
+         this .semiMinorAxis = 0; // c
+         break;
+      case 2:
+         this .semiMajorAxis = semiMajorAxis; // a
+         this .semiMinorAxis = semiMinorAxis; // c
+         break;
+      case 3:
+         const f_1 = arguments [1];
+         this .semiMajorAxis = semiMajorAxis;                 // a
+         this .semiMinorAxis = semiMajorAxis * (1 - 1 / f_1); // c
+         break;
+   }
+}
+
+Spheroid3 .prototype =
+{
+   constructor: Spheroid3,
+   getSemiMajorAxis: function ()
+   {
+      // Returns the semi-major axis (a)
+      return this .semiMajorAxis; // a
+   },
+   getSemiMinorAxis: function ()
+   {
+      // Returns the semi-minor axis (c)
+      return this .semiMinorAxis; // c
+   },
+   toString: function ()
+   {
+      return this .semiMajorAxis + " " + this .semiMinorAxis;
+   },
+};
+
+/* harmony default export */ const Geometry_Spheroid3 = (Spheroid3);
+
+;// CONCATENATED MODULE: ./src/standard/Geospatial/ReferenceEllipsoids.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+const ReferenceEllipsoids =
+{
+   // Earth
+   // X3D Specification
+   AA: new Geometry_Spheroid3 (6377563.396, 299.3249646,   true), // Airy 1830
+   AM: new Geometry_Spheroid3 (6377340.189, 299.3249646,   true), // Modified Airy
+   AN: new Geometry_Spheroid3 (6378160,     298.25,        true), // Australian National
+   BN: new Geometry_Spheroid3 (6377483.865, 299.1528128,   true), // Bessel 1841 (Namibia)
+   BR: new Geometry_Spheroid3 (6377397.155, 299.1528128,   true), // Bessel 1841 (Ethiopia Indonesia...)
+   CC: new Geometry_Spheroid3 (6378206.4,   294.9786982,   true), // Clarke 1866
+   CD: new Geometry_Spheroid3 (6378249.145, 293.465,       true), // Clarke 1880
+   EA: new Geometry_Spheroid3 (6377276.345, 300.8017,      true), // Everest (India 1830)
+   EB: new Geometry_Spheroid3 (6377298.556, 300.8017,      true), // Everest (Sabah & Sarawak)
+   EC: new Geometry_Spheroid3 (6377301.243, 300.8017,      true), // Everest (India 1956)
+   ED: new Geometry_Spheroid3 (6377295.664, 300.8017,      true), // Everest (W. Malaysia 1969)
+   EE: new Geometry_Spheroid3 (6377304.063, 300.8017,      true), // Everest (W. Malaysia & Singapore 1948)
+   EF: new Geometry_Spheroid3 (6377309.613, 300.8017,      true), // Everest (Pakistan)
+   FA: new Geometry_Spheroid3 (6378155,     298.3,         true), // Modified Fischer 1960
+   HE: new Geometry_Spheroid3 (6378200,     298.3,         true), // Helmert 1906
+   HO: new Geometry_Spheroid3 (6378270,     297,           true), // Hough 1960
+   ID: new Geometry_Spheroid3 (6378160,     298.247,       true), // Indonesian 1974
+   IN: new Geometry_Spheroid3 (6378388,     297,           true), // International 1924
+   KA: new Geometry_Spheroid3 (6378245,     298.3,         true), // Krassovsky 1940
+   RF: new Geometry_Spheroid3 (6378137,     298.257222101, true), // Geodetic Reference System 1980 (GRS 80)
+   SA: new Geometry_Spheroid3 (6378160,     298.25,        true), // South American 1969
+   WD: new Geometry_Spheroid3 (6378135,     298.26,        true), // WGS 72
+   WE: new Geometry_Spheroid3 (6378137,     298.257223563, true), // WGS 84
+   // Solar System
+   // http://en.wikipedia.de
+   // Can someone give me more accurate parameters.
+   SUN:     new Geometry_Spheroid3 (696342000, 1 / 9e-6, true),
+   MERCURY: new Geometry_Spheroid3 (2439700,  2439700),
+   VENUS:   new Geometry_Spheroid3 (6051800,  6051800),
+   MOON:    new Geometry_Spheroid3 (1738140,  1735970),
+   MARS:    new Geometry_Spheroid3 (3395428,  3377678), // http://adsabs.harvard.edu/abs/2010EM%26P..106....1A
+   JUPITER: new Geometry_Spheroid3 (71492000, 66854000),
+   SATURN:  new Geometry_Spheroid3 (60268000, 54364000),
+   URANUS:  new Geometry_Spheroid3 (2555000,  24973000),
+   NEPTUNE: new Geometry_Spheroid3 (24764000, 24341000),
+   PLUTO:   new Geometry_Spheroid3 (1153000,  1153000),
+};
+
+/* harmony default export */ const Geospatial_ReferenceEllipsoids = (ReferenceEllipsoids);
+
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("standard/Math/Numbers/Vector3");
+var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
+const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("standard/Math/Algorithm");
+var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
+;// CONCATENATED MODULE: ./src/standard/Geospatial/Geodetic.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+const
+   EPS_H = 1e-3,
+   EPS_P = 1e-10,
+   IMAX  = 30;
+
+function Geodetic (spheroid, latitudeFirst, radians)
+{
+   this .longitudeFirst = ! latitudeFirst;
+   this .degrees        = ! radians;
+   this .a              = spheroid .getSemiMajorAxis ();
+   this .c              = spheroid .getSemiMinorAxis ();
+   this .c2a2           = Math .pow (spheroid .getSemiMinorAxis () / this .a, 2);
+   this .ecc2           = 1 - this .c2a2;
+}
+
+Geodetic .prototype =
+{
+   constructor: Geodetic,
+   convert: function (geodetic, result)
+   {
+      const elevation = geodetic .z;
+
+      if (this .longitudeFirst)
+      {
+         var
+            latitude  = geodetic .y,
+            longitude = geodetic .x;
+      }
+      else
+      {
+         var
+            latitude  = geodetic .x,
+            longitude = geodetic .y;
+      }
+
+      if (this .degrees)
+      {
+         latitude  *= Math .PI / 180;
+         longitude *= Math .PI / 180;
+      }
+
+      return this .convertRadians (latitude, longitude, elevation, result);
+   },
+   convertRadians: function (latitude, longitude, elevation, result)
+   {
+      const
+         slat  = Math .sin (latitude),
+         slat2 = Math .pow (slat, 2),
+         clat  = Math .cos (latitude),
+         N     = this .a / Math .sqrt (1 - this .ecc2 * slat2),
+         Nhl   = (N + elevation) * clat;
+
+      return result .set (Nhl * Math .cos (longitude),
+                          Nhl * Math .sin (longitude),
+                          (N * this .c2a2 + elevation) * slat);
+   },
+   apply: function (geocentric, result)
+   {
+      this .applyRadians (geocentric, result);
+
+      if (this .degrees)
+      {
+         result .x *= 180 / Math .PI; // latitude
+         result .y *= 180 / Math .PI; // longitude
+      }
+
+      if (this .longitudeFirst)
+      {
+         const tmp = result .x;
+
+         result .x = result .y; // latitude
+         result .y = tmp;       // longitude
+      }
+
+      return result;
+   },
+   applyRadians: function (geocentric, result)
+   {
+      const
+         x = geocentric .x,
+         y = geocentric .y,
+         z = geocentric .z;
+
+      const P = Math .sqrt (x * x + y * y);
+
+      // Handle pole case.
+      if (P == 0)
+         return result .set (Math .PI, 0, z - this .c);
+
+      let
+         latitude  = 0,
+         longitude = Math .atan2 (y, x),
+         elevation = 0;
+
+      let
+         a    = this .a,
+         N    = a,
+         ecc2 = this .ecc2;
+
+      for (let i = 0; i < IMAX; ++ i)
+      {
+         const
+            h0 = elevation,
+            b0 = latitude;
+
+         latitude = Math .atan (z / P / (1 - ecc2 * N / (N + elevation)));
+
+         const sin_p = Math .sin (latitude);
+
+         N         = a / Math .sqrt (1 - ecc2 * sin_p * sin_p);
+         elevation = P / Math .cos (latitude) - N;
+
+         if (Math .abs (elevation - h0) < EPS_H && Math .abs (latitude - b0) < EPS_P)
+            break;
+      }
+
+      return result .set (latitude, longitude, elevation);
+   },
+   normal: function (geocentric, result)
+   {
+      const geodetic = this .applyRadians (geocentric, result);
+
+      const
+         latitude  = geodetic .x,
+         longitude = geodetic .y;
+
+      const clat = Math .cos (latitude);
+
+      const
+         nx = Math .cos (longitude) * clat,
+         ny = Math .sin (longitude) * clat,
+         nz = Math .sin (latitude);
+
+      return result .set (nx, ny, nz);
+   },
+   /*
+   lerp: function (s, d, t)
+   {
+      var
+         source     =  this .source      .assign (s),
+         destination = this .destination .assign (d);
+
+      var
+         RANGE    = this .degrees ? 180 : M_PI,
+         RANGE1_2 = RANGE / 2,
+         RANGE2   = RANGE * 2;
+
+      var range = 0;
+
+      if (this .longitudeFirst)
+      {
+         source .x = Algorithm .interval (source .x, -RANGE,    RANGE);
+         source .y = Algorithm .interval (source .y, -RANGE1_2, RANGE1_2);
+
+         destination .x = Algorithm .interval (destination .x, -RANGE,    RANGE);
+         destination .y = Algorithm .interval (destination .y, -RANGE1_2, RANGE1_2);
+
+         range = Math .abs (destination .x - source .x);
+      }
+      else
+      {
+         source .x = Algorithm .interval (source .x, -RANGE1_2, RANGE1_2);
+         source .y = Algorithm .interval (source .y, -RANGE,    RANGE);
+
+         destination .x = Algorithm .interval (destination .x, -RANGE1_2, RANGE1_2);
+         destination .y = Algorithm .interval (destination .y, -RANGE,    RANGE);
+
+         range = Math .abs (destination .y - source .y);
+      }
+
+      if (range <= RANGE)
+         return source .lerp (destination, t);
+
+      var step = (RANGE2 - range) * t;
+
+      if (this .longitudeFirst)
+      {
+         var longitude = source .x < destination .x ? source .x - step : source .x + step;
+
+         if (longitude < -RANGE)
+            longitude += RANGE2;
+
+         else if (longitude > RANGE)
+            longitude -= RANGE2;
+
+         return source .set (longitude,
+                             source .y + t * (destination .y - source .y),
+                             source .z + t * (destination .z - source .z));
+      }
+
+      var longitude = source .y < destination .y ? source .y - step : source .y + step;
+
+      if (longitude < -RANGE)
+         longitude += RANGE2;
+
+      else if (longitude > RANGE)
+         longitude -= RANGE2;
+
+      return source .set (source .x + t * (destination .x - source .x),
+                          longitude,
+                          source .z + t * (destination .z - source .z));
+   },
+   source: new Vector3 (0, 0, 0),
+   destination: new Vector3 (0, 0, 0),
+   */
+};
+
+/* harmony default export */ const Geospatial_Geodetic = (Geodetic);
+
+;// CONCATENATED MODULE: ./src/standard/Geospatial/UniversalTransverseMercator.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+const
+   N0 = 1.0e7,
+   E0 = 5.0e5,
+   k0 = 0.9996;
+
+function UniversalTransverseMercator (spheroid, zone, northernHemisphere, northingFirst)
+{
+   const
+      a    = spheroid .getSemiMajorAxis (),
+      ecc2 = 1 - Math .pow (spheroid .getSemiMinorAxis () / a, 2),
+      EE   = ecc2 / (1 - ecc2),
+      e1   = (1 - Math .sqrt (1 - ecc2)) / (1 + Math .sqrt (1 - ecc2));
+
+   this .southernHemisphere = ! northernHemisphere;
+   this .eastingFirst       = ! northingFirst;
+   this .a                  = a;
+   this .ecc2               = ecc2;
+   this .EE                 = EE;
+   this .E8                 = 8 * EE;
+   this .E9                 = 9 * EE;
+   this .E252               = 252 * EE;
+   this .e1                 = e1;
+   this .A                  = k0 * (a * (1 - ecc2 / 4 - 3 * ecc2 * ecc2 / 64 - 5 * ecc2 * ecc2 * ecc2 / 256));
+   this .B                  = 3 * e1 / 2 - 7 * e1 * e1 * e1 / 32;
+   this .C                  = 21 * e1 * e1 / 16 - 55 * e1 * e1 * e1 * e1 / 32;
+   this .D                  = 151 * e1 * e1 * e1 / 96;
+   this .E                  = a * (1 - ecc2);
+   this .W                  = 1 - ecc2 / 4 - 3 * ecc2 * ecc2 / 64 - 5 * ecc2 * ecc2 * ecc2 / 256;
+   this .X                  = 3 * ecc2 / 8 + 3 * ecc2 * ecc2 / 32 + 45 * ecc2 * ecc2 * ecc2 / 1024;
+   this .Y                  = 15 * ecc2 * ecc2 / 256 + 45 * ecc2 * ecc2 * ecc2 / 1024;
+   this .Z                  = 35 * ecc2 * ecc2 * ecc2 / 3072;
+   this .longitude0         = Algorithm_default().radians (zone * 6 - 183);
+   this .geodeticConverter  = new Geospatial_Geodetic (spheroid, true, true);
+}
+
+UniversalTransverseMercator .prototype =
+{
+   constructor: UniversalTransverseMercator,
+   convert: function (utm, result)
+   {
+      // https://gist.github.com/duedal/840476
+
+      if (this .eastingFirst)
+      {
+         var
+            northing = utm .y,
+            easting  = utm .x;
+      }
+      else
+      {
+         var
+            northing = utm .x,
+            easting  = utm .y;
+      }
+
+      // Check for southern hemisphere and remove offset from easting.
+
+      let S = this .southernHemisphere;
+
+      if (northing < 0)
+      {
+         S        = ! this .southernHemisphere;
+         northing = -northing;
+      }
+
+      if (S)
+         northing -= N0;
+
+      easting -= E0;
+
+      // Begin calculation.
+
+      const
+         mu   = northing / this .A,
+         phi1 = mu + this .B * Math .sin (2 * mu) + this .C * Math .sin (4 * mu) + this .D * Math .sin (6 * mu);
+
+      const
+         sinphi1 = Math .pow (Math .sin (phi1), 2),
+         cosphi1 = Math .cos (phi1),
+         tanphi1 = Math .tan (phi1);
+
+      const
+         N1 = this .a / Math .sqrt (1 - this .ecc2 * sinphi1),
+         T2 = Math .pow (tanphi1, 2),
+         T8 = Math .pow (tanphi1, 8),
+         C1 = this .EE * T2,
+         C2 = C1 * C1,
+         R1 = this .E / Math .pow (1 - this .ecc2 * sinphi1, 1.5),
+         I  = easting / (N1 * k0);
+
+      const
+         J = (5 + 3 * T2 + 10 * C1 - 4 * C2 - this .E9) * Math .pow (I, 4) / 24,
+         K = (61 + 90 * T2 + 298 * C1 + 45 * T8 - this .E252 - 3 * C2) * Math .pow (I, 6) / 720,
+         L = (5 - 2 * C1 + 28 * T2 - 3 * C2 + this .E8 + 24 * T8) * Math .pow (I, 5) / 120;
+
+      const
+         latitude  = phi1 - (N1 * tanphi1 / R1) * (I * I / 2 - J + K),
+         longitude = this .longitude0 + (I - (1 + 2 * T2 + C1) * Math .pow (I, 3) / 6 + L) / cosphi1;
+
+      return this .geodeticConverter .convertRadians (latitude, longitude, utm .z, result);
+   },
+   apply: function (geocentric, result)
+   {
+      // https://gist.github.com/duedal/840476
+
+      const
+         geodetic  = this .geodeticConverter .applyRadians (geocentric, result),
+         latitude  = geodetic .x,
+         longitude = geodetic .y;
+
+      const
+         tanlat = Math .tan (latitude),
+         coslat = Math .cos (latitude);
+
+      const
+         EE = this .EE,
+         N  = this .a / Math .sqrt (1 - this .ecc2 * Math .pow (Math .sin (latitude), 2)),
+         T  = tanlat * tanlat,
+         T6 = T * T * T,
+         C  = EE * coslat * coslat,
+         A  = coslat * (longitude - this .longitude0);
+
+      const M = this .a * (this .W * latitude
+                           - this .X * Math .sin (2 * latitude)
+                           + this .Y * Math .sin (4 * latitude)
+                           - this .Z * Math .sin (6 * latitude));
+
+      const easting = k0 * N * (A + (1 - T + C) * Math .pow (A, 3) / 6
+                                + (5 - 18 * T6 + 72 * C - 58 * EE) * Math .pow (A, 5) / 120)
+                      + E0;
+
+      let northing = k0 * (M + N * tanlat * (A * A / 2 + (5 - T + 9 * C + 4 * C * C) * Math .pow (A, 4) / 24
+                                             + (61 - 58 * T6 + 600 * C - 330 * EE) * Math .pow (A, 6) / 720));
+
+      if (latitude < 0)
+      {
+         northing += N0;
+
+         if (! this .southernHemisphere)
+            northing = -northing;
+      }
+      else
+      {
+         if (this .southernHemisphere)
+            northing = -northing;
+      }
+
+      if (this .eastingFirst)
+         return result .set (easting, northing, geodetic .z);
+
+      return result .set (northing, easting, geodetic .z);
+   },
+   //lerp: Vector3 .lerp,
+};
+
+/* harmony default export */ const Geospatial_UniversalTransverseMercator = (UniversalTransverseMercator);
+
+;// CONCATENATED MODULE: ./src/x_ite/Browser/Geospatial/Geocentric.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+function Geocentric () { }
+
+Geocentric .prototype =
+{
+   constructor: Geocentric,
+   convert: function (geocentric, result)
+   {
+      return result .assign (geocentric);
+   },
+   apply: function (geocentric, result)
+   {
+      return result .assign (geocentric);
+   },
+   slerp: function (source, destination, t)
+   {
+      const
+         sourceLength      = source      .magnitude (),
+         destinationLength = destination .magnitude ();
+
+      source      .normalize ();
+      destination .normalize ();
+
+      return Algorithm_default().simpleSlerp (source, destination, t) .multiply (Algorithm_default().lerp (sourceLength, destinationLength, t));
+   },
+};
+
+/* harmony default export */ const Geospatial_Geocentric = (Geocentric);
+
+;// CONCATENATED MODULE: ./src/x_ite/Browser/Geospatial/Geospatial.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+let i = 0;
+
+const
+   GD  = i ++,
+   UTM = i ++,
+   GC  = i ++;
+
+const CoordinateSystems = {
+   GD:  GD,
+   GDC: GD,
+   UTM: UTM,
+   GC:  GC,
+   GCC: GC,
+   GS:  GC,
+};
+
+const Zone = /^Z(\d+)$/;
+
+const Geospatial =
+{
+   GD: GD,
+   UTM: UTM,
+   GC: GC,
+   getReferenceFrame: function (geoSystem, radians)
+   {
+      switch (this .getCoordinateSystem (geoSystem))
+      {
+         case GD:
+         {
+            return new Geospatial_Geodetic (this .getEllipsoid (geoSystem),
+                                 this .getLatitudeFirst (geoSystem),
+                                 radians);
+         }
+         case UTM:
+         {
+            return new Geospatial_UniversalTransverseMercator (this .getEllipsoid (geoSystem),
+                                                    this .getZone (geoSystem),
+                                                    this .getNorthernHemisphere (geoSystem),
+                                                    this .getNorthingFirst (geoSystem));
+         }
+         case GC:
+         {
+            return new Geospatial_Geocentric ();
+         }
+      }
+
+      return new Geospatial_Geodetic (Geospatial_ReferenceEllipsoids.WE, true, radians);
+   },
+   getElevationFrame: function (geoSystem, radians)
+   {
+      return new Geospatial_Geodetic (this .getEllipsoid (geoSystem), true, radians);
+   },
+   getCoordinateSystem: function (geoSystem)
+   {
+      for (const gs of geoSystem)
+      {
+         const coordinateSystem = CoordinateSystems [gs];
+
+         if (coordinateSystem !== undefined)
+            return coordinateSystem;
+      }
+
+      return GD;
+   },
+   getEllipsoid: function (geoSystem)
+   {
+      for (const gs of geoSystem)
+      {
+         const ellipsoid = Geospatial_ReferenceEllipsoids [gs];
+
+         if (ellipsoid !== undefined)
+            return ellipsoid;
+      }
+
+      return Geospatial_ReferenceEllipsoids.WE;
+   },
+   getEllipsoidString: function (geoSystem)
+   {
+      for (const gs of geoSystem)
+      {
+         const ellipsoid = Geospatial_ReferenceEllipsoids [gs];
+
+         if (ellipsoid !== undefined)
+            return gs;
+      }
+
+      return "WE";
+   },
+   isStandardOrder: function (geoSystem)
+   {
+      switch (this .getCoordinateSystem (geoSystem))
+      {
+         case GD:
+         {
+            return this .getLatitudeFirst (geoSystem);
+         }
+         case UTM:
+         {
+            return this .getNorthingFirst (geoSystem);
+         }
+         case GC:
+         {
+            return true;
+         }
+      }
+
+      return this .getLatitudeFirst (geoSystem);
+   },
+   getLatitudeFirst: function (geoSystem)
+   {
+      for (const gs of geoSystem)
+      {
+         if (gs === "longitude_first")
+            return false;
+      }
+
+      return true;
+   },
+   getNorthingFirst: function (geoSystem)
+   {
+      for (const gs of geoSystem)
+      {
+         if (gs === "easting_first")
+            return false;
+      }
+
+      return true;
+   },
+   getZone: function (geoSystem)
+   {
+      for (const gs of geoSystem)
+      {
+         const match = gs .match (Zone);
+
+         if (match)
+            return parseInt (match [1]);
+      }
+
+      return 1;
+   },
+   getNorthernHemisphere: function (geoSystem)
+   {
+      for (const gs of geoSystem)
+      {
+         if (gs === "S")
+            return false;
+      }
+
+      return true;
+   },
+};
+
+/* harmony default export */ const Geospatial_Geospatial = (Geospatial);
+
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Base/X3DCast");
+var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("standard/Math/Numbers/Matrix4");
+var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/X3DGeospatialObject.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+var
+   vector = new (Vector3_default()) (0, 0, 0),
+   result = new (Vector3_default()) (0, 0, 0),
+   t      = new (Vector3_default()) (0, 0, 0),
+   x      = new (Vector3_default()) (0, 0, 0),
+   y      = new (Vector3_default()) (0, 0, 0),
+   z      = new (Vector3_default()) (0, 0, 0);
+
+function X3DGeospatialObject (executionContext)
+{
+   this .addType ((X3DConstants_default()).X3DGeospatialObject);
+
+   this .radians         = false;
+   this .origin          = new (Vector3_default()) (0, 0, 0);
+   this .originMatrix    = new (Matrix4_default()) ();
+   this .invOriginMatrix = new (Matrix4_default()) ();
+}
+
+X3DGeospatialObject .prototype =
+{
+   constructor: X3DGeospatialObject,
+   initialize: function ()
+   {
+      this ._geoSystem .addInterest ("set_geoSystem__", this);
+      this ._geoOrigin .addInterest ("set_geoOrigin__", this);
+
+      this .set_geoSystem__ ();
+      this .set_geoOrigin__ ();
+   },
+   set_geoSystem__: function ()
+   {
+      this .coordinateSystem = Geospatial_Geospatial.getCoordinateSystem (this ._geoSystem);
+      this .referenceFrame   = Geospatial_Geospatial.getReferenceFrame   (this ._geoSystem, this .radians);
+      this .elevationFrame   = Geospatial_Geospatial.getElevationFrame   (this ._geoSystem, this .radians);
+      this .standardOrder    = Geospatial_Geospatial.isStandardOrder     (this ._geoSystem);
+   },
+   set_geoOrigin__: function ()
+   {
+      if (this .geoOriginNode)
+      {
+         this .geoOriginNode .removeInterest ("set_origin__",    this);
+         this .geoOriginNode .removeInterest ("set_rotateYUp__", this);
+         this .geoOriginNode .removeInterest ("addNodeEvent",    this);
+      }
+
+      this .geoOriginNode = X3DCast_default() ((X3DConstants_default()).GeoOrigin, this ._geoOrigin);
+
+      if (this .geoOriginNode)
+      {
+         this .geoOriginNode .addInterest ("set_origin__",    this);
+         this .geoOriginNode .addInterest ("set_rotateYUp__", this);
+         this .geoOriginNode .addInterest ("addNodeEvent",    this);
+      }
+
+      this .set_origin__ ();
+      this .set_rotateYUp__ ();
+   },
+   set_origin__: function ()
+   {
+      if (this .geoOriginNode)
+         this .geoOriginNode .getOrigin (this .origin);
+      else
+         this .origin .set (0, 0, 0);
+
+      this .set_originMatrix__ ();
+   },
+   set_originMatrix__: function ()
+   {
+      if (this .geoOriginNode)
+      {
+         // Position
+         var t = this .origin;
+
+         // Let's work out the orientation at that location in order
+         // to maintain a view where +Y is in the direction of gravitional
+         // up for that region of the planet's surface. This will be the
+         // value of the rotation matrix for the transform.
+
+         this .elevationFrame .normal (t, y);
+
+         x .set (0, 0, 1) .cross (y);
+
+         // Handle pole cases.
+         if (x .equals ((Vector3_default()).Zero))
+            x .set (1, 0, 0);
+
+         z .assign (x) .cross (y);
+
+         x .normalize ();
+         z .normalize ();
+
+         this .originMatrix .set (x .x, x .y, x .z, 0,
+                                    y .x, y .y, y .z, 0,
+                                    z .x, z .y, z .z, 0,
+                                    t .x, t .y, t .z, 1);
+
+         this .invOriginMatrix .assign (this .originMatrix) .inverse ();
+      }
+   },
+   set_rotateYUp__: function ()
+   {
+      if (this .geoOriginNode && this .geoOriginNode ._rotateYUp .getValue ())
+      {
+         this .getCoord          = getCoordRotateYUp;
+         this .getGeoCoord       = getGeoCoordRotateYUp;
+         this .getGeoUpVector    = getGeoUpVectorRotateYUp;
+         this .getLocationMatrix = getLocationMatrixRotateYUp;
+      }
+      else
+      {
+         delete this .getCoord;
+         delete this .getGeoCoord;
+         delete this .getGeoUpVector;
+         delete this .getLocationMatrix;
+      }
+   },
+   getReferenceFrame: function ()
+   {
+      return this .referenceFrame;
+   },
+   getStandardOrder: function ()
+   {
+      return this .standardOrder;
+   },
+   getCoord: function (geoPoint, result)
+   {
+      return this .referenceFrame .convert (geoPoint, result) .subtract (this .origin);
+   },
+   getGeoCoord: function (point, result)
+   {
+      return this .referenceFrame .apply (vector .assign (point) .add (this .origin), result);
+   },
+   getGeoElevation: function (point)
+   {
+      return this .getGeoCoord (point, result) .z;
+   },
+   getGeoUpVector: function (point, result)
+   {
+      return this .elevationFrame .normal (vector .assign (point) .add (this .origin), result);
+   },
+   getLocationMatrix: function (geoPoint, result)
+   {
+      var
+         origin         = this .origin,
+         locationMatrix = getStandardLocationMatrix .call (this, geoPoint, result);
+
+      // translateRight (-origin)
+      locationMatrix [12] -= origin .x;
+      locationMatrix [13] -= origin .y;
+      locationMatrix [14] -= origin .z;
+
+      return locationMatrix;
+   },
+};
+
+function getCoordRotateYUp (geoPoint, result)
+{
+   return this .invOriginMatrix .multVecMatrix (this .referenceFrame .convert (geoPoint, result));
+}
+
+function getGeoCoordRotateYUp (point, result)
+{
+   return this .referenceFrame .apply (this .originMatrix .multVecMatrix (vector .assign (point)), result);
+}
+
+function getGeoUpVectorRotateYUp (point, result)
+{
+   return this .invOriginMatrix .multDirMatrix (this .elevationFrame .normal (this .originMatrix .multVecMatrix (vector .assign (point)), result));
+}
+
+function getLocationMatrixRotateYUp (geoPoint, result)
+{
+   return getStandardLocationMatrix .call (this, geoPoint, result) .multRight (this .invOriginMatrix);
+}
+
+function getStandardLocationMatrix (geoPoint, result)
+{
+   // Position
+   this .referenceFrame .convert (geoPoint, t);
+
+   // Let's work out the orientation at that location in order
+   // to maintain a view where +Y is in the direction of gravitional
+   // up for that region of the planet's surface. This will be the
+   // value of the rotation matrix for the transform.
+
+   this .elevationFrame .normal (t, y);
+
+   x .set (0, 0, 1) .cross (y);
+
+   // Handle pole cases.
+   if (x .equals ((Vector3_default()).Zero))
+      x .set (1, 0, 0);
+
+   z .assign (x) .cross (y);
+
+   x .normalize ();
+   z .normalize ();
+
+   return result .set (x .x, x .y, x .z, 0,
+                       y .x, y .y, y .z, 0,
+                       z .x, z .y, z .z, 0,
+                       t .x, t .y, t .z, 1);
+}
+
+/* harmony default export */ const Geospatial_X3DGeospatialObject = (X3DGeospatialObject);
+
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Triangle3\")"
+const Triangle3_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("standard/Math/Geometry/Triangle3");
+var Triangle3_default = /*#__PURE__*/__webpack_require__.n(Triangle3_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/GeoCoordinate.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+function GeoCoordinate (executionContext)
+{
+   X3DCoordinateNode_default().call (this, executionContext);
+   Geospatial_X3DGeospatialObject.call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).GeoCoordinate);
+}
+
+GeoCoordinate .prototype = Object .assign (Object .create ((X3DCoordinateNode_default()).prototype),
+   Geospatial_X3DGeospatialObject.prototype,
+{
+   constructor: GeoCoordinate,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",  new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin", new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem", new (Fields_default()).MFString ("GD", "WE")),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "point",     new (Fields_default()).MFVec3d ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "GeoCoordinate";
+   },
+   getComponentName: function ()
+   {
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "coord";
+   },
+   initialize: function ()
+   {
+      X3DCoordinateNode_default().prototype.initialize.call (this);
+      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+   },
+   set1Point: (function ()
+   {
+      const result = new (Vector3_default()) (0, 0, 0);
+
+      return function (index, point)
+      {
+         this ._point [index] = this .getGeoCoord (point, result);
+      };
+   })(),
+   get1Point: (function ()
+   {
+      const p = new (Vector3_default()) (0, 0, 0);
+
+      return function (index, result)
+      {
+         if (index < this .length)
+         {
+            const point = this .point;
+
+            index *= 3;
+
+            return this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), result);
+         }
+         else
+         {
+            return result .set (0, 0, 0);
+         }
+      };
+   })(),
+   addPoint: (function ()
+   {
+      const
+         p = new (Vector3_default()) (0, 0, 0),
+         g = new (Vector3_default()) (0, 0, 0);
+
+      return function (index, array)
+      {
+         if (index < this .length)
+         {
+            const point = this .point;
+
+            index *= 3;
+
+            this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
+
+            array .push (g [0], g [1], g [2], 1);
+         }
+         else
+         {
+            array .push (0, 0, 0, 1);
+         }
+      };
+   })(),
+   addPoints: (function ()
+   {
+      const
+         p = new (Vector3_default()) (0, 0, 0),
+         g = new (Vector3_default()) (0, 0, 0);
+
+      return function (array, min)
+      {
+         const point = this .point;
+
+         for (let index = 0, length = this .length * 3; index < length; index += 3)
+         {
+            this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
+
+            array .push (g [0], g [1], g [2], 1);
+         }
+
+         for (let index = this .length * 3, length = min * 3; index < length; index += 3)
+            array .push (0, 0, 0, 1);
+      };
+   })(),
+   getNormal: (function ()
+   {
+      const
+         point1 = new (Vector3_default()) (0, 0, 0),
+         point2 = new (Vector3_default()) (0, 0, 0),
+         point3 = new (Vector3_default()) (0, 0, 0);
+
+      return function (index1, index2, index3)
+      {
+         // The index[1,2,3] cannot be less than 0.
+
+         const length = this .length;
+
+         if (index1 < length && index2 < length && index3 < length)
+         {
+            return Triangle3_default().normal (this .get1Point (index1, point1),
+                                      this .get1Point (index2, point2),
+                                      this .get1Point (index3, point3),
+                                      new (Vector3_default()) (0, 0, 0));
+         }
+
+         return new (Vector3_default()) (0, 0, 0);
+      };
+   })(),
+   getQuadNormal: (function ()
+   {
+      const
+         point1 = new (Vector3_default()) (0, 0, 0),
+         point2 = new (Vector3_default()) (0, 0, 0),
+         point3 = new (Vector3_default()) (0, 0, 0),
+         point4 = new (Vector3_default()) (0, 0, 0);
+
+      return function (index1, index2, index3, index4)
+      {
+         // The index[1,2,3,4] cannot be less than 0.
+
+         const length = this .length;
+
+         if (index1 < length && index2 < length && index3 < length && index4 < length)
+         {
+            return Triangle3_default().quadNormal (this .get1Point (index1, point1),
+                                          this .get1Point (index2, point2),
+                                          this .get1Point (index3, point3),
+                                          this .get1Point (index4, point4),
+                                          new (Vector3_default()) (0, 0, 0));
+         }
+
+         return new (Vector3_default()) (0, 0, 0);
+      };
+   })(),
+});
+
+/* harmony default export */ const Geospatial_GeoCoordinate = (GeoCoordinate);
+
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
+const X3DGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Rendering/X3DGeometryNode");
+var X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometryNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector2\")"
+const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("standard/Math/Numbers/Vector2");
+var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/GeoElevationGrid.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+function GeoElevationGrid (executionContext)
+{
+   X3DGeometryNode_default().call (this, executionContext);
+   Geospatial_X3DGeospatialObject.call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).GeoElevationGrid);
+
+   this ._creaseAngle .setUnit ("angle");
+   this ._height      .setUnit ("length");
+
+   this .colorNode    = null;
+   this .texCoordNode = null;
+   this .normalNode   = null;
+}
+
+GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
+   Geospatial_X3DGeospatialObject.prototype,
+{
+   constructor: GeoElevationGrid,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",        new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",       new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",       new (Fields_default()).MFString ("GD", "WE")),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoGridOrigin",   new (Fields_default()).SFVec3d ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "xDimension",      new (Fields_default()).SFInt32 ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "zDimension",      new (Fields_default()).SFInt32 ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "xSpacing",        new (Fields_default()).SFDouble (1)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "zSpacing",        new (Fields_default()).SFDouble (1)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "yScale",          new (Fields_default()).SFFloat (1)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",           new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "ccw",             new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "creaseAngle",     new (Fields_default()).SFDouble ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "colorPerVertex",  new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "normalPerVertex", new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "color",           new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",        new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "normal",          new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "height",          new (Fields_default()).MFDouble (0, 0)),
+   ]),
+   getTypeName: function ()
+   {
+      return "GeoElevationGrid";
+   },
+   getComponentName: function ()
+   {
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   initialize: function ()
+   {
+      X3DGeometryNode_default().prototype.initialize.call (this);
+      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+
+      this ._color    .addInterest ("set_color__", this);
+      this ._texCoord .addInterest ("set_texCoord__", this);
+      this ._normal   .addInterest ("set_normal__", this);
+
+      this .set_color__ ();
+      this .set_texCoord__ ();
+      this .set_normal__ ();
+   },
+   set_color__: function ()
+   {
+      if (this .colorNode)
+      {
+         this .colorNode .removeInterest ("requestRebuild", this);
+         this .colorNode ._transparent .removeInterest ("set_transparent__", this);
+      }
+
+      this .colorNode = X3DCast_default() ((X3DConstants_default()).X3DColorNode, this ._color);
+
+      if (this .colorNode)
+      {
+         this .colorNode .addInterest ("requestRebuild", this);
+         this .colorNode ._transparent .addInterest ("set_transparent__", this);
+
+         this .set_transparent__ ();
+      }
+      else
+         this .setTransparent (false);
+   },
+   set_transparent__: function ()
+   {
+      this .setTransparent (this .colorNode .getTransparent ());
+   },
+   set_texCoord__: function ()
+   {
+      if (this .texCoordNode)
+         this .texCoordNode .removeInterest ("requestRebuild", this);
+
+      this .texCoordNode = X3DCast_default() ((X3DConstants_default()).X3DTextureCoordinateNode, this ._texCoord);
+
+      if (this .texCoordNode)
+         this .texCoordNode .addInterest ("requestRebuild", this);
+
+      this .setTextureCoordinate (this .texCoordNode);
+   },
+   set_normal__: function ()
+   {
+      if (this .normalNode)
+         this .normalNode .removeInterest ("requestRebuild", this);
+
+      this .normalNode = X3DCast_default() ((X3DConstants_default()).X3DNormalNode, this ._normal);
+
+      if (this .normalNode)
+         this .normalNode .addInterest ("requestRebuild", this);
+   },
+   getColor: function ()
+   {
+      return this .colorNode;
+   },
+   getTexCoord: function ()
+   {
+      return this .texCoordNode;
+   },
+   getNormal: function ()
+   {
+      return this .normalNode;
+   },
+   getHeight: function (index)
+   {
+      if (index < this ._height .length)
+         return this ._height [index] * this ._yScale .getValue ();
+
+      return 0;
+   },
+   createTexCoords: function ()
+   {
+      var
+         texCoords  = [ ],
+         xDimension = this ._xDimension .getValue (),
+         zDimension = this ._zDimension .getValue (),
+         xSize      = xDimension - 1,
+         zSize      = zDimension - 1;
+
+      for (var z = 0; z < zDimension; ++ z)
+      {
+         for (var x = 0; x < xDimension; ++ x)
+            texCoords .push (new (Vector2_default()) (x / xSize, z / zSize));
+      }
+
+      return texCoords;
+   },
+   createNormals: function (points, coordIndex, creaseAngle)
+   {
+      var
+         cw          = ! this ._ccw .getValue (),
+         normalIndex = [ ],
+         normals     = [ ];
+
+      for (var p = 0; p < points .length; ++ p)
+         normalIndex [p] = [ ];
+
+      for (var c = 0; c < coordIndex .length; c += 3)
+      {
+         var
+            c0 = coordIndex [c],
+            c1 = coordIndex [c + 1],
+            c2 = coordIndex [c + 2];
+
+         normalIndex [c0] .push (normals .length);
+         normalIndex [c1] .push (normals .length + 1);
+         normalIndex [c2] .push (normals .length + 2);
+
+         var normal = Triangle3_default().normal (points [c0], points [c1], points [c2], new (Vector3_default()) (0, 0, 0));
+
+         if (cw)
+            normal .negate ();
+
+         normals .push (normal);
+         normals .push (normal);
+         normals .push (normal);
+      }
+
+      return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
+   },
+   createCoordIndex: function ()
+   {
+      // p1 - p4
+      //  | \ |
+      // p2 - p3
+
+      var
+         coordIndex = [ ],
+         xDimension = this ._xDimension .getValue (),
+         zDimension = this ._zDimension .getValue (),
+         xSize      = xDimension - 1,
+         zSize      = zDimension - 1;
+
+      for (var z = 0; z < zSize; ++ z)
+      {
+         for (var x = 0; x < xSize; ++ x)
+         {
+            var
+               i1 =       z * xDimension + x,
+               i2 = (z + 1) * xDimension + x,
+               i3 = (z + 1) * xDimension + (x + 1),
+               i4 =       z * xDimension + (x + 1);
+
+            coordIndex .push (i1); // p1
+            coordIndex .push (i3); // p3
+            coordIndex .push (i2); // p2
+
+            coordIndex .push (i1); // p1
+            coordIndex .push (i4); // p4
+            coordIndex .push (i3); // p3
+         }
+      }
+
+      return coordIndex;
+   },
+   createPoints: function ()
+   {
+      var
+         points     = [ ],
+         xDimension = this ._xDimension .getValue (),
+         zDimension = this ._zDimension .getValue (),
+         xSpacing   = this ._xSpacing .getValue (),
+         zSpacing   = this ._zSpacing .getValue ();
+
+      // When the geoSystem is "GD", xSpacing refers to the number of units of longitude in angle base units between
+      // adjacent height values and zSpacing refers to the number of units of latitude in angle base units between
+      // vertical height values.
+
+      // When the geoSystem is "UTM", xSpacing refers to the number of eastings (length base units) between adjacent
+      // height values and zSpacing refers to the number of northings (length base units) between vertical height values.
+
+      if (this .getStandardOrder ())
+      {
+         for (var z = 0; z < zDimension; ++ z)
+         {
+            for (var x = 0; x < xDimension; ++ x)
+            {
+               var point = new (Vector3_default()) (zSpacing * z, // latitude, northing
+                                        xSpacing * x, // longitude, easting
+                                        this .getHeight (x + z * xDimension));
+
+               point .add (this ._geoGridOrigin .getValue ());
+
+               points .push (this .getCoord (point, point));
+            }
+         }
+      }
+      else
+      {
+         for (var z = 0; z < zDimension; ++ z)
+         {
+            for (var x = 0; x < xDimension; ++ x)
+            {
+               var point = new (Vector3_default()) (xSpacing * x, // longitude, easting
+                                        zSpacing * z, // latitude, northing
+                                        this .getHeight (x + z * xDimension));
+
+               point .add (this ._geoGridOrigin .getValue ());
+
+               points .push (this .getCoord (point, point));
+            }
+         }
+      }
+
+      return points;
+   },
+   build: function ()
+   {
+      if (this ._xDimension .getValue () < 2 || this ._zDimension .getValue () < 2)
+         return;
+
+      var
+         colorPerVertex     = this ._colorPerVertex .getValue (),
+         normalPerVertex    = this ._normalPerVertex .getValue (),
+         coordIndex         = this .createCoordIndex (),
+         colorNode          = this .getColor (),
+         texCoordNode       = this .getTexCoord (),
+         normalNode         = this .getNormal (),
+         points             = this .createPoints (),
+         colorArray         = this .getColors (),
+         multiTexCoordArray = this .getMultiTexCoords (),
+         normalArray        = this .getNormals (),
+         vertexArray        = this .getVertices (),
+         face               = 0;
+
+      // Vertex attribute
+
+      //std::vector <std::vector <float>> attribArrays (attribNodes .size ());
+
+      //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
+      //	attribArrays [a] .reserve (coordIndex .size ());
+
+      if (texCoordNode)
+      {
+         texCoordNode .init (multiTexCoordArray);
+      }
+      else
+      {
+         var
+            texCoords     = this .createTexCoords (),
+            texCoordArray = this .getTexCoords ();
+
+         multiTexCoordArray .push (texCoordArray);
+      }
+
+      // Build geometry
+
+      for (var c = 0; c < coordIndex .length; ++ face)
+      {
+         for (var p = 0; p < 6; ++ p, ++ c)
+         {
+            var
+               index = coordIndex [c],
+               point = points [index];
+
+            //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
+            //	attribNodes [a] -> addValue (attribArrays [a], i);
+
+            if (colorNode)
+            {
+               if (colorPerVertex)
+                  colorNode .addColor (index, colorArray);
+               else
+                  colorNode .addColor (face, colorArray);
+            }
+
+            if (texCoordNode)
+            {
+               texCoordNode .addTexCoord (index, multiTexCoordArray);
+            }
+            else
+            {
+               var t = texCoords [index];
+
+               texCoordArray .push (t .x, t .y, 0, 1);
+            }
+
+            if (normalNode)
+            {
+               if (normalPerVertex)
+                  normalNode .addVector (index, normalArray);
+
+               else
+                  normalNode .addVector (face, normalArray);
+            }
+
+            vertexArray .push (point .x, point .y, point .z, 1);
+         }
+      }
+
+      // Add auto-generated normals if needed.
+
+      if (! normalNode)
+      {
+         var normals = this .createNormals (points, coordIndex);
+
+         for (var i = 0; i < normals .length; ++ i)
+         {
+            var normal = normals [i];
+
+            normalArray .push (normal .x, normal .y, normal .z);
+         }
+      }
+
+      this .setSolid (this ._solid .getValue ());
+      this .setCCW (this ._ccw .getValue ());
+   },
+});
+
+/* harmony default export */ const Geospatial_GeoElevationGrid = (GeoElevationGrid);
+
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
+const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Core/X3DChildNode");
+var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DBoundedObject\")"
+const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
+var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObject_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/TraverseType\")"
+const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Rendering/TraverseType");
+var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/Group\")"
+const Group_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Grouping/Group");
+var Group_default = /*#__PURE__*/__webpack_require__.n(Group_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Networking/Inline\")"
+const Inline_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Networking/Inline");
+var Inline_default = /*#__PURE__*/__webpack_require__.n(Inline_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Box3\")"
+const Box3_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("standard/Math/Geometry/Box3");
+var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/GeoLOD.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var center = new (Vector3_default()) (0, 0, 0);
+
+function GeoLOD (executionContext)
+{
+   X3DChildNode_default().call (this, executionContext);
+   X3DBoundedObject_default().call (this, executionContext);
+   Geospatial_X3DGeospatialObject.call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).GeoLOD);
+
+   this ._range .setUnit ("length");
+
+   this .unload           = false;
+   this .rootGroup        = new (Group_default()) (this .getBrowser () .getPrivateScene ());
+   this .rootInline       = new (Inline_default()) (executionContext);
+   this .child1Inline     = new (Inline_default()) (executionContext);
+   this .child2Inline     = new (Inline_default()) (executionContext);
+   this .child3Inline     = new (Inline_default()) (executionContext);
+   this .child4Inline     = new (Inline_default()) (executionContext);
+   this .childrenLoaded   = false;
+   this .childBBox        = new (Box3_default()) ();
+   this .keepCurrentLevel = false;
+   this .modelViewMatrix  = new (Matrix4_default()) ();
+}
+
+GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+   (X3DBoundedObject_default()).prototype,
+   Geospatial_X3DGeospatialObject.prototype,
+{
+   constructor: GeoLOD,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",      new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",     new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",     new (Fields_default()).MFString ("GD", "WE")),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rootUrl",       new (Fields_default()).MFString ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "child1Url",     new (Fields_default()).MFString ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "child2Url",     new (Fields_default()).MFString ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "child3Url",     new (Fields_default()).MFString ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "child4Url",     new (Fields_default()).MFString ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "center",        new (Fields_default()).SFVec3d ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "range",         new (Fields_default()).SFFloat (10)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "level_changed", new (Fields_default()).SFInt32 (-1)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",       new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",   new (Fields_default()).SFBool ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",      new (Fields_default()).SFVec3f (-1, -1, -1)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",    new (Fields_default()).SFVec3f ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rootNode",      new (Fields_default()).MFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "children",      new (Fields_default()).MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "GeoLOD";
+   },
+   getComponentName: function ()
+   {
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DChildNode_default().prototype.initialize.call (this);
+      X3DBoundedObject_default().prototype.initialize.call (this);
+      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+
+      this ._rootNode .addFieldInterest (this .rootGroup ._children);
+
+      this .rootGroup ._children = this ._rootNode;
+      this .rootGroup .setPrivate (true);
+      this .rootGroup .setup ();
+
+      this .rootInline   ._loadState .addInterest ("set_rootLoadState__", this);
+      this .child1Inline ._loadState .addInterest ("set_childLoadState__", this);
+      this .child2Inline ._loadState .addInterest ("set_childLoadState__", this);
+      this .child3Inline ._loadState .addInterest ("set_childLoadState__", this);
+      this .child4Inline ._loadState .addInterest ("set_childLoadState__", this);
+
+      this ._rootUrl   .addFieldInterest (this .rootInline   ._url);
+      this ._child1Url .addFieldInterest (this .child1Inline ._url);
+      this ._child2Url .addFieldInterest (this .child2Inline ._url);
+      this ._child3Url .addFieldInterest (this .child3Inline ._url);
+      this ._child4Url .addFieldInterest (this .child4Inline ._url);
+
+      this .rootInline   ._load = true;
+      this .child1Inline ._load = false;
+      this .child2Inline ._load = false;
+      this .child3Inline ._load = false;
+      this .child4Inline ._load = false;
+
+      this .rootInline   ._url = this ._rootUrl;
+      this .child1Inline ._url = this ._child1Url;
+      this .child2Inline ._url = this ._child2Url;
+      this .child3Inline ._url = this ._child3Url;
+      this .child4Inline ._url = this ._child4Url;
+
+      this .rootInline   .setup ();
+      this .child1Inline .setup ();
+      this .child2Inline .setup ();
+      this .child3Inline .setup ();
+      this .child4Inline .setup ();
+   },
+   getBBox: function (bbox, shadows)
+   {
+      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      {
+         switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
+         {
+            case 0:
+            {
+               if (this ._rootNode .length)
+                  return this .rootGroup .getBBox (bbox, shadows);
+
+               return this .rootInline .getBBox (bbox, shadows);
+            }
+            case 1:
+            {
+               // Must be unique for each GeoLOD..
+               const childBBox = this .childBBox;
+
+               bbox .set ();
+
+               bbox .add (this .child1Inline .getBBox (childBBox, shadows));
+               bbox .add (this .child2Inline .getBBox (childBBox, shadows));
+               bbox .add (this .child3Inline .getBBox (childBBox, shadows));
+               bbox .add (this .child4Inline .getBBox (childBBox, shadows));
+
+               return bbox;
+            }
+         }
+
+         return bbox .set ();
+      }
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
+   set_rootLoadState__: function ()
+   {
+      if (this ._level_changed .getValue () !== 0)
+         return;
+
+      if (this ._rootNode .length)
+         return;
+
+      if (this .rootInline .checkLoadState () === (X3DConstants_default()).COMPLETE_STATE)
+      {
+         this ._children      = this .rootInline .getInternalScene () .getRootNodes ();
+         this .childrenLoaded = false;
+      }
+   },
+   set_childLoadState__: function ()
+   {
+      if (this ._level_changed .getValue () !== 1)
+         return;
+
+      var loaded = 0;
+
+      if (this .child1Inline .checkLoadState () === (X3DConstants_default()).COMPLETE_STATE ||
+          this .child1Inline .checkLoadState () === (X3DConstants_default()).FAILED_STATE)
+         ++ loaded;
+
+      if (this .child2Inline .checkLoadState () === (X3DConstants_default()).COMPLETE_STATE ||
+          this .child2Inline .checkLoadState () === (X3DConstants_default()).FAILED_STATE)
+         ++ loaded;
+
+      if (this .child3Inline .checkLoadState () === (X3DConstants_default()).COMPLETE_STATE ||
+          this .child3Inline .checkLoadState () === (X3DConstants_default()).FAILED_STATE)
+         ++ loaded;
+
+      if (this .child4Inline .checkLoadState () === (X3DConstants_default()).COMPLETE_STATE ||
+          this .child4Inline .checkLoadState () === (X3DConstants_default()).FAILED_STATE)
+         ++ loaded;
+
+      if (loaded === 4)
+      {
+         this .childrenLoaded = true;
+
+         var children = this ._children;
+
+         children .length = 0;
+
+         var rootNodes = this .child1Inline .getInternalScene () .getRootNodes ();
+
+         for (var i = 0, length = rootNodes .length; i < length; ++ i)
+            children .push (rootNodes [i]);
+
+         var rootNodes = this .child2Inline .getInternalScene () .getRootNodes ();
+
+         for (var i = 0, length = rootNodes .length; i < length; ++ i)
+            children .push (rootNodes [i]);
+
+         var rootNodes = this .child3Inline .getInternalScene () .getRootNodes ();
+
+         for (var i = 0, length = rootNodes .length; i < length; ++ i)
+            children .push (rootNodes [i]);
+
+         var rootNodes = this .child4Inline .getInternalScene () .getRootNodes ();
+
+         for (var i = 0, length = rootNodes .length; i < length; ++ i)
+            children .push (rootNodes [i]);
+      }
+   },
+   set_childCameraObject__: function ()
+   {
+      this .setCameraObject (this .child1Inline .getCameraObject () ||
+                             this .child2Inline .getCameraObject () ||
+                             this .child3Inline .getCameraObject () ||
+                             this .child4Inline .getCameraObject ());
+   },
+   set_childPickableObject__: function ()
+   {
+      this .setPickableObject (this .child1Inline .getPickableObject () ||
+                               this .child2Inline .getPickableObject () ||
+                               this .child3Inline .getPickableObject () ||
+                               this .child4Inline .getPickableObject ());
+   },
+   getLevel: function (modelViewMatrix)
+   {
+      var distance = this .getDistance (modelViewMatrix);
+
+      if (distance < this ._range .getValue ())
+         return 1;
+
+      return 0;
+   },
+   getDistance: function (modelViewMatrix)
+   {
+      modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
+
+      return modelViewMatrix .origin .magnitude ();
+   },
+   traverse: function (type, renderObject)
+   {
+      switch (type)
+      {
+         case (TraverseType_default()).PICKING:
+         {
+            var
+               browser          = this .getBrowser (),
+               pickingHierarchy = browser .getPickingHierarchy ();
+
+            pickingHierarchy .push (this);
+
+            this .traverseChildren (type, renderObject);
+
+            pickingHierarchy .pop ();
+            return;
+         }
+         case (TraverseType_default()).DISPLAY:
+         {
+            var level = this .getLevel (this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
+
+            if (level !== this ._level_changed .getValue ())
+            {
+               this ._level_changed = level;
+
+               switch (level)
+               {
+                  case 0:
+                  {
+                     this .child1Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
+                     this .child2Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
+                     this .child3Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
+                     this .child4Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
+                     this .child1Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
+                     this .child2Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
+                     this .child3Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
+                     this .child4Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
+
+                     if (this ._rootNode .length)
+                     {
+                        this .rootGroup ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+                        this .rootGroup ._isPickableObject .addFieldInterest (this ._isPickableObject);
+
+                        this .setCameraObject   (this .rootGroup .getCameraObject ());
+                        this .setPickableObject (this .rootGroup .getPickableObject ());
+
+                        this ._children      = this ._rootNode;
+                        this .childrenLoaded = false;
+                     }
+                     else
+                     {
+                        if (this .rootInline .checkLoadState () == (X3DConstants_default()).COMPLETE_STATE)
+                        {
+                           this .rootInline ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+                           this .rootInline ._isPickableObject .addFieldInterest (this ._isPickableObject);
+
+                           this .setCameraObject   (this .rootInline .getCameraObject ());
+                           this .setPickableObject (this .rootInline .getPickableObject ());
+
+                           this ._children      = this .rootInline .getInternalScene () .getRootNodes ();
+                           this .childrenLoaded = false;
+                        }
+                     }
+
+                     if (this .unload)
+                     {
+                        this .child1Inline ._load = false;
+                        this .child2Inline ._load = false;
+                        this .child3Inline ._load = false;
+                        this .child4Inline ._load = false;
+                     }
+
+                     break;
+                  }
+                  case 1:
+                  {
+                     if (this ._rootNode .length)
+                     {
+                        this .rootGroup ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
+                        this .rootGroup ._isPickableObject .removeFieldInterest (this ._isPickableObject);
+                     }
+                     else
+                     {
+                        this .rootInline ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
+                        this .rootInline ._isPickableObject .removeFieldInterest (this ._isPickableObject);
+                     }
+
+                     this .child1Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
+                     this .child2Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
+                     this .child3Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
+                     this .child4Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
+                     this .child1Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
+                     this .child2Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
+                     this .child3Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
+                     this .child4Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
+
+                     this .set_childCameraObject__ ();
+                     this .set_childPickableObject__ ();
+
+                     if (this .child1Inline ._load .getValue ())
+                     {
+                        this .set_childLoadState__ ();
+                     }
+                     else
+                     {
+                        this .child1Inline ._load = true;
+                        this .child2Inline ._load = true;
+                        this .child3Inline ._load = true;
+                        this .child4Inline ._load = true;
+                     }
+
+                     break;
+                  }
+               }
+            }
+
+            this .traverseChildren (type, renderObject);
+            return;
+         }
+         default:
+         {
+            this .traverseChildren (type, renderObject);
+            return;
+         }
+      }
+   },
+   traverseChildren: function (type, renderObject)
+   {
+      switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
+      {
+         case 0:
+         {
+            if (this ._rootNode .length)
+               this .rootGroup .traverse (type, renderObject);
+            else
+               this .rootInline .traverse (type, renderObject);
+
+            break;
+         }
+         case 1:
+         {
+            this .child1Inline .traverse (type, renderObject);
+            this .child2Inline .traverse (type, renderObject);
+            this .child3Inline .traverse (type, renderObject);
+            this .child4Inline .traverse (type, renderObject);
+            break;
+         }
+      }
+   },
+});
+
+/* harmony default export */ const Geospatial_GeoLOD = (GeoLOD);
+
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DTransformMatrix3DNode\")"
+const X3DTransformMatrix3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Grouping/X3DTransformMatrix3DNode");
+var X3DTransformMatrix3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformMatrix3DNode_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/GeoLocation.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+var locationMatrix = new (Matrix4_default()) ();
+
+function GeoLocation (executionContext)
+{
+   X3DTransformMatrix3DNode_default().call (this, executionContext);
+   Geospatial_X3DGeospatialObject.call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).GeoLocation);
+}
+
+GeoLocation .prototype = Object .assign (Object .create ((X3DTransformMatrix3DNode_default()).prototype),
+   Geospatial_X3DGeospatialObject.prototype,
+{
+   constructor: GeoLocation,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",      new (Fields_default()).MFString ("GD", "WE")),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geoCoords",      new (Fields_default()).SFVec3d ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",      new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "GeoLocation";
+   },
+   getComponentName: function ()
+   {
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DTransformMatrix3DNode_default().prototype.initialize.call (this);
+      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+
+      this .addInterest ("eventsProcessed", this);
+
+      this .eventsProcessed ();
+   },
+   eventsProcessed: function ()
+   {
+      this .setMatrix (this .getLocationMatrix (this ._geoCoords .getValue (), locationMatrix));
+   },
+});
+
+/* harmony default export */ const Geospatial_GeoLocation = (GeoLocation);
+
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DInfoNode\")"
+const X3DInfoNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Core/X3DInfoNode");
+var X3DInfoNode_default = /*#__PURE__*/__webpack_require__.n(X3DInfoNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Networking/X3DUrlObject\")"
+const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Networking/X3DUrlObject");
+var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/GeoMetadata.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+function GeoMetadata (executionContext)
+{
+   X3DInfoNode_default().call (this, executionContext);
+   X3DUrlObject_default().call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).GeoMetadata);
+}
+
+GeoMetadata .prototype = Object .assign (Object .create ((X3DInfoNode_default()).prototype),
+   (X3DUrlObject_default()).prototype,
+{
+   constructor: GeoMetadata,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",             new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "url",                  new (Fields_default()).MFString ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "load",                 new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefresh",          new (Fields_default()).SFTime ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "summary",              new (Fields_default()).MFString ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "data",                 new (Fields_default()).MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "GeoMetadata";
+   },
+   getComponentName: function ()
+   {
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DInfoNode_default().prototype.initialize.call (this);
+      X3DUrlObject_default().prototype.initialize.call (this);
+   },
+   requestImmediateLoad: function (cache = true)
+   { },
+   requestUnload: function ()
+   { },
+   set_load__: function ()
+   { },
+   set_url__: function ()
+   { },
+});
+
+/* harmony default export */ const Geospatial_GeoMetadata = (GeoMetadata);
+
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DNode\")"
+const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Core/X3DNode");
+var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/GeoOrigin.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+function GeoOrigin (executionContext)
+{
+   X3DNode_default().call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).GeoOrigin);
+
+   this .radians = false;
+}
+
+GeoOrigin .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+{
+   constructor: GeoOrigin,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",  new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem", new (Fields_default()).MFString ("GD", "WE")),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geoCoords", new (Fields_default()).SFVec3d ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rotateYUp", new (Fields_default()).SFBool ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "GeoOrigin";
+   },
+   getComponentName: function ()
+   {
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "geoOrigin";
+   },
+   initialize: function ()
+   {
+      X3DNode_default().prototype.initialize.call (this);
+
+      this ._geoSystem .addInterest ("set_geoSystem__", this);
+
+      this .set_geoSystem__ ();
+   },
+   set_geoSystem__: function ()
+   {
+      this .referenceFrame = Geospatial_Geospatial.getReferenceFrame (this ._geoSystem, this .radians);
+   },
+   getOrigin: function (result)
+   {
+      return this .referenceFrame .convert (this ._geoCoords .getValue (), result);
+   },
+});
+
+/* harmony default export */ const Geospatial_GeoOrigin = (GeoOrigin);
+
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Interpolation/X3DInterpolatorNode\")"
+const X3DInterpolatorNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Interpolation/X3DInterpolatorNode");
+var X3DInterpolatorNode_default = /*#__PURE__*/__webpack_require__.n(X3DInterpolatorNode_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/GeoPositionInterpolator.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+function GeoPositionInterpolator (executionContext)
+{
+   X3DInterpolatorNode_default().call (this, executionContext);
+   Geospatial_X3DGeospatialObject.call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).GeoPositionInterpolator);
+
+   this ._value_changed .setUnit ("length");
+
+   this .geocentric = new Geospatial_Geocentric ();
+}
+
+GeoPositionInterpolator .prototype = Object .assign (Object .create ((X3DInterpolatorNode_default()).prototype),
+   Geospatial_X3DGeospatialObject.prototype,
+{
+   constructor: GeoPositionInterpolator,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",        new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",        new (Fields_default()).MFString ("GD", "WE")),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_fraction",     new (Fields_default()).SFFloat ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "key",              new (Fields_default()).MFFloat ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "keyValue",         new (Fields_default()).MFVec3d ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "value_changed",    new (Fields_default()).SFVec3d ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "geovalue_changed", new (Fields_default()).SFVec3d ()),
+   ]),
+   keyValue0: new (Vector3_default()) (0, 0, 0),
+   keyValue1: new (Vector3_default()) (0, 0, 0),
+   geovalue: new (Vector3_default()) (0, 0, 0),
+   value: new (Vector3_default()) (0, 0, 0),
+   getTypeName: function ()
+   {
+      return "GeoPositionInterpolator";
+   },
+   getComponentName: function ()
+   {
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   setup: function ()
+   {
+      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+
+      X3DInterpolatorNode_default().prototype.setup.call (this);
+   },
+   initialize: function ()
+   {
+      X3DInterpolatorNode_default().prototype.initialize.call (this);
+
+      this ._keyValue .addInterest ("set_keyValue__", this);
+   },
+   set_keyValue__: function ()
+   {
+      var
+         key      = this ._key,
+         keyValue = this ._keyValue;
+
+      if (keyValue .length < key .length)
+         keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new (Fields_default()).SFVec3f ());
+   },
+   interpolate: function (index0, index1, weight)
+   {
+      this .getCoord (this ._keyValue [index0] .getValue (), this .keyValue0);
+      this .getCoord (this ._keyValue [index1] .getValue (), this .keyValue1);
+
+      var coord = this .geocentric .slerp (this .keyValue0, this .keyValue1, weight);
+
+      this ._geovalue_changed = this .getGeoCoord (coord, this .geovalue);
+      this ._value_changed    = coord;
+   },
+});
+
+/* harmony default export */ const Geospatial_GeoPositionInterpolator = (GeoPositionInterpolator);
+
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode\")"
+const X3DEnvironmentalSensorNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode");
+var X3DEnvironmentalSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DEnvironmentalSensorNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/EnvironmentalSensor/ProximitySensor\")"
+const ProximitySensor_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/EnvironmentalSensor/ProximitySensor");
+var ProximitySensor_default = /*#__PURE__*/__webpack_require__.n(ProximitySensor_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/GeoProximitySensor.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+var geoCoord = new (Vector3_default()) (0, 0, 0);
+
+function GeoProximitySensor (executionContext)
+{
+   X3DEnvironmentalSensorNode_default().call (this, executionContext);
+   Geospatial_X3DGeospatialObject.call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).GeoProximitySensor);
+
+   this ._position_changed         .setUnit ("length");
+   this ._centerOfRotation_changed .setUnit ("length");
+
+   this .proximitySensor = new (ProximitySensor_default()) (executionContext);
+
+   this .setCameraObject   (this .proximitySensor .getCameraObject ());
+   this .setPickableObject (this .proximitySensor .getPickableObject ());
+}
+
+GeoProximitySensor .prototype = Object .assign (Object .create ((X3DEnvironmentalSensorNode_default()).prototype),
+   Geospatial_X3DGeospatialObject.prototype,
+{
+   constructor: GeoProximitySensor,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                 new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",                new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",                new (Fields_default()).MFString ("GD", "WE")),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                  new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "size",                     new (Fields_default()).SFVec3f ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "center",                   new (Fields_default()).SFVec3f ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                 new (Fields_default()).SFBool ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "enterTime",                new (Fields_default()).SFTime ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "exitTime",                 new (Fields_default()).SFTime ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "geoCoord_changed",         new (Fields_default()).SFVec3d ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "position_changed",         new (Fields_default()).SFVec3f ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "orientation_changed",      new (Fields_default()).SFRotation ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "centerOfRotation_changed", new (Fields_default()).SFVec3f ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "GeoProximitySensor";
+   },
+   getComponentName: function ()
+   {
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DEnvironmentalSensorNode_default().prototype.initialize.call (this);
+      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+
+      this ._enabled .addFieldInterest (this .proximitySensor ._enabled);
+      this ._size    .addFieldInterest (this .proximitySensor ._size);
+      this ._center  .addFieldInterest (this .proximitySensor ._center);
+
+      this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+      this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
+
+      this .proximitySensor ._isActive                 .addFieldInterest (this ._isActive);
+      this .proximitySensor ._enterTime                .addFieldInterest (this ._enterTime);
+      this .proximitySensor ._exitTime                 .addFieldInterest (this ._exitTime);
+      this .proximitySensor ._position_changed         .addFieldInterest (this ._position_changed);
+      this .proximitySensor ._orientation_changed      .addFieldInterest (this ._orientation_changed);
+      this .proximitySensor ._centerOfRotation_changed .addFieldInterest (this ._centerOfRotation_changed);
+
+      this .proximitySensor ._position_changed .addInterest ("set_position__", this);
+
+      this .proximitySensor ._enabled = this ._enabled;
+      this .proximitySensor ._size    = this ._size;
+      this .proximitySensor ._center  = this ._center;
+
+      this .proximitySensor .setup ();
+   },
+   set_position__: function (position)
+   {
+      this ._geoCoord_changed = this .getGeoCoord (this .proximitySensor ._position_changed .getValue (), geoCoord);
+   },
+   traverse: function (type, renderObject)
+   {
+      this .proximitySensor .traverse (type, renderObject);
+   },
+});
+
+/* harmony default export */ const Geospatial_GeoProximitySensor = (GeoProximitySensor);
+
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode\")"
+const X3DTouchSensorNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode");
+var X3DTouchSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DTouchSensorNode_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/GeoTouchSensor.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+var
+   invModelViewMatrix = new (Matrix4_default()) (),
+   geoCoords          = new (Vector3_default()) (0, 0, 0);
+
+function GeoTouchSensor (executionContext)
+{
+   X3DTouchSensorNode_default().call (this, executionContext);
+   Geospatial_X3DGeospatialObject.call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).GeoTouchSensor);
+
+   this ._hitPoint_changed .setUnit ("length");
+}
+
+GeoTouchSensor .prototype = Object .assign (Object .create ((X3DTouchSensorNode_default()).prototype),
+   Geospatial_X3DGeospatialObject.prototype,
+{
+   constructor: GeoTouchSensor,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",            new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",         new (Fields_default()).SFString ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",           new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",           new (Fields_default()).MFString ("GD", "WE")),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",             new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "hitTexCoord_changed", new (Fields_default()).SFVec2f ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "hitNormal_changed",   new (Fields_default()).SFVec3f ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "hitPoint_changed",    new (Fields_default()).SFVec3f ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "hitGeoCoord_changed", new (Fields_default()).SFVec3d ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isOver",              new (Fields_default()).SFBool ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",            new (Fields_default()).SFBool ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "touchTime",           new (Fields_default()).SFTime ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "GeoTouchSensor";
+   },
+   getComponentName: function ()
+   {
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DTouchSensorNode_default().prototype.initialize.call (this);
+      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+   },
+   set_over__: function (over, hit, modelViewMatrix, projectionMatrix, viewport)
+   {
+      X3DTouchSensorNode_default().prototype.set_over__.call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
+
+      if (this ._isOver .getValue ())
+      {
+         var intersection = hit .intersection;
+
+         invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+
+         this ._hitTexCoord_changed = intersection .texCoord;
+         this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
+         this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
+         this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
+      }
+   },
+});
+
+/* harmony default export */ const Geospatial_GeoTouchSensor = (GeoTouchSensor);
+
+;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/GeoTransform.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+var
+   matrix         = new (Matrix4_default()) (),
+   GeoTransform_locationMatrix = new (Matrix4_default()) ();
+
+function GeoTransform (executionContext)
+{
+   X3DTransformMatrix3DNode_default().call (this, executionContext);
+   Geospatial_X3DGeospatialObject.call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).GeoTransform);
+
+   this ._translation .setUnit ("length");
+}
+
+GeoTransform .prototype = Object .assign (Object .create ((X3DTransformMatrix3DNode_default()).prototype),
+   Geospatial_X3DGeospatialObject.prototype,
+{
+   constructor: GeoTransform,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "translation",      new (Fields_default()).SFVec3f ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rotation",         new (Fields_default()).SFRotation ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scale",            new (Fields_default()).SFVec3f (1, 1, 1)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scaleOrientation", new (Fields_default()).SFRotation ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",        new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",        new (Fields_default()).MFString ("GD", "WE")),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geoCenter",        new (Fields_default()).SFVec3d ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",          new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",      new (Fields_default()).SFBool ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",         new (Fields_default()).SFVec3f (-1, -1, -1)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",       new (Fields_default()).SFVec3f ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",      new (Fields_default()).MFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",   new (Fields_default()).MFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",         new (Fields_default()).MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "GeoTransform";
+   },
+   getComponentName: function ()
+   {
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DTransformMatrix3DNode_default().prototype.initialize.call (this);
+      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+
+      this .addInterest ("eventsProcessed", this);
+
+      this .eventsProcessed ();
+   },
+   eventsProcessed: function ()
+   {
+      this .getLocationMatrix (this ._geoCenter .getValue (), GeoTransform_locationMatrix);
+
+      matrix .set (this ._translation      .getValue (),
+                     this ._rotation         .getValue (),
+                     this ._scale            .getValue (),
+                     this ._scaleOrientation .getValue ());
+
+      this .setMatrix (matrix .multRight (GeoTransform_locationMatrix) .multLeft (GeoTransform_locationMatrix .inverse ()));
+   },
+});
+
+/* harmony default export */ const Geospatial_GeoTransform = (GeoTransform);
+
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Navigation/X3DViewpointNode\")"
+const X3DViewpointNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Navigation/X3DViewpointNode");
+var X3DViewpointNode_default = /*#__PURE__*/__webpack_require__.n(X3DViewpointNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Interpolation/ScalarInterpolator\")"
+const ScalarInterpolator_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Interpolation/ScalarInterpolator");
+var ScalarInterpolator_default = /*#__PURE__*/__webpack_require__.n(ScalarInterpolator_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Navigation/NavigationInfo\")"
+const NavigationInfo_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components/Navigation/NavigationInfo");
+var NavigationInfo_default = /*#__PURE__*/__webpack_require__.n(NavigationInfo_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Camera\")"
+const Camera_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("standard/Math/Geometry/Camera");
+var Camera_default = /*#__PURE__*/__webpack_require__.n(Camera_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
+const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("standard/Math/Numbers/Rotation4");
+var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/GeoViewpoint.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function traverse (type, renderObject)
+{
+   X3DViewpointNode_default().prototype.traverse.call (this, type, renderObject);
+
+   this .navigationInfoNode .traverse (type, renderObject);
+}
+
+function GeoViewpoint (executionContext)
+{
+   X3DViewpointNode_default().call (this, executionContext);
+   Geospatial_X3DGeospatialObject.call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).GeoViewpoint);
+
+   this ._centerOfRotation .setUnit ("length");
+   this ._fieldOfView      .setUnit ("angle");
+
+   this .navigationInfoNode      = new (NavigationInfo_default()) (executionContext);
+   this .fieldOfViewInterpolator = new (ScalarInterpolator_default()) (this .getBrowser () .getPrivateScene ());
+   this .projectionMatrix        = new (Matrix4_default()) ();
+   this .elevation               = 0;
+
+   switch (executionContext .specificationVersion)
+   {
+      case "2.0":
+      case "3.0":
+      case "3.1":
+      case "3.2":
+         this .traverse = traverse;
+         break;
+   }
+}
+
+GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_default()).prototype),
+   Geospatial_X3DGeospatialObject.prototype,
+{
+   constructor: GeoViewpoint,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",         new (Fields_default()).SFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",         new (Fields_default()).MFString ("GD", "WE")),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_bind",          new (Fields_default()).SFBool ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",       new (Fields_default()).SFString ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "position",          new (Fields_default()).SFVec3d (0, 0, 100000)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "orientation",       new (Fields_default()).SFRotation ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "centerOfRotation",  new (Fields_default()).SFVec3d ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fieldOfView",       new (Fields_default()).SFFloat (0.7854)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "jump",              new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "retainUserOffsets", new (Fields_default()).SFBool ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "navType",           new (Fields_default()).MFString ("EXAMINE", "ANY")),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "headlight",         new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "speedFactor",       new (Fields_default()).SFFloat (1)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isBound",           new (Fields_default()).SFBool ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "bindTime",          new (Fields_default()).SFTime ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "GeoViewpoint";
+   },
+   getComponentName: function ()
+   {
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DViewpointNode_default().prototype.initialize.call (this);
+      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+
+      // Logarithmic depth buffer support
+
+      const gl = this .getBrowser () .getContext ();
+
+      this .logarithmicDepthBuffer = gl .HAS_FEATURE_FRAG_DEPTH;
+
+      // Fields
+
+      this ._position       .addInterest ("set_position__", this);
+      this ._positionOffset .addInterest ("set_position__", this);
+      this ._navType        .addFieldInterest (this .navigationInfoNode ._type);
+      this ._headlight      .addFieldInterest (this .navigationInfoNode ._headlight);
+
+      this .navigationInfoNode .setup ();
+
+      this .set_position__ ();
+
+      // Setup interpolators
+
+      this .fieldOfViewInterpolator ._key = [ 0, 1 ];
+      this .fieldOfViewInterpolator .setup ();
+
+      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
+      this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
+   },
+   setInterpolators: function (fromViewpointNode, toViewpointNode)
+   {
+      if (fromViewpointNode .getType () .includes ((X3DConstants_default()).Viewpoint) || fromViewpointNode .getType () .includes ((X3DConstants_default()).GeoViewpoint))
+      {
+         const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
+
+         this .fieldOfViewInterpolator ._keyValue = new (Fields_default()).MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
+
+         this ._fieldOfViewScale = scale;
+      }
+      else
+      {
+         this .fieldOfViewInterpolator ._keyValue = new (Fields_default()).MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
+
+         this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
+      }
+   },
+   getLogarithmicDepthBuffer: function ()
+   {
+      return this .logarithmicDepthBuffer;
+   },
+   setPosition: (function ()
+   {
+      const geoPosition = new (Vector3_default()) (0, 0, 0);
+
+      return function (value)
+      {
+         this ._position .setValue (this .getGeoCoord (value, geoPosition));
+      };
+   })(),
+   getPosition: (function ()
+   {
+      const position = new (Vector3_default()) (0, 0, 0);
+
+      return function ()
+      {
+         return this .getCoord (this ._position .getValue (), position);
+      };
+   })(),
+   set_position__: (function ()
+   {
+      const position = new (Vector3_default()) (0, 0, 0);
+
+      return function ()
+      {
+         this .getCoord (this ._position .getValue (), position);
+
+         this .elevation = this .getGeoElevation (position .add (this ._positionOffset .getValue ()));
+      };
+   })(),
+   setOrientation: (function ()
+   {
+      const
+         locationMatrix = new (Matrix4_default()) (),
+         geoOrientation = new (Rotation4_default()) (0, 0, 1, 0);
+
+      return function (value)
+      {
+         ///  Returns the resulting orientation for this viewpoint.
+
+         const rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
+
+         geoOrientation .setMatrix (rotationMatrix);
+
+         this ._orientation .setValue (geoOrientation .inverse () .multLeft (value));
+      };
+   })(),
+   getOrientation: (function ()
+   {
+      const
+         locationMatrix = new (Matrix4_default()) (),
+         orientation    = new (Rotation4_default()) (0, 0, 1, 0);
+
+      return function ()
+      {
+         ///  Returns the resulting orientation for this viewpoint.
+
+         const rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
+
+         orientation .setMatrix (rotationMatrix);
+
+         return orientation .multLeft (this ._orientation .getValue ());
+      };
+   })(),
+   getCenterOfRotation: (function ()
+   {
+      const centerOfRotation = new (Vector3_default()) (0, 0, 0);
+
+      return function ()
+      {
+         return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
+      };
+   })(),
+   getFieldOfView: function ()
+   {
+      const fov = this ._fieldOfView * this ._fieldOfViewScale;
+
+      return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
+   },
+   getMaxFarValue: function ()
+   {
+      return 1e10;
+   },
+   getUpVector: (function ()
+   {
+      const
+         position = new (Vector3_default()) (0, 0, 0),
+         upVector = new (Vector3_default()) (0, 0, 0);
+
+      return function ()
+      {
+         this .getCoord (this ._position .getValue (), position);
+
+         return this .getGeoUpVector (position .add (this ._positionOffset .getValue ()), upVector);
+      };
+   })(),
+   getSpeedFactor: function ()
+   {
+      return (Math .max (this .elevation, 0.0) + 10) / 10 * this ._speedFactor .getValue ();
+   },
+   getScreenScale: function (point, viewport, screenScale)
+   {
+      // Returns the screen scale in meter/pixel for on pixel.
+
+      const
+         width  = viewport [2],
+         height = viewport [3];
+
+      let size = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
+
+      if (width > height)
+         size /= height;
+      else
+         size /= width;
+
+      return screenScale .set (size, size, size);
+   },
+   getViewportSize: (function ()
+   {
+      const viewportSize = new (Vector2_default()) (0, 0);
+
+      return function (viewport, nearValue)
+      {
+         const
+            width  = viewport [2],
+            height = viewport [3],
+            size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
+            aspect = width / height;
+
+         if (aspect > 1)
+            return viewportSize .set (size * aspect, size);
+
+         return viewportSize .set (size, size / aspect);
+      };
+   })(),
+   getLookAtDistance: function (bbox)
+   {
+      return (bbox .size .magnitude () / 2) / Math .tan (this .getFieldOfView () / 2);
+   },
+   getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
+   {
+      return Camera_default().perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
+   },
+});
+
+/* harmony default export */ const Geospatial_GeoViewpoint = (GeoViewpoint);
+
+;// CONCATENATED MODULE: ./src/assets/components/Geospatial.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Components_default().addComponent ({
+   name: "Geospatial",
+   types:
+   {
+      GeoCoordinate:           Geospatial_GeoCoordinate,
+      GeoElevationGrid:        Geospatial_GeoElevationGrid,
+      GeoLOD:                  Geospatial_GeoLOD,
+      GeoLocation:             Geospatial_GeoLocation,
+      GeoMetadata:             Geospatial_GeoMetadata,
+      GeoOrigin:               Geospatial_GeoOrigin,
+      GeoPositionInterpolator: Geospatial_GeoPositionInterpolator,
+      GeoProximitySensor:      Geospatial_GeoProximitySensor,
+      GeoTouchSensor:          Geospatial_GeoTouchSensor,
+      GeoTransform:            Geospatial_GeoTransform,
+      GeoViewpoint:            Geospatial_GeoViewpoint,
+   },
+   abstractTypes:
+   {
+      X3DGeospatialObject: Geospatial_X3DGeospatialObject,
+   },
+});
+
+/* harmony default export */ const components_Geospatial = ((/* unused pure expression or super */ null && (undefined)));
+
+/******/ })()
+;

@@ -139,11 +139,11 @@ module .exports = async () =>
          },
          plugins: [
             new webpack .ProvidePlugin (plugins [name] || { }),
-            new webpack .IgnorePlugin ({
-               checkResource (resource, context) {
-                  return x_ite_deps .has (path .resolve (context, resource));
-               },
-            }),
+            // new webpack .IgnorePlugin ({
+            //    checkResource (resource, context) {
+            //       return x_ite_deps .has (path .resolve (context, resource));
+            //    },
+            // }),
             new WebpackShellPluginNext ({
                onBuildEnd: {
                   scripts: [
@@ -156,6 +156,21 @@ module .exports = async () =>
                   parallel: false,
                }
             }),
+         ],
+         externals: [
+            function ({ context, request }, callback)
+            {
+               const filename = path .resolve (context, request)
+
+               if (x_ite_deps .has (filename))
+               {
+                  const module = path .relative (path .resolve (__dirname, "src"), filename) .replace (/\.js$/, "")
+
+                  return callback (null, `var window [Symbol .for ("X_ITE.X3D")] .require ("${module}")`)
+               }
+
+               return callback ()
+            },
          ],
          resolve: {
             fallback: {
