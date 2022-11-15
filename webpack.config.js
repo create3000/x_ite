@@ -42,7 +42,7 @@ module .exports = async () =>
       module: {
          rules: [
             {
-               test: /.css$/,
+               test: /\.css$/,
                use: [
                   MiniCssExtractPlugin.loader,
                   {
@@ -51,7 +51,7 @@ module .exports = async () =>
                         url: false
                      },
                   },
-                ]
+               ],
             },
          ],
       },
@@ -85,7 +85,7 @@ module .exports = async () =>
                ],
                blocking: false,
                parallel: false,
-            }
+            },
          }),
       ],
       stats: "errors-only",
@@ -153,7 +153,7 @@ module .exports = async () =>
                ],
                blocking: false,
                parallel: false,
-            }
+            },
         }),
       ],
       stats: "minimal",
@@ -213,7 +213,7 @@ module .exports = async () =>
                   ],
                   blocking: false,
                   parallel: false,
-               }
+               },
             }),
          ],
          externals: [
