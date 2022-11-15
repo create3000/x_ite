@@ -61,7 +61,7 @@ const config = [{
                `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.min.js`,
                `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.js`,
                `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.min.js`,
-               // LICENSE
+               // LICENSES
                `cp LICENSE.md dist/LICENSE.md`,
                `echo '\`\`\`' >> dist/LICENSE.md`,
                `cat dist/x_ite.min.js.LICENSE.txt >> dist/LICENSE.md`,
