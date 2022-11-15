@@ -137,7 +137,10 @@ for (const component of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/comp
          }),
       ],
       resolve: {
-         fallback: { "path": false, "fs": false },
+         fallback: {
+            path: false,
+            fs: false,
+         },
       },
       stats: "minimal",
       performance: {
