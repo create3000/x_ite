@@ -377,7 +377,7 @@ X3DProgrammableShaderObject .prototype =
 
          if (location)
          {
-            console .warn (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
+            console .warn (this .getTypeName (), this .getName (), "Using uniform location name '" + depreciated + "' is depreciated, use '" + name + "'. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
          }
 
          return location;
@@ -402,7 +402,7 @@ X3DProgrammableShaderObject .prototype =
 
          if (location >= 0)
          {
-            console .warn (this .getTypeName (), this .getName (), "Using attribute location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
+            console .warn (this .getTypeName (), this .getName (), "Using attribute location name '" + depreciated + "' is depreciated, use '" + name + "'. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
          }
 
          return location;

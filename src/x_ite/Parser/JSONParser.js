@@ -1,13 +1,13 @@
-﻿/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- * X3DJSONLD Copyright John Carlson, USA 2016-2017
- * https://coderextreme.net/X3DJSONLD/
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * X3DJSONLD Copyright John Carlson, USA 2016-2017, https://coderextreme.net/X3DJSONLD
  *
  * The copyright notice above does not evidence any actual of intended
  * publication of such source code, and is an unpublished work by create3000.
@@ -29,19 +29,19 @@
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Cobweb Project.
+ * This file is part of the X_ITE Project.
  *
- * Cobweb is free software: you can redistribute it and/or modify it under the
+ * X_ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Cobweb is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Cobweb.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.

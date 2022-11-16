@@ -56971,16 +56971,16 @@ XMLParser .prototype .fieldTypes [Base_X3DConstants.MFString] = function (field)
 /* harmony default export */ const Parser_XMLParser = (XMLParser);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/JSONParser.js
-﻿/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- * X3DJSONLD Copyright John Carlson, USA 2016-2017
- * https://coderextreme.net/X3DJSONLD/
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * X3DJSONLD Copyright John Carlson, USA 2016-2017, https://coderextreme.net/X3DJSONLD
  *
  * The copyright notice above does not evidence any actual of intended
  * publication of such source code, and is an unpublished work by create3000.
@@ -57002,19 +57002,19 @@ XMLParser .prototype .fieldTypes [Base_X3DConstants.MFString] = function (field)
  *
  * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
  *
- * This file is part of the Cobweb Project.
+ * This file is part of the X_ITE Project.
  *
- * Cobweb is free software: you can redistribute it and/or modify it under the
+ * X_ITE is free software: you can redistribute it and/or modify it under the
  * terms of the GNU General Public License version 3 only, as published by the
  * Free Software Foundation.
  *
- * Cobweb is distributed in the hope that it will be useful, but WITHOUT ANY
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with Cobweb.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -89683,7 +89683,7 @@ X3DProgrammableShaderObject .prototype =
 
          if (location)
          {
-            console .warn (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
+            console .warn (this .getTypeName (), this .getName (), "Using uniform location name '" + depreciated + "' is depreciated, use '" + name + "'. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
          }
 
          return location;
@@ -89708,7 +89708,7 @@ X3DProgrammableShaderObject .prototype =
 
          if (location >= 0)
          {
-            console .warn (this .getTypeName (), this .getName (), "Using attribute location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
+            console .warn (this .getTypeName (), this .getName (), "Using attribute location name '" + depreciated + "' is depreciated, use '" + name + "'. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
          }
 
          return location;
@@ -91933,7 +91933,7 @@ const ShaderSource =
       // Legacy
       definitions += "#define x3d_GeometryPoints  0\n";
       definitions += "#define x3d_GeometryLines   1\n";
-      definitions += "#define x3d_NoneClipPlane   vec4 (88.0, 51.0, 68.0, 33.0)\n"; // ASCII »X3D!«
+      definitions += "#define x3d_NoneClipPlane   vec4 (88.0, 51.0, 68.0, 33.0)\n";
       definitions += "#define x3d_NoneFog         0\n";
       definitions += "#define x3d_NoneLight       0\n";
       definitions += "#define x3d_NoneTexture     0\n";

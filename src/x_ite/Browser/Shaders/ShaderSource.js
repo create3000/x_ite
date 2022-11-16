@@ -172,7 +172,7 @@ const ShaderSource =
       // Legacy
       definitions += "#define x3d_GeometryPoints  0\n";
       definitions += "#define x3d_GeometryLines   1\n";
-      definitions += "#define x3d_NoneClipPlane   vec4 (88.0, 51.0, 68.0, 33.0)\n"; // ASCII »X3D!«
+      definitions += "#define x3d_NoneClipPlane   vec4 (88.0, 51.0, 68.0, 33.0)\n";
       definitions += "#define x3d_NoneFog         0\n";
       definitions += "#define x3d_NoneLight       0\n";
       definitions += "#define x3d_NoneTexture     0\n";
