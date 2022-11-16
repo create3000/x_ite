@@ -45,7 +45,7 @@ function loadURL (url)
       index = history .length - 1;
    }
 
-   if (location .href .includes (".min.html") && url .startsWith ("tests/"))
+   if (location .href .includes (".min.html") && url .startsWith ("src/tests/"))
       url = "src/" + url;
 
    $(".file") .removeClass ("loaded");
@@ -80,7 +80,7 @@ bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
 loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
 
 $(".version") .text (Browser .name + " v" + Browser .version);
-$(".file") .append ($("<a></a>") .attr ('href', "tests/d3/ParticlePlot.html") .text ("d3"));
+$(".file") .append ($("<a></a>") .attr ('href', "src/tests/d3/ParticlePlot.html") .text ("d3"));
 $(".browser") .on ("initialized", () => Browser .println ("Scene loaded in " + ((performance .now () - loadTime) / 1000) .toFixed (3) + " s."));
 $(".browser") .on ("shutdown", () => Browser .println ("Shutdown at " + new Date () .toUTCString () + "."));
 $(".location-entry") .val (localStorage ["Bookmarks.history"] [index])
@@ -357,7 +357,7 @@ main.color-management .browser {
       <main>
          <div>
             <form action="javascript:alert('form submitted')">
-               <x3d-canvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" onload="$('.file') .addClass ('loaded')" x-url='"tests/Empty.x3dv"'>
+               <x3d-canvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" onload="$('.file') .addClass ('loaded')" x-url='"src/tests/Empty.x3dv"'>
                   <p class="fallback">
                      Sorry,<br/>
                      it wasn't me!<br/>

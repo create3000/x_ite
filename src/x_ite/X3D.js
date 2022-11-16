@@ -77,8 +77,6 @@ import Fallback                    from "./Fallback.js";
 import jQuery                      from "../lib/jquery.js";
 import MicroTime                   from "../standard/Time/MicroTime.js";
 
-Namespace .set ("x_ite/X3D", X3D);
-
 const
    callbacks = $.Deferred (),
    fallbacks = $.Deferred ();
@@ -137,6 +135,9 @@ Object .assign (X3D,
          }
          case 1:
          {
+            if (! Namespace .has (arguments [0]))
+               throw new Error ("Unknown module '" + arguments [0] + "'.");
+
             return Namespace .get (arguments [0]);
          }
          default:
@@ -275,5 +276,7 @@ Object .assign (X3D,
    MFVec4d:                     Fields .MFVec4d,
    MFVec4f:                     Fields .MFVec4f,
 });
+
+Namespace .set ("x_ite/X3D", X3D);
 
 export default X3D;

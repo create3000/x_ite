@@ -52,6 +52,11 @@ import URLs      from "./Browser/Networking/URLs.js";
 
 class X3DCanvas extends HTMLElement
 {
+   static define ()
+   {
+      customElements .define ("x3d-canvas", X3DCanvas);
+   }
+   
    constructor ()
    {
       super ();
@@ -94,8 +99,6 @@ class X3DCanvas extends HTMLElement
       ];
    }
 }
-
-customElements .define ("x3d-canvas", X3DCanvas);
 
 // IE fix.
 document .createElement ("X3DCanvas");

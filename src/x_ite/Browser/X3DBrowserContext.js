@@ -60,7 +60,6 @@ import X3DNetworkingContext           from "./Networking/X3DNetworkingContext.js
 import X3DPickingContext              from "./Picking/X3DPickingContext.js";
 import X3DPointingDeviceSensorContext from "./PointingDeviceSensor/X3DPointingDeviceSensorContext.js";
 import X3DRenderingContext            from "./Rendering/X3DRenderingContext.js";
-import X3DScriptingContext            from "./Scripting/X3DScriptingContext.js";
 import X3DShadersContext              from "./Shaders/X3DShadersContext.js";
 import X3DShapeContext                from "./Shape/X3DShapeContext.js";
 import X3DSoundContext                from "./Sound/X3DSoundContext.js";
@@ -93,7 +92,6 @@ function X3DBrowserContext (element)
    X3DBaseNode                    .call (this, this);
    X3DRoutingContext              .call (this);
    X3DCoreContext                 .call (this, element);
-   X3DScriptingContext            .call (this);
    X3DNetworkingContext           .call (this);
    X3DTexturingContext            .call (this);
    X3DShadersContext              .call (this);
@@ -145,7 +143,6 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
    X3DPointingDeviceSensorContext .prototype,
    X3DRenderingContext .prototype,
    X3DRoutingContext .prototype,
-   X3DScriptingContext .prototype,
    X3DShadersContext .prototype,
    X3DShapeContext .prototype,
    X3DSoundContext .prototype,
@@ -159,7 +156,6 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       X3DBaseNode                    .prototype .initialize .call (this);
       X3DRoutingContext              .prototype .initialize .call (this);
       X3DCoreContext                 .prototype .initialize .call (this);
-      X3DScriptingContext            .prototype .initialize .call (this);
       X3DNetworkingContext           .prototype .initialize .call (this);
       X3DTexturingContext            .prototype .initialize .call (this);
       X3DShadersContext              .prototype .initialize .call (this);
@@ -329,7 +325,7 @@ Object .assign (X3DBrowserContext,
 
       for (const key of Object .keys (browserContext .prototype) .concat (Object .getOwnPropertySymbols (browserContext .prototype)))
       {
-         if (X3DBrowserContext .prototype .hasOwnProperty (key))
+         if (["initialize", "dispose"] .includes (key))
             continue;
 
          Object .defineProperty (X3DBrowserContext .prototype, key,

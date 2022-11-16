@@ -51,7 +51,7 @@ import Appearance        from "../../Components/Shape/Appearance.js";
 import UnlitMaterial     from "../../Components/Shape/UnlitMaterial.js";
 import ImageTexture      from "../../Components/Texturing/ImageTexture.js";
 import TextureProperties from "../../Components/Texturing/TextureProperties.js";
-import URLs              from "../Networking/URLs.js";
+import URLs              from "../Networking/URLs1.js";
 
 const
    _lineStippleScale          = Symbol (),

@@ -104,22 +104,6 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       this .replaceWorld (this .getExecutionContext ());
 
-      // Load src or url attribute.
-
-      const urlCharacters = this .getElement () .attr ("src");
-
-      if (urlCharacters)
-      {
-         this .loadURL (new Fields .MFString (urlCharacters), new Fields .MFString ());
-      }
-      else
-      {
-         const urlCharacters = this .getElement () .attr ("url");
-
-         if (urlCharacters)
-            this .loadURL (this .parseUrlAttribute (urlCharacters), new Fields .MFString ());
-      }
-
       // Print welcome message.
 
       if (this .getInstanceId () > 1) return;

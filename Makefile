@@ -23,7 +23,7 @@ html:
 	perl -pi -e 's|"bookmarks.js"|"src/bookmarks.js"|sg'     x_ite.min.html
 	perl -pi -e 's|"examples.js"|"src/examples.js"|sg'       x_ite.min.html
 	perl -pi -e 's|"tests.js"|"src/tests.js"|sg'             x_ite.min.html
-	perl -pi -e 's|"tests/menu.js"|"src/tests/menu.js"|sg'   x_ite.min.html
+	perl -pi -e 's|"tests/|"src/tests/|sg'                   x_ite.min.html
 
 .SILENT:copy-files
 copy-files:
@@ -43,7 +43,7 @@ zip:
 
 .PHONY: dist
 .SILENT:dist
-dist: namespace compile copy-files
+dist: namespace compile copy-files html
 	du -h dist/x_ite.min.js
 
 checkout-dist:

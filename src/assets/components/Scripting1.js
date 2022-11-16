@@ -46,9 +46,10 @@
  ******************************************************************************/
 
 
-import Components    from "../../x_ite/Components.js";
-import Script        from "../../x_ite/Components/Scripting/Script.js";
-import X3DScriptNode from "../../x_ite/Components/Scripting/X3DScriptNode.js";
+import Components          from "../../x_ite/Components.js";
+import X3DScriptingContext from "../../x_ite/Browser/Scripting/X3DScriptingContext.js";
+import Script              from "../../x_ite/Components/Scripting/Script.js";
+import X3DScriptNode       from "../../x_ite/Components/Scripting/X3DScriptNode.js";
 
 Components .addComponent ({
    name: "Scripting",
@@ -60,6 +61,7 @@ Components .addComponent ({
    {
       X3DScriptNode: X3DScriptNode,
    },
+   browserContext: X3DScriptingContext,
 });
 
 export default undefined;

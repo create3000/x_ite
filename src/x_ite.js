@@ -58,4 +58,6 @@ window [Symbol .for ("X_ITE.X3D")] = X3D;
 if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
    __global_module__ .exports = X3D;
 
+X3DCanvas .define ();
+
 X3D ();

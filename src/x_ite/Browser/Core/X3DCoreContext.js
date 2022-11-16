@@ -586,6 +586,14 @@ X3DCoreContext .prototype =
          }
       }
    },
+   isExternal: function ()
+   {
+      return true;
+   },
+   getPixelPerPoint: function ()
+   {
+      return this [_pixelPerPoint];
+   },
    copyToClipboard: function (text)
    {
       // The textarea must be visible to make copy work.
@@ -594,10 +602,6 @@ X3DCoreContext .prototype =
       $temp .text (text) .select ();
       document .execCommand ("copy");
       $temp .remove ();
-   },
-   getPixelPerPoint: function ()
-   {
-      return this [_pixelPerPoint];
    },
 };
 
