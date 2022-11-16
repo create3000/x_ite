@@ -50,12 +50,13 @@
 import X3DObject from "../Base/X3DObject.js";
 import Generator from "../InputOutput/Generator.js";
 
-function ComponentInfo (name, level, title, providerUrl)
+function ComponentInfo (name, level, title, providerUrl, dependencies)
 {
-   this .name        = name;
-   this .level       = level;
-   this .title       = title;
-   this .providerUrl = providerUrl;
+   this .name         = name;
+   this .level        = level;
+   this .title        = title;
+   this .providerUrl  = providerUrl;
+   this .dependencies = dependencies;
 }
 
 ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype),

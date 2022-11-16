@@ -92,8 +92,10 @@ Components .addComponent ({
       X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,
       X3DRigidJointNode:          X3DRigidJointNode,
    },
+   exports:
+   {
+      Ammo: Ammo,
+   },
 });
 
-export default {
-   Ammo: Ammo,
-};
+export default undefined;

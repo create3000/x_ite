@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4        from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix4          from "../../../standard/Math/Numbers/Matrix4.js";
-import RigidBodyPhysics from "../../../assets/components/RigidBodyPhysics.js";
+import Vector3   from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4   from "../../../standard/Math/Numbers/Matrix4.js";
+import X3D       from "../../../x_ite/X3D.js";
 
-const Ammo = RigidBodyPhysics .Ammo;
+const Ammo = X3D .require ("Ammo");
 
 function VolumePicker ()
 {
@@ -104,24 +104,17 @@ VolumePicker .prototype =
 
       return function (compoundShape, matrix, childShape)
       {
-         try
+         if (compoundShape .getNumChildShapes ())
+            compoundShape .removeChildShapeByIndex (0);
+
+         if (childShape .getNumChildShapes ())
          {
-            if (compoundShape .getNumChildShapes ())
-               compoundShape .removeChildShapeByIndex (0);
+            matrix .get (translation, rotation, scale);
 
-            if (childShape .getNumChildShapes ())
-            {
-               matrix .get (translation, rotation, scale);
+            s .setValue (scale .x, scale .y, scale .z);
 
-               s .setValue (scale .x, scale .y, scale .z);
-
-               childShape .setLocalScaling (s);
-               compoundShape .addChildShape (this .getTransform (translation, rotation), childShape);
-            }
-         }
-         catch (error)
-         {
-            // matrix .get
+            childShape .setLocalScaling (s);
+            compoundShape .addChildShape (this .getTransform (translation, rotation), childShape);
          }
       };
    })(),

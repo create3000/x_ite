@@ -64,8 +64,6 @@ import VolumeData                         from "../../x_ite/Components/VolumeRen
 import X3DComposableVolumeRenderStyleNode from "../../x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode.js";
 import X3DVolumeDataNode                  from "../../x_ite/Components/VolumeRendering/X3DVolumeDataNode.js";
 import X3DVolumeRenderStyleNode           from "../../x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode.js";
-import CADGeometry                        from "./CADGeometry.js";
-import Texturing3D                        from "./Texturing3D.js";
 
 Components .addComponent ({
    name: "VolumeRendering",

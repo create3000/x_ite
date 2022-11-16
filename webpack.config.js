@@ -246,6 +246,7 @@ module .exports = async () =>
          ],
          resolve: {
             fallback: {
+               process: false,
                path: false,
                fs: false,
             },

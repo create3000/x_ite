@@ -97,42 +97,64 @@ X3DParser .prototype = {
    {
       this .getExecutionContext () .rootNodes .push (node);
    },
-   getProviderUrls: (function ()
+   loadComponents: (function ()
    {
       const componentsUrl = /\.js$/;
 
-      return function ()
+      async function loadDependencies ({ dependencies })
       {
          const
-            scene             = this .getScene (),
-            profile           = scene .getProfile () || scene .getBrowser () .getProfile ("Full"),
-            profileComponents = profile .components,
-            components        = scene .getComponents (),
-            providerUrls      = new Set ();
+            scene   = this .getScene (),
+            browser = scene .getBrowser ();
 
-         for (const component of profileComponents)
+         for (const dependency of dependencies)
          {
-            const providerUrl = component .providerUrl;
+            const
+               component   = browser .getSupportedComponents () .get (dependency),
+               providerUrl = component .providerUrl;
+
+            await loadDependencies .call (this, component);
 
             if (providerUrl .match (componentsUrl))
-               providerUrls .add (providerUrl);
+               await import (/* webpackIgnore: true */ providerUrl);
          }
+      }
+
+      return async function ()
+      {
+         const
+            scene      = this .getScene (),
+            browser    = scene .getBrowser (),
+            profile    = scene .getProfile () || browser .getProfile ("Full"),
+            components = new Set ();
+
+         for (const component of profile .components)
+            components .add (component);
+
+         for (const component of scene .getComponents ())
+            components .add (component);
+
+         for (const component of components)
+            loadDependencies .call (this, component);
 
          for (const component of components)
          {
             const providerUrl = component .providerUrl;
 
             if (providerUrl .match (componentsUrl))
-               providerUrls .add (providerUrl);
+               await import (/* webpackIgnore: true */ providerUrl);
          }
 
-         if (typeof __global_require__ === "function" && typeof __filename === "string")
-         {
-            for (const url of providerUrls)
-               __global_require__ (__global_require__ ("url") .fileURLToPath (url));
-         }
+         // if (typeof __global_require__ === "function" && typeof __filename === "string")
+         // {
+         //    for (const component of components)
+         //    {
+         //       const providerUrl = component .providerUrl;
 
-         return Array .from (providerUrls);
+         //       if (providerUrl .match (componentsUrl))
+         //          __global_require__ (__global_require__ ("url") .fileURLToPath (url));
+         //    }
+         // }
       };
    })(),
    setUnits: function (generator)

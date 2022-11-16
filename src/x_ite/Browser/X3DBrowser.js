@@ -173,7 +173,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       if (component)
       {
          if (level <= component .level || true)
-            return new ComponentInfo (name, level, component .title, component. providerUrl);
+            return new ComponentInfo (name, level, component .title, component. providerUrl, component .dependencies);
       }
 
       throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");

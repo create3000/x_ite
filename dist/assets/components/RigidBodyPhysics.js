@@ -4429,11 +4429,13 @@ Components_default().addComponent ({
       X3DNBodyCollisionSpaceNode: RigidBodyPhysics_X3DNBodyCollisionSpaceNode,
       X3DRigidJointNode:          RigidBodyPhysics_X3DRigidJointNode,
    },
+   exports:
+   {
+      Ammo: AmmoClass,
+   },
 });
 
-/* harmony default export */ const RigidBodyPhysics = ({
-   Ammo: AmmoClass,
-});
+/* harmony default export */ const RigidBodyPhysics = ((/* unused pure expression or super */ null && (undefined)));
 
 })();
 

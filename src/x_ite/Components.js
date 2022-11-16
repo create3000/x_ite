@@ -74,27 +74,35 @@ function Components () { }
 
 Components .prototype =
 {
-   addComponent: function (component)
+   addComponent: function ({ name, types, abstractTypes, browserContext, exports })
    {
-      if (component .types)
+      const X3D = window [Symbol .for ("X_ITE.X3D")];
+
+      if (types)
       {
-         for (const typeName in component .types)
-            SupportedNodes .addType (typeName, component .types [typeName]);
+         for (const typeName in types)
+            SupportedNodes .addType (typeName, types [typeName]);
       }
 
-      if (component .abstractTypes)
+      if (abstractTypes)
       {
-         for (const typeName in component .abstractTypes)
-            SupportedNodes .addAbstractType (typeName, component .abstractTypes [typeName]);
+         for (const typeName in abstractTypes)
+            SupportedNodes .addAbstractType (typeName, abstractTypes [typeName]);
       }
 
-      if (component .browserContext)
-         X3DBrowserContext .addBrowserContext (component .browserContext);
+      if (browserContext)
+         X3DBrowserContext .addBrowserContext (browserContext);
 
-      if (component .name)
+      if (exports)
+      {
+         for (const name in exports)
+            X3D .require ("x_ite/Namespace") .set (name, exports [name]);
+      }
+
+      if (name)
       {
          if (DEBUG)
-            console .info ("Done loading external component '" + component .name + "'.");
+            console .info ("Done loading external component '" + name + "'.");
       }
    },
 };

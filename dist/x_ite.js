@@ -35980,7 +35980,7 @@ X3DField .prototype = Object .assign (Object .create (Base_X3DChildObject.protot
    {
       const
          X3D        = window [Symbol .for ("X_ITE.X3D-7.0.0")],
-         VRMLParser = X3D .require ("VRMLParser"),
+         VRMLParser = X3D .require ("x_ite/Parser/VRMLParser"),
          parser     = new VRMLParser (scene);
 
       parser .setUnits (!!scene);
@@ -52562,7 +52562,6 @@ X3DUrlObject .prototype =
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-var X3DParser_filename = "/index.js";
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -52662,42 +52661,64 @@ X3DParser .prototype = {
    {
       this .getExecutionContext () .rootNodes .push (node);
    },
-   getProviderUrls: (function ()
+   loadComponents: (function ()
    {
       const componentsUrl = /\.js$/;
 
-      return function ()
+      async function loadDependencies ({ dependencies })
       {
          const
-            scene             = this .getScene (),
-            profile           = scene .getProfile () || scene .getBrowser () .getProfile ("Full"),
-            profileComponents = profile .components,
-            components        = scene .getComponents (),
-            providerUrls      = new Set ();
+            scene   = this .getScene (),
+            browser = scene .getBrowser ();
 
-         for (const component of profileComponents)
+         for (const dependency of dependencies)
          {
-            const providerUrl = component .providerUrl;
+            const
+               component   = browser .getSupportedComponents () .get (dependency),
+               providerUrl = component .providerUrl;
+
+            await loadDependencies .call (this, component);
 
             if (providerUrl .match (componentsUrl))
-               providerUrls .add (providerUrl);
+               await import (/* webpackIgnore: true */ providerUrl);
          }
+      }
+
+      return async function ()
+      {
+         const
+            scene      = this .getScene (),
+            browser    = scene .getBrowser (),
+            profile    = scene .getProfile () || browser .getProfile ("Full"),
+            components = new Set ();
+
+         for (const component of profile .components)
+            components .add (component);
+
+         for (const component of scene .getComponents ())
+            components .add (component);
+
+         for (const component of components)
+            loadDependencies .call (this, component);
 
          for (const component of components)
          {
             const providerUrl = component .providerUrl;
 
             if (providerUrl .match (componentsUrl))
-               providerUrls .add (providerUrl);
+               await import (/* webpackIgnore: true */ providerUrl);
          }
 
-         if (typeof __global_require__ === "function" && typeof X3DParser_filename === "string")
-         {
-            for (const url of providerUrls)
-               __global_require__ (__global_require__ ("url") .fileURLToPath (url));
-         }
+         // if (typeof __global_require__ === "function" && typeof __filename === "string")
+         // {
+         //    for (const component of components)
+         //    {
+         //       const providerUrl = component .providerUrl;
 
-         return Array .from (providerUrls);
+         //       if (providerUrl .match (componentsUrl))
+         //          __global_require__ (__global_require__ ("url") .fileURLToPath (url));
+         //    }
+         // }
       };
    })(),
    setUnits: function (generator)
@@ -53189,8 +53210,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       if (this .success)
       {
-         Promise .all (this .getProviderUrls () .map (url => import (/* webpackIgnore: true */ url)))
-         .then (function ()
+         this .loadComponents () .then (function ()
          {
             try
             {
@@ -55855,8 +55875,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
             {
                if (this .success)
                {
-                  Promise .all (this .getProviderUrls () .map (url => import (/* webpackIgnore: true */ url)))
-                  .then (function ()
+                  this .loadComponents () .then (function ()
                   {
                      this .childrenElements (xmlElement);
                      this .success (this .getScene ());
@@ -55887,8 +55906,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          {
             if (this .success)
             {
-               Promise .all (this .getProviderUrls () .map (url => import (/* webpackIgnore: true */ url)))
-               .then (function ()
+               this .loadComponents () .then (function ()
                {
                   this .sceneElement (xmlElement);
                   this .success (this .getScene ());
@@ -55912,8 +55930,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          {
             if (this .success)
             {
-               Promise .all (this .getProviderUrls () .map (url => import (/* webpackIgnore: true */ url)))
-               .then (function ()
+               this .loadComponents () .then (function ()
                {
                   this .childrenElements (xmlElement);
                   this .success (this .getScene ());
@@ -55968,8 +55985,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       if (this .success)
       {
-         Promise .all (this .getProviderUrls () .map (url => import (/* webpackIgnore: true */ url)))
-         .then (function ()
+         this .loadComponents () .then (function ()
          {
             for (var i = 0; i < childNodes .length; ++ i)
                this .x3dElementChildScene (childNodes [i])
@@ -71426,12 +71442,13 @@ Object .defineProperty (X3DRoute .prototype, "destinationField",
 
 
 
-function ComponentInfo (name, level, title, providerUrl)
+function ComponentInfo (name, level, title, providerUrl, dependencies)
 {
-   this .name        = name;
-   this .level       = level;
-   this .title       = title;
-   this .providerUrl = providerUrl;
+   this .name         = name;
+   this .level        = level;
+   this .title        = title;
+   this .providerUrl  = providerUrl;
+   this .dependencies = dependencies;
 }
 
 ComponentInfo .prototype = Object .assign (Object .create (Base_X3DObject.prototype),
@@ -71541,7 +71558,11 @@ ComponentInfoArray .prototype = Object .assign (Object .create (Base_X3DInfoArra
    },
    addComponent: function (value)
    {
-      this .add (value .name, new Configuration_ComponentInfo (value .name, value .level, value .title, value .providerUrl));
+      this .add (value .name, new Configuration_ComponentInfo (value .name,
+                                                 value .level,
+                                                 value .title,
+                                                 value .providerUrl,
+                                                 value .dependencies || [ ]));
    },
 });
 
@@ -72963,7 +72984,7 @@ function X3DCoreContext (element)
    this [_notification]        = new Core_Notification        (this .getPrivateScene ());
    this [_contextMenu]         = new Core_ContextMenu         (this .getPrivateScene ());
 
-   this [_pixelPerPoint] = 1 / 72;
+   this [_pixelPerPoint] = 1; // default 72 dpi
 
    X3DCoreContext_$(".x_ite-console") .empty ();
 
@@ -73111,7 +73132,7 @@ X3DCoreContext .prototype =
    connectedCallback: function ()
    {
       const inches = X3DCoreContext_$("<div></div>") .hide () .css ("height", "10in") .appendTo (this [_shadow]);
-      this [_pixelPerPoint] = inches .height () / 720 || 1 / 72;
+      this [_pixelPerPoint] = inches .height () / 720 || 1;
       inches .remove ();
    },
    attributeChangedCallback: function (name, oldValue, newValue)
@@ -73425,6 +73446,14 @@ X3DCoreContext .prototype =
          }
       }
    },
+   isExternal: function ()
+   {
+      return true;
+   },
+   getPixelPerPoint: function ()
+   {
+      return this [_pixelPerPoint];
+   },
    copyToClipboard: function (text)
    {
       // The textarea must be visible to make copy work.
@@ -73433,10 +73462,6 @@ X3DCoreContext .prototype =
       $temp .text (text) .select ();
       document .execCommand ("copy");
       $temp .remove ();
-   },
-   getPixelPerPoint: function ()
-   {
-      return this [_pixelPerPoint];
    },
 };
 
@@ -84201,81 +84226,6 @@ X3DRenderingContext .prototype =
 };
 
 /* harmony default export */ const Rendering_X3DRenderingContext = (X3DRenderingContext);
-
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Scripting/X3DScriptingContext.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-const _scripts = Symbol ();
-
-function X3DScriptingContext ()
-{
-   this [_scripts] = [this];
-}
-
-X3DScriptingContext .prototype =
-{
-   initialize: function ()
-   { },
-   isExternal: function ()
-   {
-      return this [_scripts] .length === 1;
-   },
-   getScriptStack: function ()
-   {
-      return this [_scripts];
-   }
-};
-
-/* harmony default export */ const Scripting_X3DScriptingContext = (X3DScriptingContext);
 
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/include/ClipPlanes.glsl.js
 /* harmony default export */ const ClipPlanes_glsl = (/* glsl */`
@@ -96854,7 +96804,6 @@ X3DRoutingContext .prototype =
 
 
 
-
 const
    _world           = Symbol (),
    _changedTime     = Symbol (),
@@ -96877,7 +96826,6 @@ function X3DBrowserContext (element)
    Base_X3DBaseNode.call (this, this);
    Routing_X3DRoutingContext.call (this);
    Core_X3DCoreContext.call (this, element);
-   Scripting_X3DScriptingContext.call (this);
    Networking_X3DNetworkingContext.call (this);
    Texturing_X3DTexturingContext.call (this);
    Shaders_X3DShadersContext.call (this);
@@ -96929,7 +96877,6 @@ X3DBrowserContext .prototype = Object .assign (Object .create (Base_X3DBaseNode.
    PointingDeviceSensor_X3DPointingDeviceSensorContext.prototype,
    Rendering_X3DRenderingContext.prototype,
    Routing_X3DRoutingContext.prototype,
-   Scripting_X3DScriptingContext.prototype,
    Shaders_X3DShadersContext.prototype,
    Shape_X3DShapeContext.prototype,
    Sound_X3DSoundContext.prototype,
@@ -96943,7 +96890,6 @@ X3DBrowserContext .prototype = Object .assign (Object .create (Base_X3DBaseNode.
       Base_X3DBaseNode.prototype.initialize.call (this);
       Routing_X3DRoutingContext.prototype.initialize.call (this);
       Core_X3DCoreContext.prototype.initialize.call (this);
-      Scripting_X3DScriptingContext.prototype.initialize.call (this);
       Networking_X3DNetworkingContext.prototype.initialize.call (this);
       Texturing_X3DTexturingContext.prototype.initialize.call (this);
       Shaders_X3DShadersContext.prototype.initialize.call (this);
@@ -97113,7 +97059,7 @@ Object .assign (X3DBrowserContext,
 
       for (const key of Object .keys (browserContext .prototype) .concat (Object .getOwnPropertySymbols (browserContext .prototype)))
       {
-         if (X3DBrowserContext .prototype .hasOwnProperty (key))
+         if (["initialize", "dispose"] .includes (key))
             continue;
 
          Object .defineProperty (X3DBrowserContext .prototype, key,
@@ -117608,27 +117554,35 @@ function Components () { }
 
 Components .prototype =
 {
-   addComponent: function (component)
+   addComponent: function ({ name, types, abstractTypes, browserContext, exports })
    {
-      if (component .types)
+      const X3D = window [Symbol .for ("X_ITE.X3D-7.0.0")];
+
+      if (types)
       {
-         for (const typeName in component .types)
-            Configuration_SupportedNodes.addType (typeName, component .types [typeName]);
+         for (const typeName in types)
+            Configuration_SupportedNodes.addType (typeName, types [typeName]);
       }
 
-      if (component .abstractTypes)
+      if (abstractTypes)
       {
-         for (const typeName in component .abstractTypes)
-            Configuration_SupportedNodes.addAbstractType (typeName, component .abstractTypes [typeName]);
+         for (const typeName in abstractTypes)
+            Configuration_SupportedNodes.addAbstractType (typeName, abstractTypes [typeName]);
       }
 
-      if (component .browserContext)
-         Browser_X3DBrowserContext.addBrowserContext (component .browserContext);
+      if (browserContext)
+         Browser_X3DBrowserContext.addBrowserContext (browserContext);
 
-      if (component .name)
+      if (exports)
+      {
+         for (const name in exports)
+            X3D .require ("x_ite/Namespace") .set (name, exports [name]);
+      }
+
+      if (name)
       {
          if (DEBUG)
-            console .info ("Done loading external component '" + component .name + "'.");
+            console .info ("Done loading external component '" + name + "'.");
       }
    },
 };
@@ -117856,112 +117810,112 @@ const SupportedComponents = new Configuration_ComponentInfoArray ([ ]);
 
 SupportedComponents .addComponent (
 {
-   title:      "Annotation",
-   name:       "Annotation",
+   title:       "Annotation",
+   name:        "Annotation",
    level:       2,
    providerUrl: Networking_URLs.getProviderUrl ("Annotation"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Computer-Aided Design (CAD) model geometry",
-   name:       "CADGeometry",
+   title:       "Computer-Aided Design (CAD) model geometry",
+   name:        "CADGeometry",
    level:       2,
    providerUrl: Networking_URLs.getProviderUrl ("CADGeometry"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Core",
-   name:       "Core",
+   title:       "Core",
+   name:        "Core",
    level:       2,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Cube map environmental texturing",
-   name:       "CubeMapTexturing",
+   title:       "Cube map environmental texturing",
+   name:        "CubeMapTexturing",
    level:       3,
    providerUrl: Networking_URLs.getProviderUrl ("CubeMapTexturing"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Distributed interactive simulation (DIS)",
-   name:       "DIS",
+   title:       "Distributed interactive simulation (DIS)",
+   name:        "DIS",
    level:       2,
    providerUrl: Networking_URLs.getProviderUrl ("DIS"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Environmental effects",
-   name:       "EnvironmentalEffects",
+   title:       "Environmental effects",
+   name:        "EnvironmentalEffects",
    level:       4,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Environmental sensor",
-   name:       "EnvironmentalSensor",
+   title:       "Environmental sensor",
+   name:        "EnvironmentalSensor",
    level:       4,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Event utilities",
-   name:       "EventUtilities",
+   title:       "Event utilities",
+   name:        "EventUtilities",
    level:       4,
    providerUrl: Networking_URLs.getProviderUrl ("EventUtilities"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Followers",
-   name:       "Followers",
+   title:       "Followers",
+   name:        "Followers",
    level:       4,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Geometry2D",
-   name:       "Geometry2D",
+   title:       "Geometry2D",
+   name:        "Geometry2D",
    level:       2,
    providerUrl: Networking_URLs.getProviderUrl ("Geometry2D"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Geometry3D",
-   name:       "Geometry3D",
+   title:       "Geometry3D",
+   name:        "Geometry3D",
    level:       4,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Geospatial",
-   name:       "Geospatial",
+   title:       "Geospatial",
+   name:        "Geospatial",
    level:       2,
    providerUrl: Networking_URLs.getProviderUrl ("Geospatial"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Grouping",
-   name:       "Grouping",
+   title:       "Grouping",
+   name:        "Grouping",
    level:       3,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Humanoid animation (HAnim)",
-   name:       "HAnim",
+   title:       "Humanoid animation (HAnim)",
+   name:        "HAnim",
    level:       3,
    providerUrl: Networking_URLs.getProviderUrl ("HAnim"),
 });
@@ -117970,192 +117924,194 @@ SupportedComponents .addAlias ("H-Anim", "HAnim");
 
 SupportedComponents .addComponent (
 {
-   title:      "Interpolation",
-   name:       "Interpolation",
+   title:       "Interpolation",
+   name:        "Interpolation",
    level:       5,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Key device sensor",
-   name:       "KeyDeviceSensor",
+   title:       "Key device sensor",
+   name:        "KeyDeviceSensor",
    level:       2,
    providerUrl: Networking_URLs.getProviderUrl ("KeyDeviceSensor"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Layering",
-   name:       "Layering",
+   title:       "Layering",
+   name:        "Layering",
    level:       1,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Layout",
-   name:       "Layout",
+   title:       "Layout",
+   name:        "Layout",
    level:       2,
    providerUrl: Networking_URLs.getProviderUrl ("Layout"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Lighting",
-   name:       "Lighting",
+   title:       "Lighting",
+   name:        "Lighting",
    level:       3,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Navigation",
-   name:       "Navigation",
+   title:       "Navigation",
+   name:        "Navigation",
    level:       3,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Networking",
-   name:       "Networking",
+   title:       "Networking",
+   name:        "Networking",
    level:       4,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Non-uniform Rational B-Spline (NURBS)",
-   name:       "NURBS",
+   title:       "Non-uniform Rational B-Spline (NURBS)",
+   name:        "NURBS",
    level:       4,
    providerUrl: Networking_URLs.getProviderUrl ("NURBS"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Particle systems",
-   name:       "ParticleSystems",
+   title:       "Particle systems",
+   name:        "ParticleSystems",
    level:       3,
    providerUrl: Networking_URLs.getProviderUrl ("ParticleSystems"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Picking sensor",
-   name:       "Picking",
-   level:       3,
-   providerUrl: Networking_URLs.getProviderUrl ("Picking"),
+   title:        "Picking sensor",
+   name:         "Picking",
+   level:        3,
+   providerUrl:  Networking_URLs.getProviderUrl ("Picking"),
+   dependencies: ["RigidBodyPhysics"],
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Pointing device sensor",
-   name:       "PointingDeviceSensor",
+   title:       "Pointing device sensor",
+   name:        "PointingDeviceSensor",
    level:       1,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Projective Texture Mapping",
-   name:       "ProjectiveTextureMapping",
+   title:       "Projective Texture Mapping",
+   name:        "ProjectiveTextureMapping",
    level:       2,
    providerUrl: Networking_URLs.getProviderUrl ("ProjectiveTextureMapping"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Programmable shaders",
-   name:       "Shaders",
+   title:       "Programmable shaders",
+   name:        "Shaders",
    level:       1,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Rendering",
-   name:       "Rendering",
+   title:       "Rendering",
+   name:        "Rendering",
    level:       5,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Rigid body physics",
-   name:       "RigidBodyPhysics",
+   title:       "Rigid body physics",
+   name:        "RigidBodyPhysics",
    level:       5,
    providerUrl: Networking_URLs.getProviderUrl ("RigidBodyPhysics"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Scripting",
-   name:       "Scripting",
+   title:       "Scripting",
+   name:        "Scripting",
    level:       1,
    providerUrl: Networking_URLs.getProviderUrl ("Scripting"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Shape",
-   name:       "Shape",
+   title:       "Shape",
+   name:        "Shape",
    level:       5,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Sound",
-   name:       "Sound",
+   title:       "Sound",
+   name:        "Sound",
    level:       1,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Text",
-   name:       "Text",
+   title:       "Text",
+   name:        "Text",
    level:       1,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Texturing",
-   name:       "Texturing",
+   title:       "Texturing",
+   name:        "Texturing",
    level:       3,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Texturing3D",
-   name:       "Texturing3D",
+   title:       "Texturing3D",
+   name:        "Texturing3D",
    level:       3,
    providerUrl: Networking_URLs.getProviderUrl ("Texturing3D"),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Time",
-   name:       "Time",
+   title:       "Time",
+   name:        "Time",
    level:       2,
    providerUrl: Networking_URLs.getProviderUrl (),
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "Volume rendering",
-   name:       "VolumeRendering",
-   level:       2,
-   providerUrl: Networking_URLs.getProviderUrl ("VolumeRendering"),
+   title:        "Volume rendering",
+   name:         "VolumeRendering",
+   level:        2,
+   providerUrl:  Networking_URLs.getProviderUrl ("VolumeRendering"),
+   dependencies: ["CADGeometry", "Texturing3D"],
 });
 
 SupportedComponents .addComponent (
 {
-   title:      "X_ITE",
-   name:       "X_ITE",
+   title:       "X_ITE",
+   name:        "X_ITE",
    level:       1,
    providerUrl: Networking_URLs.getProviderUrl ("X_ITE"),
 });
@@ -118519,22 +118475,6 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
 
       this .replaceWorld (this .getExecutionContext ());
 
-      // Load src or url attribute.
-
-      const urlCharacters = this .getElement () .attr ("src");
-
-      if (urlCharacters)
-      {
-         this .loadURL (new x_ite_Fields.MFString (urlCharacters), new x_ite_Fields.MFString ());
-      }
-      else
-      {
-         const urlCharacters = this .getElement () .attr ("url");
-
-         if (urlCharacters)
-            this .loadURL (this .parseUrlAttribute (urlCharacters), new x_ite_Fields.MFString ());
-      }
-
       // Print welcome message.
 
       if (this .getInstanceId () > 1) return;
@@ -118604,7 +118544,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
       if (component)
       {
          if (level <= component .level || true)
-            return new Configuration_ComponentInfo (name, level, component .title, component. providerUrl);
+            return new Configuration_ComponentInfo (name, level, component .title, component. providerUrl, component .dependencies);
       }
 
       throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
@@ -119433,6 +119373,79 @@ performance .now = (function ()
 })();
 
 /* harmony default export */ const MicroTime = (undefined);
+
+;// CONCATENATED MODULE: ./src/x_ite/Browser/Scripting/X3DScriptingContext.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+const _scripts = Symbol ();
+
+function X3DScriptingContext ()
+{
+   this [_scripts] = [this];
+}
+
+X3DScriptingContext .prototype =
+{
+   initialize: function ()
+   { },
+   isExternal: function ()
+   {
+      return this [_scripts] .length === 1;
+   },
+   getScriptStack: function ()
+   {
+      return this [_scripts];
+   }
+};
+
+/* harmony default export */ const Scripting_X3DScriptingContext = (X3DScriptingContext);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
 /* provided dependency */ var Fallback_$ = __webpack_require__(755);
@@ -120558,8 +120571,6 @@ Namespace .set ("x_ite/Namespace", Namespace);
 
 
 
-x_ite_Namespace.set ("x_ite/X3D", X3D);
-
 const
    callbacks = X3D_$.Deferred (),
    fallbacks = X3D_$.Deferred ();
@@ -120618,6 +120629,9 @@ Object .assign (X3D,
          }
          case 1:
          {
+            if (! x_ite_Namespace.has (arguments [0]))
+               throw new Error ("Unknown module '" + arguments [0] + "'.");
+
             return x_ite_Namespace.get (arguments [0]);
          }
          default:
@@ -120757,6 +120771,8 @@ Object .assign (X3D,
    MFVec4f:                     x_ite_Fields.MFVec4f,
 });
 
+x_ite_Namespace.set ("x_ite/X3D", X3D);
+
 /* harmony default export */ const x_ite_X3D = (X3D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
@@ -120814,6 +120830,11 @@ Object .assign (X3D,
 
 class X3DCanvas extends HTMLElement
 {
+   static define ()
+   {
+      customElements .define ("x3d-canvas", X3DCanvas);
+   }
+   
    constructor ()
    {
       super ();
@@ -120857,14 +120878,12 @@ class X3DCanvas extends HTMLElement
    }
 }
 
-customElements .define ("x3d-canvas", X3DCanvas);
-
 // IE fix.
 document .createElement ("X3DCanvas");
 
 x_ite_Namespace.set ("x_ite/X3DCanvas", X3DCanvas);
 
-/* harmony default export */ const x_ite_X3DCanvas = ((/* unused pure expression or super */ null && (X3DCanvas)));
+/* harmony default export */ const x_ite_X3DCanvas = (X3DCanvas);
 
 ;// CONCATENATED MODULE: ./src/x_ite.js
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -120926,6 +120945,8 @@ window [Symbol .for ("X_ITE.X3D-7.0.0")] = x_ite_X3D;
 
 if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
    __global_module__ .exports = x_ite_X3D;
+
+x_ite_X3DCanvas.define ();
 
 x_ite_X3D ();
 
