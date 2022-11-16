@@ -101,10 +101,8 @@ X3DParser .prototype = {
    {
       const componentsUrl = /\.js$/;
 
-      async function loadDependencies ({ name, dependencies }, seen = new Set ())
+      async function loadDependencies ({ dependencies })
       {
-         if (seen .has (name)) return; seen .add (name);
-
          const
             scene   = this .getScene (),
             browser = scene .getBrowser ();
