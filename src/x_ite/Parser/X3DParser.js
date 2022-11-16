@@ -113,7 +113,7 @@ X3DParser .prototype = {
                component   = browser .getSupportedComponents () .get (dependency),
                providerUrl = component .providerUrl;
 
-            await loadDependencies .call (this, component, seen);
+            await loadDependencies .call (this, component);
 
             if (providerUrl .match (componentsUrl))
                await import (/* webpackIgnore: true */ providerUrl);
