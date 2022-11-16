@@ -101,8 +101,10 @@ X3DParser .prototype = {
    {
       const componentsUrl = /\.js$/;
 
-      async function loadDependencies ({ dependencies })
+      async function loadDependencies ({ name, dependencies }, seen = new Set ())
       {
+         if (seen .has (name)) return; seen .add (name);
+
          const
             scene   = this .getScene (),
             browser = scene .getBrowser ();
@@ -113,7 +115,7 @@ X3DParser .prototype = {
                component   = browser .getSupportedComponents () .get (dependency),
                providerUrl = component .providerUrl;
 
-            await loadDependencies .call (this, component);
+            await loadDependencies .call (this, component, seen);
 
             if (providerUrl .match (componentsUrl))
                await import (/* webpackIgnore: true */ providerUrl);
