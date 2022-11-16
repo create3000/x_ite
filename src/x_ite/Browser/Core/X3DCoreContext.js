@@ -56,7 +56,6 @@ import RenderingProperties from "./RenderingProperties.js";
 import Notification        from "./Notification.js";
 import ContextMenu         from "./ContextMenu.js";
 import Scene               from "../../Execution/Scene.js";
-import VRMLParser          from "../../Parser/VRMLParser.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import _                   from "../../../locale/gettext.js";
@@ -79,7 +78,6 @@ const
    _renderingProperties = Symbol (),
    _notification        = Symbol (),
    _contextMenu         = Symbol (),
-   _observer            = Symbol (),
    _privateScene        = Symbol (),
    _keydown             = Symbol (),
    _keyup               = Symbol (),
@@ -268,6 +266,10 @@ X3DCoreContext .prototype =
       this [_privateScene] .setup ();
 
       return this [_privateScene];
+   },
+   getPixelPerPoint: function ()
+   {
+      return this [_pixelPerPoint];
    },
    connectedCallback: function ()
    {
@@ -585,14 +587,6 @@ X3DCoreContext .prototype =
             break;
          }
       }
-   },
-   isExternal: function ()
-   {
-      return true;
-   },
-   getPixelPerPoint: function ()
-   {
-      return this [_pixelPerPoint];
    },
    copyToClipboard: function (text)
    {

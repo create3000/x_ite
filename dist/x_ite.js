@@ -72920,7 +72920,6 @@ DataStorage .prototype = {
 
 
 
-
 const WEBGL_LATEST_VERSION = 2;
 
 const
@@ -72939,7 +72938,6 @@ const
    _renderingProperties = Symbol (),
    _notification        = Symbol (),
    _contextMenu         = Symbol (),
-   _observer            = Symbol (),
    _privateScene        = Symbol (),
    _keydown             = Symbol (),
    _keyup               = Symbol (),
@@ -73128,6 +73126,10 @@ X3DCoreContext .prototype =
       this [_privateScene] .setup ();
 
       return this [_privateScene];
+   },
+   getPixelPerPoint: function ()
+   {
+      return this [_pixelPerPoint];
    },
    connectedCallback: function ()
    {
@@ -73445,14 +73447,6 @@ X3DCoreContext .prototype =
             break;
          }
       }
-   },
-   isExternal: function ()
-   {
-      return true;
-   },
-   getPixelPerPoint: function ()
-   {
-      return this [_pixelPerPoint];
    },
    copyToClipboard: function (text)
    {
@@ -84226,6 +84220,79 @@ X3DRenderingContext .prototype =
 };
 
 /* harmony default export */ const Rendering_X3DRenderingContext = (X3DRenderingContext);
+
+;// CONCATENATED MODULE: ./src/x_ite/Browser/Scripting/X3DScriptingContext.js
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+const _scripts = Symbol ();
+
+function X3DScriptingContext ()
+{
+   this [_scripts] = [this];
+}
+
+X3DScriptingContext .prototype =
+{
+   initialize: function ()
+   { },
+   isExternal: function ()
+   {
+      return this [_scripts] .length === 1;
+   },
+   getScriptStack: function ()
+   {
+      return this [_scripts];
+   }
+};
+
+/* harmony default export */ const Scripting_X3DScriptingContext = (X3DScriptingContext);
 
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/include/ClipPlanes.glsl.js
 /* harmony default export */ const ClipPlanes_glsl = (/* glsl */`
@@ -96804,6 +96871,7 @@ X3DRoutingContext .prototype =
 
 
 
+
 const
    _world           = Symbol (),
    _changedTime     = Symbol (),
@@ -96826,6 +96894,7 @@ function X3DBrowserContext (element)
    Base_X3DBaseNode.call (this, this);
    Routing_X3DRoutingContext.call (this);
    Core_X3DCoreContext.call (this, element);
+   Scripting_X3DScriptingContext.call (this);
    Networking_X3DNetworkingContext.call (this);
    Texturing_X3DTexturingContext.call (this);
    Shaders_X3DShadersContext.call (this);
@@ -96877,6 +96946,7 @@ X3DBrowserContext .prototype = Object .assign (Object .create (Base_X3DBaseNode.
    PointingDeviceSensor_X3DPointingDeviceSensorContext.prototype,
    Rendering_X3DRenderingContext.prototype,
    Routing_X3DRoutingContext.prototype,
+   Scripting_X3DScriptingContext.prototype,
    Shaders_X3DShadersContext.prototype,
    Shape_X3DShapeContext.prototype,
    Sound_X3DSoundContext.prototype,
@@ -96890,6 +96960,7 @@ X3DBrowserContext .prototype = Object .assign (Object .create (Base_X3DBaseNode.
       Base_X3DBaseNode.prototype.initialize.call (this);
       Routing_X3DRoutingContext.prototype.initialize.call (this);
       Core_X3DCoreContext.prototype.initialize.call (this);
+      Scripting_X3DScriptingContext.prototype.initialize.call (this);
       Networking_X3DNetworkingContext.prototype.initialize.call (this);
       Texturing_X3DTexturingContext.prototype.initialize.call (this);
       Shaders_X3DShadersContext.prototype.initialize.call (this);
@@ -119374,79 +119445,6 @@ performance .now = (function ()
 
 /* harmony default export */ const MicroTime = (undefined);
 
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Scripting/X3DScriptingContext.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-const _scripts = Symbol ();
-
-function X3DScriptingContext ()
-{
-   this [_scripts] = [this];
-}
-
-X3DScriptingContext .prototype =
-{
-   initialize: function ()
-   { },
-   isExternal: function ()
-   {
-      return this [_scripts] .length === 1;
-   },
-   getScriptStack: function ()
-   {
-      return this [_scripts];
-   }
-};
-
-/* harmony default export */ const Scripting_X3DScriptingContext = (X3DScriptingContext);
-
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
 /* provided dependency */ var Fallback_$ = __webpack_require__(755);
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -120642,7 +120640,7 @@ Object .assign (X3D,
             if (typeof arguments [1] !== "function")
                throw new Error ("Invalid argument");
 
-            arguments [1] .apply (null, arguments [0] .map (file => this .require (file)));
+            X3D_$(() => arguments [1] .apply (null, arguments [0] .map (file => this .require (file))));
             break;
          }
       }

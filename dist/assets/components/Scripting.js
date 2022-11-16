@@ -75,9 +75,6 @@ var __webpack_exports__ = {};
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
 const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Scripting/X3DScriptingContext\")"
-const X3DScriptingContext_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Browser/Scripting/X3DScriptingContext");
-var X3DScriptingContext_default = /*#__PURE__*/__webpack_require__.n(X3DScriptingContext_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
 const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
@@ -894,7 +891,6 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
 
 
 
-
 Components_default().addComponent ({
    name: "Scripting",
    types:
@@ -905,7 +901,6 @@ Components_default().addComponent ({
    {
       X3DScriptNode: Scripting_X3DScriptNode,
    },
-   browserContext: (X3DScriptingContext_default()),
 });
 
 /* harmony default export */ const Scripting = ((/* unused pure expression or super */ null && (undefined)));
