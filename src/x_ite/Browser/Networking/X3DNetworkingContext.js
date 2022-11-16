@@ -48,7 +48,7 @@
 
 
 import Fields from "../../Fields.js";
-import URLs   from "./URLs1.js";
+import URLs   from "./URLs.js";
 import _      from "../../../locale/gettext.js";
 
 const

@@ -49,7 +49,7 @@
 
 import ProfileInfoArray    from "./ProfileInfoArray.js";
 import SupportedComponents from "./SupportedComponents.js";
-import URLs                from "../Browser/Networking/URLs1.js";
+import URLs                from "../Browser/Networking/URLs.js";
 
 const SupportedProfiles = new ProfileInfoArray ();
 
