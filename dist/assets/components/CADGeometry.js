@@ -111,7 +111,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 
 
-
 function X3DProductStructureChildNode (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -174,7 +173,6 @@ X3DProductStructureChildNode .prototype = Object .assign (Object .create ((X3DCh
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -276,7 +274,6 @@ var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_names
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -552,7 +549,6 @@ CADFace .prototype = Object .assign (Object .create (CADGeometry_X3DProductStruc
 
 
 
-
 function CADLayer (executionContext)
 {
    X3DGroupingNode_default().call (this, executionContext);
@@ -641,7 +637,6 @@ var X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformNo
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -745,7 +740,6 @@ var X3DComposedGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DComp
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -872,7 +866,6 @@ IndexedQuadSet .prototype = Object .assign (Object .create ((X3DComposedGeometry
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

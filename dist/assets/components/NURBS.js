@@ -115,7 +115,6 @@ var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject
 
 
 
-
 function Contour2D (executionContext)
 {
    X3DNode_default().call (this, executionContext);
@@ -281,7 +280,6 @@ function remove (array, first, last, range, rfirst, rlast)
 
 
 
-
 function X3DNurbsControlCurveNode (executionContext)
 {
    X3DNode_default().call (this, executionContext);
@@ -347,7 +345,6 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -511,7 +508,6 @@ var X3DCoordinateNode_default = /*#__PURE__*/__webpack_require__.n(X3DCoordinate
 
 
 
-
 function CoordinateDouble (executionContext)
 {
    X3DCoordinateNode_default().call (this, executionContext);
@@ -599,7 +595,6 @@ var Vector4_default = /*#__PURE__*/__webpack_require__.n(Vector4_namespaceObject
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1074,7 +1069,6 @@ const NURBS = {
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -2735,7 +2729,6 @@ nurbs .sample = sample;
 
 
 
-
 function NurbsCurve (executionContext)
 {
    NURBS_X3DParametricGeometryNode.call (this, executionContext);
@@ -2943,7 +2936,6 @@ NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeome
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -3166,7 +3158,6 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
 
 
 
-
 function NurbsOrientationInterpolator (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -3374,7 +3365,6 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -3770,7 +3760,6 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
 
 
 
-
 function NurbsPatchSurface (executionContext)
 {
    NURBS_X3DNurbsSurfaceGeometryNode.call (this, executionContext);
@@ -3865,7 +3854,6 @@ var PositionInterpolator_default = /*#__PURE__*/__webpack_require__.n(PositionIn
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -4074,7 +4062,6 @@ var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObje
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -4348,7 +4335,6 @@ var Line3_default = /*#__PURE__*/__webpack_require__.n(Line3_namespaceObject);
 
 
 
-
 function NurbsSurfaceInterpolator (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -4527,7 +4513,6 @@ var Extrusion_default = /*#__PURE__*/__webpack_require__.n(Extrusion_namespaceOb
 
 
 
-
 function NurbsSweptSurface (executionContext)
 {
    NURBS_X3DParametricGeometryNode.call (this, executionContext);
@@ -4688,7 +4673,6 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -4866,7 +4850,6 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
 
 
 
-
 function NurbsTextureCoordinate (executionContext)
 {
    X3DNode_default().call (this, executionContext);
@@ -5003,7 +4986,6 @@ NurbsTextureCoordinate .prototype = Object .assign (Object .create ((X3DNode_def
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

@@ -114,7 +114,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 
 
-
 function X3DVolumeRenderStyleNode (executionContext)
 {
    X3DNode_default().call (this, executionContext);
@@ -243,7 +242,6 @@ X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create ((X3DNode_d
 
 
 
-
 function X3DComposableVolumeRenderStyleNode (executionContext)
 {
    VolumeRendering_X3DVolumeRenderStyleNode.call (this, executionContext);
@@ -309,7 +307,6 @@ var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -482,7 +479,6 @@ OpacityMapVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
 
 
 
-
 const
    _defaultVoxelsNode         = Symbol (),
    _defaultVolumeStyle        = Symbol (),
@@ -611,7 +607,6 @@ const DEBUG_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require 
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -963,7 +958,6 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
 
 
 
-
 function BoundaryEnhancementVolumeStyle (executionContext)
 {
    VolumeRendering_X3DComposableVolumeRenderStyleNode.call (this, executionContext);
@@ -1099,7 +1093,6 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (Volu
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1407,7 +1400,6 @@ CartoonVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
 
 
 
-
 function ComposedVolumeStyle (executionContext)
 {
    VolumeRendering_X3DComposableVolumeRenderStyleNode.call (this, executionContext);
@@ -1592,7 +1584,6 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1868,7 +1859,6 @@ main ()
 
 
 
-
 function VolumeMaterial (executionContext, volumeDataNode)
 {
    UnlitMaterial_default().call (this, executionContext);
@@ -1998,7 +1988,6 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -2229,7 +2218,6 @@ var ShaderPart_default = /*#__PURE__*/__webpack_require__.n(ShaderPart_namespace
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -2591,7 +2579,6 @@ IsoSurfaceVolumeData .prototype = Object .assign (Object .create (VolumeRenderin
 
 
 
-
 function ProjectionVolumeStyle (executionContext)
 {
    VolumeRendering_X3DVolumeRenderStyleNode.call (this, executionContext);
@@ -2803,7 +2790,6 @@ ProjectionVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -3071,7 +3057,6 @@ SegmentedVolumeData .prototype = Object .assign (Object .create (VolumeRendering
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -3348,7 +3333,6 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X
 
 
 
-
 function SilhouetteEnhancementVolumeStyle (executionContext)
 {
    VolumeRendering_X3DComposableVolumeRenderStyleNode.call (this, executionContext);
@@ -3508,7 +3492,6 @@ SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (Vo
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -3683,7 +3666,6 @@ ToneMappedVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

@@ -62,7 +62,7 @@ const values = dependencies .map (filename =>
       v = filename .replace (/\.js$/, ""),
       m = v .match (/([^\/]+)$/)
 
-   return `["${v}",${repeat(" ", $l2 - v .length - 3)} ${k(m [1])}]`
+   return `["${v}",${repeat (" ", $l2 - v .length - 3)} ${k(m [1])}]`
 })
 .join (",\n   ")
 
@@ -81,6 +81,6 @@ export default Namespace;
 
 let file = fs .readFileSync ("./src/x_ite/Namespace.js") .toString ()
 
-file = file .replace (/(\/\*.*?\*\/).*/sg, "$1\n\n\n" + text)
+file = file .replace (/(\/\*.*?\*\/).*/sg, "$1\n\n" + text)
 
 fs .writeFileSync ("./src/x_ite/Namespace.js", file)

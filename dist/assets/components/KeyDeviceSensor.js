@@ -95,7 +95,6 @@ var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 
 
 
-
 const
    _keyDeviceSensorNodes = Symbol (),
    _keydown              = Symbol (),
@@ -209,7 +208,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 
 
-
 function X3DKeyDeviceSensorNode (executionContext)
 {
    X3DSensorNode_default().call (this, executionContext);
@@ -316,7 +314,6 @@ X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create ((X3DSensorNo
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -684,7 +681,6 @@ KeySensor .prototype = Object .assign (Object .create (KeyDeviceSensor_X3DKeyDev
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

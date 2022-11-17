@@ -111,7 +111,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 
 
-
 function BooleanFilter (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -214,7 +213,6 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -365,7 +363,6 @@ X3DSequencerNode .prototype = Object .assign (Object .create ((X3DChildNode_defa
 
 
 
-
 function BooleanSequencer (executionContext)
 {
    EventUtilities_X3DSequencerNode.call (this, executionContext);
@@ -470,7 +467,6 @@ BooleanSequencer .prototype = Object .assign (Object .create (EventUtilities_X3D
 
 
 
-
 function BooleanToggle (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -565,7 +561,6 @@ BooleanToggle .prototype = Object .assign (Object .create ((X3DChildNode_default
 
 
 
-
 function X3DTriggerNode (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -628,7 +623,6 @@ X3DTriggerNode .prototype = Object .assign (Object .create ((X3DChildNode_defaul
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -725,7 +719,6 @@ BooleanTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTr
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -837,7 +830,6 @@ IntegerSequencer .prototype = Object .assign (Object .create (EventUtilities_X3D
 
 
 
-
 function IntegerTrigger (executionContext)
 {
    EventUtilities_X3DTriggerNode.call (this, executionContext);
@@ -928,7 +920,6 @@ IntegerTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTr
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

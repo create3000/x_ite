@@ -108,7 +108,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
  *
  ******************************************************************************/
 
-
 let i = 0;
 
 const MatchCriterion =
@@ -169,7 +168,6 @@ const MatchCriterion =
  *
  ******************************************************************************/
 
-
 let IntersectionType_i = 0;
 
 const IntersectionType =
@@ -228,7 +226,6 @@ const IntersectionType =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 let SortOrder_i = 0;
 
@@ -299,7 +296,6 @@ var ObjectCache_default = /*#__PURE__*/__webpack_require__.n(ObjectCache_namespa
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -754,7 +750,6 @@ var Line3_default = /*#__PURE__*/__webpack_require__.n(Line3_namespaceObject);
 
 
 
-
 function LinePickSensor (executionContext)
 {
    Picking_X3DPickSensorNode.call (this, executionContext);
@@ -1076,7 +1071,6 @@ var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode
 
 
 
-
 function X3DPickableObject (executionContext)
 {
    this .addType ((X3DConstants_default()).X3DPickableObject);
@@ -1158,7 +1152,6 @@ X3DPickableObject .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1380,7 +1373,6 @@ var X3D_default = /*#__PURE__*/__webpack_require__.n(X3D_namespaceObject);
 
 
 
-
 const Ammo = X3D_default().require ("Ammo");
 
 function VolumePicker ()
@@ -1557,7 +1549,6 @@ VolumePicker .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1909,7 +1900,6 @@ PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSens
 
 
 
-
 function PrimitivePickSensor (executionContext)
 {
    Picking_X3DPickSensorNode.call (this, executionContext);
@@ -2157,7 +2147,6 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPick
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

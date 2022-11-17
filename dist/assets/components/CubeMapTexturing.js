@@ -142,7 +142,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 
 
-
 function X3DEnvironmentTextureNode (executionContext)
 {
    X3DSingleTextureNode_default().call (this, executionContext);
@@ -274,7 +273,6 @@ var BitSet_default = /*#__PURE__*/__webpack_require__.n(BitSet_namespaceObject);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -546,7 +544,6 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -841,7 +838,6 @@ var DEBUG_default = /*#__PURE__*/__webpack_require__.n(DEBUG_namespaceObject);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

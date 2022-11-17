@@ -119,7 +119,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 
 
-
 function AnnotationLayer (executionContext)
 {
    X3DLayerNode_default().call (this,
@@ -211,7 +210,6 @@ var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_names
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -311,7 +309,6 @@ var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode
 
 
 
-
 function X3DAnnotationNode (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -378,7 +375,6 @@ X3DAnnotationNode .prototype = Object .assign (Object .create ((X3DChildNode_def
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -492,7 +488,6 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
 
 
 
-
 function IconAnnotation (executionContext)
 {
    Annotation_X3DAnnotationNode.call (this, executionContext);
@@ -592,7 +587,6 @@ IconAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnota
 
 
 
-
 function TextAnnotation (executionContext)
 {
    Annotation_X3DAnnotationNode.call (this, executionContext);
@@ -679,7 +673,6 @@ TextAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnota
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

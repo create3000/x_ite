@@ -102,7 +102,6 @@ var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject
  *
  ******************************************************************************/
 
-
  let i = 0;
 
 const GeometryTypes = {
@@ -628,7 +627,6 @@ getIntersections (const in sampler2D volume, const in int verticesIndex, const i
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1628,7 +1626,6 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
 
 
 
-
 function PointEmitter (executionContext)
 {
    ParticleSystems_X3DParticleEmitterNode.call (this, executionContext);
@@ -1765,7 +1762,6 @@ PointEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DPar
 
 
 
-
 const
    _defaultEmitter = Symbol (),
    _depthShader    = Symbol ();
@@ -1842,7 +1838,6 @@ X3DParticleSystemsContext .prototype =
 
 
 
-
 function X3DParticlePhysicsModelNode (executionContext)
 {
    X3DNode_default().call (this, executionContext);
@@ -1910,7 +1905,6 @@ var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -2031,7 +2025,6 @@ BoundedPhysicsModel .prototype = Object .assign (Object .create (ParticleSystems
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -2189,7 +2182,6 @@ ConeEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DPart
 
 
 
-
 function ExplosionEmitter (executionContext)
 {
    ParticleSystems_X3DParticleEmitterNode.call (this, executionContext);
@@ -2308,7 +2300,6 @@ ExplosionEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -2827,7 +2818,6 @@ BVH .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -3911,7 +3901,6 @@ var IndexedLineSet_default = /*#__PURE__*/__webpack_require__.n(IndexedLineSet_n
 
 
 
-
 function PolylineEmitter (executionContext)
 {
    ParticleSystems_X3DParticleEmitterNode.call (this, executionContext);
@@ -4138,7 +4127,6 @@ var Triangle3_default = /*#__PURE__*/__webpack_require__.n(Triangle3_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -4382,7 +4370,6 @@ var IndexedFaceSet_default = /*#__PURE__*/__webpack_require__.n(IndexedFaceSet_n
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -4661,7 +4648,6 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

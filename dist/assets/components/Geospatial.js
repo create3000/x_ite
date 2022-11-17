@@ -774,7 +774,6 @@ UniversalTransverseMercator .prototype =
 
 
 
-
 function Geocentric () { }
 
 Geocentric .prototype =
@@ -851,7 +850,6 @@ Geocentric .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1066,7 +1064,6 @@ var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1341,7 +1338,6 @@ var Triangle3_default = /*#__PURE__*/__webpack_require__.n(Triangle3_namespaceOb
 
 
 
-
 function GeoCoordinate (executionContext)
 {
    X3DCoordinateNode_default().call (this, executionContext);
@@ -1559,7 +1555,6 @@ var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -2023,7 +2018,6 @@ var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
 
 
 
-
 var center = new (Vector3_default()) (0, 0, 0);
 
 function GeoLOD (executionContext)
@@ -2469,7 +2463,6 @@ var X3DTransformMatrix3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DTra
 
 
 
-
 var locationMatrix = new (Matrix4_default()) ();
 
 function GeoLocation (executionContext)
@@ -2588,7 +2581,6 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
 
 
 
-
 function GeoMetadata (executionContext)
 {
    X3DInfoNode_default().call (this, executionContext);
@@ -2698,7 +2690,6 @@ var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject
 
 
 
-
 function GeoOrigin (executionContext)
 {
    X3DNode_default().call (this, executionContext);
@@ -2800,7 +2791,6 @@ var X3DInterpolatorNode_default = /*#__PURE__*/__webpack_require__.n(X3DInterpol
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -2942,7 +2932,6 @@ var ProximitySensor_default = /*#__PURE__*/__webpack_require__.n(ProximitySensor
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -3102,7 +3091,6 @@ var X3DTouchSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DTouchSens
 
 
 
-
 var
    invModelViewMatrix = new (Matrix4_default()) (),
    geoCoords          = new (Vector3_default()) (0, 0, 0);
@@ -3220,7 +3208,6 @@ GeoTouchSensor .prototype = Object .assign (Object .create ((X3DTouchSensorNode_
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -3364,7 +3351,6 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

@@ -141,7 +141,6 @@ var ViewVolume_default = /*#__PURE__*/__webpack_require__.n(ViewVolume_namespace
 
 
 
-
 const
    _screenTextureProperties = Symbol ();
 
@@ -288,7 +287,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 
 
-
 function X3DLayoutNode (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -360,7 +358,6 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1003,7 +1000,6 @@ var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_names
 
 
 
-
 function LayoutGroup (executionContext)
 {
    X3DGroupingNode_default().call (this, executionContext);
@@ -1181,7 +1177,6 @@ var OrthoViewpoint_default = /*#__PURE__*/__webpack_require__.n(OrthoViewpoint_n
 
 
 
-
 function LayoutLayer (executionContext)
 {
    X3DLayerNode_default().call (this,
@@ -1305,7 +1300,6 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1725,7 +1719,6 @@ ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default
 
 
 
-
 function ScreenFontStyle (executionContext)
 {
    X3DFontStyleNode_default().call (this, executionContext);
@@ -1820,7 +1813,6 @@ ScreenFontStyle .prototype = Object .assign (Object .create ((X3DFontStyleNode_d
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

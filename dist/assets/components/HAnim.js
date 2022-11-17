@@ -111,7 +111,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 
 
-
 function HAnimDisplacer (executionContext)
 {
    X3DGeometricPropertyNode_default().call (this, executionContext);
@@ -219,7 +218,6 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -570,7 +568,6 @@ var X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformNo
 
 
 
-
 function HAnimJoint (executionContext)
 {
    X3DTransformNode_default().call (this, executionContext);
@@ -756,7 +753,6 @@ HAnimJoint .prototype = Object .assign (Object .create ((X3DTransformNode_defaul
 
 
 
-
 function HAnimMotion (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -864,7 +860,6 @@ var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode
 
 
 
-
 function HAnimSegment (executionContext)
 {
    X3DGroupingNode_default().call (this, executionContext);
@@ -957,7 +952,6 @@ HAnimSegment .prototype = Object .assign (Object .create ((X3DGroupingNode_defau
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

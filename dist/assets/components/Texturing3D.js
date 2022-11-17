@@ -7116,7 +7116,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 
 
-
 const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
 function X3DTexture3DNode (executionContext)
@@ -7287,7 +7286,6 @@ var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -7467,7 +7465,6 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 // Grammar
 
@@ -8163,7 +8160,6 @@ NRRDParser .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 function DicomParser ()
 {
@@ -9283,7 +9279,6 @@ var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespace
 
 
 
-
 function ImageTexture3D (executionContext)
 {
    Texturing3D_X3DTexture3DNode.call (this, executionContext);
@@ -9439,7 +9434,6 @@ ImageTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTextu
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -9662,7 +9656,6 @@ const Vector4_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .requir
 
 
 
-
 function TextureCoordinate3D (executionContext)
 {
    X3DSingleTextureCoordinateNode_default().call (this, executionContext);
@@ -9822,7 +9815,6 @@ TextureCoordinate3D .prototype = Object .assign (Object .create ((X3DSingleTextu
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -10012,7 +10004,6 @@ var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject
 
 
 
-
 function TextureTransform3D (executionContext)
 {
    X3DSingleTextureTransformNode_default().call (this, executionContext);
@@ -10142,7 +10133,6 @@ TextureTransform3D .prototype = Object .assign (Object .create ((X3DSingleTextur
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

@@ -114,7 +114,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 
 
-
 function BlendMode (executionContext)
 {
    X3DAppearanceChildNode_default().call (this, executionContext);

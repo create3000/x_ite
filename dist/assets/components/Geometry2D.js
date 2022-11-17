@@ -99,7 +99,6 @@ var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 
 
 
-
 function ArcClose2DOptions (executionContext)
 {
    X3DBaseNode_default().call (this, executionContext);
@@ -174,7 +173,6 @@ ArcClose2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_defa
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -259,7 +257,6 @@ var Complex_default = /*#__PURE__*/__webpack_require__.n(Complex_namespaceObject
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -376,7 +373,6 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -560,7 +556,6 @@ var TextureCoordinate_default = /*#__PURE__*/__webpack_require__.n(TextureCoordi
 
 
 
-
 function Rectangle2DOptions (executionContext)
 {
    X3DBaseNode_default().call (this, executionContext);
@@ -676,7 +671,6 @@ var PrimitiveQuality_default = /*#__PURE__*/__webpack_require__.n(PrimitiveQuali
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -838,7 +832,6 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
 
 
 
-
 function Arc2D (executionContext)
 {
    X3DLineGeometryNode_default().call (this, executionContext);
@@ -980,7 +973,6 @@ Arc2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default(
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1203,7 +1195,6 @@ ArcClose2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default
 
 
 
-
 function Circle2D (executionContext)
 {
    X3DLineGeometryNode_default().call (this, executionContext);
@@ -1318,7 +1309,6 @@ var X3DPointGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DPointGe
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1569,7 +1559,6 @@ Disk2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).
 
 
 
-
 function Polyline2D (executionContext)
 {
    X3DLineGeometryNode_default().call (this, executionContext);
@@ -1662,7 +1651,6 @@ Polyline2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_def
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1764,7 +1752,6 @@ var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1902,7 +1889,6 @@ Rectangle2D .prototype = Object .assign (Object .create ((X3DGeometryNode_defaul
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

@@ -111,7 +111,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 
 
-
 function DISEntityManager (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -202,7 +201,6 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -320,7 +318,6 @@ var X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DSensorNode_nam
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -514,7 +511,6 @@ var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObje
 
 
 
-
 function ReceiverPdu (executionContext)
 {
    X3DSensorNode_default().call (this, executionContext);
@@ -637,7 +633,6 @@ ReceiverPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default(
 
 
 
-
 function SignalPdu (executionContext)
 {
    X3DSensorNode_default().call (this, executionContext);
@@ -752,7 +747,6 @@ SignalPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default())
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

@@ -124,7 +124,6 @@ var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject
 
 
 
-
 function X3DTextureProjectorNode (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -345,7 +344,6 @@ var ObjectCache_default = /*#__PURE__*/__webpack_require__.n(ObjectCache_namespa
 
 
 
-
 var TextureProjectorPerspectiveCache = ObjectCache_default() (TextureProjectorPerspectiveContainer);
 
 function TextureProjectorPerspectiveContainer ()
@@ -540,7 +538,6 @@ TextureProjectorPerspective .prototype = Object .assign (Object .create (Project
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

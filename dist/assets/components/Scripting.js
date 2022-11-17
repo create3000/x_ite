@@ -184,7 +184,6 @@ var X3DRoute_default = /*#__PURE__*/__webpack_require__.n(X3DRoute_namespaceObje
  *
  ******************************************************************************/
 
-
 /* harmony default export */ function evaluate(globalObject, sourceText)
 {
    return Function (/* js */ `with (arguments [0])
@@ -258,7 +257,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 
 
-
 function X3DScriptNode (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -327,7 +325,6 @@ var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespace
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

@@ -34313,7 +34313,6 @@ var __webpack_exports__ = {};
  *
  ******************************************************************************/
 
-
 let
    browserEvent = 0,
    loadState    = 0,
@@ -34448,7 +34447,6 @@ const X3DConstants =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -34969,7 +34967,6 @@ const MapUtilities = {
 
 
 
-
 const
    _name      = Symbol (),
    _interests = Symbol (),
@@ -35170,7 +35167,6 @@ X3DObject .getId = (function ()
 
 
 
-
 const
    _modificationTime = Symbol (),
    _tainted          = Symbol (),
@@ -35294,7 +35290,6 @@ for (const key of Reflect .ownKeys (X3DChildObject .prototype))
  *
  ******************************************************************************/
 
-
 const _stack = Symbol ();
 
 function Events ()
@@ -35408,7 +35403,6 @@ for (const key of Reflect .ownKeys (Events .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -35535,7 +35529,6 @@ for (const key of Reflect .ownKeys (X3DEventObject .prototype))
 
 
 
-
 function X3DFieldDefinition (accessType, name, value)
 {
    this .accessType  = accessType;
@@ -35606,7 +35599,6 @@ for (const key of Reflect .ownKeys (X3DFieldDefinition .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -35897,7 +35889,6 @@ Object .defineProperty (X3DInfoArray .prototype, "length",
 
 
 
-
 function FieldDefinitionArray (values)
 {
    return Base_X3DInfoArray.call (this, values);
@@ -35968,7 +35959,6 @@ for (const key of Reflect .ownKeys (FieldDefinitionArray .prototype))
 
 
 
-
 function FieldArray ()
 {
    return Base_X3DInfoArray.call (this);
@@ -36036,7 +36026,6 @@ for (const key of Reflect .ownKeys (FieldArray .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -36480,7 +36469,6 @@ for (const key of Reflect .ownKeys (X3DField .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -37101,7 +37089,6 @@ Object .assign (Color3,
 
 
 
-
 function SFColor (r, g, b)
 {
    switch (arguments .length)
@@ -37527,7 +37514,6 @@ Object .assign (Color4,
 
 
 
-
 function SFColorRGBA (r, g, b, a)
 {
    switch (arguments .length)
@@ -37737,7 +37723,6 @@ Object .defineProperty (SFColorRGBA .prototype, "3", SFColorRGBA_a);
 
 
 
-
 function SFDouble (value)
 {
    return Base_X3DField.call (this, arguments .length ? +value : 0);
@@ -37838,7 +37823,6 @@ for (const key of Reflect .ownKeys (SFDouble .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -37948,7 +37932,6 @@ for (const key of Reflect .ownKeys (SFFloat .prototype))
 
 
 
-
 function SFInt32 (value)
 {
    return Base_X3DField.call (this, ~~value);
@@ -38045,7 +38028,6 @@ for (const key of Reflect .ownKeys (SFInt32 .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -38203,7 +38185,6 @@ for (const key of Reflect .ownKeys (SFInt32 .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -38688,7 +38669,6 @@ Object .assign (Vector2,
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -40464,8 +40444,6 @@ const m = new Matrix3 ();
 
 
 
-
-
 function SFMatrix3Template (TypeName, Type, SFVec2, double)
 {
    function SFMatrix3 (m00, m01, m02,
@@ -40593,7 +40571,6 @@ function SFMatrix3Template (TypeName, Type, SFVec2, double)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -43147,7 +43124,6 @@ const Matrix4_m = new Matrix4_Matrix4 ();
 
 
 
-
 function SFMatrix4Template (TypeName, Type, SFVec3, double)
 {
    function SFMatrix4 (m00, m01, m02, m03,
@@ -43271,7 +43247,6 @@ function SFMatrix4Template (TypeName, Type, SFVec3, double)
 
 
 
-
 const cache = new WeakMap ();
 
 function SFNodeCache () { }
@@ -43347,7 +43322,6 @@ SFNodeCache .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -43798,7 +43772,6 @@ for (const key of Reflect .ownKeys (SFNode .prototype))
 
 
 
-
 const SFVec3f = SFVec3.SFVec3f;
 
 function SFRotation (x, y, z, angle)
@@ -44030,7 +44003,6 @@ Object .defineProperty (SFRotation .prototype, "3", SFRotation_angle);
 
 
 
-
 const
    SFString_unescape = /\\(.)/g,
    SFString_escape   = /([\\"])/g;
@@ -44161,7 +44133,6 @@ Object .defineProperty (SFString .prototype, "length",
 
 
 
-
 function SFTime (value)
 {
    return Base_X3DField.call (this, arguments .length ? +value : 0);
@@ -44258,7 +44229,6 @@ for (const key of Reflect .ownKeys (SFTime .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -44431,7 +44401,6 @@ function SFVec4Template (TypeName, Type, double)
 
 
 
-
 function X3DArrayField (value)
 {
    Base_X3DField.call (this, value);
@@ -44515,7 +44484,6 @@ for (const key of Reflect .ownKeys (X3DArrayField .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -45080,7 +45048,6 @@ Object .defineProperty (X3DObjectArrayField .prototype, "length",
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -45960,7 +45927,6 @@ function addEvent (index, value, components)
 
 
 
-
 const
    SFMatrix3d = SFMatrix3.SFMatrix3d,
    SFMatrix3f = SFMatrix3.SFMatrix3f,
@@ -46470,7 +46436,6 @@ const ArrayFields =
 
 
 
-
 /*
  *  Image
  */
@@ -46762,7 +46727,6 @@ Object .defineProperty (SFImage .prototype, "y", height);
 
 
 
-
 const Fields = Object .assign (
 {
    SFBool:      Fields_SFBool,
@@ -46840,7 +46804,6 @@ Fields_ArrayFields);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -47446,7 +47409,6 @@ for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
  *
  ******************************************************************************/
 
-
 /* harmony default export */ const VERSION = ("7.0.0");
 
 ;// CONCATENATED MODULE: ./src/x_ite/DEBUG.js
@@ -47497,7 +47459,6 @@ for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 // Modified during dist build.
 
@@ -47551,7 +47512,6 @@ for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -48437,7 +48397,6 @@ BrowserTimings .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
  *
  ******************************************************************************/
 
-
 let i = 0;
 
 const PrimitiveQuality =
@@ -48497,7 +48456,6 @@ const PrimitiveQuality =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 let Shading_i = 0;
 
@@ -48561,7 +48519,6 @@ const Shading =
  *
  ******************************************************************************/
 
-
 let TextureQuality_i = 0;
 
 const TextureQuality =
@@ -48621,7 +48578,6 @@ const TextureQuality =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -48924,7 +48880,6 @@ function toBoolean (value, defaultValue)
 
 
 
-
 function BrowserProperties (executionContext)
 {
    Base_X3DBaseNode.call (this, executionContext);
@@ -49007,7 +48962,6 @@ BrowserProperties .prototype = Object .assign (Object .create (Base_X3DBaseNode.
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -49112,7 +49066,6 @@ RenderingProperties .prototype = Object .assign (Object .create (Base_X3DBaseNod
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -49238,8 +49191,7 @@ Notification .prototype = Object .assign (Object .create (Base_X3DBaseNode.proto
 
 
 
-
-typeof jquery_fullscreen;
+typeof jquery_fullscreen; // import plugin
 
 const _userMenu = Symbol ();
 
@@ -49986,7 +49938,6 @@ ContextMenu .prototype = Object .assign (Object .create (Base_X3DBaseNode.protot
  *
  ******************************************************************************/
 
-
 // Maps are set when component is registered.
 
 const
@@ -50065,7 +50016,6 @@ const HTMLSupport =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -50180,7 +50130,6 @@ for (const key of Reflect .ownKeys (SupportedNodes .prototype))
 
 
 
-
 function NamedNodesArray (array)
 {
    return Base_X3DInfoArray.call (this, array);
@@ -50248,7 +50197,6 @@ for (const key of Reflect .ownKeys (NamedNodesArray .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -51104,7 +51052,6 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
 
 
 
-
 const
    _inlineNode   = Symbol (),
    _exportedName = Symbol (),
@@ -51487,7 +51434,6 @@ Object .defineProperty (X3DImportedNode .prototype, "importedName",
 
 
 
-
 function ImportedNodesArray (array)
 {
    return Base_X3DInfoArray.call (this, array);
@@ -51555,7 +51501,6 @@ for (const key of Reflect .ownKeys (ImportedNodesArray .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -51629,7 +51574,6 @@ for (const key of Reflect .ownKeys (ExternProtoDeclarationArray .prototype))
 
 
 
-
 function ProtoDeclarationArray (array)
 {
    return Base_X3DInfoArray.call (this, array);
@@ -51697,7 +51641,6 @@ for (const key of Reflect .ownKeys (ProtoDeclarationArray .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -52340,7 +52283,6 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
 
 
 
-
 Configuration_SupportedNodes.addAbstractType ("X3DProtoDeclarationNode", X3DProtoDeclarationNode);
 
 function X3DProtoDeclarationNode (executionContext)
@@ -52441,7 +52383,6 @@ for (const key of Reflect .ownKeys (X3DProtoDeclarationNode .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -52791,7 +52732,6 @@ Object .defineProperty (X3DProtoDeclaration .prototype, "isExternProto",
 
 
 
-
 const
    _cache                   = Symbol (),
    _autoRefreshStartTime    = Symbol (),
@@ -53018,7 +52958,6 @@ X3DUrlObject .prototype =
  *
  ******************************************************************************/
 
-
 function X3DParser (scene)
 {
    this .scene             = scene;
@@ -53225,11 +53164,9 @@ X3DParser .prototype = {
 
 
 
-
 /*
  *  Grammar
  */
-
 
 //	Comment out scriptBody function fragments
 //
@@ -56185,7 +56122,6 @@ VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec4f]     = VRMLParser .
 
 
 
-
 const _dom = Symbol .for ("X_ITE.dom");
 
 const AccessType =
@@ -57432,7 +57368,6 @@ XMLParser .prototype .fieldTypes [Base_X3DConstants.MFString] = function (field)
 
 
 
-
 function JSONParser (scene)
 {
    Parser_X3DParser.call (this, scene);
@@ -57893,7 +57828,6 @@ JSONParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -58924,7 +58858,6 @@ Object .assign (ViewVolume,
 
 
 
-
 function TextureBuffer (browser, width, height)
 {
    const gl = browser .getContext ();
@@ -59149,7 +59082,6 @@ for (const key of Reflect .ownKeys (TextureBuffer .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 let TraverseType_i = 0;
 
@@ -60277,7 +60209,6 @@ function MatrixStack (Type)
 
 
 
-
 const
    DEPTH_BUFFER_WIDTH  = 16,
    DEPTH_BUFFER_HEIGHT = DEPTH_BUFFER_WIDTH;
@@ -61269,7 +61200,6 @@ function X3DRenderObject_assign (lhs, rhs)
 
 
 
-
 function X3DChildNode (executionContext)
 {
    if (this .getExecutionContext ())
@@ -61362,7 +61292,6 @@ X3DChildNode .prototype = Object .assign (Object .create (Core_X3DNode.prototype
 
 
 
-
 /* harmony default export */ function X3DCast(type, node, innerNode = true)
 {
    try
@@ -61436,7 +61365,6 @@ X3DChildNode .prototype = Object .assign (Object .create (Core_X3DNode.prototype
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -61581,7 +61509,6 @@ X3DBoundedObject .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -62302,7 +62229,6 @@ function remove (array, first, last, range, rfirst, rlast)
 
 
 
-
 function X3DViewportNode (executionContext)
 {
    Grouping_X3DGroupingNode.call (this, executionContext);
@@ -62365,7 +62291,6 @@ X3DViewportNode .prototype = Object .assign (Object .create (Grouping_X3DGroupin
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -62548,7 +62473,6 @@ for (const key of Reflect .ownKeys (BindableStack .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -62757,7 +62681,6 @@ function equals (lhs, rhs)
 
 
 
-
 function X3DBindableNode (executionContext)
 {
    Core_X3DChildNode.call (this, executionContext);
@@ -62828,7 +62751,6 @@ X3DBindableNode .prototype = Object .assign (Object .create (Core_X3DChildNode.p
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -63239,7 +63161,6 @@ NavigationInfo .prototype = Object .assign (Object .create (Core_X3DBindableNode
 
 
 
-
 const Fogs = ObjectCache (FogContainer);
 
 function FogContainer ()
@@ -63414,7 +63335,6 @@ X3DFogObject .prototype =
 
 
 
-
 function Fog (executionContext)
 {
    Core_X3DBindableNode.call (this, executionContext);
@@ -63521,7 +63441,6 @@ Fog .prototype = Object .assign (Object .create (Core_X3DBindableNode.prototype)
  *
  ******************************************************************************/
 
-
 function VertexArray ()
 {
    this .vertexArray = null;
@@ -63620,7 +63539,6 @@ VertexArray .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -64835,7 +64753,6 @@ X3DGeometryNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
 
 
 
-
 function GeometryContext (options = { })
 {
    Object .assign (this,
@@ -65221,7 +65138,6 @@ BitSet .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -65882,7 +65798,6 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (Core_X3DBindableN
 
 
 
-
 function X3DAppearanceChildNode (executionContext)
 {
    Core_X3DNode.call (this, executionContext);
@@ -65945,7 +65860,6 @@ X3DAppearanceChildNode .prototype = Object .assign (Object .create (Core_X3DNode
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -66026,7 +65940,6 @@ X3DTextureNode .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -66216,7 +66129,6 @@ X3DSingleTextureNode .prototype = Object .assign (Object .create (Texturing_X3DT
 
 
 
-
 const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
 function X3DTexture2DNode (executionContext)
@@ -66390,7 +66302,6 @@ X3DTexture2DNode .prototype = Object .assign (Object .create (Texturing_X3DSingl
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -66628,7 +66539,6 @@ ImageTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
 
 
 
-
 function Background (executionContext)
 {
    EnvironmentalEffects_X3DBackgroundNode.call (this, executionContext);
@@ -66768,7 +66678,6 @@ Background .prototype = Object .assign (Object .create (EnvironmentalEffects_X3D
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -67146,7 +67055,6 @@ X3DLayerNode .prototype = Object .assign (Object .create (Core_X3DNode.prototype
 
 
 
-
 function X3DSensorNode (executionContext)
 {
    Core_X3DChildNode.call (this, executionContext);
@@ -67209,7 +67117,6 @@ X3DSensorNode .prototype = Object .assign (Object .create (Core_X3DChildNode.pro
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -67569,7 +67476,6 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (Core_X3DChildN
 
 
 
-
 function TimeSensor (executionContext)
 {
    Core_X3DSensorNode.call (this, executionContext);
@@ -67770,7 +67676,6 @@ TimeSensor .prototype = Object .assign (Object .create (Core_X3DSensorNode.proto
 
 
 
-
 function X3DInterpolatorNode (executionContext)
 {
    Core_X3DChildNode.call (this, executionContext);
@@ -67900,7 +67805,6 @@ X3DInterpolatorNode .prototype = Object .assign (Object .create (Core_X3DChildNo
 
 
 
-
 function EaseInEaseOut (executionContext)
 {
    Interpolation_X3DInterpolatorNode.call (this, executionContext);
@@ -67946,7 +67850,7 @@ EaseInEaseOut .prototype = Object .assign (Object .create (Interpolation_X3DInte
       let
          easeOut = this ._easeInEaseOut [index0] .y,
          easeIn  = this ._easeInEaseOut [index1] .x;
-      
+
       const sum = easeOut + easeIn;
 
       if (sum < 0)
@@ -68031,7 +67935,6 @@ EaseInEaseOut .prototype = Object .assign (Object .create (Interpolation_X3DInte
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -68145,7 +68048,6 @@ PositionInterpolator .prototype = Object .assign (Object .create (Interpolation_
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -68268,7 +68170,6 @@ OrientationInterpolator .prototype = Object .assign (Object .create (Interpolati
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -68749,7 +68650,6 @@ X3DViewpointNode .prototype = Object .assign (Object .create (Core_X3DBindableNo
 
 
 
-
 function ScalarInterpolator (executionContext)
 {
    Interpolation_X3DInterpolatorNode.call (this, executionContext);
@@ -68850,7 +68750,6 @@ ScalarInterpolator .prototype = Object .assign (Object .create (Interpolation_X3
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -69046,7 +68945,6 @@ Viewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpointNo
 
 
 
-
 function Group (executionContext)
 {
    Grouping_X3DGroupingNode.call (this, executionContext);
@@ -69131,7 +69029,6 @@ Group .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.prot
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -69238,7 +69135,6 @@ Layer .prototype = Object .assign (Object .create (Layering_X3DLayerNode.prototy
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -69450,7 +69346,6 @@ LayerSet .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -69731,7 +69626,6 @@ for (const key of Reflect .ownKeys (X3DWorld .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -70217,7 +70111,6 @@ for (const key of Reflect .ownKeys (FileLoader .prototype))
 
 
 
-
 Configuration_SupportedNodes.addAbstractType ("X3DExternProtoDeclaration", X3DExternProtoDeclaration);
 
 const
@@ -70537,7 +70430,6 @@ Object .defineProperty (X3DExternProtoDeclaration .prototype, "loadState",
 
 
 
-
 function RouteArray ()
 {
    return Base_X3DInfoArray.call (this);
@@ -70605,7 +70497,6 @@ for (const key of Reflect .ownKeys (RouteArray .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -70840,7 +70731,6 @@ Object .defineProperty (X3DRoute .prototype, "destinationField",
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -71849,7 +71739,6 @@ Object .defineProperty (X3DRoute .prototype, "destinationField",
 
 
 
-
 function ComponentInfo (name, level, title, providerUrl, dependencies)
 {
    this .name         = name;
@@ -71951,7 +71840,6 @@ for (const key of Reflect .ownKeys (ComponentInfo .prototype))
 
 
 
-
 function ComponentInfoArray (values)
 {
    return Base_X3DInfoArray.call (this, values);
@@ -72027,7 +71915,6 @@ for (const key of Reflect .ownKeys (ComponentInfoArray .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -72145,7 +72032,6 @@ Object .defineProperty (UnitInfo .prototype, "conversion_factor",
 
 
 
-
 function UnitInfoArray (values)
 {
    return Base_X3DInfoArray.call (this, values);
@@ -72213,7 +72099,6 @@ for (const key of Reflect .ownKeys (UnitInfoArray .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -72362,7 +72247,6 @@ Object .defineProperty (X3DExportedNode .prototype, "localNode",
 
 
 
-
 function ExportedNodesArray (array)
 {
    return Base_X3DInfoArray.call (this, array);
@@ -72430,7 +72314,6 @@ for (const key of Reflect .ownKeys (ExportedNodesArray .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -73031,7 +72914,6 @@ for (const key of Reflect .ownKeys (X3DScene .prototype))
 
 
 
-
 const
    Scene_browser        = Symbol .for ("X3DEventObject.browser"),
    _loadingObjects = Symbol ();
@@ -73313,7 +73195,6 @@ DataStorage .prototype = {
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -73925,7 +73806,6 @@ X3DCoreContext .prototype =
 
 
 
-
 function TextureProperties (executionContext)
 {
    Core_X3DNode.call (this, executionContext);
@@ -74128,7 +74008,6 @@ TextureProperties .prototype = Object .assign (Object .create (Core_X3DNode.prot
 
 
 
-
 const _backgroundTextureProperties = Symbol ();
 
 function X3DEnvironmentalEffectsContext () { }
@@ -74205,7 +74084,6 @@ X3DEnvironmentalEffectsContext .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -74583,7 +74461,6 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (Rendering_X
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -75076,7 +74953,6 @@ IndexedFaceSet .prototype = Object .assign (Object .create (Rendering_X3DCompose
 
 
 
-
 function X3DGeometricPropertyNode (executionContext)
 {
    Core_X3DNode.call (this, executionContext);
@@ -75139,7 +75015,6 @@ X3DGeometricPropertyNode .prototype = Object .assign (Object .create (Core_X3DNo
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -75330,7 +75205,6 @@ X3DCoordinateNode .prototype = Object .assign (Object .create (Rendering_X3DGeom
 
 
 
-
 function Coordinate (executionContext)
 {
    Rendering_X3DCoordinateNode.call (this, executionContext);
@@ -75415,7 +75289,6 @@ Coordinate .prototype = Object .assign (Object .create (Rendering_X3DCoordinateN
 
 
 
-
 function X3DTextureCoordinateNode (executionContext)
 {
    Rendering_X3DGeometricPropertyNode.call (this, executionContext);
@@ -75478,7 +75351,6 @@ X3DTextureCoordinateNode .prototype = Object .assign (Object .create (Rendering_
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -75576,7 +75448,6 @@ X3DSingleTextureCoordinateNode .prototype = Object .assign (Object .create (Text
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -75751,7 +75622,6 @@ TextureCoordinate .prototype = Object .assign (Object .create (Texturing_X3DSing
 
 
 
-
 function BoxOptions (executionContext)
 {
    Base_X3DBaseNode.call (this, executionContext);
@@ -75879,7 +75749,6 @@ BoxOptions .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototy
 
 
 
-
 function ConeOptions (executionContext)
 {
    Base_X3DBaseNode.call (this, executionContext);
@@ -75959,7 +75828,6 @@ ConeOptions .prototype = Object .assign (Object .create (Base_X3DBaseNode.protot
 
 
 
-
 function CylinderOptions (executionContext)
 {
    Base_X3DBaseNode.call (this, executionContext);
@@ -76035,7 +75903,6 @@ CylinderOptions .prototype = Object .assign (Object .create (Base_X3DBaseNode.pr
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -76336,7 +76203,6 @@ QuadSphereOptions .prototype = Object .assign (Object .create (Base_X3DBaseNode.
 
 
 
-
 function X3DGeometry3DContext () { }
 
 X3DGeometry3DContext .prototype =
@@ -76462,7 +76328,6 @@ function getOptionNode (key, OptionNode)
  *
  ******************************************************************************/
 
-
 let AlphaMode_i = 0;
 
 const AlphaMode =
@@ -76523,7 +76388,6 @@ const AlphaMode =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -77081,7 +76945,6 @@ QuickSort .prototype =
 
 
 
-
 function Shape (executionContext)
 {
    Shape_X3DShapeNode.call (this, executionContext);
@@ -77488,7 +77351,6 @@ Line2 .Points = function (point1, point2)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -78007,7 +77869,6 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (Rendering_X3DGe
 
 
 
-
 function IndexedLineSet (executionContext)
 {
    Rendering_X3DLineGeometryNode.call (this, executionContext);
@@ -78314,7 +78175,6 @@ IndexedLineSet .prototype = Object .assign (Object .create (Rendering_X3DLineGeo
 
 
 
-
 function X3DColorNode (executionContext)
 {
    Rendering_X3DGeometricPropertyNode.call (this, executionContext);
@@ -78390,7 +78250,6 @@ X3DColorNode .prototype = Object .assign (Object .create (Rendering_X3DGeometric
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -78549,7 +78408,6 @@ Color .prototype = Object .assign (Object .create (Rendering_X3DColorNode.protot
 
 
 
-
 const _bboxNode = Symbol ();
 
 function X3DGroupingContext () { }
@@ -78637,7 +78495,6 @@ X3DGroupingContext .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -78810,7 +78667,6 @@ Viewport .prototype = Object .assign (Object .create (Layering_X3DViewportNode.p
 
 
 
-
 const _defaultViewport = Symbol ();
 
 function X3DLayeringContext ()
@@ -78881,7 +78737,6 @@ X3DLayeringContext .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -78992,7 +78847,6 @@ X3DLightingContext .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -79313,7 +79167,6 @@ OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpo
 
 
 
-
 function X3DViewer (executionContext)
 {
    Base_X3DBaseNode.call (this, executionContext);
@@ -79511,7 +79364,6 @@ function tbProjectToSphere (r, x, y)
 
 
 
-
 function X3DFollowerNode (executionContext)
 {
    Core_X3DChildNode.call (this, executionContext);
@@ -79649,7 +79501,6 @@ X3DFollowerNode .prototype = Object .assign (Object .create (Core_X3DChildNode.p
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -79889,7 +79740,6 @@ X3DChaserNode .prototype = Object .assign (Object .create (Followers_X3DFollower
 
 
 
-
 function PositionChaser (executionContext)
 {
    Followers_X3DChaserNode.call (this, executionContext);
@@ -79978,7 +79828,6 @@ PositionChaser .prototype = Object .assign (Object .create (Followers_X3DChaserN
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -80115,8 +79964,7 @@ OrientationChaser .prototype = Object .assign (Object .create (Followers_X3DChas
 
 
 
-
-typeof jquery_mousewheel;
+typeof jquery_mousewheel; // import plugin
 
 const macOS = /Mac OS X/i .test (navigator .userAgent)
 
@@ -80921,8 +80769,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
 
 
 
-
-typeof X3DFlyViewer_jquery_mousewheel;
+typeof X3DFlyViewer_jquery_mousewheel; // import plugin
 
 const X3DFlyViewer_macOS = /Mac OS X/i .test (navigator .userAgent)
 
@@ -81640,7 +81487,6 @@ X3DFlyViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
 
 
 
-
 function WalkViewer (executionContext)
 {
    Navigation_X3DFlyViewer.call (this, executionContext);
@@ -81762,7 +81608,6 @@ WalkViewer .prototype = Object .assign (Object .create (Navigation_X3DFlyViewer.
 
 
 
-
 function FlyViewer (executionContext)
 {
    Navigation_X3DFlyViewer.call (this, executionContext);
@@ -81856,8 +81701,7 @@ FlyViewer .prototype = Object .assign (Object .create (Navigation_X3DFlyViewer.p
 
 
 
-
-typeof PlaneViewer_jquery_mousewheel;
+typeof PlaneViewer_jquery_mousewheel; // import plugin
 
 const PlaneViewer_macOS = /Mac OS X/i .test (navigator .userAgent)
 
@@ -82096,7 +81940,6 @@ PlaneViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.pr
 
 
 
-
 function NoneViewer (executionContext)
 {
    Navigation_X3DViewer.call (this, executionContext);
@@ -82174,8 +82017,7 @@ NoneViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.pro
 
 
 
-
-typeof LookAtViewer_jquery_mousewheel;
+typeof LookAtViewer_jquery_mousewheel; // import plugin
 
 const LookAtViewer_macOS = /Mac OS X/i .test (navigator .userAgent)
 
@@ -82680,7 +82522,6 @@ LookAtViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
 
 
 
-
 function X3DLightNode (executionContext)
 {
    Core_X3DChildNode.call (this, executionContext);
@@ -82889,7 +82730,6 @@ X3DLightNode .prototype = Object .assign (Object .create (Core_X3DChildNode.prot
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -83171,7 +83011,6 @@ DirectionalLight .prototype = Object .assign (Object .create (Lighting_X3DLightN
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -83519,7 +83358,6 @@ URLs .prototype =
 
 
 
-
 const
    _loadingTotal   = Symbol (),
    X3DNetworkingContext_loadingObjects = Symbol (),
@@ -83730,7 +83568,6 @@ X3DNetworkingContext .prototype =
 
 
 
-
 const
    _transformSensorNodes = Symbol (),
    _pickSensorNodes      = Symbol (),
@@ -83869,8 +83706,7 @@ X3DPickingContext .prototype =
 
 
 
-
-typeof PointingDevice_jquery_mousewheel;
+typeof PointingDevice_jquery_mousewheel; // import plugin
 
 const CONTEXT_MENU_TIME = 1200;
 
@@ -83906,7 +83742,7 @@ PointingDevice .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
    },
    mousewheel: function (event)
    {
-      // event .preventDefault () must be done in the several viewers.
+      // event .preventDefault () must be done in the all viewers.
    },
    mousedown: function (event)
    {
@@ -84151,7 +83987,6 @@ PointingDevice .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -84476,7 +84311,6 @@ X3DPointingDeviceSensorContext .prototype =
  *
  ******************************************************************************/
 
-
 const
    _viewport     = Symbol (),
    _localObjects = Symbol (),
@@ -84692,7 +84526,6 @@ X3DRenderingContext .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 const _scripts = Symbol ();
 
@@ -89563,7 +89396,6 @@ main ()
  *
  ******************************************************************************/
 
-
 /* WebGL 1 */
 
 
@@ -89750,7 +89582,6 @@ const Shaders = {
 
 
 
-
 function X3DShaderNode (executionContext)
 {
    Shape_X3DAppearanceChildNode.call (this, executionContext);
@@ -89841,7 +89672,6 @@ X3DShaderNode .prototype = Object .assign (Object .create (Shape_X3DAppearanceCh
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -91176,7 +91006,6 @@ function lcfirst (string)
 
 
 
-
 function X3DNetworkSensorNode (executionContext)
 {
    Core_X3DSensorNode.call (this, executionContext);
@@ -91239,7 +91068,6 @@ X3DNetworkSensorNode .prototype = Object .assign (Object .create (Core_X3DSensor
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -91481,7 +91309,6 @@ LoadSensor .prototype = Object .assign (Object .create (Networking_X3DNetworkSen
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -92026,7 +91853,6 @@ struct x3d_TextureCoordinateGeneratorParameters
  *
  ******************************************************************************/
 
-
 let ModeType_i = 0;
 
 const ModeType =
@@ -92104,7 +91930,6 @@ const ModeType =
  *
  ******************************************************************************/
 
-
 let SourceType_i = 0;
 
 const SourceType =
@@ -92166,7 +91991,6 @@ const SourceType =
  *
  ******************************************************************************/
 
-
 let FunctionType_i = 0;
 
 const FunctionType =
@@ -92226,7 +92050,6 @@ const FunctionType =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 let TextureCoordinateGeneratorModeType_i = 0;
 
@@ -92296,7 +92119,6 @@ const TextureCoordinateGeneratorModeType_ModeType =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -92506,7 +92328,6 @@ function depreciatedWarning (source, depreciated, current)
 
 
 
-
 const include = /^\s*#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;
 
 function ShaderCompiler (gl)
@@ -92604,7 +92425,6 @@ ShaderCompiler .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -92837,7 +92657,6 @@ ShaderPart .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
 
 
 
-
 const
    _wireframe      = Symbol (),
    _primitiveModes = Symbol (),
@@ -93031,7 +92850,6 @@ X3DShadersContext .prototype =
 
 
 
-
 function X3DAppearanceNode (executionContext)
 {
    Core_X3DNode.call (this, executionContext);
@@ -93107,7 +92925,6 @@ X3DAppearanceNode .prototype = Object .assign (Object .create (Core_X3DNode.prot
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -93530,7 +93347,6 @@ Appearance .prototype = Object .assign (Object .create (Shape_X3DAppearanceNode.
 
 
 
-
 function X3DMaterialNode (executionContext)
 {
    Shape_X3DAppearanceChildNode.call (this, executionContext);
@@ -93844,7 +93660,6 @@ X3DMaterialNode .prototype = Object .assign (Object .create (Shape_X3DAppearance
 
 
 
-
 function X3DOneSidedMaterialNode (executionContext)
 {
    Shape_X3DMaterialNode.call (this, executionContext);
@@ -94041,7 +93856,6 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (Shape_X3DMa
 
 
 
-
 function UnlitMaterial (executionContext)
 {
    Shape_X3DOneSidedMaterialNode.call (this, executionContext);
@@ -94165,7 +93979,6 @@ UnlitMaterial .prototype = Object .assign (Object .create (Shape_X3DOneSidedMate
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -94355,7 +94168,6 @@ X3DShapeContext .prototype =
 
 
 
-
 function X3DSoundContext ()
 {
    this .addChildObjects ("volume", new x_ite_Fields.SFFloat (1),
@@ -94418,7 +94230,6 @@ X3DSoundContext .prototype =
  *
  ******************************************************************************/
 
-
 let TextAlignment_i = 0;
 
 const TextAlignment =
@@ -94479,7 +94290,6 @@ const TextAlignment =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -95018,7 +94828,6 @@ Object .defineProperty (Box2 .prototype, "center",
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -95790,7 +95599,6 @@ function cubic (x0, y0, x1, y1, x2, y2, x3, y3, t)
 
 
 
-
 function PolygonText (text, fontStyle)
 {
    Text_X3DTextGeometry.call (this, text, fontStyle);
@@ -96160,7 +95968,6 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
 
 
 
-
 function FontStyle (executionContext)
 {
    Text_X3DFontStyleNode.call (this, executionContext);
@@ -96259,7 +96066,6 @@ FontStyle .prototype = Object .assign (Object .create (Text_X3DFontStyleNode.pro
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -96387,7 +96193,6 @@ X3DTextContext .prototype =
 
 
 
-
 function X3DTextureTransformNode (executionContext)
 {
    Shape_X3DAppearanceChildNode.call (this, executionContext);
@@ -96450,7 +96255,6 @@ X3DTextureTransformNode .prototype = Object .assign (Object .create (Shape_X3DAp
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -96542,7 +96346,6 @@ X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (Textu
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -96693,7 +96496,6 @@ TextureTransform .prototype = Object .assign (Object .create (Texturing_X3DSingl
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -97033,7 +96835,6 @@ X3DTexturingContext .prototype =
 
 
 
-
 const
    _currentTime      = Symbol (),
    _currentFrameRate = Symbol (),
@@ -97146,9 +96947,6 @@ X3DTimeContext .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
-
-
 
 const
    _taintedFields     = Symbol (),
@@ -97269,7 +97067,6 @@ X3DRoutingContext .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -97635,7 +97432,6 @@ Object .assign (X3DBrowserContext,
 
 
 
-
 function X3DMetadataObject (executionContext)
 {
    this .addType (Base_X3DConstants.X3DMetadataObject);
@@ -97698,7 +97494,6 @@ X3DMetadataObject .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -97797,7 +97592,6 @@ MetadataBoolean .prototype = Object .assign (Object .create (Core_X3DNode.protot
 
 
 
-
 function MetadataDouble (executionContext)
 {
    Core_X3DNode.call (this, executionContext);
@@ -97880,7 +97674,6 @@ MetadataDouble .prototype = Object .assign (Object .create (Core_X3DNode.prototy
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -97979,7 +97772,6 @@ MetadataFloat .prototype = Object .assign (Object .create (Core_X3DNode.prototyp
 
 
 
-
 function MetadataInteger (executionContext)
 {
    Core_X3DNode.call (this, executionContext);
@@ -98062,7 +97854,6 @@ MetadataInteger .prototype = Object .assign (Object .create (Core_X3DNode.protot
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -98161,7 +97952,6 @@ MetadataSet .prototype = Object .assign (Object .create (Core_X3DNode.prototype)
 
 
 
-
 function MetadataString (executionContext)
 {
    Core_X3DNode.call (this, executionContext);
@@ -98248,7 +98038,6 @@ MetadataString .prototype = Object .assign (Object .create (Core_X3DNode.prototy
 
 
 
-
 function X3DInfoNode (executionContext)
 {
    Core_X3DChildNode.call (this, executionContext);
@@ -98311,7 +98100,6 @@ X3DInfoNode .prototype = Object .assign (Object .create (Core_X3DChildNode.proto
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -98426,7 +98214,6 @@ WorldInfo .prototype = Object .assign (Object .create (Core_X3DInfoNode.prototyp
 
 
 
-
 const Types =
 {
    MetadataBoolean: Core_MetadataBoolean,
@@ -98505,7 +98292,6 @@ for (const typeName in AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -98655,7 +98441,6 @@ FogCoordinate .prototype = Object .assign (Object .create (Rendering_X3DGeometri
 
 
 
-
 function LocalFog (executionContext)
 {
    Core_X3DChildNode.call (this, executionContext);
@@ -98760,7 +98545,6 @@ LocalFog .prototype = Object .assign (Object .create (Core_X3DChildNode.prototyp
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -98911,7 +98695,6 @@ TextureBackground .prototype = Object .assign (Object .create (EnvironmentalEffe
 
 
 
-
 const EnvironmentalEffects_Types =
 {
    Background:        EnvironmentalEffects_Background,
@@ -98983,7 +98766,6 @@ for (const typeName in EnvironmentalEffects_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -99117,7 +98899,6 @@ X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (Core_X3D
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -99384,7 +99165,6 @@ ProximitySensor .prototype = Object .assign (Object .create (EnvironmentalSensor
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -99702,7 +99482,6 @@ TransformSensor .prototype = Object .assign (Object .create (EnvironmentalSensor
 
 
 
-
 function VisibilitySensor (executionContext)
 {
    EnvironmentalSensor_X3DEnvironmentalSensorNode.call (this, executionContext);
@@ -99864,7 +99643,6 @@ VisibilitySensor .prototype = Object .assign (Object .create (EnvironmentalSenso
 
 
 
-
 const EnvironmentalSensor_Types =
 {
    ProximitySensor:  EnvironmentalSensor_ProximitySensor,
@@ -99933,7 +99711,6 @@ for (const typeName in EnvironmentalSensor_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -100069,7 +99846,6 @@ ColorChaser .prototype = Object .assign (Object .create (Followers_X3DChaserNode
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -100245,7 +100021,6 @@ X3DDamperNode .prototype = Object .assign (Object .create (Followers_X3DFollower
 
 
 
-
 var
    ColorDamper_a                  = new Numbers_Vector3 (0, 0, 0),
    ColorDamper_initialValue       = new Numbers_Vector3 (0, 0, 0),
@@ -100370,7 +100145,6 @@ ColorDamper .prototype = Object .assign (Object .create (Followers_X3DDamperNode
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 /* harmony default export */ function X3DArrayFollowerTemplate(Type)
 {
@@ -100551,7 +100325,6 @@ ColorDamper .prototype = Object .assign (Object .create (Followers_X3DDamperNode
 
 
 
-
 /* harmony default export */ function X3DArrayChaserTemplate(Type)
 {
    const X3DArrayFollower = X3DArrayFollowerTemplate (Type);
@@ -100628,7 +100401,6 @@ ColorDamper .prototype = Object .assign (Object .create (Followers_X3DDamperNode
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -100739,7 +100511,6 @@ CoordinateChaser .prototype = Object .assign (Object .create (Followers_X3DChase
 
 
 
-
 var X3DArrayFollowerObject = X3DArrayFollowerTemplate (Followers_X3DDamperNode);
 
 function CoordinateDamper (executionContext)
@@ -100834,7 +100605,6 @@ CoordinateDamper .prototype = Object .assign (Object .create (Followers_X3DDampe
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -100961,7 +100731,6 @@ OrientationDamper .prototype = Object .assign (Object .create (Followers_X3DDamp
 
 
 
-
 function PositionChaser2D (executionContext)
 {
    Followers_X3DChaserNode.call (this, executionContext);
@@ -101050,7 +100819,6 @@ PositionChaser2D .prototype = Object .assign (Object .create (Followers_X3DChase
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -101157,7 +100925,6 @@ PositionDamper .prototype = Object .assign (Object .create (Followers_X3DDamperN
 
 
 
-
 function PositionDamper2D (executionContext)
 {
    Followers_X3DDamperNode.call (this, executionContext);
@@ -101248,7 +101015,6 @@ PositionDamper2D .prototype = Object .assign (Object .create (Followers_X3DDampe
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -101381,7 +101147,6 @@ ScalarChaser .prototype = Object .assign (Object .create (Followers_X3DChaserNod
 
 
 
-
 function ScalarDamper (executionContext)
 {
    Followers_X3DDamperNode.call (this, executionContext);
@@ -101497,7 +101262,6 @@ ScalarDamper .prototype = Object .assign (Object .create (Followers_X3DDamperNod
 
 
 
-
 var TexCoordChaser2D_X3DArrayChaserObject = X3DArrayChaserTemplate (Followers_X3DChaserNode);
 
 function TexCoordChaser2D (executionContext)
@@ -101590,7 +101354,6 @@ TexCoordChaser2D .prototype = Object .assign (Object .create (Followers_X3DChase
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -101713,7 +101476,6 @@ TexCoordDamper2D .prototype = Object .assign (Object .create (Followers_X3DDampe
 
 
 
-
 const Followers_Types =
 {
    ColorChaser:       Followers_ColorChaser,
@@ -101795,7 +101557,6 @@ for (const typeName in Followers_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -101937,7 +101698,6 @@ Box .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.proto
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -102174,7 +101934,6 @@ Cone .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.prot
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -102472,7 +102231,6 @@ Cylinder .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -102915,7 +102673,6 @@ ElevationGrid .prototype = Object .assign (Object .create (Rendering_X3DGeometry
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -103627,7 +103384,6 @@ Extrusion .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode
 
 
 
-
 function Sphere (executionContext)
 {
    Rendering_X3DGeometryNode.call (this, executionContext);
@@ -103764,7 +103520,6 @@ Sphere .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.pr
 
 
 
-
 const Geometry3D_Types =
 {
    Box:            Geometry3D_Box,
@@ -103836,7 +103591,6 @@ for (const typeName in Geometry3D_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -104148,7 +103902,6 @@ StaticGroup .prototype = Object .assign (Object .create (Core_X3DChildNode.proto
 
 
 
-
 function Switch (executionContext)
 {
    Grouping_X3DGroupingNode.call (this, executionContext);
@@ -104432,7 +104185,6 @@ Switch .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.pro
 
 
 
-
 function X3DTransformMatrix3DNode (executionContext)
 {
    Grouping_X3DGroupingNode.call (this, executionContext);
@@ -104580,7 +104332,6 @@ X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (Grouping_X
 
 
 
-
 function X3DTransformNode (executionContext)
 {
    Grouping_X3DTransformMatrix3DNode.call (this, executionContext);
@@ -104662,7 +104413,6 @@ X3DTransformNode .prototype = Object .assign (Object .create (Grouping_X3DTransf
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -104769,7 +104519,6 @@ Transform .prototype = Object .assign (Object .create (Grouping_X3DTransformNode
 
 
 
-
 const Grouping_Types =
 {
    Group:       Grouping_Group,
@@ -104842,7 +104591,6 @@ for (const typeName in Grouping_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -104971,7 +104719,6 @@ ColorInterpolator .prototype = Object .assign (Object .create (Interpolation_X3D
 
 
 
-
 function CoordinateInterpolator (executionContext)
 {
    Interpolation_X3DInterpolatorNode.call (this, executionContext);
@@ -105092,7 +104839,6 @@ CoordinateInterpolator .prototype = Object .assign (Object .create (Interpolatio
 
 
 
-
 function CoordinateInterpolator2D (executionContext)
 {
    Interpolation_X3DInterpolatorNode.call (this, executionContext);
@@ -105202,7 +104948,6 @@ CoordinateInterpolator2D .prototype = Object .assign (Object .create (Interpolat
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -105357,7 +105102,6 @@ NormalInterpolator .prototype = Object .assign (Object .create (Interpolation_X3
 
 
 
-
 function PositionInterpolator2D (executionContext)
 {
    Interpolation_X3DInterpolatorNode.call (this, executionContext);
@@ -105463,7 +105207,6 @@ PositionInterpolator2D .prototype = Object .assign (Object .create (Interpolatio
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -105651,7 +105394,6 @@ CatmullRomSplineInterpolator .prototype =
 
 
 
-
 /* harmony default export */ function CatmullRomSplineInterpolatorTemplate(Type)
 {
    const
@@ -105759,7 +105501,6 @@ CatmullRomSplineInterpolator .prototype =
 
 
 
-
 /* harmony default export */ const CatmullRomSplineInterpolator3 = (CatmullRomSplineInterpolatorTemplate (Numbers_Vector3));
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/SplinePositionInterpolator.js
@@ -105810,7 +105551,6 @@ CatmullRomSplineInterpolator .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -105950,7 +105690,6 @@ SplinePositionInterpolator .prototype = Object .assign (Object .create (Interpol
 
 
 
-
 /* harmony default export */ const CatmullRomSplineInterpolator2 = (CatmullRomSplineInterpolatorTemplate (Numbers_Vector2));
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/SplinePositionInterpolator2D.js
@@ -106001,7 +105740,6 @@ SplinePositionInterpolator .prototype = Object .assign (Object .create (Interpol
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -106140,7 +105878,6 @@ SplinePositionInterpolator2D .prototype = Object .assign (Object .create (Interp
 
 
 
-
 function CatmullRomSplineInterpolator1 ()
 {
    this .T0 = [ ];
@@ -106230,7 +105967,6 @@ CatmullRomSplineInterpolator1 .prototype = Object .assign (Object .create (Inter
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -106369,7 +106105,6 @@ SplineScalarInterpolator .prototype = Object .assign (Object .create (Interpolat
 
 
 
-
 const result = new Numbers_Rotation4 (0, 0, 1, 0);
 
 function SquatInterpolator ()
@@ -106478,7 +106213,6 @@ SquatInterpolator .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -106620,7 +106354,6 @@ SquadOrientationInterpolator .prototype = Object .assign (Object .create (Interp
 
 
 
-
 const Interpolation_Types =
 {
    ColorInterpolator:            Interpolation_ColorInterpolator,
@@ -106706,7 +106439,6 @@ for (const typeName in Interpolation_AbstractTypes)
 
 
 
-
 const Layering_Types =
 {
    Layer:    Layering_Layer,
@@ -106776,7 +106508,6 @@ for (const typeName in Layering_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -106920,7 +106651,7 @@ PointLightContainer .prototype =
 
       if (! this .shadowBuffer)
          return;
-         
+
       this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
       this .shadowMatrixArray .set (this .shadowMatrix);
    },
@@ -107108,7 +106839,6 @@ PointLight .prototype = Object .assign (Object .create (Lighting_X3DLightNode.pr
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -107471,7 +107201,6 @@ SpotLight .prototype = Object .assign (Object .create (Lighting_X3DLightNode.pro
 
 
 
-
 const Lighting_Types =
 {
    DirectionalLight: Lighting_DirectionalLight,
@@ -107540,7 +107269,6 @@ for (const typeName in Lighting_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -107727,7 +107455,6 @@ Billboard .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.
 
 
 
-
 function Collision (executionContext)
 {
    Grouping_X3DGroupingNode.call (this, executionContext);
@@ -107885,7 +107612,6 @@ Collision .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -108255,7 +107981,6 @@ LOD .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.protot
 
 
 
-
 function ViewpointGroup (executionContext)
 {
    Core_X3DChildNode.call (this, executionContext);
@@ -108501,7 +108226,6 @@ function traverse (type, renderObject)
 
 
 
-
 const Navigation_Types =
 {
    Billboard:      Navigation_Billboard,
@@ -108574,7 +108298,6 @@ for (const typeName in Navigation_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -108663,7 +108386,6 @@ PointingDeviceSensorContainer .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -108783,7 +108505,6 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (Core_X3
 
 
 
-
 function X3DTouchSensorNode (executionContext)
 {
    PointingDeviceSensor_X3DPointingDeviceSensorNode.call (this, executionContext);
@@ -108853,7 +108574,6 @@ X3DTouchSensorNode .prototype = Object .assign (Object .create (PointingDeviceSe
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -108966,7 +108686,6 @@ TouchSensor .prototype = Object .assign (Object .create (PointingDeviceSensor_X3
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -109181,7 +108900,6 @@ Anchor .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.pro
 
 
 
-
 function Inline (executionContext)
 {
    Core_X3DChildNode.call (this, executionContext);
@@ -109384,7 +109102,6 @@ Inline .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype)
 
 
 
-
 const Networking_Types =
 {
    Anchor:     Networking_Anchor,
@@ -109454,7 +109171,6 @@ for (const typeName in Networking_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -109687,7 +109403,6 @@ Cylinder3 .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -109979,7 +109694,6 @@ CylinderSensor .prototype = Object .assign (Object .create (PointingDeviceSensor
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -110486,7 +110200,6 @@ Sphere3 .prototype =
 
 
 
-
 function SphereSensor (executionContext)
 {
    PointingDeviceSensor_X3DDragSensorNode.call (this, executionContext);
@@ -110688,7 +110401,6 @@ SphereSensor .prototype = Object .assign (Object .create (PointingDeviceSensor_X
 
 
 
-
 const PointingDeviceSensor_Types =
 {
    CylinderSensor: PointingDeviceSensor_CylinderSensor,
@@ -110760,7 +110472,6 @@ for (const typeName in PointingDeviceSensor_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -110937,7 +110648,6 @@ ClipPlane .prototype = Object .assign (Object .create (Core_X3DChildNode.prototy
 
 
 
-
 function ColorRGBA (executionContext)
 {
    Rendering_X3DColorNode.call (this, executionContext);
@@ -111085,7 +110795,6 @@ ColorRGBA .prototype = Object .assign (Object .create (Rendering_X3DColorNode.pr
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -111246,7 +110955,6 @@ IndexedTriangleFanSet .prototype = Object .assign (Object .create (Rendering_X3D
 
 
 
-
 function IndexedTriangleSet (executionContext)
 {
    Rendering_X3DComposedGeometryNode.call (this, executionContext);
@@ -111350,7 +111058,6 @@ IndexedTriangleSet .prototype = Object .assign (Object .create (Rendering_X3DCom
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -111512,7 +111219,6 @@ IndexedTriangleStripSet .prototype = Object .assign (Object .create (Rendering_X
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -111762,7 +111468,6 @@ LineSet .prototype = Object .assign (Object .create (Rendering_X3DLineGeometryNo
 
 
 
-
 function X3DNormalNode (executionContext)
 {
    Rendering_X3DGeometricPropertyNode.call (this, executionContext);
@@ -111825,7 +111530,6 @@ X3DNormalNode .prototype = Object .assign (Object .create (Rendering_X3DGeometri
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -111977,7 +111681,6 @@ Normal .prototype = Object .assign (Object .create (Rendering_X3DNormalNode.prot
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -112225,7 +111928,6 @@ X3DPointGeometryNode_X3DLineGeometryNode .prototype = Object .assign (Object .cr
 
 
 
-
 function PointSet (executionContext)
 {
    X3DPointGeometryNode.call (this, executionContext);
@@ -112439,7 +112141,6 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode.proto
 
 
 
-
 function TriangleFanSet (executionContext)
 {
    Rendering_X3DComposedGeometryNode.call (this, executionContext);
@@ -112575,7 +112276,6 @@ TriangleFanSet .prototype = Object .assign (Object .create (Rendering_X3DCompose
 
 
 
-
 function TriangleSet (executionContext)
 {
    Rendering_X3DComposedGeometryNode.call (this, executionContext);
@@ -112674,7 +112374,6 @@ TriangleSet .prototype = Object .assign (Object .create (Rendering_X3DComposedGe
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -112837,7 +112536,6 @@ TriangleStripSet .prototype = Object .assign (Object .create (Rendering_X3DCompo
 
 
 
-
 const Rendering_Types =
 {
    ClipPlane:               Rendering_ClipPlane,
@@ -112928,7 +112626,6 @@ for (const typeName in Rendering_AbstractTypes)
 
 
 
-
 function X3DVertexAttributeNode (executionContext)
 {
    Rendering_X3DGeometricPropertyNode.call (this, executionContext);
@@ -113003,7 +112700,6 @@ X3DVertexAttributeNode .prototype = Object .assign (Object .create (Rendering_X3
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -113151,7 +112847,6 @@ FloatVertexAttribute .prototype = Object .assign (Object .create (Shaders_X3DVer
 
 
 
-
 function Matrix3VertexAttribute (executionContext)
 {
    Shaders_X3DVertexAttributeNode.call (this, executionContext);
@@ -113274,7 +112969,6 @@ Matrix3VertexAttribute .prototype = Object .assign (Object .create (Shaders_X3DV
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -113413,7 +113107,6 @@ Matrix4VertexAttribute .prototype = Object .assign (Object .create (Shaders_X3DV
 
 
 
-
 function PackagedShader (executionContext)
 {
    Shaders_X3DShaderNode.call (this, executionContext);
@@ -113518,7 +113211,6 @@ PackagedShader .prototype = Object .assign (Object .create (Shaders_X3DShaderNod
 
 
 
-
 function ProgramShader (executionContext)
 {
    Shaders_X3DShaderNode.call (this, executionContext);
@@ -113601,7 +113293,6 @@ ProgramShader .prototype = Object .assign (Object .create (Shaders_X3DShaderNode
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -113718,7 +113409,6 @@ ShaderProgram .prototype = Object .assign (Object .create (Core_X3DNode.prototyp
 
 
 
-
 const Shaders_Types =
 {
    ComposedShader:         Shaders_ComposedShader,
@@ -113794,7 +113484,6 @@ for (const typeName in Shaders_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -113885,7 +113574,6 @@ AcousticProperties .prototype = Object .assign (Object .create (Shape_X3DAppeara
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -114056,7 +113744,6 @@ FillProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
 
 
 
-
 function LineProperties (executionContext)
 {
    Shape_X3DAppearanceChildNode.call (this, executionContext);
@@ -114209,7 +113896,6 @@ LineProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -114598,7 +114284,6 @@ Material .prototype = Object .assign (Object .create (Shape_X3DOneSidedMaterialN
 
 
 
-
 function PhysicalMaterial (executionContext)
 {
    Shape_X3DOneSidedMaterialNode.call (this, executionContext);
@@ -114886,7 +114571,6 @@ PhysicalMaterial .prototype = Object .assign (Object .create (Shape_X3DOneSidedM
 
 
 
-
 function PointProperties (executionContext)
 {
    Shape_X3DAppearanceChildNode.call (this, executionContext);
@@ -115034,7 +114718,6 @@ PointProperties .prototype = Object .assign (Object .create (Shape_X3DAppearance
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -115331,7 +115014,6 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (Shape_X3DMaterialN
 
 
 
-
 const Shape_Types =
 {
    AcousticProperties: Shape_AcousticProperties,
@@ -115411,7 +115093,6 @@ for (const typeName in Shape_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -115643,7 +115324,6 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (Core_X3DChildNod
 
 
 
-
 function AudioClip (executionContext)
 {
    Sound_X3DSoundSourceNode.call (this, executionContext);
@@ -115834,7 +115514,6 @@ AudioClip .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.
 
 
 
-
 function X3DSoundNode (executionContext)
 {
    Core_X3DChildNode.call (this, executionContext);
@@ -115897,7 +115576,6 @@ X3DSoundNode .prototype = Object .assign (Object .create (Core_X3DChildNode.prot
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -116191,7 +115869,6 @@ Sound .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype)
 
 
 
-
 const Sound_Types =
 {
    AudioClip: Sound_AudioClip,
@@ -116260,7 +115937,6 @@ for (const typeName in Sound_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -116440,7 +116116,6 @@ Text .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.prot
 
 
 
-
 const Text_Types =
 {
    FontStyle: Text_FontStyle,
@@ -116509,7 +116184,6 @@ for (const typeName in Text_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -116750,7 +116424,6 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -117089,7 +116762,6 @@ MultiTexture .prototype = Object .assign (Object .create (Texturing_X3DTextureNo
 
 
 
-
 function MultiTextureCoordinate (executionContext)
 {
    Texturing_X3DTextureCoordinateNode.call (this, executionContext);
@@ -117278,7 +116950,6 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (Texturing_X3
 
 
 
-
 function MultiTextureTransform (executionContext)
 {
    Texturing_X3DTextureTransformNode.call (this, executionContext);
@@ -117422,7 +117093,6 @@ MultiTextureTransform .prototype = Object .assign (Object .create (Texturing_X3D
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -117703,7 +117373,6 @@ PixelTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
 
 
 
-
 function TextureCoordinateGenerator (executionContext)
 {
    Texturing_X3DSingleTextureCoordinateNode.call (this, executionContext);
@@ -117866,7 +117535,6 @@ TextureCoordinateGenerator .prototype = Object .assign (Object .create (Texturin
 
 
 
-
 const Texturing_Types =
 {
    ImageTexture:               Texturing_ImageTexture,
@@ -117952,7 +117620,6 @@ for (const typeName in Texturing_AbstractTypes)
 
 
 
-
 const Time_Types =
 {
    TimeSensor: Time_TimeSensor,
@@ -118019,7 +117686,6 @@ for (const typeName in Time_AbstractTypes)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -118142,7 +117808,6 @@ Components .prototype =
 
 
 
-
 function ProfileInfo (name, title, providerUrl, components)
 {
    this .name        = name;
@@ -118228,7 +117893,6 @@ for (const key of Reflect .ownKeys (ProfileInfo .prototype))
 
 
 
-
 function ProfileInfoArray (values)
 {
    return Base_X3DInfoArray.call (this, values);
@@ -118303,7 +117967,6 @@ for (const key of Reflect .ownKeys (ProfileInfoArray .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -118673,7 +118336,6 @@ SupportedComponents .addComponent (
 
 
 
-
 const SupportedProfiles = new Configuration_ProfileInfoArray ();
 
 SupportedProfiles .addProfile ({
@@ -118918,7 +118580,6 @@ SupportedProfiles .addProfile ({
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -119926,8 +119587,6 @@ performance .now = (function ()
  *
  ******************************************************************************/
 
-
-
 // Everything went wrong when the Error function is called.
 
 const Fallback =
@@ -120020,7 +119679,6 @@ const Fallback =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -120157,7 +119815,6 @@ for (const key of Reflect .ownKeys (DependentRenderer .prototype))
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -120968,7 +120625,6 @@ Namespace .set ("x_ite/Namespace", Namespace);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
