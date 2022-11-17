@@ -142,10 +142,10 @@ module .exports = async () =>
             onBuildEnd: {
                scripts: [
                   // Version
-                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite*.js`,
-                  `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite*.js`,
+                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.js`,
+                  `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite{,.min}.js`,
                   // Source Maps
-                  `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/x_ite*.js`,
+                  `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/x_ite{,.min}.js`,
                   // Debug
                   `perl -p0i -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEBUG.js`,
                   // Licenses
@@ -227,15 +227,15 @@ module .exports = async () =>
                onBuildEnd: {
                   scripts: [
                      // Version
-                     `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}*.js`,
-                     `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/assets/components/${name}*.js`,
+                     `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}{,.min}.js`,
+                     `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/assets/components/${name}{,.min}.js`,
                      // Source Maps
-                     `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/assets/components/${name}*.js`,
+                     `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/assets/components/${name}{,.min}.js`,
                      // Per component
                      ... {
                         Texturing3D: [
-                           `perl -p0i -e 's|("./index.js"\\).*?\\})|$1.bind({})|sg' dist/assets/components/${name}*.js`,
-                           `perl -p0i -e 's/[,;]*(var\\s+)?(CharLS|OpenJPEG)\\s*=\\s*function/;module.exports=function/sg' dist/assets/components/${name}*.js`,
+                           `perl -p0i -e 's|("./index.js"\\).*?\\})|$1.bind({})|sg' dist/assets/components/${name}{,.min}.js`,
+                           `perl -p0i -e 's/[,;]*(var\\s+)?(CharLS|OpenJPEG)\\s*=\\s*function/;module.exports=function/sg' dist/assets/components/${name}{,.min}.js`,
                         ],
                      }
                      [name] || [ ],
