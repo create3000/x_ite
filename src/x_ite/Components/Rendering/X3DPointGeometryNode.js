@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DGeometryNode from "./X3DGeometryNode.js";
 import ViewVolume      from "../../../standard/Math/Geometry/ViewVolume.js";
 import Box3            from "../../../standard/Math/Geometry/Box3.js";

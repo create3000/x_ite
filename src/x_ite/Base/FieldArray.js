@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DInfoArray from "./X3DInfoArray.js";
 
 function FieldArray ()

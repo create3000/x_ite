@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 /* WebGL 1 */
 import ClipPlanes1            from "../../../assets/shaders/webgl1/include/ClipPlanes.glsl.js";
 import Colors1                from "../../../assets/shaders/webgl1/include/Colors.glsl.js";

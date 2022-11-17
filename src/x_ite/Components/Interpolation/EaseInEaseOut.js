@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
@@ -98,7 +97,7 @@ EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .
       let
          easeOut = this ._easeInEaseOut [index0] .y,
          easeIn  = this ._easeInEaseOut [index1] .x;
-      
+
       const sum = easeOut + easeIn;
 
       if (sum < 0)

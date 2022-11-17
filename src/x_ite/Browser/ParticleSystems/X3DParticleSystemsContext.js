@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import PointEmitter from "../../Components/ParticleSystems/PointEmitter.js";
 
 const

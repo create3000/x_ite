@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Types                              from "../../../assets/shaders/Types.glsl.js";
 import MultiTextureModeType               from "../Texturing/ModeType.js";
 import MultiTextureSourceType             from "../Texturing/SourceType.js";

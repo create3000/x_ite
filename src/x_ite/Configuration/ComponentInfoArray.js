@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import ComponentInfo from "./ComponentInfo.js";
 import X3DInfoArray  from "../Base/X3DInfoArray.js";
 

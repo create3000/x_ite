@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DCast                   from "../../Base/X3DCast.js";
 import Fields                    from "../../Fields.js";
 import X3DFieldDefinition        from "../../Base/X3DFieldDefinition.js";

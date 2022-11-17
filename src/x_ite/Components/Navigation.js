@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes   from "../Configuration/SupportedNodes.js";
 import Billboard        from "./Navigation/Billboard.js";
 import Collision        from "./Navigation/Collision.js";

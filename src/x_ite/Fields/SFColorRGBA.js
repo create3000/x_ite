@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DField     from "../Base/X3DField.js";
 import SFColor      from "./SFColor.js";
 import X3DConstants from "../Base/X3DConstants.js";

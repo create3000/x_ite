@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields                    from "../Fields.js";
 import X3DParser                 from "./X3DParser.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
@@ -56,7 +55,6 @@ import X3DConstants              from "../Base/X3DConstants.js";
 /*
  *  Grammar
  */
-
 
 //	Comment out scriptBody function fragments
 //

@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes   from "../Configuration/SupportedNodes.js";
 import DirectionalLight from "./Lighting/DirectionalLight.js";
 import PointLight       from "./Lighting/PointLight.js";

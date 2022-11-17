@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import PixelTexture          from "../../Components/Texturing/PixelTexture.js";
 import TextureProperties     from "../../Components/Texturing/TextureProperties.js";
 import OpacityMapVolumeStyle from "../../Components/VolumeRendering/OpacityMapVolumeStyle.js";

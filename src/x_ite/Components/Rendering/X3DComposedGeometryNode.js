@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DGeometryNode from "./X3DGeometryNode.js";
 import X3DCast         from "../../Base/X3DCast.js";
 import X3DConstants    from "../../Base/X3DConstants.js";

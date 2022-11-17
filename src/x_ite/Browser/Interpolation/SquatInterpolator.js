@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
 
 const result = new Rotation4 (0, 0, 1, 0);

@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DParser  from "./X3DParser.js";
 import JSONParser from "./JSONParser.js";
 import VRMLParser from "./VRMLParser.js";

@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes          from "../Configuration/SupportedNodes.js";
 import AcousticProperties      from "./Shape/AcousticProperties.js";
 import Appearance              from "./Shape/Appearance.js";

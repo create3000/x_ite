@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes                 from "../Configuration/SupportedNodes.js";
 import ImageTexture                   from "./Texturing/ImageTexture.js";
 import MovieTexture                   from "./Texturing/MovieTexture.js";

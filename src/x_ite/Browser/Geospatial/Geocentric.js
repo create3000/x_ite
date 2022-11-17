@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Vector3   from "../../../standard/Math/Numbers/Vector3.js";
 import Algorithm from "../../../standard/Math/Algorithm.js";
 

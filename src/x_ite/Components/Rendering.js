@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes           from "../Configuration/SupportedNodes.js";
 import ClipPlane                from "./Rendering/ClipPlane.js";
 import Color                    from "./Rendering/Color.js";

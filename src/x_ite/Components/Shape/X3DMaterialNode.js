@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields                 from "../../Fields.js";
 import X3DAppearanceChildNode from "./X3DAppearanceChildNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";

@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DObject       from "../Base/X3DObject.js";
 import Fields          from "../Fields.js";
 import GoldenGate      from "../Parser/GoldenGate.js";

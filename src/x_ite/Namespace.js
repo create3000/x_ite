@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import jquery1                                from "../lib/jquery.js";
 import gettext1                               from "../locale/gettext.js";
 import shim1                                  from "../shim.js";

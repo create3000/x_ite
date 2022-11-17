@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DFollowerNode from "./X3DFollowerNode.js";
 import X3DConstants    from "../../Base/X3DConstants.js";
 

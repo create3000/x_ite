@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes          from "../Configuration/SupportedNodes.js";
 import Fields                  from "../Fields.js";
 import X3DFieldDefinition      from "../Base/X3DFieldDefinition.js";

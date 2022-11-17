@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DAppearanceChildNode from "../Shape/X3DAppearanceChildNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 

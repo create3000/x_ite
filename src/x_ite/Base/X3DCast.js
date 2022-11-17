@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields from "../Fields.js";
 
 export default function (type, node, innerNode = true)

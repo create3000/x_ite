@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DField from "./X3DField.js";
 
 function X3DArrayField (value)

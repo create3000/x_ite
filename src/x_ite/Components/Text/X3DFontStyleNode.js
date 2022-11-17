@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields        from "../../Fields.js";
 import X3DNode       from "../Core/X3DNode.js";
 import X3DUrlObject  from "../Networking/X3DUrlObject.js";

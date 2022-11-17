@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes   from "../Configuration/SupportedNodes.js";
 import FontStyle        from "./Text/FontStyle.js";
 import Text             from "./Text/Text.js";

@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import TextureBuffer from "../../Rendering/TextureBuffer.js";
 
 const

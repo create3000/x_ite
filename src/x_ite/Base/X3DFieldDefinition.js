@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DObject from "./X3DObject.js";
 
 function X3DFieldDefinition (accessType, name, value)

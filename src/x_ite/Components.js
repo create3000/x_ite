@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DBrowserContext    from "./Browser/X3DBrowserContext.js";
 import SupportedNodes       from "./Configuration/SupportedNodes.js";
 import Core                 from "./Components/Core.js";

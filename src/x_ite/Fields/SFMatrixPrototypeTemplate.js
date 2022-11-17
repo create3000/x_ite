@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DField from "../Base/X3DField.js";
 
 export default function (Matrix, SFVec, double)

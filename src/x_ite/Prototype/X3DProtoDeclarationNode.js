@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes       from "../Configuration/SupportedNodes.js";
 import Fields               from "../Fields.js";
 import X3DBaseNode          from "../Base/X3DBaseNode.js";

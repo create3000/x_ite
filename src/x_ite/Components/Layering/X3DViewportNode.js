@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DGroupingNode from "../Grouping/X3DGroupingNode.js";
 import X3DConstants    from "../../Base/X3DConstants.js";
 

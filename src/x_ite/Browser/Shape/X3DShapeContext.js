@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Appearance        from "../../Components/Shape/Appearance.js";
 import UnlitMaterial     from "../../Components/Shape/UnlitMaterial.js";
 import ImageTexture      from "../../Components/Texturing/ImageTexture.js";

@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes             from "../Configuration/SupportedNodes.js";
 import ProximitySensor            from "./EnvironmentalSensor/ProximitySensor.js";
 import TransformSensor            from "./EnvironmentalSensor/TransformSensor.js";

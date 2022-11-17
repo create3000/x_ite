@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DInfoArray from "../Base/X3DInfoArray.js";
 
 function ImportedNodesArray (array)

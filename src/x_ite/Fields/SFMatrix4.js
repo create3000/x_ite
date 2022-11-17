@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DField                  from "../Base/X3DField.js";
 import SFMatrixPrototypeTemplate from "./SFMatrixPrototypeTemplate.js";
 import SFVec3                    from "./SFVec3.js";

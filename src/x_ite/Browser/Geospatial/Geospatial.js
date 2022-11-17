@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import ReferenceEllipsoids         from "../../../standard/Geospatial/ReferenceEllipsoids.js";
 import Geodetic                    from "../../../standard/Geospatial/Geodetic.js";
 import UniversalTransverseMercator from "../../../standard/Geospatial/UniversalTransverseMercator.js";

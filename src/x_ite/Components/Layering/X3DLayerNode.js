@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DNode         from "../Core/X3DNode.js";
 import X3DRenderObject from "../../Rendering/X3DRenderObject.js";
 import X3DViewportNode from "./X3DViewportNode.js";

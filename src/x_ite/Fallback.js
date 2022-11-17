@@ -46,8 +46,6 @@
  *
  ******************************************************************************/
 
-
-
 // Everything went wrong when the Error function is called.
 
 const Fallback =

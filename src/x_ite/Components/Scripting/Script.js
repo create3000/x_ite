@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DFieldDefinition          from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray        from "../../Base/FieldDefinitionArray.js";
 import X3DField                    from "../../Base/X3DField.js";

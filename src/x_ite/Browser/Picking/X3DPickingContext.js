@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import TraverseType from "../../Rendering/TraverseType.js";
 
 const

@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DChildNode from "../Core/X3DChildNode.js";
 import X3DUrlObject from "../Networking/X3DUrlObject.js";
 import X3DConstants from "../../Base/X3DConstants.js";

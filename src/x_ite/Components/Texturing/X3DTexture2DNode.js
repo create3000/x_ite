@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DSingleTextureNode from "./X3DSingleTextureNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 

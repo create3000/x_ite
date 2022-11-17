@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields              from "../../Fields.js";
 import Context             from "./Context.js";
 import BrowserTimings      from "./BrowserTimings.js";

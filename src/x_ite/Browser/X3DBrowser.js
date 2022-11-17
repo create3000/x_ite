@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import VERSION             from "./VERSION.js";
 import Fields              from "../Fields.js";
 import Components          from "../Components.js";

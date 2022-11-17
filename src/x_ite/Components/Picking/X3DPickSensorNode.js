@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields           from "../../Fields.js";
 import X3DSensorNode    from "../Core/X3DSensorNode.js";
 import TraverseType     from "../../Rendering/TraverseType.js";

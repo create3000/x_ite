@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import SFVec3       from "./SFVec3.js";
 import X3DField     from "../Base/X3DField.js";
 import X3DConstants from "../Base/X3DConstants.js";

@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes       from "../Configuration/SupportedNodes.js";
 import MetadataBoolean      from "./Core/MetadataBoolean.js";
 import MetadataDouble       from "./Core/MetadataDouble.js";

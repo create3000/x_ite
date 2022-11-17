@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes  from "../Configuration/SupportedNodes.js";
 import Layer           from "./Layering/Layer.js";
 import LayerSet        from "./Layering/LayerSet.js";

@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DGeometryNode from "./X3DGeometryNode.js";
 import VertexArray     from "../../Rendering/VertexArray.js";
 import ViewVolume      from "../../../standard/Math/Geometry/ViewVolume.js";

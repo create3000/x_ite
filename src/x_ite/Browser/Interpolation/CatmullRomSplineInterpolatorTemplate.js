@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import CatmullRomSplineInterpolator from "./CatmullRomSplineInterpolator.js";
 
 export default function (Type)

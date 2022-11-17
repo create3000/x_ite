@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import TextureProperties from "../../Components/Texturing/TextureProperties.js";
 
 const _backgroundTextureProperties = Symbol ();

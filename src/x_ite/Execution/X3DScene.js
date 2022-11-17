@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes      from "../Configuration/SupportedNodes.js";
 import Fields              from "../Fields.js";
 import X3DExecutionContext from "./X3DExecutionContext.js";

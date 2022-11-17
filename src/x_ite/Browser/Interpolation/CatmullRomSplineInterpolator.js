@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
 

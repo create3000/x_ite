@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DBaseNode    from "../../Base/X3DBaseNode.js";
 import OrthoViewpoint from "../../Components/Navigation/OrthoViewpoint.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";

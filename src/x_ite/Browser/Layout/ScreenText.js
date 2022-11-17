@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DTextGeometry from "../Text/X3DTextGeometry.js";
 import TextAlignment   from "../Text/TextAlignment.js";
 import PixelTexture    from "../../Components/Texturing/PixelTexture.js";

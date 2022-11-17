@@ -46,9 +46,6 @@
  *
  ******************************************************************************/
 
-
-
-
 const
    _taintedFields     = Symbol (),
    _taintedFieldsTemp = Symbol (),

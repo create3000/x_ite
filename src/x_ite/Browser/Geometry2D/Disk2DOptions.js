@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DBaseNode     from "../../Base/X3DBaseNode.js";
 import Fields          from "../../Fields.js";
 import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";

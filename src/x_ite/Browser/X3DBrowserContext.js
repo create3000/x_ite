@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import SFTime                         from "../Fields/SFTime.js";
 import X3DBaseNode                    from "../Base/X3DBaseNode.js";
 import X3DCoreContext                 from "./Core/X3DCoreContext.js";

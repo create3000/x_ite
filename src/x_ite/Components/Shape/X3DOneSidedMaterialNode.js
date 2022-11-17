@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields          from "../../Fields.js";
 import X3DMaterialNode from "./X3DMaterialNode.js";
 import X3DCast         from "../../Base/X3DCast.js";

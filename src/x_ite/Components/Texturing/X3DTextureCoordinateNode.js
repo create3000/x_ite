@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DGeometricPropertyNode from "../Rendering/X3DGeometricPropertyNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 

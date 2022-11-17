@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import TextureBuffer from "./TextureBuffer.js";
 import TraverseType  from "./TraverseType.js";
 import Algorithm     from "../../standard/Math/Algorithm.js";

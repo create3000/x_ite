@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DBaseNode from "../../Base/X3DBaseNode.js";
 
 typeof jquery_mousewheel; // import plugin

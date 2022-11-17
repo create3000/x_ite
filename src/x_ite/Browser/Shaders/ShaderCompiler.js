@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Shaders from "./Shaders.js";
 
 const include = /^\s*#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;

@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DConstants from "../../Base/X3DConstants.js";
 import Geospatial   from "../../Browser/Geospatial/Geospatial.js";
 import X3DCast      from "../../Base/X3DCast.js";

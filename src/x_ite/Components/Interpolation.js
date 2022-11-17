@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes               from "../Configuration/SupportedNodes.js";
 import ColorInterpolator            from "./Interpolation/ColorInterpolator.js";
 import CoordinateInterpolator       from "./Interpolation/CoordinateInterpolator.js";

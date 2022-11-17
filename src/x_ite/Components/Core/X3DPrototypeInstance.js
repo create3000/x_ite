@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DChildObject      from "../../Base/X3DChildObject.js";
 import X3DNode             from "./X3DNode.js";
 import X3DExecutionContext from "../../Execution/X3DExecutionContext.js";

@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Viewport from "../../Components/Layering/Viewport.js";
 
 const _defaultViewport = Symbol ();

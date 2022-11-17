@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Arc2DOptions       from "./Arc2DOptions.js";
 import ArcClose2DOptions  from "./ArcClose2DOptions.js";
 import Circle2DOptions    from "./Circle2DOptions.js";

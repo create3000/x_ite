@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DObject from "../Base/X3DObject.js";
 
 function ProfileInfo (name, title, providerUrl, components)

@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DViewer         from "./X3DViewer.js";
 import OrientationChaser from "../../Components/Followers/OrientationChaser.js";
 import GeometryContext   from "../Rendering/GeometryContext.js";

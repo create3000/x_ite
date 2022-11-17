@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes    from "../Configuration/SupportedNodes.js";
 import Background        from "./EnvironmentalEffects/Background.js";
 import Fog               from "./EnvironmentalEffects/Fog.js";

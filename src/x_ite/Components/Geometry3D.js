@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes from "../Configuration/SupportedNodes.js";
 import Box            from "./Geometry3D/Box.js";
 import Cone           from "./Geometry3D/Cone.js";

@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes              from "../Configuration/SupportedNodes.js";
 import ComposedShader              from "./Shaders/ComposedShader.js";
 import FloatVertexAttribute        from "./Shaders/FloatVertexAttribute.js";

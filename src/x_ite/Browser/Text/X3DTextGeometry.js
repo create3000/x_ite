@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import TextAlignment from "./TextAlignment.js";
 import Box2          from "../../../standard/Math/Geometry/Box2.js";
 import Box3          from "../../../standard/Math/Geometry/Box3.js";

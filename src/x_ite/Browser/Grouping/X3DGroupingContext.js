@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields         from "../../Fields.js";
 import Shape          from "../../Components/Shape/Shape.js";
 import IndexedLineSet from "../../Components/Rendering/IndexedLineSet.js";

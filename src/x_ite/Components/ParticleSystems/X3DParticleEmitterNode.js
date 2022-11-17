@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DNode       from "../Core/X3DNode.js";
 import GeometryTypes from "../../Browser/ParticleSystems/GeometryTypes.js";
 import X3DConstants  from "../../Base/X3DConstants.js";

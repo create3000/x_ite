@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes       from "../Configuration/SupportedNodes.js";
 import TimeSensor           from "./Time/TimeSensor.js";
 import X3DTimeDependentNode from "./Time/X3DTimeDependentNode.js";

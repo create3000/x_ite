@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DConstants from "../../Base/X3DConstants.js";
 
 function X3DPickableObject (executionContext)

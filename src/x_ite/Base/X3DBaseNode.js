@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DEventObject       from "./X3DEventObject.js";
 import X3DFieldDefinition   from "./X3DFieldDefinition.js";
 import FieldDefinitionArray from "./FieldDefinitionArray.js";

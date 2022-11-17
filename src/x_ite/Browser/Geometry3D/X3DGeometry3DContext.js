@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import BoxOptions        from "./BoxOptions.js";
 import ConeOptions       from "./ConeOptions.js";
 import CylinderOptions   from "./CylinderOptions.js";

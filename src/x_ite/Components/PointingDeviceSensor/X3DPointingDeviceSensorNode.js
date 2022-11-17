@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DSensorNode                 from "../Core/X3DSensorNode.js";
 import PointingDeviceSensorContainer from "../../Browser/PointingDeviceSensor/PointingDeviceSensorContainer.js";
 import X3DConstants                  from "../../Base/X3DConstants.js";

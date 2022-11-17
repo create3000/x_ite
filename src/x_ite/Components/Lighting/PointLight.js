@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
@@ -189,7 +188,7 @@ PointLightContainer .prototype =
 
       if (! this .shadowBuffer)
          return;
-         
+
       this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
       this .shadowMatrixArray .set (this .shadowMatrix);
    },

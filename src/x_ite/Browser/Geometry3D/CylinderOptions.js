@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields      from "../../Fields.js";
 import X3DBaseNode from "../../Base/X3DBaseNode.js";
 

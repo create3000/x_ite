@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields   from "../Fields.js";
 import X3DScene from "./X3DScene.js";
 

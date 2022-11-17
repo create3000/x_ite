@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import PrimitiveQuality from "../Core/PrimitiveQuality.js";
 import X3DTextGeometry  from "./X3DTextGeometry.js";
 import X3DGeometryNode  from "../../Components/Rendering/X3DGeometryNode.js";

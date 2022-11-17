@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes       from "../Configuration/SupportedNodes.js";
 import Anchor               from "./Networking/Anchor.js";
 import Inline               from "./Networking/Inline.js";

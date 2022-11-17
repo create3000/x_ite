@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 export default function (Type)
 {
    function X3DArrayFollowerObject ()

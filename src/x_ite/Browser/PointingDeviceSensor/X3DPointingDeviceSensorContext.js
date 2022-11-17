@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import PointingDevice from "./PointingDevice.js";
 import TraverseType   from "../../Rendering/TraverseType.js";
 import Line3          from "../../../standard/Math/Geometry/Line3.js";

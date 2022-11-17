@@ -48,7 +48,6 @@
  *
  ******************************************************************************/
 
-
 import XMLParser from "./XMLParser.js";
 import X3DParser from "./X3DParser.js";
 

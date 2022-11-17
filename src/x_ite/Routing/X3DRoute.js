@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DObject    from "../Base/X3DObject.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import SFNodeCache  from "../Fields/SFNodeCache.js";

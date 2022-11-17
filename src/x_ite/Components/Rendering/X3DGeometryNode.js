@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields       from "../../Fields.js";
 import VertexArray  from "../../Rendering/VertexArray.js";
 import X3DNode      from "../Core/X3DNode.js";

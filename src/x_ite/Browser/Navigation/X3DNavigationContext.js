@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Fields           from "../../Fields.js";
 import ExamineViewer    from "./ExamineViewer.js";
 import WalkViewer       from "./WalkViewer.js";

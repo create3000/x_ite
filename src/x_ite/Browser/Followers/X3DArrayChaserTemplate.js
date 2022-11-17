@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DArrayFollowerTemplate from "./X3DArrayFollowerTemplate.js";
 
 export default function (Type)

@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 export default function (globalObject, sourceText)
 {
    return Function (/* js */ `with (arguments [0])

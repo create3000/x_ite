@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";
 
 function GeometryContext (options = { })

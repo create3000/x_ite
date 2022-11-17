@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import UnlitMaterial from "../../Components/Shape/UnlitMaterial.js";
 import vs            from "./VolumeStyle.vs.js";
 import fs            from "./VolumeStyle.fs.js";

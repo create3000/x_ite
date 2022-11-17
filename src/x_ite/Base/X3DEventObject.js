@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DChildObject from "./X3DChildObject.js";
 import Events         from "./Events.js";
 

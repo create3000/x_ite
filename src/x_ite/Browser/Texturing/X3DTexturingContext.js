@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import TextureProperties from "../../Components/Texturing/TextureProperties.js";
 import TextureTransform  from "../../Components/Texturing/TextureTransform.js";
 import TextureCoordinate from "../../Components/Texturing/TextureCoordinate.js";

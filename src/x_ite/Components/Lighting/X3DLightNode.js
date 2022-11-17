@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DChildNode from "../Core/X3DChildNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";

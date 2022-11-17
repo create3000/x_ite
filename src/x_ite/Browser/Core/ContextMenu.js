@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import X3DBaseNode from "../../Base/X3DBaseNode.js";
 import _           from "../../../locale/gettext.js";
 

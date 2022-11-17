@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import SFBool      from "./Fields/SFBool.js";
 import SFColor     from "./Fields/SFColor.js";
 import SFColorRGBA from "./Fields/SFColorRGBA.js";

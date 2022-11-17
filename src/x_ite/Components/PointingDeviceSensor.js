@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import SupportedNodes              from "../Configuration/SupportedNodes.js";
 import CylinderSensor              from "./PointingDeviceSensor/CylinderSensor.js";
 import PlaneSensor                 from "./PointingDeviceSensor/PlaneSensor.js";
