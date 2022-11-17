@@ -56,6 +56,8 @@ import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4           from "../../../standard/Math/Numbers/Matrix4.js";
 import Camera            from "../../../standard/Math/Geometry/Camera.js";
 
+typeof jquery_mousewheel; // import plugin
+
 const macOS = /Mac OS X/i .test (navigator .userAgent)
 
 const

@@ -377,6 +377,430 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
+/***/ 40:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+/* provided dependency */ var jQuery = __webpack_require__(755);
+/**
+ * @preserve jquery.fullscreen 1.1.5
+ * https://github.com/code-lts/jquery-fullscreen-plugin
+ * Copyright (C) 2012-2013 Klaus Reimer <k@ailis.de>
+ * Licensed under the MIT license
+ * (See http://www.opensource.org/licenses/mit-license)
+ */
+
+(function(jQuery) {
+
+/**
+ * Sets or gets the fullscreen state.
+ *
+ * @param {boolean=} state
+ *            True to enable fullscreen mode, false to disable it. If not
+ *            specified then the current fullscreen state is returned.
+ * @return {boolean|Element|jQuery|null}
+ *            When querying the fullscreen state then the current fullscreen
+ *            element (or true if browser doesn't support it) is returned
+ *            when browser is currently in full screen mode. False is returned
+ *            if browser is not in full screen mode. Null is returned if
+ *            browser doesn't support fullscreen mode at all. When setting
+ *            the fullscreen state then the current jQuery selection is
+ *            returned for chaining.
+ * @this {jQuery}
+ */
+function fullScreen(state)
+{
+    var e, func, doc;
+
+    // Do nothing when nothing was selected
+    if (!this.length) return this;
+
+    // We only use the first selected element because it doesn't make sense
+    // to fullscreen multiple elements.
+    e = (/** @type {Element} */ this[0]);
+
+    // Find the real element and the document (Depends on whether the
+    // document itself or a HTML element was selected)
+    if (e.ownerDocument)
+    {
+        doc = e.ownerDocument;
+    }
+    else
+    {
+        doc = e;
+        e = doc.documentElement;
+    }
+
+    // When no state was specified then return the current state.
+    if (state == null)
+    {
+        // When fullscreen mode is not supported then return null
+        if (!((/** @type {?Function} */ doc["exitFullscreen"])
+            || (/** @type {?Function} */ doc["webkitExitFullscreen"])
+            || (/** @type {?Function} */ doc["webkitCancelFullScreen"])
+            || (/** @type {?Function} */ doc["msExitFullscreen"])
+            || (/** @type {?Function} */ doc["mozCancelFullScreen"])))
+        {
+            return null;
+        }
+
+        // Check fullscreen state
+        state = fullScreenState(doc);
+        if (!state) return state;
+
+        // Return current fullscreen element or "true" if browser doesn't
+        // support this
+        return (/** @type {?Element} */ doc["fullscreenElement"])
+            || (/** @type {?Element} */ doc["webkitFullscreenElement"])
+            || (/** @type {?Element} */ doc["webkitCurrentFullScreenElement"])
+            || (/** @type {?Element} */ doc["msFullscreenElement"])
+            || (/** @type {?Element} */ doc["mozFullScreenElement"])
+            || state;
+    }
+
+    // When state was specified then enter or exit fullscreen mode.
+    if (state)
+    {
+        // Enter fullscreen
+        func = (/** @type {?Function} */ e["requestFullscreen"])
+            || (/** @type {?Function} */ e["webkitRequestFullscreen"])
+            || (/** @type {?Function} */ e["webkitRequestFullScreen"])
+            || (/** @type {?Function} */ e["msRequestFullscreen"])
+            || (/** @type {?Function} */ e["mozRequestFullScreen"]);
+        if (func)
+        {
+            func.call(e);
+        }
+        return this;
+    }
+    else
+    {
+        // Exit fullscreen
+        func = (/** @type {?Function} */ doc["exitFullscreen"])
+            || (/** @type {?Function} */ doc["webkitExitFullscreen"])
+            || (/** @type {?Function} */ doc["webkitCancelFullScreen"])
+            || (/** @type {?Function} */ doc["msExitFullscreen"])
+            || (/** @type {?Function} */ doc["mozCancelFullScreen"]);
+        if (func && fullScreenState(doc)) func.call(doc);
+        return this;
+    }
+}
+
+/**
+ * Check fullscreen state
+ *
+ * @param {Document} doc The content document
+ * @return {Boolean}
+ */
+function fullScreenState(doc) {
+    return !!(doc["fullscreenElement"] || doc["msFullscreenElement"] || doc["webkitIsFullScreen"] || doc["mozFullScreen"]);
+}
+
+/**
+ * Toggles the fullscreen mode.
+ *
+ * @return {!jQuery}
+ *            The jQuery selection for chaining.
+ * @this {jQuery}
+ */
+function toggleFullScreen()
+{
+    return (/** @type {!jQuery} */ fullScreen.call(this,
+        !fullScreen.call(this)));
+}
+
+/**
+ * Handles the browser-specific fullscreenchange event and triggers
+ * a jquery event for it.
+ *
+ * @param {?Event} event
+ *            The fullscreenchange event.
+ */
+function fullScreenChangeHandler(event)
+{
+    jQuery(document).trigger(new jQuery.Event("fullscreenchange"));
+}
+
+/**
+ * Handles the browser-specific fullscreenerror event and triggers
+ * a jquery event for it.
+ *
+ * @param {?Event} event
+ *            The fullscreenerror event.
+ */
+function fullScreenErrorHandler(event)
+{
+    jQuery(document).trigger(new jQuery.Event("fullscreenerror"));
+}
+
+/**
+ * Installs the fullscreenchange event handler.
+ */
+function installFullScreenHandlers()
+{
+    var e, change, error;
+
+    // Determine event name
+    e = document;
+    if (e["webkitCancelFullScreen"])
+    {
+        change = "webkitfullscreenchange";
+        error = "webkitfullscreenerror";
+    }
+    else if (e["msExitFullscreen"])
+    {
+        change = "MSFullscreenChange";
+        error = "MSFullscreenError";
+    }
+    else if (e["mozCancelFullScreen"])
+    {
+        change = "mozfullscreenchange";
+        error = "mozfullscreenerror";
+    }
+    else
+    {
+        change = "fullscreenchange";
+        error = "fullscreenerror";
+    }
+
+    // Install the event handlers
+    jQuery(document).bind(change, fullScreenChangeHandler);
+    jQuery(document).bind(error, fullScreenErrorHandler);
+}
+
+jQuery.fn["fullScreen"] = fullScreen;
+jQuery.fn["toggleFullScreen"] = toggleFullScreen;
+installFullScreenHandlers();
+
+})(jQuery);
+
+
+/***/ }),
+
+/***/ 450:
+/***/ ((module, exports, __webpack_require__) => {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * jQuery Mousewheel 3.1.13
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license
+ * http://jquery.org/license
+ */
+
+(function (factory) {
+    if ( true ) {
+        // AMD. Register as an anonymous module.
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(755)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else {}
+}(function ($) {
+
+    var toFix  = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'],
+        toBind = ( 'onwheel' in document || document.documentMode >= 9 ) ?
+                    ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'],
+        slice  = Array.prototype.slice,
+        nullLowestDeltaTimeout, lowestDelta;
+
+    if ( $.event.fixHooks ) {
+        for ( var i = toFix.length; i; ) {
+            $.event.fixHooks[ toFix[--i] ] = $.event.mouseHooks;
+        }
+    }
+
+    var special = $.event.special.mousewheel = {
+        version: '3.1.12',
+
+        setup: function() {
+            if ( this.addEventListener ) {
+                for ( var i = toBind.length; i; ) {
+                    this.addEventListener( toBind[--i], handler, false );
+                }
+            } else {
+                this.onmousewheel = handler;
+            }
+            // Store the line height and page height for this particular element
+            $.data(this, 'mousewheel-line-height', special.getLineHeight(this));
+            $.data(this, 'mousewheel-page-height', special.getPageHeight(this));
+        },
+
+        teardown: function() {
+            if ( this.removeEventListener ) {
+                for ( var i = toBind.length; i; ) {
+                    this.removeEventListener( toBind[--i], handler, false );
+                }
+            } else {
+                this.onmousewheel = null;
+            }
+            // Clean up the data we added to the element
+            $.removeData(this, 'mousewheel-line-height');
+            $.removeData(this, 'mousewheel-page-height');
+        },
+
+        getLineHeight: function(elem) {
+            var $elem = $(elem),
+                $parent = $elem['offsetParent' in $.fn ? 'offsetParent' : 'parent']();
+            if (!$parent.length) {
+                $parent = $('body');
+            }
+            return parseInt($parent.css('fontSize'), 10) || parseInt($elem.css('fontSize'), 10) || 16;
+        },
+
+        getPageHeight: function(elem) {
+            return $(elem).height();
+        },
+
+        settings: {
+            adjustOldDeltas: true, // see shouldAdjustOldDeltas() below
+            normalizeOffset: true  // calls getBoundingClientRect for each event
+        }
+    };
+
+    $.fn.extend({
+        mousewheel: function(fn) {
+            return fn ? this.bind('mousewheel', fn) : this.trigger('mousewheel');
+        },
+
+        unmousewheel: function(fn) {
+            return this.unbind('mousewheel', fn);
+        }
+    });
+
+
+    function handler(event) {
+        var orgEvent   = event || window.event,
+            args       = slice.call(arguments, 1),
+            delta      = 0,
+            deltaX     = 0,
+            deltaY     = 0,
+            absDelta   = 0,
+            offsetX    = 0,
+            offsetY    = 0;
+        event = $.event.fix(orgEvent);
+        event.type = 'mousewheel';
+
+        // Old school scrollwheel delta
+        if ( 'detail'      in orgEvent ) { deltaY = orgEvent.detail * -1;      }
+        if ( 'wheelDelta'  in orgEvent ) { deltaY = orgEvent.wheelDelta;       }
+        if ( 'wheelDeltaY' in orgEvent ) { deltaY = orgEvent.wheelDeltaY;      }
+        if ( 'wheelDeltaX' in orgEvent ) { deltaX = orgEvent.wheelDeltaX * -1; }
+
+        // Firefox < 17 horizontal scrolling related to DOMMouseScroll event
+        if ( 'axis' in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
+            deltaX = deltaY * -1;
+            deltaY = 0;
+        }
+
+        // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatabilitiy
+        delta = deltaY === 0 ? deltaX : deltaY;
+
+        // New school wheel delta (wheel event)
+        if ( 'deltaY' in orgEvent ) {
+            deltaY = orgEvent.deltaY * -1;
+            delta  = deltaY;
+        }
+        if ( 'deltaX' in orgEvent ) {
+            deltaX = orgEvent.deltaX;
+            if ( deltaY === 0 ) { delta  = deltaX * -1; }
+        }
+
+        // No change actually happened, no reason to go any further
+        if ( deltaY === 0 && deltaX === 0 ) { return; }
+
+        // Need to convert lines and pages to pixels if we aren't already in pixels
+        // There are three delta modes:
+        //   * deltaMode 0 is by pixels, nothing to do
+        //   * deltaMode 1 is by lines
+        //   * deltaMode 2 is by pages
+        if ( orgEvent.deltaMode === 1 ) {
+            var lineHeight = $.data(this, 'mousewheel-line-height');
+            delta  *= lineHeight;
+            deltaY *= lineHeight;
+            deltaX *= lineHeight;
+        } else if ( orgEvent.deltaMode === 2 ) {
+            var pageHeight = $.data(this, 'mousewheel-page-height');
+            delta  *= pageHeight;
+            deltaY *= pageHeight;
+            deltaX *= pageHeight;
+        }
+
+        // Store lowest absolute delta to normalize the delta values
+        absDelta = Math.max( Math.abs(deltaY), Math.abs(deltaX) );
+
+        if ( !lowestDelta || absDelta < lowestDelta ) {
+            lowestDelta = absDelta;
+
+            // Adjust older deltas if necessary
+            if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
+                lowestDelta /= 40;
+            }
+        }
+
+        // Adjust older deltas if necessary
+        if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
+            // Divide all the things by 40!
+            delta  /= 40;
+            deltaX /= 40;
+            deltaY /= 40;
+        }
+
+        // Get a whole, normalized value for the deltas
+        delta  = Math[ delta  >= 1 ? 'floor' : 'ceil' ](delta  / lowestDelta);
+        deltaX = Math[ deltaX >= 1 ? 'floor' : 'ceil' ](deltaX / lowestDelta);
+        deltaY = Math[ deltaY >= 1 ? 'floor' : 'ceil' ](deltaY / lowestDelta);
+
+        // Normalise offsetX and offsetY properties
+        if ( special.settings.normalizeOffset && this.getBoundingClientRect ) {
+            var boundingRect = this.getBoundingClientRect();
+            offsetX = event.clientX - boundingRect.left;
+            offsetY = event.clientY - boundingRect.top;
+        }
+
+        // Add information to the event object
+        event.deltaX = deltaX;
+        event.deltaY = deltaY;
+        event.deltaFactor = lowestDelta;
+        event.offsetX = offsetX;
+        event.offsetY = offsetY;
+        // Go ahead and set deltaMode to 0 since we converted to pixels
+        // Although this is a little odd since we overwrite the deltaX/Y
+        // properties with normalized deltas.
+        event.deltaMode = 0;
+
+        // Add event and delta to the front of the arguments
+        args.unshift(event, delta, deltaX, deltaY);
+
+        // Clearout lowestDelta after sometime to better
+        // handle multiple device types that give different
+        // a different lowestDelta
+        // Ex: trackpad = 3 and mouse wheel = 120
+        if (nullLowestDeltaTimeout) { clearTimeout(nullLowestDeltaTimeout); }
+        nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200);
+
+        return ($.event.dispatch || $.event.handle).apply(this, args);
+    }
+
+    function nullLowestDelta() {
+        lowestDelta = null;
+    }
+
+    function shouldAdjustOldDeltas(orgEvent, absDelta) {
+        // If this is an older event and the delta is divisable by 120,
+        // then we are assuming that the browser is treating this as an
+        // older mouse wheel event and that we should divide the deltas
+        // by 40 to try and get a more usable deltaFactor.
+        // Side note, this actually impacts the reported scroll distance
+        // in older browsers and can cause scrolling to be slower than native.
+        // Turn this off by setting $.event.special.mousewheel.settings.adjustOldDeltas to false.
+        return special.settings.adjustOldDeltas && orgEvent.type === 'mousewheel' && absDelta % 120 === 0;
+    }
+
+}));
+
+
+/***/ }),
+
 /***/ 755:
 /***/ (function(module, exports) {
 
@@ -48760,23 +49184,8 @@ Notification .prototype = Object .assign (Object .create (Base_X3DBaseNode.proto
 
 /* harmony default export */ const Core_Notification = (Notification);
 
-;// CONCATENATED MODULE: ./src/lib/jquery.fullscreen-min.js
-/* provided dependency */ var jQuery = __webpack_require__(755);
-
-/*
- jquery.fullscreen 1.1.5
- https://github.com/kayahr/jquery-fullscreen-plugin
- Copyright (C) 2012-2013 Klaus Reimer <k@ailis.de>
- Licensed under the MIT license
- (See http://www.opensource.org/licenses/mit-license)
-*/
-function d(c){var b,a;if(!this.length)return this;b=this[0];b.ownerDocument?a=b.ownerDocument:(a=b,b=a.documentElement);if(null==c){if(!a.exitFullscreen&&!a.webkitExitFullscreen&&!a.webkitCancelFullScreen&&!a.msExitFullscreen&&!a.mozCancelFullScreen)return null;c=!!a.fullscreenElement||!!a.msFullscreenElement||!!a.webkitIsFullScreen||!!a.mozFullScreen;return!c?c:a.fullscreenElement||a.webkitFullscreenElement||a.webkitCurrentFullScreenElement||a.msFullscreenElement||a.mozFullScreenElement||c}c?(c=
-b.requestFullscreen||b.webkitRequestFullscreen||b.webkitRequestFullScreen||b.msRequestFullscreen||b.mozRequestFullScreen)&&c.call(b):(c=a.exitFullscreen||a.webkitExitFullscreen||a.webkitCancelFullScreen||a.msExitFullscreen||a.mozCancelFullScreen)&&c.call(a);return this}jQuery.fn.fullScreen=d;jQuery.fn.toggleFullScreen=function(){return d.call(this,!d.call(this))};var jquery_fullscreen_min_e,f,jquery_fullscreen_min_g;jquery_fullscreen_min_e=document;
-jquery_fullscreen_min_e.webkitCancelFullScreen?(f="webkitfullscreenchange",jquery_fullscreen_min_g="webkitfullscreenerror"):jquery_fullscreen_min_e.msExitFullscreen?(f="MSFullscreenChange",jquery_fullscreen_min_g="MSFullscreenError"):jquery_fullscreen_min_e.mozCancelFullScreen?(f="mozfullscreenchange",jquery_fullscreen_min_g="mozfullscreenerror"):(f="fullscreenchange",jquery_fullscreen_min_g="fullscreenerror");jQuery(document).bind(f,function(){jQuery(document).trigger(new jQuery.Event("fullscreenchange"))});jQuery(document).bind(jquery_fullscreen_min_g,function(){jQuery(document).trigger(new jQuery.Event("fullscreenerror"))});
-
-/* harmony default export */ const jquery_fullscreen_min = ((/* unused pure expression or super */ null && (undefined)));
-
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(40);
 /* provided dependency */ var ContextMenu_$ = __webpack_require__(755);
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -48830,6 +49239,7 @@ jquery_fullscreen_min_e.webkitCancelFullScreen?(f="webkitfullscreenchange",jquer
 
 
 
+typeof jquery_fullscreen;
 
 const _userMenu = Symbol ();
 
@@ -48896,10 +49306,8 @@ ContextMenu .prototype = Object .assign (Object .create (Base_X3DBaseNode.protot
    build: function (event)
    {
       const
-         browser          = this .getBrowser (),
-         activeLayer      = browser .getActiveLayer (),
-         currentViewpoint = activeLayer ? activeLayer .getViewpoint () : null,
-         fullscreen       = browser .getElement () .fullScreen ();
+         browser    = this .getBrowser (),
+         fullscreen = browser .getElement () .fullScreen ();
 
       if (! browser .getBrowserOptions () .getContextMenu ())
          return;
@@ -79646,6 +80054,7 @@ OrientationChaser .prototype = Object .assign (Object .create (Followers_X3DChas
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(450);
 /* provided dependency */ var ExamineViewer_$ = __webpack_require__(755);
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -79706,6 +80115,8 @@ OrientationChaser .prototype = Object .assign (Object .create (Followers_X3DChas
 
 
 
+
+typeof jquery_mousewheel;
 
 const macOS = /Mac OS X/i .test (navigator .userAgent)
 
@@ -80451,6 +80862,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(450);
 /* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(755);
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -80509,6 +80921,8 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
 
 
 
+
+typeof X3DFlyViewer_jquery_mousewheel;
 
 const X3DFlyViewer_macOS = /Mac OS X/i .test (navigator .userAgent)
 
@@ -81385,6 +81799,7 @@ FlyViewer .prototype = Object .assign (Object .create (Navigation_X3DFlyViewer.p
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(450);
 /* provided dependency */ var PlaneViewer_$ = __webpack_require__(755);
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -81441,6 +81856,8 @@ FlyViewer .prototype = Object .assign (Object .create (Navigation_X3DFlyViewer.p
 
 
 
+
+typeof PlaneViewer_jquery_mousewheel;
 
 const PlaneViewer_macOS = /Mac OS X/i .test (navigator .userAgent)
 
@@ -81696,6 +82113,7 @@ NoneViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.pro
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(450);
 /* provided dependency */ var LookAtViewer_$ = __webpack_require__(755);
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -81756,6 +82174,8 @@ NoneViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.pro
 
 
 
+
+typeof LookAtViewer_jquery_mousewheel;
 
 const LookAtViewer_macOS = /Mac OS X/i .test (navigator .userAgent)
 
@@ -83397,6 +83817,7 @@ X3DPickingContext .prototype =
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(450);
 /* provided dependency */ var PointingDevice_$ = __webpack_require__(755);
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -83448,6 +83869,8 @@ X3DPickingContext .prototype =
 
 
 
+
+typeof PointingDevice_jquery_mousewheel;
 
 const CONTEXT_MENU_TIME = 1200;
 

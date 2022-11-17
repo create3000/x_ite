@@ -651,6 +651,14 @@ END OF TERMS AND CONDITIONS
  * Date: 2022-08-26T17:52Z
  */
 
+/*!
+ * jQuery Mousewheel 3.1.13
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license
+ * http://jquery.org/license
+ */
+
 /*! https://mths.be/codepointat v0.2.0 by @mathias */
 
 /*! pako 2.1.0 https://github.com/nodeca/pako @license (MIT AND Zlib) */
@@ -683,5 +691,13 @@ END OF TERMS AND CONDITIONS
  * Inc. The Original Code is Copyright (c) 1991-2000 Silicon Graphics, Inc.
  * Copyright in any portions created by third parties is as indicated
  * elsewhere herein. All Rights Reserved.
+ */
+
+/**
+ * @preserve jquery.fullscreen 1.1.5
+ * https://github.com/code-lts/jquery-fullscreen-plugin
+ * Copyright (C) 2012-2013 Klaus Reimer <k@ailis.de>
+ * Licensed under the MIT license
+ * (See http://www.opensource.org/licenses/mit-license)
  */
 ```

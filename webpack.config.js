@@ -44,11 +44,11 @@ module .exports = async () =>
             {
                test: /\.css$/,
                use: [
-                  MiniCssExtractPlugin.loader,
+                  MiniCssExtractPlugin .loader,
                   {
                      loader: "css-loader",
                      options: {
-                        url: false
+                        url: false,
                      },
                   },
                ],
@@ -122,6 +122,7 @@ module .exports = async () =>
          new webpack .ProvidePlugin ({
             $: "jquery",
             jQuery: "jquery",
+            jquery_fullscreen: "jquery-fullscreen-plugin/jquery.fullscreen.js",
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             opentype: "opentype.js/dist/opentype.js",
@@ -233,7 +234,7 @@ module .exports = async () =>
                      // Per component
                      ... {
                         Texturing3D: [
-                           `perl -p0i -e 's|("./index.js"\\).*?\\})|$1.bind({})|sg' dist/assets/components/${name}*.js`,
+                           //`perl -p0i -e 's|("./index.js"\\).*?\\})|$1.bind({})|sg' dist/assets/components/${name}*.js`,
                            `perl -p0i -e 's/[,;]*(var\\s+)?(CharLS|OpenJPEG)\\s*=\\s*function/;module.exports=function/sg' dist/assets/components/${name}*.js`,
                         ],
                      }

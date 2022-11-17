@@ -49,6 +49,8 @@
 
 import X3DBaseNode from "../../Base/X3DBaseNode.js";
 
+typeof jquery_mousewheel; // import plugin
+
 const CONTEXT_MENU_TIME = 1200;
 
 function PointingDevice (executionContext)
@@ -83,7 +85,7 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    },
    mousewheel: function (event)
    {
-      // event .preventDefault () must be done in the several viewers.
+      // event .preventDefault () must be done in the all viewers.
    },
    mousedown: function (event)
    {

@@ -54,6 +54,8 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DViewer            from "./X3DViewer.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
+typeof jquery_mousewheel; // import plugin
+
 const macOS = /Mac OS X/i .test (navigator .userAgent)
 
 const SCROLL_FACTOR = macOS ? 1 / 160 : 1 / 20;

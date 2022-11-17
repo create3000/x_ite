@@ -47,9 +47,10 @@
  ******************************************************************************/
 
 
-import X3DBaseNode      from "../../Base/X3DBaseNode.js";
-import _                from "../../../locale/gettext.js";
-import jqueryFullscreen from "../../../lib/jquery.fullscreen-min.js";
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import _           from "../../../locale/gettext.js";
+
+typeof jquery_fullscreen; // import plugin
 
 const _userMenu = Symbol ();
 
@@ -116,10 +117,8 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
    build: function (event)
    {
       const
-         browser          = this .getBrowser (),
-         activeLayer      = browser .getActiveLayer (),
-         currentViewpoint = activeLayer ? activeLayer .getViewpoint () : null,
-         fullscreen       = browser .getElement () .fullScreen ();
+         browser    = this .getBrowser (),
+         fullscreen = browser .getElement () .fullScreen ();
 
       if (! browser .getBrowserOptions () .getContextMenu ())
          return;
