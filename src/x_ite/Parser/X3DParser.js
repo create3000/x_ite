@@ -144,7 +144,7 @@ X3DParser .prototype = {
             if (!providerUrl .match (componentsUrl))
                continue;
 
-            if (typeof global === "object" && typeof global .require === "function")
+            if (typeof global === "object" && typeof global .require === "function" && typeof __filename === "string")
                global .require (global .require ("url") .fileURLToPath (providerUrl))
             else
                await import (/* webpackIgnore: true */ providerUrl);

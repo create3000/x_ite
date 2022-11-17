@@ -10,10 +10,19 @@ namespace:
 compile:
 	npx webpack
 
+.SILENT:copy-files
+copy-files:
+	rsync -q -r -x -c -v -t --progress --delete src/assets/fonts    dist/assets/
+	rsync -q -r -x -c -v -t --progress --delete src/assets/hatching dist/assets/
+	rsync -q -r -x -c -v -t --progress --delete src/assets/images   dist/assets/
+	rsync -q -r -x -c -v -t --progress --delete src/assets/linetype dist/assets/
+	cp src/example.html dist/
+
 .SILENT:html
 html:
 	cp src/x_ite.html x_ite.min.html
-	perl -p0i -e 's|<!-- X_ITE START.*?X_ITE END -->|<script src="dist/x_ite.js"></script>\n   <script src="https://code.jquery.com/jquery-3.6.1.js"></script>|sg' x_ite.min.html
+	perl -p0i -e 's|<!-- X_ITE START.*?X_ITE END -->|<script src="dist/x_ite.min.js"></script>|sg'      x_ite.min.html
+	perl -p0i -e 's|<!-- JQUERY -->|<script src="https://code.jquery.com/jquery-3.6.1.js"></script>|sg' x_ite.min.html
 	perl -pi -e 's|import\s+X3D\s.*?\n||sg'                  x_ite.min.html
 	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'        x_ite.min.html
 	perl -pi -e 's|\.\./x_ite.min.html|src/x_ite.html|sg'    x_ite.min.html
@@ -25,17 +34,9 @@ html:
 	perl -pi -e 's|"tests.js"|"src/tests.js"|sg'             x_ite.min.html
 	perl -pi -e 's|"tests/|"src/tests/|sg'                   x_ite.min.html
 
-.SILENT:copy-files
-copy-files:
-	rsync -q -r -x -c -v -t --progress --delete src/assets/fonts    dist/assets/
-	rsync -q -r -x -c -v -t --progress --delete src/assets/hatching dist/assets/
-	rsync -q -r -x -c -v -t --progress --delete src/assets/images   dist/assets/
-	rsync -q -r -x -c -v -t --progress --delete src/assets/linetype dist/assets/
-	cp src/example.html dist/
-
 .SILENT:zip
 zip:
-	$(eval VERSION=$(shell npm pkg get version | sed 's/"//g'))
+	$(eval VERSION=$(shell npm pkg get version | sed 's/"g'))
 	cp -r dist x_ite-$(VERSION)
 	zip -q -x "*.zip" -r x_ite-$(VERSION).zip x_ite-$(VERSION)
 	mv x_ite-$(VERSION).zip dist/x_ite.zip

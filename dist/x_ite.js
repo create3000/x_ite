@@ -53101,7 +53101,7 @@ X3DParser .prototype = {
             if (!providerUrl .match (componentsUrl))
                continue;
 
-            if (typeof __webpack_require__.g === "object" && typeof __webpack_require__.g .require === "function")
+            if (typeof __webpack_require__.g === "object" && typeof __webpack_require__.g .require === "function" && typeof __filename === "string")
                __webpack_require__.g .require (__webpack_require__.g .require ("url") .fileURLToPath (providerUrl))
             else
                await import (/* webpackIgnore: true */ providerUrl);
