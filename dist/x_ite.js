@@ -117627,34 +117627,42 @@ Components .prototype =
 {
    addComponent: function ({ name, types, abstractTypes, browserContext, exports })
    {
-      const X3D = window [Symbol .for ("X_ITE.X3D-7.0.0")];
+      const
+         X3D       = window [Symbol .for ("X_ITE.X3D-7.0.0")],
+         Namespace = X3D .require ("x_ite/Namespace");
 
       if (types)
       {
-         for (const typeName in types)
-            Configuration_SupportedNodes.addType (typeName, types [typeName]);
+         for (const [typeName, type] of Object .entries (types))
+         {
+            Configuration_SupportedNodes.addType (typeName, type);
+            Namespace .set (`x_ite/Components/${name}/${typeName}`, type);
+         }
       }
 
       if (abstractTypes)
       {
-         for (const typeName in abstractTypes)
-            Configuration_SupportedNodes.addAbstractType (typeName, abstractTypes [typeName]);
+         for (const [typeName, type] of Object .entries (abstractTypes))
+         {
+            Configuration_SupportedNodes.addAbstractType (typeName, type);
+            Namespace .set (`x_ite/Components/${name}/${typeName}`, type);
+         }
       }
 
       if (browserContext)
+      {
          Browser_X3DBrowserContext.addBrowserContext (browserContext);
+         Namespace .set (`x_ite/Browser/${name}/X3D${name}Context`, browserContext);
+      }
 
       if (exports)
       {
-         for (const name in exports)
-            X3D .require ("x_ite/Namespace") .set (name, exports [name]);
+         for (const [name, type] of Object .entries (exports))
+            Namespace .set (name, type);
       }
 
-      if (name)
-      {
-         if (DEBUG)
-            console .info ("Done loading external component '" + name + "'.");
-      }
+      if (DEBUG)
+         console .info (`Done loading external component '${name}'.`);
    },
 };
 

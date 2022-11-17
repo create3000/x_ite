@@ -140,13 +140,14 @@ module .exports = async () =>
             },
             onBuildEnd: {
                scripts: [
+                  // Version
+                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite*.js`,
+                  `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite*.js`,
+                  // Source Maps
+                  `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/x_ite*.js`,
+                  // Debug
                   `perl -p0i -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEBUG.js`,
-                  `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/x_ite.js`,
-                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.js`,
-                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.min.js`,
-                  `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.js`,
-                  `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.min.js`,
-                  // LICENSES
+                  // Licenses
                   `cp LICENSE.md dist/LICENSE.md`,
                   `echo '\`\`\`' >> dist/LICENSE.md`,
                   `cat dist/x_ite.min.js.LICENSE.txt >> dist/LICENSE.md`,
@@ -165,11 +166,6 @@ module .exports = async () =>
          maxAssetSize: 10_000_000,
       },
    })
-
-   const plugins = {
-      RigidBodyPhysics: { },
-      Texturing3D: { },
-   }
 
    for (const filename of fs .readdirSync ("./src/assets/components/"))
    {
@@ -203,11 +199,21 @@ module .exports = async () =>
             ],
          },
          plugins: [
-            new webpack .ProvidePlugin (Object .assign (plugins [name] || { },
-            {
+            new webpack .ProvidePlugin ({
                $: path .resolve (__dirname, "src/lib/jquery.js"),
                jQuery: path .resolve (__dirname, "src/lib/jquery.js"),
-            })),
+               // Per component
+               ... {
+                  Texturing3D: {
+                     CharLS: "CharLS.js/build/charLS-FixedMemory-browser.js",
+                     dicomParser: "dicom-parser/dist/dicomParser.js",
+                     jpeg: "jpeg-lossless-decoder-js/release/current/lossless.js",
+                     OpenJPEG: "OpenJPEG.js/build/openJPEG-FixedMemory-browser.js",
+                     JpegImage: "jpeg-js/lib/decoder.js",
+                  },
+               }
+               [name] || { },
+            }),
             new WebpackShellPluginNext ({
                logging: false,
                onBuildStart: {
@@ -219,10 +225,19 @@ module .exports = async () =>
                },
                onBuildEnd: {
                   scripts: [
-                     `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}.js`,
-                     `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}.min.js`,
-                     `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/assets/components/${name}.js`,
-                     `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/assets/components/${name}.min.js`,
+                     // Version
+                     `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}*.js`,
+                     `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/assets/components/${name}*.js`,
+                     // Source Maps
+                     `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/assets/components/${name}*.js`,
+                     // Per component
+                     ... {
+                        Texturing3D: [
+                           `perl -p0i -e 's|("./index.js"\\).*?\\})|$1.bind({})|sg' dist/assets/components/${name}*.js`,
+                           `perl -p0i -e 's/[,;]*(var\\s+)?(CharLS|OpenJPEG)\\s*=\\s*function/;module.exports=function/sg' dist/assets/components/${name}*.js`,
+                        ],
+                     }
+                     [name] || [ ],
                   ],
                   blocking: false,
                   parallel: false,

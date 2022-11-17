@@ -46,15 +46,6 @@
  *
  ******************************************************************************/
 
-import JpegImage from "../../../lib/jpeg/jpeg.js";
-
-// Global instances of JPEG libraries.
-
-var
-   charLS   = undefined,
-   openJPEG = undefined;
-
-// DicomParser
 
 function DicomParser ()
 {
@@ -67,9 +58,9 @@ DicomParser .prototype =
    {
       try
       {
-         var inputArray = new Uint8Array (input .length);
+         const inputArray = new Uint8Array (input .length);
 
-         for (var i = 0, length = input .length; i < length; ++ i)
+         for (let i = 0, length = input .length; i < length; ++ i)
             inputArray [i] = input .charCodeAt (i);
 
          this .dataSet      = dicomParser .parseDicom (inputArray);
@@ -709,8 +700,8 @@ DicomParser .prototype =
     },
     decodeJPEGLossless: function (pixelData)
     {
-      var
-         decoder = new jpegLossless .lossless .Decoder (),
+      const
+         decoder = new jpeg .lossless .Decoder (),
          buffer  = decoder .decompress (pixelData);
 
       return new Uint8Array (buffer);
@@ -725,76 +716,78 @@ DicomParser .prototype =
 
       return new Uint8Array (image .pixelData .buffer);
    },
-   jpegLSDecode: function (data, isSigned)
+   jpegLSDecode: (function ()
    {
-      // Init global instance.
-      charLS = charLS || CharLS ();
+      const charLS = CharLS ();
 
-      // prepare input parameters
-      const dataPtr = charLS._malloc(data.length);
+      return function (data, isSigned)
+      {
+         // prepare input parameters
+         const dataPtr = charLS._malloc(data.length);
 
-      charLS.writeArrayToMemory(data, dataPtr);
+         charLS.writeArrayToMemory(data, dataPtr);
 
-      // prepare output parameters
-      const imagePtrPtr = charLS._malloc(4);
-      const imageSizePtr = charLS._malloc(4);
-      const widthPtr = charLS._malloc(4);
-      const heightPtr = charLS._malloc(4);
-      const bitsPerSamplePtr = charLS._malloc(4);
-      const stridePtr = charLS._malloc(4);
-      const allowedLossyErrorPtr = charLS._malloc(4);
-      const componentsPtr = charLS._malloc(4);
-      const interleaveModePtr = charLS._malloc(4);
+         // prepare output parameters
+         const imagePtrPtr = charLS._malloc(4);
+         const imageSizePtr = charLS._malloc(4);
+         const widthPtr = charLS._malloc(4);
+         const heightPtr = charLS._malloc(4);
+         const bitsPerSamplePtr = charLS._malloc(4);
+         const stridePtr = charLS._malloc(4);
+         const allowedLossyErrorPtr = charLS._malloc(4);
+         const componentsPtr = charLS._malloc(4);
+         const interleaveModePtr = charLS._malloc(4);
 
-      // Decode the image
-      const result = charLS.ccall(
-         'jpegls_decode',
-         'number',
-         ['number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number'],
-         [dataPtr, data.length, imagePtrPtr, imageSizePtr, widthPtr, heightPtr, bitsPerSamplePtr, stridePtr, componentsPtr, allowedLossyErrorPtr, interleaveModePtr]
-      );
+         // Decode the image
+         const result = charLS.ccall(
+            'jpegls_decode',
+            'number',
+            ['number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number'],
+            [dataPtr, data.length, imagePtrPtr, imageSizePtr, widthPtr, heightPtr, bitsPerSamplePtr, stridePtr, componentsPtr, allowedLossyErrorPtr, interleaveModePtr]
+         );
 
-      // Extract result values into object
-      const image = {
-         result,
-         width: charLS.getValue(widthPtr, 'i32'),
-         height: charLS.getValue(heightPtr, 'i32'),
-         bitsPerSample: charLS.getValue(bitsPerSamplePtr, 'i32'),
-         stride: charLS.getValue(stridePtr, 'i32'),
-         components: charLS.getValue(componentsPtr, 'i32'),
-         allowedLossyError: charLS.getValue(allowedLossyErrorPtr, 'i32'),
-         interleaveMode: charLS.getValue(interleaveModePtr, 'i32'),
-         pixelData: undefined
+         // Extract result values into object
+         const image = {
+            result,
+            width: charLS.getValue(widthPtr, 'i32'),
+            height: charLS.getValue(heightPtr, 'i32'),
+            bitsPerSample: charLS.getValue(bitsPerSamplePtr, 'i32'),
+            stride: charLS.getValue(stridePtr, 'i32'),
+            components: charLS.getValue(componentsPtr, 'i32'),
+            allowedLossyError: charLS.getValue(allowedLossyErrorPtr, 'i32'),
+            interleaveMode: charLS.getValue(interleaveModePtr, 'i32'),
+            pixelData: undefined
+         };
+
+         // Copy image from emscripten heap into appropriate array buffer type
+         const imagePtr = charLS.getValue(imagePtrPtr, '*');
+
+         if (image.bitsPerSample <= 8) {
+            image.pixelData = new Uint8Array(image.width * image.height * image.components);
+            image.pixelData.set(new Uint8Array(charLS.HEAP8.buffer, imagePtr, image.pixelData.length));
+         } else if (isSigned) {
+            image.pixelData = new Int16Array(image.width * image.height * image.components);
+            image.pixelData.set(new Int16Array(charLS.HEAP16.buffer, imagePtr, image.pixelData.length));
+         } else {
+            image.pixelData = new Uint16Array(image.width * image.height * image.components);
+            image.pixelData.set(new Uint16Array(charLS.HEAP16.buffer, imagePtr, image.pixelData.length));
+         }
+
+         // free memory and return image object
+         charLS._free(dataPtr);
+         charLS._free(imagePtr);
+         charLS._free(imagePtrPtr);
+         charLS._free(imageSizePtr);
+         charLS._free(widthPtr);
+         charLS._free(heightPtr);
+         charLS._free(bitsPerSamplePtr);
+         charLS._free(stridePtr);
+         charLS._free(componentsPtr);
+         charLS._free(interleaveModePtr);
+
+         return image;
       };
-
-      // Copy image from emscripten heap into appropriate array buffer type
-      const imagePtr = charLS.getValue(imagePtrPtr, '*');
-
-      if (image.bitsPerSample <= 8) {
-         image.pixelData = new Uint8Array(image.width * image.height * image.components);
-         image.pixelData.set(new Uint8Array(charLS.HEAP8.buffer, imagePtr, image.pixelData.length));
-      } else if (isSigned) {
-         image.pixelData = new Int16Array(image.width * image.height * image.components);
-         image.pixelData.set(new Int16Array(charLS.HEAP16.buffer, imagePtr, image.pixelData.length));
-      } else {
-         image.pixelData = new Uint16Array(image.width * image.height * image.components);
-         image.pixelData.set(new Uint16Array(charLS.HEAP16.buffer, imagePtr, image.pixelData.length));
-      }
-
-      // free memory and return image object
-      charLS._free(dataPtr);
-      charLS._free(imagePtr);
-      charLS._free(imagePtrPtr);
-      charLS._free(imageSizePtr);
-      charLS._free(widthPtr);
-      charLS._free(heightPtr);
-      charLS._free(bitsPerSamplePtr);
-      charLS._free(stridePtr);
-      charLS._free(componentsPtr);
-      charLS._free(interleaveModePtr);
-
-      return image;
-   },
+   })(),
    decodeJPEG2000: function (pixelData)
    {
       var
@@ -807,96 +800,98 @@ DicomParser .prototype =
 
       return new Uint8Array (image .pixelData .buffer);
    },
-   decodeOpenJPEG: function  (data, bytesPerPixel, signed)
+   decodeOpenJPEG: (function ()
    {
-      // Init global instance.
-      openJPEG = openJPEG || OpenJPEG ();
+      const openJPEG = OpenJPEG ();
 
-      const dataPtr = openJPEG._malloc(data.length);
+      return function (data, bytesPerPixel, signed)
+      {
+         const dataPtr = openJPEG._malloc(data.length);
 
-      openJPEG.writeArrayToMemory(data, dataPtr);
+         openJPEG.writeArrayToMemory(data, dataPtr);
 
-      // create param outpout
-      const imagePtrPtr = openJPEG._malloc(4);
-      const imageSizePtr = openJPEG._malloc(4);
-      const imageSizeXPtr = openJPEG._malloc(4);
-      const imageSizeYPtr = openJPEG._malloc(4);
-      const imageSizeCompPtr = openJPEG._malloc(4);
+         // create param outpout
+         const imagePtrPtr = openJPEG._malloc(4);
+         const imageSizePtr = openJPEG._malloc(4);
+         const imageSizeXPtr = openJPEG._malloc(4);
+         const imageSizeYPtr = openJPEG._malloc(4);
+         const imageSizeCompPtr = openJPEG._malloc(4);
 
-      const t0 = new Date().getTime();
-      const ret = openJPEG.ccall('jp2_decode', 'number', ['number', 'number', 'number', 'number', 'number', 'number', 'number'],
-        [dataPtr, data.length, imagePtrPtr, imageSizePtr, imageSizeXPtr, imageSizeYPtr, imageSizeCompPtr]);
-      // add num vomp..etc
+         const t0 = new Date().getTime();
+         const ret = openJPEG.ccall('jp2_decode', 'number', ['number', 'number', 'number', 'number', 'number', 'number', 'number'],
+         [dataPtr, data.length, imagePtrPtr, imageSizePtr, imageSizeXPtr, imageSizeYPtr, imageSizeCompPtr]);
+         // add num vomp..etc
 
-      if (ret !== 0) {
-         console.log('[opj_decode] decoding failed!');
+         if (ret !== 0) {
+            console.log('[opj_decode] decoding failed!');
+            openJPEG._free(dataPtr);
+            openJPEG._free(openJPEG.getValue(imagePtrPtr, '*'));
+            openJPEG._free(imageSizeXPtr);
+            openJPEG._free(imageSizeYPtr);
+            openJPEG._free(imageSizePtr);
+            openJPEG._free(imageSizeCompPtr);
+
+            return;
+         }
+
+         const imagePtr = openJPEG.getValue(imagePtrPtr, '*');
+
+         const image = {
+            length: openJPEG.getValue(imageSizePtr, 'i32'),
+            sx: openJPEG.getValue(imageSizeXPtr, 'i32'),
+            sy: openJPEG.getValue(imageSizeYPtr, 'i32'),
+            nbChannels: openJPEG.getValue(imageSizeCompPtr, 'i32'), // hard coded for now
+            perf_timetodecode: undefined,
+            pixelData: undefined
+         };
+
+         // Copy the data from the EMSCRIPTEN heap into the correct type array
+         const length = image.sx * image.sy * image.nbChannels;
+         const src32 = new Int32Array(openJPEG.HEAP32.buffer, imagePtr, length);
+
+         if (bytesPerPixel === 1) {
+            if (Uint8Array.from) {
+               image.pixelData = Uint8Array.from(src32);
+            } else {
+               image.pixelData = new Uint8Array(length);
+               for (let i = 0; i < length; i++) {
+                  image.pixelData[i] = src32[i];
+               }
+            }
+         } else if (signed) {
+            if (Int16Array.from) {
+               image.pixelData = Int16Array.from(src32);
+            } else {
+               image.pixelData = new Int16Array(length);
+               for (let i = 0; i < length; i++) {
+                  image.pixelData[i] = src32[i];
+               }
+            }
+         } else if (Uint16Array.from) {
+            image.pixelData = Uint16Array.from(src32);
+         } else {
+            image.pixelData = new Uint16Array(length);
+            for (let i = 0; i < length; i++) {
+               image.pixelData[i] = src32[i];
+            }
+         }
+
+         const t1 = new Date().getTime();
+
+         image.perf_timetodecode = t1 - t0;
+
+         // free
          openJPEG._free(dataPtr);
-         openJPEG._free(openJPEG.getValue(imagePtrPtr, '*'));
+         openJPEG._free(imagePtrPtr);
+         openJPEG._free(imagePtr);
+         openJPEG._free(imageSizePtr);
          openJPEG._free(imageSizeXPtr);
          openJPEG._free(imageSizeYPtr);
-         openJPEG._free(imageSizePtr);
          openJPEG._free(imageSizeCompPtr);
 
-         return;
-      }
-
-      const imagePtr = openJPEG.getValue(imagePtrPtr, '*');
-
-      const image = {
-         length: openJPEG.getValue(imageSizePtr, 'i32'),
-         sx: openJPEG.getValue(imageSizeXPtr, 'i32'),
-         sy: openJPEG.getValue(imageSizeYPtr, 'i32'),
-         nbChannels: openJPEG.getValue(imageSizeCompPtr, 'i32'), // hard coded for now
-         perf_timetodecode: undefined,
-         pixelData: undefined
+         return image;
       };
-
-      // Copy the data from the EMSCRIPTEN heap into the correct type array
-      const length = image.sx * image.sy * image.nbChannels;
-      const src32 = new Int32Array(openJPEG.HEAP32.buffer, imagePtr, length);
-
-      if (bytesPerPixel === 1) {
-         if (Uint8Array.from) {
-            image.pixelData = Uint8Array.from(src32);
-         } else {
-            image.pixelData = new Uint8Array(length);
-            for (let i = 0; i < length; i++) {
-               image.pixelData[i] = src32[i];
-            }
-         }
-      } else if (signed) {
-         if (Int16Array.from) {
-            image.pixelData = Int16Array.from(src32);
-         } else {
-            image.pixelData = new Int16Array(length);
-            for (let i = 0; i < length; i++) {
-               image.pixelData[i] = src32[i];
-            }
-         }
-      } else if (Uint16Array.from) {
-         image.pixelData = Uint16Array.from(src32);
-      } else {
-         image.pixelData = new Uint16Array(length);
-         for (let i = 0; i < length; i++) {
-            image.pixelData[i] = src32[i];
-         }
-      }
-
-      const t1 = new Date().getTime();
-
-      image.perf_timetodecode = t1 - t0;
-
-      // free
-      openJPEG._free(dataPtr);
-      openJPEG._free(imagePtrPtr);
-      openJPEG._free(imagePtr);
-      openJPEG._free(imageSizePtr);
-      openJPEG._free(imageSizeXPtr);
-      openJPEG._free(imageSizeYPtr);
-      openJPEG._free(imageSizeCompPtr);
-
-      return image;
-    },
+   })(),
    convertRGBColorByPlane: function (pixelData)
    {
       if (pixelData .length % 3 !== 0)
