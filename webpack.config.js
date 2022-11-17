@@ -139,6 +139,7 @@ module .exports = async () =>
             onBuildStart: {
                scripts: [
                   `echo 'Bundling x_ite ...'`,
+                  `perl -p0i -e 's|".*?"|'\`npm pkg get version\`'|sg' src/x_ite/Browser/VERSION.js`,
                   `perl -p0i -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEBUG.js`,
                ],
                blocking: false,

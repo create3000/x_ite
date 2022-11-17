@@ -47454,7 +47454,7 @@ for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
  *
  ******************************************************************************/
 
-/* harmony default export */ const VERSION = ("7.0.0");
+/* harmony default export */ const VERSION = ("8.0.0");
 
 ;// CONCATENATED MODULE: ./src/x_ite/DEBUG.js
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
