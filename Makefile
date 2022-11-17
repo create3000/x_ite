@@ -21,8 +21,8 @@ copy-files:
 .SILENT:html
 html:
 	cp src/x_ite.html x_ite.min.html
-	perl -p0i -e 's|<!-- X_ITE START.*?X_ITE END -->|<script src="dist/x_ite.min.js"></script>|sg'      x_ite.min.html
-	perl -p0i -e 's|<!-- JQUERY -->|<script src="https://code.jquery.com/jquery-3.6.1.js"></script>|sg' x_ite.min.html
+	perl -p0i -e 's|<!-- X_ITE START.*?X_ITE END -->|<script src="dist/x_ite.min.js"></script>|sg'       x_ite.min.html
+	perl -p0i -e 's|<!-- JQUERY -->|<script src="https://code.jquery.com/jquery-latest.js"></script>|sg' x_ite.min.html
 	perl -pi -e 's|import\s+X3D\s.*?\n||sg'                  x_ite.min.html
 	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'        x_ite.min.html
 	perl -pi -e 's|\.\./x_ite.min.html|src/x_ite.html|sg'    x_ite.min.html
