@@ -936,7 +936,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return hotCreateRequire("./index.js")(__nested_webpack_require_28391__.s = "./index.js");
-/******/ })
+/******/ }.bind({}))
 /************************************************************************/
 /******/ ({
 

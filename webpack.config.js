@@ -234,7 +234,7 @@ module .exports = async () =>
                      // Per component
                      ... {
                         Texturing3D: [
-                           //`perl -p0i -e 's|("./index.js"\\).*?\\})|$1.bind({})|sg' dist/assets/components/${name}*.js`,
+                           `perl -p0i -e 's|("./index.js"\\).*?\\})|$1.bind({})|sg' dist/assets/components/${name}*.js`,
                            `perl -p0i -e 's/[,;]*(var\\s+)?(CharLS|OpenJPEG)\\s*=\\s*function/;module.exports=function/sg' dist/assets/components/${name}*.js`,
                         ],
                      }
