@@ -57,7 +57,7 @@ VertexArray .prototype =
 {
    update: function (value = true)
    {
-      this .tainted = this .tainted || value;
+      this .tainted ||= value;
 
       return this;
    },
