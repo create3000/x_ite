@@ -52,12 +52,10 @@ import shim       from "./shim.js";
 
 // Assign X3D to global namespace.
 
-window .X3D                        = X3D;
 window [Symbol .for ("X_ITE.X3D")] = X3D;
-
-if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
-   __global_module__ .exports = X3D;
 
 X3DCanvas .define ();
 
 X3D ();
+
+export default X3D;

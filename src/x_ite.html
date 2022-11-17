@@ -26,12 +26,14 @@
    <script src="tests/menu.js"></script>
 
    <script type="module">
-await import ("./x_ite.js");
+import X3D from "./x_ite.js";
 await X3D ();
 
 const
    Browser      = X3D .getBrowser (),
    localStorage = Browser .getLocalStorage ();
+
+Browser .getContextMenu () .setUserMenu (createTestMenu);
 
 localStorage .addDefaultValues ({
    "Bookmarks.history": ["http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"],
@@ -115,8 +117,6 @@ $(".location-entry") .keydown (function (event)
          return
    }
 });
-
-loadTestMenu ();
    </script>
    <style>
 @import url("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic");

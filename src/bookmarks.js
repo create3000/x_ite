@@ -139,7 +139,7 @@ const Bookmarks = (function ()
             .on ("click", window .loadURL .bind (null, base + ".x3dj"))
             .text (".x3dj"));
 
-         this .browser .loadURL (new X3D .MFString (url), new X3D .MFString ());
+         $(".browser") .attr ("src", url);
       },
    };
 

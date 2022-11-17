@@ -54,8 +54,8 @@ URLs .prototype =
    {
       if (document .currentScript)
          var src = document .currentScript .src;
-      else if (typeof __global_require__ === "function" && typeof __filename === "string")
-         var src = __global_require__ ("url") .pathToFileURL (__filename) .href;
+      else if (typeof require === "function" && typeof __filename === "string")
+         var src = require ("url") .pathToFileURL (__filename) .href;
       else
          var src = document .location .href;
 

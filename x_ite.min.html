@@ -4,7 +4,7 @@
    <meta charset="utf-8"/>
    <meta name="viewport" content="width=1080"/>
 
-   <script src="dist/x_ite.min.js"></script>
+   <script src="dist/x_ite.js"></script>
    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 
    <script src="src/bookmarks.js"></script>
@@ -18,6 +18,8 @@ await X3D ();
 const
    Browser      = X3D .getBrowser (),
    localStorage = Browser .getLocalStorage ();
+
+Browser .getContextMenu () .setUserMenu (createTestMenu);
 
 localStorage .addDefaultValues ({
    "Bookmarks.history": ["http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"],
@@ -101,8 +103,6 @@ $(".location-entry") .keydown (function (event)
          return
    }
 });
-
-loadTestMenu ();
    </script>
    <style>
 @import url("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic");

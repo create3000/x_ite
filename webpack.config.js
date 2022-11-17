@@ -99,6 +99,11 @@ module .exports = async () =>
       output: {
          path: path .resolve (__dirname, "dist"),
          filename: "[name].js",
+         library: {
+            name: "X3D",
+            export: ["default"],
+            type: "umd",
+         },
       },
       mode: "production",
       optimization: {

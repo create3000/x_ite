@@ -1,4 +1,14 @@
-/* X_ITE v7.0.0 */ (() => { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["X3D"] = factory();
+	else
+		root["X3D"] = factory();
+})(self, () => {
+return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 87:
@@ -34259,10 +34269,33 @@ if (true) {
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": () => (/* binding */ x_ite)
+});
 
 ;// CONCATENATED MODULE: ./src/x_ite/Base/X3DConstants.js
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -121025,17 +121058,18 @@ x_ite_Namespace.set ("x_ite/X3DCanvas", X3DCanvas);
 
 // Assign X3D to global namespace.
 
-window .X3D                        = x_ite_X3D;
 window [Symbol .for ("X_ITE.X3D-7.0.0")] = x_ite_X3D;
-
-if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
-   __global_module__ .exports = x_ite_X3D;
 
 x_ite_X3DCanvas.define ();
 
 x_ite_X3D ();
 
+/* harmony default export */ const x_ite = (x_ite_X3D);
+
 })();
 
+__webpack_exports__ = __webpack_exports__["default"];
+/******/ 	return __webpack_exports__;
 /******/ })()
 ;
+});
