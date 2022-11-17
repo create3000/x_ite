@@ -165,6 +165,9 @@ module .exports = async () =>
             },
         }),
       ],
+      node: {
+         __filename: false,
+      },
       stats: "errors-warnings",
       performance: {
          hints: "warning",

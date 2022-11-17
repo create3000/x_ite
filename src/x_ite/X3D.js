@@ -154,16 +154,18 @@ Object .assign (X3D,
    },
    noConflict: (function ()
    {
-      const X3D_ = window .X3D;
+      const
+         _had = window .hasOwnProperty ("X3D"),
+         _X3D = window .X3D;
 
       return function ()
       {
          if (window .X3D === X3D)
          {
-            if (X3D_ === undefined)
-               delete window .X3D;
+            if (_had)
+               window .X3D = _X3D;
             else
-               window .X3D = X3D_;
+               delete window .X3D;
          }
 
          return X3D;

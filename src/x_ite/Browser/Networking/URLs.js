@@ -54,8 +54,8 @@ URLs .prototype =
    {
       if (document .currentScript)
          var src = document .currentScript .src;
-      else if (typeof require === "function" && typeof __filename === "string")
-         var src = require ("url") .pathToFileURL (__filename) .href;
+      else if (typeof global === "object" && typeof global .require === "function" && typeof __filename === "string")
+         var src = global .require ("url") .pathToFileURL (__filename) .href;
       else
          var src = document .location .href;
 
@@ -76,15 +76,6 @@ URLs .prototype =
 
       return "https://create3000.github.io/x_ite/";
    },
-   // getComponentUrl: function  (name)
-   // {
-   //    const url = urls .getProviderUrl (name);
-
-   //    if (typeof __global_require__ === "function" && typeof __filename === "string")
-   //       __global_require__ (__global_require__ ("url") .fileURLToPath (url));
-
-   //    return url;
-   // },
    getFontsUrl: function (file)
    {
       return new URL ("assets/fonts/" + file, this .getScriptUrl ()) .href;

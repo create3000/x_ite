@@ -197,7 +197,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          this .global = this .getGlobal ();
 
          const
-            result  = this .evaluate (text),
+            result  = evaluate (this .global, text),
             context = { };
 
          for (let i = 0; i < callbacks .length; ++ i)
@@ -214,7 +214,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    },
    evaluate: function (text)
    {
-      return evaluate (this .global, text);
+      return evaluate (this .global, `return (${text})`);
    },
    getGlobal: function ()
    {

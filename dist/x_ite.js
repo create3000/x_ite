@@ -34281,6 +34281,18 @@ if (true) {
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -53045,21 +53057,22 @@ X3DParser .prototype = {
    {
       const componentsUrl = /\.js$/;
 
-      async function loadDependencies ({ dependencies })
+      async function loadDependencies (browser, dependencies)
       {
-         const
-            scene   = this .getScene (),
-            browser = scene .getBrowser ();
-
          for (const dependency of dependencies)
          {
             const
                component   = browser .getSupportedComponents () .get (dependency),
                providerUrl = component .providerUrl;
 
-            await loadDependencies .call (this, component);
+            await loadDependencies (browser, component .dependencies);
 
-            if (providerUrl .match (componentsUrl))
+            if (!providerUrl .match (componentsUrl))
+               continue;
+
+            if (typeof __webpack_require__.g === "object" && typeof __webpack_require__.g .require === "function")
+               __webpack_require__.g .require (__webpack_require__.g .require ("url") .fileURLToPath (providerUrl))
+            else
                await import (/* webpackIgnore: true */ providerUrl);
          }
       }
@@ -53079,26 +53092,20 @@ X3DParser .prototype = {
             components .add (component);
 
          for (const component of components)
-            loadDependencies .call (this, component);
+            await loadDependencies (browser, component .dependencies);
 
          for (const component of components)
          {
             const providerUrl = component .providerUrl;
 
-            if (providerUrl .match (componentsUrl))
+            if (!providerUrl .match (componentsUrl))
+               continue;
+
+            if (typeof __webpack_require__.g === "object" && typeof __webpack_require__.g .require === "function")
+               __webpack_require__.g .require (__webpack_require__.g .require ("url") .fileURLToPath (providerUrl))
+            else
                await import (/* webpackIgnore: true */ providerUrl);
          }
-
-         // if (typeof __global_require__ === "function" && typeof __filename === "string")
-         // {
-         //    for (const component of components)
-         //    {
-         //       const providerUrl = component .providerUrl;
-
-         //       if (providerUrl .match (componentsUrl))
-         //          __global_require__ (__global_require__ ("url") .fileURLToPath (url));
-         //    }
-         // }
       };
    })(),
    setUnits: function (generator)
@@ -83234,7 +83241,6 @@ X3DNavigationContext .prototype =
 /* harmony default export */ const Navigation_X3DNavigationContext = (X3DNavigationContext);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Networking/URLs.js
-var URLs_filename = "/index.js";
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -83291,8 +83297,8 @@ URLs .prototype =
    {
       if (document .currentScript)
          var src = document .currentScript .src;
-      else if (typeof __global_require__ === "function" && typeof URLs_filename === "string")
-         var src = __global_require__ ("url") .pathToFileURL (URLs_filename) .href;
+      else if (typeof __webpack_require__.g === "object" && typeof __webpack_require__.g .require === "function" && typeof __filename === "string")
+         var src = __webpack_require__.g .require ("url") .pathToFileURL (__filename) .href;
       else
          var src = document .location .href;
 
@@ -83313,15 +83319,6 @@ URLs .prototype =
 
       return "https://create3000.github.io/x_ite/";
    },
-   // getComponentUrl: function  (name)
-   // {
-   //    const url = urls .getProviderUrl (name);
-
-   //    if (typeof __global_require__ === "function" && typeof __filename === "string")
-   //       __global_require__ (__global_require__ ("url") .fileURLToPath (url));
-
-   //    return url;
-   // },
    getFontsUrl: function (file)
    {
       return new URL ("assets/fonts/" + file, this .getScriptUrl ()) .href;
@@ -120767,16 +120764,18 @@ Object .assign (X3D,
    },
    noConflict: (function ()
    {
-      const X3D_ = window .X3D;
+      const
+         _had = window .hasOwnProperty ("X3D"),
+         _X3D = window .X3D;
 
       return function ()
       {
          if (window .X3D === X3D)
          {
-            if (X3D_ === undefined)
-               delete window .X3D;
+            if (_had)
+               window .X3D = _X3D;
             else
-               window .X3D = X3D_;
+               delete window .X3D;
          }
 
          return X3D;

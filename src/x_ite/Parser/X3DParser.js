@@ -100,21 +100,22 @@ X3DParser .prototype = {
    {
       const componentsUrl = /\.js$/;
 
-      async function loadDependencies ({ dependencies })
+      async function loadDependencies (browser, dependencies)
       {
-         const
-            scene   = this .getScene (),
-            browser = scene .getBrowser ();
-
          for (const dependency of dependencies)
          {
             const
                component   = browser .getSupportedComponents () .get (dependency),
                providerUrl = component .providerUrl;
 
-            await loadDependencies .call (this, component);
+            await loadDependencies (browser, component .dependencies);
 
-            if (providerUrl .match (componentsUrl))
+            if (!providerUrl .match (componentsUrl))
+               continue;
+
+            if (typeof global === "object" && typeof global .require === "function")
+               global .require (global .require ("url") .fileURLToPath (providerUrl))
+            else
                await import (/* webpackIgnore: true */ providerUrl);
          }
       }
@@ -134,26 +135,20 @@ X3DParser .prototype = {
             components .add (component);
 
          for (const component of components)
-            loadDependencies .call (this, component);
+            await loadDependencies (browser, component .dependencies);
 
          for (const component of components)
          {
             const providerUrl = component .providerUrl;
 
-            if (providerUrl .match (componentsUrl))
+            if (!providerUrl .match (componentsUrl))
+               continue;
+
+            if (typeof global === "object" && typeof global .require === "function")
+               global .require (global .require ("url") .fileURLToPath (providerUrl))
+            else
                await import (/* webpackIgnore: true */ providerUrl);
          }
-
-         // if (typeof __global_require__ === "function" && typeof __filename === "string")
-         // {
-         //    for (const component of components)
-         //    {
-         //       const providerUrl = component .providerUrl;
-
-         //       if (providerUrl .match (componentsUrl))
-         //          __global_require__ (__global_require__ ("url") .fileURLToPath (url));
-         //    }
-         // }
       };
    })(),
    setUnits: function (generator)

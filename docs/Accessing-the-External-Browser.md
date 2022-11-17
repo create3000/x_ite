@@ -122,12 +122,12 @@ Given a DOM element that represents a x3d-canvas element, the getBrowser functio
 
 ```js
 // Query all x3d-canvas elements within the HTML page.
-const x3dcanvases = document .querySelectorAll ("x3d-canvas");
+const x3d_canvases = document .querySelectorAll ("x3d-canvas");
 
-for (const x3dcanvas of x3dcanvases)
+for (const x3d_canvas of x3d_canvases)
 {
   // Obtain X3DBrowser object of element i.
-  const Browser = X3D .getBrowser (x3dcanvas);
+  const Browser = X3D .getBrowser (x3d_canvas);
   ...
 }
 ```
@@ -140,11 +140,11 @@ Creates a new x3d-canvas DOM element, initializes it and returns it. Throws an e
 function addBrowser (parent)
 {
    // Create a new x3d-canvas element.
-   const x3dcanvas = X3D .createBrowser ();
+   const x3d_canvas = X3D .createBrowser ();
 
-   x3dcanvas .setAttribute ("src", "/my/world.x3d");
+   x3d_canvas .setAttribute ("src", "/my/world.x3d");
 
-   parent .appendChild (x3dcanvas);
+   parent .appendChild (x3d_canvas);
 }
 ```
 
