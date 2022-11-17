@@ -50500,7 +50500,7 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
 
          field .getReferences () .forEach (function (reference)
          {
-            initializableReference = initializableReference || reference .isInitializable ();
+            initializableReference ||= reference .isInitializable ();
 
             // Output build in reference field
 
@@ -50560,7 +50560,7 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
 
          field .getReferences () .forEach (function (reference)
          {
-            initializableReference = initializableReference || reference .isInitializable ();
+            initializableReference ||= reference .isInitializable ();
 
             // Output user defined reference field
 
@@ -50700,7 +50700,7 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
 
                field .getReferences () .forEach (function (fieldReference)
                {
-                  initializableReference = initializableReference || fieldReference .isInitializable ();
+                  initializableReference ||= fieldReference .isInitializable ();
                });
 
                if (!initializableReference)
@@ -50793,7 +50793,7 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
 
                   field .getReferences () .forEach (function (fieldReference)
                   {
-                     initializableReference = initializableReference || fieldReference .isInitializable ();
+                     initializableReference ||= fieldReference .isInitializable ();
                   });
 
                   if (!initializableReference)
@@ -52062,7 +52062,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
 
                   field .getReferences () .forEach (function (fieldReference)
                   {
-                     initializableReference = initializableReference || fieldReference .isInitializable ();
+                     initializableReference ||= fieldReference .isInitializable ();
                   });
 
                   if (!initializableReference)
@@ -61066,7 +61066,7 @@ X3DRenderObject .prototype =
                       scissor .z,
                       scissor .w);
 
-         renderContext .shadows           = renderContext .shadows || shadows;
+         renderContext .shadows         ||= shadows;
          renderContext .objectsCount [1] += numGlobalLights;
          renderContext .objectsCount [2] += numGlobalTextureProjectors;
 
@@ -61094,7 +61094,7 @@ X3DRenderObject .prototype =
                       scissor .z,
                       scissor .w);
 
-         renderContext .shadows           = renderContext .shadows || shadows;
+         renderContext .shadows         ||= shadows;
          renderContext .objectsCount [1] += numGlobalLights;
          renderContext .objectsCount [2] += numGlobalTextureProjectors;
 
@@ -63452,7 +63452,7 @@ VertexArray .prototype =
 {
    update: function (value = true)
    {
-      this .tainted = this .tainted || value;
+      this .tainted ||= value;
 
       return this;
    },
