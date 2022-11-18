@@ -147,7 +147,7 @@ Object .assign (X3D,
             if (typeof arguments [1] !== "function")
                throw new Error ("Invalid argument.");
 
-            $(() => arguments [1] .apply (null, arguments [0] .map (file => this .require (file))));
+            arguments [1] .apply (null, arguments [0] .map (file => this .require (file)));
             break;
          }
       }

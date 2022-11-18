@@ -16586,10 +16586,10 @@ if (true) {
 	  this.sourceIndex = 0;
 	  this.tag = 0;
 	  this.bitcount = 0;
-
+	  
 	  this.dest = dest;
 	  this.destLen = 0;
-
+	  
 	  this.ltree = new Tree();  /* dynamic length/symbol tree */
 	  this.dtree = new Tree();  /* dynamic distance tree */
 	}
@@ -16731,7 +16731,7 @@ if (true) {
 	    d.tag |= d.source[d.sourceIndex++] << d.bitcount;
 	    d.bitcount += 8;
 	  }
-
+	  
 	  var sum = 0, cur = 0, len = 0;
 	  var tag = d.tag;
 
@@ -16744,7 +16744,7 @@ if (true) {
 	    sum += t.table[len];
 	    cur -= t.table[len];
 	  } while (cur >= 0);
-
+	  
 	  d.tag = tag;
 	  d.bitcount -= len;
 
@@ -16855,7 +16855,7 @@ if (true) {
 	function tinf_inflate_uncompressed_block(d) {
 	  var length, invlength;
 	  var i;
-
+	  
 	  /* unread from bitbuffer */
 	  while (d.bitcount > 8) {
 	    d.sourceIndex--;
@@ -16928,7 +16928,7 @@ if (true) {
 	    else
 	      { return d.dest.subarray(0, d.destLen); }
 	  }
-
+	  
 	  return d.dest;
 	}
 
@@ -30985,7 +30985,7 @@ if (true) {
 	Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//#
+//# 
 
 
 /***/ }),
@@ -34246,7 +34246,7 @@ if (true) {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -34260,14 +34260,14 @@ if (true) {
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
@@ -34280,7 +34280,7 @@ if (true) {
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -34292,12 +34292,12 @@ if (true) {
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
@@ -120776,12 +120776,12 @@ Object .assign (X3D,
          default:
          {
             if (! Array .isArray (arguments [0]))
-               throw new Error ("Invalid argument");
+               throw new Error ("Invalid argument.");
 
             if (typeof arguments [1] !== "function")
-               throw new Error ("Invalid argument");
+               throw new Error ("Invalid argument.");
 
-            X3D_$(() => arguments [1] .apply (null, arguments [0] .map (file => this .require (file))));
+            arguments [1] .apply (null, arguments [0] .map (file => this .require (file)));
             break;
          }
       }
@@ -120975,7 +120975,7 @@ class X3DCanvas extends HTMLElement
    {
       customElements .define ("x3d-canvas", X3DCanvas);
    }
-
+   
    constructor ()
    {
       super ();
