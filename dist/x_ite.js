@@ -49584,6 +49584,8 @@ ContextMenu .prototype = Object .assign (Object .create (Base_X3DBaseNode.protot
             className: "context-menu-icon x_ite-private-icon-world-info",
             callback: function ()
             {
+               browser .getShadow () .find (".x_ite-private-world-info") .remove ();
+
                const
                   priv      = browser .getShadow () .find (".x_ite-private-browser"),
                   overlay   = ContextMenu_$("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
@@ -49591,8 +49593,6 @@ ContextMenu .prototype = Object .assign (Object .create (Base_X3DBaseNode.protot
                   worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
                   title     = worldInfo .title,
                   info      = worldInfo .info;
-
-               browser .getShadow () .find (".x_ite-private-world-info") .remove ();
 
                ContextMenu_$("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
 
