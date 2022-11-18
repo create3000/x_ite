@@ -138,10 +138,6 @@ const Bookmarks = (function ()
             .on ("click", () => this .loadURL (base + ".x3dj"))
             .text (".x3dj"));
 
-         this .loadURL (url);
-      },
-      loadURL: function (url)
-      {
          $(".browser") .attr ("src", url);
 
          return false;
