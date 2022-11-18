@@ -27,9 +27,9 @@ module .exports = async () =>
       return deps
    }
 
-   const x_ite_deps = await deps ("./src/x_ite.js")
-
-   const targets = [ ]
+   const
+      x_ite_deps = await deps ("./src/x_ite.js"),
+      targets    = [ ]
 
    targets .push ({
       entry: {

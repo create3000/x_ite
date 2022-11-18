@@ -47651,7 +47651,7 @@ const Context =
                gl .isVertexArray     =  ext .isVertexArrayOES     .bind (ext);
             }
          }
-       }
+      }
 
       if (! gl)
          throw new Error ("Couldn't create WebGL context.");
