@@ -53053,22 +53053,54 @@ X3DParser .prototype = {
    {
       this .getExecutionContext () .rootNodes .push (node);
    },
-   loadComponents: function ()
+   loadComponents: (function ()
    {
-      const
-         browser    = this .getBrowser (),
-         scene      = this .getScene (),
-         profile    = scene .getProfile () || browser .getProfile ("Full"),
-         components = new Set ();
+      const VRML =
+      [
+         "Core",
+         "EnvironmentalEffects",
+         "EnvironmentalSensor",
+         "Geometry3D",
+         "Grouping",
+         "Interpolation",
+         "Lighting",
+         "Navigation",
+         "Networking",
+         "PointingDeviceSensor",
+         "Rendering",
+         "Scripting",
+         "Shape",
+         "Sound",
+         "Text",
+         "Texturing",
+         "Time",
+      ];
 
-      for (const component of profile .components)
-         components .add (component .name);
+      return function ()
+      {
+         const
+            browser    = this .getBrowser (),
+            scene      = this .getScene (),
+            profile    = scene .getProfile () || browser .getProfile ("Full"),
+            components = new Set ();
 
-      for (const component of scene .getComponents ())
-         components .add (component .name);
+         if (scene .getSpecificationVersion () === "2.0")
+         {
+            for (const name of VRML)
+               components .add (name);
+         }
+         else
+         {
+            for (const component of profile .components)
+               components .add (component .name);
 
-      return browser .loadComponents (components);
-   },
+            for (const component of scene .getComponents ())
+               components .add (component .name);
+         }
+
+         return browser .loadComponents (components);
+      };
+   })(),
    setUnits: function (generator)
    {
       if (typeof arguments [0] == "boolean")
