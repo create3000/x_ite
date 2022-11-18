@@ -1,4 +1,4 @@
-/* X_ITE v8.0.0 */ (() => { // webpackBootstrap
+/* X_ITE v8.0.0 */(() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 

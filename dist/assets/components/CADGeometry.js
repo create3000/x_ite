@@ -1,4 +1,4 @@
-/* X_ITE v8.0.0 */ (() => { // webpackBootstrap
+/* X_ITE v8.0.0 */(() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};

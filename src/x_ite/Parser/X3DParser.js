@@ -122,24 +122,21 @@ X3DParser .prototype = {
       return function ()
       {
          const
-            browser    = this .getBrowser (),
-            scene      = this .getScene (),
+            browser = this .getBrowser (),
+            scene   = this .getScene ();
+
+         if (scene .getSpecificationVersion () === "2.0")
+            return browser .loadComponents (VRML);
+
+         const
             profile    = scene .getProfile () || browser .getProfile ("Full"),
             components = new Set ();
 
-         if (scene .getSpecificationVersion () === "2.0")
-         {
-            for (const name of VRML)
-               components .add (name);
-         }
-         else
-         {
-            for (const component of profile .components)
-               components .add (component .name);
+         for (const component of profile .components)
+            components .add (component .name);
 
-            for (const component of scene .getComponents ())
-               components .add (component .name);
-         }
+         for (const component of scene .getComponents ())
+            components .add (component .name);
 
          return browser .loadComponents (components);
       };

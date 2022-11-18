@@ -149,7 +149,7 @@ module .exports = async () =>
                scripts: [
                   // Version
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.js`,
-                  `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite{,.min}.js`,
+                  `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite{,.min}.js`,
                   // Source Maps
                   `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/x_ite{,.min}.js`,
                   // Debug
@@ -237,7 +237,7 @@ module .exports = async () =>
                   scripts: [
                      // Version
                      `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}{,.min}.js`,
-                     `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/assets/components/${name}{,.min}.js`,
+                     `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */|sg' dist/assets/components/${name}{,.min}.js`,
                      // Source Maps
                      `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/assets/components/${name}{,.min}.js`,
                      // Per component
