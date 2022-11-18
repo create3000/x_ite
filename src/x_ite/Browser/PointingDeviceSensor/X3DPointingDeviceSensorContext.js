@@ -235,7 +235,7 @@ X3DPointingDeviceSensorContext .prototype =
          return;
       }
 
-      const t0 = performance .now ();
+      const t0 = Date .now ();
 
       this [_pickOnlySensors] = pickOnlySensors;
 
@@ -255,7 +255,7 @@ X3DPointingDeviceSensorContext .prototype =
       this [_layerSorter]    .sort (0, this [_hits] .length);
 
       this .addBrowserEvent ();
-      this [_pointerTime] = performance .now () - t0;
+      this [_pointerTime] = Date .now () - t0;
    },
    motion: function ()
    {

@@ -414,7 +414,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          const
             navigationInfo = this .getNavigationInfo (),
             viewpoint      = this .getActiveViewpoint (),
-            now            = performance .now (),
+            now            = Date .now (),
             dt             = (now - this .startTime) / 1000;
 
          upVector .assign (viewpoint .getUpVector ());
@@ -484,7 +484,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          const
             navigationInfo = this .getNavigationInfo (),
             viewpoint      = this .getActiveViewpoint (),
-            now            = performance .now (),
+            now            = Date .now (),
             dt             = (now - this .startTime) / 1000,
             upVector       = viewpoint .getUpVector ();
 
@@ -522,7 +522,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
       this .getBrowser () .prepareEvents () .addInterest ("fly", this);
       this .getBrowser () .addBrowserEvent ();
 
-      this .startTime = performance .now ();
+      this .startTime = Date .now ();
    },
    addPan: function ()
    {
@@ -533,7 +533,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
       this .getBrowser () .prepareEvents () .addInterest ("pan", this);
       this .getBrowser () .addBrowserEvent ();
 
-      this .startTime = performance .now ();
+      this .startTime = Date .now ();
    },
    addRoll: (function ()
    {

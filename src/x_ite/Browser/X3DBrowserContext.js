@@ -262,9 +262,9 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
 
       const gl = this .getContext ();
 
-      const t0 = performance .now ();
+      const t0 = Date .now ();
       this [_systemTime] = t0 - this [_systemStartTime];
-      this .advanceTime (now);
+      this .advanceTime ();
 
       this ._prepareEvents .processInterests ();
       this [_processEvents] ();
@@ -272,26 +272,26 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       this ._timeEvents .processInterests ();
       this [_processEvents] ();
 
-      const t1 = performance .now ();
+      const t1 = Date .now ();
       this [_world] .traverse (TraverseType .CAMERA, null);
-      this [_cameraTime] = performance .now () - t1;
+      this [_cameraTime] = Date .now () - t1;
 
-      const t2 = performance .now ();
+      const t2 = Date .now ();
       if (this .getCollisionCount ())
          this [_world] .traverse (TraverseType .COLLISION, null);
-      this [_collisionTime] = performance .now () - t2;
+      this [_collisionTime] = Date .now () - t2;
 
       this ._sensorEvents .processInterests ();
       this [_processEvents] ();
 
-      const t3 = performance .now ();
+      const t3 = Date .now ();
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
       this [_world] .traverse (TraverseType .DISPLAY, null);
-      this [_displayTime] = performance .now () - t3;
+      this [_displayTime] = Date .now () - t3;
 
-      this [_browserTime]     = performance .now () - t0;
-      this [_systemStartTime] = performance .now ();
+      this [_browserTime]     = Date .now () - t0;
+      this [_systemStartTime] = Date .now ();
 
       this ._finished .processInterests ();
    },

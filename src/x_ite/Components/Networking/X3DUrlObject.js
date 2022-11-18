@@ -63,7 +63,7 @@ function X3DUrlObject (executionContext)
                           "loadNow",   new Fields .SFTime ());
 
    this [_cache]                = true;
-   this [_autoRefreshStartTime] = performance .now ();
+   this [_autoRefreshStartTime] = Date .now ();
 }
 
 X3DUrlObject .prototype =
@@ -85,7 +85,7 @@ X3DUrlObject .prototype =
 
       if (value === X3DConstants .COMPLETE_STATE)
       {
-         this [_autoRefreshCompleteTime] = performance .now ();
+         this [_autoRefreshCompleteTime] = Date .now ();
          this .setAutoRefreshTimer (this ._autoRefresh .getValue ());
       }
 
@@ -172,7 +172,7 @@ X3DUrlObject .prototype =
 
       if (autoRefreshTimeLimit !== 0)
       {
-         if ((performance .now () - this [_autoRefreshStartTime]) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
+         if ((Date .now () - this [_autoRefreshStartTime]) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
             return;
       }
 
@@ -211,7 +211,7 @@ X3DUrlObject .prototype =
          return;
 
       const
-         elapsedTime = (performance .now () - this [_autoRefreshCompleteTime]) / 1000,
+         elapsedTime = (Date .now () - this [_autoRefreshCompleteTime]) / 1000,
          autoRefresh = this ._autoRefresh .getValue ();
 
       let autoRefreshInterval = autoRefresh - elapsedTime;

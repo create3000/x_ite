@@ -109,7 +109,7 @@ X3DPickingContext .prototype =
    },
    picking: function ()
    {
-      const t0 = performance .now ();
+      const t0 = Date .now ();
 
       this .getWorld () .traverse (TraverseType .PICKING, null);
 
@@ -123,7 +123,7 @@ X3DPickingContext .prototype =
          pickSensorNode .process ();
       }
 
-      this [_pickingTime] = performance .now () - t0;
+      this [_pickingTime] = Date .now () - t0;
    },
    getPickingTime: function ()
    {

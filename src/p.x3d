@@ -6,8 +6,8 @@
     <meta name='created' content='Wed, 22 Apr 2015 09:14:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrise X3D Editor V1.0.4, https://create3000.github.io/sunrise/'/>
-    <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/media/docs/examples/X3D/Pong/stage/4vong.x3d'/>
-    <meta name='modified' content='Fri, 18 Nov 2022 10:44:07 GMT'/>
+    <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/src/p.x3d'/>
+    <meta name='modified' content='Fri, 18 Nov 2022 12:39:03 GMT'/>
     <meta name='title' content='Pong'/>
   </head>
   <Scene>
@@ -76,9 +76,8 @@
               <connect nodeField='children' protoField='H'/>
             </IS>
           </Transform>
-          <!-- NULL -->
         </Transform>
-        <Script DEF='_2'
+        <Script
             directOutput='true'>
           <field accessType='inputOutput' type='SFNode' name='S'/>
           <field accessType='inputOutput' type='SFNode' name='t'>
@@ -122,15 +121,13 @@ function initialize ()
               value='false'/>
           <MetadataSet DEF='nodes' containerField='value'
               name='nodes'
-              reference='http://titania.create3000.de'>
-            <!-- NULL -->
-          </MetadataSet>
+              reference='http://titania.create3000.de'/>
         </MetadataSet>
       </MetadataSet>
     </WorldInfo>
     <ProtoInstance name='Y' DEF='HUD'>
       <fieldValue name='H'>
-        <ProtoInstance name='Y' DEF='_3' containerField='H'>
+        <ProtoInstance name='Y' DEF='_2' containerField='H'>
           <fieldValue name='T' value='0 0 -10'/>
           <fieldValue name='H'>
             <ProtoInstance name='Y' DEF='Player0' containerField='H'>
@@ -142,25 +139,24 @@ function initialize ()
                     maxPosition='0 4'/>
               </fieldValue>
               <fieldValue name='H'>
-                <ProtoInstance name='X' DEF='_4' containerField='H'>
+                <ProtoInstance name='X' DEF='_3' containerField='H'>
                   <fieldValue name='T' value='-5 0 0'/>
                   <fieldValue name='S' value='0.1 1 1'/>
                 </ProtoInstance>
               </fieldValue>
             </ProtoInstance>
             <ProtoInstance name='Y' DEF='Player1' containerField='H'>
-              <fieldValue name='T' value='0 -1.02984 0'/>
               <fieldValue name='H'>
-                <ProtoInstance name='X' DEF='_5' containerField='H'>
+                <ProtoInstance name='X' DEF='_4' containerField='H'>
                   <fieldValue name='T' value='5 0 0'/>
                   <fieldValue name='S' value='0.1 1 1'/>
                 </ProtoInstance>
               </fieldValue>
             </ProtoInstance>
             <Switch DEF='PuckSwitch' containerField='H'
-                whichChoice='0'>
+                whichChoice='1'>
               <ProtoInstance name='X' DEF='Puck'>
-                <fieldValue name='T' value='-1.04807 -2.93896 0'/>
+                <fieldValue name='T' value='4.75464 0 0'/>
                 <fieldValue name='S' value='0.2 0.2 1'/>
               </ProtoInstance>
               <ProtoInstance name='Y'/>
@@ -170,18 +166,13 @@ function initialize ()
               <ProtoInstance name='Y'/>
               <ProtoInstance name='Y'>
                 <fieldValue name='H'>
-                  <Transform DEF='_6' containerField='H'
+                  <Transform DEF='_5' containerField='H'
                       translation='-3.5 3 -0.2'
                       scale='0.5 0.5 0.5'>
                     <Shape>
                       <Appearance>
                         <PixelTexture DEF='Score0'
-                            image='3 5 2
-                              0xffff 0xffff 0xffff
-                              0 0 0xffff
-                              0xffff 0xffff 0xffff
-                              0 0 0xffff
-                              0xffff 0xffff 0xffff'
+                            image='3 5 2 0xffff 0xffff 0xffff 0xffff 0x0 0xffff 0xffff 0x0 0xffff 0xffff 0x0 0xffff 0xffff 0xffff 0xffff'
                             repeatS='false'
                             repeatT='false'/>
                       </Appearance>
@@ -192,18 +183,13 @@ function initialize ()
                       </IndexedFaceSet>
                     </Shape>
                   </Transform>
-                  <Transform DEF='_7' containerField='H'
+                  <Transform DEF='_6' containerField='H'
                       translation='3.5 3 -0.2'
                       scale='0.5 0.5 0.5'>
                     <Shape>
                       <Appearance>
                         <PixelTexture DEF='Score1'
-                            image='3 5 2
-                              0xffff 0xffff 0xffff
-                              0xffff 0 0xffff
-                              0xffff 0 0xffff
-                              0xffff 0 0xffff
-                              0xffff 0xffff 0xffff'
+                            image='3 5 2 0xffff 0xffff 0xffff 0xffff 0x0 0x0 0xffff 0xffff 0xffff 0x0 0x0 0xffff 0xffff 0xffff 0xffff'
                             repeatS='false'
                             repeatT='false'/>
                       </Appearance>
@@ -228,7 +214,7 @@ function initialize ()
     <DirectionalLight DEF='Light0'
         direction='0 -1 0'/>
     <ProtoInstance name='Y' DEF='BG0X'>
-      <fieldValue name='R' value='1 0 0 0.951475034356117'/>
+      <fieldValue name='R' value='1 0 0 5.0712772102224'/>
       <fieldValue name='H'>
         <Background DEF='BG0' containerField='H'
             skyAngle='1.7'
@@ -248,16 +234,16 @@ function initialize ()
     <ProximitySensor DEF='Proximity0'
         size='200 200 200'/>
     <TimeSensor DEF='TimeX'
-        cycleInterval='2'
+        cycleInterval='1.4'
         loop='true'
-        startTime='1546835170.57246'
-        stopTime='1546835169.57246'/>
+        startTime='1668775143.941433'
+        stopTime='1668775142.941433'/>
     <PositionInterpolator DEF='MovePlayer1'
         key='0, 1'
         keyValue='0 1 0, 0 -1 0'/>
     <PositionInterpolator DEF='MovePuck'
         key='0, 1'
-        keyValue='4.8 -3.16146 0, -4.8 -2.79621 0'/>
+        keyValue='4.8 0 0, -4.8 0 0'/>
     <Script DEF='Script0'
         directOutput='true'>
       <field accessType='inputOnly' type='SFVec3f' name='bouncepuck'/>
@@ -289,70 +275,20 @@ function initialize ()
         <PixelTexture USE='Score0' containerField='score'/>
       </field>
       <field accessType='initializeOnly' type='MFVec3f' name='moveplayer1keyval' value='0 0 0, 0 0 0'/>
-      <field accessType='initializeOnly' type='MFVec3f' name='movepuckkeyval' value='4.8 -3.16146 0, -4.8 -2.79621 0'/>
-      <field accessType='initializeOnly' type='SFImage' name='zero' value='3 5 2
-        0xffff 0xffff 0xffff
-        0xffff 0 0xffff
-        0xffff 0 0xffff
-        0xffff 0 0xffff
-        0xffff 0xffff 0xffff'/>
-      <field accessType='initializeOnly' type='SFImage' name='one' value='3 5 2
-        0xffff 0xffff 0xffff
-        0 0xffff 0
-        0 0xffff 0
-        0 0xffff 0
-        0xffff 0xffff 0'/>
-      <field accessType='initializeOnly' type='SFImage' name='two' value='3 5 2
-        0xffff 0xffff 0xffff
-        0xffff 0 0
-        0xffff 0xffff 0xffff
-        0 0 0xffff
-        0xffff 0xffff 0xffff'/>
-      <field accessType='initializeOnly' type='SFImage' name='three' value='3 5 2
-        0xffff 0xffff 0xffff
-        0 0 0xffff
-        0xffff 0xffff 0xffff
-        0 0 0xffff
-        0xffff 0xffff 0xffff'/>
-      <field accessType='initializeOnly' type='SFImage' name='four' value='3 5 2
-        0 0 0xffff
-        0 0 0xffff
-        0xffff 0xffff 0xffff
-        0xffff 0 0xffff
-        0xffff 0 0xffff'/>
-      <field accessType='initializeOnly' type='SFImage' name='five' value='3 5 2
-        0xffff 0xffff 0xffff
-        0 0 0xffff
-        0xffff 0xffff 0xffff
-        0xffff 0 0
-        0xffff 0xffff 0xffff'/>
-      <field accessType='initializeOnly' type='SFImage' name='six' value='3 5 2
-        0xffff 0xffff 0xffff
-        0xffff 0 0xffff
-        0xffff 0xffff 0xffff
-        0xffff 0 0
-        0xffff 0xffff 0xffff'/>
-      <field accessType='initializeOnly' type='SFImage' name='seven' value='3 5 2
-        0 0 0xffff
-        0 0 0xffff
-        0 0 0xffff
-        0 0 0xffff
-        0xffff 0xffff 0xffff'/>
-      <field accessType='initializeOnly' type='SFImage' name='eight' value='3 5 2
-        0xffff 0xffff 0xffff
-        0xffff 0 0xffff
-        0xffff 0xffff 0xffff
-        0xffff 0 0xffff
-        0xffff 0xffff 0xffff'/>
-      <field accessType='initializeOnly' type='SFImage' name='nine' value='3 5 2
-        0 0 0xffff
-        0 0 0xffff
-        0xffff 0xffff 0xffff
-        0xffff 0 0xffff
-        0xffff 0xffff 0xffff'/>
+      <field accessType='initializeOnly' type='MFVec3f' name='movepuckkeyval' value='4.8 0 0, -4.8 0 0'/>
+      <field accessType='initializeOnly' type='SFImage' name='zero' value='3 5 2 0xffff 0xffff 0xffff 0xffff 0x0 0xffff 0xffff 0x0 0xffff 0xffff 0x0 0xffff 0xffff 0xffff 0xffff'/>
+      <field accessType='initializeOnly' type='SFImage' name='one' value='3 5 2 0xffff 0xffff 0xffff 0x0 0xffff 0x0 0x0 0xffff 0x0 0x0 0xffff 0x0 0xffff 0xffff 0x0'/>
+      <field accessType='initializeOnly' type='SFImage' name='two' value='3 5 2 0xffff 0xffff 0xffff 0xffff 0x0 0x0 0xffff 0xffff 0xffff 0x0 0x0 0xffff 0xffff 0xffff 0xffff'/>
+      <field accessType='initializeOnly' type='SFImage' name='three' value='3 5 2 0xffff 0xffff 0xffff 0x0 0x0 0xffff 0xffff 0xffff 0xffff 0x0 0x0 0xffff 0xffff 0xffff 0xffff'/>
+      <field accessType='initializeOnly' type='SFImage' name='four' value='3 5 2 0x0 0x0 0xffff 0x0 0x0 0xffff 0xffff 0xffff 0xffff 0xffff 0x0 0xffff 0xffff 0x0 0xffff'/>
+      <field accessType='initializeOnly' type='SFImage' name='five' value='3 5 2 0xffff 0xffff 0xffff 0x0 0x0 0xffff 0xffff 0xffff 0xffff 0xffff 0x0 0x0 0xffff 0xffff 0xffff'/>
+      <field accessType='initializeOnly' type='SFImage' name='six' value='3 5 2 0xffff 0xffff 0xffff 0xffff 0x0 0xffff 0xffff 0xffff 0xffff 0xffff 0x0 0x0 0xffff 0xffff 0xffff'/>
+      <field accessType='initializeOnly' type='SFImage' name='seven' value='3 5 2 0x0 0x0 0xffff 0x0 0x0 0xffff 0x0 0x0 0xffff 0x0 0x0 0xffff 0xffff 0xffff 0xffff'/>
+      <field accessType='initializeOnly' type='SFImage' name='eight' value='3 5 2 0xffff 0xffff 0xffff 0xffff 0x0 0xffff 0xffff 0xffff 0xffff 0xffff 0x0 0xffff 0xffff 0xffff 0xffff'/>
+      <field accessType='initializeOnly' type='SFImage' name='nine' value='3 5 2 0x0 0x0 0xffff 0x0 0x0 0xffff 0xffff 0xffff 0xffff 0xffff 0x0 0xffff 0xffff 0xffff 0xffff'/>
       <field accessType='initializeOnly' type='SFInt32' name='count'/>
-      <field accessType='initializeOnly' type='SFInt32' name='skill' value='1'/>
-      <field accessType='initializeOnly' type='MFInt32' name='scores' value='10, 3'/>
+      <field accessType='initializeOnly' type='SFInt32' name='skill' value='3'/>
+      <field accessType='initializeOnly' type='MFInt32' name='scores' value='12, 3'/>
 <![CDATA[vrmlscript:
   function bouncepuck(v){
    v[1] = (6-Math.abs(6-Math.abs((v[1]+3)%12)))-3;

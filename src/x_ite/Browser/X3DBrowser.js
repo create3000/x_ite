@@ -745,7 +745,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       this .setLive (true);
       this .getExecutionContext () .setLive (true);
-      this .advanceTime (performance .now ());
+      this .advanceTime ();
       this .addBrowserEvent ();
    },
    endUpdate: function ()

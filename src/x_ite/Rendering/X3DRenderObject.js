@@ -328,7 +328,7 @@ X3DRenderObject .prototype =
       {
          ///  Returns the distance to the closest object in @a direction.  The maximum determinable value is avatarHeight * 2.
 
-         const t0 = performance .now ();
+         const t0 = Date .now ();
 
          const
             viewpoint       = this .getViewpoint (),
@@ -370,7 +370,7 @@ X3DRenderObject .prototype =
 
          this .getProjectionMatrix () .pop ();
 
-         this .collisionTime += performance .now () - t0;
+         this .collisionTime += Date .now () - t0;
          return -depth;
       };
    })(),
@@ -837,7 +837,7 @@ X3DRenderObject .prototype =
          numGlobalTextureProjectors = textureProjectors .reduce ((v, c) => v + c .textureProjectorNode .getGlobal (), 0);
 
 
-      this .renderTime = performance .now ();
+      this .renderTime = Date .now ();
 
 
       // PREPARATIONS

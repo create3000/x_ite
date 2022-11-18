@@ -49,10 +49,8 @@
 
 // Return a pseudo accurate timestamp.
 
-performance .now = (function ()
+function microtime (now)
 {
-   const now = performance .now;
-
    let
       offset = 0,
       last   = 0;
@@ -73,6 +71,9 @@ performance .now = (function ()
          return last = current + (++ offset / 1000);
       }
    };
-})();
+}
+
+performance .now = microtime (performance .now);
+Date        .now = microtime (Date        .now);
 
 export default undefined;

@@ -472,7 +472,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          }
 
          if (this .initialized)
-            this .pauseTime = performance .now ();
+            this .pauseTime = Date .now ();
       }
    },
    prepareEvents__: function ()

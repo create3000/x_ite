@@ -267,7 +267,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
    },
    real_pause: function ()
    {
-      this .pause = performance .now ();
+      this .pause = Date .now ();
 
       this .set_pause ();
 
@@ -288,7 +288,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
    },
    real_resume: function ()
    {
-      const interval = (performance .now () - this .pause) / 1000;
+      const interval = (Date .now () - this .pause) / 1000;
 
       this .pauseInterval += interval;
 
@@ -323,7 +323,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
    {
       if (this ._enabled .getValue ())
       {
-         this .getBrowser () .advanceTime (performance .now ());
+         this .getBrowser () .advanceTime ();
 
          this [callback] ();
       }

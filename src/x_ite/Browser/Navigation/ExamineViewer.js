@@ -160,7 +160,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
       if (this .button >= 0)
          return;
 
-      this .pressTime = performance .now ();
+      this .pressTime = Date .now ();
 
       const
          offset = this .getBrowser () .getSurface () .offset (),
@@ -245,7 +245,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
 
             this .getBrowser () .setCursor ("DEFAULT");
 
-            if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
+            if (Math .abs (this .rotation .angle) > SPIN_ANGLE && Date .now () - this .motionTime < SPIN_RELEASE_TIME)
             {
                if (this .getStraightenHorizon ())
                   this .rotation = this .getHorizonRotation (this .rotation);
@@ -311,13 +311,13 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
 
                this .rotation .setFromToVec (toVector, this .fromVector);
 
-               if (Math .abs (this .rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
+               if (Math .abs (this .rotation .angle) < SPIN_ANGLE && Date .now () - this .pressTime < MOTION_TIME)
                   return;
 
                this .addRotate (this .rotation);
 
                this .fromVector .assign (toVector);
-               this .motionTime = performance .now ();
+               this .motionTime = Date .now ();
                break;
             }
             case 1:

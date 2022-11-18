@@ -284,7 +284,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
 
             if (this .pauseTime)
             {
-               this .creationTime += performance .now () / 1000 - this .pauseTime;
+               this .creationTime += Date .now () / 1000 - this .pauseTime;
                this .pauseTime     = 0;
             }
          }
@@ -296,7 +296,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
             this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
 
             if (this .pauseTime === 0)
-               this .pauseTime = performance .now () / 1000;
+               this .pauseTime = Date .now () / 1000;
          }
       }
    },
@@ -314,7 +314,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
             }
             else
             {
-               this .pauseTime = performance .now () / 1000;
+               this .pauseTime = Date .now () / 1000;
             }
 
             this ._isActive = true;
@@ -431,7 +431,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       this .numParticles = Math .min (lastNumParticles, maxParticles);
 
       if (! this .emitterNode .isExplosive ())
-         this .creationTime = performance .now () / 1000;
+         this .creationTime = Date .now () / 1000;
 
       this .resizeBuffers (lastNumParticles);
       this .updateVertexArrays ();
@@ -722,7 +722,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       if (emitterNode .isExplosive ())
       {
          const
-            now              = performance .now () / 1000,
+            now              = Date .now () / 1000,
             particleLifetime = this .particleLifetime + this .particleLifetime * this .lifetimeVariation;
 
          if (now - this .creationTime > particleLifetime)
@@ -743,7 +743,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
          if (this .numParticles < this .maxParticles)
          {
             const
-               now          = performance .now () / 1000,
+               now          = Date .now () / 1000,
                newParticles = Math .max (0, Math .floor ((now - this .creationTime) * this .maxParticles / this .particleLifetime));
 
             if (newParticles)

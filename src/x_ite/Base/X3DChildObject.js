@@ -82,14 +82,14 @@ X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype
    },
    addEvent: function ()
    {
-      this .setModificationTime (performance .now ());
+      this .setModificationTime (Date .now ());
 
       for (const parent of this [_parents])
          parent .addEvent (this);
    },
    addEventObject: function (field, event)
    {
-      this .setModificationTime (performance .now ());
+      this .setModificationTime (Date .now ());
 
       for (const parent of this [_parents])
          parent .addEventObject (this, event);

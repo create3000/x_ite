@@ -66,7 +66,7 @@ X3DTimeContext .prototype =
 {
    initialize: function ()
    {
-      this .advanceTime (performance .now ());
+      this .advanceTime ();
    },
    getCurrentTime: function ()
    {
@@ -84,10 +84,10 @@ X3DTimeContext .prototype =
    {
       const lastPosition = new Vector3 (0, 0, 0);
 
-      return function (now)
+      return function ()
       {
          const
-            time     = (performance .timeOrigin + now) / 1000,
+            time     = Date .now () / 1000,
             interval = time - this [_currentTime];
 
          this [_currentTime]      = time;

@@ -175,7 +175,7 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
 
       // Advance updateTime time.
 
-      this .updateTime = performance .now ();
+      this .updateTime = Date .now ();
    },
 });
 
