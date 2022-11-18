@@ -142,10 +142,10 @@ Object .assign (X3D,
          default:
          {
             if (! Array .isArray (arguments [0]))
-               throw new Error ("Invalid argument");
+               throw new Error ("Invalid argument.");
 
             if (typeof arguments [1] !== "function")
-               throw new Error ("Invalid argument");
+               throw new Error ("Invalid argument.");
 
             $(() => arguments [1] .apply (null, arguments [0] .map (file => this .require (file))));
             break;
