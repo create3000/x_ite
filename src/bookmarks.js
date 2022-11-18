@@ -79,9 +79,9 @@ const Bookmarks = (function ()
                      .attr ('title', component + ' » ' + test)
                      .append ($("<a/>")
                         .addClass ('display-example')
-                        .attr ('href', server + '/' + component + '/' + test + '/' + test + '.x3d')
-                        .attr ('style', 'background-image:url(' + server + '/' + component + '/' + test + '/screenshot-small.png)')
-                        .on ("click", window .loadURL .bind (null, server + '/' + component + '/' + test + '/' + test + '.x3d')));
+                        .attr ('href', `${server}/${component}/${test}/${test}.x3d`)
+                        .attr ('style', `background-image:url(${server}/${component}/${test}/screenshot-small.png)`)
+                        .on ("click", () => this .loadURL (`${server}/${component}/${test}/${test}.x3d`)));
                }
                else if (path)
                {
@@ -97,7 +97,7 @@ const Bookmarks = (function ()
                      .append ($("<a/>")
                         .addClass ('display-example')
                         .attr ('href', server + '/' + path)
-                        .on ("click", window .loadURL .bind (null, server + '/' + path))
+                        .on ("click", () => this .loadURL (server + '/' + path))
                         .text (name));
                }
                else if (component)
@@ -115,11 +115,10 @@ const Bookmarks = (function ()
 
          this .element .scrollLeft (this .browser .getLocalStorage () ["Bookmarks.scrollLeft"] || 0);
 
-         $(window) .on ("unload", function ()
+         $(window) .on ("unload", () =>
          {
             this .browser .getLocalStorage () ["Bookmarks.scrollLeft"] = this .element .scrollLeft ();
-         }
-         .bind (this));
+         });
       },
       loadURL: function (url)
       {
@@ -128,18 +127,24 @@ const Bookmarks = (function ()
          $(".file") .text (url)
             .append ($("<a/>")
             .attr ('href', base + ".x3d")
-            .on ("click", window .loadURL .bind (null, base + ".x3d"))
+            .on ("click", () => this .loadURL (base + ".x3d"))
             .text (".x3d"))
             .append ($("<a/>")
             .attr ('href', base + ".x3dv")
-            .on ("click", window .loadURL .bind (null, base + ".x3dv"))
+            .on ("click", () => this .loadURL (base + ".x3dv"))
             .text (".x3dv"))
             .append ($("<a/>")
             .attr ('href', base + ".x3dj")
-            .on ("click", window .loadURL .bind (null, base + ".x3dj"))
+            .on ("click", () => this .loadURL (base + ".x3dj"))
             .text (".x3dj"));
 
+         this .loadURL (url);
+      },
+      loadURL: function (url)
+      {
          $(".browser") .attr ("src", url);
+
+         return false;
       },
    };
 

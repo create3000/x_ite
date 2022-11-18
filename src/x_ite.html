@@ -28,8 +28,9 @@
 
    <script type="module">
 import X3D from "./x_ite.js";
-await X3D ();
 window .X3D = X3D;
+
+await X3D ();
 
 const
    Browser      = X3D .getBrowser (),
@@ -71,8 +72,6 @@ function loadURL (url)
    return false;
 }
 
-window .loadURL = loadURL;
-
 function toVRMLString ()
 {
    console .log (Browser .toVRMLString ());
@@ -103,7 +102,7 @@ $(".print-vrml") .on ("click", toVRMLString);
 $(".print-xml") .on ("click", toXMLString);
 $(".print-json") .on ("click", toJSONString);
 
-$(".location-entry") .keydown (function (event)
+$(".location-entry") .keydown (event =>
 {
    switch (event .key)
    {
