@@ -215,10 +215,10 @@ module .exports = async () =>
                // Per component
                ... {
                   Texturing3D: {
-                     CharLS: "CharLS.js/build/charLS-FixedMemory-browser.js",
+                     CharLS: "CharLS.js/build/charLS-DynamicMemory-browser.js",
                      dicomParser: "dicom-parser/dist/dicomParser.js",
                      jpeg: "jpeg-lossless-decoder-js/release/current/lossless.js",
-                     OpenJPEG: "OpenJPEG.js/build/openJPEG-FixedMemory-browser.js",
+                     OpenJPEG: "OpenJPEG.js/build/openJPEG-DynamicMemory-browser.js",
                      JpegImage: "jpeg-js/lib/decoder.js",
                   },
                }

@@ -35246,14 +35246,14 @@ X3DChildObject .prototype = Object .assign (Object .create (Base_X3DObject.proto
    },
    addEvent: function ()
    {
-      this .setModificationTime (performance .now ());
+      this .setModificationTime (Date .now ());
 
       for (const parent of this [_parents])
          parent .addEvent (this);
    },
    addEventObject: function (field, event)
    {
-      this .setModificationTime (performance .now ());
+      this .setModificationTime (Date .now ());
 
       for (const parent of this [_parents])
          parent .addEventObject (this, event);
@@ -52791,7 +52791,7 @@ function X3DUrlObject (executionContext)
                           "loadNow",   new x_ite_Fields.SFTime ());
 
    this [_cache]                = true;
-   this [_autoRefreshStartTime] = performance .now ();
+   this [_autoRefreshStartTime] = Date .now ();
 }
 
 X3DUrlObject .prototype =
@@ -52813,7 +52813,7 @@ X3DUrlObject .prototype =
 
       if (value === Base_X3DConstants.COMPLETE_STATE)
       {
-         this [_autoRefreshCompleteTime] = performance .now ();
+         this [_autoRefreshCompleteTime] = Date .now ();
          this .setAutoRefreshTimer (this ._autoRefresh .getValue ());
       }
 
@@ -52900,7 +52900,7 @@ X3DUrlObject .prototype =
 
       if (autoRefreshTimeLimit !== 0)
       {
-         if ((performance .now () - this [_autoRefreshStartTime]) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
+         if ((Date .now () - this [_autoRefreshStartTime]) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
             return;
       }
 
@@ -52939,7 +52939,7 @@ X3DUrlObject .prototype =
          return;
 
       const
-         elapsedTime = (performance .now () - this [_autoRefreshCompleteTime]) / 1000,
+         elapsedTime = (Date .now () - this [_autoRefreshCompleteTime]) / 1000,
          autoRefresh = this ._autoRefresh .getValue ();
 
       let autoRefreshInterval = autoRefresh - elapsedTime;
@@ -60508,7 +60508,7 @@ X3DRenderObject .prototype =
       {
          ///  Returns the distance to the closest object in @a direction.  The maximum determinable value is avatarHeight * 2.
 
-         const t0 = performance .now ();
+         const t0 = Date .now ();
 
          const
             viewpoint       = this .getViewpoint (),
@@ -60550,7 +60550,7 @@ X3DRenderObject .prototype =
 
          this .getProjectionMatrix () .pop ();
 
-         this .collisionTime += performance .now () - t0;
+         this .collisionTime += Date .now () - t0;
          return -depth;
       };
    })(),
@@ -61017,7 +61017,7 @@ X3DRenderObject .prototype =
          numGlobalTextureProjectors = textureProjectors .reduce ((v, c) => v + c .textureProjectorNode .getGlobal (), 0);
 
 
-      this .renderTime = performance .now ();
+      this .renderTime = Date .now ();
 
 
       // PREPARATIONS
@@ -62633,7 +62633,7 @@ BindableList .prototype = Object .assign (Object .create (Base_X3DBaseNode.proto
 
       // Advance updateTime time.
 
-      this .updateTime = performance .now ();
+      this .updateTime = Date .now ();
    },
 });
 
@@ -67369,7 +67369,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (Core_X3DChildN
    },
    real_pause: function ()
    {
-      this .pause = performance .now ();
+      this .pause = Date .now ();
 
       this .set_pause ();
 
@@ -67390,7 +67390,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (Core_X3DChildN
    },
    real_resume: function ()
    {
-      const interval = (performance .now () - this .pause) / 1000;
+      const interval = (Date .now () - this .pause) / 1000;
 
       this .pauseInterval += interval;
 
@@ -67425,7 +67425,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (Core_X3DChildN
    {
       if (this ._enabled .getValue ())
       {
-         this .getBrowser () .advanceTime (performance .now ());
+         this .getBrowser () .advanceTime ();
 
          this [callback] ();
       }
@@ -80097,7 +80097,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
       if (this .button >= 0)
          return;
 
-      this .pressTime = performance .now ();
+      this .pressTime = Date .now ();
 
       const
          offset = this .getBrowser () .getSurface () .offset (),
@@ -80182,7 +80182,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
 
             this .getBrowser () .setCursor ("DEFAULT");
 
-            if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
+            if (Math .abs (this .rotation .angle) > SPIN_ANGLE && Date .now () - this .motionTime < SPIN_RELEASE_TIME)
             {
                if (this .getStraightenHorizon ())
                   this .rotation = this .getHorizonRotation (this .rotation);
@@ -80248,13 +80248,13 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
 
                this .rotation .setFromToVec (toVector, this .fromVector);
 
-               if (Math .abs (this .rotation .angle) < SPIN_ANGLE && performance .now () - this .pressTime < MOTION_TIME)
+               if (Math .abs (this .rotation .angle) < SPIN_ANGLE && Date .now () - this .pressTime < MOTION_TIME)
                   return;
 
                this .addRotate (this .rotation);
 
                this .fromVector .assign (toVector);
-               this .motionTime = performance .now ();
+               this .motionTime = Date .now ();
                break;
             }
             case 1:
@@ -81158,7 +81158,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
          const
             navigationInfo = this .getNavigationInfo (),
             viewpoint      = this .getActiveViewpoint (),
-            now            = performance .now (),
+            now            = Date .now (),
             dt             = (now - this .startTime) / 1000;
 
          upVector .assign (viewpoint .getUpVector ());
@@ -81228,7 +81228,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
          const
             navigationInfo = this .getNavigationInfo (),
             viewpoint      = this .getActiveViewpoint (),
-            now            = performance .now (),
+            now            = Date .now (),
             dt             = (now - this .startTime) / 1000,
             upVector       = viewpoint .getUpVector ();
 
@@ -81266,7 +81266,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
       this .getBrowser () .prepareEvents () .addInterest ("fly", this);
       this .getBrowser () .addBrowserEvent ();
 
-      this .startTime = performance .now ();
+      this .startTime = Date .now ();
    },
    addPan: function ()
    {
@@ -81277,7 +81277,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
       this .getBrowser () .prepareEvents () .addInterest ("pan", this);
       this .getBrowser () .addBrowserEvent ();
 
-      this .startTime = performance .now ();
+      this .startTime = Date .now ();
    },
    addRoll: (function ()
    {
@@ -83649,7 +83649,7 @@ X3DPickingContext .prototype =
    },
    picking: function ()
    {
-      const t0 = performance .now ();
+      const t0 = Date .now ();
 
       this .getWorld () .traverse (Rendering_TraverseType.PICKING, null);
 
@@ -83663,7 +83663,7 @@ X3DPickingContext .prototype =
          pickSensorNode .process ();
       }
 
-      this [_pickingTime] = performance .now () - t0;
+      this [_pickingTime] = Date .now () - t0;
    },
    getPickingTime: function ()
    {
@@ -84197,7 +84197,7 @@ X3DPointingDeviceSensorContext .prototype =
          return;
       }
 
-      const t0 = performance .now ();
+      const t0 = Date .now ();
 
       this [_pickOnlySensors] = pickOnlySensors;
 
@@ -84217,7 +84217,7 @@ X3DPointingDeviceSensorContext .prototype =
       this [_layerSorter]    .sort (0, this [_hits] .length);
 
       this .addBrowserEvent ();
-      this [_pointerTime] = performance .now () - t0;
+      this [_pointerTime] = Date .now () - t0;
    },
    motion: function ()
    {
@@ -96873,7 +96873,7 @@ X3DTimeContext .prototype =
 {
    initialize: function ()
    {
-      this .advanceTime (performance .now ());
+      this .advanceTime ();
    },
    getCurrentTime: function ()
    {
@@ -96891,10 +96891,10 @@ X3DTimeContext .prototype =
    {
       const lastPosition = new Numbers_Vector3 (0, 0, 0);
 
-      return function (now)
+      return function ()
       {
          const
-            time     = (performance .timeOrigin + now) / 1000,
+            time     = Date .now () / 1000,
             interval = time - this [_currentTime];
 
          this [_currentTime]      = time;
@@ -97304,9 +97304,9 @@ X3DBrowserContext .prototype = Object .assign (Object .create (Base_X3DBaseNode.
 
       const gl = this .getContext ();
 
-      const t0 = performance .now ();
+      const t0 = Date .now ();
       this [_systemTime] = t0 - this [_systemStartTime];
-      this .advanceTime (now);
+      this .advanceTime ();
 
       this ._prepareEvents .processInterests ();
       this [_processEvents] ();
@@ -97314,26 +97314,26 @@ X3DBrowserContext .prototype = Object .assign (Object .create (Base_X3DBaseNode.
       this ._timeEvents .processInterests ();
       this [_processEvents] ();
 
-      const t1 = performance .now ();
+      const t1 = Date .now ();
       this [_world] .traverse (Rendering_TraverseType.CAMERA, null);
-      this [_cameraTime] = performance .now () - t1;
+      this [_cameraTime] = Date .now () - t1;
 
-      const t2 = performance .now ();
+      const t2 = Date .now ();
       if (this .getCollisionCount ())
          this [_world] .traverse (Rendering_TraverseType.COLLISION, null);
-      this [_collisionTime] = performance .now () - t2;
+      this [_collisionTime] = Date .now () - t2;
 
       this ._sensorEvents .processInterests ();
       this [_processEvents] ();
 
-      const t3 = performance .now ();
+      const t3 = Date .now ();
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
       this [_world] .traverse (Rendering_TraverseType.DISPLAY, null);
-      this [_displayTime] = performance .now () - t3;
+      this [_displayTime] = Date .now () - t3;
 
-      this [_browserTime]     = performance .now () - t0;
-      this [_systemStartTime] = performance .now ();
+      this [_browserTime]     = Date .now () - t0;
+      this [_systemStartTime] = Date .now ();
 
       this ._finished .processInterests ();
    },
@@ -119300,7 +119300,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
    {
       this .setLive (true);
       this .getExecutionContext () .setLive (true);
-      this .advanceTime (performance .now ());
+      this .advanceTime ();
       this .addBrowserEvent ();
    },
    endUpdate: function ()
@@ -119562,10 +119562,8 @@ Object .defineProperty (X3DBrowser .prototype, "supportedComponents",
 
 // Return a pseudo accurate timestamp.
 
-performance .now = (function ()
+function microtime (now)
 {
-   const now = performance .now;
-
    let
       offset = 0,
       last   = 0;
@@ -119586,7 +119584,10 @@ performance .now = (function ()
          return last = current + (++ offset / 1000);
       }
    };
-})();
+}
+
+performance .now = microtime (performance .now);
+Date        .now = microtime (Date        .now);
 
 /* harmony default export */ const MicroTime = (undefined);
 
