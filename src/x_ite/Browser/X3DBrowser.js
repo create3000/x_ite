@@ -181,6 +181,39 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       return SupportedComponents;
    },
+   loadComponents: (function ()
+   {
+      const componentsUrl = /\.js$/;
+
+      function loadComponents (browser, components, seen)
+      {
+         return Promise .all (components .map (name => loadComponent (browser, name, seen)))
+      }
+
+      async function loadComponent (browser, name, seen)
+      {
+         if (seen .has (name)) return; seen .add (name);
+
+         const
+            component   = browser .getSupportedComponents () .get (name),
+            providerUrl = component .providerUrl;
+
+         await loadComponents (browser, component .dependencies, seen);
+
+         if (!providerUrl .match (componentsUrl))
+            return;
+
+         if (typeof global === "object" && typeof global .require === "function")
+            global .require (global .require ("url") .fileURLToPath (providerUrl))
+         else
+            await import (/* webpackIgnore: true */ providerUrl);
+      }
+
+      return function (components)
+      {
+         return loadComponents (this, [... components], new Set ());
+      };
+   })(),
    getSupportedNode: function (typeName)
    {
       return SupportedNodes .getType (String (typeName));

@@ -53053,61 +53053,22 @@ X3DParser .prototype = {
    {
       this .getExecutionContext () .rootNodes .push (node);
    },
-   loadComponents: (function ()
+   loadComponents: function ()
    {
-      const componentsUrl = /\.js$/;
+      const
+         browser    = this .getBrowser (),
+         scene      = this .getScene (),
+         profile    = scene .getProfile () || browser .getProfile ("Full"),
+         components = new Set ();
 
-      async function loadDependencies (browser, dependencies)
-      {
-         for (const dependency of dependencies)
-         {
-            const
-               component   = browser .getSupportedComponents () .get (dependency),
-               providerUrl = component .providerUrl;
+      for (const component of profile .components)
+         components .add (component .name);
 
-            await loadDependencies (browser, component .dependencies);
+      for (const component of scene .getComponents ())
+         components .add (component .name);
 
-            if (!providerUrl .match (componentsUrl))
-               continue;
-
-            if (typeof __webpack_require__.g === "object" && typeof __webpack_require__.g .require === "function")
-               __webpack_require__.g .require (__webpack_require__.g .require ("url") .fileURLToPath (providerUrl))
-            else
-               await import (/* webpackIgnore: true */ providerUrl);
-         }
-      }
-
-      return async function ()
-      {
-         const
-            scene      = this .getScene (),
-            browser    = scene .getBrowser (),
-            profile    = scene .getProfile () || browser .getProfile ("Full"),
-            components = new Set ();
-
-         for (const component of profile .components)
-            components .add (component);
-
-         for (const component of scene .getComponents ())
-            components .add (component);
-
-         for (const component of components)
-            await loadDependencies (browser, component .dependencies);
-
-         for (const component of components)
-         {
-            const providerUrl = component .providerUrl;
-
-            if (!providerUrl .match (componentsUrl))
-               continue;
-
-            if (typeof __webpack_require__.g === "object" && typeof __webpack_require__.g .require === "function" && typeof __filename === "string")
-               __webpack_require__.g .require (__webpack_require__.g .require ("url") .fileURLToPath (providerUrl))
-            else
-               await import (/* webpackIgnore: true */ providerUrl);
-         }
-      };
-   })(),
+      return browser .loadComponents (components);
+   },
    setUnits: function (generator)
    {
       if (typeof arguments [0] == "boolean")
@@ -118746,6 +118707,39 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
    {
       return Configuration_SupportedComponents;
    },
+   loadComponents: (function ()
+   {
+      const componentsUrl = /\.js$/;
+
+      function loadComponents (browser, components, seen)
+      {
+         return Promise .all (components .map (name => loadComponent (browser, name, seen)))
+      }
+
+      async function loadComponent (browser, name, seen)
+      {
+         if (seen .has (name)) return; seen .add (name);
+
+         const
+            component   = browser .getSupportedComponents () .get (name),
+            providerUrl = component .providerUrl;
+
+         await loadComponents (browser, component .dependencies, seen);
+
+         if (!providerUrl .match (componentsUrl))
+            return;
+
+         if (typeof __webpack_require__.g === "object" && typeof __webpack_require__.g .require === "function")
+            __webpack_require__.g .require (__webpack_require__.g .require ("url") .fileURLToPath (providerUrl))
+         else
+            await import (/* webpackIgnore: true */ providerUrl);
+      }
+
+      return function (components)
+      {
+         return loadComponents (this, [... components], new Set ());
+      };
+   })(),
    getSupportedNode: function (typeName)
    {
       return Configuration_SupportedNodes.getType (String (typeName));

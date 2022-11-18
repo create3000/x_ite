@@ -96,61 +96,22 @@ X3DParser .prototype = {
    {
       this .getExecutionContext () .rootNodes .push (node);
    },
-   loadComponents: (function ()
+   loadComponents: function ()
    {
-      const componentsUrl = /\.js$/;
+      const
+         browser    = this .getBrowser (),
+         scene      = this .getScene (),
+         profile    = scene .getProfile () || browser .getProfile ("Full"),
+         components = new Set ();
 
-      async function loadDependencies (browser, dependencies)
-      {
-         for (const dependency of dependencies)
-         {
-            const
-               component   = browser .getSupportedComponents () .get (dependency),
-               providerUrl = component .providerUrl;
+      for (const component of profile .components)
+         components .add (component .name);
 
-            await loadDependencies (browser, component .dependencies);
+      for (const component of scene .getComponents ())
+         components .add (component .name);
 
-            if (!providerUrl .match (componentsUrl))
-               continue;
-
-            if (typeof global === "object" && typeof global .require === "function")
-               global .require (global .require ("url") .fileURLToPath (providerUrl))
-            else
-               await import (/* webpackIgnore: true */ providerUrl);
-         }
-      }
-
-      return async function ()
-      {
-         const
-            scene      = this .getScene (),
-            browser    = scene .getBrowser (),
-            profile    = scene .getProfile () || browser .getProfile ("Full"),
-            components = new Set ();
-
-         for (const component of profile .components)
-            components .add (component);
-
-         for (const component of scene .getComponents ())
-            components .add (component);
-
-         for (const component of components)
-            await loadDependencies (browser, component .dependencies);
-
-         for (const component of components)
-         {
-            const providerUrl = component .providerUrl;
-
-            if (!providerUrl .match (componentsUrl))
-               continue;
-
-            if (typeof global === "object" && typeof global .require === "function" && typeof __filename === "string")
-               global .require (global .require ("url") .fileURLToPath (providerUrl))
-            else
-               await import (/* webpackIgnore: true */ providerUrl);
-         }
-      };
-   })(),
+      return browser .loadComponents (components);
+   },
    setUnits: function (generator)
    {
       if (typeof arguments [0] == "boolean")
