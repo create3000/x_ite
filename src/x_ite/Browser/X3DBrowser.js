@@ -53,6 +53,7 @@ import X3DLayerNode        from "../Components/Layering/X3DLayerNode.js";
 import X3DBrowserContext   from "./X3DBrowserContext.js";
 import ProfileInfo         from "../Configuration/ProfileInfo.js";
 import ComponentInfo       from "../Configuration/ComponentInfo.js";
+import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
 import SupportedProfiles   from "../Configuration/SupportedProfiles.js";
 import SupportedComponents from "../Configuration/SupportedComponents.js";
 import SupportedNodes      from "../Configuration/SupportedNodes.js";
@@ -211,6 +212,12 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       return function (components)
       {
+         if (arguments [0] instanceof ProfileInfo)
+            return loadComponents (this, arguments [0] .components .map (({name}) => name), new Set ());
+
+         if (arguments [0] instanceof ComponentInfoArray)
+            return loadComponents (this, arguments [0] .map (({name}) => name), new Set ());
+
          return loadComponents (this, [... components], new Set ());
       };
    })(),
