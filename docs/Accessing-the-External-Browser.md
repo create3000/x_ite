@@ -36,7 +36,7 @@ X3D (function ()
 {
   // Now, X3D is ready. We can get access to the browser object.
 
-  const Browser = X3D .getBrowser ("x3d-canvas.browser");
+  const Browser = X3D .getBrowser ();
 
   Browser .loadURL (new X3D .MFNode ("/path/to/your/world.x3dv"),
                     new X3D .MFNode ());
@@ -53,7 +53,7 @@ If something went wrong, the error callback is called:
 X3D (function ()
 {
   const
-    Browser      = X3D .getBrowser ("#browser"),               // X3DBrowser object
+    Browser      = X3D .getBrowser (),                         // X3DBrowser object
     currentScene = Browser .currentScene,                      // X3DScene object
     header       = currentScene .getNamedNode ("HeaderText");  // Text node
 
@@ -216,7 +216,7 @@ Adding HTML controls to your scene is no rocket science. We have added some HTML
 function init ()
 {
   const
-    Browser = X3D .getBrowser (".browser"),             // Get the browser instance.
+    Browser = X3D .getBrowser (".browser"),               // Get the browser instance.
     scene   = Browser .currentScene,                      // Get the scene.
     timer   = scene .getNamedNode ("SpinAnimationTimer"); // Get box TouchSensor node.
 
