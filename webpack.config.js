@@ -6,9 +6,7 @@ const
 
 const
    TerserPlugin           = require ("terser-webpack-plugin"),
-   WebpackShellPluginNext = require ("webpack-shell-plugin-next"),
-   MiniCssExtractPlugin   = require ("mini-css-extract-plugin"),
-   CssMinimizerPlugin     = require ("css-minimizer-webpack-plugin")
+   WebpackShellPluginNext = require ("webpack-shell-plugin-next")
 
 module .exports = async () =>
 {
@@ -30,66 +28,6 @@ module .exports = async () =>
    const
       x_ite_deps = await deps ("./src/x_ite.js"),
       targets    = [ ]
-
-   targets .push ({
-      entry: {
-         "x_ite": "./src/x_ite.css",
-      },
-      output: {
-         path: path .resolve (__dirname, "dist"),
-      },
-      mode: "production",
-      module: {
-         rules: [
-            {
-               test: /\.css$/,
-               use: [
-                  MiniCssExtractPlugin .loader,
-                  {
-                     loader: "css-loader",
-                     options: {
-                        url: false,
-                     },
-                  },
-               ],
-            },
-         ],
-      },
-      optimization: {
-         minimize: true,
-         minimizer: [
-            new CssMinimizerPlugin ({
-               parallel: true,
-               minify: CssMinimizerPlugin .cssoMinify,
-               exclude: /\.png$/,
-               minimizerOptions: {
-                  preset: [
-                     "default",
-                     {
-                        discardComments: { removeAll: true },
-                     },
-                  ],
-               },
-            }),
-         ],
-      },
-      plugins: [
-         new MiniCssExtractPlugin ({
-            filename: "[name].css",
-         }),
-         new WebpackShellPluginNext ({
-            logging: false,
-            onBuildEnd: {
-               scripts: [
-                  `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.css`,
-               ],
-               blocking: false,
-               parallel: false,
-            },
-         }),
-      ],
-      stats: "errors-only",
-   })
 
    targets .push ({
       entry: {
@@ -139,6 +77,8 @@ module .exports = async () =>
             onBuildStart: {
                scripts: [
                   `echo 'Bundling x_ite ...'`,
+                  `perl -p0e 's|\\/\\*.*?\\*\\/||sg' src/x_ite.css | npx node-sass --output-style compressed > dist/x_ite.css`,
+                  `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.css`,
                   `perl -p0i -e 's|".*?"|'\`npm pkg get version\`'|sg' src/x_ite/Browser/VERSION.js`,
                   `perl -p0i -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEBUG.js`,
                ],
