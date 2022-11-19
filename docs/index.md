@@ -854,6 +854,8 @@ Open Source CDN, free, fast, and reliable.
 
 #### Snipped
 
+You can always replace 'latest' by the version number you prefer.
+
 ```html
 <script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.min.js"></script>
 ```
