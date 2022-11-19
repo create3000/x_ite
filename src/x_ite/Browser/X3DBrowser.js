@@ -210,15 +210,15 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             await import (/* webpackIgnore: true */ providerUrl);
       }
 
-      return function (components)
+      return function (argument)
       {
-         if (arguments [0] instanceof ProfileInfo)
-            return loadComponents (this, arguments [0] .components .map (({name}) => name), new Set ());
+         if (argument instanceof ProfileInfo)
+            return loadComponents (this, argument .components .map (({name}) => name), new Set ());
 
-         if (arguments [0] instanceof ComponentInfoArray)
-            return loadComponents (this, arguments [0] .map (({name}) => name), new Set ());
+         if (argument instanceof ComponentInfoArray)
+            return loadComponents (this, argument .map (({name}) => name), new Set ());
 
-         return loadComponents (this, [... components], new Set ());
+         return loadComponents (this, [... argument], new Set ());
       };
    })(),
    getSupportedNode: function (typeName)
