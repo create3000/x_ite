@@ -1167,7 +1167,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 *Leipzig, 24th May 2018:* Thank's to Ammo (Bullet) physics engine we have implemented a lot of new nodes of the RigidBodyPhysics component. Most of the documentation pages of this component have a live example for this node. The component is realized as plug-in which can be include right after the x\_ite.js script tag.
 
 ```html
-<link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/4.1.6/dist/x_ite.css"/>
+<link rel="stylesheet" href="http://code.create3000.de/x_ite/4.1.6/dist/x_ite.css"/>
 <script src="http://code.create3000.de/x_ite/4.1.6/dist/x_ite.min.js"></script>
 <!-- Include the following plug-ins if you wish support for this component -->
 <script src="http://code.create3000.de/x_ite/4.1.6/dist/rigid-body-physics.min.js"></script>
@@ -1266,7 +1266,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 X\_ITE is now available from our own server at code.create3000.de. Just include the following URL's into your HTML and you are up to date again:
 
 ```html
-<link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/4.0.7/dist/x_ite.css"/>
+<link rel="stylesheet" href="http://code.create3000.de/x_ite/4.0.7/dist/x_ite.css"/>
 <script src="http://code.create3000.de/x_ite/4.0.7/dist/x_ite.min.js"></script>
 ```
 
@@ -1301,7 +1301,7 @@ Additionally X\_ITE is now available via GitHub CDN and jsDelivr CDN.
 There are new URL's for cobweb.min.js and cobweb.css. Use the following locations now.
 
 ```html
-<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/create3000/cobweb/3.3/dist/cobweb.css"/>
+<link rel="stylesheet" href="https://cdn.rawgit.com/create3000/cobweb/3.3/dist/cobweb.css"/>
 <script src="https://cdn.rawgit.com/create3000/cobweb/3.3/dist/cobweb.min.js"></script>
 ```
 

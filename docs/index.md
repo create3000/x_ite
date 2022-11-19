@@ -872,7 +872,7 @@ The HTML5 page is quite easy to create, the HTML5 code below shows you the minim
   <head>
     <meta charset="utf-8"/>
     <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
-    <style type="text/css">
+    <style>
 x3d-canvas {
   width: 768px;
   height: 432px;

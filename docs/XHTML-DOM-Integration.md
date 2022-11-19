@@ -28,7 +28,7 @@ Create an HTML or XHTML page and save it, include the »x_ite.min.js«. Now, X3D
   <head>
     <meta charset="utf-8"/>
     <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
-    <style type="text/css">
+    <style>
 x3d-canvas {
   width: 768px;
   height: 432px;
