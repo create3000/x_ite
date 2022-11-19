@@ -139,6 +139,11 @@ GeoProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmental
    {
       this .proximitySensor .traverse (type, renderObject);
    },
+   dispose: function ()
+   {
+      X3DGeospatialObject        .prototype .dispose .call (this);
+      X3DEnvironmentalSensorNode .prototype .dispose .call (this);
+   },
 });
 
 export default GeoProximitySensor;

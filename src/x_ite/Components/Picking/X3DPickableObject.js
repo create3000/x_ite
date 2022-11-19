@@ -77,6 +77,7 @@ X3DPickableObject .prototype =
          this .objectType .add (this ._objectType [i]);
       }
    },
+   dispose: function () { },
 };
 
 export default X3DPickableObject;

@@ -503,6 +503,11 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
          }
       };
    })(),
+   dispose: function ()
+   {
+      X3DBoundedObject_default().prototype.dispose.call (this);
+      X3DChildNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const HAnim_HAnimHumanoid = (HAnimHumanoid);

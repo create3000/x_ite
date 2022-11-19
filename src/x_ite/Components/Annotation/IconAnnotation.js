@@ -93,6 +93,11 @@ IconAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .p
    },
    requestImmediateLoad: function (cache = true)
    { },
+   dispose: function ()
+   {
+      X3DUrlObject      .prototype .dispose .call (this);
+      X3DAnnotationNode .prototype .dispose .call (this);
+   },
 });
 
 export default IconAnnotation;

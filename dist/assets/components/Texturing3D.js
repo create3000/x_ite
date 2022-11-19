@@ -9382,6 +9382,11 @@ ImageTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTextu
       }
       .bind (this));
    },
+   dispose: function ()
+   {
+      X3DUrlObject_default().prototype.dispose.call (this);
+      Texturing3D_X3DTexture3DNode.prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Texturing3D_ImageTexture3D = (ImageTexture3D);

@@ -2160,6 +2160,11 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create ((X3DChildNode_def
    {
       gl .uniformMatrix3fv (shaderObject .x3d_TextureNormalMatrix, true, this .textureNormalMatrixArray);
    },
+   dispose: function ()
+   {
+      X3DBoundedObject_default().prototype.dispose.call (this);
+      X3DChildNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const VolumeRendering_X3DVolumeDataNode = (X3DVolumeDataNode);

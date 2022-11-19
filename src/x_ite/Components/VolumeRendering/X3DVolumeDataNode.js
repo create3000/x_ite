@@ -217,6 +217,11 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create (X3DChildNode .pro
    {
       gl .uniformMatrix3fv (shaderObject .x3d_TextureNormalMatrix, true, this .textureNormalMatrixArray);
    },
+   dispose: function ()
+   {
+      X3DBoundedObject .prototype .dispose .call (this);
+      X3DChildNode     .prototype .dispose .call (this);
+   },
 });
 
 export default X3DVolumeDataNode;

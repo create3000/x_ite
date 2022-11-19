@@ -50997,11 +50997,6 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
          }
       }
 
-      // Remove routes from and to node if any, and dispose values of fields.
-
-      for (const field of this .getFields ())
-         field .dispose ();
-
       // Remove node from entire scene graph.
 
       for (const firstParent of new Set (this .getParents ()))
@@ -53072,17 +53067,10 @@ X3DParser .prototype = {
          if (scene .getSpecificationVersion () === "2.0")
             return browser .loadComponents (VRML);
 
-         const
-            profile    = scene .getProfile () || browser .getProfile ("Full"),
-            components = new Set ();
-
-         for (const component of profile .components)
-            components .add (component .name);
-
-         for (const component of scene .getComponents ())
-            components .add (component .name);
-
-         return browser .loadComponents (components);
+         return Promise .all ([
+            browser .loadComponents (scene .getProfile () || [ ]),
+            browser .loadComponents (scene .getComponents ()),
+         ]);
       };
    })(),
    setUnits: function (generator)
@@ -62170,6 +62158,11 @@ X3DGroupingNode .prototype = Object .assign (Object .create (Core_X3DChildNode.p
          }
       }
    },
+   dispose: function ()
+   {
+      Grouping_X3DBoundedObject.prototype.dispose.call (this);
+      Core_X3DChildNode.prototype.dispose.call (this);
+   },
 });
 
 function remove (array, first, last, range, rfirst, rlast)
@@ -63395,6 +63388,11 @@ Fog .prototype = Object .assign (Object .create (Core_X3DBindableNode.prototype)
       renderObject .getLayer () .getFogs () .push (this);
 
       this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+   },
+   dispose: function ()
+   {
+      EnvironmentalEffects_X3DFogObject.prototype.dispose.call (this);
+      Core_X3DBindableNode.prototype.dispose.call (this);
    },
 });
 
@@ -66484,6 +66482,11 @@ ImageTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
          console .log (error .message);
          this .setError ();
       }
+   },
+   dispose: function ()
+   {
+      Networking_X3DUrlObject.prototype.dispose.call (this);
+      Texturing_X3DTexture2DNode.prototype.dispose.call (this);
    },
 });
 
@@ -76532,6 +76535,11 @@ X3DShapeNode .prototype = Object .assign (Object .create (Core_X3DChildNode.prot
       {
          this .transparent = this .apparanceNode .getTransparent ();
       }
+   },
+   dispose: function ()
+   {
+      Grouping_X3DBoundedObject.prototype.dispose.call (this);
+      Core_X3DChildNode.prototype.dispose.call (this);
    },
 });
 
@@ -92588,6 +92596,7 @@ ShaderPart .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
    {
       this .getBrowser () .getContext () .deleteShader (this .shader);
 
+      Networking_X3DUrlObject.prototype.dispose.call (this);
       Core_X3DNode.prototype.dispose.call (this);
    },
 });
@@ -94486,6 +94495,11 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (Core_X3DNode.proto
    getFont: function ()
    {
       return this .font;
+   },
+   dispose: function ()
+   {
+      Networking_X3DUrlObject.prototype.dispose.call (this);
+      Core_X3DNode.prototype.dispose.call (this);
    },
 });
 
@@ -97521,6 +97535,16 @@ MetadataBoolean .prototype = Object .assign (Object .create (Core_X3DNode.protot
    {
       return "metadata";
    },
+   initialize: function ()
+   {
+      Core_X3DNode.prototype.initialize.call ();
+      Core_X3DMetadataObject.prototype.initialize.call ();
+   },
+   dispose: function ()
+   {
+      Core_X3DMetadataObject.prototype.dispose.call ();
+      Core_X3DNode.prototype.dispose.call ();
+   },
 });
 
 /* harmony default export */ const Core_MetadataBoolean = (MetadataBoolean);
@@ -97610,6 +97634,16 @@ MetadataDouble .prototype = Object .assign (Object .create (Core_X3DNode.prototy
    getContainerField: function ()
    {
       return "metadata";
+   },
+   initialize: function ()
+   {
+      Core_X3DNode.prototype.initialize.call ();
+      Core_X3DMetadataObject.prototype.initialize.call ();
+   },
+   dispose: function ()
+   {
+      Core_X3DMetadataObject.prototype.dispose.call ();
+      Core_X3DNode.prototype.dispose.call ();
    },
 });
 
@@ -97701,6 +97735,16 @@ MetadataFloat .prototype = Object .assign (Object .create (Core_X3DNode.prototyp
    {
       return "metadata";
    },
+   initialize: function ()
+   {
+      Core_X3DNode.prototype.initialize.call ();
+      Core_X3DMetadataObject.prototype.initialize.call ();
+   },
+   dispose: function ()
+   {
+      Core_X3DMetadataObject.prototype.dispose.call ();
+      Core_X3DNode.prototype.dispose.call ();
+   },
 });
 
 /* harmony default export */ const Core_MetadataFloat = (MetadataFloat);
@@ -97790,6 +97834,16 @@ MetadataInteger .prototype = Object .assign (Object .create (Core_X3DNode.protot
    getContainerField: function ()
    {
       return "metadata";
+   },
+   initialize: function ()
+   {
+      Core_X3DNode.prototype.initialize.call ();
+      Core_X3DMetadataObject.prototype.initialize.call ();
+   },
+   dispose: function ()
+   {
+      Core_X3DMetadataObject.prototype.dispose.call ();
+      Core_X3DNode.prototype.dispose.call ();
    },
 });
 
@@ -97881,6 +97935,16 @@ MetadataSet .prototype = Object .assign (Object .create (Core_X3DNode.prototype)
    {
       return "metadata";
    },
+   initialize: function ()
+   {
+      Core_X3DNode.prototype.initialize.call ();
+      Core_X3DMetadataObject.prototype.initialize.call ();
+   },
+   dispose: function ()
+   {
+      Core_X3DMetadataObject.prototype.dispose.call ();
+      Core_X3DNode.prototype.dispose.call ();
+   },
 });
 
 /* harmony default export */ const Core_MetadataSet = (MetadataSet);
@@ -97970,6 +98034,16 @@ MetadataString .prototype = Object .assign (Object .create (Core_X3DNode.prototy
    getContainerField: function ()
    {
       return "metadata";
+   },
+   initialize: function ()
+   {
+      Core_X3DNode.prototype.initialize.call ();
+      Core_X3DMetadataObject.prototype.initialize.call ();
+   },
+   dispose: function ()
+   {
+      Core_X3DMetadataObject.prototype.dispose.call ();
+      Core_X3DNode.prototype.dispose.call ();
    },
 });
 
@@ -98481,6 +98555,11 @@ LocalFog .prototype = Object .assign (Object .create (Core_X3DChildNode.prototyp
    {
       if (this ._enabled .getValue () && this .getFogType ())
          this .getBrowser () .getLocalObjects () .push (renderObject .getLocalFogs () .pop ());
+   },
+   dispose: function ()
+   {
+      EnvironmentalEffects_X3DFogObject.prototype.dispose.call (this);
+      Core_X3DChildNode.prototype.dispose.call (this);
    },
 });
 
@@ -103830,6 +103909,11 @@ StaticGroup .prototype = Object .assign (Object .create (Core_X3DChildNode.proto
          }
       };
    })(),
+   dispose: function ()
+   {
+      Grouping_X3DBoundedObject.prototype.dispose.call (this);
+      Core_X3DChildNode.prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Grouping_StaticGroup = (StaticGroup);
@@ -107549,6 +107633,11 @@ Collision .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.
          }
       }
    },
+   dispose: function ()
+   {
+      //X3DSensorNode   .prototype .dispose .call (this); // We can only call the base of a *Objects.
+      Grouping_X3DGroupingNode.prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Navigation_Collision = (Collision);
@@ -108825,6 +108914,11 @@ Anchor .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.pro
          Grouping_X3DGroupingNode.prototype.traverse.call (this, type, renderObject);
       }
    },
+   dispose: function ()
+   {
+      Networking_X3DUrlObject.prototype.dispose.call (this);
+      Grouping_X3DGroupingNode.prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Networking_Anchor = (Anchor);
@@ -109031,6 +109125,12 @@ Inline .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype)
             return;
          }
       }
+   },
+   dispose: function ()
+   {
+      Grouping_X3DBoundedObject.prototype.dispose.call (this);
+      Networking_X3DUrlObject.prototype.dispose.call (this);
+      Core_X3DChildNode.prototype.dispose.call (this);
    },
 });
 
@@ -113139,6 +113239,18 @@ PackagedShader .prototype = Object .assign (Object .create (Shaders_X3DShaderNod
    { },
    requestUnload: function ()
    { },
+   initialize: function ()
+   {
+      Shaders_X3DShaderNode.prototype.initialize.call (this);
+      Networking_X3DUrlObject.prototype.initialize.call (this);
+      Shaders_X3DProgrammableShaderObject.prototype.initialize.call (this);
+   },
+   dispose: function ()
+   {
+      Shaders_X3DProgrammableShaderObject.prototype.dispose.call (this);
+      Networking_X3DUrlObject.prototype.dispose.call (this);
+      Shaders_X3DShaderNode.prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Shaders_PackagedShader = (PackagedShader);
@@ -113331,6 +113443,18 @@ ShaderProgram .prototype = Object .assign (Object .create (Core_X3DNode.prototyp
    { },
    requestUnload: function ()
    { },
+   initialize: function ()
+   {
+      Core_X3DNode.prototype.initialize.call (this);
+      Networking_X3DUrlObject.prototype.initialize.call (this);
+      Shaders_X3DProgrammableShaderObject.prototype.initialize.call (this);
+   },
+   dispose: function ()
+   {
+      Shaders_X3DProgrammableShaderObject.prototype.dispose.call (this);
+      Networking_X3DUrlObject.prototype.dispose.call (this);
+      Core_X3DNode.prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Shaders_ShaderProgram = (ShaderProgram);
@@ -115249,6 +115373,11 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (Core_X3DChildNod
 
       this .set_ended ();
    },
+   dispose: function ()
+   {
+      Time_X3DTimeDependentNode.prototype.dispose.call (this);
+      Core_X3DChildNode.prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode);
@@ -115444,6 +115573,11 @@ AudioClip .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.
       this .audio .unbind ("canplaythrough");
       this .setMedia (this .audio);
       this .setLoadState (Base_X3DConstants.COMPLETE_STATE);
+   },
+   dispose: function ()
+   {
+      Networking_X3DUrlObject.prototype.dispose.call (this);
+      Sound_X3DSoundSourceNode.prototype.dispose.call (this);
    },
 });
 
@@ -116359,6 +116493,12 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
          this .updateTexture (this .getMedia () [0], true);
    },
    traverse: Texturing_X3DTexture2DNode.prototype.traverse,
+   dispose: function ()
+   {
+      Networking_X3DUrlObject.prototype.dispose.call (this);
+      Sound_X3DSoundSourceNode.prototype.dispose.call (this);
+      Texturing_X3DTexture2DNode.prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Texturing_MovieTexture = (MovieTexture);
@@ -117744,6 +117884,395 @@ Components .prototype =
 
 /* harmony default export */ const x_ite_Components = (new Components ());
 
+;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
+// DOMIntegration was taken from https://github.com/andreasplesch/x_ite_dom
+
+
+
+const DOMIntegration_dom = Symbol .for ("X_ITE.dom");
+
+class DOMIntegration
+{
+	constructor (browser)
+	{
+		this .browser      = browser;
+		this .rootElements = new WeakSet ();
+
+		this .canvasObserver = new MutationObserver (() =>
+		{
+			this .observeRoot (this .browser .getElement () .children ("X3D") [0]);
+		});
+
+		this .canvasObserver .observe (this .browser .getElement () [0], {
+			childList: true,
+		});
+
+		this .observeRoot (this .browser .getElement () .children ("X3D") [0]);
+	}
+
+	observeRoot (rootElement)
+	{
+		if (! rootElement)
+			return;
+
+		if (this .rootElements .has (rootElement))
+			return;
+
+		this .rootElements .add (rootElement);
+
+		//preprocess script nodes if not xhtml
+
+		if (! document .URL .toLowerCase () .includes ("xhtml"))
+			this .preprocessScripts (rootElement);
+
+		//now also attached x3d property to each node element
+		const onAfterImport = (importedScene) =>
+		{
+			this .browser .replaceWorld (importedScene);
+
+			this .loadSensor = importedScene .createNode ("LoadSensor") .getValue ();
+
+			//events
+			this .addEventDispatchersAll (rootElement); //has to happen after reimporting since rootElement .x3d
+
+			// create an observer instance
+			this .observer = new MutationObserver (mutations =>
+			{
+				for (const mutation of mutations)
+					this .processMutation (mutation, new Parser_XMLParser (importedScene));
+			});
+
+			//start observing, also catches inlined inlines
+			this .observer .observe (rootElement, {
+				attributes: true,
+				childList: true,
+				characterData: false,
+				subtree: true,
+				attributeOldValue: true,
+			});
+
+			// Add inline doms from initial scene.
+			const inlineElements = rootElement .querySelectorAll ("Inline");
+
+			for (const inlineElement of inlineElements)
+				this .processInlineDOM (inlineElement);
+		};
+
+		const onError = (error) =>
+		{
+			console .log ("Error importing document:", error);
+		};
+
+		this .browser .importDocument (rootElement, onAfterImport, onError);
+	}
+
+	preprocessScripts (rootElement)
+	{
+		const scripts = rootElement .querySelectorAll ("Script");
+
+		for (const script of scripts)
+			this .appendScriptChildren (script);
+
+		return rootElement;
+	}
+
+	appendScriptChildren (script)
+	{
+		const
+			domParser   = new DOMParser (),
+			scriptDoc   = domParser .parseFromString (script .outerHTML, "application/xml"),
+			scriptNodes = scriptDoc .children [0] .childNodes;
+
+		script .textContent = "// content moved into childNodes";
+
+		for (const scriptNode of scriptNodes)
+			script .appendChild (scriptNode);
+	}
+
+	processMutation (mutation, parser)
+	{
+		const element = mutation .target;
+
+		switch (mutation .type)
+		{
+			case "attributes":
+			{
+				this .processAttribute (mutation, element, parser);
+				break;
+			}
+			case "childList":
+			{
+				for (const node of mutation .addedNodes)
+					this .processAddedNode (node, parser);
+
+				for (const node of mutation .removedNodes)
+					this .processRemovedNode (node);
+
+				break;
+			}
+		}
+	}
+
+	addEventDispatchersAll (element)
+	{
+		for (const child of element .querySelectorAll ("*"))
+			this .addEventDispatchers (child);
+	}
+
+	addEventDispatchers (element)
+	{
+		// check for USE nodes; they do not emit events
+		if (element .x3d === undefined)
+			return;
+
+		if (element .nodeName === "ROUTE")
+			return;
+
+		for (const field of element .x3d .getFields ())
+			this .bindFieldCallback (field, element);
+	}
+
+	bindFieldCallback  (field, element)
+	{
+		/*var ctx = {};
+		ctx .field = field;
+		ctx .sensor = sensor;*/
+		//only attach callbacks for output fields
+
+		if (field .isOutput ()) // both inputOutput and outputOnly
+		{
+			field .addFieldCallback ("DomIntegration." + field .getId (),
+			                         this .fieldCallback .bind (null, field, element));
+
+			if (this .trace)
+			{
+				field .addFieldCallback ("DomIntegrationTracer." + field .getId (),
+				                         this .fieldTraceCallback .bind (null, field, element .x3d));
+			}
+		}
+	}
+
+	fieldCallback  (field, element, value)
+	{
+		//var evt = new Event (field .getName ()); // better to use official custom event
+
+		const
+		 	node      = element .x3d,
+			eventType = "x3d" + "." + field .getName ();
+
+		const event = new CustomEvent (eventType, {
+			detail: {
+				value: value,
+				fields: node .getFields (),
+				name: node .getName (),
+				x3d: node,
+			}
+		});
+
+		element .dispatchEvent (event);
+	}
+
+	fieldTraceCallback  (field, node, value)
+	{
+		const
+			now       = Date .now (),
+			timeStamp = node .getBrowser () .getCurrentTime (),
+			dt        = now - timeStamp * 1000;
+
+		console .log ("%f: at %f dt of %s ms %s '%s' %s: %s",
+					     now, timeStamp, dt .toFixed (3),
+					     node .getTypeName (), node .getName (),
+					     field .getName (), value);
+	}
+
+	processRemovedNode (element)
+	{
+		// Works also for root nodes, as it has to be, since scene .rootNodes is effectively a MFNode in x-ite.
+		// Also removes ROUTE elements.
+		if (element .x3d)
+		{
+			element .x3d .dispose ();
+
+			if (element .nodeName === "ROUTE") // dispatcher still needs .x3d when dispose processes events
+				delete element .x3d;
+		}
+	}
+
+	processAddedNode (element, parser)
+	{
+		// Only process element nodes.
+		if (element .nodeType !== Node .ELEMENT_NODE)
+			return;
+
+		// First need to look for Inline doms to add to dom.
+		this .processInlineDOMs (element);
+
+		// Do not add to scene if already parsed as child of inline,
+		// although Scene does not have .x3d so should never happen?
+		if (element .x3d)
+		{
+			if (element .nodeName === "Inline" || element .nodeName === "INLINE")
+				this .processInlineDOM (element); //only add dom
+
+			return;
+		}
+		else if (element .nodeName === "Scene" || element .nodeName === "SCENE")
+			return;
+
+		const parentNode = element .parentNode;
+
+		// first get correct execution context
+		let nodeScene = this .browser .currentScene ; // assume main Scene
+
+		if (parentNode .parentNode .nodeName === "Inline" || parentNode .parentNode .nodeName === "INLINE")
+		{
+			nodeScene = parentNode .parentNode .x3d .getInternalScene ();
+		}
+		else if (parentNode .x3d)
+		{
+			// Use parent's scene if non-root, works for inline.
+			nodeScene = parentNode .x3d .getExecutionContext ();
+		}
+
+		parser .pushExecutionContext (nodeScene);
+
+		// then check if root node
+		if (parentNode .x3d)
+		{
+			const node = parentNode .x3d;
+
+			parser .pushParent (node);
+			parser .childElement (element);
+			parser .popParent ();
+		}
+		else
+		{
+			// Inline or main root node.
+			parser .childElement (element);
+		}
+
+		parser .popExecutionContext ();
+
+		// now after creating nodes need to look again for Inline doms.
+		this .processInlineDOMs (element);
+
+		//then attach event dispatchers
+		//if (element .matches (this .sensorSelector)) { this .addEventDispatchers (element); } // matches () not well supported
+
+		this .addEventDispatchers (element);
+		this .addEventDispatchersAll (element); // also for childnodes
+	}
+
+	processInlineDOMs (element)
+	{
+		if (element .nodeName === "Inline" || element .nodeName === "INLINE")
+			this .processInlineDOM (element);
+
+		for (const inlineElement of element .querySelectorAll ("Inline"))
+			this .processInlineDOM (inlineElement);
+	}
+
+	processInlineDOM (element)
+	{
+		// Check for USE inline as it does not have dom
+		if (element .x3d === undefined)
+			return;
+
+		const watchList = this .loadSensor .getField ("watchList");
+
+		// Individual callback per inline
+
+		const callback = this .appendInlineDOM .bind (this, element);
+
+		this .loadSensor .getField ("isLoaded") .addFieldCallback ("loaded" + element .x3d .getId (), callback);
+
+		//just add to loadsensor watchlist; triggers isLoaded event after loading
+		watchList .push (element .x3d);
+	}
+
+	appendInlineDOM (element, loaded)
+	{
+		// Now loaded and in .dom
+		// Inline must have Scene
+		const
+			node      = element .x3d,
+			watchList = this .loadSensor .getField ("watchList"),
+			isLoaded  = this .loadSensor .getField ("isLoaded");
+
+		if (node [DOMIntegration_dom]) //guard since .dom does not exist for invalid urls
+			element .appendChild (node [DOMIntegration_dom] .querySelector ("Scene")) ; // XXX: or root nodes? HO: Think, Scene is better.
+
+		//not needed any more, remove callback
+		isLoaded .removeFieldCallback ("loaded" + node .getId ());
+
+		// Remove from watchlist
+
+		const wListUpdate = watchList .getValue () .filter (value => value .getValue () !== node);
+
+		watchList .setValue (wListUpdate);
+
+		//check if all inlines are appended and dispatch event;
+		//would be also dispatched later whenever a new inline was completely appended
+		if (element .querySelector ("Inline") === null) // no more internal inlines
+		{
+			// also check loadCount ?
+
+			const event = new Event ("x3dload");
+
+			event .element = this .browser .getElement ();
+
+			document .dispatchEvent (event);
+		}
+
+		// Attach dom event callbacks.
+		this .addEventDispatchersAll (element);
+	}
+
+	processAttribute (mutation, element, parser)
+	{
+		if (element .x3d)
+		{
+			try
+			{
+				const
+					attributeName = mutation .attributeName,
+					attribute     = element .attributes .getNamedItem (attributeName);
+
+				parser .nodeAttribute (attribute, element .x3d);
+			}
+			catch (error)
+			{
+				// Unknown attribute.
+				console .log (error);
+			}
+		}
+		else
+		{
+			// is an attribute of non-node child such as fieldValue (or ROUTE)
+
+			const
+				parentNode      = element .parentNode, //should always be a node (?)
+			 	node            = parentNode .x3d, // need to attach .x3d to ProtoInstance
+				isProtoInstance = parentNode .nodeName === "ProtoInstance" || parentNode .nodeName === "PROTOINSTANCE";
+
+			parser .pushExecutionContext (node .getExecutionContext ());
+			parser .pushParent (node);
+			parser .childElement (element);
+			parser .popParent ();
+			parser .popExecutionContext ();
+
+			if (isProtoInstance)
+			{
+				const field = node .getField (element .getAttribute ("name"));
+
+				field .addEvent ();
+			}
+		}
+	}
+};
+
+/* harmony default export */ const Browser_DOMIntegration = (DOMIntegration);
+
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ProfileInfo.js
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -118590,7 +119119,9 @@ SupportedProfiles .addProfile ({
 
 
 
+
 const
+   _DOMIntegration   = Symbol (),
    _loader           = Symbol (),
    _browserCallbacks = Symbol ();
 
@@ -118625,6 +119156,8 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
       // Set initial empty scene.
 
       this .replaceWorld (this .getExecutionContext ());
+
+      this [_DOMIntegration] = new Browser_DOMIntegration (this);
 
       // Print welcome message.
 
@@ -120226,6 +120759,7 @@ for (const key of Reflect .ownKeys (DependentRenderer .prototype))
 
 
 
+
 const Namespace = new Map ([
    ["lib/jquery",                                                        jquery],
    ["locale/gettext",                                                    locale_gettext],
@@ -120290,6 +120824,7 @@ const Namespace = new Map ([
    ["x_ite/Browser/Core/Shading",                                        Core_Shading],
    ["x_ite/Browser/Core/TextureQuality",                                 Core_TextureQuality],
    ["x_ite/Browser/Core/X3DCoreContext",                                 Core_X3DCoreContext],
+   ["x_ite/Browser/DOMIntegration",                                      Browser_DOMIntegration],
    ["x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext", EnvironmentalEffects_X3DEnvironmentalEffectsContext],
    ["x_ite/Browser/Followers/X3DArrayChaserTemplate",                    X3DArrayChaserTemplate],
    ["x_ite/Browser/Followers/X3DArrayFollowerTemplate",                  X3DArrayFollowerTemplate],
@@ -120737,33 +121272,12 @@ function X3D (callback, fallback)
 
 Object .assign (X3D,
 {
-   require: function ()
+   require: function (id)
    {
-      switch (arguments .length)
-      {
-         case 0:
-         {
-            return;
-         }
-         case 1:
-         {
-            if (! x_ite_Namespace.has (arguments [0]))
-               throw new Error ("Unknown module '" + arguments [0] + "'.");
+      if (! x_ite_Namespace.has (id))
+         throw new Error ("Unknown module '" + id + "'.");
 
-            return x_ite_Namespace.get (arguments [0]);
-         }
-         default:
-         {
-            if (! Array .isArray (arguments [0]))
-               throw new Error ("Invalid argument.");
-
-            if (typeof arguments [1] !== "function")
-               throw new Error ("Invalid argument.");
-
-            arguments [1] .apply (null, arguments [0] .map (file => this .require (file)));
-            break;
-         }
-      }
+      return x_ite_Namespace.get (id);
    },
    noConflict: (function ()
    {

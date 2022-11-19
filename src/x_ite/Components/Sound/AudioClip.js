@@ -188,6 +188,11 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
       this .setMedia (this .audio);
       this .setLoadState (X3DConstants .COMPLETE_STATE);
    },
+   dispose: function ()
+   {
+      X3DUrlObject       .prototype .dispose .call (this);
+      X3DSoundSourceNode .prototype .dispose .call (this);
+   },
 });
 
 export default AudioClip;

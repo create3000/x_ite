@@ -441,6 +441,12 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          }
       }
    },
+   dispose: function ()
+   {
+      X3DGeospatialObject .prototype .dispose .call (this);
+      X3DBoundedObject    .prototype .dispose .call (this);
+      X3DChildNode        .prototype .dispose .call (this);
+   },
 });
 
 export default GeoLOD;

@@ -1100,6 +1100,7 @@ X3DPickableObject .prototype =
          this .objectType .add (this ._objectType [i]);
       }
    },
+   dispose: function () { },
 };
 
 /* harmony default export */ const Picking_X3DPickableObject = (X3DPickableObject);
@@ -1306,6 +1307,11 @@ PickableGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defa
          }
       };
    })(),
+   dispose: function ()
+   {
+      Picking_X3DPickableObject.prototype.dispose.call (this);
+      X3DGroupingNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Picking_PickableGroup = (PickableGroup);

@@ -251,6 +251,11 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
    {
       return this .font;
    },
+   dispose: function ()
+   {
+      X3DUrlObject .prototype .dispose .call (this);
+      X3DNode      .prototype .dispose .call (this);
+   },
 });
 
 export default X3DFontStyleNode;

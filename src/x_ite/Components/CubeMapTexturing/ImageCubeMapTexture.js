@@ -255,6 +255,11 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
          this .setError ();
       }
    },
+   dispose: function ()
+   {
+      X3DUrlObject              .prototype .dispose .call (this);
+      X3DEnvironmentTextureNode .prototype .dispose .call (this);
+   },
 });
 
 export default ImageCubeMapTexture;

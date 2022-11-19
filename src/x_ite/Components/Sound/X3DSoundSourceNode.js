@@ -214,6 +214,11 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
 
       this .set_ended ();
    },
+   dispose: function ()
+   {
+      X3DTimeDependentNode .prototype .dispose .call (this);
+      X3DChildNode         .prototype .dispose .call (this);
+   },
 });
 
 export default X3DSoundSourceNode;

@@ -99,6 +99,11 @@ GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype)
    { },
    set_url__: function ()
    { },
+   dispose: function ()
+   {
+      X3DUrlObject .prototype .dispose .call (this);
+      X3DInfoNode  .prototype .dispose .call (this);
+   },
 });
 
 export default GeoMetadata;

@@ -186,6 +186,11 @@ X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
          this .transparent = this .apparanceNode .getTransparent ();
       }
    },
+   dispose: function ()
+   {
+      X3DBoundedObject .prototype .dispose .call (this);
+      X3DChildNode     .prototype .dispose .call (this);
+   },
 });
 
 export default X3DShapeNode;

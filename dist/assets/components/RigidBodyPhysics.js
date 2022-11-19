@@ -770,6 +770,11 @@ X3DNBodyCollidableNode .prototype = Object .assign (Object .create ((X3DChildNod
       if (this .compoundShape .getNumChildShapes ())
          this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);
    },
+   dispose: function ()
+   {
+      X3DBoundedObject_default().prototype.dispose.call (this);
+      X3DChildNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const RigidBodyPhysics_X3DNBodyCollidableNode = (X3DNBodyCollidableNode);
@@ -2183,6 +2188,16 @@ X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create ((X3DNode
    (X3DBoundedObject_default()).prototype,
 {
    constructor: X3DNBodyCollisionSpaceNode,
+   initialize: function ()
+   {
+      X3DNode_default().prototype.initialize.call (this);
+      X3DBoundedObject_default().prototype.initialize.call (this);
+   },
+   dispose: function ()
+   {
+      X3DBoundedObject_default().prototype.dispose.call (this);
+      X3DNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const RigidBodyPhysics_X3DNBodyCollisionSpaceNode = (X3DNBodyCollisionSpaceNode);

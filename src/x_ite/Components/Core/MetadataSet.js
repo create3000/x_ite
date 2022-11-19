@@ -83,6 +83,16 @@ MetadataSet .prototype = Object .assign (Object .create (X3DNode .prototype),
    {
       return "metadata";
    },
+   initialize: function ()
+   {
+      X3DNode           .prototype .initialize .call ();
+      X3DMetadataObject .prototype .initialize .call ();
+   },
+   dispose: function ()
+   {
+      X3DMetadataObject .prototype .dispose .call ();
+      X3DNode           .prototype .dispose .call ();
+   },
 });
 
 export default MetadataSet;

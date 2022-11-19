@@ -2883,6 +2883,10 @@ NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeome
          vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
       }
    },
+   dispose: function ()
+   {
+      NURBS_X3DParametricGeometryNode.prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const NURBS_NurbsCurve = (NurbsCurve);
@@ -4176,6 +4180,11 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
       }
 
       this .set_tessellationScale__ ();
+   },
+   dispose: function ()
+   {
+      X3DBoundedObject_default().prototype.dispose.call (this);
+      X3DChildNode_default().prototype.dispose.call (this);
    },
 });
 

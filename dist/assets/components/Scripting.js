@@ -269,6 +269,16 @@ X3DScriptNode .prototype = Object .assign (Object .create ((X3DChildNode_default
    (X3DUrlObject_default()).prototype,
 {
    constructor: X3DScriptNode,
+   initialize: function ()
+   {
+      X3DChildNode_default().prototype.initialize.call (this);
+      X3DUrlObject_default().prototype.initialize.call (this);
+   },
+   dispose: function ()
+   {
+      X3DUrlObject_default().prototype.dispose.call (this);
+      X3DChildNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Scripting_X3DScriptNode = (X3DScriptNode);

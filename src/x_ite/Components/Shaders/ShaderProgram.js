@@ -96,6 +96,18 @@ ShaderProgram .prototype = Object .assign (Object .create (X3DNode .prototype),
    { },
    requestUnload: function ()
    { },
+   initialize: function ()
+   {
+      X3DNode                     .prototype .initialize .call (this);
+      X3DUrlObject                .prototype .initialize .call (this);
+      X3DProgrammableShaderObject .prototype .initialize .call (this);
+   },
+   dispose: function ()
+   {
+      X3DProgrammableShaderObject .prototype .dispose .call (this);
+      X3DUrlObject                .prototype .dispose .call (this);
+      X3DNode                     .prototype .dispose .call (this);
+   },
 });
 
 export default ShaderProgram;

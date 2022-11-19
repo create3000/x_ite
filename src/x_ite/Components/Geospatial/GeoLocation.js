@@ -106,6 +106,11 @@ GeoLocation .prototype = Object .assign (Object .create (X3DTransformMatrix3DNod
    {
       this .setMatrix (this .getLocationMatrix (this ._geoCoords .getValue (), locationMatrix));
    },
+   dispose: function ()
+   {
+      X3DGeospatialObject      .prototype .dispose .call (this);
+      X3DTransformMatrix3DNode .prototype .dispose .call (this);
+   },
 });
 
 export default GeoLocation;

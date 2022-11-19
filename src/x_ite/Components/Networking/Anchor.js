@@ -195,6 +195,11 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
          X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
       }
    },
+   dispose: function ()
+   {
+      X3DUrlObject    .prototype .dispose .call (this);
+      X3DGroupingNode .prototype .dispose .call (this);
+   },
 });
 
 export default Anchor;

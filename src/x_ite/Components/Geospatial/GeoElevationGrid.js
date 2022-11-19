@@ -423,6 +423,11 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
    },
+   dispose: function ()
+   {
+      X3DGeospatialObject .prototype .dispose .call (this);
+      X3DGeometryNode     .prototype .dispose .call (this);
+   },
 });
 
 export default GeoElevationGrid;

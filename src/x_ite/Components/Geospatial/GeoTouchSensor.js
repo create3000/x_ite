@@ -120,6 +120,11 @@ GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .
          this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
       }
    },
+   dispose: function ()
+   {
+      X3DGeospatialObject .prototype .dispose .call (this);
+      X3DTouchSensorNode  .prototype .dispose .call (this);
+   },
 });
 
 export default GeoTouchSensor;

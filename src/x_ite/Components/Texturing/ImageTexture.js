@@ -222,6 +222,11 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          this .setError ();
       }
    },
+   dispose: function ()
+   {
+      X3DUrlObject     .prototype .dispose .call (this);
+      X3DTexture2DNode .prototype .dispose .call (this);
+   },
 });
 
 export default ImageTexture;

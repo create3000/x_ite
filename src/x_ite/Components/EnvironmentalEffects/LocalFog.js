@@ -105,6 +105,11 @@ LocalFog .prototype = Object .assign (Object .create (X3DChildNode .prototype),
       if (this ._enabled .getValue () && this .getFogType ())
          this .getBrowser () .getLocalObjects () .push (renderObject .getLocalFogs () .pop ());
    },
+   dispose: function ()
+   {
+      X3DFogObject .prototype .dispose .call (this);
+      X3DChildNode .prototype .dispose .call (this);
+   },
 });
 
 export default LocalFog;

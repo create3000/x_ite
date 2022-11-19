@@ -51,6 +51,7 @@ import Fields              from "../Fields.js";
 import Components          from "../Components.js";
 import X3DLayerNode        from "../Components/Layering/X3DLayerNode.js";
 import X3DBrowserContext   from "./X3DBrowserContext.js";
+import DOMIntegration      from "./DOMIntegration.js";
 import ProfileInfo         from "../Configuration/ProfileInfo.js";
 import ComponentInfo       from "../Configuration/ComponentInfo.js";
 import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
@@ -69,6 +70,7 @@ import MapUtilities        from "../../standard/Utility/MapUtilities.js";
 import _                   from "../../locale/gettext.js";
 
 const
+   _DOMIntegration   = Symbol (),
    _loader           = Symbol (),
    _browserCallbacks = Symbol ();
 
@@ -103,6 +105,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       // Set initial empty scene.
 
       this .replaceWorld (this .getExecutionContext ());
+
+      this [_DOMIntegration] = new DOMIntegration (this);
 
       // Print welcome message.
 

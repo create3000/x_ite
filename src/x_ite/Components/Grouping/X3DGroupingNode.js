@@ -697,6 +697,11 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
          }
       }
    },
+   dispose: function ()
+   {
+      X3DBoundedObject .prototype .dispose .call (this);
+      X3DChildNode     .prototype .dispose .call (this);
+   },
 });
 
 function remove (array, first, last, range, rfirst, rlast)

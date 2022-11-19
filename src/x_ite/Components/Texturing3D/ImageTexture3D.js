@@ -159,6 +159,11 @@ ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
       }
       .bind (this));
    },
+   dispose: function ()
+   {
+      X3DUrlObject     .prototype .dispose .call (this);
+      X3DTexture3DNode .prototype .dispose .call (this);
+   },
 });
 
 export default ImageTexture3D;

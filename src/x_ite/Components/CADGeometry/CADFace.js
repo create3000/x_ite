@@ -261,6 +261,11 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
          }
       }
    },
+   dispose: function ()
+   {
+      X3DBoundedObject             .prototype .dispose .call (this);
+      X3DProductStructureChildNode .prototype .dispose .call (this);
+   },
 });
 
 export default CADFace;

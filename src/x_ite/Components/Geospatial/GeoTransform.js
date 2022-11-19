@@ -121,6 +121,11 @@ GeoTransform .prototype = Object .assign (Object .create (X3DTransformMatrix3DNo
 
       this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
    },
+   dispose: function ()
+   {
+      X3DGeospatialObject      .prototype .dispose .call (this);
+      X3DTransformMatrix3DNode .prototype .dispose .call (this);
+   },
 });
 
 export default GeoTransform;

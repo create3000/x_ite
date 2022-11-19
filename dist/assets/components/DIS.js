@@ -260,6 +260,11 @@ DISEntityTypeMapping .prototype = Object .assign (Object .create ((X3DInfoNode_d
    { },
    set_url__: function ()
    { },
+   dispose: function ()
+   {
+      X3DUrlObject_default().prototype.dispose.call (this);
+      X3DInfoNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const DIS_DISEntityTypeMapping = (DISEntityTypeMapping);
@@ -573,6 +578,11 @@ ReceiverPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default(
       X3DSensorNode_default().prototype.initialize.call (this);
       X3DBoundedObject_default().prototype.initialize.call (this);
    },
+   dispose: function ()
+   {
+      X3DBoundedObject_default().prototype.dispose.call (this);
+      X3DSensorNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const DIS_ReceiverPdu = (ReceiverPdu);
@@ -694,6 +704,11 @@ SignalPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default())
    {
       X3DSensorNode_default().prototype.initialize.call (this);
       X3DBoundedObject_default().prototype.initialize.call (this);
+   },
+   dispose: function ()
+   {
+      X3DBoundedObject_default().prototype.dispose.call (this);
+      X3DSensorNode_default().prototype.dispose.call (this);
    },
 });
 
@@ -832,6 +847,11 @@ TransmitterPdu .prototype = Object .assign (Object .create ((X3DSensorNode_defau
    {
       X3DSensorNode_default().prototype.initialize.call (this);
       X3DBoundedObject_default().prototype.initialize.call (this);
+   },
+   dispose: function ()
+   {
+      X3DBoundedObject_default().prototype.dispose.call (this);
+      X3DSensorNode_default().prototype.dispose.call (this);
    },
 });
 

@@ -321,6 +321,11 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
    {
       return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
    },
+   dispose: function ()
+   {
+      X3DGeospatialObject .prototype .dispose .call (this);
+      X3DViewpointNode    .prototype .dispose .call (this);
+   },
 });
 
 export default GeoViewpoint;

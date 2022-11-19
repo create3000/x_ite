@@ -490,6 +490,11 @@ CADFace .prototype = Object .assign (Object .create (CADGeometry_X3DProductStruc
          }
       }
    },
+   dispose: function ()
+   {
+      X3DBoundedObject_default().prototype.dispose.call (this);
+      CADGeometry_X3DProductStructureChildNode.prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const CADGeometry_CADFace = (CADFace);

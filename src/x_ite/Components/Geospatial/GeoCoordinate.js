@@ -214,6 +214,11 @@ GeoCoordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .pr
          return new Vector3 (0, 0, 0);
       };
    })(),
+   dispose: function ()
+   {
+      X3DGeospatialObject .prototype .dispose .call (this);
+      X3DCoordinateNode   .prototype .dispose .call (this);
+   },
 });
 
 export default GeoCoordinate;

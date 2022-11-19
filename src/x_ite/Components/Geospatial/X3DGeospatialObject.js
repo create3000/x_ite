@@ -205,6 +205,7 @@ X3DGeospatialObject .prototype =
 
       return locationMatrix;
    },
+   dispose: function () { },
 };
 
 function getCoordRotateYUp (geoPoint, result)

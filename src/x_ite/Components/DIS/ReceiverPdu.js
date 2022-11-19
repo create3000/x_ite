@@ -115,6 +115,11 @@ ReceiverPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototyp
       X3DSensorNode    .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
    },
+   dispose: function ()
+   {
+      X3DBoundedObject .prototype .dispose .call (this);
+      X3DSensorNode    .prototype .dispose .call (this);
+   },
 });
 
 export default ReceiverPdu;

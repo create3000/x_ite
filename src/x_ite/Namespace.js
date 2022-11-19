@@ -109,6 +109,7 @@ import RenderingProperties1                   from "../x_ite/Browser/Core/Render
 import Shading1                               from "../x_ite/Browser/Core/Shading.js";
 import TextureQuality1                        from "../x_ite/Browser/Core/TextureQuality.js";
 import X3DCoreContext1                        from "../x_ite/Browser/Core/X3DCoreContext.js";
+import DOMIntegration1                        from "../x_ite/Browser/DOMIntegration.js";
 import X3DEnvironmentalEffectsContext1        from "../x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext.js";
 import X3DArrayChaserTemplate1                from "../x_ite/Browser/Followers/X3DArrayChaserTemplate.js";
 import X3DArrayFollowerTemplate1              from "../x_ite/Browser/Followers/X3DArrayFollowerTemplate.js";
@@ -487,6 +488,7 @@ const Namespace = new Map ([
    ["x_ite/Browser/Core/Shading",                                        Shading1],
    ["x_ite/Browser/Core/TextureQuality",                                 TextureQuality1],
    ["x_ite/Browser/Core/X3DCoreContext",                                 X3DCoreContext1],
+   ["x_ite/Browser/DOMIntegration",                                      DOMIntegration1],
    ["x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext", X3DEnvironmentalEffectsContext1],
    ["x_ite/Browser/Followers/X3DArrayChaserTemplate",                    X3DArrayChaserTemplate1],
    ["x_ite/Browser/Followers/X3DArrayFollowerTemplate",                  X3DArrayFollowerTemplate1],

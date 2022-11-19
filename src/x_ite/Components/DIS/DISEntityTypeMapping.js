@@ -104,6 +104,11 @@ DISEntityTypeMapping .prototype = Object .assign (Object .create (X3DInfoNode .p
    { },
    set_url__: function ()
    { },
+   dispose: function ()
+   {
+      X3DUrlObject .prototype .dispose .call (this);
+      X3DInfoNode  .prototype .dispose .call (this);
+   },
 });
 
 export default DISEntityTypeMapping;

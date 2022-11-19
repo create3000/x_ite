@@ -330,6 +330,11 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
          }
       };
    })(),
+   dispose: function ()
+   {
+      X3DBoundedObject .prototype .dispose .call (this);
+      X3DChildNode     .prototype .dispose .call (this);
+   },
 });
 
 export default HAnimHumanoid;

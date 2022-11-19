@@ -128,6 +128,11 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create (X3DInterpol
       this ._geovalue_changed = this .getGeoCoord (coord, this .geovalue);
       this ._value_changed    = coord;
    },
+   dispose: function ()
+   {
+      X3DGeospatialObject .prototype .dispose .call (this);
+      X3DInterpolatorNode .prototype .dispose .call (this);
+   },
 });
 
 export default GeoPositionInterpolator;

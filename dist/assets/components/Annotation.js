@@ -425,6 +425,11 @@ GroupAnnotation .prototype = Object .assign (Object .create ((X3DGroupingNode_de
       X3DGroupingNode_default().prototype.initialize.call (this);
       Annotation_X3DAnnotationNode.prototype.initialize.call (this);
    },
+   dispose: function ()
+   {
+      Annotation_X3DAnnotationNode.prototype.dispose.call (this);
+      X3DGroupingNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Annotation_GroupAnnotation = (GroupAnnotation);
@@ -528,6 +533,11 @@ IconAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnota
    },
    requestImmediateLoad: function (cache = true)
    { },
+   dispose: function ()
+   {
+      X3DUrlObject_default().prototype.dispose.call (this);
+      Annotation_X3DAnnotationNode.prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Annotation_IconAnnotation = (IconAnnotation);

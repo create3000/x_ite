@@ -1048,6 +1048,11 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturin
          this .setError ();
       }
    },
+   dispose: function ()
+   {
+      X3DUrlObject_default().prototype.dispose.call (this);
+      CubeMapTexturing_X3DEnvironmentTextureNode.prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const CubeMapTexturing_ImageCubeMapTexture = (ImageCubeMapTexture);

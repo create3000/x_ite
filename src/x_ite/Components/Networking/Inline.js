@@ -200,6 +200,12 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          }
       }
    },
+   dispose: function ()
+   {
+      X3DBoundedObject .prototype .dispose .call (this);
+      X3DUrlObject     .prototype .dispose .call (this);
+      X3DChildNode     .prototype .dispose .call (this);
+   },
 });
 
 export default Inline;

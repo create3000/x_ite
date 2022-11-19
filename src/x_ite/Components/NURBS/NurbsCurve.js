@@ -211,6 +211,10 @@ NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNod
          vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
       }
    },
+   dispose: function ()
+   {
+      X3DParametricGeometryNode .prototype .dispose .call (this);
+   },
 });
 
 export default NurbsCurve;

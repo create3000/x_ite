@@ -813,11 +813,6 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          }
       }
 
-      // Remove routes from and to node if any, and dispose values of fields.
-
-      for (const field of this .getFields ())
-         field .dispose ();
-
       // Remove node from entire scene graph.
 
       for (const firstParent of new Set (this .getParents ()))

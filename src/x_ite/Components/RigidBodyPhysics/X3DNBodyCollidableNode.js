@@ -145,6 +145,11 @@ X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode
       if (this .compoundShape .getNumChildShapes ())
          this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);
    },
+   dispose: function ()
+   {
+      X3DBoundedObject .prototype .dispose .call (this);
+      X3DChildNode     .prototype .dispose .call (this);
+   },
 });
 
 export default X3DNBodyCollidableNode;

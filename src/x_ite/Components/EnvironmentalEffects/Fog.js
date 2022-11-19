@@ -108,6 +108,11 @@ Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 
       this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
    },
+   dispose: function ()
+   {
+      X3DFogObject    .prototype .dispose .call (this);
+      X3DBindableNode .prototype .dispose .call (this);
+   },
 });
 
 export default Fog;

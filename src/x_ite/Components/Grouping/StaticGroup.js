@@ -295,6 +295,11 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
          }
       };
    })(),
+   dispose: function ()
+   {
+      X3DBoundedObject .prototype .dispose .call (this);
+      X3DChildNode     .prototype .dispose .call (this);
+   },
 });
 
 export default StaticGroup;

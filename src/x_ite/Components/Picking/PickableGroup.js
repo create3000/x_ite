@@ -199,6 +199,11 @@ PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prot
          }
       };
    })(),
+   dispose: function ()
+   {
+      X3DPickableObject .prototype .dispose .call (this);
+      X3DGroupingNode   .prototype .dispose .call (this);
+   },
 });
 
 export default PickableGroup;

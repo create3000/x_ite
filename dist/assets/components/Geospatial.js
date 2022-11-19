@@ -1220,6 +1220,7 @@ X3DGeospatialObject .prototype =
 
       return locationMatrix;
    },
+   dispose: function () { },
 };
 
 function getCoordRotateYUp (geoPoint, result)
@@ -1493,6 +1494,11 @@ GeoCoordinate .prototype = Object .assign (Object .create ((X3DCoordinateNode_de
          return new (Vector3_default()) (0, 0, 0);
       };
    })(),
+   dispose: function ()
+   {
+      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
+      X3DCoordinateNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Geospatial_GeoCoordinate = (GeoCoordinate);
@@ -1928,6 +1934,11 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
+   },
+   dispose: function ()
+   {
+      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
+      X3DGeometryNode_default().prototype.dispose.call (this);
    },
 });
 
@@ -2395,6 +2406,12 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
          }
       }
    },
+   dispose: function ()
+   {
+      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
+      X3DBoundedObject_default().prototype.dispose.call (this);
+      X3DChildNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Geospatial_GeoLOD = (GeoLOD);
@@ -2511,6 +2528,11 @@ GeoLocation .prototype = Object .assign (Object .create ((X3DTransformMatrix3DNo
    {
       this .setMatrix (this .getLocationMatrix (this ._geoCoords .getValue (), locationMatrix));
    },
+   dispose: function ()
+   {
+      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
+      X3DTransformMatrix3DNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Geospatial_GeoLocation = (GeoLocation);
@@ -2623,6 +2645,11 @@ GeoMetadata .prototype = Object .assign (Object .create ((X3DInfoNode_default())
    { },
    set_url__: function ()
    { },
+   dispose: function ()
+   {
+      X3DUrlObject_default().prototype.dispose.call (this);
+      X3DInfoNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Geospatial_GeoMetadata = (GeoMetadata);
@@ -2870,6 +2897,11 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create ((X3DInterpo
       this ._geovalue_changed = this .getGeoCoord (coord, this .geovalue);
       this ._value_changed    = coord;
    },
+   dispose: function ()
+   {
+      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
+      X3DInterpolatorNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Geospatial_GeoPositionInterpolator = (GeoPositionInterpolator);
@@ -3022,6 +3054,11 @@ GeoProximitySensor .prototype = Object .assign (Object .create ((X3DEnvironmenta
    {
       this .proximitySensor .traverse (type, renderObject);
    },
+   dispose: function ()
+   {
+      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
+      X3DEnvironmentalSensorNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Geospatial_GeoProximitySensor = (GeoProximitySensor);
@@ -3152,6 +3189,11 @@ GeoTouchSensor .prototype = Object .assign (Object .create ((X3DTouchSensorNode_
          this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
       }
    },
+   dispose: function ()
+   {
+      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
+      X3DTouchSensorNode_default().prototype.dispose.call (this);
+   },
 });
 
 /* harmony default export */ const Geospatial_GeoTouchSensor = (GeoTouchSensor);
@@ -3279,6 +3321,11 @@ GeoTransform .prototype = Object .assign (Object .create ((X3DTransformMatrix3DN
                      this ._scaleOrientation .getValue ());
 
       this .setMatrix (matrix .multRight (GeoTransform_locationMatrix) .multLeft (GeoTransform_locationMatrix .inverse ()));
+   },
+   dispose: function ()
+   {
+      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
+      X3DTransformMatrix3DNode_default().prototype.dispose.call (this);
    },
 });
 
@@ -3622,6 +3669,11 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
    getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
    {
       return Camera_default().perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
+   },
+   dispose: function ()
+   {
+      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
+      X3DViewpointNode_default().prototype.dispose.call (this);
    },
 });
 
