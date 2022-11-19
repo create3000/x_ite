@@ -73,7 +73,7 @@ class DOMIntegration
 
 		const onError = (error) =>
 		{
-			console .log ("Error importing document:", error);
+			console .error ("Error importing document:", error);
 		};
 
 		this .browser .importDocument (rootElement, onAfterImport, onError);
@@ -354,7 +354,7 @@ class DOMIntegration
 			catch (error)
 			{
 				// Unknown attribute like containerField.
-				// console .log (error);
+				// console .error (error);
 			}
 		}
 		else
