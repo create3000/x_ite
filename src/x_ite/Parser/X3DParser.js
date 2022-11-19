@@ -128,8 +128,10 @@ X3DParser .prototype = {
          if (scene .getSpecificationVersion () === "2.0")
             return browser .loadComponents (VRML);
 
-         return Promise .all ([browser .loadComponents (scene .getProfile () || browser .getProfile ("Full")),
-                               browser .loadComponents (scene .getComponents ())]);
+         return Promise .all ([
+            browser .loadComponents (scene .getProfile () || browser .getProfile ("Full")),
+            browser .loadComponents (scene .getComponents ()),
+         ]);
       };
    })(),
    setUnits: function (generator)
