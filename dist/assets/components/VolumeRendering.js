@@ -3886,7 +3886,6 @@ VolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolum
 
 
 
-
 Components_default().addComponent ({
    name: "VolumeRendering",
    types:

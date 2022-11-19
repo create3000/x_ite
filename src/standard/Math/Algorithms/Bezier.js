@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Algorithm from "../Algorithm.js";
 
 const lerp = Algorithm .lerp;

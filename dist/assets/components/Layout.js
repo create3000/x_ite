@@ -1948,7 +1948,6 @@ ScreenGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defaul
 
 
 
-
 Components_default().addComponent ({
    name: "Layout",
    types:

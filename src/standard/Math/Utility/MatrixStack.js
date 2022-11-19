@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 function MatrixStack (Type)
 {
    return Object .assign ([ new Type () ],

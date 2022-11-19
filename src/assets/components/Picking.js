@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import Components          from "../../x_ite/Components.js";
 import LinePickSensor      from "../../x_ite/Components/Picking/LinePickSensor.js";
 import PickableGroup       from "../../x_ite/Components/Picking/PickableGroup.js";

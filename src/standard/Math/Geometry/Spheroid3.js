@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 function Spheroid3 (semiMajorAxis, semiMinorAxis)
 {
    switch (arguments .length)

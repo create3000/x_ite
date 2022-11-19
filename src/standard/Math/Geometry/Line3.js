@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Vector3 from "../Numbers/Vector3.js";
 
 function Line3 (point, direction)

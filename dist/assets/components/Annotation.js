@@ -775,7 +775,6 @@ URLAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnotat
 
 
 
-
 Components_default().addComponent ({
    name: "Annotation",
    types:

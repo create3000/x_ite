@@ -887,7 +887,6 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
 
 
 
-
 Components_default().addComponent ({
    name: "Scripting",
    types:

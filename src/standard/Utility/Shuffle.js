@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 export default function shuffle (array)
 {
    let i = array .length;

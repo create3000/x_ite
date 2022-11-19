@@ -304,7 +304,6 @@ BlendMode .prototype = Object .assign (Object .create ((X3DAppearanceChildNode_d
 
 
 
-
 Components_default().addComponent ({
    name: "X_ITE",
    types:

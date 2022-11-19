@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Vector2 from "../Numbers/Vector2.js";
 
 function Line2 (point, direction)

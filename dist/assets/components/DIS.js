@@ -893,7 +893,6 @@ TransmitterPdu .prototype = Object .assign (Object .create ((X3DSensorNode_defau
 
 
 
-
 Components_default().addComponent ({
    name: "DIS",
    types:

@@ -10246,7 +10246,6 @@ TextureTransformMatrix3D .prototype = Object .assign (Object .create ((X3DSingle
 
 
 
-
 Components_default().addComponent ({
    name: "Texturing3D",
    types:

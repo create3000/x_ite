@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import Components           from "../../x_ite/Components.js";
 import X3DGeometry2DContext from "../../x_ite/Browser/Geometry2D/X3DGeometry2DContext.js";
 import Arc2D                from "../../x_ite/Components/Geometry2D/Arc2D.js";

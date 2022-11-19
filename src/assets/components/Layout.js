@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import Components       from "../../x_ite/Components.js";
 import X3DLayoutContext from "../../x_ite/Browser/Layout/X3DLayoutContext.js";
 import Layout           from "../../x_ite/Components/Layout/Layout.js";

@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import Components                         from "../../x_ite/Components.js";
 import X3DVolumeRenderingContext          from "../../x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext.js";
 import BlendedVolumeStyle                 from "../../x_ite/Components/VolumeRendering/BlendedVolumeStyle.js";

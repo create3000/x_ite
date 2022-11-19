@@ -4385,7 +4385,6 @@ UniversalJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3D
 
 
 
-
 Components_default().addComponent ({
    name: "RigidBodyPhysics",
    types:

@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 const shrinkFactor = 1 - Math .exp (-Math .PHI); // 0.801711847137793
 
 function PartialSort (array, compare)

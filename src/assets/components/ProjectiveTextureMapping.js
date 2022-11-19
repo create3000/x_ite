@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Components                  from "../../x_ite/Components.js";
 import TextureProjectorPerspective from "../../x_ite/Components/ProjectiveTextureMapping/TextureProjectorPerspective.js";
 import TextureProjectorParallel    from "../../x_ite/Components/ProjectiveTextureMapping/TextureProjectorParallel.js";

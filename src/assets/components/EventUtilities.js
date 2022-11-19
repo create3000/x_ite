@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import Components       from "../../x_ite/Components.js";
 import BooleanFilter    from "../../x_ite/Components/EventUtilities/BooleanFilter.js";
 import BooleanSequencer from "../../x_ite/Components/EventUtilities/BooleanSequencer.js";

@@ -1057,7 +1057,6 @@ HAnimSite .prototype = Object .assign (Object .create ((X3DTransformNode_default
 
 
 
-
 Components_default().addComponent ({
    name: "HAnim",
    types:

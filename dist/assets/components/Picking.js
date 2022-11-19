@@ -2389,7 +2389,6 @@ VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSen
 
 
 
-
 Components_default().addComponent ({
    name: "Picking",
    types:

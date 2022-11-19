@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Plane3    from "./Plane3.js";
 import Triangle3 from "./Triangle3.js";
 import Vector2   from "../Numbers/Vector2.js";

@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Spheroid3 from "../Math/Geometry/Spheroid3.js";
 
 const ReferenceEllipsoids =

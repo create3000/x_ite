@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 export default function ($)
 {
    // Use this transport for "binary" data type

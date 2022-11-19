@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import Components                from "../../x_ite/Components.js";
 import X3DKeyDeviceSensorContext from "../../x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext.js";
 import KeySensor                 from "../../x_ite/Components/KeyDeviceSensor/KeySensor.js";

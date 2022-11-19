@@ -1,4 +1,3 @@
-
 import inferType           from "./src/utils/infer-type.js";
 import computeCacheKey     from "./src/utils/cache-key.js";
 import isNdarray           from "./src/utils/is-ndarray.js";

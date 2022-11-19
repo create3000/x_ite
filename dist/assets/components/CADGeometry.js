@@ -997,7 +997,6 @@ QuadSet .prototype = Object .assign (Object .create ((X3DComposedGeometryNode_de
 
 
 
-
 Components_default().addComponent ({
    name: "CADGeometry",
    types:

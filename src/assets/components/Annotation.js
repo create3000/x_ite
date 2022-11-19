@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Components        from "../../x_ite/Components.js";
 import AnnotationLayer   from "../../x_ite/Components/Annotation/AnnotationLayer.js";
 import AnnotationTarget  from "../../x_ite/Components/Annotation/AnnotationTarget.js";

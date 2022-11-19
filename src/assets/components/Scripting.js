@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import Components          from "../../x_ite/Components.js";
 import Script              from "../../x_ite/Components/Scripting/Script.js";
 import X3DScriptNode       from "../../x_ite/Components/Scripting/X3DScriptNode.js";

@@ -1106,7 +1106,6 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturin
 
 
 
-
 Components_default().addComponent ({
    name: "CubeMapTexturing",
    types:

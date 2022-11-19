@@ -1027,7 +1027,6 @@ TimeTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTrigg
 
 
 
-
 Components_default().addComponent ({
    name: "EventUtilities",
    types:

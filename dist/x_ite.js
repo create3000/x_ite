@@ -34923,7 +34923,6 @@ Generator_Generator .Get = function (stream)
  *
  ******************************************************************************/
 
-
 const MapUtilities = {
    assign: (function ()
    {
@@ -36618,7 +36617,6 @@ for (const key of Reflect .ownKeys (SFBool .prototype))
  *
  ******************************************************************************/
 
-
 function Algorithm () { }
 
 Algorithm .prototype =
@@ -36851,7 +36849,6 @@ Algorithm .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -37346,7 +37343,6 @@ Object .defineProperty (SFColor .prototype, "2", SFColor_b);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -38398,7 +38394,6 @@ for (const key of Reflect .ownKeys (SFInt32 .prototype))
  *
  ******************************************************************************/
 
-
 function Vector2 (x, y)
 {
    this .x = x;
@@ -38852,7 +38847,6 @@ function SFVec2Template (TypeName, Type, double)
 
 
 
-
 function Vector3 (x, y, z)
 {
    this .x = x;
@@ -39239,7 +39233,6 @@ Object .assign (Vector3,
 
 
 
-
 function Matrix2 ()
 {
    if (arguments .length)
@@ -39541,7 +39534,6 @@ Object .assign (Matrix2,
  *
  ******************************************************************************/
 
-
 const eigen_decomposition_a = [ ]; // more scratch
 const eigen_decomposition_b = [ ]; // more scratch
 const z = [ ]; // more scratch
@@ -39732,7 +39724,6 @@ const z = [ ]; // more scratch
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -40773,7 +40764,6 @@ function SFVec3Template (TypeName, Type, double)
  *
  ******************************************************************************/
 
-
 function Vector4 (x, y, z, w)
 {
    this .x = x;
@@ -41171,7 +41161,6 @@ Object .assign (Vector4,
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -41734,7 +41723,6 @@ const
 
 
 
-
 const
    _x     = Symbol (),
    _y     = Symbol (),
@@ -42208,7 +42196,6 @@ Object .assign (Rotation4,
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -57968,7 +57955,6 @@ GoldenGate .Parser = [
 
 
 
-
 const
    normal    = new Numbers_Vector3 (0, 0, 0),
    point     = new Numbers_Vector3 (0, 0, 0),
@@ -58135,7 +58121,6 @@ Plane3 .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -58334,7 +58319,6 @@ Plane3 .prototype =
  *
  ******************************************************************************/
 
-
 const
    extents1 = { min: 0, max: 0 },
    extents2 = { min: 0, max: 0 };
@@ -58446,7 +58430,6 @@ function is_between (value, lowerBound, upperBound)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -59176,7 +59159,6 @@ const TraverseType =
  *
  ******************************************************************************/
 
-
 function MergeSort (array, compare)
 {
    this .array     = array;
@@ -59281,7 +59263,6 @@ MergeSort .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -59409,7 +59390,6 @@ MergeSort .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -60107,7 +60087,6 @@ Object .defineProperty (Box3 .prototype, "center",
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 function MatrixStack (Type)
 {
@@ -63112,7 +63091,6 @@ NavigationInfo .prototype = Object .assign (Object .create (Core_X3DBindableNode
  *
  ******************************************************************************/
 
-
 /* harmony default export */ function ObjectCache(Type)
 {
    const stack = [ ];
@@ -64866,7 +64844,6 @@ GeometryContext .prototype =
  *
  ******************************************************************************/
 
-
 function Complex (real, imag)
 {
    this .real = real;
@@ -65079,7 +65056,6 @@ Object .assign (Complex,
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 function BitSet (value = 0)
 {
@@ -69537,7 +69513,6 @@ for (const key of Reflect .ownKeys (X3DWorld .prototype))
  *
  ******************************************************************************/
 
-
 /* harmony default export */ function BinaryTransport($)
 {
    // Use this transport for "binary" data type
@@ -73089,7 +73064,6 @@ for (const key of Reflect .ownKeys (Scene .prototype))
  *
  ******************************************************************************/
 
-
 const
    storages   = new WeakMap (),
    namespaces = new WeakMap (),
@@ -76614,7 +76588,6 @@ X3DShapeNode .prototype = Object .assign (Object .create (Core_X3DChildNode.prot
 
 
 
-
 function Line3 (point, direction)
 {
    this .point     = point     .copy ();
@@ -76850,7 +76823,6 @@ Line3 .Points = function (point1, point2)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 function QuickSort (array, compare)
 {
@@ -77222,7 +77194,6 @@ Shape .prototype = Object .assign (Object .create (Shape_X3DShapeNode.prototype)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -94572,7 +94543,6 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (Core_X3DNode.proto
 
 
 
-
 function Box2 (size, center)
 {
    switch (arguments .length)
@@ -95467,7 +95437,6 @@ X3DTextGeometry .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -109265,7 +109234,6 @@ X3DDragSensorNode .prototype = Object .assign (Object .create (PointingDeviceSen
 
 
 
-
 function Cylinder3 (axis, radius)
 {
    this .axis   = axis .copy ();
@@ -110006,7 +109974,6 @@ PlaneSensor .prototype = Object .assign (Object .create (PointingDeviceSensor_X3
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

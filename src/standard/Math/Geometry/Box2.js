@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Matrix3 from "../Numbers/Matrix3.js";
 import Vector2 from "../Numbers/Vector2.js";
 

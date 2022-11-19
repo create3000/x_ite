@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Vector3   from "../Numbers/Vector3.js";
 import Plane3    from "../Geometry/Plane3.js";
 import QuickSort from "../Algorithms/QuickSort.js";

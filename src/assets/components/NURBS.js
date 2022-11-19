@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Components                   from "../../x_ite/Components.js";
 import Contour2D                    from "../../x_ite/Components/NURBS/Contour2D.js";
 import ContourPolyline2D            from "../../x_ite/Components/NURBS/ContourPolyline2D.js";

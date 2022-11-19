@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Vector3             from "./Vector3.js";
 import Vector4             from "./Vector4.js";
 import Rotation4           from "./Rotation4.js";

@@ -805,7 +805,6 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (Projective
 
 
 
-
 Components_default().addComponent ({
    name: "ProjectiveTextureMapping",
    types:

@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 export default {
    isPointInTriangle: function (a, b, c, point)
    {

@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Algorithm from "../Algorithm.js";
 
 function Vector3 (x, y, z)

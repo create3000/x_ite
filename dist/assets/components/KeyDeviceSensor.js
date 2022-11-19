@@ -839,7 +839,6 @@ StringSensor .prototype = Object .assign (Object .create (KeyDeviceSensor_X3DKey
 
 
 
-
 Components_default().addComponent ({
    name: "KeyDeviceSensor",
    types:

@@ -105,7 +105,6 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
  *
  ******************************************************************************/
 
-
 function Spheroid3 (semiMajorAxis, semiMinorAxis)
 {
    switch (arguments .length)
@@ -195,7 +194,6 @@ Spheroid3 .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -297,7 +295,6 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -559,7 +556,6 @@ Geodetic .prototype =
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -3678,7 +3674,6 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

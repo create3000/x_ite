@@ -2030,7 +2030,6 @@ TriangleSet2D .prototype = Object .assign (Object .create ((X3DGeometryNode_defa
 
 
 
-
 Components_default().addComponent ({
    name: "Geometry2D",
    types:

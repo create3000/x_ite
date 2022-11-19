@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import Components              from "../../x_ite/Components.js";
 import GeoCoordinate           from "../../x_ite/Components/Geospatial/GeoCoordinate.js";
 import GeoElevationGrid        from "../../x_ite/Components/Geospatial/GeoElevationGrid.js";

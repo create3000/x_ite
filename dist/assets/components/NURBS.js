@@ -2355,7 +2355,6 @@ var tmp1 = [ ];
 
 
 
-
 var BOUNDARY_TYPES = {
    open: "open",
    closed: "closed",
@@ -4246,7 +4245,6 @@ var Line3_default = /*#__PURE__*/__webpack_require__.n(Line3_namespaceObject);
  *
  ******************************************************************************/
 
-
 /* harmony default export */ const Triangle2 = ({
    isPointInTriangle: function (a, b, c, point)
    {
@@ -5162,7 +5160,6 @@ function NurbsTrimmedSurface_remove (array, first, last, range, rfirst, rlast)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

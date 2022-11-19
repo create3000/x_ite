@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 import Components                  from "../../x_ite/Components.js";
 import X3DParticleSystemsContext   from "../../x_ite/Browser/ParticleSystems/X3DParticleSystemsContext.js";
 import BoundedPhysicsModel         from "../../x_ite/Components/ParticleSystems/BoundedPhysicsModel.js";

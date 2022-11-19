@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Components               from "../../x_ite/Components.js";
 import ComposedTexture3D        from "../../x_ite/Components/Texturing3D/ComposedTexture3D.js";
 import ImageTexture3D           from "../../x_ite/Components/Texturing3D/ImageTexture3D.js";

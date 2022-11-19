@@ -46,7 +46,6 @@
  *
  ******************************************************************************/
 
-
 import Components                   from "../../x_ite/Components.js";
 import CADAssembly                  from "../../x_ite/Components/CADGeometry/CADAssembly.js";
 import CADFace                      from "../../x_ite/Components/CADGeometry/CADFace.js";
