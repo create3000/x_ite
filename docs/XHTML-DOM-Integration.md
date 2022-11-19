@@ -18,7 +18,7 @@ The complete documentation can be found at [https://github.com/andreasplesch/x_i
 
 ## How use the Plug-In with X\_ITE
 
-Create an HTML or XHTML page and save it, additionally the »x\_ite\_dom.js« script must be included after the X\_ITE script, then XHTML DOM integration is available. Now, X3D content can directly be written within the X3DCanvas element and regular DOM manipulation methods can be used to manipulate the scene graph. This gives X3D authors the ability to combine HTML with X3D. The »moveHouse« function in the example below demonstrates how to use regular DOM manipulation methods to control the behavior of the X3D content.
+Create an HTML or XHTML page and save it, include the »x_ite.min.js«. Now, X3D content can directly be written within the \<x3d-canvas\> element and regular DOM manipulation methods can be used to manipulate the scene graph. This gives X3D authors the ability to combine HTML with X3D. The example below will show a simple Box node in the \<x3d-canvas\> element.
 
 ### Example
 
