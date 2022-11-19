@@ -63,9 +63,9 @@ function execAll (regex, string)
 
 function getLanguage ()
 {
-   for (const la of navigator .languages)
+   for (const value of navigator .languages)
    {
-      const language = la .split ("-") [0];
+      const language = value .split ("-") [0];
 
       if (locales [language])
          return language;

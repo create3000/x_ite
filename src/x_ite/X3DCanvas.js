@@ -56,7 +56,7 @@ class X3DCanvas extends HTMLElement
    {
       customElements .define ("x3d-canvas", X3DCanvas);
    }
-   
+
    constructor ()
    {
       super ();

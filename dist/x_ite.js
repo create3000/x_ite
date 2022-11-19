@@ -48108,9 +48108,9 @@ function execAll (regex, string)
 
 function getLanguage ()
 {
-   for (const la of navigator .languages)
+   for (const value of navigator .languages)
    {
-      const language = la .split ("-") [0];
+      const language = value .split ("-") [0];
 
       if (locales [language])
          return language;
@@ -119559,10 +119559,9 @@ Object .defineProperty (X3DBrowser .prototype, "supportedComponents",
  *
  ******************************************************************************/
 
-
 // Return a pseudo accurate timestamp.
 
-function microtime (now)
+function micro_time (now)
 {
    let
       offset = 0,
@@ -119586,8 +119585,14 @@ function microtime (now)
    };
 }
 
-performance .now = microtime (performance .now);
-Date        .now = microtime (Date        .now);
+for (const object of [performance, Date])
+{
+   Object .defineProperty (object, "now", {
+      value: micro_time (object .now),
+      configurable: true,
+      writable: true,
+   });
+}
 
 /* harmony default export */ const MicroTime = (undefined);
 
@@ -120975,7 +120980,7 @@ class X3DCanvas extends HTMLElement
    {
       customElements .define ("x3d-canvas", X3DCanvas);
    }
-   
+
    constructor ()
    {
       super ();
