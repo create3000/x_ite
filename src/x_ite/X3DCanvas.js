@@ -85,11 +85,6 @@ class X3DCanvas extends HTMLElement
       X3D .getBrowser (this) .connectedCallback ();
    }
 
-   attributeChangedCallback (name, oldValue, newValue)
-   {
-      X3D .getBrowser (this) .attributeChangedCallback (name, oldValue, newValue);
-   }
-
    static get observedAttributes ()
    {
       return [
@@ -97,6 +92,11 @@ class X3DCanvas extends HTMLElement
          "src",
          "url",
       ];
+   }
+
+   attributeChangedCallback (name, oldValue, newValue)
+   {
+      X3D .getBrowser (this) .attributeChangedCallback (name, oldValue, newValue);
    }
 }
 
