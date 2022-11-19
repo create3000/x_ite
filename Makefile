@@ -37,7 +37,7 @@ html:
 
 .SILENT:zip
 zip:
-	$(eval VERSION=$(shell npm pkg get version | sed 's/"g'))
+	$(eval VERSION=$(shell npm pkg get version | sed 's/"//g'))
 	cp -r dist x_ite-$(VERSION)
 	zip -q -x "*.zip" -r x_ite-$(VERSION).zip x_ite-$(VERSION)
 	mv x_ite-$(VERSION).zip dist/x_ite.zip

@@ -1,4 +1,4 @@
-/* X_ITE v8.0.0 */(function webpackUniversalModuleDefinition(root, factory) {
+/* X_ITE v8.0.0a */(function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
@@ -36436,7 +36436,7 @@ X3DField .prototype = Object .assign (Object .create (Base_X3DChildObject.protot
    fromString: function (string, scene)
    {
       const
-         X3D        = window [Symbol .for ("X_ITE.X3D-8.0.0")],
+         X3D        = window [Symbol .for ("X_ITE.X3D-8.0.0a")],
          VRMLParser = X3D .require ("x_ite/Parser/VRMLParser"),
          parser     = new VRMLParser (scene);
 
@@ -47441,7 +47441,7 @@ for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
  *
  ******************************************************************************/
 
-/* harmony default export */ const VERSION = ("8.0.0");
+/* harmony default export */ const VERSION = ("8.0.0a");
 
 ;// CONCATENATED MODULE: ./src/x_ite/DEBUG.js
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -97367,7 +97367,7 @@ Object .assign (X3DBrowserContext,
       X3DBrowserContext_$("x3d-canvas, X3DCanvas") .each (function (_, canvas)
       {
          const
-            X3D     = window [Symbol .for ("X_ITE.X3D-8.0.0")],
+            X3D     = window [Symbol .for ("X_ITE.X3D-8.0.0a")],
             browser = X3D .getBrowser (canvas);
 
          browserContext .call (browser);
@@ -117844,7 +117844,7 @@ Components .prototype =
    addComponent: function ({ name, types, abstractTypes, browserContext, exports })
    {
       const
-         X3D       = window [Symbol .for ("X_ITE.X3D-8.0.0")],
+         X3D       = window [Symbol .for ("X_ITE.X3D-8.0.0a")],
          Namespace = X3D .require ("x_ite/Namespace");
 
       if (types)
@@ -117885,7 +117885,31 @@ Components .prototype =
 /* harmony default export */ const x_ite_Components = (new Components ());
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-// DOMIntegration was taken from https://github.com/andreasplesch/x_ite_dom.
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ * MIT License
+ *
+ * Copyright (c) 2016 Andreas Plesch
+ * taken from https://github.com/andreasplesch/x_ite_dom.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ ******************************************************************************/
 
 
 
@@ -117960,7 +117984,7 @@ class DOMIntegration
 
 		const onError = (error) =>
 		{
-			console .log ("Error importing document:", error);
+			console .error ("Error importing document:", error);
 		};
 
 		this .browser .importDocument (rootElement, onAfterImport, onError);
@@ -118241,7 +118265,7 @@ class DOMIntegration
 			catch (error)
 			{
 				// Unknown attribute like containerField.
-				// console .log (error);
+				// console .error (error);
 			}
 		}
 		else
@@ -121564,7 +121588,7 @@ x_ite_Namespace.set ("x_ite/X3DCanvas", X3DCanvas);
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-8.0.0")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-8.0.0a")] = x_ite_X3D;
 
 x_ite_X3DCanvas.define ();
 
