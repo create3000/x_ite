@@ -37,7 +37,7 @@ x3d-canvas {
   </head>
   <body>
     <x3d-canvas>
-      <X3D>
+      <X3D profile="Interchange">
          <Scene>
             <Shape>
                <Appearance>
