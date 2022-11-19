@@ -16,10 +16,8 @@ use Cwd;
 my $CWD = cwd;
 say $CWD;
 
-my $VERSION;
-$VERSION = `cat package.json`;
-$VERSION =~ /"version":\s*"(.*?)"/;
-$VERSION = $1;
+my $VERSION = `npm pkg get version | sed 's/"//g`;
+chomp $VERSION;
 
 my $ALPHA = $VERSION =~ /a$/;
 
