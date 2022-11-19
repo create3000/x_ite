@@ -14,7 +14,7 @@ Andreas Plesch wrote a nice plug-in for X3D HTML DOM integration. This enables J
 
 ### Reference
 
-The complete documentation can be found at [https://github.com/andreasplesch/x\_ite\_dom](https://github.com/andreasplesch/x_ite_dom).
+The complete documentation can be found at [https://github.com/andreasplesch/x_ite_dom#x_ite_dom](https://github.com/andreasplesch/x_ite_dom#x_ite_dom).
 
 ## How use the Plug-In with X\_ITE
 
