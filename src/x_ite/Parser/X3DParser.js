@@ -129,7 +129,7 @@ X3DParser .prototype = {
             return browser .loadComponents (VRML);
 
          return Promise .all ([
-            browser .loadComponents (scene .getProfile () || browser .getProfile ("Core")),
+            browser .loadComponents (scene .getProfile () || [ ]),
             browser .loadComponents (scene .getComponents ()),
          ]);
       };
