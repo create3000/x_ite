@@ -808,7 +808,7 @@ The VolumeRendering examples are only working if your browser supports WebGL 2, 
 
 There is a ZIP archive available to locally install X\_ITE on your server. Compressed and uncompressed copies of X\_ITE files are available. The uncompressed file (x\_ite.js) is best used during development or debugging; the compressed file (x\_ite.min.js) saves bandwidth and improves performance in production.
 
-[Download X\_ITE ZIP archive](https://create3000.github.io/code/x_ite/latest/dist/x_ite.zip)
+[Download X\_ITE ZIP archive](https://create3000.github.io/code/x_ite/latest/x_ite.zip)
 
 ### You also can get it on NPM
 
@@ -837,7 +837,7 @@ GitCDN serves raw files directly from GitHub with proper Content-Type headers an
 If you are a developer or you always wanna be up to date:
 
 ```html
-<script src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
+<script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
 ```
 
 #### Snipped
@@ -845,7 +845,7 @@ If you are a developer or you always wanna be up to date:
 If you are on production and everything works fine, then use a numbered version.
 
 ```html
-<script src="https://create3000.github.io/code/x_ite/7.0.0/dist/x_ite.min.js"></script>
+<script src="https://create3000.github.io/code/x_ite/7.0.0/x_ite.min.js"></script>
 ```
 
 ### jsDelivr CDN
@@ -869,7 +869,7 @@ The HTML5 page is quite easy to create, the HTML5 code below shows you the minim
 <html>
   <head>
     <meta charset="utf-8"/>
-    <script src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
+    <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
     <style type="text/css">
 x3d-canvas {
   width: 768px;

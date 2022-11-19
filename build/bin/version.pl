@@ -23,16 +23,11 @@ $VERSION = $1;
 
 my $ALPHA = $VERSION =~ /a$/;
 
-my $REVISION;
-$REVISION = `cat package.json`;
-$REVISION =~ /"revision":\s*"(.*?)"/;
-$REVISION = $1 + 1;
-
 sub commit
 {
 	my $version = shift;
 
-	system "git", "commit", "-am", "Published version $VERSION-$REVISION";
+	system "git", "commit", "-am", "Published version $VERSION";
 	system "git", "push", "origin";
 }
 
@@ -55,9 +50,9 @@ sub update
 
 	say "Uploading $release";
 
-	system "rm", "-r", "$code/dist";
-	system "mkdir", "-p", $code;
-	system "cp", "-r", $dist, "$code/dist";
+	system "rm", "-r", $code;
+	system "cp", "-r", $dist, $code;
+	system "cp", "-r", $dist, "$code/dist" if $release eq "latest";
 }
 
 sub upload
@@ -67,7 +62,7 @@ sub upload
 	chdir $code;
 
 	system "git", "add", "-A";
-	system "git", "commit", "-am", "Published version $VERSION-$REVISION";
+	system "git", "commit", "-am", "Published version $VERSION";
 	system "git", "push", "origin";
 }
 
@@ -85,21 +80,18 @@ sub docs
 
 	my $home = `cat '$CWD/docs/index.md'`;
 
-	$home =~ s|/x_ite/\d+\.\d+\.\d+/dist/|/x_ite/$VERSION/dist/|sgo;
+	$home =~ s|/code/x_ite/\d+\.\d+\.\d+/|/code/x_ite/$VERSION/|sgo;
 
 	open HOME, ">", "$CWD/docs/index.md";
 	print HOME $home;
 	close HOME;
 }
 
-my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION-$REVISION now?", "--ok-label=Yes", "--cancel-label=No";
+my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION now?", "--ok-label=Yes", "--cancel-label=No";
 
 if ($result == 0)
 {
-	say "Publishing X_ITE X3D v$VERSION-$REVISION now.";
-
-	# Increment revision number.
-	system "perl", "-pi", "-e", "s|\"revision\":\\s*\"(.*?)\"|\"revision\": \"$REVISION\"|sg", "package.json";
+	say "Publishing X_ITE X3D v$VERSION now.";
 
 	# docs
 
