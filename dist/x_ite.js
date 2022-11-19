@@ -47494,7 +47494,7 @@ for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
 
 // Modified during dist build.
 
-/* harmony default export */ const DEBUG = (false);
+/* harmony default export */ const DEBUG = (true);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Context.js
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
