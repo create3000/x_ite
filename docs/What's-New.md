@@ -648,7 +648,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Fixed sound playing when Browser.endUpdate was called.
 - Fixed Switch node when children are changed.
-- Fixed a bug with Inline nodes in conjunction with XHTML DOM integration.
+- Fixed a bug with Inline nodes in conjunction with DOM integration.
 
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
@@ -1356,7 +1356,7 @@ If you still use an old stable version from Cobweb you must changed the URL for 
 {% capture notice-text %}
 #### New Features Bug Fixes
 
-- New shader uniform x3d\_ViewportPrototypes do completely work now with XHTML DOM Integration.
+- New shader uniform x3d\_ViewportPrototypes do completely work now with DOM Integration.
 - Implemented X3DArrayField push and unshift
 - Implemented X3DField equals
 - Reworked XMLParser

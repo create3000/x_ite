@@ -1073,11 +1073,11 @@ X\_ITE is designed to provide access to a browser and its contained scene graph 
 
 [Learn more how to access the external browser.](Accessing-the-External-Browser.html)
 
-## XHTML DOM Integration
+## DOM Integration
 
-XHTML DOM integration allows you to integrate 3D content seamlessly into your webpage, with just a JavaScript file included the scene can be written directly into the XHTML markup. There are no further plug-ins needed anymore.
+DOM integration allows you to integrate 3D content seamlessly into your webpage, with just a JavaScript file included the scene can be written directly into the HTML or XHTML markup. There are no further plug-ins needed anymore.
 
-[Learn more about how XHTML and X3D can operate together.](XHTML-DOM-Integration.html)
+[Learn more about how XHTML and X3D can operate together.](DOM-Integration.html)
 
 We show you a simple example how you can manipulate the X3D DOM in JavaScript like you would do it with any HTML.
 

@@ -23,8 +23,8 @@ pages:
         url: /Supported-Nodes.html
       - title: "Accessing the External Browser"
         url: /Accessing-the-External-Browser.html
-      - title: "XHTML DOM Integration"
-        url: /XHTML-DOM-Integration.html
+      - title: "DOM Integration"
+        url: /DOM-Integration.html
       - title: "Custom Shaders"
         url: /Custom-Shaders.html
       - title: "How To Configure Your Web Server"
