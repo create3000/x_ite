@@ -203,7 +203,7 @@ A complete function reference for the X3DBrowser object and all other X3D JavaSc
 
 ## Example
 
-[![Adrenaline Molecule in 3D](https://create3000.github.io/media/x_ite/external-browser/external-browser.png)](https://create3000.github.io/media/x_ite/external-browser/external-browser.html)
+[![Adrenaline Molecule in 3D](https://create3000.github.io/media/x_ite/external-browser/adrenaline.png)](https://create3000.github.io/media/x_ite/external-browser/external-browser.html)
 
 [View scene in this window.](https://create3000.github.io/media/x_ite/external-browser/external-browser.html)
 
