@@ -118589,6 +118589,7 @@ SupportedProfiles .addProfile ({
 
 
 
+
 const
    _loader           = Symbol (),
    _browserCallbacks = Symbol ();
@@ -118731,9 +118732,15 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
             await import (/* webpackIgnore: true */ providerUrl);
       }
 
-      return function (components)
+      return function (argument)
       {
-         return loadComponents (this, [... components], new Set ());
+         if (argument instanceof Configuration_ProfileInfo)
+            return this .loadComponents (argument .components);
+
+         if (argument instanceof Configuration_ComponentInfoArray)
+            return this .loadComponents (argument .map (({name}) => name));
+
+         return loadComponents (this, [... argument], new Set ());
       };
    })(),
    getSupportedNode: function (typeName)
@@ -120976,11 +120983,6 @@ class X3DCanvas extends HTMLElement
       x_ite_X3D.getBrowser (this) .connectedCallback ();
    }
 
-   attributeChangedCallback (name, oldValue, newValue)
-   {
-      x_ite_X3D.getBrowser (this) .attributeChangedCallback (name, oldValue, newValue);
-   }
-
    static get observedAttributes ()
    {
       return [
@@ -120988,6 +120990,11 @@ class X3DCanvas extends HTMLElement
          "src",
          "url",
       ];
+   }
+
+   attributeChangedCallback (name, oldValue, newValue)
+   {
+      x_ite_X3D.getBrowser (this) .attributeChangedCallback (name, oldValue, newValue);
    }
 }
 

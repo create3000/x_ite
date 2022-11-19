@@ -213,10 +213,10 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       return function (argument)
       {
          if (argument instanceof ProfileInfo)
-            return loadComponents (this, argument .components .map (({name}) => name), new Set ());
+            return this .loadComponents (argument .components);
 
          if (argument instanceof ComponentInfoArray)
-            return loadComponents (this, argument .map (({name}) => name), new Set ());
+            return this .loadComponents (argument .map (({name}) => name));
 
          return loadComponents (this, [... argument], new Set ());
       };
