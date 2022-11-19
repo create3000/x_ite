@@ -79,9 +79,9 @@ sub menu {
    open FILE, ">", "src/tests/menu.js";
 
    say FILE <<EOT;
-function loadTestMenu ()
+function createTestMenu ()
 {
-   const menu = {
+   return {
       "tests": {
          "name": "Tests",
          "items": {
@@ -112,8 +112,6 @@ EOT
          },
       }
    };
-
-   X3D .getBrowser () .getContextMenu () .setUserMenu (() => menu);
 }
 EOT
 
