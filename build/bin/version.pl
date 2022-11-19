@@ -7,6 +7,10 @@ use v5.10.0;
 use utf8;
 use open qw/:std :utf8/;
 
+# https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
+# Set post buffer to 150 MiB
+system "git", "config", "--global", "http.postBuffer", "157286400";
+
 use Cwd;
 
 my $CWD = cwd;
@@ -123,9 +127,3 @@ if ($result == 0)
 
 	upload;
 }
-
-__END__
-
-# https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
-# Set post buffer to 150 MiB
-git config --global http.postBuffer 157286400
