@@ -100,7 +100,7 @@ If for some reason two versions of X\_ITE are loaded (which is not recommended),
 <script src="other_lib.js"></script>
 <script src="x_ite.js"></script>
 <script>
-const X_ITE = X3D .noConflict ();
+const X_ITE_X3D = X3D .noConflict ();
 // Code that uses other library's X3D can follow here.
 </script>
 ```
@@ -112,8 +112,8 @@ The following services can be used to establish a session and obtain the X3DBrow
 The *selector* argument must be a string containing a valid CSS selector expression to match elements against. If no selector was given, »x3d-canvas« is used as selector string. The return value is the appropriate X3DBrowser object.
 
 ```js
-// Obtain X3DBrowser object of x3d-canvas element with id »browser«.
-const Browser = X3D .getBrowser ("x3d-canvas#browser");
+// Obtain X3DBrowser object of fist x3d-canvas element.
+const Browser = X3D .getBrowser ();
 ```
 
 #### X3DBrowser **getBrowser** (*element : Object*)
@@ -216,7 +216,7 @@ Adding HTML controls to your scene is no rocket science. We have added some HTML
 function init ()
 {
   const
-    Browser = X3D .getBrowser ("x3d-canvas"),             // Get the browser instance.
+    Browser = X3D .getBrowser (".browser"),             // Get the browser instance.
     scene   = Browser .currentScene,                      // Get the scene.
     timer   = scene .getNamedNode ("SpinAnimationTimer"); // Get box TouchSensor node.
 
