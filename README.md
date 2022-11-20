@@ -16,6 +16,20 @@ Quick Links
 * [XHTML DOM Integration](https://create3000.github.io/x_ite/XHTML-DOM-Integration.html)
 * [Custom Shaders](https://create3000.github.io/x_ite/Custom-Shaders.html)
 
+### NPM usage
+
+```sh
+$ npm install x_ite
+```
+
+It can be used in [Electron](https://www.electronjs.org) apps in the **renderer process** like this:
+
+```js
+const X3D = require ("x_ite")
+```
+
+Make sure that contextIsolation is set to **false** when creating a BrowserWindow instance.
+
 License
 -------
 X_ITE is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License version 3](LICENSE.md) only, as published by the Free Software Foundation.
