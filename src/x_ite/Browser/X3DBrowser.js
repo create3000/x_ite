@@ -376,8 +376,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       this .addLoadCount (loader);
 
-      loader .createX3DFromURL (url, null,
-      function (scene)
+      loader .createX3DFromURL (url, null, (scene) =>
       {
          this .removeLoadCount (loader);
 
@@ -395,8 +394,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             // Wait until scene is completely loaded, scene ._loadCount must be 0.
             field .setValue (scene .rootNodes);
          }
-      }
-      .bind (this));
+      });
    },
    createX3DFromURL: function (url, node, event)
    {
@@ -425,7 +423,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    loadURL: function (url, parameter = new Fields .MFString ())
    {
-      return new Promise (function (resolve, reject)
+      return new Promise ((resolve, reject) =>
       {
          if (! (url instanceof Fields .MFString))
             throw new Error ("Browser.loadURL: url must be of type MFString.");
@@ -448,8 +446,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
          const loader = this [_loader] = new FileLoader (this .getWorld ());
 
-         loader .createX3DFromURL (url, parameter,
-         function (scene)
+         loader .createX3DFromURL (url, parameter, (scene) =>
          {
             if (loader !== this [_loader])
             {
@@ -472,13 +469,17 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
                this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
                this .callBrowserEventHandler ("error");
 
-               setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+               setTimeout (() =>
+               {
+                  this .getSplashScreen ()
+                     .find (".x_ite-private-spinner-text")
+                     .text (_ ("Failed loading world."));
+               });
 
                reject ("Couldn't load X3D file.");
             }
-         }
-         .bind (this),
-         function (fragment)
+         },
+         (fragment) =>
          {
             if (loader !== this [_loader])
             {
@@ -491,9 +492,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             this .setBrowserLoading (false);
 
             resolve ();
-         }
-         .bind (this),
-         function (url, target)
+         },
+         (url, target) =>
          {
             if (loader !== this [_loader])
             {
@@ -510,10 +510,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             this .setBrowserLoading (false);
 
             resolve ();
-         }
-         .bind (this));
-      }
-      .bind (this));
+         });
+      });
    },
    addBrowserListener: function (callback, object)
    {
