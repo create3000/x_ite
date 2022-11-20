@@ -6,7 +6,7 @@ use utf8;
 use open qw/:std :utf8/;
 
 # https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
-# Set post buffer to 150 MiB
+# Set post buffer to 150 MiB.
 system "git", "config", "--global", "http.postBuffer", "157286400";
 
 use Cwd;
@@ -14,7 +14,7 @@ use Cwd;
 my $CWD = cwd;
 say $CWD;
 
-my $VERSION = `npm pkg get version | sed 's/"//g`;
+my $VERSION = `npm pkg get version | sed 's/"//g'`;
 chomp $VERSION;
 
 my $ALPHA = $VERSION =~ /a$/;
