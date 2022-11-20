@@ -8,7 +8,7 @@ layout: single
 
 ## Upcoming version X_ITE v8.0.0
 
-*Leipzig, 20th November 2022*: We not yet finally released the new version 8.0.0..
+*Leipzig, 20th November 2022*: We not yet finally released the new version 8.0.0.
 
 {% capture notice-text %}
 #### New Features
