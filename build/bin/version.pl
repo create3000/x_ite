@@ -76,7 +76,7 @@ sub docs
 
 	my $home = `cat '$CWD/docs/index.md'`;
 
-	$home =~ s|/code/x_ite/\d+\.\d+\.\d+/|/code/x_ite/$VERSION/|sgo;
+	$home =~ s|/code/x_ite/[\d\.]+/|/code/x_ite/$VERSION/|sgo;
 
 	open HOME, ">", "$CWD/docs/index.md";
 	print HOME $home;
