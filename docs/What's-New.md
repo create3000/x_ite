@@ -6,7 +6,28 @@ layout: single
 ---
 # What's New
 
-## X\_ITE v7.0.0 Released
+## Upcoming version X_ITE v8.0.0
+
+*Leipzig, 20th November 2022*: We not yet finally released the new version 8.0.0..
+
+{% capture notice-text %}
+#### New Features
+
+- X_ITE build is now based on WebPack, and a UMD library is build.
+- x_ite_dom is now an integral component of X_ITE.
+
+{% endcapture %}
+<div class="notice--info">{{ notice-text | markdownify }}</div>
+
+{% capture notice-text %}
+#### Bug Fixes
+
+- Fixed X3DNode dispose.
+
+{% endcapture %}
+<div class="notice--success">{{ notice-text | markdownify }}</div>
+
+## X_ITE v7.0.0 Released
 
 *Leipzig, 13th November 2022*: We finally released the new version 7.0.0. This version comes with a brand new shader system. The default shaders are now highly specialized and therefor very fast. First tests reveal that the shaders are now 2 up to 3 times faster. But this also means that custom shaders may be broken now, because all x3d_Num* variables are now removed. X3D Authors must now hardcode these values into their shaders, or develop an own system.
 
@@ -29,7 +50,7 @@ layout: single
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v6.1.0 Released
+## X_ITE v6.1.0 Released
 
 *Leipzig, 24th October 2022*: We finally released the new version 6.1.0.
 
@@ -52,7 +73,7 @@ layout: single
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v6.0.0 Released
+## X_ITE v6.0.0 Released
 
 *Leipzig, 19th October 2022*: We finally released the new version 6.0.0.
 
@@ -77,7 +98,7 @@ layout: single
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.7.7 Released
+## X_ITE v4.7.7 Released
 
 *Leipzig, 30th January 2022*: This release is primarily a bug fix release, but there are also new features.
 
@@ -100,7 +121,7 @@ layout: single
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.7.6 Released
+## X_ITE v4.7.6 Released
 
 *Leipzig, 23th January 2022*: This release implements the new X3Dv4 UnlitMaterial. This also means that the custom shader interface has changed:
 
@@ -132,7 +153,7 @@ layout: single
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.7.3 Released
+## X_ITE v4.7.3 Released
 
 *Leipzig, 16th January 2022*: This release fixes bugs, and a lot of code clean up has been done.
 
@@ -145,7 +166,7 @@ layout: single
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.7.2 Released
+## X_ITE v4.7.2 Released
 
 *Leipzig, 7th January 2022*: This release fixes bugs, and a lot of code clean up has been done.
 
@@ -170,7 +191,7 @@ layout: single
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.7.1 Released
+## X_ITE v4.7.1 Released
 
 *Leipzig, 19th December 2021*: This release fixed a lot of bugs, but also implements new features. Especially MF* fields can now be used within `for of` loops. X3DBindableNode nodes do work now proper when cloned in multiple layers.
 
@@ -200,7 +221,7 @@ layout: single
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.7.0 Released
+## X_ITE v4.7.0 Released
 
 *Leipzig, 5th December 2021*: This release implements some of the new X3Dv4 Features. X3Dv4 Draft is available at <https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/Architecture.html>.
 
@@ -228,7 +249,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.24 Released
+## X_ITE v4.6.24 Released
 
 *Leipzig, 12th November 2021*: This release is a bug fix release.
 
@@ -241,11 +262,11 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.23 Released
+## X_ITE v4.6.23 Released
 
 *Leipzig, 31st October 2021*: Updated dependencies and reduced file size a tiny bit and X3DExecutionContext.updateImportedNode only updated the node associated with imported name, this enables X_ITE to import a node twice.
 
-## X\_ITE v4.6.22 Released
+## X_ITE v4.6.22 Released
 
 *Leipzig, 2nd July 2021*: This release is a bug fix release.
 
@@ -259,7 +280,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.21 Released
+## X_ITE v4.6.21 Released
 
 *Leipzig, 30th June 2021*: This release is a bug fix release.
 
@@ -271,7 +292,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.20 Released
+## X_ITE v4.6.20 Released
 
 *Leipzig, 15th June 2021*: This release is a bug fix release.
 
@@ -283,7 +304,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.19 Released
+## X_ITE v4.6.19 Released
 
 *Leipzig, 27th May 2021*: This release is a bug fix release.
 
@@ -297,7 +318,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.18 Released
+## X_ITE v4.6.18 Released
 
 *Leipzig, 13th April 2021*: This release is a bug fix release.
 
@@ -309,7 +330,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.17 Released
+## X_ITE v4.6.17 Released
 
 *Leipzig, 22nd December 2020*: This release is a bug fix release. It fixed a minor bug in X3DViewpointNode when the viewpoint is animated.
 
@@ -321,7 +342,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.15 Released
+## X_ITE v4.6.15 Released
 
 *Leipzig, 24th October 2020*: This release fixes a bug with OrthoViewpoint which has encountered in the last release, and some other bugs.
 
@@ -336,7 +357,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.14 Released
+## X_ITE v4.6.14 Released
 
 *Leipzig, 24th October 2020*: This release fixes some subtle bug in XML parser when parsing fieldValue element of proto instance.
 
@@ -348,7 +369,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.12 Released
+## X_ITE v4.6.12 Released
 
 *Leipzig, 15th October 2020*: With this release we could fix a lot of small but critical bugs and also had some optimizations for you and better support for macOS.
 
@@ -367,9 +388,9 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.11 Released
+## X_ITE v4.6.11 Released
 
-*Leipzig, 22nd August 2020*: With this release we introduce our new web site, it is now hosted on GitHub and has a clean and slick layout now. We also moved the code hosting to create3000.github.io, so make sure to update your X\_ITE urls for CSS and JavaScript.
+*Leipzig, 22nd August 2020*: With this release we introduce our new web site, it is now hosted on GitHub and has a clean and slick layout now. We also moved the code hosting to create3000.github.io, so make sure to update your X_ITE urls for CSS and JavaScript.
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -382,7 +403,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.10 Released
+## X_ITE v4.6.10 Released
 
 *Leipzig, 21st March 2020*: This is primarily a bug fix release.
 
@@ -394,7 +415,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.9 Released
+## X_ITE v4.6.9 Released
 
 *Leipzig, 30th November 2019*: Fixed bugs.
 
@@ -407,7 +428,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.8 Released
+## X_ITE v4.6.8 Released
 
 *Leipzig, 20th November 2019*: With this version we implement the TextureProjectorParallel and TextureProjectorPerspective node, from the upcoming X3D V4 standard, which will be available next year. We also have now better hardware support, we made *maxLights* and *maxTextures* dynamic, depending on the hardware of the user's system, this gives better support of older hardware and mobile systems.
 
@@ -428,7 +449,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.7 Released
+## X_ITE v4.6.7 Released
 
 *Leipzig, 10th November 2019*: With this version we implement the PointProperties node, the first node from the upcoming X3D V4 standard, which will be available next year.
 
@@ -440,7 +461,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.6 Released
+## X_ITE v4.6.6 Released
 
 *Leipzig, 4th November 2019*: This is primarily a bug fix release.
 
@@ -452,7 +473,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.4 Released
+## X_ITE v4.6.4 Released
 
 *Leipzig, 2nd November 2019*: This is primarily a bug fix release.
 
@@ -476,7 +497,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.3 Released
+## X_ITE v4.6.3 Released
 
 *Leipzig, 26th October 2019*: This is primarily a bug fix release.
 
@@ -500,7 +521,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.6.2 Released
+## X_ITE v4.6.2 Released
 
 *Leipzig, 20th October 2019*: With this release we implement full support for VolumeRendering component and full support for Texturing3D component, ie. we switch to WebGL 2 with this release, if available.
 
@@ -524,7 +545,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.5.14 Released
+## X_ITE v4.5.14 Released
 
 *Leipzig, 5th October 2019*: This is primarily a bug fix release.
 
@@ -538,7 +559,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.5.12 Released
+## X_ITE v4.5.12 Released
 
 *Leipzig, 23rd September 2019*: This is primarily a bug fix release.
 
@@ -551,7 +572,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.5.10 Released
+## X_ITE v4.5.10 Released
 
 *Leipzig, 17th July 2019*: This is primarily a bug fix release.
 
@@ -563,7 +584,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.5.9 Released
+## X_ITE v4.5.9 Released
 
 *Leipzig, 10th July 2019*: This is primarily a bug fix release.
 
@@ -576,7 +597,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.5.8 Released
+## X_ITE v4.5.8 Released
 
 *Leipzig, 3rd July 2019*: Fixed some bugs.
 
@@ -588,9 +609,9 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.5.7 Released
+## X_ITE v4.5.7 Released
 
-*Leipzig, 26th June 2019*: We could again fix some bugs which will make X\_ITE again more stable. Additionally we removed the non-standard fields from AudioClip and MovieTexture, they are now fully specification conform.
+*Leipzig, 26th June 2019*: We could again fix some bugs which will make X_ITE again more stable. Additionally we removed the non-standard fields from AudioClip and MovieTexture, they are now fully specification conform.
 
 {% capture notice-text %}
 #### New Features
@@ -611,7 +632,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.5.6 Released
+## X_ITE v4.5.6 Released
 
 *Leipzig, 19th June 2019*: We could optimize CoordinateChaser/Damper and TexCoordChaser2D/Damper2D, which runs now significantly faster.
 
@@ -631,7 +652,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.5.4 Released
+## X_ITE v4.5.4 Released
 
 *Leipzig, 9th June 2019:* We could fix some minor bugs.
 
@@ -653,11 +674,11 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.5.1 Released
+## X_ITE v4.5.1 Released
 
-*Leipzig, 20th April 2019:* Although not enable, we are still using WebGL 1 in the official releases, X\_ITE is now prepared for WebGL 2. If WebGL 2 becomes more popular we will enabled it, if available, then WebGL 2 is selected, otherwise WebGL 1 to make X\_ITE compatible to older browsers.
+*Leipzig, 20th April 2019:* Although not enable, we are still using WebGL 1 in the official releases, X_ITE is now prepared for WebGL 2. If WebGL 2 becomes more popular we will enabled it, if available, then WebGL 2 is selected, otherwise WebGL 1 to make X_ITE compatible to older browsers.
 
-## X\_ITE v4.5.0 Released
+## X_ITE v4.5.0 Released
 
 *Leipzig, 14th April 2019:* With this version we implemented MultiTexture, MultiTextureTransform, and MultiTextureCoordinate and also FillProperties is now working.
 
@@ -684,7 +705,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.4.7 Released
+## X_ITE v4.4.7 Released
 
 *Leipzig, 3rd April 2019:* This version comes with a fresh implementation of the TextureCoordinateGenerator node and we could make the VisibilitySensor more precise.
 
@@ -697,7 +718,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.4.6 Released
+## X_ITE v4.4.6 Released
 
 *Leipzig, 25th March 2019:* This version comes with the first nodes from the Picking component. We implemented LinePickSensor, PickableGroup, PointPickSensor, PrimitivePickSensor, and VolumePickSensor, which are fully implemented.
 
@@ -709,7 +730,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.4.5 Released
+## X_ITE v4.4.5 Released
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -719,7 +740,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.4.4 Released
+## X_ITE v4.4.4 Released
 
 *Leipzig, 18th March 2019:* We finally implemented *toVRMLString* for SFNode, X3DProtoDeclaration, X3DExternProtoDeclaration, and X3DScene. There is a new X3DCanvas attribute *preserveDrawingBuffer,* set this to true if you want to save the image from the canvas.
 
@@ -744,7 +765,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.4.3 Released
+## X_ITE v4.4.3 Released
 
 *Leipzig, 11th March 2019:* Fixed a bug in BlendMode and there is a new page where you can online edit the BlendMode.
 
@@ -756,7 +777,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.4.2 Released
+## X_ITE v4.4.2 Released
 
 *Leipzig, 24th February 2019:* We could fix some small bugs and now the TransformSensor is fully implemented. The version number is now displayed in the Context Menu.
 
@@ -780,7 +801,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.4.1 Released
+## X_ITE v4.4.1 Released
 
 *Leipzig, 24th February 2019:* Fixed some small bugs.
 
@@ -794,7 +815,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.4.0 Released
+## X_ITE v4.4.0 Released
 
 *Leipzig, 4th February 2019:* Small bug fixes and small optimizations makes this version as stable as ever before. We also could now implement the FogCoordinate node.
 
@@ -815,7 +836,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.17 Released
+## X_ITE v4.2.17 Released
 
 *Leipzig, 26th January 2019:* With this version we release the first version of the H-Anim component. The H-Anim component is automatically included when a profile or component statement matches »H-Anim«.
 
@@ -827,7 +848,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.16 Released
+## X_ITE v4.2.16 Released
 
 *Leipzig, 16th January 2019:* With this version we release the first version of the NURBS component. The NURBS component is automatically included when a profile or component statement matches »NURBS«.
 
@@ -839,7 +860,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.15 Released
+## X_ITE v4.2.15 Released
 
 *Leipzig, 23th December 2018:* Beside OrthoViewpoint node, the Layout node is now able to handle Viewpoint node and GeoViewpoint node and we could fix again some bugs.
 
@@ -856,9 +877,9 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.14 Released
+## X_ITE v4.2.14 Released
 
-*Leipzig, 16th December 2018:* This version implements the StringSensor from the KeyDeviceSensor component and we found a really phat bug in X3DComposedGeometryNode normal generation, which affects TriangleSet, IndexedTriangleSet, QuadSet, and so on. We also tested X\_ITE against <http://x3dgraphics.com/examples/X3dForWebAuthors/index.html> and fixed all bugs found.
+*Leipzig, 16th December 2018:* This version implements the StringSensor from the KeyDeviceSensor component and we found a really phat bug in X3DComposedGeometryNode normal generation, which affects TriangleSet, IndexedTriangleSet, QuadSet, and so on. We also tested X_ITE against <http://x3dgraphics.com/examples/X3dForWebAuthors/index.html> and fixed all bugs found.
 
 {% capture notice-text %}
 #### New Features
@@ -880,7 +901,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.13 Released
+## X_ITE v4.2.13 Released
 
 *Leipzig, 6th December 2018:* SFVec2f/d, SFVec3f/d, SFVec4f/d have now new functions. These are multVec, divVec, distance, and lerp. Have a look at:
 
@@ -888,7 +909,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - SFVec3f/d Object
 - SFVec4f/d Object
 
-for more information. Additionally we tested X\_ITE against <http://www.web3d.org/x3d/content/examples/Basic/index.html> and fixed the bugs we found.
+for more information. Additionally we tested X_ITE against <http://www.web3d.org/x3d/content/examples/Basic/index.html> and fixed the bugs we found.
 
 {% capture notice-text %}
 #### New Features
@@ -907,7 +928,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.12 Released
+## X_ITE v4.2.12 Released
 
 *Leipzig, 4th December 2018:* Fixed a bugs in Text node and BrowserOptions.
 
@@ -921,7 +942,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.11 Released
+## X_ITE v4.2.11 Released
 
 *Leipzig, 29th November 2018:* Fixed some bugs.
 
@@ -943,9 +964,9 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.10 Released
+## X_ITE v4.2.10 Released
 
-*Leipzig, 13th November 2018:* We tested X\_ITE against <http://www.web3d.org/x3d/content/ConformanceNist/index.html> and fixed the bugs we found.
+*Leipzig, 13th November 2018:* We tested X_ITE against <http://www.web3d.org/x3d/content/ConformanceNist/index.html> and fixed the bugs we found.
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -959,7 +980,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.9 Released
+## X_ITE v4.2.9 Released
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -972,7 +993,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.8 Released
+## X_ITE v4.2.8 Released
 
 *Leipzig, 31th October 2018:* The X3DCanvas element has now the onload, onshutdown, and onerror attributes and properties. There is also jQuery support for these event handler when calling jQuery.fn.on and jQuery.fn.off:
 
@@ -986,7 +1007,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 - The X3DCanvas element has now the onload, onshutdown, and onerror attributes with jQuery support.
 - The X3DCanvas element has now the onload, onshutdown, onerror, src, and url properties.
-- X\_ITE now respects the tabindex setting from the X3DCanvas element.
+- X_ITE now respects the tabindex setting from the X3DCanvas element.
 
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
@@ -1000,9 +1021,9 @@ element .on ("load", function () { console .log ("load, yeah"); });
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.7 Released
+## X_ITE v4.2.7 Released
 
-*Leipzig, 29th October 2018:* This version fixes some important bugs and makes X\_ITE more specification conform.
+*Leipzig, 29th October 2018:* This version fixes some important bugs and makes X_ITE more specification conform.
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -1015,9 +1036,9 @@ element .on ("load", function () { console .log ("load, yeah"); });
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.6 Released
+## X_ITE v4.2.6 Released
 
-*Leipzig, 14th October 2018:* With this version, X\_ITE includes a new polygon tessellator, ie. X\_ITE can better render concave polygons witch also affects polygon font support, which is now even better.
+*Leipzig, 14th October 2018:* With this version, X_ITE includes a new polygon tessellator, ie. X_ITE can better render concave polygons witch also affects polygon font support, which is now even better.
 
 {% capture notice-text %}
 #### New Features
@@ -1038,7 +1059,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.5 Released
+## X_ITE v4.2.5 Released
 
 *Leipzig, 1st October 2018:* This version fixes loads of bugs and added loads of small Features.
 
@@ -1073,7 +1094,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.4 Released
+## X_ITE v4.2.4 Released
 
 *Leipzig, 9th July 2018:* This version is primarily a bug fix version. There are also new examples online for ScalarChaser, and IndexedTriangleFanSet.
 
@@ -1086,7 +1107,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.3 Released
+## X_ITE v4.2.3 Released
 
 *Leipzig, 7th July 2018:* This version is primarily a bug fix version. There are also new examples online for PointSet, and IndexedLineSet.
 
@@ -1101,7 +1122,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.2 Released
+## X_ITE v4.2.2 Released
 
 *Leipzig, 23th June 2018:* We are proud to announce that code.create3000.de is now accessible via https.
 
@@ -1113,7 +1134,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.1 Released
+## X_ITE v4.2.1 Released
 
 *Leipzig, 17th June 2018:* This version is primarily a bug fix version.
 
@@ -1128,7 +1149,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.2.0 Released
+## X_ITE v4.2.0 Released
 
 DirectionalLight, SpotLight, and PointLight are now able to cast shadows. Let’s details them. A directional light is when light rays are parallel. A bit like when you look at the sun rays on the left. It mostly behaves like a light source very far from us. A spot light is when light rays seems to originate from a single point, and spreads outward in a coned direction, like in a dance club. To enable the shadow casting on a light, just adjust *shadowIntensity* of the light.
 
@@ -1146,9 +1167,9 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 
 ![Dynamic Shadows](https://create3000.github.io/media/images/dynamic-shadows.png)
 
-<small class="small">Dynamic shadows in X\_ITE</small>
+<small class="small">Dynamic shadows in X_ITE</small>
 
-## X\_ITE v4.1.7 Released
+## X_ITE v4.1.7 Released
 
 *Leipzig, 27th May 2018:* This version is primarily a bug fix version.
 
@@ -1162,9 +1183,9 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.1.6 Released
+## X_ITE v4.1.6 Released
 
-*Leipzig, 24th May 2018:* Thank's to Ammo (Bullet) physics engine we have implemented a lot of new nodes of the RigidBodyPhysics component. Most of the documentation pages of this component have a live example for this node. The component is realized as plug-in which can be include right after the x\_ite.js script tag.
+*Leipzig, 24th May 2018:* Thank's to Ammo (Bullet) physics engine we have implemented a lot of new nodes of the RigidBodyPhysics component. Most of the documentation pages of this component have a live example for this node. The component is realized as plug-in which can be include right after the X_ITE.js script tag.
 
 ```html
 <link rel="stylesheet" href="http://code.create3000.de/x_ite/4.1.6/dist/x_ite.css"/>
@@ -1181,7 +1202,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.1.5 Released
+## X_ITE v4.1.5 Released
 
 *Leipzig, 14th March 2018:* We finally released version 4.1.5 now. With this version it is now possible to load X3D JSON encoded files. We implemented touch device support for all viewers and nodes derived form X3DPointingDeviceSensorNode and Anchor. This means tablets and smart phones are now fully supported. There are also a lot of other bug fixes.
 
@@ -1210,17 +1231,17 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.1.4 Released
+## X_ITE v4.1.4 Released
 
-*Leipzig, 11th January 2018:* We finally released version 4.1.4 now. X\_ITE has become a huge change in the shader specification. It is now even more like GLSL. There are new uniform variables *x3d\_LightSourceParameters, x3d\_MaterialParameters,* and *x3d\_FogParameters.* Old shaders are fully compatible with this version, although old shader light and material uniforms are depreciated. For more information have a look at </x_ite/Custom-Shaders.html>.
+*Leipzig, 11th January 2018:* We finally released version 4.1.4 now. X_ITE has become a huge change in the shader specification. It is now even more like GLSL. There are new uniform variables *x3d\_LightSourceParameters, x3d\_MaterialParameters,* and *x3d\_FogParameters.* Old shaders are fully compatible with this version, although old shader light and material uniforms are depreciated. For more information have a look at </x_ite/Custom-Shaders.html>.
 
-## X\_ITE v4.1.3 Released
+## X_ITE v4.1.3 Released
 
-*Leipzig, 25th December 2017:* There is now the new BlendMode node in X\_ITE available, which gives X3D authors the ability to specify the WebGL blend modes for a node. The node is a X3DAppearance child node and can be assigned the the new *blendMode* field of a Appearance node. Shader authors have now more control over particle systems, there are three new build in variables available in shaders: *x3d\_ParticleId, x3d\_ParticleLife, x3d\_ParticleElapsedTime, x3d\_ParticlePosition.* For more information have a look at </x_ite/Custom-Shaders.html>.
+*Leipzig, 25th December 2017:* There is now the new BlendMode node in X_ITE available, which gives X3D authors the ability to specify the WebGL blend modes for a node. The node is a X3DAppearance child node and can be assigned the the new *blendMode* field of a Appearance node. Shader authors have now more control over particle systems, there are three new build in variables available in shaders: *x3d\_ParticleId, x3d\_ParticleLife, x3d\_ParticleElapsedTime, x3d\_ParticlePosition.* For more information have a look at </x_ite/Custom-Shaders.html>.
 
-## X\_ITE v4.1.2 Released
+## X_ITE v4.1.2 Released
 
-*Leipzig, 8th December 2017:* Titania supports now the whole ParticleSystem component with the default graphics card driver Nouveau. During the implementation we found some optimization to speed up the ParticleSystem node in X\_ITE. Additionally we could fix three bug.
+*Leipzig, 8th December 2017:* Titania supports now the whole ParticleSystem component with the default graphics card driver Nouveau. During the implementation we found some optimization to speed up the ParticleSystem node in X_ITE. Additionally we could fix three bug.
 
 {% capture notice-text %}
 #### New Features Bug Fixes
@@ -1233,7 +1254,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.1.1 Released
+## X_ITE v4.1.1 Released
 
 *Leipzig, 23rd November 2017:* We fixed a bug in load count handling of the splash screen, ie. if the *splashScreen* attribute of the X3DCanvas element is true, the scene is first displayed if all objects and textures are completely loaded. An examination of the source code has revealed this mistake in the networking nodes.
 
@@ -1245,7 +1266,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
 
-## X\_ITE v4.1.0 Released
+## X_ITE v4.1.0 Released
 
 *Leipzig, 22nd November 2017:* This completely implements the unit statement. Now units are parsed and all field values are converted. Additionally we could optimize X3DGroupingNode.removeChildren. It is now up to 20 % faster, especially if there are many children.
 
@@ -1259,18 +1280,18 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
 
-## Cobweb is now X\_ITE
+## Cobweb is now X_ITE
 
-*Leipzig, 23rd August 2017:* Cobweb is now **X\_ITE.** We changed its name to X\_ITE to better reflect the purpose and design of X3D. Though the project's name may have changed, its programming still includes correctness, usability, flexibility, extensibility, and safety.
+*Leipzig, 23rd August 2017:* Cobweb is now **X_ITE.** We changed its name to X_ITE to better reflect the purpose and design of X3D. Though the project's name may have changed, its programming still includes correctness, usability, flexibility, extensibility, and safety.
 
-X\_ITE is now available from our own server at code.create3000.de. Just include the following URL's into your HTML and you are up to date again:
+X_ITE is now available from our own server at code.create3000.de. Just include the following URL's into your HTML and you are up to date again:
 
 ```html
 <link rel="stylesheet" href="http://code.create3000.de/x_ite/4.0.7/dist/x_ite.css"/>
 <script src="http://code.create3000.de/x_ite/4.0.7/dist/x_ite.min.js"></script>
 ```
 
-Additionally X\_ITE is now available via GitHub CDN and jsDelivr CDN.
+Additionally X_ITE is now available via GitHub CDN and jsDelivr CDN.
 
 {% capture notice-text %}
 #### New Features Bug Fixes
@@ -1369,4 +1390,4 @@ If you still use an old stable version from Cobweb you must changed the URL for 
 
 ## First Version
 
-The first version of X\_ITE was created in April 2015. It was still called Cobweb.
+The first version of X_ITE was created in April 2015. It was still called Cobweb.
