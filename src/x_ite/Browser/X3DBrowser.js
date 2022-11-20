@@ -547,7 +547,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          }
       };
    })(),
-   importDocument: function (dom, success, error)
+   importDocument: function (dom, async = false)
    {
       const
          currentScene = this .currentScene,
@@ -564,12 +564,19 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       const parser = new XMLParser (scene);
 
       parser .setInput (dom)
-      parser .parseIntoScene (success, error);
 
-      if (arguments .length === 1)
+      if (async)
+      {
+         return new Promise (parser .parseIntoScene .bind (parser));
+      }
+      else
+      {
+         parser .parseIntoScene ();
+
          return scene;
+      }
    },
-   importJS: function (json, success, error)
+   importJS: function (json, async = false)
    {
       const
          currentScene = this .currentScene,
@@ -586,10 +593,17 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       const parser = new JSONParser (scene);
 
       parser .setInput (json);
-      parser .parseIntoScene (success, error);
 
-      if (arguments .length === 1)
+      if (async)
+      {
+         return new Promise (parser .parseIntoScene .bind (parser));
+      }
+      else
+      {
+         parser .parseIntoScene ();
+
          return scene;
+      }
    },
    getBrowserProperty: function (name)
    {

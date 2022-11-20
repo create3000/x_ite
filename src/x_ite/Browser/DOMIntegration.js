@@ -46,24 +46,27 @@ class DOMIntegration
 		this .observeRoot (this .browser .getElement () .children ("X3D") [0]);
 	}
 
-	observeRoot (rootElement)
+	async observeRoot (rootElement)
 	{
-		if (! rootElement)
-			return;
-
-		if (this .rootElements .has (rootElement))
-			return;
-
-		this .rootElements .add (rootElement);
-
-		// Preprocess script nodes if not xhtml.
-
-		if (! document .URL .toLowerCase () .includes ("xhtml"))
-			this .preprocessScripts (rootElement);
-
-		// Now also attached x3d property to each node element.
-		const onAfterImport = (importedScene) =>
+		try
 		{
+			if (! rootElement)
+				return;
+
+			if (this .rootElements .has (rootElement))
+				return;
+
+			this .rootElements .add (rootElement);
+
+			// Preprocess script nodes if not xhtml.
+
+			if (! document .URL .toLowerCase () .includes ("xhtml"))
+				this .preprocessScripts (rootElement);
+
+			// Now also attached x3d property to each node element.
+
+			const importedScene = await this .browser .importDocument (rootElement, true);
+
 			this .browser .replaceWorld (importedScene);
 
 			this .loadSensor = importedScene .createNode ("LoadSensor") .getValue ();
@@ -92,35 +95,32 @@ class DOMIntegration
 
 			for (const inlineElement of inlineElements)
 				this .processInlineDOM (inlineElement);
-		};
-
-		const onError = (error) =>
+		}
+		catch (error)
 		{
 			console .error ("Error importing document:", error);
-		};
-
-		this .browser .importDocument (rootElement, onAfterImport, onError);
+		}
 	}
 
 	preprocessScripts (rootElement)
 	{
-		const scripts = rootElement .querySelectorAll ("Script");
+		const scriptElements = rootElement .querySelectorAll ("Script");
 
-		for (const script of scripts)
-			this .appendScriptChildren (script);
+		for (const scriptElement of scriptElements)
+			this .appendScriptChildren (scriptElement);
 	}
 
-	appendScriptChildren (script)
+	appendScriptChildren (scriptElement)
 	{
 		const
 			domParser   = new DOMParser (),
-			scriptDoc   = domParser .parseFromString (script .outerHTML, "application/xml"),
+			scriptDoc   = domParser .parseFromString (scriptElement .outerHTML, "application/xml"),
 			scriptNodes = scriptDoc .children [0] .childNodes;
 
-		script .textContent = "// content moved into childNodes";
+		scriptElement .textContent = "// content moved into childNodes";
 
 		for (const scriptNode of scriptNodes)
-			script .appendChild (scriptNode);
+			scriptElement .appendChild (scriptNode);
 	}
 
 	processMutation (mutation, parser)
@@ -149,8 +149,8 @@ class DOMIntegration
 
 	addEventDispatchersAll (element)
 	{
-		for (const child of element .querySelectorAll ("*"))
-			this .addEventDispatchers (child);
+		for (const childElement of element .querySelectorAll ("*"))
+			this .addEventDispatchers (childElement);
 	}
 
 	addEventDispatchers (element)
