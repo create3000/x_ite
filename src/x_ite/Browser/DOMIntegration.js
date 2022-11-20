@@ -46,6 +46,11 @@ class DOMIntegration
 		this .observeRoot (this .browser .getElement () .children ("X3D") [0]);
 	}
 
+	isPrivate ()
+	{
+		return false;
+	}
+
 	async observeRoot (rootElement)
 	{
 		try
@@ -58,10 +63,15 @@ class DOMIntegration
 
 			this .rootElements .add (rootElement);
 
+			// Display splash screen.
+
+			this .browser .setBrowserLoading (true);
+         this .browser .addLoadCount (this);
+
 			// Preprocess script nodes if not xhtml.
 
-			if (! document .URL .toLowerCase () .includes ("xhtml"))
-				this .preprocessScripts (rootElement);
+			if (! location .pathname .toLowerCase () .endsWith (".xhtml"))
+				this .preprocessScriptElements (rootElement);
 
 			// Now also attached x3d property to each node element.
 
@@ -69,16 +79,14 @@ class DOMIntegration
 
 			this .browser .replaceWorld (importedScene);
 
+			this .parser     = new XMLParser (importedScene);
 			this .loadSensor = importedScene .createNode ("LoadSensor") .getValue ();
-
-			// Events
-			this .addEventDispatchersAll (rootElement); //has to happen after reimporting since rootElement .x3d
 
 			// Create an observer instance.
 			this .observer = new MutationObserver (mutations =>
 			{
 				for (const mutation of mutations)
-					this .processMutation (mutation, new XMLParser (importedScene));
+					this .processMutation (mutation);
 			});
 
 			// Start observing, also catches inlined inlines.
@@ -90,11 +98,13 @@ class DOMIntegration
 				attributeOldValue: true,
 			});
 
-			// Add inline doms from initial scene.
-			const inlineElements = rootElement .querySelectorAll ("Inline");
+			// Events
+			this .addEventDispatchersAll (rootElement);
 
-			for (const inlineElement of inlineElements)
-				this .processInlineDOM (inlineElement);
+			// Add inline doms from initial scene.
+			this .processInlineElements (rootElement);
+
+			this .browser .removeLoadCount (this);
 		}
 		catch (error)
 		{
@@ -102,15 +112,15 @@ class DOMIntegration
 		}
 	}
 
-	preprocessScripts (rootElement)
+	preprocessScriptElements (rootElement)
 	{
 		const scriptElements = rootElement .querySelectorAll ("Script");
 
 		for (const scriptElement of scriptElements)
-			this .appendScriptChildren (scriptElement);
+			this .appendScriptElementChildren (scriptElement);
 	}
 
-	appendScriptChildren (scriptElement)
+	appendScriptElementChildren (scriptElement)
 	{
 		const
 			domParser   = new DOMParser (),
@@ -123,21 +133,19 @@ class DOMIntegration
 			scriptElement .appendChild (scriptNode);
 	}
 
-	processMutation (mutation, parser)
+	processMutation (mutation)
 	{
-		const element = mutation .target;
-
 		switch (mutation .type)
 		{
 			case "attributes":
 			{
-				this .processAttribute (mutation, element, parser);
+				this .processAttribute (mutation, mutation .target);
 				break;
 			}
 			case "childList":
 			{
 				for (const node of mutation .addedNodes)
-					this .processAddedNode (node, parser);
+					this .processAddedNode (node);
 
 				for (const node of mutation .removedNodes)
 					this .processRemovedNode (node);
@@ -147,9 +155,182 @@ class DOMIntegration
 		}
 	}
 
+	processAttribute (mutation, element)
+	{
+		if (element .x3d)
+		{
+			const
+				attributeName = mutation .attributeName,
+				attribute     = element .attributes .getNamedItem (attributeName);
+
+			this .parser .nodeAttribute (attribute, element .x3d);
+		}
+		else
+		{
+			// Is an attribute of non-node child such as fieldValue (or ROUTE).
+
+			const
+				parentNode = element .parentNode, // Should always be a node!
+			 	node       = parentNode .x3d; // Need to attach .x3d to ProtoInstance.
+
+			this .parser .pushExecutionContext (node .getExecutionContext ());
+			this .parser .pushParent (node);
+			this .parser .childElement (element);
+			this .parser .popParent ();
+			this .parser .popExecutionContext ();
+		}
+	}
+
+	processAddedNode (element)
+	{
+		// Only process element nodes.
+		if (element .nodeType !== Node .ELEMENT_NODE)
+			return;
+
+		// First need to look for Inline doms to add to dom.
+		this .processInlineElements (element);
+
+		// Do not add to scene if already parsed as child of inline,
+		// although Scene does not have .x3d so should never happen?
+		if (element .x3d)
+		{
+			if (element .nodeName === "Inline" || element .nodeName === "INLINE")
+				this .processInlineElement (element); // Only add dom.
+
+			return;
+		}
+		else if (element .nodeName === "Scene" || element .nodeName === "SCENE")
+		{
+			return;
+		}
+
+		const parentNode = element .parentNode;
+
+		// First get correct execution context.
+		let nodeScene = this .browser .currentScene ; // assume main Scene
+
+		if (parentNode .parentNode .nodeName === "Inline" || parentNode .parentNode .nodeName === "INLINE")
+		{
+			nodeScene = parentNode .parentNode .x3d .getInternalScene ();
+		}
+		else if (parentNode .x3d)
+		{
+			// Use parent's scene if non-root, works for inline.
+			nodeScene = parentNode .x3d .getExecutionContext ();
+		}
+
+		this .parser .pushExecutionContext (nodeScene);
+
+		// then check if root node.
+		if (parentNode .x3d)
+		{
+			const node = parentNode .x3d;
+
+			this .parser .pushParent (node);
+			this .parser .childElement (element);
+			this .parser .popParent ();
+		}
+		else
+		{
+			// Inline or main root node.
+			this .parser .childElement (element);
+		}
+
+		this .parser .popExecutionContext ();
+
+		// Now after creating nodes need to look again for Inline doms.
+		this .processInlineElements (element);
+
+		// Then attach event dispatchers.
+		// if (element .matches (this .sensorSelector)) { this .addEventDispatchers (element); } // matches () not well supported
+
+		this .addEventDispatchers (element);
+		this .addEventDispatchersAll (element); // also for childnodes
+	}
+
+	processRemovedNode (element)
+	{
+		// Works also for root nodes, as it has to be, since scene .rootNodes is effectively a MFNode in x-ite.
+		// Also removes ROUTE elements.
+		if (element .x3d)
+		{
+			element .x3d .dispose ();
+
+			if (element .nodeName === "ROUTE") // Dispatcher still needs .x3d when dispose processes events.
+				delete element .x3d;
+		}
+	}
+
+	processInlineElements (element)
+	{
+		if (element .nodeName === "Inline" || element .nodeName === "INLINE")
+			this .processInlineElement (element);
+
+		for (const inlineElement of element .querySelectorAll ("Inline"))
+			this .processInlineElement (inlineElement);
+	}
+
+	processInlineElement (element)
+	{
+		// Check for USE inline as it does not have dom.
+		if (element .x3d === undefined)
+			return;
+
+		const watchList = this .loadSensor .getField ("watchList");
+
+		// Individual callback per inline.
+
+		const callback = this .appendInlineElement .bind (this, element);
+
+		this .loadSensor .getField ("isLoaded") .addFieldCallback ("loaded" + element .x3d .getId (), callback);
+
+		// Just add to loadsensor watchlist; triggers isLoaded event after loading.
+		watchList .push (element .x3d);
+	}
+
+	appendInlineElement (element, loaded)
+	{
+		// Now loaded and in .dom.
+		// Inline must have Scene.
+		const
+			node      = element .x3d,
+			watchList = this .loadSensor .getField ("watchList"),
+			isLoaded  = this .loadSensor .getField ("isLoaded");
+
+		if (node [_dom]) // Guard since .dom does not exist for invalid urls.
+			element .appendChild (node [_dom] .querySelector ("Scene")) ; // XXX: or root nodes? HO: Think, Scene is better.
+
+		// Not needed any more, remove callback.
+		isLoaded .removeFieldCallback ("loaded" + node .getId ());
+
+		// Remove from watchlist.
+
+		const wListUpdate = watchList .getValue () .filter (value => value .getValue () !== node);
+
+		watchList .setValue (wListUpdate);
+
+		// Check if all inlines are appended and dispatch event.
+		// Would be also dispatched later whenever a new inline was completely appended.
+		if (element .querySelector ("Inline") === null) // No more internal inlines.
+		{
+			// also check loadCount ?
+
+			const event = new Event ("x3dload");
+
+			event .element = this .browser .getElement ();
+
+			document .dispatchEvent (event);
+		}
+
+		// Attach dom event callbacks.
+		this .addEventDispatchersAll (element);
+	}
+
 	addEventDispatchersAll (element)
 	{
-		for (const childElement of element .querySelectorAll ("*"))
+		const childElements = element .querySelectorAll ("*");
+
+		for (const childElement of childElements)
 			this .addEventDispatchers (childElement);
 	}
 
@@ -217,183 +398,6 @@ class DOMIntegration
 					     now, timeStamp, dt .toFixed (3),
 					     node .getTypeName (), node .getName (),
 					     field .getName (), value);
-	}
-
-	processRemovedNode (element)
-	{
-		// Works also for root nodes, as it has to be, since scene .rootNodes is effectively a MFNode in x-ite.
-		// Also removes ROUTE elements.
-		if (element .x3d)
-		{
-			element .x3d .dispose ();
-
-			if (element .nodeName === "ROUTE") // Dispatcher still needs .x3d when dispose processes events.
-				delete element .x3d;
-		}
-	}
-
-	processAddedNode (element, parser)
-	{
-		// Only process element nodes.
-		if (element .nodeType !== Node .ELEMENT_NODE)
-			return;
-
-		// First need to look for Inline doms to add to dom.
-		this .processInlineDOMs (element);
-
-		// Do not add to scene if already parsed as child of inline,
-		// although Scene does not have .x3d so should never happen?
-		if (element .x3d)
-		{
-			if (element .nodeName === "Inline" || element .nodeName === "INLINE")
-				this .processInlineDOM (element); // Only add dom.
-
-			return;
-		}
-		else if (element .nodeName === "Scene" || element .nodeName === "SCENE")
-			return;
-
-		const parentNode = element .parentNode;
-
-		// First get correct execution context.
-		let nodeScene = this .browser .currentScene ; // assume main Scene
-
-		if (parentNode .parentNode .nodeName === "Inline" || parentNode .parentNode .nodeName === "INLINE")
-		{
-			nodeScene = parentNode .parentNode .x3d .getInternalScene ();
-		}
-		else if (parentNode .x3d)
-		{
-			// Use parent's scene if non-root, works for inline.
-			nodeScene = parentNode .x3d .getExecutionContext ();
-		}
-
-		parser .pushExecutionContext (nodeScene);
-
-		// then check if root node.
-		if (parentNode .x3d)
-		{
-			const node = parentNode .x3d;
-
-			parser .pushParent (node);
-			parser .childElement (element);
-			parser .popParent ();
-		}
-		else
-		{
-			// Inline or main root node.
-			parser .childElement (element);
-		}
-
-		parser .popExecutionContext ();
-
-		// Now after creating nodes need to look again for Inline doms.
-		this .processInlineDOMs (element);
-
-		// Then attach event dispatchers.
-		// if (element .matches (this .sensorSelector)) { this .addEventDispatchers (element); } // matches () not well supported
-
-		this .addEventDispatchers (element);
-		this .addEventDispatchersAll (element); // also for childnodes
-	}
-
-	processInlineDOMs (element)
-	{
-		if (element .nodeName === "Inline" || element .nodeName === "INLINE")
-			this .processInlineDOM (element);
-
-		for (const inlineElement of element .querySelectorAll ("Inline"))
-			this .processInlineDOM (inlineElement);
-	}
-
-	processInlineDOM (element)
-	{
-		// Check for USE inline as it does not have dom.
-		if (element .x3d === undefined)
-			return;
-
-		const watchList = this .loadSensor .getField ("watchList");
-
-		// Individual callback per inline.
-
-		const callback = this .appendInlineDOM .bind (this, element);
-
-		this .loadSensor .getField ("isLoaded") .addFieldCallback ("loaded" + element .x3d .getId (), callback);
-
-		// Just add to loadsensor watchlist; triggers isLoaded event after loading.
-		watchList .push (element .x3d);
-	}
-
-	appendInlineDOM (element, loaded)
-	{
-		// Now loaded and in .dom.
-		// Inline must have Scene.
-		const
-			node      = element .x3d,
-			watchList = this .loadSensor .getField ("watchList"),
-			isLoaded  = this .loadSensor .getField ("isLoaded");
-
-		if (node [_dom]) // Guard since .dom does not exist for invalid urls.
-			element .appendChild (node [_dom] .querySelector ("Scene")) ; // XXX: or root nodes? HO: Think, Scene is better.
-
-		// Not needed any more, remove callback.
-		isLoaded .removeFieldCallback ("loaded" + node .getId ());
-
-		// Remove from watchlist.
-
-		const wListUpdate = watchList .getValue () .filter (value => value .getValue () !== node);
-
-		watchList .setValue (wListUpdate);
-
-		// Check if all inlines are appended and dispatch event.
-		// Would be also dispatched later whenever a new inline was completely appended.
-		if (element .querySelector ("Inline") === null) // No more internal inlines.
-		{
-			// also check loadCount ?
-
-			const event = new Event ("x3dload");
-
-			event .element = this .browser .getElement ();
-
-			document .dispatchEvent (event);
-		}
-
-		// Attach dom event callbacks.
-		this .addEventDispatchersAll (element);
-	}
-
-	processAttribute (mutation, element, parser)
-	{
-		if (element .x3d)
-		{
-			try
-			{
-				const
-					attributeName = mutation .attributeName,
-					attribute     = element .attributes .getNamedItem (attributeName);
-
-				parser .nodeAttribute (attribute, element .x3d);
-			}
-			catch (error)
-			{
-				// Unknown attribute like containerField.
-				// console .error (error);
-			}
-		}
-		else
-		{
-			// Is an attribute of non-node child such as fieldValue (or ROUTE).
-
-			const
-				parentNode = element .parentNode, // Should always be a node!
-			 	node       = parentNode .x3d; // Need to attach .x3d to ProtoInstance.
-
-			parser .pushExecutionContext (node .getExecutionContext ());
-			parser .pushParent (node);
-			parser .childElement (element);
-			parser .popParent ();
-			parser .popExecutionContext ();
-		}
 	}
 };
 
