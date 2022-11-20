@@ -136,12 +136,11 @@ var RouteArray_default = /*#__PURE__*/__webpack_require__.n(RouteArray_namespace
 const X3DRoute_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Routing/X3DRoute");
 var X3DRoute_default = /*#__PURE__*/__webpack_require__.n(X3DRoute_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Scripting/evaluate.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -163,7 +162,7 @@ var X3DRoute_default = /*#__PURE__*/__webpack_require__.n(X3DRoute_namespaceObje
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -205,12 +204,11 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
 const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Scripting/X3DScriptNode.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -232,7 +230,7 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -288,12 +286,11 @@ const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .re
 var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Scripting/Script.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -315,7 +312,7 @@ var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespace
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -850,7 +847,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -872,7 +869,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *

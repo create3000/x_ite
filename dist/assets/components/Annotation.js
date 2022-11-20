@@ -63,12 +63,11 @@ var Group_default = /*#__PURE__*/__webpack_require__.n(Group_namespaceObject);
 const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/AnnotationLayer.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -90,7 +89,7 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -163,12 +162,11 @@ AnnotationLayer .prototype = Object .assign (Object .create ((X3DLayerNode_defau
 const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Components/Core/X3DChildNode");
 var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/AnnotationTarget.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -190,7 +188,7 @@ var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_names
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -258,12 +256,11 @@ AnnotationTarget .prototype = Object .assign (Object .create ((X3DChildNode_defa
 const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
 var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/X3DAnnotationNode.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -285,7 +282,7 @@ var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -328,12 +325,11 @@ X3DAnnotationNode .prototype = Object .assign (Object .create ((X3DChildNode_def
 /* harmony default export */ const Annotation_X3DAnnotationNode = (X3DAnnotationNode);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/GroupAnnotation.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -355,7 +351,7 @@ X3DAnnotationNode .prototype = Object .assign (Object .create ((X3DChildNode_def
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -438,12 +434,11 @@ GroupAnnotation .prototype = Object .assign (Object .create ((X3DGroupingNode_de
 const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Components/Networking/X3DUrlObject");
 var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/IconAnnotation.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -465,7 +460,7 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -543,12 +538,11 @@ IconAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnota
 /* harmony default export */ const Annotation_IconAnnotation = (IconAnnotation);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/TextAnnotation.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -570,7 +564,7 @@ IconAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnota
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -636,12 +630,11 @@ TextAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnota
 /* harmony default export */ const Annotation_TextAnnotation = (TextAnnotation);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/URLAnnotation.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -663,7 +656,7 @@ TextAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnota
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -728,12 +721,11 @@ URLAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnotat
 /* harmony default export */ const Annotation_URLAnnotation = (URLAnnotation);
 
 ;// CONCATENATED MODULE: ./src/assets/components/Annotation.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -755,7 +747,7 @@ URLAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnotat
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *

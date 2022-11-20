@@ -57,12 +57,11 @@ var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_names
 const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/DISEntityManager.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -84,7 +83,7 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -154,12 +153,11 @@ var X3DInfoNode_default = /*#__PURE__*/__webpack_require__.n(X3DInfoNode_namespa
 const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Components/Networking/X3DUrlObject");
 var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/DISEntityTypeMapping.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -181,7 +179,7 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -276,12 +274,11 @@ var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode
 const X3DSensorNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Components/Core/X3DSensorNode");
 var X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DSensorNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/EspduTransform.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -303,7 +300,7 @@ var X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DSensorNode_nam
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -461,12 +458,11 @@ EspduTransform .prototype = Object .assign (Object .create ((X3DGroupingNode_def
 const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
 var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObject_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/ReceiverPdu.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -488,7 +484,7 @@ var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObje
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -588,12 +584,11 @@ ReceiverPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default(
 /* harmony default export */ const DIS_ReceiverPdu = (ReceiverPdu);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/SignalPdu.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -615,7 +610,7 @@ ReceiverPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default(
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -715,12 +710,11 @@ SignalPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default())
 /* harmony default export */ const DIS_SignalPdu = (SignalPdu);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/TransmitterPdu.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -742,7 +736,7 @@ SignalPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default())
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -862,7 +856,7 @@ TransmitterPdu .prototype = Object .assign (Object .create ((X3DSensorNode_defau
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -884,7 +878,7 @@ TransmitterPdu .prototype = Object .assign (Object .create ((X3DSensorNode_defau
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *

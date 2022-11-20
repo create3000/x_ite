@@ -112,12 +112,11 @@ var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject
 const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/X3DRigidJointNode.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -139,7 +138,7 @@ var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -364,12 +363,11 @@ var ga=[oI,Un,ZF,rz,IF,OF,lD,Fp,Ep,Fp,oI,oI,oI,oI,oI,oI];var ha=[QH,Uv];var ia=[
 /* harmony default export */ const ammo = (Ammo);
 
 ;// CONCATENATED MODULE: ./src/lib/ammojs/AmmoClass.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -391,7 +389,7 @@ var ga=[oI,Un,ZF,rz,IF,OF,lD,Fp,Ep,Fp,oI,oI,oI,oI,oI,oI];var ha=[QH,Uv];var ia=[
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -418,12 +416,11 @@ var ga=[oI,Un,ZF,rz,IF,OF,lD,Fp,Ep,Fp,oI,oI,oI,oI,oI,oI];var ha=[QH,Uv];var ia=[
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/BallJoint.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -445,7 +442,7 @@ var ga=[oI,Un,ZF,rz,IF,OF,lD,Fp,Ep,Fp,oI,oI,oI,oI,oI,oI];var ha=[QH,Uv];var ia=[
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -623,12 +620,11 @@ var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_names
 const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
 var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObject_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -650,7 +646,7 @@ var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObje
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -783,12 +779,11 @@ X3DNBodyCollidableNode .prototype = Object .assign (Object .create ((X3DChildNod
 const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Rendering/TraverseType");
 var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollidableOffset.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -810,7 +805,7 @@ var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_names
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1063,12 +1058,11 @@ CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X
 /* harmony default export */ const RigidBodyPhysics_CollidableOffset = (CollidableOffset);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollidableShape.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1090,7 +1084,7 @@ CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1579,12 +1573,11 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
 /* harmony default export */ const RigidBodyPhysics_CollidableShape = (CollidableShape);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/RigidBodyPhysics/AppliedParametersType.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1606,7 +1599,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1645,12 +1638,11 @@ const AppliedParametersType =
 /* harmony default export */ const RigidBodyPhysics_AppliedParametersType = (AppliedParametersType);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollisionCollection.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1672,7 +1664,7 @@ const AppliedParametersType =
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1850,12 +1842,11 @@ CollisionCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
 const X3DSensorNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Components/Core/X3DSensorNode");
 var X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DSensorNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollisionSensor.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1877,7 +1868,7 @@ var X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DSensorNode_nam
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -2124,12 +2115,11 @@ CollisionSensor .prototype = Object .assign (Object .create ((X3DSensorNode_defa
 /* harmony default export */ const RigidBodyPhysics_CollisionSensor = (CollisionSensor);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -2151,7 +2141,7 @@ CollisionSensor .prototype = Object .assign (Object .create ((X3DSensorNode_defa
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -2203,12 +2193,11 @@ X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create ((X3DNode
 /* harmony default export */ const RigidBodyPhysics_X3DNBodyCollisionSpaceNode = (X3DNBodyCollisionSpaceNode);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollisionSpace.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -2230,7 +2219,7 @@ X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create ((X3DNode
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -2371,12 +2360,11 @@ CollisionSpace .prototype = Object .assign (Object .create (RigidBodyPhysics_X3D
 /* harmony default export */ const RigidBodyPhysics_CollisionSpace = (CollisionSpace);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/Contact.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -2398,7 +2386,7 @@ CollisionSpace .prototype = Object .assign (Object .create (RigidBodyPhysics_X3D
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -2483,12 +2471,11 @@ const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .req
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint.js
 /* provided dependency */ var DoubleAxisHingeJoint_$ = __webpack_require__(355);
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -2510,7 +2497,7 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -2764,12 +2751,11 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
 /* harmony default export */ const RigidBodyPhysics_DoubleAxisHingeJoint = (DoubleAxisHingeJoint);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/MotorJoint.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -2791,7 +2777,7 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -2886,12 +2872,11 @@ MotorJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigi
 /* harmony default export */ const RigidBodyPhysics_MotorJoint = (MotorJoint);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/RigidBody.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -2913,7 +2898,7 @@ MotorJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigi
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -3390,12 +3375,11 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
 /* harmony default export */ const RigidBodyPhysics_RigidBody = (RigidBody);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/RigidBodyCollection.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -3417,7 +3401,7 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -3768,12 +3752,11 @@ RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint.js
 /* provided dependency */ var SingleAxisHingeJoint_$ = __webpack_require__(355);
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -3795,7 +3778,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -4009,12 +3992,11 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SliderJoint.js
 /* provided dependency */ var SliderJoint_$ = __webpack_require__(355);
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -4036,7 +4018,7 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -4228,12 +4210,11 @@ SliderJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRig
 /* harmony default export */ const RigidBodyPhysics_SliderJoint = (SliderJoint);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/UniversalJoint.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -4255,7 +4236,7 @@ SliderJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRig
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -4332,12 +4313,11 @@ UniversalJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3D
 /* harmony default export */ const RigidBodyPhysics_UniversalJoint = (UniversalJoint);
 
 ;// CONCATENATED MODULE: ./src/assets/components/RigidBodyPhysics.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -4359,7 +4339,7 @@ UniversalJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3D
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *

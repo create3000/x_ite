@@ -48,12 +48,11 @@ var X3DBaseNode_default = /*#__PURE__*/__webpack_require__.n(X3DBaseNode_namespa
 const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Arc2DOptions.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -75,7 +74,7 @@ var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -126,12 +125,11 @@ ArcClose2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_defa
 /* harmony default export */ const Arc2DOptions = (ArcClose2DOptions);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/ArcClose2DOptions.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -153,7 +151,7 @@ ArcClose2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_defa
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -210,12 +208,11 @@ var X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometryNode
 const Complex_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("standard/Math/Numbers/Complex");
 var Complex_default = /*#__PURE__*/__webpack_require__.n(Complex_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Circle2DOptions.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -237,7 +234,7 @@ var Complex_default = /*#__PURE__*/__webpack_require__.n(Complex_namespaceObject
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -326,12 +323,11 @@ Circle2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_defaul
 const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Disk2DOptions.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -353,7 +349,7 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -502,12 +498,11 @@ var Coordinate_default = /*#__PURE__*/__webpack_require__.n(Coordinate_namespace
 const TextureCoordinate_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Components/Texturing/TextureCoordinate");
 var TextureCoordinate_default = /*#__PURE__*/__webpack_require__.n(TextureCoordinate_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Rectangle2DOptions.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -529,7 +524,7 @@ var TextureCoordinate_default = /*#__PURE__*/__webpack_require__.n(TextureCoordi
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -624,12 +619,11 @@ Rectangle2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_def
 const PrimitiveQuality_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Browser/Core/PrimitiveQuality");
 var PrimitiveQuality_default = /*#__PURE__*/__webpack_require__.n(PrimitiveQuality_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/X3DGeometry2DContext.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -651,7 +645,7 @@ var PrimitiveQuality_default = /*#__PURE__*/__webpack_require__.n(PrimitiveQuali
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -776,12 +770,11 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("standard/Math/Algorithm");
 var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Arc2D.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -803,7 +796,7 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -926,12 +919,11 @@ Arc2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default(
 /* harmony default export */ const Geometry2D_Arc2D = (Arc2D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/ArcClose2D.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -953,7 +945,7 @@ Arc2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default(
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1141,12 +1133,11 @@ ArcClose2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default
 /* harmony default export */ const Geometry2D_ArcClose2D = (ArcClose2D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Circle2D.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1168,7 +1159,7 @@ ArcClose2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1262,12 +1253,11 @@ Circle2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_defau
 const X3DPointGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Components/Rendering/X3DPointGeometryNode");
 var X3DPointGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DPointGeometryNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Disk2D.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1289,7 +1279,7 @@ var X3DPointGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DPointGe
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1505,12 +1495,11 @@ Disk2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).
 /* harmony default export */ const Geometry2D_Disk2D = (Disk2D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Polyline2D.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1532,7 +1521,7 @@ Disk2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1604,12 +1593,11 @@ Polyline2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_def
 /* harmony default export */ const Geometry2D_Polyline2D = (Polyline2D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Polypoint2D.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1631,7 +1619,7 @@ Polyline2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_def
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1705,12 +1693,11 @@ Polypoint2D .prototype = Object .assign (Object .create ((X3DPointGeometryNode_d
 const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("standard/Math/Numbers/Vector2");
 var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Rectangle2D.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1732,7 +1719,7 @@ var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1842,12 +1829,11 @@ Rectangle2D .prototype = Object .assign (Object .create ((X3DGeometryNode_defaul
 /* harmony default export */ const Geometry2D_Rectangle2D = (Rectangle2D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/TriangleSet2D.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1869,7 +1855,7 @@ Rectangle2D .prototype = Object .assign (Object .create ((X3DGeometryNode_defaul
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1976,7 +1962,7 @@ TriangleSet2D .prototype = Object .assign (Object .create ((X3DGeometryNode_defa
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1998,7 +1984,7 @@ TriangleSet2D .prototype = Object .assign (Object .create ((X3DGeometryNode_defa
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *

@@ -63,12 +63,11 @@ var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject
 const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -90,7 +89,7 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -191,12 +190,11 @@ X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create ((X3DNode_d
 /* harmony default export */ const VolumeRendering_X3DVolumeRenderStyleNode = (X3DVolumeRenderStyleNode);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -218,7 +216,7 @@ X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create ((X3DNode_d
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -260,12 +258,11 @@ X3DComposableVolumeRenderStyleNode .prototype = Object .assign (Object .create (
 const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/OpacityMapVolumeStyle.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -287,7 +284,7 @@ var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -427,12 +424,11 @@ OpacityMapVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
 /* harmony default export */ const VolumeRendering_OpacityMapVolumeStyle = (OpacityMapVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -454,7 +450,7 @@ OpacityMapVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -560,12 +556,11 @@ X3DVolumeRenderingContext .prototype =
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/DEBUG\")"
 const DEBUG_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/DEBUG");
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/BlendedVolumeStyle.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -587,7 +582,7 @@ const DEBUG_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -904,12 +899,11 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
 /* harmony default export */ const VolumeRendering_BlendedVolumeStyle = (BlendedVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/BoundaryEnhancementVolumeStyle.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -931,7 +925,7 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1046,12 +1040,11 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (Volu
 /* harmony default export */ const VolumeRendering_BoundaryEnhancementVolumeStyle = (BoundaryEnhancementVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/CartoonVolumeStyle.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1073,7 +1066,7 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (Volu
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1345,12 +1338,11 @@ CartoonVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
 /* harmony default export */ const VolumeRendering_CartoonVolumeStyle = (CartoonVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ComposedVolumeStyle.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1372,7 +1364,7 @@ CartoonVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1537,12 +1529,11 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering
 /* harmony default export */ const VolumeRendering_ComposedVolumeStyle = (ComposedVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/EdgeEnhancementVolumeStyle.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1564,7 +1555,7 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1807,12 +1798,11 @@ main ()
 `);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/VolumeMaterial.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1834,7 +1824,7 @@ main ()
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -1941,12 +1931,11 @@ VolumeMaterial .prototype = Object .assign (Object .create ((UnlitMaterial_defau
 const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/X3DVolumeDataNode.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1968,7 +1957,7 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -2176,12 +2165,11 @@ var ComposedShader_default = /*#__PURE__*/__webpack_require__.n(ComposedShader_n
 const ShaderPart_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("x_ite/Components/Shaders/ShaderPart");
 var ShaderPart_default = /*#__PURE__*/__webpack_require__.n(ShaderPart_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/IsoSurfaceVolumeData.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -2203,7 +2191,7 @@ var ShaderPart_default = /*#__PURE__*/__webpack_require__.n(ShaderPart_namespace
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -2530,12 +2518,11 @@ IsoSurfaceVolumeData .prototype = Object .assign (Object .create (VolumeRenderin
 /* harmony default export */ const VolumeRendering_IsoSurfaceVolumeData = (IsoSurfaceVolumeData);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ProjectionVolumeStyle.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -2557,7 +2544,7 @@ IsoSurfaceVolumeData .prototype = Object .assign (Object .create (VolumeRenderin
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -2748,12 +2735,11 @@ ProjectionVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
 /* harmony default export */ const VolumeRendering_ProjectionVolumeStyle = (ProjectionVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/SegmentedVolumeData.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -2775,7 +2761,7 @@ ProjectionVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -3015,12 +3001,11 @@ SegmentedVolumeData .prototype = Object .assign (Object .create (VolumeRendering
 /* harmony default export */ const VolumeRendering_SegmentedVolumeData = (SegmentedVolumeData);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ShadedVolumeStyle.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -3042,7 +3027,7 @@ SegmentedVolumeData .prototype = Object .assign (Object .create (VolumeRendering
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -3283,12 +3268,11 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X
 /* harmony default export */ const VolumeRendering_ShadedVolumeStyle = (ShadedVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/SilhouetteEnhancementVolumeStyle.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -3310,7 +3294,7 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -3450,12 +3434,11 @@ SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (Vo
 /* harmony default export */ const VolumeRendering_SilhouetteEnhancementVolumeStyle = (SilhouetteEnhancementVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ToneMappedVolumeStyle.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -3477,7 +3460,7 @@ SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (Vo
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -3624,12 +3607,11 @@ ToneMappedVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
 /* harmony default export */ const VolumeRendering_ToneMappedVolumeStyle = (ToneMappedVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/VolumeData.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -3651,7 +3633,7 @@ ToneMappedVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -3829,7 +3811,7 @@ VolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolum
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -3851,7 +3833,7 @@ VolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolum
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *

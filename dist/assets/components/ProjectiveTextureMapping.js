@@ -69,12 +69,11 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
 const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -96,7 +95,7 @@ var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -285,12 +284,11 @@ var Camera_default = /*#__PURE__*/__webpack_require__.n(Camera_namespaceObject);
 const ObjectCache_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.0.0a")] .require ("standard/Utility/ObjectCache");
 var ObjectCache_default = /*#__PURE__*/__webpack_require__.n(ObjectCache_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ProjectiveTextureMapping/TextureProjectorPerspective.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -312,7 +310,7 @@ var ObjectCache_default = /*#__PURE__*/__webpack_require__.n(ObjectCache_namespa
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -491,12 +489,11 @@ TextureProjectorPerspective .prototype = Object .assign (Object .create (Project
 /* harmony default export */ const ProjectiveTextureMapping_TextureProjectorPerspective = (TextureProjectorPerspective);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ProjectiveTextureMapping/TextureProjectorParallel.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -518,7 +515,7 @@ TextureProjectorPerspective .prototype = Object .assign (Object .create (Project
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
@@ -752,12 +749,11 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (Projective
 /* harmony default export */ const ProjectiveTextureMapping_TextureProjectorParallel = (TextureProjectorParallel);
 
 ;// CONCATENATED MODULE: ./src/assets/components/ProjectiveTextureMapping.js
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
+/*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -779,7 +775,7 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (Projective
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
  *
  * This file is part of the X_ITE Project.
  *
