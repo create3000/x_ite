@@ -118934,6 +118934,9 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
          if (argument instanceof Configuration_ComponentInfoArray)
             return this .loadComponents (argument .map (({name}) => name));
 
+         if (argument instanceof Configuration_ComponentInfo)
+            return this .loadComponents ([argument .name]);
+
          return loadComponents (this, [... argument], new Set ());
       };
    })(),
@@ -119279,15 +119282,11 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
       parser .setInput (dom)
 
       if (async)
-      {
          return new Promise (parser .parseIntoScene .bind (parser));
-      }
-      else
-      {
-         parser .parseIntoScene ();
 
-         return scene;
-      }
+      parser .parseIntoScene ();
+
+      return scene;
    },
    importJS: function (json, async = false)
    {
@@ -119308,15 +119307,11 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
       parser .setInput (json);
 
       if (async)
-      {
          return new Promise (parser .parseIntoScene .bind (parser));
-      }
-      else
-      {
-         parser .parseIntoScene ();
 
-         return scene;
-      }
+      parser .parseIntoScene ();
+
+      return scene;
    },
    getBrowserProperty: function (name)
    {

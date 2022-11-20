@@ -569,15 +569,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       parser .setInput (dom)
 
       if (async)
-      {
          return new Promise (parser .parseIntoScene .bind (parser));
-      }
-      else
-      {
-         parser .parseIntoScene ();
 
-         return scene;
-      }
+      parser .parseIntoScene ();
+
+      return scene;
    },
    importJS: function (json, async = false)
    {
@@ -598,15 +594,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       parser .setInput (json);
 
       if (async)
-      {
          return new Promise (parser .parseIntoScene .bind (parser));
-      }
-      else
-      {
-         parser .parseIntoScene ();
 
-         return scene;
-      }
+      parser .parseIntoScene ();
+
+      return scene;
    },
    getBrowserProperty: function (name)
    {
