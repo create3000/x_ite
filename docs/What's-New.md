@@ -14,7 +14,8 @@ layout: single
 #### New Features
 
 - X_ITE build is now based on WebPack, and a UMD library is build.
-- x_ite_dom is now an integral component of X_ITE.
+- x_ite_dom is now an integral part of X_ITE.
+- No more injected \<script\> elements in header of page.
 
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
