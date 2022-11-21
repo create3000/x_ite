@@ -31,7 +31,8 @@ class DOMIntegration
 {
 	constructor (browser)
 	{
-		this .browser = browser;
+		this .browser     = browser;
+		this .rootElement = undefined;
 
 		this .canvasObserver = new MutationObserver (() =>
 		{
@@ -52,6 +53,11 @@ class DOMIntegration
 	{
 		try
 		{
+			if (rootElement === this .rootElement)
+				return;
+
+			this .rootElement = rootElement;
+
 			if (rootElement)
 			{
 				// Display splash screen.
