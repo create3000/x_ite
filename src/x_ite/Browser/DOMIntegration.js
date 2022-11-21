@@ -281,24 +281,39 @@ class DOMIntegration
 	{
 		const node = $.data (element, "node");
 
-		// Remove all child nodes.
+		switch (node .checkLoadState ())
+		{
+			case X3DConstants .NOT_STARTED_STATE:
+			case X3DConstants .FAILED_STATE:
+			{
+				// Remove all child nodes.
 
-		while (element .firstChild)
-			element .removeChild (element .lastChild);
+				while (element .firstChild)
+					element .removeChild (element .lastChild);
 
-		if (node .checkLoadState () !== X3DConstants .COMPLETE_STATE)
-			return;
+				break;
+			}
+			case X3DConstants .COMPLETE_STATE:
+			{
+				// Remove all child nodes.
 
-		// Add scene as child node of Inline element.
+				while (element .firstChild)
+					element .removeChild (element .lastChild);
 
-		const X3DElement = $.data (node .getInternalScene (), "X3D");
+				// Add scene as child node of Inline element.
 
-		if (X3DElement)
-			element .appendChild (X3DElement .querySelector ("Scene"));
+				const X3DElement = $.data (node .getInternalScene (), "X3D");
 
-		// Attach dom event callbacks.
+				if (X3DElement)
+					element .appendChild (X3DElement .querySelector ("Scene"));
 
-		this .addEventDispatchersAll (element);
+				// Attach dom event callbacks.
+
+				this .addEventDispatchersAll (element);
+
+				break;
+			}
+		}
 	}
 
 	addEventDispatchersAll (element)
