@@ -274,10 +274,10 @@ class DOMIntegration
 		if (! node)
 			return;
 
-		node ._loadState .addInterest ("appendInlineElement", this, element);
+		node ._loadState .addInterest ("appendInlineChildElement", this, element);
 	}
 
-	appendInlineElement (element)
+	appendInlineChildElement (element)
 	{
 		const node = $.data (element, "node");
 
