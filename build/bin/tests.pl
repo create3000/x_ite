@@ -102,7 +102,7 @@ EOT
    "name": "$basename",
    "callback": function (event)
    {
-      window .loadURL ("$file");
+      X3D .getBrowser () .loadURL (new X3D .MFString ("$file"));
    },
 },
 EOT
