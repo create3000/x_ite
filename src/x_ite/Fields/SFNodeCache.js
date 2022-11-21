@@ -47,29 +47,32 @@
 
 import SFNode from "./SFNode.js";
 
-const cache = new WeakMap ();
-
 function SFNodeCache () { }
 
 SFNodeCache .prototype =
 {
-   get: function (baseNode)
+   get: (function ()
    {
-      const node = cache .get (baseNode);
+      const cache = new WeakMap ();
 
-      if (node)
+      return function (baseNode)
       {
-         return node;
-      }
-      else
-      {
-         const node = new SFNode (baseNode);
+         const node = cache .get (baseNode);
 
-         cache .set (baseNode, node);
+         if (node)
+         {
+            return node;
+         }
+         else
+         {
+            const node = new SFNode (baseNode);
 
-         return node;
-      }
-   },
+            cache .set (baseNode, node);
+
+            return node;
+         }
+      };
+   })(),
 };
 
 export default new SFNodeCache ();
