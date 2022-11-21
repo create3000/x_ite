@@ -94,11 +94,11 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
    {
       X3DNetworkSensorNode .prototype .initialize .call (this);
 
-      this ._enabled   .addInterest ("set_enabled__",   this);
-      this ._timeOut   .addInterest ("set_timeOut__",   this);
-      this ._watchList .addInterest ("set_watchList__", this);
+      this ._enabled  .addInterest ("set_enabled__",  this);
+      this ._timeOut  .addInterest ("set_timeOut__",  this);
+      this ._children .addInterest ("set_children__", this);
 
-      this .set_watchList__ ();
+      this .set_children__ ();
    },
    set_enabled__: function ()
    {
@@ -123,7 +123,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
             this .timeOutId = setTimeout (this .abort .bind (this), this ._timeOut .getValue () * 1000);
       }
    },
-   set_watchList__: function ()
+   set_children__: function ()
    {
       this .reset ();
    },
@@ -199,24 +199,24 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
    {
       this .remove ();
 
-      if (this ._enabled .getValue ())
+      if (! this ._enabled .getValue ())
+         return;
+
+      const urlObjects = this .urlObjects;
+
+      for (const node of this ._children)
       {
-         const urlObjects = this .urlObjects;
+         const urlObject = X3DCast (X3DConstants .X3DUrlObject, node);
 
-         for (const node of this ._watchList)
+         if (urlObject)
          {
-            const urlObject = X3DCast (X3DConstants .X3DUrlObject, node);
+            urlObjects .push (urlObject);
 
-            if (urlObject)
-            {
-               urlObjects .push (urlObject);
-
-               urlObject ._loadState .addInterest ("set_loadState__", this, urlObject);
-            }
+            urlObject ._loadState .addInterest ("set_loadState__", this, urlObject);
          }
-
-         this .count ();
       }
+
+      this .count ();
    },
    remove: function ()
    {
