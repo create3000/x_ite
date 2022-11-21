@@ -305,7 +305,7 @@ class DOMIntegration
 			}
 		});
 
-		document .dispatchEvent (event);
+		element .dispatchEvent (event);
 
 		// Attach dom event callbacks.
 
@@ -354,7 +354,6 @@ class DOMIntegration
 		const event = new CustomEvent (field .getName (), {
 			detail: {
 				node: SFNodeCache .get (node),
-				name: field .getName (),
 				value: field .valueOf (),
 			}
 		});
