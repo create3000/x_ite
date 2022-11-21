@@ -46,11 +46,6 @@ class DOMIntegration
 		this .observeRoot (this .browser .getElement () .children ("X3D") [0]);
 	}
 
-	isPrivate ()
-	{
-		return false;
-	}
-
 	async observeRoot (rootElement)
 	{
 		try

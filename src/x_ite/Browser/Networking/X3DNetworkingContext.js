@@ -178,11 +178,15 @@ X3DNetworkingContext .prototype =
    {
       this ._loadCount = value;
 
-      const displayValue = [... this [_loadingObjects]] .reduce ((v, o) => v + ! o .isPrivate (), 0);
+      const displayValue = [... this [_loadingObjects]]
+         .filter (o => o .isPrivate)
+         .reduce ((v, o) => v + ! o .isPrivate (), 0);
 
       if (value || this [_loading])
       {
-         var string = (displayValue == 1 ? _ ("Loading %1 file") : _ ("Loading %1 files")) .replace ("%1", displayValue || 1);
+         var string = (displayValue == 1
+            ? _ ("Loading %1 file")
+            : _ ("Loading %1 files")) .replace ("%1", displayValue || 1);
       }
       else
       {
