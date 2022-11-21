@@ -140,13 +140,13 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    {
       if (scene)
       {
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
          this .setInternalScene (scene);
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       else
       {
-         this .setLoadState (X3DConstants .FAILED_STATE);
          this .setInternalScene (this .getBrowser () .getDefaultScene ());
+         this .setLoadState (X3DConstants .FAILED_STATE);
       }
    },
    setInternalScene: function (scene)

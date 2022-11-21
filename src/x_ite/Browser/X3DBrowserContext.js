@@ -325,11 +325,12 @@ Object .assign (X3DBrowserContext,
    {
       browserContexts .push (browserContext);
 
-      for (const key of Object .keys (browserContext .prototype) .concat (Object .getOwnPropertySymbols (browserContext .prototype)))
-      {
-         if (["initialize", "dispose"] .includes (key))
-            continue;
+      const keys = Object .keys (browserContext .prototype)
+         .filter (k => ! k .match (/^(initialize|dispose)$/))
+         .concat (Object .getOwnPropertySymbols (browserContext .prototype));
 
+      for (const key of keys)
+      {
          Object .defineProperty (X3DBrowserContext .prototype, key,
          {
             value: browserContext .prototype [key],

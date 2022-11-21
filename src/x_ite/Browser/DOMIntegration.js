@@ -23,7 +23,8 @@
  * SOFTWARE.
  ******************************************************************************/
 
-import XMLParser from "../Parser/XMLParser.js"
+import XMLParser    from "../Parser/XMLParser.js"
+import X3DConstants from "../Base/X3DConstants.js";
 
 const _dom = Symbol .for ("X_ITE.dom");
 
@@ -74,8 +75,7 @@ class DOMIntegration
 
 			this .browser .replaceWorld (importedScene);
 
-			this .parser     = new XMLParser (importedScene);
-			this .loadSensor = importedScene .createNode ("LoadSensor") .getValue ();
+			this .parser = new XMLParser (importedScene);
 
 			// Create an observer instance.
 			this .observer = new MutationObserver (mutations =>
@@ -267,57 +267,40 @@ class DOMIntegration
 
 	processInlineElement (element)
 	{
-		// Check for USE inline as it does not have dom.
 		if (element .x3d === undefined)
 			return;
 
-		const watchList = this .loadSensor .getField ("watchList");
+		const node = element .x3d;
 
-		// Individual callback per inline.
-
-		const callback = this .appendInlineElement .bind (this, element);
-
-		this .loadSensor .getField ("isLoaded") .addFieldCallback ("loaded" + element .x3d .getId (), callback);
-
-		// Just add to loadsensor watchlist; triggers isLoaded event after loading.
-		watchList .push (element .x3d);
+		node ._loadState .addInterest ("appendInlineElement", this, element);
 	}
 
-	appendInlineElement (element, loaded)
+	appendInlineElement (element, loadState)
 	{
-		// Now loaded and in .dom.
-		// Inline must have Scene.
-		const
-			node      = element .x3d,
-			watchList = this .loadSensor .getField ("watchList"),
-			isLoaded  = this .loadSensor .getField ("isLoaded");
+		const node = element .x3d;
 
-		if (node [_dom]) // Guard since .dom does not exist for invalid urls.
-			element .appendChild (node [_dom] .querySelector ("Scene")) ; // XXX: or root nodes? HO: Think, Scene is better.
+		while (element .firstChild)
+			element .removeChild (element .lastChild);
 
-		// Not needed any more, remove callback.
-		isLoaded .removeFieldCallback ("loaded" + node .getId ());
-
-		// Remove from watchlist.
-
-		const wListUpdate = watchList .getValue () .filter (value => value .getValue () !== node);
-
-		watchList .setValue (wListUpdate);
-
-		// Check if all inlines are appended and dispatch event.
-		// Would be also dispatched later whenever a new inline was completely appended.
-		if (element .querySelector ("Inline") === null) // No more internal inlines.
+		if (loadState .getValue () === X3DConstants .COMPLETE_STATE)
 		{
-			// also check loadCount ?
+			if (node .getInternalScene () [_dom])
+				element .appendChild (node .getInternalScene () [_dom] .querySelector ("Scene"));
 
-			const event = new Event ("x3dload");
+			if (element .querySelector ("Inline") === null)
+			{
+				const event = new CustomEvent ("x3d_loaded", {
+					detail: {
+						element: this .browser .getElement () [0],
+					}
+				});
 
-			event .element = this .browser .getElement ();
-
-			document .dispatchEvent (event);
+				document .dispatchEvent (event);
+			}
 		}
 
 		// Attach dom event callbacks.
+
 		this .addEventDispatchersAll (element);
 	}
 
@@ -342,37 +325,28 @@ class DOMIntegration
 			this .bindFieldCallback (field, element);
 	}
 
-	bindFieldCallback  (field, element)
+	bindFieldCallback (field, element)
 	{
-		/*var ctx = {};
-		ctx .field = field;
-		ctx .sensor = sensor;*/
-		//only attach callbacks for output fields
+		if (! field .isOutput ())
+			return;
 
-		if (field .isOutput ()) // Both inputOutput and outputOnly.
-		{
-			field .addFieldCallback ("DomIntegration." + field .getId (),
-			                         this .fieldCallback .bind (null, field, element));
+		field .addInterest ("fieldCallback", this, element);
 
-			if (this .trace)
-			{
-				field .addFieldCallback ("DomIntegrationTracer." + field .getId (),
-				                         this .fieldTraceCallback .bind (null, field, element .x3d));
-			}
-		}
+		if (this .trace)
+			field .addInterest ("fieldTraceCallback", this, element);
 	}
 
-	fieldCallback  (field, element, value)
+	fieldCallback (element, field)
 	{
 		//var evt = new Event (field .getName ()); // Better to use official custom event.
 
 		const
 		 	node      = element .x3d,
-			eventType = "x3d" + "." + field .getName ();
+			eventType = "x3d_" + field .getName ();
 
 		const event = new CustomEvent (eventType, {
 			detail: {
-				value: value,
+				value: field .valueOf (),
 				fields: node .getFields (),
 				name: node .getName (),
 				x3d: node,
@@ -382,17 +356,18 @@ class DOMIntegration
 		element .dispatchEvent (event);
 	}
 
-	fieldTraceCallback  (field, node, value)
+	fieldTraceCallback (element, field)
 	{
 		const
 			now       = Date .now (),
 			timeStamp = node .getBrowser () .getCurrentTime (),
-			dt        = now - timeStamp * 1000;
+			dt        = now - timeStamp * 1000,
+			node      = element .x3d;
 
 		console .log ("%f: at %f dt of %s ms %s '%s' %s: %s",
 					     now, timeStamp, dt .toFixed (3),
 					     node .getTypeName (), node .getName (),
-					     field .getName (), value);
+					     field .getName (), field .valueOf ());
 	}
 };
 
