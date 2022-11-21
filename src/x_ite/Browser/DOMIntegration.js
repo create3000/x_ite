@@ -92,11 +92,10 @@ class DOMIntegration
 				attributeOldValue: true,
 			});
 
-			// Events
-			this .addEventDispatchersAll (rootElement);
+			// Add inline elements from initial scene, and connect to node events.
 
-			// Add inline doms from initial scene.
 			this .processInlineElements (rootElement);
+			this .addEventDispatchersAll (rootElement);
 
 			this .browser .removeLoadCount (this);
 		}
@@ -178,30 +177,21 @@ class DOMIntegration
 	processAddedNode (element)
 	{
 		// Only process element nodes.
+
 		if (element .nodeType !== Node .ELEMENT_NODE)
 			return;
 
-		// First need to look for Inline doms to add to dom.
-		this .processInlineElements (element);
+		if (element .nodeName === "Scene" || element .nodeName === "SCENE")
+			return;
 
-		// Do not add to scene if already parsed as child of inline,
-		// although Scene does not have .x3d so should never happen?
 		if ($.data (element, "node"))
-		{
-			if (element .nodeName === "Inline" || element .nodeName === "INLINE")
-				this .processInlineElement (element); // Only add dom.
-
 			return;
-		}
-		else if (element .nodeName === "Scene" || element .nodeName === "SCENE")
-		{
-			return;
-		}
 
 		const parentNode = element .parentNode;
 
 		// First get correct execution context.
-		let nodeScene = this .browser .currentScene ; // assume main Scene
+
+		let nodeScene = this .browser .currentScene; // Assume main Scene.
 
 		if (parentNode .parentNode .nodeName === "Inline" || parentNode .parentNode .nodeName === "INLINE")
 		{
@@ -210,12 +200,14 @@ class DOMIntegration
 		else if ($.data (parentNode, "node"))
 		{
 			// Use parent's scene if non-root, works for inline.
+
 			nodeScene = $.data (parentNode, "node") .getExecutionContext ();
 		}
 
 		this .parser .pushExecutionContext (nodeScene);
 
 		// then check if root node.
+
 		if ($.data (parentNode, "node"))
 		{
 			const node = $.data (parentNode, "node");
@@ -227,19 +219,20 @@ class DOMIntegration
 		else
 		{
 			// Inline or main root node.
+
 			this .parser .childElement (element);
 		}
 
 		this .parser .popExecutionContext ();
 
-		// Now after creating nodes need to look again for Inline doms.
+		// Now after creating nodes need to look again for Inline elements.
+
 		this .processInlineElements (element);
 
 		// Then attach event dispatchers.
-		// if (element .matches (this .sensorSelector)) { this .addEventDispatchers (element); } // matches () not well supported
 
 		this .addEventDispatchers (element);
-		this .addEventDispatchersAll (element); // also for childnodes
+		this .addEventDispatchersAll (element);
 	}
 
 	processRemovedNode (element)
@@ -307,8 +300,9 @@ class DOMIntegration
 				if (X3DElement)
 					element .appendChild (X3DElement .querySelector ("Scene"));
 
-				// Attach dom event callbacks.
+				// Add inline elements, and connect to node events.
 
+				this .processInlineElements (element);
 				this .addEventDispatchersAll (element);
 
 				break;

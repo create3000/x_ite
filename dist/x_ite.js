@@ -16586,10 +16586,10 @@ if (true) {
 	  this.sourceIndex = 0;
 	  this.tag = 0;
 	  this.bitcount = 0;
-
+	  
 	  this.dest = dest;
 	  this.destLen = 0;
-
+	  
 	  this.ltree = new Tree();  /* dynamic length/symbol tree */
 	  this.dtree = new Tree();  /* dynamic distance tree */
 	}
@@ -16731,7 +16731,7 @@ if (true) {
 	    d.tag |= d.source[d.sourceIndex++] << d.bitcount;
 	    d.bitcount += 8;
 	  }
-
+	  
 	  var sum = 0, cur = 0, len = 0;
 	  var tag = d.tag;
 
@@ -16744,7 +16744,7 @@ if (true) {
 	    sum += t.table[len];
 	    cur -= t.table[len];
 	  } while (cur >= 0);
-
+	  
 	  d.tag = tag;
 	  d.bitcount -= len;
 
@@ -16855,7 +16855,7 @@ if (true) {
 	function tinf_inflate_uncompressed_block(d) {
 	  var length, invlength;
 	  var i;
-
+	  
 	  /* unread from bitbuffer */
 	  while (d.bitcount > 8) {
 	    d.sourceIndex--;
@@ -16928,7 +16928,7 @@ if (true) {
 	    else
 	      { return d.dest.subarray(0, d.destLen); }
 	  }
-
+	  
 	  return d.dest;
 	}
 
@@ -30985,7 +30985,7 @@ if (true) {
 	Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//#
+//# 
 
 
 /***/ }),
@@ -34246,7 +34246,7 @@ if (true) {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -34260,14 +34260,14 @@ if (true) {
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
@@ -34280,7 +34280,7 @@ if (true) {
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -34292,12 +34292,12 @@ if (true) {
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
@@ -47443,7 +47443,7 @@ for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
 
 // Modified during dist build.
 
-/* harmony default export */ const DEBUG = (true);
+/* harmony default export */ const DEBUG = (false);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Context.js
 /*******************************************************************************
@@ -52993,7 +52993,7 @@ X3DParser .prototype = {
             return browser .loadComponents (VRML);
 
          return Promise .all ([
-            browser .loadComponents (scene .getProfile () || [ ]),
+            browser .loadComponents (scene .getProfile () || browser .getProfile ("Full")),
             browser .loadComponents (scene .getComponents ()),
          ]);
       };
@@ -90917,11 +90917,11 @@ LoadSensor .prototype = Object .assign (Object .create (Networking_X3DNetworkSen
    {
       Networking_X3DNetworkSensorNode.prototype.initialize.call (this);
 
-      this ._enabled   .addInterest ("set_enabled__",   this);
-      this ._timeOut   .addInterest ("set_timeOut__",   this);
-      this ._watchList .addInterest ("set_watchList__", this);
+      this ._enabled  .addInterest ("set_enabled__",  this);
+      this ._timeOut  .addInterest ("set_timeOut__",  this);
+      this ._children .addInterest ("set_children__", this);
 
-      this .set_watchList__ ();
+      this .set_children__ ();
    },
    set_enabled__: function ()
    {
@@ -90946,7 +90946,7 @@ LoadSensor .prototype = Object .assign (Object .create (Networking_X3DNetworkSen
             this .timeOutId = setTimeout (this .abort .bind (this), this ._timeOut .getValue () * 1000);
       }
    },
-   set_watchList__: function ()
+   set_children__: function ()
    {
       this .reset ();
    },
@@ -91022,24 +91022,24 @@ LoadSensor .prototype = Object .assign (Object .create (Networking_X3DNetworkSen
    {
       this .remove ();
 
-      if (this ._enabled .getValue ())
+      if (! this ._enabled .getValue ())
+         return;
+
+      const urlObjects = this .urlObjects;
+
+      for (const node of this ._children)
       {
-         const urlObjects = this .urlObjects;
+         const urlObject = X3DCast (Base_X3DConstants.X3DUrlObject, node);
 
-         for (const node of this ._watchList)
+         if (urlObject)
          {
-            const urlObject = X3DCast (Base_X3DConstants.X3DUrlObject, node);
+            urlObjects .push (urlObject);
 
-            if (urlObject)
-            {
-               urlObjects .push (urlObject);
-
-               urlObject ._loadState .addInterest ("set_loadState__", this, urlObject);
-            }
+            urlObject ._loadState .addInterest ("set_loadState__", this, urlObject);
          }
-
-         this .count ();
       }
+
+      this .count ();
    },
    remove: function ()
    {
@@ -117638,11 +117638,10 @@ class DOMIntegration
 				attributeOldValue: true,
 			});
 
-			// Events
-			this .addEventDispatchersAll (rootElement);
+			// Add inline elements from initial scene, and connect to node events.
 
-			// Add inline doms from initial scene.
 			this .processInlineElements (rootElement);
+			this .addEventDispatchersAll (rootElement);
 
 			this .browser .removeLoadCount (this);
 		}
@@ -117724,30 +117723,21 @@ class DOMIntegration
 	processAddedNode (element)
 	{
 		// Only process element nodes.
+
 		if (element .nodeType !== Node .ELEMENT_NODE)
 			return;
 
-		// First need to look for Inline doms to add to dom.
-		this .processInlineElements (element);
+		if (element .nodeName === "Scene" || element .nodeName === "SCENE")
+			return;
 
-		// Do not add to scene if already parsed as child of inline,
-		// although Scene does not have .x3d so should never happen?
 		if (DOMIntegration_$.data (element, "node"))
-		{
-			if (element .nodeName === "Inline" || element .nodeName === "INLINE")
-				this .processInlineElement (element); // Only add dom.
-
 			return;
-		}
-		else if (element .nodeName === "Scene" || element .nodeName === "SCENE")
-		{
-			return;
-		}
 
 		const parentNode = element .parentNode;
 
 		// First get correct execution context.
-		let nodeScene = this .browser .currentScene ; // assume main Scene
+
+		let nodeScene = this .browser .currentScene; // Assume main Scene.
 
 		if (parentNode .parentNode .nodeName === "Inline" || parentNode .parentNode .nodeName === "INLINE")
 		{
@@ -117756,12 +117746,14 @@ class DOMIntegration
 		else if (DOMIntegration_$.data (parentNode, "node"))
 		{
 			// Use parent's scene if non-root, works for inline.
+
 			nodeScene = DOMIntegration_$.data (parentNode, "node") .getExecutionContext ();
 		}
 
 		this .parser .pushExecutionContext (nodeScene);
 
 		// then check if root node.
+
 		if (DOMIntegration_$.data (parentNode, "node"))
 		{
 			const node = DOMIntegration_$.data (parentNode, "node");
@@ -117773,19 +117765,20 @@ class DOMIntegration
 		else
 		{
 			// Inline or main root node.
+
 			this .parser .childElement (element);
 		}
 
 		this .parser .popExecutionContext ();
 
-		// Now after creating nodes need to look again for Inline doms.
+		// Now after creating nodes need to look again for Inline elements.
+
 		this .processInlineElements (element);
 
 		// Then attach event dispatchers.
-		// if (element .matches (this .sensorSelector)) { this .addEventDispatchers (element); } // matches () not well supported
 
 		this .addEventDispatchers (element);
-		this .addEventDispatchersAll (element); // also for childnodes
+		this .addEventDispatchersAll (element);
 	}
 
 	processRemovedNode (element)
@@ -117820,31 +117813,47 @@ class DOMIntegration
 		if (! node)
 			return;
 
-		node ._loadState .addInterest ("appendInlineElement", this, element);
+		node ._loadState .addInterest ("appendInlineChildElement", this, element);
 	}
 
-	appendInlineElement (element)
+	appendInlineChildElement (element)
 	{
 		const node = DOMIntegration_$.data (element, "node");
 
-		// Remove all child nodes.
-
-		while (element .firstChild)
-			element .removeChild (element .lastChild);
-
-		// Add scene as child node of Inline element.
-
-		if (node .checkLoadState () === Base_X3DConstants.COMPLETE_STATE)
+		switch (node .checkLoadState ())
 		{
-			const X3DElement = DOMIntegration_$.data (node .getInternalScene (), "X3D");
+			case Base_X3DConstants.NOT_STARTED_STATE:
+			case Base_X3DConstants.FAILED_STATE:
+			{
+				// Remove all child nodes.
 
-			if (X3DElement)
-				element .appendChild (X3DElement .querySelector ("Scene"));
+				while (element .firstChild)
+					element .removeChild (element .lastChild);
+
+				break;
+			}
+			case Base_X3DConstants.COMPLETE_STATE:
+			{
+				// Remove all child nodes.
+
+				while (element .firstChild)
+					element .removeChild (element .lastChild);
+
+				// Add scene as child node of Inline element.
+
+				const X3DElement = DOMIntegration_$.data (node .getInternalScene (), "X3D");
+
+				if (X3DElement)
+					element .appendChild (X3DElement .querySelector ("Scene"));
+
+				// Add inline elements, and connect to node events.
+
+				this .processInlineElements (element);
+				this .addEventDispatchersAll (element);
+
+				break;
+			}
 		}
-
-		// Attach dom event callbacks.
-
-		this .addEventDispatchersAll (element);
 	}
 
 	addEventDispatchersAll (element)
