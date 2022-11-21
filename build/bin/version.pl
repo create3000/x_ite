@@ -19,6 +19,8 @@ say $CWD;
 my $VERSION = `npm pkg get version | sed 's/"//g'`;
 chomp $VERSION;
 
+exit 1 unless $VERSION;
+
 my $ALPHA = $VERSION =~ /a$/;
 
 sub commit
