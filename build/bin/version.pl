@@ -5,11 +5,13 @@ use v5.10.0;
 use utf8;
 use open qw/:std :utf8/;
 
+use Cwd;
+
+my $NO_GIT = 1;
+
 # https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
 # Set post buffer to 150 MiB.
 system "git", "config", "--global", "http.postBuffer", "157286400";
-
-use Cwd;
 
 my $CWD = cwd;
 say $CWD;
@@ -21,6 +23,8 @@ my $ALPHA = $VERSION =~ /a$/;
 
 sub commit
 {
+	return if $NO_GIT;
+
 	my $version = shift;
 
 	system "git", "commit", "-am", "Published version $VERSION";
@@ -29,6 +33,8 @@ sub commit
 
 sub publish
 {
+	return if $NO_GIT;
+
 	my $version = shift;
 
 	system "git", "tag", "--delete", $version;
@@ -53,6 +59,8 @@ sub update
 
 sub upload
 {
+	return if $NO_GIT;
+
 	my $code = "$CWD/../code";
 
 	chdir $code;
