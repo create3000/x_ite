@@ -121,7 +121,7 @@ class DOMIntegration
 			scriptDoc   = domParser .parseFromString (scriptElement .outerHTML, "application/xml"),
 			scriptNodes = scriptDoc .children [0] .childNodes;
 
-		scriptElement .textContent = "// content moved into childNodes";
+		scriptElement .textContent = "// Content moved into childNodes.";
 
 		for (const scriptNode of scriptNodes)
 			scriptElement .appendChild (scriptNode);
