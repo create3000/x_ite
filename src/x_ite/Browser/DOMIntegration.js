@@ -25,6 +25,7 @@
 
 import XMLParser    from "../Parser/XMLParser.js"
 import X3DConstants from "../Base/X3DConstants.js";
+import SFNodeCache  from "../Fields/SFNodeCache.js";
 
 const _dom = Symbol .for ("X_ITE.dom");
 
@@ -279,25 +280,27 @@ class DOMIntegration
 	{
 		const node = element .x3d;
 
+		// Add scene as child node of Inline element.
+
 		while (element .firstChild)
 			element .removeChild (element .lastChild);
 
-		if (loadState .getValue () === X3DConstants .COMPLETE_STATE)
+		if (node .checkLoadState () === X3DConstants .COMPLETE_STATE)
 		{
 			if (node .getInternalScene () [_dom])
 				element .appendChild (node .getInternalScene () [_dom] .querySelector ("Scene"));
-
-			if (element .querySelector ("Inline") === null)
-			{
-				const event = new CustomEvent ("x3d_loaded", {
-					detail: {
-						element: this .browser .getElement () [0],
-					}
-				});
-
-				document .dispatchEvent (event);
-			}
 		}
+
+		// Send loadState event.
+
+		const event = new CustomEvent ("loadState", {
+			detail: {
+				node: SFNodeCache .get (node),
+				loadState: node .checkLoadState (),
+			}
+		});
+
+		document .dispatchEvent (event);
 
 		// Attach dom event callbacks.
 
@@ -338,18 +341,13 @@ class DOMIntegration
 
 	fieldCallback (element, field)
 	{
-		//var evt = new Event (field .getName ()); // Better to use official custom event.
+		const node = element .x3d;
 
-		const
-		 	node      = element .x3d,
-			eventType = "x3d_" + field .getName ();
-
-		const event = new CustomEvent (eventType, {
+		const event = new CustomEvent (field .getName (), {
 			detail: {
+				node: SFNodeCache .get (node),
+				name: field .getName (),
 				value: field .valueOf (),
-				fields: node .getFields (),
-				name: node .getName (),
-				x3d: node,
 			}
 		});
 
