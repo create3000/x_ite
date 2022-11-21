@@ -117577,8 +117577,7 @@ class DOMIntegration
 {
 	constructor (browser)
 	{
-		this .browser      = browser;
-		this .rootElements = new WeakSet ();
+		this .browser = browser;
 
 		this .canvasObserver = new MutationObserver (() =>
 		{
@@ -117589,61 +117588,65 @@ class DOMIntegration
 			childList: true,
 		});
 
-		this .observeRoot (this .browser .getElement () .children ("X3D") [0]);
+		const rootElement = this .browser .getElement () .children ("X3D") [0];
+
+		if (rootElement)
+			this .observeRoot (rootElement);
 	}
 
 	async observeRoot (rootElement)
 	{
 		try
 		{
-			if (! rootElement)
-				return;
-
-			if (this .rootElements .has (rootElement))
-				return;
-
-			this .rootElements .add (rootElement);
-
-			// Display splash screen.
-
-			this .browser .setBrowserLoading (true);
-         this .browser .addLoadCount (this);
-
-			// Preprocess script nodes if not xhtml.
-
-			if (! location .pathname .toLowerCase () .endsWith (".xhtml"))
-				this .preprocessScriptElements (rootElement);
-
-			// Now also attached x3d property to each node element.
-
-			const importedScene = await this .browser .importDocument (rootElement, true);
-
-			this .browser .replaceWorld (importedScene);
-
-			this .parser = new Parser_XMLParser (importedScene);
-
-			// Create an observer instance.
-			this .observer = new MutationObserver (mutations =>
+			if (rootElement)
 			{
-				for (const mutation of mutations)
-					this .processMutation (mutation);
-			});
+				// Display splash screen.
 
-			// Start observing, also catches inlined inlines.
-			this .observer .observe (rootElement, {
-				attributes: true,
-				childList: true,
-				characterData: false,
-				subtree: true,
-				attributeOldValue: true,
-			});
+				this .browser .setBrowserLoading (true);
+				this .browser .addLoadCount (this);
 
-			// Add inline elements from initial scene, and connect to node events.
+				// Preprocess script nodes if not xhtml.
 
-			this .processInlineElements (rootElement);
-			this .addEventDispatchersAll (rootElement);
+				if (! location .pathname .toLowerCase () .endsWith (".xhtml"))
+					this .preprocessScriptElements (rootElement);
 
-			this .browser .removeLoadCount (this);
+				// Now also attached x3d property to each node element.
+
+				const importedScene = await this .browser .importDocument (rootElement, true);
+
+				this .browser .replaceWorld (importedScene);
+
+				this .parser = new Parser_XMLParser (importedScene);
+
+				// Create an observer instance.
+
+				this .observer = new MutationObserver (mutations =>
+				{
+					for (const mutation of mutations)
+						this .processMutation (mutation);
+				});
+
+				// Start observing, also catches inlined Inline elements.
+
+				this .observer .observe (rootElement, {
+					attributes: true,
+					childList: true,
+					characterData: false,
+					subtree: true,
+					attributeOldValue: true,
+				});
+
+				// Add Inline elements from initial scene, and connect to node events.
+
+				this .processInlineElements (rootElement);
+				this .addEventDispatchersAll (rootElement);
+
+				this .browser .removeLoadCount (this);
+			}
+			else
+			{
+				this .browser .replaceWorld (null);
+			}
 		}
 		catch (error)
 		{
@@ -117745,7 +117748,7 @@ class DOMIntegration
 		}
 		else if (DOMIntegration_$.data (parentNode, "node"))
 		{
-			// Use parent's scene if non-root, works for inline.
+			// Use parent's scene if non-root, works for Inline.
 
 			nodeScene = DOMIntegration_$.data (parentNode, "node") .getExecutionContext ();
 		}
@@ -117846,7 +117849,7 @@ class DOMIntegration
 				if (X3DElement)
 					element .appendChild (X3DElement .querySelector ("Scene"));
 
-				// Add inline elements, and connect to node events.
+				// Add Inline elements, and connect to node events.
 
 				this .processInlineElements (element);
 				this .addEventDispatchersAll (element);
