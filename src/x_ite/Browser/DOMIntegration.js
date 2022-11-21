@@ -286,15 +286,15 @@ class DOMIntegration
 		while (element .firstChild)
 			element .removeChild (element .lastChild);
 
+		if (node .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+			return;
+
 		// Add scene as child node of Inline element.
 
-		if (node .checkLoadState () === X3DConstants .COMPLETE_STATE)
-		{
-			const X3DElement = $.data (node .getInternalScene (), "X3D");
+		const X3DElement = $.data (node .getInternalScene (), "X3D");
 
-			if (X3DElement)
-				element .appendChild (X3DElement .querySelector ("Scene"));
-		}
+		if (X3DElement)
+			element .appendChild (X3DElement .querySelector ("Scene"));
 
 		// Attach dom event callbacks.
 
