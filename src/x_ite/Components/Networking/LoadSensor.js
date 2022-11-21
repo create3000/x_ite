@@ -61,6 +61,8 @@ function LoadSensor (executionContext)
    this .urlObjects = [ ];
    this .aborted    = false;
    this .timeOutId  = undefined;
+
+   this .addAlias ("watchList", this ._children);
 }
 
 LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .prototype),
@@ -74,7 +76,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
       new X3DFieldDefinition (X3DConstants .outputOnly,  "isLoaded",  new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .outputOnly,  "progress",  new Fields .SFFloat ()),
       new X3DFieldDefinition (X3DConstants .outputOnly,  "loadTime",  new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "watchList", new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "children",  new Fields .MFNode ()),
    ]),
    getTypeName: function ()
    {

@@ -296,17 +296,6 @@ class DOMIntegration
 				element .appendChild (X3DElement .querySelector ("Scene"));
 		}
 
-		// Send loadState event.
-
-		const event = new CustomEvent ("loadState", {
-			detail: {
-				node: SFNodeCache .get (node),
-				loadState: node .checkLoadState (),
-			}
-		});
-
-		element .dispatchEvent (event);
-
 		// Attach dom event callbacks.
 
 		this .addEventDispatchersAll (element);

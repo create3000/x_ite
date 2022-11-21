@@ -16586,10 +16586,10 @@ if (true) {
 	  this.sourceIndex = 0;
 	  this.tag = 0;
 	  this.bitcount = 0;
-
+	  
 	  this.dest = dest;
 	  this.destLen = 0;
-
+	  
 	  this.ltree = new Tree();  /* dynamic length/symbol tree */
 	  this.dtree = new Tree();  /* dynamic distance tree */
 	}
@@ -16731,7 +16731,7 @@ if (true) {
 	    d.tag |= d.source[d.sourceIndex++] << d.bitcount;
 	    d.bitcount += 8;
 	  }
-
+	  
 	  var sum = 0, cur = 0, len = 0;
 	  var tag = d.tag;
 
@@ -16744,7 +16744,7 @@ if (true) {
 	    sum += t.table[len];
 	    cur -= t.table[len];
 	  } while (cur >= 0);
-
+	  
 	  d.tag = tag;
 	  d.bitcount -= len;
 
@@ -16855,7 +16855,7 @@ if (true) {
 	function tinf_inflate_uncompressed_block(d) {
 	  var length, invlength;
 	  var i;
-
+	  
 	  /* unread from bitbuffer */
 	  while (d.bitcount > 8) {
 	    d.sourceIndex--;
@@ -16928,7 +16928,7 @@ if (true) {
 	    else
 	      { return d.dest.subarray(0, d.destLen); }
 	  }
-
+	  
 	  return d.dest;
 	}
 
@@ -30985,7 +30985,7 @@ if (true) {
 	Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//#
+//# 
 
 
 /***/ }),
@@ -34246,7 +34246,7 @@ if (true) {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -34260,14 +34260,14 @@ if (true) {
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
@@ -34280,7 +34280,7 @@ if (true) {
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -34292,12 +34292,12 @@ if (true) {
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
@@ -90884,6 +90884,8 @@ function LoadSensor (executionContext)
    this .urlObjects = [ ];
    this .aborted    = false;
    this .timeOutId  = undefined;
+
+   this .addAlias ("watchList", this ._children);
 }
 
 LoadSensor .prototype = Object .assign (Object .create (Networking_X3DNetworkSensorNode.prototype),
@@ -90897,7 +90899,7 @@ LoadSensor .prototype = Object .assign (Object .create (Networking_X3DNetworkSen
       new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isLoaded",  new x_ite_Fields.SFBool ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "progress",  new x_ite_Fields.SFFloat ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "loadTime",  new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "watchList", new x_ite_Fields.MFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",  new x_ite_Fields.MFNode ()),
    ]),
    getTypeName: function ()
    {
@@ -117839,17 +117841,6 @@ class DOMIntegration
 			if (X3DElement)
 				element .appendChild (X3DElement .querySelector ("Scene"));
 		}
-
-		// Send loadState event.
-
-		const event = new CustomEvent ("loadState", {
-			detail: {
-				node: Fields_SFNodeCache.get (node),
-				loadState: node .checkLoadState (),
-			}
-		});
-
-		element .dispatchEvent (event);
 
 		// Attach dom event callbacks.
 
