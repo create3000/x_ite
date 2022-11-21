@@ -56,8 +56,6 @@ import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
 import X3DConstants              from "../Base/X3DConstants.js";
 
-const _dom = Symbol .for ("X_ITE.dom");
-
 const AccessType =
 {
    initializeOnly: X3DConstants .initializeOnly,
@@ -111,9 +109,8 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    parseIntoScene: function (success, error)
    {
-      this .scene [_dom] = this .input;
-      this .success      = success;
-      this .error        = error;
+      this .success = success;
+      this .error   = error;
 
       this .getScene () .setEncoding ("XML");
       this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
@@ -239,6 +236,8 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          var
             profileNameId = xmlElement .getAttribute ("profile"),
             profile       = this .getBrowser () .getProfile (profileNameId || "Full");
+
+         $.data (this .scene, "X3D", xmlElement);
 
          this .getScene () .setProfile (profile);
       }
@@ -714,7 +713,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                throw new Error ("Unknown proto or externproto type '" + name + "'.");
 
             //AP: attach node to DOM xmlElement for access from DOM.
-            xmlElement .x3d = node;
+            $.data (xmlElement, "node", node);
 
             this .defAttribute (xmlElement, node);
             this .addNode (xmlElement, node);
@@ -786,7 +785,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             throw new Error ("Unknown node type '" + xmlElement .nodeName + "', you probably have insufficient component/profile statements.");
 
          //AP: attach node to DOM xmlElement for access from DOM.
-         xmlElement .x3d = node;
+         $.data (xmlElement, "node", node);
 
          this .defAttribute (xmlElement, node);
          this .addNode (xmlElement, node);
@@ -842,7 +841,8 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             destinationNode  = executionContext .getLocalNode (destinationNodeName),
             route            = executionContext .addRoute (sourceNode, sourceField, destinationNode, destinationField);
 
-         xmlElement .x3d = route;
+         //AP: attach node to DOM xmlElement for access from DOM.
+         $.data (xmlElement, "node", route);
       }
       catch (error)
       {

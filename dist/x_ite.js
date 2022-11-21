@@ -56050,8 +56050,6 @@ VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec4f]     = VRMLParser .
 
 
 
-const _dom = Symbol .for ("X_ITE.dom");
-
 const AccessType =
 {
    initializeOnly: Base_X3DConstants.initializeOnly,
@@ -56105,9 +56103,8 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    parseIntoScene: function (success, error)
    {
-      this .scene [_dom] = this .input;
-      this .success      = success;
-      this .error        = error;
+      this .success = success;
+      this .error   = error;
 
       this .getScene () .setEncoding ("XML");
       this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
@@ -56233,6 +56230,8 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          var
             profileNameId = xmlElement .getAttribute ("profile"),
             profile       = this .getBrowser () .getProfile (profileNameId || "Full");
+
+         XMLParser_$.data (this .scene, "X3D", xmlElement);
 
          this .getScene () .setProfile (profile);
       }
@@ -56708,7 +56707,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                throw new Error ("Unknown proto or externproto type '" + name + "'.");
 
             //AP: attach node to DOM xmlElement for access from DOM.
-            xmlElement .x3d = node;
+            XMLParser_$.data (xmlElement, "node", node);
 
             this .defAttribute (xmlElement, node);
             this .addNode (xmlElement, node);
@@ -56780,7 +56779,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
             throw new Error ("Unknown node type '" + xmlElement .nodeName + "', you probably have insufficient component/profile statements.");
 
          //AP: attach node to DOM xmlElement for access from DOM.
-         xmlElement .x3d = node;
+         XMLParser_$.data (xmlElement, "node", node);
 
          this .defAttribute (xmlElement, node);
          this .addNode (xmlElement, node);
@@ -56836,7 +56835,8 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
             destinationNode  = executionContext .getLocalNode (destinationNodeName),
             route            = executionContext .addRoute (sourceNode, sourceField, destinationNode, destinationField);
 
-         xmlElement .x3d = route;
+         //AP: attach node to DOM xmlElement for access from DOM.
+         XMLParser_$.data (xmlElement, "node", route);
       }
       catch (error)
       {
@@ -69512,8 +69512,6 @@ for (const key of Reflect .ownKeys (X3DWorld .prototype))
 
 
 BinaryTransport (FileLoader_$);
-
-const FileLoader_dom = Symbol .for ("X_ITE.dom");
 
 const
    ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:([^]*)$/,
@@ -117543,6 +117541,7 @@ Components .prototype =
 /* harmony default export */ const x_ite_Components = (new Components ());
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(755);
 /*******************************************************************************
  * MIT License
  *
@@ -117571,8 +117570,6 @@ Components .prototype =
 
 
 
-
-const DOMIntegration_dom = Symbol .for ("X_ITE.dom");
 
 class DOMIntegration
 {
@@ -117698,21 +117695,21 @@ class DOMIntegration
 
 	processAttribute (mutation, element)
 	{
-		if (element .x3d)
+		if (DOMIntegration_$.data (element, "node"))
 		{
 			const
 				attributeName = mutation .attributeName,
 				attribute     = element .attributes .getNamedItem (attributeName);
 
-			this .parser .nodeAttribute (attribute, element .x3d);
+			this .parser .nodeAttribute (attribute, DOMIntegration_$.data (element, "node"));
 		}
 		else
 		{
 			// Is an attribute of non-node child such as fieldValue (or ROUTE).
 
 			const
-				parentNode = element .parentNode, // Should always be a node!
-			 	node       = parentNode .x3d; // Need to attach .x3d to ProtoInstance.
+				parentNode = element .parentNode,
+			 	node       = DOMIntegration_$.data (parentNode, "node");
 
 			this .parser .pushExecutionContext (node .getExecutionContext ());
 			this .parser .pushParent (node);
@@ -117733,7 +117730,7 @@ class DOMIntegration
 
 		// Do not add to scene if already parsed as child of inline,
 		// although Scene does not have .x3d so should never happen?
-		if (element .x3d)
+		if (DOMIntegration_$.data (element, "node"))
 		{
 			if (element .nodeName === "Inline" || element .nodeName === "INLINE")
 				this .processInlineElement (element); // Only add dom.
@@ -117752,20 +117749,20 @@ class DOMIntegration
 
 		if (parentNode .parentNode .nodeName === "Inline" || parentNode .parentNode .nodeName === "INLINE")
 		{
-			nodeScene = parentNode .parentNode .x3d .getInternalScene ();
+			nodeScene = DOMIntegration_$.data (parentNode .parentNode, "node") .getInternalScene ();
 		}
-		else if (parentNode .x3d)
+		else if (DOMIntegration_$.data (parentNode, "node"))
 		{
 			// Use parent's scene if non-root, works for inline.
-			nodeScene = parentNode .x3d .getExecutionContext ();
+			nodeScene = DOMIntegration_$.data (parentNode, "node") .getExecutionContext ();
 		}
 
 		this .parser .pushExecutionContext (nodeScene);
 
 		// then check if root node.
-		if (parentNode .x3d)
+		if (DOMIntegration_$.data (parentNode, "node"))
 		{
-			const node = parentNode .x3d;
+			const node = DOMIntegration_$.data (parentNode, "node");
 
 			this .parser .pushParent (node);
 			this .parser .childElement (element);
@@ -117793,13 +117790,16 @@ class DOMIntegration
 	{
 		// Works also for root nodes, as it has to be, since scene .rootNodes is effectively a MFNode in x-ite.
 		// Also removes ROUTE elements.
-		if (element .x3d)
-		{
-			element .x3d .dispose ();
 
-			if (element .nodeName === "ROUTE") // Dispatcher still needs .x3d when dispose processes events.
-				delete element .x3d;
-		}
+		const node = DOMIntegration_$.data (element, "node");
+
+		if (! node)
+			return;
+
+		node .dispose ();
+
+		if (element .nodeName === "ROUTE")
+			DOMIntegration_$.data (element, "node", null);
 	}
 
 	processInlineElements (element)
@@ -117813,27 +117813,31 @@ class DOMIntegration
 
 	processInlineElement (element)
 	{
-		if (element .x3d === undefined)
-			return;
+		const node = DOMIntegration_$.data (element, "node");
 
-		const node = element .x3d;
+		if (! node)
+			return;
 
 		node ._loadState .addInterest ("appendInlineElement", this, element);
 	}
 
-	appendInlineElement (element, loadState)
+	appendInlineElement (element)
 	{
-		const node = element .x3d;
+		const node = DOMIntegration_$.data (element, "node");
 
-		// Add scene as child node of Inline element.
+		// Remove all child nodes.
 
 		while (element .firstChild)
 			element .removeChild (element .lastChild);
 
+		// Add scene as child node of Inline element.
+
 		if (node .checkLoadState () === Base_X3DConstants.COMPLETE_STATE)
 		{
-			if (node .getInternalScene () [DOMIntegration_dom])
-				element .appendChild (node .getInternalScene () [DOMIntegration_dom] .querySelector ("Scene"));
+			const X3DElement = DOMIntegration_$.data (node .getInternalScene (), "X3D");
+
+			if (X3DElement)
+				element .appendChild (X3DElement .querySelector ("Scene"));
 		}
 
 		// Send loadState event.
@@ -117863,13 +117867,16 @@ class DOMIntegration
 	addEventDispatchers (element)
 	{
 		// Check for USE nodes; they do not emit events.
-		if (element .x3d === undefined)
-			return;
 
 		if (element .nodeName === "ROUTE")
 			return;
 
-		for (const field of element .x3d .getFields ())
+		const node = DOMIntegration_$.data (element, "node");
+
+		if (! node)
+			return;
+
+		for (const field of node .getFields ())
 			this .bindFieldCallback (field, element);
 	}
 
@@ -117886,7 +117893,7 @@ class DOMIntegration
 
 	fieldCallback (element, field)
 	{
-		const node = element .x3d;
+		const node = DOMIntegration_$.data (element, "node");
 
 		const event = new CustomEvent (field .getName (), {
 			detail: {
@@ -117905,7 +117912,7 @@ class DOMIntegration
 			now       = Date .now (),
 			timeStamp = node .getBrowser () .getCurrentTime (),
 			dt        = now - timeStamp * 1000,
-			node      = element .x3d;
+			node      = DOMIntegration_$.data (element, "node");
 
 		console .log ("%f: at %f dt of %s ms %s '%s' %s: %s",
 					     now, timeStamp, dt .toFixed (3),

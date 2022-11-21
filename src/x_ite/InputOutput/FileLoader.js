@@ -54,8 +54,6 @@ import DEBUG           from "../DEBUG.js";
 
 BinaryTransport ($);
 
-const _dom = Symbol .for ("X_ITE.dom");
-
 const
    ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:([^]*)$/,
    dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,([^]*)$/,
