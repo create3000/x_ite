@@ -56050,6 +56050,7 @@ VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec4f]     = VRMLParser .
 
 
 
+
 const AccessType =
 {
    initializeOnly: Base_X3DConstants.initializeOnly,
@@ -56723,7 +56724,9 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       catch (error)
       {
          console .warn ("XML Parser Error: ", error .message);
-         //console .error (error);
+
+         if (DEBUG)
+            console .error (error);
       }
    },
    fieldValueElement: function (xmlElement)
@@ -56802,9 +56805,10 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
             return;
          }
 
-         console .error (error);
-
          console .error ("XML Parser Error: " + error .message);
+
+         if (DEBUG)
+            console .error (error);
       }
    },
    routeElement: function (xmlElement)
@@ -56840,8 +56844,10 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       }
       catch (error)
       {
-         console .error (error);
          console .warn ("XML Parser Error: " + error .message);
+
+         if (DEBUG)
+            console .error (error);
       }
    },
    importElement: function (xmlElement)

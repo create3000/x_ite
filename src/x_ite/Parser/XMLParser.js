@@ -55,6 +55,7 @@ import HTMLSupport               from "./HTMLSupport.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
 import X3DConstants              from "../Base/X3DConstants.js";
+import DEBUG                     from "../DEBUG.js";
 
 const AccessType =
 {
@@ -729,7 +730,9 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       catch (error)
       {
          console .warn ("XML Parser Error: ", error .message);
-         //console .error (error);
+
+         if (DEBUG)
+            console .error (error);
       }
    },
    fieldValueElement: function (xmlElement)
@@ -808,9 +811,10 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
          }
 
-         console .error (error);
-
          console .error ("XML Parser Error: " + error .message);
+
+         if (DEBUG)
+            console .error (error);
       }
    },
    routeElement: function (xmlElement)
@@ -846,8 +850,10 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
       catch (error)
       {
-         console .error (error);
          console .warn ("XML Parser Error: " + error .message);
+
+         if (DEBUG)
+            console .error (error);
       }
    },
    importElement: function (xmlElement)
