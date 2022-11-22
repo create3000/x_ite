@@ -394,6 +394,8 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    sceneElement: function (xmlElement)
    {
+      $.data (xmlElement, "node", this .scene);
+
       this .childrenElements (xmlElement);
    },
    childrenElements: function (xmlElement)

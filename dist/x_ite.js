@@ -56391,6 +56391,8 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    sceneElement: function (xmlElement)
    {
+      XMLParser_$.data (xmlElement, "node", this .scene);
+
       this .childrenElements (xmlElement);
    },
    childrenElements: function (xmlElement)
@@ -65910,7 +65912,7 @@ X3DSingleTextureNode .prototype = Object .assign (Object .create (Texturing_X3DT
 
          if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! haveTextureProperties)
          {
-            // Dont generate mipmaps.
+            // Don't generate MipMaps.
             gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
             gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
          }
@@ -117071,8 +117073,8 @@ PixelTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
                inputWidth  = width,
                inputHeight = height;
 
-            width  = Math_Algorithm.nextPowerOfTwo (inputWidth)  * 4;
-            height = Math_Algorithm.nextPowerOfTwo (inputHeight) * 4;
+            width  = Math_Algorithm.nextPowerOfTwo (inputWidth)  * 8;
+            height = Math_Algorithm.nextPowerOfTwo (inputHeight) * 8;
             data   = this .resize (data, inputWidth, inputHeight, width, height);
          }
          else
@@ -117747,7 +117749,7 @@ class DOMIntegration
 		if (element .nodeType !== Node .ELEMENT_NODE)
 			return;
 
-		if (element .nodeName === "Scene" || element .nodeName === "SCENE")
+		if (element .nodeName === "X3D")
 			return;
 
 		if (DOMIntegration_$.data (element, "node"))
@@ -117759,9 +117761,9 @@ class DOMIntegration
 
 		let nodeScene = this .browser .currentScene; // Assume main Scene.
 
-		if (parentNode .parentNode .nodeName === "Inline" || parentNode .parentNode .nodeName === "INLINE")
+		if (parentNode .nodeName .match (/^(?:Scene|SCENE)$/))
 		{
-			nodeScene = DOMIntegration_$.data (parentNode .parentNode, "node") .getInternalScene ();
+			nodeScene = DOMIntegration_$.data (parentNode, "node");
 		}
 		else if (DOMIntegration_$.data (parentNode, "node"))
 		{
@@ -117818,7 +117820,7 @@ class DOMIntegration
 
 	processInlineElements (element)
 	{
-		if (element .nodeName === "Inline" || element .nodeName === "INLINE")
+		if (element .nodeName .match (/^(?:Inline|INLINE)$/))
 			this .processInlineElement (element);
 
 		for (const inlineElement of element .querySelectorAll ("Inline"))
@@ -117863,7 +117865,7 @@ class DOMIntegration
 				const X3DElement = DOMIntegration_$.data (node .getInternalScene (), "X3D");
 
 				if (X3DElement)
-					element .appendChild (X3DElement .querySelector ("Scene"));
+					element .appendChild (X3DElement);
 
 				// Add Inline elements, and connect to node events.
 

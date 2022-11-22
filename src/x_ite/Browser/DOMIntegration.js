@@ -190,7 +190,7 @@ class DOMIntegration
 		if (element .nodeType !== Node .ELEMENT_NODE)
 			return;
 
-		if (element .nodeName === "Scene" || element .nodeName === "SCENE")
+		if (element .nodeName === "X3D")
 			return;
 
 		if ($.data (element, "node"))
@@ -202,9 +202,9 @@ class DOMIntegration
 
 		let nodeScene = this .browser .currentScene; // Assume main Scene.
 
-		if (parentNode .parentNode .nodeName === "Inline" || parentNode .parentNode .nodeName === "INLINE")
+		if (parentNode .nodeName .match (/^(?:Scene|SCENE)$/))
 		{
-			nodeScene = $.data (parentNode .parentNode, "node") .getInternalScene ();
+			nodeScene = $.data (parentNode, "node");
 		}
 		else if ($.data (parentNode, "node"))
 		{
@@ -261,7 +261,7 @@ class DOMIntegration
 
 	processInlineElements (element)
 	{
-		if (element .nodeName === "Inline" || element .nodeName === "INLINE")
+		if (element .nodeName .match (/^(?:Inline|INLINE)$/))
 			this .processInlineElement (element);
 
 		for (const inlineElement of element .querySelectorAll ("Inline"))
@@ -306,7 +306,7 @@ class DOMIntegration
 				const X3DElement = $.data (node .getInternalScene (), "X3D");
 
 				if (X3DElement)
-					element .appendChild (X3DElement .querySelector ("Scene"));
+					element .appendChild (X3DElement);
 
 				// Add Inline elements, and connect to node events.
 
