@@ -18,7 +18,7 @@ Andreas Plesch wrote a nice plug-in for X3D DOM integration. This enables JavaSc
 
 The complete documentation can be found at [https://github.com/andreasplesch/x_ite_dom#x_ite_dom](https://github.com/andreasplesch/x_ite_dom#x_ite_dom).
 
-## How use the Plug-In with X\_ITE
+## How use with X_ITE
 
 Create an HTML or XHTML page and save it, include the »x_ite.min.js«. Now, X3D content can directly be written within the \<x3d-canvas\> element and regular DOM manipulation methods can be used to manipulate the scene graph. This gives X3D authors the ability to combine HTML with X3D. The example below will show a simple Box node in the \<x3d-canvas\> element.
 
