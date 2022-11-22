@@ -199,3 +199,8 @@ function removeRoute ()
   route .remove ();
 }
 ```
+
+## See Also
+
+ * [X3D Encoding : XML](https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html)
+* [X3D Abstract : Node Definitions](https://www.web3d.org/content/x3d-v40-abstract-specification)
