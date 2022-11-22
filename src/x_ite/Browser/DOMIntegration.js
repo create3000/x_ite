@@ -359,9 +359,9 @@ class DOMIntegration
 
 		const event = new CustomEvent (field .getName (), {
 			detail: {
-				node: SFNodeCache .get (node),
+				node: node ? SFNodeCache .get (node) : null,
 				value: field .valueOf (),
-			}
+			},
 		});
 
 		element .dispatchEvent (event);
