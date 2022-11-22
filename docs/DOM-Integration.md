@@ -33,13 +33,13 @@ x3d-canvas {
 }
     </style>
     <script>
-window .addEventListener ('load', function ()
+window .addEventListener ("load", function ()
 {
   const
-    touchSensor = document .querySelector ('TouchSensor'),
-    hitPoint    = document .querySelector ('#hitPoint');
+    touchSensor = document .querySelector ("TouchSensor"),
+    hitPoint    = document .querySelector ("#hitPoint");
 
-  touchSensor .addEventListener ('hitPoint_changed', function (event)
+  touchSensor .addEventListener ("hitPoint_changed", function (event)
   {
     hitPoint .textContent = event .detail .value;
   });
@@ -89,9 +89,9 @@ window .addEventListener ('load', function ()
 If you change an attribute of an X3D element, then the internal state of the node will also change.
 
 ```js
-const material = document .querySelector ('Material')
+const material = document .querySelector ("Material")
 
-material .setAttribute ('diffuseColor', '1 0 0'); // Set diffuse color to red.
+material .setAttribute ("diffuseColor", "1 0 0"); // Set diffuse color to red.
 ```
 
 ## Events
@@ -118,16 +118,16 @@ The contents of the X3D scene can be modified with DOM manipulation methods to c
 function addBlueBox ()
 {
   const
-    scene      = document .querySelector ('Scene'),
-    transform  = document .createElement ('Transform'),
-    shape      = document .createElement ('Shape'),
-    appearance = document .createElement ('Appearance'),
-    material   = document .createElement ('Material'),
-    box        = document .createElement ('Box');
+    scene      = document .querySelector ("Scene"),
+    transform  = document .createElement ("Transform"),
+    shape      = document .createElement ("Shape"),
+    appearance = document .createElement ("Appearance"),
+    material   = document .createElement ("Material"),
+    box        = document .createElement ("Box");
 
-  transform .setAttribute ('id',           'BlueBox');
-  transform .setAttribute ('scale',        '3 5 8');
-  material  .setAttribute ('diffuseColor', '0 0.5 1')
+  transform .setAttribute ("id",           "BlueBox");
+  transform .setAttribute ("scale",        "3 5 8");
+  material  .setAttribute ("diffuseColor", "0 0.5 1")
 
   transform  .appendChild (shape);
   shape      .appendChild (appearance);
@@ -138,7 +138,7 @@ function addBlueBox ()
 
 function removeBlueBox ()
 {
-  const transform = document .querySelector ('#BlueBox');
+  const transform = document .querySelector ("#BlueBox");
 
   transform .remove ();
 }
@@ -164,10 +164,10 @@ Even the contents of Inline nodes can be accessed and modified. The internal sce
 </x3d-canvas>
 ```
 
-Assuming there is a Transform node with 'DEF' name 'Deer' inside the loaded scene 'Deer.x3d', the Transform can be accessed when the Inline is loaded. You should listen to the LoadSensor node's *loadTime* or *isLoaded* field to get informed when this will happen.
+Assuming there is a Transform node with DEF name »Deer« inside the loaded scene »Deer.x3d«, the Transform can be accessed when the Inline is loaded. You should listen to the LoadSensor node's *loadTime* or *isLoaded* field to get informed when this will happen.
 
 ```js
-const transform = document .querySelector ('[DEF=DeerInline] [DEF=Deer]');
+const transform = document .querySelector ("[DEF='DeerInline'] [DEF='Deer']");
 ```
 
 ## Add and Remove Routes
@@ -178,16 +178,16 @@ As well as nodes, routes can also be added and removed using DOM manipulation me
 function addRoute ()
 {
   const
-    scene = document .querySelector ('Scene'),
-    route = document .createElement ('ROUTE');
+    scene = document .querySelector ("Scene"),
+    route = document .createElement ("ROUTE");
 
   // Connect a TimeSensor node to a ScalarInterpolator node.
 
-  route .setAttribute ('id',        'route1');
-  route .setAttribute ('fromNode',  'Timer1');
-  route .setAttribute ('fromField', 'fraction_changed');
-  route .setAttribute ('toNode',    'Interpolator1');
-  route .setAttribute ('toField',   'set_fraction');
+  route .setAttribute ("id",        "route1");
+  route .setAttribute ("fromNode",  "Timer1");
+  route .setAttribute ("fromField", "fraction_changed");
+  route .setAttribute ("toNode",    "Interpolator1");
+  route .setAttribute ("toField",   "set_fraction");
 
   scene .appendChild (route);
 }
