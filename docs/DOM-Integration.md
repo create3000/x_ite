@@ -44,7 +44,7 @@ window .addEventListener ('load', function ()
   touchSensor .addEventListener ('hitPoint_changed', function (event)
   {
     hitPoint .textContent = event .detail .value;
-	});
+  });
 });
     </script>
   </head>
