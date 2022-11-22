@@ -152,7 +152,7 @@ Even the contents of Inline nodes can be accessed and modified. The internal sce
 <x3d-canvas>
   <X3D profile='Interactive' version='4.0'>
     <Scene>
-      <!-- Be aware the double quotes inside the single quotes of the url attribute, because it is an MFString field. -->
+      <!-- Be aware of the double quotes inside the single quotes of the url attribute, because it is an MFString field. -->
       <Inline DEF='DeerInline'
           url='"Deer.x3d"'>
       </Inline>
