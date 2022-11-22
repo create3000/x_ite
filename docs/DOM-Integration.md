@@ -34,6 +34,19 @@ x3d-canvas {
   height: 432px;
 }
     </style>
+    <script>
+window .addEventListener ('load', function ()
+{
+  const
+    touchSensor = document .querySelector ('TouchSensor'),
+    hitPoint    = document .querySelector ('#hitPoint');
+
+  touchSensor .addEventListener ('hitPoint_changed', function (event)
+  {
+    hitPoint .textContent = event .detail .value;
+	});
+});
+    </script>
   </head>
   <body>
     <x3d-canvas>
@@ -68,6 +81,7 @@ x3d-canvas {
          </Scene>
       </X3D>
     </x3d-canvas>
+    <p>TouchSensor.hitPoint_changed: <span id="hitPoint"></span></p>
   </body>
 </html>
 ```
