@@ -14,10 +14,6 @@ Andreas Plesch wrote a nice plug-in for X3D DOM integration. This enables JavaSc
 
 **HTML DOM integration is available by default now.**
 
-### Reference
-
-The complete documentation can be found at [https://github.com/andreasplesch/x_ite_dom#x_ite_dom](https://github.com/andreasplesch/x_ite_dom#x_ite_dom).
-
 ## How use with X_ITE
 
 Create an HTML or XHTML page and save it, include the »x_ite.min.js«. Now, X3D content can directly be written within the \<x3d-canvas\> element and regular DOM manipulation methods can be used to manipulate the scene graph. This gives X3D authors the ability to combine HTML with X3D. The example below will show a simple Box node in the \<x3d-canvas\> element.
@@ -86,4 +82,64 @@ window .addEventListener ('load', function ()
     <p>TouchSensor.hitPoint_changed: <span id="hitPoint"></span></p>
   </body>
 </html>
+```
+
+## Attributes
+
+If you change an attribute of an X3D element, then the internal state of the node will also change.
+
+```js
+const material = document .querySelector ('Material')
+
+material .setAttribute ('diffuseColor', '1 0 0'); // Set diffuse color to red.
+```
+
+## Events
+
+You can add a event listener to any X3D element with the name of the output field you want to listen to. If the field has changed an event will occur.
+
+Events send from a node are of type CustomEvent and have the following properties:
+
+```js
+{
+  type: string,   // name of field
+  detail: {
+    node: SFNode, // node to which the field belongs to
+    value: any,   // new value of field
+  }
+}
+```
+
+## Add and Remove Nodes
+
+The contents of the X3D scene can be modified with DOM manipulation methods to change the scene. You can add and remove nodes to build your own scene.
+
+```js
+function addBlueBox ()
+{
+   const
+      scene      = document .querySelector ('Scene'),
+      transform  = document .createElement ('Transform'),
+      shape      = document .createElement ('Shape'),
+      appearance = document .createElement ('Appearance'),
+      material   = document .createElement ('Material'),
+      box        = document .createElement ('Box');
+
+   transform .setAttribute ('id',           'BlueBox');
+   transform .setAttribute ('scale',        '3 5 8');
+   material  .setAttribute ('diffuseColor', '0 0.5 1')
+
+   transform  .appendChild (shape);
+   shape      .appendChild (appearance);
+   shape      .appendChild (box);
+   appearance .appendChild (material);
+   scene      .appendChild (transform);
+}
+
+function removeBlueBox ()
+{
+   const transform = document .querySelector ('#BlueBox');
+
+   transform .remove ();
+}
 ```
