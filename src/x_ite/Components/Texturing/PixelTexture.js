@@ -224,8 +224,8 @@ PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
                inputWidth  = width,
                inputHeight = height;
 
-            width  = Algorithm .nextPowerOfTwo (inputWidth)  * 4;
-            height = Algorithm .nextPowerOfTwo (inputHeight) * 4;
+            width  = Algorithm .nextPowerOfTwo (inputWidth)  * 8;
+            height = Algorithm .nextPowerOfTwo (inputHeight) * 8;
             data   = this .resize (data, inputWidth, inputHeight, width, height);
          }
          else

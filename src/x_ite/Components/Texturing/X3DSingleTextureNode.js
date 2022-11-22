@@ -112,7 +112,7 @@ X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode
 
          if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! haveTextureProperties)
          {
-            // Dont generate mipmaps.
+            // Don't generate MipMaps.
             gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
             gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
          }
