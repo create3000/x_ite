@@ -163,7 +163,7 @@ Even the contents of Inline nodes can be accessed and modified. The internal sce
 </x3d-canvas>
 ```
 
-Assuming there is a Transform node with 'DEF' name 'Deer' inside the loaded scene 'Deer.x3d', the Transform can be access when the Inline is loaded.
+Assuming there is a Transform node with 'DEF' name 'Deer' inside the loaded scene 'Deer.x3d', the Transform can be access when the Inline is loaded. You should listen to the LoadSensor node's *loadTime* or *isLoaded* field to get informed when this will happen.
 
 ```js
 const transform = document .querySelector ('[DEF=DeerInline] [DEF=Deer]');
