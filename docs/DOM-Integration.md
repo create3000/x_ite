@@ -48,7 +48,7 @@ window .addEventListener ('load', function ()
   </head>
   <body>
     <x3d-canvas>
-      <X3D profile='Interchange' version='4.0'>
+      <X3D profile='Interactive' version='4.0'>
          <Scene>
             <Background
                 skyColor='0.2 0.2 0.2'>
@@ -142,4 +142,29 @@ function removeBlueBox ()
 
    transform .remove ();
 }
+```
+
+## Inline Nodes
+
+Even the contents of Inline nodes can be accessed and modified. The internal scene of the Inline node is attached to the Inline element as child every time the Inline node is completely loaded. To check if an Inline node is loaded use a LoadSensor node.
+
+```html
+<x3d-canvas>
+  <X3D profile='Interactive' version='4.0'>
+    <Scene>
+      <Inline DEF='DeerInline'
+          url='Deer.x3d'>
+      </Inline>
+      <LoadSensor>
+        <Inline USE='DeerInline'></Inline>
+      </LoadSensor>
+    </Scene>
+  </X3D>
+</x3d-canvas>
+```
+
+Assuming there is a Transform node with 'DEF' name 'Deer' inside the loaded scene 'Deer.x3d', the Transform can be access when the Inline is loaded.
+
+```js
+const transform = document .querySelector ('[DEF=DeerInline] [DEF=Deer]');
 ```
