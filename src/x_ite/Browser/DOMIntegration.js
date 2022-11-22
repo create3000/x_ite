@@ -256,8 +256,7 @@ class DOMIntegration
 
 		node .dispose ();
 
-		if (element .nodeName === "ROUTE")
-			$.data (element, "node", null);
+		$.data (element, "node", null);
 	}
 
 	processInlineElements (element)

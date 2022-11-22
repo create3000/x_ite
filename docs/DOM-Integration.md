@@ -35,14 +35,14 @@ x3d-canvas {
     <script>
 window .addEventListener ('load', function ()
 {
-   const
-      touchSensor = document .querySelector ('TouchSensor'),
-      hitPoint    = document .querySelector ('#hitPoint');
+  const
+    touchSensor = document .querySelector ('TouchSensor'),
+    hitPoint    = document .querySelector ('#hitPoint');
 
-   touchSensor .addEventListener ('hitPoint_changed', function (event)
-   {
-      hitPoint .textContent = event .detail .value;
-   });
+  touchSensor .addEventListener ('hitPoint_changed', function (event)
+  {
+    hitPoint .textContent = event .detail .value;
+  });
 });
     </script>
   </head>
@@ -117,30 +117,30 @@ The contents of the X3D scene can be modified with DOM manipulation methods to c
 ```js
 function addBlueBox ()
 {
-   const
-      scene      = document .querySelector ('Scene'),
-      transform  = document .createElement ('Transform'),
-      shape      = document .createElement ('Shape'),
-      appearance = document .createElement ('Appearance'),
-      material   = document .createElement ('Material'),
-      box        = document .createElement ('Box');
+  const
+    scene      = document .querySelector ('Scene'),
+    transform  = document .createElement ('Transform'),
+    shape      = document .createElement ('Shape'),
+    appearance = document .createElement ('Appearance'),
+    material   = document .createElement ('Material'),
+    box        = document .createElement ('Box');
 
-   transform .setAttribute ('id',           'BlueBox');
-   transform .setAttribute ('scale',        '3 5 8');
-   material  .setAttribute ('diffuseColor', '0 0.5 1')
+  transform .setAttribute ('id',           'BlueBox');
+  transform .setAttribute ('scale',        '3 5 8');
+  material  .setAttribute ('diffuseColor', '0 0.5 1')
 
-   transform  .appendChild (shape);
-   shape      .appendChild (appearance);
-   shape      .appendChild (box);
-   appearance .appendChild (material);
-   scene      .appendChild (transform);
+  transform  .appendChild (shape);
+  shape      .appendChild (appearance);
+  shape      .appendChild (box);
+  appearance .appendChild (material);
+  scene      .appendChild (transform);
 }
 
 function removeBlueBox ()
 {
-   const transform = document .querySelector ('#BlueBox');
+  const transform = document .querySelector ('#BlueBox');
 
-   transform .remove ();
+  transform .remove ();
 }
 ```
 
@@ -168,4 +168,34 @@ Assuming there is a Transform node with 'DEF' name 'Deer' inside the loaded scen
 
 ```js
 const transform = document .querySelector ('[DEF=DeerInline] [DEF=Deer]');
+```
+
+## Add and Remove Routes
+
+As well as nodes, routes can also be added and removed using DOM manipulation methods.
+
+```js
+function addRoute ()
+{
+  const
+    scene = document .querySelector ('Scene'),
+    route = document .createElement ('ROUTE');
+
+  // Connect a TimeSensor node to a ScalarInterpolator node.
+
+  route .setAttribute ('id',        'route1');
+  route .setAttribute ('fromNode',  'Timer1');
+  route .setAttribute ('fromField', 'fraction_changed');
+  route .setAttribute ('toNode',    'Interpolator1');
+  route .setAttribute ('toField',   'set_fraction');
+
+  scene .appendChild (route);
+}
+
+function removeRoute ()
+{
+  const route = document .querySelector ("#route1");
+
+  route .remove ();
+}
 ```

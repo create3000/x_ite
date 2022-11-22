@@ -117813,8 +117813,7 @@ class DOMIntegration
 
 		node .dispose ();
 
-		if (element .nodeName === "ROUTE")
-			DOMIntegration_$.data (element, "node", null);
+		DOMIntegration_$.data (element, "node", null);
 	}
 
 	processInlineElements (element)
