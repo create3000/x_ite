@@ -37,14 +37,14 @@ x3d-canvas {
     <script>
 window .addEventListener ('load', function ()
 {
-  const
-    touchSensor = document .querySelector ('TouchSensor'),
-    hitPoint    = document .querySelector ('#hitPoint');
+   const
+      touchSensor = document .querySelector ('TouchSensor'),
+      hitPoint    = document .querySelector ('#hitPoint');
 
-  touchSensor .addEventListener ('hitPoint_changed', function (event)
-  {
-    hitPoint .textContent = event .detail .value;
-  });
+   touchSensor .addEventListener ('hitPoint_changed', function (event)
+   {
+      hitPoint .textContent = event .detail .value;
+   });
 });
     </script>
   </head>
