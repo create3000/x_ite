@@ -63,6 +63,7 @@ X3DEnvironmentalEffectsContext .prototype =
       this [_backgroundTextureProperties] ._boundaryModeR       = "CLAMP_TO_EDGE";
       this [_backgroundTextureProperties] ._minificationFilter  = "NICEST";
       this [_backgroundTextureProperties] ._magnificationFilter = "NICEST";
+      this [_backgroundTextureProperties] ._textureCompression  = "DEFAULT";
       this [_backgroundTextureProperties] .setup ();
 
       this .getBackgroundTextureProperties = function () { return this [_backgroundTextureProperties]; };

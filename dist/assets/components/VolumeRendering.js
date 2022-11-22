@@ -528,9 +528,12 @@ X3DVolumeRenderingContext .prototype =
    getDefaultTransferFunction: function ()
    {
       const textureProperties = new (TextureProperties_default()) (this .getPrivateScene ());
-      textureProperties ._generateMipMaps = true;
-      textureProperties ._boundaryModeS   = "CLAMP_TO_EDGE";
-      textureProperties ._boundaryModeT   = "REPEAT";
+      textureProperties ._boundaryModeS       = "CLAMP_TO_EDGE";
+      textureProperties ._boundaryModeT       = "REPEAT";
+      textureProperties ._magnificationFilter = "DEFAULT";
+      textureProperties ._minificationFilter  = "DEFAULT";
+      textureProperties ._generateMipMaps     = true;
+      textureProperties ._textureCompression  = "DEFAULT";
       textureProperties .setPrivate (true);
       textureProperties .setup ();
 

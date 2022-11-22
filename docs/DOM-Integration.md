@@ -39,9 +39,29 @@ x3d-canvas {
     <x3d-canvas>
       <X3D profile='Interchange' version='4.0'>
          <Scene>
+            <Background
+                skyColor='0.2 0.2 0.2'>
+            </Background>
+            <Viewpoint
+                position='4.75079 5.5764 6.80689'
+                orientation='-0.67979594907481 0.70155548858341 0.2137694179717 0.842769006819'>
+            </Viewpoint>
+            <TouchSensor
+                description='Box Geometry'>
+            </TouchSensor>
             <Shape>
                <Appearance>
-                  <Material></Material>
+                  <Material
+                      diffuseColor='0 0.5 1'>
+                    <PixelTexture
+                        containerField='diffuseTexture'
+                        image='2 2 1 0xff 0x00 0x00 0xff'>
+                      <TextureProperties
+                          boundaryModeS='CLAMP_TO_EDGE'
+                          boundaryModeT='CLAMP_TO_EDGE'>
+                      </TextureProperties>
+                    </PixelTexture>
+                  </Material>
                </Appearance>
                <Box></Box>
             </Shape>

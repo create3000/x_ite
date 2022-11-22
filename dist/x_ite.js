@@ -43242,29 +43242,32 @@ function SFMatrix4Template (TypeName, Type, SFVec3, double)
 
 
 
-const cache = new WeakMap ();
-
 function SFNodeCache () { }
 
 SFNodeCache .prototype =
 {
-   get: function (baseNode)
+   get: (function ()
    {
-      const node = cache .get (baseNode);
+      const cache = new WeakMap ();
 
-      if (node)
+      return function (baseNode)
       {
-         return node;
-      }
-      else
-      {
-         const node = new Fields_SFNode (baseNode);
+         const node = cache .get (baseNode);
 
-         cache .set (baseNode, node);
+         if (node)
+         {
+            return node;
+         }
+         else
+         {
+            const node = new Fields_SFNode (baseNode);
 
-         return node;
-      }
-   },
+            cache .set (baseNode, node);
+
+            return node;
+         }
+      };
+   })(),
 };
 
 /* harmony default export */ const Fields_SFNodeCache = (new SFNodeCache ());
@@ -73687,12 +73690,12 @@ TextureProperties .prototype = Object .assign (Object .create (Core_X3DNode.prot
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "borderWidth",         new x_ite_Fields.SFInt32 ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "anisotropicDegree",   new x_ite_Fields.SFFloat (1)),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "generateMipMaps",     new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "minificationFilter",  new x_ite_Fields.SFString ("DEFAULT")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "magnificationFilter", new x_ite_Fields.SFString ("DEFAULT")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "minificationFilter",  new x_ite_Fields.SFString ("FASTEST")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "magnificationFilter", new x_ite_Fields.SFString ("FASTEST")),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "boundaryModeS",       new x_ite_Fields.SFString ("REPEAT")),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "boundaryModeT",       new x_ite_Fields.SFString ("REPEAT")),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "boundaryModeR",       new x_ite_Fields.SFString ("REPEAT")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "textureCompression",  new x_ite_Fields.SFString ("DEFAULT")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "textureCompression",  new x_ite_Fields.SFString ("FASTEST")),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texturePriority",     new x_ite_Fields.SFFloat ()),
    ]),
    getTypeName: function ()
@@ -73888,6 +73891,7 @@ X3DEnvironmentalEffectsContext .prototype =
       this [_backgroundTextureProperties] ._boundaryModeR       = "CLAMP_TO_EDGE";
       this [_backgroundTextureProperties] ._minificationFilter  = "NICEST";
       this [_backgroundTextureProperties] ._magnificationFilter = "NICEST";
+      this [_backgroundTextureProperties] ._textureCompression  = "DEFAULT";
       this [_backgroundTextureProperties] .setup ();
 
       this .getBackgroundTextureProperties = function () { return this [_backgroundTextureProperties]; };
@@ -93862,6 +93866,7 @@ X3DShapeContext .prototype =
       this [_lineFillTextureProperties] = new Texturing_TextureProperties (this .getPrivateScene ());
       this [_lineFillTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
       this [_lineFillTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
+      this [_lineFillTextureProperties] ._textureCompression  = "DEFAULT";
       this [_lineFillTextureProperties] .setPrivate (true);
       this [_lineFillTextureProperties] .setup ();
 
@@ -96487,8 +96492,8 @@ X3DTexturingContext .prototype =
       this [_defaultTextureProperties] = new Texturing_TextureProperties (this .getPrivateScene ());
       this [_defaultTextureProperties] ._magnificationFilter = "NICEST";
       this [_defaultTextureProperties] ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
-      this [_defaultTextureProperties] ._textureCompression  = "NICEST";
       this [_defaultTextureProperties] ._generateMipMaps     = true;
+      this [_defaultTextureProperties] ._textureCompression  = "NICEST";
 
       this [_defaultTextureProperties] .setup ();
 

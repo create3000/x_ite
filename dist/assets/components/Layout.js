@@ -158,6 +158,7 @@ X3DLayoutContext .prototype =
       this [_screenTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
       this [_screenTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
       this [_screenTextureProperties] ._generateMipMaps     = false;
+      this [_screenTextureProperties] ._textureCompression  = "DEFAULT";
 
       this [_screenTextureProperties] .setup ();
 

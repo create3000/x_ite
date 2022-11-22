@@ -134,6 +134,7 @@ X3DShapeContext .prototype =
       this [_lineFillTextureProperties] = new TextureProperties (this .getPrivateScene ());
       this [_lineFillTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
       this [_lineFillTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
+      this [_lineFillTextureProperties] ._textureCompression  = "DEFAULT";
       this [_lineFillTextureProperties] .setPrivate (true);
       this [_lineFillTextureProperties] .setup ();
 
