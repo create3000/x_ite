@@ -112,7 +112,7 @@ The following services can be used to establish a session and obtain the X3DBrow
 The *selector* argument must be a string containing a valid CSS selector expression to match elements against. If no selector was given, »x3d-canvas« is used as selector string. The return value is the appropriate X3DBrowser object.
 
 ```js
-// Obtain X3DBrowser object of fist x3d-canvas element.
+// Obtain X3DBrowser object of first x3d-canvas element.
 const Browser = X3D .getBrowser ();
 ```
 
