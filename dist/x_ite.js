@@ -118820,6 +118820,14 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
 
       this [_DOMIntegration] = new Browser_DOMIntegration (this);
 
+      if (this .getElement () .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
+      {
+         if (this .getElement () .attr ("src"))
+            this .attributeChangedCallback ("src", undefined, this .getElement () .attr ("src"));
+         else if (this .getElement () .attr ("url"))
+            this .attributeChangedCallback ("url", undefined, this .getElement () .attr ("url"));
+      }
+
       // Print welcome message.
 
       if (this .getInstanceId () > 1) return;
