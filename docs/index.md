@@ -852,7 +852,7 @@ You can always replace »latest« by the version number you prefer.
 <script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.min.js"></script>
 ```
 
-#### For production
+#### For Production
 
 If you are on production and everything works fine, then use a numbered version.
 
