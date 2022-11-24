@@ -7,7 +7,7 @@ use open qw/:std :utf8/;
 
 use Cwd;
 
-my $NO_GIT = 1;
+my $NO_GIT = 0;
 
 # https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
 # Set post buffer to 150 MiB.

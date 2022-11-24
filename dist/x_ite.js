@@ -1,4 +1,4 @@
-/* X_ITE v8.0.0a */(function webpackUniversalModuleDefinition(root, factory) {
+/* X_ITE v8.0.0 */(function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
@@ -36424,7 +36424,7 @@ X3DField .prototype = Object .assign (Object .create (Base_X3DChildObject.protot
    fromString: function (string, scene)
    {
       const
-         X3D        = window [Symbol .for ("X_ITE.X3D-8.0.0a")],
+         X3D        = window [Symbol .for ("X_ITE.X3D-8.0.0")],
          VRMLParser = X3D .require ("x_ite/Parser/VRMLParser"),
          parser     = new VRMLParser (scene);
 
@@ -47394,7 +47394,7 @@ for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
  *
  ******************************************************************************/
 
-/* harmony default export */ const VERSION = ("8.0.0a");
+/* harmony default export */ const VERSION = ("8.0.0");
 
 ;// CONCATENATED MODULE: ./src/x_ite/DEBUG.js
 /*******************************************************************************
@@ -97152,7 +97152,7 @@ Object .assign (X3DBrowserContext,
       X3DBrowserContext_$("x3d-canvas, X3DCanvas") .each (function (_, canvas)
       {
          const
-            X3D     = window [Symbol .for ("X_ITE.X3D-8.0.0a")],
+            X3D     = window [Symbol .for ("X_ITE.X3D-8.0.0")],
             browser = X3D .getBrowser (canvas);
 
          browserContext .call (browser);
@@ -117515,7 +117515,7 @@ Components .prototype =
    addComponent: function ({ name, types, abstractTypes, browserContext, exports })
    {
       const
-         X3D       = window [Symbol .for ("X_ITE.X3D-8.0.0a")],
+         X3D       = window [Symbol .for ("X_ITE.X3D-8.0.0")],
          Namespace = X3D .require ("x_ite/Namespace");
 
       if (types)
@@ -121238,7 +121238,7 @@ x_ite_Namespace.set ("x_ite/X3DCanvas", X3DCanvas);
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-8.0.0a")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-8.0.0")] = x_ite_X3D;
 
 x_ite_X3DCanvas.define ();
 
