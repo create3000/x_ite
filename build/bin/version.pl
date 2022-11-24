@@ -108,6 +108,8 @@ if ($result == 0)
 	# tags
 
 	commit;
+
+	publish ("alpha");
 	publish ($VERSION) unless $ALPHA;
 	publish ("latest") unless $ALPHA;
 
