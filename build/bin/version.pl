@@ -86,12 +86,14 @@ sub docs
 
 	my $home = `cat '$CWD/docs/index.md'`;
 
-	$home =~ s|/code/x_ite/[\d\.]+/|/code/x_ite/$VERSION/|sgo;
+	$home =~ s|/x_ite@[\d\.]+/|/x_ite\@$VERSION/|sgo;
 
 	open HOME, ">", "$CWD/docs/index.md";
 	print HOME $home;
 	close HOME;
 }
+
+say "Waiting for confirmation ...";
 
 my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION now?", "--ok-label=Yes", "--cancel-label=No";
 
@@ -106,22 +108,13 @@ if ($result == 0)
 	# tags
 
 	commit;
-
-	unless ($ALPHA)
-	{
-		publish ($VERSION);
-		publish ("latest");
-	}
+	publish ($VERSION) unless $ALPHA;
+	publish ("latest") unless $ALPHA;
 
 	# code
 
 	update ("alpha");
-
-	unless ($ALPHA)
-	{
-		update ("latest");
-		update ($VERSION);
-	}
+	update ("latest") unless $ALPHA;
 
 	upload;
 }

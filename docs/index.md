@@ -840,14 +840,6 @@ If you are a developer or you always wanna be up to date:
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
 ```
 
-#### Snipped
-
-If you are on production and everything works fine, then use a numbered version.
-
-```html
-<script src="https://create3000.github.io/code/x_ite/8.0.0/x_ite.min.js"></script>
-```
-
 ### jsDelivr CDN
 
 Open Source CDN, free, fast, and reliable.
@@ -858,6 +850,14 @@ You can always replace »latest« by the version number you prefer.
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.min.js"></script>
+```
+
+#### For production
+
+If you are on production and everything works fine, then use a numbered version.
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@8.0.0/dist/x_ite.min.js"></script>
 ```
 
 ## Embedding X\_ITE within a Web Page
