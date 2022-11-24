@@ -101,10 +101,6 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       X3DBrowserContext .prototype .initialize .call (this);
 
-      // Set initial empty scene.
-
-      this .replaceWorld (this .getExecutionContext ());
-
       this [_DOMIntegration] = new DOMIntegration (this);
 
       // Print welcome message.
