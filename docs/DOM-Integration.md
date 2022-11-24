@@ -98,7 +98,7 @@ material .setAttribute ("diffuseColor", "1 0 0"); // Set diffuse color to red.
 
 You can add a event listener to any X3D element with the name of the output field you want to listen to. If the field has changed an event will occur.
 
-Events send from a node are of type CustomEvent and have the following properties:
+Events sent from a node are of type CustomEvent and have the following properties:
 
 ```js
 {
