@@ -630,49 +630,44 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
          this .rotationChaser ._value_changed .addInterest ("set_rotation__", this);
       };
    })(),
-   addSpinning: (function ()
+   addSpinning: function (rotationChange)
    {
-      const
-         direction = new Vector3 (0, 0, 0),
-         rotation  = new Rotation4 (0, 0, 1, 0);
+      this .disconnect ();
 
-      return function (rotationChange)
+      if (this .getStraightenHorizon ())
       {
          const
             viewpoint            = this .getActiveViewpoint (),
             userPosition         = viewpoint .getUserPosition (),
-            userCenterOfRotation = viewpoint .getUserCenterOfRotation ();
+            userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
+            direction            = Vector3 .subtract (userPosition, userCenterOfRotation),
+            rotation             = this .getHorizonRotation (rotationChange),
+            axis                 = this .getUpVector (viewpoint) .copy ();
 
-         this .disconnect ();
+         if (rotation .getAxis () .dot (Vector3 .yAxis) < 0 !== rotation .angle < 0)
+            axis .negate ();
 
-         if (this .getStraightenHorizon ())
+         this .timeSensor ._cycleInterval = Math .PI / (rotationChange .angle * 30);
+         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+         for (let i = 0; i < 65; ++ i)
          {
-            const axis = this .getUpVector (viewpoint);
+            const rotation = new Rotation4 (axis, 2 * Math .PI * i / 64);
 
-            direction .assign (userPosition) .subtract (userCenterOfRotation);
-
-            this .timeSensor ._cycleInterval = Math .PI / (this .rotation .angle * 30);
-            this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-            for (let i = 0; i < 65; ++ i)
-            {
-               rotation .setAxisAngle (axis, 2 * Math .PI * i / 64);
-
-               this .positionInterpolator ._key [i]      = i / 64;
-               this .positionInterpolator ._keyValue [i] = rotation .multVecRot (direction .copy ()) .add (userCenterOfRotation);
-            }
-
-            const lookAtRotation = this .lookAt (userPosition, viewpoint .getUserCenterOfRotation ());
-
-            this .orientationOffset .assign (viewpoint .getUserOrientation ()) .multRight (lookAtRotation .inverse ());
+            this .positionInterpolator ._key [i]      = i / 64;
+            this .positionInterpolator ._keyValue [i] = rotation .multVecRot (direction .copy ()) .add (userCenterOfRotation);
          }
-         else
-         {
-            this .getBrowser () .prepareEvents () .addInterest ("spin", this);
-            this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (rotationChange, SPIN_FACTOR));
-         }
-      };
-   })(),
+
+         const lookAtRotation = this .lookAt (userPosition, viewpoint .getUserCenterOfRotation ());
+
+         this .orientationOffset .assign (viewpoint .getUserOrientation ()) .multRight (lookAtRotation .inverse ());
+      }
+      else
+      {
+         this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+         this .rotation .assign (Rotation4 .Identity) .slerp (rotationChange, SPIN_FACTOR);
+      }
+   },
    spin: function ()
    {
       const viewpoint = this .getActiveViewpoint ();
