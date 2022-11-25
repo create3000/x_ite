@@ -71,7 +71,7 @@ const
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
    MOVE_TIME         = 0.2,
    ROTATE_TIME       = 0.2,
-   MAX_ANGLE         = 0.97;
+   CRITICAL_ANGLE    = 0.97;
 
 function ExamineViewer (executionContext, navigationInfo)
 {
@@ -812,7 +812,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
 
             const userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
 
-            if (Math .abs (this .getUpVector (viewpoint) .dot (userVector)) < MAX_ANGLE)
+            if (Math .abs (this .getUpVector (viewpoint) .dot (userVector)) < CRITICAL_ANGLE)
                return orientationOffsetAfter;
 
             throw new Error ("Critical angle");
