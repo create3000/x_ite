@@ -67,7 +67,7 @@ const
    MOTION_TIME       = 0.05 * 1000,
    SPIN_RELEASE_TIME = 0.04 * 1000,
    SPIN_ANGLE        = 0.003,
-   SPIN_FACTOR       = 0.6,
+   SPIN_FACTOR       = 0.3,
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
    MOVE_TIME         = 0.2,
    ROTATE_TIME       = 0.2,
