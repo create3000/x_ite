@@ -688,7 +688,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
       }
       else
       {
-         const rotation = Rotation4 .Identity .copy () .slerp (this .rotation, SPIN_FACTOR * 60 / this .getBrowser () .getCurrentFrameRate ());
+         const rotation = Rotation4 .slerp (Rotation4 .Identity, this .rotation, SPIN_FACTOR * 60 / this .getBrowser () .getCurrentFrameRate ());
 
          this .orientationOffset .assign (viewpoint ._orientationOffset .getValue ());
 
