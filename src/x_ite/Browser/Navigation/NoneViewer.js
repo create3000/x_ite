@@ -51,9 +51,9 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DViewer            from "./X3DViewer.js";
 
-function NoneViewer (executionContext)
+function NoneViewer (executionContext, navigationInfo)
 {
-   X3DViewer .call (this, executionContext);
+   X3DViewer .call (this, executionContext, navigationInfo);
 }
 
 NoneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),

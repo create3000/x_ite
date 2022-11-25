@@ -72,9 +72,9 @@ const
    MOVE = 0,
    PAN  = 1;
 
-function X3DFlyViewer (executionContext)
+function X3DFlyViewer (executionContext, navigationInfo)
 {
-   X3DViewer .call (this, executionContext);
+   X3DViewer .call (this, executionContext, navigationInfo);
 
    const
       browser = this .getBrowser (),

@@ -52,9 +52,11 @@ import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3           from "../../../standard/Math/Geometry/Box3.js";
 import ViewVolume     from "../../../standard/Math/Geometry/ViewVolume.js";
 
-function X3DViewer (executionContext)
+function X3DViewer (executionContext, navigationInfo)
 {
    X3DBaseNode .call (this, executionContext);
+
+   this .navigationInfo = navigationInfo;
 }
 
 X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -76,7 +78,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    },
    getNavigationInfo: function ()
    {
-      return this .getBrowser () .getActiveLayer () .getNavigationInfo ();
+      return this .navigationInfo;
    },
    getActiveViewpoint: function ()
    {

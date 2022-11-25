@@ -53,9 +53,9 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 
-function WalkViewer (executionContext)
+function WalkViewer (executionContext, navigationInfo)
 {
-   X3DFlyViewer .call (this, executionContext);
+   X3DFlyViewer .call (this, executionContext, navigationInfo);
 }
 
 WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),

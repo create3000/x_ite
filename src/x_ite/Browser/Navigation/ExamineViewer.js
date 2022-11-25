@@ -52,9 +52,12 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DViewer            from "./X3DViewer.js";
 import PositionChaser       from "../../Components/Followers/PositionChaser.js";
 import OrientationChaser    from "../../Components/Followers/OrientationChaser.js";
+import PositionInterpolator from "../../Components/Interpolation/PositionInterpolator.js";
+import TimeSensor           from "../../Components/Time/TimeSensor.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
 
 typeof jquery_mousewheel; // import plugin
 
@@ -70,9 +73,9 @@ const
    ROTATE_TIME       = 0.2,
    MAX_ANGLE         = 0.97;
 
-function ExamineViewer (executionContext)
+function ExamineViewer (executionContext, navigationInfo)
 {
-   X3DViewer .call (this, executionContext);
+   X3DViewer .call (this, executionContext, navigationInfo);
 
    this .button                   = -1;
    this .orientationOffset        = new Rotation4 (0, 0, 1, 0);
@@ -95,6 +98,9 @@ function ExamineViewer (executionContext)
    this .positionChaser           = new PositionChaser (executionContext);
    this .centerOfRotationChaser   = new PositionChaser (executionContext);
    this .rotationChaser           = new OrientationChaser (executionContext);
+
+   this .timeSensor           = new TimeSensor (executionContext);
+   this .positionInterpolator = new PositionInterpolator (executionContext)
 }
 
 ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
@@ -114,6 +120,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
       // Disconnect from spin.
 
       this .getNavigationInfo () ._transitionStart .addInterest ("disconnect", this);
+      browser .getBrowserOptions () ._StraightenHorizon .addInterest ("disconnect", this);
       browser ._activeViewpoint .addInterest ("set_activeViewpoint__", this);
 
       // Bind pointing device events.
@@ -139,6 +146,16 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
       this .rotationChaser ._duration = ROTATE_TIME;
       this .rotationChaser .setPrivate (true);
       this .rotationChaser .setup ();
+
+      this .timeSensor ._loop     = true;
+      this .timeSensor ._stopTime = browser .getCurrentTime ();
+      this .timeSensor .setPrivate (true);
+      this .timeSensor .setup ();
+
+      this .positionInterpolator .setup ();
+
+      this .timeSensor ._fraction_changed .addFieldInterest (this .positionInterpolator ._set_fraction);
+      this .positionInterpolator ._value_changed .addInterest ("spin", this);
 
       this .set_activeViewpoint__ ();
    },
@@ -245,12 +262,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
             this .getBrowser () .setCursor ("DEFAULT");
 
             if (Math .abs (this .rotation .angle) > SPIN_ANGLE && Date .now () - this .motionTime < SPIN_RELEASE_TIME)
-            {
-               if (this .getStraightenHorizon ())
-                  this .rotation = this .getHorizonRotation (this .rotation);
-
                this .addSpinning (this .rotation);
-            }
 
             this ._isActive = false;
             break;
@@ -541,15 +553,6 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
          }
       };
    })(),
-   spin: function ()
-   {
-      const viewpoint = this .getActiveViewpoint ();
-
-      this .orientationOffset .assign (viewpoint ._orientationOffset .getValue ());
-
-      viewpoint ._orientationOffset = this .getOrientationOffset (this .rotation, this .orientationOffset);
-      viewpoint ._positionOffset    = this .getPositionOffset (viewpoint ._positionOffset .getValue (), this .orientationOffset, viewpoint ._orientationOffset .getValue ());
-   },
    set_positionOffset__: function (value)
    {
       const viewpoint = this .getActiveViewpoint ();
@@ -629,16 +632,85 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
    })(),
    addSpinning: (function ()
    {
-      const rotation = new Rotation4 (0, 0, 1, 0);
+      const
+         direction = new Vector3 (0, 0, 0),
+         rotation  = new Rotation4 (0, 0, 1, 0);
 
       return function (rotationChange)
       {
-         this .disconnect ();
-         this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+         const
+            viewpoint            = this .getActiveViewpoint (),
+            userPosition         = viewpoint .getUserPosition (),
+            userCenterOfRotation = viewpoint .getUserCenterOfRotation ();
 
-         this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (rotationChange, SPIN_FACTOR));
+         this .disconnect ();
+
+         if (this .getStraightenHorizon ())
+         {
+            const axis = this .getUpVector (viewpoint);
+
+            direction .assign (userPosition) .subtract (userCenterOfRotation);
+
+            this .timeSensor ._cycleInterval = Math .PI / (this .rotation .angle * 30);
+            this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+            for (let i = 0; i < 65; ++ i)
+            {
+               rotation .setAxisAngle (axis, 2 * Math .PI * i / 64);
+
+               this .positionInterpolator ._key [i]      = i / 64;
+               this .positionInterpolator ._keyValue [i] = rotation .multVecRot (direction .copy ()) .add (userCenterOfRotation);
+            }
+
+            const lookAtRotation = this .lookAt (userPosition, viewpoint .getUserCenterOfRotation ());
+
+            this .orientationOffset .assign (viewpoint .getUserOrientation ()) .multRight (lookAtRotation .inverse ());
+         }
+         else
+         {
+            this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+            this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (rotationChange, SPIN_FACTOR));
+         }
       };
    })(),
+   spin: function ()
+   {
+      const viewpoint = this .getActiveViewpoint ();
+
+      if (this .getStraightenHorizon ())
+      {
+         const
+            position = this .positionInterpolator ._value_changed .getValue (),
+            rotation = this .lookAt (position, viewpoint .getUserCenterOfRotation ());
+
+         const positionOffset = position .copy () .subtract (viewpoint .getPosition ());
+
+         const orientationOffset = viewpoint .getOrientation () .copy () .inverse ()
+            .multRight (this .orientationOffset) .multRight (rotation);
+
+         viewpoint ._positionOffset    = positionOffset;
+         viewpoint ._orientationOffset = orientationOffset;
+      }
+      else
+      {
+         this .orientationOffset .assign (viewpoint ._orientationOffset .getValue ());
+
+         viewpoint ._orientationOffset = this .getOrientationOffset (this .rotation, this .orientationOffset);
+         viewpoint ._positionOffset    = this .getPositionOffset (viewpoint ._positionOffset .getValue (), this .orientationOffset, viewpoint ._orientationOffset .getValue ());
+      }
+   },
+   lookAt: function (fromPoint, toPoint)
+   {
+      const
+         up        = this .getUpVector (this .getActiveViewpoint ()),
+         direction = Vector3 .subtract (fromPoint, toPoint),
+         z         = direction .normalize (),
+         x         = up .copy () .cross (z) .normalize (),
+         y         = z .copy () .cross (x) .normalize (),
+         m         = new Matrix3 (x.x, x.y, x.z, y.x, y.y, y.z, z.x, z.y, z.z);
+
+      return new Rotation4 () .setMatrix (m);
+   },
    addMove: (function ()
    {
       const
@@ -763,9 +835,10 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
          const
             V = rotation .multVecRot (zAxis .assign (Vector3 .zAxis)),
             N = Vector3 .cross (Vector3 .yAxis, V),
-            H = Vector3 .cross (N, Vector3 .yAxis);
+            H = Vector3 .cross (N, Vector3 .yAxis),
+            r = new Rotation4 (Vector3 .zAxis, H);
 
-         return new Rotation4 (Vector3 .zAxis, H);
+         return r;
       };
    })(),
    getUpVector: function (viewpoint)
@@ -786,6 +859,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
       this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this);
       this .rotationChaser         ._value_changed .removeInterest ("set_rotation__",               this);
 
+      this .timeSensor ._stopTime = browser .getCurrentTime ();
       browser .prepareEvents () .removeInterest ("spin", this);
    },
    dispose: function ()
@@ -793,7 +867,11 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
       const browser = this .getBrowser ();
 
       this .disconnect ();
+      this .getNavigationInfo () ._transitionStart .removeInterest ("disconnect", this);
+      browser .getBrowserOptions () ._StraightenHorizon .removeInterest ("disconnect", this);
+
       browser ._activeViewpoint .removeInterest ("set_activeViewpoint__", this);
+
       browser .getSurface () .off (".ExamineViewer");
       $(document) .off (".ExamineViewer" + this .getId ());
    },

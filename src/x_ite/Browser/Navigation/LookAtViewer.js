@@ -65,9 +65,9 @@ const
    MOVE_TIME     = 0.3,
    ROTATE_TIME   = 0.3;
 
-function LookAtViewer (executionContext)
+function LookAtViewer (executionContext, navigationInfo)
 {
-   X3DViewer .call (this, executionContext);
+   X3DViewer .call (this, executionContext, navigationInfo);
 
    this .button                 = -1;
    this .fromVector             = new Vector3 (0, 0, 0);

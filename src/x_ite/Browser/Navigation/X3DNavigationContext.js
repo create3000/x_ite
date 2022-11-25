@@ -191,8 +191,10 @@ X3DNavigationContext .prototype =
    },
    set_viewer__: function (viewer)
    {
-      if (this ._activeNavigationInfo .getValue ())
-         this ._availableViewers = this ._activeNavigationInfo .getValue () ._availableViewers;
+      const navigationInfo = this ._activeNavigationInfo .getValue ();
+
+      if (navigationInfo)
+         this ._availableViewers = navigationInfo ._availableViewers;
       else
          this ._availableViewers .length = 0;
 
@@ -204,26 +206,26 @@ X3DNavigationContext .prototype =
       switch (viewer .getValue ())
       {
          case "EXAMINE":
-            this [_viewerNode] = new ExamineViewer (this);
+            this [_viewerNode] = new ExamineViewer (this, navigationInfo);
             break;
          case "WALK":
-            this [_viewerNode] = new WalkViewer (this);
+            this [_viewerNode] = new WalkViewer (this, navigationInfo);
             break;
          case "FLY":
-            this [_viewerNode] = new FlyViewer (this);
+            this [_viewerNode] = new FlyViewer (this, navigationInfo);
             break;
          case "PLANE":
          case "PLANE_create3000.de":
-            this [_viewerNode] = new PlaneViewer (this);
+            this [_viewerNode] = new PlaneViewer (this, navigationInfo);
             break;
          case "NONE":
-            this [_viewerNode] = new NoneViewer (this);
+            this [_viewerNode] = new NoneViewer (this, navigationInfo);
             break;
          case "LOOKAT":
-            this [_viewerNode] = new LookAtViewer (this);
+            this [_viewerNode] = new LookAtViewer (this, navigationInfo);
             break;
          default:
-            this [_viewerNode] = new ExamineViewer (this);
+            this [_viewerNode] = new ExamineViewer (this, navigationInfo);
             break;
       }
 

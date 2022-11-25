@@ -63,9 +63,9 @@ const
    positionOffset         = new Vector3 (0 ,0, 0),
    centerOfRotationOffset = new Vector3 (0, 0, 0);
 
-function PlaneViewer (executionContext)
+function PlaneViewer (executionContext, navigationInfo)
 {
-   X3DViewer .call (this, executionContext);
+   X3DViewer .call (this, executionContext, navigationInfo);
 
    this .button    = -1;
    this .fromPoint = new Vector3 (0, 0, 0);
