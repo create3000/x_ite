@@ -67,7 +67,7 @@ const
    MOTION_TIME       = 0.05 * 1000,
    SPIN_RELEASE_TIME = 0.04 * 1000,
    SPIN_ANGLE        = 0.003,
-   SPIN_FACTOR       = 0.3,
+   SPIN_FACTOR       = 0.4,
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
    MOVE_TIME         = 0.2,
    ROTATE_TIME       = 0.2,
@@ -668,46 +668,65 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
          this .rotation .assign (rotationChange);
       }
    },
-   spin: function ()
-   {
-      const viewpoint = this .getActiveViewpoint ();
-
-      if (this .getStraightenHorizon ())
-      {
-         const
-            position = this .positionInterpolator ._value_changed .getValue (),
-            rotation = this .lookAt (position, viewpoint .getUserCenterOfRotation ());
-
-         const positionOffset = position .copy () .subtract (viewpoint .getPosition ());
-
-         const orientationOffset = viewpoint .getOrientation () .copy () .inverse ()
-            .multRight (this .orientationOffset) .multRight (rotation);
-
-         viewpoint ._positionOffset    = positionOffset;
-         viewpoint ._orientationOffset = orientationOffset;
-      }
-      else
-      {
-         const rotation = Rotation4 .slerp (Rotation4 .Identity, this .rotation, SPIN_FACTOR * 60 / this .getBrowser () .getCurrentFrameRate ());
-
-         this .orientationOffset .assign (viewpoint ._orientationOffset .getValue ());
-
-         viewpoint ._orientationOffset = this .getOrientationOffset (rotation, this .orientationOffset);
-         viewpoint ._positionOffset    = this .getPositionOffset (viewpoint ._positionOffset .getValue (), this .orientationOffset, viewpoint ._orientationOffset .getValue ());
-      }
-   },
-   lookAt: function (fromPoint, toPoint)
+   spin: (function ()
    {
       const
-         up        = this .getUpVector (this .getActiveViewpoint ()),
-         direction = Vector3 .subtract (fromPoint, toPoint),
-         z         = direction .normalize (),
-         x         = up .copy () .cross (z) .normalize (),
-         y         = z .copy () .cross (x) .normalize (),
-         m         = new Matrix3 (x.x, x.y, x.z, y.x, y.y, y.z, z.x, z.y, z.z);
+         positionOffset    = new Vector3 (0, 0, 0),
+         orientationOffset = new Rotation4 (),
+         rotation          = new Rotation4 ();
 
-      return new Rotation4 () .setMatrix (m);
-   },
+      return function ()
+      {
+         const viewpoint = this .getActiveViewpoint ();
+
+         if (this .getStraightenHorizon ())
+         {
+            const
+               position = this .positionInterpolator ._value_changed .getValue (),
+               rotation = this .lookAt (position, viewpoint .getUserCenterOfRotation ());
+
+            positionOffset .assign (position) .subtract (viewpoint .getPosition ());
+
+            orientationOffset .assign (viewpoint .getOrientation ()) .inverse ()
+               .multRight (this .orientationOffset) .multRight (rotation);
+
+            viewpoint ._positionOffset    = positionOffset;
+            viewpoint ._orientationOffset = orientationOffset;
+         }
+         else
+         {
+            rotation .assign (Rotation4 .Identity) .slerp (this .rotation, SPIN_FACTOR * 60 / this .getBrowser () .getCurrentFrameRate ());
+
+            this .orientationOffset .assign (viewpoint ._orientationOffset .getValue ());
+
+            viewpoint ._orientationOffset = this .getOrientationOffset (rotation, this .orientationOffset);
+            viewpoint ._positionOffset    = this .getPositionOffset (viewpoint ._positionOffset .getValue (), this .orientationOffset, viewpoint ._orientationOffset .getValue ());
+         }
+      };
+   })(),
+   lookAt: (function ()
+   {
+      const
+         x = new Vector3 (0, 0, 0),
+         y = new Vector3 (0, 0, 0),
+         z = new Vector3 (0, 0, 0),
+         m = new Matrix3 (),
+         r = new Rotation4 ();
+
+      return function (fromPoint, toPoint)
+      {
+         const up = this .getUpVector (this .getActiveViewpoint ());
+
+         z .assign (fromPoint) .subtract (toPoint) .normalize ();
+         x .assign (up) .cross (z) .normalize ();
+         y .assign (z) .cross (x) .normalize ();
+
+         m .set (x.x, x.y, x.z, y.x, y.y, y.z, z.x, z.y, z.z);
+         r .setMatrix (m);
+
+         return r;
+      };
+   })(),
    addMove: (function ()
    {
       const
