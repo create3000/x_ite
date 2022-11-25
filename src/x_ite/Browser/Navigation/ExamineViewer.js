@@ -52,7 +52,6 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DViewer            from "./X3DViewer.js";
 import PositionChaser       from "../../Components/Followers/PositionChaser.js";
 import OrientationChaser    from "../../Components/Followers/OrientationChaser.js";
-import PositionInterpolator from "../../Components/Interpolation/PositionInterpolator.js";
 import TimeSensor           from "../../Components/Time/TimeSensor.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
@@ -84,6 +83,8 @@ function ExamineViewer (executionContext, navigationInfo)
    this .fromPoint                = new Vector3 (0, 0, 0);
    this .toPoint                  = new Vector3 (0, 0, 0);
    this .rotation                 = new Rotation4 (0, 0, 1, 0);
+   this .direction                = new Vector3 (0, 0, 0);
+   this .axis                     = new Vector3 (0, 0, 0);
    this .pressTime                = 0;
    this .motionTime               = 0;
 
@@ -99,8 +100,7 @@ function ExamineViewer (executionContext, navigationInfo)
    this .centerOfRotationChaser   = new PositionChaser (executionContext);
    this .rotationChaser           = new OrientationChaser (executionContext);
 
-   this .timeSensor           = new TimeSensor (executionContext);
-   this .positionInterpolator = new PositionInterpolator (executionContext)
+   this .timeSensor = new TimeSensor (executionContext);
 }
 
 ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
@@ -152,10 +152,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
       this .timeSensor .setPrivate (true);
       this .timeSensor .setup ();
 
-      this .positionInterpolator .setup ();
-
-      this .timeSensor ._fraction_changed .addFieldInterest (this .positionInterpolator ._set_fraction);
-      this .positionInterpolator ._value_changed .addInterest ("spin", this);
+      this .timeSensor ._fraction_changed  .addInterest ("spin", this);
 
       this .set_activeViewpoint__ ();
    },
@@ -642,24 +639,19 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
             userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
             direction            = Vector3 .subtract (userPosition, userCenterOfRotation),
             rotation             = this .getHorizonRotation (rotationChange),
-            axis                 = this .getUpVector (viewpoint) .copy ();
+            axis                 = this .getUpVector (viewpoint);
+
+         this .axis .assign (axis);
 
          if (rotation .getAxis () .dot (Vector3 .yAxis) < 0 !== rotation .angle < 0)
-            axis .negate ();
+            this .axis .negate ();
 
          this .timeSensor ._cycleInterval = Math .PI / (rotationChange .angle * SPIN_FACTOR * 30);
          this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
-         for (let i = 0; i < 65; ++ i)
-         {
-            const rotation = new Rotation4 (axis, 2 * Math .PI * i / 64);
+         const lookAtRotation = this .lookAt (userPosition, userCenterOfRotation);
 
-            this .positionInterpolator ._key [i]      = i / 64;
-            this .positionInterpolator ._keyValue [i] = rotation .multVecRot (direction .copy ()) .add (userCenterOfRotation);
-         }
-
-         const lookAtRotation = this .lookAt (userPosition, viewpoint .getUserCenterOfRotation ());
-
+         this .direction .assign (direction);
          this .orientationOffset .assign (viewpoint .getUserOrientation ()) .multRight (lookAtRotation .inverse ());
       }
       else
@@ -671,6 +663,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
    spin: (function ()
    {
       const
+         direction         = new Vector3 (0, 0, 0),
          positionOffset    = new Vector3 (0, 0, 0),
          orientationOffset = new Rotation4 (),
          rotation          = new Rotation4 ();
@@ -682,13 +675,16 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
          if (this .getStraightenHorizon ())
          {
             const
-               position = this .positionInterpolator ._value_changed .getValue (),
-               rotation = this .lookAt (position, viewpoint .getUserCenterOfRotation ());
+               userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
+               fraction             = this .timeSensor ._fraction_changed .getValue (),
+               rotation             = new Rotation4 (this .axis, 2 * Math .PI * fraction),
+               userPosition         = rotation .multVecRot (direction .assign (this .direction)) .add (userCenterOfRotation),
+               lookAtRotation       = this .lookAt (userPosition, viewpoint .getUserCenterOfRotation ());
 
-            positionOffset .assign (position) .subtract (viewpoint .getPosition ());
+            positionOffset .assign (userPosition) .subtract (viewpoint .getPosition ());
 
             orientationOffset .assign (viewpoint .getOrientation ()) .inverse ()
-               .multRight (this .orientationOffset) .multRight (rotation);
+               .multRight (this .orientationOffset) .multRight (lookAtRotation);
 
             viewpoint ._positionOffset    = positionOffset;
             viewpoint ._orientationOffset = orientationOffset;
