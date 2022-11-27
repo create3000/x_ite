@@ -6,16 +6,17 @@ layout: single
 ---
 # What's New
 
-## Upcoming version X_ITE v8.0.0
+## X_ITE v8.0.0 released
 
-*Leipzig, 20th November 2022*: We not yet finally released the new version 8.0.0.
+*Leipzig, 24th November 2022*: We not yet finally released the new version 8.0.0.
 
 {% capture notice-text %}
 #### New Features
 
+- Now based on native JavaScript module system.
 - X_ITE build is now based on WebPack, and a UMD library is build.
+- No more injected \<script\> elements in \<header\> element of page.
 - x_ite_dom is now an integral part of X_ITE.
-- No more injected \<script\> elements in header of page.
 
 {% endcapture %}
 <div class="notice--info">{{ notice-text | markdownify }}</div>
