@@ -64,7 +64,7 @@ None.
 
 ## FieldDefinitionArray
 
-FieldDefinitionArray is an object that represents an array of X3DFieldDefinition objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *fieldDefinitionArrayName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array).
+FieldDefinitionArray is an object that represents an array of X3DFieldDefinition objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *fieldDefinitionArrayName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
 
 ### Instance Creation Method\(s\)
 
@@ -143,7 +143,7 @@ Returns true if the passed SF\* or MF\* *field* of the same type is equals to th
 
 ## SFColor Object
 
-The SFColor object corresponds to a X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.&lt;property&gt;*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (&lt;argument-list&gt;)*, where *sfColorObjectName* is an instance of a SFColor object.
+The SFColor object corresponds to a X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.\<property\>*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (\<argument-list\>)*, where *sfColorObjectName* is an instance of a SFColor object.
 
 ### Instance Creation Method\(s\)
 
@@ -183,7 +183,7 @@ Linearely interpolate in HSV space between source color and destination color by
 
 ## SFColorRGBA Object
 
-The SFColorRGBA object corresponds to a X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.&lt;property&gt;*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (&lt;argument-list&gt;)*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object.
+The SFColorRGBA object corresponds to a X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.\<property\>*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (\<argument-list\>)*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object.
 
 ### Instance Creation Method\(s\)
 
@@ -489,7 +489,7 @@ Set the axis of rotation to the vector passed in *vec*.
 
 #### SFRotation **slerp** (*destRotation, t*)
 
-Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 &lt;= *t* &lt;= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
+Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 \<= *t* \<= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
 
 ## SFVec2d/SFVec2f Object
 
@@ -547,7 +547,7 @@ Returns the geometric length of this vector.
 
 #### SFVec2f **lerp** (*destVector, t*)
 
-Returns a SFVec2f whose value is the linear interpolation between this object's vector and *destVector* at value 0 &lt;= *t* &lt;= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+Returns a SFVec2f whose value is the linear interpolation between this object's vector and *destVector* at value 0 \<= *t* \<= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
 
 #### SFVec2f **min** (*vec*)
 
@@ -641,7 +641,7 @@ Returns the geometric length of this vector.
 
 #### SFVec3f **lerp** (*destVector, t*)
 
-Returns a SFVec3f whose value is the linear interpolation between this object's vector and *destVector* at value 0 &lt;= *t* &lt;= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+Returns a SFVec3f whose value is the linear interpolation between this object's vector and *destVector* at value 0 \<= *t* \<= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
 
 #### SFVec3f **min** (*vec*)
 
@@ -735,7 +735,7 @@ Returns the geometric length of this vector.
 
 #### SFVec4f **lerp** (*destVector, t*)
 
-Returns a SFVec4f whose value is the linear interpolation between this object's vector and *destVector* at value 0 &lt;= *t* &lt;= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+Returns a SFVec4f whose value is the linear interpolation between this object's vector and *destVector* at value 0 \<= *t* \<= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
 
 #### SFVec4f **min** (*vec*)
 
@@ -767,7 +767,7 @@ Returns an SFVec4f whose value is the passed SFVec4f subtracted, componentwise, 
 
 ## X3DArrayField
 
-The X3DArrayField object is the base object of all MF\* objects. It is used to store a one-dimensional array of the corresponding SF\* objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. X3D*ArrayFieldObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.0.
+The X3DArrayField object is the base object of all MF\* objects. It is used to store a one-dimensional array of the corresponding SF\* objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. X3D*ArrayFieldObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.0.
 
 ### Instance Creation Method(s
 
@@ -823,7 +823,7 @@ The `unshift` method inserts the given values to the beginning of an X3DArrayFie
 
 ## MFBool Object
 
-The MFBool object corresponds to a X3D MFBool field. It is used to store a one-dimensional array of SFBool objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfBoolObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.0.
+The MFBool object corresponds to a X3D MFBool field. It is used to store a one-dimensional array of SFBool objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfBoolObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.0.
 
 ### Instance Creation Method\(s\)
 
@@ -843,7 +843,7 @@ None
 
 ## MFColor/MFColorRGBA Object
 
-The MFColor object corresponds to a X3D MFColor field. It is used to store a one-dimensional array of SFColor objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfColorObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index* length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFColor (0, 0, 0).
+The MFColor object corresponds to a X3D MFColor field. It is used to store a one-dimensional array of SFColor objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfColorObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index* length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFColor (0, 0, 0).
 
 ### Instance Creation Method\(s\)
 
@@ -865,7 +865,7 @@ None
 
 ## MFDouble/MFFloat Object
 
-The MFFloat object corresponds to a X3D MFFloat field. It is used to store a one-dimensional array of SFFloat objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfFloatObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.0.
+The MFFloat object corresponds to a X3D MFFloat field. It is used to store a one-dimensional array of SFFloat objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfFloatObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.0.
 
 ### Instance Creation Method\(s\)
 
@@ -885,7 +885,7 @@ None
 
 ## MFImage Object
 
-The MFImage object corresponds to a X3D MFImage field. It is used to store a one-dimensional array of SFImage objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfImageObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFImage (0,0,0).
+The MFImage object corresponds to a X3D MFImage field. It is used to store a one-dimensional array of SFImage objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfImageObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFImage (0,0,0).
 
 ### Instance Creation Method\(s\)
 
@@ -905,7 +905,7 @@ None
 
 ## MFInt32 Object
 
-The MFInt32 object corresponds to a X3D MFInt32 field. It is used to store a one-dimensional array of SFInt32 objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfInt32ObjectName*\[*index\]*, where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.
+The MFInt32 object corresponds to a X3D MFInt32 field. It is used to store a one-dimensional array of SFInt32 objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfInt32ObjectName*\[*index\]*, where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.
 
 ### Instance Creation Method\(s\)
 
@@ -925,7 +925,7 @@ None
 
 ## MFMatrix3d/MFMatrix3f Object
 
-The MFMatrix3f object corresponds to a X3D MFMatrix3f field. It is used to store a one-dimensional array of SFMatrix3f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix3fObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to NULL.
+The MFMatrix3f object corresponds to a X3D MFMatrix3f field. It is used to store a one-dimensional array of SFMatrix3f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix3fObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to NULL.
 
 ### Instance Creation Method\(s\)
 
@@ -945,7 +945,7 @@ None
 
 ## MFMatrix4d/MFMatrix4f Object
 
-The MFMatrix4f object corresponds to a X3D MFMatrix4f field. It is used to store a one-dimensional array of SFMatrix4f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix4fObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to NULL.
+The MFMatrix4f object corresponds to a X3D MFMatrix4f field. It is used to store a one-dimensional array of SFMatrix4f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix4fObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to NULL.
 
 ### Instance Creation Method\(s\)
 
@@ -965,7 +965,7 @@ None
 
 ## MFNode Object
 
-The MFNode object corresponds to a X3D MFNode field. It is used to store a one-dimensional array of SFNode objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfNodeObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to NULL.
+The MFNode object corresponds to a X3D MFNode field. It is used to store a one-dimensional array of SFNode objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfNodeObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to NULL.
 
 ### Instance Creation Method\(s\)
 
@@ -991,7 +991,7 @@ Returns the X3D XML-encoded string that, if parsed as the value of an MFNode fie
 
 ## MFRotation Object
 
-The MFRotation object corresponds to a X3D MFRotation field. It is used to store a one-dimensional array of SFRotation objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfRotationObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFRotation (0, 0, 1, 0).
+The MFRotation object corresponds to a X3D MFRotation field. It is used to store a one-dimensional array of SFRotation objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfRotationObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFRotation (0, 0, 1, 0).
 
 ### Instance Creation Method\(s\)
 
@@ -1011,7 +1011,7 @@ None
 
 ## MFString Object
 
-The MFString object corresponds to a X3D MFString field. It is used to store a one-dimensional array of String objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfStringObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the empty string.
+The MFString object corresponds to a X3D MFString field. It is used to store a one-dimensional array of String objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfStringObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the empty string.
 
 ### Instance Creation Method\(s\)
 
@@ -1031,7 +1031,7 @@ None
 
 ## MFTime Object
 
-The MFTime object corresponds to a X3D MFTime field. It is used to store a one-dimensional array of SFTime objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfTimeObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the empty string.
+The MFTime object corresponds to a X3D MFTime field. It is used to store a one-dimensional array of SFTime objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfTimeObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the empty string.
 
 ### Instance Creation Method\(s\)
 
@@ -1051,7 +1051,7 @@ None
 
 ## MFVec2d/MFVec2f Object
 
-The MFVec2f object corresponds to a X3D MFVec2f field. It is used to store a one-dimensional array of SFVec2f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec2fObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFVec2f (0, 0).
+The MFVec2f object corresponds to a X3D MFVec2f field. It is used to store a one-dimensional array of SFVec2f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec2fObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFVec2f (0, 0).
 
 ### Instance Creation Method\(s\)
 
@@ -1071,7 +1071,7 @@ None
 
 ## MFVec3d/MFVec3f Object
 
-The MFVec3f object corresponds to a X3D MFVec3f field. It is used to store a one-dimensional array of SFVec3f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec3fObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFVec3f (0, 0, 0).
+The MFVec3f object corresponds to a X3D MFVec3f field. It is used to store a one-dimensional array of SFVec3f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec3fObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFVec3f (0, 0, 0).
 
 ### Instance Creation Method\(s\)
 
@@ -1091,7 +1091,7 @@ None
 
 ## MFVec4d/MFVec4f Object
 
-The MFVec4f object corresponds to a X3D MFVec4f field. It is used to store a one-dimensional array of SFVec4f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec4fObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFVec4f (0, 0).
+The MFVec4f object corresponds to a X3D MFVec4f field. It is used to store a one-dimensional array of SFVec4f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec4fObjectName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFVec4f (0, 0).
 
 ### Instance Creation Method\(s\)
 

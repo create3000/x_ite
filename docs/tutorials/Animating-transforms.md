@@ -74,19 +74,19 @@ TimeSensor {
 To create a continuously running timer:
 
 - *loop* **TRUE**
-- *stopTime* &lt;= *startTime*
+- *stopTime* \<= *startTime*
 
-When stop time &lt;= start time, stop time is ignored
+When stop time \<= start time, stop time is ignored
 
 To run until the stop time:
 
 - *loop* **TRUE**
-- *stopTime* &gt; *startTime*
+- *stopTime* \> *startTime*
 
 To run one cycle then stop:
 
 - *loop* **FALSE**
-- *stopTime* &lt;= *startTime*
+- *stopTime* \<= *startTime*
 
 The *set\_startTime* input event:
 

@@ -41,7 +41,7 @@ None.
 
 ## RouteArray
 
-RouteArray is an object that represents an array of X3DRoute objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *routeArrayName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array).
+RouteArray is an object that represents an array of X3DRoute objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *routeArrayName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
 
 ### Instance Creation Method\(s\)
 

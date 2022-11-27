@@ -10,7 +10,7 @@ layout: single
 
 The X3DConstants object is used to define constants values used throughout this language binding. Each property is defined as a numeric, read-only value. The individual values are not specified; these are implementation-dependent. These constants can be used anywhere that a service request wishes to return some fixed value such as if or switch statements. The list of known values are defined in the table below.
 
-The X3DConstants object is unique in ECMAScript in that there is exactly one globally available instance of the object, named X3DConstants. Properties can be accessed using the syntax X3DConstants.&lt;property-name&gt;.
+The X3DConstants object is unique in ECMAScript in that there is exactly one globally available instance of the object, named X3DConstants. Properties can be accessed using the syntax X3DConstants.\<property-name\>.
 
 The object consists solely of read-only properties. It does not define any additional functions.
 

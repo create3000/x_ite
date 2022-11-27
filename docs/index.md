@@ -864,7 +864,7 @@ If you are on production and everything works fine, then use a numbered version.
 
 To display your X3D scene in a HTML5 page first save your scene as X3D XML Encoded file, X3D JSON Encoded file, or as X3D Classic Encoded file, i.e. create a file with the extension .x3d, .x3dj, .x3dv, or .wrl.
 
-The HTML5 page is quite easy to create, the HTML5 code below shows you the minimum requirements. The path to the X3D scene is specified in the src attribute of the &lt;x3d-canvas&gt; element.
+The HTML5 page is quite easy to create, the HTML5 code below shows you the minimum requirements. The path to the X3D scene is specified in the src attribute of the \<x3d-canvas\> element.
 
 ```html
 <!DOCTYPE html>
@@ -885,9 +885,9 @@ x3d-canvas {
 </html>
 ```
 
-To get X_ITE working you must include the JavaScript file »x_ite.min.js«. After x_ite is successfully loaded a new HTML element &lt;x3d-canvas&gt; is available on your page.
+To get X_ITE working you must include the JavaScript file »x_ite.min.js«. After x_ite is successfully loaded a new HTML element \<x3d-canvas\> is available on your page.
 
-**Note:** You can style the &lt;x3d-canvas&gt; element as every HTML element with CSS as well as you can place it everywhere within the DOM tree.
+**Note:** You can style the \<x3d-canvas\> element as every HTML element with CSS as well as you can place it everywhere within the DOM tree.
 {: .notice--info}
 
 ### Supported File Formats
@@ -907,9 +907,9 @@ For more information see [How to Configure Your Web Server](w-To-Configure-Your-
 
 ### Fallback Content
 
-The &lt;x3d-canvas&gt; element is equal to the &lt;canvas&gt; element in that, it is easy to define some fallback content, to be displayed in older browsers not supporting it. You should always provide fallback content to be displayed by those browsers.
+The \<x3d-canvas\> element is equal to the \<canvas\> element in that, it is easy to define some fallback content, to be displayed in older browsers not supporting it. You should always provide fallback content to be displayed by those browsers.
 
-Providing fallback content is very straightforward: just insert the alternate content inside the &lt;x3d-canvas&gt; element. Browsers that don't support &lt;x3d-canvas&gt; will ignore the container and render the fallback content inside it. Browsers that do support &lt;x3d-canvas&gt; will ignore the content inside the container, and just render the canvas normally.
+Providing fallback content is very straightforward: just insert the alternate content inside the \<x3d-canvas\> element. Browsers that don't support \<x3d-canvas\> will ignore the container and render the fallback content inside it. Browsers that do support \<x3d-canvas\> will ignore the content inside the container, and just render the canvas normally.
 
 For example, we could provide a text description of the X3D element or provide a static image of the dynamically rendered content. This can look something like this:
 
@@ -927,7 +927,7 @@ For example, we could provide a text description of the X3D element or provide a
 
 ## Attributes of the x3d-canvas Tag
 
-The HTML **&lt;x3d-canvas&gt;** element defines the main content of the X3D document. The &lt;x3d-canvas&gt; element has three attributes that define different behaviours. All of these attributes are optional.
+The HTML **\<x3d-canvas\>** element defines the main content of the X3D document. The \<x3d-canvas\> element has three attributes that define different behaviours. All of these attributes are optional.
 
 ### cache
 

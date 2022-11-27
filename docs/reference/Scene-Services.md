@@ -322,7 +322,7 @@ None.
 
 ## ProfileInfoArray
 
-ProfileInfoArray is an object that represents an array of ProfileInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *profileInfoArrayName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array).
+ProfileInfoArray is an object that represents an array of ProfileInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *profileInfoArrayName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
 
 ### Instance Creation Method\(s\)
 
@@ -340,7 +340,7 @@ None
 
 ## ComponentInfoArray
 
-ComponentInfoArray is an object that represents an array of ComponentInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *componentInfoArrayName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array).
+ComponentInfoArray is an object that represents an array of ComponentInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *componentInfoArrayName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
 
 ### Instance Creation Method\(s\)
 
@@ -358,7 +358,7 @@ None
 
 ## UnitInfoArray
 
-UnitInfoArray is an object that represents an array of UnitInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *unitInfoArrayName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array).
+UnitInfoArray is an object that represents an array of UnitInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *unitInfoArrayName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
 
 ### Instance Creation Method\(s\)
 

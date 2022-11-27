@@ -31,7 +31,7 @@ Converts the passed String, 's', to a floating point valued number. Numbers can 
 
 ## Math Object
 
-The Math object is unique in ECMAScript in that there is exactly one globally available instance of the object, named Math. Properties can be accessed using the syntax Math.&lt;property-name&gt;. Methods can be invoked using the syntax Math.&lt;function-name&gt; ( &lt;argument-list&gt; ).
+The Math object is unique in ECMAScript in that there is exactly one globally available instance of the object, named Math. Properties can be accessed using the syntax Math.\<property-name\>. Methods can be invoked using the syntax Math.\<function-name\> ( \<argument-list\> ).
 
 ### Instance Creation Method\(s\)
 

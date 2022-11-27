@@ -27,8 +27,8 @@ You can enable smooth shading using the creaseAngle field for:
 
 A crease angle is a threshold angle between two faces:
 
-- If face angle &gt;= crease angle, use facet shading
-- If face angle &lt; crease angle, use smooth shading
+- If face angle \>= crease angle, use facet shading
+- If face angle \< crease angle, use smooth shading
 
 ## Using normals
 

@@ -14,7 +14,7 @@ If you want combine DOM access with X3D access in your JavaScript functions then
 
 ## Introduction
 
-There is the X3D object which is always available, it expects one function handler that is called when the browsers (&lt;x3d-canvas&gt; elements) are ready, and a second function handler, that is called if an error occurred. These two arguments are optional. The return value of the X3D function is a Promise, which can be used instead of the arguments.
+There is the X3D object which is always available, it expects one function handler that is called when the browsers (\<x3d-canvas\> elements) are ready, and a second function handler, that is called if an error occurred. These two arguments are optional. The return value of the X3D function is a Promise, which can be used instead of the arguments.
 
 ```js
 Promise X3D ([callback[, errorCallback]]);
@@ -27,7 +27,7 @@ function callback ()
 function errorCallback (error)
 ```
 
-The external browser can be accessed by calling the `X3D .getBrowser (selector)` function, *selector* can be any CSS selector, if you have only one &lt;x3d-canvas&gt; element on your page, you can omit the selector argument:
+The external browser can be accessed by calling the `X3D .getBrowser (selector)` function, *selector* can be any CSS selector, if you have only one \<x3d-canvas\> element on your page, you can omit the selector argument:
 
 ```html
 <script>

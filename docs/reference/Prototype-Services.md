@@ -97,7 +97,7 @@ Returns the X3D XML-encoded string that, if parsed as the value of createX3DFrom
 
 ## ProtoDeclarationArray
 
-ProtoDeclarationArray is an object that represents an array of X3DProtoDeclaration objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *protoDeclarationArrayName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array).
+ProtoDeclarationArray is an object that represents an array of X3DProtoDeclaration objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *protoDeclarationArrayName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
 
 ### Instance Creation Method\(s\)
 
@@ -115,7 +115,7 @@ None
 
 ## ExternProtoDeclarationArray
 
-ExternProtoDeclarationArray is an object that represents an array of X3DExternProtoDeclaration objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *externProtoDeclarationArrayName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array).
+ExternProtoDeclarationArray is an object that represents an array of X3DExternProtoDeclaration objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *externProtoDeclarationArrayName*\[*index*\], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
 
 ### Instance Creation Method\(s\)
 
