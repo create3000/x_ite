@@ -903,7 +903,7 @@ Additionally files can be compressed using GZip compression.
 | Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml |
 | VRML         | .wrl, .wrz     | model/vrml     |
 
-For more information see [How to Configure Your Web Server](w-To-Configure-Your-Web-Server.html).
+For more information see [How to Configure Your Web Server](How-To-Configure-Your-Web-Server.html).
 
 ### Fallback Content
 
