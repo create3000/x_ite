@@ -64,6 +64,7 @@ class X3DCanvas extends HTMLElement
          shadow = this .attachShadow ({ mode: "open", delegatesFocus: true }),
          link   = document .createElement ("link");
 
+      $(this) .data ("shadow", $(shadow));
       $(this) .data ("loaded", new Promise (function (resolve, reject)
       {
          link .onload  = resolve;
