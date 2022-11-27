@@ -8,13 +8,13 @@ layout: single
 
 ## Overview
 
-X\_ITE is a new 3D JavaScript library entirely written in JavaScript and uses WebGL for 3D rendering. Authors can publish X3D and VRML source online within an HTML5 page with X\_ITE that works with Web browsers **without** prior plugin installation. This gives X3D authors the ability to displays content in 3D, using WebGL 3D graphics technology to display X3D content in several different browsers across several different operating systems. Since X3D is backwardly compatible, X\_ITE can also be used as a VRML viewer.
+X_ITE is a new 3D JavaScript library entirely written in JavaScript and uses WebGL for 3D rendering. Authors can publish X3D and VRML source online within an HTML5 page with X_ITE that works with Web browsers **without** prior plugin installation. This gives X3D authors the ability to displays content in 3D, using WebGL 3D graphics technology to display X3D content in several different browsers across several different operating systems. Since X3D is backwardly compatible, X_ITE can also be used as a VRML viewer.
 
 X3D is an ISO-ratified, royalty-free open standards file format and run-time architecture to represent and communicate 3D scenes and objects specified by the Web 3D Consortium. X3D has evolved from its beginnings as the Virtual Reality Modeling Language (VRML) to the considerably more mature and refined ISO X3D standard. X3D provides a system for the storage, retrieval and playback of real time 3D scene in multiple applications, all within an open architecture to support a wide array of domains and user scenarios.
 
-X\_ITE supports custom shaders, clip planes, reflection mapping, script nodes, prototyping capabilities and event driven programming to provide you with an improved quality level of virtual effects and tools ready for the Internet.
+X_ITE supports custom shaders, clip planes, reflection mapping, script nodes, prototyping capabilities and event driven programming to provide you with an improved quality level of virtual effects and tools ready for the Internet.
 
-**Developer note:** X\_ITE runs best in fresh installs of Google Chrome, Chromium, Firefox, Safari, Opera, and Microsoft Edge. X\_ITE uses the latest JavaScript standard, but is also compatible with older browser, and is available both on your desktop computer and on your modern smart-phone.
+**Developer note:** X_ITE runs best in fresh installs of Google Chrome, Chromium, Firefox, Safari, Opera, and Microsoft Edge. X_ITE uses the latest JavaScript standard, but is also compatible with older browser, and is available both on your desktop computer and on your modern smart-phone.
 {: .notice--info}
 
 If you ever get in trouble, please [file a bug](https://github.com/create3000/x_ite/issues).
@@ -804,11 +804,11 @@ If you ever get in trouble, please [file a bug](https://github.com/create3000/x_
 The VolumeRendering examples are only working if your browser supports WebGL 2, otherwise the examples left black.
 {: .notice}
 
-## Download X\_ITE
+## Download X_ITE
 
-There is a ZIP archive available to locally install X\_ITE on your server. Compressed and uncompressed copies of X\_ITE files are available. The uncompressed file (x\_ite.js) is best used during development or debugging; the compressed file (x\_ite.min.js) saves bandwidth and improves performance in production.
+There is a ZIP archive available to locally install X_ITE on your server. Compressed and uncompressed copies of X_ITE files are available. The uncompressed file (X_ITE.js) is best used during development or debugging; the compressed file (X_ITE.min.js) saves bandwidth and improves performance in production.
 
-[Download X\_ITE ZIP archive](https://create3000.github.io/code/x_ite/latest/x_ite.zip)
+[Download X_ITE ZIP archive](https://create3000.github.io/code/x_ite/latest/x_ite.zip)
 
 ### You also can get it on NPM
 
@@ -824,9 +824,9 @@ const X3D = require ("x_ite")
 
 Make sure that contextIsolation is set to **false** when creating a BrowserWindow instance.
 
-### Using X\_ITE with a CDN
+### Using X_ITE with a CDN
 
-CDNs can offer a performance benefit by hosting X\_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X\_ITE from the same CDN, it won't have to be re-downloaded. To use the X\_ITE CDN, just reference the CSS and JavaScript file in the script element directly from the GitHub CDN or jsDelivr CDN domain.
+CDNs can offer a performance benefit by hosting X_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X_ITE from the same CDN, it won't have to be re-downloaded. To use the X_ITE CDN, just reference the CSS and JavaScript file in the script element directly from the GitHub CDN or jsDelivr CDN domain.
 
 ### GitHub CDN
 
@@ -860,7 +860,7 @@ If you are on production and everything works fine, then use a numbered version.
 <script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@8.0.0/dist/x_ite.min.js"></script>
 ```
 
-## Embedding X\_ITE within a Web Page
+## Embedding X_ITE within a Web Page
 
 To display your X3D scene in a HTML5 page first save your scene as X3D XML Encoded file, X3D JSON Encoded file, or as X3D Classic Encoded file, i.e. create a file with the extension .x3d, .x3dj, .x3dv, or .wrl.
 
@@ -880,24 +880,19 @@ x3d-canvas {
     </style>
   </head>
   <body>
-    <x3d-canvas src="path/to/your/X3D/world.x3d">
-      <p>Your browser may not support all features required by X_ITE.
-         For a better experience, keep your browser up to date.
-         <a href="http://outdatedbrowser.com">Check here for latest versions.</a>
-      </p>
-    </x3d-canvas>
+    <x3d-canvas src="path/to/your/X3D/world.x3d"></x3d-canvas>
   </body>
 </html>
 ```
 
-To get X\_ITE working you must include the JavaScript file »x\_ite.min.js«. After x\_ite is successfully loaded a new HTML element &lt;x3d-canvas&gt; is available on your page.
+To get X_ITE working you must include the JavaScript file »x_ite.min.js«. After x_ite is successfully loaded a new HTML element &lt;x3d-canvas&gt; is available on your page.
 
 **Note:** You can style the &lt;x3d-canvas&gt; element as every HTML element with CSS as well as you can place it everywhere within the DOM tree.
 {: .notice--info}
 
 ### Supported File Formats
 
-As of version 1.19, X\_ITE can now parse either X3D XML Encoding or X3D Classic Encoding. This gives authors the capability to use X\_ITE also as VRML viewer.
+As of version 1.19, X_ITE can now parse either X3D XML Encoding or X3D Classic Encoding. This gives authors the capability to use X_ITE also as VRML viewer.
 
 Additionally files can be compressed using GZip compression.
 
@@ -936,7 +931,7 @@ The HTML **&lt;x3d-canvas&gt;** element defines the main content of the X3D docu
 
 ### cache
 
-A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the cache attribute is `true`. It works by appending "\_={timestamp}" to the GET parameters of every request.
+A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the cache attribute is `true`. It works by appending "_={timestamp}" to the GET parameters of every request.
 {: .notice}
 
 ### contextMenu
@@ -1069,7 +1064,7 @@ Browser .getContextMenu () .setUserMenu (function ()
 
 ## Accessing the External Browser
 
-X\_ITE is designed to provide access to a browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.
+X_ITE is designed to provide access to a browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.
 
 [Learn more how to access the external browser.](Accessing-the-External-Browser.html)
 
@@ -1083,7 +1078,7 @@ We show you a simple example how you can manipulate the X3D DOM in JavaScript li
 
 ## Using Firefox, Chrome and Opera with Local Files
 
-X\_ITE makes use of the XMLHttpRequest object to load files and there's no way round that. But that means files loading using the file:// scheme protocol are subject to the same origin policy and are handled as cross origin requests (CORS) and cross origin requests are only supported for protocol schemes: http, data and https. That means X\_ITE cannot have access to this files.
+X_ITE makes use of the XMLHttpRequest object to load files and there's no way round that. But that means files loading using the file:// scheme protocol are subject to the same origin policy and are handled as cross origin requests (CORS) and cross origin requests are only supported for protocol schemes: http, data and https. That means X_ITE cannot have access to this files.
 
 To work around this problem you must set up a localhost server, than you can access your local files under the web address http://**localhost**/... This can be done using XAMPP from the <https://www.apachefriends.org> website. XAMPP is a completely free, easy to install Apache distribution containing MariaDB, PHP, and Perl. The XAMPP open source package has been set up to be incredibly easy to install and to use.
 
@@ -1091,11 +1086,11 @@ MacOS users can use [Personal Web Server](https://apps.apple.com/de/app/personal
 
 ## Report a Bug
 
-If you run into any bugs or encounter any other abnormal issues with X\_ITE, let us know!
+If you run into any bugs or encounter any other abnormal issues with X_ITE, let us know!
 
 Here's an example of a helpful bug report:
 
 *I fell through a hole on the Resistance map. I was running along the wall near the pool of water and fell through a black hole in the wall. I got stuck and had to leave the match. This happened while playing Search and Destroy.*
 {: .notice--danger}
 
-[X\_ITE Feedback Survey and Bug Report](https://github.com/create3000/x_ite/issues)
+[X_ITE Feedback Survey and Bug Report](https://github.com/create3000/x_ite/issues)
