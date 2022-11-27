@@ -64,11 +64,11 @@ class X3DCanvas extends HTMLElement
          shadow = this .attachShadow ({ mode: "open", delegatesFocus: true }),
          link   = document .createElement ("link");
 
-      shadow .loaded = new Promise (function (resolve, reject)
+      $(this) .data ("loaded", new Promise (function (resolve, reject)
       {
          link .onload  = resolve;
          link .onerror = reject;
-      });
+      }));
 
       link .setAttribute ("rel", "stylesheet");
       link .setAttribute ("type", "text/css");

@@ -108,7 +108,7 @@ function X3DCoreContext (element)
    this [_splashScreen] = splashScreen;
 
    if (shadow .length)
-      shadow .prop ("loaded") .then (function () { browser .show (); });
+      element .data ("loaded") .then (function () { browser .show (); });
 
    this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_instanceId] + ").");
    this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
