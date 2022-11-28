@@ -1,7 +1,8 @@
 ---
 title: Browser Services
+nav: reference
 categories: [Reference]
-tags: [browser services]
+tags: [browser, services]
 ---
 ## Browser Object
 
@@ -55,13 +56,13 @@ Replace the current world with this new scene that has been loaded or constructe
 
 The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 
-#### void|X3DScene **createX3DFromURL** (*MFString url \[, Node node, String event\]*)
+#### void|X3DScene **createX3DFromURL** (*MFString url [, Node node, String event]*)
 
 Parse the passed URL into a X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
 
 If event and node are omitted a X3DScene object is returned.
 
-#### Promise **loadURL** (*MFString url \[, MFString parameter\]*)
+#### Promise **loadURL** (*MFString url [, MFString parameter]*)
 
 Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return. The return value is a Promise object, that is resolved when the new scene is loaded.
 
@@ -359,6 +360,6 @@ Add a route from the passed *sourceField* to the passed *destinationField*.
 
 Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
 
-#### void **loadURL** (*MFString url \[, MFString parameter\]*)
+#### void **loadURL** (*MFString url [, MFString parameter]*)
 
 #### void **setDescription** (*String description*)

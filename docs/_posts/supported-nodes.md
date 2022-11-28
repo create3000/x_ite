@@ -2,7 +2,7 @@
 title: Supported Nodes
 nav: main
 categories: []
-tags: [supported nodes]
+tags: [supported, nodes]
 ---
 ## Overview
 

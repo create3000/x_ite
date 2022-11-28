@@ -2,7 +2,7 @@
 title: How to Configure Your Web-Server
 nav: main
 categories: []
-tags: [configure web-server]
+tags: [configure, web-server]
 ---
 ## X3D MIME Types and File Extensions
 

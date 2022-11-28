@@ -2,12 +2,12 @@
 title: Accessing the External Browser
 nav: main
 categories: []
-tags: [accessing the external browser]
+tags: [accessing, external, browser]
 ---
 
 ## Overview
 
-X\_ITE is designed to provide access to the internal X3D browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.
+X_ITE is designed to provide access to the internal X3D browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.
 
 If you want combine DOM access with X3D access in your JavaScript functions then you probably want to access the external browser object if you want include an external JavaScript file in your HTML page and you don't wanna do it directly a in Script node.
 
@@ -91,9 +91,9 @@ async function foo (url)
 
 #### X3D **noConflict** ()
 
-In X\_ITE's case, the `X3D` function object is the main entry function. If you need to use another JavaScript library alongside X\_ITE, return control of the `X3D` function object back to the other library with a call to `X3D .noConflict ()`. Old references of `X3D` function object are saved during X\_ITE initialization; `X3D .noConflict ()` simply restores them. The return value is the `X3D` function object itself.
+In X_ITE's case, the `X3D` function object is the main entry function. If you need to use another JavaScript library alongside X_ITE, return control of the `X3D` function object back to the other library with a call to `X3D .noConflict ()`. Old references of `X3D` function object are saved during X_ITE initialization; `X3D .noConflict ()` simply restores them. The return value is the `X3D` function object itself.
 
-If for some reason two versions of X\_ITE are loaded (which is not recommended), calling `X3D .noConflict ()` from the second version will return the globally scoped `X3D` object to those of the first version.
+If for some reason two versions of X_ITE are loaded (which is not recommended), calling `X3D .noConflict ()` from the second version will return the globally scoped `X3D` object to those of the first version.
 
 ```html
 <script src="other_lib.js"></script>
@@ -106,7 +106,7 @@ const X_ITE_X3D = X3D .noConflict ();
 
 The following services can be used to establish a session and obtain the X3DBrowser object.
 
-#### X3DBrowser **getBrowser** (*\[selector : String\]*)
+#### X3DBrowser **getBrowser** (*[selector : String]*)
 
 The *selector* argument must be a string containing a valid CSS selector expression to match elements against. If no selector was given, »x3d-canvas« is used as selector string. The return value is the appropriate X3DBrowser object.
 
@@ -210,7 +210,7 @@ Adding HTML controls to your scene is no rocket science. We have added some HTML
 
 ### The JavaScript
 
-```js
+```html
 <script>
 function init ()
 {

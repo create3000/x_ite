@@ -2,7 +2,7 @@
 title: Getting Started
 nav: main
 categories: []
-tags: [getting started]
+tags: [getting, started]
 permalink: /
 ---
 ## Overview
@@ -13,8 +13,8 @@ X3D is an ISO-ratified, royalty-free open standards file format and run-time arc
 
 X_ITE supports custom shaders, clip planes, reflection mapping, script nodes, prototyping capabilities and event driven programming to provide you with an improved quality level of virtual effects and tools ready for the Internet.
 
->**Developer note:** X_ITE runs best in fresh installs of Google Chrome, Chromium, Firefox, Safari, Opera, and Microsoft Edge. X_ITE uses the latest JavaScript standard, but is also compatible with older browser, and is available both on your desktop computer and on your modern smart-phone.
-{: .prompt-info }
+>**Tip:** X_ITE runs best in fresh installs of Google Chrome, Chromium, Firefox, Safari, Opera, and Microsoft Edge. X_ITE uses the latest JavaScript standard, but is also compatible with older browser, and is available both on your desktop computer and on your modern smart-phone.
+{: .prompt-tip }
 
 If you ever get in trouble, please [file a bug](https://github.com/create3000/x_ite/issues).
 
@@ -886,8 +886,8 @@ x3d-canvas {
 
 To get X_ITE working you must include the JavaScript file »x_ite.min.js«. After x_ite is successfully loaded a new HTML element \<x3d-canvas\> is available on your page.
 
->**Note:** You can style the \<x3d-canvas\> element as every HTML element with CSS as well as you can place it everywhere within the DOM tree.
-{: .notice--info}
+>**Tip:** You can style the \<x3d-canvas\> element as every HTML element with CSS as well as you can place it everywhere within the DOM tree.
+{: .prompt-tip }
 
 ### Supported File Formats
 

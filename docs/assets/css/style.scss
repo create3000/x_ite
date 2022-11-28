@@ -12,9 +12,30 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
 /* append your custom style below */
 
 #nav-wrapper {
-   border-left: 1px solid rgba(158,158,158,0.17);
-   margin-bottom: 4rem;
-   transition: top 0.2s ease-in-out;
-   -webkit-animation: fade-up 0.8s;
-   animation: fade-up 0.8s;
+  border-left: 1px solid rgba(158,158,158,0.17);
+  margin-bottom: 4rem;
+  transition: top 0.2s ease-in-out;
+  -webkit-animation: fade-up 0.8s;
+  animation: fade-up 0.8s;
+}
+
+.post h1 {
+  color: var(--link-color);
+  font-weight: bold;
+}
+
+.post h2 {
+  color: #e4e45d;
+}
+
+.post h3 {
+  color: #b9894f;
+}
+
+.post h4 {
+  color: var(--link-color);
+}
+
+.post h4 strong {
+  color: rgb(175, 206, 255);
 }
