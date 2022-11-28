@@ -1,0 +1,19 @@
+{% assign enable_nav = true %}
+{% if site.nav and page.nav %}
+  {% assign enable_nav = true %}
+{% endif %}
+
+{% if enable_nav %}
+{% for item in site.nav[page.nav] %}
+<div id="nav-wrapper">
+  <div class="panel-heading pl-3 pt-2 mb-2">{{ item.title }}</div>
+  <nav id="nav" data-toggle="nav">
+      <ul>
+         {% for item in item.children %}
+            <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+         {% endfor %}
+      </ul>
+  </nav>
+</div>
+{% endfor %}
+{% endif %}

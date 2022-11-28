@@ -1,140 +1,225 @@
+# The Site Configuration
 
-#Theme docs
-#https://github.com/mmistakes/minimal-mistakes
-#https://github.com/mluerig/personal-homepage
+# Import the theme
+theme: jekyll-theme-chirpy
 
-remote_theme: "mmistakes/minimal-mistakes"
-minimal_mistakes_skin: "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise", "default"
+# Change the following value to "/PROJECT_NAME" ONLY IF your site type is GitHub Pages Project sites
+# and doesn"t have a custom domain.
+baseurl: "/x_ite"
 
-# Site Settings
-locale: "en-US"
-title: &title "X_ITE X3D Browser"
-title_separator: "-"
-subtitle: "Ocean of Time and Space"
-name: &name "Holger Seelig"
-description: *name
-words_per_minute: 200
-github: [metadata]
+# The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
+# If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
+# otherwise, the layout language will use the default value of "en".
+lang: en
 
-# Site Author
-author:
-  name: *title
-  avatar: "assets/images/logo.png"
-  bio: "Version 8.0.0"
+
+# Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
+timezone:
+
+# jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
+# ↓ --------------------------
+
+title: X_ITE X3D Browser               # the main title
+
+tagline: Step Into The Future          # it will display as the sub-title
+
+description: >-                        # used by seo meta and the atom feed
+  X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML.
+
+# fill in the protocol & hostname for your site, e.g., "https://username.github.io"
+url: "https://create3000.github.io"
+
+github:
+  username: create3000                  # change to your github username
+
+twitter:
+  username: holger.seelig               # change to your twitter username
+
+social:
+  # Change to your full name.
+  # It will be displayed as the default author of the posts and the copyright owner in the Footer
+  name: Holger Seelig
+  email: holger.seelig@google.com         # change to your email address
   links:
-    - label: "GitHub"
-      icon: "fab fa-2x fa-fw fa-github"
-      url: "https://github.com/create3000/x_ite"
+    # The first element serves as the copyright owner"s link
+    - https://twitter.com/username        # change to your twitter homepage
+    - https://github.com/create3000       # change to your github homepage
+    # Uncomment below to add more social links
+    # - https://www.facebook.com/username
+    # - https://www.linkedin.com/in/username
 
-footer:
-  links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github-square"
-      url: "https://github.com/create3000/x_ite"
-    - label: "D3 X3D"
-      icon: "fas fa-fw fa-link"
-      url: "https://github.com/jamesleesaunders/d3-x3d"
-    - label: "Titania X3D Editor"
-      icon: "fas fa-fw fa-link"
-      url: "https://github.com/create3000/titania/wiki"
-    - label: "Web3D.org"
-      icon: "fas fa-fw fa-link"
-      url: "https://www.web3d.org"
+google_site_verification:                 # fill in to your verification string
 
-# Search
-search: true
-search_full_content: true
-search_provider: google
-google:
-  search_engine_id: 36920ccf3f21ca6d5
+# ↑ --------------------------
+# The end of `jekyll-seo-tag` settings
 
-titles_from_headings:
-  enabled: false
-  strip_title: true
-  collections: true
+google_analytics:
+  id:                 # fill in your Google Analytics ID
+  # Google Analytics pageviews report settings
+  pv:
+    proxy_endpoint:   # fill in the Google Analytics superProxy endpoint of Google App Engine
+    cache_path:       # the local PV cache data, friendly to visitors from GFW region
 
-relative_links:
-  enabled: true
-  collections: true
+# Prefer color scheme setting.
+#
+# Note: Keep empty will follow the system prefer color by default,
+# and there will be a toggle to switch the theme between dark and light
+# on the bottom left of the sidebar.
+#
+# Available options:
+#
+#     light  - Use the light color scheme
+#     dark   - Use the dark color scheme
+#
+theme_mode:   # [light|dark]
 
-plugins:
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jekyll-last-modified-at
-  - jekyll-gist
-  - jekyll-feed
-  - jekyll-include-cache
-  - jekyll-titles-from-headings
-  - jekyll-remote-theme
-  - jekyll-seo-tag
-  - jekyll-relative-links
+# The CDN endpoint for images.
+# Notice that once it is assigned, the CDN url
+# will be added to all image (site avatar & posts" images) paths starting with "/"
+#
+# e.g. "https://cdn.com"
+img_cdn:
 
-# Conversion
-encoding: "utf-8"
-markdown: kramdown
-highlighter: rouge
-lsi: false
-excerpt_separator: "\n\n"
-incremental: false
+# the avatar on sidebar, support local or CORS resources
+avatar: "assets/images/logo.png"
 
-# Markdown Processing
+# boolean type, the global switch for ToC in posts.
+toc: true
+
+comments:
+  active:         # The global switch for posts comments, e.g., "disqus".  Keep it empty means disable
+  # The active options are as follows:
+  disqus:
+    shortname:    # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
+  # utterances settings › https://utteranc.es/
+  utterances:
+    repo:         # <gh-username>/<repo>
+    issue_term:   # < url | pathname | title | ...>
+  # Giscus options › https://giscus.app
+  giscus:
+    repo:              # <gh-username>/<repo>
+    repo_id:
+    category:
+    category_id:
+    mapping:           # optional, default to "pathname"
+    input_position:    # optional, default to "bottom"
+    lang:              # optional, default to the value of `site.lang`
+    reactions_enabled: # optional, default to the value of `1`
+
+# Self-hosted static assets, optional › https://github.com/cotes2020/chirpy-static-assets
+assets:
+  self_host:
+    enabled:      # boolean, keep empty means false
+    # specify the Jekyll environment, empty means both
+    # only works if `assets.self_host.enabled` is "true"
+    env:          # [development|production]
+
+pwa:
+  enabled: true   # the option for PWA feature
+
+paginate:
+
+# ------------ The following options are not recommended to be modified ------------------
+
 kramdown:
-  input: GFM
-  hard_wrap: false
-  auto_ids: true
-  footnote_nr: 1
-  entity_output: as_char
-  toc_levels: 1..6
-  smart_quotes: lsquo,rsquo,ldquo,rdquo
-  enable_coderay: false
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:   # Rouge Options › https://github.com/jneen/rouge#full-options
+    css_class: highlight
+    # default_lang: console
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
 
-# Sass/SCSS
-sass:
-  sass_dir: _sass
-  style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
+collections:
+  tabs:
+    output: true
+    sort_by: order
 
-# Defaults
 defaults:
   - scope:
+      path: ""          # An empty string here means all files in the project
+      type: posts
+    values:
+      layout: post
+      comments: true    # Enable comments in posts.
+      toc: true         # Display TOC column in posts.
+      # DO NOT modify the following parameter unless you are confident enough
+      # to update the code of all other post links in this project.
+      permalink: /:slugified_categories/:slug
+  - scope:
+      path: _drafts
+    values:
+      comments: false
+  - scope:
       path: ""
-      type: pages
+      type: tabs             # see `site.collections`
     values:
-      layout: single
-      classes: wide
-      author_profile: true
-      sidebar:
-        nav: pages
+      layout: page
+      permalink: /:title/
   - scope:
-      path: "reference"
-      type: pages
+      path: assets/img/favicons
     values:
-      layout: single
-      classes: wide
-      author_profile: true
-      sidebar:
-        nav: reference
+      swcache: true
   - scope:
-      path: "tutorials"
-      type: pages
+      path: assets/js/dist
     values:
-      layout: single
-      classes: wide
-      author_profile: true
-      sidebar:
-        nav: tutorials
+      swcache: true
 
-# Fiels and folders
-include:
-  - 404.md
-  - Accessing-the-External-Browser.md
-  - Browser-Support.md
-  - Custom-Shaders.md
-  - Features.md
-  - Glossary.md
-  - How-To-Configure-Your-Web-Server.md
-  - Supported-Nodes.md
-  - What's-New.md
-  - DOM-Integration.md
-  - index.md
-  - reference
-  - tutorials
+sass:
+  style: compressed
+
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  profile: false
+  blanklines: false
+  ignore:
+    envs: [development]
+
+exclude:
+  - "*.gem"
+  - "*.gemspec"
+  - tools
+  - README.md
+  - CHANGELOG.md
+  - LICENSE
+  - gulpfile.js
+  - node_modules
+  - package*.json
+
+jekyll-archives:
+  enabled: [categories, tags]
+  layouts:
+    category: category
+    tag: tag
+  permalinks:
+    tag: /tags/:name/
+    category: /categories/:name/
+
+nav:
+  main:
+    - title: "Quick-Start Guide"
+      children:
+        - title: "Getting Started"
+          url: /x_ite/
+        - title: "What's New"
+          url: /x_ite/what-s-new
+        - title: "Features"
+          url: /x_ite/features
+        - title: "Browser Support"
+          url: /x_ite/browser-support
+        - title: "Supported Nodes"
+          url: /x_ite/supported-nodes
+        - title: "Accessing the External Browser"
+          url: /x_ite/accessing-the-external-browser
+        - title: "DOM Integration"
+          url: /x_ite/dom-integration
+        - title: "Custom Shaders"
+          url: /x_ite/custom-shaders
+        - title: "How To Configure Your Web Server"
+          url: /x_ite/how-to-configure-your-web-server
+        - title: "Glossary"
+          url: /x_ite/glossary
