@@ -76,19 +76,11 @@ sub docs
 {
 	my $VERSION = shift;
 
-	my $config = `cat '$CWD/docs/_config.yml'`;
-
-	$config =~ s|"Version\s+.*?"|"Version $VERSION"|sgo;
-
-	open CONFIG, ">", "$CWD/docs/_config.yml";
-	print CONFIG $config;
-	close CONFIG;
-
-	my $home = `cat '$CWD/docs/index.md'`;
+	my $home = `cat '$CWD/docs/_posts/getting-started.md'`;
 
 	$home =~ s|/x_ite@[\d\.]+/|/x_ite\@$VERSION/|sgo;
 
-	open HOME, ">", "$CWD/docs/index.md";
+	open HOME, ">", "$CWD/docs/_posts/getting-started.md";
 	print HOME $home;
 	close HOME;
 }
