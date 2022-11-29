@@ -15,7 +15,7 @@ Germany
 [+49 176 42 04 79 37](tel:+4917642047937)
 
 **E-Mail**<br/>
-<holger.seelig@create3000.de>
+<holger.seelig@gmail.com>
 
 ## Copyright
 
