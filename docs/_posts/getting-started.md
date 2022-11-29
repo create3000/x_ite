@@ -902,7 +902,7 @@ Additionally files can be compressed using GZip compression.
 | Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml |
 | VRML         | .wrl, .wrz     | model/vrml     |
 
-For more information see [How to Configure Your Web Server](how-to-configure-your-web-server).
+For more information see [How to Configure Your Web Server](how-to-configure-your-web-server.html).
 
 ### Fallback Content
 
@@ -934,7 +934,7 @@ A Boolean value (`true` or `false`) to indicate whether files transferred over t
 
 ### contextMenu
 
-A Boolean value (`true` or `false`) to indicate whether a context menu should be displayed on right click. The default value for the contextMenu attribute is `true`. The context menu can also be extended, [see here](#extending-the-context-menu).
+A Boolean value (`true` or `false`) to indicate whether a context menu should be displayed on right click. The default value for the contextMenu attribute is `true`. The context menu can also be extended, [see here](#extending-the-context-menu.html).
 
 ### notifications
 
@@ -976,7 +976,7 @@ A MFString value with urls that should be loaded on page load. If no url attribu
 
 ### More Options
 
-More options can be adjusted using the [Browser Object](reference/browser-services#browser-object) and [browser options](reference/browser-services#browser-options) for scene specific adjustments.
+More options can be adjusted using the [Browser Object](reference/browser-services.html#browser-object) and [browser options](reference/browser-services.html#browser-options) for scene specific adjustments.
 
 ## Keyboard Shortcuts
 
@@ -1055,13 +1055,13 @@ Browser .getContextMenu () .setUserMenu (function ()
 
 X_ITE is designed to provide access to a browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.
 
-[Learn more how to access the external browser.](accessing-the-external-browser)
+[Learn more how to access the external browser.](accessing-the-external-browser.html)
 
 ## DOM Integration
 
 DOM integration allows you to integrate 3D content seamlessly into your webpage, with just a JavaScript file included the scene can be written directly into the HTML or XHTML markup. There are no further plug-ins needed anymore.
 
-[Learn more about how XHTML and X3D can operate together.](dom-integration)
+[Learn more about how XHTML and X3D can operate together.](dom-integration.html)
 
 We show you a simple example how you can manipulate the X3D DOM in JavaScript like you would do it with any HTML.
 
