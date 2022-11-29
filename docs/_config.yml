@@ -206,123 +206,123 @@ nav:
         - title: "Getting Started"
           url: /x_ite/
         - title: "What's New"
-          url: /x_ite/what-s-new
+          url: /x_ite/what-s-new.html
         - title: "Features"
-          url: /x_ite/features
+          url: /x_ite/features.html
         - title: "Browser Support"
-          url: /x_ite/browser-support
+          url: /x_ite/browser-support.html
         - title: "Supported Nodes"
-          url: /x_ite/supported-nodes
+          url: /x_ite/supported-nodes.html
         - title: "Accessing the External Browser"
-          url: /x_ite/accessing-the-external-browser
+          url: /x_ite/accessing-the-external-browser.html
         - title: "DOM Integration"
-          url: /x_ite/dom-integration
+          url: /x_ite/dom-integration.html
         - title: "Custom Shaders"
-          url: /x_ite/custom-shaders
+          url: /x_ite/custom-shaders.html
         - title: "How To Configure Your Web Server"
-          url: /x_ite/how-to-configure-your-web-server
+          url: /x_ite/how-to-configure-your-web-server.html
         - title: "Glossary"
-          url: /x_ite/glossary
+          url: /x_ite/glossary.html
   reference:
     - title: "JavaScript Reference"
       children:
         - title: "Script Node Authoring Interface"
-          url: /x_ite/reference/script-node-authoring-interface
+          url: /x_ite/reference/script-node-authoring-interface.html
         - title: "ECMAScript Object and Function Definitions"
-          url: /x_ite/reference/ecmascript-object-and-function-definitions
+          url: /x_ite/reference/ecmascript-object-and-function-definitions.html
         - title: "Browser Services"
-          url: /x_ite/reference/browser-services
+          url: /x_ite/reference/browser-services.html
         - title: "Scene Services"
-          url: /x_ite/reference/scene-services
+          url: /x_ite/reference/scene-services.html
         - title: "Field Services and Objects"
-          url: /x_ite/reference/field-services-and-objects
+          url: /x_ite/reference/field-services-and-objects.html
         - title: "Route Services"
-          url: /x_ite/reference/route-services
+          url: /x_ite/reference/route-services.html
         - title: "Prototype Services"
-          url: /x_ite/reference/prototype-services
+          url: /x_ite/reference/prototype-services.html
         - title: "Constants Services"
-          url: /x_ite/reference/constants-services
+          url: /x_ite/reference/constants-services.html
   tutorials-basic:
     - title: "Basic Tutorials"
       children:
         - title: "Hello, World!"
-          url: /x_ite/tutorials/hello-world
+          url: /x_ite/tutorials/hello-world.html
         - title: "Basic Nodes"
-          url: /x_ite/tutorials/basic-nodes
+          url: /x_ite/tutorials/basic-nodes.html
   tutorials-shapes-geometry-and-appearance:
     - title: "Shapes, Geometry, and Appearance"
       children:
         - title: "Introducing X3D"
-          url: /x_ite/tutorials/introducing-x3d
+          url: /x_ite/tutorials/introducing-x3d.html
         - title: "Building a X3D World"
-          url: /x_ite/tutorials/building-a-x3d-world
+          url: /x_ite/tutorials/building-a-x3d-world.html
         - title: "Building Primitive Shapes"
-          url: /x_ite/tutorials/building-primitive-shapes
+          url: /x_ite/tutorials/building-primitive-shapes.html
         - title: "Transforming Shapes"
-          url: /x_ite/tutorials/transforming-shapes
+          url: /x_ite/tutorials/transforming-shapes.html
         - title: "Controlling Appearance with Materials"
-          url: /x_ite/tutorials/controlling-appearance-with-materials
+          url: /x_ite/tutorials/controlling-appearance-with-materials.html
         - title: "Grouping Nodes"
-          url: /x_ite/tutorials/grouping-nodes
+          url: /x_ite/tutorials/grouping-nodes.html
         - title: "Naming Nodes"
-          url: /x_ite/tutorials/naming-nodes
+          url: /x_ite/tutorials/naming-nodes.html
   tutorials-animation-sensors-and-geometry:
     - title: "Animation, Sensors, and Geometry"
       children:
         - title: "Introducing Animation"
-          url: /x_ite/tutorials/introducing-animation
+          url: /x_ite/tutorials/introducing-animation.html
         - title: "Animating Transforms"
-          url: /x_ite/tutorials/animating-transforms
+          url: /x_ite/tutorials/animating-transforms.html
         - title: "Sensing Viewer Actions"
-          url: /x_ite/tutorials/sensing-viewer-actions
+          url: /x_ite/tutorials/sensing-viewer-actions.html
         - title: "Building Shapes out of Points, Lines, and Faces"
-          url: /x_ite/tutorials/building-shapes-out-of-points-lines-and-faces
+          url: /x_ite/tutorials/building-shapes-out-of-points-lines-and-faces.html
         - title: "Building Elevation Grids"
-          url: /x_ite/tutorials/building-elevation-grids
+          url: /x_ite/tutorials/building-elevation-grids.html
         - title: "Building Extruded Shapes"
-          url: /x_ite/tutorials/building-extruded-shapes
+          url: /x_ite/tutorials/building-extruded-shapes.html
         - title: "Controlling Color on Coordinate-Based Geometry"
-          url: /x_ite/tutorials/controlling-color-on-coordinate-based-geometry
+          url: /x_ite/tutorials/controlling-color-on-coordinate-based-geometry.html
         - title: "Controlling Shading on Coordinate-Based Geometry"
-          url: /x_ite/tutorials/controlling-shading-on-coordinate-based-geometry
+          url: /x_ite/tutorials/controlling-shading-on-coordinate-based-geometry.html
   tutorials-textures-lights-and-environment:
     - title: "Textures, Lights, and Environment"
       children:
         - title: "Mapping Textures"
-          url: /x_ite/tutorials/mapping-textures
+          url: /x_ite/tutorials/mapping-textures.html
         - title: "Controlling How Textures are Mapped"
-          url: /x_ite/tutorials/controlling-how-textures-are-mapped
+          url: /x_ite/tutorials/controlling-how-textures-are-mapped.html
         - title: "Lighting Your World"
-          url: /x_ite/tutorials/lighting-your-world
+          url: /x_ite/tutorials/lighting-your-world.html
         - title: "Adding Backgrounds"
-          url: /x_ite/tutorials/adding-backgrounds
+          url: /x_ite/tutorials/adding-backgrounds.html
         - title: "Adding Fog"
-          url: /x_ite/tutorials/adding-fog
+          url: /x_ite/tutorials/adding-fog.html
         - title: "Adding Sound"
-          url: /x_ite/tutorials/adding-sound
+          url: /x_ite/tutorials/adding-sound.html
         - title: "Controlling the Viewpoint"
-          url: /x_ite/tutorials/controlling-the-viewpoint
+          url: /x_ite/tutorials/controlling-the-viewpoint.html
         - title: "Controlling Navigation"
-          url: /x_ite/tutorials/controlling-navigation
+          url: /x_ite/tutorials/controlling-navigation.html
         - title: "Sensing the Viewer"
-          url: /x_ite/tutorials/sensing-the-viewer
+          url: /x_ite/tutorials/sensing-the-viewer.html
   tutorials-scripts-and-prototypes:
     - title: "Scripts and Prototypes"
       children:
         - title: "Controlling Detail"
-          url: /x_ite/tutorials/controlling-detail
+          url: /x_ite/tutorials/controlling-detail.html
         - title: "Introducing Script Use"
-          url: /x_ite/tutorials/introducing-script-use
+          url: /x_ite/tutorials/introducing-script-use.html
         - title: "Writing Program Scripts with ECMAScript"
-          url: /x_ite/tutorials/writing-program-scripts-with-ecmascript
+          url: /x_ite/tutorials/writing-program-scripts-with-ecmascript.html
         - title: "Creating New Node Types"
-          url: /x_ite/tutorials/creating-new-node-types
+          url: /x_ite/tutorials/creating-new-node-types.html
         - title: "Providing Information About Your World"
-          url: /x_ite/tutorials/providing-information-about-your-world
+          url: /x_ite/tutorials/providing-information-about-your-world.html
   tutorials-optimize-your-scene:
     - title: "Optimize Your Scene"
       children:
         - title: "Improving Performance"
-          url: /x_ite/tutorials/improving-performance
+          url: /x_ite/tutorials/improving-performance.html
         - title: "Increasing Rendering Speed"
-          url: /x_ite/tutorials/increasing-rendering-speed
+          url: /x_ite/tutorials/increasing-rendering-speed.html
