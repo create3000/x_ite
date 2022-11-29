@@ -14,7 +14,7 @@ The only hardware and software requirement for most of the tutorials is a comput
 
 Simple, fast and efficient, our X3D tutorials give you all the tips and tricks to advance in the construction of your project.
 
-- [Hello, World](Hello,-World!.html)
+- [Hello, World](Hello-World.html)
   - First let's go over to the »Hello World« tutorial, which displays a simple earth and the text »Hello World!«.
 - [A Quick Overview: Basic Nodes](Basic-Nodes.html)
   - Here are the basic nodes described, which are often used in an X3D world.

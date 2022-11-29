@@ -84,12 +84,7 @@ Shape {
 ## Using comments
 
 ```js
----
-title: A Cylinder
-nav: tutorials
-categories: [Tutorials]
-tags: [a cylinder]
----
+# A Cylinder
 ```
 
 - Comments start with a number-sign (**\#**) and extend to the end of the line
