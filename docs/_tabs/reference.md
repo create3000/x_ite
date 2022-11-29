@@ -1,5 +1,6 @@
 ---
 # the default layout is 'page'
 order: 1
-redirect_to: /reference/script-node-authoring-interface
+redirect: /x_ite/reference/script-node-authoring-interface
+layout: redirect
 ---
