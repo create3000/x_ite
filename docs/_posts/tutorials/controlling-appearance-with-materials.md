@@ -121,11 +121,11 @@ Colors specify:
 | Cyan   | 0.0 | 1.0   | 1.0  | ![cyan][]   |
 | Brown  | 0.5 | 0.2   | 0    | ![brown][]  |
 
-  [white]: https://via.placeholder.com/15/ffffff/000000?text=+
-  [red]: https://via.placeholder.com/15/ff0000/000000?text=+
-  [yellow]: https://via.placeholder.com/15/fff000/000000?text=+
-  [cyan]: https://via.placeholder.com/15/00ffff/000000?text=+
-  [brown]: https://via.placeholder.com/15/692929/000000?text=+
+  [white]: https://via.placeholder.com/15/ffffff/ffffff
+  [red]: https://via.placeholder.com/15/ff0000/ff0000
+  [yellow]: https://via.placeholder.com/15/fff000/fff000
+  [cyan]: https://via.placeholder.com/15/00ffff/00ffff
+  [brown]: https://via.placeholder.com/15/692929/692929
 
 ## Syntax: Material
 
