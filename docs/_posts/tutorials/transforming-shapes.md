@@ -1,6 +1,6 @@
 ---
 title: Transforming Shapes
-nav: tutorials
+nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
 tags: [transforming, shapes]
 ---

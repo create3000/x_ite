@@ -1,6 +1,6 @@
 ---
 title: Controlling Detail
-nav: tutorials
+nav: tutorials-scripts-and-prototypes
 categories: [Tutorials]
 tags: [controlling, detail]
 ---

@@ -10,7 +10,7 @@
   <nav id="pages">
     <ul>
       {% for item in item.children %}
-        <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+        <li><a href="{{ item.url }}" {% if item.url contains page.url %}class="active"{% endif %}>{{ item.title }}</a></li>
       {% endfor %}
     </ul>
   </nav>

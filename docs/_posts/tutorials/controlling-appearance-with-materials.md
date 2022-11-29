@@ -1,6 +1,6 @@
 ---
 title: Controlling Appearance with Materials
-nav: tutorials
+nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
 tags: [controlling, appearance, materials]
 ---

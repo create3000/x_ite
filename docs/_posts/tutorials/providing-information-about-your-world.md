@@ -1,6 +1,6 @@
 ---
 title: Providing Information About Your World
-nav: tutorials
+nav: tutorials-scripts-and-prototypes
 categories: [Tutorials]
 tags: [providing, information, world]
 ---

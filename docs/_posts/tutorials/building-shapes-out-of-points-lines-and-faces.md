@@ -1,7 +1,6 @@
-
 ---
 title: Building Shapes out of Points, Lines, and Faces
-nav: tutorials
+nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
 tags: [building, shapes, points, lines, faces]
 ---

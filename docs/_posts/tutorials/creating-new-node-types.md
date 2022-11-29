@@ -1,6 +1,6 @@
 ---
 title: Creating New Node Types
-nav: tutorials
+nav: tutorials-scripts-and-prototypes
 categories: [Tutorials]
 tags: [creating, node, types]
 ---

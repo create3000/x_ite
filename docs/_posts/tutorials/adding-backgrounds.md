@@ -1,6 +1,6 @@
 ---
 title: Adding Backgrounds
-nav: tutorials
+nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
 tags: [background]
 ---

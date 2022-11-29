@@ -1,6 +1,6 @@
 ---
 title: Build Extruded Shapes
-nav: tutorials
+nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
 tags: [build, extruded, shapes]
 ---

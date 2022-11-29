@@ -1,6 +1,6 @@
 ---
 title: Sensing the Viewer
-nav: tutorials
+nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
 tags: [sensing, viewer]
 ---

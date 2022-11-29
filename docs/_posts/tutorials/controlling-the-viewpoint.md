@@ -1,6 +1,6 @@
 ---
 title: Controlling the Viewpoint
-nav: tutorials
+nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
 tags: [controlling, viewpoint]
 ---

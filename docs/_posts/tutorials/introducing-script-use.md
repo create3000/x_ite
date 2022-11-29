@@ -1,6 +1,6 @@
 ---
 title: Introducing Script Use
-nav: tutorials
+nav: tutorials-scripts-and-prototypes
 categories: [Tutorials]
 tags: [introducing, script]
 ---

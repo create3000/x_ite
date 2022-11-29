@@ -1,6 +1,6 @@
 ---
 title: Introducing Animations
-nav: tutorials
+nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
 tags: [introducing, animations]
 ---

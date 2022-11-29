@@ -1,6 +1,6 @@
 ---
 title: Increasing Rendering Speed
-nav: tutorials
+nav: tutorials-optimize-your-scene
 categories: [Tutorials]
 tags: [increasing, rendering, speed]
 ---

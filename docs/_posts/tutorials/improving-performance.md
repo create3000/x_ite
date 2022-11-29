@@ -1,6 +1,6 @@
 ---
 title: Improving Performance
-nav: tutorials
+nav: tutorials-optimize-your-scene
 categories: [Tutorials]
 tags: [improving, performance]
 ---

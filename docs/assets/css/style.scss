@@ -19,6 +19,10 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   animation: fade-up 0.8s;
 }
 
+#nav-wrapper a.active {
+  color: rgb(168, 182, 206);
+}
+
 .post h1 {
   color: var(--link-color);
   font-weight: bold;

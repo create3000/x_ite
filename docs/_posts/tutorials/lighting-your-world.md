@@ -1,6 +1,6 @@
 ---
 title: Lighting Your World
-nav: tutorials
+nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
 tags: [lighting, world]
 ---

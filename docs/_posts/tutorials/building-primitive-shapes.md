@@ -1,6 +1,6 @@
 ---
 title: Building Primitive Shapes
-nav: tutorials
+nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
 tags: [building, primitive, shapes]
 ---

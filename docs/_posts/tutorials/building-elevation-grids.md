@@ -1,6 +1,6 @@
 ---
 title: Building Elevation Grids
-nav: tutorials
+nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
 tags: [building, elevation grids]
 ---

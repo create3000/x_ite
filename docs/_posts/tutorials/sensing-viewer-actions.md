@@ -1,6 +1,6 @@
 ---
 title: Sensing Viewer Actions
-nav: tutorials
+nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
 tags: [sensing, viewer, actions]
 ---

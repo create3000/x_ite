@@ -1,6 +1,6 @@
 ---
 title: Mapping Textures
-nav: tutorials
+nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
 tags: [mapping, textures]
 ---

@@ -1,6 +1,6 @@
 ---
 title: Animating Transforms
-nav: tutorials
+nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
 tags: [animating, transforms]
 ---

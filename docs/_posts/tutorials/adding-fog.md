@@ -1,6 +1,6 @@
 ---
 title: Adding Fog
-nav: tutorials
+nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
 tags: [fog]
 ---

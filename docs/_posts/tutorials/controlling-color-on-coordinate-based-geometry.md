@@ -1,6 +1,6 @@
 ---
 title: Controlling Color on Coordinate-Based Geometry
-nav: tutorials
+nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
 tags: [controlling, color, coordinate, geometry]
 ---

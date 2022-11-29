@@ -1,6 +1,6 @@
 ---
 title: Hello, World!
-nav: tutorials
+nav: tutorials-basic
 categories: [Tutorials]
 tags: [hello, world]
 ---

@@ -1,6 +1,6 @@
 ---
 title: Controlling How Textures are Mapped
-nav: tutorials
+nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
 tags: [controlling, textures, mapped]
 ---

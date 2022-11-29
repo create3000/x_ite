@@ -1,6 +1,6 @@
 ---
 title: Introducing X3D
-nav: tutorials
+nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
 tags: [introducing]
 ---

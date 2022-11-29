@@ -1,6 +1,6 @@
 ---
 title: Writing Program Scripts with ECMAScript
-nav: tutorials
+nav: tutorials-scripts-and-prototypes
 categories: [Tutorials]
 tags: [program, scripts, ecmascript, javascript]
 ---

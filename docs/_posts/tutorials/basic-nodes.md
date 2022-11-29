@@ -1,6 +1,6 @@
 ---
 title: Basic Nodes
-nav: tutorials
+nav: tutorials-basic
 categories: [Tutorials]
 tags: [basic, nodes]
 ---

@@ -1,6 +1,6 @@
 ---
 title: Controlling Shading on Coordinate-Based Geometry
-nav: tutorials
+nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
 tags: [controlling, shading, coordinate, geometry]
 ---

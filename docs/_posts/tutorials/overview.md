@@ -6,9 +6,9 @@ tags: [tutorials]
 ---
 ## Overview
 
-We offer here a couple of introductory X3D tutorials on X3D concepts. It serves as background material for Titania and X\_ITE.
+We offer here a couple of introductory X3D tutorials on X3D concepts. It serves as background material for Titania and X_ITE.
 
-The only hardware and software requirement for most of the tutorials is a computer with the latest version of Titania or your favorite text editor and X\_ITE. Titania has extensive documentation. It is the perfect environment to get started in creating sensational X3D scenes.
+The only hardware and software requirement for most of the tutorials is a computer with the latest version of Titania or your favorite text editor and X_ITE. Titania has extensive documentation. It is the perfect environment to get started in creating sensational X3D scenes.
 
 ## Let’s See What We Can Do…
 
@@ -34,7 +34,7 @@ Animation, Sensors, and Geometry
 - [Introducing Animation](introducing-animation)
 - [Animating Transforms](animating-transforms)
 - [Sensing Viewer Actions](sensing-viewer-actions)
-- [Building Ahapes out of Points, Lines, and Faces](building-shapes-out-of-points,-lines,-and-faces)
+- [Building Shapes out of Points, Lines, and Faces](building-shapes-out-of-points-lines-and-faces)
 - [Building Elevation Grids](building-elevation-grids)
 - [Building Extruded Shapes](building-extruded-shapes)
 - [Controlling Color on Coordinate-Based Geometry](controlling-color-on-coordinate-based-geometry)
@@ -58,7 +58,7 @@ Scripts and Prototypes
 - [Introducing Script Use](introducing-script-use)
 - [Writing Program Scripts with ECMAScript](writing-program-scripts-with-ecmascript)
 - [Creating New Node Types](creating-new-node-types)
-- [Providing Tnformation About Your wWorld](providing-information-about-your-world)
+- [Providing Information About Your wWorld](providing-information-about-your-world)
 
 Some words about optimizing a scene
 
@@ -79,4 +79,4 @@ Some words about optimizing a scene
 
 ## Don't Compromise on Development Experience
 
-Use the full power of the modern X3D ecosystem – Titania’s got you covered! Enjoy the intelligent build system, powerful navigation and support for JavaScript, on-the-fly error detection, integrated Route Graph Editor, and X\_ITE compatibility.
+Use the full power of the modern X3D ecosystem – Titania’s got you covered! Enjoy the intelligent build system, powerful navigation and support for JavaScript, on-the-fly error detection, integrated Route Graph Editor, and X_ITE compatibility.

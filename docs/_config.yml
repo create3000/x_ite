@@ -242,17 +242,14 @@ nav:
           url: /x_ite/reference/prototype-services
         - title: "Constants Services"
           url: /x_ite/reference/constants-services
-  tutorials:
-    - title: "Tutorials"
-      children:
-        - title: "Overview"
-          url: /x_ite/tutorials/
+  tutorials-basic:
     - title: "Basic Tutorials"
       children:
         - title: "Hello, World!"
           url: /x_ite/tutorials/hello-world
         - title: "Basic Nodes"
           url: /x_ite/tutorials/basic-nodes
+  tutorials-shapes-geometry-and-appearance:
     - title: "Shapes, Geometry, and Appearance"
       children:
         - title: "Introducing X3D"
@@ -269,6 +266,7 @@ nav:
           url: /x_ite/tutorials/grouping-nodes
         - title: "Naming Nodes"
           url: /x_ite/tutorials/naming-nodes
+  tutorials-animation-sensors-and-geometry:
     - title: "Animation, Sensors, and Geometry"
       children:
         - title: "Introducing Animation"
@@ -277,8 +275,8 @@ nav:
           url: /x_ite/tutorials/animating-transforms
         - title: "Sensing Viewer Actions"
           url: /x_ite/tutorials/sensing-viewer-actions
-        - title: "Building Shapes out of Points, Lines, and faces"
-          url: /x_ite/tutorials/building-shapes-out-of-points,-lines,-and-faces
+        - title: "Building Shapes out of Points, Lines, and Faces"
+          url: /x_ite/tutorials/building-shapes-out-of-points-lines-and-faces
         - title: "Building Elevation Grids"
           url: /x_ite/tutorials/building-elevation-grids
         - title: "Building Extruded Shapes"
@@ -287,6 +285,7 @@ nav:
           url: /x_ite/tutorials/controlling-color-on-coordinate-based-geometry
         - title: "Controlling Shading on Coordinate-Based Geometry"
           url: /x_ite/tutorials/controlling-shading-on-coordinate-based-geometry
+  tutorials-textures-lights-and-environment:
     - title: "Textures, Lights, and Environment"
       children:
         - title: "Mapping Textures"
@@ -307,6 +306,7 @@ nav:
           url: /x_ite/tutorials/controlling-navigation
         - title: "Sensing the Viewer"
           url: /x_ite/tutorials/sensing-the-viewer
+  tutorials-scripts-and-prototypes:
     - title: "Scripts and Prototypes"
       children:
         - title: "Controlling Detail"
@@ -319,6 +319,7 @@ nav:
           url: /x_ite/tutorials/creating-new-node-types
         - title: "Providing Information About Your World"
           url: /x_ite/tutorials/providing-information-about-your-world
+  tutorials-optimize-your-scene:
     - title: "Optimize Your Scene"
       children:
         - title: "Improving Performance"

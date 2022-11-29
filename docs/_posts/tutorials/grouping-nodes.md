@@ -1,6 +1,6 @@
 ---
 title: Grouping Nodes
-nav: tutorials
+nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
 tags: [grouping, nodes]
 ---

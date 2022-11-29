@@ -1,6 +1,6 @@
 ---
 title: Adding Sound
-nav: tutorials
+nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
 tags: [sound]
 ---
