@@ -220,7 +220,7 @@ function init ()
     timer   = scene .getNamedNode ("SpinAnimationTimer"); // Get box TouchSensor node.
 
   // Add field callback to get informed when cycleTime is fired. "time" is an arbitrary
-  // string to identify the callback, for intance if you later want to remove the callback.
+  // string to identify the callback, for instance if you later want to remove the callback.
   timer .addFieldCallback ("cycleTime", "time", function (value)
   {
     console .log ("cycleTime: " + value);

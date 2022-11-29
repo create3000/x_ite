@@ -924,9 +924,9 @@ For example, we could provide a text description of the X3D element or provide a
 </x3d-canvas>
 ```
 
-## Attributes of the x3d-canvas Tag
+## Attributes of the \<x3d-canvas\> Element
 
-The HTML **\<x3d-canvas\>** element defines the main content of the X3D document. The \<x3d-canvas\> element has three attributes that define different behaviours. All of these attributes are optional.
+The HTML **\<x3d-canvas\>** element defines the main content of the X3D document. The \<x3d-canvas\> element has several attributes that define different behaviors. All of these attributes are optional.
 
 ### cache
 
