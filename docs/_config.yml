@@ -4,7 +4,7 @@
 theme: jekyll-theme-chirpy
 
 # Change the following value to "/PROJECT_NAME" ONLY IF your site type is GitHub Pages Project sites
-# and doesn"t have a custom domain.
+# and doesn't have a custom domain.
 baseurl: "/x_ite"
 
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
@@ -55,7 +55,7 @@ google_site_verification:                 # fill in to your verification string
 
 google_analytics:
   id:                 # fill in your Google Analytics ID
-  # Google Analytics pageviews report settings
+  # Google Analytics page views report settings
   pv:
     proxy_endpoint:   # fill in the Google Analytics superProxy endpoint of Google App Engine
     cache_path:       # the local PV cache data, friendly to visitors from GFW region
