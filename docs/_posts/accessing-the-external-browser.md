@@ -198,7 +198,7 @@ const
 
 ## Function Reference
 
-A complete function reference for the X3DBrowser object and all other X3D JavaScript objects can be found [here](reference/ECMAScript-Object-and-Function-Definitions.html).
+A complete function reference for the X3DBrowser object and all other X3D JavaScript objects can be found [here](reference/ecmascript-object-and-function-definitions).
 
 ## Example
 

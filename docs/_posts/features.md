@@ -22,17 +22,17 @@ All code is held by CREATE3000 and all contributors are selected and all contrib
 
 ## Core Features
 
-Although WebGL acts behind the scenes you do not need any special knowledge about that. There are many of ready to use [X3D nodes](Supported-Nodes.html) that will make life easier. X_ITE provides comprehensive X3D support, which is complete and standard compliant.
+Although WebGL acts behind the scenes you do not need any special knowledge about that. There are many of ready to use [X3D nodes](supported-nodes) that will make life easier. X_ITE provides comprehensive X3D support, which is complete and standard compliant.
 
 X_ITE comes with a high performance JavaScript rendering engine, ie. developers may be completely free of worry about performance optimizations in their code.
 
-We offer full [X3D ECMAScript](reference/ECMAScript-Object-and-Function-Definitions.html) support to give you the best scripting tools you can get.
+We offer full [X3D ECMAScript](reference/ecmascript-object-and-function-definitions) support to give you the best scripting tools you can get.
 
 X3D comes with a fixed set of objects, called *nodes,* which will cover most of your needs. But it's creators have also planned ahead, knowing that you'll sometimes have to create your own objects. The prototyping feature lets you create complex objects that you can reuse, changing certain characteristics of the objects when desired.
 
 X_ITE works seamlessly together with Titania. There is a X_ITE Compatibility Mode in Titania that makes that everything looks equal both in Titania and X_ITE, additionally scripts, and shaders provide the same functionality.
 
-There is excellent build in support for Gouraud and Phong shading. Gouraud and Phong shading are the most popular shading algorithm in use today. This methods were developed by Henri Gouraud and Phong Bui-Toung. If the build in shading methods are not enough for you there is support for [Custom Shaders](Custom-Shaders.html). Don't bother about *uniform variables, shader compilation, and texture loading.* With the Composed Shader node it is easy to write to your own shader even if you are a beginner, but it is also all there for professionals. There is a standardized shader API similar to GLSL that makes it easy to convert your existing shaders. The build in shaders support eight simultaneous local lights for each Shape node, Color node attached to a geometry is supported. There is smooth texture mapping adjustable with TextureProperties node and normals can be auto generated depending on *creaseAngle* if you wish smooth shading.
+There is excellent build in support for Gouraud and Phong shading. Gouraud and Phong shading are the most popular shading algorithm in use today. This methods were developed by Henri Gouraud and Phong Bui-Toung. If the build in shading methods are not enough for you there is support for [Custom Shaders](custom-shaders). Don't bother about *uniform variables, shader compilation, and texture loading.* With the Composed Shader node it is easy to write to your own shader even if you are a beginner, but it is also all there for professionals. There is a standardized shader API similar to GLSL that makes it easy to convert your existing shaders. The build in shaders support eight simultaneous local lights for each Shape node, Color node attached to a geometry is supported. There is smooth texture mapping adjustable with TextureProperties node and normals can be auto generated depending on *creaseAngle* if you wish smooth shading.
 
 Complex routing graphs can be created. The event model of X3D allows the creation of connections between fields (routes) and event are propagated along those connections. The behavior graph collects all of these field connections. It can be changed dynamically by rerouting, adding or breaking connections. Events are injected into the system and propagated through the behavior graph in a well defined order.
 
@@ -42,7 +42,7 @@ To add special effects and environment sound to your scenes there is support for
 
 You can create text quick and easy. Use the Text node which can load remote font files in TrueType and OpenType format but there are also build in fonts.
 
-If this is not enough for you have a look at [Supported Nodes](Supported-Nodes.html) there's sure to be something there for you.
+If this is not enough for you have a look at [Supported Nodes](supported-nodes) there's sure to be something there for you.
 
 ## Code Features
 

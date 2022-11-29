@@ -10,8 +10,7 @@
   <nav id="pages">
     <ul>
       {% for item in item.children %}
-        {% assign url = site.baseurl | append: page.url %}
-        <li><a href="{{ item.url }}" {% if item.url == url %}class="active"{% endif %}>{{ item.title }}</a></li>
+        <li><a href="{{ site.baseurl }}{{ item.url }}" {% if item.url == page.url %}class="active"{% endif %}>{{ item.title }}</a></li>
       {% endfor %}
     </ul>
   </nav>
