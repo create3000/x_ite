@@ -1,5 +1,9 @@
-# Sensing the Viewer
-
+---
+title: Sensing the Viewer
+nav: tutorials
+categories: [Tutorials]
+tags: [sensing, viewer]
+---
 ## Motivation
 
 Sensing the viewer enables you to trigger animations:

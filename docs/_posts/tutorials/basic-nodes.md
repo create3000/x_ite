@@ -1,5 +1,9 @@
-# Basic Nodes
-
+---
+title: Basic Nodes
+nav: tutorials
+categories: [Tutorials]
+tags: [basic, nodes]
+---
 ## Overview
 
 X3D is capable of representing static and animated objects and it can have hyperlinks to other media such as sound, movies, and image. X\_ITE is a browsers for X3D and available for many different platforms as well as Titania is an authoring tools for the creation X3D files. For programmers there is an JavaScript API interface to access X3D nodes and commonly used 3D application programmer interface features.
@@ -53,8 +57,12 @@ Here is a typical X3D Classic Encoded file with a single node:
 ```js
 #X3D V3.3 utf8
 
-# A sample file with a simple scene
-
+---
+title: A sample file with a simple scene
+nav: tutorials
+categories: [Tutorials]
+tags: [a sample file with a simple scene]
+---
 DEF Sensor PlaneSensor {
   offset 0 2 0
 }
@@ -68,8 +76,12 @@ DEF XForm Transform {
   ]
 }
 
-# Make a connection between the PlaneSensor and the Transform
-
+---
+title: Make a connection between the PlaneSensor and the Transform
+nav: tutorials
+categories: [Tutorials]
+tags: [make a connection between the planesensor and the transform]
+---
 ROUTE Sensor.translation_changed TO XForm.set_translation
 ```
 

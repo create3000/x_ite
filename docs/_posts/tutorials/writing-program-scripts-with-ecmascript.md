@@ -1,5 +1,9 @@
-# Writing Program Scripts with ECMAScript
-
+---
+title: Writing Program Scripts with ECMAScript
+nav: tutorials
+categories: [Tutorials]
+tags: [program, scripts, ecmascript, javascript]
+---
 ## Motivation
 
 A program script implements the [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script) node using values from the interface:

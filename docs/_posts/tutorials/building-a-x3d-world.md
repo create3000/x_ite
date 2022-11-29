@@ -1,5 +1,9 @@
-# Building a X3D World
-
+---
+title: Building a X3D World
+nav: tutorials
+categories: [Tutorials]
+tags: [building, world]
+---
 ## X3D file structure
 
 X3D files contain:
@@ -38,7 +42,12 @@ X3D files contain:
 
 ```js
 #X3D V3.3 utf8
-# A Cylinder
+---
+title: A Cylinder
+nav: tutorials
+categories: [Tutorials]
+tags: [a cylinder]
+---
 Shape {
   appearance Appearance {
     material Material { }
@@ -75,7 +84,12 @@ Shape {
 ## Using comments
 
 ```js
-# A Cylinder
+---
+title: A Cylinder
+nav: tutorials
+categories: [Tutorials]
+tags: [a cylinder]
+---
 ```
 
 - Comments start with a number-sign (**\#**) and extend to the end of the line

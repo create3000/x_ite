@@ -1,5 +1,9 @@
-# Build Extruded Shapes
-
+---
+title: Build Extruded Shapes
+nav: tutorials
+categories: [Tutorials]
+tags: [build, extruded, shapes]
+---
 ## Motivation
 
 Extruded shapes are very common

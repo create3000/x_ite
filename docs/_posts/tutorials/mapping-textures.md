@@ -1,5 +1,9 @@
-# Mapping Textures
-
+---
+title: Mapping Textures
+nav: tutorials
+categories: [Tutorials]
+tags: [mapping, textures]
+---
 ## Motivation
 
 You can model every tiny texture detail of a world using a vast number of colored faces:

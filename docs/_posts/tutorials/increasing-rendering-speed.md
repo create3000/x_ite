@@ -1,5 +1,9 @@
-# Increasing Rendering Speed
-
+---
+title: Increasing Rendering Speed
+nav: tutorials
+categories: [Tutorials]
+tags: [increasing, rendering, speed]
+---
 ## Overivew
 
 Another major concern for scene authors is to ensure that users can navigate smoothly and continuously through the virtual world, with the scene rendering instantly on the screen as the user moves or the scene is displayed. A minimum frame rate (redraw) of 25 frames per second is required to make the X3D world feel interactive, with visual continuity that simulates animations and moving through the real world.

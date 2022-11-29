@@ -1,5 +1,9 @@
-# Improving Performance
-
+---
+title: Improving Performance
+nav: tutorials
+categories: [Tutorials]
+tags: [improving, performance]
+---
 ## Overview
 
 By this time, you may have spend weeks creating complex and interesting X3D scenes. You've refined the models until they're lifelike and perfected their colors and texturing. You've experimented with lighting, and now you're ready to share your creation with the world.

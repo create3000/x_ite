@@ -1,5 +1,9 @@
-# Grouping Nodes
-
+---
+title: Grouping Nodes
+nav: tutorials
+categories: [Tutorials]
+tags: [grouping, nodes]
+---
 ## Motivation
 
 You can group shapes to compose complex shapes

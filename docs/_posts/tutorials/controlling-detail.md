@@ -1,5 +1,9 @@
-# Controlling Detail
-
+---
+title: Controlling Detail
+nav: tutorials
+categories: [Tutorials]
+tags: [controlling, detail]
+---
 ## Motivation
 
 The further the viewer can see, the more there is to draw.

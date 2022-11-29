@@ -1,5 +1,9 @@
-# Controlling Navigation
-
+---
+title: Controlling Navigation
+nav: tutorials
+categories: [Tutorials]
+tags: [controlling, navigation]
+---
 ## Motivation
 
 - Different types of worlds require different styles of navigation

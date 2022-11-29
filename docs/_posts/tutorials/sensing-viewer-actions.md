@@ -1,5 +1,9 @@
-# Sensing Viewer Actions
-
+---
+title: Sensing Viewer Actions
+nav: tutorials
+categories: [Tutorials]
+tags: [sensing, viewer, actions]
+---
 ## Motivation
 
 You can sense when the viewer's cursor:

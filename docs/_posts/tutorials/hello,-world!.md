@@ -1,5 +1,9 @@
-# Hello, World!
-
+---
+title: Hello, World!
+nav: tutorials
+categories: [Tutorials]
+tags: [hello, world]
+---
 ## Overview
 
 In this tutorial, you will learn how to create a simple hello world scene with X3D. Firstly, let explains some of the X3D basics.

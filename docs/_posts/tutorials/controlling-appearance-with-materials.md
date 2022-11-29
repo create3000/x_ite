@@ -1,5 +1,9 @@
-# Controlling Appearance whith Materials
-
+---
+title: Controlling Appearance with Materials
+nav: tutorials
+categories: [Tutorials]
+tags: [controlling, appearance, materials]
+---
 ## Motivation
 
 The primitive shapes have a default emissive (glowing) white appearance

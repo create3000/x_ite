@@ -1,5 +1,9 @@
-# Lighting Your World
-
+---
+title: Lighting Your World
+nav: tutorials
+categories: [Tutorials]
+tags: [lighting, world]
+---
 ## Motivation
 
 - By default, you have one light in the scene, attached to your head

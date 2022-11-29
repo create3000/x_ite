@@ -1,5 +1,9 @@
-# Controlling Color on Coordinate-Based Geometry
-
+---
+title: Controlling Color on Coordinate-Based Geometry
+nav: tutorials
+categories: [Tutorials]
+tags: [controlling, color, coordinate, geometry]
+---
 ## Motivation
 
 - The [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node gives an entire shape the same color

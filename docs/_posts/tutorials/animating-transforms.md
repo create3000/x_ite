@@ -1,5 +1,9 @@
-# Animating Transforms
-
+---
+title: Animating Transforms
+nav: tutorials
+categories: [Tutorials]
+tags: [animating, transforms]
+---
 ## Motivation
 
 An animation changes something over time:

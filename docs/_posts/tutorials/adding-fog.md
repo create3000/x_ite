@@ -1,5 +1,9 @@
-# Adding Fog
-
+---
+title: Adding Fog
+nav: tutorials
+categories: [Tutorials]
+tags: [fog]
+---
 ## Motivation
 
 Fog increases realism:

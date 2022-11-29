@@ -1,5 +1,9 @@
-# Creating New Node Types
-
+---
+title: Creating New Node Types
+nav: tutorials
+categories: [Tutorials]
+tags: [creating, node, types]
+---
 ## Motivation
 
 You can create new node types that encapsulate:

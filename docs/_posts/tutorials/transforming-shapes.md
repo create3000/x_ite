@@ -1,5 +1,9 @@
-# Transforming Shapes
-
+---
+title: Transforming Shapes
+nav: tutorials
+categories: [Tutorials]
+tags: [transforming, shapes]
+---
 ## Motivation
 
 - By default, all shapes are built at the center of the world

@@ -1,5 +1,9 @@
-# Building Elevation Grids
-
+---
+title: Building Elevation Grids
+nav: tutorials
+categories: [Tutorials]
+tags: [building, elevation grids]
+---
 ## Motivation
 
 - Building terrains is very common

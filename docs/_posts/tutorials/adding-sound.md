@@ -1,5 +1,9 @@
-# Adding Sound
-
+---
+title: Adding Sound
+nav: tutorials
+categories: [Tutorials]
+tags: [sound]
+---
 ## Motivation
 
 - Sounds can be triggered by viewer actions

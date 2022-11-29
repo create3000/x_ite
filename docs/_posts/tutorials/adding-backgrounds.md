@@ -1,5 +1,9 @@
-# Adding Backgrounds
-
+---
+title: Adding Backgrounds
+nav: tutorials
+categories: [Tutorials]
+tags: [background]
+---
 ## Motivation
 
 - Shapes form the foreground of your scene

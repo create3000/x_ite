@@ -1,5 +1,9 @@
-# Controlling Shading on Coordinate-Based Geometry
-
+---
+title: Controlling Shading on Coordinate-Based Geometry
+nav: tutorials
+categories: [Tutorials]
+tags: [controlling, shading, coordinate, geometry]
+---
 ## Motivation
 
 - When shaded, the faces on a shape are obvious

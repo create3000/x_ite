@@ -1,5 +1,9 @@
-# Introducing Script Use
-
+---
+title: Introducing Script Use
+nav: tutorials
+categories: [Tutorials]
+tags: [introducing, script]
+---
 ## Motivation
 
 Many actions are too complex for animation nodes:

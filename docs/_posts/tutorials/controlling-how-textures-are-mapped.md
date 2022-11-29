@@ -1,5 +1,9 @@
-# Controlling How Textures are Mapped
-
+---
+title: Controlling How Textures are Mapped
+nav: tutorials
+categories: [Tutorials]
+tags: [controlling, textures, mapped]
+---
 ## Motivation
 
 - By default, an entire texture image is mapped once around the shape

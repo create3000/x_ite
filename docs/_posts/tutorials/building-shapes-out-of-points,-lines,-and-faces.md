@@ -1,6 +1,10 @@
 
-# Building Shapes out of Points, Lines, and Faces
-
+---
+title: Building Shapes out of Points, Lines, and Faces
+nav: tutorials
+categories: [Tutorials]
+tags: [building, shapes, points, lines, faces]
+---
 ## Motivation
 
 Complex shapes are hard to build with primitive shapes:

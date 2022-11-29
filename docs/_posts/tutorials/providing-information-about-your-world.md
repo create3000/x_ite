@@ -1,5 +1,9 @@
-# Providing Information About Your World
-
+---
+title: Providing Information About Your World
+nav: tutorials
+categories: [Tutorials]
+tags: [providing, information, world]
+---
 ## Motivation
 
 - After you've created a great world, sign it!

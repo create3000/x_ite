@@ -1,5 +1,9 @@
-# Introducing Animations
-
+---
+title: Introducing Animations
+nav: tutorials
+categories: [Tutorials]
+tags: [introducing, animations]
+---
 ## Motivation
 
 - Nodes like [Billboard](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Billboard) and [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor) have built-in behavior

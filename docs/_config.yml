@@ -242,3 +242,86 @@ nav:
           url: /x_ite/reference/prototype-services
         - title: "Constants Services"
           url: /x_ite/reference/constants-services
+  tutorials:
+    - title: "Tutorials"
+      children:
+        - title: "Overview"
+          url: /x_ite/tutorials/
+    - title: "Basic Tutorials"
+      children:
+        - title: "Hello, World!"
+          url: /x_ite/tutorials/hello-world
+        - title: "Basic Nodes"
+          url: /x_ite/tutorials/basic-nodes
+    - title: "Shapes, Geometry, and Appearance"
+      children:
+        - title: "Introducing X3D"
+          url: /x_ite/tutorials/introducing-x3d
+        - title: "Building a X3D World"
+          url: /x_ite/tutorials/building-a-x3d-world
+        - title: "Building Primitive Shapes"
+          url: /x_ite/tutorials/building-primitive-shapes
+        - title: "Transforming Shapes"
+          url: /x_ite/tutorials/transforming-shapes
+        - title: "Controlling Appearance with Materials"
+          url: /x_ite/tutorials/controlling-appearance-with-materials
+        - title: "Grouping Nodes"
+          url: /x_ite/tutorials/grouping-nodes
+        - title: "Naming Nodes"
+          url: /x_ite/tutorials/naming-nodes
+    - title: "Animation, Sensors, and Geometry"
+      children:
+        - title: "Introducing Animation"
+          url: /x_ite/tutorials/introducing-animation
+        - title: "Animating Transforms"
+          url: /x_ite/tutorials/animating-transforms
+        - title: "Sensing Viewer Actions"
+          url: /x_ite/tutorials/sensing-viewer-actions
+        - title: "Building Shapes out of Points, Lines, and faces"
+          url: /x_ite/tutorials/building-shapes-out-of-points,-lines,-and-faces
+        - title: "Building Elevation Grids"
+          url: /x_ite/tutorials/building-elevation-grids
+        - title: "Building Extruded Shapes"
+          url: /x_ite/tutorials/building-extruded-shapes
+        - title: "Controlling Color on Coordinate-Based Geometry"
+          url: /x_ite/tutorials/controlling-color-on-coordinate-based-geometry
+        - title: "Controlling Shading on Coordinate-Based Geometry"
+          url: /x_ite/tutorials/controlling-shading-on-coordinate-based-geometry
+    - title: "Textures, Lights, and Environment"
+      children:
+        - title: "Mapping Textures"
+          url: /x_ite/tutorials/mapping-textures
+        - title: "Controlling How Textures are Mapped"
+          url: /x_ite/tutorials/controlling-how-textures-are-mapped
+        - title: "Lighting Your World"
+          url: /x_ite/tutorials/lighting-your-world
+        - title: "Adding Backgrounds"
+          url: /x_ite/tutorials/adding-backgrounds
+        - title: "Adding Fog"
+          url: /x_ite/tutorials/adding-fog
+        - title: "Adding Sound"
+          url: /x_ite/tutorials/adding-sound
+        - title: "Controlling the Viewpoint"
+          url: /x_ite/tutorials/controlling-the-viewpoint
+        - title: "Controlling Navigation"
+          url: /x_ite/tutorials/controlling-navigation
+        - title: "Sensing the Viewer"
+          url: /x_ite/tutorials/sensing-the-viewer
+    - title: "Scripts and Prototypes"
+      children:
+        - title: "Controlling Detail"
+          url: /x_ite/tutorials/controlling-detail
+        - title: "Introducing Script Use"
+          url: /x_ite/tutorials/introducing-script-use
+        - title: "Writing Program Scripts with ECMAScript"
+          url: /x_ite/tutorials/writing-program-scripts-with-ecmascript
+        - title: "Creating New Node Types"
+          url: /x_ite/tutorials/creating-new-node-types
+        - title: "Providing Information About Your World"
+          url: /x_ite/tutorials/providing-information-about-your-world
+    - title: "Optimize Your Scene"
+      children:
+        - title: "Improving Performance"
+          url: /x_ite/tutorials/improving-performance
+        - title: "Increasing Rendering Speed"
+          url: /x_ite/tutorials/increasing-rendering-speed

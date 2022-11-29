@@ -1,5 +1,9 @@
-# Controlling the Viewpoint
-
+---
+title: Controlling the Viewpoint
+nav: tutorials
+categories: [Tutorials]
+tags: [controlling, viewpoint]
+---
 ## Motivation
 
 - By default, the viewer enters a world at (0.0, 0.0, 10.0)

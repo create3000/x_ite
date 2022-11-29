@@ -1,5 +1,9 @@
-# Building Primitive Shapes
-
+---
+title: Building Primitive Shapes
+nav: tutorials
+categories: [Tutorials]
+tags: [building, primitive, shapes]
+---
 ## Motivation
 
 Shapes are the building blocks of a X3D world. Primitive Shapes are standard building blocks:
@@ -113,7 +117,12 @@ Text { ... }
 
 ```js
 #X3D V3.3 utf8
-# A cylinder
+---
+title: A cylinder
+nav: tutorials
+categories: [Tutorials]
+tags: [a cylinder]
+---
 Shape {
   appearance Appearance {
     material Material { }

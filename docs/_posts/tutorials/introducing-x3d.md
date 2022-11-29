@@ -1,5 +1,9 @@
-# Introducing X3D
-
+---
+title: Introducing X3D
+nav: tutorials
+categories: [Tutorials]
+tags: [introducing]
+---
 ## What is X3D?
 
 X3D is:
