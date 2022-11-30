@@ -972,7 +972,7 @@ If you still use an old stable version from Cobweb you must changed the URL for 
 
 ## Cobweb 3.0 Released
 
-*Leipzig, 12th April 2017:* We finally released version 3.0 now. All fields derived from X3DArrayField have now two new functions *»push«* and *»unshift«* which operate like the corresponding JavaScript Array functions. All fields derived from X3DField have now a new function *»equals«* which makes it easy to compare two field values. The XMLParser was reworked and is now more secure and several issues are fixed. And last but not least we are proud to announce that prototypes do completely work now with XMTML DOM Integration.
+*Leipzig, 12th April 2017:* We finally released version 3.0 now. All fields derived from X3DArrayField have now two new functions *»push«* and *»unshift«* which operate like the corresponding JavaScript Array functions. All fields derived from X3DField have now a new function *»equals«* which makes it easy to compare two field values. The XMLParser was reworked and is now more secure and several issues are fixed. And last but not least we are proud to announce that prototypes do completely work now with XHTML DOM Integration.
 
 ![Mountains Shader Example](https://create3000.github.io/media/images/mountains.jpg)
 
