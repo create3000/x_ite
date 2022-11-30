@@ -82,6 +82,9 @@ window .addEventListener ("load", function ()
 </html>
 ```
 
+>Make sure you use closing tags for all X3D elements.
+{: .prompt-danger }
+
 ## Attributes
 
 If you change an attribute of an X3D element, then the internal state of the node will also change.
