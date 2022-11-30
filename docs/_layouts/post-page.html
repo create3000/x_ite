@@ -21,7 +21,7 @@ tail_includes:
 </script>
 
 <script type="module">
-$("table.examples img") .each (function (i, e)
+$("table.examples img[data-src]") .each (function (i, e)
 {
   const img = $(e);
 
