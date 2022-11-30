@@ -20,17 +20,14 @@ tail_includes:
   gtag('config', 'G-380DMRLRQ9');
 </script>
 
-<script>
-$(function ()
+<script type="module">
+$("table.examples img") .each (function (i, e)
 {
-   $("table.examples img") .each (function (i, e)
-   {
-      const img = $(e);
+  const img = $(e);
 
-      img .attr ("src", img .attr ("data-src"));
-      img .removeAttr ("data-src");
-   })
-});
+  img .attr ("src", img .attr ("data-src"));
+  img .removeAttr ("data-src");
+})
 </script>
 
 {{ content }}
