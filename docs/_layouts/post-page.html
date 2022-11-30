@@ -1,0 +1,26 @@
+---
+layout: post
+refactor: true
+panel_includes:
+  - nav
+  - toc
+tail_includes:
+  - related-posts
+  - post-nav
+  - comments
+---
+
+<script>
+$(function ()
+{
+   $("table.examples img") .each (function (i, e)
+   {
+      const img = $(e);
+
+      img .attr ("src", img .attr ("data-src"));
+      img .removeAttr ("data-src");
+   })
+});
+</script>
+
+{{ content }}
