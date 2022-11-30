@@ -3,8 +3,9 @@
       "**/*~": true,
       "node_modules": true,
       "package-lock.json": true,
-      "docs/_site": true,
-      "docs/.jekyll-cache": true
+      "**/_site": true,
+      "**/.jekyll-cache": true,
+      "**/.jekyll-metadata": true
    },
    "files.insertFinalNewline": true,
    "files.trimFinalNewlines": true,
