@@ -2,7 +2,7 @@
 title: DOM Integration
 nav: main
 categories: []
-tags: [dom, integration]
+tags: [dom, integration, XHTML]
 ---
 ## Overview
 
