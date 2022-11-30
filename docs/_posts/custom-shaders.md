@@ -13,7 +13,7 @@ However, you will often want to perform special effects or special cases for you
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.x3d">
-  ![Shader Example](https://create3000.github.io/media/images/water-quality.png)
+  <img src="https://create3000.github.io/media/images/water-quality.png" alt="Shader Example"/>
 </x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.zip)

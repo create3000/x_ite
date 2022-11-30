@@ -118,7 +118,7 @@ LOD {
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/lod/lod.x3dv">
-  ![LOD](https://create3000.github.io/media/tutorials/scenes/lod/screenshot.png)
+  <img src="https://create3000.github.io/media/tutorials/scenes/lod/screenshot.png" alt="LOD"/>
 </x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/lod/lod.zip)

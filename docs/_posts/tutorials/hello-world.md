@@ -19,7 +19,7 @@ In this tutorial, you will learn how to create a simple hello world scene with X
 ### Example
 
 <x3d-canvas src="https://create3000.github.io/media/tutorials/hello-world/hello-world.x3d">
-  ![Hello World Image](https://create3000.github.io/media/tutorials/hello-world/screenshot.png)
+  <img src="https://create3000.github.io/media/tutorials/hello-world/screenshot.png" alt="Hello World Image"/>
 </x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/hello-world/hello-world.zip)
