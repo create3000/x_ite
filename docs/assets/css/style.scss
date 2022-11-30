@@ -63,8 +63,14 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   white-space: initial;
 }
 
+.table-wrapper > table.examples tbody tr {
+  border: none;
+}
+
 .table-wrapper > table.examples tbody tr td {
-  padding: 2px;
+  border: 3px solid var(--tb-odd-bg);
+  background-color: var(--tb-odd-bg);
+  padding: 0;
 }
 
 x3d-canvas,
