@@ -149,3 +149,13 @@ tail_includes:
   </div><!-- .post-tail-bottom -->
 
 </div><!-- div.post-tail-wrapper -->
+
+<script>
+$("table.examples img") .each (function (i, e)
+{
+  const img = $(e);
+
+  img .attr ("src", img .attr ("data-src"));
+  img .removeAttr ("data-src");
+})
+</script>

@@ -58,7 +58,6 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   color: rgb(175, 206, 255);
 }
 
-.table-wrapper > table tbody tr td,
-.table-wrapper > table thead th {
-  white-space: initial;
+.table-wrapper > table.examples tbody tr td {
+  padding: 2px;
 }
