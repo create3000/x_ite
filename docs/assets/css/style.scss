@@ -66,3 +66,11 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
 .table-wrapper > table.examples tbody tr td {
   padding: 2px;
 }
+
+x3d-canvas,
+iframe {
+  border: none;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}

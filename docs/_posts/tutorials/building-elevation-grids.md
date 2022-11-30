@@ -160,9 +160,11 @@ Shape {
 }
 ```
 
-[![Elevation Grid](https://create3000.github.io/media/tutorials/scenes/elevation-grid/screenshot.png)](https://create3000.github.io/media/tutorials/scenes/elevation-grid/example.html)
+### Example
 
-[View scene in this window.](https://create3000.github.io/media/tutorials/scenes/elevation-grid/example.html)
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/elevation-grid/elevation-grid.x3dv">
+  ![Elevation Grid](https://create3000.github.io/media/tutorials/scenes/elevation-grid/screenshot.png)
+</x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/elevation-grid/elevation-grid.zip)
 

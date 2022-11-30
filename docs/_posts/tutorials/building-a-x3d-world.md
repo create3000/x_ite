@@ -42,12 +42,7 @@ X3D files contain:
 
 ```js
 #X3D V3.3 utf8
----
-title: A Cylinder
-nav: tutorials
-categories: [Tutorials]
-tags: [a cylinder]
----
+# A Cylinder
 Shape {
   appearance Appearance {
     material Material { }
@@ -59,9 +54,11 @@ Shape {
 }
 ```
 
-[![Cylinder](https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.png)](https://create3000.github.io/media/tutorials/scenes/cylinder1/example.html)
+### Example
 
-[View scene in this window.](https://create3000.github.io/media/tutorials/scenes/cylinder1/example.html)
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.x3dv">
+  ![Cylinder](https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.png)
+</x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.zip)
 

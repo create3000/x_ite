@@ -115,9 +115,11 @@ LOD {
 }
 ```
 
-[![LOD](https://create3000.github.io/media/tutorials/scenes/lod/screenshot.png)](https://create3000.github.io/media/tutorials/scenes/lod/example.html)
+### Example
 
-[View scene in this window.](https://create3000.github.io/media/tutorials/scenes/lod/example.html)
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/lod/lod.x3dv">
+  ![LOD](https://create3000.github.io/media/tutorials/scenes/lod/screenshot.png)
+</x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/lod/lod.zip)
 

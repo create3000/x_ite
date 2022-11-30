@@ -446,9 +446,11 @@ ROUTE Clock.fraction_changed TO Bouncer.set_fraction
 ROUTE Bouncer.value_changed  TO Ball.set_translation
 ```
 
-[![Bouncer](https://create3000.github.io/media/tutorials/scenes/bouncer/screenshot.png)](https://create3000.github.io/media/tutorials/scenes/bouncer/example.html)
+### Example
 
-[View scene in this window.](https://create3000.github.io/media/tutorials/scenes/bouncer/example.html)
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/bouncer/bouncer.x3dv">
+  ![Bouncer](https://create3000.github.io/media/tutorials/scenes/bouncer/screenshot.png)
+</x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/bouncer/bouncer.zip)
 

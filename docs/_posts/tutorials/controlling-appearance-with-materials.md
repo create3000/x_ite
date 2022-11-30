@@ -171,9 +171,11 @@ Shape {
 ...
 ```
 
-[![Box1](https://create3000.github.io/media/tutorials/scenes/box1/screenshot.png)](https://create3000.github.io/media/tutorials/scenes/box1/example.html)
+### Example
 
-[View scene in this window.](https://create3000.github.io/media/tutorials/scenes/box1/example.html)
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/box1/box1.x3dv">
+  ![Box 1](https://create3000.github.io/media/tutorials/scenes/box1/screenshot.png)
+</x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/box1/box1.zip)
 

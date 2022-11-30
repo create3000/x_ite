@@ -12,13 +12,15 @@ However, you will often want to perform special effects or special cases for you
 
 ## Example
 
-[![Shader Example](https://create3000.github.io/media/images/water-quality.png)](https://create3000.github.io/media/examples/X3D/WaterQuality/example.html)
+<x3d-canvas src="https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.x3d">
+  ![Shader Example](https://create3000.github.io/media/images/water-quality.png)
+</x3d-canvas>
 
-[View scene in this window.](https://create3000.github.io/media/examples/X3D/WaterQuality/example.html)
+[Download ZIP Archive](https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.zip)
 
 ## Shaders and Shader Definition
 
-WebGL uses the GLSL language to write shaders that can be run across all browsers. With X\_ITE you create your own shader using ComposedShader and ShaderPart nodes and than attach the ComposedShader to the *shader* field of an Appearance node and that is a child''s play with Titania.
+WebGL uses the GLSL language to write shaders that can be run across all browsers. With X\_ITE you create your own shader using ComposedShader and ShaderPart nodes and than attach the ComposedShader to the *shader* field of an Appearance node and that is a child's play with Titania.
 
 ### X3D
 

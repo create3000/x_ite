@@ -57,12 +57,8 @@ Here is a typical X3D Classic Encoded file with a single node:
 ```js
 #X3D V3.3 utf8
 
----
-title: A sample file with a simple scene
-nav: tutorials
-categories: [Tutorials]
-tags: [a sample file with a simple scene]
----
+# A sample file with a simple scene
+
 DEF Sensor PlaneSensor {
   offset 0 2 0
 }
@@ -76,12 +72,8 @@ DEF XForm Transform {
   ]
 }
 
----
-title: Make a connection between the PlaneSensor and the Transform
-nav: tutorials
-categories: [Tutorials]
-tags: [make a connection between the planesensor and the transform]
----
+# Make a connection between the PlaneSensor and the Transform
+
 ROUTE Sensor.translation_changed TO XForm.set_translation
 ```
 

@@ -117,12 +117,7 @@ Text { ... }
 
 ```js
 #X3D V3.3 utf8
----
-title: A cylinder
-nav: tutorials
-categories: [Tutorials]
-tags: [a cylinder]
----
+# A cylinder
 Shape {
   appearance Appearance {
     material Material { }
@@ -134,9 +129,11 @@ Shape {
 }
 ```
 
-[![Cylinder](https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.png)](https://create3000.github.io/media/tutorials/scenes/cylinder1/example.html)
+### Example
 
-[View scene in this window.](https://create3000.github.io/media/tutorials/scenes/cylinder1/example.html)
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.x3dv">
+  ![Cylinder](https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.png)
+</x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.zip)
 
@@ -200,9 +197,11 @@ Shape {
 ...
 ```
 
-[![Multiple Shapes](https://create3000.github.io/media/tutorials/scenes/multiple-shapes/screenshot.png)](https://create3000.github.io/media/tutorials/scenes/multiple-shapes/example.html)
+### Example
 
-[View scene in this window.](https://create3000.github.io/media/tutorials/scenes/multiple-shapes/example.html)
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/multiple-shapes/multiple-shapes.x3dv">
+  ![Multiple Shapes](https://create3000.github.io/media/tutorials/scenes/multiple-shapes/screenshot.png)
+</x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/multiple-shapes/multiple-shapes.zip)
 

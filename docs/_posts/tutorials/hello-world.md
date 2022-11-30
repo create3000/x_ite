@@ -18,9 +18,9 @@ In this tutorial, you will learn how to create a simple hello world scene with X
 
 ### Example
 
-[![Hello World Image](https://create3000.github.io/media/tutorials/hello-world/screenshot.png)](https://create3000.github.io/media/tutorials/hello-world/example.html)
-
-[View scene in this window.](https://create3000.github.io/media/tutorials/hello-world/example.html)
+<x3d-canvas src="https://create3000.github.io/media/tutorials/hello-world/hello-world.x3d">
+  ![Hello World Image](https://create3000.github.io/media/tutorials/hello-world/screenshot.png)
+</x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/hello-world/hello-world.zip)
 
@@ -94,10 +94,6 @@ Transform {
   }
 }
 ```
-
-![Hello World in the Outliner](https://create3000.github.io/media/tutorials/hello-world/hello-world-outliner.png)
-
-Outline Editor view
 
 We take a Appearance node and assign it to the *appearance* field of the Shape node. For the texture we take an ImageTexture node. It would be possible a MovieTexture as texture too. But this later. The ImageTexture has a field *url*. Here we say the ImageTexture should fetch the image from ".earth.png". We could assign multiple urls:
 
@@ -202,7 +198,3 @@ Transform {
 ```
 
 We position the text below the sphere by a translation of about 1 Meter along the y-axis. We want a blue colored text, so we assign a Material node to the *material* field of the Appearance node and set the *diffuseColor* field to 1 0 0. As geometry we take a Text node and set the *string* field to "Hello World!".
-
-## Hello World in Titania
-
-![Hello World in Titania](https://create3000.github.io/media/tutorials/hello-world/hello-world-titania.png)

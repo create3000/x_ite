@@ -153,9 +153,11 @@ Transform {
 }
 ```
 
-[![Dinette](https://create3000.github.io/media/tutorials/scenes/dinette/screenshot.png)](https://create3000.github.io/media/tutorials/scenes/dinette/example.html)
+### Example
 
-[View scene in this window.](https://create3000.github.io/media/tutorials/scenes/dinette/example.html)
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/dinette/dinette.x3dv">
+  ![Dinette](https://create3000.github.io/media/tutorials/scenes/dinette/screenshot.png)
+</x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/dinette/dinette.zip)
 

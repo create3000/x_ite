@@ -238,9 +238,11 @@ Group {
 ROUTE C4.touchTime TO PitchC4.set_startTime
 ```
 
-[![LOD](https://create3000.github.io/media/tutorials/scenes/sound/screenshot.png)](https://create3000.github.io/media/tutorials/scenes/sound/example.html)
+### Example
 
-[View scene in this window.](https://create3000.github.io/media/tutorials/scenes/sound/example.html)
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/sound/sound.x3dv">
+  ![Sound](https://create3000.github.io/media/tutorials/scenes/sound/screenshot.png)
+</x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/sound/sound.zip)
 

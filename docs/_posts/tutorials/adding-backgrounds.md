@@ -136,9 +136,9 @@ DEF Summer Background {
 
 ### Example
 
-[![Background 1](https://create3000.github.io/media/tutorials/scenes/background1/screenshot.png)](https://create3000.github.io/media/tutorials/scenes/background1/example.html)
-
-[View scene in this window.](https://create3000.github.io/media/tutorials/scenes/background1/example.html)
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/background1/background1.x3dv">
+  ![Background 1](https://create3000.github.io/media/tutorials/scenes/background1/screenshot.png)
+</x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/background1/background1.zip)
 
@@ -256,9 +256,9 @@ DEF Summer Background {
 
 ### Example
 
-[![Background 2](https://create3000.github.io/media/tutorials/scenes/background2/screenshot.png)](https://create3000.github.io/media/tutorials/scenes/background2/example.html)
-
-[View scene in this window.](https://create3000.github.io/media/tutorials/scenes/background2/example.html)
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/background2/background2.x3dv">
+  ![Background 1](https://create3000.github.io/media/tutorials/scenes/background2/screenshot.png)
+</x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/background2/background2.zip)
 
