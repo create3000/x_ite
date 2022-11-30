@@ -886,7 +886,7 @@ x3d-canvas {
 
 To get X_ITE working you must include the JavaScript file »x_ite.min.js«. After x_ite is successfully loaded a new HTML element \<x3d-canvas\> is available on your page.
 
->If you test a page locally on you desktop computer, you must setup a **localhost** server if you want to load a file via *src* attribute or Inline node, see [Using Firefox, Chrome and Opera with Local Files](https://create3000.github.io/x_ite/#using-firefox-chrome-and-opera-with-local-files). Or use [DOM Integration](https://create3000.github.io/x_ite/dom-integration) methods to directly combine HTML with X3D.
+>**Warning:** If you test a page locally on you desktop computer, you must setup a **localhost** server if you want to load a file via *src* attribute or Inline node, see [Using Firefox, Chrome and Opera with Local Files](https://create3000.github.io/x_ite/#using-firefox-chrome-and-opera-with-local-files). Or use [DOM Integration](https://create3000.github.io/x_ite/dom-integration) methods to directly combine HTML with X3D.
 {: .prompt-danger }
 
 >**Tip:** You can style the \<x3d-canvas\> element as every HTML element with CSS as well as you can place it everywhere within the DOM tree.

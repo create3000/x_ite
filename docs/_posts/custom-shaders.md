@@ -596,7 +596,10 @@ If the shader node is part of a ParticleSystem node the following attributes and
 
 ## Built-in Constants
 
-Some built-in variables are enumerated and have special values and meanings. The following table list all of them and their corresponding values. Note: as of version 1.27 these constant are built-in.
+Some built-in variables are enumerated and have special values and meanings. The following table list all of them and their corresponding values.
+
+>**Note:** As of version 1.27 these constant are built-in.
+{: .prompt-tip }
 
 <table>
    <thead>

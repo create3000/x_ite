@@ -15,7 +15,8 @@ X3D is:
   - .x3dv (VRML) - easy to learn
   - x3db (Binary) - good for large models
 
-**Note:** all examples are in X3D Classic Encoded file format (.x3dv).
+>**Note:** All examples are in X3D XML and X3D Classic Encoded file format (.x3d and .x3dv).
+{: .prompt-info }
 
 ## What do I need to use X3D?
 
