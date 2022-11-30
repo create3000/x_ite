@@ -75,7 +75,7 @@ Shape {
 - utf8 is an international character set standard
 - utf8 stands for:
   - UCS (Universal Character Set) Transformation Format, 8-bit
-  - Encodes 24,000+ characters for many languages
+  - Can encodes up to 2,164,864 characters for many languages
   - ASCII is a subset
 
 ## Using comments
