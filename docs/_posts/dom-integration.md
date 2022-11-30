@@ -90,7 +90,7 @@ window .addEventListener ("load", function ()
 If you change an attribute of an X3D element, then the internal state of the node will also change.
 
 ```js
-const material = document .querySelector ("Material")
+const material = document .querySelector ("Material");
 
 material .setAttribute ("diffuseColor", "1 0 0"); // Set diffuse color to red.
 ```
