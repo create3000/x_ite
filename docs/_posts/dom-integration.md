@@ -82,7 +82,7 @@ window .addEventListener ("load", function ()
 </html>
 ```
 
->Make sure you use closing tags for all X3D elements.
+>Make sure you use **closing tags** for all X3D elements. This is needed, because the web browser does not know the X3D elements, and therefor does not know if the tag is self-closing.
 {: .prompt-danger }
 
 ## Attributes
