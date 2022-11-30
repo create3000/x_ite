@@ -863,7 +863,7 @@ If you are on production and everything works fine, then use a numbered version.
 
 To display your X3D scene in a HTML5 page first save your scene as X3D XML Encoded file, X3D JSON Encoded file, or as X3D Classic Encoded file, i.e. create a file with the extension .x3d, .x3dj, .x3dv, or .wrl.
 
-The HTML5 page is quite easy to create, the HTML5 code below shows you the minimum requirements. The path to the X3D scene is specified in the src attribute of the \<x3d-canvas\> element.
+The HTML5 page is quite easy to create, the HTML5 code below shows you the minimum requirements. The path to the X3D scene is specified in the *src* attribute of the \<x3d-canvas\> element.
 
 ```html
 <!DOCTYPE html>
@@ -883,6 +883,9 @@ x3d-canvas {
   </body>
 </html>
 ```
+
+>If you test a page locally on you desktop computer, you must setup a **localhost** server when you want to load a file via *src* attribute or Inline node, see [Using Firefox, Chrome and Opera with Local Files](https://create3000.github.io/x_ite/#using-firefox-chrome-and-opera-with-local-files). Or use [DOM Integration](https://create3000.github.io/x_ite/dom-integration) to directly combine HTML with X3D.
+{: .prompt-danger }
 
 To get X_ITE working you must include the JavaScript file »x_ite.min.js«. After x_ite is successfully loaded a new HTML element \<x3d-canvas\> is available on your page.
 
@@ -930,15 +933,15 @@ The HTML **\<x3d-canvas\>** element defines the main content of the X3D document
 
 ### cache
 
-A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the cache attribute is `true`. It works by appending "_={timestamp}" to the GET parameters of every request.
+A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the *cache* attribute is `true`. It works by appending "_={timestamp}" to the GET parameters of every request.
 
 ### contextMenu
 
-A Boolean value (`true` or `false`) to indicate whether a context menu should be displayed on right click. The default value for the contextMenu attribute is `true`. The context menu can also be extended, [see here](#extending-the-context-menu.html).
+A Boolean value (`true` or `false`) to indicate whether a context menu should be displayed on right click. The default value for the *contextMenu* attribute is `true`. The context menu can also be extended, [see here](#extending-the-context-menu).
 
 ### notifications
 
-A Boolean value (`true` or `false`) to indicate whether the notification bubble should be displayed. The default value for the notifications attribute is `true`.
+A Boolean value (`true` or `false`) to indicate whether the notification bubble should be displayed. The default value for the *notifications* attribute is `true`.
 
 ### onerror
 
@@ -946,7 +949,7 @@ Type: script code. This event is sent to an x3d-canvas element when an error occ
 
 ### oninitialized, onload
 
-Type: script code. This event handler will be called on the x3d-canvas element when a scene has finished loading. This applies whether the scene is applied via the src attribute or when a scene is loaded or replaced by another world. If you change the scene, the event will fire again when the new scene loads. This event will not bubble up the element tree.
+Type: script code. This event handler will be called on the x3d-canvas element when a scene has finished loading. This applies whether the scene is applied via the *src* attribute or when a scene is loaded or replaced by another world. If you change the scene, the event will fire again when the new scene loads. This event will not bubble up the element tree.
 
 ### onshutdown
 
@@ -954,19 +957,19 @@ Type: script code. This event handler will be called on the x3d-canvas element w
 
 ### preserveDrawingBuffer
 
-A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for preserveDrawingBuffer is `false`. Set preserveDrawingBuffer to true if you want to save the image from the canvas. Keep in mind setting preserveDrawingBuffer to true can have performance implications.
+A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for the *preserveDrawingBuffer* attribute is `false`. Set *preserveDrawingBuffer* to true if you want to save the image from the canvas. Keep in mind setting *preserveDrawingBuffer* to true can have performance implications.
 
 ### splashScreen
 
-A Boolean value (`true` or `false`) to indicate whether the splash screen should be displayed. The default value for the splashScreen attribute is `true`. The display of the splash screen can also be toggled via the browser option »SplashScreen« in JavaScript. Call `Browser .setBrowserOption ("SplashScreen", booleanValue)` to toggle the display of the splash screen.
+A Boolean value (`true` or `false`) to indicate whether the splash screen should be displayed. The default value for the *splashScreen* attribute is `true`. The display of the splash screen can also be toggled via the browser option »SplashScreen« in JavaScript. Call `Browser .setBrowserOption ("SplashScreen", booleanValue)` to toggle the display of the splash screen.
 
 ### src
 
-A String value with the URL that should be loaded on page load. If no src attribute is specified or the src attribute is empty an empty scene is displayed.
+A String value with the URL that should be loaded on page load. If no *src* attribute is specified or the *src* attribute is empty an empty scene is displayed.
 
 ### url
 
-A MFString value with urls that should be loaded on page load. If no url attribute is specified or the attribute is empty an empty scene is displayed. If both src and url attribute are specified the src attribute takes precedence.
+A MFString value with urls that should be loaded on page load. If no *url* attribute is specified or the attribute is empty an empty scene is displayed. If both src and *url* attribute are specified the *src* attribute takes precedence.
 
 ### Example
 
@@ -976,7 +979,7 @@ A MFString value with urls that should be loaded on page load. If no url attribu
 
 ### More Options
 
-More options can be adjusted using the [Browser Object](reference/browser-services#browser-object) and [browser options](reference/browser-services#browser-options) for scene specific adjustments.
+More options can be adjusted using the [Browser Object](reference/browser-services#browser-object) and [Browser Options](reference/browser-services#browser-options) for scene specific adjustments.
 
 ## Keyboard Shortcuts
 

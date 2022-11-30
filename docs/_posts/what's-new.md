@@ -41,7 +41,7 @@ tags: [new]
 ### New Features
 
 - Implemented picking of thick lines and large points with X3DPointingDeviceSensorNode nodes like TouchSensor.
-- Added Shading menu if debug attribute is 'true'.
+- Added Shading menu if *debug* attribute is 'true'.
 
 ### Bug Fixes
 
@@ -515,7 +515,7 @@ This release also increased pure rendering speed (without routing and scripting)
 ### New Features
 
 - Implemented toVRMLString.
-- New X3DCanvas attribute preserveDrawingBuffer.
+- New X3DCanvas attribute *preserveDrawingBuffer*.
 
 ### Bug Fixes
 
@@ -683,7 +683,7 @@ for more information. Additionally we tested X_ITE against <http://www.web3d.org
 
 ## X_ITE v4.2.8 Released
 
-*Leipzig, 31th October 2018:* The X3DCanvas element has now the onload, onshutdown, and onerror attributes and properties. There is also jQuery support for these event handler when calling jQuery.fn.on and jQuery.fn.off:
+*Leipzig, 31th October 2018:* The X3DCanvas element has now the onload, onshutdown, and *onerror* attributes and properties. There is also jQuery support for these event handler when calling jQuery.fn.on and jQuery.fn.off:
 
 ```js
 const element = $("X3DCanvas");
@@ -692,7 +692,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 ### New Features
 
-- The X3DCanvas element has now the onload, onshutdown, and onerror attributes with jQuery support.
+- The X3DCanvas element has now the onload, onshutdown, and *onerror* attributes with jQuery support.
 - The X3DCanvas element has now the onload, onshutdown, onerror, src, and url properties.
 - X_ITE now respects the tabindex setting from the X3DCanvas element.
 
