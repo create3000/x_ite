@@ -65,17 +65,24 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
 
 .table-wrapper > table.examples tbody tr {
   border: none;
+  background-color: var(--tb-odd-bg);
 }
 
 .table-wrapper > table.examples tbody tr td {
   border: 3px solid var(--tb-odd-bg);
-  background-color: var(--tb-odd-bg);
   padding: 0;
+  font-size: 0;
 }
 
 @media all and (max-width: 849px) {
   .table-wrapper > table.examples tbody tr td {
     border-width: 2px;
+  }
+}
+
+@media all and (max-width: 576px) {
+  .table-wrapper > table.examples tbody tr td {
+    border-width: 1px;
   }
 }
 
