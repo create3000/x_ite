@@ -144,10 +144,24 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
 .example .fa-circle-xmark {
   position: absolute;
   display: block;
-  background-color: black;
-  border-radius: 8px;
-  width: 16px;
-  left: -10px;
-  top: -8px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  padding: 10px;
+  left: -20px;
+  top: -18px;
   cursor: pointer;
+}
+
+.example .fa-circle-xmark::after {
+  content: " ";
+  z-index: -1;
+  position: relative;
+  display: block;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  left: 0px;
+  top: -16px;
+  background: black;
 }
