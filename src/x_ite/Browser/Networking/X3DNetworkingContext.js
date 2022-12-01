@@ -127,9 +127,9 @@ X3DNetworkingContext .prototype =
 
          if (this .getBrowserOptions () .getSplashScreen ())
          {
-            this .getContextMenu ()  .hide ();
-            this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeOut (0);
-            this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeIn (0);
+            this .getContextMenu () .hide ();
+            this .getCanvas () .hide ();
+            this .getSplashScreen () .stop (true, true) .show ();
          }
          else
          {
@@ -140,8 +140,8 @@ X3DNetworkingContext .prototype =
       {
          if (this .getBrowserOptions () .getSplashScreen ())
          {
+            this .getCanvas () .show ();
             this .getSplashScreen () .stop (true, true) .show () .fadeOut (2000);
-            this .getCanvas ()       .stop (true, true) .hide () .fadeIn  (2000);
          }
          else
          {

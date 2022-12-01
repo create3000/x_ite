@@ -91,10 +91,59 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   }
 }
 
-x3d-canvas,
-iframe {
+.post x3d-canvas,
+.post iframe {
   border: none;
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
+}
+
+.example {
+  z-index: 2;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background: var(--body-bg);
+  border-top: 1px solid rgba(158,158,158,0.17);
+}
+
+.example p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.example x3d-canvas {
+  display: block;
+  width: 50vw;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+@media all and (max-width: 849px) {
+  .example x3d-canvas {
+    width: 80vw;
+  }
+}
+
+@media all and (max-width: 576px) {
+  .example {
+    left: 15px;
+    right: 15px;
+  }
+
+  .example x3d-canvas {
+    width: 100%;
+  }
+}
+
+.example .fa-circle-xmark {
+  position: absolute;
+  display: block;
+  background-color: black;
+  border-radius: 8px;
+  width: 16px;
+  left: -10px;
+  top: -8px;
+  cursor: pointer;
 }
