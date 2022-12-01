@@ -1,5 +1,6 @@
 ---
 title: Controlling How Textures are Mapped
+date: 2022-11-28
 nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
 tags: [controlling, textures, mapped]

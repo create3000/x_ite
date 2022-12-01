@@ -1,5 +1,6 @@
 ---
 title: Building Primitive Shapes
+date: 2022-11-28
 nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
 tags: [building, primitive, shapes]

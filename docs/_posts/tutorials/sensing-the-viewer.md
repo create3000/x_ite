@@ -1,5 +1,6 @@
 ---
 title: Sensing the Viewer
+date: 2022-11-28
 nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
 tags: [sensing, viewer]

@@ -1,5 +1,6 @@
 ---
 title: Adding Fog
+date: 2022-11-28
 nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
 tags: [fog]

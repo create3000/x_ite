@@ -1,5 +1,6 @@
 ---
 title: Grouping Nodes
+date: 2022-11-28
 nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
 tags: [grouping, nodes]

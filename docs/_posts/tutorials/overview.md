@@ -1,5 +1,6 @@
 ---
 title: Tutorials
+date: 2022-11-28
 nav: none
 categories: [Tutorials]
 tags: [tutorials]

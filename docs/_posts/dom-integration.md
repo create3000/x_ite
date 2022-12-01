@@ -1,5 +1,6 @@
 ---
 title: DOM Integration
+date: 2022-11-28
 nav: main
 categories: []
 tags: [dom, integration, XHTML]

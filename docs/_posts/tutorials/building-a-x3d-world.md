@@ -1,5 +1,6 @@
 ---
 title: Building a X3D World
+date: 2022-11-28
 nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
 tags: [building, world]

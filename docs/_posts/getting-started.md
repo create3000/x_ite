@@ -1,5 +1,6 @@
 ---
 title: Getting Started
+date: 2022-11-28
 nav: main
 categories: []
 tags: [getting, started]

@@ -1,5 +1,6 @@
 ---
 title: Providing Information About Your World
+date: 2022-11-28
 nav: tutorials-scripts-and-prototypes
 categories: [Tutorials]
 tags: [providing, information, world]

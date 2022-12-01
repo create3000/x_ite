@@ -1,5 +1,6 @@
 ---
 title: How to Configure Your Web-Server
+date: 2022-11-28
 nav: main
 categories: []
 tags: [configure, web-server]
