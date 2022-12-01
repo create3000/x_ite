@@ -10,8 +10,10 @@ tail_includes:
   - comments
 ---
 
+{% if content contains '<x3d-canvas ' %}
 <!-- X_ITE -->
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+{% endif %}
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-380DMRLRQ9"></script>
@@ -23,14 +25,16 @@ tail_includes:
   gtag('config', 'G-380DMRLRQ9');
 </script>
 
+{% if content contains '<table class="examples">' %}
 <script type="module">
-$("table.examples img[data-src]") .each (function (i, e)
+$('table.examples img[data-src]') .each (function (i, e)
 {
   const img = $(e);
 
-  img .attr ("src", img .attr ("data-src"));
-  img .removeAttr ("data-src");
+  img .attr ('src', img .attr ('data-src'));
+  img .removeAttr ('data-src');
 })
 </script>
+{% endif %}
 
 {{ content }}
