@@ -26,7 +26,7 @@ Create an HTML or XHTML page and save it, include the »x_ite.min.js«. Now, X3D
 x3d-canvas {
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 8;
+  aspect-ratio: 16 / 7.8;
 }
     </style>
     <script>
