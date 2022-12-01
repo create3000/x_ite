@@ -56,7 +56,7 @@ version: dist zip
 
 .PHONY: docs
 docs:
-	cd docs && bundle exec jekyll serve --incremental
+	cd docs && bundle exec jekyll serve
 
 open-docs-in-browser:
 	open http://localhost:4000
