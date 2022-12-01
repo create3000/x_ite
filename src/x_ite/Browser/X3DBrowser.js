@@ -115,7 +115,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       if (this .getInstanceId () > 1) return;
 
-      this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
+      this .print ("Welcome to " + this .name + " X3D Browser v" + this .version + ":\n" +
                    "   Current Graphics Renderer\n" +
                    "      Name: " + this .getVendor () + " " + this .getRenderer () + "\n" +
                    "      WebGL version: " + this .getWebGLVersion () + "\n" +

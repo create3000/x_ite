@@ -83,6 +83,14 @@ sub docs
 	open HOME, ">", "$CWD/docs/_posts/getting-started.md";
 	print HOME $home;
 	close HOME;
+
+	my $wrap = `cat '$CWD/docs/_layouts/wrap.html'`;
+
+	$wrap =~ s|'X_ITE v[\d\.]+'|'X_ITE v$VERSION'|sgo;
+
+	open HOME, ">", "$CWD/docs/_layouts/wrap.html";
+	print HOME $wrap;
+	close HOME;
 }
 
 say "Waiting for confirmation ...";
