@@ -16,12 +16,6 @@ Andreas Plesch wrote a nice plug-in for X3D DOM integration. This enables JavaSc
 
 Create an HTML or XHTML page and save it, include the »x_ite.min.js«. Now, X3D content can directly be written within the \<x3d-canvas\> element and regular DOM manipulation methods can be used to manipulate the scene graph. This gives X3D authors the ability to combine HTML with X3D. The example below will show a simple Box node in the \<x3d-canvas\> element.
 
-### Example
-
-<iframe src="https://create3000.github.io/media/x_ite/dom-integration/box.html"></iframe>
-
-### HTML
-
 ```html
 <!DOCTYPE html>
 <html>
@@ -89,6 +83,10 @@ window .addEventListener ("load", function ()
 
 >Make sure you use **closing tags** for all X3D elements. This is needed, because the web browser does not know the X3D elements, and therefor does not know if the tag is self-closing, unless you use XHTML.
 {: .prompt-danger }
+
+### Example
+
+<iframe src="https://create3000.github.io/media/x_ite/dom-integration/box.html"></iframe>
 
 ## Attributes
 
