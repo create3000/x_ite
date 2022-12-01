@@ -76,20 +76,12 @@ sub docs
 {
 	my $VERSION = shift;
 
-	my $home = `cat '$CWD/docs/_posts/getting-started.md'`;
+	my $config = `cat '$CWD/docs/_config.yml'`;
 
-	$home =~ s|/x_ite@[\d\.]+/|/x_ite\@$VERSION/|sgo;
+	$config =~ s|version:\s*[\d\.]+|version: $VERSION|sgo;
 
-	open HOME, ">", "$CWD/docs/_posts/getting-started.md";
-	print HOME $home;
-	close HOME;
-
-	my $wrap = `cat '$CWD/docs/_layouts/wrap.html'`;
-
-	$wrap =~ s|'X_ITE v[\d\.]+'|'X_ITE v$VERSION'|sgo;
-
-	open HOME, ">", "$CWD/docs/_layouts/wrap.html";
-	print HOME $wrap;
+	open HOME, ">", "$CWD/docs/_config.yml";
+	print HOME $config;
 	close HOME;
 }
 

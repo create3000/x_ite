@@ -1,4 +1,5 @@
 ---
 # Wrapper HTML
 ---
-{{ content | replace: 'data-src=', 'src=' | replace: 'Post-page', 'X_ITE v8.1.0' }}
+{% assign title = 'X_ITE v' | append: site.version %}
+{{ content | replace: 'data-src=', 'src=' | replace: 'Post-page', title }}

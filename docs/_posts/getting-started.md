@@ -6,6 +6,8 @@ categories: []
 tags: [getting, started]
 permalink: /
 ---
+{% assign version = site.version %}
+
 ## Overview
 
 X_ITE is a new 3D JavaScript library entirely written in JavaScript and uses WebGL for 3D rendering. Authors can publish X3D and VRML source online within an HTML5 page with X_ITE that works with Web browsers **without** prior plugin installation. This gives X3D authors the ability to displays content in 3D, using WebGL 3D graphics technology to display X3D content in several different browsers across several different operating systems. Since X3D is backwardly compatible, X_ITE can also be used as a VRML viewer.
@@ -859,7 +861,7 @@ You can always replace »latest« by the version number you prefer.
 If you are on production and everything works fine, then use a numbered version.
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@8.1.0/dist/x_ite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@{{ version }}/dist/x_ite.min.js"></script>
 ```
 
 ## Embedding X_ITE within a Web Page
