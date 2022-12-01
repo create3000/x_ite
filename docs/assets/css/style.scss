@@ -106,6 +106,7 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   right: 1rem;
   background: var(--body-bg);
   border-top: 1px solid rgba(158,158,158,0.17);
+  box-shadow: 0px 0px 10px black;
 }
 
 .example p {
