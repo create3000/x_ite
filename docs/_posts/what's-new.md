@@ -4,6 +4,14 @@ nav: main
 categories: []
 tags: [new]
 ---
+## X_ITE v8.1.0 Released
+
+*Leipzig, 1st December 2022:* We now have a new website design.
+
+### Bug Fixes
+
+- Fixed Examine Viewer spin behavior.
+
 ## X_ITE v8.0.0 Released
 
 *Leipzig, 24th November 2022*: We finally released the new version 8.0.0.

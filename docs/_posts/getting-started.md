@@ -856,7 +856,7 @@ You can always replace »latest« by the version number you prefer.
 If you are on production and everything works fine, then use a numbered version.
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@8.0.0/dist/x_ite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@8.1.0/dist/x_ite.min.js"></script>
 ```
 
 ## Embedding X_ITE within a Web Page

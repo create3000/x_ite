@@ -1,4 +1,4 @@
-/* X_ITE v8.0.0 */(function webpackUniversalModuleDefinition(root, factory) {
+/* X_ITE v8.1.0 */(function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
@@ -36424,7 +36424,7 @@ X3DField .prototype = Object .assign (Object .create (Base_X3DChildObject.protot
    fromString: function (string, scene)
    {
       const
-         X3D        = window [Symbol .for ("X_ITE.X3D-8.0.0")],
+         X3D        = window [Symbol .for ("X_ITE.X3D-8.1.0")],
          VRMLParser = X3D .require ("x_ite/Parser/VRMLParser"),
          parser     = new VRMLParser (scene);
 
@@ -47394,7 +47394,7 @@ for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
  *
  ******************************************************************************/
 
-/* harmony default export */ const VERSION = ("8.0.0");
+/* harmony default export */ const VERSION = ("8.1.0");
 
 ;// CONCATENATED MODULE: ./src/x_ite/DEBUG.js
 /*******************************************************************************
@@ -73110,7 +73110,7 @@ function X3DCoreContext (element)
    // Get canvas & context.
 
    const
-      shadow       = X3DCoreContext_$(element .prop ("shadowRoot")),
+      shadow       = element .data ("shadow"),
       browser      = X3DCoreContext_$("<div></div>") .addClass ("x_ite-private-browser") .attr ("tabindex", 0),
       surface      = X3DCoreContext_$("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser),
       splashScreen = X3DCoreContext_$("<div></div>") .hide () .addClass ("x_ite-private-splash-screen") .appendTo (browser),
@@ -73123,14 +73123,14 @@ function X3DCoreContext (element)
 
    this [_instanceId]   = ++ instanceId;
    this [_element]      = element;
-   this [_shadow]       = shadow .length ? shadow .append (browser .hide ()) : this [_element] .prepend (browser);
+   this [_shadow]       = shadow ? shadow .append (browser .hide ()) : this [_element] .prepend (browser);
    this [_surface]      = surface;
    this [_canvas]       = X3DCoreContext_$("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
    this [_context]      = Core_Context.create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
    this [_splashScreen] = splashScreen;
 
-   if (shadow .length)
-      shadow .prop ("loaded") .then (function () { browser .show (); });
+   if (shadow)
+      element .data ("loaded") .then (function () { browser .show (); });
 
    this [_localStorage] = new Utility_DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_instanceId] + ").");
    this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
@@ -79010,9 +79010,11 @@ OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpo
 
 
 
-function X3DViewer (executionContext)
+function X3DViewer (executionContext, navigationInfo)
 {
    Base_X3DBaseNode.call (this, executionContext);
+
+   this .navigationInfo = navigationInfo;
 }
 
 X3DViewer .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
@@ -79034,7 +79036,7 @@ X3DViewer .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototyp
    },
    getNavigationInfo: function ()
    {
-      return this .getBrowser () .getActiveLayer () .getNavigationInfo ();
+      return this .navigationInfo;
    },
    getActiveViewpoint: function ()
    {
@@ -79802,6 +79804,8 @@ OrientationChaser .prototype = Object .assign (Object .create (Followers_X3DChas
 
 
 
+
+
 typeof jquery_mousewheel; // import plugin
 
 const macOS = /Mac OS X/i .test (navigator .userAgent)
@@ -79810,15 +79814,15 @@ const
    MOTION_TIME       = 0.05 * 1000,
    SPIN_RELEASE_TIME = 0.04 * 1000,
    SPIN_ANGLE        = 0.003,
-   SPIN_FACTOR       = 0.6,
+   SPIN_FACTOR       = 0.4,
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
    MOVE_TIME         = 0.2,
    ROTATE_TIME       = 0.2,
-   MAX_ANGLE         = 0.97;
+   CRITICAL_ANGLE    = 0.97;
 
-function ExamineViewer (executionContext)
+function ExamineViewer (executionContext, navigationInfo)
 {
-   Navigation_X3DViewer.call (this, executionContext);
+   Navigation_X3DViewer.call (this, executionContext, navigationInfo);
 
    this .button                   = -1;
    this .orientationOffset        = new Numbers_Rotation4 (0, 0, 1, 0);
@@ -79827,6 +79831,8 @@ function ExamineViewer (executionContext)
    this .fromPoint                = new Numbers_Vector3 (0, 0, 0);
    this .toPoint                  = new Numbers_Vector3 (0, 0, 0);
    this .rotation                 = new Numbers_Rotation4 (0, 0, 1, 0);
+   this .direction                = new Numbers_Vector3 (0, 0, 0);
+   this .axis                     = new Numbers_Vector3 (0, 0, 0);
    this .pressTime                = 0;
    this .motionTime               = 0;
 
@@ -79841,6 +79847,8 @@ function ExamineViewer (executionContext)
    this .positionChaser           = new Followers_PositionChaser (executionContext);
    this .centerOfRotationChaser   = new Followers_PositionChaser (executionContext);
    this .rotationChaser           = new Followers_OrientationChaser (executionContext);
+
+   this .timeSensor = new Time_TimeSensor (executionContext);
 }
 
 ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.prototype),
@@ -79860,6 +79868,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
       // Disconnect from spin.
 
       this .getNavigationInfo () ._transitionStart .addInterest ("disconnect", this);
+      browser .getBrowserOptions () ._StraightenHorizon .addInterest ("disconnect", this);
       browser ._activeViewpoint .addInterest ("set_activeViewpoint__", this);
 
       // Bind pointing device events.
@@ -79885,6 +79894,13 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
       this .rotationChaser ._duration = ROTATE_TIME;
       this .rotationChaser .setPrivate (true);
       this .rotationChaser .setup ();
+
+      this .timeSensor ._loop     = true;
+      this .timeSensor ._stopTime = browser .getCurrentTime ();
+      this .timeSensor .setPrivate (true);
+      this .timeSensor .setup ();
+
+      this .timeSensor ._fraction_changed  .addInterest ("spin", this);
 
       this .set_activeViewpoint__ ();
    },
@@ -79991,12 +80007,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
             this .getBrowser () .setCursor ("DEFAULT");
 
             if (Math .abs (this .rotation .angle) > SPIN_ANGLE && Date .now () - this .motionTime < SPIN_RELEASE_TIME)
-            {
-               if (this .getStraightenHorizon ())
-                  this .rotation = this .getHorizonRotation (this .rotation);
-
                this .addSpinning (this .rotation);
-            }
 
             this ._isActive = false;
             break;
@@ -80287,15 +80298,6 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
          }
       };
    })(),
-   spin: function ()
-   {
-      const viewpoint = this .getActiveViewpoint ();
-
-      this .orientationOffset .assign (viewpoint ._orientationOffset .getValue ());
-
-      viewpoint ._orientationOffset = this .getOrientationOffset (this .rotation, this .orientationOffset);
-      viewpoint ._positionOffset    = this .getPositionOffset (viewpoint ._positionOffset .getValue (), this .orientationOffset, viewpoint ._orientationOffset .getValue ());
-   },
    set_positionOffset__: function (value)
    {
       const viewpoint = this .getActiveViewpoint ();
@@ -80373,16 +80375,100 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
          this .rotationChaser ._value_changed .addInterest ("set_rotation__", this);
       };
    })(),
-   addSpinning: (function ()
+   addSpinning: function (rotationChange)
    {
-      const rotation = new Numbers_Rotation4 (0, 0, 1, 0);
+      this .disconnect ();
 
-      return function (rotationChange)
+      if (this .getStraightenHorizon ())
       {
-         this .disconnect ();
-         this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+         const
+            viewpoint            = this .getActiveViewpoint (),
+            userPosition         = viewpoint .getUserPosition (),
+            userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
+            direction            = Numbers_Vector3.subtract (userPosition, userCenterOfRotation),
+            rotation             = this .getHorizonRotation (rotationChange),
+            axis                 = this .getUpVector (viewpoint);
 
-         this .rotation .assign (rotation .assign (Numbers_Rotation4.Identity) .slerp (rotationChange, SPIN_FACTOR));
+         this .axis .assign (axis);
+
+         if (rotation .getAxis () .dot (Numbers_Vector3.yAxis) < 0 !== rotation .angle < 0)
+            this .axis .negate ();
+
+         this .timeSensor ._cycleInterval = Math .PI / (rotationChange .angle * SPIN_FACTOR * 30);
+         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+         const lookAtRotation = this .lookAt (userPosition, userCenterOfRotation);
+
+         this .direction .assign (direction);
+         this .orientationOffset .assign (viewpoint .getUserOrientation ()) .multRight (lookAtRotation .inverse ());
+      }
+      else
+      {
+         this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+         this .rotation .assign (rotationChange);
+      }
+   },
+   spin: (function ()
+   {
+      const
+         direction         = new Numbers_Vector3 (0, 0, 0),
+         positionOffset    = new Numbers_Vector3 (0, 0, 0),
+         orientationOffset = new Numbers_Rotation4 (),
+         rotation          = new Numbers_Rotation4 ();
+
+      return function ()
+      {
+         const viewpoint = this .getActiveViewpoint ();
+
+         if (this .getStraightenHorizon ())
+         {
+            const
+               userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
+               fraction             = this .timeSensor ._fraction_changed .getValue (),
+               rotation             = new Numbers_Rotation4 (this .axis, 2 * Math .PI * fraction),
+               userPosition         = rotation .multVecRot (direction .assign (this .direction)) .add (userCenterOfRotation),
+               lookAtRotation       = this .lookAt (userPosition, viewpoint .getUserCenterOfRotation ());
+
+            positionOffset .assign (userPosition) .subtract (viewpoint .getPosition ());
+
+            orientationOffset .assign (viewpoint .getOrientation ()) .inverse ()
+               .multRight (this .orientationOffset) .multRight (lookAtRotation);
+
+            viewpoint ._positionOffset    = positionOffset;
+            viewpoint ._orientationOffset = orientationOffset;
+         }
+         else
+         {
+            rotation .assign (Numbers_Rotation4.Identity) .slerp (this .rotation, SPIN_FACTOR * 60 / this .getBrowser () .getCurrentFrameRate ());
+
+            this .orientationOffset .assign (viewpoint ._orientationOffset .getValue ());
+
+            viewpoint ._orientationOffset = this .getOrientationOffset (rotation, this .orientationOffset);
+            viewpoint ._positionOffset    = this .getPositionOffset (viewpoint ._positionOffset .getValue (), this .orientationOffset, viewpoint ._orientationOffset .getValue ());
+         }
+      };
+   })(),
+   lookAt: (function ()
+   {
+      const
+         x = new Numbers_Vector3 (0, 0, 0),
+         y = new Numbers_Vector3 (0, 0, 0),
+         z = new Numbers_Vector3 (0, 0, 0),
+         m = new Numbers_Matrix3 (),
+         r = new Numbers_Rotation4 ();
+
+      return function (fromPoint, toPoint)
+      {
+         const up = this .getUpVector (this .getActiveViewpoint ());
+
+         z .assign (fromPoint) .subtract (toPoint) .normalize ();
+         x .assign (up) .cross (z) .normalize ();
+         y .assign (z) .cross (x) .normalize ();
+
+         m .set (x.x, x.y, x.z, y.x, y.y, y.z, z.x, z.y, z.z);
+         r .setMatrix (m);
+
+         return r;
       };
    })(),
    addMove: (function ()
@@ -80489,7 +80575,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
 
             const userVector = userOrientation .multVecRot (zAxis .assign (Numbers_Vector3.zAxis));
 
-            if (Math .abs (this .getUpVector (viewpoint) .dot (userVector)) < MAX_ANGLE)
+            if (Math .abs (this .getUpVector (viewpoint) .dot (userVector)) < CRITICAL_ANGLE)
                return orientationOffsetAfter;
 
             throw new Error ("Critical angle");
@@ -80509,9 +80595,10 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
          const
             V = rotation .multVecRot (zAxis .assign (Numbers_Vector3.zAxis)),
             N = Numbers_Vector3.cross (Numbers_Vector3.yAxis, V),
-            H = Numbers_Vector3.cross (N, Numbers_Vector3.yAxis);
+            H = Numbers_Vector3.cross (N, Numbers_Vector3.yAxis),
+            r = new Numbers_Rotation4 (Numbers_Vector3.zAxis, H);
 
-         return new Numbers_Rotation4 (Numbers_Vector3.zAxis, H);
+         return r;
       };
    })(),
    getUpVector: function (viewpoint)
@@ -80532,6 +80619,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
       this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this);
       this .rotationChaser         ._value_changed .removeInterest ("set_rotation__",               this);
 
+      this .timeSensor ._stopTime = browser .getCurrentTime ();
       browser .prepareEvents () .removeInterest ("spin", this);
    },
    dispose: function ()
@@ -80539,7 +80627,11 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
       const browser = this .getBrowser ();
 
       this .disconnect ();
+      this .getNavigationInfo () ._transitionStart .removeInterest ("disconnect", this);
+      browser .getBrowserOptions () ._StraightenHorizon .removeInterest ("disconnect", this);
+
       browser ._activeViewpoint .removeInterest ("set_activeViewpoint__", this);
+
       browser .getSurface () .off (".ExamineViewer");
       ExamineViewer_$(document) .off (".ExamineViewer" + this .getId ());
    },
@@ -80624,9 +80716,9 @@ const
    MOVE = 0,
    PAN  = 1;
 
-function X3DFlyViewer (executionContext)
+function X3DFlyViewer (executionContext, navigationInfo)
 {
-   Navigation_X3DViewer.call (this, executionContext);
+   Navigation_X3DViewer.call (this, executionContext, navigationInfo);
 
    const
       browser = this .getBrowser (),
@@ -81323,9 +81415,9 @@ X3DFlyViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
 
 
 
-function WalkViewer (executionContext)
+function WalkViewer (executionContext, navigationInfo)
 {
-   Navigation_X3DFlyViewer.call (this, executionContext);
+   Navigation_X3DFlyViewer.call (this, executionContext, navigationInfo);
 }
 
 WalkViewer .prototype = Object .assign (Object .create (Navigation_X3DFlyViewer.prototype),
@@ -81443,9 +81535,9 @@ WalkViewer .prototype = Object .assign (Object .create (Navigation_X3DFlyViewer.
 
 
 
-function FlyViewer (executionContext)
+function FlyViewer (executionContext, navigationInfo)
 {
-   Navigation_X3DFlyViewer.call (this, executionContext);
+   Navigation_X3DFlyViewer.call (this, executionContext, navigationInfo);
 }
 
 FlyViewer .prototype = Object .assign (Object .create (Navigation_X3DFlyViewer.prototype),
@@ -81546,9 +81638,9 @@ const
    positionOffset         = new Numbers_Vector3 (0 ,0, 0),
    centerOfRotationOffset = new Numbers_Vector3 (0, 0, 0);
 
-function PlaneViewer (executionContext)
+function PlaneViewer (executionContext, navigationInfo)
 {
-   Navigation_X3DViewer.call (this, executionContext);
+   Navigation_X3DViewer.call (this, executionContext, navigationInfo);
 
    this .button    = -1;
    this .fromPoint = new Numbers_Vector3 (0, 0, 0);
@@ -81773,9 +81865,9 @@ PlaneViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.pr
 
 
 
-function NoneViewer (executionContext)
+function NoneViewer (executionContext, navigationInfo)
 {
-   Navigation_X3DViewer.call (this, executionContext);
+   Navigation_X3DViewer.call (this, executionContext, navigationInfo);
 }
 
 NoneViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.prototype),
@@ -81858,9 +81950,9 @@ const
    LookAtViewer_MOVE_TIME     = 0.3,
    LookAtViewer_ROTATE_TIME   = 0.3;
 
-function LookAtViewer (executionContext)
+function LookAtViewer (executionContext, navigationInfo)
 {
-   Navigation_X3DViewer.call (this, executionContext);
+   Navigation_X3DViewer.call (this, executionContext, navigationInfo);
 
    this .button                 = -1;
    this .fromVector             = new Numbers_Vector3 (0, 0, 0);
@@ -82987,8 +83079,10 @@ X3DNavigationContext .prototype =
    },
    set_viewer__: function (viewer)
    {
-      if (this ._activeNavigationInfo .getValue ())
-         this ._availableViewers = this ._activeNavigationInfo .getValue () ._availableViewers;
+      const navigationInfo = this ._activeNavigationInfo .getValue ();
+
+      if (navigationInfo)
+         this ._availableViewers = navigationInfo ._availableViewers;
       else
          this ._availableViewers .length = 0;
 
@@ -83000,26 +83094,26 @@ X3DNavigationContext .prototype =
       switch (viewer .getValue ())
       {
          case "EXAMINE":
-            this [_viewerNode] = new Navigation_ExamineViewer (this);
+            this [_viewerNode] = new Navigation_ExamineViewer (this, navigationInfo);
             break;
          case "WALK":
-            this [_viewerNode] = new Navigation_WalkViewer (this);
+            this [_viewerNode] = new Navigation_WalkViewer (this, navigationInfo);
             break;
          case "FLY":
-            this [_viewerNode] = new Navigation_FlyViewer (this);
+            this [_viewerNode] = new Navigation_FlyViewer (this, navigationInfo);
             break;
          case "PLANE":
          case "PLANE_create3000.de":
-            this [_viewerNode] = new Navigation_PlaneViewer (this);
+            this [_viewerNode] = new Navigation_PlaneViewer (this, navigationInfo);
             break;
          case "NONE":
-            this [_viewerNode] = new Navigation_NoneViewer (this);
+            this [_viewerNode] = new Navigation_NoneViewer (this, navigationInfo);
             break;
          case "LOOKAT":
-            this [_viewerNode] = new Navigation_LookAtViewer (this);
+            this [_viewerNode] = new Navigation_LookAtViewer (this, navigationInfo);
             break;
          default:
-            this [_viewerNode] = new Navigation_ExamineViewer (this);
+            this [_viewerNode] = new Navigation_ExamineViewer (this, navigationInfo);
             break;
       }
 
@@ -97152,7 +97246,7 @@ Object .assign (X3DBrowserContext,
       X3DBrowserContext_$("x3d-canvas, X3DCanvas") .each (function (_, canvas)
       {
          const
-            X3D     = window [Symbol .for ("X_ITE.X3D-8.0.0")],
+            X3D     = window [Symbol .for ("X_ITE.X3D-8.1.0")],
             browser = X3D .getBrowser (canvas);
 
          browserContext .call (browser);
@@ -117515,7 +117609,7 @@ Components .prototype =
    addComponent: function ({ name, types, abstractTypes, browserContext, exports })
    {
       const
-         X3D       = window [Symbol .for ("X_ITE.X3D-8.0.0")],
+         X3D       = window [Symbol .for ("X_ITE.X3D-8.1.0")],
          Namespace = X3D .require ("x_ite/Namespace");
 
       if (types)
@@ -121080,6 +121174,7 @@ x_ite_Namespace.set ("x_ite/X3D", X3D);
 /* harmony default export */ const x_ite_X3D = (X3D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(755);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121146,11 +121241,12 @@ class X3DCanvas extends HTMLElement
          shadow = this .attachShadow ({ mode: "open", delegatesFocus: true }),
          link   = document .createElement ("link");
 
-      shadow .loaded = new Promise (function (resolve, reject)
+      X3DCanvas_$(this) .data ("shadow", X3DCanvas_$(shadow));
+      X3DCanvas_$(this) .data ("loaded", new Promise (function (resolve, reject)
       {
          link .onload  = resolve;
          link .onerror = reject;
-      });
+      }));
 
       link .setAttribute ("rel", "stylesheet");
       link .setAttribute ("type", "text/css");
@@ -121242,7 +121338,7 @@ x_ite_Namespace.set ("x_ite/X3DCanvas", X3DCanvas);
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-8.0.0")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-8.1.0")] = x_ite_X3D;
 
 x_ite_X3DCanvas.define ();
 

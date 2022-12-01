@@ -77,7 +77,7 @@ loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x
 
 $(".version") .text (Browser .name + " v" + Browser .version);
 $(".browser") .on ("initialized", () => Browser .println ("Scene loaded in " + ((performance .now () - loadTime) / 1000) .toFixed (3) + " s."));
-$(".browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = $(".browser") .attr ("src"));
+$(".browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = Browser .getWorldURL ());
 $(".browser") .on ("shutdown", () => Browser .println ("Shutdown at " + new Date () .toUTCString () + "."));
 $(".location-entry") .val (localStorage ["Bookmarks.history"] [index])
 $(".location-go") .on ("click", () => loadURL ($(".location-entry") .val ()));
