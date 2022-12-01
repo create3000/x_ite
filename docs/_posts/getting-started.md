@@ -16,7 +16,7 @@ X_ITE supports custom shaders, clip planes, reflection mapping, script nodes, pr
 >**Tip:** X_ITE runs best in fresh installs of Google Chrome, Chromium, Firefox, Safari, Opera, and Microsoft Edge. X_ITE uses the latest JavaScript standard, but is also compatible with older browser, and is available both on your desktop computer and on your modern smart-phone.
 {: .prompt-tip }
 
-If you ever get in trouble, please [file a bug](https://github.com/create3000/x_ite/issues).
+If you ever get in trouble, please [report a bug](#report-a-bug).
 
 ## X3D Examples
 
@@ -800,7 +800,7 @@ If you ever get in trouble, please [file a bug](https://github.com/create3000/x_
   </tr>
 </table>
 
->The VolumeRendering examples are only working if your browser supports WebGL 2, otherwise the examples left black.
+>**Note:** The VolumeRendering examples are only working if your browser supports WebGL 2, otherwise the examples left black.
 {: .prompt-info }
 
 ## Download X_ITE
