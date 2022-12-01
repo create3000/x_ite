@@ -104,7 +104,9 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   position: fixed;
   bottom: 1rem;
   right: 1rem;
-  background: var(--body-bg);
+  background: rgba(27,27,30,0.4);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border-top: 1px solid rgba(158,158,158,0.17);
   box-shadow: 0px 0px 10px black;
 }
@@ -112,6 +114,7 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
 .example p {
   margin-top: 0;
   margin-bottom: 0;
+  text-shadow: 1px 1px 0px black;
 }
 
 .example x3d-canvas {
