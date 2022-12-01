@@ -30,9 +30,9 @@ Create an HTML or XHTML page and save it, include the »x_ite.min.js«. Now, X3D
     <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
     <style>
 x3d-canvas {
-  width: 50%;
+  width: 100%;
   height: auto;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 8;
 }
     </style>
     <script>
