@@ -186,12 +186,13 @@ function addRoute ()
     scene = document .querySelector ("Scene"),
     route = document .createElement ("ROUTE");
 
-  // Connect a TimeSensor node to a ScalarInterpolator node.
+  // Connect a TimeSensor node with DEF name »Timer« to a ScalarInterpolator node
+  // with DEF name »Interpolator«.
 
   route .setAttribute ("id",        "route1");
-  route .setAttribute ("fromNode",  "Timer1");
+  route .setAttribute ("fromNode",  "Timer");
   route .setAttribute ("fromField", "fraction_changed");
-  route .setAttribute ("toNode",    "Interpolator1");
+  route .setAttribute ("toNode",    "Interpolator");
   route .setAttribute ("toField",   "set_fraction");
 
   scene .appendChild (route);
