@@ -12,6 +12,7 @@ tags: [new]
 ### Bug Fixes
 
 - Fixed Examine Viewer spin behavior.
+- Fixed fading of Splash Screen.
 
 ## X_ITE v8.0.0 Released
 
