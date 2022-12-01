@@ -18,6 +18,10 @@ Create an HTML or XHTML page and save it, include the »x_ite.min.js«. Now, X3D
 
 ### Example
 
+<iframe src="https://create3000.github.io/media/x_ite/dom-integration/box.html"></iframe>
+
+### HTML
+
 ```html
 <!DOCTYPE html>
 <html>

@@ -153,7 +153,7 @@ The X3D object has several properties, you can use any of the properties below.
 
 #### **X3DConstants**
 
-The X3DConstants object defines values that can be useful for scripting. See also [Constants Services](https://create3000.github.io/x_ite/reference/constants-services).
+The X3DConstants object defines values that can be useful for scripting. See also [Constants Services](reference/constants-services).
 
 ```js
 function foo (node)
@@ -185,7 +185,7 @@ function foo (node)
 
 #### **X3DFields**
 
-All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be created using the object as constructor. See also [Field Services and Objects](https://create3000.github.io/x_ite/reference/field-services-and-objects).
+All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be created using the object as constructor. See also [Field Services and Objects](reference/field-services-and-objects).
 
 >**Note:** Scalar objects like SFBool, SFDouble, SFFloat, SFInt32, SFString, and SFTime have no constructor, just use the built-in JavaScript types Boolean, Number, and String.
 {: .prompt-info }
