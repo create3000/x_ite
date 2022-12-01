@@ -105,11 +105,12 @@ You can add an event listener to any X3D element with the name of the output fie
 Events sent from a node are of type CustomEvent and have the following properties:
 
 ```js
-{
-  type: string,   // name of field
+CustomEvent: {
+  type: string,        // name of field
+  target: HTMLElement, // X3D element of node
   detail: {
-    node: SFNode, // node to which the field belongs to
-    value: any,   // new value of field
+    node: SFNode,      // node to which the field belongs to
+    value: any,        // new value of field
   }
 }
 ```
