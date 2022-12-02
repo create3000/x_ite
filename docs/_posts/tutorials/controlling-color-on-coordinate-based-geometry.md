@@ -7,12 +7,12 @@ tags: [controlling, color, coordinate, geometry]
 ---
 ## Motivation
 
-- The [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node gives an entire shape the same color
-- You can provide colors for individual parts of a shape using a [Color](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Color) node
+- The [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material){:target="_blank"} node gives an entire shape the same color
+- You can provide colors for individual parts of a shape using a [Color](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Color){:target="_blank"} node
 
 ## Syntax: Color
 
-A [Color](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Color) node contains a list of RGB values (similar to a Coordinate node):
+A [Color](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Color){:target="_blank"} node contains a list of RGB values (similar to a Coordinate node):
 
 ### XML Encoding
 
@@ -29,7 +29,7 @@ Color {
 }
 ```
 
-Used as the color field value of [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet), [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet), [PointSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#PointSet) or [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid) nodes.
+Used as the color field value of [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"}, [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet){:target="_blank"}, [PointSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#PointSet){:target="_blank"} or [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} nodes.
 
 ## Binding colors
 
@@ -40,7 +40,7 @@ Used as the color field value of [IndexedFaceSet](https://www.web3d.org/document
 
 ## Syntax: PointSet
 
-A [PointSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#PointSet) geometry node creates geometry out of points:
+A [PointSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#PointSet){:target="_blank"} geometry node creates geometry out of points:
 
 - *color* - provides a list of colors
 - Always binds one color to each point, in order
@@ -71,7 +71,7 @@ Shape {
 
 ## Syntax: IndexedLineSet
 
-An [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet) geometry node creates geometry out of lines:
+An [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet){:target="_blank"} geometry node creates geometry out of lines:
 
 - *color* - list of colors
 - *colorIndex* - selects colors from list
@@ -116,7 +116,7 @@ The *colorPerVertex* field controls how color indexes are used:
 
 ## Syntax: IndexedFaceSet
 
-An [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet) geometry node creates geometry out of faces:
+An [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"} geometry node creates geometry out of faces:
 
 - *color* - list of colors
 - *colorIndex* - selects colors from list
@@ -161,7 +161,7 @@ The *colorPerVertex* field controls how color indexes are used (similar to line 
 
 ## Syntax: ElevationGrid
 
-An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid) geometry node creates terrains:
+An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} geometry node creates terrains:
 
 - *color* - list of colors
 - *colorPerVertex* - control color binding
@@ -204,10 +204,10 @@ The *colorPerVertex* field controls how color indexes are used (similar to line 
 
 ## Summary
 
-The [Color](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Color) node lists colors to use for parts of a shape:
+The [Color](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Color){:target="_blank"} node lists colors to use for parts of a shape:
 
 - Used as the value of the color field
 - Color indexes select colors to use
-- Colors override [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node
+- Colors override [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material){:target="_blank"} node
 
 The *colorPerVertex* field selects color per line/face/grid square or color per coordinate.

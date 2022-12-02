@@ -28,7 +28,7 @@ A coordinate specifies a 3-D dot location. Measured relative to a coordinate sys
 
 ## Syntax: Coordinate
 
-A [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate) node contains a list of coordinates for use in building a shape.
+A [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate){:target="_blank"} node contains a list of coordinates for use in building a shape.
 
 ### XML Encoding
 
@@ -55,15 +55,15 @@ Coordinate {
 
 Build coordinate-based shapes using geometry nodes:
 
-- [PointSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#PointSet)
-- [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet)
-- [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet)
+- [PointSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#PointSet){:target="_blank"}
+- [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet){:target="_blank"}
+- [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"}
 
-For all three nodes, use a [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate) node as the value of the coord field.
+For all three nodes, use a [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate){:target="_blank"} node as the value of the coord field.
 
 ## Syntax: PointSet
 
-A [PointSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#PointSet) geometry node creates geometry out of points:
+A [PointSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#PointSet){:target="_blank"} geometry node creates geometry out of points:
 
 - One point (a dot) is placed at each coordinate
 
@@ -94,7 +94,7 @@ Shape {
 
 ## Syntax: IndexedLineSet
 
-An [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet) geometry node creates geometry out of lines:
+An [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet){:target="_blank"} geometry node creates geometry out of lines:
 
 - A straight line is drawn between pairs of selected coordinates
 
@@ -127,7 +127,7 @@ Shape {
 
 ## Using line set coordinate indexes
 
-Each coordinate in a [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate) node is implicitly numbered
+Each coordinate in a [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate){:target="_blank"} node is implicitly numbered
 
 - Index 0 is the first coordinate
 - Index **1** is the second coordinate, etc.
@@ -135,7 +135,7 @@ Each coordinate in a [Coordinate](https://www.web3d.org/documents/specifications
 To build a line shape:
 
 - Make a list of coordinates, using their indexes
-- List coordinate indexes in the *coordIndex* field of the [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet) node
+- List coordinate indexes in the *coordIndex* field of the [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet){:target="_blank"} node
 
 A line is drawn between pairs of coordinate indexes:
 
@@ -151,7 +151,7 @@ A line is drawn between pairs of coordinate indexes:
 
 ## Syntax: IndexedFaceSet
 
-An [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet) geometry node creates geometry out of faces:
+An [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"} geometry node creates geometry out of faces:
 
 - A flat face (polygon) is drawn using an outline specified by coordinate indexes
 
@@ -187,7 +187,7 @@ Shape {
 To build a face shape
 
 - Make a list of coordinates, using their indexes
-- List coordinate indexes in the *coordIndex* field of the [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet) node
+- List coordinate indexes in the *coordIndex* field of the [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"} node
 
 A triangle is drawn connecting sequences of coordinate indexes:
 
@@ -204,7 +204,7 @@ A triangle is drawn connecting sequences of coordinate indexes:
 
 ## Syntax: IndexedFaceSet
 
-An [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet) geometry node creates geometry out of faces:
+An [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"} geometry node creates geometry out of faces:
 
 - *solid* - shape is solid
 - *ccw* - faces are counter-clockwise
@@ -257,7 +257,7 @@ Faces are assumed to be convex
 
 ## Syntax: CoordinateInterpolator
 
-A [CoordinateInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#CoordinateInterpolator) node describes a coordinate path:
+A [CoordinateInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#CoordinateInterpolator){:target="_blank"} node describes a coordinate path:
 
 - *keys* - key fractions
 - *keyValues* - key coordinate lists (X, Y, Z lists)
@@ -279,11 +279,11 @@ CoordinateInterpolator {
 }
 ```
 
-Typically route into a [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate) node's set\_point input.
+Typically route into a [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate){:target="_blank"} node's set\_point input.
 
 ## Interpolating coordinate lists
 
-A [CoordinateInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#CoordinateInterpolator) node interpolates lists of coordinates:
+A [CoordinateInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#CoordinateInterpolator){:target="_blank"} node interpolates lists of coordinates:
 
 - Each output is a list of coordinates
 
@@ -294,22 +294,22 @@ If n output coordinates are needed for t fractional times:
 ## Summary
 
 - Shapes are built by connecting together coordinates
-- Coordinates are listed in a [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate) node
+- Coordinates are listed in a [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate){:target="_blank"} node
 - Coordinates are implicitly numbers starting at 0
 - Coordinate index lists give the order in which to use coordinates
 
-The [PointSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#PointSet) node draws a dot at every coordinate:
+The [PointSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#PointSet){:target="_blank"} node draws a dot at every coordinate:
 
 - The *coord* field value is a Coordinate node
 
-The [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet) node draws lines between coordinates:
-
-- The *coord* field value is a Coordinate node
-- The *coordIndex* field value is a list of coordinate indexes
-
-The [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet) node draws faces outlined by coordinates:
+The [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet){:target="_blank"} node draws lines between coordinates:
 
 - The *coord* field value is a Coordinate node
 - The *coordIndex* field value is a list of coordinate indexes
 
-The [CoordinateInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#CoordinateInterpolator) node converts times to coordinates.
+The [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"} node draws faces outlined by coordinates:
+
+- The *coord* field value is a Coordinate node
+- The *coordIndex* field value is a list of coordinate indexes
+
+The [CoordinateInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#CoordinateInterpolator){:target="_blank"} node converts times to coordinates.

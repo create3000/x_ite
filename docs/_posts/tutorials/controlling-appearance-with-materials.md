@@ -19,7 +19,7 @@ You can control a shape's
 
 ## Syntax: Shape
 
-Recall that [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape) nodes describe:
+Recall that [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape){:target="_blank"} nodes describe:
 
 - *appearance* - color and texture
 - *geometry* - form, or structure
@@ -44,7 +44,7 @@ Shape {
 
 ## Syntax: Appearance
 
-An [Appearance](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Appearance) node describes overall shape appearance
+An [Appearance](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Appearance){:target="_blank"} node describes overall shape appearance
 
 - *material* properties - color, transparency, etc.
 
@@ -72,7 +72,7 @@ Shape {
 
 ## Syntax: Material
 
-A [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node controls shape material attributes
+A [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material){:target="_blank"} node controls shape material attributes
 
 - *diffuseColor* - main shading color
 - *emissiveColor* - glowing color
@@ -130,7 +130,7 @@ Colors specify:
 
 ## Syntax: Material
 
-A [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node also controls shape shininess
+A [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material){:target="_blank"} node also controls shape shininess
 
 - *specularColor* - highlightcolor
 - *shininess* - highlightsize
@@ -182,9 +182,9 @@ Shape {
 
 ## Summary
 
-The [Appearance](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Appearance) node controls overall shape appearance
+The [Appearance](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Appearance){:target="_blank"} node controls overall shape appearance
 
-The [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node controls overall material properties including:
+The [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material){:target="_blank"} node controls overall material properties including:
 
 - Shading color
 - Glow color

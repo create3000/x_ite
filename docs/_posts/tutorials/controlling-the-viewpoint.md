@@ -21,7 +21,7 @@ tags: [controlling, viewpoint]
 
 ## Syntax: Viewpoint
 
-A [Viewpoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Viewpoint) node specifies a named viewing location:
+A [Viewpoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Viewpoint){:target="_blank"} node specifies a named viewing location:
 
 - *position* and *orientation* - viewing location
 - *fieldOfView* - camera lens angle
@@ -50,5 +50,5 @@ Viewpoint {
 
 ## Summary
 
-- Specify favorite viewpoints in [Viewpoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Viewpoint) nodes
+- Specify favorite viewpoints in [Viewpoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Viewpoint){:target="_blank"} nodes
 - The first viewpoint in the file is the entry viewpoint

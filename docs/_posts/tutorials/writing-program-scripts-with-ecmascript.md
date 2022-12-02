@@ -7,7 +7,7 @@ tags: [program, scripts, ecmascript, javascript]
 ---
 ## Motivation
 
-A program script implements the [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script) node using values from the interface:
+A program script implements the [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script){:target="_blank"} node using values from the interface:
 
 - The script responds to inputs and sends outputs
 
@@ -59,7 +59,7 @@ function initialize ()
 
 Initialization occurs when:
 
-- the [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script) node is created (typically when the browser loads the world)
+- the [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script){:target="_blank"} node is created (typically when the browser loads the world)
 
 ## Shutting down a program script
 
@@ -74,7 +74,7 @@ function shutdown ()
 
 Shutdown occurs when:
 
-- the [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script) node is deleted
+- the [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script){:target="_blank"} node is deleted
 - the browser loads a new world
 
 ## Responding to events
@@ -470,7 +470,7 @@ Program scripts can be used to help create 3D user interface widgets:
 
 A toggle script turns on at 1st touch, off at 2nd:
 
-- A [TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#TouchSensor) node can supply touch events
+- A [TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#TouchSensor){:target="_blank"} node can supply touch events
 
 ### XML Encoding
 

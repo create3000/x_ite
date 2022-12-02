@@ -37,7 +37,7 @@ and more
 
 ## Syntax: Group
 
-The [Group](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Group) node creates a basic group.
+The [Group](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Group){:target="_blank"} node creates a basic group.
 
 - Every child node in the group is displayed.
 
@@ -59,7 +59,7 @@ Group {
 
 ## Syntax: Switch
 
-The [Switch](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Switch) group node creates a switched group
+The [Switch](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Switch){:target="_blank"} group node creates a switched group
 
 - Only one child node in the group is displayed
 - You select which child
@@ -86,7 +86,7 @@ Switch {
 
 ## Syntax: Transform
 
-The [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform) group node creates a group with its own coordinate system.
+The [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform){:target="_blank"} group node creates a group with its own coordinate system.
 
 - Every child node in the group is displayed.
 
@@ -114,7 +114,7 @@ Transform {
 
 ## Syntax: Billboard
 
-The [Billboard](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Billboard) group node creates a group with a special coordinate system.
+The [Billboard](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Billboard){:target="_blank"} group node creates a group with a special coordinate system.
 
 - Every child node in the group is displayed.
 - The coordinate system is turned to face viewer.
@@ -183,7 +183,7 @@ Billboard {
 
 ## Syntax: Anchor
 
-An [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor) node creates a group that acts as a clickable anchor
+An [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor){:target="_blank"} node creates a group that acts as a clickable anchor
 
 - Every child node in the group is displayed
 - Clicking any child follows a URL
@@ -211,7 +211,7 @@ Anchor {
 
 ## Syntax: Inline
 
-An [Inline](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Inline) node creates a special group from another X3D file's contents
+An [Inline](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Inline){:target="_blank"} node creates a special group from another X3D file's contents
 
 - Children read from file selected by a URL
 - Every child node in group is displayed
@@ -233,10 +233,10 @@ Inline {
 
 ## Summary
 
-- The [Group](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Group) node creates a basic group
-- The [Switch](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Switch) node creates a group with 1 choice used
-- The [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform) node creates a group with a new coordinate system
-- The [Billboard](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Billboard) node creates a group with a coordinate system that rotates to face the viewer
-- The [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor) node creates a clickable group
+- The [Group](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Group){:target="_blank"} node creates a basic group
+- The [Switch](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Switch){:target="_blank"} node creates a group with 1 choice used
+- The [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform){:target="_blank"} node creates a group with a new coordinate system
+- The [Billboard](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Billboard){:target="_blank"} node creates a group with a coordinate system that rotates to face the viewer
+- The [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor){:target="_blank"} node creates a clickable group
   - Clicking any child in the group loads a URL
-- The [Inline](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Inline) node creates a special group loaded from another X3D file
+- The [Inline](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Inline){:target="_blank"} node creates a special group loaded from another X3D file

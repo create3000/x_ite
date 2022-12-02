@@ -85,7 +85,6 @@ Prototyping objects that are used frequently with a few modifications is another
     <meta name='generator' content='Titania V4.3.0, http://titania.create3000.de'/>
     <meta name='identifier' content='file:///home/holger/scene.x3dv'/>
     <meta name='modified' content='Fri, 29 Jun 2018 13:24:34 GMT'/>
-    <meta name='titania-output-style' content='Nicest'/>
   </head>
   <Scene>
     <ProtoDeclare name='BooleanSwitch'>

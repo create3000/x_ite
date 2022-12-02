@@ -12,7 +12,7 @@ tags: [providing, information, world]
 
 ## Syntax: WorldInfo
 
-A [WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/core.html#WorldInfo) node provides title and description information for your world:
+A [WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/core.html#WorldInfo){:target="_blank"} node provides title and description information for your world:
 
 - *title* - the name for your world
 - *info* - any additional information
