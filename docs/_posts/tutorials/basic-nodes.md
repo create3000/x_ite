@@ -28,17 +28,7 @@ Here is a typical X3D Classic Encoded file with a single node:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-
-<X3D profile='Full' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.3.xsd'>
-  <head>
-    <meta name='comment' content='World of Titania'/>
-    <meta name='created' content='Fri, 29 Jun 2018 13:31:47 GMT'/>
-    <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Titania V4.3.0, http://titania.create3000.de'/>
-    <meta name='identifier' content='file:///home/holger/scene.x3dv'/>
-    <meta name='modified' content='Fri, 29 Jun 2018 13:31:47 GMT'/>
-    <meta name='titania-output-style' content='Nicest'/>
-  </head>
+<X3D profile='Full' version='3.3' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-3.3.xsd'>
   <Scene>
     <PlaneSensor DEF='Sensor'
         offset='0 2 0'/>

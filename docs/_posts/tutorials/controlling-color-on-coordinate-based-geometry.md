@@ -208,6 +208,6 @@ The [Color](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/c
 
 - Used as the value of the color field
 - Color indexes select colors to use
-- Colors override [Material](http://create3000.de/users-guide/components/shape/material/) node
+- Colors override [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node
 
 The *colorPerVertex* field selects color per line/face/grid square or color per coordinate.

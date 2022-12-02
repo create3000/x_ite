@@ -5,13 +5,15 @@ nav: main
 categories: []
 tags: [setup, localhost, server, xhr]
 ---
+## Overview
+
 X_ITE makes use of the XMLHttpRequest object to load files and there's no way round that. But that means files loading using the file:// scheme protocol are subject to the same origin policy and are handled as cross origin requests (CORS) and cross origin requests are only supported for protocol schemes: https, http and data. **That means X_ITE cannot have access to this files.**
 
 To work around this problem you must set up a localhost server, then you can access your local files under the web address http://**localhost**/...
 
 ## Using Python
 
-If you have [Python](https://www.python.org) installed, then it is quite easy to start a **localhost** server.
+If you have [Python](https://www.python.org){:target="_blank"} installed, then it is quite easy to start a **localhost** server.
 
 1. Just open a Terminal and go to the directory you want to make available.
 

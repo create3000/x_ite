@@ -101,7 +101,7 @@ Text { ... }
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 
-<X3D profile='Full' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.3.xsd'>
+<X3D profile='Full' version='3.3' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-3.3.xsd'>
   <Scene>
     <Shape>
       <Appearance>
@@ -151,7 +151,7 @@ Shape {
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 
-<X3D profile='Full' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.3.xsd'>
+<X3D profile='Full' version='3.3' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-3.3.xsd'>
   <Scene>
     <Shape>
       <Appearance>

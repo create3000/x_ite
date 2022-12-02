@@ -35,7 +35,7 @@ All stock browser on **Android** 4.0+ support WebGL and JavaScript ES 6 natively
 iOS has good support since **Safari** on iOS 7+. Simplify your scenes and test them extensively to achieve the best results how you would like it to be.
 <https://www.apple.com/ios/>
 
->**Note:** Any problem with X_ITE in the above browsers should be reported as a bug in X_ITE. See [Report a Bug](./#report-a-bug).
+>**Note:** Any problem with X_ITE in the above browsers should be reported as a bug in X_ITE. See [Report a Bug](report-a-bug).
 {: .prompt-info }
 
 We do not support older browsers like Internet Explorer 6-9, Opera 12.1x or Safari 5.1+.
@@ -48,6 +48,6 @@ Similarly, X_ITE does not fix bugs in pre-release versions of browsers, such as 
 
 ## About Browser Support
 
-X_ITE is constantly tested with all of its supported browsers via unit tests. However, a web page using X_ITE may not work in the same set of browsers if its own code takes advantage of (or falls prey to) browser-specific behaviors. Testing is essential to fully support a browser. The Microsoft Edge Developer site makes available [virtual machines](https://dev.windows.com/en-us/microsoft-edge/tools/vms/) for testing many different versions of Internet Explorer. Older versions of other browsers can be found at [oldversion.com](http://oldversion.com/).
+X_ITE is constantly tested with all of its supported browsers via unit tests. However, a web page using X_ITE may not work in the same set of browsers if its own code takes advantage of (or falls prey to) browser-specific behaviors. Testing is essential to fully support a browser. The Microsoft Edge Developer site makes available [virtual machines](https://dev.windows.com/en-us/microsoft-edge/tools/vms/) for testing many different versions of Internet Explorer. Older versions of other browsers can be found at [oldversion.com](http://oldversion.com/){:target="_blank"}.
 
 Only the most current version of X_ITE is tested and updated to fix bugs or add features. Users of older versions that find a bug should upgrade to the latest released version to determine if the bug has already been fixed.

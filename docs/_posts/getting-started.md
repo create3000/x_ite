@@ -18,7 +18,7 @@ X_ITE supports custom shaders, clip planes, reflection mapping, script nodes, pr
 >**Tip:** X_ITE runs best in fresh installs of Google Chrome, Chromium, Firefox, Safari, Opera, and Microsoft Edge. X_ITE uses the latest JavaScript standard, but is also compatible with older browser, and is available both on your desktop computer and on your modern smart-phone.
 {: .prompt-tip }
 
-If you ever get in trouble, please [report a bug](#report-a-bug).
+If you ever get in trouble, please [report a bug](report-a-bug).
 
 ## X3D Examples
 
@@ -819,7 +819,7 @@ There is a ZIP archive available to locally install X_ITE on your server. Compre
 $ npm install x_ite
 ```
 
-It can be used in [Electron](https://www.electronjs.org) apps in the **renderer process** like this:
+It can be used in [Electron](https://www.electronjs.org){:target="_blank"} apps in the **renderer process** like this:
 
 ```js
 const X3D = require ("x_ite")
@@ -1039,7 +1039,7 @@ Copy the the current viewpoint of the active layer to clipboard.
 
 ## Extending the Context Menu
 
-The context menu is the jQuery Context Menu plugin, and it can be extended using the `items` syntax. The full documentation [can be found here](https://swisnl.github.io/jQuery-contextMenu/docs/items.html).
+The context menu is the jQuery Context Menu plugin, and it can be extended using the `items` syntax. The full documentation [can be found here](https://swisnl.github.io/jQuery-contextMenu/docs/items.html){:target="_blank"}.
 
 ### Example
 
@@ -1057,28 +1057,3 @@ Browser .getContextMenu () .setUserMenu (function ()
   };
 });
 ```
-
-## Accessing the External Browser
-
-X_ITE is designed to provide access to a browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.
-
-[Learn more how to access the external browser.](accessing-the-external-browser)
-
-## DOM Integration
-
-DOM integration allows you to integrate 3D content seamlessly into your webpage, with just a JavaScript file included the scene can be written directly into the HTML or XHTML markup. There are no further plug-ins needed anymore.
-
-[Learn more about how XHTML and X3D can operate together.](dom-integration)
-
-We show you a simple example how you can manipulate the X3D DOM in JavaScript like you would do it with any HTML.
-
-## Report a Bug
-
-If you run into any bugs or encounter any other abnormal issues with X_ITE, let us know!
-
-Here's an example of a helpful bug report:
-
->*I fell through a hole on the Resistance map. I was running along the wall near the pool of water and fell through a black hole in the wall. I got stuck and had to leave the match. This happened while playing Search and Destroy.*
-{: .prompt-danger }
-
-[X_ITE Feedback Survey and Bug Report](https://github.com/create3000/x_ite/issues)

@@ -635,7 +635,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - SFVec3f/d Object
 - SFVec4f/d Object
 
-for more information. Additionally we tested X_ITE against <http://www.web3d.org/x3d/content/examples/Basic/index.html> and fixed the bugs we found.
+for more information. Additionally we tested X_ITE against <https://www.web3d.org/x3d/content/examples/Basic/index.html> and fixed the bugs we found.
 
 ### New Features
 
@@ -672,7 +672,7 @@ for more information. Additionally we tested X_ITE against <http://www.web3d.org
 
 ## X_ITE v4.2.10 Released
 
-*Leipzig, 13th November 2018:* We tested X_ITE against <http://www.web3d.org/x3d/content/ConformanceNist/index.html> and fixed the bugs we found.
+*Leipzig, 13th November 2018:* We tested X_ITE against <https://www.web3d.org/x3d/content/ConformanceNist/index.html> and fixed the bugs we found.
 
 ### Bug Fixes
 

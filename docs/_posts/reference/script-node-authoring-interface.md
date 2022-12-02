@@ -210,7 +210,7 @@ Dereferencing an MF object creates a new object of the corresponding SF object t
 The *url* field of the Script node may contain a URL that references ECMAScript code:
 
 ```js
-Script { url "http://foo.com/myScript.js" }
+Script { url "http://example.com/myScript.js" }
 ```
 
 The *ecmascript:* protocol allows the script to be placed inline as follows:
@@ -231,7 +231,7 @@ The *url* field may contain multiple URL's and thus reference a remote file or i
 ```js
 Script {
   url [
-    "http://foo.com/myScript.js",
+    "http://example.com/myScript.js",
     "ecmascript: function foo () { ... }"
   ]
 }
