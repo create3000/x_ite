@@ -51,6 +51,7 @@ import Components          from "../Components.js";
 import X3DLayerNode        from "../Components/Layering/X3DLayerNode.js";
 import X3DBrowserContext   from "./X3DBrowserContext.js";
 import DOMIntegration      from "./DOMIntegration.js";
+import legacy              from "./Legacy.js";
 import ProfileInfo         from "../Configuration/ProfileInfo.js";
 import ComponentInfo       from "../Configuration/ComponentInfo.js";
 import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
@@ -103,13 +104,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       this [_DOMIntegration] = new DOMIntegration (this);
 
-      if (this .getElement () .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
-      {
-         if (this .getElement () .attr ("src"))
-            this .attributeChangedCallback ("src", undefined, this .getElement () .attr ("src"));
-         else if (this .getElement () .attr ("url"))
-            this .attributeChangedCallback ("url", undefined, this .getElement () .attr ("url"));
-      }
+      legacy .call (this);
 
       // Print welcome message.
 

@@ -125,6 +125,7 @@ import CatmullRomSplineInterpolator31         from "../x_ite/Browser/Interpolati
 import CatmullRomSplineInterpolatorTemplate1  from "../x_ite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate.js";
 import SquatInterpolator1                     from "../x_ite/Browser/Interpolation/SquatInterpolator.js";
 import X3DLayeringContext1                    from "../x_ite/Browser/Layering/X3DLayeringContext.js";
+import Legacy1                                from "../x_ite/Browser/Legacy.js";
 import X3DLightingContext1                    from "../x_ite/Browser/Lighting/X3DLightingContext.js";
 import ExamineViewer1                         from "../x_ite/Browser/Navigation/ExamineViewer.js";
 import FlyViewer1                             from "../x_ite/Browser/Navigation/FlyViewer.js";
@@ -504,6 +505,7 @@ const Namespace = new Map ([
    ["x_ite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate",  CatmullRomSplineInterpolatorTemplate1],
    ["x_ite/Browser/Interpolation/SquatInterpolator",                     SquatInterpolator1],
    ["x_ite/Browser/Layering/X3DLayeringContext",                         X3DLayeringContext1],
+   ["x_ite/Browser/Legacy",                                              Legacy1],
    ["x_ite/Browser/Lighting/X3DLightingContext",                         X3DLightingContext1],
    ["x_ite/Browser/Navigation/ExamineViewer",                            ExamineViewer1],
    ["x_ite/Browser/Navigation/FlyViewer",                                FlyViewer1],

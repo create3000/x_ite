@@ -83947,10 +83947,6 @@ X3DPointingDeviceSensorContext .prototype =
 {
    initialize: function ()
    {
-      // Make element focusable.
-      if (this .getElement () .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
-         this .getElement () .attr ("tabindex", this .getElement () .attr ("tabindex") || 0);
-
       this .setCursor ("DEFAULT");
 
       this [_pointingDevice] .setup ();
@@ -118041,6 +118037,72 @@ class DOMIntegration
 
 /* harmony default export */ const Browser_DOMIntegration = (DOMIntegration);
 
+;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+function legacy ()
+{
+   const element = this .getElement ();
+
+   if (element .prop ("nodeName") .toUpperCase () !== "X3DCANVAS")
+      return;
+
+   if (element .attr ("src"))
+      this .attributeChangedCallback ("src", undefined, element .attr ("src"));
+   else if (element .attr ("url"))
+      this .attributeChangedCallback ("url", undefined, element .attr ("url"));
+
+   // Make element focusable.
+   element .attr ("tabindex", element .attr ("tabindex") || 0);
+}
+
+/* harmony default export */ const Legacy = (legacy);
+
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ProfileInfo.js
 /*******************************************************************************
  *
@@ -118883,6 +118945,7 @@ SupportedProfiles .addProfile ({
 
 
 
+
 const
    _DOMIntegration   = Symbol (),
    _loader           = Symbol (),
@@ -118918,13 +118981,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
 
       this [_DOMIntegration] = new Browser_DOMIntegration (this);
 
-      if (this .getElement () .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
-      {
-         if (this .getElement () .attr ("src"))
-            this .attributeChangedCallback ("src", undefined, this .getElement () .attr ("src"));
-         else if (this .getElement () .attr ("url"))
-            this .attributeChangedCallback ("url", undefined, this .getElement () .attr ("url"));
-      }
+      Legacy.call (this);
 
       // Print welcome message.
 
@@ -120529,6 +120586,7 @@ for (const key of Reflect .ownKeys (DependentRenderer .prototype))
 
 
 
+
 const Namespace = new Map ([
    ["lib/jquery",                                                        jquery],
    ["locale/gettext",                                                    locale_gettext],
@@ -120610,6 +120668,7 @@ const Namespace = new Map ([
    ["x_ite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate",  CatmullRomSplineInterpolatorTemplate],
    ["x_ite/Browser/Interpolation/SquatInterpolator",                     Interpolation_SquatInterpolator],
    ["x_ite/Browser/Layering/X3DLayeringContext",                         Layering_X3DLayeringContext],
+   ["x_ite/Browser/Legacy",                                              Legacy],
    ["x_ite/Browser/Lighting/X3DLightingContext",                         Lighting_X3DLightingContext],
    ["x_ite/Browser/Navigation/ExamineViewer",                            Navigation_ExamineViewer],
    ["x_ite/Browser/Navigation/FlyViewer",                                Navigation_FlyViewer],

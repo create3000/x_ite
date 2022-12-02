@@ -92,10 +92,6 @@ X3DPointingDeviceSensorContext .prototype =
 {
    initialize: function ()
    {
-      // Make element focusable.
-      if (this .getElement () .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
-         this .getElement () .attr ("tabindex", this .getElement () .attr ("tabindex") || 0);
-
       this .setCursor ("DEFAULT");
 
       this [_pointingDevice] .setup ();
