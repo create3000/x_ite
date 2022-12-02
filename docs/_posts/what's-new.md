@@ -613,7 +613,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ## X_ITE v4.2.14 Released
 
-*Leipzig, 16th December 2018:* This version implements the StringSensor from the KeyDeviceSensor component and we found a really phat bug in X3DComposedGeometryNode normal generation, which affects TriangleSet, IndexedTriangleSet, QuadSet, and so on. We also tested X_ITE against <http://x3dgraphics.com/examples/X3dForWebAuthors/index.html> and fixed all bugs found.
+*Leipzig, 16th December 2018:* This version implements the StringSensor from the KeyDeviceSensor component and we found a really phat bug in X3DComposedGeometryNode normal generation, which affects TriangleSet, IndexedTriangleSet, QuadSet, and so on. We also tested X_ITE against <https://x3dgraphics.com/examples/X3dForWebAuthors/index.html> and fixed all bugs found.
 
 ### New Features
 
@@ -838,10 +838,10 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 *Leipzig, 24th May 2018:* Thank's to Ammo (Bullet) physics engine we have implemented a lot of new nodes of the RigidBodyPhysics component. Most of the documentation pages of this component have a live example for this node. The component is realized as plug-in which can be include right after the X_ITE.js script tag.
 
 ```html
-<link rel="stylesheet" href="http://code.create3000.de/x_ite/4.1.6/dist/x_ite.css"/>
-<script src="http://code.create3000.de/x_ite/4.1.6/dist/x_ite.min.js"></script>
+<link rel="stylesheet" href="https://code.create3000.de/x_ite/4.1.6/dist/x_ite.css"/>
+<script src="https://code.create3000.de/x_ite/4.1.6/dist/x_ite.min.js"></script>
 <!-- Include the following plug-ins if you wish support for this component -->
-<script src="http://code.create3000.de/x_ite/4.1.6/dist/rigid-body-physics.min.js"></script>
+<script src="https://code.create3000.de/x_ite/4.1.6/dist/rigid-body-physics.min.js"></script>
 ```
 
 ### New Features
@@ -913,8 +913,8 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 X_ITE is now available from our own server at code.create3000.de. Just include the following URL's into your HTML and you are up to date again:
 
 ```html
-<link rel="stylesheet" href="http://code.create3000.de/x_ite/4.0.7/dist/x_ite.css"/>
-<script src="http://code.create3000.de/x_ite/4.0.7/dist/x_ite.min.js"></script>
+<link rel="stylesheet" href="https://code.create3000.de/x_ite/4.0.7/dist/x_ite.css"/>
+<script src="https://code.create3000.de/x_ite/4.0.7/dist/x_ite.min.js"></script>
 ```
 
 Additionally X_ITE is now available via GitHub CDN and jsDelivr CDN.

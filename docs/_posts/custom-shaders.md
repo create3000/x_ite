@@ -704,7 +704,7 @@ void
 main ()
 {
    ...
-   //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
+   //https://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
    gl_FragDepth = log2 (1.0 + 1.0 / gl_FragCoord .w) * x3d_LogarithmicFarFactor1_2;
 }
 ```

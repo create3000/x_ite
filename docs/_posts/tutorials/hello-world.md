@@ -101,7 +101,7 @@ We take a Appearance node and assign it to the *appearance* field of the Shape n
 ### XML Encoding
 
 ```xml
-url='"earth.png", "http://example.com/earth.png"'
+url='"earth.png", "https://example.com/earth.png"'
 ```
 
 ### Classic Encoding
@@ -109,7 +109,7 @@ url='"earth.png", "http://example.com/earth.png"'
 ```js
 url [
   "earth.png",
-  "http://example.com/earth.png"
+  "https://example.com/earth.png"
 ]
 ```
 

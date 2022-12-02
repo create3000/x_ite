@@ -76,7 +76,7 @@ Some words about optimizing a scene
 
 ## There are also Books for Further Reading
 
-[X3D: Extensible 3D Graphics for Web Authors](http://www.amazon.com/gp/product/012088500X?ie=UTF8&tag=x3dext3dgrafo-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=012088500X) by Don Brutzman and Leonard Daly
+[X3D: Extensible 3D Graphics for Web Authors](https://www.amazon.com/gp/product/012088500X?ie=UTF8&tag=x3dext3dgrafo-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=012088500X) by Don Brutzman and Leonard Daly
 
 ## Don't Compromise on Development Experience
 
