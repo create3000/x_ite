@@ -807,9 +807,9 @@ If you ever get in trouble, please [report a bug](#report-a-bug).
 >**Note:** The VolumeRendering examples are only working if your browser supports WebGL 2, otherwise the examples left black.
 {: .prompt-info }
 
-## Download X_ITE
+## Download X_ITE v{{ site.version }}
 
-There is a ZIP archive available to locally install X_ITE on your server. Compressed and uncompressed copies of X_ITE files are available. The uncompressed file (X_ITE.js) is best used during development or debugging; the compressed file (X_ITE.min.js) saves bandwidth and improves performance in production.
+There is a ZIP archive available to locally install X_ITE on your server. Compressed and uncompressed copies of X_ITE files are available. The uncompressed file (x_ite.js) is best used during development or debugging; the compressed file (x_ite.min.js) saves bandwidth and improves performance in production.
 
 [Download X_ITE ZIP archive](https://create3000.github.io/code/x_ite/latest/x_ite.zip)
 
