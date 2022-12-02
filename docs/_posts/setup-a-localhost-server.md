@@ -15,20 +15,20 @@ To work around this problem you must set up a localhost server, then you can acc
 
 If you have [Python](https://www.python.org){:target="_blank"} installed, then it is quite easy to start a **localhost** server.
 
-1. Just open a Terminal and go to the directory you want to make available.
+Just open a Terminal and go to the directory you want to make available.
 
 ```sh
 # Let's make the Desktop directory available.
 $ cd Desktop
 ```
 
-2. Type in the following command to start the server.
+Type in the following command to start the server.
 
 ```sh
 $ python3 -m http.server
 ```
 
-3. By default, this will run the contents of the directory on a local web server, on port 8000. You can go to this server by going to the URL http://**localhost**:8000 in your web browser. Here you'll see the contents of the directory listed — click the HTML file you want to run.
+By default, this will run the contents of the directory on a local web server, on port 8000. You can go to this server by going to the URL http://**localhost**:8000 in your web browser. Here you'll see the contents of the directory listed — click the HTML file you want to run.
 
 >**Tip:** If you already have something running on port 8000, you can choose another port by running the server command followed by an alternative port number, e.g. python3 -m http.server 7800. You can then access your content at http://**localhost**:7800.
 {: .prompt-tip }
