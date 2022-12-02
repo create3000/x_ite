@@ -72522,7 +72522,7 @@ X3DScene .prototype = Object .assign (Object .create (Execution_X3DExecutionCont
       stream .string += " ";
       stream .string += this .getBrowser () .name;
       stream .string += " ";
-      stream .string += "V";
+      stream .string += "v";
       stream .string += this .getBrowser () .version;
       stream .string += "\n";
       stream .string += "\n";
@@ -83947,6 +83947,10 @@ X3DPointingDeviceSensorContext .prototype =
 {
    initialize: function ()
    {
+      // Make element focusable.
+      if (this .getElement () .prop ("nodeName") .toUpperCase () === "X3DCANVAS")
+         this .getElement () .attr ("tabindex", this .getElement () .attr ("tabindex") || 0);
+
       this .setCursor ("DEFAULT");
 
       this [_pointingDevice] .setup ();
@@ -118926,7 +118930,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
 
       if (this .getInstanceId () > 1) return;
 
-      this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
+      this .print ("Welcome to " + this .name + " X3D Browser v" + this .version + ":\n" +
                    "   Current Graphics Renderer\n" +
                    "      Name: " + this .getVendor () + " " + this .getRenderer () + "\n" +
                    "      WebGL version: " + this .getWebGLVersion () + "\n" +
