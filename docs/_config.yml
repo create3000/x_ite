@@ -220,6 +220,8 @@ nav:
           url: /dom-integration
         - title: "Custom Shaders"
           url: /custom-shaders
+        - title: Setup a localhost Server
+          url: /setup-a-localhost-server
         - title: "How To Configure Your Web Server"
           url: /how-to-configure-your-web-server
         - title: "Glossary"

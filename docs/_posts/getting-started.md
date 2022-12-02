@@ -890,7 +890,7 @@ x3d-canvas {
 
 To get X_ITE working you must include the JavaScript file »x_ite.min.js«. After x_ite is successfully loaded a new HTML element \<x3d-canvas\> is available on your page.
 
->**Attention:** If you test a page locally on your desktop computer, you must setup a **localhost** server if you want to load a file via *src* attribute or Inline node, see [Using Firefox, Chrome and Opera with Local Files](#using-firefox-chrome-and-opera-with-local-files). Or use [DOM Integration](dom-integration) methods to directly combine HTML with X3D.
+>**Attention:** If you test a page locally on your desktop computer, you must setup a **localhost** server if you want to load a file via *src* attribute or Inline node, see [Setup a localhost Server](setup-a-localhost-server). Or use [DOM Integration](dom-integration) methods to directly combine HTML with X3D.
 {: .prompt-danger }
 
 >**Tip:** You can style the \<x3d-canvas\> element as every HTML element with CSS as well as you can place it everywhere within the DOM tree.
@@ -1071,14 +1071,6 @@ DOM integration allows you to integrate 3D content seamlessly into your webpage,
 [Learn more about how XHTML and X3D can operate together.](dom-integration)
 
 We show you a simple example how you can manipulate the X3D DOM in JavaScript like you would do it with any HTML.
-
-## Using Firefox, Chrome and Opera with Local Files
-
-X_ITE makes use of the XMLHttpRequest object to load files and there's no way round that. But that means files loading using the file:// scheme protocol are subject to the same origin policy and are handled as cross origin requests (CORS) and cross origin requests are only supported for protocol schemes: http, data and https. That means X_ITE cannot have access to this files.
-
-To work around this problem you must set up a localhost server, than you can access your local files under the web address http://**localhost**/... This can be done using XAMPP from the <https://www.apachefriends.org> website. XAMPP is a completely free, easy to install Apache distribution containing MariaDB, PHP, and Perl. The XAMPP open source package has been set up to be incredibly easy to install and to use.
-
-MacOS users can use [Personal Web Server](https://apps.apple.com/de/app/personal-web-server/id1486323797?mt=12), which can serve files through a web server, and is very easy to use.
 
 ## Report a Bug
 
