@@ -35,6 +35,8 @@ By default, this will run the contents of the directory on a local web server, o
 
 ## Using an Application
 
-MacOS users can use [Personal Web Server](https://apps.apple.com/de/app/personal-web-server/id1486323797?mt=12), which can serve files through a web server, and is very easy to use.
+There are several applications on the Internet which can make a localhost server. Here I would like to recommend you two of them:
 
-Another application is [XAMPP](https://www.apachefriends.org/index.html), which runs on several operating systems.
+MacOS users can use [Personal Web Server](https://apps.apple.com/de/app/personal-web-server/id1486323797?mt=12), which can serves files through a web server, and is very easy to use.
+
+Another application is [XAMPP](https://www.apachefriends.org/index.html), which runs on several operating systems and is very popular.
