@@ -38,7 +38,7 @@
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -1256,7 +1256,7 @@ X3DProgrammableShaderObject .prototype =
          activeAttributes = gl .getProgramParameter (program, gl .ACTIVE_ATTRIBUTES);
 
       // Taken from the WebGl spec:
-      // http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.14
+      // https://www.khronos.org/registry/webgl/specs/latest/1.0/#5.14
       const enums = {
          0x8B50: 'vec2',
          0x8B51: 'vec3',

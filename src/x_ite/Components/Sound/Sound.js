@@ -38,7 +38,7 @@
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -235,7 +235,7 @@ Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
       return function (modelViewMatrix, back, front, value)
       {
          /*
-          * http://de.wikipedia.org/wiki/Ellipse
+          * https://de.wikipedia.org/wiki/Ellipse
           *
           * The ellipsoid is transformed to a sphere for easier calculation and then the viewer position is
           * transformed into this coordinate system. The radius and distance can then be obtained.

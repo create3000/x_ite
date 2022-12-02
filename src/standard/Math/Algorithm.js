@@ -38,7 +38,7 @@
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -68,8 +68,8 @@ Algorithm .prototype =
    },
    clamp: function (value, min, max)
    {
-      // http://jsperf.com/math-clamp
-      // http://jsperf.com/clamping-methods/2
+      // https://jsperf.com/math-clamp
+      // https://jsperf.com/clamping-methods/2
       return Math .min (Math .max (value, min), max);
    },
    interval: function (value, low, high)
@@ -164,7 +164,7 @@ Algorithm .prototype =
    },
    lowerBound: function (array, first, last, value, comp = this .less)
    {
-      // http://en.cppreference.com/w/cpp/algorithm/lower_bound
+      // https://en.cppreference.com/w/cpp/algorithm/lower_bound
 
       let
          index = 0,
@@ -189,7 +189,7 @@ Algorithm .prototype =
    },
    upperBound: function (array, first, last, value, comp = this .less)
    {
-      // http://en.cppreference.com/w/cpp/algorithm/upper_bound
+      // sen.cppreference.com/w/cpp/algorithm/upper_bound
 
       let
          index = 0,

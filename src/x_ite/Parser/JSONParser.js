@@ -40,7 +40,7 @@
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -54,7 +54,7 @@ function JSONParser (scene)
 {
    X3DParser .call (this, scene);
 
-   this .x3djsonNS = "http://www.web3d.org/specifications/x3d-namespace";
+   this .namespace = "https://www.web3d.org/specifications/x3d-namespace";
 }
 
 JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -155,13 +155,15 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
        * containerField is set, then the containerField is set in the elemetn.
        */
 
-      if (typeof this .x3djsonNS === "undefined")
+      if (typeof this .namespace === "undefined")
       {
          var child = document .createElement (key);
       }
       else
       {
-         var child = document .createElementNS (this .x3djsonNS, key);
+         console .log (this .namespace);
+
+         var child = document .createElementNS (this .namespace, key);
 
          if (child === null || typeof child === "undefined")
          {

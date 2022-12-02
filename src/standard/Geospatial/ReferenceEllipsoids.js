@@ -38,7 +38,7 @@
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -75,13 +75,13 @@ const ReferenceEllipsoids =
    WD: new Spheroid3 (6378135,     298.26,        true), // WGS 72
    WE: new Spheroid3 (6378137,     298.257223563, true), // WGS 84
    // Solar System
-   // http://en.wikipedia.de
+   // https://en.wikipedia.de
    // Can someone give me more accurate parameters.
    SUN:     new Spheroid3 (696342000, 1 / 9e-6, true),
    MERCURY: new Spheroid3 (2439700,  2439700),
    VENUS:   new Spheroid3 (6051800,  6051800),
    MOON:    new Spheroid3 (1738140,  1735970),
-   MARS:    new Spheroid3 (3395428,  3377678), // http://adsabs.harvard.edu/abs/2010EM%26P..106....1A
+   MARS:    new Spheroid3 (3395428,  3377678), // https://adsabs.harvard.edu/abs/2010EM%26P..106....1A
    JUPITER: new Spheroid3 (71492000, 66854000),
    SATURN:  new Spheroid3 (60268000, 54364000),
    URANUS:  new Spheroid3 (2555000,  24973000),

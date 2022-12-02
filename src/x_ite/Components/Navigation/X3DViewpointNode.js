@@ -38,7 +38,7 @@
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -182,7 +182,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
    getUpVector: function ()
    {
       // Local y-axis,
-      // see http://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
+      // see https://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
       return Vector3 .yAxis;
    },
    getSpeedFactor: function ()

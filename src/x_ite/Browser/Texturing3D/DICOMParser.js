@@ -38,7 +38,7 @@
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -1040,7 +1040,7 @@ DicomParser .prototype =
 
       // The first Palette Color Lookup Table Descriptor value is the number of entries in the lookup table.
       // When the number of table entries is equal to 2ˆ16 then this value shall be 0.
-      // See http://dicom.nema.org/MEDICAL/DICOM/current/output/chtml/part03/sect_C.7.6.3.html#sect_C.7.6.3.1.5
+      // See https://dicom.nema.org/MEDICAL/DICOM/current/output/chtml/part03/sect_C.7.6.3.html#sect_C.7.6.3.1.5
       if (imagePixelModule .redPaletteColorLookupTableDescriptor [0] === 0)
       {
          imagePixelModule .redPaletteColorLookupTableDescriptor   [0] = 65536;

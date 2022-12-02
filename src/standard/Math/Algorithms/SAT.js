@@ -38,7 +38,7 @@
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
  * copy of the GPLv3 License.
  *
  * For Silvio, Joy and Adi.
@@ -56,7 +56,7 @@ function SAT () { }
 
 SAT .isSeparated = function (axes, points1, points2)
 {
-   // http://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
+   // https://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
 
    for (const axis of axes)
    {
