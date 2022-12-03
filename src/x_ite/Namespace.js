@@ -136,6 +136,7 @@ import WalkViewer1                            from "../x_ite/Browser/Navigation/
 import X3DFlyViewer1                          from "../x_ite/Browser/Navigation/X3DFlyViewer.js";
 import X3DNavigationContext1                  from "../x_ite/Browser/Navigation/X3DNavigationContext.js";
 import X3DViewer1                             from "../x_ite/Browser/Navigation/X3DViewer.js";
+import Features1                              from "../x_ite/Browser/Networking/Features.js";
 import URLs1                                  from "../x_ite/Browser/Networking/URLs.js";
 import X3DNetworkingContext1                  from "../x_ite/Browser/Networking/X3DNetworkingContext.js";
 import X3DPickingContext1                     from "../x_ite/Browser/Picking/X3DPickingContext.js";
@@ -516,6 +517,7 @@ const Namespace = new Map ([
    ["x_ite/Browser/Navigation/X3DFlyViewer",                             X3DFlyViewer1],
    ["x_ite/Browser/Navigation/X3DNavigationContext",                     X3DNavigationContext1],
    ["x_ite/Browser/Navigation/X3DViewer",                                X3DViewer1],
+   ["x_ite/Browser/Networking/Features",                                 Features1],
    ["x_ite/Browser/Networking/URLs",                                     URLs1],
    ["x_ite/Browser/Networking/X3DNetworkingContext",                     X3DNetworkingContext1],
    ["x_ite/Browser/Picking/X3DPickingContext",                           X3DPickingContext1],

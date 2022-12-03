@@ -110,6 +110,11 @@ module .exports = async () =>
       node: {
          __filename: false,
       },
+      resolve: {
+         fallback: {
+            process: false,
+         },
+      },
       stats: "errors-warnings",
       performance: {
          hints: "warning",

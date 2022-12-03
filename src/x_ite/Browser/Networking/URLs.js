@@ -45,16 +45,18 @@
  *
  ******************************************************************************/
 
+import Features from "./Features.js";
+
 function URLs () { }
 
 URLs .prototype =
 {
    getScriptUrl: (function ()
    {
-      if (document .currentScript)
-         var src = document .currentScript .src;
-      else if (typeof global === "object" && typeof global .require === "function" && typeof __filename === "string")
+      if (Features .NODE_ENV)
          var src = global .require ("url") .pathToFileURL (__filename) .href;
+      else if (document .currentScript)
+         var src = document .currentScript .src;
       else
          var src = document .location .href;
 

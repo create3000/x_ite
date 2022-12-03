@@ -75,14 +75,6 @@ function X3DNetworkingContext ()
    this [_loadingObjects] = new Set ();
    this [_loading]        = false;
    this [_location]       = getBaseURI (this .getElement () [0]);
-
-   this .getCanvas () .hide ();
-
-   if (this .getBrowserOptions () .getSplashScreen ())
-   {
-      this .getContextMenu () .hide ();
-      this .getSplashScreen () .show ();
-   }
 }
 
 X3DNetworkingContext .prototype =
@@ -131,10 +123,6 @@ X3DNetworkingContext .prototype =
             this .getCanvas () .hide ();
             this .getSplashScreen () .stop (true, true) .show ();
          }
-         else
-         {
-            this .getCanvas () .hide ();
-         }
       }
       else
       {
@@ -142,10 +130,6 @@ X3DNetworkingContext .prototype =
          {
             this .getCanvas () .show ();
             this .getSplashScreen () .stop (true, true) .show () .fadeOut (2000);
-         }
-         else
-         {
-            this .getCanvas () .show ();
          }
       }
    },

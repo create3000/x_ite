@@ -66,6 +66,7 @@ import XMLParser           from "../Parser/XMLParser.js";
 import JSONParser          from "../Parser/JSONParser.js";
 import X3DCast             from "../Base/X3DCast.js";
 import X3DConstants        from "../Base/X3DConstants.js";
+import Features            from "./Networking/Features.js";
 import MapUtilities        from "../../standard/Utility/MapUtilities.js";
 import _                   from "../../locale/gettext.js";
 
@@ -206,7 +207,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          if (!providerUrl .match (componentsUrl))
             return;
 
-         if (typeof global === "object" && typeof global .require === "function")
+         if (Features .NODE_ENV)
             global .require (global .require ("url") .fileURLToPath (providerUrl))
          else
             await import (/* webpackIgnore: true */ providerUrl);
