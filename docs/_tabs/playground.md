@@ -139,5 +139,6 @@ const box = `<X3D profile='Full' version='4.0'>
 </X3D>`;
 
 editor .setValue (box .replace (/ {3}/, "  "), -1);
+editor .getSession () .setUndoManager (new ace .UndoManager ());
 </script>
 </pre>
