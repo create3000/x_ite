@@ -233,9 +233,9 @@ const box = `<X3D profile='Full' version='4.0'>
       <Shape>
          <Appearance>
             <Material
-               diffuseColor='0 0.5 1'/>
+               diffuseColor='0 0.5 1'></Material>
          </Appearance>
-         <Box/>
+         <Box></Box>
       </Shape>
    </Scene>
 </X3D>
