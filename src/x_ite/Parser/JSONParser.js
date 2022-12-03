@@ -161,8 +161,6 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
       else
       {
-         console .log (this .namespace);
-
          var child = document .createElementNS (this .namespace, key);
 
          if (child === null || typeof child === "undefined")

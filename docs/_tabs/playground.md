@@ -8,6 +8,8 @@ order: 3
    height: 100%;
 }
 
+/* Table */
+
 table {
   width: 100%;
   height: 100%;
@@ -18,6 +20,8 @@ table td {
    width: 50%;
    vertical-align: top;
 }
+
+/* Editor */
 
 #editor-wrapper, .console {
    outline: none;
@@ -50,6 +54,8 @@ table td {
    background: rgba(255,255,255,0.05) !important;
 }
 
+/* XML */
+
 .ace_tag-open, .ace_tag-close, .ace_end-tag-open {
    color: var(--text-color) !important;
 }
@@ -70,6 +76,34 @@ table td {
    color: #cd9177 !important;
 }
 
+/* JSON */
+
+.ace_paren {
+   color: #fdd601 !important;
+}
+
+.ace_identifier {
+   color: #9fdcfe !important;
+}
+
+.ace_variable {
+   color: #9fdcfe !important;
+}
+
+.ace_numeric {
+   color: #b7cea5 !important;
+}
+
+.ace_string {
+   color: #cd9177 !important;
+}
+
+.ace_boolean {
+   color: #5a9cd8 !important;
+}
+
+/* Console */
+
 .console {
    --system-red: rgb(255, 69, 58);
    --system-yellow: rgb(255, 214, 10);
@@ -88,6 +122,8 @@ span.warning {
 span.error {
    color: var(--system-red);
 }
+
+/* Canvas */
 
 .post x3d-canvas {
    width: 100%;
@@ -122,43 +158,60 @@ span.error {
    {
       return function ()
       {
-         log .apply (this, arguments);
+         log .apply (this, arguments)
 
          const
             text    = Array .prototype .slice .call (arguments) .join ("") + "\n",
-            element = $("<span></span>") .addClass (classes) .text (text);
+            element = $("<span></span>") .addClass (classes) .text (text)
 
-         $(".console") .append (element);
-         element [0] .scrollIntoView (false);
+         $(".console") .append (element)
+         element [0] .scrollIntoView (false)
       }
    }
 
-   console .log     = output (console .log,     "log");
-   console .info    = output (console .info,    "info");
-   console .warning = output (console .warning, "warning");
-   console .error   = output (console .error,   "error");
-   console .debug   = output (console .debug,   "debug");
-})();
+   console .log     = output (console .log,     "log")
+   console .info    = output (console .info,    "info")
+   console .warning = output (console .warning, "warning")
+   console .error   = output (console .error,   "error")
+   console .debug   = output (console .debug,   "debug")
+})()
 </script>
 
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.13.1/ace.min.js"></script>
 
 <script>
-ace .config .set ("basePath", "https://cdnjs.cloudflare.com/ajax/libs/ace/1.13.1/");
+ace .config .set ("basePath", "https://cdnjs.cloudflare.com/ajax/libs/ace/1.13.1/")
 
-const editor = ace .edit ("editor");
+const editor = ace .edit ("editor")
 
-editor .setTheme ("ace/theme/monokai");
-editor .session .setOptions ({ tabSize: 2, useSoftTabs: true });
-editor .session .setMode ("ace/mode/xml");
+editor .setTheme ("ace/theme/monokai")
+editor .session .setOptions ({ tabSize: 2, useSoftTabs: true })
 
 editor .getSession () .on ("change", function ()
 {
-   const url = "data:," + editor .getSession () .getValue ();
+   const
+      text = editor .getSession () .getValue (),
+      url  = "data:," + text
 
-   X3D .getBrowser () .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
-});
+   X3D .getBrowser () .loadURL (new X3D .MFString (url)) .catch (Function .prototype)
+
+   if (text .match (/<\w+/))
+   {
+      editor .session .setMode ("ace/mode/xml")
+      editor .getSession () .setUseWorker (true)
+   }
+   else if (text .match (/\w+\s*\{/))
+   {
+      editor .session .setMode ("ace/mode/javascript")
+      editor .getSession () .setUseWorker (false)
+   }
+   else if (text .match (/"\w+"\s*:\s*\{/))
+   {
+      editor .session .setMode ("ace/mode/json")
+      editor .getSession () .setUseWorker (true)
+   }
+})
 
 const box = `<X3D profile='Full' version='4.0'>
    <Scene>
@@ -170,9 +223,9 @@ const box = `<X3D profile='Full' version='4.0'>
       </Shape>
    </Scene>
 </X3D>
-`;
+`
 
-editor .setValue (box .replace (/ {3}/g, "  "), -1);
-editor .getSession () .setUndoManager (new ace .UndoManager ());
+editor .setValue (box .replace (/ {3}/g, "  "), -1)
+editor .getSession () .setUndoManager (new ace .UndoManager ())
 </script>
 </pre>
