@@ -42,14 +42,31 @@ table td {
    right: 0;
    bottom: 0;
    left: 0;
-}
-
-.ace-monokai {
    background: unset;
 }
 
-.ace-monokai .ace_gutter {
-   background: rgba(255,255,255,0.05);
+.ace_gutter {
+   background: rgba(255,255,255,0.05) !important;
+}
+
+.ace_tag-open, .ace_tag-close, .ace_end-tag-open {
+   color: var(--text-color) !important;
+}
+
+.ace_tag-name {
+   color: #5a9cd8 !important;
+}
+
+.ace_attribute-name {
+   color: #9fdcfe !important;
+}
+
+.ace_attribute-equals {
+   color: #d4d4d4 !important;
+}
+
+.ace_attribute-value {
+   color: #cd9177 !important;
 }
 
 .console {
