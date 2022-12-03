@@ -211,16 +211,16 @@ editor .getSession () .on ("change", async function ()
       editor .getSession () .setUseWorker (true)
    }
 
-   if (Browser ._activeViewpoint .getValue ())
+   if (Browser .getActiveViewpoint ())
    {
       const
-         positionOffset    = Browser ._activeViewpoint .getValue () ._positionOffset .copy (),
-         orientationOffset = Browser ._activeViewpoint .getValue () ._orientationOffset .copy ()
+         positionOffset    = Browser .getActiveViewpoint () ._positionOffset    .copy (),
+         orientationOffset = Browser .getActiveViewpoint () ._orientationOffset .copy ()
 
       await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype)
 
-      Browser ._activeViewpoint .getValue () ._positionOffset    = positionOffset
-      Browser ._activeViewpoint .getValue () ._orientationOffset = orientationOffset
+      Browser .getActiveViewpoint () ._positionOffset    = positionOffset
+      Browser .getActiveViewpoint () ._orientationOffset = orientationOffset
    }
    else
    {
