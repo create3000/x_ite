@@ -61,10 +61,6 @@ table td {
    height: 100%;
    aspect-ratio: unset;
 }
-
-.example {
-   display: none;
-}
 </style>
 
 <table>
@@ -85,21 +81,7 @@ table td {
    </tr>
 </table>
 
-<pre class="example">
-<script class="box" type="application/xml">
-<X3D profile='Full' version='4.0'>
-   <Scene>
-      <Shape>
-         <Appearance>
-            <Material diffuseColor='0 0.5 1'></Material>
-         </Appearance>
-         <Box></Box>
-      </Shape>
-   </Scene>
-</X3D>
-</script>
-</pre>
-
+<pre style="display:none">
 <script>
 (function ()
 {
@@ -145,5 +127,17 @@ editor .getSession () .on ("change", function ()
    X3D .getBrowser () .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 });
 
-editor .setValue ($(".example > .box") .text () .trim () .replace (/(\x20{2})\x20/g, "$1") + "\n", -1);
+const box = `<X3D profile='Full' version='4.0'>
+   <Scene>
+      <Shape>
+         <Appearance>
+            <Material diffuseColor='0 0.5 1'></Material>
+         </Appearance>
+         <Box></Box>
+      </Shape>
+   </Scene>
+</X3D>`;
+
+editor .setValue (box .replace (/ {3}/, "  "), -1);
 </script>
+</pre>
