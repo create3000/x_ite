@@ -69,11 +69,6 @@ const Fallback =
    {
       console .error (error);
 
-      const consoleElement = $(".x_ite-console");
-
-      if (consoleElement .length)
-         consoleElement .append (document .createTextNode (error));
-
       // X3DCanvas
       elements .children (".x_ite-private-browser") .hide ();
       elements .children (":not(.x_ite-private-browser)") .show ();

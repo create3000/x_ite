@@ -122,8 +122,6 @@ function X3DCoreContext (element)
 
    this [_pixelPerPoint] = 1; // default 72 dpi
 
-   $(".x_ite-console") .empty ();
-
    this .addChildObjects ("controlKey",  new Fields .SFBool (),
                           "shiftKey",    new Fields .SFBool (),
                           "altKey",      new Fields .SFBool (),

@@ -93,6 +93,7 @@ bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
 loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
 
 $(".version") .text (Browser .name + " v" + Browser .version);
+$(".browser") .on ("initialized", () => $(".console") .empty ());
 $(".browser") .on ("initialized", () => Browser .println ("Scene loaded in " + ((performance .now () - loadTime) / 1000) .toFixed (3) + " s."));
 $(".browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = Browser .getWorldURL ());
 $(".browser") .on ("shutdown", () => Browser .println ("Shutdown at " + new Date () .toUTCString () + "."));
@@ -118,6 +119,31 @@ $(".location-entry") .keydown (event =>
          return
    }
 });
+   </script>
+   <script>
+(function ()
+{
+   function output (log, classes)
+   {
+      return function ()
+      {
+         log .apply (this, arguments)
+
+         const
+            text    = Array .prototype .slice .call (arguments) .join ("") + "\n",
+            element = $("<span></span>") .addClass (classes) .text (text)
+
+         $(".console") .append (element)
+         //element [0] .scrollIntoView (false)
+      }
+   }
+
+   console .log     = output (console .log,     "log")
+   console .info    = output (console .info,    "info")
+   console .warning = output (console .warning, "warning")
+   console .error   = output (console .error,   "error")
+   console .debug   = output (console .debug,   "debug")
+})()
    </script>
    <style>
 @import url("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic");
@@ -351,7 +377,7 @@ main.color-management .browser {
    display: none;
 }
 
-.x_ite-console {
+.console {
    font-family: monospace;
    white-space: pre;
 }
@@ -393,7 +419,7 @@ main.color-management .browser {
             </div>
          </div>
       </main>
-      <footer><div class="console x_ite-console"></div></footer>
+      <footer><div class="console"></div></footer>
    </div>
 </body>
 </html>

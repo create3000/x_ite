@@ -57417,8 +57417,6 @@ JSONParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       }
       else
       {
-         console .log (this .namespace);
-
          var child = document .createElementNS (this .namespace, key);
 
          if (child === null || typeof child === "undefined")
@@ -73145,8 +73143,6 @@ function X3DCoreContext (element)
    this [_contextMenu]         = new Core_ContextMenu         (this .getPrivateScene ());
 
    this [_pixelPerPoint] = 1; // default 72 dpi
-
-   X3DCoreContext_$(".x_ite-console") .empty ();
 
    this .addChildObjects ("controlKey",  new x_ite_Fields.SFBool (),
                           "shiftKey",    new x_ite_Fields.SFBool (),
@@ -118916,7 +118912,6 @@ SupportedProfiles .addProfile ({
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(526);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119691,25 +119686,11 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
    },
    print: function ()
    {
-      const string = Array .prototype .join .call (arguments, "");
-
-      console .log (string);
-
-      const element = X3DBrowser_$(".x_ite-console");
-
-      if (element .length)
-         element .append (document .createTextNode (string));
+      console .log (Array .prototype .join .call (arguments, " "));
    },
    println: function ()
    {
-      const string = Array .prototype .join .call (arguments, "");
-
-      console .log (string);
-
-      const element = X3DBrowser_$(".x_ite-console");
-
-      if (element .length)
-         element .append (document .createTextNode (string + "\n"));
+      console .log (Array .prototype .join .call (arguments, " "));
    },
    toVRMLStream: function (stream)
    {
@@ -120047,11 +120028,6 @@ const Fallback =
    show: function (elements, error)
    {
       console .error (error);
-
-      const consoleElement = Fallback_$(".x_ite-console");
-
-      if (consoleElement .length)
-         consoleElement .append (document .createTextNode (error));
 
       // X3DCanvas
       elements .children (".x_ite-private-browser") .hide ();
