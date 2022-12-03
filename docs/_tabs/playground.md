@@ -11,6 +11,7 @@ order: 3
 table {
   width: 100%;
   height: 100%;
+  table-layout: fixed;
 }
 
 table td {
