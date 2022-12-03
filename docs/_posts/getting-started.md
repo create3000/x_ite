@@ -1009,6 +1009,10 @@ Go to next viewpoint.
 
 Display browser timings.
 
+### Shift+F8
+
+Copy the the current viewpoint of the active layer to clipboard.
+
 ### Ctrl+S
 
 If x3d-canvas attribute *debug* is `true`, toggle begin/end update of browser.
@@ -1032,10 +1036,6 @@ If x3d-canvas attribute *debug* is `true`, set shading to GOURAUD.
 ### Ctrl+5
 
 If x3d-canvas attribute *debug* is `true`, set shading to PHONG.
-
-### Shift+F8
-
-Copy the the current viewpoint of the active layer to clipboard.
 
 ## Extending the Context Menu
 
