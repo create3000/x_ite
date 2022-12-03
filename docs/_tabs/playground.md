@@ -188,13 +188,12 @@ const editor = ace .edit ("editor")
 editor .setTheme ("ace/theme/monokai")
 editor .session .setOptions ({ tabSize: 2, useSoftTabs: true })
 
-editor .getSession () .on ("change", function ()
+editor .getSession () .on ("change", async function ()
 {
    const
-      text = editor .getSession () .getValue (),
-      url  = "data:," + text
-
-   X3D .getBrowser () .loadURL (new X3D .MFString (url)) .catch (Function .prototype)
+      Browser = X3D .getBrowser (),
+      text    = editor .getSession () .getValue (),
+      url     = "data:," + text
 
    if (text .match (/<\w+/))
    {
@@ -211,15 +210,32 @@ editor .getSession () .on ("change", function ()
       editor .session .setMode ("ace/mode/json")
       editor .getSession () .setUseWorker (true)
    }
+
+   if (Browser ._activeViewpoint .getValue ())
+   {
+      const
+         positionOffset    = Browser ._activeViewpoint .getValue () ._positionOffset .copy (),
+         orientationOffset = Browser ._activeViewpoint .getValue () ._orientationOffset .copy ()
+
+      await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype)
+
+      Browser ._activeViewpoint .getValue () ._positionOffset    = positionOffset
+      Browser ._activeViewpoint .getValue () ._orientationOffset = orientationOffset
+   }
+   else
+   {
+      await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype)
+   }
 })
 
 const box = `<X3D profile='Full' version='4.0'>
    <Scene>
       <Shape>
          <Appearance>
-            <Material diffuseColor='0 0.5 1'></Material>
+            <Material
+               diffuseColor='0 0.5 1'/>
          </Appearance>
-         <Box></Box>
+         <Box/>
       </Shape>
    </Scene>
 </X3D>
