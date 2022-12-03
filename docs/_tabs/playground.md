@@ -151,6 +151,7 @@ span.error {
 </table>
 
 <pre style="display:none">
+Online X3D and VRML viewer.
 <script>
 (function ()
 {
