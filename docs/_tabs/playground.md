@@ -71,7 +71,22 @@ table td {
 }
 
 .console {
+   --system-red: rgb(255, 69, 58);
+   --system-yellow: rgb(255, 214, 10);
+   --system-blue: rgb(10, 132, 255);
    overflow: scroll;
+}
+
+span.info {
+   color: var(--system-blue);
+}
+
+span.warning {
+   color: var(--system-yellow);
+}
+
+span.error {
+   color: var(--system-red);
 }
 
 .post x3d-canvas {
@@ -103,7 +118,7 @@ table td {
 <script>
 (function ()
 {
-   function output (log)
+   function output (log, classes)
    {
       return function ()
       {
@@ -111,18 +126,18 @@ table td {
 
          const
             text    = Array .prototype .slice .call (arguments) .join ("") + "\n",
-            element = $("<span></span>") .text (text);
+            element = $("<span></span>") .addClass (classes) .text (text);
 
          $(".console") .append (element);
          element [0] .scrollIntoView (false);
       }
    }
 
-   console .log     = output (console .log);
-   console .info    = output (console .info);
-   console .warning = output (console .warning);
-   console .error   = output (console .error);
-   console .debug   = output (console .debug);
+   console .log     = output (console .log,     "log");
+   console .info    = output (console .info,    "info");
+   console .warning = output (console .warning, "warning");
+   console .error   = output (console .error,   "error");
+   console .debug   = output (console .debug,   "debug");
 })();
 </script>
 
