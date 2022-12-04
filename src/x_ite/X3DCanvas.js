@@ -45,9 +45,9 @@
  *
  ******************************************************************************/
 
-import X3D       from "./X3D.js";
-import Namespace from "./Namespace.js";
-import URLs      from "./Browser/Networking/URLs.js";
+import X3DBrowser from "./Browser/X3DBrowser.js";
+import Namespace  from "./Namespace.js";
+import URLs       from "./Browser/Networking/URLs.js";
 
 class X3DCanvas extends HTMLElement
 {
@@ -77,12 +77,12 @@ class X3DCanvas extends HTMLElement
 
       shadow .appendChild (link);
 
-      X3D .createBrowserFromElement (this);
+      this .browser = new X3DBrowser (this);
    }
 
    connectedCallback ()
    {
-      X3D .getBrowser (this) .connectedCallback ();
+      this .browser .connectedCallback ();
    }
 
    static get observedAttributes ()
@@ -96,7 +96,7 @@ class X3DCanvas extends HTMLElement
 
    attributeChangedCallback (name, oldValue, newValue)
    {
-      X3D .getBrowser (this) .attributeChangedCallback (name, oldValue, newValue);
+      this .browser .attributeChangedCallback (name, oldValue, newValue);
    }
 }
 

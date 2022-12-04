@@ -77,11 +77,20 @@ const
 
 function X3DBrowser (element)
 {
+   element = $(element);
+
+   if (element .data ("browser"))
+      throw new Error ("Couldn't create browser, element has already a browser.");
+
+   element .data ("browser", this);
+
    X3DBrowserContext .call (this, element);
 
    this [_browserCallbacks] = new Map ();
 
    this .setExecutionContext (this .createScene ());
+
+   this .setup ();
 };
 
 X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .prototype),

@@ -72,8 +72,8 @@ import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
 import Namespace                   from "./Namespace.js";
 import Fallback                    from "./Fallback.js";
-import jQuery                      from "../lib/jquery.js";
 import MicroTime                   from "../standard/Time/MicroTime.js";
+import jQuery                      from "../lib/jquery.js";
 
 const
    callbacks = $.Deferred (),
@@ -107,16 +107,28 @@ function X3D (callback, fallback)
 
       $(function ()
       {
-         const elements = $("X3DCanvas");
-
-         if (elements .length)
+         try
          {
-            console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
+            // Begin Legacy
 
-            $.map (elements, X3D .createBrowserFromElement);
+            const elements = $("X3DCanvas");
+
+            if (elements .length)
+            {
+               console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
+
+               $.map (elements, element => new X3DBrowser (element));
+            }
+
+            // End Legacy
+
+            callbacks .resolve ();
          }
-
-         callbacks .resolve ();
+         catch (error)
+         {
+            Fallback .show ($("x3d-canvas, X3DCanvas"), error);
+            fallbacks .resolve (error);
+         }
       });
    });
 }
@@ -161,27 +173,6 @@ Object .assign (X3D,
          element .attr ("url", url .toString ())
 
       return element .get (0);
-   },
-   createBrowserFromElement: function (element)
-   {
-      try
-      {
-         element = $(element);
-
-         if (element .find (".x_ite-private-browser") .length)
-            return;
-
-         const browser = new X3DBrowser (element);
-
-         element .data ("browser", browser);
-
-         browser .setup ();
-      }
-      catch (error)
-      {
-         Fallback .show ($("x3d-canvas, X3DCanvas"), error);
-         fallbacks .resolve (error);
-      }
    },
 });
 
