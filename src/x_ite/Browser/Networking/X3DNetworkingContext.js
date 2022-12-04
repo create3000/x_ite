@@ -191,6 +191,9 @@ X3DNetworkingContext .prototype =
       this [_loadingTotal] = 0;
 
       this [_loadingObjects] .clear ();
+
+      for (const object of this .getPrivateScene () .getLoadingObjects ())
+         this .addLoadingObject (object);
    },
 };
 

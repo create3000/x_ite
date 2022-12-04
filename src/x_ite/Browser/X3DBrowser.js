@@ -307,9 +307,6 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       this .setBrowserLoading (true);
       this ._loadCount .addInterest ("checkLoadCount", this);
 
-      for (const object of this .getPrivateScene () .getLoadingObjects ())
-         this .addLoadingObject (object);
-
       for (const object of scene .getLoadingObjects ())
          this .addLoadingObject (object);
 
