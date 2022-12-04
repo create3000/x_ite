@@ -1,0 +1,254 @@
+---
+title: Playground
+layout: wide
+order: 3
+---
+<style>
+.row, .post, .post-content {
+   height: 100%;
+}
+
+/* Table */
+
+table {
+  width: 100%;
+  height: 100%;
+  table-layout: fixed;
+}
+
+table td {
+   width: 50%;
+   vertical-align: top;
+}
+
+/* Editor */
+
+#editor-wrapper, .console {
+   outline: none;
+   border: none;
+   padding: 0.5rem;
+   background: rgba(0,0,0,0.2);
+   width: 100%;
+   height: 100%;
+   resize: none;
+   font-family: monospace;
+   font-size: 0.8rem;
+   line-height: 1.4;
+   white-space: pre;
+}
+
+#editor-wrapper {
+   position: relative;
+}
+
+#editor {
+   position: absolute;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   background: unset;
+}
+
+.ace_gutter {
+   background: rgba(255,255,255,0.05) !important;
+}
+
+/* XML */
+
+.ace_tag-open, .ace_tag-close, .ace_end-tag-open {
+   color: var(--text-color) !important;
+}
+
+.ace_tag-name {
+   color: #5a9cd8 !important;
+}
+
+.ace_attribute-name {
+   color: #9fdcfe !important;
+}
+
+.ace_attribute-equals {
+   color: #d4d4d4 !important;
+}
+
+.ace_attribute-value {
+   color: #cd9177 !important;
+}
+
+/* JSON */
+
+.ace_paren {
+   color: #fdd601 !important;
+}
+
+.ace_identifier {
+   color: #9fdcfe !important;
+}
+
+.ace_variable {
+   color: #9fdcfe !important;
+}
+
+.ace_numeric {
+   color: #b7cea5 !important;
+}
+
+.ace_string {
+   color: #cd9177 !important;
+}
+
+.ace_boolean {
+   color: #5a9cd8 !important;
+}
+
+/* Console */
+
+.console {
+   --system-red: rgb(255, 69, 58);
+   --system-yellow: rgb(255, 214, 10);
+   --system-blue: rgb(10, 132, 255);
+   overflow: scroll;
+}
+
+span.info {
+   color: var(--system-blue);
+}
+
+span.warning {
+   color: var(--system-yellow);
+}
+
+span.error {
+   color: var(--system-red);
+}
+
+/* Canvas */
+
+.post x3d-canvas {
+   width: 100%;
+   height: 100%;
+   aspect-ratio: unset;
+}
+</style>
+
+<pre style="display:none">
+Online X3D and VRML viewer.
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.13.1/ace.min.js"></script>
+<script>
+$(function ()
+{
+   ace .config .set ("basePath", "https://cdnjs.cloudflare.com/ajax/libs/ace/1.13.1/");
+
+   const editor = ace .edit ("editor");
+
+   editor .setTheme ("ace/theme/monokai");
+   editor .session .setOptions ({ tabSize: 2, useSoftTabs: true });
+
+   editor .getSession () .on ("change", async function ()
+   {
+      const
+         Browser = X3D .getBrowser (),
+         text    = editor .getSession () .getValue (),
+         url     = "data:," + text;
+
+      if (text .match (/<\w+/))
+      {
+         editor .session .setMode ("ace/mode/xml");
+         editor .getSession () .setUseWorker (true);
+      }
+      else if (text .match (/\w+\s*\{/))
+      {
+         editor .session .setMode ("ace/mode/javascript");
+         editor .getSession () .setUseWorker (false);
+      }
+      else if (text .match (/"\w+"\s*:\s*\{/))
+      {
+         editor .session .setMode ("ace/mode/json");
+         editor .getSession () .setUseWorker (true);
+      }
+
+      if (Browser .getActiveViewpoint ())
+      {
+         const
+            positionOffset    = Browser .getActiveViewpoint () ._positionOffset    .copy (),
+            orientationOffset = Browser .getActiveViewpoint () ._orientationOffset .copy ();
+
+         await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+
+         Browser .getActiveViewpoint () ._positionOffset    = positionOffset;
+         Browser .getActiveViewpoint () ._orientationOffset = orientationOffset;
+      }
+      else
+      {
+         await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+      }
+   });
+
+   const box = `<X3D profile='Full' version='4.0'>
+   <Scene>
+      <Shape>
+         <Appearance>
+            <Material
+               diffuseColor='0 0.5 1'></Material>
+         </Appearance>
+         <Box></Box>
+      </Shape>
+   </Scene>
+</X3D>
+`;
+
+   editor .setValue (box .replace (/ {3}/g, "  "), -1);
+   editor .getSession () .setUndoManager (new ace .UndoManager ());
+});
+</script>
+</pre>
+
+<script>
+(function ()
+{
+   function output (log, classes)
+   {
+      return function ()
+      {
+         const args = arguments;
+
+         $(function ()
+         {
+            const
+               text    = Array .prototype .slice .call (args) .join ("") + "\n",
+               element = $("<span></span>") .addClass (classes) .text (text);
+
+            log .apply (this, args);
+
+            $(".console") .append (element);
+            element [0] .scrollIntoView (false);
+         });
+      }
+   }
+
+   console .log     = output (console .log,     "log");
+   console .info    = output (console .info,    "info");
+   console .warning = output (console .warning, "warning");
+   console .error   = output (console .error,   "error");
+   console .debug   = output (console .debug,   "debug");
+})();
+</script>
+
+<table>
+   <tr>
+      <td>
+         <table>
+            <tr>
+               <td><x3d-canvas splashScreen="false"></x3d-canvas></td>
+            </tr>
+            <tr>
+               <td><div class="console"></div></td>
+            </tr>
+         </table>
+      </td>
+      <td>
+         <div id="editor-wrapper"><div id="editor"></div></div>
+      </td>
+   </tr>
+</table>

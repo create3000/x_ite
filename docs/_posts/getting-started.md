@@ -22,7 +22,7 @@ If you ever get in trouble, please [report a bug](report-a-bug).
 
 ## X3D Examples
 
-<script type="module" src="example.js"></script>
+<script type="module" src="assets/js/example.js"></script>
 
 <table class="examples">
   <tr>
