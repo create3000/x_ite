@@ -99,6 +99,9 @@ FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
       this .set_hatched__ ();
       this .set_hatchColor__ ();
       this .set_hatchStyle__ ();
+
+      // Preload texture.
+      this .getBrowser () .getHatchStyleTexture (this .hatchStyle);
    },
    set_filled__: function ()
    {
@@ -124,9 +127,6 @@ FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
          hatchStyle = 1;
 
       this .hatchStyle = hatchStyle;
-
-      // Preload texture.
-      this .getBrowser () .getHatchStyleTexture (this .hatchStyle);
    },
    setTransparent: function (value)
    {

@@ -90,6 +90,9 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
       this .set_applied__ ();
       this .set_linetype__ ();
       this .set_linewidthScaleFactor__ ();
+
+      // Preload texture.
+      this .getBrowser () .getLinetypeTexture ();
    },
    getApplied: function ()
    {
@@ -119,9 +122,6 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
          linetype = 1;
 
       this .linetype = linetype;
-
-      // Preload texture.
-      this .getBrowser () .getLinetypeTexture ();
    },
    set_linewidthScaleFactor__: function ()
    {
