@@ -52737,13 +52737,13 @@ X3DUrlObject .prototype =
             break;
          case Base_X3DConstants.IN_PROGRESS_STATE:
          {
-            this .getScene () .addLoadCount (this);
+            this .getScene () .addLoadingObject (this);
             break;
          }
          case Base_X3DConstants.COMPLETE_STATE:
          case Base_X3DConstants.FAILED_STATE:
          {
-            this .getScene () .removeLoadCount (this);
+            this .getScene () .removeLoadingObject (this);
             break;
          }
       }
@@ -72814,7 +72814,7 @@ Scene .prototype = Object .assign (Object .create (Execution_X3DScene.prototype)
          const scene = this .getScene ();
 
          for (const object of this [_loadingObjects])
-            scene .removeLoadCount (object);
+            scene .removeLoadingObject (object);
       }
 
       Execution_X3DScene.prototype.setExecutionContext.call (this, value);
@@ -72824,7 +72824,7 @@ Scene .prototype = Object .assign (Object .create (Execution_X3DScene.prototype)
          const scene = this .getScene ();
 
          for (const object of this [_loadingObjects])
-            scene .addLoadCount (object);
+            scene .addLoadingObject (object);
       }
    },
    addInitLoadCount: function (node)
@@ -72835,7 +72835,11 @@ Scene .prototype = Object .assign (Object .create (Execution_X3DScene.prototype)
    {
       this ._initLoadCount = this ._initLoadCount .getValue () - 1;
    },
-   addLoadCount: function (node)
+   getLoadingObjects: function ()
+   {
+      return this [_loadingObjects];
+   },
+   addLoadingObject: function (node)
    {
       if (this [_loadingObjects] .has (node))
          return;
@@ -72849,12 +72853,12 @@ Scene .prototype = Object .assign (Object .create (Execution_X3DScene.prototype)
          scene   = this .getScene ();
 
       if (this === browser .getExecutionContext () || this .loader === browser .loader)
-         browser .addLoadCount (node);
+         browser .addLoadingObject (node);
 
       if (! this .isMainScene ())
-         scene .addLoadCount (node);
+         scene .addLoadingObject (node);
    },
-   removeLoadCount: function (node)
+   removeLoadingObject: function (node)
    {
       if (!this [_loadingObjects] .has (node))
          return;
@@ -72868,14 +72872,10 @@ Scene .prototype = Object .assign (Object .create (Execution_X3DScene.prototype)
          scene   = this .getScene ();
 
       if (this === browser .getExecutionContext () || this .loader === browser .loader)
-         browser .removeLoadCount (node);
+         browser .removeLoadingObject (node);
 
       if (! this .isMainScene ())
-         scene .removeLoadCount (node);
-   },
-   getLoadingObjects: function ()
-   {
-      return this [_loadingObjects];
+         scene .removeLoadingObject (node);
    },
 });
 
@@ -83418,7 +83418,7 @@ X3DNetworkingContext .prototype =
    {
       return this [_loading];
    },
-   addLoadCount: function (object)
+   addLoadingObject: function (object)
    {
       if (this [X3DNetworkingContext_loadingObjects] .has (object))
          return;
@@ -83430,7 +83430,7 @@ X3DNetworkingContext .prototype =
       this .setLoadCount (this [X3DNetworkingContext_loadingObjects] .size);
       this .setCursor ("DEFAULT");
    },
-   removeLoadCount: function (object)
+   removeLoadingObject: function (object)
    {
       if (! this [X3DNetworkingContext_loadingObjects] .has (object))
          return;
@@ -113592,6 +113592,9 @@ FillProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
          hatchStyle = 1;
 
       this .hatchStyle = hatchStyle;
+
+      // Preload texture.
+      this .getBrowser () .getHatchStyleTexture (this .hatchStyle);
    },
    setTransparent: function (value)
    {
@@ -113749,6 +113752,9 @@ LineProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
          linetype = 1;
 
       this .linetype = linetype;
+
+      // Preload texture.
+      this .getBrowser () .getLinetypeTexture ();
    },
    set_linewidthScaleFactor__: function ()
    {
@@ -117761,7 +117767,7 @@ class DOMIntegration
 				// Display splash screen.
 
 				this .browser .setBrowserLoading (true);
-				this .browser .addLoadCount (this);
+				this .browser .addLoadingObject (this);
 
 				// Preprocess script nodes if not xhtml.
 
@@ -117799,7 +117805,7 @@ class DOMIntegration
 				this .processInlineElements (rootElement);
 				this .addEventDispatchersAll (rootElement);
 
-				this .browser .removeLoadCount (this);
+				this .browser .removeLoadingObject (this);
 			}
 			else
 			{
@@ -119228,12 +119234,14 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
       this .setBrowserLoading (true);
       this ._loadCount .addInterest ("checkLoadCount", this);
 
+      for (const object of this .getPrivateScene () .getLoadingObjects ())
+         this .addLoadingObject (object);
+
       for (const object of scene .getLoadingObjects ())
-         this .addLoadCount (object);
+         this .addLoadingObject (object);
 
       this .setExecutionContext (scene);
       this .getWorld () .bindBindables ();
-      this .getWorld () .traverse (Rendering_TraverseType.DISPLAY, null);
 
       scene .setLive (this .isLive () .getValue ());
    },
@@ -119295,11 +119303,11 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
          external     = this .isExternal (),
          loader       = new InputOutput_FileLoader (this .getWorld ());
 
-      this .addLoadCount (loader);
+      this .addLoadingObject (loader);
 
       loader .createX3DFromURL (url, null, (scene) =>
       {
-         this .removeLoadCount (loader);
+         this .removeLoadingObject (loader);
 
          if (scene)
          {
@@ -119363,7 +119371,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
          // Start loading.
 
          this .setBrowserLoading (true);
-         this .addLoadCount (this);
+         this .addLoadingObject (this);
 
          const loader = this [_loader] = new InputOutput_FileLoader (this .getWorld ());
 
@@ -119381,7 +119389,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
             if (scene)
             {
                this .replaceWorld (scene);
-               this .removeLoadCount (this);
+               this .removeLoadingObject (this);
 
                resolve ();
             }
@@ -119409,7 +119417,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
             }
 
             this .changeViewpoint (fragment);
-            this .removeLoadCount (this);
+            this .removeLoadingObject (this);
             this .setBrowserLoading (false);
 
             resolve ();
@@ -119427,7 +119435,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
             else
                location = url;
 
-            this .removeLoadCount (this);
+            this .removeLoadingObject (this);
             this .setBrowserLoading (false);
 
             resolve ();
