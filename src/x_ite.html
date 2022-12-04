@@ -119,37 +119,7 @@ $(".location-entry") .keydown (event =>
          return
    }
 });
-   </script>
-   <script>
-(function ()
-{
-   function output (log, classes)
-   {
-      return function ()
-      {
-         const args = arguments;
-
-         $(function ()
-         {
-            const
-               text    = Array .prototype .slice .call (args) .join ("") + "\n",
-               element = $("<span></span>") .addClass (classes) .text (text);
-
-            log .apply (this, args);
-
-            $(".console") .append (element);
-            element [0] .scrollIntoView (false);
-         });
-      }
-   }
-
-   console .log     = output (console .log,     "log");
-   console .info    = output (console .info,    "info");
-   console .warning = output (console .warning, "warning");
-   console .error   = output (console .error,   "error");
-   console .debug   = output (console .debug,   "debug");
-})();
-     </script>
+      </script>
       <style>
 @import url("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic");
 
