@@ -73679,6 +73679,13 @@ function TextureProperties (executionContext)
    Core_X3DNode.call (this, executionContext);
 
    this .addType (Base_X3DConstants.TextureProperties);
+
+   if (executionContext .getSpecificationVersion () < 4.0)
+   {
+      this ._minificationFilter  = "DEFAULT";
+      this ._magnificationFilter = "DEFAULT";
+      this ._textureCompression  = "DEFAULT";
+   }
 }
 
 TextureProperties .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
