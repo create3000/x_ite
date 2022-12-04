@@ -97,13 +97,13 @@ X3DUrlObject .prototype =
             break;
          case X3DConstants .IN_PROGRESS_STATE:
          {
-            this .getScene () .addLoadCount (this);
+            this .getScene () .addLoadingObject (this);
             break;
          }
          case X3DConstants .COMPLETE_STATE:
          case X3DConstants .FAILED_STATE:
          {
-            this .getScene () .removeLoadCount (this);
+            this .getScene () .removeLoadingObject (this);
             break;
          }
       }

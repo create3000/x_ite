@@ -137,7 +137,7 @@ X3DNetworkingContext .prototype =
    {
       return this [_loading];
    },
-   addLoadCount: function (object)
+   addLoadingObject: function (object)
    {
       if (this [_loadingObjects] .has (object))
          return;
@@ -149,7 +149,7 @@ X3DNetworkingContext .prototype =
       this .setLoadCount (this [_loadingObjects] .size);
       this .setCursor ("DEFAULT");
    },
-   removeLoadCount: function (object)
+   removeLoadingObject: function (object)
    {
       if (! this [_loadingObjects] .has (object))
          return;

@@ -63,7 +63,7 @@ class DOMIntegration
 				// Display splash screen.
 
 				this .browser .setBrowserLoading (true);
-				this .browser .addLoadCount (this);
+				this .browser .addLoadingObject (this);
 
 				// Preprocess script nodes if not xhtml.
 
@@ -101,7 +101,7 @@ class DOMIntegration
 				this .processInlineElements (rootElement);
 				this .addEventDispatchersAll (rootElement);
 
-				this .browser .removeLoadCount (this);
+				this .browser .removeLoadingObject (this);
 			}
 			else
 			{

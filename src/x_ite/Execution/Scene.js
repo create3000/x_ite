@@ -74,7 +74,7 @@ Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
          const scene = this .getScene ();
 
          for (const object of this [_loadingObjects])
-            scene .removeLoadCount (object);
+            scene .removeLoadingObject (object);
       }
 
       X3DScene .prototype .setExecutionContext .call (this, value);
@@ -84,7 +84,7 @@ Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
          const scene = this .getScene ();
 
          for (const object of this [_loadingObjects])
-            scene .addLoadCount (object);
+            scene .addLoadingObject (object);
       }
    },
    addInitLoadCount: function (node)
@@ -95,7 +95,11 @@ Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
    {
       this ._initLoadCount = this ._initLoadCount .getValue () - 1;
    },
-   addLoadCount: function (node)
+   getLoadingObjects: function ()
+   {
+      return this [_loadingObjects];
+   },
+   addLoadingObject: function (node)
    {
       if (this [_loadingObjects] .has (node))
          return;
@@ -109,12 +113,12 @@ Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
          scene   = this .getScene ();
 
       if (this === browser .getExecutionContext () || this .loader === browser .loader)
-         browser .addLoadCount (node);
+         browser .addLoadingObject (node);
 
       if (! this .isMainScene ())
-         scene .addLoadCount (node);
+         scene .addLoadingObject (node);
    },
-   removeLoadCount: function (node)
+   removeLoadingObject: function (node)
    {
       if (!this [_loadingObjects] .has (node))
          return;
@@ -128,14 +132,10 @@ Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
          scene   = this .getScene ();
 
       if (this === browser .getExecutionContext () || this .loader === browser .loader)
-         browser .removeLoadCount (node);
+         browser .removeLoadingObject (node);
 
       if (! this .isMainScene ())
-         scene .removeLoadCount (node);
-   },
-   getLoadingObjects: function ()
-   {
-      return this [_loadingObjects];
+         scene .removeLoadingObject (node);
    },
 });
 

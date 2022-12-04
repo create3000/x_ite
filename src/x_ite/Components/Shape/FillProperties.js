@@ -124,6 +124,9 @@ FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
          hatchStyle = 1;
 
       this .hatchStyle = hatchStyle;
+
+      // Preload texture.
+      this .getBrowser () .getHatchStyleTexture (this .hatchStyle);
    },
    setTransparent: function (value)
    {
