@@ -167,12 +167,12 @@ Object .assign (X3D,
    },
    createBrowser: function (url, parameter)
    {
-      const element = $("<x3d-canvas></x3d-canvas>");
+      const element = document .createElement ("x3d-canvas");
 
-      if (url instanceof Fields .MFString)
-         element .attr ("url", url .toString ())
+      if (arguments .length)
+         element .browser .loadURL (url, parameter);
 
-      return element .get (0);
+      return element;
    },
 });
 
