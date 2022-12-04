@@ -312,7 +312,6 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       this .setExecutionContext (scene);
       this .getWorld () .bindBindables ();
-      this .getWorld () .traverse (TraverseType .DISPLAY, null);
 
       scene .setLive (this .isLive () .getValue ());
    },
