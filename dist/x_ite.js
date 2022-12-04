@@ -83472,6 +83472,9 @@ X3DNetworkingContext .prototype =
       this [_loadingTotal] = 0;
 
       this [X3DNetworkingContext_loadingObjects] .clear ();
+
+      for (const object of this .getPrivateScene () .getLoadingObjects ())
+         this .addLoadingObject (object);
    },
 };
 
@@ -89955,7 +89958,7 @@ X3DProgrammableShaderObject .prototype =
 
          if (location)
          {
-            console .warn (this .getTypeName (), this .getName (), "Using uniform location name '" + depreciated + "' is depreciated, use '" + name + "'. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
+            console .warn (this .getTypeName (), this .getName (), "Using uniform location name '" + depreciated + "' is depreciated, use '" + name + "'. See https://create3000.github.io/x_ite/custom-shaders.html.");
          }
 
          return location;
@@ -89980,7 +89983,7 @@ X3DProgrammableShaderObject .prototype =
 
          if (location >= 0)
          {
-            console .warn (this .getTypeName (), this .getName (), "Using attribute location name '" + depreciated + "' is depreciated, use '" + name + "'. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
+            console .warn (this .getTypeName (), this .getName (), "Using attribute location name '" + depreciated + "' is depreciated, use '" + name + "'. See https://create3000.github.io/x_ite/custom-shaders.html.");
          }
 
          return location;
@@ -92218,7 +92221,7 @@ function depreciatedWarning (source, depreciated, current)
    if (source .indexOf (depreciated) === -1)
       return;
 
-   console .warn ("Use of '" + depreciated + "' is depreciated, use '" + current + "' instead. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
+   console .warn ("Use of '" + depreciated + "' is depreciated, use '" + current + "' instead. See https://create3000.github.io/x_ite/custom-shaders.html.");
 }
 
 /* harmony default export */ const Shaders_ShaderSource = (ShaderSource);
@@ -113567,6 +113570,9 @@ FillProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
       this .set_hatched__ ();
       this .set_hatchColor__ ();
       this .set_hatchStyle__ ();
+
+      // Preload texture.
+      this .getBrowser () .getHatchStyleTexture (this .hatchStyle);
    },
    set_filled__: function ()
    {
@@ -113592,9 +113598,6 @@ FillProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
          hatchStyle = 1;
 
       this .hatchStyle = hatchStyle;
-
-      // Preload texture.
-      this .getBrowser () .getHatchStyleTexture (this .hatchStyle);
    },
    setTransparent: function (value)
    {
@@ -113723,6 +113726,9 @@ LineProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
       this .set_applied__ ();
       this .set_linetype__ ();
       this .set_linewidthScaleFactor__ ();
+
+      // Preload texture.
+      this .getBrowser () .getLinetypeTexture ();
    },
    getApplied: function ()
    {
@@ -113752,9 +113758,6 @@ LineProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
          linetype = 1;
 
       this .linetype = linetype;
-
-      // Preload texture.
-      this .getBrowser () .getLinetypeTexture ();
    },
    set_linewidthScaleFactor__: function ()
    {
@@ -118925,6 +118928,7 @@ SupportedProfiles .addProfile ({
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(526);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119004,11 +119008,20 @@ const
 
 function X3DBrowser (element)
 {
+   element = X3DBrowser_$(element);
+
+   if (element .data ("browser"))
+      throw new Error ("Couldn't create browser, element has already a browser.");
+
+   element .data ("browser", this);
+
    Browser_X3DBrowserContext.call (this, element);
 
    this [_browserCallbacks] = new Map ();
 
    this .setExecutionContext (this .createScene ());
+
+   this .setup ();
 };
 
 X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContext.prototype),
@@ -119233,9 +119246,6 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
       this .getBrowserOptions () .configure ();
       this .setBrowserLoading (true);
       this ._loadCount .addInterest ("checkLoadCount", this);
-
-      for (const object of this .getPrivateScene () .getLoadingObjects ())
-         this .addLoadingObject (object);
 
       for (const object of scene .getLoadingObjects ())
          this .addLoadingObject (object);
@@ -119849,7 +119859,6 @@ Object .defineProperty (X3DBrowser .prototype, "supportedComponents",
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 (function ()
 {
@@ -121119,16 +121128,28 @@ function X3D (callback, fallback)
 
       X3D_$(function ()
       {
-         const elements = X3D_$("X3DCanvas");
-
-         if (elements .length)
+         try
          {
-            console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
+            // Begin Legacy
 
-            X3D_$.map (elements, X3D .createBrowserFromElement);
+            const elements = X3D_$("X3DCanvas");
+
+            if (elements .length)
+            {
+               console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
+
+               X3D_$.map (elements, element => new Browser_X3DBrowser (element));
+            }
+
+            // End Legacy
+
+            callbacks .resolve ();
          }
-
-         callbacks .resolve ();
+         catch (error)
+         {
+            x_ite_Fallback.show (X3D_$("x3d-canvas, X3DCanvas"), error);
+            fallbacks .resolve (error);
+         }
       });
    });
 }
@@ -121167,33 +121188,12 @@ Object .assign (X3D,
    },
    createBrowser: function (url, parameter)
    {
-      const element = X3D_$("<x3d-canvas></x3d-canvas>");
+      const element = document .createElement ("x3d-canvas");
 
-      if (url instanceof x_ite_Fields.MFString)
-         element .attr ("url", url .toString ())
+      if (arguments .length)
+         element .browser .loadURL (url, parameter);
 
-      return element .get (0);
-   },
-   createBrowserFromElement: function (element)
-   {
-      try
-      {
-         element = X3D_$(element);
-
-         if (element .find (".x_ite-private-browser") .length)
-            return;
-
-         const browser = new Browser_X3DBrowser (element);
-
-         element .data ("browser", browser);
-
-         browser .setup ();
-      }
-      catch (error)
-      {
-         x_ite_Fallback.show (X3D_$("x3d-canvas, X3DCanvas"), error);
-         fallbacks .resolve (error);
-      }
+      return element;
    },
 });
 
@@ -121353,12 +121353,12 @@ class X3DCanvas extends HTMLElement
 
       shadow .appendChild (link);
 
-      x_ite_X3D.createBrowserFromElement (this);
+      this .browser = new Browser_X3DBrowser (this);
    }
 
    connectedCallback ()
    {
-      x_ite_X3D.getBrowser (this) .connectedCallback ();
+      this .browser .connectedCallback ();
    }
 
    static get observedAttributes ()
@@ -121372,7 +121372,7 @@ class X3DCanvas extends HTMLElement
 
    attributeChangedCallback (name, oldValue, newValue)
    {
-      x_ite_X3D.getBrowser (this) .attributeChangedCallback (name, oldValue, newValue);
+      this .browser .attributeChangedCallback (name, oldValue, newValue);
    }
 }
 
