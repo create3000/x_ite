@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 637:
+/***/ 666:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(971);
+/* provided dependency */ var jQuery = __webpack_require__(580);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 167:
+/***/ 557:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(971);
+/* provided dependency */ var jQuery = __webpack_require__(580);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 676:
+/***/ 617:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(971)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(580)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 971:
+/***/ 580:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11728,7 +11728,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 812:
+/***/ 633:
 /***/ ((module) => {
 
 /**
@@ -16507,7 +16507,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 591:
+/***/ 699:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -33749,7 +33749,7 @@ x_ite_Namespace.set ("locale/gettext", gettext);
 /* harmony default export */ const locale_gettext = (gettext);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(971);
+/* provided dependency */ var $ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34646,7 +34646,7 @@ x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperti
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(971);
+/* provided dependency */ var Notification_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34766,8 +34766,8 @@ x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification);
 /* harmony default export */ const Core_Notification = (Notification);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(167);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(971);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(557);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41658,7 +41658,7 @@ x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(971);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43660,7 +43660,7 @@ x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3);
 /* harmony default export */ const Geometry_Plane3 = (Plane3);
 
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(812);
+/* provided dependency */ var libtess = __webpack_require__(633);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51865,7 +51865,7 @@ x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2D
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(971);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55194,8 +55194,8 @@ x_ite_Namespace.set ("standard/Networking/BinaryTransport", BinaryTransport);
 /* harmony default export */ const Networking_BinaryTransport = (BinaryTransport);
 
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(971);
-/* provided dependency */ var pako = __webpack_require__(591);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(580);
+/* provided dependency */ var pako = __webpack_require__(699);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -57303,7 +57303,7 @@ x_ite_Namespace.set ("x_ite/Routing/X3DRoute", X3DRoute);
 /* harmony default export */ const Execution_X3DExecutionContext = (X3DExecutionContext);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(971);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -58763,7 +58763,7 @@ DataStorage .prototype = {
 /* harmony default export */ const Utility_DataStorage = (DataStorage);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(971);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65529,8 +65529,8 @@ x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", Orientation
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(676);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(971);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(617);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66426,8 +66426,8 @@ x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(676);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(971);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(617);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67360,8 +67360,8 @@ x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(676);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(971);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(617);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67672,8 +67672,8 @@ x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(676);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(971);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(617);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -69407,8 +69407,8 @@ x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContex
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(676);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(971);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(617);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70014,8 +70014,8 @@ x_ite_Namespace.set ("x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensor
 /* harmony default export */ const PointingDeviceSensor_X3DPointingDeviceSensorContext = (X3DPointingDeviceSensorContext);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(971);
-/* provided dependency */ var ResizeSensor = __webpack_require__(637);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(580);
+/* provided dependency */ var ResizeSensor = __webpack_require__(666);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -80816,7 +80816,7 @@ x_ite_Namespace.set ("x_ite/Routing/X3DRoutingContext", X3DRoutingContext);
 /* harmony default export */ const Routing_X3DRoutingContext = (X3DRoutingContext);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowserContext.js
-/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(971);
+/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99205,7 +99205,7 @@ x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSource
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(971);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99834,7 +99834,7 @@ x_ite_Namespace.set ("x_ite/Components/Sound", undefined);
 /* harmony default export */ const Components_Sound = ((/* unused pure expression or super */ null && (undefined)));
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(971);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100749,7 +100749,7 @@ x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTe
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(971);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101442,7 +101442,7 @@ x_ite_Namespace.set ("x_ite/Components", Components);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components)));
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(971);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(580);
 /*******************************************************************************
  * MIT License
  *
@@ -102673,7 +102673,7 @@ x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles)
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(971);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103555,7 +103555,7 @@ x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(971);
+/* provided dependency */ var Fallback_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103730,12 +103730,12 @@ x_ite_Namespace.set ("standard/Time/MicroTime", undefined);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (undefined)));
 
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(971);
+/* provided dependency */ var jquery_$ = __webpack_require__(580);
 x_ite_Namespace.set ("lib/jquery", jquery_$);
 /* harmony default export */ const jquery = (jquery_$);
 
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(971);
+/* provided dependency */ var X3D_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103990,7 +103990,7 @@ x_ite_Namespace.set ("x_ite/X3D", X3D);
 /* harmony default export */ const x_ite_X3D = (X3D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(971);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(580);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
