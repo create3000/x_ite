@@ -185,7 +185,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       if (component)
       {
          if (level <= component .level || true)
-            return new ComponentInfo (name, level, component .title, component. providerUrl, component .dependencies);
+            return new ComponentInfo (name, level, component .title, component. providerUrl, $.data (component, "dependencies"));
       }
 
       throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
@@ -211,7 +211,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             component   = browser .getSupportedComponents () .get (name),
             providerUrl = component .providerUrl;
 
-         await loadComponents (browser, component .dependencies, seen);
+         await loadComponents (browser, $.data (component, "dependencies"), seen);
 
          if (!providerUrl .match (componentsUrl))
             return;

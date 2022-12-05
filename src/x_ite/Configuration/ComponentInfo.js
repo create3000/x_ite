@@ -54,7 +54,8 @@ function ComponentInfo (name, level, title, providerUrl, dependencies)
    this .level        = level;
    this .title        = title;
    this .providerUrl  = providerUrl;
-   this .dependencies = dependencies;
+
+   $.data (this, "dependencies", dependencies)
 }
 
 ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
