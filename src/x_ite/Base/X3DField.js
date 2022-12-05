@@ -407,6 +407,10 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
    {
       return this;
    },
+   fromString: function (string, scene)
+   {
+      // Function will be overridden in VRMLParser.
+   },
    dispose: function ()
    {
       for (const route of new Set (this [_inputRoutes]))
