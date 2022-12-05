@@ -8,7 +8,7 @@ $("table.examples a") .on ("click", function ()
 
    if (div .length)
    {
-      X3D .getBrowser (canvas) .beginUpdate ();
+      canvas .prop ("browser") .beginUpdate ();
       div .show ();
    }
    else
@@ -19,7 +19,7 @@ $("table.examples a") .on ("click", function ()
 
       $("<i></i>") .addClass (["fas", "fa-solid", "fa-circle-xmark", "fa-fw"]) .appendTo (div) .on ("click", function ()
       {
-         X3D .getBrowser (canvas) .endUpdate ();
+         canvas .prop ("browser") .endUpdate ();
          div .hide ();
       });
 
