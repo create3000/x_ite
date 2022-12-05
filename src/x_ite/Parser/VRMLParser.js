@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import Fields                    from "../Fields.js";
+import X3DField                  from "../Base/X3DField.js";
 import X3DParser                 from "./X3DParser.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
@@ -2945,5 +2946,18 @@ VRMLParser .prototype .fieldTypes [X3DConstants .MFVec3d]     = VRMLParser .prot
 VRMLParser .prototype .fieldTypes [X3DConstants .MFVec3f]     = VRMLParser .prototype .mfvec3fValue;
 VRMLParser .prototype .fieldTypes [X3DConstants .MFVec4d]     = VRMLParser .prototype .mfvec4dValue;
 VRMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = VRMLParser .prototype .mfvec4fValue;
+
+X3DField .prototype .fromString = function (string, scene)
+{
+   const parser = new VRMLParser (scene);
+
+   parser .setUnits (!!scene);
+   parser .setInput (string);
+
+   if (parser .fieldValue (this))
+      return;
+
+   throw new Error ("Couldn't read value for field '" + this .getName () + "'.");
+};
 
 export default VRMLParser;
