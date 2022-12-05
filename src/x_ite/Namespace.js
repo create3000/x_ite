@@ -49,12 +49,10 @@ import jquery1                                from "../lib/jquery.js";
 import gettext1                               from "../locale/gettext.js";
 import shim1                                  from "../shim.js";
 import Algorithm1                             from "../standard/Math/Algorithm.js";
-import Bezier1                                from "../standard/Math/Algorithms/Bezier.js";
 import MergeSort1                             from "../standard/Math/Algorithms/MergeSort.js";
 import QuickSort1                             from "../standard/Math/Algorithms/QuickSort.js";
 import SAT1                                   from "../standard/Math/Algorithms/SAT.js";
 import eigen_decomposition1                   from "../standard/Math/Algorithms/eigen_decomposition.js";
-import Box21                                  from "../standard/Math/Geometry/Box2.js";
 import Box31                                  from "../standard/Math/Geometry/Box3.js";
 import Camera1                                from "../standard/Math/Geometry/Camera.js";
 import Cylinder31                             from "../standard/Math/Geometry/Cylinder3.js";
@@ -153,10 +151,6 @@ import X3DShadersContext1                     from "../x_ite/Browser/Shaders/X3D
 import AlphaMode1                             from "../x_ite/Browser/Shape/AlphaMode.js";
 import X3DShapeContext1                       from "../x_ite/Browser/Shape/X3DShapeContext.js";
 import X3DSoundContext1                       from "../x_ite/Browser/Sound/X3DSoundContext.js";
-import PolygonText1                           from "../x_ite/Browser/Text/PolygonText.js";
-import TextAlignment1                         from "../x_ite/Browser/Text/TextAlignment.js";
-import X3DTextContext1                        from "../x_ite/Browser/Text/X3DTextContext.js";
-import X3DTextGeometry1                       from "../x_ite/Browser/Text/X3DTextGeometry.js";
 import FunctionType1                          from "../x_ite/Browser/Texturing/FunctionType.js";
 import ModeType1                              from "../x_ite/Browser/Texturing/ModeType.js";
 import SourceType1                            from "../x_ite/Browser/Texturing/SourceType.js";
@@ -335,10 +329,6 @@ import AudioClip1                             from "../x_ite/Components/Sound/Au
 import Sound2                                 from "../x_ite/Components/Sound/Sound.js";
 import X3DSoundNode1                          from "../x_ite/Components/Sound/X3DSoundNode.js";
 import X3DSoundSourceNode1                    from "../x_ite/Components/Sound/X3DSoundSourceNode.js";
-import Text1                                  from "../x_ite/Components/Text.js";
-import FontStyle1                             from "../x_ite/Components/Text/FontStyle.js";
-import Text2                                  from "../x_ite/Components/Text/Text.js";
-import X3DFontStyleNode1                      from "../x_ite/Components/Text/X3DFontStyleNode.js";
 import Texturing1                             from "../x_ite/Components/Texturing.js";
 import ImageTexture1                          from "../x_ite/Components/Texturing/ImageTexture.js";
 import MovieTexture1                          from "../x_ite/Components/Texturing/MovieTexture.js";
@@ -416,7 +406,6 @@ import ProtoDeclarationArray1                 from "../x_ite/Prototype/ProtoDecl
 import X3DExternProtoDeclaration1             from "../x_ite/Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration1                   from "../x_ite/Prototype/X3DProtoDeclaration.js";
 import X3DProtoDeclarationNode1               from "../x_ite/Prototype/X3DProtoDeclarationNode.js";
-import DependentRenderer1                     from "../x_ite/Rendering/DependentRenderer.js";
 import TextureBuffer1                         from "../x_ite/Rendering/TextureBuffer.js";
 import TraverseType1                          from "../x_ite/Rendering/TraverseType.js";
 import VertexArray1                           from "../x_ite/Rendering/VertexArray.js";
@@ -430,12 +419,10 @@ const Namespace = new Map ([
    ["locale/gettext",                                                    gettext1],
    ["shim",                                                              shim1],
    ["standard/Math/Algorithm",                                           Algorithm1],
-   ["standard/Math/Algorithms/Bezier",                                   Bezier1],
    ["standard/Math/Algorithms/MergeSort",                                MergeSort1],
    ["standard/Math/Algorithms/QuickSort",                                QuickSort1],
    ["standard/Math/Algorithms/SAT",                                      SAT1],
    ["standard/Math/Algorithms/eigen_decomposition",                      eigen_decomposition1],
-   ["standard/Math/Geometry/Box2",                                       Box21],
    ["standard/Math/Geometry/Box3",                                       Box31],
    ["standard/Math/Geometry/Camera",                                     Camera1],
    ["standard/Math/Geometry/Cylinder3",                                  Cylinder31],
@@ -534,10 +521,6 @@ const Namespace = new Map ([
    ["x_ite/Browser/Shape/AlphaMode",                                     AlphaMode1],
    ["x_ite/Browser/Shape/X3DShapeContext",                               X3DShapeContext1],
    ["x_ite/Browser/Sound/X3DSoundContext",                               X3DSoundContext1],
-   ["x_ite/Browser/Text/PolygonText",                                    PolygonText1],
-   ["x_ite/Browser/Text/TextAlignment",                                  TextAlignment1],
-   ["x_ite/Browser/Text/X3DTextContext",                                 X3DTextContext1],
-   ["x_ite/Browser/Text/X3DTextGeometry",                                X3DTextGeometry1],
    ["x_ite/Browser/Texturing/FunctionType",                              FunctionType1],
    ["x_ite/Browser/Texturing/ModeType",                                  ModeType1],
    ["x_ite/Browser/Texturing/SourceType",                                SourceType1],
@@ -716,10 +699,6 @@ const Namespace = new Map ([
    ["x_ite/Components/Sound/Sound",                                      Sound2],
    ["x_ite/Components/Sound/X3DSoundNode",                               X3DSoundNode1],
    ["x_ite/Components/Sound/X3DSoundSourceNode",                         X3DSoundSourceNode1],
-   ["x_ite/Components/Text",                                             Text1],
-   ["x_ite/Components/Text/FontStyle",                                   FontStyle1],
-   ["x_ite/Components/Text/Text",                                        Text2],
-   ["x_ite/Components/Text/X3DFontStyleNode",                            X3DFontStyleNode1],
    ["x_ite/Components/Texturing",                                        Texturing1],
    ["x_ite/Components/Texturing/ImageTexture",                           ImageTexture1],
    ["x_ite/Components/Texturing/MovieTexture",                           MovieTexture1],
@@ -797,7 +776,6 @@ const Namespace = new Map ([
    ["x_ite/Prototype/X3DExternProtoDeclaration",                         X3DExternProtoDeclaration1],
    ["x_ite/Prototype/X3DProtoDeclaration",                               X3DProtoDeclaration1],
    ["x_ite/Prototype/X3DProtoDeclarationNode",                           X3DProtoDeclarationNode1],
-   ["x_ite/Rendering/DependentRenderer",                                 DependentRenderer1],
    ["x_ite/Rendering/TextureBuffer",                                     TextureBuffer1],
    ["x_ite/Rendering/TraverseType",                                      TraverseType1],
    ["x_ite/Rendering/VertexArray",                                       VertexArray1],

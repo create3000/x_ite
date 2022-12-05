@@ -659,8 +659,6 @@ END OF TERMS AND CONDITIONS
  * http://jquery.org/license
  */
 
-/*! https://mths.be/codepointat v0.2.0 by @mathias */
-
 /*! pako 2.1.0 https://github.com/nodeca/pako @license (MIT AND Zlib) */
 
 /**

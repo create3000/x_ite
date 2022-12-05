@@ -68,7 +68,6 @@ module .exports = async () =>
             jquery_fullscreen: "jquery-fullscreen-plugin/jquery.fullscreen.js",
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
-            opentype: "opentype.js/dist/opentype.js",
             pako: "pako/dist/pako_inflate.js",
             ResizeSensor: "css-element-queries/src/ResizeSensor.js",
          }),
@@ -160,6 +159,9 @@ module .exports = async () =>
                jQuery: path .resolve (__dirname, "src/lib/jquery.js"),
                // Per component
                ... {
+                  Text: {
+                     opentype: "opentype.js/dist/opentype.js",
+                  },
                   Texturing3D: {
                      CharLS: "CharLS.js/build/charLS-DynamicMemory-browser.js",
                      dicomParser: "dicom-parser/dist/dicomParser.js",

@@ -45,26 +45,24 @@
  *
  ******************************************************************************/
 
-import SupportedNodes   from "../Configuration/SupportedNodes.js";
-import FontStyle        from "./Text/FontStyle.js";
-import Text             from "./Text/Text.js";
-import X3DFontStyleNode from "./Text/X3DFontStyleNode.js";
+import Components       from "../../x_ite/Components.js";
+import X3DTextContext   from "../../x_ite/Browser/Text/X3DTextContext.js"
+import FontStyle        from "../../x_ite/Components/Text/FontStyle.js";
+import Text             from "../../x_ite/Components/Text/Text.js";
+import X3DFontStyleNode from "../../x_ite/Components/Text/X3DFontStyleNode.js";
 
-const Types =
-{
-   FontStyle: FontStyle,
-   Text: Text,
-};
-
-const AbstractTypes =
-{
-   X3DFontStyleNode: X3DFontStyleNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+Components .addComponent ({
+   name: "Text",
+   types:
+   {
+      FontStyle: FontStyle,
+      Text: Text,
+   },
+   abstractTypes:
+   {
+      X3DFontStyleNode: X3DFontStyleNode,
+   },
+   browserContext: X3DTextContext,
+});
 
 export default undefined;

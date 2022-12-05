@@ -194,6 +194,7 @@ SupportedComponents .addComponent (
    name:        "Layout",
    level:       2,
    providerUrl: URLs .getProviderUrl ("Layout"),
+   dependencies: ["Text"],
 });
 
 SupportedComponents .addComponent (
@@ -314,7 +315,7 @@ SupportedComponents .addComponent (
    title:       "Text",
    name:        "Text",
    level:       1,
-   providerUrl: URLs .getProviderUrl (),
+   providerUrl: URLs .getProviderUrl ("Text"),
 });
 
 SupportedComponents .addComponent (

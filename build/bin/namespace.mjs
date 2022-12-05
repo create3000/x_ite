@@ -3,6 +3,12 @@ import repeat from "repeat-string"
 import path   from "path"
 import fs     from "fs"
 
+let file = fs .readFileSync ("./src/x_ite/Namespace.js") .toString ()
+
+file = file .replace (/(\/\*.*?\*\/).*/sg, "$1\n\n")
+
+fs .writeFileSync ("./src/x_ite/Namespace.js", file)
+
 // Dependencies
 
 async function deps (path)
@@ -78,8 +84,6 @@ Namespace .set ("x_ite/Namespace", Namespace);
 
 export default Namespace;
 `
-
-let file = fs .readFileSync ("./src/x_ite/Namespace.js") .toString ()
 
 file = file .replace (/(\/\*.*?\*\/).*/sg, "$1\n\n" + text)
 

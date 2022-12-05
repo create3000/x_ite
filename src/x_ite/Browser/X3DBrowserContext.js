@@ -62,7 +62,6 @@ import X3DScriptingContext            from "./Scripting/X3DScriptingContext.js";
 import X3DShadersContext              from "./Shaders/X3DShadersContext.js";
 import X3DShapeContext                from "./Shape/X3DShapeContext.js";
 import X3DSoundContext                from "./Sound/X3DSoundContext.js";
-import X3DTextContext                 from "./Text/X3DTextContext.js";
 import X3DTexturingContext            from "./Texturing/X3DTexturingContext.js";
 import X3DTimeContext                 from "./Time/X3DTimeContext.js";
 import X3DRoutingContext              from "../Routing/X3DRoutingContext.js";
@@ -106,7 +105,6 @@ function X3DBrowserContext (element)
    X3DLightingContext             .call (this);
    X3DPickingContext              .call (this);
    X3DSoundContext                .call (this);
-   X3DTextContext                 .call (this);
    X3DTimeContext                 .call (this);
 
    for (const browserContext of browserContexts)
@@ -147,7 +145,6 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
    X3DShadersContext .prototype,
    X3DShapeContext .prototype,
    X3DSoundContext .prototype,
-   X3DTextContext .prototype,
    X3DTexturingContext .prototype,
    X3DTimeContext .prototype,
 {
@@ -172,7 +169,6 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       X3DLightingContext             .prototype .initialize .call (this);
       X3DPickingContext              .prototype .initialize .call (this);
       X3DSoundContext                .prototype .initialize .call (this);
-      X3DTextContext                 .prototype .initialize .call (this);
       X3DTimeContext                 .prototype .initialize .call (this);
 
       for (const browserContext of browserContexts)

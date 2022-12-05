@@ -63,7 +63,6 @@ import Rendering            from "./Components/Rendering.js";
 import Shaders              from "./Components/Shaders.js";
 import Shape                from "./Components/Shape.js";
 import Sound                from "./Components/Sound.js";
-import Text                 from "./Components/Text.js";
 import Texturing            from "./Components/Texturing.js";
 import Time                 from "./Components/Time.js";
 import DEBUG                from "./DEBUG.js";
