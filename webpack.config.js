@@ -33,7 +33,7 @@ module .exports = async () =>
    const namespace =
    {
       test: /\.js$/,
-      exclude: /(Namespace|X3D)\.js$/,
+      exclude: /Namespace\.js$/,
       use: [
          {
             loader: StringReplacePlugin .replace ({

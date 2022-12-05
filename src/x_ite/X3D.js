@@ -70,7 +70,6 @@ import X3DProtoDeclarationNode     from "./Prototype/X3DProtoDeclarationNode.js"
 import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
-import Namespace                   from "./Namespace.js";
 import Fallback                    from "./Fallback.js";
 import MicroTime                   from "../standard/Time/MicroTime.js";
 import jQuery                      from "../lib/jquery.js";
@@ -246,7 +245,5 @@ Object .assign (X3D,
    MFVec4d:                     Fields .MFVec4d,
    MFVec4f:                     Fields .MFVec4f,
 });
-
-Namespace .set ("x_ite/X3D", X3D);
 
 export default X3D;
