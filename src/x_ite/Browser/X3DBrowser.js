@@ -60,7 +60,6 @@ import SupportedComponents from "../Configuration/SupportedComponents.js";
 import SupportedNodes      from "../Configuration/SupportedNodes.js";
 import Scene               from "../Execution/Scene.js";
 import X3DScene            from "../Execution/X3DScene.js";
-import TraverseType        from "../Rendering/TraverseType.js";
 import FileLoader          from "../InputOutput/FileLoader.js";
 import XMLParser           from "../Parser/XMLParser.js";
 import JSONParser          from "../Parser/JSONParser.js";
@@ -185,7 +184,15 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       if (component)
       {
          if (level <= component .level || true)
-            return new ComponentInfo (name, level, component .title, component. providerUrl, $.data (component, "dependencies"));
+         {
+            return new ComponentInfo ({
+               name: name,
+               level: level,
+               title: component .title,
+               external: $.data (component, "external"),
+               dependencies: $.data (component, "dependencies"),
+            });
+         }
       }
 
       throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
