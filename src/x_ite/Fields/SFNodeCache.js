@@ -47,9 +47,7 @@
 
 import SFNode from "./SFNode.js";
 
-function SFNodeCache () { }
-
-SFNodeCache .prototype =
+const SFNodeCache =
 {
    get: (function ()
    {
@@ -75,4 +73,4 @@ SFNodeCache .prototype =
    })(),
 };
 
-export default new SFNodeCache ();
+export default SFNodeCache;

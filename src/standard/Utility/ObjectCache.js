@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-export default function (Type)
+function ObjectCache (Type)
 {
    const stack = [ ];
 
@@ -68,4 +68,6 @@ export default function (Type)
          this .size    = 0;
       },
    };
-};
+}
+
+export default ObjectCache;

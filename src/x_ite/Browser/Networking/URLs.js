@@ -47,10 +47,7 @@
 
 import Features from "./Features.js";
 
-function URLs () { }
-
-URLs .prototype =
-{
+const URLs = {
    getScriptUrl: (function ()
    {
       if (Features .NODE_ENV)
@@ -91,4 +88,4 @@ URLs .prototype =
    },
 };
 
-export default new URLs ();
+export default URLs;

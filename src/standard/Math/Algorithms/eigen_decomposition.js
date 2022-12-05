@@ -51,7 +51,7 @@ const z = [ ]; // more scratch
 
 // Calculate eigenvalues and eigenvectors.
 // This is from SGI Inventor Matrix.cpp.
-export default function (matrix, result)
+function eigen_decomposition (matrix, result)
 {
    const
       ORDER   = matrix .order,
@@ -185,4 +185,6 @@ export default function (matrix, result)
    }
 
    return result;
-};
+}
+
+export default eigen_decomposition;

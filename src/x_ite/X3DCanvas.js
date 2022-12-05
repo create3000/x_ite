@@ -103,6 +103,4 @@ class X3DCanvas extends HTMLElement
 // IE fix.
 document .createElement ("X3DCanvas");
 
-Namespace .set ("x_ite/X3DCanvas", X3DCanvas);
-
 export default X3DCanvas

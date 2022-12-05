@@ -67,49 +67,28 @@ import Texturing            from "./Components/Texturing.js";
 import Time                 from "./Components/Time.js";
 import DEBUG                from "./DEBUG.js";
 
-function Components () { }
-
-Components .prototype =
+class Components
 {
-   addComponent: function ({ name, types, abstractTypes, browserContext, exports })
+   static addComponent ({ name, types, abstractTypes, browserContext })
    {
-      const
-         X3D       = window [Symbol .for ("X_ITE.X3D")],
-         Namespace = X3D .require ("x_ite/Namespace");
-
       if (types)
       {
          for (const [typeName, type] of Object .entries (types))
-         {
             SupportedNodes .addType (typeName, type);
-            Namespace .set (`x_ite/Components/${name}/${typeName}`, type);
-         }
       }
 
       if (abstractTypes)
       {
          for (const [typeName, type] of Object .entries (abstractTypes))
-         {
             SupportedNodes .addAbstractType (typeName, type);
-            Namespace .set (`x_ite/Components/${name}/${typeName}`, type);
-         }
       }
 
       if (browserContext)
-      {
          X3DBrowserContext .addBrowserContext (browserContext);
-         Namespace .set (`x_ite/Browser/${name}/X3D${name}Context`, browserContext);
-      }
-
-      if (exports)
-      {
-         for (const [name, type] of Object .entries (exports))
-            Namespace .set (name, type);
-      }
 
       if (DEBUG)
          console .info (`Done loading external component '${name}'.`);
-   },
-};
+   }
+}
 
-export default new Components ();
+export default Components;

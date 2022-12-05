@@ -47,6 +47,9 @@ var X3DBaseNode_default = /*#__PURE__*/__webpack_require__.n(X3DBaseNode_namespa
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
 const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Namespace");
+var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Arc2DOptions.js
 /*******************************************************************************
  *
@@ -122,6 +125,7 @@ ArcClose2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_defa
    },
 });
 
+Namespace_default().set ("x_ite/Browser/Geometry2D/Arc2DOptions", ArcClose2DOptions);
 /* harmony default export */ const Arc2DOptions = (ArcClose2DOptions);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/ArcClose2DOptions.js
@@ -199,6 +203,7 @@ ArcClose2DOptions_Arc2DOptions .prototype = Object .assign (Object .create ((X3D
    },
 });
 
+Namespace_default().set ("x_ite/Browser/Geometry2D/ArcClose2DOptions", ArcClose2DOptions_Arc2DOptions);
 /* harmony default export */ const Geometry2D_ArcClose2DOptions = (ArcClose2DOptions_Arc2DOptions);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
@@ -317,6 +322,7 @@ Circle2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_defaul
    },
 });
 
+Namespace_default().set ("x_ite/Browser/Geometry2D/Circle2DOptions", Circle2DOptions);
 /* harmony default export */ const Geometry2D_Circle2DOptions = (Circle2DOptions);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
@@ -486,6 +492,7 @@ Disk2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default(
    })(),
 });
 
+Namespace_default().set ("x_ite/Browser/Geometry2D/Disk2DOptions", Disk2DOptions);
 /* harmony default export */ const Geometry2D_Disk2DOptions = (Disk2DOptions);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Geometry3D/IndexedFaceSet\")"
@@ -613,6 +620,7 @@ Rectangle2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_def
    },
 });
 
+Namespace_default().set ("x_ite/Browser/Geometry2D/Rectangle2DOptions", Rectangle2DOptions);
 /* harmony default export */ const Geometry2D_Rectangle2DOptions = (Rectangle2DOptions);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Core/PrimitiveQuality\")"
@@ -752,6 +760,7 @@ function getOptionNode (key, OptionNode)
    return optionNode;
 }
 
+Namespace_default().set ("x_ite/Browser/Geometry2D/X3DGeometry2DContext", X3DGeometry2DContext);
 /* harmony default export */ const Geometry2D_X3DGeometry2DContext = (X3DGeometry2DContext);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
@@ -916,6 +925,7 @@ Arc2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default(
    },
 });
 
+Namespace_default().set ("x_ite/Components/Geometry2D/Arc2D", Arc2D);
 /* harmony default export */ const Geometry2D_Arc2D = (Arc2D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/ArcClose2D.js
@@ -1130,6 +1140,7 @@ ArcClose2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default
    })(),
 });
 
+Namespace_default().set ("x_ite/Components/Geometry2D/ArcClose2D", ArcClose2D);
 /* harmony default export */ const Geometry2D_ArcClose2D = (ArcClose2D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Circle2D.js
@@ -1247,6 +1258,7 @@ Circle2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_defau
    },
 });
 
+Namespace_default().set ("x_ite/Components/Geometry2D/Circle2D", Circle2D);
 /* harmony default export */ const Geometry2D_Circle2D = (Circle2D);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DPointGeometryNode\")"
@@ -1492,6 +1504,7 @@ Disk2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).
    { },
 });
 
+Namespace_default().set ("x_ite/Components/Geometry2D/Disk2D", Disk2D);
 /* harmony default export */ const Geometry2D_Disk2D = (Disk2D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Polyline2D.js
@@ -1590,6 +1603,7 @@ Polyline2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_def
    },
 });
 
+Namespace_default().set ("x_ite/Components/Geometry2D/Polyline2D", Polyline2D);
 /* harmony default export */ const Geometry2D_Polyline2D = (Polyline2D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Polypoint2D.js
@@ -1687,6 +1701,7 @@ Polypoint2D .prototype = Object .assign (Object .create ((X3DPointGeometryNode_d
    },
 });
 
+Namespace_default().set ("x_ite/Components/Geometry2D/Polypoint2D", Polypoint2D);
 /* harmony default export */ const Geometry2D_Polypoint2D = (Polypoint2D);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector2\")"
@@ -1826,6 +1841,7 @@ Rectangle2D .prototype = Object .assign (Object .create ((X3DGeometryNode_defaul
    })(),
 });
 
+Namespace_default().set ("x_ite/Components/Geometry2D/Rectangle2D", Rectangle2D);
 /* harmony default export */ const Geometry2D_Rectangle2D = (Rectangle2D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/TriangleSet2D.js
@@ -1955,6 +1971,7 @@ TriangleSet2D .prototype = Object .assign (Object .create ((X3DGeometryNode_defa
    },
 });
 
+Namespace_default().set ("x_ite/Components/Geometry2D/TriangleSet2D", TriangleSet2D);
 /* harmony default export */ const Geometry2D_TriangleSet2D = (TriangleSet2D);
 
 ;// CONCATENATED MODULE: ./src/assets/components/Geometry2D.js
@@ -2035,6 +2052,7 @@ Components_default().addComponent ({
    browserContext: Geometry2D_X3DGeometry2DContext,
 });
 
+Namespace_default().set ("assets/components/Geometry2D", undefined);
 /* harmony default export */ const Geometry2D = ((/* unused pure expression or super */ null && (undefined)));
 
 /******/ })()

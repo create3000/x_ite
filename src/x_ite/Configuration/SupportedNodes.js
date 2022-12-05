@@ -54,9 +54,7 @@ const
 
 let nodeType = X3DConstants .X3DBaseNode;
 
-function SupportedNodes () { }
-
-SupportedNodes .prototype =
+const SupportedNodes =
 {
    addType: function (typeName, Type)
    {
@@ -102,7 +100,4 @@ SupportedNodes .prototype =
    },
 };
 
-for (const key of Reflect .ownKeys (SupportedNodes .prototype))
-   Object .defineProperty (SupportedNodes .prototype, key, { enumerable: false });
-
-export default new SupportedNodes ();
+export default SupportedNodes;

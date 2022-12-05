@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-export default function ($)
+function BinaryTransport ($)
 {
    // Use this transport for "binary" data type
    $.ajaxTransport ("+binary", function (options, originalOptions, jqXHR)
@@ -111,4 +111,6 @@ export default function ($)
          };
       }
    });
-};
+}
+
+export default BinaryTransport;

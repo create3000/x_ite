@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-export default function shuffle (array)
+function shuffle (array)
 {
    let i = array .length;
 
@@ -61,4 +61,6 @@ export default function shuffle (array)
    }
 
    return array;
-};
+}
+
+export default shuffle;

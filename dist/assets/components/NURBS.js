@@ -59,6 +59,9 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
 const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Namespace");
+var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/Contour2D.js
 /*******************************************************************************
  *
@@ -225,6 +228,7 @@ function remove (array, first, last, range, rfirst, rlast)
    return array .remove (first, last, compare);
 }
 
+Namespace_default().set ("x_ite/Components/NURBS/Contour2D", Contour2D);
 /* harmony default export */ const NURBS_Contour2D = (Contour2D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/X3DNurbsControlCurveNode.js
@@ -290,6 +294,7 @@ X3DNurbsControlCurveNode .prototype = Object .assign (Object .create ((X3DNode_d
    constructor: X3DNurbsControlCurveNode,
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/X3DNurbsControlCurveNode", X3DNurbsControlCurveNode);
 /* harmony default export */ const NURBS_X3DNurbsControlCurveNode = (X3DNurbsControlCurveNode);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
@@ -445,6 +450,7 @@ ContourPolyline2D .prototype = Object .assign (Object .create (NURBS_X3DNurbsCon
    },
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/ContourPolyline2D", ContourPolyline2D);
 /* harmony default export */ const NURBS_ContourPolyline2D = (ContourPolyline2D);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DCoordinateNode\")"
@@ -532,6 +538,7 @@ CoordinateDouble .prototype = Object .assign (Object .create ((X3DCoordinateNode
    },
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/CoordinateDouble", CoordinateDouble);
 /* harmony default export */ const NURBS_CoordinateDouble = (CoordinateDouble);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
@@ -1014,6 +1021,7 @@ const NURBS = {
    },
 };
 
+Namespace_default().set ("x_ite/Browser/NURBS/NURBS", NURBS);
 /* harmony default export */ const NURBS_NURBS = (NURBS);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/X3DParametricGeometryNode.js
@@ -1084,6 +1092,7 @@ X3DParametricGeometryNode .prototype = Object .assign (Object .create ((X3DGeome
    },
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/X3DParametricGeometryNode", X3DParametricGeometryNode);
 /* harmony default export */ const NURBS_X3DParametricGeometryNode = (X3DParametricGeometryNode);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DLineGeometryNode\")"
@@ -1173,6 +1182,7 @@ inferType .NDARRAY          = "Nd";
 inferType .GENERIC_NDARRAY  = "GenNd";
 inferType .PACKED           = "PackArr";
 
+Namespace_default().set ("lib/nurbs/src/utils/infer-type", inferType);
 /* harmony default export */ const infer_type = (inferType);
 
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/cache-key.js
@@ -1253,6 +1263,7 @@ createVariable.sum = function (parts) {
    return parts.join(" + ");
 };
 
+Namespace_default().set ("lib/nurbs/src/utils/variable", createVariable);
 /* harmony default export */ const variable = (createVariable);
 
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/create-accessors.js
@@ -2661,6 +2672,7 @@ function nurbs (points, degree, knots, weights, boundary, opts)
 
 nurbs .sample = sample;
 
+Namespace_default().set ("lib/nurbs/nurbs", nurbs);
 /* harmony default export */ const nurbs_nurbs = (nurbs);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsCurve.js
@@ -2882,6 +2894,7 @@ NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeome
    },
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/NurbsCurve", NurbsCurve);
 /* harmony default export */ const NURBS_NurbsCurve = (NurbsCurve);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsCurve2D.js
@@ -3081,6 +3094,7 @@ NurbsCurve2D .prototype = Object .assign (Object .create (NURBS_X3DNurbsControlC
    },
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/NurbsCurve2D", NurbsCurve2D);
 /* harmony default export */ const NURBS_NurbsCurve2D = (NurbsCurve2D);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
@@ -3306,6 +3320,7 @@ NurbsOrientationInterpolator .prototype = Object .assign (Object .create ((X3DCh
    },
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/NurbsOrientationInterpolator", NurbsOrientationInterpolator);
 /* harmony default export */ const NURBS_NurbsOrientationInterpolator = (NurbsOrientationInterpolator);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
@@ -3696,6 +3711,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
    })(),
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode", X3DNurbsSurfaceGeometryNode);
 /* harmony default export */ const NURBS_X3DNurbsSurfaceGeometryNode = (X3DNurbsSurfaceGeometryNode);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsPatchSurface.js
@@ -3793,6 +3809,7 @@ NurbsPatchSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsSur
    },
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/NurbsPatchSurface", NurbsPatchSurface);
 /* harmony default export */ const NURBS_NurbsPatchSurface = (NurbsPatchSurface);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Interpolation/PositionInterpolator\")"
@@ -4000,6 +4017,7 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create ((X3DChild
    },
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/NurbsPositionInterpolator", NurbsPositionInterpolator);
 /* harmony default export */ const NURBS_NurbsPositionInterpolator = (NurbsPositionInterpolator);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DBoundedObject\")"
@@ -4187,6 +4205,7 @@ function NurbsSet_remove (array, first, last, range, rfirst, rlast)
    return array .remove (first, last, compare);
 }
 
+Namespace_default().set ("x_ite/Components/NURBS/NurbsSet", NurbsSet);
 /* harmony default export */ const NURBS_NurbsSet = (NurbsSet);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Line3\")"
@@ -4240,7 +4259,7 @@ var Line3_default = /*#__PURE__*/__webpack_require__.n(Line3_namespaceObject);
  *
  ******************************************************************************/
 
-/* harmony default export */ const Triangle2 = ({
+const Trinagle2 = {
    isPointInTriangle: function (a, b, c, point)
    {
       // https://en.wikipedia.org/wiki/Barycentric_coordinate_system
@@ -4267,7 +4286,10 @@ var Line3_default = /*#__PURE__*/__webpack_require__.n(Line3_namespaceObject);
 
       return true;
    },
-});
+};
+
+Namespace_default().set ("standard/Math/Geometry/Triangle2", Trinagle2);
+/* harmony default export */ const Triangle2 = (Trinagle2);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSurfaceInterpolator.js
 /*******************************************************************************
@@ -4443,6 +4465,7 @@ NurbsSurfaceInterpolator .prototype = Object .assign (Object .create ((X3DChildN
    })(),
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/NurbsSurfaceInterpolator", NurbsSurfaceInterpolator);
 /* harmony default export */ const NURBS_NurbsSurfaceInterpolator = (NurbsSurfaceInterpolator);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Geometry3D/Extrusion\")"
@@ -4614,6 +4637,7 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
    },
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/NurbsSweptSurface", NurbsSweptSurface);
 /* harmony default export */ const NURBS_NurbsSweptSurface = (NurbsSweptSurface);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSwungSurface.js
@@ -4782,6 +4806,7 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
    },
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/NurbsSwungSurface", NurbsSwungSurface);
 /* harmony default export */ const NURBS_NurbsSwungSurface = (NurbsSwungSurface);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsTextureCoordinate.js
@@ -4925,6 +4950,7 @@ NurbsTextureCoordinate .prototype = Object .assign (Object .create ((X3DNode_def
    }
 });
 
+Namespace_default().set ("x_ite/Components/NURBS/NurbsTextureCoordinate", NurbsTextureCoordinate);
 /* harmony default export */ const NURBS_NurbsTextureCoordinate = (NurbsTextureCoordinate);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsTrimmedSurface.js
@@ -5100,6 +5126,7 @@ function NurbsTrimmedSurface_remove (array, first, last, range, rfirst, rlast)
    return array .remove (first, last, compare);
 }
 
+Namespace_default().set ("x_ite/Components/NURBS/NurbsTrimmedSurface", NurbsTrimmedSurface);
 /* harmony default export */ const NURBS_NurbsTrimmedSurface = (NurbsTrimmedSurface);
 
 ;// CONCATENATED MODULE: ./src/assets/components/NURBS.js
@@ -5196,6 +5223,7 @@ Components_default().addComponent ({
    },
 });
 
+Namespace_default().set ("assets/components/NURBS", undefined);
 /* harmony default export */ const components_NURBS = ((/* unused pure expression or super */ null && (undefined)));
 
 /******/ })()

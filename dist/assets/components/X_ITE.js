@@ -58,6 +58,9 @@ const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .r
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
 const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Namespace");
+var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/BlendMode.js
 /*******************************************************************************
  *
@@ -249,6 +252,7 @@ BlendMode .prototype = Object .assign (Object .create ((X3DAppearanceChildNode_d
    },
 });
 
+Namespace_default().set ("x_ite/Components/X_ITE/BlendMode", BlendMode);
 /* harmony default export */ const X_ITE_BlendMode = (BlendMode);
 
 ;// CONCATENATED MODULE: ./src/assets/components/X_ITE.js
@@ -312,6 +316,7 @@ Components_default().addComponent ({
    { },
 });
 
+Namespace_default().set ("assets/components/X_ITE", undefined);
 /* harmony default export */ const X_ITE = ((/* unused pure expression or super */ null && (undefined)));
 
 /******/ })()

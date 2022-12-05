@@ -6,7 +6,8 @@ const
 
 const
    TerserPlugin           = require ("terser-webpack-plugin"),
-   WebpackShellPluginNext = require ("webpack-shell-plugin-next")
+   WebpackShellPluginNext = require ("webpack-shell-plugin-next"),
+   StringReplacePlugin    = require ("string-replace-webpack-plugin")
 
 module .exports = async () =>
 {
@@ -19,15 +20,41 @@ module .exports = async () =>
       for (const files of Object .values (graph .obj ()))
       {
          for (const file of files)
-            deps .add (path .resolve (__dirname, "src", file))
+            deps .add (path .resolve (path .dirname (filename), file))
       }
 
       return deps
    }
 
    const
-      x_ite_deps = await deps ("./src/x_ite.js"),
+      x_ite_deps = await deps (path .resolve (__dirname, "src/x_ite.js")),
       targets    = [ ]
+
+   const namespace =
+   {
+      test: /\.js$/,
+      exclude: /(Namespace|X3D)\.js$/,
+      use: [
+         {
+            loader: StringReplacePlugin .replace ({
+               replacements: [
+                  {
+                     pattern: /export\s+default\s+(.*?);/ig,
+                     replacement: function (match, p1, offset, string)
+                     {
+                        const
+                           ns  = path .resolve (__dirname, "src/x_ite/Namespace.js"),
+                           rel = path .relative (path .dirname (this .resourcePath), ns),
+                           key = this .resourcePath .replace (/^.*?x_ite\/src\//, "") .replace (/\.js$/, "")
+
+                        return `import Namespace from "./${rel}";Namespace .set ("${key}", ${p1});\n${match}`;
+                     },
+                  },
+               ],
+            }),
+         },
+      ],
+   }
 
    targets .push ({
       entry: {
@@ -44,6 +71,9 @@ module .exports = async () =>
          },
       },
       mode: "production",
+      module: {
+         rules: [namespace],
+      },
       optimization: {
          minimize: true,
          minimizer: [
@@ -122,9 +152,30 @@ module .exports = async () =>
       },
    })
 
+   const dependencies = {
+      "Layout": ["Text"],
+      "Picking": ["RigidBodyPhysics"],
+      "VolumeRendering": ["CADGeometry", "Texturing3D"],
+   }
+
+   function resolveDeps (name)
+   {
+      let deps = [ ]
+
+      for (const d of dependencies [name] || [ ])
+         deps = [... deps, ... resolveDeps (d), d]
+
+      return deps
+   }
+
    for (const filename of fs .readdirSync ("./src/assets/components/"))
    {
-      const name = path .parse (filename) .name
+      const
+         name           = path .parse (filename) .name,
+         component_deps = [x_ite_deps]
+
+      for (const dependency of resolveDeps (name))
+         component_deps .push (await deps (path .resolve (__dirname, `src/assets/components/${dependency}.js`)))
 
       targets .push ({
          entry: {
@@ -136,6 +187,9 @@ module .exports = async () =>
             filename: "[name].js",
          },
          mode: "production",
+         module: {
+            rules: [namespace],
+         },
          optimization: {
             minimize: true,
             minimizer: [
@@ -154,6 +208,7 @@ module .exports = async () =>
             ],
          },
          plugins: [
+            new StringReplacePlugin (),
             new webpack .ProvidePlugin ({
                $: path .resolve (__dirname, "src/lib/jquery.js"),
                jQuery: path .resolve (__dirname, "src/lib/jquery.js"),
@@ -207,8 +262,11 @@ module .exports = async () =>
             {
                const filename = path .resolve (context, request)
 
-               if (x_ite_deps .has (filename))
+               for (const deps of component_deps)
                {
+                  if (! deps .has (filename))
+                     continue
+
                   const module = path .relative (path .resolve (__dirname, "src"), filename) .replace (/\.js$/, "")
 
                   return callback (null, `var window [Symbol .for ("X_ITE.X3D")] .require ("${module}")`)

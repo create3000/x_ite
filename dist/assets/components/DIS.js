@@ -56,6 +56,9 @@ var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_names
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
 const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Namespace");
+var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/DISEntityManager.js
 /*******************************************************************************
  *
@@ -144,6 +147,7 @@ DISEntityManager .prototype = Object .assign (Object .create ((X3DChildNode_defa
    },
 });
 
+Namespace_default().set ("x_ite/Components/DIS/DISEntityManager", DISEntityManager);
 /* harmony default export */ const DIS_DISEntityManager = (DISEntityManager);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DInfoNode\")"
@@ -265,6 +269,7 @@ DISEntityTypeMapping .prototype = Object .assign (Object .create ((X3DInfoNode_d
    },
 });
 
+Namespace_default().set ("x_ite/Components/DIS/DISEntityTypeMapping", DISEntityTypeMapping);
 /* harmony default export */ const DIS_DISEntityTypeMapping = (DISEntityTypeMapping);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
@@ -452,6 +457,7 @@ EspduTransform .prototype = Object .assign (Object .create ((X3DGroupingNode_def
    },
 });
 
+Namespace_default().set ("x_ite/Components/DIS/EspduTransform", EspduTransform);
 /* harmony default export */ const DIS_EspduTransform = (EspduTransform);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DBoundedObject\")"
@@ -581,6 +587,7 @@ ReceiverPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default(
    },
 });
 
+Namespace_default().set ("x_ite/Components/DIS/ReceiverPdu", ReceiverPdu);
 /* harmony default export */ const DIS_ReceiverPdu = (ReceiverPdu);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/SignalPdu.js
@@ -707,6 +714,7 @@ SignalPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default())
    },
 });
 
+Namespace_default().set ("x_ite/Components/DIS/SignalPdu", SignalPdu);
 /* harmony default export */ const DIS_SignalPdu = (SignalPdu);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/TransmitterPdu.js
@@ -849,6 +857,7 @@ TransmitterPdu .prototype = Object .assign (Object .create ((X3DSensorNode_defau
    },
 });
 
+Namespace_default().set ("x_ite/Components/DIS/TransmitterPdu", TransmitterPdu);
 /* harmony default export */ const DIS_TransmitterPdu = (TransmitterPdu);
 
 ;// CONCATENATED MODULE: ./src/assets/components/DIS.js
@@ -923,6 +932,7 @@ Components_default().addComponent ({
    },
 });
 
+Namespace_default().set ("assets/components/DIS", undefined);
 /* harmony default export */ const DIS = ((/* unused pure expression or super */ null && (undefined)));
 
 /******/ })()

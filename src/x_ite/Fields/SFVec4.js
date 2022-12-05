@@ -160,7 +160,9 @@ function SFVec4Template (TypeName, Type, double)
    return SFVec4;
 }
 
-export default {
+const SFVec4 = {
    SFVec4d: SFVec4Template ("SFVec4d", X3DConstants .SFVec4d, true),
    SFVec4f: SFVec4Template ("SFVec4f", X3DConstants .SFVec4f, false),
 };
+
+export default SFVec4;

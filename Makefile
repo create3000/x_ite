@@ -4,9 +4,6 @@ all: dist
 configure:
 	sudo npm install
 
-namespace:
-	node build/bin/namespace.mjs
-
 compile:
 	npx webpack
 
@@ -21,7 +18,7 @@ copy-files:
 .SILENT:html
 html:
 	cp src/x_ite.html x_ite.min.html
-	perl -p0i -e 's|<!-- X_ITE START.*?X_ITE END -->|<script src="dist/x_ite.min.js"></script>|sg'       x_ite.min.html
+	perl -p0i -e 's|<!-- X_ITE START.*?X_ITE END -->|<script src="dist/x_ite.js"></script>|sg'       x_ite.min.html
 	perl -p0i -e 's|<!-- JQUERY -->|<script src="https://code.jquery.com/jquery-latest.js"></script>|sg' x_ite.min.html
 	perl -p0i -e 's|import\s+X3D\s.*?\n||sg'                  x_ite.min.html
 	perl -p0i -e 's|window\s*.X3D.*?\n+||sg'                  x_ite.min.html
@@ -45,7 +42,7 @@ zip:
 
 .PHONY: dist
 .SILENT:dist
-dist: namespace compile copy-files html
+dist: compile copy-files html
 	du -h dist/x_ite.min.js
 
 checkout-dist:

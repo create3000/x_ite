@@ -68,6 +68,9 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
 const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Namespace");
+var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode.js
 /*******************************************************************************
  *
@@ -275,6 +278,7 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNo
    },
 });
 
+Namespace_default().set ("x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode", X3DTextureProjectorNode);
 /* harmony default export */ const ProjectiveTextureMapping_X3DTextureProjectorNode = (X3DTextureProjectorNode);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Camera\")"
@@ -486,6 +490,7 @@ TextureProjectorPerspective .prototype = Object .assign (Object .create (Project
    },
 });
 
+Namespace_default().set ("x_ite/Components/ProjectiveTextureMapping/TextureProjectorPerspective", TextureProjectorPerspective);
 /* harmony default export */ const ProjectiveTextureMapping_TextureProjectorPerspective = (TextureProjectorPerspective);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ProjectiveTextureMapping/TextureProjectorParallel.js
@@ -746,6 +751,7 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (Projective
    },
 });
 
+Namespace_default().set ("x_ite/Components/ProjectiveTextureMapping/TextureProjectorParallel", TextureProjectorParallel);
 /* harmony default export */ const ProjectiveTextureMapping_TextureProjectorParallel = (TextureProjectorParallel);
 
 ;// CONCATENATED MODULE: ./src/assets/components/ProjectiveTextureMapping.js
@@ -814,6 +820,7 @@ Components_default().addComponent ({
    },
 });
 
+Namespace_default().set ("assets/components/ProjectiveTextureMapping", undefined);
 /* harmony default export */ const ProjectiveTextureMapping = ((/* unused pure expression or super */ null && (undefined)));
 
 /******/ })()

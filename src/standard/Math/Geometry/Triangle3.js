@@ -47,7 +47,7 @@
 
 import Vector3 from "../Numbers/Vector3.js";
 
-export default {
+const Triangle3 = {
    area: (function ()
    {
       const
@@ -192,3 +192,5 @@ export default {
       return normal .normalize ();
    },
 };
+
+export default Triangle3;

@@ -47,7 +47,7 @@
 
 import Fields from "../Fields.js";
 
-export default function (type, node, innerNode = true)
+function X3DCast (type, node, innerNode = true)
 {
    try
    {
@@ -70,4 +70,6 @@ export default function (type, node, innerNode = true)
    { }
 
    return null;
-};
+}
+
+export default X3DCast;

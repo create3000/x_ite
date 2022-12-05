@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-export default function (globalObject, sourceText)
+function evaluate (globalObject, sourceText)
 {
    return Function (/* js */ `with (arguments [0])
    {
@@ -54,4 +54,6 @@ export default function (globalObject, sourceText)
       ${sourceText}
    }`)
    (globalObject);
-};
+}
+
+export default evaluate;

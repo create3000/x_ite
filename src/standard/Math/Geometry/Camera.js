@@ -47,7 +47,7 @@
 
 import Vector3 from "../Numbers/Vector3.js";
 
-export default {
+const Camera = {
    frustum: function (l, r, b, t, n, f, matrix)
    {
       const
@@ -122,3 +122,5 @@ export default {
       };
    })(),
 };
+
+export default Camera;

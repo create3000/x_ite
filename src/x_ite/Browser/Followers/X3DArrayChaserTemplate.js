@@ -47,7 +47,7 @@
 
 import X3DArrayFollowerTemplate from "./X3DArrayFollowerTemplate.js";
 
-export default function (Type)
+function X3DArrayChaserTemplate (Type)
 {
    const X3DArrayFollower = X3DArrayFollowerTemplate (Type);
 
@@ -73,4 +73,6 @@ export default function (Type)
    });
 
    return X3DArrayChaserObject;
-};
+}
+
+export default X3DArrayChaserTemplate;

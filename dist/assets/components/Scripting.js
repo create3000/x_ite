@@ -135,6 +135,9 @@ var RouteArray_default = /*#__PURE__*/__webpack_require__.n(RouteArray_namespace
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Routing/X3DRoute\")"
 const X3DRoute_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Routing/X3DRoute");
 var X3DRoute_default = /*#__PURE__*/__webpack_require__.n(X3DRoute_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Namespace");
+var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Scripting/evaluate.js
 /*******************************************************************************
  *
@@ -183,7 +186,7 @@ var X3DRoute_default = /*#__PURE__*/__webpack_require__.n(X3DRoute_namespaceObje
  *
  ******************************************************************************/
 
-/* harmony default export */ function evaluate(globalObject, sourceText)
+function evaluate (globalObject, sourceText)
 {
    return Function (/* js */ `with (arguments [0])
    {
@@ -192,7 +195,10 @@ var X3DRoute_default = /*#__PURE__*/__webpack_require__.n(X3DRoute_namespaceObje
       ${sourceText}
    }`)
    (globalObject);
-};
+}
+
+Namespace_default().set ("x_ite/Browser/Scripting/evaluate", evaluate);
+/* harmony default export */ const Scripting_evaluate = (evaluate);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
 const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Components/Core/X3DChildNode");
@@ -279,6 +285,7 @@ X3DScriptNode .prototype = Object .assign (Object .create ((X3DChildNode_default
    },
 });
 
+Namespace_default().set ("x_ite/Components/Scripting/X3DScriptNode", X3DScriptNode);
 /* harmony default export */ const Scripting_X3DScriptNode = (X3DScriptNode);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/InputOutput/FileLoader\")"
@@ -484,7 +491,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
          this .global = this .getGlobal ();
 
          const
-            result  = evaluate (this .global, text),
+            result  = Scripting_evaluate (this .global, text),
             context = { };
 
          for (let i = 0; i < callbacks .length; ++ i)
@@ -501,7 +508,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
    },
    evaluate: function (text)
    {
-      return evaluate (this .global, `return (${text})`);
+      return Scripting_evaluate (this .global, `return (${text})`);
    },
    getGlobal: function ()
    {
@@ -840,6 +847,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
    },
 });
 
+Namespace_default().set ("x_ite/Components/Scripting/Script", Script);
 /* harmony default export */ const Scripting_Script = (Script);
 
 ;// CONCATENATED MODULE: ./src/assets/components/Scripting.js
@@ -906,6 +914,7 @@ Components_default().addComponent ({
    },
 });
 
+Namespace_default().set ("assets/components/Scripting", undefined);
 /* harmony default export */ const Scripting = ((/* unused pure expression or super */ null && (undefined)));
 
 })();

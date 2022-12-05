@@ -125,7 +125,9 @@ function SFMatrix3Template (TypeName, Type, SFVec2, double)
    return SFMatrix3;
 }
 
-export default {
+const SFMatrix3 = {
    SFMatrix3d: SFMatrix3Template ("SFMatrix3d", X3DConstants .SFMatrix3d, SFVec2 .SFVec2d, true),
    SFMatrix3f: SFMatrix3Template ("SFMatrix3f", X3DConstants .SFMatrix3f, SFVec2 .SFVec2f, false),
 };
+
+export default SFMatrix3;

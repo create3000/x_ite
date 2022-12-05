@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-export default function (Type)
+function X3DArrayFollowerTemplate (Type)
 {
    function X3DArrayFollowerObject ()
    {
@@ -171,4 +171,6 @@ export default function (Type)
    };
 
    return X3DArrayFollowerObject;
-};
+}
+
+export default X3DArrayFollowerTemplate;

@@ -56,9 +56,7 @@ import VolumePicker         from "../../Browser/Picking/VolumePicker.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Box3                 from "../../../standard/Math/Geometry/Box3.js";
-import X3D                  from "../../../x_ite/X3D.js";
-
-const Ammo = X3D .require ("Ammo");
+import Ammo                 from "../../../lib/ammojs/AmmoClass.js";
 
 function PointPickSensor (executionContext)
 {

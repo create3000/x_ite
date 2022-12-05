@@ -108,4 +108,6 @@ Events .prototype =
 for (const key of Reflect .ownKeys (Events .prototype))
    Object .defineProperty (Events .prototype, key, { enumerable: false });
 
-export default new Events ();
+const events = new Events ();
+
+export default events;

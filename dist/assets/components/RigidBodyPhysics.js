@@ -111,6 +111,9 @@ var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
 const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Namespace");
+var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/X3DRigidJointNode.js
 /*******************************************************************************
  *
@@ -319,6 +322,7 @@ X3DRigidJointNode .prototype = Object .assign (Object .create ((X3DNode_default(
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/X3DRigidJointNode", X3DRigidJointNode);
 /* harmony default export */ const RigidBodyPhysics_X3DRigidJointNode = (X3DRigidJointNode);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
@@ -360,6 +364,7 @@ var ga=[oI,Un,ZF,rz,IF,OF,lD,Fp,Ep,Fp,oI,oI,oI,oI,oI,oI];var ha=[QH,Uv];var ia=[
 );
 })();
 
+Namespace_default().set ("lib/ammojs/ammo", Ammo);
 /* harmony default export */ const ammo = (Ammo);
 
 ;// CONCATENATED MODULE: ./src/lib/ammojs/AmmoClass.js
@@ -412,7 +417,10 @@ var ga=[oI,Un,ZF,rz,IF,OF,lD,Fp,Ep,Fp,oI,oI,oI,oI,oI,oI];var ha=[QH,Uv];var ia=[
 
 
 
-/* harmony default export */ const AmmoClass = (new ammo ());
+const AmmoClass = new ammo ();
+
+Namespace_default().set ("lib/ammojs/AmmoClass", AmmoClass);
+/* harmony default export */ const ammojs_AmmoClass = (AmmoClass);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/BallJoint.js
 /* provided dependency */ var $ = __webpack_require__(355);
@@ -532,10 +540,10 @@ BallJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigid
       if (this .getBody2 () .getCollection () !== this .getCollection ())
          return;
 
-      this .joint = new AmmoClass.btPoint2PointConstraint (this .getBody1 () .getRigidBody (),
+      this .joint = new ammojs_AmmoClass.btPoint2PointConstraint (this .getBody1 () .getRigidBody (),
                                                        this .getBody2 () .getRigidBody (),
-                                                       new AmmoClass.btVector3 (),
-                                                       new AmmoClass.btVector3 ());
+                                                       new ammojs_AmmoClass.btVector3 (),
+                                                       new ammojs_AmmoClass.btVector3 ());
 
       this .set_anchorPoint__ ();
 
@@ -549,7 +557,7 @@ BallJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigid
       if (this .getCollection ())
          this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
 
-      AmmoClass.destroy (this .joint);
+      ammojs_AmmoClass.destroy (this .joint);
       this .joint = null;
    },
    set_forceOutput__: function ()
@@ -585,8 +593,8 @@ BallJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigid
          this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this ._anchorPoint .getValue ()));
          this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this ._anchorPoint .getValue ()));
 
-         this .joint .setPivotA (new AmmoClass.btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z));
-         this .joint .setPivotB (new AmmoClass.btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
+         this .joint .setPivotA (new ammojs_AmmoClass.btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z));
+         this .joint .setPivotB (new ammojs_AmmoClass.btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
       }
    },
    update1: (function ()
@@ -611,6 +619,7 @@ BallJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigid
    })(),
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/BallJoint", BallJoint);
 /* harmony default export */ const RigidBodyPhysics_BallJoint = (BallJoint);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
@@ -691,7 +700,7 @@ function X3DNBodyCollidableNode (executionContext)
 
    // Members
 
-   this .compoundShape  = new AmmoClass.btCompoundShape ()
+   this .compoundShape  = new ammojs_AmmoClass.btCompoundShape ()
    this .offset         = new (Vector3_default()) (0, 0, 0);
    this .matrix         = new (Matrix4_default()) ();
 }
@@ -713,8 +722,8 @@ X3DNBodyCollidableNode .prototype = Object .assign (Object .create ((X3DChildNod
    {
       var
          m = new (Matrix4_default()) (),
-         o = new AmmoClass.btVector3 (0, 0, 0),
-         l = new AmmoClass.btTransform ();
+         o = new ammojs_AmmoClass.btVector3 (0, 0, 0),
+         l = new ammojs_AmmoClass.btTransform ();
 
       return function ()
       {
@@ -773,6 +782,7 @@ X3DNBodyCollidableNode .prototype = Object .assign (Object .create ((X3DChildNod
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode", X3DNBodyCollidableNode);
 /* harmony default export */ const RigidBodyPhysics_X3DNBodyCollidableNode = (X3DNBodyCollidableNode);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/TraverseType\")"
@@ -1055,6 +1065,7 @@ CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/CollidableOffset", CollidableOffset);
 /* harmony default export */ const RigidBodyPhysics_CollidableOffset = (CollidableOffset);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollidableShape.js
@@ -1188,7 +1199,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
    },
    createConvexGeometry: (function ()
    {
-      var p = new AmmoClass.btVector3 ();
+      var p = new ammojs_AmmoClass.btVector3 ();
 
       return function ()
       {
@@ -1197,7 +1208,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
          if (vertices .length === 0)
             return null;
 
-         var convexHull = new AmmoClass.btConvexHullShape ();
+         var convexHull = new ammojs_AmmoClass.btConvexHullShape ();
 
          for (var i = 0, length = vertices .length; i < length; i += 4)
          {
@@ -1213,9 +1224,9 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
    createConcaveGeometry: (function ()
    {
       var
-         p1 = new AmmoClass.btVector3 (),
-         p2 = new AmmoClass.btVector3 (),
-         p3 = new AmmoClass.btVector3 ();
+         p1 = new ammojs_AmmoClass.btVector3 (),
+         p2 = new ammojs_AmmoClass.btVector3 (),
+         p3 = new ammojs_AmmoClass.btVector3 ();
 
       return function ()
       {
@@ -1224,7 +1235,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
          if (vertices .length === 0)
             return null;
 
-         this .triangleMesh = new AmmoClass.btTriangleMesh ();
+         this .triangleMesh = new ammojs_AmmoClass.btTriangleMesh ();
 
          for (var i = 0, length = vertices .length; i < length; i += 12)
          {
@@ -1235,7 +1246,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
             this .triangleMesh .addTriangle (p1, p2, p3);
          }
 
-         return new AmmoClass.btBvhTriangleMeshShape (this .triangleMesh, false);
+         return new ammojs_AmmoClass.btBvhTriangleMeshShape (this .triangleMesh, false);
       };
    })(),
    set_shape__: function ()
@@ -1333,8 +1344,8 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
    set_collidableGeometry__: (function ()
    {
       var
-         localScaling   = new AmmoClass.btVector3 (),
-         defaultScaling = new AmmoClass.btVector3 (1, 1, 1);
+         localScaling   = new ammojs_AmmoClass.btVector3 (),
+         defaultScaling = new ammojs_AmmoClass.btVector3 (1, 1, 1);
 
       return function ()
       {
@@ -1359,7 +1370,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
                         box  = this .geometryNode,
                         size = box ._size .getValue ();
 
-                     this .collisionShape = new AmmoClass.btBoxShape (new AmmoClass.btVector3 (size .x / 2, size .y / 2, size .z / 2));
+                     this .collisionShape = new ammojs_AmmoClass.btBoxShape (new ammojs_AmmoClass.btVector3 (size .x / 2, size .y / 2, size .z / 2));
                      break;
                   }
                   case (X3DConstants_default()).Cone:
@@ -1367,7 +1378,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
                      var cone = this .geometryNode;
 
                      if (cone ._side .getValue () && cone ._bottom .getValue ())
-                        this .collisionShape = new AmmoClass.btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
+                        this .collisionShape = new ammojs_AmmoClass.btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
                      else
                         this .collisionShape = this .createConcaveGeometry ();
 
@@ -1381,7 +1392,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
                         height1_2 = cylinder ._height .getValue () * 0.5;
 
                      if (cylinder ._side .getValue () && cylinder ._top .getValue () && cylinder ._bottom .getValue ())
-                        this .collisionShape = new AmmoClass.btCylinderShape (new AmmoClass.btVector3 (radius, height1_2, radius));
+                        this .collisionShape = new ammojs_AmmoClass.btCylinderShape (new ammojs_AmmoClass.btVector3 (radius, height1_2, radius));
                      else
                         this .collisionShape = this .createConcaveGeometry ();
 
@@ -1396,7 +1407,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
                         var
                            min         = Number .POSITIVE_INFINITY,
                            max         = Number .NEGATIVE_INFINITY,
-                           heightField = this .heightField = AmmoClass._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ()),
+                           heightField = this .heightField = ammojs_AmmoClass._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ()),
                            i4          = 0;
 
                         for (var i = 0, length = elevationGrid ._height .length; i < length; ++ i)
@@ -1406,12 +1417,12 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
                            min = Math .min (min, value);
                            max = Math .max (max, value);
 
-                           AmmoClass.HEAPF32 [heightField + i4 >> 2] = elevationGrid ._height [i];
+                           ammojs_AmmoClass.HEAPF32 [heightField + i4 >> 2] = elevationGrid ._height [i];
 
                            i4 += 4;
                         }
 
-                        this .collisionShape = new AmmoClass.btHeightfieldTerrainShape (elevationGrid ._xDimension .getValue (),
+                        this .collisionShape = new ammojs_AmmoClass.btHeightfieldTerrainShape (elevationGrid ._xDimension .getValue (),
                                                                                     elevationGrid ._zDimension .getValue (),
                                                                                     heightField,
                                                                                     1,
@@ -1421,7 +1432,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
                                                                                     "PHY_FLOAT",
                                                                                     true);
 
-                        this .collisionShape .setLocalScaling (new AmmoClass.btVector3 (elevationGrid ._xSpacing .getValue (), 1, elevationGrid ._zSpacing .getValue ()));
+                        this .collisionShape .setLocalScaling (new ammojs_AmmoClass.btVector3 (elevationGrid ._xSpacing .getValue (), 1, elevationGrid ._zSpacing .getValue ()));
 
                         this .setOffset (elevationGrid ._xSpacing .getValue () * (elevationGrid ._xDimension .getValue () - 1) * 0.5,
                                          (min + max) * 0.5,
@@ -1434,7 +1445,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
                   {
                      var sphere = this .geometryNode;
 
-                     this .collisionShape = new AmmoClass.btSphereShape (sphere ._radius .getValue ());
+                     this .collisionShape = new ammojs_AmmoClass.btSphereShape (sphere ._radius .getValue ());
                      break;
                   }
                   case (X3DConstants_default()).X3DGeometryNode:
@@ -1474,19 +1485,19 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
       if (this .collisionShape)
       {
          this .getCompoundShape () .removeChildShapeByIndex (0);
-         AmmoClass.destroy (this .collisionShape);
+         ammojs_AmmoClass.destroy (this .collisionShape);
          this .collisionShape = null;
       }
 
       if (this .heightField)
       {
-         AmmoClass._free (this .heightField);
+         ammojs_AmmoClass._free (this .heightField);
          this .heightField = null;
       }
 
       if (this .triangleMesh)
       {
-         AmmoClass.destroy (this .triangleMesh);
+         ammojs_AmmoClass.destroy (this .triangleMesh);
          this .triangleMesh = null;
       }
    },
@@ -1570,6 +1581,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/CollidableShape", CollidableShape);
 /* harmony default export */ const RigidBodyPhysics_CollidableShape = (CollidableShape);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/RigidBodyPhysics/AppliedParametersType.js
@@ -1635,6 +1647,7 @@ const AppliedParametersType =
    SLIP_2:                 i ++,
 };
 
+Namespace_default().set ("x_ite/Browser/RigidBodyPhysics/AppliedParametersType", AppliedParametersType);
 /* harmony default export */ const RigidBodyPhysics_AppliedParametersType = (AppliedParametersType);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollisionCollection.js
@@ -1836,6 +1849,7 @@ CollisionCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/CollisionCollection", CollisionCollection);
 /* harmony default export */ const RigidBodyPhysics_CollisionCollection = (CollisionCollection);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DSensorNode\")"
@@ -2112,6 +2126,7 @@ CollisionSensor .prototype = Object .assign (Object .create ((X3DSensorNode_defa
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/CollisionSensor", CollisionSensor);
 /* harmony default export */ const RigidBodyPhysics_CollisionSensor = (CollisionSensor);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode.js
@@ -2190,6 +2205,7 @@ X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create ((X3DNode
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode", X3DNBodyCollisionSpaceNode);
 /* harmony default export */ const RigidBodyPhysics_X3DNBodyCollisionSpaceNode = (X3DNBodyCollisionSpaceNode);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollisionSpace.js
@@ -2357,6 +2373,7 @@ CollisionSpace .prototype = Object .assign (Object .create (RigidBodyPhysics_X3D
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/CollisionSpace", CollisionSpace);
 /* harmony default export */ const RigidBodyPhysics_CollisionSpace = (CollisionSpace);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/Contact.js
@@ -2464,6 +2481,7 @@ Contact .prototype = Object .assign (Object .create ((X3DNode_default()).prototy
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/Contact", Contact);
 /* harmony default export */ const RigidBodyPhysics_Contact = (Contact);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
@@ -2636,12 +2654,12 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
          this .getInitialInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
          this .getInitialInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
 
-         this .joint = new AmmoClass.btHingeConstraint (this .getBody1 () .getRigidBody (),
+         this .joint = new ammojs_AmmoClass.btHingeConstraint (this .getBody1 () .getRigidBody (),
                                                     this .getBody2 () .getRigidBody (),
-                                                    new AmmoClass.btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
-                                                    new AmmoClass.btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
-                                                    new AmmoClass.btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
-                                                    new AmmoClass.btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
+                                                    new ammojs_AmmoClass.btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
+                                                    new ammojs_AmmoClass.btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
+                                                    new ammojs_AmmoClass.btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
+                                                    new ammojs_AmmoClass.btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
                                                     false);
 
          this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
@@ -2655,7 +2673,7 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
       if (this .getCollection ())
          this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
 
-      AmmoClass.destroy (this .joint);
+      ammojs_AmmoClass.destroy (this .joint);
       this .joint = null;
    },
    set_forceOutput__: function ()
@@ -2748,6 +2766,7 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
    })(),
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint", DoubleAxisHingeJoint);
 /* harmony default export */ const RigidBodyPhysics_DoubleAxisHingeJoint = (DoubleAxisHingeJoint);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/MotorJoint.js
@@ -2869,6 +2888,7 @@ MotorJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigi
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/MotorJoint", MotorJoint);
 /* harmony default export */ const RigidBodyPhysics_MotorJoint = (MotorJoint);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/RigidBody.js
@@ -2949,10 +2969,10 @@ function RigidBody (executionContext)
    this ._disableLinearSpeed  .setUnit ("speed");
    this ._disableAngularSpeed .setUnit ("angularRate");
 
-   this .compoundShape      = new AmmoClass.btCompoundShape ();
-   this .motionState        = new AmmoClass.btDefaultMotionState ();
-   this .constructionInfo   = new AmmoClass.btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape);
-   this .rigidBody          = new AmmoClass.btRigidBody (this .constructionInfo);
+   this .compoundShape      = new ammojs_AmmoClass.btCompoundShape ();
+   this .motionState        = new ammojs_AmmoClass.btDefaultMotionState ();
+   this .constructionInfo   = new ammojs_AmmoClass.btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape);
+   this .rigidBody          = new ammojs_AmmoClass.btRigidBody (this .constructionInfo);
    this .geometryNodes      = [ ];
    this .otherGeometryNodes = [ ];
    this .matrix             = new (Matrix4_default()) ();
@@ -3060,11 +3080,11 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    set_transform__: (function ()
    {
       var
-         o  = new AmmoClass.btVector3 (0, 0, 0),
-         t  = new AmmoClass.btTransform (),
+         o  = new ammojs_AmmoClass.btVector3 (0, 0, 0),
+         t  = new ammojs_AmmoClass.btTransform (),
          im = new (Matrix4_default()) (),
-         it = new AmmoClass.btTransform (),
-         io = new AmmoClass.btVector3 (0, 0, 0);
+         it = new ammojs_AmmoClass.btTransform (),
+         io = new ammojs_AmmoClass.btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -3110,7 +3130,7 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    })(),
    set_linearVelocity__: (function ()
    {
-      var lv = new AmmoClass.btVector3 (0, 0, 0);
+      var lv = new ammojs_AmmoClass.btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -3125,7 +3145,7 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    }) (),
    set_angularVelocity__: (function ()
    {
-      var av = new AmmoClass.btVector3 (0, 0, 0);
+      var av = new ammojs_AmmoClass.btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -3140,7 +3160,7 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    })(),
    set_finiteRotationAxis__: (function ()
    {
-      var angularFactor = new AmmoClass.btVector3 (1, 1, 1);
+      var angularFactor = new ammojs_AmmoClass.btVector3 (1, 1, 1);
 
       return function ()
       {
@@ -3164,9 +3184,9 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    set_centerOfMass__: (function ()
    {
       var
-         rotation     = new AmmoClass.btQuaternion (0, 0, 0, 1),
-         origin       = new AmmoClass.btVector3 (0, 0, 0),
-         centerOfMass = new AmmoClass.btTransform (rotation, origin);
+         rotation     = new ammojs_AmmoClass.btQuaternion (0, 0, 0, 1),
+         origin       = new ammojs_AmmoClass.btVector3 (0, 0, 0),
+         centerOfMass = new ammojs_AmmoClass.btTransform (rotation, origin);
 
       return function ()
       {
@@ -3178,7 +3198,7 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    })(),
    set_massProps__: (function ()
    {
-      var localInertia = new AmmoClass.btVector3 (0, 0, 0);
+      var localInertia = new ammojs_AmmoClass.btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -3284,7 +3304,7 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    },
    set_compoundShape__: (function ()
    {
-      var transform = new AmmoClass.btTransform ();
+      var transform = new ammojs_AmmoClass.btTransform ();
 
       return function ()
       {
@@ -3311,10 +3331,10 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    applyForces: (function ()
    {
       var
-         g = new AmmoClass.btVector3 (0, 0, 0),
-         f = new AmmoClass.btVector3 (0, 0, 0),
-         t = new AmmoClass.btVector3 (0, 0, 0),
-         z = new AmmoClass.btVector3 (0, 0, 0);
+         g = new ammojs_AmmoClass.btVector3 (0, 0, 0),
+         f = new ammojs_AmmoClass.btVector3 (0, 0, 0),
+         t = new ammojs_AmmoClass.btVector3 (0, 0, 0),
+         z = new ammojs_AmmoClass.btVector3 (0, 0, 0);
 
       return function (gravity)
       {
@@ -3337,7 +3357,7 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    update: (function ()
    {
       var
-         transform       = new AmmoClass.btTransform (),
+         transform       = new ammojs_AmmoClass.btTransform (),
          position        = new (Vector3_default()) (0, 0, 0),
          orientation     = new (Rotation4_default()) (0, 0, 1, 0),
          linearVelocity  = new (Vector3_default()) (0, 0, 0),
@@ -3363,15 +3383,16 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    })(),
    dispose: function ()
    {
-      AmmoClass.destroy (this .rigidBody);
-      AmmoClass.destroy (this .constructionInfo);
-      AmmoClass.destroy (this .motionState);
-      AmmoClass.destroy (this .compoundShape);
+      ammojs_AmmoClass.destroy (this .rigidBody);
+      ammojs_AmmoClass.destroy (this .constructionInfo);
+      ammojs_AmmoClass.destroy (this .motionState);
+      ammojs_AmmoClass.destroy (this .compoundShape);
 
       X3DNode_default().prototype.dispose.call (this);
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/RigidBody", RigidBody);
 /* harmony default export */ const RigidBodyPhysics_RigidBody = (RigidBody);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/RigidBodyCollection.js
@@ -3448,11 +3469,11 @@ function RigidBodyCollection (executionContext)
 
    // Members
 
-   this .broadphase             = new AmmoClass.btDbvtBroadphase ();
-   this .collisionConfiguration = new AmmoClass.btDefaultCollisionConfiguration ();
-   this .dispatcher             = new AmmoClass.btCollisionDispatcher (this .collisionConfiguration);
-   this .solver                 = new AmmoClass.btSequentialImpulseConstraintSolver ();
-   this .dynamicsWorld          = new AmmoClass.btDiscreteDynamicsWorld (this .dispatcher, this .broadphase, this .solver, this .collisionConfiguration);
+   this .broadphase             = new ammojs_AmmoClass.btDbvtBroadphase ();
+   this .collisionConfiguration = new ammojs_AmmoClass.btDefaultCollisionConfiguration ();
+   this .dispatcher             = new ammojs_AmmoClass.btCollisionDispatcher (this .collisionConfiguration);
+   this .solver                 = new ammojs_AmmoClass.btSequentialImpulseConstraintSolver ();
+   this .dynamicsWorld          = new ammojs_AmmoClass.btDiscreteDynamicsWorld (this .dispatcher, this .broadphase, this .solver, this .collisionConfiguration);
    this .deltaTime              = 0;
    this .colliderNode           = null;
    this .bodyNodes              = [ ];
@@ -3541,7 +3562,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
    },
    set_gravity__: (function ()
    {
-      var gravity = new AmmoClass.btVector3 (0, 0, 0);
+      var gravity = new ammojs_AmmoClass.btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -3748,6 +3769,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/RigidBodyCollection", RigidBodyCollection);
 /* harmony default export */ const RigidBodyPhysics_RigidBodyCollection = (RigidBodyCollection);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint.js
@@ -3904,12 +3926,12 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
          this .getInitialInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
          this .getInitialInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
 
-         this .joint = new AmmoClass.btHingeConstraint (this .getBody1 () .getRigidBody (),
+         this .joint = new ammojs_AmmoClass.btHingeConstraint (this .getBody1 () .getRigidBody (),
                                                     this .getBody2 () .getRigidBody (),
-                                                    new AmmoClass.btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
-                                                    new AmmoClass.btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
-                                                    new AmmoClass.btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
-                                                    new AmmoClass.btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
+                                                    new ammojs_AmmoClass.btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
+                                                    new ammojs_AmmoClass.btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
+                                                    new ammojs_AmmoClass.btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
+                                                    new ammojs_AmmoClass.btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
                                                     false);
 
          this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
@@ -3922,7 +3944,7 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
          if (this .getCollection ())
             this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
 
-         AmmoClass.destroy (this .joint);
+         ammojs_AmmoClass.destroy (this .joint);
          this .joint = null;
       }
    },
@@ -3988,6 +4010,7 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
    })(),
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint", SingleAxisHingeJoint);
 /* harmony default export */ const RigidBodyPhysics_SingleAxisHingeJoint = (SingleAxisHingeJoint);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SliderJoint.js
@@ -4108,9 +4131,9 @@ SliderJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRig
          axisRotation = new (Rotation4_default()) (0, 0, 1, 0),
          matrixA      = new (Matrix4_default()) (),
          matrixB      = new (Matrix4_default()) (),
-         origin       = new AmmoClass.btVector3 (0, 0, 0),
-         frameInA     = new AmmoClass.btTransform (),
-         frameInB     = new AmmoClass.btTransform ();
+         origin       = new ammojs_AmmoClass.btVector3 (0, 0, 0),
+         frameInA     = new ammojs_AmmoClass.btTransform (),
+         frameInB     = new ammojs_AmmoClass.btTransform ();
 
       return function ()
       {
@@ -4150,7 +4173,7 @@ SliderJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRig
 
          frameInB .setOrigin (origin);
 
-         this .joint = new AmmoClass.btSliderConstraint (this .getBody1 () .getRigidBody (),
+         this .joint = new ammojs_AmmoClass.btSliderConstraint (this .getBody1 () .getRigidBody (),
                                                      this .getBody2 () .getRigidBody (),
                                                      frameInA,
                                                      frameInB,
@@ -4172,7 +4195,7 @@ SliderJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRig
       if (this .getCollection ())
          this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
 
-      AmmoClass.destroy (this .joint);
+      ammojs_AmmoClass.destroy (this .joint);
       this .joint = null;
    },
    set_forceOutput__: function ()
@@ -4207,6 +4230,7 @@ SliderJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRig
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/SliderJoint", SliderJoint);
 /* harmony default export */ const RigidBodyPhysics_SliderJoint = (SliderJoint);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/UniversalJoint.js
@@ -4310,6 +4334,7 @@ UniversalJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3D
    },
 });
 
+Namespace_default().set ("x_ite/Components/RigidBodyPhysics/UniversalJoint", UniversalJoint);
 /* harmony default export */ const RigidBodyPhysics_UniversalJoint = (UniversalJoint);
 
 ;// CONCATENATED MODULE: ./src/assets/components/RigidBodyPhysics.js
@@ -4379,7 +4404,6 @@ UniversalJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3D
 
 
 
-
 Components_default().addComponent ({
    name: "RigidBodyPhysics",
    types:
@@ -4405,12 +4429,9 @@ Components_default().addComponent ({
       X3DNBodyCollisionSpaceNode: RigidBodyPhysics_X3DNBodyCollisionSpaceNode,
       X3DRigidJointNode:          RigidBodyPhysics_X3DRigidJointNode,
    },
-   exports:
-   {
-      Ammo: AmmoClass,
-   },
 });
 
+Namespace_default().set ("assets/components/RigidBodyPhysics", undefined);
 /* harmony default export */ const RigidBodyPhysics = ((/* unused pure expression or super */ null && (undefined)));
 
 })();

@@ -45,34 +45,36 @@
  *
  ******************************************************************************/
 
-function Algorithm () { }
-
-Algorithm .prototype =
+class Algorithm
 {
-   constructor: Algorithm,
-   radians: function (value)
+   static radians (value)
    {
       return value * (Math .PI / 180);
-   },
-   degrees: function (value)
+   }
+
+   static degrees (value)
    {
       return value * (180 / Math .PI);
-   },
-   random: function (min, max)
+   }
+
+   static random (min, max)
    {
       return min + Math .random () * (max - min);
-   },
-   fract: function (value)
+   }
+
+   static fract (value)
    {
       return value % 1;
-   },
-   clamp: function (value, min, max)
+   }
+
+   static clamp (value, min, max)
    {
       // https://jsperf.com/math-clamp
       // https://jsperf.com/clamping-methods/2
       return Math .min (Math .max (value, min), max);
-   },
-   interval: function (value, low, high)
+   }
+
+   static interval (value, low, high)
    {
       if (value >= high)
          return ((value - low) % (high - low)) + low;
@@ -81,12 +83,14 @@ Algorithm .prototype =
          return ((value - high) % (high - low)) + high;
 
       return value;
-   },
-   lerp: function (source, destination, t)
+   }
+
+   static lerp (source, destination, t)
    {
       return source + t * (destination - source);
-   },
-   slerp: function (source, destination, t)
+   }
+
+   static slerp (source, destination, t)
    {
       let cosom = source .dot (destination);
 
@@ -114,8 +118,9 @@ Algorithm .prototype =
       source .w = source .w * scale0 + destination .w * scale1;
 
       return source;
-   },
-   simpleSlerp: function (source, destination, t)
+   }
+
+   static simpleSlerp (source, destination, t)
    {
       const cosom = source .dot (destination);
 
@@ -136,12 +141,14 @@ Algorithm .prototype =
       source .w = source .w * scale0 + destination .w * scale1;
 
       return source;
-   },
-   isPowerOfTwo: function (n)
+   }
+
+   static isPowerOfTwo (n)
    {
       return ((n - 1) & n) === 0;
-   },
-   nextPowerOfTwo: function (n)
+   }
+
+   static nextPowerOfTwo (n)
    {
       ///  Returns the next power of two of @a n. If n is a power of two, n is returned.
 
@@ -149,20 +156,24 @@ Algorithm .prototype =
          return n;
 
       return 1 << 32 - Math .clz32 (n);
-   },
-   cmp: function (lhs, rhs)
+   }
+
+   static cmp (lhs, rhs)
    {
       return lhs > rhs ? 1 : lhs < rhs ? -1 : 0;
-   },
-   less: function (lhs, rhs)
+   }
+
+   static less (lhs, rhs)
    {
       return lhs < rhs;
-   },
-   greater: function (lhs, rhs)
+   }
+
+   static greater (lhs, rhs)
    {
       return lhs > rhs;
-   },
-   lowerBound: function (array, first, last, value, comp = this .less)
+   }
+
+   static lowerBound (array, first, last, value, comp = this.less)
    {
       // https://en.cppreference.com/w/cpp/algorithm/lower_bound
 
@@ -186,8 +197,9 @@ Algorithm .prototype =
       }
 
       return first;
-   },
-   upperBound: function (array, first, last, value, comp = this .less)
+   }
+
+   static upperBound (array, first, last, value, comp = this.less)
    {
       // sen.cppreference.com/w/cpp/algorithm/upper_bound
 
@@ -212,8 +224,9 @@ Algorithm .prototype =
       }
 
       return first;
-   },
-   set_difference: function (lhs, rhs, result)
+   }
+
+   static set_difference (lhs, rhs, result)
    {
       for (const key of lhs)
       {
@@ -224,7 +237,7 @@ Algorithm .prototype =
       }
 
       return result;
-   },
-};
+   }
+}
 
-export default new Algorithm ();
+export default Algorithm;

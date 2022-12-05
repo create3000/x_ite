@@ -63,7 +63,6 @@ import UniversalJoint             from "../../x_ite/Components/RigidBodyPhysics/
 import X3DNBodyCollidableNode     from "../../x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode.js";
 import X3DNBodyCollisionSpaceNode from "../../x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode.js";
 import X3DRigidJointNode          from "../../x_ite/Components/RigidBodyPhysics/X3DRigidJointNode.js";
-import Ammo                       from "../../lib/ammojs/AmmoClass.js";
 
 Components .addComponent ({
    name: "RigidBodyPhysics",
@@ -89,10 +88,6 @@ Components .addComponent ({
       X3DNBodyCollidableNode:     X3DNBodyCollidableNode,
       X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,
       X3DRigidJointNode:          X3DRigidJointNode,
-   },
-   exports:
-   {
-      Ammo: Ammo,
    },
 });
 

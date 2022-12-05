@@ -47,7 +47,7 @@
 
 import X3DField from "../Base/X3DField.js";
 
-export default function (Matrix, SFVec, double)
+function SFMatrixPrototypeTemplate (Matrix, SFVec, double)
 {
    return Object .assign (Object .create (X3DField .prototype),
    {
@@ -151,4 +151,6 @@ export default function (Matrix, SFVec, double)
          this .toStream (stream);
       },
    });
-};
+}
+
+export default SFMatrixPrototypeTemplate;

@@ -47,7 +47,7 @@
 
 import CatmullRomSplineInterpolator from "./CatmullRomSplineInterpolator.js";
 
-export default function (Type)
+function CatmullRomSplineInterpolatorTemplate (Type)
 {
    const
       c0 = new Type (0, 0, 0, 0),
@@ -100,4 +100,6 @@ export default function (Type)
    });
 
    return CatmullRomSplineInterpolatorInstance;
-};
+}
+
+export default CatmullRomSplineInterpolatorTemplate;

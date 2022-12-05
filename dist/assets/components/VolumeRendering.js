@@ -62,6 +62,9 @@ var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
 const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Namespace");
+var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode.js
 /*******************************************************************************
  *
@@ -187,6 +190,7 @@ X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create ((X3DNode_d
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode", X3DVolumeRenderStyleNode);
 /* harmony default export */ const VolumeRendering_X3DVolumeRenderStyleNode = (X3DVolumeRenderStyleNode);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode.js
@@ -252,6 +256,7 @@ X3DComposableVolumeRenderStyleNode .prototype = Object .assign (Object .create (
    constructor: X3DComposableVolumeRenderStyleNode,
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode", X3DComposableVolumeRenderStyleNode);
 /* harmony default export */ const VolumeRendering_X3DComposableVolumeRenderStyleNode = (X3DComposableVolumeRenderStyleNode);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
@@ -421,6 +426,7 @@ OpacityMapVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/OpacityMapVolumeStyle", OpacityMapVolumeStyle);
 /* harmony default export */ const VolumeRendering_OpacityMapVolumeStyle = (OpacityMapVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext.js
@@ -554,6 +560,7 @@ X3DVolumeRenderingContext .prototype =
    },
 };
 
+Namespace_default().set ("x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext", X3DVolumeRenderingContext);
 /* harmony default export */ const VolumeRendering_X3DVolumeRenderingContext = (X3DVolumeRenderingContext);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/DEBUG\")"
@@ -899,6 +906,7 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/BlendedVolumeStyle", BlendedVolumeStyle);
 /* harmony default export */ const VolumeRendering_BlendedVolumeStyle = (BlendedVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/BoundaryEnhancementVolumeStyle.js
@@ -1040,6 +1048,7 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (Volu
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/BoundaryEnhancementVolumeStyle", BoundaryEnhancementVolumeStyle);
 /* harmony default export */ const VolumeRendering_BoundaryEnhancementVolumeStyle = (BoundaryEnhancementVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/CartoonVolumeStyle.js
@@ -1338,6 +1347,7 @@ CartoonVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/CartoonVolumeStyle", CartoonVolumeStyle);
 /* harmony default export */ const VolumeRendering_CartoonVolumeStyle = (CartoonVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ComposedVolumeStyle.js
@@ -1529,6 +1539,7 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering
    }
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/ComposedVolumeStyle", ComposedVolumeStyle);
 /* harmony default export */ const VolumeRendering_ComposedVolumeStyle = (ComposedVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/EdgeEnhancementVolumeStyle.js
@@ -1696,6 +1707,7 @@ EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRe
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/EdgeEnhancementVolumeStyle", EdgeEnhancementVolumeStyle);
 /* harmony default export */ const VolumeRendering_EdgeEnhancementVolumeStyle = (EdgeEnhancementVolumeStyle);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
@@ -1928,6 +1940,7 @@ VolumeMaterial .prototype = Object .assign (Object .create ((UnlitMaterial_defau
    },
 });
 
+Namespace_default().set ("x_ite/Browser/VolumeRendering/VolumeMaterial", VolumeMaterial);
 /* harmony default export */ const VolumeRendering_VolumeMaterial = (VolumeMaterial);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
@@ -2159,6 +2172,7 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create ((X3DChildNode_def
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/X3DVolumeDataNode", X3DVolumeDataNode);
 /* harmony default export */ const VolumeRendering_X3DVolumeDataNode = (X3DVolumeDataNode);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Shaders/ComposedShader\")"
@@ -2518,6 +2532,7 @@ IsoSurfaceVolumeData .prototype = Object .assign (Object .create (VolumeRenderin
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/IsoSurfaceVolumeData", IsoSurfaceVolumeData);
 /* harmony default export */ const VolumeRendering_IsoSurfaceVolumeData = (IsoSurfaceVolumeData);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ProjectionVolumeStyle.js
@@ -2735,6 +2750,7 @@ ProjectionVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/ProjectionVolumeStyle", ProjectionVolumeStyle);
 /* harmony default export */ const VolumeRendering_ProjectionVolumeStyle = (ProjectionVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/SegmentedVolumeData.js
@@ -3001,6 +3017,7 @@ SegmentedVolumeData .prototype = Object .assign (Object .create (VolumeRendering
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/SegmentedVolumeData", SegmentedVolumeData);
 /* harmony default export */ const VolumeRendering_SegmentedVolumeData = (SegmentedVolumeData);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ShadedVolumeStyle.js
@@ -3268,6 +3285,7 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/ShadedVolumeStyle", ShadedVolumeStyle);
 /* harmony default export */ const VolumeRendering_ShadedVolumeStyle = (ShadedVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/SilhouetteEnhancementVolumeStyle.js
@@ -3434,6 +3452,7 @@ SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (Vo
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/SilhouetteEnhancementVolumeStyle", SilhouetteEnhancementVolumeStyle);
 /* harmony default export */ const VolumeRendering_SilhouetteEnhancementVolumeStyle = (SilhouetteEnhancementVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ToneMappedVolumeStyle.js
@@ -3607,6 +3626,7 @@ ToneMappedVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/ToneMappedVolumeStyle", ToneMappedVolumeStyle);
 /* harmony default export */ const VolumeRendering_ToneMappedVolumeStyle = (ToneMappedVolumeStyle);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/VolumeData.js
@@ -3807,6 +3827,7 @@ VolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolum
    },
 });
 
+Namespace_default().set ("x_ite/Components/VolumeRendering/VolumeData", VolumeData);
 /* harmony default export */ const VolumeRendering_VolumeData = (VolumeData);
 
 ;// CONCATENATED MODULE: ./src/assets/components/VolumeRendering.js
@@ -3903,6 +3924,7 @@ Components_default().addComponent ({
    browserContext: VolumeRendering_X3DVolumeRenderingContext,
 });
 
+Namespace_default().set ("assets/components/VolumeRendering", undefined);
 /* harmony default export */ const VolumeRendering = ((/* unused pure expression or super */ null && (undefined)));
 
 /******/ })()
