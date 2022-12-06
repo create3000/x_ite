@@ -169,3 +169,9 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   top: -16px;
   background: black;
 }
+
+.nav-item i {
+  display: initial !important;
+  margin-left: 0.2rem !important;
+  margin-right: 0.2rem !important;
+}
