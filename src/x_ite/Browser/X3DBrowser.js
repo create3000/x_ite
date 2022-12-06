@@ -72,8 +72,7 @@ import _                   from "../../locale/gettext.js";
 const
    _DOMIntegration   = Symbol (),
    _loader           = Symbol (),
-   _browserCallbacks = Symbol (),
-   _initialized      = Symbol ();
+   _browserCallbacks = Symbol ();
 
 function X3DBrowser (element)
 {
@@ -115,10 +114,6 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       this [_DOMIntegration] = new DOMIntegration (this);
 
       legacy .call (this);
-
-      // Connect.
-
-      this .initialized () .addInterest (_initialized, this);
 
       // Print welcome message.
 
@@ -339,13 +334,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          return;
 
       this ._loadCount .removeInterest ("checkLoadCount", this);
-      this .initialized () .setValue (this .getCurrentTime ());
-      this .setBrowserLoading (false);
-   },
-   [_initialized]: function ()
-   {
+      this .initialized () .set (this .getCurrentTime ());
+      this .initialized () .processInterests ();
       this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
       this .callBrowserEventHandler ("initialized load");
+      this .setBrowserLoading (false);
    },
    createVrmlFromString: function (vrmlSyntax)
    {
