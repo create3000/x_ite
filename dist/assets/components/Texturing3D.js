@@ -1,7 +1,7 @@
 /* X_ITE v8.2.1a */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 302:
+/***/ 845:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -37,7 +37,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 296:
+/***/ 257:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -70,7 +70,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 589:
+/***/ 877:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2022-12-05 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4026,7 +4026,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 45:
+/***/ 92:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5181,7 +5181,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 643:
+/***/ 641:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=undefined;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=undefined;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
@@ -8110,11 +8110,11 @@ Namespace_default().set ("x_ite/Browser/Texturing3D/NRRDParser", NRRDParser);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(589);
-/* provided dependency */ var JpegImage = __webpack_require__(45);
-/* provided dependency */ var jpeg = __webpack_require__(643);
-/* provided dependency */ var CharLS = __webpack_require__(302);
-/* provided dependency */ var OpenJPEG = __webpack_require__(296);
+/* provided dependency */ var dicomParser = __webpack_require__(877);
+/* provided dependency */ var JpegImage = __webpack_require__(92);
+/* provided dependency */ var jpeg = __webpack_require__(641);
+/* provided dependency */ var CharLS = __webpack_require__(845);
+/* provided dependency */ var OpenJPEG = __webpack_require__(257);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

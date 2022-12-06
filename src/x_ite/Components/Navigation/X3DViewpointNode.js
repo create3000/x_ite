@@ -373,7 +373,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, translation);
       this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
-      this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
+      this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, 1);
       this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
       this .setInterpolators (this, this);
