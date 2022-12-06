@@ -47,7 +47,6 @@
 
 import X3DNode         from "../Core/X3DNode.js";
 import X3DRenderObject from "../../Rendering/X3DRenderObject.js";
-import X3DViewportNode from "./X3DViewportNode.js";
 import BindableStack   from "../../Execution/BindableStack.js";
 import BindableList    from "../../Execution/BindableList.js";
 import NavigationInfo  from "../Navigation/NavigationInfo.js";
@@ -58,10 +57,7 @@ import TraverseType    from "../../Rendering/TraverseType.js";
 import X3DConstants    from "../../Base/X3DConstants.js";
 import Camera          from "../../../standard/Math/Geometry/Camera.js";
 import Box3            from "../../../standard/Math/Geometry/Box3.js";
-import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
-
-var projectionMatrix = new Matrix4 ();
 
 function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 {
@@ -206,9 +202,13 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    {
       return this .groupNode .getBBox (bbox, shadows);
    },
-   lookAt: function (factor, straighten)
+   lookAt: function (factor = 0, straighten = false)
    {
-      this .getViewpoint () .lookAtBBox (this, this .getBBox (new Box3 ()), factor, straighten);
+      const
+         viewpoint = this .getViewpoint (),
+         bbox      = this .getBBox (new Box3 ()) .multRight (Matrix4 .inverse (viewpoint .getModelMatrix ()));
+
+      viewpoint .lookAt (this, bbox .center, viewpoint .getLookAtDistance (bbox), factor, straighten);
    },
    set_viewport__: function ()
    {
@@ -326,33 +326,38 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .getModelViewMatrix () .pop ();
    },
-   collision: function (type, renderObject)
+   collision: (function ()
    {
-      var navigationInfo = this .getNavigationInfo ();
+      const projectionMatrix = new Matrix4 ();
 
-      if (navigationInfo ._transitionActive .getValue ())
-         return;
+      return function (type, renderObject)
+      {
+         var navigationInfo = this .getNavigationInfo ();
 
-      var
-         collisionRadius = navigationInfo .getCollisionRadius (),
-         avatarHeight    = navigationInfo .getAvatarHeight (),
-         size            = Math .max (collisionRadius * 2, avatarHeight * 2);
+         if (navigationInfo ._transitionActive .getValue ())
+            return;
 
-      this .collisionTime = 0;
+         var
+            collisionRadius = navigationInfo .getCollisionRadius (),
+            avatarHeight    = navigationInfo .getAvatarHeight (),
+            size            = Math .max (collisionRadius * 2, avatarHeight * 2);
 
-      Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
+         this .collisionTime = 0;
 
-      this .getProjectionMatrix () .pushMatrix (projectionMatrix);
-      this .getModelViewMatrix  () .pushMatrix (this .getViewMatrix () .get ());
+         Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
 
-      // Render
-      this .currentViewport .push (this);
-      renderObject .render (type, this .groupNode .traverse, this .groupNode);
-      this .currentViewport .pop (this);
+         this .getProjectionMatrix () .pushMatrix (projectionMatrix);
+         this .getModelViewMatrix  () .pushMatrix (this .getViewMatrix () .get ());
 
-      this .getModelViewMatrix  () .pop ()
-      this .getProjectionMatrix () .pop ()
-   },
+         // Render
+         this .currentViewport .push (this);
+         renderObject .render (type, this .groupNode .traverse, this .groupNode);
+         this .currentViewport .pop (this);
+
+         this .getModelViewMatrix  () .pop ()
+         this .getProjectionMatrix () .pop ()
+      };
+   })(),
    display: function (type, renderObject)
    {
       this .getNavigationInfo () .enable (type, renderObject);
