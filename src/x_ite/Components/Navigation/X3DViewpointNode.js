@@ -269,6 +269,8 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
                }
             }
 
+            layerNode .getNavigationInfo () ._transitionStart = true;
+
             this .timeSensor ._cycleInterval = transitionTime;
             this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
             this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
