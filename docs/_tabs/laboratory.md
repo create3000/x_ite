@@ -1,7 +1,7 @@
 ---
 # the default layout is 'page'
 title: Laboratory
-icon: fas fa-atom
+icon: fas fa-flask-vial
 order: 4
 ---
 * [X3D Visual Blend Mode Editor](/x_ite/laboratory/x3d-visual-blend-mode-editor)
