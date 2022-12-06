@@ -202,7 +202,7 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    {
       return this .groupNode .getBBox (bbox, shadows);
    },
-   lookAt: function (factor = 0, straighten = false)
+   lookAt: function (factor = 1, straighten = false)
    {
       const
          viewpoint = this .getViewpoint (),
