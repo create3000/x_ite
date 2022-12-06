@@ -1,0 +1,67 @@
+---
+title: Online DICOM and NRRD file Viewer
+layout: wide
+categories: [Laboratory]
+tags: [online, dicom, nrrd, file, viewer]
+---
+<style>
+.row, .post, .post-content {
+   min-height: 100%;
+}
+
+/* Table */
+
+table {
+  width: 100%;
+  height: 100%;
+}
+
+table td {
+   vertical-align: top;
+   padding: 1rem;
+}
+
+/* Canvas */
+
+.post x3d-canvas {
+   height: 60vh;
+   width: 100%;
+   aspect-ratio: unset;
+}
+
+#dicom-buttons input {
+   margin-right: 1.5rem;
+}
+
+#dicom-buttons input:last-child {
+   margin-right: 0;
+}
+
+#core-wrapper table h3 {
+   margin-top: 0;
+}
+</style>
+
+<script type="module" src="dicom/dicom.mjs"></script>
+
+<div class="post-content">
+   <p>Click »Choose File« and select a DICOM P10 or NRRD file from your local file system.</p>
+   <table>
+      <tr>
+         <td>
+            <x3d-canvas src="dicom/dicom.x3d"></x3d-canvas>
+            <p id="dicom-buttons"></p>
+         </td>
+         <td>
+            <h3>Sample Images</h3>
+            <ul id="dicom-samples">
+               <li><a href="https://create3000.github.io/media/laboratory/dicom/datasets/CT1_J2KR.dcm">CT1_J2KR.dcm</a></li>
+               <li><a href="https://create3000.github.io/media/laboratory/dicom/datasets/MR-MONO2-12-shoulder.dcm">MR-MONO2-12-shoulder.dcm</a></li>
+               <li><a href="https://create3000.github.io/media/laboratory/dicom/datasets/paramap.dcm">paramap.dcm</a></li>
+               <li><a href="https://create3000.github.io/media/laboratory/dicom/datasets/US-PAL-8-10x-echo.dcm">US-PAL-8-10x-echo.dcm</a></li>
+               <li><a href="https://create3000.github.io/media/laboratory/dicom/datasets/VL1_J2KI.dcm">VL1_J2KI.dcm</a></li>
+            </ul>
+         </td>
+      </tr>
+   </table>
+</div>

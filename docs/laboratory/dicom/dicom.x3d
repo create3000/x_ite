@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "https://www.web3d.org/specifications/x3d-3.3.dtd">
+<X3D profile='Interchange' version='3.3' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-3.3.xsd'>
+  <head>
+    <component name='Geometry2D' level='2'/>
+    <component name='Texturing3D' level='3'/>
+    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
+    <meta name='comment' content='World of Sunrise X3D Editor'/>
+    <meta name='created' content='Sat, 02 Nov 2019 01:08:52 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrise X3D Editor V1.0.5, https://create3000.github.io/sunrise/'/>
+    <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/laboratory/dicom/dicom.x3d'/>
+    <meta name='modified' content='Tue, 06 Dec 2022 09:35:35 GMT'/>
+  </head>
+  <Scene>
+    <WorldInfo/>
+    <NavigationInfo
+        type='"PLANE_create3000.de"'/>
+    <OrthoViewpoint DEF='Viewpoint'
+        fieldOfView='-1.1, -1.1, 1.1, 1.1'/>
+    <Transform DEF='DICOM'>
+      <Shape>
+        <Appearance>
+          <ImageTexture3D DEF='Texture'
+              url='"datasets/CT1_J2KR.dcm"'
+              repeatS='true'
+              repeatT='true'
+              repeatR='true'/>
+          <TextureTransform3D DEF='TextureTransform'/>
+        </Appearance>
+        <Rectangle2D/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

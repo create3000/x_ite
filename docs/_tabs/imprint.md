@@ -2,7 +2,7 @@
 # the default layout is 'page'
 title: Imprint
 icon: fas fa-info-circle
-order: 5
+order: 6
 ---
 ## Contact
 
