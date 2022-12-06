@@ -10,7 +10,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrise X3D Editor V1.0.5, https://create3000.github.io/sunrise/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/laboratory/dicom/dicom.x3d'/>
-    <meta name='modified' content='Tue, 06 Dec 2022 09:35:35 GMT'/>
+    <meta name='modified' content='Tue, 06 Dec 2022 09:43:36 GMT'/>
   </head>
   <Scene>
     <WorldInfo/>
@@ -22,7 +22,7 @@
       <Shape>
         <Appearance>
           <ImageTexture3D DEF='Texture'
-              url='"datasets/CT1_J2KR.dcm"'
+              url='"https://create3000.github.io/media/laboratory/dicom/datasets/CT1_J2KR.dcm"'
               repeatS='true'
               repeatT='true'
               repeatR='true'/>
