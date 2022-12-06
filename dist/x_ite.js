@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 189:
+/***/ 677:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(343);
+/* provided dependency */ var jQuery = __webpack_require__(807);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 212:
+/***/ 512:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(343);
+/* provided dependency */ var jQuery = __webpack_require__(807);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 296:
+/***/ 134:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(343)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(807)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 343:
+/***/ 807:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11728,7 +11728,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 689:
+/***/ 278:
 /***/ ((module) => {
 
 /**
@@ -16507,7 +16507,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 4:
+/***/ 55:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -33738,7 +33738,7 @@ x_ite_Namespace.set ("locale/gettext", gettext);
 /* harmony default export */ const locale_gettext = (gettext);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(343);
+/* provided dependency */ var $ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34635,7 +34635,7 @@ x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperti
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(343);
+/* provided dependency */ var Notification_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34755,8 +34755,8 @@ x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification);
 /* harmony default export */ const Core_Notification = (Notification);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(212);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(343);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(512);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41661,7 +41661,7 @@ x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(343);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43663,7 +43663,7 @@ x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3);
 /* harmony default export */ const Geometry_Plane3 = (Plane3);
 
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(689);
+/* provided dependency */ var libtess = __webpack_require__(278);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51868,7 +51868,7 @@ x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2D
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(343);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55197,8 +55197,8 @@ x_ite_Namespace.set ("standard/Networking/BinaryTransport", BinaryTransport);
 /* harmony default export */ const Networking_BinaryTransport = (BinaryTransport);
 
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(343);
-/* provided dependency */ var pako = __webpack_require__(4);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(807);
+/* provided dependency */ var pako = __webpack_require__(55);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -57305,8 +57305,157 @@ x_ite_Namespace.set ("x_ite/Routing/X3DRoute", X3DRoute);
  x_ite_Namespace.set ("x_ite/Execution/X3DExecutionContext", X3DExecutionContext);
 /* harmony default export */ const Execution_X3DExecutionContext = (X3DExecutionContext);
 
+;// CONCATENATED MODULE: ./src/x_ite/Browser/Networking/Features.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+const Features = {
+   NODE_ENV: (typeof process === "object") && (process .release .name .search (/node|io.js/) !== -1),
+};
+
+x_ite_Namespace.set ("x_ite/Browser/Networking/Features", Features);
+/* harmony default export */ const Networking_Features = (Features);
+
+;// CONCATENATED MODULE: ./src/x_ite/Browser/Networking/URLs.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+const URLs = {
+   getScriptUrl: (function ()
+   {
+      if (Networking_Features.NODE_ENV)
+         var src = __webpack_require__.g .require ("url") .pathToFileURL (__filename) .href;
+      else if (document .currentScript)
+         var src = document .currentScript .src;
+      else
+         var src = document .location .href;
+
+      return function ()
+      {
+         return src;
+      };
+   })(),
+   getProviderUrl: function (file)
+   {
+      if (file)
+      {
+         if (this .getScriptUrl () .match (/\.min\.js$/))
+            file += ".min";
+
+         return new URL ("assets/components/" + file + ".js", this .getScriptUrl ()) .href;
+      }
+
+      return "https://create3000.github.io/x_ite/";
+   },
+   getFontsUrl: function (file)
+   {
+      return new URL ("assets/fonts/" + file, this .getScriptUrl ()) .href;
+   },
+   getLinetypeUrl: function ()
+   {
+      return new URL ("assets/linetype/linetypes.png", this .getScriptUrl ()) .href;
+   },
+   getHatchingUrl: function (index)
+   {
+      return new URL ("assets/hatching/" + index + ".png", this .getScriptUrl ()) .href;
+   },
+};
+
+x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs);
+/* harmony default export */ const Networking_URLs = (URLs);
+
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(343);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -57357,13 +57506,15 @@ x_ite_Namespace.set ("x_ite/Routing/X3DRoute", X3DRoute);
 
 
 
-function ComponentInfo (name, level, title, providerUrl, dependencies)
-{
-   this .name         = name;
-   this .level        = level;
-   this .title        = title;
-   this .providerUrl  = providerUrl;
 
+function ComponentInfo ({ name, level, title, providerUrl, external = false, dependencies = [ ] })
+{
+   this .name        = name;
+   this .level       = level;
+   this .title       = title;
+   this .providerUrl = providerUrl || Networking_URLs.getProviderUrl (external && name);
+
+   ComponentInfo_$.data (this, "external",     external)
    ComponentInfo_$.data (this, "dependencies", dependencies)
 }
 
@@ -57473,11 +57624,7 @@ ComponentInfoArray .prototype = Object .assign (Object .create (Base_X3DInfoArra
    },
    addComponent: function (value)
    {
-      this .add (value .name, new Configuration_ComponentInfo (value .name,
-                                                 value .level,
-                                                 value .title,
-                                                 value .providerUrl,
-                                                 value .dependencies || [ ]));
+      this .add (value .name, new Configuration_ComponentInfo (value));
    },
 });
 
@@ -58766,7 +58913,7 @@ DataStorage .prototype = {
 /* harmony default export */ const Utility_DataStorage = (DataStorage);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(343);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65532,8 +65679,8 @@ x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", Orientation
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(296);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(343);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(134);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66429,8 +66576,8 @@ x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(296);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(343);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(134);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67363,8 +67510,8 @@ x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(296);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(343);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(134);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67675,8 +67822,8 @@ x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(296);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(343);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(134);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -68921,155 +69068,6 @@ X3DNavigationContext .prototype =
 x_ite_Namespace.set ("x_ite/Browser/Navigation/X3DNavigationContext", X3DNavigationContext);
 /* harmony default export */ const Navigation_X3DNavigationContext = (X3DNavigationContext);
 
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Networking/Features.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-const Features = {
-   NODE_ENV: (typeof process === "object") && (process .release .name .search (/node|io.js/) !== -1),
-};
-
-x_ite_Namespace.set ("x_ite/Browser/Networking/Features", Features);
-/* harmony default export */ const Networking_Features = (Features);
-
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Networking/URLs.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-const URLs = {
-   getScriptUrl: (function ()
-   {
-      if (Networking_Features.NODE_ENV)
-         var src = __webpack_require__.g .require ("url") .pathToFileURL (__filename) .href;
-      else if (document .currentScript)
-         var src = document .currentScript .src;
-      else
-         var src = document .location .href;
-
-      return function ()
-      {
-         return src;
-      };
-   })(),
-   getProviderUrl: function (file)
-   {
-      if (file)
-      {
-         if (this .getScriptUrl () .match (/\.min\.js$/))
-            file += ".min";
-
-         return new URL ("assets/components/" + file + ".js", this .getScriptUrl ()) .href;
-      }
-
-      return "https://create3000.github.io/x_ite/";
-   },
-   getFontsUrl: function (file)
-   {
-      return new URL ("assets/fonts/" + file, this .getScriptUrl ()) .href;
-   },
-   getLinetypeUrl: function ()
-   {
-      return new URL ("assets/linetype/linetypes.png", this .getScriptUrl ()) .href;
-   },
-   getHatchingUrl: function (index)
-   {
-      return new URL ("assets/hatching/" + index + ".png", this .getScriptUrl ()) .href;
-   },
-};
-
-x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs);
-/* harmony default export */ const Networking_URLs = (URLs);
-
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Networking/X3DNetworkingContext.js
 /*******************************************************************************
  *
@@ -69410,8 +69408,8 @@ x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContex
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(296);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(343);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(134);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70017,8 +70015,8 @@ x_ite_Namespace.set ("x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensor
 /* harmony default export */ const PointingDeviceSensor_X3DPointingDeviceSensorContext = (X3DPointingDeviceSensorContext);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(343);
-/* provided dependency */ var ResizeSensor = __webpack_require__(189);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(807);
+/* provided dependency */ var ResizeSensor = __webpack_require__(677);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -80819,7 +80817,7 @@ x_ite_Namespace.set ("x_ite/Routing/X3DRoutingContext", X3DRoutingContext);
 /* harmony default export */ const Routing_X3DRoutingContext = (X3DRoutingContext);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowserContext.js
-/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(343);
+/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99208,7 +99206,7 @@ x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSource
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(343);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99837,7 +99835,7 @@ x_ite_Namespace.set ("x_ite/Components/Sound", undefined);
 /* harmony default export */ const Components_Sound = ((/* unused pure expression or super */ null && (undefined)));
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(343);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100752,7 +100750,7 @@ x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTe
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(343);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101445,7 +101443,7 @@ x_ite_Namespace.set ("x_ite/Components", Components);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components)));
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(343);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(807);
 /*******************************************************************************
  * MIT License
  *
@@ -102112,316 +102110,297 @@ x_ite_Namespace.set ("x_ite/Configuration/ProfileInfoArray", ProfileInfoArray);
 
 
 
-
 const SupportedComponents = new Configuration_ComponentInfoArray ([ ]);
 
 SupportedComponents .addComponent (
 {
-   title:       "Annotation",
-   name:        "Annotation",
-   level:       2,
-   providerUrl: Networking_URLs.getProviderUrl ("Annotation"),
+   title: "Annotation",
+   name: "Annotation",
+   level: 2,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Computer-Aided Design (CAD) model geometry",
-   name:        "CADGeometry",
-   level:       2,
-   providerUrl: Networking_URLs.getProviderUrl ("CADGeometry"),
+   title: "Computer-Aided Design (CAD) model geometry",
+   name: "CADGeometry",
+   level: 2,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Core",
-   name:        "Core",
-   level:       2,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Core",
+   name: "Core",
+   level: 2,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Cube map environmental texturing",
-   name:        "CubeMapTexturing",
-   level:       3,
-   providerUrl: Networking_URLs.getProviderUrl ("CubeMapTexturing"),
+   title: "Cube map environmental texturing",
+   name: "CubeMapTexturing",
+   level: 3,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Distributed interactive simulation (DIS)",
-   name:        "DIS",
-   level:       2,
-   providerUrl: Networking_URLs.getProviderUrl ("DIS"),
+   title: "Distributed interactive simulation (DIS)",
+   name: "DIS",
+   level: 2,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Environmental effects",
-   name:        "EnvironmentalEffects",
-   level:       4,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Environmental effects",
+   name: "EnvironmentalEffects",
+   level: 4,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Environmental sensor",
-   name:        "EnvironmentalSensor",
-   level:       4,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Environmental sensor",
+   name: "EnvironmentalSensor",
+   level: 4,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Event utilities",
-   name:        "EventUtilities",
-   level:       4,
-   providerUrl: Networking_URLs.getProviderUrl ("EventUtilities"),
+   title: "Event utilities",
+   name: "EventUtilities",
+   level: 4,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Followers",
-   name:        "Followers",
-   level:       4,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Followers",
+   name: "Followers",
+   level: 4,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Geometry2D",
-   name:        "Geometry2D",
-   level:       2,
-   providerUrl: Networking_URLs.getProviderUrl ("Geometry2D"),
+   title: "Geometry2D",
+   name: "Geometry2D",
+   level: 2,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Geometry3D",
-   name:        "Geometry3D",
-   level:       4,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Geometry3D",
+   name: "Geometry3D",
+   level: 4,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Geospatial",
-   name:        "Geospatial",
-   level:       2,
-   providerUrl: Networking_URLs.getProviderUrl ("Geospatial"),
+   title: "Geospatial",
+   name: "Geospatial",
+   level: 2,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Grouping",
-   name:        "Grouping",
-   level:       3,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Grouping",
+   name: "Grouping",
+   level: 3,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Humanoid animation (HAnim)",
-   name:        "HAnim",
-   level:       3,
-   providerUrl: Networking_URLs.getProviderUrl ("HAnim"),
+   title: "Humanoid animation (HAnim)",
+   name: "HAnim",
+   level: 3,
+   external: true,
 });
 
 SupportedComponents .addAlias ("H-Anim", "HAnim");
 
 SupportedComponents .addComponent (
 {
-   title:       "Interpolation",
-   name:        "Interpolation",
-   level:       5,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Interpolation",
+   name: "Interpolation",
+   level: 5,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Key device sensor",
-   name:        "KeyDeviceSensor",
-   level:       2,
-   providerUrl: Networking_URLs.getProviderUrl ("KeyDeviceSensor"),
+   title: "Key device sensor",
+   name: "KeyDeviceSensor",
+   level: 2,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Layering",
-   name:        "Layering",
-   level:       1,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Layering",
+   name: "Layering",
+   level: 1,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Layout",
-   name:        "Layout",
-   level:       2,
-   providerUrl: Networking_URLs.getProviderUrl ("Layout"),
+   title: "Layout",
+   name: "Layout",
+   level: 2,
+   external: true,
    dependencies: ["Text"],
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Lighting",
-   name:        "Lighting",
-   level:       3,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Lighting",
+   name: "Lighting",
+   level: 3,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Navigation",
-   name:        "Navigation",
-   level:       3,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Navigation",
+   name: "Navigation",
+   level: 3,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Networking",
-   name:        "Networking",
-   level:       4,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Networking",
+   name: "Networking",
+   level: 4,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Non-uniform Rational B-Spline (NURBS)",
-   name:        "NURBS",
-   level:       4,
-   providerUrl: Networking_URLs.getProviderUrl ("NURBS"),
+   title: "Non-uniform Rational B-Spline (NURBS)",
+   name: "NURBS",
+   level: 4,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Particle systems",
-   name:        "ParticleSystems",
-   level:       3,
-   providerUrl: Networking_URLs.getProviderUrl ("ParticleSystems"),
+   title: "Particle systems",
+   name: "ParticleSystems",
+   level: 3,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:        "Picking sensor",
-   name:         "Picking",
-   level:        3,
-   providerUrl:  Networking_URLs.getProviderUrl ("Picking"),
+   title: "Picking sensor",
+   name: "Picking",
+   level: 3,
+   external: true,
    dependencies: ["RigidBodyPhysics"],
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Pointing device sensor",
-   name:        "PointingDeviceSensor",
-   level:       1,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Pointing device sensor",
+   name: "PointingDeviceSensor",
+   level: 1,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Projective Texture Mapping",
-   name:        "ProjectiveTextureMapping",
-   level:       2,
-   providerUrl: Networking_URLs.getProviderUrl ("ProjectiveTextureMapping"),
+   title: "Projective Texture Mapping",
+   name: "ProjectiveTextureMapping",
+   level: 2,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Programmable shaders",
-   name:        "Shaders",
-   level:       1,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Programmable shaders",
+   name: "Shaders",
+   level: 1,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Rendering",
-   name:        "Rendering",
-   level:       5,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Rendering",
+   name: "Rendering",
+   level: 5,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Rigid body physics",
-   name:        "RigidBodyPhysics",
-   level:       5,
-   providerUrl: Networking_URLs.getProviderUrl ("RigidBodyPhysics"),
+   title: "Rigid body physics",
+   name: "RigidBodyPhysics",
+   level: 5,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Scripting",
-   name:        "Scripting",
-   level:       1,
-   providerUrl: Networking_URLs.getProviderUrl ("Scripting"),
+   title: "Scripting",
+   name: "Scripting",
+   level: 1,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Shape",
-   name:        "Shape",
-   level:       5,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Shape",
+   name: "Shape",
+   level: 5,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Sound",
-   name:        "Sound",
-   level:       1,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Sound",
+   name: "Sound",
+   level: 1,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Text",
-   name:        "Text",
-   level:       1,
-   providerUrl: Networking_URLs.getProviderUrl ("Text"),
+   title: "Text",
+   name: "Text",
+   level: 1,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Texturing",
-   name:        "Texturing",
-   level:       3,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Texturing",
+   name: "Texturing",
+   level: 3,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Texturing3D",
-   name:        "Texturing3D",
-   level:       3,
-   providerUrl: Networking_URLs.getProviderUrl ("Texturing3D"),
+   title: "Texturing3D",
+   name: "Texturing3D",
+   level: 3,
+   external: true,
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "Time",
-   name:        "Time",
-   level:       2,
-   providerUrl: Networking_URLs.getProviderUrl (),
+   title: "Time",
+   name: "Time",
+   level: 2,
 });
 
 SupportedComponents .addComponent (
 {
-   title:        "Volume rendering",
-   name:         "VolumeRendering",
-   level:        2,
-   providerUrl:  Networking_URLs.getProviderUrl ("VolumeRendering"),
+   title: "Volume rendering",
+   name: "VolumeRendering",
+   level: 2,
+   external: true,
    dependencies: ["CADGeometry", "Texturing3D"],
 });
 
 SupportedComponents .addComponent (
 {
-   title:       "X_ITE",
-   name:        "X_ITE",
-   level:       1,
-   providerUrl: Networking_URLs.getProviderUrl ("X_ITE"),
+   title: "X_ITE",
+   name: "X_ITE",
+   level: 1,
+   external: true,
 });
 
 x_ite_Namespace.set ("x_ite/Configuration/SupportedComponents", SupportedComponents);
@@ -102676,7 +102655,7 @@ x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles)
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(343);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102723,7 +102702,6 @@ x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles)
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -102864,7 +102842,16 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
       if (component)
       {
          if (level <= component .level || true)
-            return new Configuration_ComponentInfo (name, level, component .title, component. providerUrl, X3DBrowser_$.data (component, "dependencies"));
+         {
+            return new Configuration_ComponentInfo ({
+               name: name,
+               level: level,
+               title: component .title,
+               providerUrl: component .providerUrl,
+               external: X3DBrowser_$.data (component, "external"),
+               dependencies: X3DBrowser_$.data (component, "dependencies"),
+            });
+         }
       }
 
       throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
@@ -102875,8 +102862,6 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
    },
    loadComponents: (function ()
    {
-      const componentsUrl = /\.js$/;
-
       function loadComponents (browser, components, seen)
       {
          return Promise .all (components .map (name => loadComponent (browser, name, seen)))
@@ -102886,19 +102871,17 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
       {
          if (seen .has (name)) return; seen .add (name);
 
-         const
-            component   = browser .getSupportedComponents () .get (name),
-            providerUrl = component .providerUrl;
+         const component = browser .getSupportedComponents () .get (name);
 
          await loadComponents (browser, X3DBrowser_$.data (component, "dependencies"), seen);
 
-         if (!providerUrl .match (componentsUrl))
+         if (! X3DBrowser_$.data (component, "external"))
             return;
 
          if (Networking_Features.NODE_ENV)
-            __webpack_require__.g .require (__webpack_require__.g .require ("url") .fileURLToPath (providerUrl))
+            __webpack_require__.g .require (__webpack_require__.g .require ("url") .fileURLToPath (component .providerUrl))
          else
-            await import (/* webpackIgnore: true */ providerUrl);
+            await import (/* webpackIgnore: true */ component .providerUrl);
       }
 
       return function (argument)
@@ -103558,7 +103541,7 @@ x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(343);
+/* provided dependency */ var Fallback_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103733,12 +103716,12 @@ x_ite_Namespace.set ("standard/Time/MicroTime", undefined);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (undefined)));
 
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(343);
+/* provided dependency */ var jquery_$ = __webpack_require__(807);
 x_ite_Namespace.set ("lib/jquery", jquery_$);
 /* harmony default export */ const jquery = (jquery_$);
 
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(343);
+/* provided dependency */ var X3D_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103991,7 +103974,7 @@ x_ite_Namespace.set ("x_ite/X3D", X3D);
 /* harmony default export */ const x_ite_X3D = (X3D);
 
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(343);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(807);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
