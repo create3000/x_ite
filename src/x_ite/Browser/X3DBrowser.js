@@ -189,6 +189,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
                name: name,
                level: level,
                title: component .title,
+               providerUrl: component .providerUrl,
                external: $.data (component, "external"),
                dependencies: $.data (component, "dependencies"),
             });
