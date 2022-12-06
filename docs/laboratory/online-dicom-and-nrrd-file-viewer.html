@@ -29,6 +29,8 @@ table td {
    aspect-ratio: unset;
 }
 
+/* Buttons */
+
 #dicom-buttons input {
    margin-right: 1.5rem;
 }
@@ -36,6 +38,8 @@ table td {
 #dicom-buttons input:last-child {
    margin-right: 0;
 }
+
+/* Samples */
 
 #core-wrapper table h3 {
    margin-top: 0;
@@ -49,7 +53,7 @@ table td {
    <table>
       <tr>
          <td>
-            <x3d-canvas src="dicom/dicom.x3d"></x3d-canvas>
+            <x3d-canvas splashScreen="false" src="dicom/dicom.x3d"></x3d-canvas>
             <p id="dicom-buttons"></p>
          </td>
          <td>

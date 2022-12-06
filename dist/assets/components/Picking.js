@@ -1,4 +1,4 @@
-/* X_ITE v8.2.0 */(() => { // webpackBootstrap
+/* X_ITE v8.2.1a */(() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};
@@ -39,28 +39,28 @@ var __webpack_exports__ = {};
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DSensorNode\")"
-const X3DSensorNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Components/Core/X3DSensorNode");
+const X3DSensorNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Core/X3DSensorNode");
 var X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DSensorNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Rendering/TraverseType");
+const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Rendering/TraverseType");
 var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Picking/MatchCriterion.js
 /*******************************************************************************
@@ -243,13 +243,13 @@ Namespace_default().set ("x_ite/Browser/Picking/SortOrder", SortOrder);
 /* harmony default export */ const Picking_SortOrder = (SortOrder);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("standard/Math/Numbers/Matrix4");
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithms/QuickSort\")"
-const QuickSort_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("standard/Math/Algorithms/QuickSort");
+const QuickSort_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("standard/Math/Algorithms/QuickSort");
 var QuickSort_default = /*#__PURE__*/__webpack_require__.n(QuickSort_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Utility/ObjectCache\")"
-const ObjectCache_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("standard/Utility/ObjectCache");
+const ObjectCache_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("standard/Utility/ObjectCache");
 var ObjectCache_default = /*#__PURE__*/__webpack_require__.n(ObjectCache_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Picking/X3DPickSensorNode.js
 /*******************************************************************************
@@ -685,13 +685,13 @@ Namespace_default().set ("x_ite/Components/Picking/X3DPickSensorNode", X3DPickSe
 /* harmony default export */ const Picking_X3DPickSensorNode = (X3DPickSensorNode);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("standard/Math/Numbers/Vector3");
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Box3\")"
-const Box3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("standard/Math/Geometry/Box3");
+const Box3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("standard/Math/Geometry/Box3");
 var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Line3\")"
-const Line3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("standard/Math/Geometry/Line3");
+const Line3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("standard/Math/Geometry/Line3");
 var Line3_default = /*#__PURE__*/__webpack_require__.n(Line3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Picking/LinePickSensor.js
 /*******************************************************************************
@@ -1021,7 +1021,7 @@ Namespace_default().set ("x_ite/Components/Picking/LinePickSensor", LinePickSens
 /* harmony default export */ const Picking_LinePickSensor = (LinePickSensor);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
-const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
+const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
 var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Picking/X3DPickableObject.js
 /*******************************************************************************
@@ -1320,13 +1320,13 @@ Namespace_default().set ("x_ite/Components/Picking/PickableGroup", PickableGroup
 /* harmony default export */ const Picking_PickableGroup = (PickableGroup);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("x_ite/Base/X3DCast");
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
-const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("standard/Math/Numbers/Rotation4");
+const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("standard/Math/Numbers/Rotation4");
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"lib/ammojs/AmmoClass\")"
-const AmmoClass_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.0")] .require ("lib/ammojs/AmmoClass");
+const AmmoClass_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("lib/ammojs/AmmoClass");
 var AmmoClass_default = /*#__PURE__*/__webpack_require__.n(AmmoClass_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Picking/VolumePicker.js
 /*******************************************************************************

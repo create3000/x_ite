@@ -208,7 +208,7 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    },
    lookAt: function (factor, straighten)
    {
-      this .getViewpoint () .lookAtBBox (this .getBBox (new Box3 ()), factor, straighten);
+      this .getViewpoint () .lookAtBBox (this, this .getBBox (new Box3 ()), factor, straighten);
    },
    set_viewport__: function ()
    {
