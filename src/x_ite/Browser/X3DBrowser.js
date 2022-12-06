@@ -204,8 +204,6 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    loadComponents: (function ()
    {
-      const componentsUrl = /\.js$/;
-
       function loadComponents (browser, components, seen)
       {
          return Promise .all (components .map (name => loadComponent (browser, name, seen)))
@@ -215,19 +213,17 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       {
          if (seen .has (name)) return; seen .add (name);
 
-         const
-            component   = browser .getSupportedComponents () .get (name),
-            providerUrl = component .providerUrl;
+         const component = browser .getSupportedComponents () .get (name);
 
          await loadComponents (browser, $.data (component, "dependencies"), seen);
 
-         if (!providerUrl .match (componentsUrl))
+         if (! $.data (component, "external"))
             return;
 
          if (Features .NODE_ENV)
-            global .require (global .require ("url") .fileURLToPath (providerUrl))
+            global .require (global .require ("url") .fileURLToPath (component .providerUrl))
          else
-            await import (/* webpackIgnore: true */ providerUrl);
+            await import (/* webpackIgnore: true */ component .providerUrl);
       }
 
       return function (argument)
