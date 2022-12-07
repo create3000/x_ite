@@ -536,7 +536,7 @@ Returns an SFVec2d/f whose value is the object divided by the passed numeric val
 
 #### SFVec2d/f **divVec** (*vec*)
 
-Returns an SFVec2d/f whose value is the object divided, componentwise, by passed the SFVec2d/f *vec*.
+Returns an SFVec2d/f whose value is the object divided, componentwise, by the passed SFVec2d/f *vec*.
 
 #### Number **dot** (*vec*)
 
@@ -634,7 +634,7 @@ Returns an SFVec3d/f whose value is the object divided by the passed numeric val
 
 #### SFVec3d/f **divVec** (*vec*)
 
-Returns an SFVec3d/f whose value is the object divided, componentwise, by passed the SFVec3d/f *vec*.
+Returns an SFVec3d/f whose value is the object divided, componentwise, by the passed SFVec3d/f *vec*.
 
 #### Number **dot** (*vec*)
 
@@ -732,7 +732,7 @@ Returns an SFVec4d/f whose value is the object divided by the passed numeric val
 
 #### SFVec4d/f **divVec** (*vec*)
 
-Returns an SFVec4d/f whose value is the object divided, componentwise, by passed the SFVec4d/f *vec*.
+Returns an SFVec4d/f whose value is the object divided, componentwise, by the passed SFVec4d/f *vec*.
 
 #### Number **dot** (*vec*)
 
