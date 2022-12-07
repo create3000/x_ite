@@ -187,10 +187,6 @@ function X3DTypedArrayField (value)
    {
       this [_cache] = [ ]; // Cache of elements.
       this [_tmp]   = [ ]; // Array with components size.
-
-      this .includes    = includes;
-      this .indexOf     = indexOf;
-      this .lastIndexOf = lastIndexOf;
    }
 
    if (value [0] instanceof Array)
@@ -848,6 +844,52 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
    },
 });
 
+Object .assign (X3DTypedArrayField .prototype,
+{
+   includes: function (value, fromIndex = 0)
+   {
+      if (this .getComponents () > 1)
+      {
+         if (fromIndex < 0)
+            fromIndex = this .length + fromIndex;
+
+         return this .some ((v, i) => i >= fromIndex && v .equals (value));
+      }
+      else
+      {
+         return X3DArrayField .prototype .includes .apply (this, arguments);
+      }
+   },
+   indexOf: function (value, fromIndex = 0)
+   {
+      if (this .getComponents () > 1)
+      {
+         if (fromIndex < 0)
+            fromIndex = this .length + fromIndex;
+
+         return this .findIndex ((v, i) => i >= fromIndex && v .equals (value));
+      }
+      else
+      {
+         return X3DArrayField .prototype .indexOf .apply (this, arguments);
+      }
+   },
+   lastIndexOf: function (value, fromIndex = 0)
+   {
+      if (this .getComponents () > 1)
+      {
+         if (fromIndex < 0)
+            fromIndex = this .length + fromIndex;
+
+         return this .findLastIndex ((v, i) => i <= fromIndex && v .equals (value));
+      }
+      else
+      {
+         return X3DArrayField .prototype .lastIndexOf .apply (this, arguments);
+      }
+   },
+})
+
 for (const key of Reflect .ownKeys (X3DTypedArrayField .prototype))
    Object .defineProperty (X3DTypedArrayField .prototype, key, { enumerable: false });
 
@@ -879,23 +921,6 @@ function addEvent (index, components, value)
       array [index] = value [c];
 
    this .addEvent ();
-}
-
-// Array functions
-
-function includes (value)
-{
-   return this .some (v => v .equals (value));
-}
-
-function indexOf (value)
-{
-   return this .findIndex (v => v .equals (value));
-}
-
-function lastIndexOf (value)
-{
-   return this .findLastIndex (v => v .equals (value));
 }
 
 export default X3DTypedArrayField;
