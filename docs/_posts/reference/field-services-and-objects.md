@@ -904,11 +904,11 @@ None
 
 ## MFDouble/MFFloat Object
 
-The MFFloat object corresponds to a X3D MFFloat field. It is used to store a one-dimensional array of SFFloat objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfFloatObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.0.
+The MFDouble/MFFloat object corresponds to a X3D MFDouble/MFFloat field. It is used to store a one-dimensional array of SFFloat objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfFloatObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.0.
 
 ### Instance Creation Method(s)
 
-#### *mfFloatObjectName* = new **MFFloat** (*[number, number...]*)
+#### *mfFloat/DoubleObjectName* = new **MFDouble/MFFloat** (*[number, number...]*)
 
 The creation method can be passed 0 or more numeric-valued expressions to initialize the elements of the array.
 
