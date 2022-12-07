@@ -239,21 +239,21 @@ None
 
 ## SFMatrix3d/SFMatrix3f Object
 
-The SFMatrix3f object provides many useful methods for performing manipulations on 3×3 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix3fObjectName[0], ..., sflMatrixObjectName[8]*).
+The SFMatrix3d/f object provides many useful methods for performing manipulations on 3×3 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix3d/fObjectName[0], ..., sflMatrixObjectName[8]*).
 
 ### Instance Creation Method(s)
 
-#### *sfMatrix3fObjectName* = new **SFMatrix3f** ()
+#### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** ()
 
 A new matrix initialized with the identity matrix is created and returned.
 
-#### *sfMatrix3fObjectName* = new **SFMatrix3f** (*f11, f12, f13, f21, f22, f23, f31, f32, f33*)
+#### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*f11, f12, f13, f21, f22, f23, f31, f32, f33*)
 
 A new matrix initialized with the values in *f11* through *f44* is created and returned.
 
-#### *sfMatrix3fObjectName* = new **SFMatrix3f** (*vector0, vector1, vector2*)
+#### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*vector0, vector1, vector2*)
 
-A new matrix initialized with the vectors in *vector0* through *vector2* of type SFVec3f is created and returned.
+A new matrix initialized with the vectors in *vector0* through *vector2* of type SFVec3d/f is created and returned.
 
 ### Properties
 
@@ -263,61 +263,61 @@ None
 
 #### void **setTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*)
 
-Sets the SFMatrix3f to the passed values. *translation* is an SFVec2f object, *rotation* is a Number, *scaleFactor* is a SFVec2f object, *scaleOrientation* is a Number and *center* is a SFVec2f object. Any of the rightmost parameters can be omitted. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
+Sets the SFMatrix3d/f to the passed values. *translation* is an SFVec2d/f object, *rotation* is a Number, *scaleFactor* is a SFVec2d/f object, *scaleOrientation* is a Number and *center* is a SFVec2d/f object. Any of the rightmost parameters can be omitted. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
 
 #### void **getTransform** (*translation*, *rotation*, *scaleFactor*)
 
-Decomposes the SFMatrix3f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*. rotation* is a SFVec3f where x and y are the complex value of the rotation and z is the rotation angle in radians. The other types of the parameters are the same as in **setTransform**. Any projection or shear information in the matrix is ignored.
+Decomposes the SFMatrix3d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*. rotation* is a SFVec3d/f where x and y are the complex value of the rotation and z is the rotation angle in radians. The other types of the parameters are the same as in **setTransform**. Any projection or shear information in the matrix is ignored.
 
-#### SFMatrix3f **inverse** ()
+#### SFMatrix3d/f **inverse** ()
 
 Returns a SFMatrix whose value is the inverse of this object.
 
-#### SFMatrix3f **transpose** ()
+#### SFMatrix3d/f **transpose** ()
 
-Returns a SFMatrix3f whose value is the transpose of this object.
+Returns a SFMatrix3d/f whose value is the transpose of this object.
 
-#### SFMatrix3f **multLeft** *(matrix*)
+#### SFMatrix3d/f **multLeft** *(matrix*)
 
-Returns a SFMatrix3f whose value is the object multiplied by the passed *matrix* on the left.
+Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the left.
 
-#### SFMatrix3f **multRight** (*matrix*)
+#### SFMatrix3d/f **multRight** (*matrix*)
 
-Returns a SFMatrix3f whose value is the object multiplied by the passed *matrix* on the right.
+Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the right.
 
-#### SFVec2f **multVecMatrix** (*vec*)
+#### SFVec2d/f **multVecMatrix** (*vec*)
 
-Returns a SFVec2f whose value is the object multiplied by the passed row vector.
+Returns a SFVec2d/f whose value is the object multiplied by the passed row vector.
 
-#### SFVec2f **multMatrixVec** (*vec*)
+#### SFVec2d/f **multMatrixVec** (*vec*)
 
-Returns a SFVec2f whose value is the object multiplied by the passed column vector.
+Returns a SFVec2d/f whose value is the object multiplied by the passed column vector.
 
-#### SFVec2f **multDirMatrix** (*vec*)
+#### SFVec2d/f **multDirMatrix** (*vec*)
 
-Returns a SFVec2f whose value is the object's 2×2 submatrix multiplied by the passed row vector.
+Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed row vector.
 
-#### SFVec2f **multMatrixDir** (*vec*)
+#### SFVec2d/f **multMatrixDir** (*vec*)
 
-Returns a SFVec2f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
+Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
 
 ## SFMatrix4d/SFMatrix4f Object
 
-The SFMatrix4f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4fObjectName[0], ..., sflMatrixObjectName[15]*).
+The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4d/fObjectName[0], ..., sflMatrixObjectName[15]*).
 
 ### Instance Creation Method(s)
 
-#### *sfMatrix4fObjectName* = new **SFMatrix4f** ()
+#### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** ()
 
 A new matrix initialized with the identity matrix is created and returned.
 
-#### *sfMatrix4fObjectName* = new **SFMatrix4f** (*f11, f12, f13, f14, f21, f22, f23, f24, f31, f32, f33, f34, f41, f42, f43, f44*)
+#### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*f11, f12, f13, f14, f21, f22, f23, f24, f31, f32, f33, f34, f41, f42, f43, f44*)
 
 A new matrix initialized with the values in *f11* through *f44* is created and returned.
 
-#### *sfMatrix4fObjectName* = new **SFMatrix4f** (*vector0, vector1, vector2, vector3*)
+#### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*vector0, vector1, vector2, vector3*)
 
-A new matrix initialized with the vectors in *vector0* through *vector3* of type SFVec4f is created and returned.
+A new matrix initialized with the vectors in *vector0* through *vector3* of type SFVec4d/f is created and returned.
 
 ### Properties
 
@@ -327,43 +327,43 @@ None
 
 #### void **setTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*)
 
-Sets the SFMatrix4f to the passed values. *translation* is an SFVec3f object, *rotation* is a SFRotation object, *scaleFactor* is a SFVec3f object, *scaleOrientation* is a SFRotation object and *center* is a SFVec3f object. Any of the rightmost parameters can be omitted. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
+Sets the SFMatrix4d/f to the passed values. *translation* is an SFVec3d/f object, *rotation* is a SFRotation object, *scaleFactor* is a SFVec3d/f object, *scaleOrientation* is a SFRotation object and *center* is a SFVec3d/f object. Any of the rightmost parameters can be omitted. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
 
 #### void **getTransform** (*translation*, *rotation*, *scaleFactor*)
 
-Decomposes the SFMatrix4f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*.* The types of the parameters are the same as in **setTransform**. Any projection or shear information in the matrix is ignored.
+Decomposes the SFMatrix4d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*.* The types of the parameters are the same as in **setTransform**. Any projection or shear information in the matrix is ignored.
 
-#### SFMatrix4f **inverse** ()
+#### SFMatrix4d/f **inverse** ()
 
 Returns a SFMatrix whose value is the inverse of this object.
 
-#### SFMatrix4f **transpose** ()
+#### SFMatrix4d/f **transpose** ()
 
-Returns a SFMatrix4f whose value is the transpose of this object.
+Returns a SFMatrix4d/f whose value is the transpose of this object.
 
-#### SFMatrix4f **multLeft** *(matrix*)
+#### SFMatrix4d/f **multLeft** *(matrix*)
 
-Returns a SFMatrix4f whose value is the object multiplied by the passed *matrix* on the left.
+Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the left.
 
-#### SFMatrix4f **multRight** (*matrix*)
+#### SFMatrix4d/f **multRight** (*matrix*)
 
-Returns a SFMatrix4f whose value is the object multiplied by the passed *matrix* on the right.
+Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the right.
 
-#### SFVec3f **multVecMatrix** (*vec*)
+#### SFVec3d/f **multVecMatrix** (*vec*)
 
-Returns a SFVec3f whose value is the object multiplied by the passed row vector.
+Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
 
-#### SFVec3f **multMatrixVec** (*vec*)
+#### SFVec3d/f **multMatrixVec** (*vec*)
 
-Returns a SFVec3f whose value is the object multiplied by the passed column vector.
+Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
 
-#### SFVec3f **multDirMatrix** (*vec*)
+#### SFVec3d/f **multDirMatrix** (*vec*)
 
-Returns a SFVec3f whose value is the object's 3×3 submatrix multiplied by the passed row vector.
+Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed row vector.
 
-#### SFVec3f **multMatrixDir** (*vec*)
+#### SFVec3d/f **multMatrixDir** (*vec*)
 
-Returns a SFVec3f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
+Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
 
 ## SFNode Object
 
@@ -494,15 +494,15 @@ Returns a SFRotation whose value is the spherical linear interpolation between t
 
 ## SFVec2d/SFVec2f Object
 
-The SFVec2f object corresponds to a X3D SFVec2f field. Each component of the vector can be accessed using the x and y properties or using C-style array dereferencing (i.e. *sfVec2fObjectName[0]* or *sfVec2fObjectName[1]).*
+The SFVec2d/f object corresponds to a X3D SFVec2d/f field. Each component of the vector can be accessed using the x and y properties or using C-style array dereferencing (i.e. *sfVec2d/fObjectName[0]* or *sfVec2d/fObjectName[1]).*
 
 ### Instance Creation Method(s)
 
-#### *sfVec2fObjectName* = new **SFVec2f** ()
+#### *sfVec2d/fObjectName* = new **SFVec2d/f** ()
 
 A new vector initialized with zero values is created and returned.
 
-#### *sfVec2fObjectName* = new **SFVec2f** (*number1, number2*)
+#### *sfVec2d/fObjectName* = new **SFVec2d/f** (*number1, number2*)
 
 Where *number1* and *number2* are scalar expressions.
 
@@ -518,81 +518,81 @@ Returns the second value of the vector.
 
 ### Methods
 
-#### SFVec2f **abs** ()
+#### SFVec2d/f **abs** ()
 
-Returns an SFVec2f whose value is the componentwise absolute value of the object.
+Returns an SFVec2d/f whose value is the componentwise absolute value of the object.
 
-#### SFVec2f **add** (*vec*)
+#### SFVec2d/f **add** (*vec*)
 
-Returns an SFVec2f whose value is the passed SFVec2f added, componentwise, to the object.
+Returns an SFVec2d/f whose value is the passed SFVec2d/f added, componentwise, to the object.
 
 #### Number **distance** (*vec*)
 
-Returns the distance of this vector to SFVec2f *vec*.
+Returns the distance of this vector to SFVec2d/f *vec*.
 
-#### SFVec2f **divide** (*number*)
+#### SFVec2d/f **divide** (*number*)
 
-Returns an SFVec2f whose value is the object divided by the passed numeric value.
+Returns an SFVec2d/f whose value is the object divided by the passed numeric value.
 
-#### SFVec2f **divVec** (*vec*)
+#### SFVec2d/f **divVec** (*vec*)
 
-Returns an SFVec2f whose value is the passed SFVec2f divided, componentwise, by the object.
+Returns an SFVec2d/f whose value is the passed SFVec2d/f divided, componentwise, by the object.
 
 #### Number **dot** (*vec*)
 
-Returns the dot product of this vector and SFVec2f *vec*.
+Returns the dot product of this vector and SFVec2d/f *vec*.
 
-#### SFVec2f **inverse** ()
+#### SFVec2d/f **inverse** ()
 
-Returns an SFVec2f whose value is the componentwise inverse of the object.
+Returns an SFVec2d/f whose value is the componentwise inverse of the object.
 
 #### Number **length** ()
 
 Returns the geometric length of this vector.
 
-#### SFVec2f **lerp** (*destVector, t*)
+#### SFVec2d/f **lerp** (*destVector, t*)
 
-Returns a SFVec2f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
 
-#### SFVec2f **min** (*vec*)
+#### SFVec2d/f **min** (*vec*)
 
-Returns an SFVec2f whose value is the componentwise minimum of the passed SFVec2f and the object.
+Returns an SFVec2d/f whose value is the componentwise minimum of the passed SFVec2d/f and the object.
 
-#### SFVec2f **max** (*vec*)
+#### SFVec2d/f **max** (*vec*)
 
-Returns an SFVec2f whose value is the componentwise maximum of the passed SFVec2f and the object.
+Returns an SFVec2d/f whose value is the componentwise maximum of the passed SFVec2d/f and the object.
 
-#### SFVec2f **multiply** (*number*)
+#### SFVec2d/f **multiply** (*number*)
 
-Returns an SFVec2f whose value is the object multiplied by the passed numeric value.
+Returns an SFVec2d/f whose value is the object multiplied by the passed numeric value.
 
-#### SFVec2f **multVec** (*vec*)
+#### SFVec2d/f **multVec** (*vec*)
 
-Returns an SFVec2f whose value is the passed SFVec2f multiplied, componentwise, with the object.
+Returns an SFVec2d/f whose value is the passed SFVec2d/f multiplied, componentwise, with the object.
 
-#### SFVec2f **negate** ()
+#### SFVec2d/f **negate** ()
 
-Returns an SFVec2f whose value is the componentwise negation of the object.
+Returns an SFVec2d/f whose value is the componentwise negation of the object.
 
-#### SFVec2f **normalize** ()
+#### SFVec2d/f **normalize** ()
 
-Returns an SFVec2f of object converted to unit length.
+Returns an SFVec2d/f of object converted to unit length.
 
-#### SFVec2f **subtract** (*vec*)
+#### SFVec2d/f **subtract** (*vec*)
 
-Returns an SFVec2f whose value is the passed SFVec2f subtracted, componentwise, from the object.
+Returns an SFVec2d/f whose value is the passed SFVec2d/f subtracted, componentwise, from the object.
 
 ## SFVec3d/SFVec3f Object
 
-The SFVec3f object corresponds to a X3D SFVec3f field. Each component of the vector can be accessed using the x, y, and z properties or using C-style array dereferencing (i.e. *sfVec3fObjectName[0], sfVec3fObjectName[1]* or *sfVec3fObjectName[2]).*
+The SFVec3d/f object corresponds to a X3D SFVec3d/f field. Each component of the vector can be accessed using the x, y, and z properties or using C-style array dereferencing (i.e. *sfVec3d/fObjectName[0], sfVec3d/fObjectName[1]* or *sfVec3d/fObjectName[2]).*
 
 ### Instance Creation Method(s)
 
-#### *sfVec3fObjectName* = new **SFVec3f** ()
+#### *sfVec3d/fObjectName* = new **SFVec3d/f** ()
 
 A new vector initialized with zero values is created and returned.
 
-#### *sfVec3fObjectName* = new **SFVec3f** (*number1, number2, number3*)
+#### *sfVec3d/fObjectName* = new **SFVec3d/f** (*number1, number2, number3*)
 
 Where *number1, number2,* and *number3* are scalar expressions.
 
@@ -612,85 +612,85 @@ Returns the third value of the vector.
 
 ### Methods
 
-#### SFVec3f **abs** ()
+#### SFVec3d/f **abs** ()
 
-Returns an SFVec3f whose value is the componentwise absolute value of the object.
+Returns an SFVec3d/f whose value is the componentwise absolute value of the object.
 
-#### SFVec3f **add** (*vec*)
+#### SFVec3d/f **add** (*vec*)
 
-Returns an SFVec3f whose value is the passed SFVec3f added, componentwise, to the object.
+Returns an SFVec3d/f whose value is the passed SFVec3d/f added, componentwise, to the object.
 
-#### SFVec3f **cross** (*vec*)
+#### SFVec3d/f **cross** (*vec*)
 
-Returns the cross product of the object and the passed SFVec3f.
+Returns the cross product of the object and the passed SFVec3d/f.
 
 #### Number **distance** (*vec*)
 
-Returns the distance of this vector to SFVec3f *vec*.
+Returns the distance of this vector to SFVec3d/f *vec*.
 
-#### SFVec3f **divide** (*number*)
+#### SFVec3d/f **divide** (*number*)
 
-Returns an SFVec3f whose value is the object divided by the passed numeric value.
+Returns an SFVec3d/f whose value is the object divided by the passed numeric value.
 
-#### SFVec3f **divVec** (*vec*)
+#### SFVec3d/f **divVec** (*vec*)
 
-Returns an SFVec3f whose value is the passed SFVec3f divided, componentwise, by the object.
+Returns an SFVec3d/f whose value is the passed SFVec3d/f divided, componentwise, by the object.
 
 #### Number **dot** (*vec*)
 
-Returns the dot product of this vector and SFVec3f *vec*.
+Returns the dot product of this vector and SFVec3d/f *vec*.
 
-#### SFVec3f **inverse** ()
+#### SFVec3d/f **inverse** ()
 
-Returns an SFVec3f whose value is the componentwise inverse of the object.
+Returns an SFVec3d/f whose value is the componentwise inverse of the object.
 
 #### Number **length** ()
 
 Returns the geometric length of this vector.
 
-#### SFVec3f **lerp** (*destVector, t*)
+#### SFVec3d/f **lerp** (*destVector, t*)
 
-Returns a SFVec3f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
 
-#### SFVec3f **min** (*vec*)
+#### SFVec3d/f **min** (*vec*)
 
-Returns an SFVec3f whose value is the componentwise minimum of the passed SFVec3f and the object.
+Returns an SFVec3d/f whose value is the componentwise minimum of the passed SFVec3d/f and the object.
 
-#### SFVec3f **max** (*vec*)
+#### SFVec3d/f **max** (*vec*)
 
-Returns an SFVec3f whose value is the componentwise maximum of the passed SFVec3f and the object.
+Returns an SFVec3d/f whose value is the componentwise maximum of the passed SFVec3d/f and the object.
 
-#### SFVec3f **multiply** (*number*)
+#### SFVec3d/f **multiply** (*number*)
 
-Returns an SFVec3f whose value is the object multiplied by the passed numeric value.
+Returns an SFVec3d/f whose value is the object multiplied by the passed numeric value.
 
-#### SFVec3f **multVec** (*vec*)
+#### SFVec3d/f **multVec** (*vec*)
 
-Returns an SFVec3f whose value is the passed SFVec3f multiplied, componentwise, with the object.
+Returns an SFVec3d/f whose value is the passed SFVec3d/f multiplied, componentwise, with the object.
 
-#### SFVec3f **negate** ()
+#### SFVec3d/f **negate** ()
 
-Returns an SFVec3f whose value is the componentwise negation of the object.
+Returns an SFVec3d/f whose value is the componentwise negation of the object.
 
-#### SFVec3f **normalize** ()
+#### SFVec3d/f **normalize** ()
 
-Returns an SFVec3f of object converted to unit length
+Returns an SFVec3d/f of object converted to unit length
 
-#### SFVec3f **subtract** (*vec*)
+#### SFVec3d/f **subtract** (*vec*)
 
-Returns an SFVec3f whose value is the passed SFVec3f subtracted, componentwise, from the object.
+Returns an SFVec3d/f whose value is the passed SFVec3d/f subtracted, componentwise, from the object.
 
-## SFVec4d/SFVec4f Object
+## SFVec4d/SFVec4d/f Object
 
-The SFVec4f object corresponds to a X3D SFVec4f field. Each component of the vector can be accessed using the x, y, z and w properties or using C-style array dereferencing (i.e. *sfVec4fObjectName[0], sfVec4fObjectName[1], sfVec4fObjectName[2]* or *sfVec4fObjectName[3]).*
+The SFVec4d/f object corresponds to a X3D SFVec4d/f field. Each component of the vector can be accessed using the x, y, z and w properties or using C-style array dereferencing (i.e. *sfVec4d/fObjectName[0], sfVec4d/fObjectName[1], sfVec4d/fObjectName[2]* or *sfVec4d/fObjectName[3]).*
 
 ### Instance Creation Method(s)
 
-#### *sfVec4fObjectName* = new **SFVec4f** ()
+#### *sfVec4d/fObjectName* = new **SFVec4d/f** ()
 
 A new vector initialized with zero values is created and returned.
 
-#### *sfVec4fObjectName* = new **SFVec4f** (*number1, number2, number3, number4*)
+#### *sfVec4d/fObjectName* = new **SFVec4d/f** (*number1, number2, number3, number4*)
 
 Where *number1, number2, number3* and *number4* are scalar expressions.
 
@@ -714,69 +714,69 @@ Returns the fourth value of the vector.
 
 ### Methods
 
-#### SFVec4f **abs** ()
+#### SFVec4d/f **abs** ()
 
-Returns an SFVec4f whose value is the componentwise absolute value of the object.
+Returns an SFVec4d/f whose value is the componentwise absolute value of the object.
 
-#### SFVec4f **add** (*vec*)
+#### SFVec4d/f **add** (*vec*)
 
-Returns an SFVec4f whose value is the passed SFVec4f added, componentwise, to the object.
+Returns an SFVec4d/f whose value is the passed SFVec4d/f added, componentwise, to the object.
 
 #### Number **distance** (*vec*)
 
-Returns the distance of this vector to SFVec4f *vec*.
+Returns the distance of this vector to SFVec4d/f *vec*.
 
-#### SFVec4f **divide** (*number*)
+#### SFVec4d/f **divide** (*number*)
 
-Returns an SFVec4f whose value is the object divided by the passed numeric value.
+Returns an SFVec4d/f whose value is the object divided by the passed numeric value.
 
-#### SFVec4f **divVec** (*vec*)
+#### SFVec4d/f **divVec** (*vec*)
 
-Returns an SFVec4f whose value is the passed SFVec4f divided, componentwise, by the object.
+Returns an SFVec4d/f whose value is the passed SFVec4d/f divided, componentwise, by the object.
 
 #### Number **dot** (*vec*)
 
-Returns the dot product of this vector and SFVec4f *vec*.
+Returns the dot product of this vector and SFVec4d/f *vec*.
 
-#### SFVec4f **inverse** ()
+#### SFVec4d/f **inverse** ()
 
-Returns an SFVec4f whose value is the componentwise inverse of the object.
+Returns an SFVec4d/f whose value is the componentwise inverse of the object.
 
 #### Number **length** ()
 
 Returns the geometric length of this vector.
 
-#### SFVec4f **lerp** (*destVector, t*)
+#### SFVec4d/f **lerp** (*destVector, t*)
 
-Returns a SFVec4f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
 
-#### SFVec4f **min** (*vec*)
+#### SFVec4d/f **min** (*vec*)
 
-Returns an SFVec4f whose value is the componentwise minimum of the passed SFVec4f and the object.
+Returns an SFVec4d/f whose value is the componentwise minimum of the passed SFVec4d/f and the object.
 
-#### SFVec4f **max** (*vec*)
+#### SFVec4d/f **max** (*vec*)
 
-Returns an SFVec4f whose value is the componentwise maximum of the passed SFVec4f and the object.
+Returns an SFVec4d/f whose value is the componentwise maximum of the passed SFVec4d/f and the object.
 
-#### SFVec4f **multiply** (*number*)
+#### SFVec4d/f **multiply** (*number*)
 
-Returns an SFVec4f whose value is the object multiplied by the passed numeric value.
+Returns an SFVec4d/f whose value is the object multiplied by the passed numeric value.
 
-#### SFVec4f **multVec** (*vec*)
+#### SFVec4d/f **multVec** (*vec*)
 
-Returns an SFVec4f whose value is the passed SFVec4f multiplied, componentwise, with the object.
+Returns an SFVec4d/f whose value is the passed SFVec4d/f multiplied, componentwise, with the object.
 
-#### SFVec4f **negate** ()
+#### SFVec4d/f **negate** ()
 
-Returns an SFVec4f whose value is the componentwise negation of the object.
+Returns an SFVec4d/f whose value is the componentwise negation of the object.
 
-#### SFVec4f **normalize** ()
+#### SFVec4d/f **normalize** ()
 
-Returns an SFVec4f of object converted to unit length.
+Returns an SFVec4d/f of object converted to unit length.
 
-#### SFVec4f **subtract** (*vec*)
+#### SFVec4d/f **subtract** (*vec*)
 
-Returns an SFVec4f whose value is the passed SFVec4f subtracted, componentwise, from the object.
+Returns an SFVec4d/f whose value is the passed SFVec4d/f subtracted, componentwise, from the object.
 
 ## X3DArrayField
 
@@ -936,15 +936,15 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 None
 
-## MFMatrix3d/MFMatrix3f Object
+## MFMatrix3d/MFMatrix3d/f Object
 
-The MFMatrix3f object corresponds to a X3D MFMatrix3f field. It is used to store a one-dimensional array of SFMatrix3f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix3fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to NULL.
+The MFMatrix3d/f object corresponds to a X3D MFMatrix3d/f field. It is used to store a one-dimensional array of SFMatrix3d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix3d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to NULL.
 
 ### Instance Creation Method(s)
 
-#### *mfMatrix3fObjectName* = new **MFMatrix3f** (*[SFMatrix3f, SFMatrix3f, ...]*)
+#### *mfMatrix3d/fObjectName* = new **MFMatrix3d/f** (*[SFMatrix3d/f, SFMatrix3d/f, ...]*)
 
-The creation method can be passed 0 or more SFMatrix3f-valued expressions to initialize the elements of the array.
+The creation method can be passed 0 or more SFMatrix3d/f-valued expressions to initialize the elements of the array.
 
 ### Properties
 
@@ -958,13 +958,13 @@ None
 
 ## MFMatrix4d/MFMatrix4f Object
 
-The MFMatrix4f object corresponds to a X3D MFMatrix4f field. It is used to store a one-dimensional array of SFMatrix4f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix4fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to NULL.
+The MFMatrix4d/f object corresponds to a X3D MFMatrix4d/f field. It is used to store a one-dimensional array of SFMatrix4d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfMatrix4d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to NULL.
 
 ### Instance Creation Method(s)
 
-#### *mfMatrix4fObjectName* = new **MFMatrix4f** (*[SFMatrix4f, SFMatrix4f, ...]*)
+#### *mfMatrix4d/fObjectName* = new **MFMatrix4d/f** (*[SFMatrix4d/f, SFMatrix4d/f, ...]*)
 
-The creation method can be passed 0 or more SFMatrix4f-valued expressions to initialize the elements of the array.
+The creation method can be passed 0 or more SFMatrix4d/f-valued expressions to initialize the elements of the array.
 
 ### Properties
 
@@ -1064,13 +1064,13 @@ None
 
 ## MFVec2d/MFVec2f Object
 
-The MFVec2f object corresponds to a X3D MFVec2f field. It is used to store a one-dimensional array of SFVec2f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec2fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFVec2f (0, 0).
+The MFVec2d/f object corresponds to a X3D MFVec2d/f field. It is used to store a one-dimensional array of SFVec2d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec2d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFVec2d/f (0, 0).
 
 ### Instance Creation Method(s)
 
-#### *mfVec2fObjectName* = new **MFVec2f** (*[SFVec2f, SFVec2f, ...]*)
+#### *mfVec2d/fObjectName* = new **MFVec2d/f** (*[SFVec2d/f, SFVec2d/f, ...]*)
 
-The creation method can be passed 0 or more SFVec2f-valued expressions to initialize the elements of the array.
+The creation method can be passed 0 or more SFVec2d/f-valued expressions to initialize the elements of the array.
 
 ### Properties
 
@@ -1082,15 +1082,15 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 None
 
-## MFVec3d/MFVec3f Object
+## MFVec3d/MFVec3d/f Object
 
-The MFVec3f object corresponds to a X3D MFVec3f field. It is used to store a one-dimensional array of SFVec3f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec3fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFVec3f (0, 0, 0).
+The MFVec3d/f object corresponds to a X3D MFVec3d/f field. It is used to store a one-dimensional array of SFVec3d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec3d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFVec3d/f (0, 0, 0).
 
 ### Instance Creation Method(s)
 
-#### *mfVec3fObjectName* = new **MFVec3f** (*[SFVec3f, SFVec3f, ...]*)
+#### *mfVec3d/fObjectName* = new **MFVec3d/f** (*[SFVec3d/f, SFVec3d/f, ...]*)
 
-The creation method can be passed 0 or more SFVec3f-valued expressions to initialize the elements of the array.
+The creation method can be passed 0 or more SFVec3d/f-valued expressions to initialize the elements of the array.
 
 ### Properties
 
@@ -1104,13 +1104,13 @@ None
 
 ## MFVec4d/MFVec4f Object
 
-The MFVec4f object corresponds to a X3D MFVec4f field. It is used to store a one-dimensional array of SFVec4f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec4fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFVec4f (0, 0).
+The MFVec4d/f object corresponds to a X3D MFVec4d/f field. It is used to store a one-dimensional array of SFVec4d/f objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfVec4d/fObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFVec4d/f (0, 0, 0, 0).
 
 ### Instance Creation Method(s)
 
-#### *mfVec4fObjectName* = new **MFVec4f** (*[SFVec4f, SFVec4f, ...]*)
+#### *mfVec4d/fObjectName* = new **MFVec4d/f** (*[SFVec4d/f, SFVec4d/f, ...]*)
 
-The creation method can be passed 0 or more SFVec4f-valued expressions to initialize the elements of the array.
+The creation method can be passed 0 or more SFVec4d/f-valued expressions to initialize the elements of the array.
 
 ### Properties
 
