@@ -67,14 +67,14 @@ X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    includes: Array .prototype .includes,
    indexOf: Array .prototype .indexOf,
    join: Array .prototype .join,
-   keys: function () { return Array (this .length) .keys (); },
+   keys: Array .prototype .keys,
    lastIndexOf: Array .prototype .lastIndexOf,
    map: Array .prototype .map,
    reduce: Array .prototype .reduce,
    reduceRight: Array .prototype .reduceRight,
    slice: Array .prototype .slice,
    some: Array .prototype .some,
-   values: function () { return this [Symbol .iterator]; },
+   values: Array .prototype .values,
 });
 
 for (const key of Reflect .ownKeys (X3DArrayField .prototype))
