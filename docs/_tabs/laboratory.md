@@ -8,3 +8,7 @@ order: 4
 * [3D L-System Generator](/x_ite/laboratory/3d-l-system-generator)
 * [Online DICOM and NRRD File Viewer](/x_ite/laboratory/online-dicom-and-nrrd-file-viewer)
 * [Real time Earth Quake Information](/x_ite/laboratory/real-time-earth-quake-information)
+
+## D3-X3D
+
+D3-X3D combines the power of [D3.js](http://www.d3js.org/){:target="_blank"} with X3D and can be found on [GitHub](https://github.com/jamesleesaunders/d3-x3d#d3-x3d){:target="_blank"}.
