@@ -381,6 +381,10 @@ Each node may assign values to its inputOnly fields and obtain the last output v
 
 ### Methods
 
+#### String **getNodeTypeName** ()
+
+Returns the node type name.
+
 #### String **getNodeName** ()
 
 Returns the node name.
