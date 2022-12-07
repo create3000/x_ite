@@ -80,10 +80,6 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create (X3DInterpol
       new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",    new Fields .SFVec3d ()),
       new X3DFieldDefinition (X3DConstants .outputOnly,     "geovalue_changed", new Fields .SFVec3d ()),
    ]),
-   keyValue0: new Vector3 (0, 0, 0),
-   keyValue1: new Vector3 (0, 0, 0),
-   geovalue: new Vector3 (0, 0, 0),
-   value: new Vector3 (0, 0, 0),
    getTypeName: function ()
    {
       return "GeoPositionInterpolator";
@@ -110,23 +106,31 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create (X3DInterpol
    },
    set_keyValue__: function ()
    {
-      var
+      const
          key      = this ._key,
          keyValue = this ._keyValue;
 
       if (keyValue .length < key .length)
          keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
    },
-   interpolate: function (index0, index1, weight)
+   interpolate: (function ()
    {
-      this .getCoord (this ._keyValue [index0] .getValue (), this .keyValue0);
-      this .getCoord (this ._keyValue [index1] .getValue (), this .keyValue1);
+      const
+         keyValue0 = new Vector3 (0, 0, 0),
+         keyValue1 = new Vector3 (0, 0, 0),
+         geovalue  = new Vector3 (0, 0, 0);
 
-      var coord = this .geocentric .slerp (this .keyValue0, this .keyValue1, weight);
+      return function (index0, index1, weight)
+      {
+         this .getCoord (this ._keyValue [index0] .getValue (), keyValue0);
+         this .getCoord (this ._keyValue [index1] .getValue (), keyValue1);
 
-      this ._geovalue_changed = this .getGeoCoord (coord, this .geovalue);
-      this ._value_changed    = coord;
-   },
+         const coord = this .geocentric .slerp (keyValue0, keyValue1, weight);
+
+         this ._geovalue_changed = this .getGeoCoord (coord, geovalue);
+         this ._value_changed    = coord;
+      };
+   })(),
    dispose: function ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);
