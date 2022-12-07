@@ -496,7 +496,7 @@ Returns the second value of the vector.
 
 #### SFVec2f **abs** ()
 
-Returns an SFVec2f whose value is the absolute value of the object.
+Returns an SFVec2f whose value is the componentwise absolute value of the object.
 
 #### SFVec2f **add** (*vec*)
 
@@ -532,11 +532,11 @@ Returns a SFVec2f whose value is the linear interpolation between this object's 
 
 #### SFVec2f **min** (*vec*)
 
-Returns an SFVec2f whose value is the minimum of the passed SFVec2f and the object.
+Returns an SFVec2f whose value is the componentwise minimum of the passed SFVec2f and the object.
 
 #### SFVec2f **max** (*vec*)
 
-Returns an SFVec2f whose value is the maximum of the passed SFVec2f and the object.
+Returns an SFVec2f whose value is the componentwise maximum of the passed SFVec2f and the object.
 
 #### SFVec2f **multiply** (*number*)
 
@@ -586,7 +586,7 @@ Returns the third value of the vector.
 
 #### SFVec3f **abs** ()
 
-Returns an SFVec3f whose value is the absolute value of the object.
+Returns an SFVec3f whose value is the componentwise absolute value of the object.
 
 #### SFVec3f **add** (*vec*)
 
@@ -626,11 +626,11 @@ Returns a SFVec3f whose value is the linear interpolation between this object's 
 
 #### SFVec3f **min** (*vec*)
 
-Returns an SFVec3f whose value is the minimum of the passed SFVec3f and the object.
+Returns an SFVec3f whose value is the componentwise minimum of the passed SFVec3f and the object.
 
 #### SFVec3f **max** (*vec*)
 
-Returns an SFVec3f whose value is the maximum of the passed SFVec3f and the object.
+Returns an SFVec3f whose value is the componentwise maximum of the passed SFVec3f and the object.
 
 #### SFVec3f **multiply** (*number*)
 
@@ -684,7 +684,7 @@ Returns the fourth value of the vector.
 
 #### SFVec4f **abs** ()
 
-Returns an SFVec4f whose value is the absolute value of the object.
+Returns an SFVec4f whose value is the componentwise absolute value of the object.
 
 #### SFVec4f **add** (*vec*)
 
@@ -720,11 +720,11 @@ Returns a SFVec4f whose value is the linear interpolation between this object's 
 
 #### SFVec4f **min** (*vec*)
 
-Returns an SFVec4f whose value is the minimum of the passed SFVec4f and the object.
+Returns an SFVec4f whose value is the componentwise minimum of the passed SFVec4f and the object.
 
 #### SFVec4f **max** (*vec*)
 
-Returns an SFVec4f whose value is the maximum of the passed SFVec4f and the object.
+Returns an SFVec4f whose value is the componentwise maximum of the passed SFVec4f and the object.
 
 #### SFVec4f **multiply** (*number*)
 
