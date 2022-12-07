@@ -51,6 +51,7 @@ import Algorithm     from "../../standard/Math/Algorithm.js";
 
 const
    _target = Symbol (),
+   _cache  = Symbol (),
    _tmp    = Symbol (),
    _length = Symbol ();
 
@@ -87,15 +88,26 @@ const handler =
             {
                // Return reference to index.
 
-               const
-                  value         = new (valueType) (),
-                  internalValue = value .getValue (),
-                  i             = index * components;
+               const value = target [_cache] [index];
 
-               value .addEvent = addEvent .bind (target, i, internalValue, components);
-               value .getValue = getValue .bind (target, i, internalValue, components);
+               if (value)
+               {
+                  return value;
+               }
+               else
+               {
+                  const
+                     value         = new valueType (),
+                     internalValue = value .getValue (),
+                     i             = index * components;
 
-               return value;
+                  value .addEvent = addEvent .bind (target, i, components, internalValue);
+                  value .getValue = getValue .bind (target, i, components, internalValue);
+
+                  target [_cache] [index] = value;
+
+                  return value;
+               }
             }
          }
          else
@@ -170,6 +182,7 @@ function X3DTypedArrayField (value)
    X3DArrayField .call (this, new (this .getArrayType ()) (2));
 
    this [_target] = this;
+   this [_cache]  = [ ];
    this [_tmp]    = [ ];  // Array with components size.
 
    if (value [0] instanceof Array)
@@ -208,16 +221,27 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
          for (let index = 0; index < length; ++ index)
          {
-            const
-               value         = new (valueType) (),
-               internalValue = value .getValue (),
-               i             = index * components;
+            const value = target [_cache] [index];
 
-            value .addEvent = addEvent .bind (target, i, internalValue, components);
-            value .getValue = getValue .bind (target, i, internalValue, components);
+            if (value)
+            {
+               yield value;
+            }
+            else
+            {
+               const
+                  value         = new valueType (),
+                  internalValue = value .getValue (),
+                  i             = index * components;
 
-            yield value;
-         }
+               value .addEvent = addEvent .bind (target, i, internalValue, components);
+               value .getValue = getValue .bind (target, i, internalValue, components);
+
+               target [_cache] [index] = value;
+
+               yield value;
+            }
+          }
       }
    },
    getTarget: function ()
@@ -253,7 +277,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          return false;
 
       const
-         a = target  .getValue (),
+         a = target .getValue (),
          b = other .getValue ();
 
       for (let i = 0, l = length * target .getComponents (); i < l; ++ i)
@@ -390,9 +414,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
             for (let c = 0; c < components; ++ c)
                tmp [c] = array [c];
 
-            var value = Object .create (valueType .prototype);
-
-            valueType .apply (value, tmp);
+            var value = new valueType (... tmp);
          }
 
          array .copyWithin (0, components, length * components);
@@ -461,9 +483,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
             for (let c = 0, a = newLength * components; c < components; ++ c, ++ a)
                tmp [c] = array [a];
 
-            var value = Object .create (valueType .prototype);
-
-            valueType .apply (value, tmp);
+            var value = new valueType (... tmp);
          }
 
          array .fill (0, newLength * components, length * components);
@@ -573,6 +593,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       target [_length] = newLength;
       values [_length] = difference;
 
+      if (components > 1)
+         target [_cache] .length = newLength;
+
       target .addEvent ();
 
       return values .slice ();
@@ -589,6 +612,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       if (newLength < length)
       {
          array .fill (0, newLength * components, length * components);
+
+         if (components > 1)
+            target [_cache] .length = newLength;
 
          if (!silent)
             target .addEvent ();
@@ -827,21 +853,17 @@ Object .defineProperty (X3DTypedArrayField .prototype, "length",
 
 // Getter/Setter functions to reference a value for a given index.
 
-function getValue (index, value, components)
+function getValue (index, components, value)
 {
-   const
-      array = this .getValue (),
-      tmp   = this [_tmp];
+   const array = this .getValue ();
 
    for (let c = 0; c < components; ++ c, ++ index)
-      tmp [c] = array [index];
-
-   value .set .apply (value, tmp);
+      value [c] = array [index];
 
    return value;
 }
 
-function addEvent (index, value, components)
+function addEvent (index, components, value)
 {
    const array = this .getValue ();
 

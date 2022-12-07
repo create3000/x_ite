@@ -771,7 +771,6 @@ Namespace_default().set ("standard/Geospatial/UniversalTransverseMercator", Univ
 
 
 
-
 function Geocentric () { }
 
 Geocentric .prototype =
@@ -2852,10 +2851,6 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create ((X3DInterpo
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "value_changed",    new (Fields_default()).SFVec3d ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "geovalue_changed", new (Fields_default()).SFVec3d ()),
    ]),
-   keyValue0: new (Vector3_default()) (0, 0, 0),
-   keyValue1: new (Vector3_default()) (0, 0, 0),
-   geovalue: new (Vector3_default()) (0, 0, 0),
-   value: new (Vector3_default()) (0, 0, 0),
    getTypeName: function ()
    {
       return "GeoPositionInterpolator";
@@ -2882,23 +2877,31 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create ((X3DInterpo
    },
    set_keyValue__: function ()
    {
-      var
+      const
          key      = this ._key,
          keyValue = this ._keyValue;
 
       if (keyValue .length < key .length)
          keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new (Fields_default()).SFVec3f ());
    },
-   interpolate: function (index0, index1, weight)
+   interpolate: (function ()
    {
-      this .getCoord (this ._keyValue [index0] .getValue (), this .keyValue0);
-      this .getCoord (this ._keyValue [index1] .getValue (), this .keyValue1);
+      const
+         keyValue0 = new (Vector3_default()) (0, 0, 0),
+         keyValue1 = new (Vector3_default()) (0, 0, 0),
+         geovalue  = new (Vector3_default()) (0, 0, 0);
 
-      var coord = this .geocentric .slerp (this .keyValue0, this .keyValue1, weight);
+      return function (index0, index1, weight)
+      {
+         this .getCoord (this ._keyValue [index0] .getValue (), keyValue0);
+         this .getCoord (this ._keyValue [index1] .getValue (), keyValue1);
 
-      this ._geovalue_changed = this .getGeoCoord (coord, this .geovalue);
-      this ._value_changed    = coord;
-   },
+         const coord = this .geocentric .slerp (keyValue0, keyValue1, weight);
+
+         this ._geovalue_changed = this .getGeoCoord (coord, geovalue);
+         this ._value_changed    = coord;
+      };
+   })(),
    dispose: function ()
    {
       Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
@@ -3396,7 +3399,6 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
