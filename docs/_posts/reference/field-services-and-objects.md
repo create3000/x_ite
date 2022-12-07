@@ -381,9 +381,15 @@ Each node may assign values to its inputOnly fields and obtain the last output v
 
 ### Methods
 
-#### String **getNodeTypeName** ()
+#### void **addFieldCallback** (*name, key, callback*)
 
-Returns the node type name.
+Adds a field callback function, if external browser interface is used. *Name* is the name of the field. *Key* is a custom key of any type associated with the *callback*. The callback is called when the field has been changed.
+
+The callback has a signature of *function (value),* where value is the current value of the field.
+
+#### FieldDefinitionArray **getFieldDefinitions** ()
+
+Returns a list of fields defined for the SFNode object.
 
 #### String **getNodeName** ()
 
@@ -393,15 +399,9 @@ Returns the node name.
 
 Returns, in the array, a list of constant values that indicate node types as provided in the X3DConstants object.
 
-#### FieldDefinitionArray **getFieldDefinitions** ()
+#### String **getNodeTypeName** ()
 
-Returns a list of fields defined for the SFNode object.
-
-#### void **addFieldCallback** (*name, key, callback*)
-
-Adds a field callback function, if external browser interface is used. *Name* is the name of the field. *Key* is a custom key of any type associated with the *callback*. The callback is called when the field has been changed.
-
-The callback has a signature of *function (value),* where value is the current value of the field.
+Returns the node type name.
 
 #### void **removeFieldCallback** (*name, key*)
 
