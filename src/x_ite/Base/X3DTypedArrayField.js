@@ -179,11 +179,15 @@ const handler =
 
 function X3DTypedArrayField (value)
 {
-   X3DArrayField .call (this, new (this .getArrayType ()) (2));
+   X3DArrayField .call (this, new (this .getArrayType ()) (16));
 
    this [_target] = this;
-   this [_cache]  = [ ];
-   this [_tmp]    = [ ];  // Array with components size.
+
+   if (this .getComponents () > 1)
+   {
+      this [_cache] = [ ]; // Cache of elements.
+      this [_tmp]   = [ ]; // Array with components size.
+   }
 
    if (value [0] instanceof Array)
       value = value [0];
