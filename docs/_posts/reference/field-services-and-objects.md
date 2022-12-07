@@ -778,7 +778,7 @@ The `push` method appends values to an array. The return value is the new length
 
 The `shift` method removes the first element from an array and returns that value to the caller. The return value is the removed element from the array; `undefined` if the array is empty.
 
-#### MF* **splice** (*start [, deleteCount, [item1, item2, ...]]*)
+#### Array **splice** (*start [, deleteCount, [item1, item2, ...]]*)
 
 #### start
 
