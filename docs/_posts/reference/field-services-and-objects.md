@@ -858,7 +858,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 None
 
-## MFColor/MFColorRGBA Object
+## MFColor Object
 
 The MFColor object corresponds to a X3D MFColor field. It is used to store a one-dimensional array of SFColor objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfColorObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index* length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFColor (0, 0, 0).
 
@@ -867,6 +867,28 @@ The MFColor object corresponds to a X3D MFColor field. It is used to store a one
 #### *mfColorObjectName* = new **MFColor** (*[SFColor, SFColor, ...]*)
 
 The creation method can be passed 0 or more SFColor-valued expressions to initialize the elements of the array.
+
+### Properties
+
+#### **length**
+
+An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
+
+### Common Methods
+
+### Methods
+
+None
+
+## MFColorRGBA Object
+
+The MFColorRGBA object corresponds to a X3D MFColorRGBA field. It is used to store a one-dimensional array of SFColorRGBA objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfColorObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index* length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to SFColorRGBA (0, 0, 0, 0).
+
+### Instance Creation Method(s)
+
+#### *mfColorRGBAObjectName* = new **MFColorRGBA** (*[SFColorRGBA, SFColorRGBA, ...]*)
+
+The creation method can be passed 0 or more SFColorRGBA-valued expressions to initialize the elements of the array.
 
 ### Properties
 
