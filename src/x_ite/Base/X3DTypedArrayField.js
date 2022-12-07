@@ -188,8 +188,9 @@ function X3DTypedArrayField (value)
       this [_cache] = [ ]; // Cache of elements.
       this [_tmp]   = [ ]; // Array with components size.
 
-      this .includes = includes;
-      this .indexOf  = indexOf;
+      this .includes    = includes;
+      this .indexOf     = indexOf;
+      this .lastIndexOf = lastIndexOf;
    }
 
    if (value [0] instanceof Array)
@@ -890,6 +891,11 @@ function includes (value)
 function indexOf (value)
 {
    return this .findIndex (v => v .equals (value));
+}
+
+function lastIndexOf (value)
+{
+   return this .findLastIndex (v => v .equals (value));
 }
 
 export default X3DTypedArrayField;
