@@ -800,7 +800,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 #### Boolean **equals** (*array*)
 
-Returns true if the passed MF*l *array* of the same type is equals to this object, otherwise false.
+Returns true if the passed MF* *array* of the same type is equals to this object, otherwise false.
 
 #### SF* **pop** ()
 
