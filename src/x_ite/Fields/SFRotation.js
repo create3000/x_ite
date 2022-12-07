@@ -45,32 +45,44 @@
  *
  ******************************************************************************/
 
-import SFVec3       from "./SFVec3.js";
 import X3DField     from "../Base/X3DField.js";
+import SFVec3       from "./SFVec3.js";
+import SFMatrix3    from "./SFMatrix3.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import Generator    from "../InputOutput/Generator.js";
 import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
+import Matrix3      from "../../standard/Math/Numbers/Matrix3.js";
 
-const SFVec3f = SFVec3 .SFVec3f;
+const
+   SFVec3f    = SFVec3 .SFVec3f,
+   SFMatrix3f = SFMatrix3 .SFMatrix3f;
 
 function SFRotation (x, y, z, angle)
 {
    switch (arguments .length)
    {
       case 0:
+      {
          return X3DField .call (this, new Rotation4 ());
-
+      }
       case 1:
-         return X3DField .call (this, arguments [0]);
+      {
+         if (arguments [0] instanceof SFMatrix3f)
+            return X3DField .call (this, new Rotation4 () .setMatrix (arguments [0] .getValue ()));
 
+         return X3DField .call (this, arguments [0]);
+      }
       case 2:
+      {
          if (arguments [1] instanceof SFVec3f)
             return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
 
          return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), +arguments [1]));
-
+      }
       case 4:
+      {
          return X3DField .call (this, new Rotation4 (+x, +y, +z, +angle));
+      }
    }
 
    throw new Error ("Invalid arguments.");
@@ -115,6 +127,15 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    getAxis: function ()
    {
       return new SFVec3f (this .getValue () .getAxis () .copy ());
+   },
+   setMatrix: function (matrix)
+   {
+      this .getValue () .setMatrix (matrix .getValue ());
+      this .addEvent ();
+   },
+   getMatrix: function ()
+   {
+      return new SFMatrix3f (this .getValue () .getMatrix (new Matrix3 ()));
    },
    inverse: function ()
    {

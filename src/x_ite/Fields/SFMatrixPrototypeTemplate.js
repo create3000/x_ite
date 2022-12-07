@@ -45,7 +45,8 @@
  *
  ******************************************************************************/
 
-import X3DField from "../Base/X3DField.js";
+import X3DField  from "../Base/X3DField.js";
+import Generator from "../InputOutput/Generator.js";
 
 function SFMatrixPrototypeTemplate (Matrix, SFVec, double)
 {
