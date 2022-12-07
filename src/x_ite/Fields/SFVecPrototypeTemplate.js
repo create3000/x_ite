@@ -48,13 +48,21 @@
 import X3DField  from "../Base/X3DField.js";
 import Generator from "../InputOutput/Generator.js";
 
-function SFVecPrototypeTemplate (Type, double)
+function SFVecPrototypeTemplate (TypeName, Type, ValueType, double)
 {
    return Object .assign (Object .create (X3DField .prototype),
    {
       [Symbol .iterator]: function* ()
       {
          yield* this .getValue ();
+      },
+      getTypeName: function ()
+      {
+         return TypeName;
+      },
+      getType: function ()
+      {
+         return Type;
       },
       copy: function ()
       {
@@ -66,7 +74,7 @@ function SFVecPrototypeTemplate (Type, double)
       },
       isDefaultValue: function ()
       {
-         return this .getValue () .equals (Type .Zero);
+         return this .getValue () .equals (ValueType .Zero);
       },
       set: function (value)
       {
@@ -74,11 +82,11 @@ function SFVecPrototypeTemplate (Type, double)
       },
       abs: function ()
       {
-         return new (this .constructor) (Type .abs (this .getValue ()));
+         return new (this .constructor) (ValueType .abs (this .getValue ()));
       },
       add: function (vector)
       {
-         return new (this .constructor) (Type .add (this .getValue (), vector .getValue ()));
+         return new (this .constructor) (ValueType .add (this .getValue (), vector .getValue ()));
       },
       distance: function (vector)
       {
@@ -86,11 +94,11 @@ function SFVecPrototypeTemplate (Type, double)
       },
       divide: function (value)
       {
-         return new (this .constructor) (Type .divide (this .getValue (), value));
+         return new (this .constructor) (ValueType .divide (this .getValue (), value));
       },
       divVec: function (vector)
       {
-         return new (this .constructor) (Type .divVec (this .getValue (), vector .getValue ()));
+         return new (this .constructor) (ValueType .divVec (this .getValue (), vector .getValue ()));
       },
       dot: function (vector)
       {
@@ -98,7 +106,7 @@ function SFVecPrototypeTemplate (Type, double)
       },
       inverse: function ()
       {
-         return new (this .constructor) (Type .inverse (this .getValue ()));
+         return new (this .constructor) (ValueType .inverse (this .getValue ()));
       },
       length: function ()
       {
@@ -106,35 +114,35 @@ function SFVecPrototypeTemplate (Type, double)
       },
       lerp: function (destination, t)
       {
-         return new (this .constructor) (Type .lerp (this .getValue (), destination, t));
+         return new (this .constructor) (ValueType .lerp (this .getValue (), destination, t));
       },
       max: function (vector)
       {
-         return new (this .constructor) (Type .max (this .getValue (), vector .getValue ()));
+         return new (this .constructor) (ValueType .max (this .getValue (), vector .getValue ()));
       },
       min: function (vector)
       {
-         return new (this .constructor) (Type .min (this .getValue (), vector .getValue ()));
+         return new (this .constructor) (ValueType .min (this .getValue (), vector .getValue ()));
       },
       multiply: function (value)
       {
-         return new (this .constructor) (Type .multiply (this .getValue (), value));
+         return new (this .constructor) (ValueType .multiply (this .getValue (), value));
       },
       multVec: function (vector)
       {
-         return new (this .constructor) (Type .multVec (this .getValue (), vector .getValue ()));
+         return new (this .constructor) (ValueType .multVec (this .getValue (), vector .getValue ()));
       },
       negate: function ()
       {
-         return new (this .constructor) (Type .negate (this .getValue ()));
+         return new (this .constructor) (ValueType .negate (this .getValue ()));
       },
       normalize: function (vector)
       {
-         return new (this .constructor) (Type .normalize (this .getValue ()));
+         return new (this .constructor) (ValueType .normalize (this .getValue ()));
       },
       subtract: function (vector)
       {
-         return new (this .constructor) (Type .subtract (this .getValue (), vector .getValue ()));
+         return new (this .constructor) (ValueType .subtract (this .getValue (), vector .getValue ()));
       },
       toStream: function (stream)
       {

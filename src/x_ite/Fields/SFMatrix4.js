@@ -90,17 +90,9 @@ function SFMatrix4Template (TypeName, Type, SFVec3, double)
    }
 
    SFMatrix4 .prototype = Object .assign (Object .create (X3DField .prototype),
-      SFMatrixPrototypeTemplate (Matrix4, SFVec3, double),
+      SFMatrixPrototypeTemplate (TypeName, Type, Matrix4, SFVec3, double),
    {
       constructor: SFMatrix4,
-      getTypeName: function ()
-      {
-         return TypeName;
-      },
-      getType: function ()
-      {
-         return Type;
-      },
    });
 
    for (const key of Reflect .ownKeys (SFMatrix4 .prototype))

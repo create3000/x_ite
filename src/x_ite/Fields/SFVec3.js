@@ -70,17 +70,9 @@ function SFVec3Template (TypeName, Type, double)
    }
 
    SFVec3 .prototype = Object .assign (Object .create (X3DField .prototype),
-      SFVecPrototypeTemplate (Vector3, double),
+      SFVecPrototypeTemplate (TypeName, Type, Vector3, double),
    {
       constructor: SFVec3,
-      getTypeName: function ()
-      {
-         return TypeName;
-      },
-      getType: function ()
-      {
-         return Type;
-      },
       cross: function (vector)
       {
          return new (this .constructor) (Vector3 .cross (this .getValue (), vector .getValue ()));

@@ -48,13 +48,21 @@
 import X3DField  from "../Base/X3DField.js";
 import Generator from "../InputOutput/Generator.js";
 
-function SFMatrixPrototypeTemplate (Matrix, SFVec, double)
+function SFMatrixPrototypeTemplate (TypeName, Type, Matrix, SFVec, double)
 {
    return Object .assign (Object .create (X3DField .prototype),
    {
       [Symbol .iterator]: function* ()
       {
          yield* this .getValue ();
+      },
+      getTypeName: function ()
+      {
+         return TypeName;
+      },
+      getType: function ()
+      {
+         return Type;
       },
       copy: function ()
       {

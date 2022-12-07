@@ -86,17 +86,9 @@ function SFMatrix3Template (TypeName, Type, SFVec2, double)
    }
 
    SFMatrix3 .prototype = Object .assign (Object .create (X3DField .prototype),
-      SFMatrixPrototypeTemplate (Matrix3, SFVec2, double),
+      SFMatrixPrototypeTemplate (TypeName, Type, Matrix3, SFVec2, double),
    {
       constructor: SFMatrix3,
-      getTypeName: function ()
-      {
-         return TypeName;
-      },
-      getType: function ()
-      {
-         return Type;
-      },
       setTransform: function (translation, rotation, scale, scaleOrientation, center)
       {
          translation      = translation      ? translation      .getValue () : null;

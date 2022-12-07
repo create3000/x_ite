@@ -70,17 +70,9 @@ function SFVec4Template (TypeName, Type, double)
    }
 
    SFVec4 .prototype = Object .assign (Object .create (X3DField .prototype),
-      SFVecPrototypeTemplate (Vector4, double),
+      SFVecPrototypeTemplate (TypeName, Type, Vector4, double),
    {
       constructor: SFVec4,
-      getTypeName: function ()
-      {
-         return TypeName;
-      },
-      getType: function ()
-      {
-         return Type;
-      },
    });
 
    for (const key of Reflect .ownKeys (SFVec4 .prototype))
