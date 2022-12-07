@@ -112,11 +112,15 @@ Returns true if the passed SF* or MF* *field* of the same type is equals to this
 
 ## SFColor Object
 
-The SFColor object corresponds to a X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.<property>*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (<argument-list>)*, where *sfColorObjectName* is an instance of a SFColor object.
+The SFColor object corresponds to a X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.<property>*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (<argument-list>*), where *sfColorObjectName* is an instance of a SFColor object.
 
 ### Instance Creation Method(s)
 
-#### *sfColorObjectName* = new **SFColor** (*r, g, b)*
+#### *sfColorObjectName* = new **SFColor** ()
+
+A new color initialized with zero values is created and returned.
+
+#### *sfColorObjectName* = new **SFColor** (*r, g, b*)
 
 *r, g,* and *b* are scalar values with the red, green, and blue values of the color in the range 0–1.
 
@@ -152,11 +156,15 @@ Linearely interpolate in HSV space between source color and destination color by
 
 ## SFColorRGBA Object
 
-The SFColorRGBA object corresponds to a X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.<property>*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (<argument-list>)*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object.
+The SFColorRGBA object corresponds to a X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.<property>*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (<argument-list>*), where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object.
 
 ### Instance Creation Method(s)
 
-#### *sfColorRGBAObjectName* = new **SFColor** (*r, g, b, a)*
+#### *sfColorRGBAObjectName* = new **SFColor** ()
+
+A new color initialized with zero values is created and returned.
+
+#### *sfColorRGBAObjectName* = new **SFColor** (*r, g, b, a*)
 
 *r, g,*  *b* and *a* are scalar values with the red, green and blue values of the color in the range 0–1.
 
@@ -200,7 +208,7 @@ The SFImage object corresponds to a X3D SFImage field.
 
 ### Instance Creation Method(s)
 
-#### *sfImageObjectName* = new **SFImage** (*width, height, components[, MFInt32 array])*
+#### *sfImageObjectName* = new **SFImage** (*width, height, components[, MFInt32 array]*)
 
 *width* is the width in pixels of the image.
 *height* is the height in pixels of the image.
@@ -235,13 +243,17 @@ The SFMatrix3f object provides many useful methods for performing manipulations 
 
 ### Instance Creation Method(s)
 
-#### *x3dMatrix3fObjectName* = new **X3DMatrix3f** (*f11, f12, f13, f21, f22, f23, f31, f32, f33)*
+#### *sfMatrix3fObjectName* = new **SFMatrix3f** ()
+
+A new matrix initialized with the identity matrix is created and returned.
+
+#### *sfMatrix3fObjectName* = new **SFMatrix3f** (*f11, f12, f13, f21, f22, f23, f31, f32, f33*)
 
 A new matrix initialized with the values in *f11* through *f44* is created and returned.
 
-#### *x3dMatrix3fObjectName* = new **SFMatrix3f** (*)*
+#### *sfMatrix3fObjectName* = new **SFMatrix3f** (*vector0, vector1, vector2*)
 
-A new matrix initialized with the identity matrix is created and returned.
+A new matrix initialized with the vectors in *vector0* through *vector2* of type SFVec3f is created and returned.
 
 ### Properties
 
@@ -265,7 +277,7 @@ Returns a SFMatrix whose value is the inverse of this object.
 
 Returns a SFMatrix3f whose value is the transpose of this object.
 
-#### SFMatrix3f **multLeft** *(matrix)*
+#### SFMatrix3f **multLeft** *(matrix*)
 
 Returns a SFMatrix3f whose value is the object multiplied by the passed *matrix* on the left.
 
@@ -295,13 +307,17 @@ The SFMatrix4f object provides many useful methods for performing manipulations 
 
 ### Instance Creation Method(s)
 
-#### *x3dMatrix4fObjectName* = new **X3DMatrix4f** (*f11, f12, f13, f14, f21, f22, f23, f24, f31, f32, f33, f34, f41, f42, f43, f44)*
+#### *sfMatrix4fObjectName* = new **SFMatrix4f** ()
+
+A new matrix initialized with the identity matrix is created and returned.
+
+#### *sfMatrix4fObjectName* = new **SFMatrix4f** (*f11, f12, f13, f14, f21, f22, f23, f24, f31, f32, f33, f34, f41, f42, f43, f44*)
 
 A new matrix initialized with the values in *f11* through *f44* is created and returned.
 
-#### *x3dMatrix4fObjectName* = new **SFMatrix4f** (*)*
+#### *sfMatrix4fObjectName* = new **SFMatrix4f** (*vector0, vector1, vector2, vector3*)
 
-A new matrix initialized with the identity matrix is created and returned.
+A new matrix initialized with the vectors in *vector0* through *vector3* of type SFVec4f is created and returned.
 
 ### Properties
 
@@ -325,7 +341,7 @@ Returns a SFMatrix whose value is the inverse of this object.
 
 Returns a SFMatrix4f whose value is the transpose of this object.
 
-#### SFMatrix4f **multLeft** *(matrix)*
+#### SFMatrix4f **multLeft** *(matrix*)
 
 Returns a SFMatrix4f whose value is the object multiplied by the passed *matrix* on the left.
 
@@ -401,7 +417,11 @@ The SFRotation object corresponds to a X3D SFRotation field.
 
 ### Instance Creation Method(s)
 
-#### *sfRotationObjectName* = new **SFRotation** (*x, y, z, angle)*
+#### *sfRotationObjectName* = new **SFRotation** ()
+
+A new rotation initialized with the identity rotation is created and returned.
+
+#### *sfRotationObjectName* = new **SFRotation** (*x, y, z, angle*)
 
 *x*, *y*, and *z* are the axis of the rotation.
 *angle* is the angle of the rotation (in radians). All values are scalar.
@@ -452,7 +472,7 @@ Returns the rotation matrix as an SFMatrix3f object.
 
 Returns a SFRotation object whose value is the inverse of this object's rotation
 
-#### SFRotation **multiply** *(rotation)*
+#### SFRotation **multiply** *(rotation*)
 
 Returns an SFRotation whose value is the object multiplied by the passed SFRotation.
 
@@ -478,7 +498,11 @@ The SFVec2f object corresponds to a X3D SFVec2f field. Each component of the vec
 
 ### Instance Creation Method(s)
 
-#### *sfVec2fObjectName* = new **SFVec2f** (*number1, number2)*
+#### *sfVec2fObjectName* = new **SFVec2f** ()
+
+A new vector initialized with zero values is created and returned.
+
+#### *sfVec2fObjectName* = new **SFVec2f** (*number1, number2*)
 
 Where *number1* and *number2* are scalar expressions.
 
@@ -564,9 +588,13 @@ The SFVec3f object corresponds to a X3D SFVec3f field. Each component of the vec
 
 ### Instance Creation Method(s)
 
-#### *sfVec3fObjectName* = new **SFVec3f** (*number1, number2, number3)*
+#### *sfVec3fObjectName* = new **SFVec3f** ()
 
-Where *number1,**number2,* and *number3* are scalar expressions.
+A new vector initialized with zero values is created and returned.
+
+#### *sfVec3fObjectName* = new **SFVec3f** (*number1, number2, number3*)
+
+Where *number1, number2,* and *number3* are scalar expressions.
 
 ### Properties
 
@@ -658,7 +686,11 @@ The SFVec4f object corresponds to a X3D SFVec4f field. Each component of the vec
 
 ### Instance Creation Method(s)
 
-#### *sfVec4fObjectName* = new **SFVec4f** (*number1, number2, number3, number4)*
+#### *sfVec4fObjectName* = new **SFVec4f** ()
+
+A new vector initialized with zero values is created and returned.
+
+#### *sfVec4fObjectName* = new **SFVec4f** (*number1, number2, number3, number4*)
 
 Where *number1, number2, number3* and *number4* are scalar expressions.
 
@@ -808,7 +840,7 @@ The MFBool object corresponds to a X3D MFBool field. It is used to store a one-d
 
 ### Instance Creation Method(s)
 
-#### *mfBoolObjectName* = new **MFBool** (*[boolean, boolean...])*
+#### *mfBoolObjectName* = new **MFBool** (*[boolean, boolean...]*)
 
 The creation method can be passed 0 or more numeric-valued expressions to initialize the elements of the array.
 
@@ -828,7 +860,7 @@ The MFColor object corresponds to a X3D MFColor field. It is used to store a one
 
 ### Instance Creation Method(s)
 
-#### *mfColorObjectName* = new **MFColor** (*[SFColor, SFColor, ...])*
+#### *mfColorObjectName* = new **MFColor** (*[SFColor, SFColor, ...]*)
 
 The creation method can be passed 0 or more SFColor-valued expressions to initialize the elements of the array.
 
@@ -850,7 +882,7 @@ The MFFloat object corresponds to a X3D MFFloat field. It is used to store a one
 
 ### Instance Creation Method(s)
 
-#### *mfFloatObjectName* = new **MFFloat** (*[number, number...])*
+#### *mfFloatObjectName* = new **MFFloat** (*[number, number...]*)
 
 The creation method can be passed 0 or more numeric-valued expressions to initialize the elements of the array.
 
@@ -870,7 +902,7 @@ The MFImage object corresponds to a X3D MFImage field. It is used to store a one
 
 ### Instance Creation Method(s)
 
-#### *mfImageObjectName* = new **MFImage** (*[SFImage, SFImage, ...])*
+#### *mfImageObjectName* = new **MFImage** (*[SFImage, SFImage, ...]*)
 
 The creation method can be passed 0 or more SFImage-valued expressions to initialize the elements of the array.
 
@@ -890,7 +922,7 @@ The MFInt32 object corresponds to a X3D MFInt32 field. It is used to store a one
 
 ### Instance Creation Method(s)
 
-#### *mfInt32ObjectName* = new **MFInt32** (*[number, number, ...])*
+#### *mfInt32ObjectName* = new **MFInt32** (*[number, number, ...]*)
 
 The creation method can be passed 0 or more integer-valued expressions to initialize the elements of the array.
 
@@ -910,7 +942,7 @@ The MFMatrix3f object corresponds to a X3D MFMatrix3f field. It is used to store
 
 ### Instance Creation Method(s)
 
-#### *mfMatrix3fObjectName* = new **MFMatrix3f** (*[SFMatrix3f, SFMatrix3f, ...])*
+#### *mfMatrix3fObjectName* = new **MFMatrix3f** (*[SFMatrix3f, SFMatrix3f, ...]*)
 
 The creation method can be passed 0 or more SFMatrix3f-valued expressions to initialize the elements of the array.
 
@@ -930,7 +962,7 @@ The MFMatrix4f object corresponds to a X3D MFMatrix4f field. It is used to store
 
 ### Instance Creation Method(s)
 
-#### *mfMatrix4fObjectName* = new **MFMatrix4f** (*[SFMatrix4f, SFMatrix4f, ...])*
+#### *mfMatrix4fObjectName* = new **MFMatrix4f** (*[SFMatrix4f, SFMatrix4f, ...]*)
 
 The creation method can be passed 0 or more SFMatrix4f-valued expressions to initialize the elements of the array.
 
@@ -950,7 +982,7 @@ The MFNode object corresponds to a X3D MFNode field. It is used to store a one-d
 
 ### Instance Creation Method(s)
 
-#### *mfNodeObjectName* = new **MFNode** (*[SFNode, SFNode, ...])*
+#### *mfNodeObjectName* = new **MFNode** (*[SFNode, SFNode, ...]*)
 
 The creation method can be passed 0 or more SFNode-valued expressions to initialize the elements of the array.
 
@@ -976,7 +1008,7 @@ The MFRotation object corresponds to a X3D MFRotation field. It is used to store
 
 ### Instance Creation Method(s)
 
-#### *mfRotationObjectName* = new **MFRotation** (*[SFRotation, SFRotation, ...])*
+#### *mfRotationObjectName* = new **MFRotation** (*[SFRotation, SFRotation, ...]*)
 
 The creation method can be passed 0 or more SFRotation-valued expressions to initialize the elements of the array.
 
@@ -996,7 +1028,7 @@ The MFString object corresponds to a X3D MFString field. It is used to store a o
 
 ### Instance Creation Method(s)
 
-#### *mfStringObjectName* = new **MFString** (*[string, string, ...])*
+#### *mfStringObjectName* = new **MFString** (*[string, string, ...]*)
 
 The creation method can be passed 0 or more string-valued expressions to initialize the elements of the array.
 
@@ -1016,7 +1048,7 @@ The MFTime object corresponds to a X3D MFTime field. It is used to store a one-d
 
 ### Instance Creation Method(s)
 
-#### *mfTimeObjectName* = new **MFTime** (*[string, string, ...])*
+#### *mfTimeObjectName* = new **MFTime** (*[string, string, ...]*)
 
 The creation method can be passed 0 or more string-valued expressions to initialize the elements of the array.
 
@@ -1036,7 +1068,7 @@ The MFVec2f object corresponds to a X3D MFVec2f field. It is used to store a one
 
 ### Instance Creation Method(s)
 
-#### *mfVec2fObjectName* = new **MFVec2f** (*[SFVec2f, SFVec2f, ...])*
+#### *mfVec2fObjectName* = new **MFVec2f** (*[SFVec2f, SFVec2f, ...]*)
 
 The creation method can be passed 0 or more SFVec2f-valued expressions to initialize the elements of the array.
 
@@ -1056,7 +1088,7 @@ The MFVec3f object corresponds to a X3D MFVec3f field. It is used to store a one
 
 ### Instance Creation Method(s)
 
-#### *mfVec3fObjectName* = new **MFVec3f** (*[SFVec3f, SFVec3f, ...])*
+#### *mfVec3fObjectName* = new **MFVec3f** (*[SFVec3f, SFVec3f, ...]*)
 
 The creation method can be passed 0 or more SFVec3f-valued expressions to initialize the elements of the array.
 
@@ -1076,7 +1108,7 @@ The MFVec4f object corresponds to a X3D MFVec4f field. It is used to store a one
 
 ### Instance Creation Method(s)
 
-#### *mfVec4fObjectName* = new **MFVec4f** (*[SFVec4f, SFVec4f, ...])*
+#### *mfVec4fObjectName* = new **MFVec4f** (*[SFVec4f, SFVec4f, ...]*)
 
 The creation method can be passed 0 or more SFVec4f-valued expressions to initialize the elements of the array.
 

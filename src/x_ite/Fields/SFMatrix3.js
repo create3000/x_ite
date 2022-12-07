@@ -65,6 +65,17 @@ function SFMatrix3Template (TypeName, Type, SFVec2, double)
          case 1:
             return X3DField .call (this, arguments [0]);
 
+         case 3:
+         {
+            const
+               r0 = arguments [0],
+               r1 = arguments [1],
+               r2 = arguments [2];
+
+            return X3DField .call (this, new Matrix3 (r0 .x, r0 .y, r0 .z,
+                                                      r1 .x, r1 .y, r1 .z,
+                                                      r2 .x, r2 .y, r2 .z));
+         }
          case 9:
             return X3DField .call (this, new Matrix3 (+m00, +m01, +m02,
                                                       +m10, +m11, +m12,
