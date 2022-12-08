@@ -217,6 +217,8 @@ Object .defineProperty (Color3 .prototype, "2", b);
 
 Object .assign (Color3,
 {
+   Black: new Color3 (0, 0, 0),
+   White: new Color3 (1, 1, 1),
    HSV: function (h, s, v)
    {
       const color = Object .create (this .prototype);

@@ -99,7 +99,7 @@ ColorInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNo
       this .hsv .length = 0;
 
       for (const value of keyValue)
-         this .hsv .push (value .getHSV ([ ]));
+         this .hsv .push (value .getHSV ());
    },
    interpolate: (function ()
    {

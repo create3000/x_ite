@@ -89,11 +89,7 @@ SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
    equals: SFColor .prototype .equals,
    isDefaultValue: function ()
    {
-      return (
-         this .getValue () .r === 0 &&
-         this .getValue () .g === 0 &&
-         this .getValue () .b === 0 &&
-         this .getValue () .a === 0);
+      return this .getValue () .equals (Color4 .Transparent);
    },
    set: SFColor .prototype .set,
    getHSVA: function ()

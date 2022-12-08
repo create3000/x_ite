@@ -238,8 +238,8 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
                   internalValue = value .getValue (),
                   i             = index * components;
 
-               value .addEvent = addEvent .bind (target, i, internalValue, components);
-               value .getValue = getValue .bind (target, i, internalValue, components);
+               value .addEvent = addEvent .bind (target, i, components, internalValue);
+               value .getValue = getValue .bind (target, i, components, internalValue);
 
                target [_cache] [index] = value;
 
