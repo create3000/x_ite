@@ -3,6 +3,7 @@ all: dist
 
 configure:
 	sudo npm install
+	cd docs && bundle install
 
 compile:
 	npx webpack
@@ -54,6 +55,12 @@ version: dist zip
 .PHONY: docs
 docs:
 	cd docs && bundle exec jekyll serve --incremental
+
+docs-force:
+	cd docs && bundle exec jekyll serve
+
+docs-update:
+	cd docs && bundle update
 
 open-docs-in-browser:
 	open http://localhost:4000
