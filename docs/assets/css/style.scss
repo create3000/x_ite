@@ -9,6 +9,18 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
 
 @import "{{ site.theme }}";
 
+html {
+  --nav-border-color: rgba(158,158,158,0.17);
+  --nav-active-page: rgb(168, 182, 206);
+  --h4-color: rgb(175, 206, 255);
+  --example-background-color: rgba(27,27,30,0.4);
+  --button-background-color: black;
+}
+
+html[data-mode=light] {
+  --button-background-color: white;
+}
+
 /* append your custom style below */
 
 a {
@@ -26,7 +38,7 @@ a {
 }
 
 #nav-wrapper {
-  border-left: 1px solid rgba(158,158,158,0.17);
+  border-left: 1px solid var(--nav-border-color);
   margin-bottom: 4rem;
   transition: top 0.2s ease-in-out;
   -webkit-animation: fade-up 0.8s;
@@ -34,7 +46,7 @@ a {
 }
 
 #nav-wrapper a.active {
-  color: rgb(168, 182, 206);
+  color: var(--nav-active-page);
 }
 
 @media all and (max-width: 1199px) {
@@ -69,7 +81,7 @@ a {
 }
 
 .post h4 strong {
-  color: rgb(175, 206, 255);
+  color: var(--h4-color);
 }
 
 .table-wrapper > table tbody tr td,
@@ -113,17 +125,17 @@ a {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
-  background: rgba(27,27,30,0.4);
+  background: var(--example-background-color);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(158,158,158,0.17);
-  box-shadow: 0px 0px 10px black;
+  border-top: 1px solid var(--nav-border-color);
+  box-shadow: 0px 0px 10px var(--button-background-color);
 }
 
 .example p {
   margin-top: 0;
   margin-bottom: 0;
-  text-shadow: 1px 1px 0px black;
+  text-shadow: 1px 1px 0px var(--button-background-color);
 }
 
 .example x3d-canvas {
@@ -172,7 +184,7 @@ a {
   height: 16px;
   left: 0px;
   top: -16px;
-  background: black;
+  background: var(--button-background-color);
 }
 
 .nav-item i {
