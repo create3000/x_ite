@@ -813,7 +813,7 @@ There is a ZIP archive available to locally install X_ITE on your server. Compre
 
 [Download X_ITE ZIP archive](https://create3000.github.io/code/x_ite/latest/x_ite.zip)
 
-### You also can get it on NPM
+### You can also get it on NPM
 
 ```sh
 $ npm install x_ite
