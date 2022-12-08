@@ -45,7 +45,7 @@ module .exports = async () =>
                         const
                            ns  = path .resolve (__dirname, "src/x_ite/Namespace.js"),
                            rel = path .relative (path .dirname (this .resourcePath), ns),
-                           key = this .resourcePath .replace (/^.*?x_ite\/src\//, "") .replace (/\.js$/, "")
+                           key = path .relative (path .resolve (__dirname, "src"), this .resourcePath) .replace (/\.js$/, "")
 
                         return `import Namespace from "./${rel}";Namespace .set ("${key}", ${p1});\n${match}`;
                      },
