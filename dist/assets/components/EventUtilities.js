@@ -162,8 +162,10 @@ BooleanFilter .prototype = Object .assign (Object .create ((X3DChildNode_default
    },
 });
 
-Namespace_default().set ("x_ite/Components/EventUtilities/BooleanFilter", BooleanFilter);
-/* harmony default export */ const EventUtilities_BooleanFilter = (BooleanFilter);
+const __default__ = BooleanFilter;
+
+Namespace_default().set ("x_ite/Components/EventUtilities/BooleanFilter", __default__);
+/* harmony default export */ const EventUtilities_BooleanFilter = (__default__);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
 const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("standard/Math/Algorithm");
@@ -308,8 +310,10 @@ X3DSequencerNode .prototype = Object .assign (Object .create ((X3DChildNode_defa
    },
 });
 
-Namespace_default().set ("x_ite/Components/EventUtilities/X3DSequencerNode", X3DSequencerNode);
-/* harmony default export */ const EventUtilities_X3DSequencerNode = (X3DSequencerNode);
+const X3DSequencerNode_default_ = X3DSequencerNode;
+
+Namespace_default().set ("x_ite/Components/EventUtilities/X3DSequencerNode", X3DSequencerNode_default_);
+/* harmony default export */ const EventUtilities_X3DSequencerNode = (X3DSequencerNode_default_);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/BooleanSequencer.js
 /*******************************************************************************
@@ -412,8 +416,10 @@ BooleanSequencer .prototype = Object .assign (Object .create (EventUtilities_X3D
    },
 });
 
-Namespace_default().set ("x_ite/Components/EventUtilities/BooleanSequencer", BooleanSequencer);
-/* harmony default export */ const EventUtilities_BooleanSequencer = (BooleanSequencer);
+const BooleanSequencer_default_ = BooleanSequencer;
+
+Namespace_default().set ("x_ite/Components/EventUtilities/BooleanSequencer", BooleanSequencer_default_);
+/* harmony default export */ const EventUtilities_BooleanSequencer = (BooleanSequencer_default_);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/BooleanToggle.js
 /*******************************************************************************
@@ -509,8 +515,10 @@ BooleanToggle .prototype = Object .assign (Object .create ((X3DChildNode_default
    },
 });
 
-Namespace_default().set ("x_ite/Components/EventUtilities/BooleanToggle", BooleanToggle);
-/* harmony default export */ const EventUtilities_BooleanToggle = (BooleanToggle);
+const BooleanToggle_default_ = BooleanToggle;
+
+Namespace_default().set ("x_ite/Components/EventUtilities/BooleanToggle", BooleanToggle_default_);
+/* harmony default export */ const EventUtilities_BooleanToggle = (BooleanToggle_default_);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/X3DTriggerNode.js
 /*******************************************************************************
@@ -575,8 +583,10 @@ X3DTriggerNode .prototype = Object .assign (Object .create ((X3DChildNode_defaul
    constructor: X3DTriggerNode,
 });
 
-Namespace_default().set ("x_ite/Components/EventUtilities/X3DTriggerNode", X3DTriggerNode);
-/* harmony default export */ const EventUtilities_X3DTriggerNode = (X3DTriggerNode);
+const X3DTriggerNode_default_ = X3DTriggerNode;
+
+Namespace_default().set ("x_ite/Components/EventUtilities/X3DTriggerNode", X3DTriggerNode_default_);
+/* harmony default export */ const EventUtilities_X3DTriggerNode = (X3DTriggerNode_default_);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/BooleanTrigger.js
 /*******************************************************************************
@@ -671,8 +681,10 @@ BooleanTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTr
    },
 });
 
-Namespace_default().set ("x_ite/Components/EventUtilities/BooleanTrigger", BooleanTrigger);
-/* harmony default export */ const EventUtilities_BooleanTrigger = (BooleanTrigger);
+const BooleanTrigger_default_ = BooleanTrigger;
+
+Namespace_default().set ("x_ite/Components/EventUtilities/BooleanTrigger", BooleanTrigger_default_);
+/* harmony default export */ const EventUtilities_BooleanTrigger = (BooleanTrigger_default_);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/IntegerSequencer.js
 /*******************************************************************************
@@ -775,8 +787,10 @@ IntegerSequencer .prototype = Object .assign (Object .create (EventUtilities_X3D
    },
 });
 
-Namespace_default().set ("x_ite/Components/EventUtilities/IntegerSequencer", IntegerSequencer);
-/* harmony default export */ const EventUtilities_IntegerSequencer = (IntegerSequencer);
+const IntegerSequencer_default_ = IntegerSequencer;
+
+Namespace_default().set ("x_ite/Components/EventUtilities/IntegerSequencer", IntegerSequencer_default_);
+/* harmony default export */ const EventUtilities_IntegerSequencer = (IntegerSequencer_default_);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/IntegerTrigger.js
 /*******************************************************************************
@@ -872,8 +886,10 @@ IntegerTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTr
    },
 });
 
-Namespace_default().set ("x_ite/Components/EventUtilities/IntegerTrigger", IntegerTrigger);
-/* harmony default export */ const EventUtilities_IntegerTrigger = (IntegerTrigger);
+const IntegerTrigger_default_ = IntegerTrigger;
+
+Namespace_default().set ("x_ite/Components/EventUtilities/IntegerTrigger", IntegerTrigger_default_);
+/* harmony default export */ const EventUtilities_IntegerTrigger = (IntegerTrigger_default_);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/TimeTrigger.js
 /*******************************************************************************
@@ -968,8 +984,10 @@ TimeTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTrigg
    },
 });
 
-Namespace_default().set ("x_ite/Components/EventUtilities/TimeTrigger", TimeTrigger);
-/* harmony default export */ const EventUtilities_TimeTrigger = (TimeTrigger);
+const TimeTrigger_default_ = TimeTrigger;
+
+Namespace_default().set ("x_ite/Components/EventUtilities/TimeTrigger", TimeTrigger_default_);
+/* harmony default export */ const EventUtilities_TimeTrigger = (TimeTrigger_default_);
 
 ;// CONCATENATED MODULE: ./src/assets/components/EventUtilities.js
 /*******************************************************************************
@@ -1049,8 +1067,10 @@ Components_default().addComponent ({
    },
 });
 
-Namespace_default().set ("assets/components/EventUtilities", undefined);
-/* harmony default export */ const EventUtilities = ((/* unused pure expression or super */ null && (undefined)));
+const EventUtilities_default_ = undefined;
+
+Namespace_default().set ("assets/components/EventUtilities", EventUtilities_default_);
+/* harmony default export */ const EventUtilities = ((/* unused pure expression or super */ null && (EventUtilities_default_)));
 
 /******/ })()
 ;

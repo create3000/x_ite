@@ -146,8 +146,10 @@ HAnimDisplacer .prototype = Object .assign (Object .create ((X3DGeometricPropert
    },
 });
 
-Namespace_default().set ("x_ite/Components/HAnim/HAnimDisplacer", HAnimDisplacer);
-/* harmony default export */ const HAnim_HAnimDisplacer = (HAnimDisplacer);
+const __default__ = HAnimDisplacer;
+
+Namespace_default().set ("x_ite/Components/HAnim/HAnimDisplacer", __default__);
+/* harmony default export */ const HAnim_HAnimDisplacer = (__default__);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
 const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Core/X3DChildNode");
@@ -512,8 +514,10 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
    },
 });
 
-Namespace_default().set ("x_ite/Components/HAnim/HAnimHumanoid", HAnimHumanoid);
-/* harmony default export */ const HAnim_HAnimHumanoid = (HAnimHumanoid);
+const HAnimHumanoid_default_ = HAnimHumanoid;
+
+Namespace_default().set ("x_ite/Components/HAnim/HAnimHumanoid", HAnimHumanoid_default_);
+/* harmony default export */ const HAnim_HAnimHumanoid = (HAnimHumanoid_default_);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DTransformNode\")"
 const X3DTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Grouping/X3DTransformNode");
@@ -703,8 +707,10 @@ HAnimJoint .prototype = Object .assign (Object .create ((X3DTransformNode_defaul
    })(),
 });
 
-Namespace_default().set ("x_ite/Components/HAnim/HAnimJoint", HAnimJoint);
-/* harmony default export */ const HAnim_HAnimJoint = (HAnimJoint);
+const HAnimJoint_default_ = HAnimJoint;
+
+Namespace_default().set ("x_ite/Components/HAnim/HAnimJoint", HAnimJoint_default_);
+/* harmony default export */ const HAnim_HAnimJoint = (HAnimJoint_default_);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimMotion.js
 /*******************************************************************************
@@ -807,8 +813,10 @@ HAnimMotion .prototype = Object .assign (Object .create ((X3DChildNode_default()
    },
 });
 
-Namespace_default().set ("x_ite/Components/HAnim/HAnimMotion", HAnimMotion);
-/* harmony default export */ const HAnim_HAnimMotion = (HAnimMotion);
+const HAnimMotion_default_ = HAnimMotion;
+
+Namespace_default().set ("x_ite/Components/HAnim/HAnimMotion", HAnimMotion_default_);
+/* harmony default export */ const HAnim_HAnimMotion = (HAnimMotion_default_);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
 const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
@@ -909,8 +917,10 @@ HAnimSegment .prototype = Object .assign (Object .create ((X3DGroupingNode_defau
    },
 });
 
-Namespace_default().set ("x_ite/Components/HAnim/HAnimSegment", HAnimSegment);
-/* harmony default export */ const HAnim_HAnimSegment = (HAnimSegment);
+const HAnimSegment_default_ = HAnimSegment;
+
+Namespace_default().set ("x_ite/Components/HAnim/HAnimSegment", HAnimSegment_default_);
+/* harmony default export */ const HAnim_HAnimSegment = (HAnimSegment_default_);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimSite.js
 /*******************************************************************************
@@ -1006,8 +1016,10 @@ HAnimSite .prototype = Object .assign (Object .create ((X3DTransformNode_default
    },
 });
 
-Namespace_default().set ("x_ite/Components/HAnim/HAnimSite", HAnimSite);
-/* harmony default export */ const HAnim_HAnimSite = (HAnimSite);
+const HAnimSite_default_ = HAnimSite;
+
+Namespace_default().set ("x_ite/Components/HAnim/HAnimSite", HAnimSite_default_);
+/* harmony default export */ const HAnim_HAnimSite = (HAnimSite_default_);
 
 ;// CONCATENATED MODULE: ./src/assets/components/HAnim.js
 /*******************************************************************************
@@ -1081,8 +1093,10 @@ Components_default().addComponent ({
    },
 });
 
-Namespace_default().set ("assets/components/HAnim", undefined);
-/* harmony default export */ const HAnim = ((/* unused pure expression or super */ null && (undefined)));
+const HAnim_default_ = undefined;
+
+Namespace_default().set ("assets/components/HAnim", HAnim_default_);
+/* harmony default export */ const HAnim = ((/* unused pure expression or super */ null && (HAnim_default_)));
 
 /******/ })()
 ;

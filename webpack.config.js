@@ -40,14 +40,17 @@ module .exports = async () =>
                replacements: [
                   {
                      pattern: /export\s+default\s+(.*?);/ig,
-                     replacement: function (match, p1, offset, string)
+                     replacement: function (match, m, offset, string)
                      {
                         const
                            ns  = path .resolve (__dirname, "src/x_ite/Namespace.js"),
                            rel = path .relative (path .dirname (this .resourcePath), ns),
                            key = path .relative (path .resolve (__dirname, "src"), this .resourcePath) .replace (/\.js$/, "")
 
-                        return `import Namespace from "./${rel}";Namespace .set ("${key}", ${p1});\n${match}`;
+                        return `const __default__ = ${m};
+import Namespace from "./${rel}";
+Namespace .set ("${key}", __default__);
+export default __default__;`;
                      },
                   },
                ],

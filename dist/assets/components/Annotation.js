@@ -159,8 +159,10 @@ AnnotationLayer .prototype = Object .assign (Object .create ((X3DLayerNode_defau
    },
 });
 
-Namespace_default().set ("x_ite/Components/Annotation/AnnotationLayer", AnnotationLayer);
-/* harmony default export */ const Annotation_AnnotationLayer = (AnnotationLayer);
+const __default__ = AnnotationLayer;
+
+Namespace_default().set ("x_ite/Components/Annotation/AnnotationLayer", __default__);
+/* harmony default export */ const Annotation_AnnotationLayer = (__default__);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
 const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Core/X3DChildNode");
@@ -254,8 +256,10 @@ AnnotationTarget .prototype = Object .assign (Object .create ((X3DChildNode_defa
    },
 });
 
-Namespace_default().set ("x_ite/Components/Annotation/AnnotationTarget", AnnotationTarget);
-/* harmony default export */ const Annotation_AnnotationTarget = (AnnotationTarget);
+const AnnotationTarget_default_ = AnnotationTarget;
+
+Namespace_default().set ("x_ite/Components/Annotation/AnnotationTarget", AnnotationTarget_default_);
+/* harmony default export */ const Annotation_AnnotationTarget = (AnnotationTarget_default_);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
 const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
@@ -327,8 +331,10 @@ X3DAnnotationNode .prototype = Object .assign (Object .create ((X3DChildNode_def
    },
 });
 
-Namespace_default().set ("x_ite/Components/Annotation/X3DAnnotationNode", X3DAnnotationNode);
-/* harmony default export */ const Annotation_X3DAnnotationNode = (X3DAnnotationNode);
+const X3DAnnotationNode_default_ = X3DAnnotationNode;
+
+Namespace_default().set ("x_ite/Components/Annotation/X3DAnnotationNode", X3DAnnotationNode_default_);
+/* harmony default export */ const Annotation_X3DAnnotationNode = (X3DAnnotationNode_default_);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/GroupAnnotation.js
 /*******************************************************************************
@@ -434,8 +440,10 @@ GroupAnnotation .prototype = Object .assign (Object .create ((X3DGroupingNode_de
    },
 });
 
-Namespace_default().set ("x_ite/Components/Annotation/GroupAnnotation", GroupAnnotation);
-/* harmony default export */ const Annotation_GroupAnnotation = (GroupAnnotation);
+const GroupAnnotation_default_ = GroupAnnotation;
+
+Namespace_default().set ("x_ite/Components/Annotation/GroupAnnotation", GroupAnnotation_default_);
+/* harmony default export */ const Annotation_GroupAnnotation = (GroupAnnotation_default_);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Networking/X3DUrlObject\")"
 const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Networking/X3DUrlObject");
@@ -542,8 +550,10 @@ IconAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnota
    },
 });
 
-Namespace_default().set ("x_ite/Components/Annotation/IconAnnotation", IconAnnotation);
-/* harmony default export */ const Annotation_IconAnnotation = (IconAnnotation);
+const IconAnnotation_default_ = IconAnnotation;
+
+Namespace_default().set ("x_ite/Components/Annotation/IconAnnotation", IconAnnotation_default_);
+/* harmony default export */ const Annotation_IconAnnotation = (IconAnnotation_default_);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/TextAnnotation.js
 /*******************************************************************************
@@ -635,8 +645,10 @@ TextAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnota
    },
 });
 
-Namespace_default().set ("x_ite/Components/Annotation/TextAnnotation", TextAnnotation);
-/* harmony default export */ const Annotation_TextAnnotation = (TextAnnotation);
+const TextAnnotation_default_ = TextAnnotation;
+
+Namespace_default().set ("x_ite/Components/Annotation/TextAnnotation", TextAnnotation_default_);
+/* harmony default export */ const Annotation_TextAnnotation = (TextAnnotation_default_);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/URLAnnotation.js
 /*******************************************************************************
@@ -727,8 +739,10 @@ URLAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnotat
    },
 });
 
-Namespace_default().set ("x_ite/Components/Annotation/URLAnnotation", URLAnnotation);
-/* harmony default export */ const Annotation_URLAnnotation = (URLAnnotation);
+const URLAnnotation_default_ = URLAnnotation;
+
+Namespace_default().set ("x_ite/Components/Annotation/URLAnnotation", URLAnnotation_default_);
+/* harmony default export */ const Annotation_URLAnnotation = (URLAnnotation_default_);
 
 ;// CONCATENATED MODULE: ./src/assets/components/Annotation.js
 /*******************************************************************************
@@ -804,8 +818,10 @@ Components_default().addComponent ({
    },
 });
 
-Namespace_default().set ("assets/components/Annotation", undefined);
-/* harmony default export */ const Annotation = ((/* unused pure expression or super */ null && (undefined)));
+const Annotation_default_ = undefined;
+
+Namespace_default().set ("assets/components/Annotation", Annotation_default_);
+/* harmony default export */ const Annotation = ((/* unused pure expression or super */ null && (Annotation_default_)));
 
 /******/ })()
 ;

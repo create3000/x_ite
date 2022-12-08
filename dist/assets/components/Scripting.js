@@ -197,8 +197,10 @@ function evaluate (globalObject, sourceText)
    (globalObject);
 }
 
-Namespace_default().set ("x_ite/Browser/Scripting/evaluate", evaluate);
-/* harmony default export */ const Scripting_evaluate = (evaluate);
+const __default__ = evaluate;
+
+Namespace_default().set ("x_ite/Browser/Scripting/evaluate", __default__);
+/* harmony default export */ const Scripting_evaluate = (__default__);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
 const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Core/X3DChildNode");
@@ -285,8 +287,10 @@ X3DScriptNode .prototype = Object .assign (Object .create ((X3DChildNode_default
    },
 });
 
-Namespace_default().set ("x_ite/Components/Scripting/X3DScriptNode", X3DScriptNode);
-/* harmony default export */ const Scripting_X3DScriptNode = (X3DScriptNode);
+const X3DScriptNode_default_ = X3DScriptNode;
+
+Namespace_default().set ("x_ite/Components/Scripting/X3DScriptNode", X3DScriptNode_default_);
+/* harmony default export */ const Scripting_X3DScriptNode = (X3DScriptNode_default_);
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/InputOutput/FileLoader\")"
 const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/InputOutput/FileLoader");
@@ -847,8 +851,10 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
    },
 });
 
-Namespace_default().set ("x_ite/Components/Scripting/Script", Script);
-/* harmony default export */ const Scripting_Script = (Script);
+const Script_default_ = Script;
+
+Namespace_default().set ("x_ite/Components/Scripting/Script", Script_default_);
+/* harmony default export */ const Scripting_Script = (Script_default_);
 
 ;// CONCATENATED MODULE: ./src/assets/components/Scripting.js
 /*******************************************************************************
@@ -914,8 +920,10 @@ Components_default().addComponent ({
    },
 });
 
-Namespace_default().set ("assets/components/Scripting", undefined);
-/* harmony default export */ const Scripting = ((/* unused pure expression or super */ null && (undefined)));
+const Scripting_default_ = undefined;
+
+Namespace_default().set ("assets/components/Scripting", Scripting_default_);
+/* harmony default export */ const Scripting = ((/* unused pure expression or super */ null && (Scripting_default_)));
 
 })();
 

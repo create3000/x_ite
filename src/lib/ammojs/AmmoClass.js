@@ -47,6 +47,4 @@
 
 import Ammo from "./ammo.js";
 
-const AmmoClass = new Ammo ();
-
-export default AmmoClass;
+export default new Ammo ();

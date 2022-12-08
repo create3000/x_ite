@@ -252,8 +252,10 @@ BlendMode .prototype = Object .assign (Object .create ((X3DAppearanceChildNode_d
    },
 });
 
-Namespace_default().set ("x_ite/Components/X_ITE/BlendMode", BlendMode);
-/* harmony default export */ const X_ITE_BlendMode = (BlendMode);
+const __default__ = BlendMode;
+
+Namespace_default().set ("x_ite/Components/X_ITE/BlendMode", __default__);
+/* harmony default export */ const X_ITE_BlendMode = (__default__);
 
 ;// CONCATENATED MODULE: ./src/assets/components/X_ITE.js
 /*******************************************************************************
@@ -316,8 +318,10 @@ Components_default().addComponent ({
    { },
 });
 
-Namespace_default().set ("assets/components/X_ITE", undefined);
-/* harmony default export */ const X_ITE = ((/* unused pure expression or super */ null && (undefined)));
+const X_ITE_default_ = undefined;
+
+Namespace_default().set ("assets/components/X_ITE", X_ITE_default_);
+/* harmony default export */ const X_ITE = ((/* unused pure expression or super */ null && (X_ITE_default_)));
 
 /******/ })()
 ;
