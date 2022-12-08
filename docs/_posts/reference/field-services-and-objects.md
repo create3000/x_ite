@@ -820,15 +820,15 @@ The `shift` method removes the first element from an array and returns that valu
 
 Index at which to start changing the array (with origin 0). If greater than the length of the array, actual starting index will be set to the length of the array. If negative, will begin that many elements from the end of the array (with origin 1) and will be set to 0 if absolute value is greater than the length of the array.
 
-#### deleteCount <small class="small">optional</small>
+#### deleteCount *optional*
 
 An integer indicating the number of old array elements to remove. If *deleteCount* is 0, no elements are removed. In this case, you should specify at least one new element. If *deleteCount* is greater than the number of elements left in the array starting at start, then all of the elements through the end of the array will be deleted.
 
 If *deleteCount* is omitted, or if its value is larger than array.length - start, then all of the elements beginning with start index on through the end of the array will be deleted.
 
-#### item1, item2, ... <small class="small">optional</small>
+#### item1, item2, ... *optional*
 
-The elements to add to the array, beginning at the start index. If you don't specify any elements, `splice ()` will only remove elements from the array.
+The elements to add to the array, beginning at the start index. If you don't specify any elements, `splice` will only remove elements from the array.
 
 #### Return value
 
