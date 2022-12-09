@@ -184,7 +184,7 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterial
             gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
             gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._normalTextureMapping .getValue ()) || 0);
 
-            gl .uniform1f (shaderObject .x3d_NormalScale, this ._normalScale .getValue ());
+            gl .uniform1f (shaderObject .x3d_NormalScale, Math .max (this ._normalScale .getValue (), 0));
          }
       }
    },

@@ -76,6 +76,7 @@ TimeSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype
    constructor: TimeSensor,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
       new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "description",      new Fields .SFString ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "cycleInterval",    new Fields .SFTime (1)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "loop",             new Fields .SFBool ()),
