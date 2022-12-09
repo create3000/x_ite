@@ -219,6 +219,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
                   return;
 
                const
+                  browser              = this .getBrowser (),
                   globalObjects        = renderObject .getGlobalObjects (),
                   globalShadow         = renderObject .getGlobalShadows () .at (-1),
                   opaqueShapesEnd      = renderObject .getNumOpaqueShapes (),
@@ -232,8 +233,12 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
                for (let g = globalsBegin; g < globalsEnd; ++ g)
                {
-                  numGlobalLights            += !!globalObjects [g] .lightNode;
-                  numGlobalTextureProjectors += !!globalObjects [g] .textureProjectorNode;
+                  const globalObject = globalObjects [g];
+
+                  numGlobalLights            += !!globalObject .lightNode;
+                  numGlobalTextureProjectors += !!globalObject .textureProjectorNode;
+
+                  browser .getLocalObjects () .push (globalObject);
                }
 
                for (let i = opaqueShapesBegin; i < opaqueShapesEnd; ++ i)
