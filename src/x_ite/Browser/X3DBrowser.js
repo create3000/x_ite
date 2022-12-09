@@ -87,8 +87,6 @@ function X3DBrowser (element)
 
    this [_browserCallbacks] = new Map ();
 
-   this .setExecutionContext (this .createScene ());
-
    this .setup ();
 };
 
@@ -110,6 +108,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    initialize: function ()
    {
       X3DBrowserContext .prototype .initialize .call (this);
+
+      this .replaceWorld (this .createScene ());
 
       this [_DOMIntegration] = new DOMIntegration (this);
 
