@@ -189,6 +189,8 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prot
          colorNode      = this .colorNode,
          colorArray     = this .getColors (),
          coordNode      = this .coordNode,
+         normalArray    = this .getNormals (),
+         normalNode     = this .normalNode,
          vertexArray    = this .getVertices (),
          numPoints      = coordNode ._point .length;
 
@@ -203,6 +205,9 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prot
 
       if (colorNode)
          colorNode .addColors (colorArray, numPoints);
+
+      if (normalNode)
+         normalNode .addNormals (normalArray, numPoints);
 
       coordNode .addPoints (vertexArray, numPoints);
    },

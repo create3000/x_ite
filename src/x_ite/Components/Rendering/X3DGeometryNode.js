@@ -716,54 +716,59 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       return function (shading)
       {
-         if (this .geometryType < 2)
-            return;
-
          const
-            browser     = this .getBrowser (),
-            flatShading = browser .getBrowserOptions () .getShading () === Shading .FLAT;
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
 
-         if (flatShading === this .flatShading)
-            return;
-
-         this .flatShading = flatShading;
-
-         // Generate flat normals if needed.
-
-         const gl = browser .getContext ();
-
-         if (flatShading)
+         if (this .geometryType < 2)
          {
-            if (! this .flatNormals .length)
-            {
-               const
-                  cw          = this .frontFace === gl .CW,
-                  flatNormals = this .flatNormals,
-                  vertices    = this .vertices .getValue ();
-
-               for (let i = 0, length = vertices .length; i < length; i += 12)
-               {
-                  Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
-                                     v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
-                                     v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
-                                     normal);
-
-                  if (cw)
-                     normal .negate ();
-
-                  flatNormals .push (normal .x, normal .y, normal .z,
-                                     normal .x, normal .y, normal .z,
-                                     normal .x, normal .y, normal .z);
-               }
-
-               flatNormals .shrinkToFit ();
-            }
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, this .normals .getValue (), gl .DYNAMIC_DRAW);
          }
+         else
+         {
+            const flatShading = browser .getBrowserOptions () .getShading () === Shading .FLAT;
 
-         // Transfer normals.
+            if (flatShading === this .flatShading)
+               return;
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .DYNAMIC_DRAW);
+            this .flatShading = flatShading;
+
+            // Generate flat normals if needed.
+
+            if (flatShading)
+            {
+               if (! this .flatNormals .length)
+               {
+                  const
+                     cw          = this .frontFace === gl .CW,
+                     flatNormals = this .flatNormals,
+                     vertices    = this .vertices .getValue ();
+
+                  for (let i = 0, length = vertices .length; i < length; i += 12)
+                  {
+                     Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
+                                       v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
+                                       v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
+                                       normal);
+
+                     if (cw)
+                        normal .negate ();
+
+                     flatNormals .push (normal .x, normal .y, normal .z,
+                                       normal .x, normal .y, normal .z,
+                                       normal .x, normal .y, normal .z);
+                  }
+
+                  flatNormals .shrinkToFit ();
+               }
+            }
+
+            // Transfer normals.
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .DYNAMIC_DRAW);
+         }
       };
    })(),
    requestRebuild: function ()

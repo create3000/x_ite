@@ -207,7 +207,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
          gl .bufferData (gl .ARRAY_BUFFER, lineStipple .getValue (), gl .DYNAMIC_DRAW);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (12 * 6 * numLines), gl .DYNAMIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (15 * 6 * numLines), gl .DYNAMIC_DRAW);
       }
    },
    updateLengthSoFar: (function ()
@@ -312,6 +312,9 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
                      colorStride        = 8 * Float32Array .BYTES_PER_ELEMENT,
                      colorOffset0       = 0,
                      colorOffset1       = 4 * Float32Array .BYTES_PER_ELEMENT,
+                     normalStride       = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     normalOffset0      = 0,
+                     normalOffset1      = 3 * Float32Array .BYTES_PER_ELEMENT,
                      vertexStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
                      vertexOffset0      = 0,
                      vertexOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT;
@@ -332,6 +335,12 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
                   {
                      transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
                      transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
+                  }
+
+                  if (this .hasNormals)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
                   }
 
                   transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
@@ -371,11 +380,12 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
                if (this .thickVertexArrayObject .enable (gl, shaderNode))
                {
                   const
-                     stride            = 12 * Float32Array .BYTES_PER_ELEMENT,
+                     stride            = 15 * Float32Array .BYTES_PER_ELEMENT,
                      lineStippleOffset = 0,
                      fogCoordOffset    = 3 * Float32Array .BYTES_PER_ELEMENT,
                      colorOffset       = 4 * Float32Array .BYTES_PER_ELEMENT,
-                     vertexOffset      = 8 * Float32Array .BYTES_PER_ELEMENT;
+                     normalOffset      = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexOffset      = 11 * Float32Array .BYTES_PER_ELEMENT;
 
                   // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -387,6 +397,9 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
                   if (this .colorMaterial)
                      shaderNode .enableColorAttribute (gl, this .trianglesBuffer, stride, colorOffset);
+
+                   if (this .hasNormals)
+                     shaderNode .enableNormalAttribute (gl, this .trianglesBuffer, stride, normalOffset);
 
                   shaderNode .enableVertexAttribute (gl, this .trianglesBuffer, stride, vertexOffset);
 
@@ -436,6 +449,9 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
             if (this .colorMaterial)
                shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+            if (this .hasNormals)
+               shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
          }
@@ -487,8 +503,10 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
          if (this .colorMaterial)
             shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-         shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-         shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
          this .updateParticles = false;
       }

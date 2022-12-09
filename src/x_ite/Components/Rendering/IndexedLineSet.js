@@ -257,8 +257,10 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
          fogCoordNode   = this .fogCoordNode,
          colorNode      = this .colorNode,
          coordNode      = this .coordNode,
+         normalNode     = this .normalNode,
          fogDepthArray  = this .getFogDepths (),
          colorArray     = this .getColors (),
+         normalArray    = this .getNormals (),
          vertexArray    = this .getVertices ();
 
       // Fill GeometryNode
@@ -292,6 +294,9 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
                      else
                         colorNode .addColor (this .getColorIndex (face), colorArray);
                   }
+
+                  if (normalNode)
+                     normalNode .addVector (index, normalArray);
 
                   coordNode .addPoint (index, vertexArray);
                }

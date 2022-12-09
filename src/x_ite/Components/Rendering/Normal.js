@@ -143,6 +143,36 @@ Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
          return array .push (0, 0, 0);
       }
    },
+   addNormals: function (array, min)
+   {
+      if (this .length)
+      {
+         const vector = this .vector;
+
+         for (var index = 0, length = Math .min (min, this .length) * 3; index < length; index += 3)
+            array .push (vector [index], vector [index + 1], vector [index + 2]);
+
+         if (this .length < min)
+         {
+            var index = (this .length - 1) * 3;
+
+            const
+               x = vector [index],
+               y = vector [index + 1],
+               z = vector [index + 2];
+
+            for (var index = length, length = min * 3; index < length; index += 3)
+               array .push (x, y, z);
+         }
+      }
+      else
+      {
+         for (let index = 0; index < min; ++ index)
+            array .push (0, 0, 0);
+      }
+
+      return array;
+   },
 });
 
 export default Normal;

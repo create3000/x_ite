@@ -200,9 +200,11 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
          attribArrays   = this .getAttribs (),
          fogCoordNode   = this .fogCoordNode,
          colorNode      = this .colorNode,
+         normalNode     = this .normalNode,
          coordNode      = this .coordNode,
          fogDepthArray  = this .getFogDepths (),
          colorArray     = this .getColors (),
+         normalArray    = this .getNormals (),
          vertexArray    = this .getVertices (),
          size           = coordNode .getSize ();
 
@@ -227,6 +229,9 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
 
                if (colorNode)
                   colorNode .addColor (index, colorArray);
+
+               if (normalNode)
+                  normalNode .addVector (index, normalArray);
 
                coordNode .addPoint (index, vertexArray);
             }

@@ -174,6 +174,9 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
          if (this .colorMaterial)
             shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
       }
 
@@ -218,6 +221,9 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
          if (this .colorMaterial)
             shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
