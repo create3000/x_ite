@@ -53,7 +53,7 @@ var Grammar =
    field: new RegExp ("([\\w\\s]+):\\s*(.+?)\\n", 'gy'),
    comment: new RegExp ("#[^\\n]*\\n", 'gy'),
    newLine: new RegExp ("\n", 'gy'),
-   data: new RegExp ("([^]*)$", 'gy'),
+   data: new RegExp ("(.*)$", 'sgy'),
 };
 
 function parse (parser)

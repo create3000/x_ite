@@ -46,7 +46,6 @@
  ******************************************************************************/
 
 import X3DBrowser from "./Browser/X3DBrowser.js";
-import Namespace  from "./Namespace.js";
 import URLs       from "./Browser/Networking/URLs.js";
 
 class X3DCanvas extends HTMLElement
@@ -103,4 +102,4 @@ class X3DCanvas extends HTMLElement
 // IE fix.
 document .createElement ("X3DCanvas");
 
-export default X3DCanvas
+export default X3DCanvas;

@@ -160,10 +160,10 @@ AnnotationLayer .prototype = Object .assign (Object .create ((X3DLayerNode_defau
 });
 
 const __default__ = AnnotationLayer;
+;
 
 Namespace_default().set ("x_ite/Components/Annotation/AnnotationLayer", __default__);
 /* harmony default export */ const Annotation_AnnotationLayer = (__default__);
-
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
 const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Core/X3DChildNode");
 var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
@@ -257,10 +257,10 @@ AnnotationTarget .prototype = Object .assign (Object .create ((X3DChildNode_defa
 });
 
 const AnnotationTarget_default_ = AnnotationTarget;
+;
 
 Namespace_default().set ("x_ite/Components/Annotation/AnnotationTarget", AnnotationTarget_default_);
 /* harmony default export */ const Annotation_AnnotationTarget = (AnnotationTarget_default_);
-
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
 const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
 var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode_namespaceObject);
@@ -332,10 +332,10 @@ X3DAnnotationNode .prototype = Object .assign (Object .create ((X3DChildNode_def
 });
 
 const X3DAnnotationNode_default_ = X3DAnnotationNode;
+;
 
 Namespace_default().set ("x_ite/Components/Annotation/X3DAnnotationNode", X3DAnnotationNode_default_);
 /* harmony default export */ const Annotation_X3DAnnotationNode = (X3DAnnotationNode_default_);
-
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/GroupAnnotation.js
 /*******************************************************************************
  *
@@ -441,10 +441,10 @@ GroupAnnotation .prototype = Object .assign (Object .create ((X3DGroupingNode_de
 });
 
 const GroupAnnotation_default_ = GroupAnnotation;
+;
 
 Namespace_default().set ("x_ite/Components/Annotation/GroupAnnotation", GroupAnnotation_default_);
 /* harmony default export */ const Annotation_GroupAnnotation = (GroupAnnotation_default_);
-
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Networking/X3DUrlObject\")"
 const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Networking/X3DUrlObject");
 var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_namespaceObject);
@@ -551,10 +551,10 @@ IconAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnota
 });
 
 const IconAnnotation_default_ = IconAnnotation;
+;
 
 Namespace_default().set ("x_ite/Components/Annotation/IconAnnotation", IconAnnotation_default_);
 /* harmony default export */ const Annotation_IconAnnotation = (IconAnnotation_default_);
-
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/TextAnnotation.js
 /*******************************************************************************
  *
@@ -646,10 +646,10 @@ TextAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnota
 });
 
 const TextAnnotation_default_ = TextAnnotation;
+;
 
 Namespace_default().set ("x_ite/Components/Annotation/TextAnnotation", TextAnnotation_default_);
 /* harmony default export */ const Annotation_TextAnnotation = (TextAnnotation_default_);
-
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/URLAnnotation.js
 /*******************************************************************************
  *
@@ -740,10 +740,10 @@ URLAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnotat
 });
 
 const URLAnnotation_default_ = URLAnnotation;
+;
 
 Namespace_default().set ("x_ite/Components/Annotation/URLAnnotation", URLAnnotation_default_);
 /* harmony default export */ const Annotation_URLAnnotation = (URLAnnotation_default_);
-
 ;// CONCATENATED MODULE: ./src/assets/components/Annotation.js
 /*******************************************************************************
  *
@@ -819,9 +819,9 @@ Components_default().addComponent ({
 });
 
 const Annotation_default_ = undefined;
+;
 
 Namespace_default().set ("assets/components/Annotation", Annotation_default_);
 /* harmony default export */ const Annotation = ((/* unused pure expression or super */ null && (Annotation_default_)));
-
 /******/ })()
 ;

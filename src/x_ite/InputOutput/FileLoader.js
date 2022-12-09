@@ -55,8 +55,8 @@ import DEBUG           from "../DEBUG.js";
 BinaryTransport ($);
 
 const
-   ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:([^]*)$/,
-   dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,([^]*)$/,
+   ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
+   dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,(.*)$/s,
    contentTypeRx = /^(?:(.*?);(.*?)$)/;
 
 const foreignExtensions = new RegExp ("\.(?:html|xhtml)$");

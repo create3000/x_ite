@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-class Algorithm
+export default class Algorithm
 {
    static radians (value)
    {
@@ -238,6 +238,4 @@ class Algorithm
 
       return result;
    }
-}
-
-export default Algorithm;
+};

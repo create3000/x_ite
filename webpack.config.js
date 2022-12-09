@@ -30,6 +30,8 @@ module .exports = async () =>
       x_ite_deps = await deps (path .resolve (__dirname, "src/x_ite.js")),
       targets    = [ ]
 
+   x_ite_deps .add (path .resolve (__dirname, "src/x_ite/Namespace.js"))
+
    const namespace =
    {
       test: /\.js$/,
@@ -39,7 +41,7 @@ module .exports = async () =>
             loader: StringReplacePlugin .replace ({
                replacements: [
                   {
-                     pattern: /export\s+default\s+(.*?);/ig,
+                     pattern: /export\s+default\s+(.+)$/sg,
                      replacement: function (match, m, offset, string)
                      {
                         const

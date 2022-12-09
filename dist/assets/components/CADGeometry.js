@@ -126,10 +126,10 @@ X3DProductStructureChildNode .prototype = Object .assign (Object .create ((X3DCh
 });
 
 const __default__ = X3DProductStructureChildNode;
+;
 
 Namespace_default().set ("x_ite/Components/CADGeometry/X3DProductStructureChildNode", __default__);
 /* harmony default export */ const CADGeometry_X3DProductStructureChildNode = (__default__);
-
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CADGeometry/CADAssembly.js
 /*******************************************************************************
  *
@@ -223,10 +223,10 @@ CADAssembly .prototype = Object .assign (Object .create ((X3DGroupingNode_defaul
 });
 
 const CADAssembly_default_ = CADAssembly;
+;
 
 Namespace_default().set ("x_ite/Components/CADGeometry/CADAssembly", CADAssembly_default_);
 /* harmony default export */ const CADGeometry_CADAssembly = (CADAssembly_default_);
-
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DBoundedObject\")"
 const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
 var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObject_namespaceObject);
@@ -504,10 +504,10 @@ CADFace .prototype = Object .assign (Object .create (CADGeometry_X3DProductStruc
 });
 
 const CADFace_default_ = CADFace;
+;
 
 Namespace_default().set ("x_ite/Components/CADGeometry/CADFace", CADFace_default_);
 /* harmony default export */ const CADGeometry_CADFace = (CADFace_default_);
-
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CADGeometry/CADLayer.js
 /*******************************************************************************
  *
@@ -598,10 +598,10 @@ CADLayer .prototype = Object .assign (Object .create ((X3DGroupingNode_default()
 });
 
 const CADLayer_default_ = CADLayer;
+;
 
 Namespace_default().set ("x_ite/Components/CADGeometry/CADLayer", CADLayer_default_);
 /* harmony default export */ const CADGeometry_CADLayer = (CADLayer_default_);
-
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DTransformNode\")"
 const X3DTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Grouping/X3DTransformNode");
 var X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformNode_namespaceObject);
@@ -703,10 +703,10 @@ CADPart .prototype = Object .assign (Object .create ((X3DTransformNode_default()
 });
 
 const CADPart_default_ = CADPart;
+;
 
 Namespace_default().set ("x_ite/Components/CADGeometry/CADPart", CADPart_default_);
 /* harmony default export */ const CADGeometry_CADPart = (CADPart_default_);
-
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DComposedGeometryNode\")"
 const X3DComposedGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Rendering/X3DComposedGeometryNode");
 var X3DComposedGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DComposedGeometryNode_namespaceObject);
@@ -834,10 +834,10 @@ IndexedQuadSet .prototype = Object .assign (Object .create ((X3DComposedGeometry
 });
 
 const IndexedQuadSet_default_ = IndexedQuadSet;
+;
 
 Namespace_default().set ("x_ite/Components/CADGeometry/IndexedQuadSet", IndexedQuadSet_default_);
 /* harmony default export */ const CADGeometry_IndexedQuadSet = (IndexedQuadSet_default_);
-
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CADGeometry/QuadSet.js
 /*******************************************************************************
  *
@@ -957,10 +957,10 @@ QuadSet .prototype = Object .assign (Object .create ((X3DComposedGeometryNode_de
 });
 
 const QuadSet_default_ = QuadSet;
+;
 
 Namespace_default().set ("x_ite/Components/CADGeometry/QuadSet", QuadSet_default_);
 /* harmony default export */ const CADGeometry_QuadSet = (QuadSet_default_);
-
 ;// CONCATENATED MODULE: ./src/assets/components/CADGeometry.js
 /*******************************************************************************
  *
@@ -1036,9 +1036,9 @@ Components_default().addComponent ({
 });
 
 const CADGeometry_default_ = undefined;
+;
 
 Namespace_default().set ("assets/components/CADGeometry", CADGeometry_default_);
 /* harmony default export */ const CADGeometry = ((/* unused pure expression or super */ null && (CADGeometry_default_)));
-
 /******/ })()
 ;

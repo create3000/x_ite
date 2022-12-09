@@ -77,12 +77,12 @@ const ShaderSource =
 				match = source .match (GLSL);
 
       // const
-      //    COMMENTS = "\\s+|/\\*[^]*?\\*/|//.*?\\n",
+      //    COMMENTS = "\\s+|/\\*.*?\\*/|//.*?\\n",
       //    VERSION  = "#version\\s+.*?\\n",
-      //    ANY      = "[^]*";
+      //    ANY      = ".*";
 
       // const
-      //    GLSL  = new RegExp ("^((?:" + COMMENTS + ")?(?:" + VERSION + ")?)(" + ANY + ")$"),
+      //    GLSL  = new RegExp ("^((?:" + COMMENTS + ")?(?:" + VERSION + ")?)(" + ANY + ")$", "s"),
       //    match = source .match (GLSL);
 
       if (! match)

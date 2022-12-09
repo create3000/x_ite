@@ -220,10 +220,10 @@ X3DEnvironmentTextureNode .prototype = Object .assign (Object .create ((X3DSingl
 });
 
 const __default__ = X3DEnvironmentTextureNode;
+;
 
 Namespace_default().set ("x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode", __default__);
 /* harmony default export */ const CubeMapTexturing_X3DEnvironmentTextureNode = (__default__);
-
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
 const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
@@ -469,10 +469,10 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTextu
 });
 
 const ComposedCubeMapTexture_default_ = ComposedCubeMapTexture;
+;
 
 Namespace_default().set ("x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture", ComposedCubeMapTexture_default_);
 /* harmony default export */ const CubeMapTexturing_ComposedCubeMapTexture = (ComposedCubeMapTexture_default_);
-
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DBaseNode\")"
 const X3DBaseNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Base/X3DBaseNode");
 var X3DBaseNode_default = /*#__PURE__*/__webpack_require__.n(X3DBaseNode_namespaceObject);
@@ -616,10 +616,10 @@ for (const key of Reflect .ownKeys (DependentRenderer .prototype))
    Object .defineProperty (DependentRenderer .prototype, key, { enumerable: false });
 
 const DependentRenderer_default_ = DependentRenderer;
+;
 
 Namespace_default().set ("x_ite/Rendering/DependentRenderer", DependentRenderer_default_);
 /* harmony default export */ const Rendering_DependentRenderer = (DependentRenderer_default_);
-
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/TextureBuffer\")"
 const TextureBuffer_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Rendering/TextureBuffer");
 var TextureBuffer_default = /*#__PURE__*/__webpack_require__.n(TextureBuffer_namespaceObject);
@@ -926,10 +926,10 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapText
 });
 
 const GeneratedCubeMapTexture_default_ = GeneratedCubeMapTexture;
+;
 
 Namespace_default().set ("x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture", GeneratedCubeMapTexture_default_);
 /* harmony default export */ const CubeMapTexturing_GeneratedCubeMapTexture = (GeneratedCubeMapTexture_default_);
-
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Networking/X3DUrlObject\")"
 const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Networking/X3DUrlObject");
 var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_namespaceObject);
@@ -1205,10 +1205,10 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturin
 });
 
 const ImageCubeMapTexture_default_ = ImageCubeMapTexture;
+;
 
 Namespace_default().set ("x_ite/Components/CubeMapTexturing/ImageCubeMapTexture", ImageCubeMapTexture_default_);
 /* harmony default export */ const CubeMapTexturing_ImageCubeMapTexture = (ImageCubeMapTexture_default_);
-
 ;// CONCATENATED MODULE: ./src/assets/components/CubeMapTexturing.js
 /*******************************************************************************
  *
@@ -1278,10 +1278,10 @@ Components_default().addComponent ({
 });
 
 const CubeMapTexturing_default_ = undefined;
+;
 
 Namespace_default().set ("assets/components/CubeMapTexturing", CubeMapTexturing_default_);
 /* harmony default export */ const CubeMapTexturing = ((/* unused pure expression or super */ null && (CubeMapTexturing_default_)));
-
 })();
 
 /******/ })()
