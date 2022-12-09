@@ -209,18 +209,22 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
                   globalsBegin           = renderObject .getGlobalObjects () .length,
                   shadowsBegin           = renderObject .getGlobalShadows () .length,
                   opaqueShapesBegin      = renderObject .getNumOpaqueShapes (),
-                  transparentShapesBegin = renderObject .getNumTransparentShapes (),
-                  opaqueShapes           = renderObject .getOpaqueShapes (),
-                  transparentShapes      = renderObject .getTransparentShapes ();
+                  transparentShapesBegin = renderObject .getNumTransparentShapes ();
 
                this .group .traverse (type, renderObject);
 
+               const globalsEnd = renderObject .getGlobalObjects () .length;
+
+               if (globalsBegin === globalsEnd)
+                  return;
+
                const
                   globalObjects        = renderObject .getGlobalObjects (),
-                  globalsEnd           = renderObject .getGlobalObjects () .length,
                   globalShadow         = renderObject .getGlobalShadows () .at (-1),
                   opaqueShapesEnd      = renderObject .getNumOpaqueShapes (),
-                  transparentShapesEnd = renderObject .getNumTransparentShapes ();
+                  transparentShapesEnd = renderObject .getNumTransparentShapes (),
+                  opaqueShapes         = renderObject .getOpaqueShapes (),
+                  transparentShapes    = renderObject .getTransparentShapes ();
 
                let
                   numGlobalLights            = 0,
