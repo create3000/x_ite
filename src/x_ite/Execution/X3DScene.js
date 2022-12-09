@@ -76,7 +76,7 @@ function X3DScene (executionContext)
 
    this .addType (X3DConstants .X3DScene)
 
-   this [_specificationVersion] = "3.3";
+   this [_specificationVersion] = "4.0";
    this [_encoding]             = "SCRIPTED";
    this [_profile]              = null;
    this [_components]           = new ComponentInfoArray ([ ]);

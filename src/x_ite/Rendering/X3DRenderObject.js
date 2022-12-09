@@ -178,6 +178,10 @@ X3DRenderObject .prototype =
    {
       this .globalShadows .push (value || this .globalShadows .at (-1));
    },
+   getGlobalShadows: function ()
+   {
+      return this .globalShadows;
+   },
    pushLocalShadows: function (value)
    {
       this .localShadows .push (value || this .localShadows .at (-1));
@@ -826,14 +830,15 @@ X3DRenderObject .prototype =
          browser                    = this .getBrowser (),
          gl                         = browser .getContext (),
          viewport                   = this .getViewVolume () .getViewport (),
+         globalObjects              = this .globalObjects,
          lights                     = this .lights,
          textureProjectors          = this .textureProjectors,
          generatedCubeMapTextures   = this .generatedCubeMapTextures,
          globalShadows              = this .globalShadows,
          shadows                    = globalShadows .at (-1),
          headlight                  = this .getNavigationInfo () ._headlight .getValue (),
-         numGlobalLights            = lights .reduce ((v, c) => v + c .lightNode .getGlobal (), +headlight),
-         numGlobalTextureProjectors = textureProjectors .reduce ((v, c) => v + c .textureProjectorNode .getGlobal (), 0);
+         numGlobalLights            = globalObjects .reduce ((v, c) => v + !!c .lightNode, +headlight),
+         numGlobalTextureProjectors = globalObjects .reduce ((v, c) => v + !!c .textureProjectorNode, 0);
 
 
       this .renderTime = Date .now ();
@@ -956,8 +961,6 @@ X3DRenderObject .prototype =
 
 
       // POST DRAW
-
-      const globalObjects = this .globalObjects;
 
       if (this .isIndependent ())
       {

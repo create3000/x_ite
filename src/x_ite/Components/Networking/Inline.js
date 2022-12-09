@@ -197,6 +197,75 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
             pickingHierarchy .pop ();
             return;
          }
+         case TraverseType .DISPLAY:
+         {
+            if (this ._global .getValue ())
+            {
+               this .group .traverse (type, renderObject);
+            }
+            else
+            {
+               const
+                  globalsBegin           = renderObject .getGlobalObjects () .length,
+                  shadowsBegin           = renderObject .getGlobalShadows () .length,
+                  opaqueShapesBegin      = renderObject .getNumOpaqueShapes (),
+                  transparentShapesBegin = renderObject .getNumTransparentShapes (),
+                  opaqueShapes           = renderObject .getOpaqueShapes (),
+                  transparentShapes      = renderObject .getTransparentShapes ();
+
+               this .group .traverse (type, renderObject);
+
+               const
+                  globalObjects        = renderObject .getGlobalObjects (),
+                  globalsEnd           = renderObject .getGlobalObjects () .length,
+                  globalShadow         = renderObject .getGlobalShadows () .at (-1),
+                  opaqueShapesEnd      = renderObject .getNumOpaqueShapes (),
+                  transparentShapesEnd = renderObject .getNumTransparentShapes ();
+
+               let
+                  numGlobalLights            = 0,
+                  numGlobalTextureProjectors = 0;
+
+               for (let g = globalsBegin; g < globalsEnd; ++ g)
+               {
+                  numGlobalLights            += !!globalObjects [g] .lightNode;
+                  numGlobalTextureProjectors += !!globalObjects [g] .textureProjectorNode;
+               }
+
+               for (let i = opaqueShapesBegin; i < opaqueShapesEnd; ++ i)
+               {
+                  const
+                     renderContext = opaqueShapes [i],
+                     localObjects  = renderContext .localObjects;
+
+                  renderContext .shadows         ||= globalShadow;
+                  renderContext .objectsCount [1] += numGlobalLights;
+                  renderContext .objectsCount [2] += numGlobalTextureProjectors;
+
+                  for (let g = globalsBegin; g < globalsEnd; ++ g)
+                     localObjects .push (globalObjects [g]);
+               }
+
+               for (let i = transparentShapesBegin; i < transparentShapesEnd; ++ i)
+               {
+                  const
+                     renderContext = transparentShapes [i],
+                     localObjects  = renderContext .localObjects;
+
+                  renderContext .shadows         ||= globalShadow;
+                  renderContext .objectsCount [1] += numGlobalLights;
+                  renderContext .objectsCount [2] += numGlobalTextureProjectors;
+
+                  for (let g = globalsBegin; g < globalsEnd; ++ g)
+                     localObjects .push (globalObjects [g]);
+               }
+
+               renderObject .getGlobalObjects () .length = globalsBegin;
+               renderObject .getGlobalShadows () .length = shadowsBegin;
+            }
+
+            return;
+         }
          default:
          {
             this .group .traverse (type, renderObject);
