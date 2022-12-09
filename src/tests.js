@@ -235,6 +235,7 @@ const X_ITE_TESTS = [
    { path: "Rendering/IndexedLineSet.x3d" },
    { path: "Rendering/IndexedTriangleSetSphere.x3d" },
    { path: "Rendering/L-System.x3dz" },
+   { path: "Rendering/Normals.x3d" },
    { path: "Rendering/PointSize.x3d" },
    { path: "Rendering/world.x3d" },
    { component: "RigidBodyPhysics" },
