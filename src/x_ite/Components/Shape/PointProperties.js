@@ -71,7 +71,6 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
       new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMinValue",    new Fields .SFFloat (1)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMaxValue",    new Fields .SFFloat (1)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeAttenuation", new Fields .MFFloat (1, 0, 0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "markerType",           new Fields .SFInt32 (1)),
    ]),
    getTypeName: function ()
    {
@@ -97,13 +96,11 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
       this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
       this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
       this ._pointSizeAttenuation .addInterest ("set_pointSizeAttenuation__", this);
-      this ._markerType           .addInterest ("set_markerType__",           this);
 
       this .set_pointSizeScaleFactor__ ();
       this .set_pointSizeMinValue__ ();
       this .set_pointSizeMaxValue__ ();
       this .set_pointSizeAttenuation__ ();
-      this .set_markerType__ ();
    },
    getPointSize: function (point)
    {
@@ -137,9 +134,6 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
       this .pointSizeAttenuation [0] = length > 0 ? Math .max (0, this ._pointSizeAttenuation [0]) : 1;
       this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this ._pointSizeAttenuation [1]) : 0;
       this .pointSizeAttenuation [2] = length > 2 ? Math .max (0, this ._pointSizeAttenuation [2]) : 0;
-   },
-   set_markerType__: function ()
-   {
    },
    setShaderUniforms: function (gl, shaderObject)
    {
