@@ -17,7 +17,7 @@ None. This object cannot be instantiated by the user.
 
 #### **specificationVersion**
 
-The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "3.3". This property is read only.
+The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.0". This property is read only.
 
 #### **encoding**
 

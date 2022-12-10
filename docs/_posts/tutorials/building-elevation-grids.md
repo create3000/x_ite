@@ -10,12 +10,12 @@ tags: [building, elevation grids]
 - Building terrains is very common
   - Hills, valleys, mountains
   - Other tricky uses...
-- You can build a terrain using an [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"} node
-- You can build terrains more efficiently using an [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} node
+- You can build a terrain using an [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"} node
+- You can build terrains more efficiently using an [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} node
 
 ## Syntax: ElevationGrid
 
-An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} geometry node creates terrains:
+An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} geometry node creates terrains:
 
 - *xDimension* and *zDimension* - grid size
 - *xSpacing* and *zSpacing* - row and column distances
@@ -49,7 +49,7 @@ Shape {
 }
 ```
 
-An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} geometry node creates terrains:
+An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} geometry node creates terrains:
 
 - *height* - elevations at grid points
 
@@ -80,7 +80,7 @@ Shape {
 }
 ```
 
-An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} geometry node creates terrains
+An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} geometry node creates terrains
 
 - *solid* - shape is solid
 - *ccw* - faces are counter-clockwise
@@ -171,7 +171,7 @@ Shape {
 
 ## Summary
 
-- An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} node efficiently creates a terrain
+- An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} node efficiently creates a terrain
 - Grid size is specified in the *xDimension* and *zDimension* fields
 - Grid spacing is specified in the *xSpacing* and *zSpacing* field
 - Elevations at each grid point are specified in the *height* field

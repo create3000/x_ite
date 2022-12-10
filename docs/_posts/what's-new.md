@@ -165,7 +165,7 @@ tags: [new]
 
 ## X_ITE v4.7.0 Released
 
-*Leipzig, 5th December 2021*: This release implements some of the new X3Dv4 Features. X3Dv4 Draft is available at <https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/Architecture.html>.
+*Leipzig, 5th December 2021*: This release implements some of the new X3Dv4 Features. X3Dv4 Draft is available at <https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/Architecture.html>.
 
 This release also increased pure rendering speed (without routing and scripting) of up to 30%, that is a huge amount, especially when there are many nodes (300 and more).
 

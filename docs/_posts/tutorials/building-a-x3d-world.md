@@ -24,7 +24,7 @@ X3D files contain:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 
-<X3D profile='Full' version='3.3' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-3.3.xsd'>
+<X3D profile='Full' version='4.0' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <Scene>
   <!-- A Cylinder -->
   <Shape>
@@ -42,7 +42,7 @@ X3D files contain:
 ### Classic Encoding
 
 ```js
-#X3D V3.3 utf8
+#X3D V4.0 utf8
 # A Cylinder
 Shape {
   appearance Appearance {
@@ -65,10 +65,10 @@ Shape {
 
 ## Understanding the header
 
-**\#X3D V3.3 utf8**
+**\#X3D V4.0 utf8**
 
 - **\#X3D:** File contains X3D text
-- **V3.3 :** Text conforms to version 3.3 syntax
+- **V4.0 :** Text conforms to version 4.0 syntax
 - **utf8 :** Text uses UTF8 character set
 
 ## Understanding UTF8
@@ -104,7 +104,7 @@ Cylinder {
 
 - Nodes describe shapes, lights, sounds, etc.
 - Every node has:
-  - A node type ([Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape){:target="_blank"}, [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Cylinder){:target="_blank"}, etc.)
+  - A node type ([Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"}, [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cylinder){:target="_blank"}, etc.)
   - A pair of curly-braces
   - Zero or more fields inside the curly-braces
 
@@ -117,7 +117,7 @@ Node type names are case sensitive:
 
 Some examples:
 
-[Appearance](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Appearance){:target="_blank"}, [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Cylinder){:target="_blank"}, [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material){:target="_blank"}, [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape){:target="_blank"}
+[Appearance](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance){:target="_blank"}, [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cylinder){:target="_blank"}, [Material](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Material){:target="_blank"}, [Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"}
 
 ## Using fields and values
 

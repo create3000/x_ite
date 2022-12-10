@@ -28,7 +28,7 @@ Here is a typical X3D Classic Encoded file with a single node:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<X3D profile='Full' version='3.3' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-3.3.xsd'>
+<X3D profile='Full' version='4.0' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <Scene>
     <PlaneSensor DEF='Sensor'
         offset='0 2 0'/>
@@ -46,7 +46,7 @@ Here is a typical X3D Classic Encoded file with a single node:
 ### Classic Encoding
 
 ```js
-#X3D V3.3 utf8
+#X3D V4.0 utf8
 
 # A sample file with a simple scene
 
@@ -72,7 +72,7 @@ Be careful! X3D is a case sensitive language.
 
 ## Key Concept
 
-Now we can start to add information to the file. The first node to deal with is the [WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/core.html#WorldInfo){:target="_blank"} node. This node contains general information about the world, such as a *title* for the world. [WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/core.html#WorldInfo){:target="_blank"} can also contain an *info* field, which contain other information about the file such as copyright information. You can put what you like in it. A sample [WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/core.html#WorldInfo){:target="_blank"} node is shown below:
+Now we can start to add information to the file. The first node to deal with is the [WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#WorldInfo){:target="_blank"} node. This node contains general information about the world, such as a *title* for the world. [WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#WorldInfo){:target="_blank"} can also contain an *info* field, which contain other information about the file such as copyright information. You can put what you like in it. A sample [WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#WorldInfo){:target="_blank"} node is shown below:
 
 ### XML Encoding
 
@@ -98,7 +98,7 @@ You can have multiple strings in the *info* field, by putting them all inside sq
 
 ## Shape
 
-A [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape){:target="_blank"} node is the node to specify material and geometry properties. We add a Shape node to the world now, as shown below.
+A [Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"} node is the node to specify material and geometry properties. We add a Shape node to the world now, as shown below.
 
 ### XML Encoding
 
@@ -126,20 +126,20 @@ Shape {
 
 There are a lot geometry nodes defined in X3D. The basic geometry nodes are:
 
-- [Box](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Box){:target="_blank"}
-- [Cone](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Cone){:target="_blank"}
-- [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Cylinder){:target="_blank"}
-- [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"}
-- [Extrusion](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Extrusion){:target="_blank"}
-- [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"}
-- [Sphere](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Sphere){:target="_blank"}
-- [Text](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/text.html#Text){:target="_blank"}
+- [Box](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Box){:target="_blank"}
+- [Cone](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cone){:target="_blank"}
+- [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cylinder){:target="_blank"}
+- [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"}
+- [Extrusion](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Extrusion){:target="_blank"}
+- [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"}
+- [Sphere](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Sphere){:target="_blank"}
+- [Text](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#Text){:target="_blank"}
 
-The most important to define various geometries is probably the [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"} node.
+The most important to define various geometries is probably the [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"} node.
 
 ## Transform
 
-In order to make our world any use at all, we need to be able to transform objects. X3D has three types of transformations we can apply to objects. These are *translation, rotation, and scale.* These are used in a [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform){:target="_blank"} node. A Transform node doesn't have to have all three in it. You can just have a *rotation,* for instance. The transformations within a Transform apply to the children of the node. This is called nesting, where a node can have any number of child nodes. The syntax for this is shown in the example below, along with the syntax for a Transform node.
+In order to make our world any use at all, we need to be able to transform objects. X3D has three types of transformations we can apply to objects. These are *translation, rotation, and scale.* These are used in a [Transform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform){:target="_blank"} node. A Transform node doesn't have to have all three in it. You can just have a *rotation,* for instance. The transformations within a Transform apply to the children of the node. This is called nesting, where a node can have any number of child nodes. The syntax for this is shown in the example below, along with the syntax for a Transform node.
 
 ### XML Encoding
 
@@ -169,7 +169,7 @@ A Transform node can have another Transform nested inside it as a child, which a
 
 ## Anchor
 
-In X3D, you navigate between pages the same way as in HTML. You have an object that, when the user clicks on it, links to another page. Exactly what you're all used to. In X3D, this is done with the [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor){:target="_blank"} node.
+In X3D, you navigate between pages the same way as in HTML. You have an object that, when the user clicks on it, links to another page. Exactly what you're all used to. In X3D, this is done with the [Anchor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Anchor){:target="_blank"} node.
 
 ### XML Encoding
 
@@ -211,7 +211,7 @@ parameter [ "target=_blank" ]
 
 ## Background
 
-There are two ways we can change the background of our scene. One is to specify colors for the [Background](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/enveffects.html#Background){:target="_blank"}, and the other is to provide images to be mapped onto the background. Both of these are implemented with the Background node. First of all, I'll describe how to add color to the background of your scene.
+There are two ways we can change the background of our scene. One is to specify colors for the [Background](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Background){:target="_blank"}, and the other is to provide images to be mapped onto the background. Both of these are implemented with the Background node. First of all, I'll describe how to add color to the background of your scene.
 
 ### XML Encoding
 
@@ -232,7 +232,7 @@ This will display a gray background. You can also make the background transparen
 
 ## Viewpoint
 
-To give the world camera another position or orientation there is a [Viewpoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Viewpoint){:target="_blank"} node. The viewpoint node can be placed anywhere within the scene graph.
+To give the world camera another position or orientation there is a [Viewpoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#Viewpoint){:target="_blank"} node. The viewpoint node can be placed anywhere within the scene graph.
 
 ### XML Encoding
 
@@ -251,9 +251,9 @@ DEF LookAtHouse Viewpoint {
 }
 ```
 
-Beside the Viewpoint node there is also an [OrthoViewpoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#OrthoViewpoint){:target="_blank"} node to define an orthographic camera.
+Beside the Viewpoint node there is also an [OrthoViewpoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#OrthoViewpoint){:target="_blank"} node to define an orthographic camera.
 
-If you define more than once viewpoint in a X3D file, the first viewpoint defined will be bound if the world is loaded. To bind one of the other viewpoints send a *set\_bind* event with the value TRUE to the viewpoint. You must use a [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script){:target="_blank"} node for that or use a Anchor node with the name of the viewpoint in the *url* field preceded by '#'.
+If you define more than once viewpoint in a X3D file, the first viewpoint defined will be bound if the world is loaded. To bind one of the other viewpoints send a *set\_bind* event with the value TRUE to the viewpoint. You must use a [Script](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/scripting.html#Script){:target="_blank"} node for that or use a Anchor node with the name of the viewpoint in the *url* field preceded by '#'.
 
 ### XML Encoding
 
@@ -274,7 +274,7 @@ Anchor {
 
 The first thing to mention is the way that the X3D lighting model works. All lights have the following fields: *color, ambientIntensity,* and *intensity.* Each light has an intensity, which a value between 0 and 1 corresponding to its brightness. It also has an ambient intensity, also between 0 and 1, which is how much light it contributes to the general ambient light in the scene. Because of this, the more lights in the scene, the brighter the ambient illumination, which makes sense. Ambient light is light that shines on every surface in the scene, simulating light scattered from other objects. Each light also has a *color* field associated with it, which is the color of the light it emits. The direct light emitted by a light source is calculated by *intensity × color.* The ambient light contributed to the scene is *ambientIntensity × color.* Each light source also has an area of effect, so as to keep X3D worlds enclosed and scalable. The method of doing this varies between the different types.
 
-When using Gouraud shading browsers calculate lighting by working it out for each corner of a face, and interpolating the shading between these vertices. By default, X3D worlds will have the user's headlight ON. Remember to turn it off if you feel it necessary. Use a [NavigationInfo](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#NavigationInfo){:target="_blank"} node to do that.
+When using Gouraud shading browsers calculate lighting by working it out for each corner of a face, and interpolating the shading between these vertices. By default, X3D worlds will have the user's headlight ON. Remember to turn it off if you feel it necessary. Use a [NavigationInfo](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo){:target="_blank"} node to do that.
 
 ### XML Encoding
 
@@ -293,20 +293,20 @@ NavigationInfo {
 
 There are three different light nodes that can be used within a scene.
 
-- [DirectionalLight](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/lighting.html#DirectionalLight){:target="_blank"}
-- [PointLight](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/lighting.html#PointLight){:target="_blank"}
-- [SpotLight](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/lighting.html#SpotLight){:target="_blank"}
+- [DirectionalLight](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#DirectionalLight){:target="_blank"}
+- [PointLight](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#PointLight){:target="_blank"}
+- [SpotLight](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#SpotLight){:target="_blank"}
 
-You can place any light node within a grouping node (e.g. [Group](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Group){:target="_blank"}, [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform){:target="_blank"}, [Switch](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Switch){:target="_blank"}) and set the global field to **FALSE** to define a local light.
+You can place any light node within a grouping node (e.g. [Group](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Group){:target="_blank"}, [Transform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform){:target="_blank"}, [Switch](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Switch){:target="_blank"}) and set the global field to **FALSE** to define a local light.
 
 ## Grouping Nodes
 
 The following nodes are the most important grouping nodes (there are much more in X3D) which means that they can contain other nodes in their children field.
 
-- [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor){:target="_blank"}
-- [Billboard](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Billboard){:target="_blank"}
-- [Collision](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Collision){:target="_blank"}
-- [Group](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Group){:target="_blank"}
-- [LOD](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#LOD){:target="_blank"}
-- [Switch](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Switch){:target="_blank"}
-- [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform){:target="_blank"}
+- [Anchor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Anchor){:target="_blank"}
+- [Billboard](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#Billboard){:target="_blank"}
+- [Collision](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#Collision){:target="_blank"}
+- [Group](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Group){:target="_blank"}
+- [LOD](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#LOD){:target="_blank"}
+- [Switch](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Switch){:target="_blank"}
+- [Transform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform){:target="_blank"}

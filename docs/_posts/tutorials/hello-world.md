@@ -32,7 +32,7 @@ As first a very easy example, we will create a sphere with a texture and a text 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 
-<X3D profile='Full' version='3.3' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-3.3.xsd'>
+<X3D profile='Full' version='4.0' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <Scene>
     <Transform>
       <Shape>
@@ -46,7 +46,7 @@ As first a very easy example, we will create a sphere with a texture and a text 
 ### Classic Encoding
 
 ```js
-#X3D V3.3 utf8
+#X3D V4.0 utf8
 
 Transform {
   children Shape {
@@ -64,7 +64,7 @@ Now we have a sphere, but we don't see if it is rotating, let's assign a texture
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 
-<X3D profile='Full' version='3.3' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-3.3.xsd'>
+<X3D profile='Full' version='4.0' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <Scene>
     <Transform>
       <Shape>
@@ -82,7 +82,7 @@ Now we have a sphere, but we don't see if it is rotating, let's assign a texture
 ### Classic Encoding
 
 ```js
-#X3D V3.3 utf8
+#X3D V4.0 utf8
 
 Transform {
   children Shape {
@@ -122,7 +122,7 @@ Now the sphere looks like an earth and you are very curious how the text will be
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 
-<X3D profile='Full' version='3.3' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-3.3.xsd'>
+<X3D profile='Full' version='4.0' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <Scene>
     <Viewpoint
         description='Home'
@@ -158,7 +158,7 @@ Now the sphere looks like an earth and you are very curious how the text will be
 ### Classic Encoding
 
 ```js
-#X3D V3.3 utf8
+#X3D V4.0 utf8
 
 META "title" "about:hello_world"
 

@@ -7,7 +7,7 @@ tags: [program, scripts, ecmascript, javascript]
 ---
 ## Motivation
 
-A program script implements the [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script){:target="_blank"} node using values from the interface:
+A program script implements the [Script](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/scripting.html#Script){:target="_blank"} node using values from the interface:
 
 - The script responds to inputs and sends outputs
 
@@ -59,7 +59,7 @@ function initialize ()
 
 Initialization occurs when:
 
-- the [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script){:target="_blank"} node is created (typically when the browser loads the world)
+- the [Script](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/scripting.html#Script){:target="_blank"} node is created (typically when the browser loads the world)
 
 ## Shutting down a program script
 
@@ -74,7 +74,7 @@ function shutdown ()
 
 Shutdown occurs when:
 
-- the [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script){:target="_blank"} node is deleted
+- the [Script](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/scripting.html#Script){:target="_blank"} node is deleted
 - the browser loads a new world
 
 ## Responding to events
@@ -338,7 +338,7 @@ ROUTE Bouncer.value_changed  TO Ball.set_translation
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 
-<X3D profile='Full' version='3.3' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-3.3.xsd'>
+<X3D profile='Full' version='4.0' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <Scene>
     <Transform DEF='Ball'>
       <Shape>
@@ -391,7 +391,7 @@ function set_fraction (fraction, time)
 ### Classic Encoding
 
 ```js
-#X3D V3.3 utf8 Titania V4.3.0
+#X3D V4.0 utf8 Titania V4.3.0
 
 DEF Ball Transform {
   children [
@@ -470,7 +470,7 @@ Program scripts can be used to help create 3D user interface widgets:
 
 A toggle script turns on at 1st touch, off at 2nd:
 
-- A [TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#TouchSensor){:target="_blank"} node can supply touch events
+- A [TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#TouchSensor){:target="_blank"} node can supply touch events
 
 ### XML Encoding
 

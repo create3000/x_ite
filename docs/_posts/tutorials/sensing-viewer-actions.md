@@ -22,12 +22,12 @@ What can you do:
 
 There are four main action sensor types:
 
-- [TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#TouchSensor){:target="_blank"} senses touch
-- [SphereSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#SphereSensor){:target="_blank"} senses drags
-- [CylinderSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#CylinderSensor){:target="_blank"} senses drags
-- [PlaneSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#PlaneSensor){:target="_blank"} senses drags
+- [TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#TouchSensor){:target="_blank"} senses touch
+- [SphereSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#SphereSensor){:target="_blank"} senses drags
+- [CylinderSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#CylinderSensor){:target="_blank"} senses drags
+- [PlaneSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#PlaneSensor){:target="_blank"} senses drags
 
-The [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor){:target="_blank"} node is a special-purpose action sensor with a built-in response.
+The [Anchor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Anchor){:target="_blank"} node is a special-purpose action sensor with a built-in response.
 
 ## Sensing shapes
 
@@ -36,7 +36,7 @@ The [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/
 
 ## Syntax: TouchSensor
 
-A [TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#TouchSensor){:target="_blank"} node senses the cursor's touch:
+A [TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#TouchSensor){:target="_blank"} node senses the cursor's touch:
 
 - *isOver* - send true/false when cursor over/not over
 - *isActive* - send true/false when mouse button pressed/released
@@ -106,7 +106,7 @@ ROUTE Rot1.value_changed      TO Frame1.set_rotation
 
 ## Syntax: SphereSensor
 
-A [SphereSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#SphereSensor){:target="_blank"} node senses a cursor drag and generates rotations as if rotating a ball:
+A [SphereSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#SphereSensor){:target="_blank"} node senses a cursor drag and generates rotations as if rotating a ball:
 
 - *isActive* - sends true/false when mouse button pressed/released
 - *rotation\_changed* - sends rotation during a drag
@@ -135,7 +135,7 @@ ROUTE Rotator.rotation_changed TO RotateMe.set_rotation
 
 ## Syntax: CylinderSensor
 
-A [CylinderSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#CylinderSensor){:target="_blank"} node senses a cursor drag and generates rotations as if rotating a cylinder:
+A [CylinderSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#CylinderSensor){:target="_blank"} node senses a cursor drag and generates rotations as if rotating a cylinder:
 
 - *isActive* - sends true/false when mouse button pressed/released
 - *rotation\_changed* - sends rotation during a drag
@@ -164,7 +164,7 @@ ROUTE Rotator.rotation_changed TO RotateMe.set_rotation
 
 ## Syntax: PlaneSensor
 
-A [PlaneSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#PlaneSensor){:target="_blank"} node senses a cursor drag and generates translations as if sliding on a plane:
+A [PlaneSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#PlaneSensor){:target="_blank"} node senses a cursor drag and generates translations as if sliding on a plane:
 
 - *isActive* - sends true/false when mouse button pressed/released
 - *translation\_changed* - sends translations during a drag

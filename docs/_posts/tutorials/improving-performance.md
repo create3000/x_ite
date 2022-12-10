@@ -77,7 +77,7 @@ Prototyping objects that are used frequently with a few modifications is another
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 
-<X3D profile='Full' version='3.3' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-3.3.xsd'>
+<X3D profile='Full' version='4.0' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <meta name='comment' content='World of Titania'/>
     <meta name='created' content='Fri, 29 Jun 2018 13:24:34 GMT'/>
@@ -149,7 +149,7 @@ function set_whichChoice (value)
 ### Classic Encoding
 
 ```js
-#X3D V3.3 utf8 Titania V4.3.0
+#X3D V4.0 utf8 Titania V4.3.0
 
 PROTO BooleanSwitch [
   inputOutput    SFBool  whichChoice FALSE
