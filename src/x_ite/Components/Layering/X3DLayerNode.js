@@ -304,20 +304,23 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    },
    camera: function (type, renderObject)
    {
-      this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
+      if (this ._visible .getValue ())
+      {
+         this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
 
-      this .currentViewport .push (this);
-      this .groupNode .traverse (type, renderObject);
-      this .currentViewport .pop (this);
+         this .currentViewport .push (this);
+         this .groupNode .traverse (type, renderObject);
+         this .currentViewport .pop (this);
 
-      this .getModelViewMatrix () .pop ();
+         this .getModelViewMatrix () .pop ();
 
-      this .navigationInfos .update (this, this .navigationInfoStack);
-      this .viewpoints      .update (this, this .viewpointStack);
-      this .backgrounds     .update (this, this .backgroundStack);
-      this .fogs            .update (this, this .fogStack);
+         this .navigationInfos .update (this, this .navigationInfoStack);
+         this .viewpoints      .update (this, this .viewpointStack);
+         this .backgrounds     .update (this, this .backgroundStack);
+         this .fogs            .update (this, this .fogStack);
 
-      this .getViewpoint () .update ();
+         this .getViewpoint () .update ();
+      }
    },
    picking: function (type, renderObject)
    {
