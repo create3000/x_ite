@@ -324,13 +324,16 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    },
    picking: function (type, renderObject)
    {
-      this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
+      if (this ._pickable .getValue ())
+      {
+         this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
 
-      this .currentViewport .push (this);
-      this .groupNode .traverse (type, renderObject);
-      this .currentViewport .pop (this);
+         this .currentViewport .push (this);
+         this .groupNode .traverse (type, renderObject);
+         this .currentViewport .pop (this);
 
-      this .getModelViewMatrix () .pop ();
+         this .getModelViewMatrix () .pop ();
+      }
    },
    collision: (function ()
    {
