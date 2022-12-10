@@ -69,9 +69,9 @@ Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype
    constructor: Cylinder,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
       new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "top",      new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "side",     new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bottom",   new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "top",      new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "side",     new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "bottom",   new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "height",   new Fields .SFFloat (2)),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),

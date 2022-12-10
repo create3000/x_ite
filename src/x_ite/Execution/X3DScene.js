@@ -368,7 +368,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       let specificationVersion = this .getSpecificationVersion ();
 
       if (specificationVersion === "2.0")
-         specificationVersion = "3.3";
+         specificationVersion = "4.0";
 
       stream .string += "#X3D V";
       stream .string += specificationVersion;
@@ -475,7 +475,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       let specificationVersion = this .getSpecificationVersion ();
 
       if (specificationVersion === "2.0")
-         specificationVersion = "3.3";
+         specificationVersion = "4.0";
 
       stream .string += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
       stream .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
