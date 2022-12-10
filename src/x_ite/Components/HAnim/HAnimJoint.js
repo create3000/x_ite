@@ -73,6 +73,7 @@ HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .protot
    constructor: HAnimJoint,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
       new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",      new Fields .SFString ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",         new Fields .SFRotation ()),

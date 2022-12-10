@@ -65,6 +65,7 @@ HAnimSegment .prototype = Object .assign (Object .create (X3DGroupingNode .proto
    constructor: HAnimSegment,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
       new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",      new Fields .SFString ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "mass",             new Fields .SFFloat ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "centerOfMass",     new Fields .SFVec3f ()),
