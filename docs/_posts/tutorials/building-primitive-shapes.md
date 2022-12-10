@@ -100,7 +100,6 @@ Text { ... }
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-
 <X3D profile='Full' version='4.0' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <Scene>
     <Shape>
@@ -150,7 +149,6 @@ Shape {
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-
 <X3D profile='Full' version='4.0' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <Scene>
     <Shape>
