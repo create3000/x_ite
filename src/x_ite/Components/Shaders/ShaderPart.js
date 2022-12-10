@@ -85,6 +85,7 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
    constructor: ShaderPart,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
       new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
