@@ -58,6 +58,8 @@ import X3DConstants        from "../Base/X3DConstants.js";
 import Generator           from "../InputOutput/Generator.js";
 import SFNodeCache         from "../Fields/SFNodeCache.js";
 
+SupportedNodes .addAbstractType ("X3DScene", X3DScene);
+
 const
    _specificationVersion = Symbol (),
    _encoding             = Symbol (),
@@ -68,7 +70,7 @@ const
    _metadata             = Symbol (),
    _exportedNodes        = Symbol ();
 
-SupportedNodes .addAbstractType ("X3DScene", X3DScene);
+const LATEST_VERSION = "4.0";
 
 function X3DScene (executionContext)
 {
@@ -76,7 +78,7 @@ function X3DScene (executionContext)
 
    this .addType (X3DConstants .X3DScene)
 
-   this [_specificationVersion] = "4.0";
+   this [_specificationVersion] = LATEST_VERSION;
    this [_encoding]             = "SCRIPTED";
    this [_profile]              = null;
    this [_components]           = new ComponentInfoArray ([ ]);
@@ -365,13 +367,8 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    {
       const generator = Generator .Get (stream);
 
-      let specificationVersion = this .getSpecificationVersion ();
-
-      if (specificationVersion === "2.0")
-         specificationVersion = "4.0";
-
       stream .string += "#X3D V";
-      stream .string += specificationVersion;
+      stream .string += LATEST_VERSION;
       stream .string += " ";
       stream .string += "utf8";
       stream .string += " ";
@@ -472,16 +469,11 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    {
       const generator = Generator .Get (stream);
 
-      let specificationVersion = this .getSpecificationVersion ();
-
-      if (specificationVersion === "2.0")
-         specificationVersion = "4.0";
-
       stream .string += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
       stream .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
-      stream .string += specificationVersion;
+      stream .string += LATEST_VERSION;
       stream .string += "//EN\" \"https://www.web3d.org/specifications/x3d-";
-      stream .string += specificationVersion;
+      stream .string += LATEST_VERSION;
       stream .string += ".dtd\">\n";
 
       stream .string += "<X3D";
@@ -491,7 +483,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       stream .string += "'";
       stream .string += " ";
       stream .string += "version='";
-      stream .string += specificationVersion;
+      stream .string += LATEST_VERSION;
       stream .string += "'";
       stream .string += " ";
       stream .string += "xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance'";
