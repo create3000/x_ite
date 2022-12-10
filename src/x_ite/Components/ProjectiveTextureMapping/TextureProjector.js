@@ -56,9 +56,9 @@ import Rotation4               from "../../../standard/Math/Numbers/Rotation4.js
 import Matrix4                 from "../../../standard/Math/Numbers/Matrix4.js";
 import ObjectCache             from "../../../standard/Utility/ObjectCache.js";
 
-var TextureProjectorPerspectiveCache = ObjectCache (TextureProjectorPerspectiveContainer);
+var TextureProjectorCache = ObjectCache (TextureProjectorContainer);
 
-function TextureProjectorPerspectiveContainer ()
+function TextureProjectorContainer ()
 {
    this .projectionMatrix                = new Matrix4 ();
    this .modelViewMatrix                 = new Matrix4 ();
@@ -73,9 +73,9 @@ function TextureProjectorPerspectiveContainer ()
    this .projectiveTextureMatrixArray    = new Float32Array (16);
 }
 
-TextureProjectorPerspectiveContainer .prototype =
+TextureProjectorContainer .prototype =
 {
-   constructor: TextureProjectorPerspectiveContainer,
+   constructor: TextureProjectorContainer,
    set: function (textureProjectorNode, modelViewMatrix)
    {
       this .browser              = textureProjectorNode .getBrowser ();
@@ -142,22 +142,22 @@ TextureProjectorPerspectiveContainer .prototype =
    },
    dispose: function ()
    {
-      TextureProjectorPerspectiveCache .push (this);
+      TextureProjectorCache .push (this);
    },
 };
 
-function TextureProjectorPerspective (executionContext)
+function TextureProjector (executionContext)
 {
    X3DTextureProjectorNode .call (this, executionContext);
 
-   this .addType (X3DConstants .TextureProjectorPerspective);
+   this .addType (X3DConstants .TextureProjector);
 
    this ._fieldOfView .setUnit ("angle");
 }
 
-TextureProjectorPerspective .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
+TextureProjector .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
 {
-   constructor: TextureProjectorPerspective,
+   constructor: TextureProjector,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
       new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "description",  new Fields .SFString ()),
@@ -174,7 +174,7 @@ TextureProjectorPerspective .prototype = Object .assign (Object .create (X3DText
    ]),
    getTypeName: function ()
    {
-      return "TextureProjectorPerspective";
+      return "TextureProjector";
    },
    getComponentName: function ()
    {
@@ -196,8 +196,8 @@ TextureProjectorPerspective .prototype = Object .assign (Object .create (X3DText
    },
    getTextureProjectors: function ()
    {
-      return TextureProjectorPerspectiveCache;
+      return TextureProjectorCache;
    },
 });
 
-export default TextureProjectorPerspective;
+export default TextureProjector;

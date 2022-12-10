@@ -68,7 +68,9 @@ LayoutLayer .prototype = Object .assign (Object .create (X3DLayerNode .prototype
    constructor: LayoutLayer,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
       new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "isPickable",     new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "pickable",       new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "objectType",     new Fields .MFString ("ALL")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "visible",        new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "layout",         new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "viewport",       new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOnly,   "addChildren",    new Fields .MFNode ()),

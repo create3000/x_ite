@@ -45,16 +45,16 @@
  *
  ******************************************************************************/
 
-import Components                  from "../../x_ite/Components.js";
-import TextureProjectorPerspective from "../../x_ite/Components/ProjectiveTextureMapping/TextureProjectorPerspective.js";
-import TextureProjectorParallel    from "../../x_ite/Components/ProjectiveTextureMapping/TextureProjectorParallel.js";
-import X3DTextureProjectorNode     from "../../x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode.js";
+import Components               from "../../x_ite/Components.js";
+import TextureProjector         from "../../x_ite/Components/ProjectiveTextureMapping/TextureProjector.js";
+import TextureProjectorParallel from "../../x_ite/Components/ProjectiveTextureMapping/TextureProjectorParallel.js";
+import X3DTextureProjectorNode  from "../../x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode.js";
 
 Components .addComponent ({
    name: "ProjectiveTextureMapping",
    types:
    {
-      TextureProjectorPerspective:  TextureProjectorPerspective,
+      TextureProjector:  TextureProjector,
       TextureProjectorParallel: TextureProjectorParallel,
    },
    abstractTypes:

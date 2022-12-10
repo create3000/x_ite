@@ -66,6 +66,9 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 
    this .addType (X3DConstants .X3DLayerNode);
 
+   if (executionContext .getSpecificationVersion () < 4.0)
+      this .addAlias ("isPickable", this ._pickable);
+
    this .groupNode       = groupNode;
    this .currentViewport = null;
 
@@ -272,7 +275,7 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    },
    pointer: function (type, renderObject)
    {
-      if (this ._isPickable .getValue ())
+      if (this ._pickable .getValue ())
       {
          var
             browser  = this .getBrowser (),
@@ -360,15 +363,18 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    })(),
    display: function (type, renderObject)
    {
-      this .getNavigationInfo () .enable (type, renderObject);
+      if (this ._visible .getValue ())
+      {
+         this .getNavigationInfo () .enable (type, renderObject);
 
-      this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
+         this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
 
-      this .currentViewport .push (this);
-      renderObject .render (type, this .groupNode .traverse, this .groupNode);
-      this .currentViewport .pop (this);
+         this .currentViewport .push (this);
+         renderObject .render (type, this .groupNode .traverse, this .groupNode);
+         this .currentViewport .pop (this);
 
-      this .getModelViewMatrix () .pop ()
+         this .getModelViewMatrix () .pop ()
+      }
    },
 });
 
