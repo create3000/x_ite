@@ -79,7 +79,7 @@ Now we can start to add information to the file. The first node to deal with is 
 ```xml
 <WorldInfo
     title='Tutorial'
-    info='"Basic Nodes", "create3000.de"'/>
+    info='"Basic Nodes", "https://create3000.github.io/x_ite/"'/>
 ```
 
 ### Classic Encoding
@@ -89,7 +89,7 @@ WorldInfo {
  title "Tutorial"
  info [
    "Basic Nodes"
-   "create3000.de"
+   "https://create3000.github.io/x_ite/"
   ]
 }
 ```
