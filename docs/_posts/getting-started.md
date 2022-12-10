@@ -587,8 +587,8 @@ If you ever get in trouble, please [report a bug](report-a-bug).
       </a>
     </td>
     <td>
-      <a href="https://create3000.github.io/media/examples/ProjectiveTextureMapping/TextureProjectorPerspective/TextureProjectorPerspective.x3d" title="ProjectiveTextureMapping » TextureProjectorPerspective">
-        <img src="https://create3000.github.io/media/examples/ProjectiveTextureMapping/TextureProjectorPerspective/screenshot-small.png" alt="TextureProjectorPerspective"/>
+      <a href="https://create3000.github.io/media/examples/ProjectiveTextureMapping/TextureProjector/TextureProjector.x3d" title="ProjectiveTextureMapping » TextureProjector">
+        <img src="https://create3000.github.io/media/examples/ProjectiveTextureMapping/TextureProjector/screenshot-small.png" alt="TextureProjector"/>
       </a>
     </td>
     <td>
