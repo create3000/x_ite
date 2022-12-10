@@ -190,6 +190,7 @@ NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .pro
             case "NONE":
                this ._viewer = string;
                break;
+            case "PLANE_create3000.github.io":
             case "PLANE_create3000.de":
                this ._viewer = "PLANE";
                break;

@@ -215,8 +215,9 @@ X3DNavigationContext .prototype =
             this [_viewerNode] = new FlyViewer (this, navigationInfo);
             break;
          case "PLANE":
+         case "PLANE_create3000.github.io":
          case "PLANE_create3000.de":
-            this [_viewerNode] = new PlaneViewer (this, navigationInfo);
+                  this [_viewerNode] = new PlaneViewer (this, navigationInfo);
             break;
          case "NONE":
             this [_viewerNode] = new NoneViewer (this, navigationInfo);
