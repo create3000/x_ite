@@ -47,6 +47,7 @@
 
 import SupportedNodes   from "../Configuration/SupportedNodes.js";
 import DirectionalLight from "./Lighting/DirectionalLight.js";
+import EnvironmentLight from "./Lighting/EnvironmentLight.js";
 import PointLight       from "./Lighting/PointLight.js";
 import SpotLight        from "./Lighting/SpotLight.js";
 import X3DLightNode     from "./Lighting/X3DLightNode.js";
@@ -54,6 +55,7 @@ import X3DLightNode     from "./Lighting/X3DLightNode.js";
 const Types =
 {
    DirectionalLight: DirectionalLight,
+   EnvironmentLight: EnvironmentLight,
    PointLight:       PointLight,
    SpotLight:        SpotLight,
 };
