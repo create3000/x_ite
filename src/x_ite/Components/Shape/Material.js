@@ -60,6 +60,9 @@ function Material (executionContext)
 
    this .addType (X3DConstants .Material);
 
+   if (executionContext .getSpecificationVersion () < 4.0)
+      this .getMaterialKey = getMaterialKey;
+
    this .diffuseColor  = new Float32Array (3);
    this .specularColor = new Float32Array (3);
 }
@@ -229,22 +232,9 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
          return textureIndices;
       };
    })(),
-   getMaterialKey: function (shadows)
+   getMaterialKey: function ()
    {
-      if (shadows || +this .getTextureBits ())
-      {
-         return "2";
-      }
-      else
-      {
-         switch (this .getBrowser () .getBrowserOptions () .getShading ())
-         {
-            default:
-               return "1";
-            case Shading .PHONG:
-               return "2";
-         }
-      }
+      return "2";
    },
    createShader: function (key, geometryContext, renderContext)
    {
@@ -372,5 +362,23 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
       }
    },
 });
+
+function getMaterialKey (shadows)
+{
+   if (shadows || +this .getTextureBits ())
+   {
+      return "2";
+   }
+   else
+   {
+      switch (this .getBrowser () .getBrowserOptions () .getShading ())
+      {
+         default:
+            return "1";
+         case Shading .PHONG:
+            return "2";
+      }
+   }
+}
 
 export default Material;
