@@ -85,10 +85,6 @@ function DirectionalLightContainer ()
 DirectionalLightContainer .prototype =
 {
    constructor: DirectionalLightContainer,
-   getModelViewMatrix: function ()
-   {
-      return this .modelViewMatrix;
-   },
    set: function (lightNode, groupNode, modelViewMatrix)
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
@@ -108,6 +104,14 @@ DirectionalLightContainer .prototype =
          if (! this .shadowBuffer)
             console .warn ("Couldn't create shadow buffer.");
       }
+   },
+   setGroup: function (groupNode)
+   {
+      this .groupNode = groupNode;
+   },
+   getModelViewMatrix: function ()
+   {
+      return this .modelViewMatrix;
    },
    renderShadowMap: function (renderObject)
    {

@@ -83,6 +83,10 @@ TextureProjectorContainer .prototype =
 
       this .modelViewMatrix .assign (modelViewMatrix);
    },
+   setGroup: function (groupNode)
+   {
+      this .groupNode = groupNode;
+   },
    getModelViewMatrix: function ()
    {
       return this .modelViewMatrix;

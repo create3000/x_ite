@@ -67,10 +67,10 @@ function Inline (executionContext)
    if (executionContext .getSpecificationVersion () < 4.0)
       this ._global = true;
 
-   this .scene = this .getBrowser () .getDefaultScene ();
-   this .group = new Group (executionContext);
+   this .scene     = this .getBrowser () .getDefaultScene ();
+   this .groupNode = new Group (executionContext);
 
-   this .group .addParent (this);
+   this .groupNode .addParent (this);
 }
 
 Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -109,18 +109,18 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
       X3DUrlObject     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this .group .setPrivate (true);
-      this .group .setup ();
+      this .groupNode .setPrivate (true);
+      this .groupNode .setup ();
 
-      this .group ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-      this .group ._isPickableObject .addFieldInterest (this ._isPickableObject);
+      this .groupNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+      this .groupNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
       this .requestImmediateLoad ();
    },
    getBBox: function (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-         return this .group .getBBox (bbox, shadows);
+         return this .groupNode .getBBox (bbox, shadows);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -157,7 +157,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    setInternalScene: function (scene)
    {
       this .scene .setLive (false);
-      this .scene .rootNodes .removeFieldInterest (this .group ._children);
+      this .scene .rootNodes .removeFieldInterest (this .groupNode ._children);
 
       // Set new scene.
 
@@ -165,8 +165,8 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
       this .scene .setExecutionContext (this .getExecutionContext ());
       this .scene .setPrivate (this .getExecutionContext () .isPrivate ());
 
-      this .scene .rootNodes .addFieldInterest (this .group ._children);
-      this .group ._children = this .scene .rootNodes;
+      this .scene .rootNodes .addFieldInterest (this .groupNode ._children);
+      this .groupNode ._children = this .scene .rootNodes;
 
       this .set_live__ ();
 
@@ -192,7 +192,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
             pickingHierarchy .push (this);
 
-            this .group .traverse (type, renderObject);
+            this .groupNode .traverse (type, renderObject);
 
             pickingHierarchy .pop ();
             return;
@@ -201,7 +201,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          {
             if (this ._global .getValue ())
             {
-               this .group .traverse (type, renderObject);
+               this .groupNode .traverse (type, renderObject);
             }
             else
             {
@@ -211,7 +211,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
                   opaqueShapesBegin      = renderObject .getNumOpaqueShapes (),
                   transparentShapesBegin = renderObject .getNumTransparentShapes ();
 
-               this .group .traverse (type, renderObject);
+               this .groupNode .traverse (type, renderObject);
 
                const globalsEnd = renderObject .getGlobalObjects () .length;
 
@@ -234,6 +234,8 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
                for (let g = globalsBegin; g < globalsEnd; ++ g)
                {
                   const globalObject = globalObjects [g];
+
+                  globalObject .setGroup (this .groupNode);
 
                   numGlobalLights            += !!globalObject .lightNode;
                   numGlobalTextureProjectors += !!globalObject .textureProjectorNode;
@@ -277,7 +279,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          }
          default:
          {
-            this .group .traverse (type, renderObject);
+            this .groupNode .traverse (type, renderObject);
             return;
          }
       }

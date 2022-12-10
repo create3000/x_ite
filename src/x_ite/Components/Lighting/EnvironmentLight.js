@@ -64,12 +64,16 @@ function EnvironmentLightContainer ()
 EnvironmentLightContainer .prototype =
 {
    constructor: EnvironmentLightContainer,
+   set: function (lightNode, groupNode, modelViewMatrix)
+   {
+   },
+   setGroup: function (groupNode)
+   {
+      this .groupNode = groupNode;
+   },
    getModelViewMatrix: function ()
    {
       return this .modelViewMatrix;
-   },
-   set: function (lightNode, groupNode, modelViewMatrix)
-   {
    },
    renderShadowMap: function (renderObject)
    {

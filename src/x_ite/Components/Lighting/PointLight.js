@@ -111,10 +111,6 @@ function PointLightContainer ()
 PointLightContainer .prototype =
 {
    constructor: PointLightContainer,
-   getModelViewMatrix: function ()
-   {
-      return this .modelViewMatrix;
-   },
    set: function (lightNode, groupNode, modelViewMatrix)
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
@@ -136,6 +132,14 @@ PointLightContainer .prototype =
          if (!this .shadowBuffer)
             console .warn ("Couldn't create shadow buffer.");
       }
+   },
+   setGroup: function (groupNode)
+   {
+      this .groupNode = groupNode;
+   },
+   getModelViewMatrix: function ()
+   {
+      return this .modelViewMatrix;
    },
    renderShadowMap: function (renderObject)
    {
