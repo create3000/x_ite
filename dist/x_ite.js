@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 361:
+/***/ 842:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(725);
+/* provided dependency */ var jQuery = __webpack_require__(156);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 125:
+/***/ 137:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(725);
+/* provided dependency */ var jQuery = __webpack_require__(156);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 419:
+/***/ 777:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(725)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(156)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 725:
+/***/ 156:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11728,7 +11728,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 4:
+/***/ 957:
 /***/ ((module) => {
 
 /**
@@ -16507,7 +16507,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 311:
+/***/ 29:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -33898,7 +33898,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(725);
+/* provided dependency */ var $ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34809,7 +34809,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(725);
+/* provided dependency */ var Notification_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34931,8 +34931,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(125);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(725);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(137);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41867,7 +41867,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(725);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43877,7 +43877,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(4);
+/* provided dependency */ var libtess = __webpack_require__(957);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46163,6 +46163,10 @@ X3DRenderObject .prototype =
    {
       this .globalShadows .push (value || this .globalShadows .at (-1));
    },
+   getGlobalShadows: function ()
+   {
+      return this .globalShadows;
+   },
    pushLocalShadows: function (value)
    {
       this .localShadows .push (value || this .localShadows .at (-1));
@@ -46811,14 +46815,15 @@ X3DRenderObject .prototype =
          browser                    = this .getBrowser (),
          gl                         = browser .getContext (),
          viewport                   = this .getViewVolume () .getViewport (),
+         globalObjects              = this .globalObjects,
          lights                     = this .lights,
          textureProjectors          = this .textureProjectors,
          generatedCubeMapTextures   = this .generatedCubeMapTextures,
          globalShadows              = this .globalShadows,
          shadows                    = globalShadows .at (-1),
          headlight                  = this .getNavigationInfo () ._headlight .getValue (),
-         numGlobalLights            = lights .reduce ((v, c) => v + c .lightNode .getGlobal (), +headlight),
-         numGlobalTextureProjectors = textureProjectors .reduce ((v, c) => v + c .textureProjectorNode .getGlobal (), 0);
+         numGlobalLights            = globalObjects .reduce ((v, c) => v + !!c .lightNode, +headlight),
+         numGlobalTextureProjectors = globalObjects .reduce ((v, c) => v + !!c .textureProjectorNode, 0);
 
 
       this .renderTime = Date .now ();
@@ -46941,8 +46946,6 @@ X3DRenderObject .prototype =
 
 
       // POST DRAW
-
-      const globalObjects = this .globalObjects;
 
       if (this .isIndependent ())
       {
@@ -49069,54 +49072,59 @@ X3DGeometryNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
 
       return function (shading)
       {
-         if (this .geometryType < 2)
-            return;
-
          const
-            browser     = this .getBrowser (),
-            flatShading = browser .getBrowserOptions () .getShading () === Core_Shading.FLAT;
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
 
-         if (flatShading === this .flatShading)
-            return;
-
-         this .flatShading = flatShading;
-
-         // Generate flat normals if needed.
-
-         const gl = browser .getContext ();
-
-         if (flatShading)
+         if (this .geometryType < 2)
          {
-            if (! this .flatNormals .length)
-            {
-               const
-                  cw          = this .frontFace === gl .CW,
-                  flatNormals = this .flatNormals,
-                  vertices    = this .vertices .getValue ();
-
-               for (let i = 0, length = vertices .length; i < length; i += 12)
-               {
-                  Geometry_Triangle3.normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
-                                     v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
-                                     v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
-                                     normal);
-
-                  if (cw)
-                     normal .negate ();
-
-                  flatNormals .push (normal .x, normal .y, normal .z,
-                                     normal .x, normal .y, normal .z,
-                                     normal .x, normal .y, normal .z);
-               }
-
-               flatNormals .shrinkToFit ();
-            }
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, this .normals .getValue (), gl .DYNAMIC_DRAW);
          }
+         else
+         {
+            const flatShading = browser .getBrowserOptions () .getShading () === Core_Shading.FLAT;
 
-         // Transfer normals.
+            if (flatShading === this .flatShading)
+               return;
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .DYNAMIC_DRAW);
+            this .flatShading = flatShading;
+
+            // Generate flat normals if needed.
+
+            if (flatShading)
+            {
+               if (! this .flatNormals .length)
+               {
+                  const
+                     cw          = this .frontFace === gl .CW,
+                     flatNormals = this .flatNormals,
+                     vertices    = this .vertices .getValue ();
+
+                  for (let i = 0, length = vertices .length; i < length; i += 12)
+                  {
+                     Geometry_Triangle3.normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
+                                       v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
+                                       v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
+                                       normal);
+
+                     if (cw)
+                        normal .negate ();
+
+                     flatNormals .push (normal .x, normal .y, normal .z,
+                                       normal .x, normal .y, normal .z,
+                                       normal .x, normal .y, normal .z);
+                  }
+
+                  flatNormals .shrinkToFit ();
+               }
+            }
+
+            // Transfer normals.
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .DYNAMIC_DRAW);
+         }
       };
    })(),
    requestRebuild: function ()
@@ -51209,7 +51217,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(725);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51663,6 +51671,9 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 
    this .addType (Base_X3DConstants.X3DLayerNode);
 
+   if (executionContext .getSpecificationVersion () < 4.0)
+      this .addAlias ("isPickable", this ._pickable);
+
    this .groupNode       = groupNode;
    this .currentViewport = null;
 
@@ -51869,7 +51880,7 @@ X3DLayerNode .prototype = Object .assign (Object .create (Core_X3DNode.prototype
    },
    pointer: function (type, renderObject)
    {
-      if (this ._isPickable .getValue ())
+      if (this ._pickable .getValue ())
       {
          var
             browser  = this .getBrowser (),
@@ -51957,15 +51968,18 @@ X3DLayerNode .prototype = Object .assign (Object .create (Core_X3DNode.prototype
    })(),
    display: function (type, renderObject)
    {
-      this .getNavigationInfo () .enable (type, renderObject);
+      if (this ._visible .getValue ())
+      {
+         this .getNavigationInfo () .enable (type, renderObject);
 
-      this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
+         this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
 
-      this .currentViewport .push (this);
-      renderObject .render (type, this .groupNode .traverse, this .groupNode);
-      this .currentViewport .pop (this);
+         this .currentViewport .push (this);
+         renderObject .render (type, this .groupNode .traverse, this .groupNode);
+         this .currentViewport .pop (this);
 
-      this .getModelViewMatrix () .pop ()
+         this .getModelViewMatrix () .pop ()
+      }
    },
 });
 
@@ -52473,6 +52487,7 @@ TimeSensor .prototype = Object .assign (Object .create (Core_X3DSensorNode.proto
    constructor: TimeSensor,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",         new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",      new x_ite_Fields.SFString ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",          new x_ite_Fields.SFBool (true)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "cycleInterval",    new x_ite_Fields.SFTime (1)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loop",             new x_ite_Fields.SFBool ()),
@@ -53777,10 +53792,14 @@ Viewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpointNo
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "orientation",       new x_ite_Fields.SFRotation ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "centerOfRotation",  new x_ite_Fields.SFVec3f ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fieldOfView",       new x_ite_Fields.SFFloat (0.7854)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "nearDistance",      new x_ite_Fields.SFFloat (-1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "farDistance",       new x_ite_Fields.SFFloat (-1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "viewAll",           new x_ite_Fields.SFBool (false)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "jump",              new x_ite_Fields.SFBool (true)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "retainUserOffsets", new x_ite_Fields.SFBool ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",           new x_ite_Fields.SFBool ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",          new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "navigationInfo",    new x_ite_Fields.SFNode ()),
    ]),
    getTypeName: function ()
    {
@@ -54916,7 +54935,9 @@ Layer .prototype = Object .assign (Object .create (Layering_X3DLayerNode.prototy
    constructor: Layer,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",       new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "isPickable",     new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pickable",       new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "objectType",     new x_ite_Fields.MFString ("ALL")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "visible",        new x_ite_Fields.SFBool (true)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "viewport",       new x_ite_Fields.SFNode ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "addChildren",    new x_ite_Fields.MFNode ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "removeChildren", new x_ite_Fields.MFNode ()),
@@ -55450,8 +55471,8 @@ const BinaryTransport_default_ = BinaryTransport;
 x_ite_Namespace.set ("standard/Networking/BinaryTransport", BinaryTransport_default_);
 /* harmony default export */ const Networking_BinaryTransport = (BinaryTransport_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(725);
-/* provided dependency */ var pako = __webpack_require__(311);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(156);
+/* provided dependency */ var pako = __webpack_require__(29);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -57722,7 +57743,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(725);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -58391,7 +58412,7 @@ function X3DScene (executionContext)
 
    this .addType (Base_X3DConstants.X3DScene)
 
-   this [_specificationVersion] = "3.3";
+   this [_specificationVersion] = "4.0";
    this [_encoding]             = "SCRIPTED";
    this [_profile]              = null;
    this [_components]           = new Configuration_ComponentInfoArray ([ ]);
@@ -58683,7 +58704,7 @@ X3DScene .prototype = Object .assign (Object .create (Execution_X3DExecutionCont
       let specificationVersion = this .getSpecificationVersion ();
 
       if (specificationVersion === "2.0")
-         specificationVersion = "3.3";
+         specificationVersion = "4.0";
 
       stream .string += "#X3D V";
       stream .string += specificationVersion;
@@ -58790,7 +58811,7 @@ X3DScene .prototype = Object .assign (Object .create (Execution_X3DExecutionCont
       let specificationVersion = this .getSpecificationVersion ();
 
       if (specificationVersion === "2.0")
-         specificationVersion = "3.3";
+         specificationVersion = "4.0";
 
       stream .string += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
       stream .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
@@ -59198,7 +59219,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(725);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63616,7 +63637,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (Rendering_X3DGe
          gl .bufferData (gl .ARRAY_BUFFER, lineStipple .getValue (), gl .DYNAMIC_DRAW);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (12 * 6 * numLines), gl .DYNAMIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (15 * 6 * numLines), gl .DYNAMIC_DRAW);
       }
    },
    updateLengthSoFar: (function ()
@@ -63721,6 +63742,9 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (Rendering_X3DGe
                      colorStride        = 8 * Float32Array .BYTES_PER_ELEMENT,
                      colorOffset0       = 0,
                      colorOffset1       = 4 * Float32Array .BYTES_PER_ELEMENT,
+                     normalStride       = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     normalOffset0      = 0,
+                     normalOffset1      = 3 * Float32Array .BYTES_PER_ELEMENT,
                      vertexStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
                      vertexOffset0      = 0,
                      vertexOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT;
@@ -63741,6 +63765,12 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (Rendering_X3DGe
                   {
                      transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
                      transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
+                  }
+
+                  if (this .hasNormals)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
                   }
 
                   transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
@@ -63780,11 +63810,12 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (Rendering_X3DGe
                if (this .thickVertexArrayObject .enable (gl, shaderNode))
                {
                   const
-                     stride            = 12 * Float32Array .BYTES_PER_ELEMENT,
+                     stride            = 15 * Float32Array .BYTES_PER_ELEMENT,
                      lineStippleOffset = 0,
                      fogCoordOffset    = 3 * Float32Array .BYTES_PER_ELEMENT,
                      colorOffset       = 4 * Float32Array .BYTES_PER_ELEMENT,
-                     vertexOffset      = 8 * Float32Array .BYTES_PER_ELEMENT;
+                     normalOffset      = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexOffset      = 11 * Float32Array .BYTES_PER_ELEMENT;
 
                   // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -63796,6 +63827,9 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (Rendering_X3DGe
 
                   if (this .colorMaterial)
                      shaderNode .enableColorAttribute (gl, this .trianglesBuffer, stride, colorOffset);
+
+                   if (this .hasNormals)
+                     shaderNode .enableNormalAttribute (gl, this .trianglesBuffer, stride, normalOffset);
 
                   shaderNode .enableVertexAttribute (gl, this .trianglesBuffer, stride, vertexOffset);
 
@@ -63845,6 +63879,9 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (Rendering_X3DGe
 
             if (this .colorMaterial)
                shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+            if (this .hasNormals)
+               shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
          }
@@ -63896,8 +63933,10 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (Rendering_X3DGe
          if (this .colorMaterial)
             shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-         shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-         shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
          this .updateParticles = false;
       }
@@ -64178,8 +64217,10 @@ IndexedLineSet .prototype = Object .assign (Object .create (Rendering_X3DLineGeo
          fogCoordNode   = this .fogCoordNode,
          colorNode      = this .colorNode,
          coordNode      = this .coordNode,
+         normalNode     = this .normalNode,
          fogDepthArray  = this .getFogDepths (),
          colorArray     = this .getColors (),
+         normalArray    = this .getNormals (),
          vertexArray    = this .getVertices ();
 
       // Fill GeometryNode
@@ -64213,6 +64254,9 @@ IndexedLineSet .prototype = Object .assign (Object .create (Rendering_X3DLineGeo
                      else
                         colorNode .addColor (this .getColorIndex (face), colorArray);
                   }
+
+                  if (normalNode)
+                     normalNode .addVector (index, normalArray);
 
                   coordNode .addPoint (index, vertexArray);
                }
@@ -65076,10 +65120,14 @@ OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpo
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "orientation",       new x_ite_Fields.SFRotation ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "centerOfRotation",  new x_ite_Fields.SFVec3f ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fieldOfView",       new x_ite_Fields.MFFloat (-1, -1, 1, 1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "nearDistance",      new x_ite_Fields.SFFloat (-1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "farDistance",       new x_ite_Fields.SFFloat (-1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "viewAll",           new x_ite_Fields.SFBool (false)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "jump",              new x_ite_Fields.SFBool (true)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "retainUserOffsets", new x_ite_Fields.SFBool ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",           new x_ite_Fields.SFBool ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",          new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "navigationInfo",    new x_ite_Fields.SFNode ()),
    ]),
    getTypeName: function ()
    {
@@ -66104,8 +66152,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(419);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(725);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(777);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67003,8 +67051,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(419);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(725);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(777);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67943,8 +67991,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(419);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(725);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(777);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -68259,8 +68307,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(419);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(725);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(777);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -69077,10 +69125,6 @@ function DirectionalLightContainer ()
 DirectionalLightContainer .prototype =
 {
    constructor: DirectionalLightContainer,
-   getModelViewMatrix: function ()
-   {
-      return this .modelViewMatrix;
-   },
    set: function (lightNode, groupNode, modelViewMatrix)
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
@@ -69100,6 +69144,14 @@ DirectionalLightContainer .prototype =
          if (! this .shadowBuffer)
             console .warn ("Couldn't create shadow buffer.");
       }
+   },
+   setGroup: function (groupNode)
+   {
+      this .groupNode = groupNode;
+   },
+   getModelViewMatrix: function ()
+   {
+      return this .modelViewMatrix;
    },
    renderShadowMap: function (renderObject)
    {
@@ -69857,8 +69909,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(419);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(725);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(777);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70468,8 +70520,8 @@ const X3DPointingDeviceSensorContext_default_ = X3DPointingDeviceSensorContext;
 x_ite_Namespace.set ("x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext", X3DPointingDeviceSensorContext_default_);
 /* harmony default export */ const PointingDeviceSensor_X3DPointingDeviceSensorContext = (X3DPointingDeviceSensorContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(725);
-/* provided dependency */ var ResizeSensor = __webpack_require__(361);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(156);
+/* provided dependency */ var ResizeSensor = __webpack_require__(842);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -74879,12 +74931,12 @@ uniform mat4  modelViewProjectionMatrix;
 uniform mat4  invModelViewProjectionMatrix;
 uniform float scale;
 
-in vec3 x3d_LineStipple0; in float x3d_FogDepth0; in vec4 x3d_Color0; in vec4 x3d_Vertex0;
-in vec3 x3d_LineStipple1; in float x3d_FogDepth1; in vec4 x3d_Color1; in vec4 x3d_Vertex1;
+in vec3 x3d_LineStipple0; in float x3d_FogDepth0; in vec4 x3d_Color0; in vec3 x3d_Normal0; in vec4 x3d_Vertex0;
+in vec3 x3d_LineStipple1; in float x3d_FogDepth1; in vec4 x3d_Color1; in vec3 x3d_Normal1; in vec4 x3d_Vertex1;
 
-out vec3 lineStipple0; out float fogDepth0; out vec4 color0; out vec4 vertex0;
-out vec3 lineStipple1; out float fogDepth1; out vec4 color1; out vec4 vertex1;
-out vec3 lineStipple2; out float fogDepth2; out vec4 color2; out vec4 vertex2;
+out vec3 lineStipple0; out float fogDepth0; out vec4 color0; out vec3 normal0; out vec4 vertex0;
+out vec3 lineStipple1; out float fogDepth1; out vec4 color1; out vec3 normal1; out vec4 vertex1;
+out vec3 lineStipple2; out float fogDepth2; out vec4 color2; out vec3 normal2; out vec4 vertex2;
 
 vec3
 projectPoint (const in vec4 point, const in mat4 modelViewProjectionMatrix, const in vec4 viewport)
@@ -74928,9 +74980,9 @@ main ()
       vec4 p1 = unProjectPoint (vec3 (pq1 .xy, projected0 .z), invModelViewProjectionMatrix, viewport);
       vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), invModelViewProjectionMatrix, viewport);
 
-      lineStipple0 = x3d_LineStipple0; fogDepth0 = x3d_FogDepth0; color0 = x3d_Color0; vertex0 = p0;
-      lineStipple1 = x3d_LineStipple0; fogDepth1 = x3d_FogDepth0; color1 = x3d_Color0; vertex1 = p1;
-      lineStipple2 = x3d_LineStipple1; fogDepth2 = x3d_FogDepth1; color2 = x3d_Color1; vertex2 = p2;
+      lineStipple0 = x3d_LineStipple0; fogDepth0 = x3d_FogDepth0; color0 = x3d_Color0; normal0 = x3d_Normal0; vertex0 = p0;
+      lineStipple1 = x3d_LineStipple0; fogDepth1 = x3d_FogDepth0; color1 = x3d_Color0; normal1 = x3d_Normal0; vertex1 = p1;
+      lineStipple2 = x3d_LineStipple1; fogDepth2 = x3d_FogDepth1; color2 = x3d_Color1; normal2 = x3d_Normal1; vertex2 = p2;
    }
    else
    {
@@ -74942,9 +74994,9 @@ main ()
       vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), invModelViewProjectionMatrix, viewport);
       vec4 p3 = unProjectPoint (vec3 (pq3 .xy, projected1 .z), invModelViewProjectionMatrix, viewport);
 
-      lineStipple0 = x3d_LineStipple0; fogDepth0 = x3d_FogDepth0; color0 = x3d_Color0; vertex0 = p0;
-      lineStipple1 = x3d_LineStipple1; fogDepth1 = x3d_FogDepth1; color1 = x3d_Color1; vertex1 = p2;
-      lineStipple2 = x3d_LineStipple1; fogDepth2 = x3d_FogDepth1; color2 = x3d_Color1; vertex2 = p3;
+      lineStipple0 = x3d_LineStipple0; fogDepth0 = x3d_FogDepth0; color0 = x3d_Color0; normal0 = x3d_Normal0; vertex0 = p0;
+      lineStipple1 = x3d_LineStipple1; fogDepth1 = x3d_FogDepth1; color1 = x3d_Color1; normal1 = x3d_Normal1; vertex1 = p2;
+      lineStipple2 = x3d_LineStipple1; fogDepth2 = x3d_FogDepth1; color2 = x3d_Color1; normal2 = x3d_Normal1; vertex2 = p3;
    }
 }
 `;
@@ -77024,13 +77076,16 @@ X3DProgrammableShaderObject .prototype =
 
          // Normal matrix
 
-         normalMatrix [0] = modelViewMatrix [0]; normalMatrix [3] = modelViewMatrix [1]; normalMatrix [6] = modelViewMatrix [ 2];
-         normalMatrix [1] = modelViewMatrix [4]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [7] = modelViewMatrix [ 6];
-         normalMatrix [2] = modelViewMatrix [8]; normalMatrix [5] = modelViewMatrix [9]; normalMatrix [8] = modelViewMatrix [10];
+         if (geometryContext .hasNormals)
+         {
+            normalMatrix [0] = modelViewMatrix [0]; normalMatrix [3] = modelViewMatrix [1]; normalMatrix [6] = modelViewMatrix [ 2];
+            normalMatrix [1] = modelViewMatrix [4]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [7] = modelViewMatrix [ 6];
+            normalMatrix [2] = modelViewMatrix [8]; normalMatrix [5] = modelViewMatrix [9]; normalMatrix [8] = modelViewMatrix [10];
 
-         Numbers_Matrix3.prototype.inverse.call (normalMatrix);
+            Numbers_Matrix3.prototype.inverse.call (normalMatrix);
 
-         gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrix);
+            gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrix);
+         }
 
          // Fog
 
@@ -77464,14 +77519,14 @@ LoadSensor .prototype = Object .assign (Object .create (Networking_X3DNetworkSen
 {
    constructor: LoadSensor,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",   new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "timeOut",   new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",  new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isLoaded",  new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "progress",  new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "loadTime",  new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",  new x_ite_Fields.MFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",  new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "timeOut",  new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive", new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isLoaded", new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "progress", new x_ite_Fields.SFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "loadTime", new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children", new x_ite_Fields.MFNode ()),
    ]),
    getTypeName: function ()
    {
@@ -78858,6 +78913,7 @@ ShaderPart .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
    constructor: ShaderPart,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "type",                 new x_ite_Fields.SFString ("VERTEX")),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
@@ -79353,7 +79409,6 @@ Appearance .prototype = Object .assign (Object .create (Shape_X3DAppearanceNode.
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",           new x_ite_Fields.SFNode ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "alphaMode",          new x_ite_Fields.SFString ("AUTO")),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "alphaCutoff",        new x_ite_Fields.SFFloat (0.5)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "acousticProperties", new x_ite_Fields.SFNode ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointProperties",    new x_ite_Fields.SFNode ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "lineProperties",     new x_ite_Fields.SFNode ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fillProperties",     new x_ite_Fields.SFNode ()),
@@ -79363,6 +79418,7 @@ Appearance .prototype = Object .assign (Object .create (Shape_X3DAppearanceNode.
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "textureTransform",   new x_ite_Fields.SFNode ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "shaders",            new x_ite_Fields.MFNode ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "blendMode",          new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "acousticProperties", new x_ite_Fields.SFNode ()),
    ]),
    getTypeName: function ()
    {
@@ -80196,7 +80252,7 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (Shape_X3DMa
             gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
             gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._normalTextureMapping .getValue ()) || 0);
 
-            gl .uniform1f (shaderObject .x3d_NormalScale, this ._normalScale .getValue ());
+            gl .uniform1f (shaderObject .x3d_NormalScale, Math .max (this ._normalScale .getValue (), 0));
          }
       }
    },
@@ -80496,9 +80552,9 @@ X3DShapeContext .prototype =
       ];
 
       const transformFeedbackVaryings = [
-         "lineStipple0", "fogDepth0", "color0", "vertex0",
-         "lineStipple1", "fogDepth1", "color1", "vertex1",
-         "lineStipple2", "fogDepth2", "color2", "vertex2",
+         "lineStipple0", "fogDepth0", "color0", "normal0", "vertex0",
+         "lineStipple1", "fogDepth1", "color1", "normal1", "vertex1",
+         "lineStipple2", "fogDepth2", "color2", "normal2", "vertex2",
       ];
 
       this [_lineTransformShaderNode] = this .createShader ("LineTransformShader", "LineTransform", "LineTransform", [ ], uniformNames, transformFeedbackVaryings);
@@ -81484,7 +81540,7 @@ const X3DRoutingContext_default_ = X3DRoutingContext;
 x_ite_Namespace.set ("x_ite/Routing/X3DRoutingContext", X3DRoutingContext_default_);
 /* harmony default export */ const Routing_X3DRoutingContext = (X3DRoutingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowserContext.js
-/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(725);
+/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -86331,8 +86387,8 @@ Cone .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.prot
    constructor: Cone,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",     new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "side",         new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bottom",       new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "side",         new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bottom",       new x_ite_Fields.SFBool (true)),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "height",       new x_ite_Fields.SFFloat (2)),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bottomRadius", new x_ite_Fields.SFFloat (1)),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",        new x_ite_Fields.SFBool (true)),
@@ -86569,9 +86625,9 @@ Cylinder .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.
    constructor: Cylinder,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "top",      new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "side",     new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bottom",   new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "top",      new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "side",     new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bottom",   new x_ite_Fields.SFBool (true)),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "height",   new x_ite_Fields.SFFloat (2)),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "radius",   new x_ite_Fields.SFFloat (1)),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",    new x_ite_Fields.SFBool (true)),
@@ -91142,6 +91198,154 @@ const Layering_default_ = undefined;
 
 x_ite_Namespace.set ("x_ite/Components/Layering", Layering_default_);
 /* harmony default export */ const Layering = ((/* unused pure expression or super */ null && (Layering_default_)));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Lighting/EnvironmentLight.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+const EnvironmentLights = Utility_ObjectCache (EnvironmentLightContainer);
+
+function EnvironmentLightContainer ()
+{
+   this .modelViewMatrix = new Utility_MatrixStack (Numbers_Matrix4);
+}
+
+EnvironmentLightContainer .prototype =
+{
+   constructor: EnvironmentLightContainer,
+   set: function (lightNode, groupNode, modelViewMatrix)
+   {
+   },
+   setGroup: function (groupNode)
+   {
+      this .groupNode = groupNode;
+   },
+   getModelViewMatrix: function ()
+   {
+      return this .modelViewMatrix;
+   },
+   renderShadowMap: function (renderObject)
+   {
+   },
+   setGlobalVariables: function (renderObject)
+   {
+   },
+   setShaderUniforms: function (gl, shaderObject)
+   {
+   },
+   dispose: function ()
+   {
+      // Return container
+
+      EnvironmentLights .push (this);
+   },
+};
+
+function EnvironmentLight (executionContext)
+{
+   Lighting_X3DLightNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.EnvironmentLight);
+}
+
+EnvironmentLight .prototype = Object .assign (Object .create (Lighting_X3DLightNode.prototype),
+{
+   constructor: EnvironmentLight,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",            new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "global",              new x_ite_Fields.SFBool (false)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "on",                  new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",               new x_ite_Fields.SFColor (1, 1, 1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",           new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "ambientIntensity",    new x_ite_Fields.SFFloat ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "rotation",            new x_ite_Fields.SFRotation ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "diffuseCoefficients", new x_ite_Fields.MFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "diffuse",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "diffuseTexture",      new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "specularTexture",     new x_ite_Fields.SFNode ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadows",             new  x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowColor",         new  x_ite_Fields.SFColor ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowIntensity",     new  x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowBias",          new  x_ite_Fields.SFFloat (0.005)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "shadowMapSize",       new  x_ite_Fields.SFInt32 (1024)),
+   ]),
+   getTypeName: function ()
+   {
+      return "EnvironmentLight";
+   },
+   getComponentName: function ()
+   {
+      return "Lighting";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   getLights: function ()
+   {
+      return EnvironmentLights;
+   },
+});
+
+const EnvironmentLight_default_ = EnvironmentLight;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Lighting/EnvironmentLight", EnvironmentLight_default_);
+/* harmony default export */ const Lighting_EnvironmentLight = (EnvironmentLight_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Lighting/PointLight.js
 /*******************************************************************************
  *
@@ -91256,10 +91460,6 @@ function PointLightContainer ()
 PointLightContainer .prototype =
 {
    constructor: PointLightContainer,
-   getModelViewMatrix: function ()
-   {
-      return this .modelViewMatrix;
-   },
    set: function (lightNode, groupNode, modelViewMatrix)
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
@@ -91281,6 +91481,14 @@ PointLightContainer .prototype =
          if (!this .shadowBuffer)
             console .warn ("Couldn't create shadow buffer.");
       }
+   },
+   setGroup: function (groupNode)
+   {
+      this .groupNode = groupNode;
+   },
+   getModelViewMatrix: function ()
+   {
+      return this .modelViewMatrix;
    },
    renderShadowMap: function (renderObject)
    {
@@ -91570,10 +91778,6 @@ function SpotLightContainer ()
 SpotLightContainer .prototype =
 {
    constructor: SpotLightContainer,
-   getModelViewMatrix: function ()
-   {
-      return this .modelViewMatrix;
-   },
    set: function (lightNode, groupNode, modelViewMatrix)
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
@@ -91595,6 +91799,14 @@ SpotLightContainer .prototype =
          if (!this .shadowBuffer)
             console .warn ("Couldn't create shadow buffer.");
       }
+   },
+   setGroup: function (groupNode)
+   {
+      this .groupNode = groupNode;
+   },
+   getModelViewMatrix: function ()
+   {
+      return this .modelViewMatrix;
    },
    renderShadowMap: function (renderObject)
    {
@@ -91887,9 +92099,11 @@ x_ite_Namespace.set ("x_ite/Components/Lighting/SpotLight", SpotLight_default_);
 
 
 
+
 const Lighting_Types =
 {
    DirectionalLight: Lighting_DirectionalLight,
+   EnvironmentLight: Lighting_EnvironmentLight,
    PointLight:       Lighting_PointLight,
    SpotLight:        Lighting_SpotLight,
 };
@@ -93627,10 +93841,13 @@ function Inline (executionContext)
 
    this .addType (Base_X3DConstants.Inline);
 
-   this .scene = this .getBrowser () .getDefaultScene ();
-   this .group = new Grouping_Group (executionContext);
+   if (executionContext .getSpecificationVersion () < 4.0)
+      this ._global = true;
 
-   this .group .addParent (this);
+   this .scene     = this .getBrowser () .getDefaultScene ();
+   this .groupNode = new Grouping_Group (executionContext);
+
+   this .groupNode .addParent (this);
 }
 
 Inline .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype),
@@ -93640,6 +93857,8 @@ Inline .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype)
    constructor: Inline,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "global",               new x_ite_Fields.SFBool (false)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
@@ -93667,18 +93886,18 @@ Inline .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype)
       Networking_X3DUrlObject.prototype.initialize.call (this);
       Grouping_X3DBoundedObject.prototype.initialize.call (this);
 
-      this .group .setPrivate (true);
-      this .group .setup ();
+      this .groupNode .setPrivate (true);
+      this .groupNode .setup ();
 
-      this .group ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-      this .group ._isPickableObject .addFieldInterest (this ._isPickableObject);
+      this .groupNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+      this .groupNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
       this .requestImmediateLoad ();
    },
    getBBox: function (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-         return this .group .getBBox (bbox, shadows);
+         return this .groupNode .getBBox (bbox, shadows);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -93715,7 +93934,7 @@ Inline .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype)
    setInternalScene: function (scene)
    {
       this .scene .setLive (false);
-      this .scene .rootNodes .removeFieldInterest (this .group ._children);
+      this .scene .rootNodes .removeFieldInterest (this .groupNode ._children);
 
       // Set new scene.
 
@@ -93723,8 +93942,8 @@ Inline .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype)
       this .scene .setExecutionContext (this .getExecutionContext ());
       this .scene .setPrivate (this .getExecutionContext () .isPrivate ());
 
-      this .scene .rootNodes .addFieldInterest (this .group ._children);
-      this .group ._children = this .scene .rootNodes;
+      this .scene .rootNodes .addFieldInterest (this .groupNode ._children);
+      this .groupNode ._children = this .scene .rootNodes;
 
       this .set_live__ ();
 
@@ -93750,14 +93969,94 @@ Inline .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype)
 
             pickingHierarchy .push (this);
 
-            this .group .traverse (type, renderObject);
+            this .groupNode .traverse (type, renderObject);
 
             pickingHierarchy .pop ();
             return;
          }
+         case Rendering_TraverseType.DISPLAY:
+         {
+            if (this ._global .getValue ())
+            {
+               this .groupNode .traverse (type, renderObject);
+            }
+            else
+            {
+               const
+                  globalsBegin           = renderObject .getGlobalObjects () .length,
+                  shadowsBegin           = renderObject .getGlobalShadows () .length,
+                  opaqueShapesBegin      = renderObject .getNumOpaqueShapes (),
+                  transparentShapesBegin = renderObject .getNumTransparentShapes ();
+
+               this .groupNode .traverse (type, renderObject);
+
+               const globalsEnd = renderObject .getGlobalObjects () .length;
+
+               if (globalsBegin === globalsEnd)
+                  return;
+
+               const
+                  browser              = this .getBrowser (),
+                  globalObjects        = renderObject .getGlobalObjects (),
+                  globalShadow         = renderObject .getGlobalShadows () .at (-1),
+                  opaqueShapesEnd      = renderObject .getNumOpaqueShapes (),
+                  transparentShapesEnd = renderObject .getNumTransparentShapes (),
+                  opaqueShapes         = renderObject .getOpaqueShapes (),
+                  transparentShapes    = renderObject .getTransparentShapes ();
+
+               let
+                  numGlobalLights            = 0,
+                  numGlobalTextureProjectors = 0;
+
+               for (let g = globalsBegin; g < globalsEnd; ++ g)
+               {
+                  const globalObject = globalObjects [g];
+
+                  globalObject .setGroup (this .groupNode);
+
+                  numGlobalLights            += !!globalObject .lightNode;
+                  numGlobalTextureProjectors += !!globalObject .textureProjectorNode;
+
+                  browser .getLocalObjects () .push (globalObject);
+               }
+
+               for (let i = opaqueShapesBegin; i < opaqueShapesEnd; ++ i)
+               {
+                  const
+                     renderContext = opaqueShapes [i],
+                     localObjects  = renderContext .localObjects;
+
+                  renderContext .shadows         ||= globalShadow;
+                  renderContext .objectsCount [1] += numGlobalLights;
+                  renderContext .objectsCount [2] += numGlobalTextureProjectors;
+
+                  for (let g = globalsBegin; g < globalsEnd; ++ g)
+                     localObjects .push (globalObjects [g]);
+               }
+
+               for (let i = transparentShapesBegin; i < transparentShapesEnd; ++ i)
+               {
+                  const
+                     renderContext = transparentShapes [i],
+                     localObjects  = renderContext .localObjects;
+
+                  renderContext .shadows         ||= globalShadow;
+                  renderContext .objectsCount [1] += numGlobalLights;
+                  renderContext .objectsCount [2] += numGlobalTextureProjectors;
+
+                  for (let g = globalsBegin; g < globalsEnd; ++ g)
+                     localObjects .push (globalObjects [g]);
+               }
+
+               renderObject .getGlobalObjects () .length = globalsBegin;
+               renderObject .getGlobalShadows () .length = shadowsBegin;
+            }
+
+            return;
+         }
          default:
          {
-            this .group .traverse (type, renderObject);
+            this .groupNode .traverse (type, renderObject);
             return;
          }
       }
@@ -96128,9 +96427,11 @@ LineSet .prototype = Object .assign (Object .create (Rendering_X3DLineGeometryNo
          attribArrays   = this .getAttribs (),
          fogCoordNode   = this .fogCoordNode,
          colorNode      = this .colorNode,
+         normalNode     = this .normalNode,
          coordNode      = this .coordNode,
          fogDepthArray  = this .getFogDepths (),
          colorArray     = this .getColors (),
+         normalArray    = this .getNormals (),
          vertexArray    = this .getVertices (),
          size           = coordNode .getSize ();
 
@@ -96155,6 +96456,9 @@ LineSet .prototype = Object .assign (Object .create (Rendering_X3DLineGeometryNo
 
                if (colorNode)
                   colorNode .addColor (index, colorArray);
+
+               if (normalNode)
+                  normalNode .addVector (index, normalArray);
 
                coordNode .addPoint (index, vertexArray);
             }
@@ -96386,6 +96690,36 @@ Normal .prototype = Object .assign (Object .create (Rendering_X3DNormalNode.prot
          return array .push (0, 0, 0);
       }
    },
+   addNormals: function (array, min)
+   {
+      if (this .length)
+      {
+         const vector = this .vector;
+
+         for (var index = 0, length = Math .min (min, this .length) * 3; index < length; index += 3)
+            array .push (vector [index], vector [index + 1], vector [index + 2]);
+
+         if (this .length < min)
+         {
+            var index = (this .length - 1) * 3;
+
+            const
+               x = vector [index],
+               y = vector [index + 1],
+               z = vector [index + 2];
+
+            for (var index = length, length = min * 3; index < length; index += 3)
+               array .push (x, y, z);
+         }
+      }
+      else
+      {
+         for (let index = 0; index < min; ++ index)
+            array .push (0, 0, 0);
+      }
+
+      return array;
+   },
 });
 
 const Normal_default_ = Normal;
@@ -96570,6 +96904,9 @@ X3DPointGeometryNode_X3DLineGeometryNode .prototype = Object .assign (Object .cr
          if (this .colorMaterial)
             shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
       }
 
@@ -96614,6 +96951,9 @@ X3DPointGeometryNode_X3DLineGeometryNode .prototype = Object .assign (Object .cr
 
          if (this .colorMaterial)
             shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
@@ -96826,6 +97166,8 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode.proto
          colorNode      = this .colorNode,
          colorArray     = this .getColors (),
          coordNode      = this .coordNode,
+         normalArray    = this .getNormals (),
+         normalNode     = this .normalNode,
          vertexArray    = this .getVertices (),
          numPoints      = coordNode ._point .length;
 
@@ -96840,6 +97182,9 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode.proto
 
       if (colorNode)
          colorNode .addColors (colorArray, numPoints);
+
+      if (normalNode)
+         normalNode .addNormals (normalArray, numPoints);
 
       coordNode .addPoints (vertexArray, numPoints);
    },
@@ -97903,6 +98248,7 @@ PackagedShader .prototype = Object .assign (Object .create (Shaders_X3DShaderNod
    constructor: PackagedShader,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "activate",             new x_ite_Fields.SFBool ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isSelected",           new x_ite_Fields.SFBool ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isValid",              new x_ite_Fields.SFBool ()),
@@ -98114,6 +98460,7 @@ ShaderProgram .prototype = Object .assign (Object .create (Core_X3DNode.prototyp
    constructor: ShaderProgram,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "type",                 new x_ite_Fields.SFString ("VERTEX")),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
@@ -98737,6 +99084,9 @@ function Material (executionContext)
 
    this .addType (Base_X3DConstants.Material);
 
+   if (executionContext .getSpecificationVersion () < 4.0)
+      this .getMaterialKey = getMaterialKey;
+
    this .diffuseColor  = new Float32Array (3);
    this .specularColor = new Float32Array (3);
 }
@@ -98906,22 +99256,9 @@ Material .prototype = Object .assign (Object .create (Shape_X3DOneSidedMaterialN
          return textureIndices;
       };
    })(),
-   getMaterialKey: function (shadows)
+   getMaterialKey: function ()
    {
-      if (shadows || +this .getTextureBits ())
-      {
-         return "2";
-      }
-      else
-      {
-         switch (this .getBrowser () .getBrowserOptions () .getShading ())
-         {
-            default:
-               return "1";
-            case Core_Shading.PHONG:
-               return "2";
-         }
-      }
+      return "2";
    },
    createShader: function (key, geometryContext, renderContext)
    {
@@ -99049,6 +99386,24 @@ Material .prototype = Object .assign (Object .create (Shape_X3DOneSidedMaterialN
       }
    },
 });
+
+function getMaterialKey (shadows)
+{
+   if (shadows || +this .getTextureBits ())
+   {
+      return "2";
+   }
+   else
+   {
+      switch (this .getBrowser () .getBrowserOptions () .getShading ())
+      {
+         default:
+            return "1";
+         case Core_Shading.PHONG:
+            return "2";
+      }
+   }
+}
 
 const Material_default_ = Material;
 ;
@@ -99418,7 +99773,6 @@ PointProperties .prototype = Object .assign (Object .create (Shape_X3DAppearance
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeMinValue",    new x_ite_Fields.SFFloat (1)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeMaxValue",    new x_ite_Fields.SFFloat (1)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeAttenuation", new x_ite_Fields.MFFloat (1, 0, 0)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "markerType",           new x_ite_Fields.SFInt32 (1)),
    ]),
    getTypeName: function ()
    {
@@ -99444,13 +99798,11 @@ PointProperties .prototype = Object .assign (Object .create (Shape_X3DAppearance
       this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
       this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
       this ._pointSizeAttenuation .addInterest ("set_pointSizeAttenuation__", this);
-      this ._markerType           .addInterest ("set_markerType__",           this);
 
       this .set_pointSizeScaleFactor__ ();
       this .set_pointSizeMinValue__ ();
       this .set_pointSizeMaxValue__ ();
       this .set_pointSizeAttenuation__ ();
-      this .set_markerType__ ();
    },
    getPointSize: function (point)
    {
@@ -99484,9 +99836,6 @@ PointProperties .prototype = Object .assign (Object .create (Shape_X3DAppearance
       this .pointSizeAttenuation [0] = length > 0 ? Math .max (0, this ._pointSizeAttenuation [0]) : 1;
       this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this ._pointSizeAttenuation [1]) : 0;
       this .pointSizeAttenuation [2] = length > 2 ? Math .max (0, this ._pointSizeAttenuation [2]) : 0;
-   },
-   set_markerType__: function ()
-   {
    },
    setShaderUniforms: function (gl, shaderObject)
    {
@@ -99882,6 +100231,184 @@ const Components_Shape_default_ = undefined;
 
 x_ite_Namespace.set ("x_ite/Components/Shape", Components_Shape_default_);
 /* harmony default export */ const Components_Shape = ((/* unused pure expression or super */ null && (Components_Shape_default_)));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundProcessingNode.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+function X3DSoundProcessingNode (executionContext)
+{
+   Time_X3DTimeDependentNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.X3DSoundProcessingNode);
+}
+
+X3DSoundProcessingNode .prototype = Object .assign (Object .create (Time_X3DTimeDependentNode.prototype),
+{
+   constructor: X3DSoundProcessingNode,
+});
+
+const X3DSoundProcessingNode_default_ = X3DSoundProcessingNode;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundProcessingNode", X3DSoundProcessingNode_default_);
+/* harmony default export */ const Sound_X3DSoundProcessingNode = (X3DSoundProcessingNode_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/Analyser.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function Analyser (executionContext)
+{
+   Sound_X3DSoundProcessingNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.Analyser);
+}
+
+Analyser .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
+{
+   constructor: Analyser,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fftSize",               new x_ite_Fields.SFInt32 (2048)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "frequencyBinCount",     new x_ite_Fields.SFInt32 (1024)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "minDecibels",           new x_ite_Fields.SFFloat (-100)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "maxDecibels",           new x_ite_Fields.SFFloat (-30)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "smoothingTimeConstant", new x_ite_Fields.SFFloat (0.8)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "Analyser";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+});
+
+const Analyser_default_ = Analyser;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/Analyser", Analyser_default_);
+/* harmony default export */ const Sound_Analyser = (Analyser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundSourceNode.js
 /*******************************************************************************
  *
@@ -100111,7 +100638,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(725);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100381,6 +100908,1602 @@ const X3DSoundNode_default_ = X3DSoundNode;
 
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundNode", X3DSoundNode_default_);
 /* harmony default export */ const Sound_X3DSoundNode = (X3DSoundNode_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundDestinationNode.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+function X3DSoundDestinationNode (executionContext)
+{
+   Sound_X3DSoundNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.X3DSoundDestinationNode);
+}
+
+X3DSoundDestinationNode .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype),
+{
+   constructor: X3DSoundDestinationNode,
+});
+
+const X3DSoundDestinationNode_default_ = X3DSoundDestinationNode;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundDestinationNode", X3DSoundDestinationNode_default_);
+/* harmony default export */ const Sound_X3DSoundDestinationNode = (X3DSoundDestinationNode_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioDestination.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function AudioDestination (executionContext)
+{
+   Sound_X3DSoundDestinationNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.AudioDestination);
+}
+
+AudioDestination .prototype = Object .assign (Object .create (Sound_X3DSoundDestinationNode.prototype),
+{
+   constructor: AudioDestination,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "maxChannelCount",       new x_ite_Fields.SFInt32 (2)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "mediaDeviceID",         new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "AudioDestination";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+});
+
+const AudioDestination_default_ = AudioDestination;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/AudioDestination", AudioDestination_default_);
+/* harmony default export */ const Sound_AudioDestination = (AudioDestination_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/BiquadFilter.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function BiquadFilter (executionContext)
+{
+   Sound_X3DSoundProcessingNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.BiquadFilter);
+}
+
+BiquadFilter .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
+{
+   constructor: BiquadFilter,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "detune",                new x_ite_Fields.SFFloat (0)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "frequency",             new x_ite_Fields.SFFloat (350)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "qualityFactor",         new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "type",                  new x_ite_Fields.SFString ("lowpass")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "BiquadFilter";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+});
+
+const BiquadFilter_default_ = BiquadFilter;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/BiquadFilter", BiquadFilter_default_);
+/* harmony default export */ const Sound_BiquadFilter = (BiquadFilter_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/BufferAudioSource.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+function BufferAudioSource (executionContext)
+{
+   Sound_X3DSoundSourceNode.call (this, executionContext);
+   Networking_X3DUrlObject.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.BufferAudioSource);
+
+   this .addChildObjects ("speed", new x_ite_Fields.SFFloat (1));
+}
+
+BufferAudioSource .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.prototype),
+   Networking_X3DUrlObject.prototype,
+{
+   constructor: BufferAudioSource,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "load",                 new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "url",                  new x_ite_Fields.MFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoRefresh",          new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                 new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "buffer",               new x_ite_Fields.MFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "detune",               new x_ite_Fields.SFFloat (0)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "bufferDuration",       new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loopStart",            new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loopEnd",              new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "numberOfChannels",     new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "playbackRate",         new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "sampleRate",           new x_ite_Fields.SFFloat (0)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bufferLength",         new x_ite_Fields.SFInt32 ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loop",                 new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",            new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",           new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",            new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",             new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",             new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",          new x_ite_Fields.SFTime ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "BufferAudioSource";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "source";
+   },
+   initialize: function ()
+   {
+      Sound_X3DSoundSourceNode.prototype.initialize.call (this);
+      Networking_X3DUrlObject.prototype.initialize.call (this);
+   },
+   dispose: function ()
+   {
+      Networking_X3DUrlObject.prototype.dispose.call (this);
+      Sound_X3DSoundSourceNode.prototype.dispose.call (this);
+   },
+});
+
+const BufferAudioSource_default_ = BufferAudioSource;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/BufferAudioSource", BufferAudioSource_default_);
+/* harmony default export */ const Sound_BufferAudioSource = (BufferAudioSource_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundChannelNode.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+function X3DSoundChannelNode (executionContext)
+{
+   Sound_X3DSoundNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.X3DSoundChannelNode);
+}
+
+X3DSoundChannelNode .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype),
+{
+   constructor: X3DSoundChannelNode,
+});
+
+const X3DSoundChannelNode_default_ = X3DSoundChannelNode;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundChannelNode", X3DSoundChannelNode_default_);
+/* harmony default export */ const Sound_X3DSoundChannelNode = (X3DSoundChannelNode_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/ChannelMerger.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function ChannelMerger (executionContext)
+{
+   Sound_X3DSoundChannelNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.ChannelMerger);
+}
+
+ChannelMerger .prototype = Object .assign (Object .create (Sound_X3DSoundChannelNode.prototype),
+{
+   constructor: ChannelMerger,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "ChannelMerger";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+});
+
+const ChannelMerger_default_ = ChannelMerger;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/ChannelMerger", ChannelMerger_default_);
+/* harmony default export */ const Sound_ChannelMerger = (ChannelMerger_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/ChannelSelector.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function ChannelSelector (executionContext)
+{
+   Sound_X3DSoundChannelNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.ChannelSelector);
+}
+
+ChannelSelector .prototype = Object .assign (Object .create (Sound_X3DSoundChannelNode.prototype),
+{
+   constructor: ChannelSelector,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelSelection",      new x_ite_Fields.SFInt32 (0)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "ChannelSelector";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+});
+
+const ChannelSelector_default_ = ChannelSelector;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/ChannelSelector", ChannelSelector_default_);
+/* harmony default export */ const Sound_ChannelSelector = (ChannelSelector_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/ChannelSplitter.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function ChannelSplitter (executionContext)
+{
+   Sound_X3DSoundChannelNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.ChannelSplitter);
+}
+
+ChannelSplitter .prototype = Object .assign (Object .create (Sound_X3DSoundChannelNode.prototype),
+{
+   constructor: ChannelSplitter,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "outputs",               new x_ite_Fields.MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "ChannelSplitter";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+});
+
+const ChannelSplitter_default_ = ChannelSplitter;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/ChannelSplitter", ChannelSplitter_default_);
+/* harmony default export */ const Sound_ChannelSplitter = (ChannelSplitter_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/Convolver.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function Convolver (executionContext)
+{
+   Sound_X3DSoundProcessingNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.Convolver);
+}
+
+Convolver .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
+{
+   constructor: Convolver,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "buffer",                new x_ite_Fields.MFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalize",             new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "Convolver";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+});
+
+const Convolver_default_ = Convolver;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/Convolver", Convolver_default_);
+/* harmony default export */ const Sound_Convolver = (Convolver_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/Delay.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function Delay (executionContext)
+{
+   Sound_X3DSoundProcessingNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.Delay);
+}
+
+Delay .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
+{
+   constructor: Delay,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "delayTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "maxDelayTime",          new x_ite_Fields.SFTime (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "Delay";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+});
+
+const Delay_default_ = Delay;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/Delay", Delay_default_);
+/* harmony default export */ const Sound_Delay = (Delay_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/DynamicsCompressor.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function DynamicsCompressor (executionContext)
+{
+   Sound_X3DSoundProcessingNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.DynamicsCompressor);
+}
+
+DynamicsCompressor .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
+{
+   constructor: DynamicsCompressor,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "attack",                new x_ite_Fields.SFFloat (0.003)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "knee",                  new x_ite_Fields.SFFloat (30)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ratio",                 new x_ite_Fields.SFFloat (12)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reduction",             new x_ite_Fields.SFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "release",               new x_ite_Fields.SFTime (0.25)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "threshold",             new x_ite_Fields.SFFloat (-24)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "DynamicsCompressor";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+});
+
+const DynamicsCompressor_default_ = DynamicsCompressor;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/DynamicsCompressor", DynamicsCompressor_default_);
+/* harmony default export */ const Sound_DynamicsCompressor = (DynamicsCompressor_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/Gain.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function Gain (executionContext)
+{
+   Sound_X3DSoundProcessingNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.Gain);
+}
+
+Gain .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
+{
+   constructor: Gain,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",              new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",           new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",               new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "Gain";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+});
+
+const Gain_default_ = Gain;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/Gain", Gain_default_);
+/* harmony default export */ const Sound_Gain = (Gain_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/ListenerPointSource.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function ListenerPointSource (executionContext)
+{
+   Sound_X3DSoundSourceNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.ListenerPointSource);
+
+   this .addChildObjects ("speed", new x_ite_Fields.SFFloat (1));
+}
+
+ListenerPointSource .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.prototype),
+{
+   constructor: ListenerPointSource,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                 new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "dopplerEnabled",       new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "interauralDistance",   new x_ite_Fields.SFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "orientation",          new x_ite_Fields.SFRotation ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "position",             new x_ite_Fields.SFVec3f ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "trackCurrentView",     new x_ite_Fields.SFBool ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",            new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",           new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",            new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",             new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",             new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",          new x_ite_Fields.SFTime ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "ListenerPointSource";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "source";
+   },
+});
+
+const ListenerPointSource_default_ = ListenerPointSource;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/ListenerPointSource", ListenerPointSource_default_);
+/* harmony default export */ const Sound_ListenerPointSource = (ListenerPointSource_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/MicrophoneSource.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function MicrophoneSource (executionContext)
+{
+   Sound_X3DSoundSourceNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.MicrophoneSource);
+
+   this .addChildObjects ("speed", new x_ite_Fields.SFFloat (1));
+}
+
+MicrophoneSource .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.prototype),
+{
+   constructor: MicrophoneSource,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",   new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",       new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",          new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mediaDeviceID", new x_ite_Fields.SFString ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",     new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",    new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",     new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",      new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",      new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",      new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",   new x_ite_Fields.SFTime ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "MicrophoneSource";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "source";
+   },
+});
+
+const MicrophoneSource_default_ = MicrophoneSource;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/MicrophoneSource", MicrophoneSource_default_);
+/* harmony default export */ const Sound_MicrophoneSource = (MicrophoneSource_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/OscillatorSource.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function OscillatorSource (executionContext)
+{
+   Sound_X3DSoundSourceNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.OscillatorSource);
+
+   this .addChildObjects ("speed", new x_ite_Fields.SFFloat (1));
+}
+
+OscillatorSource .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.prototype),
+{
+   constructor: OscillatorSource,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",   new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",       new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",          new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "detune",        new x_ite_Fields.SFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "frequency",     new x_ite_Fields.SFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "periodicWave",  new x_ite_Fields.SFNode ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",     new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",    new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",     new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",      new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",      new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",      new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",   new x_ite_Fields.SFTime ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "OscillatorSource";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "source";
+   },
+});
+
+const OscillatorSource_default_ = OscillatorSource;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/OscillatorSource", OscillatorSource_default_);
+/* harmony default export */ const Sound_OscillatorSource = (OscillatorSource_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/PeriodicWave.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function PeriodicWave (executionContext)
+{
+   Sound_X3DSoundNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.PeriodicWave);
+}
+
+PeriodicWave .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype),
+{
+   constructor: PeriodicWave,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",   new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",       new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "optionsReal",   new x_ite_Fields.MFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "optionsImag",   new x_ite_Fields.MFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "type",          new x_ite_Fields.SFString ("square")),
+   ]),
+   getTypeName: function ()
+   {
+      return "PeriodicWave";
+   },
+   getComponentName: function ()
+   {
+      return "PeriodicWave";
+   },
+   getContainerField: function ()
+   {
+      return "periodicWave";
+   },
+});
+
+const PeriodicWave_default_ = PeriodicWave;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/PeriodicWave", PeriodicWave_default_);
+/* harmony default export */ const Sound_PeriodicWave = (PeriodicWave_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/Sound.js
 /*******************************************************************************
  *
@@ -100464,17 +102587,20 @@ Sound .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype)
 {
    constructor: Sound,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",   new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",  new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "spatialize", new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "location",   new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "direction",  new x_ite_Fields.SFVec3f (0, 0, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "minBack",    new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "minFront",   new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "maxBack",    new x_ite_Fields.SFFloat (10)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "maxFront",   new x_ite_Fields.SFFloat (10)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "priority",   new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "source",     new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",    new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description", new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "enabled",     new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "spatialize",  new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",   new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "location",    new x_ite_Fields.SFVec3f ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "direction",   new x_ite_Fields.SFVec3f (0, 0, 1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "minBack",     new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "minFront",    new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "maxBack",     new x_ite_Fields.SFFloat (10)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "maxFront",    new x_ite_Fields.SFFloat (10)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "priority",    new x_ite_Fields.SFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "source",      new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",    new x_ite_Fields.MFNode ()),
    ]),
    getTypeName: function ()
    {
@@ -100670,6 +102796,419 @@ const Sound_default_ = Sound;
 
 x_ite_Namespace.set ("x_ite/Components/Sound/Sound", Sound_default_);
 /* harmony default export */ const Sound_Sound = (Sound_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/SpatialSound.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function SpatialSound (executionContext)
+{
+   Sound_X3DSoundNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.SpatialSound);
+}
+
+SpatialSound .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype),
+{
+   constructor: SpatialSound,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",    new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description", new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "enabled",     new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "spatialize",        new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coneInnerAngle",    new x_ite_Fields.SFFloat (6.2832)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coneOuterAngle",    new x_ite_Fields.SFFloat (6.2832)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coneOuterGain",     new x_ite_Fields.SFFloat (0)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "direction",         new x_ite_Fields.SFVec3f (0, 0, 1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "distanceModel",     new x_ite_Fields.SFString ("INVERSE")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "dopplerEnabled",    new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "enableHRTF",        new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "gain",              new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",         new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "location",          new x_ite_Fields.SFVec3f ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "maxDistance",       new x_ite_Fields.SFFloat (10000)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "priority",          new x_ite_Fields.SFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "referenceDistance", new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "rolloffFactor",     new x_ite_Fields.SFFloat (1)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",    new x_ite_Fields.MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "SpatialSound";
+   },
+   getComponentName: function ()
+   {
+      return "SpatialSound";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+});
+
+const SpatialSound_default_ = SpatialSound;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/SpatialSound", SpatialSound_default_);
+/* harmony default export */ const Sound_SpatialSound = (SpatialSound_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/StreamAudioDestination.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function StreamAudioDestination (executionContext)
+{
+   Sound_X3DSoundDestinationNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.StreamAudioDestination);
+}
+
+StreamAudioDestination .prototype = Object .assign (Object .create (Sound_X3DSoundDestinationNode.prototype),
+{
+   constructor: StreamAudioDestination,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",              new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",           new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",               new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "streamIdentifier",      new x_ite_Fields.MFString ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "mediaDeviceID",         new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "StreamAudioDestination";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+});
+
+const StreamAudioDestination_default_ = StreamAudioDestination;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/StreamAudioDestination", StreamAudioDestination_default_);
+/* harmony default export */ const Sound_StreamAudioDestination = (StreamAudioDestination_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/StreamAudioSource.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function StreamAudioSource (executionContext)
+{
+   Sound_X3DSoundSourceNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.StreamAudioSource);
+
+   this .addChildObjects ("speed", new x_ite_Fields.SFFloat (1));
+}
+
+StreamAudioSource .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.prototype),
+{
+   constructor: StreamAudioSource,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",         new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",      new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",          new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",             new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "streamIdentifier", new x_ite_Fields.MFString ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",        new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",       new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",        new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",         new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",         new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",         new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",      new x_ite_Fields.SFTime ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "StreamAudioSource";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "source";
+   },
+});
+
+const StreamAudioSource_default_ = StreamAudioSource;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/StreamAudioSource", StreamAudioSource_default_);
+/* harmony default export */ const Sound_StreamAudioSource = (StreamAudioSource_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/WaveShaper.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function WaveShaper (executionContext)
+{
+   Sound_X3DSoundProcessingNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.WaveShaper);
+}
+
+WaveShaper .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
+{
+   constructor: WaveShaper,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "curve",                 new x_ite_Fields.MFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "oversample",            new x_ite_Fields.SFString ("none")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "WaveShaper";
+   },
+   getComponentName: function ()
+   {
+      return "Sound";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+});
+
+const WaveShaper_default_ = WaveShaper;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Sound/WaveShaper", WaveShaper_default_);
+/* harmony default export */ const Sound_WaveShaper = (WaveShaper_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound.js
 /*******************************************************************************
  *
@@ -100724,16 +103263,60 @@ x_ite_Namespace.set ("x_ite/Components/Sound/Sound", Sound_default_);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const Sound_Types =
 {
-   AudioClip: Sound_AudioClip,
-   Sound:     Sound_Sound,
+   Analyser:               Sound_Analyser,
+   AudioClip:              Sound_AudioClip,
+   AudioDestination:       Sound_AudioDestination,
+   BiquadFilter:           Sound_BiquadFilter,
+   BufferAudioSource:      Sound_BufferAudioSource,
+   ChannelMerger:          Sound_ChannelMerger,
+   ChannelSelector:        Sound_ChannelSelector,
+   ChannelSplitter:        Sound_ChannelSplitter,
+   Convolver:              Sound_Convolver,
+   Delay:                  Sound_Delay,
+   DynamicsCompressor:     Sound_DynamicsCompressor,
+   Gain:                   Sound_Gain,
+   ListenerPointSource:    Sound_ListenerPointSource,
+   MicrophoneSource:       Sound_MicrophoneSource,
+   OscillatorSource:       Sound_OscillatorSource,
+   PeriodicWave:           Sound_PeriodicWave,
+   Sound:                  Sound_Sound,
+   SpatialSound:           Sound_SpatialSound,
+   StreamAudioDestination: Sound_StreamAudioDestination,
+   StreamAudioSource:      Sound_StreamAudioSource,
+   WaveShaper:             Sound_WaveShaper,
 };
 
 const Sound_AbstractTypes =
 {
-   X3DSoundNode:       Sound_X3DSoundNode,
-   X3DSoundSourceNode: Sound_X3DSoundSourceNode,
+   X3DSoundChannelNode:     Sound_X3DSoundChannelNode,
+   X3DSoundDestinationNode: Sound_X3DSoundDestinationNode,
+   X3DSoundNode:            Sound_X3DSoundNode,
+   X3DSoundProcessingNode:  Sound_X3DSoundProcessingNode,
+   X3DSoundSourceNode:      Sound_X3DSoundSourceNode,
 };
 
 for (const typeName in Sound_Types)
@@ -100748,7 +103331,7 @@ const Components_Sound_default_ = undefined;
 x_ite_Namespace.set ("x_ite/Components/Sound", Components_Sound_default_);
 /* harmony default export */ const Components_Sound = ((/* unused pure expression or super */ null && (Components_Sound_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(725);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101671,7 +104254,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(725);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102374,7 +104957,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(725);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(156);
 /*******************************************************************************
  * MIT License
  *
@@ -103598,7 +106181,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(725);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103688,8 +106271,6 @@ function X3DBrowser (element)
 
    this [_browserCallbacks] = new Map ();
 
-   this .setExecutionContext (this .createScene ());
-
    this .setup ();
 };
 
@@ -103711,6 +106292,8 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
    initialize: function ()
    {
       Browser_X3DBrowserContext.prototype.initialize.call (this);
+
+      this .replaceWorld (this .createScene ());
 
       this [_DOMIntegration] = new Browser_DOMIntegration (this);
 
@@ -104487,7 +107070,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(725);
+/* provided dependency */ var Fallback_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104666,14 +107249,14 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(725);
+/* provided dependency */ var jquery_$ = __webpack_require__(156);
 const jquery_default_ = jquery_$;
 ;
 
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(725);
+/* provided dependency */ var X3D_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104928,7 +107511,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(725);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(156);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

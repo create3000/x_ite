@@ -3495,6 +3495,9 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "orientation",       new (Fields_default()).SFRotation ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "centerOfRotation",  new (Fields_default()).SFVec3d ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fieldOfView",       new (Fields_default()).SFFloat (0.7854)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "nearDistance",      new (Fields_default()).SFFloat (-1)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "farDistance",       new (Fields_default()).SFFloat (-1)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "viewAll",           new (Fields_default()).SFBool (false)),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "jump",              new (Fields_default()).SFBool (true)),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "retainUserOffsets", new (Fields_default()).SFBool ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "navType",           new (Fields_default()).MFString ("EXAMINE", "ANY")),
@@ -3502,6 +3505,7 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "speedFactor",       new (Fields_default()).SFFloat (1)),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isBound",           new (Fields_default()).SFBool ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "bindTime",          new (Fields_default()).SFTime ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "navigationInfo",    new (Fields_default()).SFNode ()),
    ]),
    getTypeName: function ()
    {

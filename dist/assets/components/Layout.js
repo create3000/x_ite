@@ -1203,7 +1203,9 @@ LayoutLayer .prototype = Object .assign (Object .create ((X3DLayerNode_default()
    constructor: LayoutLayer,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "isPickable",     new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pickable",       new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "objectType",     new (Fields_default()).MFString ("ALL")),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "visible",        new (Fields_default()).SFBool (true)),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "layout",         new (Fields_default()).SFNode ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "viewport",       new (Fields_default()).SFNode ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "addChildren",    new (Fields_default()).MFNode ()),
