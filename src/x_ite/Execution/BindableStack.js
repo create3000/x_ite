@@ -136,21 +136,21 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
 
       const top = this .array .at (-1);
 
-      if (top === boundNode)
-         return;
+      if (top !== boundNode)
+      {
+         // First unbind last bound node.
 
-      // First unbind last bound node.
+         boundNode ._set_bind = false;
+         boundNode ._isBound  = false;
 
-      boundNode ._set_bind = false;
-      boundNode ._isBound  = false;
+         // Now bind new top node.
 
-      // Now bind new top node.
+         top ._set_bind = true;
+         top ._isBound  = true;
+         top ._bindTime = this .getBrowser () .getCurrentTime ();
+      }
 
-      top ._set_bind  = true;
-      top ._isBound   = true;
-      top ._bindTime  = this .getBrowser () .getCurrentTime ();
-
-      // Do transition.
+      // Do transition, use transition node for multiple layers support.
 
       this .transitionNode = top .create (this .getExecutionContext ());
 

@@ -308,6 +308,10 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
          return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
       }
    },
+   viewAll: function (bbox)
+   {
+
+   },
 });
 
 export default OrthoViewpoint;

@@ -56,7 +56,9 @@ import TraverseType            from "../../Rendering/TraverseType.js";
 import X3DConstants            from "../../Base/X3DConstants.js";
 import Vector3                 from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4               from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix3                 from "../../../standard/Math/Numbers/Matrix3.js";
 import Matrix4                 from "../../../standard/Math/Numbers/Matrix4.js";
+import Box3                    from "../../../standard/Math/Geometry/Box3.js";
 
 function X3DViewpointNode (executionContext)
 {
@@ -127,6 +129,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       this ._nearDistance   .addInterest ("set_nearDistance__",   this);
       this ._farDistance    .addInterest ("set_farDistance__",    this);
+      this ._viewAll        .addInterest ("set_viewAll__",        this);
       this ._navigationInfo .addInterest ("set_navigationInfo__", this);
       this ._isBound        .addInterest ("set_bound__",          this);
 
@@ -197,14 +200,37 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
    {
       return 1;
    },
+   getLookAtRotation: (function ()
+   {
+      const
+         x = new Vector3 (0, 0, 0),
+         y = new Vector3 (0, 0, 0),
+         z = new Vector3 (0, 0, 0),
+         m = new Matrix3 (),
+         r = new Rotation4 ();
+
+      return function (fromPoint, toPoint)
+      {
+         const up = this .getUpVector ();
+
+         z .assign (fromPoint) .subtract (toPoint) .normalize ();
+         x .assign (up) .cross (z) .normalize ();
+         y .assign (z) .cross (x) .normalize ();
+
+         m .set (x.x, x.y, x.z, y.x, y.y, y.z, z.x, z.y, z.z);
+         r .setMatrix (m);
+
+         return r;
+      };
+   })(),
    setVRMLTransition: function (value)
    {
-      // VRML behaviour support.
+      // VRML behavior support.
       this .VRMLTransition = value;
    },
    getVRMLTransition: function ()
    {
-      // VRML behaviour support.
+      // VRML behavior support.
       return this .VRMLTransition;
    },
    transitionStart: (function ()
@@ -286,6 +312,9 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
             this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
 
             toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+
+            if (this ._viewAll .getValue ())
+               toViewpointNode .viewAll (layerNode .getBBox (new Box3 ()));
 
             this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relativePosition,         toViewpointNode ._positionOffset);
             this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relativeOrientation,      toViewpointNode ._orientationOffset);
@@ -451,6 +480,16 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       const farDistance = this ._farDistance .getValue ();
 
       this .farDistance = farDistance >= 0 ? farDistance : undefined;
+   },
+   set_viewAll__: function ()
+   {
+      if (! this ._viewAll .getValue ())
+         return;
+
+      if (! this ._isBound .getValue ())
+         return;
+
+      this ._set_bind = true;
    },
    set_navigationInfo__: function ()
    {

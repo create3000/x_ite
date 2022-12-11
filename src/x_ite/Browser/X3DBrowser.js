@@ -747,11 +747,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       viewpointNode .setVRMLTransition (true);
 
-      if (viewpointNode ._isBound .getValue ())
-         viewpointNode .transitionStart (layerNode, viewpointNode, viewpointNode);
-
-      else
-         viewpointNode ._set_bind = true;
+      viewpointNode ._set_bind = true;
    },
    addRoute: function (fromNode, fromEventOut, toNode, toEventIn)
    {
