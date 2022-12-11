@@ -285,6 +285,16 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
    getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
    {
       const
+         nearDistance = this ._nearDistance .getValue (),
+         farDistance  = this ._farDistance .getValue ();
+
+      if (nearDistance >= 0)
+         nearValue = nearDistance;
+
+      if (farDistance >= 0)
+         farValue = farDistance;
+
+      const
          width  = viewport [2],
          height = viewport [3],
          aspect = width / height,
