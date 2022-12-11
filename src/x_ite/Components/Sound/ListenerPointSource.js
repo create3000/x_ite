@@ -93,7 +93,7 @@ ListenerPointSource .prototype = Object .assign (Object .create (X3DSoundSourceN
    },
    getContainerField: function ()
    {
-      return "source";
+      return "children";
    },
 });
 

@@ -89,7 +89,7 @@ StreamAudioSource .prototype = Object .assign (Object .create (X3DSoundSourceNod
    },
    getContainerField: function ()
    {
-      return "source";
+      return "children";
    },
 });
 

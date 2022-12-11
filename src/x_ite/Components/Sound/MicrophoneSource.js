@@ -89,7 +89,7 @@ MicrophoneSource .prototype = Object .assign (Object .create (X3DSoundSourceNode
    },
    getContainerField: function ()
    {
-      return "source";
+      return "children";
    },
 });
 
