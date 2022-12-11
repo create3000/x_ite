@@ -48,6 +48,8 @@
 import X3DConstants from "../Base/X3DConstants.js";
 import HTMLSupport  from "../Parser/HTMLSupport.js";
 
+const _fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions");
+
 const
    types         = new Map (),
    abstractTypes = new Map ();
@@ -64,9 +66,9 @@ const SupportedNodes =
 
       HTMLSupport .addNodeTypeName (typeName);
 
-      // HTMLSupport
+      // HTML Support
 
-      for (const fieldDefinition of Type .prototype [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")])
+      for (const fieldDefinition of Type .prototype [_fieldDefinitions])
       {
          const
             name       = fieldDefinition .name,
