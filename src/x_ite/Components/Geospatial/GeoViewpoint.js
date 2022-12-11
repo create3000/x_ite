@@ -59,13 +59,6 @@ import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
-function traverse (type, renderObject)
-{
-   X3DViewpointNode .prototype .traverse .call (this, type, renderObject);
-
-   this .navigationInfoNode .traverse (type, renderObject);
-}
-
 function GeoViewpoint (executionContext)
 {
    X3DViewpointNode    .call (this, executionContext);
@@ -76,7 +69,7 @@ function GeoViewpoint (executionContext)
    this ._centerOfRotation .setUnit ("length");
    this ._fieldOfView      .setUnit ("angle");
 
-   this .navigationInfoNode      = new NavigationInfo (executionContext);
+   this .geoNavigationInfoNode   = new NavigationInfo (executionContext);
    this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
    this .projectionMatrix        = new Matrix4 ();
    this .elevation               = 0;
@@ -145,10 +138,10 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
 
       this ._position       .addInterest ("set_position__", this);
       this ._positionOffset .addInterest ("set_position__", this);
-      this ._navType        .addFieldInterest (this .navigationInfoNode ._type);
-      this ._headlight      .addFieldInterest (this .navigationInfoNode ._headlight);
+      this ._navType        .addFieldInterest (this .geoNavigationInfoNode ._type);
+      this ._headlight      .addFieldInterest (this .geoNavigationInfoNode ._headlight);
 
-      this .navigationInfoNode .setup ();
+      this .geoNavigationInfoNode .setup ();
 
       this .set_position__ ();
 
@@ -329,5 +322,12 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
       X3DViewpointNode    .prototype .dispose .call (this);
    },
 });
+
+function traverse (type, renderObject)
+{
+   X3DViewpointNode .prototype .traverse .call (this, type, renderObject);
+
+   this .geoNavigationInfoNode .traverse (type, renderObject);
+}
 
 export default GeoViewpoint;
