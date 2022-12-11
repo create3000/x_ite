@@ -639,7 +639,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
             userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
             direction            = Vector3 .subtract (userPosition, userCenterOfRotation),
             rotation             = this .getHorizonRotation (rotationChange),
-            axis                 = this .getUpVector (viewpoint);
+            axis                 = viewpoint .getUpVector (true);
 
          this .axis .assign (axis);
 
@@ -649,7 +649,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
          this .timeSensor ._cycleInterval = Math .PI / (rotationChange .angle * SPIN_FACTOR * 30);
          this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
-         const lookAtRotation = this .lookAt (userPosition, userCenterOfRotation);
+         const lookAtRotation = viewpoint .getLookAtRotation (userPosition, userCenterOfRotation);
 
          this .direction .assign (direction);
          this .orientationOffset .assign (viewpoint .getUserOrientation ()) .multRight (lookAtRotation .inverse ());
@@ -679,7 +679,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
                fraction             = this .timeSensor ._fraction_changed .getValue (),
                rotation             = new Rotation4 (this .axis, 2 * Math .PI * fraction),
                userPosition         = rotation .multVecRot (direction .assign (this .direction)) .add (userCenterOfRotation),
-               lookAtRotation       = this .lookAt (userPosition, viewpoint .getUserCenterOfRotation ());
+               lookAtRotation       = viewpoint .getLookAtRotation (userPosition, viewpoint .getUserCenterOfRotation ());
 
             positionOffset .assign (userPosition) .subtract (viewpoint .getPosition ());
 
@@ -698,29 +698,6 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
             viewpoint ._orientationOffset = this .getOrientationOffset (rotation, this .orientationOffset);
             viewpoint ._positionOffset    = this .getPositionOffset (viewpoint ._positionOffset .getValue (), this .orientationOffset, viewpoint ._orientationOffset .getValue ());
          }
-      };
-   })(),
-   lookAt: (function ()
-   {
-      const
-         x = new Vector3 (0, 0, 0),
-         y = new Vector3 (0, 0, 0),
-         z = new Vector3 (0, 0, 0),
-         m = new Matrix3 (),
-         r = new Rotation4 ();
-
-      return function (fromPoint, toPoint)
-      {
-         const up = this .getUpVector (this .getActiveViewpoint ());
-
-         z .assign (fromPoint) .subtract (toPoint) .normalize ();
-         x .assign (up) .cross (z) .normalize ();
-         y .assign (z) .cross (x) .normalize ();
-
-         m .set (x.x, x.y, x.z, y.x, y.y, y.z, z.x, z.y, z.z);
-         r .setMatrix (m);
-
-         return r;
       };
    })(),
    addMove: (function ()
@@ -813,7 +790,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
             .multRight (orientationOffsetBefore);
 
          if (straightenHorizon)
-            viewpoint .straightenHorizon (userOrientation, this .getUpVector (viewpoint));
+            viewpoint .straightenHorizon (userOrientation, viewpoint .getUpVector (true));
 
          const orientationOffsetAfter = orientationOffset
             .assign (viewpoint .getOrientation ())
@@ -827,7 +804,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
 
             const userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
 
-            if (Math .abs (this .getUpVector (viewpoint) .dot (userVector)) < CRITICAL_ANGLE)
+            if (Math .abs (viewpoint .getUpVector (true) .dot (userVector)) < CRITICAL_ANGLE)
                return orientationOffsetAfter;
 
             throw new Error ("Critical angle");
@@ -853,16 +830,6 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
          return r;
       };
    })(),
-   getUpVector: function (viewpoint)
-   {
-      if (viewpoint .getTypeName () !== "GeoViewpoint")
-         return viewpoint .getUpVector ();
-
-      if (viewpoint .getUserPosition () .magnitude () < 6.5e6)
-         return viewpoint .getUpVector ();
-
-      return Vector3 .zAxis;
-   },
    disconnect: function ()
    {
       const browser = this .getBrowser ();

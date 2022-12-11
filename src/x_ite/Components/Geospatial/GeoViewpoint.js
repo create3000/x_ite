@@ -262,11 +262,18 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
          position = new Vector3 (0, 0, 0),
          upVector = new Vector3 (0, 0, 0);
 
-      return function ()
+      return function (dynamic = false)
       {
-         this .getCoord (this ._position .getValue (), position);
+         if (! dynamic || this .getUserPosition () .magnitude () < 6.5e6)
+         {
+            this .getCoord (this ._position .getValue (), position);
 
-         return this .getGeoUpVector (position .add (this ._positionOffset .getValue ()), upVector);
+            return this .getGeoUpVector (position .add (this ._positionOffset .getValue ()), upVector);
+         }
+         else
+         {
+            return upVector .assign (Vector3 .zAxis);
+         }
       };
    })(),
    getSpeedFactor: function ()
@@ -318,7 +325,16 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
    },
    viewAll: function (bbox)
    {
+      const
+         center          = bbox .center,
+         direction       = this .getUserPosition () .copy () .subtract (center),
+         distance        = this .getLookAtDistance (bbox),
+         userPosition    = center .copy () .add (direction .normalize () .multiply (distance)),
+         userOrientation = this .getLookAtRotation (userPosition, center);
 
+      this ._positionOffset         = userPosition .subtract (this .getPosition ());
+      this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
+      this ._centerOfRotationOffset = center .subtract (this .getCenterOfRotation ());
    },
    dispose: function ()
    {

@@ -354,7 +354,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       return function (fromPoint, toPoint)
       {
-         const up = this .getUpVector ();
+         const up = this .getUpVector (true);
 
          z .assign (fromPoint) .subtract (toPoint) .normalize ();
          x .assign (up) .cross (z) .normalize ();
