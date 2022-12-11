@@ -275,7 +275,7 @@ X3DCoreContext .prototype =
    },
    attributeChangedCallback: function (name, oldValue, newValue)
    {
-      switch (name)
+      switch (name .toLowerCase ())
       {
          case "splashscreen":
          {
