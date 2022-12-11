@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 842:
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(156);
+/* provided dependency */ var jQuery = __webpack_require__(605);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 137:
+/***/ 156:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(156);
+/* provided dependency */ var jQuery = __webpack_require__(605);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 777:
+/***/ 146:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(156)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(605)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 156:
+/***/ 605:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11728,7 +11728,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 957:
+/***/ 856:
 /***/ ((module) => {
 
 /**
@@ -16507,7 +16507,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 29:
+/***/ 804:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -33898,7 +33898,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(156);
+/* provided dependency */ var $ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34809,7 +34809,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(156);
+/* provided dependency */ var Notification_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34931,8 +34931,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(137);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(156);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(156);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -35816,6 +35816,8 @@ x_ite_Namespace.set ("x_ite/Parser/HTMLSupport", HTMLSupport_default_);
 
 
 
+const SupportedNodes_fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions");
+
 const
    types         = new Map (),
    abstractTypes = new Map ();
@@ -35832,9 +35834,9 @@ const SupportedNodes =
 
       Parser_HTMLSupport.addNodeTypeName (typeName);
 
-      // HTMLSupport
+      // HTML Support
 
-      for (const fieldDefinition of Type .prototype [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")])
+      for (const fieldDefinition of Type .prototype [SupportedNodes_fieldDefinitions])
       {
          const
             name       = fieldDefinition .name,
@@ -41867,7 +41869,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(156);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43877,7 +43879,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(957);
+/* provided dependency */ var libtess = __webpack_require__(856);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47126,21 +47128,21 @@ BindableStack .prototype = Object .assign (Object .create (Base_X3DBaseNode.prot
 
       const top = this .array .at (-1);
 
-      if (top === boundNode)
-         return;
+      if (top !== boundNode)
+      {
+         // First unbind last bound node.
 
-      // First unbind last bound node.
+         boundNode ._set_bind = false;
+         boundNode ._isBound  = false;
 
-      boundNode ._set_bind = false;
-      boundNode ._isBound  = false;
+         // Now bind new top node.
 
-      // Now bind new top node.
+         top ._set_bind = true;
+         top ._isBound  = true;
+         top ._bindTime = this .getBrowser () .getCurrentTime ();
+      }
 
-      top ._set_bind  = true;
-      top ._isBound   = true;
-      top ._bindTime  = this .getBrowser () .getCurrentTime ();
-
-      // Do transition.
+      // Do transition, use transition node for multiple layers support.
 
       this .transitionNode = top .create (this .getExecutionContext ());
 
@@ -47742,6 +47744,7 @@ NavigationInfo .prototype = Object .assign (Object .create (Core_X3DBindableNode
             case "NONE":
                this ._viewer = string;
                break;
+            case "PLANE_create3000.github.io":
             case "PLANE_create3000.de":
                this ._viewer = "PLANE";
                break;
@@ -50471,11 +50474,9 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (Core_X3DBindableN
    display: (function ()
    {
       const
-         invProjectionMatrix = new Numbers_Matrix4 (),
-         modelViewMatrix     = new Numbers_Matrix4 (),
-         rotation            = new Numbers_Rotation4 (),
-         scale               = new Numbers_Vector3 (0, 0, 0),
-         farVector           = new Numbers_Vector3 (0, 0, 0);
+         modelViewMatrix = new Numbers_Matrix4 (),
+         rotation        = new Numbers_Rotation4 (),
+         scale           = new Numbers_Vector3 (0, 0, 0);
 
       return function (gl, renderObject, viewport)
       {
@@ -50489,13 +50490,9 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (Core_X3DBindableN
          gl .enable (gl .CULL_FACE);
          gl .frontFace (gl .CCW);
 
-         // Get background scale.
-
-         const farValue = -Geometry_ViewVolume.unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
-
          // Get projection matrix.
 
-         this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());
+         this .projectionMatrixArray .set (renderObject .getViewpoint () .getProjectionMatrixWithLimits (0.125, 200_000, viewport));
 
          // Rotate and scale background.
 
@@ -50504,7 +50501,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (Core_X3DBindableN
          modelViewMatrix .get (null, rotation);
          modelViewMatrix .identity ();
          modelViewMatrix .rotate (rotation);
-         modelViewMatrix .scale (scale .set (farValue, farValue, farValue));
+         modelViewMatrix .scale (scale .set (100_000, 100_000, 100_000));
 
          this .modelViewMatrixArray .set (modelViewMatrix);
 
@@ -51217,7 +51214,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(156);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51884,7 +51881,7 @@ X3DLayerNode .prototype = Object .assign (Object .create (Core_X3DNode.prototype
       {
          var
             browser  = this .getBrowser (),
-            viewport = this .currentViewport .getRectangle (browser);
+            viewport = this .currentViewport .getRectangle ();
 
          if (browser .getSelectedLayer ())
          {
@@ -51909,30 +51906,36 @@ X3DLayerNode .prototype = Object .assign (Object .create (Core_X3DNode.prototype
    },
    camera: function (type, renderObject)
    {
-      this .getModelViewMatrix () .pushMatrix (Numbers_Matrix4.Identity);
+      if (this ._visible .getValue ())
+      {
+         this .getModelViewMatrix () .pushMatrix (Numbers_Matrix4.Identity);
 
-      this .currentViewport .push (this);
-      this .groupNode .traverse (type, renderObject);
-      this .currentViewport .pop (this);
+         this .currentViewport .push (this);
+         this .groupNode .traverse (type, renderObject);
+         this .currentViewport .pop (this);
 
-      this .getModelViewMatrix () .pop ();
+         this .getModelViewMatrix () .pop ();
 
-      this .navigationInfos .update (this, this .navigationInfoStack);
-      this .viewpoints      .update (this, this .viewpointStack);
-      this .backgrounds     .update (this, this .backgroundStack);
-      this .fogs            .update (this, this .fogStack);
+         this .navigationInfos .update (this, this .navigationInfoStack);
+         this .viewpoints      .update (this, this .viewpointStack);
+         this .backgrounds     .update (this, this .backgroundStack);
+         this .fogs            .update (this, this .fogStack);
 
-      this .getViewpoint () .update ();
+         this .getViewpoint () .update ();
+      }
    },
    picking: function (type, renderObject)
    {
-      this .getModelViewMatrix () .pushMatrix (Numbers_Matrix4.Identity);
+      if (this ._pickable .getValue ())
+      {
+         this .getModelViewMatrix () .pushMatrix (Numbers_Matrix4.Identity);
 
-      this .currentViewport .push (this);
-      this .groupNode .traverse (type, renderObject);
-      this .currentViewport .pop (this);
+         this .currentViewport .push (this);
+         this .groupNode .traverse (type, renderObject);
+         this .currentViewport .pop (this);
 
-      this .getModelViewMatrix () .pop ();
+         this .getModelViewMatrix () .pop ();
+      }
    },
    collision: (function ()
    {
@@ -53182,6 +53185,9 @@ x_ite_Namespace.set ("x_ite/Components/Interpolation/OrientationInterpolator", O
 
 
 
+
+
+
 function X3DViewpointNode (executionContext)
 {
    Core_X3DBindableNode.call (this, executionContext);
@@ -53249,7 +53255,15 @@ X3DViewpointNode .prototype = Object .assign (Object .create (Core_X3DBindableNo
       this .scaleInterpolator            ._value_changed .addFieldInterest (this ._scaleOffset);
       this .scaleOrientationInterpolator ._value_changed .addFieldInterest (this ._scaleOrientationOffset);
 
-      this ._isBound .addInterest ("set_bound__", this);
+      this ._nearDistance   .addInterest ("set_nearDistance__",   this);
+      this ._farDistance    .addInterest ("set_farDistance__",    this);
+      this ._viewAll        .addInterest ("set_viewAll__",        this);
+      this ._navigationInfo .addInterest ("set_navigationInfo__", this);
+      this ._isBound        .addInterest ("set_bound__",          this);
+
+      this .set_nearDistance__ ();
+      this .set_farDistance__ ();
+      this .set_navigationInfo__ ();
    },
    getEaseInEaseOut: function ()
    {
@@ -53284,9 +53298,9 @@ X3DViewpointNode .prototype = Object .assign (Object .create (Core_X3DBindableNo
    {
       const navigationInfo = renderObject .getNavigationInfo ();
 
-      return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (),
-                                                  navigationInfo .getFarValue (this),
-                                                  renderObject .getLayer () .getViewport () .getRectangle (this .getBrowser ()));
+      return this .getProjectionMatrixWithLimits (this .nearDistance ?? navigationInfo .getNearValue (),
+                                                  this .farDistance ?? navigationInfo .getFarValue (this),
+                                                  renderObject .getLayer () .getViewport () .getRectangle ());
    },
    getCameraSpaceMatrix: function ()
    {
@@ -53316,12 +53330,12 @@ X3DViewpointNode .prototype = Object .assign (Object .create (Core_X3DBindableNo
    },
    setVRMLTransition: function (value)
    {
-      // VRML behaviour support.
+      // VRML behavior support.
       this .VRMLTransition = value;
    },
    getVRMLTransition: function ()
    {
-      // VRML behaviour support.
+      // VRML behavior support.
       return this .VRMLTransition;
    },
    transitionStart: (function ()
@@ -53404,6 +53418,9 @@ X3DViewpointNode .prototype = Object .assign (Object .create (Core_X3DBindableNo
 
             toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
+            if (this ._viewAll .getValue ())
+               toViewpointNode .viewAll (layerNode .getBBox (new Geometry_Box3 ()));
+
             this .positionInterpolator         ._keyValue = new x_ite_Fields.MFVec3f    (relativePosition,         toViewpointNode ._positionOffset);
             this .orientationInterpolator      ._keyValue = new x_ite_Fields.MFRotation (relativeOrientation,      toViewpointNode ._orientationOffset);
             this .scaleInterpolator            ._keyValue = new x_ite_Fields.MFVec3f    (relativeScale,            toViewpointNode ._scaleOffset);
@@ -53454,6 +53471,29 @@ X3DViewpointNode .prototype = Object .assign (Object .create (Core_X3DBindableNo
       relativePosition .subtract (this .getPosition ());
       relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
    },
+   getLookAtRotation: (function ()
+   {
+      const
+         x = new Numbers_Vector3 (0, 0, 0),
+         y = new Numbers_Vector3 (0, 0, 0),
+         z = new Numbers_Vector3 (0, 0, 0),
+         m = new Numbers_Matrix3 (),
+         r = new Numbers_Rotation4 ();
+
+      return function (fromPoint, toPoint)
+      {
+         const up = this .getUpVector (true);
+
+         z .assign (fromPoint) .subtract (toPoint) .normalize ();
+         x .assign (up) .cross (z) .normalize ();
+         y .assign (z) .cross (x) .normalize ();
+
+         m .set (x.x, x.y, x.z, y.x, y.y, y.z, z.x, z.y, z.z);
+         r .setMatrix (m);
+
+         return r;
+      };
+   })(),
    lookAtPoint: function (layerNode, point, factor, straighten)
    {
       this .getCameraSpaceMatrix () .multVecMatrix (point);
@@ -53557,6 +53597,47 @@ X3DViewpointNode .prototype = Object .assign (Object .create (Core_X3DBindableNo
          return orientation .multRight (rotation);
       };
    })(),
+   set_nearDistance__: function ()
+   {
+      const nearDistance = this ._nearDistance .getValue ();
+
+      this .nearDistance = nearDistance >= 0 ? nearDistance : undefined;
+   },
+   set_farDistance__: function ()
+   {
+      const farDistance = this ._farDistance .getValue ();
+
+      this .farDistance = farDistance >= 0 ? farDistance : undefined;
+   },
+   set_viewAll__: function ()
+   {
+      if (! this ._viewAll .getValue ())
+         return;
+
+      if (! this ._isBound .getValue ())
+         return;
+
+      this ._set_bind = true;
+   },
+   set_navigationInfo__: function ()
+   {
+      if (this .navigationInfoNode)
+         this ._isBound .removeFieldInterest (this .navigationInfoNode ._set_bind);
+
+      this .navigationInfoNode = Base_X3DCast (Base_X3DConstants.NavigationInfo, this ._navigationInfo);
+
+      if (this .navigationInfoNode)
+         this ._isBound .addFieldInterest (this .navigationInfoNode ._set_bind);
+   },
+   set_bound__: function ()
+   {
+      const browser = this .getBrowser ();
+
+      if (this ._isBound .getValue ())
+         browser .getNotification () ._string = this ._description;
+      else
+         this .timeSensor ._stopTime = browser .getCurrentTime ();
+   },
    set_active__: function (navigationInfoNode, active)
    {
       if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
@@ -53564,17 +53645,13 @@ X3DViewpointNode .prototype = Object .assign (Object .create (Core_X3DBindableNo
          navigationInfoNode ._transitionComplete = true;
       }
    },
-   set_bound__: function ()
-   {
-      if (this ._isBound .getValue ())
-         this .getBrowser () .getNotification () ._string = this ._description;
-      else
-         this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
-   },
    traverse: function (type, renderObject)
    {
       if (type !== Rendering_TraverseType.CAMERA)
          return;
+
+      if (this .navigationInfoNode)
+         this .navigationInfoNode .traverse (type, renderObject);
 
       renderObject .getLayer () .getViewpoints () .push (this);
 
@@ -53894,6 +53971,19 @@ Viewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpointNo
    getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
    {
       return Geometry_Camera.perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
+   },
+   viewAll: function (bbox)
+   {
+      const
+         center          = bbox .center,
+         direction       = this .getUserPosition () .copy () .subtract (center),
+         distance        = this .getLookAtDistance (bbox),
+         userPosition    = center .copy () .add (direction .normalize () .multiply (distance)),
+         userOrientation = this .getLookAtRotation (userPosition, center);
+
+      this ._positionOffset         = userPosition .subtract (this .getPosition ());
+      this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
+      this ._centerOfRotationOffset = center .subtract (this .getCenterOfRotation ());
    },
 });
 
@@ -55471,8 +55561,8 @@ const BinaryTransport_default_ = BinaryTransport;
 x_ite_Namespace.set ("standard/Networking/BinaryTransport", BinaryTransport_default_);
 /* harmony default export */ const Networking_BinaryTransport = (BinaryTransport_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(156);
-/* provided dependency */ var pako = __webpack_require__(29);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(605);
+/* provided dependency */ var pako = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -56649,942 +56739,942 @@ x_ite_Namespace.set ("x_ite/Routing/X3DRoute", X3DRoute_default_);
 
 
 
- const
-    _namedNodes     = Symbol (),
-    _importedNodes  = Symbol (),
-    _protos         = Symbol (),
-    _externprotos   = Symbol (),
-    X3DExecutionContext_routes         = Symbol (),
-    _outerNode      = Symbol ();
-
- Configuration_SupportedNodes.addAbstractType ("X3DExecutionContext", X3DExecutionContext);
-
- function X3DExecutionContext (executionContext)
- {
-    Base_X3DBaseNode.call (this, executionContext);
-
-    this .addType (Base_X3DConstants.X3DExecutionContext)
-
-    this .addChildObjects ("rootNodes",          new x_ite_Fields.MFNode (),
-                           "worldInfos",         new x_ite_Fields.MFNode (),
-                           "sceneGraph_changed", new x_ite_Fields.SFTime ());
-
-    this ._rootNodes .setAccessType (Base_X3DConstants.initializeOnly);
-    this ._rootNodes .addCloneCount (1);
-
-    this [_namedNodes]     = new Execution_NamedNodesArray ();
-    this [_importedNodes]  = new Execution_ImportedNodesArray ();
-    this [_protos]         = new Prototype_ProtoDeclarationArray ();
-    this [_externprotos]   = new Prototype_ExternProtoDeclarationArray ();
-    this [X3DExecutionContext_routes]         = new Routing_RouteArray ();
-
-    this .addChildObjects ("namedNodes_changed",    new x_ite_Fields.SFTime (),
-                           "importedNodes_changed", new x_ite_Fields.SFTime (),
-                           "protos_changed",        new x_ite_Fields.SFTime (),
-                           "externprotos_changed",  new x_ite_Fields.SFTime (),
-                           "routes_changed",        new x_ite_Fields.SFTime ())
-
- }
-
- X3DExecutionContext .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
- {
-    constructor: X3DExecutionContext,
-    initialize: function ()
-    {
-       Base_X3DBaseNode.prototype.initialize.call (this);
-
-       if (! this .isScene ())
-          this ._sceneGraph_changed .addInterest ("set_sceneGraph", this)
-    },
-    set_sceneGraph: function ()
-    {
-       this .getExecutionContext () ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
-    },
-    isScene: function ()
-    {
-       return false;
-    },
-    getTypeName: function ()
-    {
-       return "X3DExecutionContext";
-    },
-    [_outerNode]: null,
-    getOuterNode: function ()
-    {
-       // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
-       return this [_outerNode];
-    },
-    setOuterNode: function (value)
-    {
-       this [_outerNode] = value;
-    },
-    getSpecificationVersion: function ()
-    {
-       return this .getExecutionContext () .getSpecificationVersion ();
-    },
-    getEncoding: function ()
-    {
-       return this .getExecutionContext () .getEncoding ();
-    },
-    getWorldURL: function ()
-    {
-       return this .getExecutionContext () .getWorldURL ();
-    },
-    getProfile: function ()
-    {
-       return this .getExecutionContext () .getProfile ();
-    },
-    getComponents: function ()
-    {
-       return this .getExecutionContext () .getComponents ();
-    },
-    fromUnit: function (category, value)
-    {
-       return this .getExecutionContext () .fromUnit (category, value);
-    },
-    toUnit: function (category, value)
-    {
-       return this .getExecutionContext () .toUnit (category, value);
-    },
-    getUnits: function ()
-    {
-       return this .getExecutionContext () .getUnits ();
-    },
-    createNode: function (typeName, setup = true)
-    {
-       typeName = String (typeName);
+Configuration_SupportedNodes.addAbstractType ("X3DExecutionContext", X3DExecutionContext);
+
+const
+   _namedNodes     = Symbol (),
+   _importedNodes  = Symbol (),
+   _protos         = Symbol (),
+   _externprotos   = Symbol (),
+   X3DExecutionContext_routes         = Symbol (),
+   _outerNode      = Symbol ();
+
+function X3DExecutionContext (executionContext)
+{
+   Base_X3DBaseNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.X3DExecutionContext)
+
+   this .addChildObjects ("rootNodes",          new x_ite_Fields.MFNode (),
+                        "worldInfos",         new x_ite_Fields.MFNode (),
+                        "sceneGraph_changed", new x_ite_Fields.SFTime ());
+
+   this ._rootNodes .setAccessType (Base_X3DConstants.initializeOnly);
+   this ._rootNodes .addCloneCount (1);
+
+   this [_namedNodes]     = new Execution_NamedNodesArray ();
+   this [_importedNodes]  = new Execution_ImportedNodesArray ();
+   this [_protos]         = new Prototype_ProtoDeclarationArray ();
+   this [_externprotos]   = new Prototype_ExternProtoDeclarationArray ();
+   this [X3DExecutionContext_routes]         = new Routing_RouteArray ();
+
+   this .addChildObjects ("namedNodes_changed",    new x_ite_Fields.SFTime (),
+                        "importedNodes_changed", new x_ite_Fields.SFTime (),
+                        "protos_changed",        new x_ite_Fields.SFTime (),
+                        "externprotos_changed",  new x_ite_Fields.SFTime (),
+                        "routes_changed",        new x_ite_Fields.SFTime ())
+
+}
+
+X3DExecutionContext .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
+{
+   constructor: X3DExecutionContext,
+   initialize: function ()
+   {
+      Base_X3DBaseNode.prototype.initialize.call (this);
+
+      if (! this .isScene ())
+         this ._sceneGraph_changed .addInterest ("set_sceneGraph", this)
+   },
+   set_sceneGraph: function ()
+   {
+      this .getExecutionContext () ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+   },
+   isScene: function ()
+   {
+      return false;
+   },
+   getTypeName: function ()
+   {
+      return "X3DExecutionContext";
+   },
+   [_outerNode]: null,
+   getOuterNode: function ()
+   {
+      // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
+      return this [_outerNode];
+   },
+   setOuterNode: function (value)
+   {
+      this [_outerNode] = value;
+   },
+   getSpecificationVersion: function ()
+   {
+      return this .getExecutionContext () .getSpecificationVersion ();
+   },
+   getEncoding: function ()
+   {
+      return this .getExecutionContext () .getEncoding ();
+   },
+   getWorldURL: function ()
+   {
+      return this .getExecutionContext () .getWorldURL ();
+   },
+   getProfile: function ()
+   {
+      return this .getExecutionContext () .getProfile ();
+   },
+   getComponents: function ()
+   {
+      return this .getExecutionContext () .getComponents ();
+   },
+   fromUnit: function (category, value)
+   {
+      return this .getExecutionContext () .fromUnit (category, value);
+   },
+   toUnit: function (category, value)
+   {
+      return this .getExecutionContext () .toUnit (category, value);
+   },
+   getUnits: function ()
+   {
+      return this .getExecutionContext () .getUnits ();
+   },
+   createNode: function (typeName, setup = true)
+   {
+      typeName = String (typeName);
 
-       if (setup === false)
-       {
-          const Type = this .getBrowser () .getSupportedNode (typeName);
+      if (setup === false)
+      {
+         const Type = this .getBrowser () .getSupportedNode (typeName);
 
-          if (! Type)
-             return null;
+         if (! Type)
+            return null;
 
-          return new Type (this);
-       }
-       else
-       {
-          const Type = this .getBrowser () .getSupportedNode (typeName);
+         return new Type (this);
+      }
+      else
+      {
+         const Type = this .getBrowser () .getSupportedNode (typeName);
 
-          if (! Type)
-             throw new Error ("Unknown node type '" + typeName + "'.");
+         if (! Type)
+            throw new Error ("Unknown node type '" + typeName + "'.");
 
-          const baseNode = new Type (this);
+         const baseNode = new Type (this);
 
-          baseNode .setup ();
+         baseNode .setup ();
 
-          return Fields_SFNodeCache.get (baseNode);
-       }
-    },
-    createProto: function (name, setup = true)
-    {
-       name = String (name);
+         return Fields_SFNodeCache.get (baseNode);
+      }
+   },
+   createProto: function (name, setup = true)
+   {
+      name = String (name);
 
-       let executionContext = this;
+      let executionContext = this;
 
-       for (;;)
-       {
-          const proto = executionContext .protos .get (name);
+      for (;;)
+      {
+         const proto = executionContext .protos .get (name);
 
-          if (proto)
-             return proto .createInstance (this, setup);
+         if (proto)
+            return proto .createInstance (this, setup);
 
-          const externproto = executionContext .externprotos .get (name);
+         const externproto = executionContext .externprotos .get (name);
 
-          if (externproto)
-             return externproto .createInstance (this, setup);
+         if (externproto)
+            return externproto .createInstance (this, setup);
 
-          if (executionContext .isScene ())
-             break;
+         if (executionContext .isScene ())
+            break;
 
-          executionContext = executionContext .getExecutionContext ();
-       }
+         executionContext = executionContext .getExecutionContext ();
+      }
 
-       if (setup === false)
-          return null;
+      if (setup === false)
+         return null;
 
-       throw new Error ("Unknown proto or externproto type '" + name + "'.");
-    },
-    addNamedNode: function (name, node)
-    {
-       if (this [_namedNodes] .has (name))
-          throw new Error ("Couldn't add named node: node named '" + name + "' is already in use.");
+      throw new Error ("Unknown proto or externproto type '" + name + "'.");
+   },
+   addNamedNode: function (name, node)
+   {
+      if (this [_namedNodes] .has (name))
+         throw new Error ("Couldn't add named node: node named '" + name + "' is already in use.");
 
-       this .updateNamedNode (name, node);
-    },
-    updateNamedNode: function (name, node)
-    {
-       name = String (name);
-       node = Base_X3DCast (Base_X3DConstants.X3DNode, node, false);
+      this .updateNamedNode (name, node);
+   },
+   updateNamedNode: function (name, node)
+   {
+      name = String (name);
+      node = Base_X3DCast (Base_X3DConstants.X3DNode, node, false);
 
-       if (! node)
-          throw new Error ("Couldn't update named node: node must be of type X3DNode.");
+      if (! node)
+         throw new Error ("Couldn't update named node: node must be of type X3DNode.");
 
-       if (node .getExecutionContext () !== this)
-          throw new Error ("Couldn't update named node: node does not belong to this execution context.");
+      if (node .getExecutionContext () !== this)
+         throw new Error ("Couldn't update named node: node does not belong to this execution context.");
 
-       if (name .length === 0)
-          throw new Error ("Couldn't update named node: node name is empty.");
+      if (name .length === 0)
+         throw new Error ("Couldn't update named node: node name is empty.");
 
-       // Remove named node.
+      // Remove named node.
 
-       this .removeNamedNode (node .getName ());
-       this .removeNamedNode (name);
+      this .removeNamedNode (node .getName ());
+      this .removeNamedNode (name);
 
-       // Update named node.
+      // Update named node.
 
-       node .setName (name);
+      node .setName (name);
 
-       this [_namedNodes] .add (name, node);
+      this [_namedNodes] .add (name, node);
 
-       this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
-    },
-    removeNamedNode: function (name)
-    {
-       name = String (name);
+      this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
+   },
+   removeNamedNode: function (name)
+   {
+      name = String (name);
 
-       const node = this [_namedNodes] .get (name);
+      const node = this [_namedNodes] .get (name);
 
-       if (! node)
-          return;
+      if (! node)
+         return;
 
-       node .setName ("");
+      node .setName ("");
 
-       this [_namedNodes] .remove (name);
+      this [_namedNodes] .remove (name);
 
-       this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
-    },
-    getNamedNode: function (name)
-    {
-       name = String (name);
+      this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
+   },
+   getNamedNode: function (name)
+   {
+      name = String (name);
 
-       const node = this [_namedNodes] .get (name);
+      const node = this [_namedNodes] .get (name);
 
-       if (node)
-          return Fields_SFNodeCache.get (node);
+      if (node)
+         return Fields_SFNodeCache.get (node);
 
-       throw new Error ("Named node '" + name + "' not found.");
-    },
-    getNamedNodes: function ()
-    {
-       return this [_namedNodes];
-    },
-    getUniqueName: function (name = "")
-    {
-       return getUniqueName .call (this, _namedNodes, name);
-    },
-    addImportedNode: function (inlineNode, exportedName, importedName)
-    {
-       if (importedName === undefined)
-          importedName = exportedName;
+      throw new Error ("Named node '" + name + "' not found.");
+   },
+   getNamedNodes: function ()
+   {
+      return this [_namedNodes];
+   },
+   getUniqueName: function (name = "")
+   {
+      return getUniqueName .call (this, _namedNodes, name);
+   },
+   addImportedNode: function (inlineNode, exportedName, importedName)
+   {
+      if (importedName === undefined)
+         importedName = exportedName;
 
-       exportedName = String (exportedName);
-       importedName = String (importedName);
+      exportedName = String (exportedName);
+      importedName = String (importedName);
 
-       if (this [_importedNodes] .has (importedName))
-          throw new Error ("Couldn't add imported node: imported name '" + importedName + "' already in use.");
+      if (this [_importedNodes] .has (importedName))
+         throw new Error ("Couldn't add imported node: imported name '" + importedName + "' already in use.");
 
-       this .updateImportedNode (inlineNode, exportedName, importedName);
-    },
-    updateImportedNode: function (inlineNode, exportedName, importedName)
-    {
-       inlineNode   = Base_X3DCast (Base_X3DConstants.Inline, inlineNode, false);
-       exportedName = String (exportedName);
-       importedName = importedName === undefined ? exportedName : String (importedName);
+      this .updateImportedNode (inlineNode, exportedName, importedName);
+   },
+   updateImportedNode: function (inlineNode, exportedName, importedName)
+   {
+      inlineNode   = Base_X3DCast (Base_X3DConstants.Inline, inlineNode, false);
+      exportedName = String (exportedName);
+      importedName = importedName === undefined ? exportedName : String (importedName);
 
-       if (! inlineNode)
-          throw new Error ("Node must be of type Inline node.");
+      if (! inlineNode)
+         throw new Error ("Node must be of type Inline node.");
 
-       if (inlineNode .getExecutionContext () !== this)
-          throw new Error ("Couldn't update imported node: Inline node does not belong to this execution context.");
-
-       if (exportedName .length === 0)
-          throw new Error ("Couldn't update imported node: exported name is empty.");
+      if (inlineNode .getExecutionContext () !== this)
+         throw new Error ("Couldn't update imported node: Inline node does not belong to this execution context.");
+
+      if (exportedName .length === 0)
+         throw new Error ("Couldn't update imported node: exported name is empty.");
 
-       if (importedName .length === 0)
-          throw new Error ("Couldn't update imported node: imported name is empty.");
+      if (importedName .length === 0)
+         throw new Error ("Couldn't update imported node: imported name is empty.");
 
-       // Update imported node.
+      // Update imported node.
 
-       this .removeImportedNode (importedName);
+      this .removeImportedNode (importedName);
 
-       const importedNode = new Execution_X3DImportedNode (this, inlineNode, exportedName, importedName);
+      const importedNode = new Execution_X3DImportedNode (this, inlineNode, exportedName, importedName);
 
-       this [_importedNodes] .add (importedName, importedNode);
+      this [_importedNodes] .add (importedName, importedNode);
 
-       importedNode .setup ();
+      importedNode .setup ();
 
-       this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
-    },
-    removeImportedNode: function (importedName)
-    {
-       importedName = String (importedName);
+      this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
+   },
+   removeImportedNode: function (importedName)
+   {
+      importedName = String (importedName);
 
-       const importedNode = this [_importedNodes] .get (importedName);
+      const importedNode = this [_importedNodes] .get (importedName);
 
-       if (! importedNode)
-          return;
+      if (! importedNode)
+         return;
 
-       importedNode .dispose ();
+      importedNode .dispose ();
 
-       this [_importedNodes] .remove (importedName);
+      this [_importedNodes] .remove (importedName);
 
-       this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
-    },
-    getImportedNode: function (importedName)
-    {
-       importedName = String (importedName);
+      this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
+   },
+   getImportedNode: function (importedName)
+   {
+      importedName = String (importedName);
 
-       const importedNode = this [_importedNodes] .get (importedName);
+      const importedNode = this [_importedNodes] .get (importedName);
 
-       if (importedNode)
-          return Fields_SFNodeCache.get (importedNode .getExportedNode ());
+      if (importedNode)
+         return Fields_SFNodeCache.get (importedNode .getExportedNode ());
 
-       throw new Error ("Imported node '" + importedName + "' not found.");
-    },
-    getImportedNodes: function ()
-    {
-       return this [_importedNodes];
-    },
-    getLocalNode: function (name)
-    {
-       name = String (name);
+      throw new Error ("Imported node '" + importedName + "' not found.");
+   },
+   getImportedNodes: function ()
+   {
+      return this [_importedNodes];
+   },
+   getLocalNode: function (name)
+   {
+      name = String (name);
 
-       try
-       {
-          return this .getNamedNode (name);
-       }
-       catch (error)
-       {
-          const importedNode = this [_importedNodes] .get (name);
+      try
+      {
+         return this .getNamedNode (name);
+      }
+      catch (error)
+      {
+         const importedNode = this [_importedNodes] .get (name);
 
-          if (importedNode)
-             return Fields_SFNodeCache.get (importedNode);
+         if (importedNode)
+            return Fields_SFNodeCache.get (importedNode);
 
-          throw new Error ("Unknown named or imported node '" + name + "'.");
-       }
-    },
-    getLocalName: function (node)
-    {
-       node = Base_X3DCast (Base_X3DConstants.X3DNode, node, false);
+         throw new Error ("Unknown named or imported node '" + name + "'.");
+      }
+   },
+   getLocalName: function (node)
+   {
+      node = Base_X3DCast (Base_X3DConstants.X3DNode, node, false);
 
-       if (! node)
-          throw new Error ("Couldn't get local name: node must be of type X3DNode.");
+      if (! node)
+         throw new Error ("Couldn't get local name: node must be of type X3DNode.");
 
-       if (node .getExecutionContext () === this)
-          return node .getName ();
+      if (node .getExecutionContext () === this)
+         return node .getName ();
 
-       for (const importedNode of this [_importedNodes])
-       {
-          try
-          {
-             if (importedNode .getExportedNode () === node)
-                return importedNode .getImportedName ();
-          }
-          catch (error)
-          {
-             //console .error (error);
-          }
-       }
+      for (const importedNode of this [_importedNodes])
+      {
+         try
+         {
+            if (importedNode .getExportedNode () === node)
+               return importedNode .getImportedName ();
+         }
+         catch (error)
+         {
+            //console .error (error);
+         }
+      }
 
-       throw new Error ("Couldn't get local name: node is shared.");
-    },
-    setRootNodes: function () { },
-    getRootNodes: function ()
-    {
-       return this ._rootNodes;
-    },
-    getProtoDeclaration: function (name)
-    {
-       name = String (name);
+      throw new Error ("Couldn't get local name: node is shared.");
+   },
+   setRootNodes: function () { },
+   getRootNodes: function ()
+   {
+      return this ._rootNodes;
+   },
+   getProtoDeclaration: function (name)
+   {
+      name = String (name);
 
-       const proto = this [_protos] .get (name);
+      const proto = this [_protos] .get (name);
 
-       if (proto)
-          return proto;
+      if (proto)
+         return proto;
 
-       throw new Error ("Proto declaration '" + name + "' not found.");
-    },
-    addProtoDeclaration (name, proto)
-    {
-       name = String (name);
+      throw new Error ("Proto declaration '" + name + "' not found.");
+   },
+   addProtoDeclaration (name, proto)
+   {
+      name = String (name);
 
-       if (! (proto instanceof Prototype_X3DProtoDeclaration))
-          throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
+      if (! (proto instanceof Prototype_X3DProtoDeclaration))
+         throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
 
-       if (this [_protos] .get (name))
-          throw new Error ("Couldn't add proto declaration: proto '" + name + "' already in use.");
+      if (this [_protos] .get (name))
+         throw new Error ("Couldn't add proto declaration: proto '" + name + "' already in use.");
 
-       name = String (name);
+      name = String (name);
 
-       if (name .length === 0)
-          throw new Error ("Couldn't add proto declaration: proto name is empty.");
+      if (name .length === 0)
+         throw new Error ("Couldn't add proto declaration: proto name is empty.");
 
-       this [_protos] .add (name, proto);
-       proto .setName (name);
+      this [_protos] .add (name, proto);
+      proto .setName (name);
 
-       this ._protos_changed = this .getBrowser () .getCurrentTime ();
-    },
-    updateProtoDeclaration (name, proto)
-    {
-       name = String (name);
-
-       if (! (proto instanceof Prototype_X3DProtoDeclaration))
-          throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
-
-       name = String (name);
-
-       if (name .length === 0)
-          throw new Error ("Couldn't add proto declaration: proto name is empty.");
+      this ._protos_changed = this .getBrowser () .getCurrentTime ();
+   },
+   updateProtoDeclaration (name, proto)
+   {
+      name = String (name);
+
+      if (! (proto instanceof Prototype_X3DProtoDeclaration))
+         throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
+
+      name = String (name);
+
+      if (name .length === 0)
+         throw new Error ("Couldn't add proto declaration: proto name is empty.");
 
-       this [_protos] .update (proto .getName (), name, proto);
-       proto .setName (name);
+      this [_protos] .update (proto .getName (), name, proto);
+      proto .setName (name);
 
-       this ._protos_changed = this .getBrowser () .getCurrentTime ();
-    },
-    removeProtoDeclaration (name)
-    {
-       name = String (name);
-
-       this [_protos] .remove (name);
-
-       this ._protos_changed = this .getBrowser () .getCurrentTime ();
-    },
-    getProtoDeclarations: function ()
-    {
-       return this [_protos];
-    },
-    getUniqueProtoName: function (name = "")
-    {
-       return getUniqueName .call (this, _protos, name);
-    },
-    getExternProtoDeclaration: function (name)
-    {
-       name = String (name);
-
-       const externproto = this [_externprotos] .get (name);
-
-       if (externproto)
-          return externproto;
-
-       throw new Error ("Extern proto declaration '" + name + "' not found.");
-    },
-    addExternProtoDeclaration (name, externproto)
-    {
-       name = String (name);
-
-       if (! (externproto instanceof Prototype_X3DExternProtoDeclaration))
-          throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
-
-       if (this [_externprotos] .get (name))
-          throw new Error ("Couldn't add extern proto declaration: extern proto '" + name + "' already in use.");
-
-       name = String (name);
-
-       if (name .length === 0)
-          throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
-
-       this [_externprotos] .add (name, externproto);
-       externproto .setName (name);
-
-       this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
-    },
-    updateExternProtoDeclaration (name, externproto)
-    {
-       name = String (name);
-
-       if (! (externproto instanceof Prototype_X3DExternProtoDeclaration))
-          throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
-
-       name = String (name);
-
-       if (name .length === 0)
-          throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
-
-       this [_externprotos] .update (externproto .getName (), name, externproto);
-       externproto .setName (name);
-
-       this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
-    },
-    removeExternProtoDeclaration (name)
-    {
-       name = String (name);
-
-       this [_externprotos] .remove (name);
-
-       this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
-    },
-    getExternProtoDeclarations: function ()
-    {
-       return this [_externprotos];
-    },
-    getUniqueExternProtoName: function (name = "")
-    {
-       return getUniqueName .call (this, _externprotos, name);
-    },
-    addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
-    {
-       sourceNode       = Base_X3DCast (Base_X3DConstants.X3DNode, sourceNode, false);
-       sourceField      = String (sourceField);
-       destinationNode  = Base_X3DCast (Base_X3DConstants.X3DNode, destinationNode, false);
-       destinationField = String (destinationField);
-
-       if (! sourceNode)
-          throw new Error ("Bad ROUTE specification: source node must be of type X3DNode.");
-
-       if (! destinationNode)
-          throw new Error ("Bad ROUTE specification: destination node must be of type X3DNode.");
-
-       // Imported nodes handling.
-
-       let
-          importedSourceNode      = sourceNode      instanceof Execution_X3DImportedNode ? sourceNode      : null,
-          importedDestinationNode = destinationNode instanceof Execution_X3DImportedNode ? destinationNode : null;
-
-       try
-       {
-          // If sourceNode is shared node try to find the corresponding X3DImportedNode.
-          if (sourceNode .getExecutionContext () !== this)
-             importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
-       }
-       catch (error)
-       {
-          // Source node is shared but not imported.
-       }
-
-       try
-       {
-          // If destinationNode is shared node try to find the corresponding X3DImportedNode.
-          if (destinationNode .getExecutionContext () !== this)
-             importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
-       }
-       catch (error)
-       {
-          // Destination node is shared but not imported.
-       }
-
-       if (importedSourceNode instanceof Execution_X3DImportedNode && importedDestinationNode instanceof Execution_X3DImportedNode)
-       {
-          importedSourceNode      .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
-          importedDestinationNode .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
-       }
-       else if (importedSourceNode instanceof Execution_X3DImportedNode)
-       {
-          importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNode, destinationField);
-       }
-       else if (importedDestinationNode instanceof Execution_X3DImportedNode)
-       {
-          importedDestinationNode .addRoute (sourceNode, sourceField, importedDestinationNode, destinationField);
-       }
-
-       // If either sourceNode or destinationNode is an X3DImportedNode return here without value.
-       if (importedSourceNode === sourceNode || importedDestinationNode === destinationNode)
-          return;
-
-       // Create route and return.
-
-       return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
-    },
-    addSimpleRoute: function (sourceNode, sourceField, destinationNode, destinationField)
-    {
-       // Source and dest node are here X3DBaseNode.
-
-       try
-       {
-          // Private function.
-          // Create route and return.
-
-          sourceField      = sourceNode      .getField (sourceField),
-          destinationField = destinationNode .getField (destinationField);
-
-          if (! sourceField .isOutput ())
-             throw new Error ("Field named '" + sourceField .getName () + "' in node named '" + sourceNode .getName () + "' of type " + sourceNode .getTypeName () + " is not an output field.");
-
-          if (! destinationField .isInput ())
-             throw new Error ("Field named '" + destinationField .getName () + "' in node named '" + destinationNode .getName () + "' of type " + destinationNode .getTypeName () + " is not an input field.");
-
-          if (sourceField .getType () !== destinationField .getType ())
-             throw new Error ("ROUTE types " + sourceField .getTypeName () + " and " + destinationField .getTypeName () + " do not match.");
-
-          const id = sourceField .getId () + "." + destinationField .getId ();
-
-          let route = this [X3DExecutionContext_routes] .get (id);
-
-          if (route)
-             return route;
-
-          route = new Routing_X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
-
-          this [X3DExecutionContext_routes] .add (id, route);
-
-          this ._routes_changed = this .getBrowser () .getCurrentTime ();
-
-          return route;
-       }
-       catch (error)
-       {
-          throw new Error ("Bad ROUTE specification: " + error .message);
-       }
-    },
-    deleteRoute: function (route)
-    {
-       // sourceNode, sourceField, destinationNode, destinationField
-       if (arguments .length === 4)
-       {
-          route = this .getRoute .apply (this, arguments);
-
-          if (! route)
-             return false;
-       }
-
-       if (this .deleteSimpleRoute (route))
-          this .deleteImportedRoute (route .sourceNode, route .destinationNode, route);
-    },
-    deleteSimpleRoute: function (route)
-    {
-       try
-       {
-          const
-             sourceField      = route .getSourceField (),
-             destinationField = route .getDestinationField (),
-             id               = sourceField .getId () + "." + destinationField .getId ();
-
-          this [X3DExecutionContext_routes] .remove (id);
-          route .disconnect ();
-
-          this ._routes_changed = this .getBrowser () .getCurrentTime ();
-
-          return true;
-       }
-       catch (error)
-       {
-          console .error (error);
-          return false;
-       }
-    },
-    deleteImportedRoute (sourceNode, destinationNode, route)
-    {
-       // Imported nodes handling.
-
-       let
-          importedSourceNode      = null,
-          importedDestinationNode = null;
-
-       try
-       {
-          // If sourceNode is shared node try to find the corresponding X3DImportedNode.
-          if (sourceNode .getValue () .getExecutionContext () !== this)
-             importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
-       }
-       catch (error)
-       {
-          // Source node is shared but not imported.
-       }
-
-       try
-       {
-          // If destinationNode is shared node try to find the corresponding X3DImportedNode.
-          if (destinationNode .getValue () .getExecutionContext () !== this)
-             importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
-       }
-       catch (error)
-       {
-          // Destination node is shared but not imported.
-       }
-
-       if (importedSourceNode instanceof Execution_X3DImportedNode && importedDestinationNode instanceof Execution_X3DImportedNode)
-       {
-          importedSourceNode      .deleteRoute (route);
-          importedDestinationNode .deleteRoute (route);
-       }
-       else if (importedSourceNode instanceof Execution_X3DImportedNode)
-       {
-          importedSourceNode .deleteRoute (route);
-       }
-       else if (importedDestinationNode instanceof Execution_X3DImportedNode)
-       {
-          importedDestinationNode .deleteRoute (route);
-       }
-    },
-    getRoute: function (sourceNode, sourceField, destinationNode, destinationField)
-    {
-       sourceNode       = Base_X3DCast (Base_X3DConstants.X3DNode, sourceNode, false);
-       sourceField      = String (sourceField)
-       destinationNode  = Base_X3DCast (Base_X3DConstants.X3DNode, destinationNode, false);
-       destinationField = String (destinationField)
-
-       if (! sourceNode)
-          throw new Error ("Bad ROUTE specification: sourceNode must be of type X3DNode.");
-
-       if (! destinationNode)
-          throw new Error ("Bad ROUTE specification: destinationNode must be of type X3DNode.");
-
-       sourceField      = sourceNode      .getField (sourceField);
-       destinationField = destinationNode .getField (destinationField);
-
-       const id = sourceField .getId () + "." + destinationField .getId ();
-
-       return this [X3DExecutionContext_routes] .get (id);
-    },
-    getRoutes: function ()
-    {
-       return this [X3DExecutionContext_routes];
-    },
-    getWorldInfos: function ()
-    {
-       return this ._worldInfos;
-    },
-    addWorldInfo: function (worldInfoNode)
-    {
-       this ._worldInfos .push (worldInfoNode);
-    },
-    removeWorldInfo: function (worldInfoNode)
-    {
-       for (let i = this ._worldInfos .length - 1; i >= 0; -- i)
-       {
-          if (this ._worldInfos [i] .getValue () === worldInfoNode)
-             this ._worldInfos .splice (i, 1);
-       }
-    },
-    toVRMLStream: function (stream)
-    {
-       const generator = InputOutput_Generator.Get (stream);
-
-       generator .PushExecutionContext (this);
-       generator .EnterScope ();
-       generator .ImportedNodes (this .getImportedNodes ());
-
-       // Output extern protos
-
-       this .getExternProtoDeclarations () .toVRMLStream (stream);
-
-       // Output protos
-
-       this .getProtoDeclarations () .toVRMLStream (stream);
-
-       // Output root nodes
-
-       const rootNodes = this .getRootNodes ();
-
-       for (let i = 0, length = rootNodes .length; i < length; ++ i)
-       {
-          const rootNode = rootNodes [i];
-
-          stream .string += generator .Indent ();
-
-          if (rootNode)
-             rootNode .toVRMLStream (stream);
-          else
-             stream .string += "NULL";
-
-          stream .string += "\n";
-
-          if (i !== length - 1)
-             stream .string += "\n";
-       }
-
-       // Output imported nodes
-
-       const importedNodes = this .getImportedNodes ();
-
-       if (importedNodes .size)
-       {
-          stream .string += "\n";
-
-          importedNodes .forEach (function (importedNode)
-          {
-             try
-             {
-                importedNode .toVRMLStream (stream);
-
-                stream .string += "\n";
-             }
-             catch (error)
-             { }
-          });
-       }
-
-       // Output routes
-
-       const routes = this .getRoutes ();
-
-       if (routes .length)
-       {
-          stream .string += "\n";
-
-          routes .toVRMLStream (stream);
-       }
-
-       generator .LeaveScope ();
-       generator .PopExecutionContext ();
-    },
-    toXMLStream: function (stream)
-    {
-       const generator = InputOutput_Generator.Get (stream);
-
-       generator .PushExecutionContext (this);
-       generator .EnterScope ();
-       generator .ImportedNodes (this .getImportedNodes ());
-
-       // Output extern protos
-
-       this .getExternProtoDeclarations () .toXMLStream (stream);
-
-       // Output protos
-
-       this .getProtoDeclarations () .toXMLStream (stream);
-
-       // Output root nodes
-
-       const rootNodes = this .getRootNodes ();
-
-       if (rootNodes .length)
-       {
-          rootNodes .toXMLStream (stream);
-
-          stream .string += "\n";
-       }
-
-       // Output imported nodes
-
-       const importedNodes = this .getImportedNodes ();
-
-       importedNodes .forEach (function (importedNode)
-       {
-          try
-          {
-             importedNode .toXMLStream (stream);
-
-             stream .string += "\n";
-          }
-          catch (error)
-          { }
-       });
-
-       // Output routes
-
-       this .getRoutes () .toXMLStream (stream);
-
-       generator .LeaveScope ();
-       generator .PopExecutionContext ();
-    },
-    dispose: function ()
-    {
-       this ._rootNodes .dispose ();
-
-       for (const route of this [X3DExecutionContext_routes])
-          this .deleteRoute (route);
-
-       Base_X3DBaseNode.prototype.dispose.call (this);
-    },
- });
-
- const getUniqueName = (function ()
- {
-    const _TrailingNumbers = /_\d+$/;
-
-    return function (array, name = "")
-    {
-       name = String (name) .replace (_TrailingNumbers, "");
-
-       let
-          newName = name,
-          i       = 64;
-
-       for (; i;)
-       {
-          if (! (this [array] .has (newName) || newName .length === 0))
-             break;
-
-          const
-             min = i,
-             max = i <<= 1;
-
-          newName  = name;
-          newName += '_';
-          newName += Math .round (Algorithm.random (min, max));
-       }
-
-       return newName;
-    };
- })();
-
- for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
-    Object .defineProperty (X3DExecutionContext .prototype, key, { enumerable: false });
-
- Object .defineProperty (X3DExecutionContext .prototype, "specificationVersion",
- {
-    get: function () { return this .getSpecificationVersion (); },
-    enumerable: true,
-    configurable: false
- });
-
- Object .defineProperty (X3DExecutionContext .prototype, "encoding",
- {
-    get: function () { return this .getEncoding (); },
-    enumerable: true,
-    configurable: false
- });
-
- Object .defineProperty (X3DExecutionContext .prototype, "profile",
- {
-    get: function () { return this .getProfile (); },
-    enumerable: true,
-    configurable: false
- });
-
- Object .defineProperty (X3DExecutionContext .prototype, "components",
- {
-    get: function () { return this .getComponents (); },
-    enumerable: true,
-    configurable: false
- });
-
- Object .defineProperty (X3DExecutionContext .prototype, "worldURL",
- {
-    get: function () { return this .getWorldURL (); },
-    enumerable: true,
-    configurable: false
- });
-
- Object .defineProperty (X3DExecutionContext .prototype, "units",
- {
-    get: function () { return this .getUnits (); },
-    enumerable: true,
-    configurable: false
- });
-
- Object .defineProperty (X3DExecutionContext .prototype, "rootNodes",
- {
-    get: function () { return this .getRootNodes (); },
-    set: function (value) { this .setRootNodes (value); },
-    enumerable: true,
-    configurable: false
- });
-
- Object .defineProperty (X3DExecutionContext .prototype, "protos",
- {
-    get: function () { return this .getProtoDeclarations (); },
-    enumerable: true,
-    configurable: false
- });
-
- Object .defineProperty (X3DExecutionContext .prototype, "externprotos",
- {
-    get: function () { return this .getExternProtoDeclarations (); },
-    enumerable: true,
-    configurable: false
- });
-
- Object .defineProperty (X3DExecutionContext .prototype, "routes",
- {
-    get: function () { return this .getRoutes (); },
-    enumerable: true,
-    configurable: false
- });
-
- const X3DExecutionContext_default_ = X3DExecutionContext;
+      this ._protos_changed = this .getBrowser () .getCurrentTime ();
+   },
+   removeProtoDeclaration (name)
+   {
+      name = String (name);
+
+      this [_protos] .remove (name);
+
+      this ._protos_changed = this .getBrowser () .getCurrentTime ();
+   },
+   getProtoDeclarations: function ()
+   {
+      return this [_protos];
+   },
+   getUniqueProtoName: function (name = "")
+   {
+      return getUniqueName .call (this, _protos, name);
+   },
+   getExternProtoDeclaration: function (name)
+   {
+      name = String (name);
+
+      const externproto = this [_externprotos] .get (name);
+
+      if (externproto)
+         return externproto;
+
+      throw new Error ("Extern proto declaration '" + name + "' not found.");
+   },
+   addExternProtoDeclaration (name, externproto)
+   {
+      name = String (name);
+
+      if (! (externproto instanceof Prototype_X3DExternProtoDeclaration))
+         throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
+
+      if (this [_externprotos] .get (name))
+         throw new Error ("Couldn't add extern proto declaration: extern proto '" + name + "' already in use.");
+
+      name = String (name);
+
+      if (name .length === 0)
+         throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
+
+      this [_externprotos] .add (name, externproto);
+      externproto .setName (name);
+
+      this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
+   },
+   updateExternProtoDeclaration (name, externproto)
+   {
+      name = String (name);
+
+      if (! (externproto instanceof Prototype_X3DExternProtoDeclaration))
+         throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
+
+      name = String (name);
+
+      if (name .length === 0)
+         throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
+
+      this [_externprotos] .update (externproto .getName (), name, externproto);
+      externproto .setName (name);
+
+      this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
+   },
+   removeExternProtoDeclaration (name)
+   {
+      name = String (name);
+
+      this [_externprotos] .remove (name);
+
+      this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
+   },
+   getExternProtoDeclarations: function ()
+   {
+      return this [_externprotos];
+   },
+   getUniqueExternProtoName: function (name = "")
+   {
+      return getUniqueName .call (this, _externprotos, name);
+   },
+   addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
+   {
+      sourceNode       = Base_X3DCast (Base_X3DConstants.X3DNode, sourceNode, false);
+      sourceField      = String (sourceField);
+      destinationNode  = Base_X3DCast (Base_X3DConstants.X3DNode, destinationNode, false);
+      destinationField = String (destinationField);
+
+      if (! sourceNode)
+         throw new Error ("Bad ROUTE specification: source node must be of type X3DNode.");
+
+      if (! destinationNode)
+         throw new Error ("Bad ROUTE specification: destination node must be of type X3DNode.");
+
+      // Imported nodes handling.
+
+      let
+         importedSourceNode      = sourceNode      instanceof Execution_X3DImportedNode ? sourceNode      : null,
+         importedDestinationNode = destinationNode instanceof Execution_X3DImportedNode ? destinationNode : null;
+
+      try
+      {
+         // If sourceNode is shared node try to find the corresponding X3DImportedNode.
+         if (sourceNode .getExecutionContext () !== this)
+            importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
+      }
+      catch (error)
+      {
+         // Source node is shared but not imported.
+      }
+
+      try
+      {
+         // If destinationNode is shared node try to find the corresponding X3DImportedNode.
+         if (destinationNode .getExecutionContext () !== this)
+            importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
+      }
+      catch (error)
+      {
+         // Destination node is shared but not imported.
+      }
+
+      if (importedSourceNode instanceof Execution_X3DImportedNode && importedDestinationNode instanceof Execution_X3DImportedNode)
+      {
+         importedSourceNode      .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
+         importedDestinationNode .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
+      }
+      else if (importedSourceNode instanceof Execution_X3DImportedNode)
+      {
+         importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNode, destinationField);
+      }
+      else if (importedDestinationNode instanceof Execution_X3DImportedNode)
+      {
+         importedDestinationNode .addRoute (sourceNode, sourceField, importedDestinationNode, destinationField);
+      }
+
+      // If either sourceNode or destinationNode is an X3DImportedNode return here without value.
+      if (importedSourceNode === sourceNode || importedDestinationNode === destinationNode)
+         return;
+
+      // Create route and return.
+
+      return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
+   },
+   addSimpleRoute: function (sourceNode, sourceField, destinationNode, destinationField)
+   {
+      // Source and dest node are here X3DBaseNode.
+
+      try
+      {
+         // Private function.
+         // Create route and return.
+
+         sourceField      = sourceNode      .getField (sourceField),
+         destinationField = destinationNode .getField (destinationField);
+
+         if (! sourceField .isOutput ())
+            throw new Error ("Field named '" + sourceField .getName () + "' in node named '" + sourceNode .getName () + "' of type " + sourceNode .getTypeName () + " is not an output field.");
+
+         if (! destinationField .isInput ())
+            throw new Error ("Field named '" + destinationField .getName () + "' in node named '" + destinationNode .getName () + "' of type " + destinationNode .getTypeName () + " is not an input field.");
+
+         if (sourceField .getType () !== destinationField .getType ())
+            throw new Error ("ROUTE types " + sourceField .getTypeName () + " and " + destinationField .getTypeName () + " do not match.");
+
+         const id = sourceField .getId () + "." + destinationField .getId ();
+
+         let route = this [X3DExecutionContext_routes] .get (id);
+
+         if (route)
+            return route;
+
+         route = new Routing_X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
+
+         this [X3DExecutionContext_routes] .add (id, route);
+
+         this ._routes_changed = this .getBrowser () .getCurrentTime ();
+
+         return route;
+      }
+      catch (error)
+      {
+         throw new Error ("Bad ROUTE specification: " + error .message);
+      }
+   },
+   deleteRoute: function (route)
+   {
+      // sourceNode, sourceField, destinationNode, destinationField
+      if (arguments .length === 4)
+      {
+         route = this .getRoute .apply (this, arguments);
+
+         if (! route)
+            return false;
+      }
+
+      if (this .deleteSimpleRoute (route))
+         this .deleteImportedRoute (route .sourceNode, route .destinationNode, route);
+   },
+   deleteSimpleRoute: function (route)
+   {
+      try
+      {
+         const
+            sourceField      = route .getSourceField (),
+            destinationField = route .getDestinationField (),
+            id               = sourceField .getId () + "." + destinationField .getId ();
+
+         this [X3DExecutionContext_routes] .remove (id);
+         route .disconnect ();
+
+         this ._routes_changed = this .getBrowser () .getCurrentTime ();
+
+         return true;
+      }
+      catch (error)
+      {
+         console .error (error);
+         return false;
+      }
+   },
+   deleteImportedRoute (sourceNode, destinationNode, route)
+   {
+      // Imported nodes handling.
+
+      let
+         importedSourceNode      = null,
+         importedDestinationNode = null;
+
+      try
+      {
+         // If sourceNode is shared node try to find the corresponding X3DImportedNode.
+         if (sourceNode .getValue () .getExecutionContext () !== this)
+            importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
+      }
+      catch (error)
+      {
+         // Source node is shared but not imported.
+      }
+
+      try
+      {
+         // If destinationNode is shared node try to find the corresponding X3DImportedNode.
+         if (destinationNode .getValue () .getExecutionContext () !== this)
+            importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
+      }
+      catch (error)
+      {
+         // Destination node is shared but not imported.
+      }
+
+      if (importedSourceNode instanceof Execution_X3DImportedNode && importedDestinationNode instanceof Execution_X3DImportedNode)
+      {
+         importedSourceNode      .deleteRoute (route);
+         importedDestinationNode .deleteRoute (route);
+      }
+      else if (importedSourceNode instanceof Execution_X3DImportedNode)
+      {
+         importedSourceNode .deleteRoute (route);
+      }
+      else if (importedDestinationNode instanceof Execution_X3DImportedNode)
+      {
+         importedDestinationNode .deleteRoute (route);
+      }
+   },
+   getRoute: function (sourceNode, sourceField, destinationNode, destinationField)
+   {
+      sourceNode       = Base_X3DCast (Base_X3DConstants.X3DNode, sourceNode, false);
+      sourceField      = String (sourceField)
+      destinationNode  = Base_X3DCast (Base_X3DConstants.X3DNode, destinationNode, false);
+      destinationField = String (destinationField)
+
+      if (! sourceNode)
+         throw new Error ("Bad ROUTE specification: sourceNode must be of type X3DNode.");
+
+      if (! destinationNode)
+         throw new Error ("Bad ROUTE specification: destinationNode must be of type X3DNode.");
+
+      sourceField      = sourceNode      .getField (sourceField);
+      destinationField = destinationNode .getField (destinationField);
+
+      const id = sourceField .getId () + "." + destinationField .getId ();
+
+      return this [X3DExecutionContext_routes] .get (id);
+   },
+   getRoutes: function ()
+   {
+      return this [X3DExecutionContext_routes];
+   },
+   getWorldInfos: function ()
+   {
+      return this ._worldInfos;
+   },
+   addWorldInfo: function (worldInfoNode)
+   {
+      this ._worldInfos .push (worldInfoNode);
+   },
+   removeWorldInfo: function (worldInfoNode)
+   {
+      for (let i = this ._worldInfos .length - 1; i >= 0; -- i)
+      {
+         if (this ._worldInfos [i] .getValue () === worldInfoNode)
+            this ._worldInfos .splice (i, 1);
+      }
+   },
+   toVRMLStream: function (stream)
+   {
+      const generator = InputOutput_Generator.Get (stream);
+
+      generator .PushExecutionContext (this);
+      generator .EnterScope ();
+      generator .ImportedNodes (this .getImportedNodes ());
+
+      // Output extern protos
+
+      this .getExternProtoDeclarations () .toVRMLStream (stream);
+
+      // Output protos
+
+      this .getProtoDeclarations () .toVRMLStream (stream);
+
+      // Output root nodes
+
+      const rootNodes = this .getRootNodes ();
+
+      for (let i = 0, length = rootNodes .length; i < length; ++ i)
+      {
+         const rootNode = rootNodes [i];
+
+         stream .string += generator .Indent ();
+
+         if (rootNode)
+            rootNode .toVRMLStream (stream);
+         else
+            stream .string += "NULL";
+
+         stream .string += "\n";
+
+         if (i !== length - 1)
+            stream .string += "\n";
+      }
+
+      // Output imported nodes
+
+      const importedNodes = this .getImportedNodes ();
+
+      if (importedNodes .size)
+      {
+         stream .string += "\n";
+
+         importedNodes .forEach (function (importedNode)
+         {
+            try
+            {
+               importedNode .toVRMLStream (stream);
+
+               stream .string += "\n";
+            }
+            catch (error)
+            { }
+         });
+      }
+
+      // Output routes
+
+      const routes = this .getRoutes ();
+
+      if (routes .length)
+      {
+         stream .string += "\n";
+
+         routes .toVRMLStream (stream);
+      }
+
+      generator .LeaveScope ();
+      generator .PopExecutionContext ();
+   },
+   toXMLStream: function (stream)
+   {
+      const generator = InputOutput_Generator.Get (stream);
+
+      generator .PushExecutionContext (this);
+      generator .EnterScope ();
+      generator .ImportedNodes (this .getImportedNodes ());
+
+      // Output extern protos
+
+      this .getExternProtoDeclarations () .toXMLStream (stream);
+
+      // Output protos
+
+      this .getProtoDeclarations () .toXMLStream (stream);
+
+      // Output root nodes
+
+      const rootNodes = this .getRootNodes ();
+
+      if (rootNodes .length)
+      {
+         rootNodes .toXMLStream (stream);
+
+         stream .string += "\n";
+      }
+
+      // Output imported nodes
+
+      const importedNodes = this .getImportedNodes ();
+
+      importedNodes .forEach (function (importedNode)
+      {
+         try
+         {
+            importedNode .toXMLStream (stream);
+
+            stream .string += "\n";
+         }
+         catch (error)
+         { }
+      });
+
+      // Output routes
+
+      this .getRoutes () .toXMLStream (stream);
+
+      generator .LeaveScope ();
+      generator .PopExecutionContext ();
+   },
+   dispose: function ()
+   {
+      this ._rootNodes .dispose ();
+
+      for (const route of this [X3DExecutionContext_routes])
+         this .deleteRoute (route);
+
+      Base_X3DBaseNode.prototype.dispose.call (this);
+   },
+});
+
+const getUniqueName = (function ()
+{
+   const _TrailingNumbers = /_\d+$/;
+
+   return function (array, name = "")
+   {
+      name = String (name) .replace (_TrailingNumbers, "");
+
+      let
+         newName = name,
+         i       = 64;
+
+      for (; i;)
+      {
+         if (! (this [array] .has (newName) || newName .length === 0))
+            break;
+
+         const
+            min = i,
+            max = i <<= 1;
+
+         newName  = name;
+         newName += '_';
+         newName += Math .round (Algorithm.random (min, max));
+      }
+
+      return newName;
+   };
+})();
+
+for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
+   Object .defineProperty (X3DExecutionContext .prototype, key, { enumerable: false });
+
+Object .defineProperty (X3DExecutionContext .prototype, "specificationVersion",
+{
+   get: function () { return this .getSpecificationVersion (); },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DExecutionContext .prototype, "encoding",
+{
+   get: function () { return this .getEncoding (); },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DExecutionContext .prototype, "profile",
+{
+   get: function () { return this .getProfile (); },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DExecutionContext .prototype, "components",
+{
+   get: function () { return this .getComponents (); },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DExecutionContext .prototype, "worldURL",
+{
+   get: function () { return this .getWorldURL (); },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DExecutionContext .prototype, "units",
+{
+   get: function () { return this .getUnits (); },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DExecutionContext .prototype, "rootNodes",
+{
+   get: function () { return this .getRootNodes (); },
+   set: function (value) { this .setRootNodes (value); },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DExecutionContext .prototype, "protos",
+{
+   get: function () { return this .getProtoDeclarations (); },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DExecutionContext .prototype, "externprotos",
+{
+   get: function () { return this .getExternProtoDeclarations (); },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DExecutionContext .prototype, "routes",
+{
+   get: function () { return this .getRoutes (); },
+   enumerable: true,
+   configurable: false
+});
+
+const X3DExecutionContext_default_ = X3DExecutionContext;
 ;
 
 x_ite_Namespace.set ("x_ite/Execution/X3DExecutionContext", X3DExecutionContext_default_);
@@ -57743,7 +57833,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(156);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -58394,6 +58484,8 @@ x_ite_Namespace.set ("x_ite/Execution/ExportedNodesArray", ExportedNodesArray_de
 
 
 
+Configuration_SupportedNodes.addAbstractType ("X3DScene", X3DScene);
+
 const
    _specificationVersion = Symbol (),
    _encoding             = Symbol (),
@@ -58404,7 +58496,7 @@ const
    _metadata             = Symbol (),
    _exportedNodes        = Symbol ();
 
-Configuration_SupportedNodes.addAbstractType ("X3DScene", X3DScene);
+const LATEST_VERSION = "4.0";
 
 function X3DScene (executionContext)
 {
@@ -58412,7 +58504,7 @@ function X3DScene (executionContext)
 
    this .addType (Base_X3DConstants.X3DScene)
 
-   this [_specificationVersion] = "4.0";
+   this [_specificationVersion] = LATEST_VERSION;
    this [_encoding]             = "SCRIPTED";
    this [_profile]              = null;
    this [_components]           = new Configuration_ComponentInfoArray ([ ]);
@@ -58701,13 +58793,8 @@ X3DScene .prototype = Object .assign (Object .create (Execution_X3DExecutionCont
    {
       const generator = InputOutput_Generator.Get (stream);
 
-      let specificationVersion = this .getSpecificationVersion ();
-
-      if (specificationVersion === "2.0")
-         specificationVersion = "4.0";
-
       stream .string += "#X3D V";
-      stream .string += specificationVersion;
+      stream .string += LATEST_VERSION;
       stream .string += " ";
       stream .string += "utf8";
       stream .string += " ";
@@ -58808,16 +58895,11 @@ X3DScene .prototype = Object .assign (Object .create (Execution_X3DExecutionCont
    {
       const generator = InputOutput_Generator.Get (stream);
 
-      let specificationVersion = this .getSpecificationVersion ();
-
-      if (specificationVersion === "2.0")
-         specificationVersion = "4.0";
-
       stream .string += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
       stream .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
-      stream .string += specificationVersion;
+      stream .string += LATEST_VERSION;
       stream .string += "//EN\" \"https://www.web3d.org/specifications/x3d-";
-      stream .string += specificationVersion;
+      stream .string += LATEST_VERSION;
       stream .string += ".dtd\">\n";
 
       stream .string += "<X3D";
@@ -58827,13 +58909,13 @@ X3DScene .prototype = Object .assign (Object .create (Execution_X3DExecutionCont
       stream .string += "'";
       stream .string += " ";
       stream .string += "version='";
-      stream .string += specificationVersion;
+      stream .string += LATEST_VERSION;
       stream .string += "'";
       stream .string += " ";
       stream .string += "xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance'";
       stream .string += " ";
       stream .string += "xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-";
-      stream .string += specificationVersion;
+      stream .string += LATEST_VERSION;
       stream .string += ".xsd'>\n";
 
       generator .IncIndent ();
@@ -59219,7 +59301,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(156);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -64767,9 +64849,9 @@ Viewport .prototype = Object .assign (Object .create (Layering_X3DViewportNode.p
    {
       return "viewport";
    },
-   getRectangle: function (browser)
+   getRectangle: function ()
    {
-      const viewport = browser .getViewport ();
+      const viewport = this .getBrowser () .getViewport ();
 
       const
          left   = Math .floor (viewport [2] * this .getLeft ()),
@@ -64824,7 +64906,7 @@ Viewport .prototype = Object .assign (Object .create (Layering_X3DViewportNode.p
    {
       const
          viewVolumes = renderObject .getViewVolumes (),
-         rectangle   = this .getRectangle (this .getBrowser ()),
+         rectangle   = this .getRectangle (),
          viewport    = viewVolumes .length ? viewVolumes .at (-1) .getViewport () : rectangle,
          viewVolume  = ViewVolumes .pop ();
 
@@ -65341,6 +65423,10 @@ OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpo
          return Geometry_Camera.ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
       }
    },
+   viewAll: function (bbox)
+   {
+
+   },
 });
 
 const OrthoViewpoint_default_ = OrthoViewpoint;
@@ -65464,7 +65550,7 @@ X3DViewer .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototyp
          const
             navigationInfo   = this .getNavigationInfo (),
             viewpoint        = this .getActiveViewpoint (),
-            viewport         = this .getViewport () .getRectangle (this .getBrowser ()),
+            viewport         = this .getViewport () .getRectangle (),
             projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
 
          // Far plane point
@@ -65489,7 +65575,7 @@ X3DViewer .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototyp
    },
    trackballProjectToSphere: function (x, y, vector)
    {
-      const viewport = this .getViewport () .getRectangle (this .getBrowser ());
+      const viewport = this .getViewport () .getRectangle ();
 
       y = this .getBrowser () .getViewport () [3] - y;
 
@@ -66152,8 +66238,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(777);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(156);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(146);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66795,7 +66881,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
             userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
             direction            = Numbers_Vector3.subtract (userPosition, userCenterOfRotation),
             rotation             = this .getHorizonRotation (rotationChange),
-            axis                 = this .getUpVector (viewpoint);
+            axis                 = viewpoint .getUpVector (true);
 
          this .axis .assign (axis);
 
@@ -66805,7 +66891,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
          this .timeSensor ._cycleInterval = Math .PI / (rotationChange .angle * SPIN_FACTOR * 30);
          this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
-         const lookAtRotation = this .lookAt (userPosition, userCenterOfRotation);
+         const lookAtRotation = viewpoint .getLookAtRotation (userPosition, userCenterOfRotation);
 
          this .direction .assign (direction);
          this .orientationOffset .assign (viewpoint .getUserOrientation ()) .multRight (lookAtRotation .inverse ());
@@ -66835,7 +66921,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
                fraction             = this .timeSensor ._fraction_changed .getValue (),
                rotation             = new Numbers_Rotation4 (this .axis, 2 * Math .PI * fraction),
                userPosition         = rotation .multVecRot (direction .assign (this .direction)) .add (userCenterOfRotation),
-               lookAtRotation       = this .lookAt (userPosition, viewpoint .getUserCenterOfRotation ());
+               lookAtRotation       = viewpoint .getLookAtRotation (userPosition, viewpoint .getUserCenterOfRotation ());
 
             positionOffset .assign (userPosition) .subtract (viewpoint .getPosition ());
 
@@ -66854,29 +66940,6 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
             viewpoint ._orientationOffset = this .getOrientationOffset (rotation, this .orientationOffset);
             viewpoint ._positionOffset    = this .getPositionOffset (viewpoint ._positionOffset .getValue (), this .orientationOffset, viewpoint ._orientationOffset .getValue ());
          }
-      };
-   })(),
-   lookAt: (function ()
-   {
-      const
-         x = new Numbers_Vector3 (0, 0, 0),
-         y = new Numbers_Vector3 (0, 0, 0),
-         z = new Numbers_Vector3 (0, 0, 0),
-         m = new Numbers_Matrix3 (),
-         r = new Numbers_Rotation4 ();
-
-      return function (fromPoint, toPoint)
-      {
-         const up = this .getUpVector (this .getActiveViewpoint ());
-
-         z .assign (fromPoint) .subtract (toPoint) .normalize ();
-         x .assign (up) .cross (z) .normalize ();
-         y .assign (z) .cross (x) .normalize ();
-
-         m .set (x.x, x.y, x.z, y.x, y.y, y.z, z.x, z.y, z.z);
-         r .setMatrix (m);
-
-         return r;
       };
    })(),
    addMove: (function ()
@@ -66969,7 +67032,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
             .multRight (orientationOffsetBefore);
 
          if (straightenHorizon)
-            viewpoint .straightenHorizon (userOrientation, this .getUpVector (viewpoint));
+            viewpoint .straightenHorizon (userOrientation, viewpoint .getUpVector (true));
 
          const orientationOffsetAfter = orientationOffset
             .assign (viewpoint .getOrientation ())
@@ -66983,7 +67046,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
 
             const userVector = userOrientation .multVecRot (zAxis .assign (Numbers_Vector3.zAxis));
 
-            if (Math .abs (this .getUpVector (viewpoint) .dot (userVector)) < CRITICAL_ANGLE)
+            if (Math .abs (viewpoint .getUpVector (true) .dot (userVector)) < CRITICAL_ANGLE)
                return orientationOffsetAfter;
 
             throw new Error ("Critical angle");
@@ -67009,16 +67072,6 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
          return r;
       };
    })(),
-   getUpVector: function (viewpoint)
-   {
-      if (viewpoint .getTypeName () !== "GeoViewpoint")
-         return viewpoint .getUpVector ();
-
-      if (viewpoint .getUserPosition () .magnitude () < 6.5e6)
-         return viewpoint .getUpVector ();
-
-      return Numbers_Vector3.zAxis;
-   },
    disconnect: function ()
    {
       const browser = this .getBrowser ();
@@ -67051,8 +67104,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(777);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(156);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(146);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67991,8 +68044,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(777);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(156);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(146);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -68307,8 +68360,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(777);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(156);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(146);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -69542,8 +69595,9 @@ X3DNavigationContext .prototype =
             this [_viewerNode] = new Navigation_FlyViewer (this, navigationInfo);
             break;
          case "PLANE":
+         case "PLANE_create3000.github.io":
          case "PLANE_create3000.de":
-            this [_viewerNode] = new Navigation_PlaneViewer (this, navigationInfo);
+                  this [_viewerNode] = new Navigation_PlaneViewer (this, navigationInfo);
             break;
          case "NONE":
             this [_viewerNode] = new Navigation_NoneViewer (this, navigationInfo);
@@ -69909,8 +69963,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(777);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(156);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(146);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70520,8 +70574,8 @@ const X3DPointingDeviceSensorContext_default_ = X3DPointingDeviceSensorContext;
 x_ite_Namespace.set ("x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext", X3DPointingDeviceSensorContext_default_);
 /* harmony default export */ const PointingDeviceSensor_X3DPointingDeviceSensorContext = (X3DPointingDeviceSensorContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(156);
-/* provided dependency */ var ResizeSensor = __webpack_require__(842);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(605);
+/* provided dependency */ var ResizeSensor = __webpack_require__(9);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81540,7 +81594,7 @@ const X3DRoutingContext_default_ = X3DRoutingContext;
 x_ite_Namespace.set ("x_ite/Routing/X3DRoutingContext", X3DRoutingContext_default_);
 /* harmony default export */ const Routing_X3DRoutingContext = (X3DRoutingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowserContext.js
-/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(156);
+/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100638,7 +100692,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(156);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101297,7 +101351,7 @@ BufferAudioSource .prototype = Object .assign (Object .create (Sound_X3DSoundSou
    },
    getContainerField: function ()
    {
-      return "source";
+      return "children";
    },
    initialize: function ()
    {
@@ -102200,7 +102254,7 @@ ListenerPointSource .prototype = Object .assign (Object .create (Sound_X3DSoundS
    },
    getContainerField: function ()
    {
-      return "source";
+      return "children";
    },
 });
 
@@ -102301,7 +102355,7 @@ MicrophoneSource .prototype = Object .assign (Object .create (Sound_X3DSoundSour
    },
    getContainerField: function ()
    {
-      return "source";
+      return "children";
    },
 });
 
@@ -102404,7 +102458,7 @@ OscillatorSource .prototype = Object .assign (Object .create (Sound_X3DSoundSour
    },
    getContainerField: function ()
    {
-      return "source";
+      return "children";
    },
 });
 
@@ -102491,7 +102545,7 @@ PeriodicWave .prototype = Object .assign (Object .create (Sound_X3DSoundNode.pro
    },
    getComponentName: function ()
    {
-      return "PeriodicWave";
+      return "Sound";
    },
    getContainerField: function ()
    {
@@ -102889,7 +102943,7 @@ SpatialSound .prototype = Object .assign (Object .create (Sound_X3DSoundNode.pro
    },
    getComponentName: function ()
    {
-      return "SpatialSound";
+      return "Sound";
    },
    getContainerField: function ()
    {
@@ -103093,7 +103147,7 @@ StreamAudioSource .prototype = Object .assign (Object .create (Sound_X3DSoundSou
    },
    getContainerField: function ()
    {
-      return "source";
+      return "children";
    },
 });
 
@@ -103331,7 +103385,7 @@ const Components_Sound_default_ = undefined;
 x_ite_Namespace.set ("x_ite/Components/Sound", Components_Sound_default_);
 /* harmony default export */ const Components_Sound = ((/* unused pure expression or super */ null && (Components_Sound_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(156);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104254,7 +104308,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(156);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104957,7 +105011,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(156);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(605);
 /*******************************************************************************
  * MIT License
  *
@@ -106181,7 +106235,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(156);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106931,11 +106985,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
 
       viewpointNode .setVRMLTransition (true);
 
-      if (viewpointNode ._isBound .getValue ())
-         viewpointNode .transitionStart (layerNode, viewpointNode, viewpointNode);
-
-      else
-         viewpointNode ._set_bind = true;
+      viewpointNode ._set_bind = true;
    },
    addRoute: function (fromNode, fromEventOut, toNode, toEventIn)
    {
@@ -107070,7 +107120,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(156);
+/* provided dependency */ var Fallback_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107249,14 +107299,14 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(156);
+/* provided dependency */ var jquery_$ = __webpack_require__(605);
 const jquery_default_ = jquery_$;
 ;
 
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(156);
+/* provided dependency */ var X3D_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107511,7 +107561,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(156);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(605);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

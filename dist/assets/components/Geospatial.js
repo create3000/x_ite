@@ -3374,15 +3374,15 @@ Namespace_default().set ("x_ite/Components/Geospatial/GeoTransform", GeoTransfor
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Navigation/X3DViewpointNode\")"
 const X3DViewpointNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Navigation/X3DViewpointNode");
 var X3DViewpointNode_default = /*#__PURE__*/__webpack_require__.n(X3DViewpointNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Navigation/Viewpoint\")"
+const Viewpoint_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Navigation/Viewpoint");
+var Viewpoint_default = /*#__PURE__*/__webpack_require__.n(Viewpoint_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Interpolation/ScalarInterpolator\")"
 const ScalarInterpolator_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Interpolation/ScalarInterpolator");
 var ScalarInterpolator_default = /*#__PURE__*/__webpack_require__.n(ScalarInterpolator_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Navigation/NavigationInfo\")"
 const NavigationInfo_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("x_ite/Components/Navigation/NavigationInfo");
 var NavigationInfo_default = /*#__PURE__*/__webpack_require__.n(NavigationInfo_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Camera\")"
-const Camera_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("standard/Math/Geometry/Camera");
-var Camera_default = /*#__PURE__*/__webpack_require__.n(Camera_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
 const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.2.1a")] .require ("standard/Math/Numbers/Rotation4");
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
@@ -3447,14 +3447,6 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
 
 
 
-
-function traverse (type, renderObject)
-{
-   X3DViewpointNode_default().prototype.traverse.call (this, type, renderObject);
-
-   this .navigationInfoNode .traverse (type, renderObject);
-}
-
 function GeoViewpoint (executionContext)
 {
    X3DViewpointNode_default().call (this, executionContext);
@@ -3465,7 +3457,7 @@ function GeoViewpoint (executionContext)
    this ._centerOfRotation .setUnit ("length");
    this ._fieldOfView      .setUnit ("angle");
 
-   this .navigationInfoNode      = new (NavigationInfo_default()) (executionContext);
+   this .geoNavigationInfoNode   = new (NavigationInfo_default()) (executionContext);
    this .fieldOfViewInterpolator = new (ScalarInterpolator_default()) (this .getBrowser () .getPrivateScene ());
    this .projectionMatrix        = new (Matrix4_default()) ();
    this .elevation               = 0;
@@ -3534,10 +3526,10 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
 
       this ._position       .addInterest ("set_position__", this);
       this ._positionOffset .addInterest ("set_position__", this);
-      this ._navType        .addFieldInterest (this .navigationInfoNode ._type);
-      this ._headlight      .addFieldInterest (this .navigationInfoNode ._headlight);
+      this ._navType        .addFieldInterest (this .geoNavigationInfoNode ._type);
+      this ._headlight      .addFieldInterest (this .geoNavigationInfoNode ._headlight);
 
-      this .navigationInfoNode .setup ();
+      this .geoNavigationInfoNode .setup ();
 
       this .set_position__ ();
 
@@ -3549,23 +3541,7 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
       this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
       this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
    },
-   setInterpolators: function (fromViewpointNode, toViewpointNode)
-   {
-      if (fromViewpointNode .getType () .includes ((X3DConstants_default()).Viewpoint) || fromViewpointNode .getType () .includes ((X3DConstants_default()).GeoViewpoint))
-      {
-         const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
-
-         this .fieldOfViewInterpolator ._keyValue = new (Fields_default()).MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
-
-         this ._fieldOfViewScale = scale;
-      }
-      else
-      {
-         this .fieldOfViewInterpolator ._keyValue = new (Fields_default()).MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
-
-         this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
-      }
-   },
+   setInterpolators: (Viewpoint_default()).prototype.setInterpolators,
    getLogarithmicDepthBuffer: function ()
    {
       return this .logarithmicDepthBuffer;
@@ -3642,12 +3618,7 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
          return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
       };
    })(),
-   getFieldOfView: function ()
-   {
-      const fov = this ._fieldOfView * this ._fieldOfViewScale;
-
-      return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
-   },
+   getFieldOfView: (Viewpoint_default()).prototype.getFieldOfView,
    getMaxFarValue: function ()
    {
       return 1e10;
@@ -3658,66 +3629,42 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
          position = new (Vector3_default()) (0, 0, 0),
          upVector = new (Vector3_default()) (0, 0, 0);
 
-      return function ()
+      return function (dynamic = false)
       {
-         this .getCoord (this ._position .getValue (), position);
+         if (! dynamic || this .getUserPosition () .magnitude () < 6.5e6)
+         {
+            this .getCoord (this ._position .getValue (), position);
 
-         return this .getGeoUpVector (position .add (this ._positionOffset .getValue ()), upVector);
+            return this .getGeoUpVector (position .add (this ._positionOffset .getValue ()), upVector);
+         }
+         else
+         {
+            return upVector .assign ((Vector3_default()).zAxis);
+         }
       };
    })(),
    getSpeedFactor: function ()
    {
       return (Math .max (this .elevation, 0.0) + 10) / 10 * this ._speedFactor .getValue ();
    },
-   getScreenScale: function (point, viewport, screenScale)
-   {
-      // Returns the screen scale in meter/pixel for on pixel.
-
-      const
-         width  = viewport [2],
-         height = viewport [3];
-
-      let size = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
-
-      if (width > height)
-         size /= height;
-      else
-         size /= width;
-
-      return screenScale .set (size, size, size);
-   },
-   getViewportSize: (function ()
-   {
-      const viewportSize = new (Vector2_default()) (0, 0);
-
-      return function (viewport, nearValue)
-      {
-         const
-            width  = viewport [2],
-            height = viewport [3],
-            size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
-            aspect = width / height;
-
-         if (aspect > 1)
-            return viewportSize .set (size * aspect, size);
-
-         return viewportSize .set (size, size / aspect);
-      };
-   })(),
-   getLookAtDistance: function (bbox)
-   {
-      return (bbox .size .magnitude () / 2) / Math .tan (this .getFieldOfView () / 2);
-   },
-   getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
-   {
-      return Camera_default().perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
-   },
+   getScreenScale: (Viewpoint_default()).prototype.getScreenScale,
+   getViewportSize: (Viewpoint_default()).prototype.getViewportSize,
+   getLookAtDistance: (Viewpoint_default()).prototype.getLookAtDistance,
+   getProjectionMatrixWithLimits: (Viewpoint_default()).prototype.getProjectionMatrixWithLimits,
+   viewAll: (Viewpoint_default()).prototype.viewAll,
    dispose: function ()
    {
       Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
       X3DViewpointNode_default().prototype.dispose.call (this);
    },
 });
+
+function traverse (type, renderObject)
+{
+   X3DViewpointNode_default().prototype.traverse.call (this, type, renderObject);
+
+   this .geoNavigationInfoNode .traverse (type, renderObject);
+}
 
 const GeoViewpoint_default_ = GeoViewpoint;
 ;
