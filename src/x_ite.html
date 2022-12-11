@@ -90,7 +90,7 @@ function toJSONString ()
 const bookmarks = new Bookmarks (Browser, $(".examples-box"));
 
 bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
-//loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
+loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
 
 $(".version") .text (Browser .name + " v" + Browser .version);
 $(".browser") .on ("initialized", () => $(".console") .empty ());
