@@ -90,7 +90,7 @@ function toJSONString ()
 const bookmarks = new Bookmarks (Browser, $(".examples-box"));
 
 bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
-loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
+//loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
 
 $(".version") .text (Browser .name + " v" + Browser .version);
 $(".browser") .on ("initialized", () => $(".console") .empty ());
@@ -369,7 +369,7 @@ main.color-management .browser {
       <main>
          <div>
             <form action="javascript:alert('form submitted')">
-               <x3d-canvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" onload="$('.file') .addClass ('loaded')" x-url='"tests/Empty.x3dv"'>
+               <x3d-canvas id="browser" class="browser" splashscreen="true" contextmenu="true" cache="false" debug="true" preservedrawingbuffer="false" onload="$('.file') .addClass ('loaded')" x-url='"tests/Empty.x3dv"'>
                   <p class="fallback">
                      Sorry,<br/>
                      it wasn't me!<br/>

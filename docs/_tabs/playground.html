@@ -28,7 +28,7 @@ table td {
 
 /* Editor */
 
-#editor-wrapper, .console {
+#editor, .console {
    outline: none;
    border: none;
    padding: 0.5rem;
@@ -40,19 +40,6 @@ table td {
    font-size: 0.8rem;
    line-height: 1.4;
    white-space: pre;
-}
-
-#editor-wrapper {
-   position: relative;
-}
-
-#editor {
-   position: absolute;
-   top: 0;
-   right: 0;
-   bottom: 0;
-   left: 0;
-   background: unset;
 }
 
 .ace_gutter {
@@ -245,7 +232,7 @@ $(function ()
       <td>
          <table>
             <tr>
-               <td><x3d-canvas splashScreen="false"></x3d-canvas></td>
+               <td><x3d-canvas splashscreen="false"></x3d-canvas></td>
             </tr>
             <tr>
                <td><div class="console"></div></td>
@@ -253,7 +240,7 @@ $(function ()
          </table>
       </td>
       <td>
-         <div id="editor-wrapper"><div id="editor"></div></div>
+         <div id="editor"></div>
       </td>
    </tr>
 </table>

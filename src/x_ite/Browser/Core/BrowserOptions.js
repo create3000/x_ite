@@ -66,8 +66,6 @@ function BrowserOptions (executionContext)
    this .textureQuality   = TextureQuality .MEDIUM
    this .primitiveQuality = PrimitiveQuality .MEDIUM;
    this .shading          = Shading .GOURAUD;
-
-   this .setAttributeSplashScreen ();
 }
 
 BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -113,7 +111,6 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          Timings:           this ._Timings           .getValue (),
       });
 
-      this ._SplashScreen           .addInterest ("set_splashScreen__",           this);
       this ._Rubberband             .addInterest ("set_rubberband__",             this);
       this ._PrimitiveQuality       .addInterest ("set_primitiveQuality__",       this);
       this ._TextureQuality         .addInterest ("set_textureQuality__",         this);
@@ -146,8 +143,6 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          straightenHorizon = localStorage .StraightenHorizon,
          timings           = localStorage .Timings;
 
-      this .setAttributeSplashScreen ();
-
       if (rubberband !== this ._Rubberband .getValue ())
          this ._Rubberband = rubberband;
 
@@ -163,29 +158,43 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       if (timings !== this ._Timings .getValue ())
          this ._Timings = timings;
    },
-   setAttributeSplashScreen: function ()
+   getAttribute: function (name)
    {
-      this ._SplashScreen .set (this .getSplashScreen ());
+      const element = this .getBrowser () .getElement ();
+
+      return element .attr (name) || element .attr (name .toLowerCase ());
+   },
+   toBoolean: function  (value, defaultValue)
+   {
+      value = String (value) .toLowerCase ();
+
+      if (value === "true")
+         return true;
+
+      if (value === "false")
+         return false;
+
+      return defaultValue;
    },
    getCache: function ()
    {
-      return toBoolean (this .getBrowser () .getElement () .attr ("cache"), true);
+      return this .toBoolean (this .getAttribute ("cache"), true);
    },
    getContextMenu: function ()
    {
-      return toBoolean (this .getBrowser () .getElement () .attr ("contextMenu"), true);
+      return this .toBoolean (this .getAttribute ("contextMenu"), true);
    },
    getDebug: function ()
    {
-      return toBoolean (this .getBrowser () .getElement () .attr ("debug"), false);
+      return this .toBoolean (this .getAttribute ("debug"), false);
    },
    getNotifications: function ()
    {
-      return toBoolean (this .getBrowser () .getElement () .attr ("notifications"), true);
+      return this .toBoolean (this .getAttribute ("notifications"), true);
    },
    getSplashScreen: function ()
    {
-      return toBoolean (this .getBrowser () .getElement () .attr ("splashScreen"), true);
+      return this .toBoolean (this .getAttribute ("splashScreen"), this ._SplashScreen .getValue ());
    },
    getPrimitiveQuality: function ()
    {
@@ -198,10 +207,6 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    getTextureQuality: function ()
    {
       return this .textureQuality;
-   },
-   set_splashScreen__: function (splashScreen)
-   {
-      this .getBrowser () .getElement () .attr ("splashScreen", splashScreen .getValue () ? "true" : "false");
    },
    set_rubberband__: function (rubberband)
    {
@@ -275,18 +280,5 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       this .getBrowser () .getBrowserTimings () .setEnabled (timings .getValue ());
    },
 });
-
-function toBoolean (value, defaultValue)
-{
-   value = String (value) .toUpperCase ();
-
-   if (value === "TRUE")
-      return true;
-
-   if (value === "FALSE")
-      return false;
-
-   return defaultValue;
-}
 
 export default BrowserOptions;

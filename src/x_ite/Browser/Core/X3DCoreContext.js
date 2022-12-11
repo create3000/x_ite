@@ -275,11 +275,16 @@ X3DCoreContext .prototype =
    },
    attributeChangedCallback: function (name, oldValue, newValue)
    {
-      switch (name .toLowerCase ())
+      switch (name)
       {
          case "splashscreen":
          {
-            this .getBrowserOptions () .setAttributeSplashScreen ();
+            if (newValue .toLowerCase () !== "true")
+            {
+               this .getCanvas () .show ();
+               this .getSplashScreen () .stop (true, true) .hide ();
+            }
+
             break;
          }
          case "src":

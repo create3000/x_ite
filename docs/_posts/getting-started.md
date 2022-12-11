@@ -939,9 +939,9 @@ The HTML **\<x3d-canvas\>** element defines the main content of the X3D document
 
 A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the *cache* attribute is `true`. It works by appending "_={timestamp}" to the GET parameters of every request.
 
-### contextMenu
+### contextmenu
 
-A Boolean value (`true` or `false`) to indicate whether a context menu should be displayed on right click. The default value for the *contextMenu* attribute is `true`. The context menu can also be extended, [see here](#extending-the-context-menu).
+A Boolean value (`true` or `false`) to indicate whether a context menu should be displayed on right click. The default value for the *contextmenu* attribute is `true`. The context menu can also be extended, [see here](#extending-the-context-menu).
 
 ### notifications
 
@@ -959,13 +959,13 @@ Type: script code. This event handler will be called on the x3d-canvas element w
 
 Type: script code. This event handler will be called on the x3d-canvas element when a scene is unloaded or replaced by another world.
 
-### preserveDrawingBuffer
+### preservedrawingbuffer
 
-A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for the *preserveDrawingBuffer* attribute is `false`. Set *preserveDrawingBuffer* to true if you want to save the image from the canvas. Keep in mind setting *preserveDrawingBuffer* to true can have performance implications.
+A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for the *preservedrawingbuffer* attribute is `false`. Set *preservedrawingbuffer* to true if you want to save the image from the canvas. Keep in mind setting *preservedrawingbuffer* to true can have performance implications.
 
-### splashScreen
+### splashscreen
 
-A Boolean value (`true` or `false`) to indicate whether the splash screen should be displayed. The default value for the *splashScreen* attribute is `true`. The display of the splash screen can also be toggled via the browser option »SplashScreen« in JavaScript. Call `Browser .setBrowserOption ("SplashScreen", booleanValue)` to toggle the display of the splash screen.
+A Boolean value (`true` or `false`) to indicate whether the splash screen should be displayed. The default value for the *splashscreen* attribute is `true`. The display of the splash screen can also be toggled via the browser option »SplashScreen« in JavaScript. Call `Browser .setBrowserOption ("SplashScreen", booleanValue)` to toggle the display of the splash screen.
 
 ### src
 
