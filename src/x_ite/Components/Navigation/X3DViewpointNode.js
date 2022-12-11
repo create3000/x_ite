@@ -125,9 +125,13 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this .scaleInterpolator            ._value_changed .addFieldInterest (this ._scaleOffset);
       this .scaleOrientationInterpolator ._value_changed .addFieldInterest (this ._scaleOrientationOffset);
 
+      this ._nearDistance   .addInterest ("set_nearDistance__",   this);
+      this ._farDistance    .addInterest ("set_farDistance__",    this);
       this ._navigationInfo .addInterest ("set_navigationInfo__", this);
       this ._isBound        .addInterest ("set_bound__",          this);
 
+      this .set_nearDistance__ ();
+      this .set_farDistance__ ();
       this .set_navigationInfo__ ();
    },
    getEaseInEaseOut: function ()
@@ -163,9 +167,9 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
    {
       const navigationInfo = renderObject .getNavigationInfo ();
 
-      return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (),
-                                                  navigationInfo .getFarValue (this),
-                                                  renderObject .getLayer () .getViewport () .getRectangle (this .getBrowser ()));
+      return this .getProjectionMatrixWithLimits (this .nearDistance ?? navigationInfo .getNearValue (),
+                                                  this .farDistance ?? navigationInfo .getFarValue (this),
+                                                  renderObject .getLayer () .getViewport () .getRectangle ());
    },
    getCameraSpaceMatrix: function ()
    {
@@ -436,6 +440,18 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          return orientation .multRight (rotation);
       };
    })(),
+   set_nearDistance__: function ()
+   {
+      const nearDistance = this ._nearDistance .getValue ();
+
+      this .nearDistance = nearDistance >= 0 ? nearDistance : undefined;
+   },
+   set_farDistance__: function ()
+   {
+      const farDistance = this ._farDistance .getValue ();
+
+      this .farDistance = farDistance >= 0 ? farDistance : undefined;
+   },
    set_navigationInfo__: function ()
    {
       if (this .navigationInfoNode)

@@ -279,7 +279,7 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
       {
          var
             browser  = this .getBrowser (),
-            viewport = this .currentViewport .getRectangle (browser);
+            viewport = this .currentViewport .getRectangle ();
 
          if (browser .getSelectedLayer ())
          {

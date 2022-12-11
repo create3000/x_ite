@@ -113,7 +113,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          const
             navigationInfo   = this .getNavigationInfo (),
             viewpoint        = this .getActiveViewpoint (),
-            viewport         = this .getViewport () .getRectangle (this .getBrowser ()),
+            viewport         = this .getViewport () .getRectangle (),
             projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
 
          // Far plane point
@@ -138,7 +138,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    },
    trackballProjectToSphere: function (x, y, vector)
    {
-      const viewport = this .getViewport () .getRectangle (this .getBrowser ());
+      const viewport = this .getViewport () .getRectangle ();
 
       y = this .getBrowser () .getViewport () [3] - y;
 

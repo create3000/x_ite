@@ -182,16 +182,6 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
    },
    getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
    {
-      const
-         nearDistance = this ._nearDistance .getValue (),
-         farDistance  = this ._farDistance .getValue ();
-
-      if (nearDistance >= 0)
-         nearValue = nearDistance;
-
-      if (farDistance >= 0)
-         farValue = farDistance;
-
       return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
    },
 });

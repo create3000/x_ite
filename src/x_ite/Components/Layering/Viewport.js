@@ -92,9 +92,9 @@ Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype
    {
       return "viewport";
    },
-   getRectangle: function (browser)
+   getRectangle: function ()
    {
-      const viewport = browser .getViewport ();
+      const viewport = this .getBrowser () .getViewport ();
 
       const
          left   = Math .floor (viewport [2] * this .getLeft ()),
@@ -149,7 +149,7 @@ Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype
    {
       const
          viewVolumes = renderObject .getViewVolumes (),
-         rectangle   = this .getRectangle (this .getBrowser ()),
+         rectangle   = this .getRectangle (),
          viewport    = viewVolumes .length ? viewVolumes .at (-1) .getViewport () : rectangle,
          viewVolume  = ViewVolumes .pop ();
 

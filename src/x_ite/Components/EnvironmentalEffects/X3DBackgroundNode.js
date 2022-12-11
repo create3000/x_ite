@@ -505,11 +505,9 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
    display: (function ()
    {
       const
-         invProjectionMatrix = new Matrix4 (),
-         modelViewMatrix     = new Matrix4 (),
-         rotation            = new Rotation4 (),
-         scale               = new Vector3 (0, 0, 0),
-         farVector           = new Vector3 (0, 0, 0);
+         modelViewMatrix = new Matrix4 (),
+         rotation        = new Rotation4 (),
+         scale           = new Vector3 (0, 0, 0);
 
       return function (gl, renderObject, viewport)
       {
@@ -523,13 +521,9 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
          gl .enable (gl .CULL_FACE);
          gl .frontFace (gl .CCW);
 
-         // Get background scale.
-
-         const farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
-
          // Get projection matrix.
 
-         this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());
+         this .projectionMatrixArray .set (renderObject .getViewpoint () .getProjectionMatrixWithLimits (0.125, 200_000, viewport));
 
          // Rotate and scale background.
 
@@ -538,7 +532,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
          modelViewMatrix .get (null, rotation);
          modelViewMatrix .identity ();
          modelViewMatrix .rotate (rotation);
-         modelViewMatrix .scale (scale .set (farValue, farValue, farValue));
+         modelViewMatrix .scale (scale .set (100_000, 100_000, 100_000));
 
          this .modelViewMatrixArray .set (modelViewMatrix);
 
