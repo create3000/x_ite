@@ -50,11 +50,10 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DViewpointNode     from "../Navigation/X3DViewpointNode.js";
 import X3DGeospatialObject  from "./X3DGeospatialObject.js";
+import Viewpoint            from "../Navigation/Viewpoint.js";
 import ScalarInterpolator   from "../Interpolation/ScalarInterpolator.js";
 import NavigationInfo       from "../Navigation/NavigationInfo.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Camera               from "../../../standard/Math/Geometry/Camera.js";
-import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
@@ -153,23 +152,7 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
       this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
       this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
    },
-   setInterpolators: function (fromViewpointNode, toViewpointNode)
-   {
-      if (fromViewpointNode .getType () .includes (X3DConstants .Viewpoint) || fromViewpointNode .getType () .includes (X3DConstants .GeoViewpoint))
-      {
-         const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
-
-         this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
-
-         this ._fieldOfViewScale = scale;
-      }
-      else
-      {
-         this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
-
-         this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
-      }
-   },
+   setInterpolators: Viewpoint .prototype .setInterpolators,
    getLogarithmicDepthBuffer: function ()
    {
       return this .logarithmicDepthBuffer;
@@ -246,12 +229,7 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
          return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
       };
    })(),
-   getFieldOfView: function ()
-   {
-      const fov = this ._fieldOfView * this ._fieldOfViewScale;
-
-      return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
-   },
+   getFieldOfView: Viewpoint .prototype .getFieldOfView,
    getMaxFarValue: function ()
    {
       return 1e10;
@@ -280,62 +258,11 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
    {
       return (Math .max (this .elevation, 0.0) + 10) / 10 * this ._speedFactor .getValue ();
    },
-   getScreenScale: function (point, viewport, screenScale)
-   {
-      // Returns the screen scale in meter/pixel for on pixel.
-
-      const
-         width  = viewport [2],
-         height = viewport [3];
-
-      let size = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
-
-      if (width > height)
-         size /= height;
-      else
-         size /= width;
-
-      return screenScale .set (size, size, size);
-   },
-   getViewportSize: (function ()
-   {
-      const viewportSize = new Vector2 (0, 0);
-
-      return function (viewport, nearValue)
-      {
-         const
-            width  = viewport [2],
-            height = viewport [3],
-            size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
-            aspect = width / height;
-
-         if (aspect > 1)
-            return viewportSize .set (size * aspect, size);
-
-         return viewportSize .set (size, size / aspect);
-      };
-   })(),
-   getLookAtDistance: function (bbox)
-   {
-      return (bbox .size .magnitude () / 2) / Math .tan (this .getFieldOfView () / 2);
-   },
-   getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
-   {
-      return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
-   },
-   viewAll: function (bbox)
-   {
-      const
-         center          = bbox .center,
-         direction       = this .getUserPosition () .copy () .subtract (center),
-         distance        = this .getLookAtDistance (bbox),
-         userPosition    = center .copy () .add (direction .normalize () .multiply (distance)),
-         userOrientation = this .getLookAtRotation (userPosition, center);
-
-      this ._positionOffset         = userPosition .subtract (this .getPosition ());
-      this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
-      this ._centerOfRotationOffset = center .subtract (this .getCenterOfRotation ());
-   },
+   getScreenScale: Viewpoint .prototype .getScreenScale,
+   getViewportSize: Viewpoint .prototype .getViewportSize,
+   getLookAtDistance: Viewpoint .prototype .getLookAtDistance,
+   getProjectionMatrixWithLimits: Viewpoint .prototype .getProjectionMatrixWithLimits,
+   viewAll: Viewpoint .prototype .viewAll,
    dispose: function ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);
