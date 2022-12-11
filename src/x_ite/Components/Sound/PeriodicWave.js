@@ -75,7 +75,7 @@ PeriodicWave .prototype = Object .assign (Object .create (X3DSoundNode .prototyp
    },
    getComponentName: function ()
    {
-      return "PeriodicWave";
+      return "Sound";
    },
    getContainerField: function ()
    {

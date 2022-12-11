@@ -489,7 +489,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       stream .string += "xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance'";
       stream .string += " ";
       stream .string += "xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-";
-      stream .string += specificationVersion;
+      stream .string += LATEST_VERSION;
       stream .string += ".xsd'>\n";
 
       generator .IncIndent ();

@@ -51,6 +51,7 @@ import TimeSensor              from "../Time/TimeSensor.js";
 import EaseInEaseOut           from "../Interpolation/EaseInEaseOut.js";
 import PositionInterpolator    from "../Interpolation/PositionInterpolator.js";
 import OrientationInterpolator from "../Interpolation/OrientationInterpolator.js";
+import X3DCast                 from "../../Base/X3DCast.js";
 import TraverseType            from "../../Rendering/TraverseType.js";
 import X3DConstants            from "../../Base/X3DConstants.js";
 import Vector3                 from "../../../standard/Math/Numbers/Vector3.js";
@@ -124,7 +125,10 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this .scaleInterpolator            ._value_changed .addFieldInterest (this ._scaleOffset);
       this .scaleOrientationInterpolator ._value_changed .addFieldInterest (this ._scaleOrientationOffset);
 
-      this ._isBound .addInterest ("set_bound__", this);
+      this ._navigationInfo .addInterest ("set_navigationInfo__", this);
+      this ._isBound        .addInterest ("set_bound__",          this);
+
+      this .set_navigationInfo__ ();
    },
    getEaseInEaseOut: function ()
    {
@@ -432,6 +436,25 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          return orientation .multRight (rotation);
       };
    })(),
+   set_navigationInfo__: function ()
+   {
+      if (this .navigationInfoNode)
+         this ._isBound .removeFieldInterest (this .navigationInfoNode ._set_bind);
+
+      this .navigationInfoNode = X3DCast (X3DConstants .NavigationInfo, this ._navigationInfo);
+
+      if (this .navigationInfoNode)
+         this ._isBound .addFieldInterest (this .navigationInfoNode ._set_bind);
+   },
+   set_bound__: function ()
+   {
+      const browser = this .getBrowser ();
+
+      if (this ._isBound .getValue ())
+         browser .getNotification () ._string = this ._description;
+      else
+         this .timeSensor ._stopTime = browser .getCurrentTime ();
+   },
    set_active__: function (navigationInfoNode, active)
    {
       if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
@@ -439,17 +462,13 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          navigationInfoNode ._transitionComplete = true;
       }
    },
-   set_bound__: function ()
-   {
-      if (this ._isBound .getValue ())
-         this .getBrowser () .getNotification () ._string = this ._description;
-      else
-         this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
-   },
    traverse: function (type, renderObject)
    {
       if (type !== TraverseType .CAMERA)
          return;
+
+      if (this .navigationInfoNode)
+         this .navigationInfoNode .traverse (type, renderObject);
 
       renderObject .getLayer () .getViewpoints () .push (this);
 
