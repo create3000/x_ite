@@ -200,29 +200,6 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
    {
       return 1;
    },
-   getLookAtRotation: (function ()
-   {
-      const
-         x = new Vector3 (0, 0, 0),
-         y = new Vector3 (0, 0, 0),
-         z = new Vector3 (0, 0, 0),
-         m = new Matrix3 (),
-         r = new Rotation4 ();
-
-      return function (fromPoint, toPoint)
-      {
-         const up = this .getUpVector ();
-
-         z .assign (fromPoint) .subtract (toPoint) .normalize ();
-         x .assign (up) .cross (z) .normalize ();
-         y .assign (z) .cross (x) .normalize ();
-
-         m .set (x.x, x.y, x.z, y.x, y.y, y.z, z.x, z.y, z.z);
-         r .setMatrix (m);
-
-         return r;
-      };
-   })(),
    setVRMLTransition: function (value)
    {
       // VRML behavior support.
@@ -366,6 +343,29 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       relativePosition .subtract (this .getPosition ());
       relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
    },
+   getLookAtRotation: (function ()
+   {
+      const
+         x = new Vector3 (0, 0, 0),
+         y = new Vector3 (0, 0, 0),
+         z = new Vector3 (0, 0, 0),
+         m = new Matrix3 (),
+         r = new Rotation4 ();
+
+      return function (fromPoint, toPoint)
+      {
+         const up = this .getUpVector ();
+
+         z .assign (fromPoint) .subtract (toPoint) .normalize ();
+         x .assign (up) .cross (z) .normalize ();
+         y .assign (z) .cross (x) .normalize ();
+
+         m .set (x.x, x.y, x.z, y.x, y.y, y.z, z.x, z.y, z.z);
+         r .setMatrix (m);
+
+         return r;
+      };
+   })(),
    lookAtPoint: function (layerNode, point, factor, straighten)
    {
       this .getCameraSpaceMatrix () .multVecMatrix (point);
