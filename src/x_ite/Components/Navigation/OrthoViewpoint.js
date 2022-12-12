@@ -165,6 +165,15 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
       this ._fieldOfViewOffset [2] = this .fieldOfViewOffsetInterpolator2 ._value_changed .getValue ();
       this ._fieldOfViewOffset [3] = this .fieldOfViewOffsetInterpolator3 ._value_changed .getValue ();
    },
+   resetUserOffsets: function ()
+   {
+      X3DViewpointNode .prototype .resetUserOffsets .call (this);
+
+      this ._fieldOfViewOffset [0] = 0;
+      this ._fieldOfViewOffset [1] = 0;
+      this ._fieldOfViewOffset [2] = 0;
+      this ._fieldOfViewOffset [3] = 0;
+   },
    setInterpolators: function (fromViewpointNode, toViewpointNode)
    {
       if (fromViewpointNode .getType () .includes (X3DConstants .OrthoViewpoint))
