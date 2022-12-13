@@ -254,6 +254,9 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          if (transitionTime <= 0)
             transitionType = "TELEPORT";
 
+         if (toViewpointNode .constructor !== fromViewpointNode .constructor)
+            transitionType = "TELEPORT";
+
          switch (transitionType)
          {
             case "TELEPORT":

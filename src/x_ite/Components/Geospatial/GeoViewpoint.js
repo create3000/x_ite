@@ -152,7 +152,14 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
       this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
       this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
    },
+   getRelativeTransformation: Viewpoint .prototype .getRelativeTransformation,
    setInterpolators: Viewpoint .prototype .setInterpolators,
+   getFieldOfView: Viewpoint .prototype .getFieldOfView,
+   getScreenScale: Viewpoint .prototype .getScreenScale,
+   getViewportSize: Viewpoint .prototype .getViewportSize,
+   getLookAtDistance: Viewpoint .prototype .getLookAtDistance,
+   getProjectionMatrixWithLimits: Viewpoint .prototype .getProjectionMatrixWithLimits,
+   viewAll: Viewpoint .prototype .viewAll,
    getLogarithmicDepthBuffer: function ()
    {
       return this .logarithmicDepthBuffer;
@@ -229,7 +236,6 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
          return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
       };
    })(),
-   getFieldOfView: Viewpoint .prototype .getFieldOfView,
    getMaxFarValue: function ()
    {
       return 1e10;
@@ -258,11 +264,6 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
    {
       return (Math .max (this .elevation, 0.0) + 10) / 10 * this ._speedFactor .getValue ();
    },
-   getScreenScale: Viewpoint .prototype .getScreenScale,
-   getViewportSize: Viewpoint .prototype .getViewportSize,
-   getLookAtDistance: Viewpoint .prototype .getLookAtDistance,
-   getProjectionMatrixWithLimits: Viewpoint .prototype .getProjectionMatrixWithLimits,
-   viewAll: Viewpoint .prototype .viewAll,
    dispose: function ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);

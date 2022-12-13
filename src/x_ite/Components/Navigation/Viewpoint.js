@@ -112,11 +112,20 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
       this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
       this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
    },
-   setInterpolators: function (fromViewpointNode, toViewpointNode)
+   getRelativeTransformation: function (fromViewpointNode)
    {
-      if (fromViewpointNode .getType () .includes (X3DConstants .Viewpoint) || fromViewpointNode .getType () .includes (X3DConstants .GeoViewpoint))
+      const relative = X3DViewpointNode .prototype .getRelativeTransformation .call (this, fromViewpointNode);
+
+      if (fromViewpointNode .constructor === this .constructor)
+         relative .fieldOfView = fromViewpointNode .getFieldOfView ();
+
+      return relative;
+   },
+   setInterpolators: function (fromViewpointNode, toViewpointNode, relative)
+   {
+      if (fromViewpointNode .constructor === toViewpointNode .constructor)
       {
-         const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
+         const scale = relative .fieldOfView / toViewpointNode .getFieldOfView ();
 
          this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
 
