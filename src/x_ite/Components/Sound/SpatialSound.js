@@ -56,6 +56,8 @@ function SpatialSound (executionContext)
    X3DSoundNode .call (this, executionContext);
 
    this .addType (X3DConstants .SpatialSound);
+
+   this ._location .setUnit ("length");
 }
 
 SpatialSound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),

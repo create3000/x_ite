@@ -58,6 +58,8 @@ function ListenerPointSource (executionContext)
    this .addType (X3DConstants .ListenerPointSource);
 
    this .addChildObjects ("speed", new Fields .SFFloat (1));
+
+   this ._position .setUnit ("length");
 }
 
 ListenerPointSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
@@ -68,11 +70,11 @@ ListenerPointSource .prototype = Object .assign (Object .create (X3DSoundSourceN
       new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
 
+      new X3DFieldDefinition (X3DConstants .inputOutput, "position",             new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",          new Fields .SFRotation ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                 new Fields .SFFloat (1)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "dopplerEnabled",       new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "interauralDistance",   new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",          new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "position",             new Fields .SFVec3f ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "trackCurrentView",     new Fields .SFBool ()),
 
       new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",            new Fields .SFTime ()),
