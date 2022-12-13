@@ -154,29 +154,40 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
       this ._fieldOfViewOffset [2] = 0;
       this ._fieldOfViewOffset [3] = 0;
    },
-   setInterpolators: function (fromViewpointNode, toViewpointNode)
+   getRelativeTransformation: function (fromViewpointNode)
+   {
+      const relative = X3DViewpointNode .prototype .getRelativeTransformation .call (this, fromViewpointNode);
+
+      relative .userMinimumX     = fromViewpointNode .getUserMinimumX ();
+      relative .userMinimumY     = fromViewpointNode .getUserMinimumY ();
+      relative .userMaximumX     = fromViewpointNode .getUserMaximumX ();
+      relative .userMaximumY     = fromViewpointNode .getUserMaximumY ();
+      relative .fieldOfViewScale = fromViewpointNode ._fieldOfViewScale .getValue ();
+
+      return relative;
+   },
+   setInterpolators: function (fromViewpointNode, toViewpointNode, relative)
    {
       if (fromViewpointNode .getType () .includes (X3DConstants .OrthoViewpoint))
       {
          const
-            offset0 = fromViewpointNode .getMinimumX () - toViewpointNode .getMinimumX (),
-            offset1 = fromViewpointNode .getMinimumY () - toViewpointNode .getMinimumY (),
-            offset2 = fromViewpointNode .getMaximumX () - toViewpointNode .getMaximumX (),
-            offset3 = fromViewpointNode .getMaximumY () - toViewpointNode .getMaximumY ();
+            offset0 = relative .userMinimumX - toViewpointNode .getMinimumX (),
+            offset1 = relative .userMinimumY - toViewpointNode .getMinimumY (),
+            offset2 = relative .userMaximumX - toViewpointNode .getMaximumX (),
+            offset3 = relative .userMaximumY - toViewpointNode .getMaximumY ();
 
          this .fieldOfViewOffsetInterpolator0 ._keyValue = new Fields .MFFloat (offset0, toViewpointNode ._fieldOfViewOffset [0]);
          this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (offset1, toViewpointNode ._fieldOfViewOffset [1]);
          this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (offset2, toViewpointNode ._fieldOfViewOffset [2]);
          this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (offset3, toViewpointNode ._fieldOfViewOffset [3]);
 
-         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (fromViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (1, 1);
 
-         this ._fieldOfViewOffset [0] = offset0;
-         this ._fieldOfViewOffset [1] = offset1;
-         this ._fieldOfViewOffset [2] = offset2;
-         this ._fieldOfViewOffset [3] = offset3;
-
-         this ._fieldOfViewScale = fromViewpointNode ._fieldOfViewScale .getValue ();
+         this ._fieldOfViewOffset [0] = relative .offset0;
+         this ._fieldOfViewOffset [1] = relative .offset1;
+         this ._fieldOfViewOffset [2] = relative .offset2;
+         this ._fieldOfViewOffset [3] = relative .offset3;
+         this ._fieldOfViewScale      = 1;
       }
       else
       {
@@ -185,10 +196,10 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
          this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewOffset [2], toViewpointNode ._fieldOfViewOffset [2]);
          this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewOffset [3], toViewpointNode ._fieldOfViewOffset [3]);
 
-         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (1, 1);
 
          this ._fieldOfViewOffset = toViewpointNode ._fieldOfViewOffset .getValue ();
-         this ._fieldOfViewScale  = toViewpointNode ._fieldOfViewScale  .getValue ();
+         this ._fieldOfViewScale  = 1;
       }
    },
    getLogarithmicDepthBuffer: function ()
@@ -328,7 +339,11 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
          scaleY = size .y / this .getSizeY (),
          scale  = Math .max (scaleX, scaleY) * 1.1;
 
-      this ._scaleOffset = new Vector3 (scale, scale, scale);
+      this ._fieldOfViewOffset [0] = this .getMinimumX () * scale - this .getMinimumX ();
+      this ._fieldOfViewOffset [1] = this .getMinimumY () * scale - this .getMinimumY ();
+      this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
+      this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
+      this ._fieldOfViewScale      = 1;
    },
 });
 
