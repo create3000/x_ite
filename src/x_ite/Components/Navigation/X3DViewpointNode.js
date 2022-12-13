@@ -277,6 +277,8 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          {
             for (const field of toViewpointNode .getFields ())
                this .getField (field .getName ()) .assign (field);
+
+            this .initialize ();
          }
 
          if (this ._viewAll .getValue ())
