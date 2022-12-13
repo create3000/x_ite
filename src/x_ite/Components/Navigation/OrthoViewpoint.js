@@ -54,7 +54,6 @@ import ScalarInterpolator   from "../Interpolation/ScalarInterpolator.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Camera               from "../../../standard/Math/Geometry/Camera.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 function OrthoViewpoint (executionContext)
@@ -74,7 +73,6 @@ function OrthoViewpoint (executionContext)
    this .fieldOfViewOffsetInterpolator1 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
    this .fieldOfViewOffsetInterpolator2 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
    this .fieldOfViewOffsetInterpolator3 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
-   this .fieldOfViewScaleInterpolator   = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
 }
 
 OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
@@ -117,26 +115,21 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
       this .fieldOfViewOffsetInterpolator1 ._key = new Fields .MFFloat (0, 1);
       this .fieldOfViewOffsetInterpolator2 ._key = new Fields .MFFloat (0, 1);
       this .fieldOfViewOffsetInterpolator3 ._key = new Fields .MFFloat (0, 1);
-      this .fieldOfViewScaleInterpolator   ._key = new Fields .MFFloat (0, 1);
 
       this .fieldOfViewOffsetInterpolator0 .setup ();
       this .fieldOfViewOffsetInterpolator1 .setup ();
       this .fieldOfViewOffsetInterpolator2 .setup ();
       this .fieldOfViewOffsetInterpolator3 .setup ();
-      this .fieldOfViewScaleInterpolator   .setup ();
 
-      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator0 ._set_fraction);
-      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator1 ._set_fraction);
-      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator2 ._set_fraction);
-      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator3 ._set_fraction);
-      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewScaleInterpolator   ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator0 ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator1 ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator2 ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator3 ._set_fraction);
 
       this .fieldOfViewOffsetInterpolator0 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
       this .fieldOfViewOffsetInterpolator1 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
       this .fieldOfViewOffsetInterpolator2 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
       this .fieldOfViewOffsetInterpolator3 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
-
-      this .fieldOfViewScaleInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
    },
    set_fieldOfViewOffset__: function ()
    {
@@ -331,8 +324,6 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
    },
    viewAll: function (bbox)
    {
-      Viewpoint .prototype .viewAll .call (this, bbox);
-
       const
          size   = bbox .size,
          scaleX = size .x / this .getSizeX (),
@@ -344,6 +335,8 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
       this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
       this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
       this ._fieldOfViewScale      = 1;
+
+      Viewpoint .prototype .viewAll .call (this, bbox);
    },
 });
 

@@ -51,7 +51,6 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DViewpointNode     from "../Navigation/X3DViewpointNode.js";
 import X3DGeospatialObject  from "./X3DGeospatialObject.js";
 import Viewpoint            from "../Navigation/Viewpoint.js";
-import ScalarInterpolator   from "../Interpolation/ScalarInterpolator.js";
 import NavigationInfo       from "../Navigation/NavigationInfo.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
@@ -68,10 +67,9 @@ function GeoViewpoint (executionContext)
    this ._centerOfRotation .setUnit ("length");
    this ._fieldOfView      .setUnit ("angle");
 
-   this .geoNavigationInfoNode   = new NavigationInfo (executionContext);
-   this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
-   this .projectionMatrix        = new Matrix4 ();
-   this .elevation               = 0;
+   this .geoNavigationInfoNode = new NavigationInfo (executionContext);
+   this .projectionMatrix      = new Matrix4 ();
+   this .elevation             = 0;
 
    switch (executionContext .specificationVersion)
    {
@@ -143,14 +141,6 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
       this .geoNavigationInfoNode .setup ();
 
       this .set_position__ ();
-
-      // Setup interpolators
-
-      this .fieldOfViewInterpolator ._key = [ 0, 1 ];
-      this .fieldOfViewInterpolator .setup ();
-
-      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
-      this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
    },
    getRelativeTransformation: Viewpoint .prototype .getRelativeTransformation,
    setInterpolators: Viewpoint .prototype .setInterpolators,

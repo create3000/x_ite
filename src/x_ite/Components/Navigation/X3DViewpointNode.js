@@ -51,6 +51,7 @@ import TimeSensor              from "../Time/TimeSensor.js";
 import EaseInEaseOut           from "../Interpolation/EaseInEaseOut.js";
 import PositionInterpolator    from "../Interpolation/PositionInterpolator.js";
 import OrientationInterpolator from "../Interpolation/OrientationInterpolator.js";
+import ScalarInterpolator      from "../Interpolation/ScalarInterpolator.js";
 import X3DCast                 from "../../Base/X3DCast.js";
 import TraverseType            from "../../Rendering/TraverseType.js";
 import X3DConstants            from "../../Base/X3DConstants.js";
@@ -88,6 +89,7 @@ function X3DViewpointNode (executionContext)
    this .orientationInterpolator      = new OrientationInterpolator (browser .getPrivateScene ());
    this .scaleInterpolator            = new PositionInterpolator    (browser .getPrivateScene ());
    this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
+   this .fieldOfViewScaleInterpolator = new ScalarInterpolator      (browser .getPrivateScene ());
 }
 
 X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
@@ -108,11 +110,13 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this .orientationInterpolator      ._key = new Fields .MFFloat (0, 1);
       this .scaleInterpolator            ._key = new Fields .MFFloat (0, 1);
       this .scaleOrientationInterpolator ._key = new Fields .MFFloat (0, 1);
+      this .fieldOfViewScaleInterpolator ._key = new Fields .MFFloat (0, 1);
 
       this .positionInterpolator         .setup ();
       this .orientationInterpolator      .setup ();
       this .scaleInterpolator            .setup ();
       this .scaleOrientationInterpolator .setup ();
+      this .fieldOfViewScaleInterpolator .setup ();
 
       this .timeSensor ._isActive         .addFieldInterest (this ._transitionActive);
       this .timeSensor ._fraction_changed .addFieldInterest (this .easeInEaseOut ._set_fraction);
@@ -121,11 +125,13 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .orientationInterpolator      ._set_fraction);
       this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleInterpolator            ._set_fraction);
       this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleOrientationInterpolator ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewScaleInterpolator      ._set_fraction);
 
       this .positionInterpolator         ._value_changed .addFieldInterest (this ._positionOffset);
       this .orientationInterpolator      ._value_changed .addFieldInterest (this ._orientationOffset);
       this .scaleInterpolator            ._value_changed .addFieldInterest (this ._scaleOffset);
       this .scaleOrientationInterpolator ._value_changed .addFieldInterest (this ._scaleOrientationOffset);
+      this .fieldOfViewScaleInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
 
       this ._nearDistance   .addInterest ("set_nearDistance__",   this);
       this ._farDistance    .addInterest ("set_farDistance__",    this);
@@ -136,10 +142,6 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this .set_nearDistance__ ();
       this .set_farDistance__ ();
       this .set_navigationInfo__ ();
-   },
-   getEaseInEaseOut: function ()
-   {
-      return this .easeInEaseOut;
    },
    setInterpolators: function () { },
    getPosition: function ()

@@ -49,11 +49,9 @@ import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DViewpointNode     from "./X3DViewpointNode.js";
-import ScalarInterpolator   from "../Interpolation/ScalarInterpolator.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Camera               from "../../../standard/Math/Geometry/Camera.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
-import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 function Viewpoint (executionContext)
@@ -66,8 +64,7 @@ function Viewpoint (executionContext)
    this ._centerOfRotation .setUnit ("length");
    this ._fieldOfView      .setUnit ("angle");
 
-   this .projectionMatrix        = new Matrix4 ();
-   this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
+   this .projectionMatrix = new Matrix4 ();
 }
 
 Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
@@ -102,16 +99,6 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
    {
       return "children";
    },
-   initialize: function ()
-   {
-      X3DViewpointNode .prototype .initialize .call (this);
-
-      this .fieldOfViewInterpolator ._key = new Fields .MFFloat (0, 1);
-      this .fieldOfViewInterpolator .setup ();
-
-      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
-      this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
-   },
    getRelativeTransformation: function (fromViewpointNode)
    {
       const relative = X3DViewpointNode .prototype .getRelativeTransformation .call (this, fromViewpointNode);
@@ -127,13 +114,13 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
       {
          const scale = relative .fieldOfView / toViewpointNode .getFieldOfView ();
 
-         this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
 
          this ._fieldOfViewScale = scale;
       }
       else
       {
-         this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
 
          this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
       }
@@ -205,6 +192,7 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
       this ._positionOffset         = userPosition .subtract (this .getPosition ());
       this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
       this ._centerOfRotationOffset = center .subtract (this .getCenterOfRotation ());
+      this ._fieldOfViewScale       = 1;
    },
 });
 
