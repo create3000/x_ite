@@ -113,10 +113,6 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
    {
       X3DViewpointNode .prototype .initialize .call (this);
 
-      this ._fieldOfView       .addInterest ("set_fieldOfView__", this);
-      this ._fieldOfViewOffset .addInterest ("set_fieldOfView__", this);
-      this ._fieldOfViewScale  .addInterest ("set_fieldOfView__", this);
-
       this .fieldOfViewOffsetInterpolator0 ._key = new Fields .MFFloat (0, 1);
       this .fieldOfViewOffsetInterpolator1 ._key = new Fields .MFFloat (0, 1);
       this .fieldOfViewOffsetInterpolator2 ._key = new Fields .MFFloat (0, 1);
@@ -141,22 +137,6 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
       this .fieldOfViewOffsetInterpolator3 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
 
       this .fieldOfViewScaleInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
-
-      this .set_fieldOfView__ ();
-   },
-   set_fieldOfView__: function ()
-   {
-      const
-         length           = this ._fieldOfView .length,
-         fieldOfViewScale = this ._fieldOfViewScale .getValue ();
-
-      this .minimumX = ((length > 0 ? this ._fieldOfView [0] : -1) + this ._fieldOfViewOffset [0]) * fieldOfViewScale;
-      this .minimumY = ((length > 1 ? this ._fieldOfView [1] : -1) + this ._fieldOfViewOffset [1]) * fieldOfViewScale;
-      this .maximumX = ((length > 2 ? this ._fieldOfView [2] :  1) + this ._fieldOfViewOffset [2]) * fieldOfViewScale;
-      this .maximumY = ((length > 3 ? this ._fieldOfView [3] :  1) + this ._fieldOfViewOffset [3]) * fieldOfViewScale;
-
-      this .sizeX = this .maximumX - this .minimumX;
-      this .sizeY = this .maximumY - this .minimumY;
    },
    set_fieldOfViewOffset__: function ()
    {
@@ -179,14 +159,10 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
       if (fromViewpointNode .getType () .includes (X3DConstants .OrthoViewpoint))
       {
          const
-            toLength   = toViewpointNode   ._fieldOfView .length,
-            fromLength = fromViewpointNode ._fieldOfView .length;
-
-         const
-            offset0 = (fromLength > 0 ? fromViewpointNode ._fieldOfView [0] : -1) - (toLength > 0 ? toViewpointNode ._fieldOfView [0] : -1),
-            offset1 = (fromLength > 1 ? fromViewpointNode ._fieldOfView [1] : -1) - (toLength > 1 ? toViewpointNode ._fieldOfView [1] : -1),
-            offset2 = (fromLength > 2 ? fromViewpointNode ._fieldOfView [2] :  1) - (toLength > 2 ? toViewpointNode ._fieldOfView [2] :  1),
-            offset3 = (fromLength > 3 ? fromViewpointNode ._fieldOfView [3] :  1) - (toLength > 3 ? toViewpointNode ._fieldOfView [3] :  1);
+            offset0 = fromViewpointNode .getMinimumX () - toViewpointNode .getMinimumX (),
+            offset1 = fromViewpointNode .getMinimumY () - toViewpointNode .getMinimumY (),
+            offset2 = fromViewpointNode .getMaximumX () - toViewpointNode .getMaximumX (),
+            offset3 = fromViewpointNode .getMaximumY () - toViewpointNode .getMaximumY ();
 
          this .fieldOfViewOffsetInterpolator0 ._keyValue = new Fields .MFFloat (offset0, toViewpointNode ._fieldOfViewOffset [0]);
          this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (offset1, toViewpointNode ._fieldOfViewOffset [1]);
@@ -221,27 +197,51 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
    },
    getMinimumX: function ()
    {
-      return this .minimumX;
+      return this ._fieldOfView .length > 0 ? this ._fieldOfView [0] : -1;
+   },
+   getUserMinimumX: function ()
+   {
+      return (this .getMinimumX () + this ._fieldOfViewOffset [0]) * this ._fieldOfViewScale .getValue ();
    },
    getMinimumY: function ()
    {
-      return this .minimumY;
+      return this ._fieldOfView .length > 1 ? this ._fieldOfView [1] : -1;
+   },
+   getUserMinimumY: function ()
+   {
+      return (this .getMinimumY () + this ._fieldOfViewOffset [1]) * this ._fieldOfViewScale .getValue ();
    },
    getMaximumX: function ()
    {
-      return this .maximumX;
+      return this ._fieldOfView .length > 2 ? this ._fieldOfView [2] : 1;
+   },
+   getUserMaximumX: function ()
+   {
+      return (this .getMaximumX () + this ._fieldOfViewOffset [2]) * this ._fieldOfViewScale .getValue ();
    },
    getMaximumY: function ()
    {
-      return this .maximumY;
+      return this ._fieldOfView .length > 3 ? this ._fieldOfView [3] : 1;
+   },
+   getUserMaximumY: function ()
+   {
+      return (this .getMaximumY () + this ._fieldOfViewOffset [3]) * this ._fieldOfViewScale .getValue ();
    },
    getSizeX: function ()
    {
-      return this .sizeX;
+      return this .getMaximumX () - this .getMinimumX ();
+   },
+   getUserSizeX: function ()
+   {
+      return this .getUserMaximumX () - this .getUserMinimumX ();
    },
    getSizeY: function ()
    {
-      return this .sizeY;
+      return this .getMaximumY () - this .getMinimumY ();
+   },
+   getUserSizeY: function ()
+   {
+      return this .getUserMaximumY () - this .getUserMinimumY ();
    },
    getMaxFarValue: function ()
    {
@@ -252,8 +252,8 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
       const
          width  = viewport [2],
          height = viewport [3],
-         sizeX  = this .sizeX,
-         sizeY  = this .sizeY,
+         sizeX  = this .getUserSizeX (),
+         sizeY  = this .getUserSizeY (),
          aspect = width / height;
 
       if (aspect > sizeX / sizeY)
@@ -278,8 +278,8 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
          const
             width  = viewport [2],
             height = viewport [3],
-            sizeX  = this .sizeX,
-            sizeY  = this .sizeY,
+            sizeX  = this .getUserSizeX (),
+            sizeY  = this .getUserSizeY (),
             aspect = width / height;
 
          if (aspect > sizeX / sizeY)
@@ -298,24 +298,24 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
          width  = viewport [2],
          height = viewport [3],
          aspect = width / height,
-         sizeX  = this .sizeX,
-         sizeY  = this .sizeY;
+         sizeX  = this .getUserSizeX (),
+         sizeY  = this .getUserSizeY ();
 
       if (aspect > sizeX / sizeY)
       {
          const
-            center  = (this .minimumX + this .maximumX) / 2,
+            center  = (this .getUserMinimumX () + this .getUserMaximumX ()) / 2,
             size1_2 = (sizeY * aspect) / 2;
 
-         return Camera .ortho (center - size1_2, center + size1_2, this .minimumY, this .maximumY, nearValue, farValue, this .projectionMatrix);
+         return Camera .ortho (center - size1_2, center + size1_2, this .getUserMinimumY (), this .getUserMaximumY (), nearValue, farValue, this .projectionMatrix);
       }
       else
       {
          const
-            center  = (this .minimumY + this .maximumY) / 2,
+            center  = (this .getUserMinimumY () + this .getUserMaximumY ()) / 2,
             size1_2 = (sizeX / aspect) / 2;
 
-         return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
+         return Camera .ortho (this .getUserMinimumX (), this .getUserMaximumX (), center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
       }
    },
    viewAll: function (bbox)

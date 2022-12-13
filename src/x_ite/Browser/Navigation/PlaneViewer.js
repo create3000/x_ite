@@ -207,9 +207,6 @@ PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          this .constrainFieldOfViewScale ();
       }
 
-      if (viewpoint .set_fieldOfView___)
-         viewpoint .set_fieldOfView___ (); // XXX: Immediately apply fieldOfViewScale;
-
       const
          toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
          translation = viewpoint .getUserOrientation () .multVecRot (vector .assign (fromPoint) .subtract (toPoint));
