@@ -345,7 +345,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          differenceMatrix .get (position, orientation, scale, scaleOrientation);
 
          position .subtract (this .getPosition ());
-         orientation .assign (this .getOrientation () .copy () .inverse () .multRight (orientation));
+         orientation .multLeft (this .getOrientation () .copy () .inverse ());
 
          return {
             position: position,
