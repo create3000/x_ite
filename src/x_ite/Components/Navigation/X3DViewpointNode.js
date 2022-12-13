@@ -229,7 +229,10 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
                this .getField (field .getName ()) .assign (field);
          }
 
-         // Respect NavigationInfo.
+         if (this ._viewAll .getValue ())
+            toViewpointNode .viewAll (layerNode .getBBox (new Box3 ()));
+
+         // Handle NavigationInfo.
 
          const
             navigationInfoNode = layerNode .getNavigationInfo (),
@@ -284,9 +287,6 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
          this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
-
-         if (this ._viewAll .getValue ())
-            toViewpointNode .viewAll (layerNode .getBBox (new Box3 ()));
 
          this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relative .position,         toViewpointNode ._positionOffset);
          this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relative .orientation,      toViewpointNode ._orientationOffset);
