@@ -182,7 +182,7 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
          this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (offset1, toViewpointNode ._fieldOfViewOffset [1]);
          this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (offset2, toViewpointNode ._fieldOfViewOffset [2]);
          this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (offset3, toViewpointNode ._fieldOfViewOffset [3]);
-         this .fieldOfViewScaleInterpolator   ._keyValue = new Fields .MFFloat (1, 1);
+         this .fieldOfViewScaleInterpolator   ._keyValue = new Fields .MFFloat (1, toViewpointNode ._fieldOfViewScale .getValue ());
 
          this ._fieldOfViewOffset [0] = relative .offset0;
          this ._fieldOfViewOffset [1] = relative .offset1;
@@ -196,7 +196,7 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
          this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewOffset [1], toViewpointNode ._fieldOfViewOffset [1]);
          this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewOffset [2], toViewpointNode ._fieldOfViewOffset [2]);
          this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewOffset [3], toViewpointNode ._fieldOfViewOffset [3]);
-         this .fieldOfViewScaleInterpolator   ._keyValue = new Fields .MFFloat (1, 1);
+         this .fieldOfViewScaleInterpolator   ._keyValue = new Fields .MFFloat (1, toViewpointNode ._fieldOfViewOffset .getValue ());
 
          this ._fieldOfViewOffset = toViewpointNode ._fieldOfViewOffset .getValue ();
          this ._fieldOfViewScale  = 1;
