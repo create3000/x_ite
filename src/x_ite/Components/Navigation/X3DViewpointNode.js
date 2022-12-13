@@ -129,6 +129,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       this ._nearDistance   .addInterest ("set_nearDistance__",   this);
       this ._farDistance    .addInterest ("set_farDistance__",    this);
+      this ._viewAll        .addInterest ("set_viewAll__",        this);
       this ._navigationInfo .addInterest ("set_navigationInfo__", this);
       this ._isBound        .addInterest ("set_bound__",          this);
 
@@ -489,6 +490,16 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       const farDistance = this ._farDistance .getValue ();
 
       this .farDistance = farDistance >= 0 ? farDistance : undefined;
+   },
+   set_viewAll__: function ()
+   {
+      if (! this ._viewAll .getValue ())
+         return;
+
+      if (! this ._isBound .getValue ())
+         return;
+
+      this ._set_bind = true;
    },
    set_navigationInfo__: function ()
    {
