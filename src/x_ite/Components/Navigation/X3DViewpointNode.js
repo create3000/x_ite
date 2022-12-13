@@ -143,6 +143,54 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this .set_farDistance__ ();
       this .set_navigationInfo__ ();
    },
+   set_nearDistance__: function ()
+   {
+      const nearDistance = this ._nearDistance .getValue ();
+
+      this .nearDistance = nearDistance >= 0 ? nearDistance : undefined;
+   },
+   set_farDistance__: function ()
+   {
+      const farDistance = this ._farDistance .getValue ();
+
+      this .farDistance = farDistance >= 0 ? farDistance : undefined;
+   },
+   set_viewAll__: function ()
+   {
+      if (! this ._viewAll .getValue ())
+         return;
+
+      if (! this ._isBound .getValue ())
+         return;
+
+      this ._set_bind = true;
+   },
+   set_navigationInfo__: function ()
+   {
+      if (this .navigationInfoNode)
+         this ._isBound .removeFieldInterest (this .navigationInfoNode ._set_bind);
+
+      this .navigationInfoNode = X3DCast (X3DConstants .NavigationInfo, this ._navigationInfo);
+
+      if (this .navigationInfoNode)
+         this ._isBound .addFieldInterest (this .navigationInfoNode ._set_bind);
+   },
+   set_bound__: function ()
+   {
+      const browser = this .getBrowser ();
+
+      if (this ._isBound .getValue ())
+         browser .getNotification () ._string = this ._description;
+      else
+         this .timeSensor ._stopTime = browser .getCurrentTime ();
+   },
+   set_active__: function (navigationInfoNode, active)
+   {
+      if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
+      {
+         navigationInfoNode ._transitionComplete = true;
+      }
+   },
    setInterpolators: function () { },
    getPosition: function ()
    {
@@ -494,54 +542,6 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
       this ._centerOfRotationOffset = center .subtract (this .getCenterOfRotation ());
       this ._fieldOfViewScale       = 1;
-   },
-   set_nearDistance__: function ()
-   {
-      const nearDistance = this ._nearDistance .getValue ();
-
-      this .nearDistance = nearDistance >= 0 ? nearDistance : undefined;
-   },
-   set_farDistance__: function ()
-   {
-      const farDistance = this ._farDistance .getValue ();
-
-      this .farDistance = farDistance >= 0 ? farDistance : undefined;
-   },
-   set_viewAll__: function ()
-   {
-      if (! this ._viewAll .getValue ())
-         return;
-
-      if (! this ._isBound .getValue ())
-         return;
-
-      this ._set_bind = true;
-   },
-   set_navigationInfo__: function ()
-   {
-      if (this .navigationInfoNode)
-         this ._isBound .removeFieldInterest (this .navigationInfoNode ._set_bind);
-
-      this .navigationInfoNode = X3DCast (X3DConstants .NavigationInfo, this ._navigationInfo);
-
-      if (this .navigationInfoNode)
-         this ._isBound .addFieldInterest (this .navigationInfoNode ._set_bind);
-   },
-   set_bound__: function ()
-   {
-      const browser = this .getBrowser ();
-
-      if (this ._isBound .getValue ())
-         browser .getNotification () ._string = this ._description;
-      else
-         this .timeSensor ._stopTime = browser .getCurrentTime ();
-   },
-   set_active__: function (navigationInfoNode, active)
-   {
-      if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
-      {
-         navigationInfoNode ._transitionComplete = true;
-      }
    },
    traverse: function (type, renderObject)
    {
