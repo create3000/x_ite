@@ -242,7 +242,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
          // VRML behavior
 
-         if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
+         if (this .getExecutionContext () .getSpecificationVersion () === "2.0")
          {
             if (toViewpointNode .getVRMLTransition ())
                transitionType = "LINEAR";
