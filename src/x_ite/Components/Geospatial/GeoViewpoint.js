@@ -149,7 +149,6 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
    getViewportSize: Viewpoint .prototype .getViewportSize,
    getLookAtDistance: Viewpoint .prototype .getLookAtDistance,
    getProjectionMatrixWithLimits: Viewpoint .prototype .getProjectionMatrixWithLimits,
-   viewAll: Viewpoint .prototype .viewAll,
    getLogarithmicDepthBuffer: function ()
    {
       return this .logarithmicDepthBuffer;

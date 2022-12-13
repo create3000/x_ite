@@ -49,7 +49,6 @@ import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DViewpointNode     from "./X3DViewpointNode.js";
-import Viewpoint            from "./Viewpoint.js";
 import ScalarInterpolator   from "../Interpolation/ScalarInterpolator.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Camera               from "../../../standard/Math/Geometry/Camera.js";
@@ -334,9 +333,8 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
       this ._fieldOfViewOffset [1] = this .getMinimumY () * scale - this .getMinimumY ();
       this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
       this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
-      this ._fieldOfViewScale      = 1;
 
-      Viewpoint .prototype .viewAll .call (this, bbox);
+      X3DViewpointNode .prototype .viewAll .call (this, bbox);
    },
 });
 

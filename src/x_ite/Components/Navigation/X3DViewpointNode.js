@@ -481,6 +481,20 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          return orientation .multRight (rotation);
       };
    })(),
+   viewAll: function (bbox)
+   {
+      const
+         center          = bbox .center,
+         direction       = this .getUserPosition () .copy () .subtract (center),
+         distance        = this .getLookAtDistance (bbox),
+         userPosition    = center .copy () .add (direction .normalize () .multiply (distance)),
+         userOrientation = this .getLookAtRotation (userPosition, center);
+
+      this ._positionOffset         = userPosition .subtract (this .getPosition ());
+      this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
+      this ._centerOfRotationOffset = center .subtract (this .getCenterOfRotation ());
+      this ._fieldOfViewScale       = 1;
+   },
    set_nearDistance__: function ()
    {
       const nearDistance = this ._nearDistance .getValue ();
