@@ -5,6 +5,26 @@ nav: main
 categories: []
 tags: [new]
 ---
+
+## X_ITE v8.3.0 Released
+
+*Leipzig, 14st December 2022:* We right now released a new version.
+
+### New Features
+
+- Use Phong shading as default for version 4.0.
+- Implemented X3DViewpointNode viewAll, nearDistance, farDistance and navigationInfo.
+- Implemented Inline global field.
+- Implemented point and line normals.
+- Added getNodeTypeName to SFNode (https://create3000.github.io/x_ite/reference/field-services-and-objects#sfnode-object).
+- Added vector constructors to SFMatrix* (https://create3000.github.io/x_ite/reference/field-services-and-objects#sfmatrix3dsfmatrix3f-object).
+- Added SFRotation matrix handling functions (https://create3000.github.io/x_ite/reference/field-services-and-objects#sfrotation-object).
+- Text component is now loaded on demand.
+
+### Bug Fixes
+
+- Fixed bug with GeoViewpoint flickering when just bound.
+
 ## X_ITE v8.1.0 Released
 
 *Leipzig, 1st December 2022:* We now have a new website design.
@@ -838,10 +858,10 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 *Leipzig, 24th May 2018:* Thank's to Ammo (Bullet) physics engine we have implemented a lot of new nodes of the RigidBodyPhysics component. Most of the documentation pages of this component have a live example for this node. The component is realized as plug-in which can be include right after the X_ITE.js script tag.
 
 ```html
-<link rel="stylesheet" href="https://code.create3000.de/x_ite/4.1.6/dist/x_ite.css"/>
-<script src="https://code.create3000.de/x_ite/4.1.6/dist/x_ite.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/create3000/x_ite@4.1.6/dist/x_ite.css"/>
+<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@4.1.6/dist/x_ite.min.js"></script>
 <!-- Include the following plug-ins if you wish support for this component -->
-<script src="https://code.create3000.de/x_ite/4.1.6/dist/rigid-body-physics.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@4.1.6/dist/rigid-body-physics.min.js"></script>
 ```
 
 ### New Features
@@ -913,8 +933,8 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 X_ITE is now available from our own server at code.create3000.de. Just include the following URL's into your HTML and you are up to date again:
 
 ```html
-<link rel="stylesheet" href="https://code.create3000.de/x_ite/4.0.7/dist/x_ite.css"/>
-<script src="https://code.create3000.de/x_ite/4.0.7/dist/x_ite.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/create3000/x_ite@4.0.7/dist/x_ite.css"/>
+<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@4.0.7/dist/x_ite.min.js"></script>
 ```
 
 Additionally X_ITE is now available via GitHub CDN and jsDelivr CDN.
@@ -947,12 +967,6 @@ There are new URL's for cobweb.min.js and cobweb.css. Use the following location
 <link rel="stylesheet" href="https://cdn.rawgit.com/create3000/cobweb/3.3/dist/cobweb.css"/>
 <script src="https://cdn.rawgit.com/create3000/cobweb/3.3/dist/cobweb.min.js"></script>
 ```
-
-### Important
-
-If you still use an old stable version from Cobweb you must changed the URL for the stable folder to:
-
-<https://cdn.rawgit.com/create3000/cobweb/releases/>
 
 ### New Features Bug Fixes
 
