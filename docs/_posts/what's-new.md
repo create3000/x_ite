@@ -3,9 +3,8 @@ title: What's New
 date: 2022-11-28
 nav: main
 categories: []
-tags: [new]
+tags: [new, releases]
 ---
-
 ## X_ITE v8.3.0 Released
 
 *Leipzig, 14st December 2022:* We right now released a new version.
@@ -13,12 +12,12 @@ tags: [new]
 ### New Features
 
 - Use Phong shading as default for version 4.0.
-- Implemented X3DViewpointNode viewAll, nearDistance, farDistance and navigationInfo.
-- Implemented Inline global field.
-- Implemented point and line normals.
-- Added getNodeTypeName to SFNode (https://create3000.github.io/x_ite/reference/field-services-and-objects#sfnode-object).
-- Added vector constructors to SFMatrix* (https://create3000.github.io/x_ite/reference/field-services-and-objects#sfmatrix3dsfmatrix3f-object).
-- Added SFRotation matrix handling functions (https://create3000.github.io/x_ite/reference/field-services-and-objects#sfrotation-object).
+- Implemented X3DViewpointNode *viewAll, nearDistance, farDistance and navigationInfo*.
+- Implemented Inline *global* field.
+- Implemented point and line geometry *normal* field.
+- Added getNodeTypeName to [SFNode](https://create3000.github.io/x_ite/reference/field-services-and-objects#sfnode-object).
+- Added vector constructors to [SFMatrix*](https://create3000.github.io/x_ite/reference/field-services-and-objects#sfmatrix3dsfmatrix3f-object).
+- Added [SFRotation](https://create3000.github.io/x_ite/reference/field-services-and-objects#sfrotation-object) matrix handling functions.
 - Text component is now loaded on demand.
 
 ### Bug Fixes
