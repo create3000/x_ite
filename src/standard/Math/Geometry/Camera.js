@@ -47,8 +47,9 @@
 
 import Vector3 from "../Numbers/Vector3.js";
 
-const Camera = {
-   frustum: function (l, r, b, t, n, f, matrix)
+class Camera
+{
+   static frustum (l, r, b, t, n, f, matrix)
    {
       const
          r_l = r - l,
@@ -67,8 +68,9 @@ const Camera = {
                           0, F, 0, 0,
                           A, B, C, -1,
                           0, 0, D, 0);
-   },
-   perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
+   }
+
+   static perspective (fieldOfView, zNear, zFar, width, height, matrix)
    {
       const ratio = Math .tan (fieldOfView / 2) * zNear;
 
@@ -82,14 +84,16 @@ const Camera = {
          const aspect = height * ratio / width;
          return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
       }
-   },
-   perspective2: function (fieldOfView, zNear, zFar, width, height, matrix)
+   }
+
+   static perspective2 (fieldOfView, zNear, zFar, width, height, matrix)
    {
       const ratio = Math .tan (fieldOfView / 2) * zNear;
 
       return this .frustum (-ratio, ratio, -ratio, ratio, zNear, zFar, matrix);
-   },
-   ortho: function (l, r, b, t, n, f, matrix)
+   }
+
+   static ortho (l, r, b, t, n, f, matrix)
    {
       const
          r_l = r - l,
@@ -107,8 +111,9 @@ const Camera = {
                           0, B, 0, 0,
                           0, 0, C, 0,
                           D, E, F, 1);
-   },
-   orthoBox: (function ()
+   }
+
+   static orthoBox = (function ()
    {
       const
          min = new Vector3 (0, 0, 0),
@@ -120,7 +125,7 @@ const Camera = {
 
          return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
       };
-   })(),
-};
+   })()
+}
 
 export default Camera;
