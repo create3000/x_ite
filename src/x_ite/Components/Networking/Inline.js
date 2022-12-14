@@ -249,7 +249,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
                      renderContext = opaqueShapes [i],
                      localObjects  = renderContext .localObjects;
 
-                  renderContext .shadows         ||= globalShadow;
+                  renderContext .shadows           = renderContext .shadows || globalShadow;
                   renderContext .objectsCount [1] += numGlobalLights;
                   renderContext .objectsCount [2] += numGlobalTextureProjectors;
 
@@ -263,7 +263,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
                      renderContext = transparentShapes [i],
                      localObjects  = renderContext .localObjects;
 
-                  renderContext .shadows         ||= globalShadow;
+                  renderContext .shadows           = renderContext .shadows || globalShadow;
                   renderContext .objectsCount [1] += numGlobalLights;
                   renderContext .objectsCount [2] += numGlobalTextureProjectors;
 

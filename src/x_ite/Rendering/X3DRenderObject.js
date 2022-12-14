@@ -920,7 +920,7 @@ X3DRenderObject .prototype =
                       scissor .z,
                       scissor .w);
 
-         renderContext .shadows         ||= shadows;
+         renderContext .shadows           = renderContext .shadows || shadows;
          renderContext .objectsCount [1] += numGlobalLights;
          renderContext .objectsCount [2] += numGlobalTextureProjectors;
 
@@ -948,7 +948,7 @@ X3DRenderObject .prototype =
                       scissor .z,
                       scissor .w);
 
-         renderContext .shadows         ||= shadows;
+         renderContext .shadows           = renderContext .shadows || shadows;
          renderContext .objectsCount [1] += numGlobalLights;
          renderContext .objectsCount [2] += numGlobalTextureProjectors;
 

@@ -465,7 +465,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
                   field .getReferences () .forEach (function (fieldReference)
                   {
-                     initializableReference ||= fieldReference .isInitializable ();
+                     initializableReference = initializableReference || fieldReference .isInitializable ();
                   });
 
                   if (!initializableReference)

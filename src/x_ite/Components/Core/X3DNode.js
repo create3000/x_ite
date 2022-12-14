@@ -347,7 +347,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
          field .getReferences () .forEach (function (reference)
          {
-            initializableReference ||= reference .isInitializable ();
+            initializableReference = initializableReference || reference .isInitializable ();
 
             // Output build in reference field
 
@@ -407,7 +407,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
          field .getReferences () .forEach (function (reference)
          {
-            initializableReference ||= reference .isInitializable ();
+            initializableReference = initializableReference || reference .isInitializable ();
 
             // Output user defined reference field
 
@@ -547,7 +547,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
                field .getReferences () .forEach (function (fieldReference)
                {
-                  initializableReference ||= fieldReference .isInitializable ();
+                  initializableReference = initializableReference || fieldReference .isInitializable ();
                });
 
                if (!initializableReference)
@@ -640,7 +640,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
                   field .getReferences () .forEach (function (fieldReference)
                   {
-                     initializableReference ||= fieldReference .isInitializable ();
+                     initializableReference = initializableReference || fieldReference .isInitializable ();
                   });
 
                   if (!initializableReference)

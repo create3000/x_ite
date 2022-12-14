@@ -13,94 +13,95 @@
    <script src="src/tests/menu.js"></script>
 
    <script type="module">
-await X3D ();
-
-const
-   Browser      = X3D .getBrowser (),
-   localStorage = Browser .getLocalStorage ();
-
-Browser .getContextMenu () .setUserMenu (createTestMenu);
-
-localStorage .addDefaultValues ({
-   "Bookmarks.history": ["https://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"],
-});
-
-let
-   loadTime = 0,
-   index    = localStorage ["Bookmarks.history"] .length - 1;
-
-function loadURL (url)
+X3D (function ()
 {
-   const history = localStorage ["Bookmarks.history"];
+   const
+      Browser      = X3D .getBrowser (),
+      localStorage = Browser .getLocalStorage ();
 
-   localStorage ["Bookmarks.url"] = url;
+   Browser .getContextMenu () .setUserMenu (createTestMenu);
 
-   if (url !== history .at (-1))
+   localStorage .addDefaultValues ({
+      "Bookmarks.history": ["https://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"],
+   });
+
+   let
+      loadTime = 0,
+      index    = localStorage ["Bookmarks.history"] .length - 1;
+
+   function loadURL (url)
    {
-      history .push (url);
-      history .splice (0, history .length - 100);
-      localStorage ["Bookmarks.history"] = history;
-      index = history .length - 1;
+      const history = localStorage ["Bookmarks.history"];
+
+      localStorage ["Bookmarks.url"] = url;
+
+      if (url !== history .at (-1))
+      {
+         history .push (url);
+         history .splice (0, history .length - 100);
+         localStorage ["Bookmarks.history"] = history;
+         index = history .length - 1;
+      }
+
+      if (location .href .includes (".min.html") && url .startsWith ("src/tests/"))
+         url = "src/" + url;
+
+      $(".file") .removeClass ("loaded");
+
+      loadTime = performance .now ();
+
+      bookmarks .loadURL (url);
+
+      return false;
    }
 
-   if (location .href .includes (".min.html") && url .startsWith ("src/tests/"))
-      url = "src/" + url;
-
-   $(".file") .removeClass ("loaded");
-
-   loadTime = performance .now ();
-
-   bookmarks .loadURL (url);
-
-   return false;
-}
-
-function toVRMLString ()
-{
-   console .log (Browser .toVRMLString ());
-}
-
-function toXMLString ()
-{
-   console .log (Browser .toXMLString ());
-}
-
-function toJSONString ()
-{
-   console .log (Browser .toJSONString ());
-}
-
-const bookmarks = new Bookmarks (Browser, $(".examples-box"));
-
-bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
-loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
-
-$(".version") .text (Browser .name + " v" + Browser .version);
-$(".browser") .on ("initialized", () => $(".console") .empty ());
-$(".browser") .on ("initialized", () => Browser .println ("Scene loaded in " + ((performance .now () - loadTime) / 1000) .toFixed (3) + " s."));
-$(".browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = Browser .getWorldURL ());
-$(".browser") .on ("shutdown", () => Browser .println ("Shutdown at " + new Date () .toUTCString () + "."));
-$(".location-entry") .val (localStorage ["Bookmarks.history"] [index])
-$(".location-go") .on ("click", () => loadURL ($(".location-entry") .val ()));
-$(".print-vrml") .on ("click", toVRMLString);
-$(".print-xml") .on ("click", toXMLString);
-$(".print-json") .on ("click", toJSONString);
-
-$(".location-entry") .keydown (event =>
-{
-   switch (event .key)
+   function toVRMLString ()
    {
-      case "Enter":
-         return loadURL ($(".location-entry") .val ())
-      case "ArrowUp":
-         if (index > 0)
-            $(".location-entry") .val (localStorage ["Bookmarks.history"] [--index])
-         return
-      case "ArrowDown":
-         if (index < localStorage ["Bookmarks.history"] .length - 1)
-            $(".location-entry") .val (localStorage ["Bookmarks.history"] [++index])
-         return
+      console .log (Browser .toVRMLString ());
    }
+
+   function toXMLString ()
+   {
+      console .log (Browser .toXMLString ());
+   }
+
+   function toJSONString ()
+   {
+      console .log (Browser .toJSONString ());
+   }
+
+   const bookmarks = new Bookmarks (Browser, $(".examples-box"));
+
+   bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
+   loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
+
+   $(".version") .text (Browser .name + " v" + Browser .version);
+   $(".browser") .on ("initialized", () => $(".console") .empty ());
+   $(".browser") .on ("initialized", () => Browser .println ("Scene loaded in " + ((performance .now () - loadTime) / 1000) .toFixed (3) + " s."));
+   $(".browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = Browser .getWorldURL ());
+   $(".browser") .on ("shutdown", () => Browser .println ("Shutdown at " + new Date () .toUTCString () + "."));
+   $(".location-entry") .val (localStorage ["Bookmarks.history"] [index])
+   $(".location-go") .on ("click", () => loadURL ($(".location-entry") .val ()));
+   $(".print-vrml") .on ("click", toVRMLString);
+   $(".print-xml") .on ("click", toXMLString);
+   $(".print-json") .on ("click", toJSONString);
+
+   $(".location-entry") .keydown (event =>
+   {
+      switch (event .key)
+      {
+         case "Enter":
+            return loadURL ($(".location-entry") .val ())
+         case "ArrowUp":
+            if (index > 0)
+               $(".location-entry") .val (localStorage ["Bookmarks.history"] [--index])
+            return
+         case "ArrowDown":
+            if (index < localStorage ["Bookmarks.history"] .length - 1)
+               $(".location-entry") .val (localStorage ["Bookmarks.history"] [++index])
+            return
+      }
+   });
 });
       </script>
       <style>
