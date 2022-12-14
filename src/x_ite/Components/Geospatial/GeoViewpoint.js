@@ -67,19 +67,12 @@ function GeoViewpoint (executionContext)
    this ._centerOfRotation .setUnit ("length");
    this ._fieldOfView      .setUnit ("angle");
 
+   if (executionContext .getSpecificationVersion () <= 3.2)
+      this .traverse = traverse;
+
    this .geoNavigationInfoNode = new NavigationInfo (executionContext);
    this .projectionMatrix      = new Matrix4 ();
    this .elevation             = 0;
-
-   switch (executionContext .specificationVersion)
-   {
-      case "2.0":
-      case "3.0":
-      case "3.1":
-      case "3.2":
-         this .traverse = traverse;
-         break;
-   }
 }
 
 GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
