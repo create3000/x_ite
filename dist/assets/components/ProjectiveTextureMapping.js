@@ -721,6 +721,18 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (Projective
 
       this .set_fieldOfView___ ();
    },
+   set_fieldOfView___: function ()
+   {
+      var length = this ._fieldOfView .length;
+
+      this .minimumX = (length > 0 ? this ._fieldOfView [0] : -1);
+      this .minimumY = (length > 1 ? this ._fieldOfView [1] : -1);
+      this .maximumX = (length > 2 ? this ._fieldOfView [2] :  1);
+      this .maximumY = (length > 3 ? this ._fieldOfView [3] :  1);
+
+      this .sizeX = this .maximumX - this .minimumX;
+      this .sizeY = this .maximumY - this .minimumY;
+   },
    getMinimumX: function ()
    {
       return this .minimumX;
@@ -748,18 +760,6 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (Projective
    getTextureProjectors: function ()
    {
       return TextureProjectorParallelCache;
-   },
-   set_fieldOfView___: function ()
-   {
-      var length = this ._fieldOfView .length;
-
-      this .minimumX = (length > 0 ? this ._fieldOfView [0] : -1);
-      this .minimumY = (length > 1 ? this ._fieldOfView [1] : -1);
-      this .maximumX = (length > 2 ? this ._fieldOfView [2] :  1);
-      this .maximumY = (length > 3 ? this ._fieldOfView [3] :  1);
-
-      this .sizeX = this .maximumX - this .minimumX;
-      this .sizeY = this .maximumY - this .minimumY;
    },
 });
 

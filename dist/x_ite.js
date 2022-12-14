@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 903:
+/***/ 835:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(683);
+/* provided dependency */ var jQuery = __webpack_require__(160);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 632:
+/***/ 332:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(683);
+/* provided dependency */ var jQuery = __webpack_require__(160);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 609:
+/***/ 924:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(683)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(160)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 683:
+/***/ 160:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11728,7 +11728,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 257:
+/***/ 555:
 /***/ ((module) => {
 
 /**
@@ -16507,7 +16507,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 34:
+/***/ 266:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -33898,7 +33898,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(683);
+/* provided dependency */ var $ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34801,7 +34801,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(683);
+/* provided dependency */ var Notification_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34923,8 +34923,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(632);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(683);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(332);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41861,7 +41861,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(683);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43871,7 +43871,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(257);
+/* provided dependency */ var libtess = __webpack_require__(555);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51206,7 +51206,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(683);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53117,556 +53117,6 @@ const OrientationInterpolator_default_ = OrientationInterpolator;
 
 x_ite_Namespace.set ("x_ite/Components/Interpolation/OrientationInterpolator", OrientationInterpolator_default_);
 /* harmony default export */ const Interpolation_OrientationInterpolator = (OrientationInterpolator_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Navigation/X3DViewpointNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function X3DViewpointNode (executionContext)
-{
-   Core_X3DBindableNode.call (this, executionContext);
-
-   this .addType (Base_X3DConstants.X3DViewpointNode);
-
-   this .addChildObjects ("positionOffset",         new x_ite_Fields.SFVec3f (),
-                          "orientationOffset",      new x_ite_Fields.SFRotation (),
-                          "scaleOffset",            new x_ite_Fields.SFVec3f (1, 1, 1),
-                          "scaleOrientationOffset", new x_ite_Fields.SFRotation (),
-                          "centerOfRotationOffset", new x_ite_Fields.SFVec3f (),
-                          "fieldOfViewScale",       new x_ite_Fields.SFFloat (1));
-
-   this .userPosition         = new Numbers_Vector3 (0, 1, 0);
-   this .userOrientation      = new Numbers_Rotation4 (0, 0, 1, 0);
-   this .userCenterOfRotation = new Numbers_Vector3 (0, 0, 0);
-   this .modelMatrix          = new Numbers_Matrix4 ();
-   this .cameraSpaceMatrix    = new Numbers_Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
-   this .viewMatrix           = new Numbers_Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
-
-   const browser = this .getBrowser ();
-
-   this .timeSensor                   = new Time_TimeSensor              (browser .getPrivateScene ());
-   this .easeInEaseOut                = new Interpolation_EaseInEaseOut           (browser .getPrivateScene ());
-   this .positionInterpolator         = new Interpolation_PositionInterpolator    (browser .getPrivateScene ());
-   this .orientationInterpolator      = new Interpolation_OrientationInterpolator (browser .getPrivateScene ());
-   this .scaleInterpolator            = new Interpolation_PositionInterpolator    (browser .getPrivateScene ());
-   this .scaleOrientationInterpolator = new Interpolation_OrientationInterpolator (browser .getPrivateScene ());
-}
-
-X3DViewpointNode .prototype = Object .assign (Object .create (Core_X3DBindableNode.prototype),
-{
-   constructor: X3DViewpointNode,
-   initialize: function ()
-   {
-      Core_X3DBindableNode.prototype.initialize.call (this);
-
-      this .timeSensor ._stopTime = 1;
-      this .timeSensor .setup ();
-
-      this .easeInEaseOut ._key           = new x_ite_Fields.MFFloat (0, 1);
-      this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields.MFVec2f (new x_ite_Fields.SFVec2f (0, 0), new x_ite_Fields.SFVec2f (0, 0));
-      this .easeInEaseOut .setup ();
-
-      this .positionInterpolator         ._key = new x_ite_Fields.MFFloat (0, 1);
-      this .orientationInterpolator      ._key = new x_ite_Fields.MFFloat (0, 1);
-      this .scaleInterpolator            ._key = new x_ite_Fields.MFFloat (0, 1);
-      this .scaleOrientationInterpolator ._key = new x_ite_Fields.MFFloat (0, 1);
-
-      this .positionInterpolator         .setup ();
-      this .orientationInterpolator      .setup ();
-      this .scaleInterpolator            .setup ();
-      this .scaleOrientationInterpolator .setup ();
-
-      this .timeSensor ._isActive         .addFieldInterest (this ._transitionActive);
-      this .timeSensor ._fraction_changed .addFieldInterest (this .easeInEaseOut ._set_fraction);
-
-      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .positionInterpolator         ._set_fraction);
-      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .orientationInterpolator      ._set_fraction);
-      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleInterpolator            ._set_fraction);
-      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleOrientationInterpolator ._set_fraction);
-
-      this .positionInterpolator         ._value_changed .addFieldInterest (this ._positionOffset);
-      this .orientationInterpolator      ._value_changed .addFieldInterest (this ._orientationOffset);
-      this .scaleInterpolator            ._value_changed .addFieldInterest (this ._scaleOffset);
-      this .scaleOrientationInterpolator ._value_changed .addFieldInterest (this ._scaleOrientationOffset);
-
-      this ._nearDistance   .addInterest ("set_nearDistance__",   this);
-      this ._farDistance    .addInterest ("set_farDistance__",    this);
-      this ._viewAll        .addInterest ("set_viewAll__",        this);
-      this ._navigationInfo .addInterest ("set_navigationInfo__", this);
-      this ._isBound        .addInterest ("set_bound__",          this);
-
-      this .set_nearDistance__ ();
-      this .set_farDistance__ ();
-      this .set_navigationInfo__ ();
-   },
-   getEaseInEaseOut: function ()
-   {
-      return this .easeInEaseOut;
-   },
-   setInterpolators: function () { },
-   getPosition: function ()
-   {
-      return this ._position .getValue ();
-   },
-   getUserPosition: function ()
-   {
-      return this .userPosition .assign (this .getPosition ()) .add (this ._positionOffset .getValue ());
-   },
-   getOrientation: function ()
-   {
-      return this ._orientation .getValue ();
-   },
-   getUserOrientation: function ()
-   {
-      return this .userOrientation .assign (this .getOrientation ()) .multRight (this ._orientationOffset .getValue ());
-   },
-   getCenterOfRotation: function ()
-   {
-      return this ._centerOfRotation .getValue ();
-   },
-   getUserCenterOfRotation: function ()
-   {
-      return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this ._centerOfRotationOffset .getValue ());
-   },
-   getProjectionMatrix: function (renderObject)
-   {
-      const navigationInfo = renderObject .getNavigationInfo ();
-
-      return this .getProjectionMatrixWithLimits (this .nearDistance ?? navigationInfo .getNearValue (),
-                                                  this .farDistance ?? navigationInfo .getFarValue (this),
-                                                  renderObject .getLayer () .getViewport () .getRectangle ());
-   },
-   getCameraSpaceMatrix: function ()
-   {
-      return this .cameraSpaceMatrix;
-   },
-   getViewMatrix: function ()
-   {
-      return this .viewMatrix;
-   },
-   getModelMatrix: function ()
-   {
-      return this .modelMatrix;
-   },
-   getMaxFarValue: function ()
-   {
-      return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e5;
-   },
-   getUpVector: function ()
-   {
-      // Local y-axis,
-      // see https://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
-      return Numbers_Vector3.yAxis;
-   },
-   getSpeedFactor: function ()
-   {
-      return 1;
-   },
-   setVRMLTransition: function (value)
-   {
-      // VRML behavior support.
-      this .VRMLTransition = value;
-   },
-   getVRMLTransition: function ()
-   {
-      // VRML behavior support.
-      return this .VRMLTransition;
-   },
-   transitionStart: (function ()
-   {
-      const
-         relativePosition         = new Numbers_Vector3 (0, 0, 0),
-         relativeOrientation      = new Numbers_Rotation4 (0, 0, 1, 0),
-         relativeScale            = new Numbers_Vector3 (0, 0, 0),
-         relativeScaleOrientation = new Numbers_Rotation4 (0, 0, 1, 0);
-
-      return function (layerNode, fromViewpointNode, toViewpointNode)
-      {
-         this .to = toViewpointNode;
-
-         if (toViewpointNode ._jump .getValue ())
-         {
-            if (! toViewpointNode ._retainUserOffsets .getValue ())
-               toViewpointNode .resetUserOffsets ();
-
-            // Copy from toViewpointNode all fields.
-
-            if (this !== toViewpointNode)
-            {
-               for (const field of toViewpointNode .getFields ())
-                  this .getField (field .getName ()) .assign (field);
-            }
-
-            // Respect NavigationInfo.
-
-            const
-               navigationInfoNode = layerNode .getNavigationInfo (),
-               transitionTime     = navigationInfoNode ._transitionTime .getValue ();
-
-            let transitionType = navigationInfoNode .getTransitionType ();
-
-            // VRML behavior
-
-            if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
-            {
-               if (toViewpointNode .getVRMLTransition ())
-                  transitionType = "LINEAR";
-               else
-                  transitionType = "TELEPORT";
-            }
-
-            toViewpointNode .setVRMLTransition (false);
-
-            // End VRML behavior
-
-            if (transitionTime <= 0)
-               transitionType = "TELEPORT";
-
-            switch (transitionType)
-            {
-               case "TELEPORT":
-               {
-                  navigationInfoNode ._transitionComplete = true;
-                  return;
-               }
-               case "ANIMATE":
-               {
-                  this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields.MFVec2f (new x_ite_Fields.SFVec2f (0, 1), new x_ite_Fields.SFVec2f (1, 0));
-                  break;
-               }
-               default:
-               {
-                  // LINEAR
-                  this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields.MFVec2f (new x_ite_Fields.SFVec2f (0, 0), new x_ite_Fields.SFVec2f (0, 0));
-                  break;
-               }
-            }
-
-            layerNode .getNavigationInfo () ._transitionStart = true;
-
-            this .timeSensor ._cycleInterval = transitionTime;
-            this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-            this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-            this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
-
-            toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-            if (this ._viewAll .getValue ())
-               toViewpointNode .viewAll (layerNode .getBBox (new Geometry_Box3 ()));
-
-            this .positionInterpolator         ._keyValue = new x_ite_Fields.MFVec3f    (relativePosition,         toViewpointNode ._positionOffset);
-            this .orientationInterpolator      ._keyValue = new x_ite_Fields.MFRotation (relativeOrientation,      toViewpointNode ._orientationOffset);
-            this .scaleInterpolator            ._keyValue = new x_ite_Fields.MFVec3f    (relativeScale,            toViewpointNode ._scaleOffset);
-            this .scaleOrientationInterpolator ._keyValue = new x_ite_Fields.MFRotation (relativeScaleOrientation, toViewpointNode ._scaleOrientationOffset);
-
-            this ._positionOffset         = relativePosition;
-            this ._orientationOffset      = relativeOrientation;
-            this ._scaleOffset            = relativeScale;
-            this ._scaleOrientationOffset = relativeScaleOrientation;
-
-            this .setInterpolators (fromViewpointNode, toViewpointNode);
-
-            this ._transitionActive = true;
-         }
-         else
-         {
-            toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-            toViewpointNode ._positionOffset         = relativePosition;
-            toViewpointNode ._orientationOffset      = relativeOrientation;
-            toViewpointNode ._scaleOffset            = relativeScale;
-            toViewpointNode ._scaleOrientationOffset = relativeScaleOrientation;
-
-            toViewpointNode .setInterpolators (fromViewpointNode, toViewpointNode);
-         }
-      };
-   })(),
-   transitionStop: function ()
-   {
-      this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
-      this .timeSensor ._isActive .removeInterest ("set_active__", this);
-   },
-   resetUserOffsets: function ()
-   {
-      this ._positionOffset         = Numbers_Vector3.Zero;
-      this ._orientationOffset      = Numbers_Rotation4.Identity;
-      this ._scaleOffset            = Numbers_Vector3.One;
-      this ._scaleOrientationOffset = Numbers_Rotation4.Identity;
-      this ._centerOfRotationOffset = Numbers_Vector3.Zero;
-      this ._fieldOfViewScale       = 1;
-   },
-   getRelativeTransformation: function (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
-   {
-      const differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
-
-      differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-      relativePosition .subtract (this .getPosition ());
-      relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
-   },
-   getLookAtRotation: (function ()
-   {
-      const
-         x = new Numbers_Vector3 (0, 0, 0),
-         y = new Numbers_Vector3 (0, 0, 0),
-         z = new Numbers_Vector3 (0, 0, 0),
-         m = new Numbers_Matrix3 (),
-         r = new Numbers_Rotation4 ();
-
-      return function (fromPoint, toPoint)
-      {
-         const up = this .getUpVector (true);
-
-         z .assign (fromPoint) .subtract (toPoint) .normalize ();
-         x .assign (up) .cross (z) .normalize ();
-         y .assign (z) .cross (x) .normalize ();
-
-         m .set (x.x, x.y, x.z, y.x, y.y, y.z, z.x, z.y, z.z);
-         r .setMatrix (m);
-
-         return r;
-      };
-   })(),
-   lookAtPoint: function (layerNode, point, factor, straighten)
-   {
-      this .getCameraSpaceMatrix () .multVecMatrix (point);
-
-      Numbers_Matrix4.inverse (this .getModelMatrix ()) .multVecMatrix (point);
-
-      const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
-
-      this .lookAt (layerNode, point, minDistance, factor, straighten);
-   },
-   lookAtBBox: function (layerNode, bbox, factor, straighten)
-   {
-      bbox = bbox .copy () .multRight (Numbers_Matrix4.inverse (this .getModelMatrix ()));
-
-      const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
-
-      this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
-   },
-   lookAt: function (layerNode, point, distance, factor, straighten)
-   {
-      const
-         offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Numbers_Vector3 (0, 0, distance))) .subtract (this .getPosition ());
-
-      layerNode .getNavigationInfo () ._transitionStart = true;
-
-      this .timeSensor ._cycleInterval = 0.2;
-      this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-      this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
-
-      this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields.MFVec2f (new x_ite_Fields.SFVec2f (0, 1), new x_ite_Fields.SFVec2f (1, 0));
-
-      const
-         translation = Numbers_Vector3.lerp (this ._positionOffset .getValue (), offset, factor),
-         direction   = Numbers_Vector3.add (this .getPosition (), translation) .subtract (point);
-
-      let rotation = Numbers_Rotation4.multRight (this ._orientationOffset .getValue (), new Numbers_Rotation4 (this .getUserOrientation () .multVecRot (new Numbers_Vector3 (0, 0, 1)), direction));
-
-      if (straighten)
-      {
-         rotation = Numbers_Rotation4.inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Numbers_Rotation4.multRight (this .getOrientation (), rotation)));
-      }
-
-      this .positionInterpolator         ._keyValue = new x_ite_Fields.MFVec3f (this ._positionOffset, translation);
-      this .orientationInterpolator      ._keyValue = new x_ite_Fields.MFRotation (this ._orientationOffset, rotation);
-      this .scaleInterpolator            ._keyValue = new x_ite_Fields.MFVec3f (this ._scaleOffset, Numbers_Vector3.One);
-      this .scaleOrientationInterpolator ._keyValue = new x_ite_Fields.MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
-
-      this .setInterpolators (this, this);
-
-      this ._centerOfRotationOffset = Numbers_Vector3.subtract (point, this .getCenterOfRotation ());
-      this ._set_bind               = true;
-   },
-   straighten: function (layerNode, horizon)
-   {
-      layerNode .getNavigationInfo () ._transitionStart = true;
-
-      this .timeSensor ._cycleInterval = 0.4;
-      this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-      this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
-
-      this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields.MFVec2f (new x_ite_Fields.SFVec2f (0, 1), new x_ite_Fields.SFVec2f (1, 0));
-
-      const rotation = Numbers_Rotation4.multRight (Numbers_Rotation4.inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
-
-      this .positionInterpolator         ._keyValue = new x_ite_Fields.MFVec3f (this ._positionOffset, this ._positionOffset);
-      this .orientationInterpolator      ._keyValue = new x_ite_Fields.MFRotation (this ._orientationOffset, rotation);
-      this .scaleInterpolator            ._keyValue = new x_ite_Fields.MFVec3f (this ._scaleOffset, this ._scaleOffset);
-      this .scaleOrientationInterpolator ._keyValue = new x_ite_Fields.MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
-
-      this .setInterpolators (this, this);
-
-      this ._set_bind = true;
-   },
-   straightenHorizon: (function ()
-   {
-      const
-         localXAxis  = new Numbers_Vector3 (0, 0, 0),
-         localZAxis  = new Numbers_Vector3 (0, 0, 0),
-         rotation    = new Numbers_Rotation4 (0, 0, 1, 0);
-
-      return function (orientation, upVector = this .getUpVector ())
-      {
-         orientation .multVecRot (localXAxis .assign (Numbers_Vector3.xAxis) .negate ());
-         orientation .multVecRot (localZAxis .assign (Numbers_Vector3.zAxis));
-
-         const vector = localZAxis .cross (upVector);
-
-         // If viewer looks along the up vector.
-         if (Math .abs (localZAxis .dot (upVector)) >= 1)
-            return orientation;
-
-         if (Math .abs (vector .dot (localXAxis)) >= 1)
-            return orientation;
-
-         rotation .setFromToVec (localXAxis, vector);
-
-         return orientation .multRight (rotation);
-      };
-   })(),
-   set_nearDistance__: function ()
-   {
-      const nearDistance = this ._nearDistance .getValue ();
-
-      this .nearDistance = nearDistance >= 0 ? nearDistance : undefined;
-   },
-   set_farDistance__: function ()
-   {
-      const farDistance = this ._farDistance .getValue ();
-
-      this .farDistance = farDistance >= 0 ? farDistance : undefined;
-   },
-   set_viewAll__: function ()
-   {
-      if (! this ._viewAll .getValue ())
-         return;
-
-      if (! this ._isBound .getValue ())
-         return;
-
-      this ._set_bind = true;
-   },
-   set_navigationInfo__: function ()
-   {
-      if (this .navigationInfoNode)
-         this ._isBound .removeFieldInterest (this .navigationInfoNode ._set_bind);
-
-      this .navigationInfoNode = Base_X3DCast (Base_X3DConstants.NavigationInfo, this ._navigationInfo);
-
-      if (this .navigationInfoNode)
-         this ._isBound .addFieldInterest (this .navigationInfoNode ._set_bind);
-   },
-   set_bound__: function ()
-   {
-      const browser = this .getBrowser ();
-
-      if (this ._isBound .getValue ())
-         browser .getNotification () ._string = this ._description;
-      else
-         this .timeSensor ._stopTime = browser .getCurrentTime ();
-   },
-   set_active__: function (navigationInfoNode, active)
-   {
-      if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
-      {
-         navigationInfoNode ._transitionComplete = true;
-      }
-   },
-   traverse: function (type, renderObject)
-   {
-      if (type !== Rendering_TraverseType.CAMERA)
-         return;
-
-      if (this .navigationInfoNode)
-         this .navigationInfoNode .traverse (type, renderObject);
-
-      renderObject .getLayer () .getViewpoints () .push (this);
-
-      this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-   },
-   update: function ()
-   {
-      this .cameraSpaceMatrix .set (this .getUserPosition (),
-                                    this .getUserOrientation (),
-                                    this ._scaleOffset .getValue (),
-                                    this ._scaleOrientationOffset .getValue ());
-
-      this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
-
-      this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
-   }
-});
-
-const X3DViewpointNode_default_ = X3DViewpointNode;
-;
-
-x_ite_Namespace.set ("x_ite/Components/Navigation/X3DViewpointNode", X3DViewpointNode_default_);
-/* harmony default export */ const Navigation_X3DViewpointNode = (X3DViewpointNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Interpolation/ScalarInterpolator.js
 /*******************************************************************************
  *
@@ -53777,7 +53227,7 @@ const ScalarInterpolator_default_ = ScalarInterpolator;
 
 x_ite_Namespace.set ("x_ite/Components/Interpolation/ScalarInterpolator", ScalarInterpolator_default_);
 /* harmony default export */ const Interpolation_ScalarInterpolator = (ScalarInterpolator_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Navigation/Viewpoint.js
+;// CONCATENATED MODULE: ./src/x_ite/Components/Navigation/X3DViewpointNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53836,6 +53286,582 @@ x_ite_Namespace.set ("x_ite/Components/Interpolation/ScalarInterpolator", Scalar
 
 
 
+
+
+
+
+
+function X3DViewpointNode (executionContext)
+{
+   Core_X3DBindableNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.X3DViewpointNode);
+
+   this .addChildObjects ("positionOffset",         new x_ite_Fields.SFVec3f (),
+                          "orientationOffset",      new x_ite_Fields.SFRotation (),
+                          "scaleOffset",            new x_ite_Fields.SFVec3f (1, 1, 1),
+                          "scaleOrientationOffset", new x_ite_Fields.SFRotation (),
+                          "centerOfRotationOffset", new x_ite_Fields.SFVec3f (),
+                          "fieldOfViewScale",       new x_ite_Fields.SFFloat (1));
+
+   this .userPosition         = new Numbers_Vector3 (0, 1, 0);
+   this .userOrientation      = new Numbers_Rotation4 (0, 0, 1, 0);
+   this .userCenterOfRotation = new Numbers_Vector3 (0, 0, 0);
+   this .modelMatrix          = new Numbers_Matrix4 ();
+   this .cameraSpaceMatrix    = new Numbers_Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
+   this .viewMatrix           = new Numbers_Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
+
+   const browser = this .getBrowser ();
+
+   this .timeSensor                   = new Time_TimeSensor              (browser .getPrivateScene ());
+   this .easeInEaseOut                = new Interpolation_EaseInEaseOut           (browser .getPrivateScene ());
+   this .positionInterpolator         = new Interpolation_PositionInterpolator    (browser .getPrivateScene ());
+   this .orientationInterpolator      = new Interpolation_OrientationInterpolator (browser .getPrivateScene ());
+   this .scaleInterpolator            = new Interpolation_PositionInterpolator    (browser .getPrivateScene ());
+   this .scaleOrientationInterpolator = new Interpolation_OrientationInterpolator (browser .getPrivateScene ());
+   this .fieldOfViewScaleInterpolator = new Interpolation_ScalarInterpolator      (browser .getPrivateScene ());
+}
+
+X3DViewpointNode .prototype = Object .assign (Object .create (Core_X3DBindableNode.prototype),
+{
+   constructor: X3DViewpointNode,
+   initialize: function ()
+   {
+      Core_X3DBindableNode.prototype.initialize.call (this);
+
+      this .timeSensor ._stopTime = 1;
+      this .timeSensor .setup ();
+
+      this .easeInEaseOut ._key           = new x_ite_Fields.MFFloat (0, 1);
+      this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields.MFVec2f (new x_ite_Fields.SFVec2f (0, 0), new x_ite_Fields.SFVec2f (0, 0));
+      this .easeInEaseOut .setup ();
+
+      this .positionInterpolator         ._key = new x_ite_Fields.MFFloat (0, 1);
+      this .orientationInterpolator      ._key = new x_ite_Fields.MFFloat (0, 1);
+      this .scaleInterpolator            ._key = new x_ite_Fields.MFFloat (0, 1);
+      this .scaleOrientationInterpolator ._key = new x_ite_Fields.MFFloat (0, 1);
+      this .fieldOfViewScaleInterpolator ._key = new x_ite_Fields.MFFloat (0, 1);
+
+      this .positionInterpolator         .setup ();
+      this .orientationInterpolator      .setup ();
+      this .scaleInterpolator            .setup ();
+      this .scaleOrientationInterpolator .setup ();
+      this .fieldOfViewScaleInterpolator .setup ();
+
+      this .timeSensor ._isActive         .addFieldInterest (this ._transitionActive);
+      this .timeSensor ._fraction_changed .addFieldInterest (this .easeInEaseOut ._set_fraction);
+
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .positionInterpolator         ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .orientationInterpolator      ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleInterpolator            ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleOrientationInterpolator ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewScaleInterpolator      ._set_fraction);
+
+      this .positionInterpolator         ._value_changed .addFieldInterest (this ._positionOffset);
+      this .orientationInterpolator      ._value_changed .addFieldInterest (this ._orientationOffset);
+      this .scaleInterpolator            ._value_changed .addFieldInterest (this ._scaleOffset);
+      this .scaleOrientationInterpolator ._value_changed .addFieldInterest (this ._scaleOrientationOffset);
+      this .fieldOfViewScaleInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
+
+      this ._nearDistance   .addInterest ("set_nearDistance__",   this);
+      this ._farDistance    .addInterest ("set_farDistance__",    this);
+      this ._viewAll        .addInterest ("set_viewAll__",        this);
+      this ._navigationInfo .addInterest ("set_navigationInfo__", this);
+      this ._isBound        .addInterest ("set_bound__",          this);
+
+      this .set_nearDistance__ ();
+      this .set_farDistance__ ();
+      this .set_navigationInfo__ ();
+   },
+   set_nearDistance__: function ()
+   {
+      const nearDistance = this ._nearDistance .getValue ();
+
+      this .nearDistance = nearDistance >= 0 ? nearDistance : undefined;
+   },
+   set_farDistance__: function ()
+   {
+      const farDistance = this ._farDistance .getValue ();
+
+      this .farDistance = farDistance >= 0 ? farDistance : undefined;
+   },
+   set_viewAll__: function ()
+   {
+      if (! this ._viewAll .getValue ())
+         return;
+
+      if (! this ._isBound .getValue ())
+         return;
+
+      this ._set_bind = true;
+   },
+   set_navigationInfo__: function ()
+   {
+      if (this .navigationInfoNode)
+         this ._isBound .removeFieldInterest (this .navigationInfoNode ._set_bind);
+
+      this .navigationInfoNode = Base_X3DCast (Base_X3DConstants.NavigationInfo, this ._navigationInfo);
+
+      if (this .navigationInfoNode)
+         this ._isBound .addFieldInterest (this .navigationInfoNode ._set_bind);
+   },
+   set_bound__: function ()
+   {
+      const browser = this .getBrowser ();
+
+      if (this ._isBound .getValue ())
+         browser .getNotification () ._string = this ._description;
+      else
+         this .timeSensor ._stopTime = browser .getCurrentTime ();
+   },
+   set_active__: function (navigationInfoNode, active)
+   {
+      if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
+      {
+         navigationInfoNode ._transitionComplete = true;
+      }
+   },
+   setInterpolators: function () { },
+   getPosition: function ()
+   {
+      return this ._position .getValue ();
+   },
+   getUserPosition: function ()
+   {
+      return this .userPosition .assign (this .getPosition ()) .add (this ._positionOffset .getValue ());
+   },
+   getOrientation: function ()
+   {
+      return this ._orientation .getValue ();
+   },
+   getUserOrientation: function ()
+   {
+      return this .userOrientation .assign (this .getOrientation ()) .multRight (this ._orientationOffset .getValue ());
+   },
+   getCenterOfRotation: function ()
+   {
+      return this ._centerOfRotation .getValue ();
+   },
+   getUserCenterOfRotation: function ()
+   {
+      return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this ._centerOfRotationOffset .getValue ());
+   },
+   getProjectionMatrix: function (renderObject)
+   {
+      const navigationInfo = renderObject .getNavigationInfo ();
+
+      return this .getProjectionMatrixWithLimits (this .nearDistance ?? navigationInfo .getNearValue (),
+                                                  this .farDistance ?? navigationInfo .getFarValue (this),
+                                                  renderObject .getLayer () .getViewport () .getRectangle ());
+   },
+   getCameraSpaceMatrix: function ()
+   {
+      return this .cameraSpaceMatrix;
+   },
+   getViewMatrix: function ()
+   {
+      return this .viewMatrix;
+   },
+   getModelMatrix: function ()
+   {
+      return this .modelMatrix;
+   },
+   getMaxFarValue: function ()
+   {
+      return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e5;
+   },
+   getUpVector: function ()
+   {
+      // Local y-axis,
+      // see https://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
+      return Numbers_Vector3.yAxis;
+   },
+   getSpeedFactor: function ()
+   {
+      return 1;
+   },
+   setVRMLTransition: function (value)
+   {
+      // VRML behavior support.
+      this .VRMLTransition = value;
+   },
+   getVRMLTransition: function ()
+   {
+      // VRML behavior support.
+      return this .VRMLTransition;
+   },
+   transitionStart: function (layerNode, fromViewpointNode, toViewpointNode)
+   {
+      this .to = toViewpointNode;
+
+      if (toViewpointNode ._jump .getValue ())
+      {
+         const relative = toViewpointNode .getRelativeTransformation (fromViewpointNode);
+
+         if (! toViewpointNode ._retainUserOffsets .getValue ())
+            toViewpointNode .resetUserOffsets ();
+
+         // Copy from toViewpointNode all fields.
+
+         if (this !== toViewpointNode)
+         {
+            for (const field of toViewpointNode .getFields ())
+               this .getField (field .getName ()) .assign (field);
+
+            this .initialize ();
+         }
+
+         if (this ._viewAll .getValue ())
+            toViewpointNode .viewAll (layerNode .getBBox (new Geometry_Box3 ()));
+
+         // Handle NavigationInfo.
+
+         const
+            navigationInfoNode = layerNode .getNavigationInfo (),
+            transitionTime     = navigationInfoNode ._transitionTime .getValue ();
+
+         let transitionType = navigationInfoNode .getTransitionType ();
+
+         // VRML behavior
+
+         if (this .getExecutionContext () .getSpecificationVersion () === "2.0")
+         {
+            if (toViewpointNode .getVRMLTransition ())
+               transitionType = "LINEAR";
+            else
+               transitionType = "TELEPORT";
+         }
+
+         toViewpointNode .setVRMLTransition (false);
+
+         // End VRML behavior
+
+         if (transitionTime <= 0)
+            transitionType = "TELEPORT";
+
+         if (toViewpointNode .constructor !== fromViewpointNode .constructor)
+            transitionType = "TELEPORT";
+
+         switch (transitionType)
+         {
+            case "TELEPORT":
+            {
+               navigationInfoNode ._transitionComplete = true;
+               return;
+            }
+            case "ANIMATE":
+            {
+               this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields.MFVec2f (new x_ite_Fields.SFVec2f (0, 1), new x_ite_Fields.SFVec2f (1, 0));
+               break;
+            }
+            default:
+            {
+               // LINEAR
+               this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields.MFVec2f (new x_ite_Fields.SFVec2f (0, 0), new x_ite_Fields.SFVec2f (0, 0));
+               break;
+            }
+         }
+
+         layerNode .getNavigationInfo () ._transitionStart = true;
+
+         this .timeSensor ._cycleInterval = transitionTime;
+         this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+         this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
+
+         this .positionInterpolator         ._keyValue = new x_ite_Fields.MFVec3f    (relative .position,         toViewpointNode ._positionOffset);
+         this .orientationInterpolator      ._keyValue = new x_ite_Fields.MFRotation (relative .orientation,      toViewpointNode ._orientationOffset);
+         this .scaleInterpolator            ._keyValue = new x_ite_Fields.MFVec3f    (relative .scale,            toViewpointNode ._scaleOffset);
+         this .scaleOrientationInterpolator ._keyValue = new x_ite_Fields.MFRotation (relative .scaleOrientation, toViewpointNode ._scaleOrientationOffset);
+
+         this ._positionOffset         = relative .position;
+         this ._orientationOffset      = relative .orientation;
+         this ._scaleOffset            = relative .scale;
+         this ._scaleOrientationOffset = relative .scaleOrientation;
+
+         this .setInterpolators (fromViewpointNode, toViewpointNode, relative);
+
+         this ._transitionActive = true;
+      }
+      else
+      {
+         const relative = toViewpointNode .getRelativeTransformation (fromViewpointNode);
+
+         toViewpointNode ._positionOffset         = relative .position;
+         toViewpointNode ._orientationOffset      = relative .orientation;
+         toViewpointNode ._scaleOffset            = relative .scale;
+         toViewpointNode ._scaleOrientationOffset = relative .scaleOrientation;
+
+         this .setInterpolators (fromViewpointNode, toViewpointNode, relative);
+      }
+   },
+   transitionStop: function ()
+   {
+      this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
+      this .timeSensor ._isActive .removeInterest ("set_active__", this);
+   },
+   resetUserOffsets: function ()
+   {
+      this ._positionOffset         = Numbers_Vector3.Zero;
+      this ._orientationOffset      = Numbers_Rotation4.Identity;
+      this ._scaleOffset            = Numbers_Vector3.One;
+      this ._scaleOrientationOffset = Numbers_Rotation4.Identity;
+      this ._centerOfRotationOffset = Numbers_Vector3.Zero;
+      this ._fieldOfViewScale       = 1;
+   },
+   getRelativeTransformation: (function ()
+   {
+      const
+         position         = new Numbers_Vector3 (0, 0, 0),
+         orientation      = new Numbers_Rotation4 (0, 0, 1, 0),
+         scale            = new Numbers_Vector3 (0, 0, 0),
+         scaleOrientation = new Numbers_Rotation4 (0, 0, 1, 0);
+
+      return function (fromViewpointNode)
+      {
+         const differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
+
+         differenceMatrix .get (position, orientation, scale, scaleOrientation);
+
+         position .subtract (this .getPosition ());
+         orientation .multLeft (this .getOrientation () .copy () .inverse ());
+
+         return {
+            position: position,
+            orientation: orientation,
+            scale: scale,
+            scaleOrientation: scaleOrientation,
+         };
+      };
+   })(),
+   getLookAtRotation: (function ()
+   {
+      const
+         x = new Numbers_Vector3 (0, 0, 0),
+         y = new Numbers_Vector3 (0, 0, 0),
+         z = new Numbers_Vector3 (0, 0, 0),
+         m = new Numbers_Matrix3 (),
+         r = new Numbers_Rotation4 ();
+
+      return function (fromPoint, toPoint)
+      {
+         const up = this .getUpVector (true);
+
+         z .assign (fromPoint) .subtract (toPoint) .normalize ();
+         x .assign (up) .cross (z) .normalize ();
+         y .assign (z) .cross (x) .normalize ();
+
+         m .set (x.x, x.y, x.z, y.x, y.y, y.z, z.x, z.y, z.z);
+         r .setMatrix (m);
+
+         return r;
+      };
+   })(),
+   lookAtPoint: function (layerNode, point, factor, straighten)
+   {
+      this .getCameraSpaceMatrix () .multVecMatrix (point);
+
+      Numbers_Matrix4.inverse (this .getModelMatrix ()) .multVecMatrix (point);
+
+      const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+
+      this .lookAt (layerNode, point, minDistance, factor, straighten);
+   },
+   lookAtBBox: function (layerNode, bbox, factor, straighten)
+   {
+      bbox = bbox .copy () .multRight (Numbers_Matrix4.inverse (this .getModelMatrix ()));
+
+      const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+
+      this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
+   },
+   lookAt: function (layerNode, point, distance, factor, straighten)
+   {
+      const
+         offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Numbers_Vector3 (0, 0, distance))) .subtract (this .getPosition ());
+
+      layerNode .getNavigationInfo () ._transitionStart = true;
+
+      this .timeSensor ._cycleInterval = 0.2;
+      this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+      this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
+
+      this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields.MFVec2f (new x_ite_Fields.SFVec2f (0, 1), new x_ite_Fields.SFVec2f (1, 0));
+
+      const
+         translation = Numbers_Vector3.lerp (this ._positionOffset .getValue (), offset, factor),
+         direction   = Numbers_Vector3.add (this .getPosition (), translation) .subtract (point);
+
+      let rotation = Numbers_Rotation4.multRight (this ._orientationOffset .getValue (), new Numbers_Rotation4 (this .getUserOrientation () .multVecRot (new Numbers_Vector3 (0, 0, 1)), direction));
+
+      if (straighten)
+      {
+         rotation = Numbers_Rotation4.inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Numbers_Rotation4.multRight (this .getOrientation (), rotation)));
+      }
+
+      this .positionInterpolator         ._keyValue = new x_ite_Fields.MFVec3f (this ._positionOffset, translation);
+      this .orientationInterpolator      ._keyValue = new x_ite_Fields.MFRotation (this ._orientationOffset, rotation);
+      this .scaleInterpolator            ._keyValue = new x_ite_Fields.MFVec3f (this ._scaleOffset, Numbers_Vector3.One);
+      this .scaleOrientationInterpolator ._keyValue = new x_ite_Fields.MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
+
+      this .setInterpolators (this, this, this .getRelativeTransformation (this));
+
+      this ._centerOfRotationOffset = Numbers_Vector3.subtract (point, this .getCenterOfRotation ());
+      this ._set_bind               = true;
+   },
+   straighten: function (layerNode, horizon)
+   {
+      layerNode .getNavigationInfo () ._transitionStart = true;
+
+      this .timeSensor ._cycleInterval = 0.4;
+      this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+      this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
+
+      this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields.MFVec2f (new x_ite_Fields.SFVec2f (0, 1), new x_ite_Fields.SFVec2f (1, 0));
+
+      const rotation = Numbers_Rotation4.multRight (Numbers_Rotation4.inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
+
+      this .positionInterpolator         ._keyValue = new x_ite_Fields.MFVec3f (this ._positionOffset, this ._positionOffset);
+      this .orientationInterpolator      ._keyValue = new x_ite_Fields.MFRotation (this ._orientationOffset, rotation);
+      this .scaleInterpolator            ._keyValue = new x_ite_Fields.MFVec3f (this ._scaleOffset, this ._scaleOffset);
+      this .scaleOrientationInterpolator ._keyValue = new x_ite_Fields.MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
+
+      this .setInterpolators (this, this, this .getRelativeTransformation (this));
+
+      this ._set_bind = true;
+   },
+   straightenHorizon: (function ()
+   {
+      const
+         localXAxis  = new Numbers_Vector3 (0, 0, 0),
+         localZAxis  = new Numbers_Vector3 (0, 0, 0),
+         rotation    = new Numbers_Rotation4 (0, 0, 1, 0);
+
+      return function (orientation, upVector = this .getUpVector ())
+      {
+         orientation .multVecRot (localXAxis .assign (Numbers_Vector3.xAxis) .negate ());
+         orientation .multVecRot (localZAxis .assign (Numbers_Vector3.zAxis));
+
+         const vector = localZAxis .cross (upVector);
+
+         // If viewer looks along the up vector.
+         if (Math .abs (localZAxis .dot (upVector)) >= 1)
+            return orientation;
+
+         if (Math .abs (vector .dot (localXAxis)) >= 1)
+            return orientation;
+
+         rotation .setFromToVec (localXAxis, vector);
+
+         return orientation .multRight (rotation);
+      };
+   })(),
+   viewAll: function (bbox)
+   {
+      const
+         center          = bbox .center,
+         direction       = this .getUserPosition () .copy () .subtract (center),
+         distance        = this .getLookAtDistance (bbox),
+         userPosition    = center .copy () .add (direction .normalize () .multiply (distance)),
+         userOrientation = this .getLookAtRotation (userPosition, center);
+
+      this ._positionOffset         = userPosition .subtract (this .getPosition ());
+      this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
+      this ._centerOfRotationOffset = center .subtract (this .getCenterOfRotation ());
+      this ._fieldOfViewScale       = 1;
+   },
+   traverse: function (type, renderObject)
+   {
+      if (type !== Rendering_TraverseType.CAMERA)
+         return;
+
+      if (this .navigationInfoNode)
+         this .navigationInfoNode .traverse (type, renderObject);
+
+      renderObject .getLayer () .getViewpoints () .push (this);
+
+      this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+   },
+   update: function ()
+   {
+      this .cameraSpaceMatrix .set (this .getUserPosition (),
+                                    this .getUserOrientation (),
+                                    this ._scaleOffset .getValue (),
+                                    this ._scaleOrientationOffset .getValue ());
+
+      this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
+
+      this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
+   }
+});
+
+const X3DViewpointNode_default_ = X3DViewpointNode;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Navigation/X3DViewpointNode", X3DViewpointNode_default_);
+/* harmony default export */ const Navigation_X3DViewpointNode = (X3DViewpointNode_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Navigation/Viewpoint.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
 function Viewpoint (executionContext)
 {
    Navigation_X3DViewpointNode.call (this, executionContext);
@@ -53846,8 +53872,7 @@ function Viewpoint (executionContext)
    this ._centerOfRotation .setUnit ("length");
    this ._fieldOfView      .setUnit ("angle");
 
-   this .projectionMatrix        = new Numbers_Matrix4 ();
-   this .fieldOfViewInterpolator = new Interpolation_ScalarInterpolator (this .getBrowser () .getPrivateScene ());
+   this .projectionMatrix = new Numbers_Matrix4 ();
 }
 
 Viewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpointNode.prototype),
@@ -53882,29 +53907,28 @@ Viewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpointNo
    {
       return "children";
    },
-   initialize: function ()
+   getRelativeTransformation: function (fromViewpointNode)
    {
-      Navigation_X3DViewpointNode.prototype.initialize.call (this);
+      const relative = Navigation_X3DViewpointNode.prototype.getRelativeTransformation.call (this, fromViewpointNode);
 
-      this .fieldOfViewInterpolator ._key = new x_ite_Fields.MFFloat (0, 1);
-      this .fieldOfViewInterpolator .setup ();
+      if (fromViewpointNode .constructor === this .constructor)
+         relative .fieldOfView = fromViewpointNode .getFieldOfView ();
 
-      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
-      this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
+      return relative;
    },
-   setInterpolators: function (fromViewpointNode, toViewpointNode)
+   setInterpolators: function (fromViewpointNode, toViewpointNode, relative)
    {
-      if (fromViewpointNode .getType () .includes (Base_X3DConstants.Viewpoint) || fromViewpointNode .getType () .includes (Base_X3DConstants.GeoViewpoint))
+      if (fromViewpointNode .constructor === toViewpointNode .constructor)
       {
-         const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
+         const scale = relative .fieldOfView / toViewpointNode .getFieldOfView ();
 
-         this .fieldOfViewInterpolator ._keyValue = new x_ite_Fields.MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator ._keyValue = new x_ite_Fields.MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
 
          this ._fieldOfViewScale = scale;
       }
       else
       {
-         this .fieldOfViewInterpolator ._keyValue = new x_ite_Fields.MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator ._keyValue = new x_ite_Fields.MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
 
          this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
       }
@@ -53963,19 +53987,6 @@ Viewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpointNo
    getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
    {
       return Geometry_Camera.perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
-   },
-   viewAll: function (bbox)
-   {
-      const
-         center          = bbox .center,
-         direction       = this .getUserPosition () .copy () .subtract (center),
-         distance        = this .getLookAtDistance (bbox),
-         userPosition    = center .copy () .add (direction .normalize () .multiply (distance)),
-         userOrientation = this .getLookAtRotation (userPosition, center);
-
-      this ._positionOffset         = userPosition .subtract (this .getPosition ());
-      this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
-      this ._centerOfRotationOffset = center .subtract (this .getCenterOfRotation ());
    },
 });
 
@@ -55553,8 +55564,8 @@ const BinaryTransport_default_ = BinaryTransport;
 x_ite_Namespace.set ("standard/Networking/BinaryTransport", BinaryTransport_default_);
 /* harmony default export */ const Networking_BinaryTransport = (BinaryTransport_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(683);
-/* provided dependency */ var pako = __webpack_require__(34);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(160);
+/* provided dependency */ var pako = __webpack_require__(266);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -57825,7 +57836,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(683);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59293,7 +59304,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(683);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65167,7 +65178,6 @@ x_ite_Namespace.set ("x_ite/Browser/Lighting/X3DLightingContext", X3DLightingCon
 
 
 
-
 function OrthoViewpoint (executionContext)
 {
    Navigation_X3DViewpointNode.call (this, executionContext);
@@ -65185,7 +65195,6 @@ function OrthoViewpoint (executionContext)
    this .fieldOfViewOffsetInterpolator1 = new Interpolation_ScalarInterpolator (this .getBrowser () .getPrivateScene ());
    this .fieldOfViewOffsetInterpolator2 = new Interpolation_ScalarInterpolator (this .getBrowser () .getPrivateScene ());
    this .fieldOfViewOffsetInterpolator3 = new Interpolation_ScalarInterpolator (this .getBrowser () .getPrivateScene ());
-   this .fieldOfViewScaleInterpolator   = new Interpolation_ScalarInterpolator (this .getBrowser () .getPrivateScene ());
 }
 
 OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpointNode.prototype),
@@ -65224,50 +65233,25 @@ OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpo
    {
       Navigation_X3DViewpointNode.prototype.initialize.call (this);
 
-      this ._fieldOfView       .addInterest ("set_fieldOfView__", this);
-      this ._fieldOfViewOffset .addInterest ("set_fieldOfView__", this);
-      this ._fieldOfViewScale  .addInterest ("set_fieldOfView__", this);
-
       this .fieldOfViewOffsetInterpolator0 ._key = new x_ite_Fields.MFFloat (0, 1);
       this .fieldOfViewOffsetInterpolator1 ._key = new x_ite_Fields.MFFloat (0, 1);
       this .fieldOfViewOffsetInterpolator2 ._key = new x_ite_Fields.MFFloat (0, 1);
       this .fieldOfViewOffsetInterpolator3 ._key = new x_ite_Fields.MFFloat (0, 1);
-      this .fieldOfViewScaleInterpolator   ._key = new x_ite_Fields.MFFloat (0, 1);
 
       this .fieldOfViewOffsetInterpolator0 .setup ();
       this .fieldOfViewOffsetInterpolator1 .setup ();
       this .fieldOfViewOffsetInterpolator2 .setup ();
       this .fieldOfViewOffsetInterpolator3 .setup ();
-      this .fieldOfViewScaleInterpolator   .setup ();
 
-      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator0 ._set_fraction);
-      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator1 ._set_fraction);
-      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator2 ._set_fraction);
-      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator3 ._set_fraction);
-      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewScaleInterpolator   ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator0 ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator1 ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator2 ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator3 ._set_fraction);
 
       this .fieldOfViewOffsetInterpolator0 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
       this .fieldOfViewOffsetInterpolator1 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
       this .fieldOfViewOffsetInterpolator2 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
       this .fieldOfViewOffsetInterpolator3 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
-
-      this .fieldOfViewScaleInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
-
-      this .set_fieldOfView__ ();
-   },
-   set_fieldOfView__: function ()
-   {
-      const
-         length           = this ._fieldOfView .length,
-         fieldOfViewScale = this ._fieldOfViewScale .getValue ();
-
-      this .minimumX = ((length > 0 ? this ._fieldOfView [0] : -1) + this ._fieldOfViewOffset [0]) * fieldOfViewScale;
-      this .minimumY = ((length > 1 ? this ._fieldOfView [1] : -1) + this ._fieldOfViewOffset [1]) * fieldOfViewScale;
-      this .maximumX = ((length > 2 ? this ._fieldOfView [2] :  1) + this ._fieldOfViewOffset [2]) * fieldOfViewScale;
-      this .maximumY = ((length > 3 ? this ._fieldOfView [3] :  1) + this ._fieldOfViewOffset [3]) * fieldOfViewScale;
-
-      this .sizeX = this .maximumX - this .minimumX;
-      this .sizeY = this .maximumY - this .minimumY;
    },
    set_fieldOfViewOffset__: function ()
    {
@@ -65276,33 +65260,50 @@ OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpo
       this ._fieldOfViewOffset [2] = this .fieldOfViewOffsetInterpolator2 ._value_changed .getValue ();
       this ._fieldOfViewOffset [3] = this .fieldOfViewOffsetInterpolator3 ._value_changed .getValue ();
    },
-   setInterpolators: function (fromViewpointNode, toViewpointNode)
+   resetUserOffsets: function ()
    {
-      if (fromViewpointNode .getType () .includes (Base_X3DConstants.OrthoViewpoint))
+      Navigation_X3DViewpointNode.prototype.resetUserOffsets.call (this);
+
+      this ._fieldOfViewOffset [0] = 0;
+      this ._fieldOfViewOffset [1] = 0;
+      this ._fieldOfViewOffset [2] = 0;
+      this ._fieldOfViewOffset [3] = 0;
+   },
+   getRelativeTransformation: function (fromViewpointNode)
+   {
+      const relative = Navigation_X3DViewpointNode.prototype.getRelativeTransformation.call (this, fromViewpointNode);
+
+      if (fromViewpointNode .constructor === this .constructor)
+      {
+         relative .userMinimumX = fromViewpointNode .getUserMinimumX ();
+         relative .userMinimumY = fromViewpointNode .getUserMinimumY ();
+         relative .userMaximumX = fromViewpointNode .getUserMaximumX ();
+         relative .userMaximumY = fromViewpointNode .getUserMaximumY ();
+      }
+
+      return relative;
+   },
+   setInterpolators: function (fromViewpointNode, toViewpointNode, relative)
+   {
+      if (fromViewpointNode .constructor === toViewpointNode .constructor)
       {
          const
-            toLength   = toViewpointNode   ._fieldOfView .length,
-            fromLength = fromViewpointNode ._fieldOfView .length;
-
-         const
-            offset0 = (fromLength > 0 ? fromViewpointNode ._fieldOfView [0] : -1) - (toLength > 0 ? toViewpointNode ._fieldOfView [0] : -1),
-            offset1 = (fromLength > 1 ? fromViewpointNode ._fieldOfView [1] : -1) - (toLength > 1 ? toViewpointNode ._fieldOfView [1] : -1),
-            offset2 = (fromLength > 2 ? fromViewpointNode ._fieldOfView [2] :  1) - (toLength > 2 ? toViewpointNode ._fieldOfView [2] :  1),
-            offset3 = (fromLength > 3 ? fromViewpointNode ._fieldOfView [3] :  1) - (toLength > 3 ? toViewpointNode ._fieldOfView [3] :  1);
+            offset0 = relative .userMinimumX - toViewpointNode .getMinimumX (),
+            offset1 = relative .userMinimumY - toViewpointNode .getMinimumY (),
+            offset2 = relative .userMaximumX - toViewpointNode .getMaximumX (),
+            offset3 = relative .userMaximumY - toViewpointNode .getMaximumY ();
 
          this .fieldOfViewOffsetInterpolator0 ._keyValue = new x_ite_Fields.MFFloat (offset0, toViewpointNode ._fieldOfViewOffset [0]);
          this .fieldOfViewOffsetInterpolator1 ._keyValue = new x_ite_Fields.MFFloat (offset1, toViewpointNode ._fieldOfViewOffset [1]);
          this .fieldOfViewOffsetInterpolator2 ._keyValue = new x_ite_Fields.MFFloat (offset2, toViewpointNode ._fieldOfViewOffset [2]);
          this .fieldOfViewOffsetInterpolator3 ._keyValue = new x_ite_Fields.MFFloat (offset3, toViewpointNode ._fieldOfViewOffset [3]);
+         this .fieldOfViewScaleInterpolator   ._keyValue = new x_ite_Fields.MFFloat (1, toViewpointNode ._fieldOfViewScale .getValue ());
 
-         this .fieldOfViewScaleInterpolator ._keyValue = new x_ite_Fields.MFFloat (fromViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
-
-         this ._fieldOfViewOffset [0] = offset0;
-         this ._fieldOfViewOffset [1] = offset1;
-         this ._fieldOfViewOffset [2] = offset2;
-         this ._fieldOfViewOffset [3] = offset3;
-
-         this ._fieldOfViewScale = fromViewpointNode ._fieldOfViewScale .getValue ();
+         this ._fieldOfViewOffset [0] = relative .offset0;
+         this ._fieldOfViewOffset [1] = relative .offset1;
+         this ._fieldOfViewOffset [2] = relative .offset2;
+         this ._fieldOfViewOffset [3] = relative .offset3;
+         this ._fieldOfViewScale      = 1;
       }
       else
       {
@@ -65310,11 +65311,10 @@ OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpo
          this .fieldOfViewOffsetInterpolator1 ._keyValue = new x_ite_Fields.MFFloat (toViewpointNode ._fieldOfViewOffset [1], toViewpointNode ._fieldOfViewOffset [1]);
          this .fieldOfViewOffsetInterpolator2 ._keyValue = new x_ite_Fields.MFFloat (toViewpointNode ._fieldOfViewOffset [2], toViewpointNode ._fieldOfViewOffset [2]);
          this .fieldOfViewOffsetInterpolator3 ._keyValue = new x_ite_Fields.MFFloat (toViewpointNode ._fieldOfViewOffset [3], toViewpointNode ._fieldOfViewOffset [3]);
-
-         this .fieldOfViewScaleInterpolator ._keyValue = new x_ite_Fields.MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator   ._keyValue = new x_ite_Fields.MFFloat (1, toViewpointNode ._fieldOfViewOffset .getValue ());
 
          this ._fieldOfViewOffset = toViewpointNode ._fieldOfViewOffset .getValue ();
-         this ._fieldOfViewScale  = toViewpointNode ._fieldOfViewScale  .getValue ();
+         this ._fieldOfViewScale  = 1;
       }
    },
    getLogarithmicDepthBuffer: function ()
@@ -65323,27 +65323,51 @@ OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpo
    },
    getMinimumX: function ()
    {
-      return this .minimumX;
+      return this ._fieldOfView .length > 0 ? this ._fieldOfView [0] : -1;
+   },
+   getUserMinimumX: function ()
+   {
+      return (this .getMinimumX () + this ._fieldOfViewOffset [0]) * this ._fieldOfViewScale .getValue ();
    },
    getMinimumY: function ()
    {
-      return this .minimumY;
+      return this ._fieldOfView .length > 1 ? this ._fieldOfView [1] : -1;
+   },
+   getUserMinimumY: function ()
+   {
+      return (this .getMinimumY () + this ._fieldOfViewOffset [1]) * this ._fieldOfViewScale .getValue ();
    },
    getMaximumX: function ()
    {
-      return this .maximumX;
+      return this ._fieldOfView .length > 2 ? this ._fieldOfView [2] : 1;
+   },
+   getUserMaximumX: function ()
+   {
+      return (this .getMaximumX () + this ._fieldOfViewOffset [2]) * this ._fieldOfViewScale .getValue ();
    },
    getMaximumY: function ()
    {
-      return this .maximumY;
+      return this ._fieldOfView .length > 3 ? this ._fieldOfView [3] : 1;
+   },
+   getUserMaximumY: function ()
+   {
+      return (this .getMaximumY () + this ._fieldOfViewOffset [3]) * this ._fieldOfViewScale .getValue ();
    },
    getSizeX: function ()
    {
-      return this .sizeX;
+      return this .getMaximumX () - this .getMinimumX ();
+   },
+   getUserSizeX: function ()
+   {
+      return this .getUserMaximumX () - this .getUserMinimumX ();
    },
    getSizeY: function ()
    {
-      return this .sizeY;
+      return this .getMaximumY () - this .getMinimumY ();
+   },
+   getUserSizeY: function ()
+   {
+      return this .getUserMaximumY () - this .getUserMinimumY ();
    },
    getMaxFarValue: function ()
    {
@@ -65354,8 +65378,8 @@ OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpo
       const
          width  = viewport [2],
          height = viewport [3],
-         sizeX  = this .sizeX,
-         sizeY  = this .sizeY,
+         sizeX  = this .getUserSizeX (),
+         sizeY  = this .getUserSizeY (),
          aspect = width / height;
 
       if (aspect > sizeX / sizeY)
@@ -65380,8 +65404,8 @@ OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpo
          const
             width  = viewport [2],
             height = viewport [3],
-            sizeX  = this .sizeX,
-            sizeY  = this .sizeY,
+            sizeX  = this .getUserSizeX (),
+            sizeY  = this .getUserSizeY (),
             aspect = width / height;
 
          if (aspect > sizeX / sizeY)
@@ -65400,29 +65424,40 @@ OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpo
          width  = viewport [2],
          height = viewport [3],
          aspect = width / height,
-         sizeX  = this .sizeX,
-         sizeY  = this .sizeY;
+         sizeX  = this .getUserSizeX (),
+         sizeY  = this .getUserSizeY ();
 
       if (aspect > sizeX / sizeY)
       {
          const
-            center  = (this .minimumX + this .maximumX) / 2,
+            center  = (this .getUserMinimumX () + this .getUserMaximumX ()) / 2,
             size1_2 = (sizeY * aspect) / 2;
 
-         return Geometry_Camera.ortho (center - size1_2, center + size1_2, this .minimumY, this .maximumY, nearValue, farValue, this .projectionMatrix);
+         return Geometry_Camera.ortho (center - size1_2, center + size1_2, this .getUserMinimumY (), this .getUserMaximumY (), nearValue, farValue, this .projectionMatrix);
       }
       else
       {
          const
-            center  = (this .minimumY + this .maximumY) / 2,
+            center  = (this .getUserMinimumY () + this .getUserMaximumY ()) / 2,
             size1_2 = (sizeX / aspect) / 2;
 
-         return Geometry_Camera.ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
+         return Geometry_Camera.ortho (this .getUserMinimumX (), this .getUserMaximumX (), center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
       }
    },
    viewAll: function (bbox)
    {
+      const
+         size   = bbox .size,
+         scaleX = size .x / this .getSizeX (),
+         scaleY = size .y / this .getSizeY (),
+         scale  = Math .max (scaleX, scaleY) * 1.1;
 
+      this ._fieldOfViewOffset [0] = this .getMinimumX () * scale - this .getMinimumX ();
+      this ._fieldOfViewOffset [1] = this .getMinimumY () * scale - this .getMinimumY ();
+      this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
+      this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
+
+      Navigation_X3DViewpointNode.prototype.viewAll.call (this, bbox);
    },
 });
 
@@ -66235,8 +66270,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(609);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(683);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(924);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67101,8 +67136,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(609);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(683);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(924);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -68041,8 +68076,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(609);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(683);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(924);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -68252,9 +68287,6 @@ PlaneViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.pr
          this .constrainFieldOfViewScale ();
       }
 
-      if (viewpoint .set_fieldOfView___)
-         viewpoint .set_fieldOfView___ (); // XXX: Immediately apply fieldOfViewScale;
-
       const
          toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
          translation = viewpoint .getUserOrientation () .multVecRot (vector .assign (fromPoint) .subtract (toPoint));
@@ -68357,8 +68389,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(609);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(683);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(924);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -69960,8 +69992,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(609);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(683);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(924);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70571,8 +70603,8 @@ const X3DPointingDeviceSensorContext_default_ = X3DPointingDeviceSensorContext;
 x_ite_Namespace.set ("x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext", X3DPointingDeviceSensorContext_default_);
 /* harmony default export */ const PointingDeviceSensor_X3DPointingDeviceSensorContext = (X3DPointingDeviceSensorContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(683);
-/* provided dependency */ var ResizeSensor = __webpack_require__(903);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(160);
+/* provided dependency */ var ResizeSensor = __webpack_require__(835);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81591,7 +81623,7 @@ const X3DRoutingContext_default_ = X3DRoutingContext;
 x_ite_Namespace.set ("x_ite/Routing/X3DRoutingContext", X3DRoutingContext_default_);
 /* harmony default export */ const Routing_X3DRoutingContext = (X3DRoutingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowserContext.js
-/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(683);
+/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100689,7 +100721,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(683);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102216,6 +102248,8 @@ function ListenerPointSource (executionContext)
    this .addType (Base_X3DConstants.ListenerPointSource);
 
    this .addChildObjects ("speed", new x_ite_Fields.SFFloat (1));
+
+   this ._position .setUnit ("length");
 }
 
 ListenerPointSource .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.prototype),
@@ -102226,11 +102260,11 @@ ListenerPointSource .prototype = Object .assign (Object .create (Sound_X3DSoundS
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
 
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "position",             new x_ite_Fields.SFVec3f ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "orientation",          new x_ite_Fields.SFRotation ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                 new x_ite_Fields.SFFloat (1)),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "dopplerEnabled",       new x_ite_Fields.SFBool ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "interauralDistance",   new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "orientation",          new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "position",             new x_ite_Fields.SFVec3f ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "trackCurrentView",     new x_ite_Fields.SFBool ()),
 
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",            new x_ite_Fields.SFTime ()),
@@ -102906,6 +102940,8 @@ function SpatialSound (executionContext)
    Sound_X3DSoundNode.call (this, executionContext);
 
    this .addType (Base_X3DConstants.SpatialSound);
+
+   this ._location .setUnit ("length");
 }
 
 SpatialSound .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype),
@@ -103382,7 +103418,7 @@ const Components_Sound_default_ = undefined;
 x_ite_Namespace.set ("x_ite/Components/Sound", Components_Sound_default_);
 /* harmony default export */ const Components_Sound = ((/* unused pure expression or super */ null && (Components_Sound_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(683);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104305,7 +104341,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(683);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105008,7 +105044,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(683);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(160);
 /*******************************************************************************
  * MIT License
  *
@@ -106232,7 +106268,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(683);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107117,7 +107153,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(683);
+/* provided dependency */ var Fallback_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107296,14 +107332,14 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(683);
+/* provided dependency */ var jquery_$ = __webpack_require__(160);
 const jquery_default_ = jquery_$;
 ;
 
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(683);
+/* provided dependency */ var X3D_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107558,7 +107594,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(683);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
