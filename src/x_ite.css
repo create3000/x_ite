@@ -53,6 +53,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border: 0;
   border-radius: 0;
   padding: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   inset: 0;
 }
 
@@ -198,12 +202,20 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-world-info-overlay {
   position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   inset: 0;
 }
 
 .x_ite-private-world-info {
   overflow-y: auto;
   position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   inset: 0;
   margin: 21pt;
   -webkit-backdrop-filter: blur(8px);
@@ -268,6 +280,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-menu.context-menu-layer {
   position: fixed;
   z-index: 10000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   inset: 0;
 }
 
@@ -498,6 +514,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-splash-screen {
   position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   inset: 0;
   background: #1b1d21;
   background: -moz-radial-gradient(center, ellipse cover, #2f3135 0%, #1b1d21 100%);
