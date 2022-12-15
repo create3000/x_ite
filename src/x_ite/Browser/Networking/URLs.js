@@ -62,14 +62,14 @@ const URLs = {
          return src;
       };
    })(),
-   getProviderUrl: function (file)
+   getProviderUrl: function (component)
    {
-      if (file)
+      if (component)
       {
          if (this .getScriptUrl () .match (/\.min\.js$/))
-            file += ".min";
+            component += ".min";
 
-         return new URL ("assets/components/" + file + ".js", this .getScriptUrl ()) .href;
+         return new URL ("assets/components/" + component + ".js", this .getScriptUrl ()) .href;
       }
 
       return "https://create3000.github.io/x_ite/";
