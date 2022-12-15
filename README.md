@@ -26,7 +26,7 @@ If you are a developer or you always wanna be up to date:
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
 ```
 
-## NPM usage
+## NPM Usage
 
 ```sh
 $ npm install x_ite
