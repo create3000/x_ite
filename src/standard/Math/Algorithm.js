@@ -69,8 +69,7 @@ export default class Algorithm
 
    static clamp (value, min, max)
    {
-      // https://jsperf.com/math-clamp
-      // https://jsperf.com/clamping-methods/2
+      // https://registry.khronos.org/OpenGL-Refpages/gl4/html/clamp.xhtml
       return Math .min (Math .max (value, min), max);
    }
 
