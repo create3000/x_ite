@@ -77,6 +77,10 @@ varying vec3 vertex;
 void
 vertex_main ()
 {
+   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
+
+   vertex = position .xyz;
+
    #if defined (X3D_GEOMETRY_0D)
       #if defined (X3D_STYLE_PROPERTIES)
          gl_PointSize = pointSize = getPointSize (vertex);
@@ -112,10 +116,6 @@ vertex_main ()
          localNormal = x3d_Normal;
       #endif
    #endif
-
-   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
-
-   vertex = position .xyz;
 
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
       localVertex = x3d_Vertex .xyz;
