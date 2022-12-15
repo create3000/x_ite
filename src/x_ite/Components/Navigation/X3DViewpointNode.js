@@ -477,10 +477,11 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, Vector3 .One);
       this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
+      this ._fieldOfViewScale = 1;
+
       this .setInterpolators (this, this, this .getRelativeTransformation (this));
 
       this ._centerOfRotationOffset = Vector3 .subtract (point, this .getCenterOfRotation ());
-      this ._set_bind               = true;
    },
    straighten: function (layerNode, horizon)
    {
@@ -501,9 +502,9 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
       this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
-      this .setInterpolators (this, this, this .getRelativeTransformation (this));
+      this ._fieldOfViewScale = 1;
 
-      this ._set_bind = true;
+      this .setInterpolators (this, this, this .getRelativeTransformation (this));
    },
    straightenHorizon: (function ()
    {
