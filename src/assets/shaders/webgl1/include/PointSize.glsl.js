@@ -10,14 +10,14 @@ getPointSize (const in vec3 vertex)
 {
    // Determine point size.
 
-   float pointSizeMinValue    = x3d_PointProperties .pointSizeMinValue;
-   float pointSizeMaxValue    = x3d_PointProperties .pointSizeMaxValue;
-   vec3  pointSizeAttenuation = x3d_PointProperties .pointSizeAttenuation;
-   float dL                   = length (vertex);
-   float pointSize            = 0.0;
+   float pointSizeMinValue = x3d_PointProperties .pointSizeMinValue;
+   float pointSizeMaxValue = x3d_PointProperties .pointSizeMaxValue;
+   vec3  attenuation       = x3d_PointProperties .attenuation;
+   float dL                = length (vertex);
+   float pointSize         = 0.0;
 
    pointSize  = x3d_PointProperties .pointSizeScaleFactor;
-   pointSize /= dot (pointSizeAttenuation, vec3 (1.0, dL, dL * dL));
+   pointSize /= dot (attenuation, vec3 (1.0, dL, dL * dL));
    pointSize  = clamp (pointSize, pointSizeMinValue, pointSizeMaxValue);
 
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURE)

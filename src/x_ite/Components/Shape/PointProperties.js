@@ -59,7 +59,7 @@ function PointProperties (executionContext)
 
    this .addType (X3DConstants .PointProperties);
 
-   this .pointSizeAttenuation = new Float32Array (3);
+   this .attenuation = new Float32Array (3);
 }
 
 PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -70,7 +70,7 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
       new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeScaleFactor", new Fields .SFFloat (1)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMinValue",    new Fields .SFFloat (1)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMaxValue",    new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeAttenuation", new Fields .MFFloat (1, 0, 0)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "attenuation",          new Fields .MFFloat (1, 0, 0)),
    ]),
    getTypeName: function ()
    {
@@ -95,22 +95,22 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
       this ._pointSizeScaleFactor .addInterest ("set_pointSizeScaleFactor__", this);
       this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
       this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
-      this ._pointSizeAttenuation .addInterest ("set_pointSizeAttenuation__", this);
+      this ._attenuation          .addInterest ("set_attenuation__",          this);
 
       this .set_pointSizeScaleFactor__ ();
       this .set_pointSizeMinValue__ ();
       this .set_pointSizeMaxValue__ ();
-      this .set_pointSizeAttenuation__ ();
+      this .set_attenuation__ ();
    },
    getPointSize: function (point)
    {
       const
-         pointSizeAttenuation = this .pointSizeAttenuation,
-         dL                   = point .magnitude ();
+         attenuation = this .attenuation,
+         dL          = point .magnitude ();
 
       let pointSize = this .pointSizeScaleFactor;
 
-      pointSize /= pointSizeAttenuation [0] + pointSizeAttenuation [1] * dL + pointSizeAttenuation [2] * (dL * dL);
+      pointSize /= attenuation [0] + attenuation [1] * dL + attenuation [2] * (dL * dL);
       pointSize  = Algorithm .clamp (pointSize, this .pointSizeMinValue, this .pointSizeMaxValue);
 
       return pointSize;
@@ -127,20 +127,20 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
    {
       this .pointSizeMaxValue = Algorithm .clamp (this ._pointSizeMaxValue .getValue (), 0, this .pointSizeRange [1]);
    },
-   set_pointSizeAttenuation__: function ()
+   set_attenuation__: function ()
    {
-      const length = this ._pointSizeAttenuation .length;
+      const length = this ._attenuation .length;
 
-      this .pointSizeAttenuation [0] = length > 0 ? Math .max (0, this ._pointSizeAttenuation [0]) : 1;
-      this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this ._pointSizeAttenuation [1]) : 0;
-      this .pointSizeAttenuation [2] = length > 2 ? Math .max (0, this ._pointSizeAttenuation [2]) : 0;
+      this .attenuation [0] = length > 0 ? Math .max (0, this ._attenuation [0]) : 1;
+      this .attenuation [1] = length > 1 ? Math .max (0, this ._attenuation [1]) : 0;
+      this .attenuation [2] = length > 2 ? Math .max (0, this ._attenuation [2]) : 0;
    },
    setShaderUniforms: function (gl, shaderObject)
    {
       gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeScaleFactor, this .pointSizeScaleFactor);
       gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMinValue,    this .pointSizeMinValue);
       gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMaxValue,    this .pointSizeMaxValue);
-      gl .uniform3fv (shaderObject .x3d_PointPropertiesPointSizeAttenuation, this .pointSizeAttenuation);
+      gl .uniform3fv (shaderObject .x3d_PointPropertiesAttenuation, this .attenuation);
    },
 });
 

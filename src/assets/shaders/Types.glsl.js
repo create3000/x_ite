@@ -41,7 +41,7 @@ struct x3d_PointPropertiesParameters
    mediump float pointSizeScaleFactor;
    mediump float pointSizeMinValue;
    mediump float pointSizeMaxValue;
-   mediump vec3  pointSizeAttenuation;
+   mediump vec3  attenuation;
 };
 #endif
 
