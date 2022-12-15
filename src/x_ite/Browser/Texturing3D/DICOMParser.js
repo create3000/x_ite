@@ -304,7 +304,7 @@ DicomParser .prototype =
    {
       var frames = [ ];
 
-      if (pixelElement .encapsulatedPixelData)
+      if (pixelElement && pixelElement .encapsulatedPixelData)
       {
          if (pixelElement .basicOffsetTable .length)
          {
