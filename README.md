@@ -9,10 +9,10 @@ X_ITE is an X3D JavaScript WebGL browser. It is a full standard X3D WebGL browse
 ## Quick Links
 
 * [Getting Started](https://create3000.github.io/x_ite/)
-* [Supported Nodes](https://create3000.github.io/x_ite/Supported-Nodes.html)
-* [Accessing the External Browser](https://create3000.github.io/x_ite/Accessing-the-External-Browser.html)
-* [XHTML DOM Integration](https://create3000.github.io/x_ite/XHTML-DOM-Integration.html)
-* [Custom Shaders](https://create3000.github.io/x_ite/Custom-Shaders.html)
+* [Supported Nodes](https://create3000.github.io/x_ite/supported-nodes)
+* [Accessing the External Browser](https://create3000.github.io/x_ite/accessing-the-external-browser)
+* [DOM Integration](https://create3000.github.io/x_ite/dom-integration)
+* [Custom Shaders](https://create3000.github.io/x_ite/custom-shaders)
 
 ## GitHub CDN
 
