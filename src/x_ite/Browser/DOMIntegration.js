@@ -196,43 +196,42 @@ class DOMIntegration
 		if ($.data (element, "node"))
 			return;
 
-		const parentNode = element .parentNode;
-
-		// First get correct execution context.
-
-		let nodeScene = this .browser .currentScene; // Assume main Scene.
+		const
+			parentNode = element .parentNode,
+			parser     = this .parser;
 
 		if (parentNode .nodeName .match (/^(?:Scene|SCENE)$/))
 		{
-			nodeScene = $.data (parentNode, "node");
+			// Root scene or Inline scene.
+
+			const scene = $.data (parentNode, "node");
+
+			parser .pushExecutionContext (scene);
+			parser .childElement (element);
+			parser .popExecutionContext ();
 		}
 		else if ($.data (parentNode, "node"))
 		{
 			// Use parent's scene if non-root, works for Inline.
 
-			nodeScene = $.data (parentNode, "node") .getExecutionContext ();
-		}
+			const
+				node             = $.data (parentNode, "node"),
+				executionContext = node .getExecutionContext ();
 
-		this .parser .pushExecutionContext (nodeScene);
-
-		// then check if root node.
-
-		if ($.data (parentNode, "node"))
-		{
-			const node = $.data (parentNode, "node");
-
-			this .parser .pushParent (node);
-			this .parser .childElement (element);
-			this .parser .popParent ();
+			parser .pushExecutionContext (executionContext);
+			parser .pushParent (node);
+			parser .childElement (element);
+			parser .popParent ();
+			parser .popExecutionContext ();
 		}
 		else
 		{
-			// Inline or main root node.
+			const scene = this .browser .currentScene;
 
-			this .parser .childElement (element);
+			parser .pushExecutionContext (scene);
+			parser .childElement (element);
+			parser .popExecutionContext ();
 		}
-
-		this .parser .popExecutionContext ();
 
 		// Now after creating nodes need to look again for Inline elements.
 

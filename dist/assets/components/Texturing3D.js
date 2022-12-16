@@ -1,7 +1,7 @@
 /* X_ITE v8.3.0 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 796:
+/***/ 269:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var yb=[Uw,Qq,Uq,Or,Sr,Xr,Zr,xu,Iu,Uw,Uw,Uw,Uw,Uw,Uw,Uw];var zb=[Vw,ii,Yh,Mh,Ah,
 
 /***/ }),
 
-/***/ 63:
+/***/ 67:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var Qa=[oj,ed,We,oj];var Ra=[pj,Bi,Vh,Th,Ab,Bb,Cb,Db,Hc,Ic,Kc,$c,nd,Oe,af,od,pd,
 
 /***/ }),
 
-/***/ 247:
+/***/ 538:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2022-12-05 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 964:
+/***/ 390:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 857:
+/***/ 689:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=undefined;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=undefined;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
@@ -8118,11 +8118,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().set ("x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(247);
-/* provided dependency */ var JpegImage = __webpack_require__(964);
-/* provided dependency */ var jpeg = __webpack_require__(857);
-/* provided dependency */ var CharLS = __webpack_require__(796);
-/* provided dependency */ var OpenJPEG = __webpack_require__(63);
+/* provided dependency */ var dicomParser = __webpack_require__(538);
+/* provided dependency */ var JpegImage = __webpack_require__(390);
+/* provided dependency */ var jpeg = __webpack_require__(689);
+/* provided dependency */ var CharLS = __webpack_require__(269);
+/* provided dependency */ var OpenJPEG = __webpack_require__(67);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
