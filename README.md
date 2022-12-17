@@ -32,7 +32,7 @@ If you are a developer or you always wanna be up to date:
 $ npm install x_ite
 ```
 
-It can be used in [Electron](https://www.electronjs.org){:target="_blank"} apps in a preload script of the **renderer process** like this:
+It can be used in [Electron](https://www.electronjs.org) apps in a preload script of the **renderer process** like this:
 
 ```js
 window .addEventListener ("DOMContentLoaded", () =>
