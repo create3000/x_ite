@@ -819,10 +819,13 @@ There is a ZIP archive available to locally install X_ITE on your server. Compre
 $ npm install x_ite
 ```
 
-It can be used in [Electron](https://www.electronjs.org){:target="_blank"} apps in the **renderer process** like this:
+It can be used in [Electron](https://www.electronjs.org){:target="_blank"} apps in a preload script of the **renderer process** like this:
 
 ```js
-const X3D = require ("x_ite")
+window .addEventListener ("DOMContentLoaded", () =>
+{
+  const X3D = require ("x_ite")
+})
 ```
 
 Make sure that contextIsolation is set to **false** when creating a BrowserWindow instance.
