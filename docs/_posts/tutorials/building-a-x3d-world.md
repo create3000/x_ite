@@ -23,7 +23,7 @@ X3D files contain:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<X3D profile='Full' version='4.0' xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<X3D profile='Full' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
   <Scene>
   <!-- A Cylinder -->
   <Shape>

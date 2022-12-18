@@ -374,7 +374,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       stream .string += " ";
       stream .string += this .getBrowser () .name;
       stream .string += " ";
-      stream .string += "v";
+      stream .string += "V";
       stream .string += this .getBrowser () .version;
       stream .string += "\n";
       stream .string += "\n";
@@ -472,7 +472,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       stream .string += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
       stream .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
       stream .string += LATEST_VERSION;
-      stream .string += "//EN\" \"https://www.web3d.org/specifications/x3d-";
+      stream .string += "//EN\" \"http://www.web3d.org/specifications/x3d-";
       stream .string += LATEST_VERSION;
       stream .string += ".dtd\">\n";
 
@@ -486,92 +486,108 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       stream .string += LATEST_VERSION;
       stream .string += "'";
       stream .string += " ";
-      stream .string += "xmlns:xsd='https://www.w3.org/2001/XMLSchema-instance'";
+      stream .string += "xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'";
       stream .string += " ";
-      stream .string += "xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-";
+      stream .string += "xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-";
       stream .string += LATEST_VERSION;
       stream .string += ".xsd'>\n";
 
       generator .IncIndent ();
 
-      stream .string += generator .Indent ();
-      stream .string += "<head>\n";
-
-      generator .IncIndent ();
-
-      // <head>
-
-      this .getComponents () .toXMLStream (stream);
-
-      for (const unit of this .getUnits ())
-      {
-         if (unit .conversionFactor !== 1)
-         {
-            unit .toXMLStream (stream);
-
-            stream .string += "\n";
-         }
-      }
-
-      this .getMetaDatas () .forEach (function (value, key)
+      if (this .getComponents () .length ||
+          this .getUnits () .some (unit => unit .conversionFactor !== 1) ||
+          this .getMetaDatas () .size)
       {
          stream .string += generator .Indent ();
-         stream .string += "<meta";
-         stream .string += " ";
-         stream .string += "name='";
-         stream .string += generator .XMLEncode (key);
-         stream .string += "'";
-         stream .string += " ";
-         stream .string += "content='";
-         stream .string += generator .XMLEncode (value);
-         stream .string += "'";
-         stream .string += "/>\n";
-      });
+         stream .string += "<head>\n";
 
-      // </head>
+         generator .IncIndent ();
 
-      generator .DecIndent ();
+         // <head>
 
-      stream .string += generator .Indent ();
-      stream .string += "</head>\n";
-      stream .string += generator .Indent ();
-      stream .string += "<Scene>\n";
+         this .getComponents () .toXMLStream (stream);
 
-      generator .IncIndent ();
-
-      // <Scene>
-
-      const exportedNodes = this .getExportedNodes ();
-
-      generator .PushExecutionContext (this);
-      generator .EnterScope ();
-      generator .ExportedNodes (exportedNodes);
-
-      X3DExecutionContext .prototype .toXMLStream .call (this, stream);
-
-      for (const exportedNode of exportedNodes)
-      {
-         try
+         for (const unit of this .getUnits ())
          {
-            exportedNode .toXMLStream (stream);
+            if (unit .conversionFactor !== 1)
+            {
+               unit .toXMLStream (stream);
 
-            stream .string += "\n";
+               stream .string += "\n";
+            }
          }
-         catch (error)
+
+         this .getMetaDatas () .forEach (function (value, key)
          {
-            console .error (error);
-         }
+            stream .string += generator .Indent ();
+            stream .string += "<meta";
+            stream .string += " ";
+            stream .string += "name='";
+            stream .string += generator .XMLEncode (key);
+            stream .string += "'";
+            stream .string += " ";
+            stream .string += "content='";
+            stream .string += generator .XMLEncode (value);
+            stream .string += "'";
+            stream .string += "/>\n";
+         });
+
+         // </head>
+
+         generator .DecIndent ();
+
+         stream .string += generator .Indent ();
+         stream .string += "</head>\n";
       }
 
-      generator .LeaveScope ();
-      generator .PopExecutionContext ();
+      if (this .getExternProtoDeclarations () .length ||
+          this .getProtoDeclarations () .length ||
+          this .getRootNodes () .length)
+      {
+         stream .string += generator .Indent ();
+         stream .string += "<Scene>\n";
 
-      // </Scene>
+         generator .IncIndent ();
 
-      generator .DecIndent ();
+         // <Scene>
 
-      stream .string += generator .Indent ();
-      stream .string += "</Scene>\n";
+         const exportedNodes = this .getExportedNodes ();
+
+         generator .PushExecutionContext (this);
+         generator .EnterScope ();
+         generator .ExportedNodes (exportedNodes);
+
+         X3DExecutionContext .prototype .toXMLStream .call (this, stream);
+
+         for (const exportedNode of exportedNodes)
+         {
+            try
+            {
+               exportedNode .toXMLStream (stream);
+
+               stream .string += "\n";
+            }
+            catch (error)
+            {
+               console .error (error);
+            }
+         }
+
+         generator .LeaveScope ();
+         generator .PopExecutionContext ();
+
+         // </Scene>
+
+         generator .DecIndent ();
+
+         stream .string += generator .Indent ();
+         stream .string += "</Scene>\n";
+      }
+      else
+      {
+         stream .string += generator .Indent ();
+         stream .string += "<Scene/>\n";
+      }
 
       generator .DecIndent ();
 

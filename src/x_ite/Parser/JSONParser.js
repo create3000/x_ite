@@ -54,7 +54,7 @@ function JSONParser (scene)
 {
    X3DParser .call (this, scene);
 
-   this .namespace = "https://www.web3d.org/specifications/x3d-namespace";
+   this .namespace = "http://www.web3d.org/specifications/x3d-namespace";
 }
 
 JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
