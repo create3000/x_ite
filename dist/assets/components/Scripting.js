@@ -1,11 +1,11 @@
-/* X_ITE v8.3.0 */(() => { // webpackBootstrap
+/* X_ITE v8.3.1 */(() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 355:
 /***/ ((module) => {
 
-module.exports = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("lib/jquery");
+module.exports = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("lib/jquery");
 
 /***/ })
 
@@ -73,70 +73,70 @@ var __webpack_exports__ = {};
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DField\")"
-const X3DField_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Base/X3DField");
+const X3DField_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Base/X3DField");
 var X3DField_default = /*#__PURE__*/__webpack_require__.n(X3DField_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DArrayField\")"
-const X3DArrayField_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Base/X3DArrayField");
+const X3DArrayField_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Base/X3DArrayField");
 var X3DArrayField_default = /*#__PURE__*/__webpack_require__.n(X3DArrayField_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/X3DBrowser\")"
-const X3DBrowser_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Browser/X3DBrowser");
+const X3DBrowser_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Browser/X3DBrowser");
 var X3DBrowser_default = /*#__PURE__*/__webpack_require__.n(X3DBrowser_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Configuration/ComponentInfo\")"
-const ComponentInfo_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Configuration/ComponentInfo");
+const ComponentInfo_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Configuration/ComponentInfo");
 var ComponentInfo_default = /*#__PURE__*/__webpack_require__.n(ComponentInfo_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Configuration/ComponentInfoArray\")"
-const ComponentInfoArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Configuration/ComponentInfoArray");
+const ComponentInfoArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Configuration/ComponentInfoArray");
 var ComponentInfoArray_default = /*#__PURE__*/__webpack_require__.n(ComponentInfoArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Configuration/ProfileInfo\")"
-const ProfileInfo_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Configuration/ProfileInfo");
+const ProfileInfo_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Configuration/ProfileInfo");
 var ProfileInfo_default = /*#__PURE__*/__webpack_require__.n(ProfileInfo_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Configuration/ProfileInfoArray\")"
-const ProfileInfoArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Configuration/ProfileInfoArray");
+const ProfileInfoArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Configuration/ProfileInfoArray");
 var ProfileInfoArray_default = /*#__PURE__*/__webpack_require__.n(ProfileInfoArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Configuration/UnitInfo\")"
-const UnitInfo_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Configuration/UnitInfo");
+const UnitInfo_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Configuration/UnitInfo");
 var UnitInfo_default = /*#__PURE__*/__webpack_require__.n(UnitInfo_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Configuration/UnitInfoArray\")"
-const UnitInfoArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Configuration/UnitInfoArray");
+const UnitInfoArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Configuration/UnitInfoArray");
 var UnitInfoArray_default = /*#__PURE__*/__webpack_require__.n(UnitInfoArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Execution/X3DExecutionContext\")"
-const X3DExecutionContext_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Execution/X3DExecutionContext");
+const X3DExecutionContext_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Execution/X3DExecutionContext");
 var X3DExecutionContext_default = /*#__PURE__*/__webpack_require__.n(X3DExecutionContext_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Execution/X3DScene\")"
-const X3DScene_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Execution/X3DScene");
+const X3DScene_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Execution/X3DScene");
 var X3DScene_default = /*#__PURE__*/__webpack_require__.n(X3DScene_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Prototype/ExternProtoDeclarationArray\")"
-const ExternProtoDeclarationArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Prototype/ExternProtoDeclarationArray");
+const ExternProtoDeclarationArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Prototype/ExternProtoDeclarationArray");
 var ExternProtoDeclarationArray_default = /*#__PURE__*/__webpack_require__.n(ExternProtoDeclarationArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Prototype/ProtoDeclarationArray\")"
-const ProtoDeclarationArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Prototype/ProtoDeclarationArray");
+const ProtoDeclarationArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Prototype/ProtoDeclarationArray");
 var ProtoDeclarationArray_default = /*#__PURE__*/__webpack_require__.n(ProtoDeclarationArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Prototype/X3DExternProtoDeclaration\")"
-const X3DExternProtoDeclaration_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Prototype/X3DExternProtoDeclaration");
+const X3DExternProtoDeclaration_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Prototype/X3DExternProtoDeclaration");
 var X3DExternProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(X3DExternProtoDeclaration_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Prototype/X3DProtoDeclaration\")"
-const X3DProtoDeclaration_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Prototype/X3DProtoDeclaration");
+const X3DProtoDeclaration_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Prototype/X3DProtoDeclaration");
 var X3DProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(X3DProtoDeclaration_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Routing/RouteArray\")"
-const RouteArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Routing/RouteArray");
+const RouteArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Routing/RouteArray");
 var RouteArray_default = /*#__PURE__*/__webpack_require__.n(RouteArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Routing/X3DRoute\")"
-const X3DRoute_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Routing/X3DRoute");
+const X3DRoute_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Routing/X3DRoute");
 var X3DRoute_default = /*#__PURE__*/__webpack_require__.n(X3DRoute_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Scripting/evaluate.js
 /*******************************************************************************
@@ -203,13 +203,13 @@ const __default__ = evaluate;
 Namespace_default().set ("x_ite/Browser/Scripting/evaluate", __default__);
 /* harmony default export */ const Scripting_evaluate = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Components/Core/X3DChildNode");
+const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Components/Core/X3DChildNode");
 var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Networking/X3DUrlObject\")"
-const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Components/Networking/X3DUrlObject");
+const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Components/Networking/X3DUrlObject");
 var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Scripting/X3DScriptNode.js
 /*******************************************************************************
@@ -293,7 +293,7 @@ const X3DScriptNode_default_ = X3DScriptNode;
 Namespace_default().set ("x_ite/Components/Scripting/X3DScriptNode", X3DScriptNode_default_);
 /* harmony default export */ const Scripting_X3DScriptNode = (X3DScriptNode_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/InputOutput/FileLoader\")"
-const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.0")] .require ("x_ite/InputOutput/FileLoader");
+const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.1")] .require ("x_ite/InputOutput/FileLoader");
 var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Scripting/Script.js
 /* provided dependency */ var $ = __webpack_require__(355);
