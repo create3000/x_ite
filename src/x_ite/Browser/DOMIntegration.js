@@ -379,10 +379,13 @@ class DOMIntegration
 	{
 		const node = $.data (element, "node");
 
+		if (! node)
+			return;
+
 		const event = new CustomEvent (field .getName (),
 		{
 			detail: {
-				node: node ? node .valueOf () : null,
+				node: node .valueOf (),
 				value: field .valueOf (),
 			},
 		});
