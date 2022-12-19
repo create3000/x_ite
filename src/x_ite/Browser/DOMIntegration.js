@@ -321,7 +321,7 @@ class DOMIntegration
 			{
 				const event = new CustomEvent ("load",
 				{
-					detail: { node: node ? node .valueOf () : null },
+					detail: { node: node .valueOf () },
 				});
 
 				element .dispatchEvent (event);
@@ -331,7 +331,7 @@ class DOMIntegration
 			{
 				const event = new CustomEvent ("error",
 				{
-					detail: { node: node ? node .valueOf () : null },
+					detail: { node: node .valueOf () },
 				});
 
 				element .dispatchEvent (event);
