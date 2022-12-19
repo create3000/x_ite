@@ -223,10 +223,10 @@ export default __default__;`;
                      opentype: "opentype.js/dist/opentype.js",
                   },
                   Texturing3D: {
-                     CharLS: "CharLS.js/dist/charLS-FixedMemory-browser.js",
+                     CharLS: "CharLS.js/dist/charLS-DynamicMemory-browser.js",
                      dicomParser: "dicom-parser/dist/dicomParser.js",
                      jpeg: "jpeg-lossless-decoder-js/release/current/lossless.js",
-                     OpenJPEG: "OpenJPEG.js/dist/openJPEG-FixedMemory-browser.js",
+                     OpenJPEG: "OpenJPEG.js/dist/openJPEG-DynamicMemory-browser.js",
                      JpegImage: "jpeg-js/lib/decoder.js",
                   },
                }
