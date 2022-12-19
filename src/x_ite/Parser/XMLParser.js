@@ -792,6 +792,10 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          //AP: attach node to DOM xmlElement for access from DOM.
          $.data (xmlElement, "node", node);
 
+         //DOMIntegration: Script node support for HTML.
+         if (xmlElement .nodeName === "SCRIPT")
+            this .scriptElement (xmlElement);
+
          this .defAttribute (xmlElement, node);
          this .addNode (xmlElement, node);
          this .pushParent (node);
@@ -819,6 +823,22 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             console .error (error);
       }
    },
+   scriptElement (element)
+	{
+		const
+			domParser      = new DOMParser (),
+			scriptDocument = domParser .parseFromString (element .outerHTML, "application/xml"),
+			childNodes     = scriptDocument .children [0] .childNodes;
+
+      element .textContent = "// Content moved into childNodes.";
+
+		for (const childNode of childNodes)
+		{
+         // Add elements and cdata.
+			if (childNode .nodeType === 1 || childNode .nodeType === 4)
+         	element .appendChild (childNode);
+		}
+	},
    routeElement: function (xmlElement)
    {
       try

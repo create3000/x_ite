@@ -64,11 +64,6 @@ class DOMIntegration
 				this .browser .setBrowserLoading (true);
 				this .browser .addLoadingObject (this);
 
-				// Preprocess script nodes if not xhtml.
-
-				if (! location .pathname .toLowerCase () .endsWith (".xhtml"))
-					this .preprocessScriptElements (rootElement);
-
 				// Now also attached x3d property to each node element.
 
 				const importedScene = await this .browser .importDocument (rootElement, true);
@@ -111,27 +106,6 @@ class DOMIntegration
 		{
 			console .error ("Error importing document:", error);
 		}
-	}
-
-	preprocessScriptElements (rootElement)
-	{
-		const scriptElements = rootElement .querySelectorAll ("Script");
-
-		for (const scriptElement of scriptElements)
-			this .appendScriptElementChildren (scriptElement);
-	}
-
-	appendScriptElementChildren (scriptElement)
-	{
-		const
-			domParser   = new DOMParser (),
-			scriptDoc   = domParser .parseFromString (scriptElement .outerHTML, "application/xml"),
-			scriptNodes = scriptDoc .children [0] .childNodes;
-
-		scriptElement .textContent = "// Content moved into childNodes.";
-
-		for (const scriptNode of scriptNodes)
-			scriptElement .appendChild (scriptNode);
 	}
 
 	processMutation (mutation)
