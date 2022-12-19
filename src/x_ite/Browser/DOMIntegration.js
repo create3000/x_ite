@@ -25,7 +25,6 @@
 
 import XMLParser    from "../Parser/XMLParser.js"
 import X3DConstants from "../Base/X3DConstants.js";
-import SFNodeCache  from "../Fields/SFNodeCache.js";
 
 class DOMIntegration
 {
@@ -315,6 +314,30 @@ class DOMIntegration
 				break;
 			}
 		}
+
+		switch (node .checkLoadState ())
+		{
+			case X3DConstants .COMPLETE_STATE:
+			{
+				const event = new CustomEvent ("load",
+				{
+					detail: { node: node ? node .valueOf () : null },
+				});
+
+				element .dispatchEvent (event);
+				break;
+			}
+			case X3DConstants .FAILED_STATE:
+			{
+				const event = new CustomEvent ("error",
+				{
+					detail: { node: node ? node .valueOf () : null },
+				});
+
+				element .dispatchEvent (event);
+				break;
+			}
+		}
 	}
 
 	addEventDispatchersAll (element)
@@ -356,9 +379,10 @@ class DOMIntegration
 	{
 		const node = $.data (element, "node");
 
-		const event = new CustomEvent (field .getName (), {
+		const event = new CustomEvent (field .getName (),
+		{
 			detail: {
-				node: node ? SFNodeCache .get (node) : null,
+				node: node ? node .valueOf () : null,
 				value: field .valueOf (),
 			},
 		});
