@@ -12,12 +12,14 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
 html {
   --nav-border-color: rgba(158,158,158,0.17);
   --nav-active-page: rgb(168, 182, 206);
+  --h2-color: #e4e45d;
   --h4-color: rgb(175, 206, 255);
   --example-background-color: rgba(27,27,30,0.4);
   --button-background-color: black;
 }
 
 html[data-mode=light] {
+  --h2-color: #cbca00;
   --button-background-color: white;
 }
 
@@ -69,7 +71,7 @@ a {
 }
 
 .post h2 {
-  color: #e4e45d;
+  color: var(--h2-color);
 }
 
 .post h3 {
