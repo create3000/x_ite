@@ -604,17 +604,13 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
 
       // Menu
 
-      const
-         x = event .pageX - $(document) .scrollLeft (),
-         y = event .pageY - $(document) .scrollTop ();
-
       const ul = $("<ul></ul>")
          .hide ()
+         .addClass ("context-menu-root")
          .addClass ("context-menu-list")
          .addClass (menu .className)
-         .addClass ("context-menu-root")
-         .css ({ "left": x, "top": y })
-         .appendTo (options .appendTo);
+         .appendTo (options .appendTo)
+         .offset ({ "left": event .pageX, "top": event .pageY });
 
       for (const k in menu .items)
          ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1, hide));
@@ -622,6 +618,8 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
       ul [options .animation .show] (options .animation .duration);
 
       // Reposition menu if to right or to low.
+
+		ul .offset ({ "left": event .pageX, "top": event .pageY }); // Do it again!
 
       if (ul .offset () .left - $(document) .scrollLeft () + ul .outerWidth () > $(window) .width ())
          ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .outerWidth ()) });
