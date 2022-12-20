@@ -219,7 +219,7 @@ inline .addEventListener ("load", () => console .log ("Deer loaded!"));
 
 ## Script Element
 
-If you use a HTML page instead of a XHTML page then there is already a \<script\> element, as you know. To avoid collisions you must add a different type. The right type is `model/x3d+xml`, which prevents the web browser from interpreting the content as JavaScript, and X_ITE can take over the content.
+If you use a HTML instead of a XHTML page then there is already a \<script\> element, as you know. To avoid collisions you must add a different type. The right type is `model/x3d+xml`, which prevents the web browser from interpreting the content as JavaScript, and X_ITE can take over the content.
 
 ```html
 <Script type='model/x3d+xml' DEF='ChangeColorScript'>
