@@ -150,6 +150,37 @@ function removeBlueBox ()
 }
 ```
 
+## Add and Remove Routes
+
+As well as nodes, routes can also be added and removed using DOM manipulation methods.
+
+```js
+function addRoute ()
+{
+  const
+    scene = document .querySelector ("Scene"),
+    route = document .createElement ("ROUTE");
+
+  // Connect a TimeSensor node with DEF name »Timer« to a ScalarInterpolator node
+  // with DEF name »Interpolator«.
+
+  route .setAttribute ("id",        "route1");
+  route .setAttribute ("fromNode",  "Timer");
+  route .setAttribute ("fromField", "fraction_changed");
+  route .setAttribute ("toNode",    "Interpolator");
+  route .setAttribute ("toField",   "set_fraction");
+
+  scene .appendChild (route);
+}
+
+function removeRoute ()
+{
+  const route = document .querySelector ("#route1");
+
+  route .remove ();
+}
+```
+
 ## Inline Nodes
 
 Even the contents of Inline nodes can be accessed and modified. The internal scene of the Inline node is attached to the Inline element as child every time the Inline node is completely loaded. To check if an Inline node is loaded use a LoadSensor node.
@@ -201,37 +232,6 @@ function set_over (value, time)
 }
 ]]>
 </Script>
-```
-
-## Add and Remove Routes
-
-As well as nodes, routes can also be added and removed using DOM manipulation methods.
-
-```js
-function addRoute ()
-{
-  const
-    scene = document .querySelector ("Scene"),
-    route = document .createElement ("ROUTE");
-
-  // Connect a TimeSensor node with DEF name »Timer« to a ScalarInterpolator node
-  // with DEF name »Interpolator«.
-
-  route .setAttribute ("id",        "route1");
-  route .setAttribute ("fromNode",  "Timer");
-  route .setAttribute ("fromField", "fraction_changed");
-  route .setAttribute ("toNode",    "Interpolator");
-  route .setAttribute ("toField",   "set_fraction");
-
-  scene .appendChild (route);
-}
-
-function removeRoute ()
-{
-  const route = document .querySelector ("#route1");
-
-  route .remove ();
-}
 ```
 
 ## See Also
