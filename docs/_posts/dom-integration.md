@@ -176,7 +176,7 @@ Assuming there is a Transform node with DEF name »Deer« inside the loaded scen
 const transform = document .querySelector ("[DEF='DeerInline'] [DEF='Deer']");
 ```
 
-### Events of Inline Elements
+### Events of Inline Element
 
 Every Inline element sends a `load` or `error` event when the contents of the Inline is loaded or failed loading.
 
