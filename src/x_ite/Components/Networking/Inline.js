@@ -135,24 +135,43 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    },
    unLoadNow: function ()
    {
+      this .abortLoading ();
       this .setInternalScene (this .getBrowser () .getDefaultScene ());
    },
    loadNow: function ()
    {
-      new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
+      this .abortLoading ();
+      this .fileLoader = new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
+   },
+   abortLoading: function ()
+   {
+      this .scene ._loadCount .removeInterest ("checkLoadCount", this);
+
+      if (this .fileLoader)
+         this .fileLoader .abort ();
    },
    setInternalSceneAsync: function (scene)
    {
       if (scene)
       {
+         scene ._loadCount .addInterest ("checkLoadCount", this);
          this .setInternalScene (scene);
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
+         this .checkLoadCount (scene ._loadCount);
       }
       else
       {
          this .setInternalScene (this .getBrowser () .getDefaultScene ());
          this .setLoadState (X3DConstants .FAILED_STATE);
       }
+   },
+   checkLoadCount: function (loadCount)
+   {
+      if (loadCount .getValue ())
+         return;
+
+      loadCount .removeInterest ("checkLoadCount", this);
+
+      this .setLoadState (X3DConstants .COMPLETE_STATE);
    },
    setInternalScene: function (scene)
    {

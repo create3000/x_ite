@@ -248,6 +248,8 @@ class DOMIntegration
 			return;
 
 		node ._loadState .addInterest ("appendInlineChildElement", this, element);
+
+		this .appendInlineChildElement (element);
 	}
 
 	appendInlineChildElement (element)
@@ -282,8 +284,8 @@ class DOMIntegration
 
 				// Add Inline elements, and connect to node events.
 
-				this .processInlineElements (element);
-				this .addEventDispatchersAll (element);
+				this .processInlineElements (X3DElement);
+				this .addEventDispatchersAll (X3DElement);
 
 				break;
 			}
