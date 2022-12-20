@@ -176,12 +176,14 @@ Assuming there is a Transform node with DEF name »Deer« inside the loaded scen
 const transform = document .querySelector ("[DEF='DeerInline'] [DEF='Deer']");
 ```
 
-### Event sof Inline Elements
+### Events of Inline Elements
 
 Every Inline element sends a `load` or `error` event when the contents of the Inline is loaded or failed loading.
 
 ```js
-document .querySelector ("[DEF='DeerInline']") .addEventListener ("load", () => console .log ("Deer loaded!"));
+const inline = document .querySelector ("[DEF='DeerInline']");
+
+inline .addEventListener ("load", () => console .log ("Deer loaded!"));
 ```
 
 ## Script Element
@@ -191,11 +193,11 @@ If you use a HTML page instead of a XHTML page then there is already a \<script\
 ```html
 <Script type='text/plain' DEF='ChangeColorScript'>
   <field accessType='inputOnly' type='SFBool' name='set_over'></field>
-	<field accessType='outputOnly' type='SFColor' name='diffuseColor_changed'></field>
+  <field accessType='outputOnly' type='SFColor' name='diffuseColor_changed'></field>
 <![CDATA[ecmascript:
 function set_over (value, time)
 {
-	diffuseColor_changed = value ? new SFColor (1, 0, 0) : new SFColor (0, 0, 1);
+  diffuseColor_changed = value ? new SFColor (1, 0, 0) : new SFColor (0, 0, 1);
 }
 ]]>
 </Script>
