@@ -21,7 +21,7 @@ timezone:
 
 title: X_ITE X3D Browser               # the main title
 version: 8.3.2                         # x_ite latest version
-x3d_latest_version: 4.0                # x3d latest version
+x3d_latest_version: 8.3.2                # x3d latest version
 
 tagline: Step Into The Future          # it will display as the sub-title
 
