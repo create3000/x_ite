@@ -176,6 +176,31 @@ Assuming there is a Transform node with DEF name »Deer« inside the loaded scen
 const transform = document .querySelector ("[DEF='DeerInline'] [DEF='Deer']");
 ```
 
+### Event sof Inline Elements
+
+Every Inline element sends a `load` or `error` event when the contents of the Inline is loaded or failed loading.
+
+```js
+document .querySelector ("[DEF='DeerInline']") .addEventListener ("load", () => console .log ("Deer loaded!")));
+```
+
+## Script Element
+
+If you use a HTML page instead of a XHTML page then there is already a \<script\> element, as you know. To avoid collisions you must add a different type. A good type is `text/plain`, which prevents the web browser from interpreting the contents as JavaScript.
+
+```html
+<Script type='text/plain' DEF='ChangeColorScript'>
+  <field accessType='inputOnly' type='SFBool' name='set_over'></field>
+	<field accessType='outputOnly' type='SFColor' name='diffuseColor_changed'></field>
+<![CDATA[ecmascript:
+function set_over (value, time)
+{
+	diffuseColor_changed = value ? new SFColor (1, 0, 0) : new SFColor (0, 0, 1);
+}
+]]>
+</Script>
+```
+
 ## Add and Remove Routes
 
 As well as nodes, routes can also be added and removed using DOM manipulation methods.
