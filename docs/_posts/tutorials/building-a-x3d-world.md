@@ -23,7 +23,7 @@ X3D files contain:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<X3D profile='Full' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <Scene>
   <!-- A Cylinder -->
   <Shape>
@@ -41,7 +41,7 @@ X3D files contain:
 ### Classic Encoding
 
 ```js
-#X3D V4.0 utf8
+#X3D V{{ site.x3d_latest_version }} utf8
 # A Cylinder
 Shape {
   appearance Appearance {
@@ -64,10 +64,10 @@ Shape {
 
 ## Understanding the header
 
-**\#X3D V4.0 utf8**
+**\#X3D V{{ site.x3d_latest_version }} utf8**
 
 - **\#X3D:** File contains X3D text
-- **V4.0 :** Text conforms to version 4.0 syntax
+- **V{{ site.x3d_latest_version }} :** Text conforms to version {{ site.x3d_latest_version }} syntax
 - **utf8 :** Text uses UTF8 character set
 
 ## Understanding UTF8

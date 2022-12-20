@@ -100,7 +100,7 @@ Text { ... }
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<X3D profile='Full' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <Scene>
     <Shape>
       <Appearance>
@@ -116,7 +116,7 @@ Text { ... }
 ### Classic Encoding
 
 ```js
-#X3D V4.0 utf8
+#X3D V{{ site.x3d_latest_version }} utf8
 # A cylinder
 Shape {
   appearance Appearance {
@@ -149,7 +149,7 @@ Shape {
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<X3D profile='Full' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <Scene>
     <Shape>
       <Appearance>
@@ -173,7 +173,7 @@ Shape {
 ### Classic Encoding
 
 ```js
-#X3D V4.0 utf8
+#X3D V{{ site.x3d_latest_version }} utf8
 
 Shape {
   appearance Appearance {

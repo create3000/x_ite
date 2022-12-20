@@ -46,7 +46,7 @@ window .addEventListener ("load", function ()
   </head>
   <body>
     <x3d-canvas>
-      <X3D profile='Interactive' version='4.0'>
+      <X3D profile='Interactive' version='{{ site.x3d_latest_version }}'>
          <Scene>
             <Background
                 skyColor='0.2 0.2 0.2'>
@@ -187,7 +187,7 @@ Even the contents of Inline nodes can be accessed and modified. The internal sce
 
 ```html
 <x3d-canvas>
-  <X3D profile='Interactive' version='4.0'>
+  <X3D profile='Interactive' version='{{ site.x3d_latest_version }}'>
     <Scene>
       <!-- Be aware of the double quotes inside the single quotes of the url attribute, because it is an MFString field. -->
       <Inline DEF='DeerInline'

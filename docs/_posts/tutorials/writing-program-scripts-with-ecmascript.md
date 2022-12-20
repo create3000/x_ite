@@ -337,7 +337,7 @@ ROUTE Bouncer.value_changed  TO Ball.set_translation
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<X3D profile='Full' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <Scene>
     <Transform DEF='Ball'>
       <Shape>
@@ -390,7 +390,7 @@ function set_fraction (fraction, time)
 ### Classic Encoding
 
 ```js
-#X3D V4.0 utf8 Titania V4.3.0
+#X3D V{{ site.x3d_latest_version }} utf8
 
 DEF Ball Transform {
   children [

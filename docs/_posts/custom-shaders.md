@@ -26,7 +26,7 @@ WebGL uses the GLSL language to write shaders that can be run across all browser
 ### X3D
 
 ```js
-#X3D V4.0 utf8
+#X3D V{{ site.x3d_latest_version }} utf8
 
 DEF Timer TimeSensor {
   loop TRUE

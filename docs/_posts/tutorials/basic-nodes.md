@@ -28,7 +28,7 @@ Here is a typical X3D Classic Encoded file with a single node:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<X3D profile='Full' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <Scene>
     <PlaneSensor DEF='Sensor'
         offset='0 2 0'/>
@@ -46,7 +46,7 @@ Here is a typical X3D Classic Encoded file with a single node:
 ### Classic Encoding
 
 ```js
-#X3D V4.0 utf8
+#X3D V{{ site.x3d_latest_version }} utf8
 
 # A sample file with a simple scene
 
