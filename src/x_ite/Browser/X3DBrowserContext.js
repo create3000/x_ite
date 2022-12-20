@@ -341,6 +341,9 @@ Object .assign (X3DBrowserContext,
             X3D     = window [Symbol .for ("X_ITE.X3D")],
             browser = X3D .getBrowser (canvas);
 
+         if (! browser)
+            return;
+
          browserContext .call (browser);
 
          if (typeof browserContext .prototype .initialize === "function")
