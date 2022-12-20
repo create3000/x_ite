@@ -181,7 +181,7 @@ const transform = document .querySelector ("[DEF='DeerInline'] [DEF='Deer']");
 Every Inline element sends a `load` or `error` event when the contents of the Inline is loaded or failed loading.
 
 ```js
-document .querySelector ("[DEF='DeerInline']") .addEventListener ("load", () => console .log ("Deer loaded!")));
+document .querySelector ("[DEF='DeerInline']") .addEventListener ("load", () => console .log ("Deer loaded!"));
 ```
 
 ## Script Element
