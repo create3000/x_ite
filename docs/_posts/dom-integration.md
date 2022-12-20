@@ -118,7 +118,7 @@ CustomEvent: {
 
 ## Add and Remove Nodes
 
-The contents of the X3D scene can be modified with DOM manipulation methods to change the scene. You can add and remove nodes to build your own scene.
+The content of the X3D scene can be modified with DOM manipulation methods to change the scene. You can add and remove nodes to build your own scene.
 
 ```js
 function addBlueBox ()
@@ -183,7 +183,7 @@ function removeRoute ()
 
 ## Inline Nodes
 
-Even the contents of Inline nodes can be accessed and modified. The internal scene of the Inline node is attached to the Inline element as child every time the Inline node is completely loaded. To check if an Inline node is loaded use a LoadSensor node.
+Even the content of Inline nodes can be accessed and modified. The internal scene of the Inline node is attached to the Inline element as child every time the Inline node is completely loaded. To check if an Inline node is loaded use a LoadSensor node.
 
 ```html
 <x3d-canvas>
@@ -209,7 +209,7 @@ const transform = document .querySelector ("[DEF='DeerInline'] [DEF='Deer']");
 
 ### Events of Inline Element
 
-Every Inline element sends a `load` or `error` event when the contents of the Inline is loaded or failed loading.
+Every Inline element sends a `load` or `error` event when the content of the Inline is loaded or failed loading.
 
 ```js
 const inline = document .querySelector ("[DEF='DeerInline']");
@@ -219,7 +219,7 @@ inline .addEventListener ("load", () => console .log ("Deer loaded!"));
 
 ## Script Element
 
-If you use a HTML page instead of a XHTML page then there is already a \<script\> element, as you know. To avoid collisions you must add a different type. A right type is `model/x3d+xml`, which prevents the web browser from interpreting the contents as JavaScript.
+If you use a HTML page instead of a XHTML page then there is already a \<script\> element, as you know. To avoid collisions you must add a different type. The right type is `model/x3d+xml`, which prevents the web browser from interpreting the content as JavaScript, and X_ITE can take over the content.
 
 ```html
 <Script type='model/x3d+xml' DEF='ChangeColorScript'>
