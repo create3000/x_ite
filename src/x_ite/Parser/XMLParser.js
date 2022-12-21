@@ -73,6 +73,7 @@ function XMLParser (scene)
    this .parents           = [ ];
    this .parser            = new VRMLParser (scene);
    this .url               = new Fields .MFString ();
+   this .protoNames        = new Map ();
 
    try
    {
@@ -565,6 +566,9 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          { }
 
          this .getExecutionContext () .updateProtoDeclaration (name, proto);
+
+         this .protoNames .set (name,                 name);
+         this .protoNames .set (name .toUpperCase (), name);
       }
    },
    protoInterfaceElement: function (xmlElement)
@@ -785,6 +789,9 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
 
          var node = this .getExecutionContext () .createNode (this .nodeNameToCamelCase (xmlElement .nodeName), false);
+
+         if (! node)
+            var node = this .getExecutionContext () .createProto (this .protoNameToCamelCase (xmlElement .nodeName), false);
 
          if (! node)
             throw new Error ("Unknown node type '" + xmlElement .nodeName + "', you probably have insufficient component/profile statements.");
@@ -1115,6 +1122,11 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return false;
 
       return true;
+   },
+   protoNameToCamelCase: function (nodeName)
+   {
+      // Function also needed by X_ITE DOM.
+      return this .protoNames .get (nodeName);
    },
    nodeNameToCamelCase: function (nodeName)
    {
