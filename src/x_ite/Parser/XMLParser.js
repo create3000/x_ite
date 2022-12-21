@@ -620,6 +620,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (! this .id (name))
             return;
 
+         //DOMIntegration: add lowercase versions of field names.
          if (this .getParent () instanceof X3DProtoDeclarationNode)
          {
             this .protoFieldNames .set (name,                 name)
