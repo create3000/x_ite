@@ -486,6 +486,9 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .protoInterfaceElement (xmlElement); // parse fields
          this .popParent ();
 
+         //DOMIntegration: add lowercase versions of field names.
+         this .addProtoFieldNames (externproto);
+
          externproto .setup ();
 
          try
@@ -522,6 +525,9 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   this .pushParent (proto);
                   this .protoInterfaceElement (child);
                   this .popParent ();
+
+                  //DOMIntegration: add lowercase versions of field names.
+                  this .addProtoFieldNames (proto);
                   break;
                }
                default:
@@ -620,13 +626,6 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (! this .id (name))
             return;
 
-         //DOMIntegration: add lowercase versions of field names.
-         if (this .getParent () instanceof X3DProtoDeclarationNode)
-         {
-            this .protoFieldNames .set (name,                 name)
-            this .protoFieldNames .set (name .toLowerCase (), name);
-         }
-
          var field = new type ();
 
          if (accessType & X3DConstants .initializeOnly)
@@ -643,6 +642,20 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       catch (error)
       {
          //console .error (error);
+      }
+   },
+   addProtoFieldNames: function (protoNode)
+   {
+      //DOMIntegration: handle lowercase versions of field names.
+
+      const fieldNames = new Map ([["metadata", "metadata"]]);
+
+      this .protoFieldNames .set (protoNode, fieldNames);
+
+      for (const { name } of protoNode .getFieldDefinitions ())
+      {
+         fieldNames .set (name,                 name);
+         fieldNames .set (name .toLowerCase (), name);
       }
    },
    protoBodyElement: function (xmlElement)
@@ -1025,7 +1038,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       try
       {
          var
-            field      = node .getField (this .attributeToCamelCase (xmlAttribute .name)),
+            field      = node .getField (this .attributeToCamelCase (node, xmlAttribute .name)),
             accessType = field .getAccessType ();
 
          if (accessType & X3DConstants .initializeOnly)
@@ -1142,10 +1155,13 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Function also needed by X_ITE DOM.
       return HTMLSupport .getNodeTypeName (nodeName);
    },
-   attributeToCamelCase: function (name)
+   attributeToCamelCase: function (node, name)
    {
+      if (node instanceof X3DPrototypeInstance)
+         return this .protoFieldNames .get (node .getProtoNode ()) .get (name);
+
       // Function also needed by X_ITE DOM.
-      return HTMLSupport .getFieldName (name) || this .protoFieldNames .get (name);
+      return HTMLSupport .getFieldName (name);
    },
 });
 
