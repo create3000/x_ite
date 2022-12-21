@@ -648,7 +648,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       //DOMIntegration: handle lowercase versions of field names.
 
-      const fieldNames = new Map ([["metadata", "metadata"]]);
+      const fieldNames = new Map ();
 
       this .protoFieldNames .set (protoNode, fieldNames);
 
