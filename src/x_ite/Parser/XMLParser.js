@@ -719,7 +719,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             if (! node)
                throw new Error ("Unknown proto or externproto type '" + name + "'.");
 
-            //AP: attach node to DOM xmlElement for access from DOM.
+            ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
             $.data (xmlElement, "node", node);
 
             this .defAttribute (xmlElement, node);
@@ -796,7 +796,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (! node)
             throw new Error ("Unknown node type '" + xmlElement .nodeName + "', you probably have insufficient component/profile statements.");
 
-         //AP: attach node to DOM xmlElement for access from DOM.
+         ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
          $.data (xmlElement, "node", node);
 
          //DOMIntegration: Script node support for HTML.
@@ -874,7 +874,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             destinationNode  = executionContext .getLocalNode (destinationNodeName),
             route            = executionContext .addRoute (sourceNode, sourceField, destinationNode, destinationField);
 
-         //AP: attach node to DOM xmlElement for access from DOM.
+         ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
          $.data (xmlElement, "node", route);
       }
       catch (error)
