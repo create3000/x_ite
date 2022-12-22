@@ -54,7 +54,6 @@ import VRMLParser                from "./VRMLParser.js";
 import HTMLSupport               from "./HTMLSupport.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
-import X3DProtoDeclarationNode   from "../Prototype/X3DProtoDeclarationNode.js";
 import X3DConstants              from "../Base/X3DConstants.js";
 import DEBUG                     from "../DEBUG.js";
 
@@ -75,7 +74,7 @@ function XMLParser (scene)
    this .parser            = new VRMLParser (scene);
    this .url               = new Fields .MFString ();
    this .protoNames        = new Map ();
-   this .protoFields       = new Map ();
+   this .protoFields       = new WeakMap ();
 
    try
    {
