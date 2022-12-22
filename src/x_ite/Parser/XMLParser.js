@@ -1076,20 +1076,32 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .protoNames .set (name,                 name);
       this .protoNames .set (name .toUpperCase (), name);
    },
-   addProtoFieldNames: function (protoNode)
+   addProtoFieldNames: (function ()
    {
-      //DOMIntegration: handle lowercase versions of field names.
+      const reservedAttributes = new Set ([
+         "DEF",
+         "USE",
+         "containerField",
+      ]);
 
-      const fields = new Map ();
-
-      this .protoFields .set (protoNode, fields);
-
-      for (const { name } of protoNode .getFieldDefinitions ())
+      return function (protoNode)
       {
-         fields .set (name,                 name);
-         fields .set (name .toLowerCase (), name);
-      }
-   },
+         //DOMIntegration: handle lowercase versions of field names.
+
+         const fields = new Map ();
+
+         this .protoFields .set (protoNode, fields);
+
+         for (const { name } of protoNode .getFieldDefinitions ())
+         {
+            if (reservedAttributes .has (name))
+               continue;
+
+            fields .set (name,                 name);
+            fields .set (name .toLowerCase (), name);
+         }
+      };
+   })(),
    addNode: function (xmlElement, node)
    {
       if (this .parents .length === 0 || this .getParent () instanceof X3DProtoDeclaration)
