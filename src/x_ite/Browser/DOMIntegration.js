@@ -30,25 +30,23 @@ class DOMIntegration
 {
 	constructor (browser)
 	{
-		this .browser     = browser;
-		this .rootElement = undefined;
+		this .browser        = browser;
+		this .rootElement    = undefined;
+		this .canvasObserver = new MutationObserver (() => this .processCanvasMutation (browser));
 
-		this .canvasObserver = new MutationObserver (() =>
-		{
-			this .observeRoot (this .browser .getElement () .children ("X3D") [0]);
-		});
-
-		this .canvasObserver .observe (this .browser .getElement () [0], {
+		this .canvasObserver .observe (browser .getElement () [0], {
 			childList: true,
 		});
 
-		const rootElement = this .browser .getElement () .children ("X3D") [0];
-
-		if (rootElement)
-			this .observeRoot (rootElement);
+		this .processCanvasMutation (browser)
 	}
 
-	async observeRoot (rootElement)
+	processCanvasMutation (browser)
+	{
+		this .processRootElement (browser, browser .getElement () .children ("X3D") .get (-1));
+	}
+
+	async processRootElement (browser, rootElement)
 	{
 		try
 		{
@@ -61,12 +59,12 @@ class DOMIntegration
 			{
 				// Display splash screen.
 
-				this .browser .setBrowserLoading (true);
-				this .browser .addLoadingObject (this);
+				browser .setBrowserLoading (true);
+				browser .addLoadingObject (this);
 
 				// Now also attached node property to each node element.
 
-				const scene = this .browser .createScene ();
+				const scene = browser .createScene ();
 
 				this .parser = new XMLParser (scene);
 
@@ -74,7 +72,7 @@ class DOMIntegration
 
 				await new Promise (this .parser .parseIntoScene .bind (this .parser));
 
-				this .browser .replaceWorld (scene);
+				browser .replaceWorld (scene);
 
 				// Create an observer instance.
 
@@ -99,11 +97,11 @@ class DOMIntegration
 				this .processInlineElements (rootElement);
 				this .addEventDispatchersAll (rootElement);
 
-				this .browser .removeLoadingObject (this);
+				browser .removeLoadingObject (this);
 			}
 			else
 			{
-				this .browser .replaceWorld (null);
+				browser .replaceWorld (null);
 			}
 		}
 		catch (error)
