@@ -68,12 +68,8 @@ const SupportedNodes =
 
       // HTML Support
 
-      for (const fieldDefinition of Type .prototype [_fieldDefinitions])
+      for (const { name, accessType } of Type .prototype [_fieldDefinitions])
       {
-         const
-            name       = fieldDefinition .name,
-            accessType = fieldDefinition .accessType;
-
          if (accessType & X3DConstants .initializeOnly)
             HTMLSupport .addFieldName (name)
       }

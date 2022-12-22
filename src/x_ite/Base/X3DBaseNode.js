@@ -51,6 +51,7 @@ import FieldDefinitionArray from "./FieldDefinitionArray.js";
 import FieldArray           from "./FieldArray.js";
 import Fields               from "../Fields.js";
 import X3DConstants         from "./X3DConstants.js";
+import HTMLSupport          from "../Parser/HTMLSupport.js";
 
 const
    _executionContext  = Symbol (),
@@ -390,6 +391,9 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
          enumerable: true,
          configurable: false,
       });
+
+      if (field .isInitializable ())
+         HTMLSupport .addFieldName (alias);
    },
    removeField: function (name)
    {
