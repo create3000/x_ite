@@ -75,7 +75,7 @@ function XMLParser (scene)
    this .parser            = new VRMLParser (scene);
    this .url               = new Fields .MFString ();
    this .protoNames        = new Map ();
-   this .protoFieldNames   = new Map ();
+   this .protoFields       = new Map ();
 
    try
    {
@@ -483,10 +483,8 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          var externproto = new X3DExternProtoDeclaration (this .getExecutionContext (), this .url);
 
          this .pushParent (externproto);
-         this .protoInterfaceElement (xmlElement); // parse fields
+         this .protoInterfaceElement (xmlElement);
          this .popParent ();
-
-         //DOMIntegration: add lowercase versions of field names.
          this .addProtoFieldNames (externproto);
 
          externproto .setup ();
@@ -501,6 +499,8 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          { }
 
          this .getExecutionContext () .updateExternProtoDeclaration (name, externproto);
+
+         this .addProtoName (name);
       }
    },
    protoDeclareElement: function (xmlElement)
@@ -525,8 +525,6 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   this .pushParent (proto);
                   this .protoInterfaceElement (child);
                   this .popParent ();
-
-                  //DOMIntegration: add lowercase versions of field names.
                   this .addProtoFieldNames (proto);
                   break;
                }
@@ -575,8 +573,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          this .getExecutionContext () .updateProtoDeclaration (name, proto);
 
-         this .protoNames .set (name,                 name);
-         this .protoNames .set (name .toUpperCase (), name);
+         this .addProtoName (name);
       }
    },
    protoInterfaceElement: function (xmlElement)
@@ -642,20 +639,6 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       catch (error)
       {
          //console .error (error);
-      }
-   },
-   addProtoFieldNames: function (protoNode)
-   {
-      //DOMIntegration: handle lowercase versions of field names.
-
-      const fieldNames = new Map ();
-
-      this .protoFieldNames .set (protoNode, fieldNames);
-
-      for (const { name } of protoNode .getFieldDefinitions ())
-      {
-         fieldNames .set (name,                 name);
-         fieldNames .set (name .toLowerCase (), name);
       }
    },
    protoBodyElement: function (xmlElement)
@@ -1061,6 +1044,53 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .parser .popExecutionContext ();
    },
+   id: function (string)
+   {
+      if (string === null)
+         return false;
+
+      if (string .length === 0)
+         return false;
+
+      return true;
+   },
+   getParents: function ()
+   {
+      return this .parents;
+   },
+   getParent: function ()
+   {
+      return this .parents .at (-1);
+   },
+   pushParent: function (parent)
+   {
+      return this .parents .push (parent);
+   },
+   popParent: function ()
+   {
+      this .parents .pop ();
+   },
+   addProtoName: function (name)
+   {
+      //DOMIntegration: add uppercase versions of proto name.
+
+      this .protoNames .set (name,                 name);
+      this .protoNames .set (name .toUpperCase (), name);
+   },
+   addProtoFieldNames: function (protoNode)
+   {
+      //DOMIntegration: handle lowercase versions of field names.
+
+      const fields = new Map ();
+
+      this .protoFields .set (protoNode, fields);
+
+      for (const { name } of protoNode .getFieldDefinitions ())
+      {
+         fields .set (name,                 name);
+         fields .set (name .toLowerCase (), name);
+      }
+   },
    addNode: function (xmlElement, node)
    {
       if (this .parents .length === 0 || this .getParent () instanceof X3DProtoDeclaration)
@@ -1119,48 +1149,23 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          //console .warn (error .message);
       }
    },
-   getParents: function ()
+   protoNameToCamelCase: function (typeName)
    {
-      return this .parents;
+      //DOMIntegration: handle uppercase versions of node names.
+      return this .protoNames .get (typeName);
    },
-   getParent: function ()
+   nodeNameToCamelCase: function (typeName)
    {
-      return this .parents .at (-1);
-   },
-   pushParent: function (parent)
-   {
-      return this .parents .push (parent);
-   },
-   popParent: function ()
-   {
-      this .parents .pop ();
-   },
-   id: function (string)
-   {
-      if (string === null)
-         return false;
-
-      if (string .length === 0)
-         return false;
-
-      return true;
-   },
-   protoNameToCamelCase: function (nodeName)
-   {
-      // Function also needed by X_ITE DOM.
-      return this .protoNames .get (nodeName);
-   },
-   nodeNameToCamelCase: function (nodeName)
-   {
-      // Function also needed by X_ITE DOM.
-      return HTMLSupport .getNodeTypeName (nodeName);
+      //DOMIntegration: handle uppercase versions of node names.
+      return HTMLSupport .getNodeTypeName (typeName);
    },
    attributeToCamelCase: function (node, name)
    {
-      if (node instanceof X3DPrototypeInstance)
-         return this .protoFieldNames .get (node .getProtoNode ()) .get (name);
+      //DOMIntegration: handle lowercase versions of field names.
 
-      // Function also needed by X_ITE DOM.
+      if (node instanceof X3DPrototypeInstance)
+         return this .protoFields .get (node .getProtoNode ()) .get (name);
+
       return HTMLSupport .getFieldName (name);
    },
 });
