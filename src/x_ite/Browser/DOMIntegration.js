@@ -64,7 +64,7 @@ class DOMIntegration
 				this .browser .setBrowserLoading (true);
 				this .browser .addLoadingObject (this);
 
-				// Now also attached x3d property to each node element.
+				// Now also attached node property to each node element.
 
 				const scene = this .browser .createScene ();
 
