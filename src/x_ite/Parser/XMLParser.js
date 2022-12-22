@@ -1019,11 +1019,9 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       try
       {
-         var
-            field      = node .getField (this .attributeToCamelCase (node, xmlAttribute .name)),
-            accessType = field .getAccessType ();
+         const field = node .getField (this .attributeToCamelCase (node, xmlAttribute .name));
 
-         if (accessType & X3DConstants .initializeOnly)
+         if (field .isInitializable ())
             this .fieldValue (field, xmlAttribute .value);
       }
       catch (error)

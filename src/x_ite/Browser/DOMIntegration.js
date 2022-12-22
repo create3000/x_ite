@@ -66,11 +66,15 @@ class DOMIntegration
 
 				// Now also attached x3d property to each node element.
 
-				const importedScene = await this .browser .importDocument (rootElement, true);
+				const scene = this .browser .createScene ();
 
-				this .browser .replaceWorld (importedScene);
+				this .parser = new XMLParser (scene);
 
-				this .parser = new XMLParser (importedScene);
+				this .parser .setInput (rootElement);
+
+				await new Promise (this .parser .parseIntoScene .bind (this .parser));
+
+				this .browser .replaceWorld (scene);
 
 				// Create an observer instance.
 
@@ -132,13 +136,15 @@ class DOMIntegration
 
 	processAttribute (mutation, element)
 	{
+		const parser = this .parser;
+
 		if ($.data (element, "node"))
 		{
 			const
 				attributeName = mutation .attributeName,
 				attribute     = element .attributes .getNamedItem (attributeName);
 
-			this .parser .nodeAttribute (attribute, $.data (element, "node"));
+			parser .nodeAttribute (attribute, $.data (element, "node"));
 		}
 		else
 		{
@@ -148,11 +154,11 @@ class DOMIntegration
 				parentNode = element .parentNode,
 			 	node       = $.data (parentNode, "node");
 
-			this .parser .pushExecutionContext (node .getExecutionContext ());
-			this .parser .pushParent (node);
-			this .parser .childElement (element);
-			this .parser .popParent ();
-			this .parser .popExecutionContext ();
+			parser .pushExecutionContext (node .getExecutionContext ());
+			parser .pushParent (node);
+			parser .childElement (element);
+			parser .popParent ();
+			parser .popExecutionContext ();
 		}
 	}
 
