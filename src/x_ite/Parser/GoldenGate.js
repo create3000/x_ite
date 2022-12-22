@@ -70,7 +70,9 @@ GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             if (parser .isValid ())
             {
+               parser .pushExecutionContext (this .getExecutionContext ());
                parser .parseIntoScene (success, error);
+               parser .popExecutionContext ();
                return
             }
          }
