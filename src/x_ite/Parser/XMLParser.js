@@ -105,6 +105,9 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          this .input = xmlElement;
          this .xml   = this .isXML (xmlElement);
+
+         if (! this .xml)
+            Object .assign (this, HTMLParser);
       }
       catch (error)
       {
@@ -1124,90 +1127,20 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
    },
    addProtoName: function (name)
-   {
-      if (this .xml)
-            return;
-
-      //DOMIntegration: add uppercase versions of proto name.
-
-      this .protoNames .set (name,                 name);
-      this .protoNames .set (name .toUpperCase (), name);
-   },
-   addProtoFieldNames: (function ()
-   {
-      const reservedAttributes = new Set ();
-
-      for (const reservedAttribute of [
-         "DEF",
-         "USE",
-         "containerField",
-      ])
-      {
-         reservedAttributes
-            .add (reservedAttribute)
-            .add (reservedAttribute .toLowerCase ());
-      }
-
-      return function (protoNode)
-      {
-         if (this .xml)
-            return;
-
-         //DOMIntegration: handle lowercase versions of field names.
-
-         const fields = new Map ();
-
-         this .protoFields .set (protoNode, fields);
-
-         for (const { name } of protoNode .getFieldDefinitions ())
-         {
-            if (reservedAttributes .has (name))
-               continue;
-
-            fields .set (name,                 name);
-            fields .set (name .toLowerCase (), name);
-         }
-      };
-   })(),
+   { },
+   addProtoFieldNames: function ()
+   { },
    protoNameToCamelCase: function (typeName)
    {
-      if (this .xml)
-      {
-         return typeName;
-      }
-      else
-      {
-         //DOMIntegration: handle uppercase versions of node names.
-         return this .protoNames .get (typeName);
-      }
+      return typeName;
    },
    nodeNameToCamelCase: function (typeName)
    {
-      if (this .htxmlml)
-      {
-         return typeName;
-      }
-      else
-      {
-         //DOMIntegration: handle uppercase versions of node names.
-         return HTMLSupport .getNodeTypeName (typeName);
-      }
+      return typeName;
    },
    attributeToCamelCase: function (node, name)
    {
-      if (this .xml)
-      {
-         return name;
-      }
-      else
-      {
-         //DOMIntegration: handle lowercase versions of field names.
-
-         if (node instanceof X3DPrototypeInstance)
-            return this .protoFields .get (node .getProtoNode ()) .get (name);
-
-         return HTMLSupport .getFieldName (name);
-      }
+      return name;
    },
 });
 
@@ -1260,7 +1193,7 @@ XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = VRMLParser .proto
  * Lazy parse functions.
  */
 
-var
+const
    infs            = /\binf\b/g,
    nans            = /\bnan\b/g,
    trimWhitespaces = /^[\x20\n,\t\r"]+|[\x20\n,\t\r"]+$/g,
@@ -1355,6 +1288,69 @@ XMLParser .prototype .fieldTypes [X3DConstants .MFVec3f] = function (field)
 XMLParser .prototype .fieldTypes [X3DConstants .MFString] = function (field)
 {
    field .setValue (prepareStrings (this .getInput ()));
+};
+
+const HTMLParser =
+{
+   addProtoName: function (name)
+   {
+      //DOMIntegration: add uppercase versions of proto name.
+
+      this .protoNames .set (name,                 name);
+      this .protoNames .set (name .toUpperCase (), name);
+   },
+   addProtoFieldNames: (function ()
+   {
+      const reservedAttributes = new Set ();
+
+      for (const reservedAttribute of [
+         "DEF",
+         "USE",
+         "containerField",
+      ])
+      {
+         reservedAttributes
+            .add (reservedAttribute)
+            .add (reservedAttribute .toLowerCase ());
+      }
+
+      return function (protoNode)
+      {
+         //DOMIntegration: handle lowercase versions of field names.
+
+         const fields = new Map ();
+
+         this .protoFields .set (protoNode, fields);
+
+         for (const { name } of protoNode .getFieldDefinitions ())
+         {
+            if (reservedAttributes .has (name))
+               continue;
+
+            fields .set (name,                 name);
+            fields .set (name .toLowerCase (), name);
+         }
+      };
+   })(),
+   protoNameToCamelCase: function (typeName)
+   {
+      //DOMIntegration: handle uppercase versions of node names.
+      return this .protoNames .get (typeName);
+   },
+   nodeNameToCamelCase: function (typeName)
+   {
+      //DOMIntegration: handle uppercase versions of node names.
+      return HTMLSupport .getNodeTypeName (typeName);
+   },
+   attributeToCamelCase: function (node, name)
+   {
+      //DOMIntegration: handle lowercase versions of field names.
+
+      if (node instanceof X3DPrototypeInstance)
+         return this .protoFields .get (node .getProtoNode ()) .get (name);
+
+      return HTMLSupport .getFieldName (name);
+   },
 };
 
 export default XMLParser;
