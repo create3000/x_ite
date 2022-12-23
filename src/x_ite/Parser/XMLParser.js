@@ -1126,9 +1126,10 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          //console .warn (error .message);
       }
    },
+   // Overloaded by HTMLParser.
    addProtoName: function (name)
    { },
-   addProtoFieldNames: function ()
+   addProtoFieldNames: function (protoNode)
    { },
    protoNameToCamelCase: function (typeName)
    {
