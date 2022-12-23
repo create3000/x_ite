@@ -1291,6 +1291,8 @@ XMLParser .prototype .fieldTypes [X3DConstants .MFString] = function (field)
    field .setValue (prepareStrings (this .getInput ()));
 };
 
+// HTML Support
+
 const HTMLParser =
 {
    addProtoName: function (name)
