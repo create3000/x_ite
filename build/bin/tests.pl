@@ -51,6 +51,8 @@ sub tests
 
    for my $file (@files)
    {
+      next unless $file =~ /Components/;
+
       $file =~ s|/Volumes/Home/Projekte/Library/Tests/Components/||;
       $file =~ m|^([^/]+)|;
 

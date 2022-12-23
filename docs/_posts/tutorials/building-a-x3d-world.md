@@ -150,9 +150,25 @@ Every field has:
 - Fields can be listed in any order
   - The order doesn't affect the node
 
+## Placing nodes
+
+Every node has a »containerField« attribute with a default value, which is different for each node. You can change the value if needed.
+
+```xml
+<Collision>
+  <Shape containerField='proxy'>
+    <Box/>
+  </Shape>
+  <Transform>
+    <!-- ... -->
+  </Transform>
+</Collision>
+```
+
 ## Summary
 
 - The file header gives the version and encoding
 - Nodes describe scene content
 - Fields and values specify node attributes
+- containerField attribute can be changed.
 - Everything is case sensitive
