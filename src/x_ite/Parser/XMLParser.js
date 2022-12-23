@@ -1135,11 +1135,18 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    addProtoFieldNames: (function ()
    {
-      const reservedAttributes = new Set ([
+      const reservedAttributes = new Set ();
+
+      for (const reservedAttribute of [
          "DEF",
          "USE",
          "containerField",
-      ]);
+      ])
+      {
+         reservedAttributes
+            .add (reservedAttribute)
+            .add (reservedAttribute .toLowerCase ());
+      }
 
       return function (protoNode)
       {
