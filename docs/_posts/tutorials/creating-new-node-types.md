@@ -324,7 +324,7 @@ EXTERNPROTO BouncingBall [
 ### XML Encoding
 
 ```xml
-<ExternProtoDeclare name='Torus'><!-- ... --></ExternProtoDeclare>
+<ExternProtoDeclare name='Torus' url='"torus.x3d#Torus"'><!-- ... --></ExternProtoDeclare>
 <Shape>
   <!-- Official Syntax -->
   <ProtoInstance name='Torus' containerField='geometry'>
