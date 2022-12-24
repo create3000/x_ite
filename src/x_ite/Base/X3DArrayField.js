@@ -57,6 +57,7 @@ X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    constructor: X3DArrayField,
    at: Array .prototype .at,
    concat: Array .prototype .concat,
+   //Array.prototype.copyWithin,
    entries: Array .prototype .entries,
    every: Array .prototype .every,
    fill: Array .prototype .fill,
@@ -76,8 +77,10 @@ X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    map: Array .prototype .map,
    reduce: Array .prototype .reduce,
    reduceRight: Array .prototype .reduceRight,
+   //Array.prototype.reverse
    slice: Array .prototype .slice,
    some: Array .prototype .some,
+   //Array.prototype.sort
    values: Array .prototype .values,
 });
 
