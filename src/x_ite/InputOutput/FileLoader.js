@@ -101,7 +101,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       return this .URL;
    },
-   createX3DFromString: function (worldURL, string, success, error)
+   createX3DFromString: function (worldURL, string = "", success, error)
    {
       try
       {
