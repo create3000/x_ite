@@ -84,7 +84,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
    {
       return "Core";
    },
-   getContainerField: function (strict = false)
+   getContainerField: function (strict = true)
    {
       if (! strict)
       {
@@ -99,7 +99,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
                const rootNode = rootNodes [0];
 
                if (rootNode)
-                  return rootNode .getValue () .getContainerField ();
+                  return rootNode .getValue () .getContainerField (strict);
             }
          }
       }
@@ -408,7 +408,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
             if (containerField)
             {
-               if (containerField .getName () !== this .getContainerField (true))
+               if (containerField .getName () !== this .getContainerField ())
                {
                   stream .string += " ";
                   stream .string += "containerField='";
@@ -445,7 +445,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       if (containerField)
       {
-         if (containerField .getName () !== this .getContainerField (true))
+         if (containerField .getName () !== this .getContainerField ())
          {
             stream .string += " ";
             stream .string += "containerField='";

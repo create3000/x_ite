@@ -1103,7 +1103,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (! containerField)
          {
             if (node)
-               containerField = node .getContainerField ();
+               containerField = node .getContainerField (false);
             else
                throw new Error ("NULL node must have a container field attribute.");
          }
