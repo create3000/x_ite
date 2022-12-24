@@ -737,29 +737,13 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    statement: function ()
    {
-      var node = this .nodeStatement ();
+      const node = this .nodeStatement ();
 
       if (node !== false)
       {
          this .addRootNode (node);
          return true;
       }
-
-      return false;
-   },
-   otherStatement: function ()
-   {
-      if (this .protoStatement ())
-         return true;
-
-      if (this .routeStatement ())
-         return true;
-
-      if (this .importStatement ())
-         return true;
-
-      if (this .exportStatement ())
-         return true;
 
       return false;
    },
@@ -788,6 +772,22 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return null;
 
       return this .node ("");
+   },
+   otherStatement: function ()
+   {
+      if (this .protoStatement ())
+         return true;
+
+      if (this .routeStatement ())
+         return true;
+
+      if (this .importStatement ())
+         return true;
+
+      if (this .exportStatement ())
+         return true;
+
+      return false;
    },
    protoStatement: function ()
    {
