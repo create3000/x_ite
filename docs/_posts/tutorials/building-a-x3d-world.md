@@ -152,7 +152,7 @@ Every field has:
 
 ## Placing nodes
 
-Every node has a »containerField« attribute with a default value, which is different for each node. You can change the value if needed.
+Every node has a »containerField« attribute with a default value, which is different for each node type. You can change the value if needed.
 
 ```xml
 <Collision>
