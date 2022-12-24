@@ -255,7 +255,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
             return;
 
          const
-            jointNodes     = renderObject .getJoints (), // this ._jointNodes
+            jointNodes     = this .jointNodes .length ? this .jointNodes : renderObject .getJoints (),
             skinNormalNode = this .skinNormalNode,
             skinCoordNode  = this .skinCoordNode,
             restNormalNode = this .restNormalNode,
@@ -276,14 +276,10 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
          for (const jointNode of jointNodes)
          {
-            const skinCoordIndexLength = jointNode ._skinCoordIndex .length;
-
-            if (skinCoordIndexLength === 0)
-               continue;
-
             const
-               jointMatrix    = jointNode .getModelMatrix () .multRight (invModelMatrix),
-               displacerNodes = jointNode .getDisplacers ();
+               skinCoordIndexLength = jointNode ._skinCoordIndex .length,
+               jointMatrix          = jointNode .getModelMatrix () .multRight (invModelMatrix),
+               displacerNodes       = jointNode .getDisplacers ();
 
             for (const displacerNode of displacerNodes)
             {

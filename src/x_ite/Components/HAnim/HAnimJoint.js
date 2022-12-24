@@ -145,9 +145,12 @@ HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .protot
    {
       if (type === TraverseType .CAMERA)
       {
-         renderObject .getJoints () .push (this);
+         if (this ._skinCoordIndex .length)
+         {
+            renderObject .getJoints () .push (this);
 
-         this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
+            this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
+         }
       }
 
       X3DTransformNode .prototype .traverse .call (this, type, renderObject);
@@ -156,9 +159,12 @@ HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .protot
    {
       if (type === TraverseType .CAMERA)
       {
-         renderObject .getJoints () .push (this);
+         if (this ._skinCoordIndex .length)
+         {
+            renderObject .getJoints () .push (this);
 
-         this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+            this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+         }
       }
 
       X3DTransformNode .prototype .groupTraverse .call (this, type, renderObject);
