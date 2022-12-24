@@ -816,27 +816,31 @@ The `shift` method removes the first element from an array and returns that valu
 
 #### Array **splice** (*start [, deleteCount, [item1, item2, ...]]*)
 
-#### start
+##### start
 
 Index at which to start changing the array (with origin 0). If greater than the length of the array, actual starting index will be set to the length of the array. If negative, will begin that many elements from the end of the array (with origin 1) and will be set to 0 if absolute value is greater than the length of the array.
 
-#### deleteCount *optional*
+##### deleteCount *optional*
 
 An integer indicating the number of old array elements to remove. If *deleteCount* is 0, no elements are removed. In this case, you should specify at least one new element. If *deleteCount* is greater than the number of elements left in the array starting at start, then all of the elements through the end of the array will be deleted.
 
 If *deleteCount* is omitted, or if its value is larger than array.length - start, then all of the elements beginning with start index on through the end of the array will be deleted.
 
-#### item1, item2, ... *optional*
+##### item1, item2, ... *optional*
 
 The elements to add to the array, beginning at the start index. If you don't specify any elements, `splice` will only remove elements from the array.
 
-#### Return value
+##### Return value
 
-An MF* array containing the deleted elements. If only one element is removed, an array of one element is returned. If no elements are removed, an empty array is returned.
+An Array containing the deleted elements. If only one element is removed, an array of one element is returned. If no elements are removed, an empty array is returned.
 
 #### Number **unshift** (*element1 [, ..., elementN]*)
 
 The `unshift` method inserts the given values to the beginning of an X3DArrayField object. The return value is the new length of the object upon which the method was called.
+
+#### Other Array functions
+
+Common Array functions like `at`, `concat`, `entries`, `every`, `fill`, `filter`, `find`, `findIndex`, `findLast`, `findLastIndex`, `flat`, `flatMap`, `forEach`, `includes`, `indexOf`, `join`, `keys`, `lastIndexOf`, `map`, `reduce`, `reduceRight`, `slice`, `some`, `values` are also available.
 
 ## MFBool Object
 
