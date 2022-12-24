@@ -737,6 +737,9 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    statement: function ()
    {
+      while (this .otherStatement ())
+         ;
+
       const node = this .nodeStatement ();
 
       if (node !== false)
@@ -749,9 +752,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    nodeStatement: function ()
    {
-      while (this .otherStatement ())
-         ;
-
       if (Grammar .DEF .parse (this))
       {
          if (this .nodeNameId ())
@@ -2376,7 +2376,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    sfnodeValue: function (field)
    {
-      var baseNode = this .nodeStatement ();
+      const baseNode = this .nodeStatement ();
 
       if (baseNode !== false)
       {
@@ -2390,7 +2390,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       field .length = 0;
 
-      var node = this .nodeStatement ();
+      const node = this .nodeStatement ();
 
       if (node !== false)
       {
@@ -2414,11 +2414,17 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    nodeStatements: function (field)
    {
-      var node = this .nodeStatement ();
+      while (this .otherStatement ())
+         ;
+
+      let node = this .nodeStatement ();
 
       while (node !== false)
       {
          field .push (node);
+
+         while (this .otherStatement ())
+            ;
 
          node = this .nodeStatement ();
       }
