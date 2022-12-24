@@ -396,7 +396,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
             if (containerField)
             {
-               if (containerField .getName () !== this .getContainerField ())
+               if (containerField .getName () !== "children")
                {
                   stream .string += " ";
                   stream .string += "containerField='";
