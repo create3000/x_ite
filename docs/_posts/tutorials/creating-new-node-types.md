@@ -189,6 +189,23 @@ For example, if the first node is a geometry node:
 
 The new node type can be used wherever the first node of the prototype body can be used.
 
+- In XML the default value of the »containerField« attribute of a ProtoInstance element is »children«. Change this attribute to whatever value you need.
+
+### XML Encoding
+
+```xml
+<Shape>
+  <!-- Official Syntax -->
+  <ProtoInstance name='Torus' containerField='geometry'>
+    <!-- ... -->
+  </ProtoInstance>
+</Shape>
+<Shape>
+  <!-- Short Syntax -->
+  <Torus containerField='geometry' .../>
+</Shape>
+```
+
 ## A sample prototype use
 
 Create a **BouncingBall** node type that:
@@ -315,26 +332,6 @@ EXTERNPROTO BouncingBall [
   "bounce.x3dv#BouncingBall",
   "bounce.x3d#BouncingBall"
 ]
-```
-
-## Using an extern prototype
-
-- In XML the default value of the »containerField« attribute of a ProtoInstance element from an extern prototype is »children«. Change this attribute to whatever value you need.
-
-### XML Encoding
-
-```xml
-<ExternProtoDeclare name='Torus' url='"torus.x3d#Torus"'><!-- ... --></ExternProtoDeclare>
-<Shape>
-  <!-- Official Syntax -->
-  <ProtoInstance name='Torus' containerField='geometry'>
-    <!-- ... -->
-  </ProtoInstance>
-</Shape>
-<Shape>
-  <!-- Short Syntax -->
-  <Torus containerField='geometry' .../>
-</Shape>
 ```
 
 ## Summary

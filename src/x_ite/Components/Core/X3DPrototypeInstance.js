@@ -84,26 +84,8 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
    {
       return "Core";
    },
-   getContainerField: function (strict = true)
+   getContainerField: function ()
    {
-      if (! strict)
-      {
-         const proto = this [_protoNode];
-
-         if (! proto .isExternProto)
-         {
-            const rootNodes = proto .getBody () .getRootNodes ();
-
-            if (rootNodes .length)
-            {
-               const rootNode = rootNodes [0];
-
-               if (rootNode)
-                  return rootNode .getValue () .getContainerField (strict);
-            }
-         }
-      }
-
       return "children";
    },
    initialize: function ()
