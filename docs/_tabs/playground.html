@@ -5,7 +5,7 @@ order: 3
 icon: fas fa-rocket
 ---
 <style>
-.row, .post, .post-content {
+.post, .post-content {
    height: 100%;
 }
 
@@ -15,15 +15,15 @@ icon: fas fa-rocket
 
 /* Table */
 
-table {
-  width: 100%;
-  height: 100%;
-  table-layout: fixed;
+.row {
+  display: flex;
+  height: calc(100vh - 180px);
 }
 
-table td {
-   width: 50%;
-   vertical-align: top;
+.column {
+  flex: 50%;
+  width: 50%;
+  height: 100%;
 }
 
 /* Editor */
@@ -84,6 +84,17 @@ html[data-mode=light] {
    font-size: 0.8rem;
    line-height: 1.4;
    white-space: pre;
+}
+
+.console {
+   height: 50%;
+}
+
+.post x3d-canvas {
+   display: block;
+   width: 100%;
+   height: 50%;
+   aspect-ratio: unset;
 }
 
 .ace_gutter {
@@ -164,20 +175,12 @@ span.info {
    color: var(--system-blue);
 }
 
-span.warning {
+span.warn {
    color: var(--system-yellow);
 }
 
 span.error {
    color: var(--system-red);
-}
-
-/* Canvas */
-
-.post x3d-canvas {
-   width: 100%;
-   height: 100%;
-   aspect-ratio: unset;
 }
 </style>
 
@@ -268,6 +271,9 @@ $(function ()
                text    = Array .prototype .slice .call (args) .join ("") + "\n",
                element = $("<span></span>") .addClass (classes) .text (text);
 
+            if (text .includes ("No suitable"))
+               return;
+
             log .apply (this, args);
 
             $(".console") .append (element);
@@ -276,28 +282,18 @@ $(function ()
       }
    }
 
-   console .log     = output (console .log,     "log");
-   console .info    = output (console .info,    "info");
-   console .warning = output (console .warning, "warning");
-   console .error   = output (console .error,   "error");
-   console .debug   = output (console .debug,   "debug");
+   console .log   = output (console .log,   "log");
+   console .info  = output (console .info,  "info");
+   console .warn  = output (console .warn,  "warn");
+   console .error = output (console .error, "error");
+   console .debug = output (console .debug, "debug");
 })();
 </script>
 
-<table>
-   <tr>
-      <td>
-         <table>
-            <tr>
-               <td><x3d-canvas splashScreen="false"></x3d-canvas></td>
-            </tr>
-            <tr>
-               <td><div class="console"></div></td>
-            </tr>
-         </table>
-      </td>
-      <td>
-         <div id="editor"></div>
-      </td>
-   </tr>
-</table>
+<div class="row">
+   <div class="column">
+      <x3d-canvas splashScreen="false"></x3d-canvas>
+      <div class="console"></div>
+   </div>
+   <div class="column"><div id="editor"></div></div>
+</div>
