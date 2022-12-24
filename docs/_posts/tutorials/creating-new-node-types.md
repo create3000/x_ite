@@ -189,17 +189,21 @@ For example, if the first node is a geometry node:
 
 The new node type can be used wherever the first node of the prototype body can be used.
 
-- In XML the default value of the »containerField« attribute of ProtoInstance is »children«. Change this field to whatever field you need, e.g. to »geometry« when the first node is a geometry node and the parent node is a [Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"} node.
+- In XML the default value of the »containerField« attribute of ProtoInstance is »children«. Change this attribute to whatever value you need.
 
 ### XML Encoding
 
 ```xml
-<!-- Official Syntax -->
-<ProtoInstance name='Torus' containerField='geometry'>
-  <!-- ... -->
-</ProtoInstance>
-<!-- Short Syntax -->
-<Torus containerField='geometry' .../>
+<Shape>
+  <!-- Official Syntax -->
+  <ProtoInstance name='Torus' containerField='geometry'>
+    <!-- ... -->
+  </ProtoInstance>
+</Shape>
+<Shape>
+  <!-- Short Syntax -->
+  <Torus containerField='geometry' .../>
+</Shape>
 ```
 
 ## A sample prototype use
