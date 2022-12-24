@@ -82,6 +82,7 @@ function X3DRenderObject (executionContext)
    this .localShadows             = [ false ];
    this .localFogs                = [ null ];
    this .layouts                  = [ ];
+   this .jointNodes               = [ ];
    this .textureProjectors        = [ ];
    this .generatedCubeMapTextures = [ ];
    this .collisions               = [ ];
@@ -218,6 +219,10 @@ X3DRenderObject .prototype =
    getLayouts: function ()
    {
       return this .layouts;
+   },
+   getJoints: function ()
+   {
+      return this .jointNodes;
    },
    getParentLayout: function ()
    {

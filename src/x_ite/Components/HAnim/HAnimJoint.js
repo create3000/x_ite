@@ -133,54 +133,36 @@ HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .protot
 
       displacerNodes .length = 0;
 
-      for (var i = 0, length = this ._displacers .length; i < length; ++ i)
+      for (const node of this ._displacers)
       {
-         const displacerNode = X3DCast (X3DConstants .HAnimDisplacer, this ._displacers [i]);
+         const displacerNode = X3DCast (X3DConstants .HAnimDisplacer, node);
 
          if (displacerNode)
             displacerNodes .push (displacerNode);
       }
    },
-   getTraverse: (function ()
+   traverse: function traverse (type, renderObject)
    {
-      const base = X3DTransformNode .prototype .getTraverse ();
-
-      function traverse (type, renderObject)
+      if (type === TraverseType .CAMERA)
       {
-         if (type === TraverseType .CAMERA)
-            this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
+         renderObject .getJoints () .push (this);
 
-         base .call (this, type, renderObject);
+         this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
       }
 
-      return function ()
-      {
-         if (this ._skinCoordIndex .length)
-            return traverse;
-
-         return base;
-      };
-   })(),
-   getGroupTraverse: (function ()
+      X3DTransformNode .prototype .traverse .call (this, type, renderObject);
+   },
+   groupTraverse: function (type, renderObject)
    {
-      const base = X3DTransformNode .prototype .getGroupTraverse ();
-
-      function traverse (type, renderObject)
+      if (type === TraverseType .CAMERA)
       {
-         if (type === TraverseType .CAMERA)
-            this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+         renderObject .getJoints () .push (this);
 
-         base .call (this, type, renderObject);
+         this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
       }
 
-      return function ()
-      {
-         if (this ._skinCoordIndex .length)
-            return traverse;
-
-         return base;
-      };
-   })(),
+      X3DTransformNode .prototype .groupTraverse .call (this, type, renderObject);
+   },
 });
 
 export default HAnimJoint;

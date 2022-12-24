@@ -57,9 +57,7 @@ function X3DTransformMatrix3DNode (executionContext)
 
    this .addType (X3DConstants .X3DTransformMatrix3DNode);
 
-   this .matrix   = new Matrix4 ();
-   this .getBBox  = this .getGetGroupBBox ();
-   this .traverse = this .getGroupTraverse ();
+   this .matrix = new Matrix4 ();
 }
 
 X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -71,15 +69,15 @@ X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupin
       {
          this .matrix .identity ();
 
-         this .getBBox  = this .getGetGroupBBox ();
-         this .traverse = this .getGroupTraverse ();
+         this .getBBox  = this .getSubBBox;
+         this .traverse = this .groupTraverse;
       }
       else
       {
          this .matrix .assign (matrix);
 
-         this .getBBox  = this .getGetBBox ();
-         this .traverse = this .getTraverse ();
+         delete this .getBBox;
+         delete this .traverse;
       }
    },
    getMatrix: function ()
@@ -92,56 +90,33 @@ X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupin
       {
          this .matrix .identity ();
 
-         this .getBBox  = this .getGetGroupBBox ();
-         this .traverse = this .getGroupTraverse ();
+         this .getBBox  = this .getSubBBox;
+         this .traverse = this .groupTraverse;
       }
       else
       {
          this .matrix .set (t, r, s, so, c);
 
-         this .getBBox  = this .getGetBBox ();
-         this .traverse = this .getTraverse ();
+         delete this .getBBox;
+         delete this .traverse;
       }
    },
-   getGetBBox: (function ()
+   getBBox: function getBBox (bbox, shadows)
    {
-      function getBBox (bbox, shadows)
-      {
-         return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
-      }
-
-      return function ()
-      {
-         return getBBox;
-      };
-   })(),
-   getGetGroupBBox: function ()
-   {
-      return X3DGroupingNode .prototype .getBBox;
+      return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
    },
-   getTraverse: (function ()
+   traverse: function (type, renderObject)
    {
-      function traverse (type, renderObject)
-      {
-         const modelViewMatrix = renderObject .getModelViewMatrix ();
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-         modelViewMatrix .push ();
-         modelViewMatrix .multLeft (this .matrix);
+      modelViewMatrix .push ();
+      modelViewMatrix .multLeft (this .matrix);
 
-         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+      X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-         modelViewMatrix .pop ();
-      }
-
-      return function ()
-      {
-         return traverse;
-      };
-   })(),
-   getGroupTraverse: function ()
-   {
-      return X3DGroupingNode .prototype .traverse;
+      modelViewMatrix .pop ();
    },
+   groupTraverse: X3DGroupingNode .prototype .traverse,
 });
 
 export default X3DTransformMatrix3DNode;

@@ -200,13 +200,13 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
    },
    set_joints__: function ()
    {
-      var jointNodes = this .jointNodes;
+      const jointNodes = this .jointNodes;
 
       jointNodes .length = 0;
 
-      for (var i = 0, length = this ._joints .length; i < length; ++ i)
+      for (const node of this ._joints)
       {
-         var jointNode = X3DCast (X3DConstants .HAnimJoint, this ._joints [i]);
+         const jointNode = X3DCast (X3DConstants .HAnimJoint, node);
 
          if (jointNode)
             jointNodes .push (jointNode);
@@ -232,12 +232,14 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
    },
    traverse: function (type, renderObject)
    {
+      renderObject .getJoints () .length = 0;
+
       this .transformNode .traverse (type, renderObject);
       this .skinning (type, renderObject);
    },
    skinning: (function ()
    {
-      var
+      const
          invModelMatrix = new Matrix4 (),
          vector         = new Vector3 (0, 0, 0),
          rest           = new Vector3 (0, 0, 0),
@@ -252,8 +254,8 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
          if (! this .skinCoordNode)
             return;
 
-         var
-            jointNodes     = this .jointNodes,
+         const
+            jointNodes     = renderObject .getJoints (), // this ._jointNodes
             skinNormalNode = this .skinNormalNode,
             skinCoordNode  = this .skinCoordNode,
             restNormalNode = this .restNormalNode,
@@ -272,32 +274,29 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
          // Apply joint transformations.
 
-         for (var j = 0, jointNodesLength = jointNodes .length; j < jointNodesLength; ++ j)
+         for (const jointNode of jointNodes)
          {
-            var
-               jointNode            = jointNodes [j],
-               skinCoordIndexLength = jointNode ._skinCoordIndex .length;
+            const skinCoordIndexLength = jointNode ._skinCoordIndex .length;
 
             if (skinCoordIndexLength === 0)
                continue;
 
-            var
+            const
                jointMatrix    = jointNode .getModelMatrix () .multRight (invModelMatrix),
                displacerNodes = jointNode .getDisplacers ();
 
-            for (var d = 0, displacerNodesLength = displacerNodes .length; d < displacerNodesLength; ++ d)
+            for (const displacerNode of displacerNodes)
             {
-               var
-                  displacerNode       = displacerNodes [d],
+               const
                   coordIndex          = displacerNode ._coordIndex .getValue (),
                   coordIndexLength    = displacerNode ._coordIndex .length,
                   weight              = displacerNode ._weight .getValue (),
                   displacements       = displacerNode ._displacements .getValue (),
                   displacementsLength = displacerNode ._displacements .length;
 
-               for (var i = 0; i < coordIndexLength; ++ i)
+               for (let i = 0; i < coordIndexLength; ++ i)
                {
-                  var
+                  const
                      i3           = i * 3,
                      index        = coordIndex [i],
                      displacement = i < displacementsLength ? point .set (displacements [i3], displacements [i3 + 1], displacements [i3 + 2]) : point .assign (Vector3 .Zero);
@@ -308,15 +307,15 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
                }
             }
 
-            var
+            const
                normalMatrix          = skinNormalNode ? jointMatrix .submatrix .transpose () .inverse () : null,
                skinCoordIndex        = jointNode ._skinCoordIndex .getValue (),
                skinCoordWeight       = jointNode ._skinCoordWeight .getValue (),
                skinCoordWeightLength = jointNode ._skinCoordWeight .length;
 
-            for (var i = 0; i < skinCoordIndexLength; ++ i)
+            for (let i = 0; i < skinCoordIndexLength; ++ i)
             {
-               var
+               const
                   index  = skinCoordIndex [i],
                   weight = i < skinCoordWeightLength ? skinCoordWeight [i] : 1;
 
