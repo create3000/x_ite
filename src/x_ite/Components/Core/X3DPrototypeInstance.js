@@ -84,15 +84,27 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
    {
       return "Core";
    },
-   getContainerField: function ()
+   getContainerField: function (strict = false)
    {
-      const proto = this [_protoNode] .getProtoDeclaration ();
+      if (! strict)
+      {
+         const proto = this [_protoNode];
 
-      if (proto && proto .getBody () .getRootNodes () .length)
-         return proto .getBody () .getRootNodes () [0] .getValue () .getContainerField ();
+         if (! proto .isExternProto)
+         {
+            const rootNodes = proto .getBody () .getRootNodes ();
 
-      else
-         return "children";
+            if (rootNodes .length)
+            {
+               const rootNode = rootNodes [0];
+
+               if (rootNode)
+                  return rootNode .getValue () .getContainerField ();
+            }
+         }
+      }
+
+      return "children";
    },
    initialize: function ()
    {
@@ -297,7 +309,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
    },
    getInnerNode: function ()
    {
-      const rootNodes = this [_body] .getRootNodes () .getValue ();
+      const rootNodes = this [_body] .getRootNodes ();
 
       if (rootNodes .length)
       {
@@ -396,7 +408,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
             if (containerField)
             {
-               if (containerField .getName () !== "children")
+               if (containerField .getName () !== this .getContainerField (true))
                {
                   stream .string += " ";
                   stream .string += "containerField='";
@@ -433,7 +445,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       if (containerField)
       {
-         if (containerField .getName () !== this .getContainerField ())
+         if (containerField .getName () !== this .getContainerField (true))
          {
             stream .string += " ";
             stream .string += "containerField='";
