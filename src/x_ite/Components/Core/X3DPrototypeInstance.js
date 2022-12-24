@@ -97,7 +97,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
             const rootNode = rootNodes [0];
 
             if (rootNode)
-               return rootNode .getValue () .getContainerField (strict);
+               return rootNode .getValue () .getContainerField ();
          }
       }
 
