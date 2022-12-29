@@ -275,6 +275,8 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
          if (userDefinedFields .length)
          {
+            const last = userDefinedFields .at (-1);
+
             stream .string += generator .TidyBreak ();
             generator .IncIndent ();
 
@@ -282,7 +284,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             {
                this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
 
-               if (field === fields .at (-1))
+               if (field === last)
                   stream .string += generator .TidyBreak ();
                else
                   stream .string += generator .Break ();
@@ -304,6 +306,8 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       }
       else
       {
+         const last = fields .at (-1);
+
          if (userDefinedFields .length === 0)
             stream .string += generator .TidyBreak ();
 
@@ -313,7 +317,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          {
             this .toVRMLStreamField (stream, field, fieldTypeLength, accessTypeLength);
 
-            if (field === fields .at (-1))
+            if (field === last)
                stream .string += generator .TidyBreak ();
             else
                stream .string += generator .Break ();
