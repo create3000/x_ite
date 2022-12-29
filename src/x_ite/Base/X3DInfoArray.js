@@ -248,7 +248,7 @@ X3DInfoArray .prototype = {
             stream .string += generator .Break ();
 
             if (value instanceof X3DBaseNode)
-               stream .string += generator .Break ();
+               stream .string += generator .TidyBreak ();
          }
          catch (error)
          {

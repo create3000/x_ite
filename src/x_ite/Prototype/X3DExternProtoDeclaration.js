@@ -186,16 +186,16 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
 
       const userDefinedFields = this .getUserDefinedFields ();
 
-      let
-         fieldTypeLength   = 0,
-         accessTypeLength  = 0;
-
       if (userDefinedFields .length === 0)
       {
          stream .string += generator .TidySpace ();
       }
       else
       {
+         let
+            fieldTypeLength   = 0,
+            accessTypeLength  = 0;
+
          for (const field of userDefinedFields)
          {
             fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
