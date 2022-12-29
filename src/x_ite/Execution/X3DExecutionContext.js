@@ -80,8 +80,8 @@ function X3DExecutionContext (executionContext)
    this .addType (X3DConstants .X3DExecutionContext)
 
    this .addChildObjects ("rootNodes",          new Fields .MFNode (),
-                        "worldInfos",         new Fields .MFNode (),
-                        "sceneGraph_changed", new Fields .SFTime ());
+                          "worldInfos",         new Fields .MFNode (),
+                          "sceneGraph_changed", new Fields .SFTime ());
 
    this ._rootNodes .setAccessType (X3DConstants .initializeOnly);
    this ._rootNodes .addCloneCount (1);
