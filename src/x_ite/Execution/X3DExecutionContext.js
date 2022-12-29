@@ -96,7 +96,6 @@ function X3DExecutionContext (executionContext)
    this [_protos]         = new ProtoDeclarationArray ();
    this [_externprotos]   = new ExternProtoDeclarationArray ();
    this [_routes]         = new RouteArray ();
-
 }
 
 X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
