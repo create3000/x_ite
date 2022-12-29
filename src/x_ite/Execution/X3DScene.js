@@ -78,6 +78,12 @@ function X3DScene (executionContext)
 
    this .addType (X3DConstants .X3DScene)
 
+   this .addChildObjects ("profile_changed",       new Fields .SFTime (),
+                          "components_changed",    new Fields .SFTime (),
+                          "units_changed",         new Fields .SFTime (),
+                          "metadata_changed",      new Fields .SFTime (),
+                          "exportedNodes_changed", new Fields .SFTime ())
+
    this [_specificationVersion] = LATEST_VERSION;
    this [_encoding]             = "SCRIPTED";
    this [_profile]              = null;
@@ -92,12 +98,6 @@ function X3DScene (executionContext)
 
    this [_metadata]      = new Map ();
    this [_exportedNodes] = new ExportedNodesArray ();
-
-   this .addChildObjects ("profile_changed",       new Fields .SFTime (),
-                          "components_changed",    new Fields .SFTime (),
-                          "units_changed",         new Fields .SFTime (),
-                          "metadata_changed",      new Fields .SFTime (),
-                          "exportedNodes_changed", new Fields .SFTime ())
 
    this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 

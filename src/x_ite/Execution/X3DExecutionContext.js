@@ -79,9 +79,14 @@ function X3DExecutionContext (executionContext)
 
    this .addType (X3DConstants .X3DExecutionContext)
 
-   this .addChildObjects ("rootNodes",          new Fields .MFNode (),
-                          "worldInfos",         new Fields .MFNode (),
-                          "sceneGraph_changed", new Fields .SFTime ());
+   this .addChildObjects ("rootNodes",             new Fields .MFNode (),
+                          "worldInfos",            new Fields .MFNode (),
+                          "sceneGraph_changed",    new Fields .SFTime (),
+                          "namedNodes_changed",    new Fields .SFTime (),
+                          "importedNodes_changed", new Fields .SFTime (),
+                          "protos_changed",        new Fields .SFTime (),
+                          "externprotos_changed",  new Fields .SFTime (),
+                          "routes_changed",        new Fields .SFTime ())
 
    this ._rootNodes .setAccessType (X3DConstants .initializeOnly);
    this ._rootNodes .addCloneCount (1);
@@ -91,12 +96,6 @@ function X3DExecutionContext (executionContext)
    this [_protos]         = new ProtoDeclarationArray ();
    this [_externprotos]   = new ExternProtoDeclarationArray ();
    this [_routes]         = new RouteArray ();
-
-   this .addChildObjects ("namedNodes_changed",    new Fields .SFTime (),
-                          "importedNodes_changed", new Fields .SFTime (),
-                          "protos_changed",        new Fields .SFTime (),
-                          "externprotos_changed",  new Fields .SFTime (),
-                          "routes_changed",        new Fields .SFTime ())
 
 }
 
