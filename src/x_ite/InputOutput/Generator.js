@@ -49,12 +49,10 @@ import X3DConstants from "../Base/X3DConstants.js";
 
 function Generator ()
 {
-   this .comma      = ",";
-   this .break      = "\n";
-   this .tidyBreak  = "\n";
-   this .forceBreak = "\n";
-   this .space      = " ";
-   this .tidySpace  = " ";
+   this .comma     = ",";
+   this .break     = "\n";
+   this .tidyBreak = "\n";
+   this .tidySpace = " ";
 
    this .indent              = "";
    this .indentChar          = "  ";
@@ -130,11 +128,11 @@ Generator .prototype =
    },
    ForceBreak: function ()
    {
-      return this .forceBreak;
+      return "\n";
    },
    Space: function ()
    {
-      return this .space;
+      return " ";
    },
    TidySpace: function ()
    {
