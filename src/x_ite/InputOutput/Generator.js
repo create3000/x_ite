@@ -49,20 +49,15 @@ import X3DConstants from "../Base/X3DConstants.js";
 
 function Generator (style)
 {
-   this .string = "";
+   this .Style (style);
 
-   this .comma     = ",";
-   this .break     = "\n";
-   this .tidyBreak = "\n";
-   this .tidySpace = " ";
+   this .string = "";
 
    this .indent              = "";
    this .indentChar          = "  ";
    this .precision           = 6;
    this .doublePrecision     = 14;
    this .removeTrailingZeros = /\.?0*(?=$|[eE])/;
-
-   this .Style (style);
 
    this .executionContextStack = [ null ];
    this .importedNodesIndex    = new Map ();
