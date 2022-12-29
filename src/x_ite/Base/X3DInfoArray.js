@@ -252,7 +252,7 @@ X3DInfoArray .prototype = {
          }
          catch (error)
          {
-            console .error (error);
+            // console .error (error);
          }
       }
    },
@@ -270,7 +270,7 @@ X3DInfoArray .prototype = {
          }
          catch (error)
          {
-            console .error (error);
+            // console .error (error);
          }
       }
    },

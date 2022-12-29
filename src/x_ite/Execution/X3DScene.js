@@ -443,23 +443,11 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       X3DExecutionContext .prototype .toVRMLStream .call (this, stream);
 
-      if (exportedNodes .size)
+      if (exportedNodes .length)
       {
-         stream .string += generator .Break ();
+         stream .string += generator .TidyBreak ();
 
-         exportedNodes .forEach (function (exportedNode)
-         {
-            try
-            {
-               exportedNode .toVRMLStream (stream);
-
-               stream .string += generator .Break ();
-            }
-            catch (error)
-            {
-               console .error (error);
-            }
-         });
+         exportedNodes .toVRMLStream (stream);
       }
 
       generator .LeaveScope ();
@@ -566,19 +554,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
          X3DExecutionContext .prototype .toXMLStream .call (this, stream);
 
-         for (const exportedNode of exportedNodes)
-         {
-            try
-            {
-               exportedNode .toXMLStream (stream);
-
-               stream .string += generator .TidyBreak ();
-            }
-            catch (error)
-            {
-               console .error (error);
-            }
-         }
+         exportedNodes .toXMLStream (stream);
 
          generator .LeaveScope ();
          generator .PopExecutionContext ();

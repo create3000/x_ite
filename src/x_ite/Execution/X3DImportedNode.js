@@ -45,32 +45,38 @@
  *
  ******************************************************************************/
 
-import X3DNode      from "../Components/Core/X3DNode.js";
+import X3DObject    from "../Base/X3DObject.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import SFNodeCache  from "../Fields/SFNodeCache.js";
 import Generator    from "../InputOutput/Generator.js";
 
 const
-   _inlineNode   = Symbol (),
-   _exportedName = Symbol (),
-   _importedName = Symbol (),
-   _routes       = Symbol ();
+   _executionContext = Symbol (),
+   _inlineNode       = Symbol (),
+   _exportedName     = Symbol (),
+   _importedName     = Symbol (),
+   _routes           = Symbol ();
 
 function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
 {
-   X3DNode .call (this, executionContext);
+   X3DObject .call (this);
 
-   this [_inlineNode]   = inlineNode;
-   this [_exportedName] = exportedName;
-   this [_importedName] = importedName;
-   this [_routes]       = new Set ();
+   this [_executionContext] = executionContext;
+   this [_inlineNode]       = inlineNode;
+   this [_exportedName]     = exportedName;
+   this [_importedName]     = importedName;
+   this [_routes]           = new Set ();
 
    this [_inlineNode] ._loadState .addInterest ("set_loadState__", this);
 }
 
-X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+X3DImportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
 {
    constructor: X3DImportedNode,
+   getExecutionContext: function ()
+   {
+      return this [_executionContext];
+   },
    getInlineNode: function ()
    {
       return this [_inlineNode];
@@ -126,7 +132,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          if (destinationNode instanceof X3DImportedNode)
             destinationNode = destinationNode .getExportedNode ();
 
-         route .real = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
+         route .real = this [_executionContext] .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
       }
       catch (error)
       {
@@ -150,7 +156,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          if (real)
          {
             delete route .real;
-            this .getExecutionContext () .deleteSimpleRoute (real);
+            this [_executionContext] .deleteSimpleRoute (real);
          }
       }
    },

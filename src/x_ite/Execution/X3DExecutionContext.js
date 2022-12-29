@@ -327,8 +327,6 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       this [_importedNodes] .add (importedName, importedNode);
 
-      importedNode .setup ();
-
       this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
    removeImportedNode: function (importedName)
@@ -802,21 +800,11 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       const importedNodes = this .getImportedNodes ();
 
-      if (importedNodes .size)
+      if (importedNodes .length)
       {
          stream .string += generator .TidyBreak ();
 
-         importedNodes .forEach (function (importedNode)
-         {
-            try
-            {
-               importedNode .toVRMLStream (stream);
-
-               stream .string += generator .Break ();
-            }
-            catch (error)
-            { }
-         });
+         importedNodes .toVRMLStream (stream);
       }
 
       // Output routes
@@ -825,7 +813,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       if (routes .length)
       {
-         stream .string += generator .Break ();
+         stream .string += generator .TidyBreak ();
 
          routes .toVRMLStream (stream);
       }
@@ -862,19 +850,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       // Output imported nodes
 
-      const importedNodes = this .getImportedNodes ();
-
-      importedNodes .forEach (function (importedNode)
-      {
-         try
-         {
-            importedNode .toXMLStream (stream);
-
-            stream .string += generator .TidyBreak ();
-         }
-         catch (error)
-         { }
-      });
+      this .getImportedNodes () .toXMLStream (stream);
 
       // Output routes
 
