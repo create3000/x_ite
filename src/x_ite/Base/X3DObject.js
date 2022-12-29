@@ -131,59 +131,59 @@ X3DObject .prototype =
             interest ();
       }
    },
-   toString: function (options = Object .prototype)
+   toString: function ({ scene, style } = Object .prototype)
    {
       const
          stream    = { string: "" },
          generator = Generator .Get (stream);
 
-      if (options .scene)
-         generator .PushExecutionContext (options .scene);
+      if (scene)
+         generator .PushExecutionContext (scene);
 
       this .toStream (stream);
 
       return stream .string;
    },
-   toVRMLString: function  (options = Object .prototype)
+   toVRMLString: function  ({ scene, style } = Object .prototype)
    {
       const
          stream    = { string: "" },
          generator = Generator .Get (stream);
 
-      generator .Style (options .style);
+      generator .Style (style);
 
-      if (options .scene)
-         generator .PushExecutionContext (options .scene);
+      if (scene)
+         generator .PushExecutionContext (scene);
 
       this .toVRMLStream (stream);
 
       return stream .string;
    },
-   toXMLString: function  (options = Object .prototype)
+   toXMLString: function  ({ scene, style } = Object .prototype)
    {
       const
          stream    = { string: "" },
          generator = Generator .Get (stream);
 
-      generator .Style (options .style);
+      generator .Style (style);
 
-      if (options .scene)
-         generator .PushExecutionContext (options .scene);
+      if (scene)
+         generator .PushExecutionContext (scene);
 
       this .toXMLStream (stream);
 
       return stream .string;
    },
-   toJSONString: function (options = Object .prototype)
+   toJSONString: function ({ scene, style } = Object .prototype)
    {
       const
          stream    = { string: "" },
          generator = Generator .Get (stream);
 
-      generator .Style (options .style);
+      generator .Style (style);
 
-      if (options .scene)
-         generator .PushExecutionContext (options .scene);
+      if (scene)
+         generator .PushExecutionContext (scene);
 
       this .toVRMLStream (stream); // TODO.
 
