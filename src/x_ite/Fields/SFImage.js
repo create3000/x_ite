@@ -191,7 +191,11 @@ SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
          generator = Generator .Get (stream),
          array     = this .array;
 
-      stream .string += this .width + " " + this .height + " " + this .comp;
+      stream .string += this .width;
+      stream .string += generator .Space ();
+      stream .string += this .height;
+      stream .string += generator .Space ();
+      stream .string += this .comp;
       stream .string += generator .Break ();
 
       generator .IncIndent ();
