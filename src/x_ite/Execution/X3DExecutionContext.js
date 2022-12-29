@@ -93,10 +93,10 @@ function X3DExecutionContext (executionContext)
    this [_routes]         = new RouteArray ();
 
    this .addChildObjects ("namedNodes_changed",    new Fields .SFTime (),
-                        "importedNodes_changed", new Fields .SFTime (),
-                        "protos_changed",        new Fields .SFTime (),
-                        "externprotos_changed",  new Fields .SFTime (),
-                        "routes_changed",        new Fields .SFTime ())
+                          "importedNodes_changed", new Fields .SFTime (),
+                          "protos_changed",        new Fields .SFTime (),
+                          "externprotos_changed",  new Fields .SFTime (),
+                          "routes_changed",        new Fields .SFTime ())
 
 }
 
