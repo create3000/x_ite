@@ -131,51 +131,59 @@ X3DObject .prototype =
             interest ();
       }
    },
-   toString: function (options = { })
+   toString: function (options = Object .prototype)
    {
-      const stream = { string: "" };
+      const
+         stream    = { string: "" },
+         generator = Generator .Get (stream);
 
       if (options .scene)
-         Generator .Get (stream) .PushExecutionContext (options .scene);
+         generator .PushExecutionContext (options .scene);
 
       this .toStream (stream);
 
       return stream .string;
    },
-   toVRMLString: function  (options = { })
+   toVRMLString: function  (options = Object .prototype)
    {
-      const stream = { string: "" };
+      const
+         stream    = { string: "" },
+         generator = Generator .Get (stream);
 
-      Generator .Get (stream) .Style (options .style);
+      generator .Style (options .style);
 
       if (options .scene)
-         Generator .Get (stream) .PushExecutionContext (options .scene);
+         generator .PushExecutionContext (options .scene);
 
       this .toVRMLStream (stream);
 
       return stream .string;
    },
-   toXMLString: function  (options = { })
+   toXMLString: function  (options = Object .prototype)
    {
-      const stream = { string: "" };
+      const
+         stream    = { string: "" },
+         generator = Generator .Get (stream);
 
-      Generator .Get (stream) .Style (options .style);
+      generator .Style (options .style);
 
       if (options .scene)
-         Generator .Get (stream) .PushExecutionContext (options .scene);
+         generator .PushExecutionContext (options .scene);
 
       this .toXMLStream (stream);
 
       return stream .string;
    },
-   toJSONString: function (options = { })
+   toJSONString: function (options = Object .prototype)
    {
-      const stream = { string: "" };
+      const
+         stream    = { string: "" },
+         generator = Generator .Get (stream);
 
-      Generator .Get (stream) .Style (options .style);
+      generator .Style (options .style);
 
       if (options .scene)
-         Generator .Get (stream) .PushExecutionContext (options .scene);
+         generator .PushExecutionContext (options .scene);
 
       this .toVRMLStream (stream); // TODO.
 
