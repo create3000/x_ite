@@ -161,27 +161,26 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 
       value .removeCloneCount (this [_cloneCount]);
    },
-   toStream: function (stream)
+   toStream: function (generator)
    {
       const
-         target    = this .getTarget (),
-         array     = target .getValue (),
-         generator = Generator .Get (stream);
+         target = this .getTarget (),
+         array  = target .getValue ();
 
       switch (array .length)
       {
          case 0:
          {
-            stream .string += "[";
-            stream .string += generator .TidySpace ();
-            stream .string += "]";
+            generator .string += "[";
+            generator .string += generator .TidySpace ();
+            generator .string += "]";
             break;
          }
          case 1:
          {
             generator .PushUnitCategory (target .getUnit ());
 
-            array [0] .toStream (stream);
+            array [0] .toStream (generator);
 
             generator .PopUnitCategory ();
             break;
@@ -190,20 +189,20 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          {
             generator .PushUnitCategory (target .getUnit ());
 
-            stream .string += "[";
-            stream .string += generator .TidyBreak ();
+            generator .string += "[";
+            generator .string += generator .TidyBreak ();
             generator .IncIndent ();
 
             for (let i = 0, length = array .length; i < length; ++ i)
             {
-               stream .string += generator .Indent ();
-               array [i] .toStream (stream);
-               stream .string += generator .TidyBreak ();
+               generator .string += generator .Indent ();
+               array [i] .toStream (generator);
+               generator .string += generator .TidyBreak ();
             }
 
             generator .DecIndent ();
-            stream .string += generator .Indent ();
-            stream .string += "]";
+            generator .string += generator .Indent ();
+            generator .string += "]";
 
             generator .PopUnitCategory ();
             break;
@@ -220,27 +219,26 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 
       return string;
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
       const
-         target    = this .getTarget (),
-         array     = target .getValue (),
-         generator = Generator .Get (stream);
+         target = this .getTarget (),
+         array  = target .getValue ();
 
       switch (array .length)
       {
          case 0:
          {
-            stream .string += "[";
-            stream .string += generator .TidySpace ();
-            stream .string += "]";
+            generator .string += "[";
+            generator .string += generator .TidySpace ();
+            generator .string += "]";
             break;
          }
          case 1:
          {
             generator .EnterScope ();
 
-            array [0] .toVRMLStream (stream);
+            array [0] .toVRMLStream (generator);
 
             generator .LeaveScope ();
             break;
@@ -249,20 +247,20 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          {
             generator .EnterScope ();
 
-            stream .string += "[";
-            stream .string += generator .TidyBreak ();
+            generator .string += "[";
+            generator .string += generator .TidyBreak ();
             generator .IncIndent ();
 
             for (const element of array)
             {
-               stream .string += generator .Indent ();
-               element .toVRMLStream (stream);
-               stream .string += generator .TidyBreak ();
+               generator .string += generator .Indent ();
+               element .toVRMLStream (generator);
+               generator .string += generator .TidyBreak ();
             }
 
             generator .DecIndent ();
-            stream .string += generator .Indent ();
-            stream .string += "]";
+            generator .string += generator .Indent ();
+            generator .string += "]";
 
             generator .LeaveScope ();
             break;
@@ -279,11 +277,9 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 
       return string;
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      const
-         generator = Generator .Get (stream),
-         length    = this .length;
+      const length = this .length;
 
       if (length)
       {
@@ -297,26 +293,26 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 
             if (node)
             {
-               node .toXMLStream (stream);
-               stream .string += generator .TidyBreak ();
+               node .toXMLStream (generator);
+               generator .string += generator .TidyBreak ();
             }
             else
             {
-               stream .string += generator .Indent ();
-               stream .string += "<";
-               stream .string += "NULL";
+               generator .string += generator .Indent ();
+               generator .string += "<";
+               generator .string += "NULL";
 
                const containerField = generator .ContainerField ();
 
                if (containerField)
                {
-                  stream .string += generator .Space ();
-                  stream .string += "containerField='";
-                  stream .string += generator .XMLEncode (containerField .getName ());
-                  stream .string += "'";
+                  generator .string += generator .Space ();
+                  generator .string += "containerField='";
+                  generator .string += generator .XMLEncode (containerField .getName ());
+                  generator .string += "'";
                }
 
-               stream .string += "/>";
+               generator .string += "/>";
             }
          }
 
@@ -324,22 +320,22 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 
          if (node)
          {
-            node .toXMLStream (stream);
+            node .toXMLStream (generator);
          }
          else
          {
-            stream .string += generator .Indent ();
-            stream .string += "<";
-            stream .string += "NULL";
+            generator .string += generator .Indent ();
+            generator .string += "<";
+            generator .string += "NULL";
 
             const containerField = generator .ContainerField ();
 
             if (containerField)
             {
-               stream .string += generator .Space ();
-               stream .string += "containerField='";
-               stream .string += generator .XMLEncode (containerField .getName ());
-               stream .string += "'";
+               generator .string += generator .Space ();
+               generator .string += "containerField='";
+               generator .string += generator .XMLEncode (containerField .getName ());
+               generator .string += "'";
             }
          }
 
@@ -389,28 +385,26 @@ MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .proto
    {
       return X3DConstants .MFString;
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
       const length = this .length;
 
       if (length)
       {
-         const
-            generator = Generator .Get (stream),
-            value     = this .getValue ();
+         const value = this .getValue ();
 
          for (let i = 0, n = length - 1; i < n; ++ i)
          {
-            stream .string += "\"";
-            value [i] .toXMLStream (stream);
-            stream .string += "\"";
-            stream .string += generator .Comma ();
-            stream .string += generator .TidySpace ();
+            generator .string += "\"";
+            value [i] .toXMLStream (generator);
+            generator .string += "\"";
+            generator .string += generator .Comma ();
+            generator .string += generator .TidySpace ();
          }
 
-         stream .string += "\"";
-         value .at (-1) .toXMLStream (stream);
-         stream .string += "\"";
+         generator .string += "\"";
+         value .at (-1) .toXMLStream (generator);
+         generator .string += "\"";
       }
    },
 });

@@ -72,47 +72,43 @@ X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototyp
    {
       return this [_localNode];
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      const
-         generator = Generator .Get (stream),
-         localName = generator .LocalName (this [_localNode]);
+      const localName = generator .LocalName (this [_localNode]);
 
-      stream .string += generator .Indent ();
-      stream .string += "EXPORT";
-      stream .string += generator .Space ();
-      stream .string += localName;
+      generator .string += generator .Indent ();
+      generator .string += "EXPORT";
+      generator .string += generator .Space ();
+      generator .string += localName;
 
       if (this [_exportedName] !== localName)
       {
-         stream .string += generator .Space ();
-         stream .string += "AS";
-         stream .string += generator .Space ();
-         stream .string += this [_exportedName];
+         generator .string += generator .Space ();
+         generator .string += "AS";
+         generator .string += generator .Space ();
+         generator .string += this [_exportedName];
       }
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      const
-         generator = Generator .Get (stream),
-         localName = generator .LocalName (this [_localNode]);
+      const localName = generator .LocalName (this [_localNode]);
 
-      stream .string += generator .Indent ();
-      stream .string += "<EXPORT";
-      stream .string += generator .Space ();
-      stream .string += "localDEF='";
-      stream .string += generator .XMLEncode (localName);
-      stream .string += "'";
+      generator .string += generator .Indent ();
+      generator .string += "<EXPORT";
+      generator .string += generator .Space ();
+      generator .string += "localDEF='";
+      generator .string += generator .XMLEncode (localName);
+      generator .string += "'";
 
       if (this [_exportedName] !== localName)
       {
-         stream .string += generator .Space ();
-         stream .string += "AS='";
-         stream .string += generator .XMLEncode (this [_exportedName]);
-         stream .string += "'";
+         generator .string += generator .Space ();
+         generator .string += "AS='";
+         generator .string += generator .XMLEncode (this [_exportedName]);
+         generator .string += "'";
       }
 
-      stream .string += "/>";
+      generator .string += "/>";
    },
 });
 

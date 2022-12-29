@@ -112,68 +112,66 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
       this [_sourceField]      .removeOutputRoute (this);
       this [_destinationField] .removeInputRoute (this);
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
       const
-         generator           = Generator .Get (stream),
          sourceNodeName      = generator .LocalName (this [_sourceNode]),
          destinationNodeName = generator .LocalName (this [_destinationNode]);
 
-      stream .string += generator .Indent ();
-      stream .string += "ROUTE";
-      stream .string += generator .Space ();
-      stream .string += sourceNodeName;
-      stream .string += ".";
-      stream .string += this [_sourceField] .getName ();
+      generator .string += generator .Indent ();
+      generator .string += "ROUTE";
+      generator .string += generator .Space ();
+      generator .string += sourceNodeName;
+      generator .string += ".";
+      generator .string += this [_sourceField] .getName ();
 
       if (this [_sourceField] .getAccessType () === X3DConstants .inputOutput)
-         stream .string += "_changed";
+         generator .string += "_changed";
 
-      stream .string += generator .Space ();
-      stream .string += "TO";
-      stream .string += generator .Space ();
-      stream .string += destinationNodeName;
-      stream .string += ".";
+      generator .string += generator .Space ();
+      generator .string += "TO";
+      generator .string += generator .Space ();
+      generator .string += destinationNodeName;
+      generator .string += ".";
 
       if (this [_destinationField] .getAccessType () === X3DConstants .inputOutput)
-         stream .string += "set_";
+         generator .string += "set_";
 
-      stream .string += this [_destinationField] .getName ();
+      generator .string += this [_destinationField] .getName ();
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
       const
-         generator           = Generator .Get (stream),
          sourceNodeName      = generator .LocalName (this [_sourceNode]),
          destinationNodeName = generator .LocalName (this [_destinationNode]);
 
-      stream .string += generator .Indent ();
-      stream .string += "<ROUTE";
-      stream .string += generator .Space ();
-      stream .string += "fromNode='";
-      stream .string += generator .XMLEncode (sourceNodeName);
-      stream .string += "'";
-      stream .string += generator .Space ();
-      stream .string += "fromField='";
-      stream .string += generator .XMLEncode (this [_sourceField] .getName ());
+      generator .string += generator .Indent ();
+      generator .string += "<ROUTE";
+      generator .string += generator .Space ();
+      generator .string += "fromNode='";
+      generator .string += generator .XMLEncode (sourceNodeName);
+      generator .string += "'";
+      generator .string += generator .Space ();
+      generator .string += "fromField='";
+      generator .string += generator .XMLEncode (this [_sourceField] .getName ());
 
       if (this [_sourceField] .getAccessType () === X3DConstants .inputOutput)
-         stream .string += "_changed";
+         generator .string += "_changed";
 
-      stream .string += "'";
-      stream .string += generator .Space ();
-      stream .string += "toNode='";
-      stream .string += generator .XMLEncode (destinationNodeName);
-      stream .string += "'";
-      stream .string += generator .Space ();
-      stream .string += "toField='";
+      generator .string += "'";
+      generator .string += generator .Space ();
+      generator .string += "toNode='";
+      generator .string += generator .XMLEncode (destinationNodeName);
+      generator .string += "'";
+      generator .string += generator .Space ();
+      generator .string += "toField='";
 
       if (this [_destinationField] .getAccessType () === X3DConstants .inputOutput)
-         stream .string += "set_";
+         generator .string += "set_";
 
-      stream .string += generator .XMLEncode (this [_destinationField] .getName ());
-      stream .string += "'";
-      stream .string += "/>";
+      generator .string += generator .XMLEncode (this [_destinationField] .getName ());
+      generator .string += "'";
+      generator .string += "/>";
    },
    dispose: function ()
    {

@@ -224,31 +224,33 @@ X3DInfoArray .prototype = {
    slice: Array .prototype .slice,
    some: Array .prototype .some,
    values: Array .prototype .values,
-   toString: function (scene)
+   toString: function ({ scene } = Object .prototype)
    {
-      const stream = { string: "" };
+      const generator = new Generator ();
 
       if (scene)
-         Generator .Get (stream) .PushExecutionContext (scene);
+         generator .PushExecutionContext (scene);
 
-      this .toStream (stream);
+      this .toStream (generator);
 
-      return stream .string;
+      return generator .string;
    },
-   toVRMLStream: function (stream)
+   toStream: function (generator)
    {
-      const generator = Generator .Get (stream);
-
+      generator .string = "[object " + this .getTypeName () + "]";
+   },
+   toVRMLStream: function (generator)
+   {
       for (const value of this [_array])
       {
          try
          {
-            value .toVRMLStream (stream);
+            value .toVRMLStream (generator);
 
-            stream .string += generator .Break ();
+            generator .string += generator .Break ();
 
             if (value instanceof X3DBaseNode)
-               stream .string += generator .TidyBreak ();
+               generator .string += generator .TidyBreak ();
          }
          catch (error)
          {
@@ -256,27 +258,21 @@ X3DInfoArray .prototype = {
          }
       }
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      const generator = Generator .Get (stream);
-
       for (const value of this [_array])
       {
          try
          {
-            value .toXMLStream (stream);
+            value .toXMLStream (generator);
 
-            stream .string += generator .TidyBreak ();
+            generator .string += generator .TidyBreak ();
          }
          catch (error)
          {
             // console .error (error);
          }
       }
-   },
-   toStream: function (stream)
-   {
-      stream .string = "[object " + this .getTypeName () + "]";
    },
 };
 

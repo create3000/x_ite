@@ -787,17 +787,17 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       console .log (Array .prototype .join .call (arguments, " "));
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      this .currentScene .toVRMLStream (stream);
+      this .currentScene .toVRMLStream (generator);
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      this .currentScene .toXMLStream (stream);
+      this .currentScene .toXMLStream (generator);
    },
-   toJSONStream: function (stream)
+   toJSONStream: function (generator)
    {
-      this .currentScene .toJSONStream (stream);
+      this .currentScene .toJSONStream (generator);
    },
 });
 

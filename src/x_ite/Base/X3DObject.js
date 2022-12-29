@@ -131,67 +131,53 @@ X3DObject .prototype =
             interest ();
       }
    },
-   toString: function ({ scene, style } = Object .prototype)
+   toString: function ({ scene } = Object .prototype)
    {
-      const
-         stream    = { string: "" },
-         generator = Generator .Get (stream);
+      const generator = new Generator ();
 
       if (scene)
          generator .PushExecutionContext (scene);
 
-      this .toStream (stream);
+      this .toStream (generator);
 
-      return stream .string;
+      return generator .string;
    },
    toVRMLString: function  ({ scene, style } = Object .prototype)
    {
-      const
-         stream    = { string: "" },
-         generator = Generator .Get (stream);
-
-      generator .Style (style);
+      const generator = new Generator (style);
 
       if (scene)
          generator .PushExecutionContext (scene);
 
-      this .toVRMLStream (stream);
+      this .toVRMLStream (generator);
 
-      return stream .string;
+      return generator .string;
    },
    toXMLString: function  ({ scene, style } = Object .prototype)
    {
-      const
-         stream    = { string: "" },
-         generator = Generator .Get (stream);
-
-      generator .Style (style);
+      const generator = new Generator (style);
 
       if (scene)
          generator .PushExecutionContext (scene);
 
-      this .toXMLStream (stream);
+      this .toXMLStream (generator);
 
-      return stream .string;
+      return generator .string;
    },
    toJSONString: function ({ scene, style } = Object .prototype)
    {
-      const
-         stream    = { string: "" },
-         generator = Generator .Get (stream);
-
-      generator .Style (style);
+      const generator = new Generator (style);
 
       if (scene)
          generator .PushExecutionContext (scene);
 
-      this .toVRMLStream (stream); // TODO.
+      this .toVRMLStream (generator); // TODO.
 
-      return stream .string;
+      return generator .string;
    },
-   toStream: function (stream)
+   toStream: function (generator)
    {
-      stream .string = "[object " + this .getTypeName () + "]";
+      generator .string = "[object " + this .getTypeName () + "]";
    },
    dispose: function () { },
 };

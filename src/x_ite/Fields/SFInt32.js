@@ -77,17 +77,17 @@ SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),
       X3DField .prototype .set .call (this, ~~value);
    },
    valueOf: X3DField .prototype .getValue,
-   toStream: function (stream, base)
+   toStream: function (generator, base)
    {
-      stream .string += this .getValue () .toString (base);
+      generator .string += this .getValue () .toString (base);
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      stream .string += this .getValue () .toString ();
+      generator .string += this .getValue () .toString ();
    },
 });
 

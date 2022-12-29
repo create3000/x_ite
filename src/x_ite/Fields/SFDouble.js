@@ -78,21 +78,19 @@ SFDouble .prototype = Object .assign (Object .create (X3DField .prototype),
       X3DField .prototype .set .call (this, +value);
    },
    valueOf: X3DField .prototype .getValue,
-   toStream: function (stream)
+   toStream: function (generator)
    {
-      const
-         generator = Generator .Get (stream),
-         category  = generator .Unit (this .getUnit ());
+      const category = generator .Unit (this .getUnit ());
 
-      stream .string += generator .DoublePrecision (generator .ToUnit (category, this .getValue ()));
+      generator .string += generator .DoublePrecision (generator .ToUnit (category, this .getValue ()));
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
 });
 

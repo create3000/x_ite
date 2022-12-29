@@ -63,17 +63,15 @@ ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       return "ProfileInfo";
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      const generator = Generator .Get (stream);
-
-      stream .string += "PROFILE";
-      stream .string += generator .Space ();
-      stream .string += this .name;
+      generator .string += "PROFILE";
+      generator .string += generator .Space ();
+      generator .string += this .name;
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      stream .string += this .name;
+      generator .string += this .name;
    },
 });
 

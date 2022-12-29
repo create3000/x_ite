@@ -80,17 +80,17 @@ SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       return this .getValue ();
    },
-   toStream: function (stream)
+   toStream: function (generator)
    {
-      stream .string += this .getValue () ? "TRUE" : "FALSE";
+      generator .string += this .getValue () ? "TRUE" : "FALSE";
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      stream .string += this .getValue () ? "true" : "false";
+      generator .string += this .getValue () ? "true" : "false";
    },
 });
 

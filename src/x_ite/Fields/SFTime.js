@@ -77,17 +77,17 @@ SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
       X3DField .prototype .set .call (this, +value);
    },
    valueOf: X3DField .prototype .getValue,
-   toStream: function (stream)
+   toStream: function (generator)
    {
-      stream .string += this .getValue ();
+      generator .string += this .getValue ();
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
 });
 

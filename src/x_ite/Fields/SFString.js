@@ -98,17 +98,17 @@ SFString .prototype = Object .assign (Object .create (X3DField .prototype),
       X3DField .prototype .set .call (this, "" + value);
    },
    valueOf: X3DField .prototype .getValue,
-   toStream: function (stream)
+   toStream: function (generator)
    {
-      stream .string += '"' + SFString .escape (this .getValue ()) + '"';
+      generator .string += '"' + SFString .escape (this .getValue ()) + '"';
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      stream .string += Generator .Get (stream) .XMLEncode (this .getValue ());
+      generator .string += generator .XMLEncode (this .getValue ());
    },
 });
 

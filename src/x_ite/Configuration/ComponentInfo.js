@@ -67,33 +67,29 @@ ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype)
    {
       return "ComponentInfo";
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      const generator = Generator .Get (stream);
-
-      stream .string += "COMPONENT";
-      stream .string += generator .Space ();
-      stream .string += this .name;
-      stream .string += generator .TidySpace ();
-      stream .string += ":";
-      stream .string += generator .TidySpace ();
-      stream .string += this .level;
+      generator .string += "COMPONENT";
+      generator .string += generator .Space ();
+      generator .string += this .name;
+      generator .string += generator .TidySpace ();
+      generator .string += ":";
+      generator .string += generator .TidySpace ();
+      generator .string += this .level;
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      const generator = Generator .Get (stream);
-
-      stream .string += generator .Indent ();
-      stream .string += "<component";
-      stream .string += generator .Space ();
-      stream .string += "name='";
-      stream .string += this .name;
-      stream .string += "'";
-      stream .string += generator .Space ();
-      stream .string += "level='";
-      stream .string += this .level;
-      stream .string += "'";
-      stream .string += "/>";
+      generator .string += generator .Indent ();
+      generator .string += "<component";
+      generator .string += generator .Space ();
+      generator .string += "name='";
+      generator .string += this .name;
+      generator .string += "'";
+      generator .string += generator .Space ();
+      generator .string += "level='";
+      generator .string += this .level;
+      generator .string += "'";
+      generator .string += "/>";
    },
 });
 

@@ -372,54 +372,68 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       return null;
    },
-   toStream: function (stream)
+   toStream: function (generator)
    {
       const
          target = this [_target],
          value  = target .getValue ();
 
       if (value)
-         value .toStream (stream);
+         value .toStream (generator);
       else
-         stream .string += "NULL";
+         generator .string += "NULL";
    },
-   toVRMLStream: function (stream)
+   toVRMLString: function ()
    {
       const
-         target = this [_target],
-         value  = target .getValue ();
-
-      if (value)
-         value .toVRMLStream (stream);
-      else
-         stream .string += "NULL";
-   },
-   toXMLString: function ()
-   {
-      const
+         generator = new Generator (),
          target    = this [_target],
-         stream    = { string: "" },
-         generator = Generator .Get (stream),
          value     = target .getValue ();
 
       generator .PushExecutionContext (value .getExecutionContext ());
 
-      target .toXMLStream (stream);
+      target .toVRMLStream (generator);
 
       generator .PopExecutionContext ();
 
-      return stream .string;
+      return generator .string;
    },
-   toXMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
       const
          target = this [_target],
          value  = target .getValue ();
 
       if (value)
-         value .toXMLStream (stream);
+         value .toVRMLStream (generator);
       else
-         stream .string += "<!-- NULL -->";
+         generator .string += "NULL";
+   },
+   toXMLString: function ()
+   {
+      const
+         generator = new Generator (),
+         target    = this [_target],
+         value     = target .getValue ();
+
+      generator .PushExecutionContext (value .getExecutionContext ());
+
+      target .toXMLStream (generator);
+
+      generator .PopExecutionContext ();
+
+      return generator .string;
+   },
+   toXMLStream: function (generator)
+   {
+      const
+         target = this [_target],
+         value  = target .getValue ();
+
+      if (value)
+         value .toXMLStream (generator);
+      else
+         generator .string += "<!-- NULL -->";
    },
    dispose: function ()
    {

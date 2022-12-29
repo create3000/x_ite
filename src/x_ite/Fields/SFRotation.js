@@ -153,24 +153,22 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       return new SFRotation (Rotation4 .slerp (this .getValue (), rotation .getValue (), t));
    },
-   toStream: function (stream)
+   toStream: function (generator)
    {
-      const
-         generator = Generator .Get (stream),
-         rotation  = this .getValue ();
+      const rotation = this .getValue ();
 
-      stream .string += generator .DoublePrecision (rotation .x) + " " +
+      generator .string += generator .DoublePrecision (rotation .x) + " " +
                         generator .DoublePrecision (rotation .y) + " " +
                         generator .DoublePrecision (rotation .z) + " " +
                         generator .DoublePrecision (generator .ToUnit ("angle", rotation .angle));
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
 });
 

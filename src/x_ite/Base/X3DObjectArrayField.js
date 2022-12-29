@@ -453,27 +453,26 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    {
       value .removeParent (this [_proxy]);
    },
-   toStream: function (stream)
+   toStream: function (generator)
    {
       const
-         target    = this [_target],
-         array     = target .getValue (),
-         generator = Generator .Get (stream);
+         target = this [_target],
+         array  = target .getValue ();
 
       switch (array .length)
       {
          case 0:
          {
-            stream .string += "[";
-            stream .string += generator .TidySpace ();
-            stream .string += "]";
+            generator .string += "[";
+            generator .string += generator .TidySpace ();
+            generator .string += "]";
             break;
          }
          case 1:
          {
             generator .PushUnitCategory (target .getUnit ());
 
-            array [0] .toStream (stream);
+            array [0] .toStream (generator);
 
             generator .PopUnitCategory ();
             break;
@@ -482,36 +481,36 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          {
             generator .PushUnitCategory (target .getUnit ());
 
-            stream .string += "[";
-            stream .string += generator .TidyBreak ();
+            generator .string += "[";
+            generator .string += generator .TidyBreak ();
             generator .IncIndent ();
 
             for (let i = 0, length = array .length - 1; i < length; ++ i)
             {
-               stream .string += generator .Indent ();
-               array [i] .toStream (stream);
-               stream .string += generator .Comma ();
-               stream .string += generator .TidyBreak ();
+               generator .string += generator .Indent ();
+               array [i] .toStream (generator);
+               generator .string += generator .Comma ();
+               generator .string += generator .TidyBreak ();
             }
 
-            stream .string += generator .Indent ();
-            array .at (-1) .toStream (stream);
-            stream .string += generator .TidyBreak ();
+            generator .string += generator .Indent ();
+            array .at (-1) .toStream (generator);
+            generator .string += generator .TidyBreak ();
 
             generator .DecIndent ();
-            stream .string += generator .Indent ();
-            stream .string += "]";
+            generator .string += generator .Indent ();
+            generator .string += "]";
 
             generator .PopUnitCategory ();
             break;
          }
       }
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
       const
          target = this [_target],
@@ -519,20 +518,18 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       if (length)
       {
-         const
-            generator = Generator .Get (stream),
-            array     = target .getValue ();
+         const array = target .getValue ();
 
          generator .PushUnitCategory (target .getUnit ());
 
          for (let i = 0, length = array .length - 1; i < length; ++ i)
          {
-            array [i] .toXMLStream (stream);
-            stream .string += generator .Comma ();
-            stream .string += generator .TidySpace ();
+            array [i] .toXMLStream (generator);
+            generator .string += generator .Comma ();
+            generator .string += generator .TidySpace ();
          }
 
-         array .at (-1) .toXMLStream (stream);
+         array .at (-1) .toXMLStream (generator);
 
          generator .PopUnitCategory ();
       }

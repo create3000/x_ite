@@ -218,14 +218,12 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       return true;
    },
    traverse: function () { },
-   toStream: function (stream)
+   toStream: function (generator)
    {
-      stream .string += this .getTypeName () + " { }";
+      generator .string += this .getTypeName () + " { }";
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      const generator = Generator .Get (stream);
-
       generator .EnterScope ();
 
       const name = generator .Name (this);
@@ -234,9 +232,9 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       {
          if (generator .ExistsNode (this))
          {
-            stream .string += "USE";
-            stream .string += generator .Space ();
-            stream .string += name;
+            generator .string += "USE";
+            generator .string += generator .Space ();
+            generator .string += name;
 
             generator .LeaveScope ();
             return;
@@ -247,15 +245,15 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       {
          generator .AddNode (this);
 
-         stream .string += "DEF";
-         stream .string += generator .Space ();
-         stream .string += name;
-         stream .string += generator .Space ();
+         generator .string += "DEF";
+         generator .string += generator .Space ();
+         generator .string += name;
+         generator .string += generator .Space ();
       }
 
-      stream .string += this .getTypeName ();
-      stream .string += generator .TidySpace ();
-      stream .string += "{";
+      generator .string += this .getTypeName ();
+      generator .string += generator .TidySpace ();
+      generator .string += "{";
 
       const
          fields            = this .getChangedFields (),
@@ -277,80 +275,78 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
             const last = userDefinedFields .at (-1);
 
-            stream .string += generator .TidyBreak ();
+            generator .string += generator .TidyBreak ();
             generator .IncIndent ();
 
             for (const field of userDefinedFields)
             {
-               this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
+               this .toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength);
 
                if (field === last)
-                  stream .string += generator .TidyBreak ();
+                  generator .string += generator .TidyBreak ();
                else
-                  stream .string += generator .Break ();
+                  generator .string += generator .Break ();
             }
 
             generator .DecIndent ();
 
             if (fields .length !== 0)
-               stream .string += generator .TidyBreak ();
+               generator .string += generator .TidyBreak ();
          }
       }
 
       if (fields .length === 0)
       {
          if (userDefinedFields .length)
-            stream .string += generator .Indent ();
+            generator .string += generator .Indent ();
          else
-            stream .string += generator .TidySpace ();
+            generator .string += generator .TidySpace ();
       }
       else
       {
          const last = fields .at (-1);
 
          if (userDefinedFields .length === 0)
-            stream .string += generator .TidyBreak ();
+            generator .string += generator .TidyBreak ();
 
          generator .IncIndent ();
 
          for (const field of fields)
          {
-            this .toVRMLStreamField (stream, field);
+            this .toVRMLStreamField (generator, field);
 
             if (field === last)
-               stream .string += generator .TidyBreak ();
+               generator .string += generator .TidyBreak ();
             else
-               stream .string += generator .Break ();
+               generator .string += generator .Break ();
          }
 
          generator .DecIndent ();
-         stream .string += generator .Indent ();
+         generator .string += generator .Indent ();
       }
 
-      stream .string += "}";
+      generator .string += "}";
 
       generator .LeaveScope ();
    },
-   toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
+   toVRMLStreamUserDefinedField: function (generator, field, fieldTypeLength, accessTypeLength)
    {
-      const
-         generator  = Generator .Get (stream),
-         sharedNode = generator .IsSharedNode (this);
+      const sharedNode = generator .IsSharedNode (this);
 
       if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
       {
-         stream .string += generator .Indent ();
-         stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-         stream .string += generator .Space ();
-         stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-         stream .string += generator .Space ();
-         stream .string += field .getName ();
+         generator .string += generator .Indent ();
+         generator .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+         generator .string += generator .Space ();
+         generator .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+         generator .string += generator .Space ();
+         generator .string += field .getName ();
 
          if (field .isInitializable ())
          {
-            stream .string += generator .Space ();
+            generator .string += generator .Space ();
 
-            field .toVRMLStream (stream);
+            field .toVRMLStream (generator);
          }
       }
       else
@@ -365,57 +361,55 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
             // Output user defined reference field
 
-            stream .string += generator .Indent ();
-            stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-            stream .string += generator .Space ();
-            stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-            stream .string += generator .Space ();
-            stream .string += field .getName ();
-            stream .string += generator .Space ();
-            stream .string += "IS";
-            stream .string += generator .Space ();
-            stream .string += reference .getName ();
+            generator .string += generator .Indent ();
+            generator .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+            generator .string += generator .Space ();
+            generator .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+            generator .string += generator .Space ();
+            generator .string += field .getName ();
+            generator .string += generator .Space ();
+            generator .string += "IS";
+            generator .string += generator .Space ();
+            generator .string += reference .getName ();
 
             ++ index;
 
             if (index !== field .getReferences () .size)
-               stream .string += generator .Break ();
+               generator .string += generator .Break ();
          });
 
          if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !field .isDefaultValue ())
          {
-            stream .string += generator .Break ();
-            stream .string += generator .Indent ();
-            stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-            stream .string += generator .Space ();
-            stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-            stream .string += generator .Space ();
-            stream .string += field .getName ();
+            generator .string += generator .Break ();
+            generator .string += generator .Indent ();
+            generator .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+            generator .string += generator .Space ();
+            generator .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+            generator .string += generator .Space ();
+            generator .string += field .getName ();
 
             if (field .isInitializable ())
             {
-               stream .string += generator .Space ();
+               generator .string += generator .Space ();
 
-               field .toVRMLStream (stream);
+               field .toVRMLStream (generator);
             }
          }
       }
    },
-   toVRMLStreamField: function (stream, field)
+   toVRMLStreamField: function (generator, field)
    {
-      const
-         generator  = Generator .Get (stream),
-         sharedNode = generator .IsSharedNode (this);
+      const sharedNode = generator .IsSharedNode (this);
 
       if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
       {
          if (field .isInitializable ())
          {
-            stream .string += generator .Indent ();
-            stream .string += field .getName ();
-            stream .string += generator .Space ();
+            generator .string += generator .Indent ();
+            generator .string += field .getName ();
+            generator .string += generator .Space ();
 
-            field .toVRMLStream (stream);
+            field .toVRMLStream (generator);
          }
       }
       else
@@ -430,37 +424,35 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
             // Output build in reference field
 
-            stream .string += generator .Indent ();
-            stream .string += field .getName ();
-            stream .string += generator .Space ();
-            stream .string += "IS";
-            stream .string += generator .Space ();
-            stream .string += reference .getName ();
+            generator .string += generator .Indent ();
+            generator .string += field .getName ();
+            generator .string += generator .Space ();
+            generator .string += "IS";
+            generator .string += generator .Space ();
+            generator .string += reference .getName ();
 
             ++ index;
 
             if (index !== field .getReferences () .size)
-               stream .string += generator .Break ();
+               generator .string += generator .Break ();
          });
 
          if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !this .isDefaultValue (field))
          {
             // Output build in field
 
-            stream .string += generator .Break ();
-            stream .string += generator .Indent ();
-            stream .string += field .getName ();
-            stream .string += generator .Space ();
+            generator .string += generator .Break ();
+            generator .string += generator .Indent ();
+            generator .string += field .getName ();
+            generator .string += generator .Space ();
 
-            field .toVRMLStream (stream);
+            field .toVRMLStream (generator);
          }
       }
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      const
-         generator  = Generator .Get (stream),
-         sharedNode = generator .IsSharedNode (this);
+      const sharedNode = generator .IsSharedNode (this);
 
       generator .EnterScope ();
 
@@ -470,13 +462,13 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       {
          if (generator .ExistsNode (this))
          {
-            stream .string += generator .Indent ();
-            stream .string += "<";
-            stream .string += this .getTypeName ();
-            stream .string += generator .Space ();
-            stream .string += "USE='";
-            stream .string += generator .XMLEncode (name);
-            stream .string += "'";
+            generator .string += generator .Indent ();
+            generator .string += "<";
+            generator .string += this .getTypeName ();
+            generator .string += generator .Space ();
+            generator .string += "USE='";
+            generator .string += generator .XMLEncode (name);
+            generator .string += "'";
 
             const containerField = generator .ContainerField ();
 
@@ -484,32 +476,32 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             {
                if (containerField .getName () !== this .getContainerField ())
                {
-                  stream .string += generator .Space ();
-                  stream .string += "containerField='";
-                  stream .string += generator .XMLEncode (containerField .getName ());
-                  stream .string += "'";
+                  generator .string += generator .Space ();
+                  generator .string += "containerField='";
+                  generator .string += generator .XMLEncode (containerField .getName ());
+                  generator .string += "'";
                }
             }
 
-            stream .string += "/>";
+            generator .string += "/>";
 
             generator .LeaveScope ();
             return;
          }
       }
 
-      stream .string += generator .Indent ();
-      stream .string += "<";
-      stream .string += this .getTypeName ();
+      generator .string += generator .Indent ();
+      generator .string += "<";
+      generator .string += this .getTypeName ();
 
       if (name .length)
       {
          generator .AddNode (this);
 
-         stream .string += generator .Space ();
-         stream .string += "DEF='";
-         stream .string += generator .XMLEncode (name);
-         stream .string += "'";
+         generator .string += generator .Space ();
+         generator .string += "DEF='";
+         generator .string += generator .XMLEncode (name);
+         generator .string += "'";
       }
 
       const containerField = generator .ContainerField ();
@@ -518,10 +510,10 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       {
          if (containerField .getName () !== this .getContainerField ())
          {
-            stream .string += generator .Space ();
-            stream .string += "containerField='";
-            stream .string += generator .XMLEncode (containerField .getName ());
-            stream .string += "'";
+            generator .string += generator .Space ();
+            generator .string += "containerField='";
+            generator .string += generator .XMLEncode (containerField .getName ());
+            generator .string += "'";
          }
       }
 
@@ -587,14 +579,14 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                      if (field === cdata)
                         break;
 
-                     stream .string += generator .Break ();
-                     stream .string += generator .Indent ();
-                     stream .string += field .getName ();
-                     stream .string += "='";
+                     generator .string += generator .Break ();
+                     generator .string += generator .Indent ();
+                     generator .string += field .getName ();
+                     generator .string += "='";
 
-                     field .toXMLStream (stream);
+                     field .toXMLStream (generator);
 
-                     stream .string += "'";
+                     generator .string += "'";
                      break;
                   }
                }
@@ -611,12 +603,12 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       if ((!this .canUserDefinedFields () || !userDefinedFields .length) && (!references .length || sharedNode) && !childNodes .length && !cdata)
       {
-         stream .string += "/>";
+         generator .string += "/>";
       }
       else
       {
-         stream .string += ">";
-         stream .string += generator .TidyBreak ();
+         generator .string += ">";
+         generator .string += generator .TidyBreak ();
 
          generator .IncIndent ();
 
@@ -624,20 +616,20 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          {
             for (const field of userDefinedFields)
             {
-               stream .string += generator .Indent ();
-               stream .string += "<field";
-               stream .string += generator .Space ();
-               stream .string += "accessType='";
-               stream .string += generator .AccessType (field .getAccessType ());
-               stream .string += "'";
-               stream .string += generator .Space ();
-               stream .string += "type='";
-               stream .string += field .getTypeName ();
-               stream .string += "'";
-               stream .string += generator .Space ();
-               stream .string += "name='";
-               stream .string += generator .XMLEncode (field .getName ());
-               stream .string += "'";
+               generator .string += generator .Indent ();
+               generator .string += "<field";
+               generator .string += generator .Space ();
+               generator .string += "accessType='";
+               generator .string += generator .AccessType (field .getAccessType ());
+               generator .string += "'";
+               generator .string += generator .Space ();
+               generator .string += "type='";
+               generator .string += field .getTypeName ();
+               generator .string += "'";
+               generator .string += generator .Space ();
+               generator .string += "name='";
+               generator .string += generator .XMLEncode (field .getName ());
+               generator .string += "'";
 
                // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
                // for this field.
@@ -664,8 +656,8 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
                   if (!field .isInitializable () || field .isDefaultValue ())
                   {
-                     stream .string += "/>";
-                     stream .string += generator .TidyBreak ();
+                     generator .string += "/>";
+                     generator .string += generator .TidyBreak ();
                   }
                   else
                   {
@@ -678,34 +670,34 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                         {
                            generator .PushContainerField (field);
 
-                           stream .string += ">";
-                           stream .string += generator .TidyBreak ();
+                           generator .string += ">";
+                           generator .string += generator .TidyBreak ();
 
                            generator .IncIndent ();
 
-                           field .toXMLStream (stream);
+                           field .toXMLStream (generator);
 
-                           stream .string += generator .TidyBreak ();
+                           generator .string += generator .TidyBreak ();
 
                            generator .DecIndent ();
 
-                           stream .string += generator .Indent ();
-                           stream .string += "</field>";
-                           stream .string += generator .TidyBreak ();
+                           generator .string += generator .Indent ();
+                           generator .string += "</field>";
+                           generator .string += generator .TidyBreak ();
 
                            generator .PopContainerField ();
                            break;
                         }
                         default:
                         {
-                           stream .string += generator .Space ();
-                           stream .string += "value='";
+                           generator .string += generator .Space ();
+                           generator .string += "value='";
 
-                           field .toXMLStream (stream);
+                           field .toXMLStream (generator);
 
-                           stream .string += "'";
-                           stream .string += "/>";
-                           stream .string += generator .TidyBreak ();
+                           generator .string += "'";
+                           generator .string += "/>";
+                           generator .string += generator .TidyBreak ();
                            break;
                         }
                      }
@@ -716,17 +708,17 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                   if (generator .ExecutionContext ())
                      references .push (field);
 
-                  stream .string += "/>";
-                  stream .string += generator .TidyBreak ();
+                  generator .string += "/>";
+                  generator .string += generator .TidyBreak ();
                }
             }
          }
 
          if (references .length && !sharedNode)
          {
-            stream .string += generator .Indent ();
-            stream .string += "<IS>";
-            stream .string += generator .TidyBreak ();
+            generator .string += generator .Indent ();
+            generator .string += "<IS>";
+            generator .string += generator .TidyBreak ();
 
             generator .IncIndent ();
 
@@ -736,35 +728,35 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
                protoFields .forEach (function (protoField)
                {
-                  stream .string += generator .Indent ();
-                  stream .string += "<connect";
-                  stream .string += generator .Space ();
-                  stream .string += "nodeField='";
-                  stream .string += generator .XMLEncode (field .getName ());
-                  stream .string += "'";
-                  stream .string += generator .Space ();
-                  stream .string += "protoField='";
-                  stream .string += generator .XMLEncode (protoField .getName ());
-                  stream .string += "'";
-                  stream .string += "/>";
-                  stream .string += generator .TidyBreak ();
+                  generator .string += generator .Indent ();
+                  generator .string += "<connect";
+                  generator .string += generator .Space ();
+                  generator .string += "nodeField='";
+                  generator .string += generator .XMLEncode (field .getName ());
+                  generator .string += "'";
+                  generator .string += generator .Space ();
+                  generator .string += "protoField='";
+                  generator .string += generator .XMLEncode (protoField .getName ());
+                  generator .string += "'";
+                  generator .string += "/>";
+                  generator .string += generator .TidyBreak ();
                });
             }
 
             generator .DecIndent ();
 
-            stream .string += generator .Indent ();
-            stream .string += "</IS>";
-            stream .string += generator .TidyBreak ();
+            generator .string += generator .Indent ();
+            generator .string += "</IS>";
+            generator .string += generator .TidyBreak ();
          }
 
          for (const field of childNodes)
          {
             generator .PushContainerField (field);
 
-            field .toXMLStream (stream);
+            field .toXMLStream (generator);
 
-            stream .string += generator .TidyBreak ();
+            generator .string += generator .TidyBreak ();
 
             generator .PopContainerField ();
          }
@@ -773,19 +765,19 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          {
             for (const value of cdata)
             {
-               stream .string += "<![CDATA[";
-               stream .string += generator .escapeCDATA (value);
-               stream .string += "]]>";
-               stream .string += generator .TidyBreak ();
+               generator .string += "<![CDATA[";
+               generator .string += generator .escapeCDATA (value);
+               generator .string += "]]>";
+               generator .string += generator .TidyBreak ();
             }
          }
 
          generator .DecIndent ();
 
-         stream .string += generator .Indent ();
-         stream .string += "</";
-         stream .string += this .getTypeName ();
-         stream .string += ">";
+         generator .string += generator .Indent ();
+         generator .string += "</";
+         generator .string += this .getTypeName ();
+         generator .string += ">";
       }
 
       generator .LeaveScope ();

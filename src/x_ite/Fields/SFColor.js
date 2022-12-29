@@ -127,28 +127,27 @@ SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
          return result;
       };
    })(),
-   toStream: function (stream)
+   toStream: function (generator)
    {
       const
-         generator = Generator .Get (stream),
-         value     = this .getValue (),
-         last      = value .length - 1;
+         value = this .getValue (),
+         last  = value .length - 1;
 
       for (let i = 0; i < last; ++ i)
       {
-         stream .string += generator .Precision (value [i]);
-         stream .string += " ";
+         generator .string += generator .Precision (value [i]);
+         generator .string += " ";
       }
 
-      stream .string += generator .Precision (value [last]);
+      generator .string += generator .Precision (value [last]);
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
 });
 

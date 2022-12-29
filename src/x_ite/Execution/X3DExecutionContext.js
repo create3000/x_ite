@@ -757,21 +757,19 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
             this ._worldInfos .splice (i, 1);
       }
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      const generator = Generator .Get (stream);
-
       generator .PushExecutionContext (this);
       generator .EnterScope ();
       generator .ImportedNodes (this .getImportedNodes ());
 
       // Output extern protos
 
-      this .getExternProtoDeclarations () .toVRMLStream (stream);
+      this .getExternProtoDeclarations () .toVRMLStream (generator);
 
       // Output protos
 
-      this .getProtoDeclarations () .toVRMLStream (stream);
+      this .getProtoDeclarations () .toVRMLStream (generator);
 
       // Output root nodes
 
@@ -781,17 +779,17 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       {
          const rootNode = rootNodes [i];
 
-         stream .string += generator .Indent ();
+         generator .string += generator .Indent ();
 
          if (rootNode)
-            rootNode .toVRMLStream (stream);
+            rootNode .toVRMLStream (generator);
          else
-            stream .string += "NULL";
+            generator .string += "NULL";
 
-         stream .string += generator .TidyBreak ();
+         generator .string += generator .TidyBreak ();
 
          if (i !== length - 1)
-            stream .string += generator .TidyBreak ();
+            generator .string += generator .TidyBreak ();
       }
 
       // Output imported nodes
@@ -800,9 +798,9 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       if (importedNodes .length)
       {
-         stream .string += generator .TidyBreak ();
+         generator .string += generator .TidyBreak ();
 
-         importedNodes .toVRMLStream (stream);
+         importedNodes .toVRMLStream (generator);
       }
 
       // Output routes
@@ -811,29 +809,27 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       if (routes .length)
       {
-         stream .string += generator .TidyBreak ();
+         generator .string += generator .TidyBreak ();
 
-         routes .toVRMLStream (stream);
+         routes .toVRMLStream (generator);
       }
 
       generator .LeaveScope ();
       generator .PopExecutionContext ();
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      const generator = Generator .Get (stream);
-
       generator .PushExecutionContext (this);
       generator .EnterScope ();
       generator .ImportedNodes (this .getImportedNodes ());
 
       // Output extern protos
 
-      this .getExternProtoDeclarations () .toXMLStream (stream);
+      this .getExternProtoDeclarations () .toXMLStream (generator);
 
       // Output protos
 
-      this .getProtoDeclarations () .toXMLStream (stream);
+      this .getProtoDeclarations () .toXMLStream (generator);
 
       // Output root nodes
 
@@ -841,18 +837,18 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       if (rootNodes .length)
       {
-         rootNodes .toXMLStream (stream);
+         rootNodes .toXMLStream (generator);
 
-         stream .string += generator .TidyBreak ();
+         generator .string += generator .TidyBreak ();
       }
 
       // Output imported nodes
 
-      this .getImportedNodes () .toXMLStream (stream);
+      this .getImportedNodes () .toXMLStream (generator);
 
       // Output routes
 
-      this .getRoutes () .toXMLStream (stream);
+      this .getRoutes () .toXMLStream (generator);
 
       generator .LeaveScope ();
       generator .PopExecutionContext ();

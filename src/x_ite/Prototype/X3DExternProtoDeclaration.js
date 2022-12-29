@@ -173,22 +173,20 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
       this .setLoadState (X3DConstants .FAILED_STATE);
       this .setProtoDeclaration (null);
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      const generator = Generator .Get (stream);
-
-      stream .string += generator .Indent ();
-      stream .string += "EXTERNPROTO";
-      stream .string += generator .Space ();
-      stream .string += this .getName ();
-      stream .string += generator .TidySpace ();
-      stream .string += "[";
+      generator .string += generator .Indent ();
+      generator .string += "EXTERNPROTO";
+      generator .string += generator .Space ();
+      generator .string += this .getName ();
+      generator .string += generator .TidySpace ();
+      generator .string += "[";
 
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length === 0)
       {
-         stream .string += generator .TidySpace ();
+         generator .string += generator .TidySpace ();
       }
       else
       {
@@ -202,57 +200,54 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
             accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
          }
 
-         stream .string += generator .TidyBreak ();
+         generator .string += generator .TidyBreak ();
 
          generator .IncIndent ();
 
          for (const field of userDefinedFields)
          {
-            this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
+            this .toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength);
 
-            stream .string += generator .Break ();
+            generator .string += generator .Break ();
          }
 
          generator .DecIndent ();
 
-         stream .string += generator .Indent ();
+         generator .string += generator .Indent ();
       }
 
-      stream .string += "]";
-      stream .string += generator .TidyBreak ();
-      stream .string += generator .Indent ();
+      generator .string += "]";
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .Indent ();
 
-      this ._url .toVRMLStream (stream);
+      this ._url .toVRMLStream (generator);
    },
-   toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
+   toVRMLStreamUserDefinedField: function (generator, field, fieldTypeLength, accessTypeLength)
    {
-      const generator = Generator .Get (stream);
-
-      stream .string += generator .Indent ();
-      stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-      stream .string += generator .Space ();
-      stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-      stream .string += generator .Space ();
-      stream .string += field .getName ();
+      generator .string += generator .Indent ();
+      generator .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+      generator .string += generator .Space ();
+      generator .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+      generator .string += generator .Space ();
+      generator .string += field .getName ();
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      const generator = Generator .Get (stream);
+      generator .string += generator .Indent ();
+      generator .string += "<ExternProtoDeclare";
+      generator .string += generator .Space ();
+      generator .string += "name='";
+      generator .string += generator .XMLEncode (this .getName ());
+      generator .string += "'";
+      generator .string += generator .Space ();
+      generator .string += "url='";
 
-      stream .string += generator .Indent ();
-      stream .string += "<ExternProtoDeclare";
-      stream .string += generator .Space ();
-      stream .string += "name='";
-      stream .string += generator .XMLEncode (this .getName ());
-      stream .string += "'";
-      stream .string += generator .Space ();
-      stream .string += "url='";
+      console .log (this ._url .toXMLString ())
+      this ._url .toXMLStream (generator);
 
-      this ._url .toXMLStream (stream);
-
-      stream .string += "'";
-      stream .string += ">";
-      stream .string += generator .TidyBreak ();
+      generator .string += "'";
+      generator .string += ">";
+      generator .string += generator .TidyBreak ();
 
       generator .IncIndent ();
 
@@ -260,28 +255,28 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
 
       for (const field of userDefinedFields)
       {
-         stream .string += generator .Indent ();
-         stream .string += "<field";
-         stream .string += generator .Space ();
-         stream .string += "accessType='";
-         stream .string += generator .AccessType (field .getAccessType ());
-         stream .string += "'";
-         stream .string += generator .Space ();
-         stream .string += "type='";
-         stream .string += field .getTypeName ();
-         stream .string += "'";
-         stream .string += generator .Space ();
-         stream .string += "name='";
-         stream .string += generator .XMLEncode (field .getName ());
-         stream .string += "'";
-         stream .string += "/>";
-         stream .string += generator .TidyBreak ();
+         generator .string += generator .Indent ();
+         generator .string += "<field";
+         generator .string += generator .Space ();
+         generator .string += "accessType='";
+         generator .string += generator .AccessType (field .getAccessType ());
+         generator .string += "'";
+         generator .string += generator .Space ();
+         generator .string += "type='";
+         generator .string += field .getTypeName ();
+         generator .string += "'";
+         generator .string += generator .Space ();
+         generator .string += "name='";
+         generator .string += generator .XMLEncode (field .getName ());
+         generator .string += "'";
+         generator .string += "/>";
+         generator .string += generator .TidyBreak ();
       }
 
       generator .DecIndent ();
 
-      stream .string += generator .Indent ();
-      stream .string += "</ExternProtoDeclare>";
+      generator .string += generator .Indent ();
+      generator .string += "</ExternProtoDeclare>";
    },
 });
 

@@ -136,28 +136,27 @@ function SFMatrixPrototypeTemplate (TypeName, Type, Matrix, SFVec, double)
       {
          return new SFVec (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
       },
-      toStream: function (stream)
+      toStream: function (generator)
       {
          const
-            generator = Generator .Get (stream),
-            value     = this .getValue (),
-            last      = value .length - 1;
+            value = this .getValue (),
+            last  = value .length - 1;
 
          for (let i = 0; i < last; ++ i)
          {
-            stream .string += double ? generator .DoublePrecision (value [i]) : generator .Precision (value [i]);
-            stream .string += " ";
+            generator .string += double ? generator .DoublePrecision (value [i]) : generator .Precision (value [i]);
+            generator .string += " ";
          }
 
-         stream .string += double ? generator .DoublePrecision (value [last]) : generator .Precision (value [last]);
+         generator .string += double ? generator .DoublePrecision (value [last]) : generator .Precision (value [last]);
       },
-      toVRMLStream: function (stream)
+      toVRMLStream: function (generator)
       {
-         this .toStream (stream);
+         this .toStream (generator);
       },
-      toXMLStream: function (stream)
+      toXMLStream: function (generator)
       {
-         this .toStream (stream);
+         this .toStream (generator);
       },
    });
 }

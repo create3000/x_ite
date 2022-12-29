@@ -185,47 +185,45 @@ SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       return X3DConstants .SFImage;
    },
-   toStream: function (stream)
+   toStream: function (generator)
    {
-      const
-         generator = Generator .Get (stream),
-         array     = this .array;
+      const array = this .array;
 
-      stream .string += this .width;
-      stream .string += generator .Space ();
-      stream .string += this .height;
-      stream .string += generator .Space ();
-      stream .string += this .comp;
-      stream .string += generator .Break ();
+      generator .string += this .width;
+      generator .string += generator .Space ();
+      generator .string += this .height;
+      generator .string += generator .Space ();
+      generator .string += this .comp;
+      generator .string += generator .Break ();
 
       generator .IncIndent ();
 
       for (let y = 0, h = this .height; y < h; ++ y)
       {
-         stream .string += generator .Indent ();
+         generator .string += generator .Indent ();
 
          for (let x = 0, w = this .width; x < w; ++ x)
          {
-            stream .string += "0x";
-            stream .string += array [y * w + x] .toString (16);
+            generator .string += "0x";
+            generator .string += array [y * w + x] .toString (16);
 
             if (x !== w - 1)
-               stream .string += generator .Space ();
+               generator .string += generator .Space ();
          }
 
          if (y !== h - 1)
-            stream .string += generator .TidyBreak ();
+            generator .string += generator .TidyBreak ();
       }
 
       generator .DecIndent ();
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
 });
 

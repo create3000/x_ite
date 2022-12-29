@@ -47,8 +47,10 @@
 
 import X3DConstants from "../Base/X3DConstants.js";
 
-function Generator ()
+function Generator (style)
 {
+   this .string = "";
+
    this .comma     = ",";
    this .break     = "\n";
    this .tidyBreak = "\n";
@@ -59,6 +61,8 @@ function Generator ()
    this .precision           = 6;
    this .doublePrecision     = 14;
    this .removeTrailingZeros = /\.?0*(?=$|[eE])/;
+
+   this .Style (style);
 
    this .executionContextStack = [ null ];
    this .importedNodesIndex    = new Map ();
@@ -478,13 +482,5 @@ Generator .prototype =
 
 for (const key of Reflect .ownKeys (Generator .prototype))
    Object .defineProperty (Generator .prototype, key, { enumerable: false });
-
-Generator .Get = function (stream)
-{
-   if (! stream .generator)
-      stream .generator = new Generator ();
-
-   return stream .generator;
-};
 
 export default Generator;

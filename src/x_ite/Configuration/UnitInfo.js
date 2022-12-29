@@ -66,37 +66,33 @@ UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       return "UnitInfo";
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      const generator = Generator .Get (stream);
-
-      stream .string += "UNIT";
-      stream .string += generator .Space ();
-      stream .string += this .category;
-      stream .string += generator .Space ();
-      stream .string += this .name;
-      stream .string += generator .Space ();
-      stream .string += this .conversionFactor;
+      generator .string += "UNIT";
+      generator .string += generator .Space ();
+      generator .string += this .category;
+      generator .string += generator .Space ();
+      generator .string += this .name;
+      generator .string += generator .Space ();
+      generator .string += this .conversionFactor;
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
-      const generator = Generator .Get (stream);
-
-      stream .string += generator .Indent ();
-      stream .string += "<unit";
-      stream .string += generator .Space ();
-      stream .string += "category='";
-      stream .string += this .category;
-      stream .string += "'";
-      stream .string += generator .Space ();
-      stream .string += "name='";
-      stream .string += generator .XMLEncode (this .name);
-      stream .string += "'";
-      stream .string += generator .Space ();
-      stream .string += "conversionFactor='";
-      stream .string += this .conversionFactor;
-      stream .string += "'";
-      stream .string += "/>";
+      generator .string += generator .Indent ();
+      generator .string += "<unit";
+      generator .string += generator .Space ();
+      generator .string += "category='";
+      generator .string += this .category;
+      generator .string += "'";
+      generator .string += generator .Space ();
+      generator .string += "name='";
+      generator .string += generator .XMLEncode (this .name);
+      generator .string += "'";
+      generator .string += generator .Space ();
+      generator .string += "conversionFactor='";
+      generator .string += this .conversionFactor;
+      generator .string += "'";
+      generator .string += "/>";
    },
 });
 

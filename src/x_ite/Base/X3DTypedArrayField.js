@@ -688,11 +688,10 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       return newArray;
    },
-   toStream: function (stream)
+   toStream: function (generator)
    {
       const
          target     = this [_target],
-         generator  = Generator .Get (stream),
          array      = target .getValue (),
          length     = target [_length],
          components = target .getComponents (),
@@ -702,9 +701,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       {
          case 0:
          {
-            stream .string += "[";
-            stream .string += generator .TidySpace ();
-            stream .string += "]";
+            generator .string += "[";
+            generator .string += generator .TidySpace ();
+            generator .string += "]";
             break;
          }
          case 1:
@@ -715,14 +714,14 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
             {
                value .set (array [0]);
 
-               value .toStream (stream);
+               value .toStream (generator);
             }
             else
             {
                for (let c = 0, first = 0; c < components; ++ c, ++ first)
                   value [c] = array [first];
 
-               value .toStream (stream);
+               value .toStream (generator);
             }
 
             generator .PopUnitCategory ();
@@ -732,67 +731,67 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          {
             generator .PushUnitCategory (target .getUnit ());
 
-            stream .string += "[";
-            stream .string += generator .TidyBreak ();
+            generator .string += "[";
+            generator .string += generator .TidyBreak ();
             generator .IncIndent ();
 
             if (components === 1)
             {
                for (let i = 0, n = length - 1; i < n; ++ i)
                {
-                  stream .string += generator .Indent ();
+                  generator .string += generator .Indent ();
 
                   value .set (array [i * components]);
-                  value .toStream (stream);
+                  value .toStream (generator);
 
-                  stream .string += generator .Comma ();
-                  stream .string += generator .TidyBreak ();
+                  generator .string += generator .Comma ();
+                  generator .string += generator .TidyBreak ();
                }
 
-               stream .string += generator .Indent ();
+               generator .string += generator .Indent ();
                value .set (array [(length - 1) * components]);
-               value .toStream (stream);
+               value .toStream (generator);
 
-               stream .string += generator .TidyBreak ();
+               generator .string += generator .TidyBreak ();
             }
             else
             {
                for (let i = 0, n = length - 1; i < n; ++ i)
                {
-                  stream .string += generator .Indent ();
+                  generator .string += generator .Indent ();
 
                   for (let c = 0, first = i * components; c < components; ++ c, ++ first)
                      value [c] = array [first];
 
-                  value .toStream (stream);
+                  value .toStream (generator);
 
-                  stream .string += generator .Comma ();
-                  stream .string += generator .TidyBreak ();
+                  generator .string += generator .Comma ();
+                  generator .string += generator .TidyBreak ();
                }
 
-               stream .string += generator .Indent ();
+               generator .string += generator .Indent ();
 
                for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
                   value [c] = array [first];
 
-               value .toStream (stream);
-               stream .string += generator .TidyBreak ();
+               value .toStream (generator);
+               generator .string += generator .TidyBreak ();
             }
 
             generator .DecIndent ();
-            stream .string += generator .Indent ();
-            stream .string += "]";
+            generator .string += generator .Indent ();
+            generator .string += "]";
 
             generator .PopUnitCategory ();
             break;
          }
       }
    },
-   toVRMLStream: function (stream)
+   toVRMLStream: function (generator)
    {
-      this .toStream (stream);
+      this .toStream (generator);
    },
-   toXMLStream: function (stream)
+   toXMLStream: function (generator)
    {
       const
          target = this [_target],
@@ -801,7 +800,6 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       if (length)
       {
          const
-            generator  = Generator .Get (stream),
             array      = target .getValue (),
             components = target .getComponents (),
             value      = new (target .getSingleType ()) ();
@@ -813,15 +811,15 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
             for (let i = 0, n = length - 1; i < n; ++ i)
             {
                value .set (array [i * components]);
-               value .toXMLStream (stream);
+               value .toXMLStream (generator);
 
-               stream .string += generator .Comma ();
-               stream .string += generator .TidySpace ();
+               generator .string += generator .Comma ();
+               generator .string += generator .TidySpace ();
             }
 
             value .set (array [(length - 1) * components]);
 
-            value .toXMLStream (stream);
+            value .toXMLStream (generator);
          }
          else
          {
@@ -830,16 +828,16 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
                for (let c = 0, first = i * components; c < components; ++ c, ++ first)
                   value [c] = array [first];
 
-               value .toXMLStream (stream);
+               value .toXMLStream (generator);
 
-               stream .string += generator .Comma ();
-               stream .string += generator .TidySpace ();
+               generator .string += generator .Comma ();
+               generator .string += generator .TidySpace ();
             }
 
             for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
                value [c] = array [first];
 
-            value .toXMLStream (stream);
+            value .toXMLStream (generator);
          }
 
          generator .PopUnitCategory ();
