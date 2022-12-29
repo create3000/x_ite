@@ -241,7 +241,6 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
       generator .string += generator .Space ();
       generator .string += "url='";
 
-      console .log (this ._url .toXMLString ())
       this ._url .toXMLStream (generator);
 
       generator .string += "'";
