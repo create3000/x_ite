@@ -49,7 +49,6 @@ import X3DField     from "../Base/X3DField.js";
 import SFVec3       from "./SFVec3.js";
 import SFMatrix3    from "./SFMatrix3.js";
 import X3DConstants from "../Base/X3DConstants.js";
-import Generator    from "../InputOutput/Generator.js";
 import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix3      from "../../standard/Math/Numbers/Matrix3.js";
 

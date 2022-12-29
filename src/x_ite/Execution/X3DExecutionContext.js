@@ -59,7 +59,6 @@ import RouteArray                  from "../Routing/RouteArray.js";
 import X3DRoute                    from "../Routing/X3DRoute.js";
 import X3DCast                     from "../Base/X3DCast.js";
 import X3DConstants                from "../Base/X3DConstants.js";
-import Generator                   from "../InputOutput/Generator.js";
 import SFNodeCache                 from "../Fields/SFNodeCache.js";
 import Algorithm                   from "../../standard/Math/Algorithm.js";
 

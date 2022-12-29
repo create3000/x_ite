@@ -47,7 +47,6 @@
 
 import X3DObject   from "../Base/X3DObject.js";
 import SFNodeCache from "../Fields/SFNodeCache.js";
-import Generator   from "../InputOutput/Generator.js";
 
 const
    _exportedName = Symbol (),

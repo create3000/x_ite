@@ -52,7 +52,6 @@ import FieldDefinitionArray    from "../Base/FieldDefinitionArray.js";
 import X3DExecutionContext     from "../Execution/X3DExecutionContext.js";
 import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
 import X3DConstants            from "../Base/X3DConstants.js";
-import Generator               from "../InputOutput/Generator.js";
 
 SupportedNodes .addAbstractType ("X3DProtoDeclaration", X3DProtoDeclaration);
 

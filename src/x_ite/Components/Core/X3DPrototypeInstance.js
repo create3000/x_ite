@@ -49,7 +49,6 @@ import X3DChildObject      from "../../Base/X3DChildObject.js";
 import X3DNode             from "./X3DNode.js";
 import X3DExecutionContext from "../../Execution/X3DExecutionContext.js";
 import X3DConstants        from "../../Base/X3DConstants.js";
-import Generator           from "../../InputOutput/Generator.js";
 
 const
    _protoNode        = Symbol (),

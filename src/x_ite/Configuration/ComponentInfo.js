@@ -47,7 +47,6 @@
 
 import X3DObject from "../Base/X3DObject.js";
 import URLs      from "../Browser/Networking/URLs.js";
-import Generator from "../InputOutput/Generator.js";
 
 function ComponentInfo ({ name, level, title, providerUrl, external = false, dependencies = [ ] })
 {

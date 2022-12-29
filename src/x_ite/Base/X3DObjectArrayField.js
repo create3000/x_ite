@@ -47,7 +47,6 @@
 
 import X3DField      from "./X3DField.js";
 import X3DArrayField from "./X3DArrayField.js";
-import Generator     from "../InputOutput/Generator.js";
 
 const
    _target = Symbol (),

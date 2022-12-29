@@ -55,7 +55,6 @@ import X3DExportedNode     from "./X3DExportedNode.js";
 import ExportedNodesArray  from "./ExportedNodesArray.js";
 import X3DCast             from "../Base/X3DCast.js";
 import X3DConstants        from "../Base/X3DConstants.js";
-import Generator           from "../InputOutput/Generator.js";
 import SFNodeCache         from "../Fields/SFNodeCache.js";
 
 SupportedNodes .addAbstractType ("X3DScene", X3DScene);

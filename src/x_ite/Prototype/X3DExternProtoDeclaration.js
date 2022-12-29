@@ -53,7 +53,6 @@ import X3DUrlObject            from "../Components/Networking/X3DUrlObject.js";
 import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
 import X3DConstants            from "../Base/X3DConstants.js";
 import FileLoader              from "../InputOutput/FileLoader.js";
-import Generator               from "../InputOutput/Generator.js";
 
 SupportedNodes .addAbstractType ("X3DExternProtoDeclaration", X3DExternProtoDeclaration);
 

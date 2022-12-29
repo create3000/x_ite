@@ -48,7 +48,6 @@
 import Fields       from "../../Fields.js";
 import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
-import Generator    from "../../InputOutput/Generator.js";
 
 function X3DNode (executionContext)
 {
