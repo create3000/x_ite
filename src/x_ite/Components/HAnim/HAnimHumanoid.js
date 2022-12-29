@@ -159,6 +159,8 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
       this ._scale            .addFieldInterest (this .transformNode ._scale);
       this ._scaleOrientation .addFieldInterest (this .transformNode ._scaleOrientation);
       this ._center           .addFieldInterest (this .transformNode ._center);
+      this ._visible          .addFieldInterest (this .transformNode ._visible);
+      this ._bboxDisplay      .addFieldInterest (this .transformNode ._bboxDisplay);
       this ._bboxSize         .addFieldInterest (this .transformNode ._bboxSize);
       this ._bboxCenter       .addFieldInterest (this .transformNode ._bboxCenter);
 
@@ -167,6 +169,8 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
       this .transformNode ._scale            = this ._scale;
       this .transformNode ._scaleOrientation = this ._scaleOrientation;
       this .transformNode ._center           = this ._center;
+      this .transformNode ._visible          = this ._visible;
+      this .transformNode ._bboxDisplay      = this ._bboxDisplay;
       this .transformNode ._bboxSize         = this ._bboxSize;
       this .transformNode ._bboxCenter       = this ._bboxCenter;
       this .transformNode ._children         = [ this .viewpointsNode, this .skeletonNode, this .skinNode ];
