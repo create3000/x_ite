@@ -104,15 +104,6 @@ Generator .prototype =
             this .indentChar = "";
             break;
          }
-         case "COMPACT":
-         {
-            this .comma      = ",";
-            this .break      = "\n";
-            this .tidyBreak  = "\n";
-            this .tidySpace  = " ";
-            this .indentChar = "  ";
-            break;
-         }
          case "TIDY":
          default:
          {
