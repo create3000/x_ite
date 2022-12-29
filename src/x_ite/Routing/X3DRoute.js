@@ -121,7 +121,7 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       stream .string += generator .Indent ();
       stream .string += "ROUTE";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += sourceNodeName;
       stream .string += ".";
       stream .string += this [_sourceField] .getName ();
@@ -129,9 +129,9 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
       if (this [_sourceField] .getAccessType () === X3DConstants .inputOutput)
          stream .string += "_changed";
 
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "TO";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += destinationNodeName;
       stream .string += ".";
 
@@ -149,11 +149,11 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       stream .string += generator .Indent ();
       stream .string += "<ROUTE";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "fromNode='";
       stream .string += generator .XMLEncode (sourceNodeName);
       stream .string += "'";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "fromField='";
       stream .string += generator .XMLEncode (this [_sourceField] .getName ());
 
@@ -161,11 +161,11 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
          stream .string += "_changed";
 
       stream .string += "'";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "toNode='";
       stream .string += generator .XMLEncode (destinationNodeName);
       stream .string += "'";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "toField='";
 
       if (this [_destinationField] .getAccessType () === X3DConstants .inputOutput)

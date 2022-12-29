@@ -68,12 +68,14 @@ UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
    },
    toVRMLStream: function (stream)
    {
+      const generator = Generator .Get (stream);
+
       stream .string += "UNIT";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += this .category;
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += this .name;
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += this .conversionFactor;
    },
    toXMLStream: function (stream)
@@ -82,15 +84,15 @@ UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       stream .string += generator .Indent ();
       stream .string += "<unit";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "category='";
       stream .string += this .category;
       stream .string += "'";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "name='";
       stream .string += generator .XMLEncode (this .name);
       stream .string += "'";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "conversionFactor='";
       stream .string += this .conversionFactor;
       stream .string += "'";

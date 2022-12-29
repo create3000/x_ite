@@ -172,7 +172,9 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
       {
          case 0:
          {
-            stream .string += "[ ]";
+            stream .string += "[";
+            stream .string += generator .TidySpace ();
+            stream .string += "]";
             break;
          }
          case 1:
@@ -188,14 +190,15 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          {
             generator .PushUnitCategory (target .getUnit ());
 
-            stream .string += "[\n";
+            stream .string += "[";
+            stream .string += generator .TidyBreak ();
             generator .IncIndent ();
 
             for (let i = 0, length = array .length; i < length; ++ i)
             {
                stream .string += generator .Indent ();
                array [i] .toStream (stream);
-               stream .string += "\n";
+               stream .string += generator .TidyBreak ();
             }
 
             generator .DecIndent ();
@@ -228,7 +231,9 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
       {
          case 0:
          {
-            stream .string += "[ ]";
+            stream .string += "[";
+            stream .string += generator .TidySpace ();
+            stream .string += "]";
             break;
          }
          case 1:
@@ -244,14 +249,15 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          {
             generator .EnterScope ();
 
-            stream .string += "[\n";
+            stream .string += "[";
+            stream .string += generator .TidyBreak ();
             generator .IncIndent ();
 
             for (const element of array)
             {
                stream .string += generator .Indent ();
                element .toVRMLStream (stream);
-               stream .string += "\n";
+               stream .string += generator .TidyBreak ();
             }
 
             generator .DecIndent ();
@@ -292,7 +298,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
             if (node)
             {
                node .toXMLStream (stream);
-               stream .string += "\n";
+               stream .string += generator .TidyBreak ();
             }
             else
             {
@@ -304,7 +310,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 
                if (containerField)
                {
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += "containerField='";
                   stream .string += generator .XMLEncode (containerField .getName ());
                   stream .string += "'";
@@ -330,7 +336,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 
             if (containerField)
             {
-               stream .string += " ";
+               stream .string += generator .Space ();
                stream .string += "containerField='";
                stream .string += generator .XMLEncode (containerField .getName ());
                stream .string += "'";
@@ -389,14 +395,17 @@ MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .proto
 
       if (length)
       {
-         const value = this .getValue ();
+         const
+            generator = Generator .Get (stream),
+            value     = this .getValue ();
 
          for (let i = 0, n = length - 1; i < n; ++ i)
          {
             stream .string += "\"";
             value [i] .toXMLStream (stream);
             stream .string += "\"";
-            stream .string += ", ";
+            stream .string += generator .Comma ();
+            stream .string += generator .TidySpace ();
          }
 
          stream .string += "\"";

@@ -49,6 +49,13 @@ import X3DConstants from "../Base/X3DConstants.js";
 
 function Generator ()
 {
+   this .comma      = ",";
+   this .break      = "\n";
+   this .tidyBreak  = "\n";
+   this .forceBreak = "\n";
+   this .space      = " ";
+   this .tidySpace  = " ";
+
    this .indent              = "";
    this .indentChar          = "  ";
    this .precision           = 6;
@@ -75,6 +82,73 @@ function Generator ()
 Generator .prototype =
 {
    constructor: Generator,
+   Style: function (style)
+   {
+      switch (style)
+      {
+         case "CLEAN":
+         {
+            this .comma      = " ";
+            this .break      = " ";
+            this .tidyBreak  = "";
+            this .tidySpace  = "";
+            this .indentChar = "";
+            break;
+         }
+         case "SMALL":
+         {
+            this .comma      = " ";
+            this .break      = "\n";
+            this .tidyBreak  = "\n";
+            this .tidySpace  = "";
+            this .indentChar = "";
+            break;
+         }
+         case "COMPACT":
+         {
+            this .comma      = ",";
+            this .break      = "\n";
+            this .tidyBreak  = "\n";
+            this .tidySpace  = " ";
+            this .indentChar = "  ";
+            break;
+         }
+         case "TIDY":
+         default:
+         {
+            this .comma      = ",";
+            this .break      = "\n";
+            this .tidyBreak  = "\n";
+            this .tidySpace  = " ";
+            this .indentChar = "  ";
+            break;
+         }
+      }
+   },
+   Comma: function ()
+   {
+      return this .comma;
+   },
+   Break: function ()
+   {
+      return this .break;
+   },
+   TidyBreak: function ()
+   {
+      return this .tidyBreak;
+   },
+   ForceBreak: function ()
+   {
+      return this .forceBreak;
+   },
+   Space: function ()
+   {
+      return this .space;
+   },
+   TidySpace: function ()
+   {
+      return this .tidySpace;
+   },
    Indent: function ()
    {
       return this .indent;

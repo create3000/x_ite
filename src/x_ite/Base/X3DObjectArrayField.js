@@ -464,7 +464,9 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
       {
          case 0:
          {
-            stream .string += "[ ]";
+            stream .string += "[";
+            stream .string += generator .TidySpace ();
+            stream .string += "]";
             break;
          }
          case 1:
@@ -480,19 +482,21 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          {
             generator .PushUnitCategory (target .getUnit ());
 
-            stream .string += "[\n";
+            stream .string += "[";
+            stream .string += generator .TidyBreak ();
             generator .IncIndent ();
 
             for (let i = 0, length = array .length - 1; i < length; ++ i)
             {
                stream .string += generator .Indent ();
                array [i] .toStream (stream);
-               stream .string += ",\n";
+               stream .string += generator .Comma ();
+               stream .string += generator .TidyBreak ();
             }
 
             stream .string += generator .Indent ();
             array .at (-1) .toStream (stream);
-            stream .string += "\n";
+            stream .string += generator .TidyBreak ();
 
             generator .DecIndent ();
             stream .string += generator .Indent ();
@@ -521,10 +525,11 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
          generator .PushUnitCategory (target .getUnit ());
 
-         for (const element of array)
+         for (let i = 0, length = array .length - 1; i < length; ++ i)
          {
-            element .toXMLStream (stream);
-            stream .string += ", ";
+            array [i] .toXMLStream (stream);
+            stream .string += generator .Comma ();
+            stream .string += generator .TidySpace ();
          }
 
          array .at (-1) .toXMLStream (stream);

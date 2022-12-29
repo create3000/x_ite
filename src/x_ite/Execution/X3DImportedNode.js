@@ -183,16 +183,16 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       {
          stream .string += generator .Indent ();
          stream .string += "IMPORT";
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += generator .Name (this .getInlineNode ());
          stream .string += ".";
          stream .string += this .getExportedName ();
 
          if (this .getImportedName () !== this .getExportedName ())
          {
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += "AS";
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += this .getImportedName ();
          }
 
@@ -223,17 +223,17 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
                      ? destinationNode .getImportedName ()
                      : generator .Name (destinationNode);
 
-                  stream .string += "\n";
-                  stream .string += "\n";
+                  stream .string += generator .Break ();
+                  stream .string += generator .TidyBreak ();
                   stream .string += generator .Indent ();
                   stream .string += "ROUTE";
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += sourceNodeName;
                   stream .string += ".";
                   stream .string += sourceField;
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += "TO";
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += destinationNodeName;
                   stream .string += ".";
                   stream .string += destinationField;
@@ -252,18 +252,18 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       {
          stream .string += generator .Indent ();
          stream .string += "<IMPORT";
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += "inlineDEF='";
          stream .string += generator .XMLEncode (generator .Name (this .getInlineNode ()));
          stream .string += "'";
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += "importedDEF='";
          stream .string += generator .XMLEncode (this .getExportedName ());
          stream .string += "'";
 
          if (this .getImportedName () !== this .getExportedName ())
          {
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += "AS='";
             stream .string += generator .XMLEncode (this .getImportedName ());
             stream .string += "'";
@@ -298,23 +298,23 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
                      ? destinationNode .getImportedName ()
                      : generator .Name (destinationNode);
 
-                  stream .string += "\n";
-                  stream .string += "\n";
+                  stream .string += generator .Break ();
+                  stream .string += generator .TidyBreak ();
                   stream .string += generator .Indent ();
                   stream .string += "<ROUTE";
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += "fromNode='";
                   stream .string += generator .XMLEncode (sourceNodeName);
                   stream .string += "'";
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += "fromField='";
                   stream .string += generator .XMLEncode (sourceField);
                   stream .string += "'";
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += "toNode='";
                   stream .string += generator .XMLEncode (destinationNodeName);
                   stream .string += "'";
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += "toField='";
                   stream .string += generator .XMLEncode (destinationField);
                   stream .string += "'";

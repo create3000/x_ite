@@ -369,15 +369,15 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       stream .string += "#X3D V";
       stream .string += LATEST_VERSION;
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "utf8";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += this .getBrowser () .name;
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "V";
       stream .string += this .getBrowser () .version;
-      stream .string += "\n";
-      stream .string += "\n";
+      stream .string += generator .ForceBreak ();
+      stream .string += generator .ForceBreak ();
 
       const profile = this .getProfile ();
 
@@ -385,8 +385,8 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       {
          profile .toVRMLStream (stream);
 
-         stream .string += "\n";
-         stream .string += "\n";
+         stream .string += generator .Break ();
+         stream .string += generator .TidyBreak ();
       }
 
       const components = this .getComponents ();
@@ -395,7 +395,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       {
          components .toVRMLStream (stream);
 
-         stream .string += "\n";
+         stream .string += generator .TidyBreak ();
       }
 
       // Units
@@ -410,12 +410,12 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
                unit .toVRMLStream (stream);
 
-               stream .string += "\n";
+               stream .string += generator .Break ();
             }
          }
 
          if (!empty)
-            stream .string += "\n";
+            stream .string += generator .TidyBreak ();
       }
 
       const metadata = this .getMetaDatas ();
@@ -425,14 +425,14 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
          metadata .forEach (function (value, key)
          {
             stream .string += "META";
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += new Fields .SFString (key) .toString ();
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += new Fields .SFString (value) .toString ();
-            stream .string += "\n";
+            stream .string += generator .Break ();
          });
 
-         stream .string += "\n";
+         stream .string += generator .TidyBreak ();
       }
 
       const exportedNodes = this .getExportedNodes ();
@@ -445,7 +445,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       if (exportedNodes .size)
       {
-         stream .string += "\n";
+         stream .string += generator .Break ();
 
          exportedNodes .forEach (function (exportedNode)
          {
@@ -453,7 +453,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
             {
                exportedNode .toVRMLStream (stream);
 
-               stream .string += "\n";
+               stream .string += generator .Break ();
             }
             catch (error)
             {
@@ -469,28 +469,31 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    {
       const generator = Generator .Get (stream);
 
-      stream .string += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+      stream .string += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+      stream .string += generator .TidyBreak ();
       stream .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
       stream .string += LATEST_VERSION;
       stream .string += "//EN\" \"http://www.web3d.org/specifications/x3d-";
       stream .string += LATEST_VERSION;
-      stream .string += ".dtd\">\n";
+      stream .string += ".dtd\">";
+      stream .string += generator .TidyBreak ();
 
       stream .string += "<X3D";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "profile='";
       stream .string += this .getProfile () ? this .getProfile () .name : "Full";
       stream .string += "'";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "version='";
       stream .string += LATEST_VERSION;
       stream .string += "'";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-";
       stream .string += LATEST_VERSION;
-      stream .string += ".xsd'>\n";
+      stream .string += ".xsd'>";
+      stream .string += generator .TidyBreak ();
 
       generator .IncIndent ();
 
@@ -499,7 +502,8 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
           this .getMetaDatas () .size)
       {
          stream .string += generator .Indent ();
-         stream .string += "<head>\n";
+         stream .string += "<head>";
+         stream .string += generator .TidyBreak ();
 
          generator .IncIndent ();
 
@@ -513,7 +517,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
             {
                unit .toXMLStream (stream);
 
-               stream .string += "\n";
+               stream .string += generator .TidyBreak ();
             }
          }
 
@@ -521,15 +525,16 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
          {
             stream .string += generator .Indent ();
             stream .string += "<meta";
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += "name='";
             stream .string += generator .XMLEncode (key);
             stream .string += "'";
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += "content='";
             stream .string += generator .XMLEncode (value);
             stream .string += "'";
-            stream .string += "/>\n";
+            stream .string += "/>";
+            stream .string += generator .TidyBreak ();
          });
 
          // </head>
@@ -537,7 +542,8 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
          generator .DecIndent ();
 
          stream .string += generator .Indent ();
-         stream .string += "</head>\n";
+         stream .string += "</head>";
+         stream .string += generator .TidyBreak ();
       }
 
       if (this .getExternProtoDeclarations () .length ||
@@ -545,7 +551,8 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
           this .getRootNodes () .length)
       {
          stream .string += generator .Indent ();
-         stream .string += "<Scene>\n";
+         stream .string += "<Scene>";
+         stream .string += generator .TidyBreak ();
 
          generator .IncIndent ();
 
@@ -565,7 +572,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
             {
                exportedNode .toXMLStream (stream);
 
-               stream .string += "\n";
+               stream .string += generator .TidyBreak ();
             }
             catch (error)
             {
@@ -581,17 +588,20 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
          generator .DecIndent ();
 
          stream .string += generator .Indent ();
-         stream .string += "</Scene>\n";
+         stream .string += "</Scene>";
+         stream .string += generator .TidyBreak ();
       }
       else
       {
          stream .string += generator .Indent ();
-         stream .string += "<Scene/>\n";
+         stream .string += "<Scene/>";
+         stream .string += generator .TidyBreak ();
       }
 
       generator .DecIndent ();
 
-      stream .string += "</X3D>\n";
+      stream .string += "</X3D>";
+      stream .string += generator .TidyBreak ();
    },
 });
 

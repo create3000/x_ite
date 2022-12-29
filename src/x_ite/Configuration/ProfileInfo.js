@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import X3DObject from "../Base/X3DObject.js";
+import Generator from "../InputOutput/Generator.js";
 
 function ProfileInfo (name, title, providerUrl, components)
 {
@@ -64,8 +65,10 @@ ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
    },
    toVRMLStream: function (stream)
    {
+      const generator = Generator .Get (stream);
+
       stream .string += "PROFILE";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += this .name;
    },
    toXMLStream: function (stream)

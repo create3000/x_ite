@@ -48,6 +48,7 @@
 import X3DField     from "../Base/X3DField.js";
 import ArrayFields  from "./ArrayFields.js";
 import X3DConstants from "../Base/X3DConstants.js";
+import Generator    from "../InputOutput/Generator.js";
 
 /*
  *  Image
@@ -186,10 +187,33 @@ SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    toStream: function (stream)
    {
-      stream .string += this .width + " " + this .height + " " + this .comp;
+      const
+         generator = Generator .Get (stream),
+         array     = this .array;
 
-      for (const value of this .array)
-         stream .string += " 0x" + value .toString (16);
+      stream .string += this .width + " " + this .height + " " + this .comp;
+      stream .string += generator .Break ();
+
+      generator .IncIndent ();
+
+      for (let y = 0, h = this .height; y < h; ++ y)
+      {
+         stream .string += generator .Indent ();
+
+         for (let x = 0, w = this .width; x < w; ++ x)
+         {
+            stream .string += "0x";
+            stream .string += array [y * w + x] .toString (16);
+
+            if (x !== w - 1)
+               stream .string += generator .Space ();
+         }
+
+         if (y !== h - 1)
+            stream .string += generator .TidyBreak ();
+      }
+
+      generator .DecIndent ();
    },
    toVRMLStream: function (stream)
    {

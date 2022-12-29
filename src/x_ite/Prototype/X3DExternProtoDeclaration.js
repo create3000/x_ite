@@ -179,9 +179,9 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
 
       stream .string += generator .Indent ();
       stream .string += "EXTERNPROTO";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += this .getName ();
-      stream .string += " ";
+      stream .string += generator .TidySpace ();
       stream .string += "[";
 
       const userDefinedFields = this .getUserDefinedFields ();
@@ -192,7 +192,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
 
       if (userDefinedFields .length === 0)
       {
-         stream .string += " ";
+         stream .string += generator .TidySpace ();
       }
       else
       {
@@ -202,14 +202,15 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
             accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
          }
 
-         stream .string += "\n";
+         stream .string += generator .TidyBreak ();
 
          generator .IncIndent ();
 
          for (const field of userDefinedFields)
          {
             this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
-            stream .string += "\n";
+
+            stream .string += generator .Break ();
          }
 
          generator .DecIndent ();
@@ -218,8 +219,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
       }
 
       stream .string += "]";
-      stream .string += "\n";
-
+      stream .string += generator .TidyBreak ();
       stream .string += generator .Indent ();
 
       this ._url .toVRMLStream (stream);
@@ -230,9 +230,9 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
 
       stream .string += generator .Indent ();
       stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += field .getName ();
    },
    toXMLStream: function (stream)
@@ -241,17 +241,18 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
 
       stream .string += generator .Indent ();
       stream .string += "<ExternProtoDeclare";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "name='";
       stream .string += generator .XMLEncode (this .getName ());
       stream .string += "'";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "url='";
 
       this ._url .toXMLStream (stream);
 
       stream .string += "'";
-      stream .string += ">\n";
+      stream .string += ">";
+      stream .string += generator .TidyBreak ();
 
       generator .IncIndent ();
 
@@ -261,19 +262,20 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
       {
          stream .string += generator .Indent ();
          stream .string += "<field";
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += "accessType='";
          stream .string += generator .AccessType (field .getAccessType ());
          stream .string += "'";
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += "type='";
          stream .string += field .getTypeName ();
          stream .string += "'";
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += "name='";
          stream .string += generator .XMLEncode (field .getName ());
          stream .string += "'";
-         stream .string += "/>\n";
+         stream .string += "/>";
+         stream .string += generator .TidyBreak ();
       }
 
       generator .DecIndent ();

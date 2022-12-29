@@ -702,7 +702,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       {
          case 0:
          {
-            stream .string += "[ ]";
+            stream .string += "[";
+            stream .string += generator .TidySpace ();
+            stream .string += "]";
             break;
          }
          case 1:
@@ -730,7 +732,8 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          {
             generator .PushUnitCategory (target .getUnit ());
 
-            stream .string += "[\n";
+            stream .string += "[";
+            stream .string += generator .TidyBreak ();
             generator .IncIndent ();
 
             if (components === 1)
@@ -742,14 +745,15 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
                   value .set (array [i * components]);
                   value .toStream (stream);
 
-                  stream .string += ",\n";
+                  stream .string += generator .Comma ();
+                  stream .string += generator .TidyBreak ();
                }
 
                stream .string += generator .Indent ();
                value .set (array [(length - 1) * components]);
                value .toStream (stream);
 
-               stream .string += "\n";
+               stream .string += generator .TidyBreak ();
             }
             else
             {
@@ -762,7 +766,8 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
                   value .toStream (stream);
 
-                  stream .string += ",\n";
+                  stream .string += generator .Comma ();
+                  stream .string += generator .TidyBreak ();
                }
 
                stream .string += generator .Indent ();
@@ -771,7 +776,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
                   value [c] = array [first];
 
                value .toStream (stream);
-               stream .string += "\n";
+               stream .string += generator .TidyBreak ();
             }
 
             generator .DecIndent ();
@@ -810,7 +815,8 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
                value .set (array [i * components]);
                value .toXMLStream (stream);
 
-               stream .string += ", ";
+               stream .string += generator .Comma ();
+               stream .string += generator .TidySpace ();
             }
 
             value .set (array [(length - 1) * components]);
@@ -826,7 +832,8 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
                value .toXMLStream (stream);
 
-               stream .string += ", ";
+               stream .string += generator .Comma ();
+               stream .string += generator .TidySpace ();
             }
 
             for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)

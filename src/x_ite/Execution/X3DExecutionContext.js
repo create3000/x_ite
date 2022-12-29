@@ -792,10 +792,10 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          else
             stream .string += "NULL";
 
-         stream .string += "\n";
+         stream .string += generator .TidyBreak ();
 
          if (i !== length - 1)
-            stream .string += "\n";
+            stream .string += generator .TidyBreak ();
       }
 
       // Output imported nodes
@@ -804,7 +804,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       if (importedNodes .size)
       {
-         stream .string += "\n";
+         stream .string += generator .TidyBreak ();
 
          importedNodes .forEach (function (importedNode)
          {
@@ -812,7 +812,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
             {
                importedNode .toVRMLStream (stream);
 
-               stream .string += "\n";
+               stream .string += generator .Break ();
             }
             catch (error)
             { }
@@ -825,7 +825,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       if (routes .length)
       {
-         stream .string += "\n";
+         stream .string += generator .Break ();
 
          routes .toVRMLStream (stream);
       }
@@ -857,7 +857,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       {
          rootNodes .toXMLStream (stream);
 
-         stream .string += "\n";
+         stream .string += generator .TidyBreak ();
       }
 
       // Output imported nodes
@@ -870,7 +870,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          {
             importedNode .toXMLStream (stream);
 
-            stream .string += "\n";
+            stream .string += generator .TidyBreak ();
          }
          catch (error)
          { }

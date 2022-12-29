@@ -235,7 +235,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          if (generator .ExistsNode (this))
          {
             stream .string += "USE";
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += name;
 
             generator .LeaveScope ();
@@ -248,13 +248,13 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          generator .AddNode (this);
 
          stream .string += "DEF";
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += name;
-         stream .string += " ";
+         stream .string += generator .Space ();
       }
 
       stream .string += this .getTypeName ();
-      stream .string += " ";
+      stream .string += generator .TidySpace ();
       stream .string += "{";
 
       const
@@ -275,20 +275,23 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
          if (userDefinedFields .length)
          {
-            stream .string += "\n";
+            stream .string += generator .TidyBreak ();
             generator .IncIndent ();
 
             for (const field of userDefinedFields)
             {
                this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
 
-               stream .string += "\n";
+               if (field === fields .at (-1))
+                  stream .string += generator .TidyBreak ();
+               else
+                  stream .string += generator .Break ();
             }
 
             generator .DecIndent ();
 
             if (fields .length !== 0)
-               stream .string += "\n";
+               stream .string += generator .TidyBreak ();
          }
       }
 
@@ -297,22 +300,24 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          if (userDefinedFields .length)
             stream .string += generator .Indent ();
          else
-            stream .string += " ";
+            stream .string += generator .TidySpace ();
       }
       else
       {
          if (userDefinedFields .length === 0)
-            stream .string += "\n";
+            stream .string += generator .TidyBreak ();
 
          generator .IncIndent ();
 
-         fields .forEach (function (field)
+         for (const field of fields)
          {
             this .toVRMLStreamField (stream, field, fieldTypeLength, accessTypeLength);
 
-            stream .string += "\n";
-         },
-         this);
+            if (field === fields .at (-1))
+               stream .string += generator .TidyBreak ();
+            else
+               stream .string += generator .Break ();
+         }
 
          generator .DecIndent ();
          stream .string += generator .Indent ();
@@ -334,7 +339,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          {
             stream .string += generator .Indent ();
             stream .string += field .getName ();
-            stream .string += " ";
+            stream .string += generator .Space ();
 
             field .toVRMLStream (stream);
          }
@@ -353,25 +358,25 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
             stream .string += generator .Indent ();
             stream .string += field .getName ();
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += "IS";
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += reference .getName ();
 
             ++ index;
 
             if (index !== field .getReferences () .size)
-               stream .string += "\n";
+               stream .string += generator .Break ();
          });
 
          if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !this .isDefaultValue (field))
          {
             // Output build in field
 
-            stream .string += "\n";
+            stream .string += generator .Break ();
             stream .string += generator .Indent ();
             stream .string += field .getName ();
-            stream .string += " ";
+            stream .string += generator .Space ();
 
             field .toVRMLStream (stream);
          }
@@ -387,14 +392,14 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       {
          stream .string += generator .Indent ();
          stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += field .getName ();
 
          if (field .isInitializable ())
          {
-            stream .string += " ";
+            stream .string += generator .Space ();
 
             field .toVRMLStream (stream);
          }
@@ -413,34 +418,34 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
             stream .string += generator .Indent ();
             stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += field .getName ();
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += "IS";
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += reference .getName ();
 
             ++ index;
 
             if (index !== field .getReferences () .size)
-               stream .string += "\n";
+               stream .string += generator .Break ();
          });
 
          if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !field .isDefaultValue ())
          {
-            stream .string += "\n";
+            stream .string += generator .Break ();
             stream .string += generator .Indent ();
             stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += field .getName ();
 
             if (field .isInitializable ())
             {
-               stream .string += " ";
+               stream .string += generator .Space ();
 
                field .toVRMLStream (stream);
             }
@@ -464,7 +469,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             stream .string += generator .Indent ();
             stream .string += "<";
             stream .string += this .getTypeName ();
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += "USE='";
             stream .string += generator .XMLEncode (name);
             stream .string += "'";
@@ -475,7 +480,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             {
                if (containerField .getName () !== this .getContainerField ())
                {
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += "containerField='";
                   stream .string += generator .XMLEncode (containerField .getName ());
                   stream .string += "'";
@@ -497,7 +502,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       {
          generator .AddNode (this);
 
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += "DEF='";
          stream .string += generator .XMLEncode (name);
          stream .string += "'";
@@ -509,7 +514,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       {
          if (containerField .getName () !== this .getContainerField ())
          {
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += "containerField='";
             stream .string += generator .XMLEncode (containerField .getName ());
             stream .string += "'";
@@ -578,7 +583,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                      if (field === cdata)
                         break;
 
-                     stream .string += "\n";
+                     stream .string += generator .Break ();
                      stream .string += generator .Indent ();
                      stream .string += field .getName ();
                      stream .string += "='";
@@ -606,7 +611,8 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       }
       else
       {
-         stream .string += ">\n";
+         stream .string += ">";
+         stream .string += generator .TidyBreak ();
 
          generator .IncIndent ();
 
@@ -616,15 +622,15 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             {
                stream .string += generator .Indent ();
                stream .string += "<field";
-               stream .string += " ";
+               stream .string += generator .Space ();
                stream .string += "accessType='";
                stream .string += generator .AccessType (field .getAccessType ());
                stream .string += "'";
-               stream .string += " ";
+               stream .string += generator .Space ();
                stream .string += "type='";
                stream .string += field .getTypeName ();
                stream .string += "'";
-               stream .string += " ";
+               stream .string += generator .Space ();
                stream .string += "name='";
                stream .string += generator .XMLEncode (field .getName ());
                stream .string += "'";
@@ -654,7 +660,8 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
                   if (!field .isInitializable () || field .isDefaultValue ())
                   {
-                     stream .string += "/>\n";
+                     stream .string += "/>";
+                     stream .string += generator .TidyBreak ();
                   }
                   else
                   {
@@ -667,31 +674,34 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                         {
                            generator .PushContainerField (field);
 
-                           stream .string += ">\n";
+                           stream .string += ">";
+                           stream .string += generator .TidyBreak ();
 
                            generator .IncIndent ();
 
                            field .toXMLStream (stream);
 
-                           stream .string += "\n";
+                           stream .string += generator .TidyBreak ();
 
                            generator .DecIndent ();
 
                            stream .string += generator .Indent ();
-                           stream .string += "</field>\n";
+                           stream .string += "</field>";
+                           stream .string += generator .TidyBreak ();
 
                            generator .PopContainerField ();
                            break;
                         }
                         default:
                         {
-                           stream .string += " ";
+                           stream .string += generator .Space ();
                            stream .string += "value='";
 
                            field .toXMLStream (stream);
 
                            stream .string += "'";
-                           stream .string += "/>\n";
+                           stream .string += "/>";
+                           stream .string += generator .TidyBreak ();
                            break;
                         }
                      }
@@ -702,7 +712,8 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                   if (generator .ExecutionContext ())
                      references .push (field);
 
-                  stream .string += "/>\n";
+                  stream .string += "/>";
+                  stream .string += generator .TidyBreak ();
                }
             }
          }
@@ -711,7 +722,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          {
             stream .string += generator .Indent ();
             stream .string += "<IS>";
-            stream .string += "\n";
+            stream .string += generator .TidyBreak ();
 
             generator .IncIndent ();
 
@@ -723,22 +734,24 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                {
                   stream .string += generator .Indent ();
                   stream .string += "<connect";
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += "nodeField='";
                   stream .string += generator .XMLEncode (field .getName ());
                   stream .string += "'";
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += "protoField='";
                   stream .string += generator .XMLEncode (protoField .getName ());
                   stream .string += "'";
-                  stream .string += "/>\n";
+                  stream .string += "/>";
+                  stream .string += generator .TidyBreak ();
                });
             }
 
             generator .DecIndent ();
 
             stream .string += generator .Indent ();
-            stream .string += "</IS>\n";
+            stream .string += "</IS>";
+            stream .string += generator .TidyBreak ();
          }
 
          for (const field of childNodes)
@@ -747,7 +760,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
             field .toXMLStream (stream);
 
-            stream .string += "\n";
+            stream .string += generator .TidyBreak ();
 
             generator .PopContainerField ();
          }
@@ -758,7 +771,8 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             {
                stream .string += "<![CDATA[";
                stream .string += generator .escapeCDATA (value);
-               stream .string += "]]>\n";
+               stream .string += "]]>";
+               stream .string += generator .TidyBreak ();
             }
          }
 

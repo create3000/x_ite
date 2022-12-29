@@ -80,14 +80,14 @@ X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototyp
 
       stream .string += generator .Indent ();
       stream .string += "EXPORT";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += localName;
 
       if (this [_exportedName] !== localName)
       {
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += "AS";
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += this [_exportedName];
       }
    },
@@ -99,14 +99,14 @@ X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototyp
 
       stream .string += generator .Indent ();
       stream .string += "<EXPORT";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "localDEF='";
       stream .string += generator .XMLEncode (localName);
       stream .string += "'";
 
       if (this [_exportedName] !== localName)
       {
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += "AS='";
          stream .string += generator .XMLEncode (this [_exportedName]);
          stream .string += "'";

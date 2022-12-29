@@ -394,11 +394,11 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
          {
             stream .string += generator .Indent ();
             stream .string += "<ProtoInstance";
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += "name='";
             stream .string += generator .XMLEncode (this .getTypeName ());
             stream .string += "'";
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += "USE='";
             stream .string += generator .XMLEncode (name);
             stream .string += "'";
@@ -409,7 +409,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
             {
                if (containerField .getName () !== this .getContainerField ())
                {
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += "containerField='";
                   stream .string += generator .XMLEncode (containerField .getName ());
                   stream .string += "'";
@@ -425,7 +425,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       stream .string += generator .Indent ();
       stream .string += "<ProtoInstance";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "name='";
       stream .string += generator .XMLEncode (this .getTypeName ());
       stream .string += "'";
@@ -434,7 +434,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
       {
          generator .AddNode (this);
 
-         stream .string += " ";
+         stream .string += generator .Space ();
          stream .string += "DEF='";
          stream .string += generator .XMLEncode (name);
          stream .string += "'";
@@ -446,7 +446,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
       {
          if (containerField .getName () !== this .getContainerField ())
          {
-            stream .string += " ";
+            stream .string += generator .Space ();
             stream .string += "containerField='";
             stream .string += generator .XMLEncode (containerField .getName ());
             stream .string += "'";
@@ -461,7 +461,8 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
       }
       else
       {
-         stream .string += ">\n";
+         stream .string += ">";
+         stream .string += generator .TidyBreak ();
 
          generator .IncIndent ();
 
@@ -504,31 +505,34 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
                   {
                      stream .string += generator .Indent ();
                      stream .string += "<fieldValue";
-                     stream .string += " ";
+                     stream .string += generator .Space ();
                      stream .string += "name='";
                      stream .string += generator .XMLEncode (field .getName ());
                      stream .string += "'";
 
                      if (field .length === 0)
                      {
-                        stream .string += "/>\n";
+                        stream .string += "/>";
+                        stream .string += generator .TidyBreak ();
                      }
                      else
                      {
                         generator .PushContainerField (field);
 
-                        stream .string += ">\n";
+                        stream .string += ">";
+                        stream .string += generator .TidyBreak ();
 
                         generator .IncIndent ();
 
                         field .toXMLStream (stream);
 
-                        stream .string += "\n";
+                        stream .string += generator .TidyBreak ();
 
                         generator .DecIndent ();
 
                         stream .string += generator .Indent ();
-                        stream .string += "</fieldValue>\n";
+                        stream .string += "</fieldValue>";
+                        stream .string += generator .TidyBreak ();
 
                         generator .PopContainerField ();
                      }
@@ -543,22 +547,24 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
                         stream .string += generator .Indent ();
                         stream .string += "<fieldValue";
-                        stream .string += " ";
+                        stream .string += generator .Space ();
                         stream .string += "name='";
                         stream .string += generator .XMLEncode (field .getName ());
                         stream .string += "'";
-                        stream .string += ">\n";
+                        stream .string += ">";
+                        stream .string += generator .TidyBreak ();
 
                         generator .IncIndent ();
 
                         field .toXMLStream (stream);
 
-                        stream .string += "\n";
+                        stream .string += generator .TidyBreak ();
 
                         generator .DecIndent ();
 
                         stream .string += generator .Indent ();
-                        stream .string += "</fieldValue>\n";
+                        stream .string += "</fieldValue>";
+                        stream .string += generator .TidyBreak ();
 
                         generator .PopContainerField ();
                         break;
@@ -570,17 +576,18 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
                   {
                      stream .string += generator .Indent ();
                      stream .string += "<fieldValue";
-                     stream .string += " ";
+                     stream .string += generator .Space ();
                      stream .string += "name='";
                      stream .string += generator .XMLEncode (field .getName ());
                      stream .string += "'";
-                     stream .string += " ";
+                     stream .string += generator .Space ();
                      stream .string += "value='";
 
                      field .toXMLStream (stream);
 
                      stream .string += "'";
-                     stream .string += "/>\n";
+                     stream .string += "/>";
+                     stream .string += generator .TidyBreak ();
                      break;
                   }
                }
@@ -595,7 +602,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
          {
             stream .string += generator .Indent ();
             stream .string += "<IS>";
-            stream .string += "\n";
+            stream .string += generator .TidyBreak ();
 
             generator .IncIndent ();
 
@@ -607,22 +614,24 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
                {
                   stream .string += generator .Indent ();
                   stream .string += "<connect";
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += "nodeField='";
                   stream .string += generator .XMLEncode (field .getName ());
                   stream .string += "'";
-                  stream .string += " ";
+                  stream .string += generator .Space ();
                   stream .string += "protoField='";
                   stream .string += generator .XMLEncode (protoField .getName ());
                   stream .string += "'";
-                  stream .string += "/>\n";
+                  stream .string += "/>";
+                  stream .string += generator .TidyBreak ();
                });
             }
 
             generator .DecIndent ();
 
             stream .string += generator .Indent ();
-            stream .string += "</IS>\n";
+            stream .string += "</IS>";
+            stream .string += generator .TidyBreak ();
          }
 
          generator .DecIndent ();

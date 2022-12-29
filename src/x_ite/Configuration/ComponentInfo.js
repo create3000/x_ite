@@ -69,12 +69,14 @@ ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype)
    },
    toVRMLStream: function (stream)
    {
+      const generator = Generator .Get (stream);
+
       stream .string += "COMPONENT";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += this .name;
-      stream .string += " ";
+      stream .string += generator .TidySpace ();
       stream .string += ":";
-      stream .string += " ";
+      stream .string += generator .TidySpace ();
       stream .string += this .level;
    },
    toXMLStream: function (stream)
@@ -83,11 +85,11 @@ ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype)
 
       stream .string += generator .Indent ();
       stream .string += "<component";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "name='";
       stream .string += this .name;
       stream .string += "'";
-      stream .string += " ";
+      stream .string += generator .Space ();
       stream .string += "level='";
       stream .string += this .level;
       stream .string += "'";

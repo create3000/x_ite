@@ -131,36 +131,51 @@ X3DObject .prototype =
             interest ();
       }
    },
-   toString: function (scene)
+   toString: function (options = { })
    {
       const stream = { string: "" };
 
-      if (scene)
-         Generator .Get (stream) .PushExecutionContext (scene);
+      if (options .scene)
+         Generator .Get (stream) .PushExecutionContext (options .scene);
 
       this .toStream (stream);
 
       return stream .string;
    },
-   toVRMLString: function ()
+   toVRMLString: function  (options = { })
    {
       const stream = { string: "" };
+
+      Generator .Get (stream) .Style (options .style);
+
+      if (options .scene)
+         Generator .Get (stream) .PushExecutionContext (options .scene);
 
       this .toVRMLStream (stream);
 
       return stream .string;
    },
-   toXMLString: function ()
+   toXMLString: function  (options = { })
    {
       const stream = { string: "" };
+
+      Generator .Get (stream) .Style (options .style);
+
+      if (options .scene)
+         Generator .Get (stream) .PushExecutionContext (options .scene);
 
       this .toXMLStream (stream);
 
       return stream .string;
    },
-   toJSONString: function ()
+   toJSONString: function (options = { })
    {
       const stream = { string: "" };
+
+      Generator .Get (stream) .Style (options .style);
+
+      if (options .scene)
+         Generator .Get (stream) .PushExecutionContext (options .scene);
 
       this .toVRMLStream (stream); // TODO.
 

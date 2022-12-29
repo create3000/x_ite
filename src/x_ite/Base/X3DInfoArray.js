@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import X3DBaseNode from "../Base/X3DBaseNode.js";
+import Generator   from "../InputOutput/Generator.js";
 
 const
    _array = Symbol (),
@@ -236,16 +237,18 @@ X3DInfoArray .prototype = {
    },
    toVRMLStream: function (stream)
    {
+      const generator = Generator .Get (stream);
+
       for (const value of this [_array])
       {
          try
          {
             value .toVRMLStream (stream);
 
-            stream .string += "\n";
+            stream .string += generator .Break ();
 
             if (value instanceof X3DBaseNode)
-               stream .string += "\n";
+               stream .string += generator .Break ();
          }
          catch (error)
          {
@@ -255,13 +258,15 @@ X3DInfoArray .prototype = {
    },
    toXMLStream: function (stream)
    {
+      const generator = Generator .Get (stream);
+
       for (const value of this [_array])
       {
          try
          {
             value .toXMLStream (stream);
 
-            stream .string += "\n";
+            stream .string += generator .TidyBreak ();
          }
          catch (error)
          {
