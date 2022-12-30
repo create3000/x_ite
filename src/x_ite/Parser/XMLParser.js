@@ -793,10 +793,10 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (this .useAttribute (xmlElement))
             return;
 
-         var node = this .getExecutionContext () .createNode (this .nodeNameToCamelCase (xmlElement .nodeName), false);
+         var node = this .getExecutionContext () .createProto (this .protoNameToCamelCase (xmlElement .nodeName), false);
 
          if (! node)
-            var node = this .getExecutionContext () .createProto (this .protoNameToCamelCase (xmlElement .nodeName), false);
+            node = this .getExecutionContext () .createNode (this .nodeNameToCamelCase (xmlElement .nodeName), false);
 
          if (! node)
             throw new Error ("Unknown node type '" + xmlElement .nodeName + "', you probably have insufficient component/profile statements.");
