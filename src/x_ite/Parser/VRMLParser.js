@@ -737,10 +737,19 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    statement: function ()
    {
-      while (this .otherStatement ())
-         ;
+      if (this .protoStatement ())
+         return true;
 
-      const node = this .nodeStatement ();
+      if (this .routeStatement ())
+         return true;
+
+      if (this .importStatement ())
+         return true;
+
+      if (this .exportStatement ())
+         return true;
+
+      var node = this .nodeStatement ();
 
       if (node !== false)
       {
@@ -752,6 +761,8 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    nodeStatement: function ()
    {
+      this .comments ();
+
       if (Grammar .DEF .parse (this))
       {
          if (this .nodeNameId ())
@@ -772,22 +783,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return null;
 
       return this .node ("");
-   },
-   otherStatement: function ()
-   {
-      if (this .protoStatement ())
-         return true;
-
-      if (this .routeStatement ())
-         return true;
-
-      if (this .importStatement ())
-         return true;
-
-      if (this .exportStatement ())
-         return true;
-
-      return false;
    },
    protoStatement: function ()
    {
@@ -2376,7 +2371,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    sfnodeValue: function (field)
    {
-      const baseNode = this .nodeStatement ();
+      var baseNode = this .nodeStatement ();
 
       if (baseNode !== false)
       {
@@ -2390,7 +2385,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       field .length = 0;
 
-      const node = this .nodeStatement ();
+      var node = this .nodeStatement ();
 
       if (node !== false)
       {
@@ -2414,17 +2409,11 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    nodeStatements: function (field)
    {
-      while (this .otherStatement ())
-         ;
-
-      let node = this .nodeStatement ();
+      var node = this .nodeStatement ();
 
       while (node !== false)
       {
          field .push (node);
-
-         while (this .otherStatement ())
-            ;
 
          node = this .nodeStatement ();
       }

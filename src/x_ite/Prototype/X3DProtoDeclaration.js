@@ -64,8 +64,6 @@ function X3DProtoDeclaration (executionContext)
 
    this .addType (X3DConstants .X3DProtoDeclaration)
 
-   this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
-
    this [_body] = new X3DExecutionContext (executionContext);
    this [_body] .setOuterNode (this);
    this [_body] .setLive (false);
@@ -87,8 +85,6 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
       X3DProtoDeclarationNode .prototype .initialize .call (this);
 
       this [_body] .setup ();
-
-      this ._loadState = X3DConstants .COMPLETE_STATE;
    },
    getProtoDeclaration: function ()
    {
@@ -97,10 +93,6 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
    getBody: function ()
    {
       return this [_body];
-   },
-   checkLoadState: function ()
-   {
-      return this ._loadState .getValue ();
    },
    canUserDefinedFields: function ()
    {
