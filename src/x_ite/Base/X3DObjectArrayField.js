@@ -481,23 +481,23 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
             generator .PushUnitCategory (target .getUnit ());
 
             generator .string += "[";
-            generator .string += generator .TidyBreak ();
+            generator .string += generator .ListStart ();
             generator .IncIndent ();
 
             for (let i = 0, length = array .length - 1; i < length; ++ i)
             {
-               generator .string += generator .Indent ();
+               generator .string += generator .ListIndent ();
                array [i] .toStream (generator);
                generator .string += generator .Comma ();
-               generator .string += generator .TidyBreak ();
+               generator .string += generator .ListBreak ();
             }
 
-            generator .string += generator .Indent ();
+            generator .string += generator .ListIndent ();
             array .at (-1) .toStream (generator);
-            generator .string += generator .TidyBreak ();
 
+            generator .string += generator .ListStart ();
             generator .DecIndent ();
-            generator .string += generator .Indent ();
+            generator .string += generator .ListIndent ();
             generator .string += "]";
 
             generator .PopUnitCategory ();

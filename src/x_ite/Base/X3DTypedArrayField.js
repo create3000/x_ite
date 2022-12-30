@@ -731,33 +731,31 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
             generator .PushUnitCategory (target .getUnit ());
 
             generator .string += "[";
-            generator .string += generator .TidyBreak ();
+            generator .string += generator .ListStart ();
             generator .IncIndent ();
 
             if (components === 1)
             {
                for (let i = 0, n = length - 1; i < n; ++ i)
                {
-                  generator .string += generator .Indent ();
+                  generator .string += generator .ListIndent ();
 
                   value .set (array [i * components]);
                   value .toStream (generator);
 
                   generator .string += generator .Comma ();
-                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .ListBreak ();
                }
 
-               generator .string += generator .Indent ();
+               generator .string += generator .ListIndent ();
                value .set (array [(length - 1) * components]);
                value .toStream (generator);
-
-               generator .string += generator .TidyBreak ();
             }
             else
             {
                for (let i = 0, n = length - 1; i < n; ++ i)
                {
-                  generator .string += generator .Indent ();
+                  generator .string += generator .ListIndent ();
 
                   for (let c = 0, first = i * components; c < components; ++ c, ++ first)
                      value [c] = array [first];
@@ -765,20 +763,20 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
                   value .toStream (generator);
 
                   generator .string += generator .Comma ();
-                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .ListBreak ();
                }
 
-               generator .string += generator .Indent ();
+               generator .string += generator .ListIndent ();
 
                for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
                   value [c] = array [first];
 
                value .toStream (generator);
-               generator .string += generator .TidyBreak ();
             }
 
+            generator .string += generator .ListStart ();
             generator .DecIndent ();
-            generator .string += generator .Indent ();
+            generator .string += generator .ListIndent ();
             generator .string += "]";
 
             generator .PopUnitCategory ();

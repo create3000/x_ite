@@ -578,8 +578,8 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                      if (field === cdata)
                         break;
 
-                     generator .string += generator .Break ();
-                     generator .string += generator .Indent ();
+                     generator .string += generator .AttribBreak ();
+                     generator .string += generator .ListIndent ();
                      generator .string += field .getName ();
                      generator .string += "='";
 

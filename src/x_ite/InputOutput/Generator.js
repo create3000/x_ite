@@ -53,6 +53,7 @@ function Generator (style)
 
    this .string              = "";
    this .indent              = "";
+   this .listIndent          = "";
    this .precision           = 6;
    this .doublePrecision     = 14;
    this .removeTrailingZeros = /\.?0*(?=$|[eE])/;
@@ -83,30 +84,55 @@ Generator .prototype =
       {
          case "CLEAN":
          {
-            this .comma      = " ";
-            this .break      = " ";
-            this .tidyBreak  = "";
-            this .tidySpace  = "";
-            this .indentChar = "";
+            this .comma          = " ";
+            this .break          = " ";
+            this .tidyBreak      = "";
+            this .tidySpace      = "";
+            this .indentChar     = "";
+            this .listStart      = "";
+            this .listBreak      = "";
+            this .listIndentChar = "";
+            this .attribBreak    = " ";
             break;
          }
          case "SMALL":
          {
-            this .comma      = " ";
-            this .break      = "\n";
-            this .tidyBreak  = "\n";
-            this .tidySpace  = "";
-            this .indentChar = "";
+            this .comma          = ",";
+            this .break          = "\n";
+            this .tidyBreak      = "\n";
+            this .tidySpace      = "";
+            this .indentChar     = "";
+            this .listStart      = "";
+            this .listBreak      = "";
+            this .listIndentChar = "";
+            this .attribBreak    = " ";
+            break;
+         }
+         case "COMPACT":
+         {
+            this .comma          = ",";
+            this .break          = "\n";
+            this .tidyBreak      = "\n";
+            this .tidySpace      = " ";
+            this .indentChar     = "  ";
+            this .listStart      = "";
+            this .listBreak      = " ";
+            this .listIndentChar = "";
+            this .attribBreak    = " ";
             break;
          }
          case "TIDY":
          default:
          {
-            this .comma      = ",";
-            this .break      = "\n";
-            this .tidyBreak  = "\n";
-            this .tidySpace  = " ";
-            this .indentChar = "  ";
+            this .comma          = ",";
+            this .break          = "\n";
+            this .tidyBreak      = "\n";
+            this .tidySpace      = " ";
+            this .indentChar     = "  ";
+            this .listStart      = "\n";
+            this .listBreak      = "\n";
+            this .listIndentChar = "  ";
+            this .attribBreak    = "\n";
             break;
          }
       }
@@ -135,17 +161,35 @@ Generator .prototype =
    {
       return this .tidySpace;
    },
+   ListStart: function ()
+   {
+      return this .listStart;
+   },
+   ListBreak: function ()
+   {
+      return this .listBreak;
+   },
+   AttribBreak: function ()
+   {
+      return this .attribBreak;
+   },
    Indent: function ()
    {
       return this .indent;
    },
+   ListIndent: function ()
+   {
+      return this .listIndent;
+   },
    IncIndent: function ()
    {
-      this .indent += this .indentChar;
+      this .indent     += this .indentChar;
+      this .listIndent += this .listIndentChar;
    },
    DecIndent: function ()
    {
-      this .indent = this .indent .substr (0, this .indent .length - this .indentChar .length);
+      this .indent = this .indent .slice (0, this .indent .length - this .indentChar .length);
+      this .listIndent = this .listIndent .slice (0, this .listIndent .length - this .listIndentChar .length);
    },
    PadRight: function (string, pad)
    {

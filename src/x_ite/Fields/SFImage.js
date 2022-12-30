@@ -193,13 +193,13 @@ SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
       generator .string += this .height;
       generator .string += generator .Space ();
       generator .string += this .comp;
-      generator .string += generator .Break ();
+      generator .string += generator .AttribBreak ();
 
       generator .IncIndent ();
 
       for (let y = 0, h = this .height; y < h; ++ y)
       {
-         generator .string += generator .Indent ();
+         generator .string += generator .ListIndent ();
 
          for (let x = 0, w = this .width; x < w; ++ x)
          {
@@ -211,7 +211,7 @@ SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
          }
 
          if (y !== h - 1)
-            generator .string += generator .TidyBreak ();
+            generator .string += generator .AttribBreak ();
       }
 
       generator .DecIndent ();
