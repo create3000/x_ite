@@ -51,10 +51,8 @@ function Generator (style)
 {
    this .Style (style);
 
-   this .string = "";
-
+   this .string              = "";
    this .indent              = "";
-   this .indentChar          = "  ";
    this .precision           = 6;
    this .doublePrecision     = 14;
    this .removeTrailingZeros = /\.?0*(?=$|[eE])/;
