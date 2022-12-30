@@ -49,6 +49,8 @@ import X3DField from "../Base/X3DField.js";
 
 function SFMatrixPrototypeTemplate (TypeName, Type, Matrix, SFVec, double)
 {
+   const _formatter = double ? "DoublePrecision" : "Precision";
+
    return Object .assign (Object .create (X3DField .prototype),
    {
       [Symbol .iterator]: function* ()
@@ -143,11 +145,11 @@ function SFMatrixPrototypeTemplate (TypeName, Type, Matrix, SFVec, double)
 
          for (let i = 0; i < last; ++ i)
          {
-            generator .string += double ? generator .DoublePrecision (value [i]) : generator .Precision (value [i]);
-            generator .string += " ";
+            generator .string += generator [_formatter] (value [i]);
+            generator .string += generator .Space ();
          }
 
-         generator .string += double ? generator .DoublePrecision (value [last]) : generator .Precision (value [last]);
+         generator .string += generator [_formatter] (value [last]);
       },
       toVRMLStream: function (generator)
       {
