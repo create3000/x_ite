@@ -165,6 +165,10 @@ Generator .prototype =
    {
       return this .listStart;
    },
+   ListEnd: function ()
+   {
+      return this .listStart;
+   },
    ListBreak: function ()
    {
       return this .listBreak;

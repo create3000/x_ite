@@ -495,7 +495,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
             generator .string += generator .ListIndent ();
             array .at (-1) .toStream (generator);
 
-            generator .string += generator .ListStart ();
+            generator .string += generator .ListEnd ();
             generator .DecIndent ();
             generator .string += generator .ListIndent ();
             generator .string += "]";

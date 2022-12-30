@@ -774,7 +774,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
                value .toStream (generator);
             }
 
-            generator .string += generator .ListStart ();
+            generator .string += generator .ListEnd ();
             generator .DecIndent ();
             generator .string += generator .ListIndent ();
             generator .string += "]";
