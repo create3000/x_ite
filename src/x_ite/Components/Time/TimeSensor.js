@@ -197,6 +197,11 @@ TimeSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype
 
       this ._time = time;
    },
+   dispose: function ()
+   {
+      X3DTimeDependentNode .prototype .dispose .call (this);
+      X3DSensorNode        .prototype .dispose .call (this);
+   },
 });
 
 export default TimeSensor;

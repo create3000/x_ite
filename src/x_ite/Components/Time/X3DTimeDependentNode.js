@@ -342,6 +342,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
    set_resume: function () { },
    set_stop: function () { },
    set_time: function () { },
+   dispose: function () { }
 });
 
 export default X3DTimeDependentNode;
