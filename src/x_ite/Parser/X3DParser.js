@@ -91,10 +91,6 @@ X3DParser .prototype = {
    {
       return Boolean (this .prototypes .length);
    },
-   addRootNode: function (node)
-   {
-      this .getExecutionContext () .rootNodes .push (node);
-   },
    loadComponents: (function ()
    {
       const VRML =

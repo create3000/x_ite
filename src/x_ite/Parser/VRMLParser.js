@@ -447,7 +447,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             try
             {
-               this .statements ();
+               this .statements (this .getExecutionContext () .rootNodes);
 
                if (this .lastIndex < this .input .length)
                   throw new Error ("Unknown statement.");
@@ -469,7 +469,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
       else
       {
-         this .statements ();
+         this .statements (this .getExecutionContext () .rootNodes);
 
          if (this .lastIndex < this .input .length)
             throw new Error ("Unknown statement.");
@@ -730,12 +730,12 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
       return false;
    },
-   statements: function ()
+   statements: function (field)
    {
-      while (this .statement ())
+      while (this .statement (field))
          ;
    },
-   statement: function ()
+   statement: function (field)
    {
       if (this .protoStatement ())
          return true;
@@ -753,7 +753,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (node !== false)
       {
-         this .addRootNode (node);
+         field .push (node);
          return true;
       }
 
@@ -835,7 +835,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                      this .pushPrototype (proto);
                      this .pushExecutionContext (proto .getBody ());
 
-                     this .protoBody ();
+                     this .protoBody (proto .getBody () .rootNodes);
 
                      this .popExecutionContext ();
                      this .popPrototype ();
@@ -877,16 +877,16 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   protoBody: function ()
+   protoBody: function (rootNodes)
    {
       this .protoStatements ();
 
-      var rootNodeStatement = this .rootNodeStatement ();
+      const rootNodeStatement = this .rootNodeStatement ();
 
       if (rootNodeStatement !== false)
-         this .addRootNode (rootNodeStatement);
+         rootNodes .push (rootNodeStatement);
 
-      this .statements ();
+      this .statements (rootNodes);
    },
    rootNodeStatement: function ()
    {
@@ -2409,14 +2409,16 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    nodeStatements: function (field)
    {
-      var node = this .nodeStatement ();
+      this .statements (field);
 
-      while (node !== false)
-      {
-         field .push (node);
+      // var node = this .nodeStatement ();
 
-         node = this .nodeStatement ();
-      }
+      // while (node !== false)
+      // {
+      //    field .push (node);
+
+      //    node = this .nodeStatement ();
+      // }
    },
    sfrotationValue: function (field)
    {

@@ -45,19 +45,32 @@
  *
  ******************************************************************************/
 
+import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DTimeDependentNode from "../Time/X3DTimeDependentNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 function X3DSoundProcessingNode (executionContext)
 {
+   X3DChildNode         .call (this, executionContext);
    X3DTimeDependentNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DSoundProcessingNode);
 }
 
-X3DSoundProcessingNode .prototype = Object .assign (Object .create (X3DTimeDependentNode .prototype),
+X3DSoundProcessingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   X3DTimeDependentNode .prototype,
 {
    constructor: X3DSoundProcessingNode,
+   initialize: function ()
+   {
+      X3DChildNode         .prototype .initialize .call (this);
+      X3DTimeDependentNode .prototype .initialize .call (this);
+   },
+   dispose: function ()
+   {
+      X3DTimeDependentNode .prototype .dispose .call (this);
+      X3DChildNode         .prototype .dispose .call (this);
+   },
 });
 
 export default X3DSoundProcessingNode;
