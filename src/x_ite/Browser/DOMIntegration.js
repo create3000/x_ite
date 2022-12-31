@@ -25,6 +25,7 @@
 
 import XMLParser    from "../Parser/XMLParser.js"
 import X3DConstants from "../Base/X3DConstants.js";
+import SFNodeCache  from "../Fields/SFNodeCache.js";
 
 class DOMIntegration
 {
@@ -301,7 +302,7 @@ class DOMIntegration
 			{
 				const event = new CustomEvent ("load",
 				{
-					detail: { node: node .valueOf () },
+					detail: { node: SFNodeCache .get (node) },
 				});
 
 				element .dispatchEvent (event);
@@ -311,7 +312,7 @@ class DOMIntegration
 			{
 				const event = new CustomEvent ("error",
 				{
-					detail: { node: node .valueOf () },
+					detail: { node: SFNodeCache .get (node) },
 				});
 
 				element .dispatchEvent (event);
@@ -365,7 +366,7 @@ class DOMIntegration
 		const event = new CustomEvent (field .getName (),
 		{
 			detail: {
-				node: node .valueOf (),
+				node: SFNodeCache .get (node),
 				value: field .valueOf (),
 			},
 		});
