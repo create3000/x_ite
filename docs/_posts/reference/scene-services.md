@@ -144,11 +144,20 @@ Creates or updates the exported node *exportedName.*
 
 Removes the exported node *exportedName.*
 
-#### String **toVRMLString** ()
+#### String **toVRMLString** (\[options\])
 
 Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this scene.
 
-#### String **toXMLString** ()
+##### Options
+
+An object with one or more of these properties:
+
+* **scene:** scene to use for units (default: current scene)
+* **style:** string, output style (on of: **"TIDY"**, "COMPACT", "SMALL", "CLEAN")
+* **precision:** integer, float precision (default: 6)
+* **doublePrecision:** integer, double precision (default: 14)
+
+#### String **toXMLString** (\[options\])
 
 Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this scene.
 
