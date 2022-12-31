@@ -56,7 +56,7 @@ function Generator ({ style = "TIDY", precision = 6, doublePrecision = 14 })
    this .listIndent          = "";
    this .precision           = precision;
    this .doublePrecision     = doublePrecision;
-   this .removeTrailingZeros = /\.?0*(?=$|[eE])/;
+   this .removeTrailingZeros = /(?:\.|(\.[0-9]*?))0*(?=[eE]|$)/;
 
    this .executionContextStack = [ null ];
    this .importedNodesIndex    = new Map ();
