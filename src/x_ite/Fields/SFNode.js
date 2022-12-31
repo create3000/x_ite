@@ -383,10 +383,10 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
       else
          generator .string += "NULL";
    },
-   toVRMLString: function ()
+   toVRMLString: function (options)
    {
       const
-         generator = new Generator (),
+         generator = new Generator (options),
          target    = this [_target],
          value     = target .getValue ();
 
@@ -394,7 +394,31 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       target .toVRMLStream (generator);
 
-      generator .PopExecutionContext ();
+      return generator .string;
+   },
+   toXMLString: function (options)
+   {
+      const
+         generator = new Generator (options),
+         target    = this [_target],
+         value     = target .getValue ();
+
+      generator .PushExecutionContext (value .getExecutionContext ());
+
+      target .toXMLStream (generator);
+
+      return generator .string;
+   },
+   toJSONString: function (options)
+   {
+      const
+         generator = new Generator (options),
+         target    = this [_target],
+         value     = target .getValue ();
+
+      generator .PushExecutionContext (value .getExecutionContext ());
+
+      target .toJSONStream (generator);
 
       return generator .string;
    },
@@ -408,21 +432,6 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
          value .toVRMLStream (generator);
       else
          generator .string += "NULL";
-   },
-   toXMLString: function ()
-   {
-      const
-         generator = new Generator (),
-         target    = this [_target],
-         value     = target .getValue ();
-
-      generator .PushExecutionContext (value .getExecutionContext ());
-
-      target .toXMLStream (generator);
-
-      generator .PopExecutionContext ();
-
-      return generator .string;
    },
    toXMLStream: function (generator)
    {

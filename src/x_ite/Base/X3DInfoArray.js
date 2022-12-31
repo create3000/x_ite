@@ -224,12 +224,12 @@ X3DInfoArray .prototype = {
    slice: Array .prototype .slice,
    some: Array .prototype .some,
    values: Array .prototype .values,
-   toString: function ({ scene } = Object .prototype)
+   toString: function (options = Object .prototype)
    {
-      const generator = new Generator ();
+      const generator = new Generator (options);
 
-      if (scene)
-         generator .PushExecutionContext (scene);
+      if (options .scene)
+         generator .PushExecutionContext (options .scene);
 
       this .toStream (generator);
 

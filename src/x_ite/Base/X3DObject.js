@@ -131,45 +131,45 @@ X3DObject .prototype =
             interest ();
       }
    },
-   toString: function ({ scene } = Object .prototype)
+   toString: function (options = Object .prototype)
    {
-      const generator = new Generator ();
+      const generator = new Generator (options);
 
-      if (scene)
-         generator .PushExecutionContext (scene);
+      if (options .scene)
+         generator .PushExecutionContext (options .scene);
 
       this .toStream (generator);
 
       return generator .string;
    },
-   toVRMLString: function  ({ scene, style } = Object .prototype)
+   toVRMLString: function  (options = Object .prototype)
    {
-      const generator = new Generator (style);
+      const generator = new Generator (options);
 
-      if (scene)
-         generator .PushExecutionContext (scene);
+      if (options .scene)
+         generator .PushExecutionContext (options .scene);
 
       this .toVRMLStream (generator);
 
       return generator .string;
    },
-   toXMLString: function  ({ scene, style } = Object .prototype)
+   toXMLString: function  (options = Object .prototype)
    {
-      const generator = new Generator (style);
+      const generator = new Generator (options);
 
-      if (scene)
-         generator .PushExecutionContext (scene);
+      if (options .scene)
+         generator .PushExecutionContext (options .scene);
 
       this .toXMLStream (generator);
 
       return generator .string;
    },
-   toJSONString: function ({ scene, style } = Object .prototype)
+   toJSONString: function (options = Object .prototype)
    {
-      const generator = new Generator (style);
+      const generator = new Generator (options);
 
-      if (scene)
-         generator .PushExecutionContext (scene);
+      if (options .scene)
+         generator .PushExecutionContext (options .scene);
 
       this .toVRMLStream (generator); // TODO.
 

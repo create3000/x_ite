@@ -47,15 +47,15 @@
 
 import X3DConstants from "../Base/X3DConstants.js";
 
-function Generator (style)
+function Generator ({ style = "TIDY", precision = 6, doublePrecision = 14 })
 {
    this .Style (style);
 
    this .string              = "";
    this .indent              = "";
    this .listIndent          = "";
-   this .precision           = 6;
-   this .doublePrecision     = 14;
+   this .precision           = precision;
+   this .doublePrecision     = doublePrecision;
    this .removeTrailingZeros = /\.?0*(?=$|[eE])/;
 
    this .executionContextStack = [ null ];
@@ -89,7 +89,7 @@ Generator .prototype =
             this .tidyBreak      = "";
             this .tidySpace      = "";
             this .indentChar     = "";
-            this .listStart      = "";
+            this .listEnclosure  = "";
             this .listBreak      = "";
             this .listIndentChar = "";
             this .attribBreak    = " ";
@@ -102,7 +102,7 @@ Generator .prototype =
             this .tidyBreak      = "\n";
             this .tidySpace      = "";
             this .indentChar     = "";
-            this .listStart      = "";
+            this .listEnclosure  = "";
             this .listBreak      = "";
             this .listIndentChar = "";
             this .attribBreak    = " ";
@@ -115,7 +115,7 @@ Generator .prototype =
             this .tidyBreak      = "\n";
             this .tidySpace      = " ";
             this .indentChar     = "  ";
-            this .listStart      = "";
+            this .listEnclosure  = "";
             this .listBreak      = " ";
             this .listIndentChar = "";
             this .attribBreak    = " ";
@@ -129,7 +129,7 @@ Generator .prototype =
             this .tidyBreak      = "\n";
             this .tidySpace      = " ";
             this .indentChar     = "  ";
-            this .listStart      = "\n";
+            this .listEnclosure  = "\n";
             this .listBreak      = "\n";
             this .listIndentChar = "  ";
             this .attribBreak    = "\n";
@@ -163,11 +163,11 @@ Generator .prototype =
    },
    ListStart: function ()
    {
-      return this .listStart;
+      return this .listEnclosure;
    },
    ListEnd: function ()
    {
-      return this .listStart;
+      return this .listEnclosure;
    },
    ListBreak: function ()
    {
