@@ -108,7 +108,7 @@ SupportedProfiles .addProfile ({
       SupportedComponents .get ("ParticleSystems"),
       SupportedComponents .get ("Picking"),
       SupportedComponents .get ("PointingDeviceSensor"),
-      SupportedComponents .get ("ProjectiveTextureMapping"),
+      SupportedComponents .get ("TextureProjector"),
       SupportedComponents .get ("Rendering"),
       SupportedComponents .get ("RigidBodyPhysics"),
       SupportedComponents .get ("Scripting"),

@@ -5,6 +5,21 @@ nav: main
 categories: []
 tags: [new, releases]
 ---
+## X_ITE v8.3.3 Released
+
+### New Features
+
+- Added to*String options (scene, style, precision, doublePrecision).
+- Added output styles (CLEAN, SMALL, COMPACT, TIDY).
+- Prefer PROTO's during parse.
+- Collect joint nodes if no provided (HAnim).
+- Relaxed VRML parser (parse top level statements in MFNode).
+- XML short syntax of prototype instances.
+
+### Bug Fixes
+
+- Fixed bug when floating point numbers are printed.
+
 ## X_ITE v8.3.0 Released
 
 *Leipzig, 14st December 2022:* We right now released a new version.

@@ -59,7 +59,7 @@ SupportedComponents .addComponent (
 
 SupportedComponents .addComponent (
 {
-   title: "Computer-Aided Design (CAD) model geometry",
+   title: "CAD geometry",
    name: "CADGeometry",
    level: 2,
    external: true,
@@ -82,7 +82,7 @@ SupportedComponents .addComponent (
 
 SupportedComponents .addComponent (
 {
-   title: "Distributed interactive simulation (DIS)",
+   title: "Distributed interactive simulation",
    name: "DIS",
    level: 2,
    external: true,
@@ -99,14 +99,14 @@ SupportedComponents .addComponent (
 {
    title: "Environmental sensor",
    name: "EnvironmentalSensor",
-   level: 4,
+   level: 3,
 });
 
 SupportedComponents .addComponent (
 {
    title: "Event utilities",
    name: "EventUtilities",
-   level: 4,
+   level: 1,
    external: true,
 });
 
@@ -114,7 +114,7 @@ SupportedComponents .addComponent (
 {
    title: "Followers",
    name: "Followers",
-   level: 4,
+   level: 1,
 });
 
 SupportedComponents .addComponent (
@@ -211,7 +211,7 @@ SupportedComponents .addComponent (
 
 SupportedComponents .addComponent (
 {
-   title: "Non-uniform Rational B-Spline (NURBS)",
+   title: "NURBS",
    name: "NURBS",
    level: 4,
    external: true,
@@ -227,7 +227,7 @@ SupportedComponents .addComponent (
 
 SupportedComponents .addComponent (
 {
-   title: "Picking sensor",
+   title: "Picking",
    name: "Picking",
    level: 3,
    external: true,
@@ -243,18 +243,20 @@ SupportedComponents .addComponent (
 
 SupportedComponents .addComponent (
 {
-   title: "Projective Texture Mapping",
-   name: "ProjectiveTextureMapping",
-   level: 2,
-   external: true,
-});
-
-SupportedComponents .addComponent (
-{
    title: "Programmable shaders",
    name: "Shaders",
    level: 1,
 });
+
+SupportedComponents .addComponent (
+{
+   title: "Texture Projector",
+   name: "TextureProjector",
+   level: 2,
+   external: true,
+});
+
+SupportedComponents .addAlias ("ProjectiveTextureMapping", "TextureProjector");
 
 SupportedComponents .addComponent (
 {
@@ -267,7 +269,7 @@ SupportedComponents .addComponent (
 {
    title: "Rigid body physics",
    name: "RigidBodyPhysics",
-   level: 5,
+   level: 2,
    external: true,
 });
 
@@ -283,14 +285,14 @@ SupportedComponents .addComponent (
 {
    title: "Shape",
    name: "Shape",
-   level: 5,
+   level: 4,
 });
 
 SupportedComponents .addComponent (
 {
    title: "Sound",
    name: "Sound",
-   level: 1,
+   level: 3,
 });
 
 SupportedComponents .addComponent (
@@ -305,14 +307,14 @@ SupportedComponents .addComponent (
 {
    title: "Texturing",
    name: "Texturing",
-   level: 3,
+   level: 4,
 });
 
 SupportedComponents .addComponent (
 {
    title: "Texturing3D",
    name: "Texturing3D",
-   level: 3,
+   level: 2,
    external: true,
 });
 
@@ -327,7 +329,7 @@ SupportedComponents .addComponent (
 {
    title: "Volume rendering",
    name: "VolumeRendering",
-   level: 2,
+   level: 4,
    external: true,
    dependencies: ["CADGeometry", "Texturing3D"],
 });

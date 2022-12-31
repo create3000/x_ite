@@ -45,8 +45,7 @@
  *
  ******************************************************************************/
 
-import X3DBaseNode from "../Base/X3DBaseNode.js";
-import Generator   from "../InputOutput/Generator.js";
+import Generator from "../InputOutput/Generator.js";
 
 const
    _array = Symbol (),
@@ -249,7 +248,7 @@ X3DInfoArray .prototype = {
 
             generator .string += generator .Break ();
 
-            if (value instanceof X3DBaseNode)
+            if (this .getTypeName () .match (/Proto/))
                generator .string += generator .TidyBreak ();
          }
          catch (error)

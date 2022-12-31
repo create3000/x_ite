@@ -587,11 +587,6 @@ If you ever get in trouble, please [report a bug](report-a-bug).
       </a>
     </td>
     <td>
-      <a href="https://create3000.github.io/media/examples/ProjectiveTextureMapping/TextureProjector/TextureProjector.x3d" title="ProjectiveTextureMapping » TextureProjector">
-        <img src="https://create3000.github.io/media/examples/ProjectiveTextureMapping/TextureProjector/screenshot-small.png" alt="TextureProjector"/>
-      </a>
-    </td>
-    <td>
       <a href="https://create3000.github.io/media/examples/Rendering/ClipPlane/ClipPlane.x3d" title="Rendering » ClipPlane">
         <img src="https://create3000.github.io/media/examples/Rendering/ClipPlane/screenshot-small.png" alt="ClipPlane"/>
       </a>
@@ -616,13 +611,13 @@ If you ever get in trouble, please [report a bug](report-a-bug).
         <img src="https://create3000.github.io/media/examples/Rendering/IndexedLineSet/screenshot-small.png" alt="IndexedLineSet"/>
       </a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Rendering/IndexedTriangleFanSet/IndexedTriangleFanSet.x3d" title="Rendering » IndexedTriangleFanSet">
         <img src="https://create3000.github.io/media/examples/Rendering/IndexedTriangleFanSet/screenshot-small.png" alt="IndexedTriangleFanSet"/>
       </a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Rendering/IndexedTriangleSet/IndexedTriangleSet.x3d" title="Rendering » IndexedTriangleSet">
         <img src="https://create3000.github.io/media/examples/Rendering/IndexedTriangleSet/screenshot-small.png" alt="IndexedTriangleSet"/>
@@ -653,13 +648,13 @@ If you ever get in trouble, please [report a bug](report-a-bug).
         <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollisionCollection/screenshot-small.png" alt="CollisionCollection"/>
       </a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBody/RigidBody.x3d" title="RigidBodyPhysics » RigidBody">
         <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBody/screenshot-small.png" alt="RigidBody"/>
       </a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBodyCollection/RigidBodyCollection.x3d" title="RigidBodyPhysics » RigidBodyCollection">
         <img src="https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBodyCollection/screenshot-small.png" alt="RigidBodyCollection"/>
@@ -690,13 +685,13 @@ If you ever get in trouble, please [report a bug](report-a-bug).
         <img src="https://create3000.github.io/media/examples/Shaders/ShaderPart/screenshot-small.png" alt="ShaderPart"/>
       </a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d" title="Shape » Appearance">
         <img src="https://create3000.github.io/media/examples/Shape/Appearance/screenshot-small.png" alt="Appearance"/>
       </a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Shape/FillProperties/FillProperties.x3d" title="Shape » FillProperties">
         <img src="https://create3000.github.io/media/examples/Shape/FillProperties/screenshot-small.png" alt="FillProperties"/>
@@ -727,11 +722,16 @@ If you ever get in trouble, please [report a bug](report-a-bug).
         <img src="https://create3000.github.io/media/examples/Text/FontStyle/screenshot-small.png" alt="FontStyle"/>
       </a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Text/Text/Text.x3d" title="Text » Text">
         <img src="https://create3000.github.io/media/examples/Text/Text/screenshot-small.png" alt="Text"/>
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://create3000.github.io/media/examples/TextureProjector/TextureProjector/TextureProjector.x3d" title="TextureProjector » TextureProjector">
+        <img src="https://create3000.github.io/media/examples/TextureProjector/TextureProjector/screenshot-small.png" alt="TextureProjector"/>
       </a>
     </td>
     <td>
