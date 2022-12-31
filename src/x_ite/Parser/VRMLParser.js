@@ -443,11 +443,11 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (this .success)
       {
-         this .loadComponents () .then (function ()
+         this .loadComponents () .then (() =>
          {
             try
             {
-               this .statements (this .getExecutionContext () .rootNodes);
+               this .statements (this .getScene () .rootNodes);
 
                if (this .lastIndex < this .input .length)
                   throw new Error ("Unknown statement.");
@@ -459,17 +459,12 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                //console .error (error);
                this .error (new Error (this .getError (error)));
             }
-         }
-         .bind (this))
-         .catch (function (error)
-         {
-            this .error (error);
-         }
-         .bind (this));
+         })
+         .catch (this .error .bind (this));
       }
       else
       {
-         this .statements (this .getExecutionContext () .rootNodes);
+         this .statements (this .getScene () .rootNodes);
 
          if (this .lastIndex < this .input .length)
             throw new Error ("Unknown statement.");
