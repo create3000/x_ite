@@ -204,11 +204,11 @@ Generator .prototype =
    },
    Precision: function (value)
    {
-      return Math .fround (value) .toPrecision (this .precision) .replace (this .removeTrailingZeros, "");
+      return Math .fround (value) .toPrecision (this .precision) .replace (this .removeTrailingZeros, "$1");
    },
    DoublePrecision: function (value)
    {
-      return value .toPrecision (this .doublePrecision) .replace (this .removeTrailingZeros, "");
+      return value .toPrecision (this .doublePrecision) .replace (this .removeTrailingZeros, "$1");
    },
    PushExecutionContext: function (executionContext)
    {
