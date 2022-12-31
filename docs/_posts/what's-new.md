@@ -19,6 +19,7 @@ tags: [new, releases]
 ### Bug Fixes
 
 - Fixed bug when floating point numbers are printed.
+- Fixed component levels.
 
 ## X_ITE v8.3.0 Released
 

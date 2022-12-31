@@ -71,7 +71,7 @@ var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
 const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.2")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode.js
+;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjector/X3DTextureProjectorNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -281,15 +281,15 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNo
 const __default__ = X3DTextureProjectorNode;
 ;
 
-Namespace_default().set ("x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode", __default__);
-/* harmony default export */ const ProjectiveTextureMapping_X3DTextureProjectorNode = (__default__);
+Namespace_default().set ("x_ite/Components/TextureProjector/X3DTextureProjectorNode", __default__);
+/* harmony default export */ const TextureProjector_X3DTextureProjectorNode = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Camera\")"
 const Camera_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.2")] .require ("standard/Math/Geometry/Camera");
 var Camera_default = /*#__PURE__*/__webpack_require__.n(Camera_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Utility/ObjectCache\")"
 const ObjectCache_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.3.2")] .require ("standard/Utility/ObjectCache");
 var ObjectCache_default = /*#__PURE__*/__webpack_require__.n(ObjectCache_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/ProjectiveTextureMapping/TextureProjector.js
+;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjector/TextureProjector.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -444,14 +444,14 @@ TextureProjectorContainer .prototype =
 
 function TextureProjector (executionContext)
 {
-   ProjectiveTextureMapping_X3DTextureProjectorNode.call (this, executionContext);
+   TextureProjector_X3DTextureProjectorNode.call (this, executionContext);
 
    this .addType ((X3DConstants_default()).TextureProjector);
 
    this ._fieldOfView .setUnit ("angle");
 }
 
-TextureProjector .prototype = Object .assign (Object .create (ProjectiveTextureMapping_X3DTextureProjectorNode.prototype),
+TextureProjector .prototype = Object .assign (Object .create (TextureProjector_X3DTextureProjectorNode.prototype),
 {
    constructor: TextureProjector,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
@@ -474,7 +474,7 @@ TextureProjector .prototype = Object .assign (Object .create (ProjectiveTextureM
    },
    getComponentName: function ()
    {
-      return "ProjectiveTextureMapping";
+      return "TextureProjector";
    },
    getContainerField: function ()
    {
@@ -482,7 +482,7 @@ TextureProjector .prototype = Object .assign (Object .create (ProjectiveTextureM
    },
    initialize: function ()
    {
-      ProjectiveTextureMapping_X3DTextureProjectorNode.prototype.initialize.call (this);
+      TextureProjector_X3DTextureProjectorNode.prototype.initialize.call (this);
    },
    getFieldOfView: function ()
    {
@@ -499,9 +499,9 @@ TextureProjector .prototype = Object .assign (Object .create (ProjectiveTextureM
 const TextureProjector_default_ = TextureProjector;
 ;
 
-Namespace_default().set ("x_ite/Components/ProjectiveTextureMapping/TextureProjector", TextureProjector_default_);
-/* harmony default export */ const ProjectiveTextureMapping_TextureProjector = (TextureProjector_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Components/ProjectiveTextureMapping/TextureProjectorParallel.js
+Namespace_default().set ("x_ite/Components/TextureProjector/TextureProjector", TextureProjector_default_);
+/* harmony default export */ const TextureProjector_TextureProjector = (TextureProjector_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjector/TextureProjectorParallel.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -677,14 +677,14 @@ TextureProjectorParallelContainer .prototype =
 
 function TextureProjectorParallel (executionContext)
 {
-   ProjectiveTextureMapping_X3DTextureProjectorNode.call (this, executionContext);
+   TextureProjector_X3DTextureProjectorNode.call (this, executionContext);
 
    this .addType ((X3DConstants_default()).TextureProjectorParallel);
 
    this ._fieldOfView .setUnit ("length");
 }
 
-TextureProjectorParallel .prototype = Object .assign (Object .create (ProjectiveTextureMapping_X3DTextureProjectorNode.prototype),
+TextureProjectorParallel .prototype = Object .assign (Object .create (TextureProjector_X3DTextureProjectorNode.prototype),
 {
    constructor: TextureProjectorParallel,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
@@ -707,7 +707,7 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (Projective
    },
    getComponentName: function ()
    {
-      return "ProjectiveTextureMapping";
+      return "TextureProjector";
    },
    getContainerField: function ()
    {
@@ -715,7 +715,7 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (Projective
    },
    initialize: function ()
    {
-      ProjectiveTextureMapping_X3DTextureProjectorNode.prototype.initialize.call (this);
+      TextureProjector_X3DTextureProjectorNode.prototype.initialize.call (this);
 
       this ._fieldOfView .addInterest ("set_fieldOfView___", this);
 
@@ -766,9 +766,9 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (Projective
 const TextureProjectorParallel_default_ = TextureProjectorParallel;
 ;
 
-Namespace_default().set ("x_ite/Components/ProjectiveTextureMapping/TextureProjectorParallel", TextureProjectorParallel_default_);
-/* harmony default export */ const ProjectiveTextureMapping_TextureProjectorParallel = (TextureProjectorParallel_default_);
-;// CONCATENATED MODULE: ./src/assets/components/ProjectiveTextureMapping.js
+Namespace_default().set ("x_ite/Components/TextureProjector/TextureProjectorParallel", TextureProjectorParallel_default_);
+/* harmony default export */ const TextureProjector_TextureProjectorParallel = (TextureProjectorParallel_default_);
+;// CONCATENATED MODULE: ./src/assets/components/TextureProjector.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -822,22 +822,22 @@ Namespace_default().set ("x_ite/Components/ProjectiveTextureMapping/TextureProje
 
 
 Components_default().addComponent ({
-   name: "ProjectiveTextureMapping",
+   name: "TextureProjector",
    types:
    {
-      TextureProjector:  ProjectiveTextureMapping_TextureProjector,
-      TextureProjectorParallel: ProjectiveTextureMapping_TextureProjectorParallel,
+      TextureProjector:         TextureProjector_TextureProjector,
+      TextureProjectorParallel: TextureProjector_TextureProjectorParallel,
    },
    abstractTypes:
    {
-      X3DTextureProjectorNode: ProjectiveTextureMapping_X3DTextureProjectorNode,
+      X3DTextureProjectorNode: TextureProjector_X3DTextureProjectorNode,
    },
 });
 
-const ProjectiveTextureMapping_default_ = undefined;
+const components_TextureProjector_default_ = undefined;
 ;
 
-Namespace_default().set ("assets/components/ProjectiveTextureMapping", ProjectiveTextureMapping_default_);
-/* harmony default export */ const ProjectiveTextureMapping = ((/* unused pure expression or super */ null && (ProjectiveTextureMapping_default_)));
+Namespace_default().set ("assets/components/TextureProjector", components_TextureProjector_default_);
+/* harmony default export */ const components_TextureProjector = ((/* unused pure expression or super */ null && (components_TextureProjector_default_)));
 /******/ })()
 ;

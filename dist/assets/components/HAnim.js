@@ -338,6 +338,8 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
       this ._scale            .addFieldInterest (this .transformNode ._scale);
       this ._scaleOrientation .addFieldInterest (this .transformNode ._scaleOrientation);
       this ._center           .addFieldInterest (this .transformNode ._center);
+      this ._visible          .addFieldInterest (this .transformNode ._visible);
+      this ._bboxDisplay      .addFieldInterest (this .transformNode ._bboxDisplay);
       this ._bboxSize         .addFieldInterest (this .transformNode ._bboxSize);
       this ._bboxCenter       .addFieldInterest (this .transformNode ._bboxCenter);
 
@@ -346,6 +348,8 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
       this .transformNode ._scale            = this ._scale;
       this .transformNode ._scaleOrientation = this ._scaleOrientation;
       this .transformNode ._center           = this ._center;
+      this .transformNode ._visible          = this ._visible;
+      this .transformNode ._bboxDisplay      = this ._bboxDisplay;
       this .transformNode ._bboxSize         = this ._bboxSize;
       this .transformNode ._bboxCenter       = this ._bboxCenter;
       this .transformNode ._children         = [ this .viewpointsNode, this .skeletonNode, this .skinNode ];
@@ -379,13 +383,13 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
    },
    set_joints__: function ()
    {
-      var jointNodes = this .jointNodes;
+      const jointNodes = this .jointNodes;
 
       jointNodes .length = 0;
 
-      for (var i = 0, length = this ._joints .length; i < length; ++ i)
+      for (const node of this ._joints)
       {
-         var jointNode = X3DCast_default() ((X3DConstants_default()).HAnimJoint, this ._joints [i]);
+         const jointNode = X3DCast_default() ((X3DConstants_default()).HAnimJoint, node);
 
          if (jointNode)
             jointNodes .push (jointNode);
@@ -411,12 +415,14 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
    },
    traverse: function (type, renderObject)
    {
+      renderObject .getJoints () .length = 0;
+
       this .transformNode .traverse (type, renderObject);
       this .skinning (type, renderObject);
    },
    skinning: (function ()
    {
-      var
+      const
          invModelMatrix = new (Matrix4_default()) (),
          vector         = new (Vector3_default()) (0, 0, 0),
          rest           = new (Vector3_default()) (0, 0, 0),
@@ -431,8 +437,8 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
          if (! this .skinCoordNode)
             return;
 
-         var
-            jointNodes     = this .jointNodes,
+         const
+            jointNodes     = this .jointNodes .length ? this .jointNodes : renderObject .getJoints (),
             skinNormalNode = this .skinNormalNode,
             skinCoordNode  = this .skinCoordNode,
             restNormalNode = this .restNormalNode,
@@ -451,32 +457,25 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
 
          // Apply joint transformations.
 
-         for (var j = 0, jointNodesLength = jointNodes .length; j < jointNodesLength; ++ j)
+         for (const jointNode of jointNodes)
          {
-            var
-               jointNode            = jointNodes [j],
-               skinCoordIndexLength = jointNode ._skinCoordIndex .length;
+            const
+               skinCoordIndexLength = jointNode ._skinCoordIndex .length,
+               jointMatrix          = jointNode .getModelMatrix () .multRight (invModelMatrix),
+               displacerNodes       = jointNode .getDisplacers ();
 
-            if (skinCoordIndexLength === 0)
-               continue;
-
-            var
-               jointMatrix    = jointNode .getModelMatrix () .multRight (invModelMatrix),
-               displacerNodes = jointNode .getDisplacers ();
-
-            for (var d = 0, displacerNodesLength = displacerNodes .length; d < displacerNodesLength; ++ d)
+            for (const displacerNode of displacerNodes)
             {
-               var
-                  displacerNode       = displacerNodes [d],
+               const
                   coordIndex          = displacerNode ._coordIndex .getValue (),
                   coordIndexLength    = displacerNode ._coordIndex .length,
                   weight              = displacerNode ._weight .getValue (),
                   displacements       = displacerNode ._displacements .getValue (),
                   displacementsLength = displacerNode ._displacements .length;
 
-               for (var i = 0; i < coordIndexLength; ++ i)
+               for (let i = 0; i < coordIndexLength; ++ i)
                {
-                  var
+                  const
                      i3           = i * 3,
                      index        = coordIndex [i],
                      displacement = i < displacementsLength ? point .set (displacements [i3], displacements [i3 + 1], displacements [i3 + 2]) : point .assign ((Vector3_default()).Zero);
@@ -487,15 +486,15 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
                }
             }
 
-            var
+            const
                normalMatrix          = skinNormalNode ? jointMatrix .submatrix .transpose () .inverse () : null,
                skinCoordIndex        = jointNode ._skinCoordIndex .getValue (),
                skinCoordWeight       = jointNode ._skinCoordWeight .getValue (),
                skinCoordWeightLength = jointNode ._skinCoordWeight .length;
 
-            for (var i = 0; i < skinCoordIndexLength; ++ i)
+            for (let i = 0; i < skinCoordIndexLength; ++ i)
             {
-               var
+               const
                   index  = skinCoordIndex [i],
                   weight = i < skinCoordWeightLength ? skinCoordWeight [i] : 1;
 
@@ -668,54 +667,42 @@ HAnimJoint .prototype = Object .assign (Object .create ((X3DTransformNode_defaul
 
       displacerNodes .length = 0;
 
-      for (var i = 0, length = this ._displacers .length; i < length; ++ i)
+      for (const node of this ._displacers)
       {
-         const displacerNode = X3DCast_default() ((X3DConstants_default()).HAnimDisplacer, this ._displacers [i]);
+         const displacerNode = X3DCast_default() ((X3DConstants_default()).HAnimDisplacer, node);
 
          if (displacerNode)
             displacerNodes .push (displacerNode);
       }
    },
-   getTraverse: (function ()
+   traverse: function traverse (type, renderObject)
    {
-      const base = X3DTransformNode_default().prototype.getTraverse ();
-
-      function traverse (type, renderObject)
+      if (type === (TraverseType_default()).CAMERA)
       {
-         if (type === (TraverseType_default()).CAMERA)
+         if (this ._skinCoordIndex .length)
+         {
+            renderObject .getJoints () .push (this);
+
             this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
-
-         base .call (this, type, renderObject);
+         }
       }
 
-      return function ()
-      {
-         if (this ._skinCoordIndex .length)
-            return traverse;
-
-         return base;
-      };
-   })(),
-   getGroupTraverse: (function ()
+      X3DTransformNode_default().prototype.traverse.call (this, type, renderObject);
+   },
+   groupTraverse: function (type, renderObject)
    {
-      const base = X3DTransformNode_default().prototype.getGroupTraverse ();
-
-      function traverse (type, renderObject)
-      {
-         if (type === (TraverseType_default()).CAMERA)
-            this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-
-         base .call (this, type, renderObject);
-      }
-
-      return function ()
+      if (type === (TraverseType_default()).CAMERA)
       {
          if (this ._skinCoordIndex .length)
-            return traverse;
+         {
+            renderObject .getJoints () .push (this);
 
-         return base;
-      };
-   })(),
+            this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+         }
+      }
+
+      X3DTransformNode_default().prototype.groupTraverse.call (this, type, renderObject);
+   },
 });
 
 const HAnimJoint_default_ = HAnimJoint;
