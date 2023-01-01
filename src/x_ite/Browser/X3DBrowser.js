@@ -781,11 +781,25 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    print: function ()
    {
-      console .log (Array .prototype .join .call (arguments, " "));
+      const string = Array .prototype .join .call (arguments, "");
+
+      console .log (string);
+
+      const element = $(".x_ite-console");
+
+      if (element .length)
+         element .append (document .createTextNode (string));
    },
    println: function ()
    {
-      console .log (Array .prototype .join .call (arguments, " "));
+      const string = Array .prototype .join .call (arguments, "");
+
+      console .log (string);
+
+      const element = $(".x_ite-console");
+
+      if (element .length)
+         element .append (document .createTextNode (string + "\n"));
    },
    toVRMLStream: function (generator)
    {
