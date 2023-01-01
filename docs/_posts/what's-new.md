@@ -530,7 +530,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fixed picking and Layout node.
 - Fixed bug with composite glyphs in Text node.
 - Fixed bug with data URLs.
-- Fixed bug in toXMLString and toVRMLString when outputing protos.
+- Fixed bug in toXMLString and toVRMLString when outputting protos.
 
 ## X_ITE v4.4.7 Released
 
