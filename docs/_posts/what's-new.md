@@ -570,7 +570,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fixed bug when parsing SFMatrix3d/f values.
 - Fixed bug when parsing data URLs.
 - Fixed shadow handling.
-- Fixed bug in MF\* fields pop and shift.
+- Fixed bug in MF* fields pop and shift.
 
 ## X_ITE v4.4.3 Released
 
