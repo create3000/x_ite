@@ -121,25 +121,28 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       if (this .getInstanceId () > 1) return;
 
-      this .print ("Welcome to " + this .name + " X3D Browser v" + this .version + ":\n" +
-                   "   Current Graphics Renderer\n" +
-                   "      Name: " + this .getVendor () + " " + this .getRenderer () + "\n" +
-                   "      WebGL version: " + this .getWebGLVersion () + "\n" +
-                   "      Shading language: " + this .getShadingLanguageVersion () + "\n" +
-                   "   Rendering Properties\n" +
-                   "      Antialiased: " + this .getAntialiased () + "\n" +
-                   "      Depth size: " + this .getDepthSize () + " bits\n" +
-                   "      Color depth: " + this .getColorDepth () + " bits\n" +
-                   "      Max clip planes per shape: " + this .getMaxClipPlanes () + "\n" +
-                   "      Max lights per shape: " + this .getMaxLights () + "\n" +
-                   "      Max multi textures per shape: " + this .getMaxTextures () + "\n" +
-                   "      Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
-                   "      Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixels\n" +
-                   "      Texture memory: " + this .getTextureMemory () + "\n" +
-                   "      Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
-                   "      Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
-                   "      Max vertex attribs: " + this .getMaxVertexAttribs () + "\n" +
-                   "      Max varying vectors: " + this .getMaxVaryingVectors () + "\n");
+      $(() =>
+      {
+         this .print ("Welcome to " + this .name + " X3D Browser v" + this .version + ":\n" +
+                      "   Current Graphics Renderer\n" +
+                      "      Name: " + this .getVendor () + " " + this .getRenderer () + "\n" +
+                      "      WebGL version: " + this .getWebGLVersion () + "\n" +
+                      "      Shading language: " + this .getShadingLanguageVersion () + "\n" +
+                      "   Rendering Properties\n" +
+                      "      Antialiased: " + this .getAntialiased () + "\n" +
+                      "      Depth size: " + this .getDepthSize () + " bits\n" +
+                      "      Color depth: " + this .getColorDepth () + " bits\n" +
+                      "      Max clip planes per shape: " + this .getMaxClipPlanes () + "\n" +
+                      "      Max lights per shape: " + this .getMaxLights () + "\n" +
+                      "      Max multi textures per shape: " + this .getMaxTextures () + "\n" +
+                      "      Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
+                      "      Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixels\n" +
+                      "      Texture memory: " + this .getTextureMemory () + "\n" +
+                      "      Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
+                      "      Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
+                      "      Max vertex attribs: " + this .getMaxVertexAttribs () + "\n" +
+                      "      Max varying vectors: " + this .getMaxVaryingVectors () + "\n");
+      });
    },
    getName: function ()
    {
@@ -787,11 +790,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       console .log (string);
 
-      $(() =>
-      {
-         for (const element of this [_console])
-            element .append (document .createTextNode (string));
-      });
+      for (const element of this [_console])
+         element .append (document .createTextNode (string));
    },
    println: function ()
    {
@@ -799,11 +799,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       console .log (string);
 
-      $(() =>
-      {
-         for (const element of this [_console])
-            element .append (document .createTextNode (string + "\n"));
-      });
+      for (const element of this [_console])
+         element .append (document .createTextNode (string + "\n"));
    },
    toVRMLStream: function (generator)
    {
