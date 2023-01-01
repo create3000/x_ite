@@ -72,7 +72,8 @@ import _                   from "../../locale/gettext.js";
 const
    _DOMIntegration   = Symbol (),
    _loader           = Symbol (),
-   _browserCallbacks = Symbol ();
+   _browserCallbacks = Symbol (),
+   _console          = Symbol ();
 
 function X3DBrowser (element)
 {
@@ -86,6 +87,7 @@ function X3DBrowser (element)
    X3DBrowserContext .call (this, element);
 
    this [_browserCallbacks] = new Map ();
+   this [_console]          = document .getElementsByClassName ("x_ite-console");
 
    this .setup ();
 };
@@ -785,10 +787,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       console .log (string);
 
-      const element = $(".x_ite-console");
-
-      if (element .length)
-         element .append (document .createTextNode (string));
+      $(() =>
+      {
+         for (const element of this [_console])
+            element .append (document .createTextNode (string));
+      });
    },
    println: function ()
    {
@@ -796,10 +799,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       console .log (string);
 
-      const element = $(".x_ite-console");
-
-      if (element .length)
-         element .append (document .createTextNode (string + "\n"));
+      $(() =>
+      {
+         for (const element of this [_console])
+            element .append (document .createTextNode (string + "\n"));
+      });
    },
    toVRMLStream: function (generator)
    {
