@@ -161,6 +161,8 @@ An object with one or more of these properties:
 
 Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this scene.
 
+For options see toVRMLString.
+
 ## ProfileInfo
 
 This object stores information about a particular X3D profile.
