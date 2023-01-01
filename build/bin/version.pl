@@ -56,7 +56,7 @@ sub update
 
 	system "rm", "-r", $code;
 	system "cp", "-r", $dist, $code;
-	system "ln", "-s", $code, "$code/dist" if $release eq "latest";
+	system "ln", "-s", ".", "$code/dist" if $release eq "latest";
 }
 
 sub upload
