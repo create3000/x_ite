@@ -21,7 +21,7 @@ tags: [new, releases]
 - Fixed bug when floating point numbers are printed.
 - Fixed bug when MFImage is printed.
 - Fixed component's highest levels.
-- Fixed double count of headlight.
+- Fixed double count of headlight
 
 ## X_ITE v8.3.0 Released
 
