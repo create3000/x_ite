@@ -153,7 +153,7 @@ Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFro
 An object with one or more of these properties:
 
 * **scene:** scene to use for units (default: current scene)
-* **style:** string, output style (on of: **"TIDY"**, "COMPACT", "SMALL", "CLEAN")
+* **style:** string, output style (one of: **"TIDY"**, "COMPACT", "SMALL", "CLEAN")
 * **precision:** integer, float precision (default: 6)
 * **doublePrecision:** integer, double precision (default: 14)
 
