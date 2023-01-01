@@ -897,7 +897,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 - Optimizations in IndexedQuadSet and QuadSet
 - Optimized CoordinateInterpolator, NormalInterpolator, and CoordinateInterpolator2D
 - Support for more textures for custom shaders
-- New »StraigtenHorizon« browser option
+- New »StraightenHorizon« browser option
 - Better rendering of Text in some cases
 
 ### Bug Fixes
