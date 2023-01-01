@@ -110,6 +110,10 @@ a {
   margin: 0;
 }
 
+.table-wrapper > table.examples .shimmer::before {
+  all: unset;
+}
+
 @media all and (max-width: 849px) {
   .table-wrapper > table.examples tbody tr td {
     border-width: 2px;
