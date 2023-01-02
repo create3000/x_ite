@@ -91,6 +91,10 @@ SFFloat .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       this .toStream (generator);
    },
+   toJSONStream: function (generator)
+   {
+      this .toStream (generator);
+   },
 });
 
 for (const key of Reflect .ownKeys (SFFloat .prototype))

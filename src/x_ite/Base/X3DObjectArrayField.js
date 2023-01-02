@@ -553,7 +553,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          {
             generator .string += generator .ListIndent ();
 
-            value [i] .toJSONStream (generator);
+            value [i] .toJSONStreamValue (generator);
 
             generator .string += ',';
             generator .string += generator .ListBreak ();
@@ -561,7 +561,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
          generator .string += generator .ListIndent ();
 
-         value .at (-1) .toJSONStream (generator);
+         value .at (-1) .toJSONStreamValue (generator);
 
          generator .string += generator .ListBreak ();
          generator .string += generator .DecIndent ();

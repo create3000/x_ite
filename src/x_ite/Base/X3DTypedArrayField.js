@@ -840,6 +840,80 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          generator .PopUnitCategory ();
       }
    },
+   toJSONStream: function (generator)
+   {
+      const
+         target = this [_target],
+         length = target .length;
+
+      if (length)
+      {
+         const
+            array      = target .getValue (),
+            components = target .getComponents (),
+            value      = new (target .getSingleType ()) ();
+
+         generator .PushUnitCategory (target .getUnit ());
+
+         generator .string += '[';
+         generator .string += generator .ListBreak ();
+         generator .string += generator .IncIndent ();
+
+         if (components === 1)
+         {
+            for (let i = 0, n = length - 1; i < n; ++ i)
+            {
+               generator .string += generator .ListIndent ();
+
+               value .set (array [i * components]);
+               value .toJSONStream (generator);
+
+               generator .string += ',';
+               generator .string += generator .ListBreak ();
+            }
+
+            generator .string += generator .ListIndent ();
+
+            value .set (array [(length - 1) * components]);
+            value .toJSONStream (generator);
+         }
+         else
+         {
+            for (let i = 0, n = length - 1; i < n; ++ i)
+            {
+               generator .string += generator .ListIndent ();
+
+               for (let c = 0, first = i * components; c < components; ++ c, ++ first)
+                  value [c] = array [first];
+
+               value .toJSONStreamValue (generator);
+
+               generator .string += ',';
+               generator .string += generator .ListBreak ();
+            }
+
+            generator .string += generator .ListIndent ();
+
+            for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
+               value [c] = array [first];
+
+            value .toJSONStreamValue (generator);
+         }
+
+         generator .string += generator .ListBreak ();
+         generator .string += generator .DecIndent ();
+         generator .string += generator .ListIndent ();
+         generator .string += ']';
+
+         generator .PopUnitCategory ();
+      }
+      else
+      {
+         generator .string += '[';
+         generator .string += generator .TidySpace ();
+         generator .string += ']';
+      }
+   },
    dispose: function ()
    {
       X3DArrayField .prototype .dispose .call (this [_target]);

@@ -168,6 +168,31 @@ function SFVecPrototypeTemplate (TypeName, Type, ValueType, double)
       {
          this .toStream (generator);
       },
+      toJSONStream: function (generator)
+      {
+         generator .string += '[';
+         generator .string += generator .TidySpace ();
+
+         this .toJSONStreamValue (generator);
+
+         generator .string += generator .TidySpace ();
+         generator .string += ']';
+      },
+      toJSONStreamValue: function (generator)
+      {
+         const
+            value = this .getValue (),
+            last  = value .length - 1;
+
+         for (let i = 0; i < last; ++ i)
+         {
+            generator .string += generator [_formatter] (value [i]);
+            generator .string += ',';
+            generator .string += generator .Space ();
+         }
+
+         generator .string += generator [_formatter] (value [last]);
+      },
    });
 }
 

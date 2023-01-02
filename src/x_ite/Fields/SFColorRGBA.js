@@ -124,6 +124,8 @@ SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
    toStream: SFColor .prototype .toStream,
    toVRMLStream: SFColor .prototype .toVRMLStream,
    toXMLStream: SFColor .prototype .toXMLStream,
+   toJSONStream: SFColor .prototype .toJSONStream,
+   toJSONStreamValue: SFColor .prototype .toJSONStreamValue,
 });
 
 for (const key of Reflect .ownKeys (SFColorRGBA .prototype))

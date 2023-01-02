@@ -89,6 +89,10 @@ SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       generator .string += this .getValue () .toString ();
    },
+   toJSONStream: function (generator)
+   {
+      generator .string += this .getValue () .toString ();
+   },
 });
 
 for (const key of Reflect .ownKeys (SFInt32 .prototype))

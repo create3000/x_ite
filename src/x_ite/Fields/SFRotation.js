@@ -172,6 +172,31 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       this .toStream (generator);
    },
+   toJSONStream: function (generator)
+   {
+      generator .string += '[';
+      generator .string += generator .TidySpace ();
+
+      this .toJSONStreamValue (generator);
+
+      generator .string += generator .TidySpace ();
+      generator .string += ']';
+   },
+   toJSONStreamValue: function (generator)
+   {
+      const rotation = this .getValue ();
+
+      generator .string += generator .DoublePrecision (rotation .x);
+      generator .string += ',';
+      generator .string += generator .Space ();
+      generator .string += generator .DoublePrecision (rotation .y);
+      generator .string += ',';
+      generator .string += generator .Space ();
+      generator .string += generator .DoublePrecision (rotation .z);
+      generator .string += ',';
+      generator .string += generator .Space ();
+      generator .string += generator .DoublePrecision (generator .ToUnit ("angle", rotation .angle));
+   },
 });
 
 for (const key of Reflect .ownKeys (SFRotation .prototype))

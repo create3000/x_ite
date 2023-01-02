@@ -92,6 +92,10 @@ SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       generator .string += this .getValue () ? "true" : "false";
    },
+   toJSONStream: function (generator)
+   {
+      generator .string += this .getValue () ? "true" : "false";
+   },
 });
 
 for (const key of Reflect .ownKeys (SFBool .prototype))

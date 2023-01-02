@@ -201,10 +201,12 @@ SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
       {
          generator .string += generator .ListIndent ();
 
+         const s = y * this .width;
+
          for (let x = 0, w = this .width; x < w; ++ x)
          {
             generator .string += "0x";
-            generator .string += array [y * w + x] .toString (16);
+            generator .string += array [x + s] .toString (16);
 
             if (x !== w - 1)
                generator .string += generator .Space ();
@@ -223,6 +225,61 @@ SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
    toXMLStream: function (generator)
    {
       this .toStream (generator);
+   },
+   toJSONStream: function (generator)
+   {
+      generator .string += '[';
+      generator .string += generator .TidySpace ();
+
+      this .toJSONStreamValue (generator);
+
+      generator .string += generator .TidySpace ();
+      generator .string += ']';
+   },
+   toJSONStreamValue: function (generator)
+   {
+      const
+         array  = this .array,
+         length = array .length;
+
+      generator .string += this .width;
+      generator .string += ',';
+      generator .string += generator .TidySpace ();
+      generator .string += this .height;
+      generator .string += ',';
+      generator .string += generator .TidySpace ();
+      generator .string += this .comp;
+      generator .string += ',';
+
+      if (this .width && this .height)
+      {
+         generator .string += generator .ListBreak ();
+         generator .string += generator .IncIndent ();
+
+         for (let y = 0, h = this .height; y < h; ++ y)
+         {
+            generator .string += generator .ListIndent ();
+
+            const s = y * this .width;
+
+            for (let x = 0, w = this .width; x < w; ++ x)
+            {
+               console .log (x + s)
+               generator .string += array [x + s];
+
+               if (x + s !== length - 1)
+                  generator .string += ',';
+
+               if (x !== w - 1)
+                  generator .string += generator .TidySpace ();
+            }
+
+            if (y !== h - 1)
+               generator .string += generator .ListBreak ();
+         }
+
+         generator .string += generator .DecIndent ();
+      }
    },
 });
 
