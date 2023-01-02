@@ -168,7 +168,7 @@ SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
       {
          generator .string += generator .Precision (value [i]);
          generator .string += ',';
-         generator .string += generator .Space ();
+         generator .string += generator .TidySpace ();
       }
 
       generator .string += generator .Precision (value [last]);

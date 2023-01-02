@@ -444,6 +444,21 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
       else
          generator .string += "<!-- NULL -->";
    },
+   toJSONStream: function (generator)
+   {
+      this .toJSONStreamValue (generator);
+   },
+   toJSONStreamValue: function (generator)
+   {
+      const
+         target = this [_target],
+         value  = target .getValue ();
+
+      if (value)
+         value .toJSONStream (generator);
+      else
+         generator .string += "null";
+   },
    dispose: function ()
    {
       const

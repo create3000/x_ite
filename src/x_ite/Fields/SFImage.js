@@ -229,11 +229,15 @@ SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
    toJSONStream: function (generator)
    {
       generator .string += '[';
-      generator .string += generator .TidySpace ();
+      generator .string += generator .ListBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .ListIndent ();
 
       this .toJSONStreamValue (generator);
 
-      generator .string += generator .TidySpace ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .ListBreak ();
+      generator .string += generator .ListIndent ();
       generator .string += ']';
    },
    toJSONStreamValue: function (generator)
@@ -264,7 +268,6 @@ SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
 
             for (let x = 0, w = this .width; x < w; ++ x)
             {
-               console .log (x + s)
                generator .string += array [x + s];
 
                if (x + s !== length - 1)

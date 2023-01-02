@@ -188,7 +188,7 @@ function SFVecPrototypeTemplate (TypeName, Type, ValueType, double)
          {
             generator .string += generator [_formatter] (value [i]);
             generator .string += ',';
-            generator .string += generator .Space ();
+            generator .string += generator .TidySpace ();
          }
 
          generator .string += generator [_formatter] (value [last]);
