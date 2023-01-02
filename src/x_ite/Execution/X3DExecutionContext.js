@@ -854,6 +854,38 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    },
    toJSONStream: function (generator)
    {
+      generator .PushExecutionContext (this);
+      generator .EnterScope ();
+      generator .ImportedNodes (this .getImportedNodes ());
+
+
+      // Extern proto declarations
+
+      this .getExternProtoDeclarations () .toJSONStream (generator, true);
+
+
+      // Proto declarations
+
+      this .getProtoDeclarations () .toJSONStream (generator, true);
+
+
+      // Root nodes
+
+      //this .getRootNodes () .toJSONStream (generator, true);
+
+
+      // Imported nodes
+
+      this .getImportedNodes () .toJSONStream (generator, true);
+
+
+      // Routes
+
+      this .getRoutes () .toJSONStream (generator, true);
+
+
+      generator .LeaveScope ();
+      generator .PopExecutionContext ();
    },
    dispose: function ()
    {

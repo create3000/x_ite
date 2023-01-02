@@ -533,6 +533,50 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          generator .PopUnitCategory ();
       }
    },
+   toJSONStream: function (generator)
+   {
+      const
+         target = this [_target],
+         length = target .length;
+
+      if (length)
+      {
+         const value = this .getValue ();
+
+         generator .PushUnitCategory (target .getUnit ());
+
+         generator .string += '[';
+         generator .string += generator .ListBreak ();
+         generator .string += generator .IncIndent ();
+
+         for (let i = 0, n = length - 1; i < n; ++ i)
+         {
+            generator .string += generator .ListIndent ();
+
+            value [i] .toJSONStream (generator);
+
+            generator .string += ',';
+            generator .string += generator .ListBreak ();
+         }
+
+         generator .string += generator .ListIndent ();
+
+         value .at (-1) .toJSONStream (generator);
+
+         generator .string += generator .ListBreak ();
+         generator .string += generator .DecIndent ();
+         generator .string += generator .ListIndent ();
+         generator .string += ']';
+
+         generator .PopUnitCategory ();
+      }
+      else
+      {
+         generator .string += '[';
+         generator .string += generator .TidySpace ();
+         generator .string += ']';
+      }
+   },
    dispose: function ()
    {
       const

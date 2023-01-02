@@ -109,6 +109,10 @@ SFString .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       generator .string += generator .XMLEncode (this .getValue ());
    },
+   toJSONStream: function (generator)
+   {
+      generator .string += generator .JSONEncode (this .getValue ());
+   },
 });
 
 for (const key of Reflect .ownKeys (SFString .prototype))

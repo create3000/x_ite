@@ -109,6 +109,57 @@ X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototyp
 
       generator .string += "/>";
    },
+   toJSONStream: function (generator)
+   {
+      const localName = generator .LocalName (this [_localNode]);
+
+      generator .string += '{';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "EXPORT";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@localDEF";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .JSONEncode (localName);
+
+      if (this [_exportedName] !== localName)
+      {
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "@AS";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += generator .JSONEncode (this [_exportedName]);
+         generator .string += generator .TidyBreak ();
+      }
+      else
+      {
+         generator .string += generator .TidyBreak ();
+      }
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+   },
 });
 
 for (const key of Reflect .ownKeys (X3DExportedNode .prototype))

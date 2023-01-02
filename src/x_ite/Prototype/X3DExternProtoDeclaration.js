@@ -276,6 +276,129 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
       generator .string += generator .Indent ();
       generator .string += "</ExternProtoDeclare>";
    },
+   toJSONStream: function (generator)
+   {
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "ExternProtoDeclare";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@name";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .JSONEncode (this .getName ());
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+
+      // Fields
+
+      const userDefinedFields = this .getUserDefinedFields ();
+
+      if (userDefinedFields .length)
+      {
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "field";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += '[';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+
+         for (const field of userDefinedFields)
+         {
+            generator .string += generator .Indent ();
+            generator .string += '{';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@accessType";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '"';
+            generator .string += generator .AccessType (field .getAccessType ());
+            generator .string += '"';
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@type";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '"';
+            generator .string += field .getTypeName ();
+            generator .string += '"';
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@name";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += generator .JSONEncode (field .getName ());
+            generator .string += generator .TidyBreak ();
+
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += '}';
+
+            if (field !== userDefinedFields .at (-1))
+               generator .string += ',';
+
+            generator .string += generator .TidyBreak ();
+         }
+
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += ']';
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+      }
+
+
+      // URL
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@url";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+
+      this ._url .toJSONStream (generator);
+
+      generator .string += generator .TidyBreak ();
+
+
+      // End
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+   },
 });
 
 for (const key of Reflect .ownKeys (X3DExternProtoDeclaration .prototype))

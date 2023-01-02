@@ -831,7 +831,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
             this .getUnits ()  .toJSONStream (generator);
 
-            
+
             // Unit end
 
             generator .string += generator .DecIndent ();
@@ -881,25 +881,17 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       X3DExecutionContext .prototype .toJSONStream .call (this, generator);
 
-      exportedNodes .toXMLStream (generator);
+      // Exported nodes
+
+      this .getExportedNodes () .toJSONStream (generator, true);
+
+      generator .string = generator .string .replace (/,(\s*)$/s, "$1");
 
       generator .LeaveScope ();
       generator .PopExecutionContext ();
 
-      let lastProperty = this .getExternProtoDeclarations () .length ||
-                         this .getProtoDeclarations ()       .length ||
-                         this .getRootNodes ()               .length ||
-                         this .getImportedNodes ()           .length ||
-                         this .getRoutes ()                  .length;
-
-      // Exported nodes
-
-      lastProperty = lastProperty || this .getExportedNodes () .toJSONStream (generator);
-
-
       // Scene end
 
-      generator .string += generator .TidyBreak ();
       generator .string += generator .DecIndent ();
       generator .string += generator .Indent ();
       generator .string += ']';

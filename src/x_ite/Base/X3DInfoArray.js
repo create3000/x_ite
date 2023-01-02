@@ -273,7 +273,7 @@ X3DInfoArray .prototype = {
          }
       }
    },
-   toJSONStream: function (generator)
+   toJSONStream: function (generator, comma)
    {
       let lastProperty = false;
 
@@ -294,8 +294,8 @@ X3DInfoArray .prototype = {
          }
       }
 
-      if (lastProperty)
-         generator .string = generator .string .replace (/,\s*$/s, generator .TidyBreak ());
+      if (lastProperty && !comma)
+         generator .string = generator .string .replace (/,(\s*)$/s, "$1");
 
       return lastProperty;
    },
