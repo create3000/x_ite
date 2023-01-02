@@ -871,7 +871,24 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       // Root nodes
 
-      //this .getRootNodes () .toJSONStream (generator, true);
+      if (this .getRootNodes () .length)
+      {
+         for (const rootNode of this .getRootNodes ())
+         {
+            if (rootNode)
+            {
+               rootNode .toJSONStream (generator);
+            }
+            else
+            {
+               generator .string += generator .Indent ();
+               generator .string += "null";
+            }
+
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+         }
+      }
 
 
       // Imported nodes

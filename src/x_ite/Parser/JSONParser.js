@@ -73,7 +73,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       try
       {
          if (typeof json === "string")
-            json = JSON .parse (json)
+            json = JSON .parse (json);
 
          this .input = json;
       }

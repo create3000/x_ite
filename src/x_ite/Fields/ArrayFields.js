@@ -341,6 +341,50 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          generator .LeaveScope ();
       }
    },
+   toJSONStream: function (generator)
+   {
+      const length = this .length;
+
+      if (length)
+      {
+         const array = this .getValue ();
+
+         generator .EnterScope ();
+
+         generator .string += '[';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+
+         for (let i = 0, n = length - 1; i < n; ++ i)
+         {
+            if (array [i])
+               array [i] .toJSONStreamValue (generator);
+            else
+               generator .string += 'null';
+
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+         }
+
+         if (array .at (-1))
+            array .at (-1) .toJSONStreamValue (generator);
+         else
+            generator .string += 'null';
+
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += ']';
+
+         generator .LeaveScope ();
+      }
+      else
+      {
+         generator .string += '[';
+			generator .string += generator .TidySpace ();
+			generator .string += ']';
+      }
+   },
    dispose: function ()
    {
       this .resize (0);

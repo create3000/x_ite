@@ -113,6 +113,7 @@ X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototyp
    {
       const localName = generator .LocalName (this [_localNode]);
 
+      generator .string += generator .Indent ();
       generator .string += '{';
       generator .string += generator .TidySpace ();
       generator .string += '"';
