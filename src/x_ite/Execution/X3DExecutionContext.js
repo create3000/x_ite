@@ -875,6 +875,8 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       {
          for (const rootNode of this .getRootNodes ())
          {
+            generator .string += generator .Indent ();
+
             if (rootNode)
             {
                rootNode .toJSONStream (generator);

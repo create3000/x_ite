@@ -513,6 +513,8 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
 
       this [_body] .toJSONStream (generator);
 
+      generator .string = generator .string .replace (/,(\s*)$/s, "$1");
+      
       generator .string += generator .DecIndent ();
       generator .string += generator .Indent ();
       generator .string += ']';

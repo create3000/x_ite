@@ -651,7 +651,6 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
       {
          if (generator .ExistsNode (this))
          {
-            generator .string += generator .Indent ();
             generator .string += '{';
             generator .string += generator .TidySpace ();
             generator .string += '"';
@@ -701,7 +700,6 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       // Type name
 
-      generator .string += generator .Indent ();
       generator .string += '{';
       generator .string += generator .TidySpace ();
       generator .string += '"';
@@ -948,7 +946,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
             for (const field of references)
             {
-               const protoFields = field .getReferences ();
+               const protoFields = [... field .getReferences ()];
 
                for (const protoField of protoFields)
                {

@@ -357,6 +357,8 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 
          for (let i = 0, n = length - 1; i < n; ++ i)
          {
+            generator .string += generator .Indent ();
+
             if (array [i])
                array [i] .toJSONStreamValue (generator);
             else
@@ -365,6 +367,8 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
             generator .string += ',';
             generator .string += generator .TidyBreak ();
          }
+
+         generator .string += generator .Indent ();
 
          if (array .at (-1))
             array .at (-1) .toJSONStreamValue (generator);

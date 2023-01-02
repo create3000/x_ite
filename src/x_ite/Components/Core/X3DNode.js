@@ -783,6 +783,8 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    },
    toJSONStream: function (generator)
    {
+      try
+      {
       const sharedNode = generator .IsSharedNode (this);
 
       generator .EnterScope ();
@@ -795,7 +797,6 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       {
          if (generator .ExistsNode (this))
          {
-            generator .string += generator .Indent ();
             generator .string += '{';
             generator .string += generator .TidySpace ();
             generator .string += '"';
@@ -831,7 +832,6 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       // Type name
 
-      generator .string += generator .Indent ();
       generator .string += '{';
       generator .string += generator .TidySpace ();
       generator .string += '"';
@@ -881,7 +881,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          if (sourceText .length !== 1)
             sourceText = null;
 
-         if (sourceText && ! sourceText .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s))
+         if (sourceText && ! sourceText [0] .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s))
             sourceText = nullptr;
       }
 
@@ -1049,7 +1049,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             if ((field .getReferences () .size === 0 || !generator .ExecutionContext ()) || sharedNode || mustOutputValue)
             {
                if (mustOutputValue && generator .ExecutionContext ())
-                     references .push (field);
+                  references .push (field);
 
                if (!field .isInitializable () || field .isDefaultValue ())
                   ;
@@ -1146,20 +1146,22 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          generator .string += generator .TidySpace ();
          generator .string += '[';
          generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
 
          const sourceTextLines = sourceText [0] .split ("\n");
 
-         for (let i = 0, l = sourceTextLines .length; i < length; ++ i)
+         for (let i = 0, length = sourceTextLines .length; i < length; ++ i)
          {
             generator .string += generator .ListIndent ();
             generator .string += generator .JSONEncode (sourceTextLines [i]);
 
-            if (i !== l - 1)
+            if (i !== length - 1)
                generator .string += ',';
 
             generator .string += generator .TidyBreak ();
          }
 
+         generator .string += generator .DecIndent ();
          generator .string += generator .Indent ();
          generator .string += ']';
          generator .string += generator .TidyBreak ();
@@ -1191,7 +1193,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
          for (const field of references)
          {
-            const protoFields = field .getReferences ();
+            const protoFields = [... field .getReferences ()];
 
             for (const protoField of protoFields)
             {
@@ -1257,6 +1259,11 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       generator .string += '}';
 
       generator .LeaveScope ();
+      }
+      catch (error)
+      {
+         console .log (error)
+      }
    },
    dispose: function ()
    {
