@@ -273,6 +273,32 @@ X3DInfoArray .prototype = {
          }
       }
    },
+   toJSONStream: function (generator)
+   {
+      let lastProperty = false;
+
+      for (const value of this [_array])
+      {
+         try
+         {
+            value .toJSONStream (generator, true);
+
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+
+            lastProperty = true;
+         }
+         catch (error)
+         {
+            // console .error (error);
+         }
+      }
+
+      if (lastProperty)
+         generator .string = generator .string .replace (/,\s*$/s, generator .TidyBreak ());
+
+      return lastProperty;
+   },
 };
 
 for (const key of Reflect .ownKeys (X3DInfoArray .prototype))

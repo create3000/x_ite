@@ -72,6 +72,10 @@ ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       generator .string += this .name;
    },
+   toJSONStream: function (generator)
+   {
+      generator .string += this .name;
+   },
 });
 
 for (const key of Reflect .ownKeys (ProfileInfo .prototype))

@@ -574,6 +574,353 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       generator .string += "</X3D>";
       generator .string += generator .TidyBreak ();
    },
+   toJSONStream: function (generator)
+   {
+      // X3D
+
+      generator .string += '{';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "X3D";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .IncIndent ();
+
+
+      // Encoding
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "encoding";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "UTF-8";
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+
+      // Profile
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@profile";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += this .getProfile () ? this .getProfile () .name : "Full";
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+
+      // Version
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@version";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += this .getSpecificationVersion ();
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+
+      // XSD noNamespaceSchemaLocation
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@xsd:noNamespaceSchemaLocation";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "http://www.web3d.org/specifications/x3d-";
+      generator .string += LATEST_VERSION;
+      generator .string += ".xsd";
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+
+      // JSON schema
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "JSON schema";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "http://www.web3d.org/specifications/x3d-";
+      generator .string += LATEST_VERSION;
+      generator .string += "-JSONSchema.json";
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+
+      // Head
+
+      const outputUnits = this .getUnits () .some (unit => unit .conversionFactor !== 1);
+
+      if (this .getComponents () .length || outputUnits || this .getMetaDatas () .size)
+      {
+         let headLastProperty = false;
+
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "head";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += '{';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+
+
+         // Meta data
+
+         if (this .getMetaDatas () .size)
+         {
+            if (headLastProperty)
+            {
+               generator .string += ',';
+               generator .string += generator .TidyBreak ();
+            }
+
+
+            // Meta data begin
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "meta";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '[';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+
+
+            // Meta data
+
+            let i = 0;
+
+            for (const [key, value] of this .getMetaDatas ())
+            {
+               generator .string += generator .Indent ();
+               generator .string += '{';
+               generator .string += generator .TidyBreak ();
+               generator .string += generator .IncIndent ();
+
+               generator .string += generator .Indent ();
+               generator .string += '"';
+               generator .string += "@name";
+               generator .string += '"';
+               generator .string += ':';
+               generator .string += generator .TidySpace ();
+               generator .string += generator .JSONEncode (key);
+               generator .string += ',';
+               generator .string += generator .TidyBreak ();
+
+               generator .string += generator .Indent ();
+               generator .string += '"';
+               generator .string += "@content";
+               generator .string += '"';
+               generator .string += ':';
+               generator .string += generator .TidySpace ();
+               generator .string += generator .JSONEncode (value);
+               generator .string += generator .TidyBreak ();
+
+               generator .string += generator .DecIndent ();
+               generator .string += generator .Indent ();
+               generator .string += '}';
+
+               if (++ i !== this .getMetaDatas () .size)
+                  generator .string += ',';
+
+               generator .string += generator .TidyBreak ();
+            }
+
+
+            // Meta data end
+
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += ']';
+
+            headLastProperty = true;
+         }
+
+
+         // Components
+
+         if (this .getComponents () .length)
+         {
+            if (headLastProperty)
+            {
+               generator .string += ',';
+               generator .string += generator .TidyBreak ();
+            }
+
+
+            // Components begin
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "component";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '[';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+
+
+            // Components
+
+            this .getComponents () .toJSONStream (generator);
+
+
+            // Components end
+
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += ']';
+
+            headLastProperty = true;
+         }
+
+
+         // Units
+
+         if (outputUnits)
+         {
+            if (headLastProperty)
+            {
+               generator .string += ',';
+               generator .string += generator .TidyBreak ();
+            }
+
+
+            // Units begin
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "unit";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '[';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+
+
+            // Units
+
+            this .getUnits ()  .toJSONStream (generator);
+
+            
+            // Unit end
+
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += ']';
+
+            headLastProperty = true;
+         }
+
+
+         // Head end
+
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += '}';
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+      }
+
+      // Scene
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "Scene";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "-children";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '[';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+      const exportedNodes = this .getExportedNodes ();
+
+      generator .PushExecutionContext (this);
+      generator .EnterScope ();
+      generator .ExportedNodes (exportedNodes);
+
+      X3DExecutionContext .prototype .toJSONStream .call (this, generator);
+
+      exportedNodes .toXMLStream (generator);
+
+      generator .LeaveScope ();
+      generator .PopExecutionContext ();
+
+      let lastProperty = this .getExternProtoDeclarations () .length ||
+                         this .getProtoDeclarations ()       .length ||
+                         this .getRootNodes ()               .length ||
+                         this .getImportedNodes ()           .length ||
+                         this .getRoutes ()                  .length;
+
+      // Exported nodes
+
+      lastProperty = lastProperty || this .getExportedNodes () .toJSONStream (generator);
+
+
+      // Scene end
+
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += ']';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+
+
+      // X3D end
+
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+   },
 });
 
 for (const key of Reflect .ownKeys (X3DScene .prototype))

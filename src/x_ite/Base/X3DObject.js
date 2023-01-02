@@ -171,7 +171,7 @@ X3DObject .prototype =
       if (options .scene)
          generator .PushExecutionContext (options .scene);
 
-      this .toVRMLStream (generator); // TODO.
+      this .toJSONStream (generator);
 
       return generator .string;
    },

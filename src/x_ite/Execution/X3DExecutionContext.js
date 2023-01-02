@@ -852,6 +852,9 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       generator .LeaveScope ();
       generator .PopExecutionContext ();
    },
+   toJSONStream: function (generator)
+   {
+   },
    dispose: function ()
    {
       this ._rootNodes .dispose ();

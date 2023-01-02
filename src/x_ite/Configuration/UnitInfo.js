@@ -93,6 +93,52 @@ UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
       generator .string += "'";
       generator .string += "/>";
    },
+   toJSONStream: function (generator, _throw)
+   {
+      if (this .conversionFactor === 1)
+         throw new Error ("conversionFactor is 1");
+
+      generator .string += generator .Indent ();
+
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@category";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += this .category;
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@name";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .JSONEncode (this .name);
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@conversionFactor";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .DoublePrecision (this .conversionFactor);
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+   },
 });
 
 for (const key of Reflect .ownKeys (UnitInfo .prototype))

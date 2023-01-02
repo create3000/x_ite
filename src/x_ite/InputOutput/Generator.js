@@ -189,11 +189,15 @@ Generator .prototype =
    {
       this .indent     += this .indentChar;
       this .listIndent += this .listIndentChar;
+
+      return "";
    },
    DecIndent: function ()
    {
       this .indent = this .indent .slice (0, this .indent .length - this .indentChar .length);
       this .listIndent = this .listIndent .slice (0, this .listIndent .length - this .listIndentChar .length);
+
+      return "";
    },
    PadRight: function (string, pad)
    {
@@ -519,6 +523,51 @@ Generator .prototype =
    {
       return string .replace (/\]\]\>/g, "\\]\\]\\>");
    },
+   JSONEncode: function (string)
+   {
+      let result = '"';
+
+      for (const character of string)
+      {
+         switch (character)
+         {
+            case '\r':
+            {
+               result += "\\r";
+               break;
+            }
+            case '\n':
+            {
+               result += "\\n";
+               break;
+            }
+            case '\t':
+            {
+               result += "\\t";
+               break;
+            }
+            case '"':
+            {
+               result += "\\\"";
+               break;
+            }
+            case '\\':
+            {
+               result += "\\\\";
+               break;
+            }
+            default:
+            {
+               result += character;
+               break;
+            }
+         }
+      }
+
+      result += '"';
+
+      return result;
+   }
 };
 
 for (const key of Reflect .ownKeys (Generator .prototype))

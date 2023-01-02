@@ -781,6 +781,9 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       generator .LeaveScope ();
    },
+   toJSONStream: function (generator)
+   {
+   },
    dispose: function ()
    {
       const executionContext = this .getExecutionContext ();
