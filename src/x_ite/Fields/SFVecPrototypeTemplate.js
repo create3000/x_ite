@@ -183,7 +183,7 @@ function SFVecPrototypeTemplate (TypeName, Type, ValueType, double)
          const
             value = this .getValue (),
             last  = value .length - 1,
-            category  = generator .Unit (this .getUnit ());;
+            category  = generator .Unit (this .getUnit ());
 
          for (let i = 0; i < last; ++ i)
          {

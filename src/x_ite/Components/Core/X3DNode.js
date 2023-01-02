@@ -882,7 +882,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             sourceText = null;
 
          if (sourceText && ! sourceText [0] .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s))
-            sourceText = nullptr;
+            sourceText = null;
       }
 
 
@@ -1164,6 +1164,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          generator .string += generator .DecIndent ();
          generator .string += generator .Indent ();
          generator .string += ']';
+         generator .string += ',';
          generator .string += generator .TidyBreak ();
       }
 
