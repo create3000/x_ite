@@ -866,7 +866,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
                generator .string += generator .ListIndent ();
 
                value .set (array [i * components]);
-               value .toJSONStream (generator);
+               value .toJSONStreamValue (generator);
 
                generator .string += ',';
                generator .string += generator .ListBreak ();
@@ -875,7 +875,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
             generator .string += generator .ListIndent ();
 
             value .set (array [(length - 1) * components]);
-            value .toJSONStream (generator);
+            value .toJSONStreamValue (generator);
          }
          else
          {

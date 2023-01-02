@@ -93,6 +93,10 @@ SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       this .toStream (generator);
    },
+   toJSONStreamValue: function (generator)
+   {
+      this .toStream (generator);
+   },
 });
 
 for (const key of Reflect .ownKeys (SFTime .prototype))

@@ -148,14 +148,14 @@ function SFVecPrototypeTemplate (TypeName, Type, ValueType, double)
       toStream: function (generator)
       {
          const
-            value     = this .getValue (),
-            category  = generator .Unit (this .getUnit ()),
-            last      = value .length - 1;
+            value    = this .getValue (),
+            last     = value .length - 1,
+            category = generator .Unit (this .getUnit ());
 
          for (let i = 0; i < last; ++ i)
          {
             generator .string += generator [_formatter] (generator .ToUnit (category, value [i]));
-            generator .string += generator .Space ();
+            generator .string += generator .TidySpace ();
          }
 
          generator .string += generator [_formatter] (generator .ToUnit (category, value [last]));
@@ -182,16 +182,17 @@ function SFVecPrototypeTemplate (TypeName, Type, ValueType, double)
       {
          const
             value = this .getValue (),
-            last  = value .length - 1;
+            last  = value .length - 1,
+            category  = generator .Unit (this .getUnit ());;
 
          for (let i = 0; i < last; ++ i)
          {
-            generator .string += generator [_formatter] (value [i]);
+            generator .string += generator [_formatter] (generator .ToUnit (category, value [i]));
             generator .string += ',';
             generator .string += generator .TidySpace ();
          }
 
-         generator .string += generator [_formatter] (value [last]);
+         generator .string += generator [_formatter] (generator .ToUnit (category, value [last]));
       },
    });
 }

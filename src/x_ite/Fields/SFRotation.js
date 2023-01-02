@@ -157,11 +157,11 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
       const rotation = this .getValue ();
 
       generator .string += generator .DoublePrecision (rotation .x);
-      generator .string += generator .Space ();
+      generator .string += generator .TidySpace ();
       generator .string += generator .DoublePrecision (rotation .y);
-      generator .string += generator .Space ();
+      generator .string += generator .TidySpace ();
       generator .string += generator .DoublePrecision (rotation .z);
-      generator .string += generator .Space ();
+      generator .string += generator .TidySpace ();
       generator .string += generator .DoublePrecision (generator .ToUnit ("angle", rotation .angle));
    },
    toVRMLStream: function (generator)
@@ -188,13 +188,13 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
 
       generator .string += generator .DoublePrecision (rotation .x);
       generator .string += ',';
-      generator .string += generator .Space ();
+      generator .string += generator .TidySpace ();
       generator .string += generator .DoublePrecision (rotation .y);
       generator .string += ',';
-      generator .string += generator .Space ();
+      generator .string += generator .TidySpace ();
       generator .string += generator .DoublePrecision (rotation .z);
       generator .string += ',';
-      generator .string += generator .Space ();
+      generator .string += generator .TidySpace ();
       generator .string += generator .DoublePrecision (generator .ToUnit ("angle", rotation .angle));
    },
 });
