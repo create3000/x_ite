@@ -312,9 +312,6 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
          for (const field of fields)
          {
-            if (!generator .metadata && field .getName () === "metadata")
-               continue;
-
             this .toVRMLStreamField (generator, field);
 
             if (field === last)
@@ -537,9 +534,6 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       for (const field of fields)
       {
-         if (!generator .metadata && field .getName () === "metadata")
-            continue;
-
          // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
          // for this field.
 
@@ -889,9 +883,6 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
          for (const field of fields)
          {
-            if (!generator .metadata && field .getName () === "metadata")
-               continue;
-
             // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
             // for this field.
 
