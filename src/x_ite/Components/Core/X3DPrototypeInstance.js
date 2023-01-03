@@ -663,9 +663,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
             generator .string += '"';
             generator .string += ':';
             generator .string += generator .TidySpace ();
-            generator .string += '"';
             generator .string += generator .JSONEncode (this .getTypeName ());
-            generator .string += '"';
             generator .string += ',';
             generator .string += generator .TidyBreak ();
 
