@@ -567,7 +567,19 @@ Generator .prototype =
       result += '"';
 
       return result;
-   }
+   },
+   JSONNumber: function (value)
+   {
+      switch (value)
+      {
+         case "NaN":
+         case "Infinity":
+         case "-Infinity":
+            return '"' + value + '"';
+         default:
+            return value;
+      }
+   },
 };
 
 for (const key of Reflect .ownKeys (Generator .prototype))

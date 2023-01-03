@@ -93,11 +93,13 @@ SFDouble .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    toJSONStream: function (generator)
    {
-      this .toStream (generator);
+      this .toJSONStreamValue (generator);
    },
    toJSONStreamValue: function (generator)
    {
-      this .toStream (generator);
+      const category = generator .Unit (this .getUnit ());
+
+      generator .string += generator .JSONNumber (generator .DoublePrecision (generator .ToUnit (category, this .getValue ())));
    },
 });
 

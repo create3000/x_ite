@@ -177,12 +177,12 @@ function SFMatrixPrototypeTemplate (TypeName, Type, Matrix, SFVec, double)
 
          for (let i = 0; i < last; ++ i)
          {
-            generator .string += generator [_formatter] (value [i]);
+            generator .string += generator .JSONNumber (generator [_formatter] (value [i]));
             generator .string += ',';
             generator .string += generator .TidySpace ();
          }
 
-         generator .string += generator [_formatter] (value [last]);
+         generator .string += generator .JSONNumber (generator [_formatter] (value [last]));
       },
    });
 }

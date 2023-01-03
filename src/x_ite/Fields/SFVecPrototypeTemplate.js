@@ -187,12 +187,12 @@ function SFVecPrototypeTemplate (TypeName, Type, ValueType, double)
 
          for (let i = 0; i < last; ++ i)
          {
-            generator .string += generator [_formatter] (generator .ToUnit (category, value [i]));
+            generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, value [i])));
             generator .string += ',';
             generator .string += generator .TidySpace ();
          }
 
-         generator .string += generator [_formatter] (generator .ToUnit (category, value [last]));
+         generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, value [last])));
       },
    });
 }
