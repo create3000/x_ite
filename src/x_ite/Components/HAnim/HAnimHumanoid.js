@@ -239,7 +239,9 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
       renderObject .getJoints () .length = 0;
 
       this .transformNode .traverse (type, renderObject);
-      this .skinning (type, renderObject);
+
+      if (this .isLive () .getValue ())
+         this .skinning (type, renderObject);
    },
    skinning: (function ()
    {

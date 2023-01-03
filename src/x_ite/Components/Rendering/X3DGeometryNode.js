@@ -401,7 +401,8 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          if ((Xsize >= Ysize) && (Xsize >= Zsize))
          {
             // X size largest
-            texCoordParams .Ssize = Xsize; texCoordParams .Sindex = 0;
+            texCoordParams .Ssize  = Xsize;
+            texCoordParams .Sindex = 0;
 
             if (Ysize >= Zsize)
                texCoordParams .Tindex = 1;
@@ -411,7 +412,8 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          else if ((Ysize >= Xsize) && (Ysize >= Zsize))
          {
             // Y size largest
-            texCoordParams .Ssize = Ysize; texCoordParams .Sindex = 1;
+            texCoordParams .Ssize  = Ysize;
+            texCoordParams .Sindex = 1;
 
             if (Xsize >= Zsize)
                texCoordParams .Tindex = 0;
@@ -421,7 +423,8 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          else
          {
             // Z is the largest
-            texCoordParams .Ssize = Zsize; texCoordParams .Sindex = 2;
+            texCoordParams .Ssize  = Zsize;
+            texCoordParams .Sindex = 2;
 
             if (Xsize >= Ysize)
                texCoordParams .Tindex = 0;
