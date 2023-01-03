@@ -476,14 +476,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
             {
                if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
                {
-                  let initializableReference = false;
-
-                  field .getReferences () .forEach (function (fieldReference)
-                  {
-                     initializableReference = initializableReference || fieldReference .isInitializable ();
-                  });
-
-                  if (!initializableReference)
+                  if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
                      mustOutputValue = !this .isDefaultValue (field);
                }
             }
@@ -776,14 +769,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
             {
                if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
                {
-                  let initializableReference = false;
-
-                  field .getReferences () .forEach (function (fieldReference)
-                  {
-                     initializableReference = initializableReference || fieldReference .isInitializable ();
-                  });
-
-                  if (!initializableReference)
+                  if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
                      mustOutputValue = !this .isDefaultValue (field);
                }
             }

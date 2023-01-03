@@ -354,7 +354,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             index                  = 0,
             initializableReference = false;
 
-         field .getReferences () .forEach (function (reference)
+         for (const reference of field .getReferences ())
          {
             initializableReference = initializableReference || reference .isInitializable ();
 
@@ -375,7 +375,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
             if (index !== field .getReferences () .size)
                generator .string += generator .Break ();
-         });
+         }
 
          if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !field .isDefaultValue ())
          {
@@ -417,7 +417,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             index                  = 0,
             initializableReference = false;
 
-         field .getReferences () .forEach (function (reference)
+         for (const reference of field .getReferences ())
          {
             initializableReference = initializableReference || reference .isInitializable ();
 
@@ -434,7 +434,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
             if (index !== field .getReferences () .size)
                generator .string += generator .Break ();
-         });
+         }
 
          if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !this .isDefaultValue (field))
          {
@@ -543,14 +543,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          {
             if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
             {
-               let initializableReference = false;
-
-               field .getReferences () .forEach (function (fieldReference)
-               {
-                  initializableReference = initializableReference || fieldReference .isInitializable ();
-               });
-
-               if (!initializableReference)
+               if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
                   mustOutputValue = !this .isDefaultValue (field);
             }
          }
@@ -635,17 +628,13 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
                let mustOutputValue = false;
 
-               if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
+               if (generator .ExecutionContext ())
                {
-                  let initializableReference = false;
-
-                  field .getReferences () .forEach (function (fieldReference)
+                  if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
                   {
-                     initializableReference = initializableReference || fieldReference .isInitializable ();
-                  });
-
-                  if (!initializableReference)
-                     mustOutputValue = true;
+                     if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
+                        mustOutputValue = !this .isDefaultValue (field);
+                  }
                }
 
                if ((field .getReferences () .size === 0 || !generator .ExecutionContext ()) || sharedNode || mustOutputValue)
@@ -903,14 +892,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             {
                if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
                {
-                  let initializableReference = false;
-
-                  field .getReferences () .forEach (function (fieldReference)
-                  {
-                     initializableReference = initializableReference || fieldReference .isInitializable ();
-                  });
-
-                  if (!initializableReference)
+                  if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
                      mustOutputValue = !this .isDefaultValue (field);
                }
             }
@@ -1033,17 +1015,13 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
             let mustOutputValue = false;
 
-            if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
+            if (generator .ExecutionContext ())
             {
-               let initializableReference = false;
-
-               field .getReferences () .forEach (function (fieldReference)
+               if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
                {
-                  initializableReference = initializableReference || fieldReference .isInitializable ();
-               });
-
-               if (!initializableReference)
-                  mustOutputValue = true;
+                  if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
+                     mustOutputValue = !this .isDefaultValue (field);
+               }
             }
 
             if ((field .getReferences () .size === 0 || !generator .ExecutionContext ()) || sharedNode || mustOutputValue)
