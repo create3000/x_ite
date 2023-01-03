@@ -407,13 +407,23 @@ Returns the node type name.
 
 Removes a field callback function associated with the parameters *name* and *key*.
 
-#### String **toVRMLString** ()
+#### String **toVRMLString** (\[options\])
 
 Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, produce this node.
 
-#### String **toXMLString** ()
+For options see X3DScene.toVRMLString.
+
+#### String **toXMLString** (\[options\])
 
 Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, produce this node.
+
+For options see X3DScene.toVRMLString.
+
+#### String **toJSONString** (\[options\])
+
+Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, produce this node.
+
+For options see X3DScene.toVRMLString.
 
 ## SFRotation Object
 
@@ -966,13 +976,23 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-#### String **toVRMLString** ()
+#### String **toVRMLString** (\[options\])
 
 Returns the X3D VRML-encoded string that, if parsed as the value of an MFNode field, produce this node.
 
-#### String **toXMLString** ()
+For options see X3DScene.toVRMLString.
+
+#### String **toXMLString** (\[options\])
 
 Returns the X3D XML-encoded string that, if parsed as the value of an MFNode field, produce this node.
+
+For options see X3DScene.toVRMLString.
+
+#### String **toJSONString** (\[options\])
+
+Returns the X3D JSON-encoded string that, if parsed as the value of an MFNode field, produce this node.
+
+For options see X3DScene.toVRMLString.
 
 ## MFRotation Object
 
