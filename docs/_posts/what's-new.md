@@ -5,7 +5,17 @@ nav: main
 categories: []
 tags: [new, releases]
 ---
+## X_ITE v8.4.0 Released
+
+*Leipzig, 3rd January 2023:* We right now released a new version. With this version toJSONString is implemented and available for X3DScene, SFNode, MFNode, X3DProtoDeclaration, and X3DExternProtoDeclaration.
+
+### New Features
+
+- Implemented toJSONString.
+
 ## X_ITE v8.3.3 Released
+
+*Leipzig, 31st December 2022:* We right now released a new version.
 
 ### New Features
 
@@ -25,7 +35,7 @@ tags: [new, releases]
 
 ## X_ITE v8.3.0 Released
 
-*Leipzig, 14st December 2022:* We right now released a new version.
+*Leipzig, 14th December 2022:* We right now released a new version.
 
 ### New Features
 
