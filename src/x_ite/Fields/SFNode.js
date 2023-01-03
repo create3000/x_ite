@@ -372,6 +372,45 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       return null;
    },
+   toVRMLString: function (options = Object .prototype)
+   {
+      const
+         generator = new Generator (options),
+         value     = this .getValue ();
+
+      if (value)
+         generator .PushExecutionContext (value .getExecutionContext ());
+
+      this .toVRMLStream (generator);
+
+      return generator .string;
+   },
+   toXMLString: function (options = Object .prototype)
+   {
+      const
+         generator = new Generator (options),
+         value     = this .getValue ();
+
+      if (value)
+         generator .PushExecutionContext (value .getExecutionContext ());
+
+      this .toXMLStream (generator);
+
+      return generator .string;
+   },
+   toJSONString: function (options = Object .prototype)
+   {
+      const
+         generator = new Generator (options),
+         value     = this .getValue ();
+
+      if (value)
+         generator .PushExecutionContext (value .getExecutionContext ());
+
+      this .toJSONStream (generator);
+
+      return generator .string;
+   },
    toStream: function (generator)
    {
       const
@@ -382,45 +421,6 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
          value .toStream (generator);
       else
          generator .string += "NULL";
-   },
-   toVRMLString: function (options)
-   {
-      const
-         generator = new Generator (options),
-         target    = this [_target],
-         value     = target .getValue ();
-
-      generator .PushExecutionContext (value .getExecutionContext ());
-
-      target .toVRMLStream (generator);
-
-      return generator .string;
-   },
-   toXMLString: function (options)
-   {
-      const
-         generator = new Generator (options),
-         target    = this [_target],
-         value     = target .getValue ();
-
-      generator .PushExecutionContext (value .getExecutionContext ());
-
-      target .toXMLStream (generator);
-
-      return generator .string;
-   },
-   toJSONString: function (options)
-   {
-      const
-         generator = new Generator (options),
-         target    = this [_target],
-         value     = target .getValue ();
-
-      generator .PushExecutionContext (value .getExecutionContext ());
-
-      target .toJSONStream (generator);
-
-      return generator .string;
    },
    toVRMLStream: function (generator)
    {
