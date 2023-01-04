@@ -1,4 +1,4 @@
-/* X_ITE v8.3.3 */(function webpackUniversalModuleDefinition(root, factory) {
+/* X_ITE v8.4.0 */(function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 99:
+/***/ 726:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(93);
+/* provided dependency */ var jQuery = __webpack_require__(718);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 342:
+/***/ 967:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(93);
+/* provided dependency */ var jQuery = __webpack_require__(718);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 442:
+/***/ 248:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(93)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(718)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 93:
+/***/ 718:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11812,7 +11812,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 461:
+/***/ 941:
 /***/ ((module) => {
 
 /**
@@ -16591,7 +16591,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 777:
+/***/ 513:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -20212,7 +20212,7 @@ Generator .prototype =
             this .tidyBreak      = "\n";
             this .tidySpace      = " ";
             this .indentChar     = "  ";
-            this .listEnclosure  = "";
+            this .listEnclosure  = " ";
             this .listBreak      = " ";
             this .listIndentChar = "";
             this .attribBreak    = " ";
@@ -20286,11 +20286,15 @@ Generator .prototype =
    {
       this .indent     += this .indentChar;
       this .listIndent += this .listIndentChar;
+
+      return "";
    },
    DecIndent: function ()
    {
       this .indent = this .indent .slice (0, this .indent .length - this .indentChar .length);
       this .listIndent = this .listIndent .slice (0, this .listIndent .length - this .listIndentChar .length);
+
+      return "";
    },
    PadRight: function (string, pad)
    {
@@ -20616,6 +20620,63 @@ Generator .prototype =
    {
       return string .replace (/\]\]\>/g, "\\]\\]\\>");
    },
+   JSONEncode: function (string)
+   {
+      let result = '"';
+
+      for (const character of string)
+      {
+         switch (character)
+         {
+            case '\r':
+            {
+               result += "\\r";
+               break;
+            }
+            case '\n':
+            {
+               result += "\\n";
+               break;
+            }
+            case '\t':
+            {
+               result += "\\t";
+               break;
+            }
+            case '"':
+            {
+               result += "\\\"";
+               break;
+            }
+            case '\\':
+            {
+               result += "\\\\";
+               break;
+            }
+            default:
+            {
+               result += character;
+               break;
+            }
+         }
+      }
+
+      result += '"';
+
+      return result;
+   },
+   JSONNumber: function (value)
+   {
+      switch (value)
+      {
+         case "NaN":
+         case "Infinity":
+         case "-Infinity":
+            return '"' + value + '"';
+         default:
+            return value;
+      }
+   },
 };
 
 for (const key of Reflect .ownKeys (Generator .prototype))
@@ -20887,7 +20948,7 @@ X3DObject .prototype =
       if (options .scene)
          generator .PushExecutionContext (options .scene);
 
-      this .toVRMLStream (generator); // TODO.
+      this .toJSONStream (generator);
 
       return generator .string;
    },
@@ -21646,6 +21707,32 @@ X3DInfoArray .prototype = {
          }
       }
    },
+   toJSONStream: function (generator, comma)
+   {
+      let lastProperty = false;
+
+      for (const value of this [_array])
+      {
+         try
+         {
+            value .toJSONStream (generator, true);
+
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+
+            lastProperty = true;
+         }
+         catch (error)
+         {
+            // console .error (error);
+         }
+      }
+
+      if (lastProperty && !comma)
+         generator .string = generator .string .replace (/,(\s*)$/s, "$1");
+
+      return lastProperty;
+   },
 };
 
 for (const key of Reflect .ownKeys (X3DInfoArray .prototype))
@@ -22336,6 +22423,14 @@ SFBool .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    {
       generator .string += this .getValue () ? "true" : "false";
    },
+   toJSONStream: function (generator)
+   {
+      this .toJSONStreamValue (generator);
+   },
+   toJSONStreamValue: function (generator)
+   {
+      generator .string += this .getValue () ? "true" : "false";
+   },
 });
 
 for (const key of Reflect .ownKeys (SFBool .prototype))
@@ -23009,7 +23104,7 @@ SFColor .prototype = Object .assign (Object .create (Base_X3DField.prototype),
       for (let i = 0; i < last; ++ i)
       {
          generator .string += generator .Precision (value [i]);
-         generator .string += generator .Space ();
+         generator .string += generator .TidySpace ();
       }
 
       generator .string += generator .Precision (value [last]);
@@ -23021,6 +23116,31 @@ SFColor .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    toXMLStream: function (generator)
    {
       this .toStream (generator);
+   },
+   toJSONStream: function (generator)
+   {
+      generator .string += '[';
+      generator .string += generator .TidySpace ();
+
+      this .toJSONStreamValue (generator);
+
+      generator .string += generator .TidySpace ();
+      generator .string += ']';
+   },
+   toJSONStreamValue: function (generator)
+   {
+      const
+         value = this .getValue (),
+         last  = value .length - 1;
+
+      for (let i = 0; i < last; ++ i)
+      {
+         generator .string += generator .JSONNumber (generator .Precision (value [i]));
+         generator .string += ',';
+         generator .string += generator .TidySpace ();
+      }
+
+      generator .string += generator .JSONNumber (generator .Precision (value [last]));
    },
 });
 
@@ -23424,6 +23544,8 @@ SFColorRGBA .prototype = Object .assign (Object .create (Base_X3DField.prototype
    toStream: Fields_SFColor.prototype.toStream,
    toVRMLStream: Fields_SFColor.prototype.toVRMLStream,
    toXMLStream: Fields_SFColor.prototype.toXMLStream,
+   toJSONStream: Fields_SFColor.prototype.toJSONStream,
+   toJSONStreamValue: Fields_SFColor.prototype.toJSONStreamValue,
 });
 
 for (const key of Reflect .ownKeys (SFColorRGBA .prototype))
@@ -23599,6 +23721,16 @@ SFDouble .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    {
       this .toStream (generator);
    },
+   toJSONStream: function (generator)
+   {
+      this .toJSONStreamValue (generator);
+   },
+   toJSONStreamValue: function (generator)
+   {
+      const category = generator .Unit (this .getUnit ());
+
+      generator .string += generator .JSONNumber (generator .DoublePrecision (generator .ToUnit (category, this .getValue ())));
+   },
 });
 
 for (const key of Reflect .ownKeys (SFDouble .prototype))
@@ -23703,6 +23835,16 @@ SFFloat .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    {
       this .toStream (generator);
    },
+   toJSONStream: function (generator)
+   {
+      this .toJSONStreamValue (generator);
+   },
+   toJSONStreamValue: function (generator)
+   {
+      const category = generator .Unit (this .getUnit ());
+
+      generator .string += generator .JSONNumber (generator .Precision (generator .ToUnit (category, this .getValue ())));
+   },
 });
 
 for (const key of Reflect .ownKeys (SFFloat .prototype))
@@ -23793,9 +23935,9 @@ SFInt32 .prototype = Object .assign (Object .create (Base_X3DField.prototype),
       Base_X3DField.prototype.set.call (this, ~~value);
    },
    valueOf: Base_X3DField.prototype.getValue,
-   toStream: function (generator, base)
+   toStream: function (generator)
    {
-      generator .string += this .getValue () .toString (base);
+      generator .string += this .getValue () .toString ();
    },
    toVRMLStream: function (generator)
    {
@@ -23803,7 +23945,15 @@ SFInt32 .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    },
    toXMLStream: function (generator)
    {
-      generator .string += this .getValue () .toString ();
+      this .toStream (generator);
+   },
+   toJSONStream: function (generator)
+   {
+      this .toStream (generator);
+   },
+   toJSONStreamValue: function (generator)
+   {
+      this .toStream (generator);
    },
 });
 
@@ -23964,7 +24114,7 @@ function SFMatrixPrototypeTemplate (TypeName, Type, Matrix, SFVec, double)
          for (let i = 0; i < last; ++ i)
          {
             generator .string += generator [_formatter] (value [i]);
-            generator .string += generator .Space ();
+            generator .string += generator .TidySpace ();
          }
 
          generator .string += generator [_formatter] (value [last]);
@@ -23976,6 +24126,31 @@ function SFMatrixPrototypeTemplate (TypeName, Type, Matrix, SFVec, double)
       toXMLStream: function (generator)
       {
          this .toStream (generator);
+      },
+      toJSONStream: function (generator)
+      {
+         generator .string += '[';
+         generator .string += generator .TidySpace ();
+
+         this .toJSONStreamValue (generator);
+
+         generator .string += generator .TidySpace ();
+         generator .string += ']';
+      },
+      toJSONStreamValue: function (generator)
+      {
+         const
+            value = this .getValue (),
+            last  = value .length - 1;
+
+         for (let i = 0; i < last; ++ i)
+         {
+            generator .string += generator .JSONNumber (generator [_formatter] (value [i]));
+            generator .string += ',';
+            generator .string += generator .TidySpace ();
+         }
+
+         generator .string += generator .JSONNumber (generator [_formatter] (value [last]));
       },
    });
 }
@@ -24136,14 +24311,14 @@ function SFVecPrototypeTemplate (TypeName, Type, ValueType, double)
       toStream: function (generator)
       {
          const
-            value     = this .getValue (),
-            category  = generator .Unit (this .getUnit ()),
-            last      = value .length - 1;
+            value    = this .getValue (),
+            last     = value .length - 1,
+            category = generator .Unit (this .getUnit ());
 
          for (let i = 0; i < last; ++ i)
          {
             generator .string += generator [_formatter] (generator .ToUnit (category, value [i]));
-            generator .string += generator .Space ();
+            generator .string += generator .TidySpace ();
          }
 
          generator .string += generator [_formatter] (generator .ToUnit (category, value [last]));
@@ -24155,6 +24330,32 @@ function SFVecPrototypeTemplate (TypeName, Type, ValueType, double)
       toXMLStream: function (generator)
       {
          this .toStream (generator);
+      },
+      toJSONStream: function (generator)
+      {
+         generator .string += '[';
+         generator .string += generator .TidySpace ();
+
+         this .toJSONStreamValue (generator);
+
+         generator .string += generator .TidySpace ();
+         generator .string += ']';
+      },
+      toJSONStreamValue: function (generator)
+      {
+         const
+            value = this .getValue (),
+            last  = value .length - 1,
+            category  = generator .Unit (this .getUnit ());
+
+         for (let i = 0; i < last; ++ i)
+         {
+            generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, value [i])));
+            generator .string += ',';
+            generator .string += generator .TidySpace ();
+         }
+
+         generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, value [last])));
       },
    });
 }
@@ -29531,6 +29732,45 @@ SFNode .prototype = Object .assign (Object .create (Base_X3DField.prototype),
 
       return null;
    },
+   toVRMLString: function (options = Object .prototype)
+   {
+      const
+         generator = new InputOutput_Generator (options),
+         value     = this .getValue ();
+
+      if (value)
+         generator .PushExecutionContext (value .getExecutionContext ());
+
+      this .toVRMLStream (generator);
+
+      return generator .string;
+   },
+   toXMLString: function (options = Object .prototype)
+   {
+      const
+         generator = new InputOutput_Generator (options),
+         value     = this .getValue ();
+
+      if (value)
+         generator .PushExecutionContext (value .getExecutionContext ());
+
+      this .toXMLStream (generator);
+
+      return generator .string;
+   },
+   toJSONString: function (options = Object .prototype)
+   {
+      const
+         generator = new InputOutput_Generator (options),
+         value     = this .getValue ();
+
+      if (value)
+         generator .PushExecutionContext (value .getExecutionContext ());
+
+      this .toJSONStream (generator);
+
+      return generator .string;
+   },
    toStream: function (generator)
    {
       const
@@ -29541,45 +29781,6 @@ SFNode .prototype = Object .assign (Object .create (Base_X3DField.prototype),
          value .toStream (generator);
       else
          generator .string += "NULL";
-   },
-   toVRMLString: function (options)
-   {
-      const
-         generator = new InputOutput_Generator (options),
-         target    = this [_target],
-         value     = target .getValue ();
-
-      generator .PushExecutionContext (value .getExecutionContext ());
-
-      target .toVRMLStream (generator);
-
-      return generator .string;
-   },
-   toXMLString: function (options)
-   {
-      const
-         generator = new InputOutput_Generator (options),
-         target    = this [_target],
-         value     = target .getValue ();
-
-      generator .PushExecutionContext (value .getExecutionContext ());
-
-      target .toXMLStream (generator);
-
-      return generator .string;
-   },
-   toJSONString: function (options)
-   {
-      const
-         generator = new InputOutput_Generator (options),
-         target    = this [_target],
-         value     = target .getValue ();
-
-      generator .PushExecutionContext (value .getExecutionContext ());
-
-      target .toJSONStream (generator);
-
-      return generator .string;
    },
    toVRMLStream: function (generator)
    {
@@ -29602,6 +29803,21 @@ SFNode .prototype = Object .assign (Object .create (Base_X3DField.prototype),
          value .toXMLStream (generator);
       else
          generator .string += "<!-- NULL -->";
+   },
+   toJSONStream: function (generator)
+   {
+      this .toJSONStreamValue (generator);
+   },
+   toJSONStreamValue: function (generator)
+   {
+      const
+         target = this [_target],
+         value  = target .getValue ();
+
+      if (value)
+         value .toJSONStream (generator);
+      else
+         generator .string += "null";
    },
    dispose: function ()
    {
@@ -29784,11 +30000,11 @@ SFRotation .prototype = Object .assign (Object .create (Base_X3DField.prototype)
       const rotation = this .getValue ();
 
       generator .string += generator .DoublePrecision (rotation .x);
-      generator .string += generator .Space ();
+      generator .string += generator .TidySpace ();
       generator .string += generator .DoublePrecision (rotation .y);
-      generator .string += generator .Space ();
+      generator .string += generator .TidySpace ();
       generator .string += generator .DoublePrecision (rotation .z);
-      generator .string += generator .Space ();
+      generator .string += generator .TidySpace ();
       generator .string += generator .DoublePrecision (generator .ToUnit ("angle", rotation .angle));
    },
    toVRMLStream: function (generator)
@@ -29798,6 +30014,31 @@ SFRotation .prototype = Object .assign (Object .create (Base_X3DField.prototype)
    toXMLStream: function (generator)
    {
       this .toStream (generator);
+   },
+   toJSONStream: function (generator)
+   {
+      generator .string += '[';
+      generator .string += generator .TidySpace ();
+
+      this .toJSONStreamValue (generator);
+
+      generator .string += generator .TidySpace ();
+      generator .string += ']';
+   },
+   toJSONStreamValue: function (generator)
+   {
+      const rotation = this .getValue ();
+
+      generator .string += generator .JSONNumber (generator .DoublePrecision (rotation .x));
+      generator .string += ',';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .JSONNumber (generator .DoublePrecision (rotation .y));
+      generator .string += ',';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .JSONNumber (generator .DoublePrecision (rotation .z));
+      generator .string += ',';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .JSONNumber (generator .DoublePrecision (generator .ToUnit ("angle", rotation .angle)));
    },
 });
 
@@ -29992,6 +30233,14 @@ SFString .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    {
       generator .string += generator .XMLEncode (this .getValue ());
    },
+   toJSONStream: function (generator)
+   {
+      this .toJSONStreamValue (generator)
+   },
+   toJSONStreamValue: function (generator)
+   {
+      generator .string += generator .JSONEncode (this .getValue ());
+   },
 });
 
 for (const key of Reflect .ownKeys (SFString .prototype))
@@ -30103,6 +30352,14 @@ SFTime .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    toXMLStream: function (generator)
    {
       this .toStream (generator);
+   },
+   toJSONStream: function (generator)
+   {
+      this .toJSONStreamValue (generator);
+   },
+   toJSONStreamValue: function (generator)
+   {
+      generator .string += generator .JSONNumber (generator .DoublePrecision (this .getValue ()));
    },
 });
 
@@ -30908,6 +31165,50 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (Base_X3DArrayFi
          array .at (-1) .toXMLStream (generator);
 
          generator .PopUnitCategory ();
+      }
+   },
+   toJSONStream: function (generator)
+   {
+      const
+         target = this [X3DObjectArrayField_target],
+         length = target .length;
+
+      if (length)
+      {
+         const value = this .getValue ();
+
+         generator .PushUnitCategory (target .getUnit ());
+
+         generator .string += '[';
+         generator .string += generator .ListBreak ();
+         generator .string += generator .IncIndent ();
+
+         for (let i = 0, n = length - 1; i < n; ++ i)
+         {
+            generator .string += generator .ListIndent ();
+
+            value [i] .toJSONStreamValue (generator);
+
+            generator .string += ',';
+            generator .string += generator .ListBreak ();
+         }
+
+         generator .string += generator .ListIndent ();
+
+         value .at (-1) .toJSONStreamValue (generator);
+
+         generator .string += generator .ListBreak ();
+         generator .string += generator .DecIndent ();
+         generator .string += generator .ListIndent ();
+         generator .string += ']';
+
+         generator .PopUnitCategory ();
+      }
+      else
+      {
+         generator .string += '[';
+         generator .string += generator .TidySpace ();
+         generator .string += ']';
       }
    },
    dispose: function ()
@@ -31784,6 +32085,80 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (Base_X3DArrayFie
          generator .PopUnitCategory ();
       }
    },
+   toJSONStream: function (generator)
+   {
+      const
+         target = this [X3DTypedArrayField_target],
+         length = target .length;
+
+      if (length)
+      {
+         const
+            array      = target .getValue (),
+            components = target .getComponents (),
+            value      = new (target .getSingleType ()) ();
+
+         generator .PushUnitCategory (target .getUnit ());
+
+         generator .string += '[';
+         generator .string += generator .ListBreak ();
+         generator .string += generator .IncIndent ();
+
+         if (components === 1)
+         {
+            for (let i = 0, n = length - 1; i < n; ++ i)
+            {
+               generator .string += generator .ListIndent ();
+
+               value .set (array [i * components]);
+               value .toJSONStreamValue (generator);
+
+               generator .string += ',';
+               generator .string += generator .ListBreak ();
+            }
+
+            generator .string += generator .ListIndent ();
+
+            value .set (array [(length - 1) * components]);
+            value .toJSONStreamValue (generator);
+         }
+         else
+         {
+            for (let i = 0, n = length - 1; i < n; ++ i)
+            {
+               generator .string += generator .ListIndent ();
+
+               for (let c = 0, first = i * components; c < components; ++ c, ++ first)
+                  value [c] = array [first];
+
+               value .toJSONStreamValue (generator);
+
+               generator .string += ',';
+               generator .string += generator .ListBreak ();
+            }
+
+            generator .string += generator .ListIndent ();
+
+            for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
+               value [c] = array [first];
+
+            value .toJSONStreamValue (generator);
+         }
+
+         generator .string += generator .ListBreak ();
+         generator .string += generator .DecIndent ();
+         generator .string += generator .ListIndent ();
+         generator .string += ']';
+
+         generator .PopUnitCategory ();
+      }
+      else
+      {
+         generator .string += '[';
+         generator .string += generator .TidySpace ();
+         generator .string += ']';
+      }
+   },
    dispose: function ()
    {
       Base_X3DArrayField.prototype.dispose.call (this [X3DTypedArrayField_target]);
@@ -32170,6 +32545,54 @@ MFNode .prototype = Object .assign (Object .create (Base_X3DObjectArrayField.pro
          }
 
          generator .LeaveScope ();
+      }
+   },
+   toJSONStream: function (generator)
+   {
+      const length = this .length;
+
+      if (length)
+      {
+         const array = this .getValue ();
+
+         generator .EnterScope ();
+
+         generator .string += '[';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+
+         for (let i = 0, n = length - 1; i < n; ++ i)
+         {
+            generator .string += generator .Indent ();
+
+            if (array [i])
+               array [i] .toJSONStreamValue (generator);
+            else
+               generator .string += 'null';
+
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+         }
+
+         generator .string += generator .Indent ();
+
+         if (array .at (-1))
+            array .at (-1) .toJSONStreamValue (generator);
+         else
+            generator .string += 'null';
+
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += ']';
+
+         generator .LeaveScope ();
+      }
+      else
+      {
+         generator .string += '[';
+			generator .string += generator .TidySpace ();
+			generator .string += ']';
       }
    },
    dispose: function ()
@@ -32562,10 +32985,12 @@ SFImage .prototype = Object .assign (Object .create (Base_X3DField.prototype),
       {
          generator .string += generator .ListIndent ();
 
+         const s = y * this .width;
+
          for (let x = 0, w = this .width; x < w; ++ x)
          {
             generator .string += "0x";
-            generator .string += array [y * w + x] .toString (16);
+            generator .string += array [x + s] .toString (16);
 
             if (x !== w - 1)
                generator .string += generator .Space ();
@@ -32584,6 +33009,64 @@ SFImage .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    toXMLStream: function (generator)
    {
       this .toStream (generator);
+   },
+   toJSONStream: function (generator)
+   {
+      generator .string += '[';
+      generator .string += generator .ListBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .ListIndent ();
+
+      this .toJSONStreamValue (generator);
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .ListBreak ();
+      generator .string += generator .ListIndent ();
+      generator .string += ']';
+   },
+   toJSONStreamValue: function (generator)
+   {
+      const
+         array  = this .array,
+         length = array .length;
+
+      generator .string += this .width;
+      generator .string += ',';
+      generator .string += generator .TidySpace ();
+      generator .string += this .height;
+      generator .string += ',';
+      generator .string += generator .TidySpace ();
+      generator .string += this .comp;
+      generator .string += ',';
+
+      if (this .width && this .height)
+      {
+         generator .string += generator .ListBreak ();
+         generator .string += generator .IncIndent ();
+
+         for (let y = 0, h = this .height; y < h; ++ y)
+         {
+            generator .string += generator .ListIndent ();
+
+            const s = y * this .width;
+
+            for (let x = 0, w = this .width; x < w; ++ x)
+            {
+               generator .string += array [x + s];
+
+               if (x + s !== length - 1)
+                  generator .string += ',';
+
+               if (x !== w - 1)
+                  generator .string += generator .TidySpace ();
+            }
+
+            if (y !== h - 1)
+               generator .string += generator .ListBreak ();
+         }
+
+         generator .string += generator .DecIndent ();
+      }
    },
 });
 
@@ -33484,7 +33967,7 @@ x_ite_Namespace.set ("x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
  *
  ******************************************************************************/
 
-const VERSION_default_ = "8.3.3";
+const VERSION_default_ = "8.4.0";
 ;
 
 x_ite_Namespace.set ("x_ite/Browser/VERSION", VERSION_default_);
@@ -34211,7 +34694,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(93);
+/* provided dependency */ var $ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -35114,7 +35597,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(93);
+/* provided dependency */ var Notification_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -35236,8 +35719,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(342);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(93);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(967);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36537,7 +37020,7 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
             index                  = 0,
             initializableReference = false;
 
-         field .getReferences () .forEach (function (reference)
+         for (const reference of field .getReferences ())
          {
             initializableReference = initializableReference || reference .isInitializable ();
 
@@ -36558,7 +37041,7 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
 
             if (index !== field .getReferences () .size)
                generator .string += generator .Break ();
-         });
+         }
 
          if (field .getAccessType () === Base_X3DConstants.inputOutput && !initializableReference && !field .isDefaultValue ())
          {
@@ -36600,7 +37083,7 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
             index                  = 0,
             initializableReference = false;
 
-         field .getReferences () .forEach (function (reference)
+         for (const reference of field .getReferences ())
          {
             initializableReference = initializableReference || reference .isInitializable ();
 
@@ -36617,7 +37100,7 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
 
             if (index !== field .getReferences () .size)
                generator .string += generator .Break ();
-         });
+         }
 
          if (field .getAccessType () === Base_X3DConstants.inputOutput && !initializableReference && !this .isDefaultValue (field))
          {
@@ -36726,14 +37209,7 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
          {
             if (field .getAccessType () === Base_X3DConstants.inputOutput && field .getReferences () .size !== 0)
             {
-               let initializableReference = false;
-
-               field .getReferences () .forEach (function (fieldReference)
-               {
-                  initializableReference = initializableReference || fieldReference .isInitializable ();
-               });
-
-               if (!initializableReference)
+               if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
                   mustOutputValue = !this .isDefaultValue (field);
             }
          }
@@ -36818,17 +37294,13 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
 
                let mustOutputValue = false;
 
-               if (field .getAccessType () === Base_X3DConstants.inputOutput && field .getReferences () .size !== 0)
+               if (generator .ExecutionContext ())
                {
-                  let initializableReference = false;
-
-                  field .getReferences () .forEach (function (fieldReference)
+                  if (field .getAccessType () === Base_X3DConstants.inputOutput && field .getReferences () .size !== 0)
                   {
-                     initializableReference = initializableReference || fieldReference .isInitializable ();
-                  });
-
-                  if (!initializableReference)
-                     mustOutputValue = true;
+                     if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
+                        mustOutputValue = !this .isDefaultValue (field);
+                  }
                }
 
                if ((field .getReferences () .size === 0 || !generator .ExecutionContext ()) || sharedNode || mustOutputValue)
@@ -36908,7 +37380,7 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
             {
                const protoFields = field .getReferences ();
 
-               protoFields .forEach (function (protoField)
+               for (const protoField of protoFields)
                {
                   generator .string += generator .Indent ();
                   generator .string += "<connect";
@@ -36922,7 +37394,7 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
                   generator .string += "'";
                   generator .string += "/>";
                   generator .string += generator .TidyBreak ();
-               });
+               }
             }
 
             generator .DecIndent ();
@@ -36963,6 +37435,480 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
       }
 
       generator .LeaveScope ();
+   },
+   toJSONStream: function (generator)
+   {
+      try
+      {
+      const sharedNode = generator .IsSharedNode (this);
+
+      generator .EnterScope ();
+
+      const name = generator .Name (this);
+
+      // USE name
+
+      if (name .length)
+      {
+         if (generator .ExistsNode (this))
+         {
+            generator .string += '{';
+            generator .string += generator .TidySpace ();
+            generator .string += '"';
+            generator .string += this .getTypeName ();
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+            generator .string += generator .Indent ();
+            generator .string += '{';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@USE";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += generator .JSONEncode (name);
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += '}';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += '}';
+
+            generator .LeaveScope ();
+            return;
+         }
+      }
+
+      // Type name
+
+      generator .string += '{';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += this .getTypeName ();
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+
+      // DEF name
+
+      if (name .length)
+      {
+         generator .AddNode (this);
+
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "@DEF";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += generator .JSONEncode (name);
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+      }
+
+
+      // Fields
+
+      const
+         fields            = this .getChangedFields (),
+         userDefinedFields = this .getUserDefinedFields ();
+
+      const references = [ ];
+
+      let sourceText = this .getSourceText ();
+
+      // Source text
+
+      if (sourceText)
+      {
+         if (sourceText .length !== 1)
+            sourceText = null;
+
+         if (sourceText && ! sourceText [0] .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s))
+            sourceText = null;
+      }
+
+
+      // Predefined fields
+
+      if (fields .length)
+      {
+         const outputFields = [ ];
+
+         for (const field of fields)
+         {
+            // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+            // for this field.
+
+            let mustOutputValue = false;
+
+            if (generator .ExecutionContext ())
+            {
+               if (field .getAccessType () === Base_X3DConstants.inputOutput && field .getReferences () .size !== 0)
+               {
+                  if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
+                     mustOutputValue = !this .isDefaultValue (field);
+               }
+            }
+
+            // If we have no execution context we are not in a proto and must not generate IS references the same is true
+            // if the node is a shared node as the node does not belong to the execution context.
+
+            if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode || mustOutputValue)
+            {
+               if (mustOutputValue)
+                  references .push (field);
+
+               if (field !== sourceText)
+                  outputFields .push (field);
+            }
+            else
+            {
+               references .push (field);
+            }
+         }
+
+         for (const field of outputFields)
+         {
+            if (field .isInitializable ())
+            {
+               switch (field .getType ())
+               {
+                  case Base_X3DConstants.SFNode:
+                  case Base_X3DConstants.MFNode:
+                  {
+                     generator .string += generator .Indent ();
+                     generator .string += '"';
+                     generator .string += '-';
+                     generator .string += field .getName ();
+                     generator .string += '"';
+                     generator .string += ':';
+                     generator .string += generator .TidySpace ();
+
+                     field .toJSONStream (generator);
+                     break;
+                  }
+                  default:
+                  {
+                     generator .string += generator .Indent ();
+                     generator .string += '"';
+                     generator .string += '@';
+                     generator .string += field .getName ();
+                     generator .string += '"';
+                     generator .string += ':';
+                     generator .string += generator .TidySpace ();
+
+                     field .toJSONStream (generator);
+                     break;
+                  }
+               }
+
+               generator .string += ',';
+               generator .string += generator .TidyBreak ();
+            }
+         }
+      }
+
+      // User defined fields
+
+      if (! this .canUserDefinedFields () || ! userDefinedFields .length)
+         ;
+      else
+      {
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "field";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += '[';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+
+         for (const field of userDefinedFields)
+         {
+            generator .string += generator .Indent ();
+            generator .string += '{';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@accessType";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '"';
+            generator .string += generator .AccessType (field .getAccessType ());
+            generator .string += '"';
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@type";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '"';
+            generator .string += field .getTypeName ();
+            generator .string += '"';
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@name";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += generator .JSONEncode (field .getName ());
+
+            // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+            // for this field.
+
+            let mustOutputValue = false;
+
+            if (generator .ExecutionContext ())
+            {
+               if (field .getAccessType () === Base_X3DConstants.inputOutput && field .getReferences () .size !== 0)
+               {
+                  if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
+                     mustOutputValue = !this .isDefaultValue (field);
+               }
+            }
+
+            if ((field .getReferences () .size === 0 || !generator .ExecutionContext ()) || sharedNode || mustOutputValue)
+            {
+               if (mustOutputValue && generator .ExecutionContext ())
+                  references .push (field);
+
+               if (!field .isInitializable () || field .isDefaultValue ())
+                  ;
+               else
+               {
+                  // Output value
+
+                  generator .string += ',';
+                  generator .string += generator .TidyBreak ();
+
+                  switch (field .getType ())
+                  {
+                     case Base_X3DConstants.SFNode:
+                     {
+                        generator .string += generator .Indent ();
+                        generator .string += '"';
+                        generator .string += "-children";
+                        generator .string += '"';
+                        generator .string += ':';
+                        generator .string += generator .TidySpace ();
+                        generator .string += '[';
+                        generator .string += generator .TidyBreak ();
+                        generator .string += generator .IncIndent ();
+                        generator .string += generator .Indent ();
+
+                        field .toJSONStream (generator);
+
+                        generator .string += generator .TidyBreak ();
+                        generator .string += generator .DecIndent ();
+                        generator .string += generator .Indent ();
+                        generator .string += ']';
+                        break;
+                     }
+                     case Base_X3DConstants.MFNode:
+                     {
+                        generator .string += generator .Indent ();
+                        generator .string += '"';
+                        generator .string += "-children";
+                        generator .string += '"';
+                        generator .string += ':';
+                        generator .string += generator .TidySpace ();
+
+                        field .toJSONStream (generator);
+                        break;
+                     }
+                     default:
+                     {
+                        generator .string += generator .Indent ();
+                        generator .string += '"';
+                        generator .string += "@value";
+                        generator .string += '"';
+                        generator .string += ':';
+                        generator .string += generator .TidySpace ();
+
+                        field .toJSONStream (generator);
+                        break;
+                     }
+                  }
+               }
+            }
+            else
+            {
+               if (generator .ExecutionContext ())
+                  references .push (field);
+            }
+
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += '}';
+
+            if (field !== userDefinedFields .at (-1))
+               generator .string += ',';
+
+            generator .string += generator .TidyBreak ();
+         }
+
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += ']';
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+      }
+
+      // Source text
+
+      if (sourceText)
+      {
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "#sourceText";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += '[';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+
+         const sourceTextLines = sourceText [0] .split ("\n");
+
+         for (let i = 0, length = sourceTextLines .length; i < length; ++ i)
+         {
+            generator .string += generator .ListIndent ();
+            generator .string += generator .JSONEncode (sourceTextLines [i]);
+
+            if (i !== length - 1)
+               generator .string += ',';
+
+            generator .string += generator .TidyBreak ();
+         }
+
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += ']';
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+      }
+
+
+      // IS references
+
+      if (references .length && !sharedNode)
+      {
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "IS";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += '{';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "connect";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += '[';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+
+         for (const field of references)
+         {
+            const protoFields = [... field .getReferences ()];
+
+            for (const protoField of protoFields)
+            {
+               generator .string += generator .Indent ();
+               generator .string += '{';
+               generator .string += generator .TidyBreak ();
+               generator .string += generator .IncIndent ();
+
+               generator .string += generator .Indent ();
+               generator .string += '"';
+               generator .string += "@nodeField";
+               generator .string += '"';
+               generator .string += ':';
+               generator .string += generator .TidySpace ();
+               generator .string += generator .JSONEncode (field .getName ());
+               generator .string += ',';
+               generator .string += generator .TidyBreak ();
+
+               generator .string += generator .Indent ();
+               generator .string += '"';
+               generator .string += "@protoField";
+               generator .string += '"';
+               generator .string += ':';
+               generator .string += generator .TidySpace ();
+               generator .string += generator .JSONEncode (protoField .getName ());
+               generator .string += generator .TidyBreak ();
+
+               generator .string += generator .DecIndent ();
+               generator .string += generator .Indent ();
+               generator .string += '}';
+
+               if (field === references .at (-1) && protoField === protoFields .at (-1))
+                  ;
+               else
+               {
+                  generator .string += ',';
+               }
+
+               generator .string += generator .TidyBreak ();
+            }
+         }
+
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += ']';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += '}';
+         generator .string += generator .TidyBreak ();
+      }
+
+      generator .string = generator .string .replace (/,(\s*)$/s, "$1");
+
+      // End
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+
+      generator .LeaveScope ();
+      }
+      catch (error)
+      {
+         console .log (error)
+      }
    },
    dispose: function ()
    {
@@ -37278,7 +38224,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
          }
       }
       else
+      {
          throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
+      }
    },
    toXMLStream: function (generator)
    {
@@ -37358,7 +38306,169 @@ X3DImportedNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
          }
       }
       else
+      {
          throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
+      }
+   },
+   toJSONStream: function (generator)
+   {
+      if (generator .ExistsNode (this .getInlineNode ()))
+      {
+         generator .string += generator .Indent ();
+         generator .string += '{';
+         generator .string += generator .TidySpace ();
+         generator .string += '"';
+         generator .string += "IMPORT";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+         generator .string += generator .Indent ();
+         generator .string += '{';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "@inlineDEF";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += generator .JSONEncode (generator .Name (this .getInlineNode ()));
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "@importedDEF";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += generator .JSONEncode (this .getExportedName ());
+
+         if (this .getImportedName () !== this .getExportedName ())
+         {
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@AS";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += generator .JSONEncode (this .getImportedName ());
+            generator .string += generator .TidyBreak ();
+         }
+         else
+         {
+            generator .string += generator .TidyBreak ();
+         }
+
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += '}';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += '}';
+
+         try
+         {
+            generator .AddRouteNode (this);
+            generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
+         }
+         catch (error)
+         {
+            // Output unresolved routes.
+
+            for (const route of this [_routes])
+            {
+               const
+                  sourceNode       = route .sourceNode,
+                  sourceField      = route .sourceField,
+                  destinationNode  = route .destinationNode,
+                  destinationField = route .destinationField;
+
+               if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
+               {
+                  const sourceNodeName = sourceNode instanceof X3DImportedNode
+                     ? sourceNode .getImportedName ()
+                     : generator .Name (sourceNode);
+
+                  const destinationNodeName = destinationNode instanceof X3DImportedNode
+                     ? destinationNode .getImportedName ()
+                     : generator .Name (destinationNode);
+
+                  generator .string += ',';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .Indent ();
+                  generator .string += '{';
+                  generator .string += generator .TidySpace ();
+                  generator .string += '"';
+                  generator .string += "ROUTE";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .IncIndent ();
+                  generator .string += generator .Indent ();
+                  generator .string += '{';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .IncIndent ();
+
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "@fromNode";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+                  generator .string += generator .JSONEncode (sourceNodeName);
+                  generator .string += ',';
+                  generator .string += generator .TidyBreak ();
+
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "@fromField";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+                  generator .string += generator .JSONEncode (sourceField);
+                  generator .string += ',';
+                  generator .string += generator .TidyBreak ();
+
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "@toNode";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+                  generator .string += generator .JSONEncode (destinationNodeName);
+                  generator .string += ',';
+                  generator .string += generator .TidyBreak ();
+
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "@toField";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+                  generator .string += generator .JSONEncode (destinationField);
+                  generator .string += generator .TidyBreak ();
+
+                  generator .string += generator .DecIndent ();
+                  generator .string += generator .Indent ();
+                  generator .string += '}';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .DecIndent ();
+                  generator .string += generator .Indent ();
+                  generator .string += '}';
+               }
+            }
+         }
+      }
+      else
+      {
+         throw new Error ("X3DImportedNode.toJSONStream: Inline node does not exist.");
+      }
    },
    dispose: function ()
    {
@@ -38113,14 +39223,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
             {
                if (field .getAccessType () === Base_X3DConstants.inputOutput && field .getReferences () .size !== 0)
                {
-                  let initializableReference = false;
-
-                  field .getReferences () .forEach (function (fieldReference)
-                  {
-                     initializableReference = initializableReference || fieldReference .isInitializable ();
-                  });
-
-                  if (!initializableReference)
+                  if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
                      mustOutputValue = !this .isDefaultValue (field);
                }
             }
@@ -38244,7 +39347,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
             {
                const protoFields = field .getReferences ();
 
-               protoFields .forEach (function (protoField)
+               for (const protoField of protoFields)
                {
                   generator .string += generator .Indent ();
                   generator .string += "<connect";
@@ -38258,7 +39361,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
                   generator .string += "'";
                   generator .string += "/>";
                   generator .string += generator .TidyBreak ();
-               });
+               }
             }
 
             generator .DecIndent ();
@@ -38273,6 +39376,374 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
          generator .string += generator .Indent ();
          generator .string += "</ProtoInstance>";
       }
+
+      generator .LeaveScope ();
+   },
+   toJSONStream: function (generator)
+   {
+      const sharedNode = generator .IsSharedNode (this);
+
+      generator .EnterScope ();
+
+      const name = generator .Name (this);
+
+      if (name .length)
+      {
+         if (generator .ExistsNode (this))
+         {
+            generator .string += '{';
+            generator .string += generator .TidySpace ();
+            generator .string += '"';
+            generator .string += "ProtoInstance";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+            generator .string += generator .Indent ();
+            generator .string += '{';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@name";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += generator .JSONEncode (this .getTypeName ());
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@USE";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += generator .JSONEncode (name);
+            generator .string += generator .TidyBreak ();
+
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += '}';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += '}';
+
+            generator .LeaveScope ();
+            return;
+         }
+      }
+
+      // Type name
+
+      generator .string += '{';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "ProtoInstance";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+
+      // DEF name
+
+      if (name .length)
+      {
+         generator .AddNode (this);
+
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "@DEF";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += generator .JSONEncode (name);
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+      }
+
+
+      // Type name
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@name";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .JSONEncode (this .getTypeName ());
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+
+      // Fields
+
+      const
+         fields     = this .getChangedFields (),
+         references = [ ];
+
+      if (fields .length)
+      {
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "fieldValue";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += '[';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+
+         const outputFields = [ ];
+
+         for (const field of fields)
+         {
+            // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+            // for this field.
+
+            let mustOutputValue = false;
+
+            if (generator .ExecutionContext ())
+            {
+               if (field .getAccessType () === Base_X3DConstants.inputOutput && field .getReferences () .size !== 0)
+               {
+                  if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
+                     mustOutputValue = !this .isDefaultValue (field);
+               }
+            }
+
+            // If we have no execution context we are not in a proto and must not generate IS references the same is true
+            // if the node is a shared node as the node does not belong to the execution context.
+
+            if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode || mustOutputValue)
+            {
+               if (mustOutputValue)
+                  references .push (field);
+
+               outputFields .push (field);
+            }
+            else
+            {
+               references .push (field);
+            }
+         }
+
+         for (const field of outputFields)
+         {
+            switch (field .getType ())
+            {
+               case Base_X3DConstants.SFNode:
+               {
+                  generator .string += generator .Indent ();
+                  generator .string += '{';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .IncIndent ();
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "@name";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+                  generator .string += generator .JSONEncode (field .getName ());
+                  generator .string += ',';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "-children";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+                  generator .string += '[';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .IncIndent ();
+                  generator .string += generator .Indent ();
+
+                  field .toJSONStream (generator);
+
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .DecIndent ();
+                  generator .string += generator .Indent ();
+                  generator .string += ']';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .DecIndent ();
+                  generator .string += generator .Indent ();
+                  generator .string += '}';
+                  break;
+               }
+               case Base_X3DConstants.MFNode:
+               {
+                  generator .string += generator .Indent ();
+                  generator .string += '{';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .IncIndent ();
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "@name";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+                  generator .string += generator .JSONEncode (field .getName ());
+                  generator .string += ',';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "-children";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+
+                  field .toJSONStream (generator);
+
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .DecIndent ();
+                  generator .string += generator .Indent ();
+                  generator .string += '}';
+                  break;
+               }
+               default:
+               {
+                  generator .string += generator .Indent ();
+                  generator .string += '{';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .IncIndent ();
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "@name";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+                  generator .string += generator .JSONEncode (field .getName ());
+                  generator .string += ',';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "@value";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+
+                  field .toJSONStream (generator);
+
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .DecIndent ();
+                  generator .string += generator .Indent ();
+                  generator .string += '}';
+                  break;
+               }
+            }
+
+            if (field !== outputFields .at (-1))
+               generator .string += ',';
+
+            generator .string += generator .TidyBreak ();
+         }
+
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += ']';
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+
+
+         // IS references
+
+         if (references .length && ! sharedNode)
+         {
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "IS";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '{';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "connect";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '[';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+
+            for (const field of references)
+            {
+               const protoFields = [... field .getReferences ()];
+
+               for (const protoField of protoFields)
+               {
+                  generator .string += generator .Indent ();
+                  generator .string += '{';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .IncIndent ();
+
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "@nodeField";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+                  generator .string += generator .JSONEncode (field .getName ());
+                  generator .string += ',';
+                  generator .string += generator .TidyBreak ();
+
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "@protoField";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+                  generator .string += generator .JSONEncode (protoField .getName ());
+                  generator .string += generator .TidyBreak ();
+
+                  generator .string += generator .DecIndent ();
+                  generator .string += generator .Indent ();
+                  generator .string += '}';
+
+                  if (field === references .at (-1) && protoField === protoFields .at (-1))
+                     ;
+                  else
+                  {
+                     generator .string += ',';
+                  }
+
+                  generator .string += generator .TidyBreak ();
+               }
+            }
+
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += ']';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += '}';
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+         }
+      }
+
+      generator .string = generator .string .replace (/,(\s*)$/s, "$1");
+
+
+      // End
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
 
       generator .LeaveScope ();
    },
@@ -38711,6 +40182,234 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (Prototype_X3DPr
 
       generator .string += generator .Indent ();
       generator .string += "</ProtoDeclare>";
+   },
+   toJSONStream: function (generator)
+   {
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "ProtoDeclare";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@name";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .JSONEncode (this .getName ());
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "ProtoInterface";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+
+      // Fields
+
+      generator .EnterScope ();
+
+      const userDefinedFields = this .getUserDefinedFields ();
+
+      if (userDefinedFields .length)
+      {
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "field";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += '[';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+
+         for (const field of userDefinedFields)
+         {
+            generator .string += generator .Indent ();
+            generator .string += '{';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@accessType";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '"';
+            generator .string += generator .AccessType (field .getAccessType ());
+            generator .string += '"';
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@type";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '"';
+            generator .string += field .getTypeName ();
+            generator .string += '"';
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@name";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += generator .JSONEncode (field .getName ());
+
+            if (field .isDefaultValue ())
+            {
+               generator .string += generator .TidyBreak ();
+            }
+            else
+            {
+               generator .string += ',';
+               generator .string += generator .TidyBreak ();
+
+               // Output value
+
+               switch (field .getType ())
+               {
+                  case Base_X3DConstants.SFNode:
+                  {
+                     generator .string += generator .Indent ();
+                     generator .string += '"';
+                     generator .string += "-children";
+                     generator .string += '"';
+                     generator .string += ':';
+                     generator .string += generator .TidySpace ();
+                     generator .string += '[';
+                     generator .string += generator .TidyBreak ();
+                     generator .string += generator .IncIndent ();
+                     generator .string += generator .Indent ();
+
+                     field .toJSONStream (generator);
+
+                     generator .string += generator .TidyBreak ();
+                     generator .string += generator .DecIndent ();
+                     generator .string += generator .Indent ();
+                     generator .string += ']';
+                     generator .string += generator .TidyBreak ();
+                     break;
+                  }
+                  case Base_X3DConstants.MFNode:
+                  {
+                     generator .string += generator .Indent ();
+                     generator .string += '"';
+                     generator .string += "-children";
+                     generator .string += '"';
+                     generator .string += ':';
+                     generator .string += generator .TidySpace ();
+
+                     field .toJSONStream (generator);
+
+                     generator .string += generator .TidyBreak ();
+                     break;
+                  }
+                  default:
+                  {
+                     generator .string += generator .Indent ();
+                     generator .string += '"';
+                     generator .string += "@value";
+                     generator .string += '"';
+                     generator .string += ':';
+                     generator .string += generator .TidySpace ();
+
+                     field .toJSONStream (generator);
+
+                     generator .string += generator .TidyBreak ();
+                     break;
+                  }
+               }
+            }
+
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += '}';
+
+            if (field !== userDefinedFields .at (-1))
+               generator .string += ',';
+
+            generator .string += generator .TidyBreak ();
+         }
+
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += ']';
+      }
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+      generator .LeaveScope ();
+
+
+      // ProtoBody
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "ProtoBody";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "-children";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '[';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+      this [X3DProtoDeclaration_body] .toJSONStream (generator);
+
+      generator .string = generator .string .replace (/,(\s*)$/s, "$1");
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += ']';
+      generator .string += generator .TidyBreak ();
+
+      // End
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
    },
 });
 
@@ -42116,7 +43815,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(93);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43556,7 +45255,7 @@ JSONParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       try
       {
          if (typeof json === "string")
-            json = JSON .parse (json)
+            json = JSON .parse (json);
 
          this .input = json;
       }
@@ -44228,7 +45927,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(461);
+/* provided dependency */ var libtess = __webpack_require__(941);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49114,7 +50813,8 @@ X3DGeometryNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
          if ((Xsize >= Ysize) && (Xsize >= Zsize))
          {
             // X size largest
-            texCoordParams .Ssize = Xsize; texCoordParams .Sindex = 0;
+            texCoordParams .Ssize  = Xsize;
+            texCoordParams .Sindex = 0;
 
             if (Ysize >= Zsize)
                texCoordParams .Tindex = 1;
@@ -49124,7 +50824,8 @@ X3DGeometryNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
          else if ((Ysize >= Xsize) && (Ysize >= Zsize))
          {
             // Y size largest
-            texCoordParams .Ssize = Ysize; texCoordParams .Sindex = 1;
+            texCoordParams .Ssize  = Ysize;
+            texCoordParams .Sindex = 1;
 
             if (Xsize >= Zsize)
                texCoordParams .Tindex = 0;
@@ -49134,7 +50835,8 @@ X3DGeometryNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
          else
          {
             // Z is the largest
-            texCoordParams .Ssize = Zsize; texCoordParams .Sindex = 2;
+            texCoordParams .Ssize  = Zsize;
+            texCoordParams .Sindex = 2;
 
             if (Xsize >= Ysize)
                texCoordParams .Tindex = 0;
@@ -51568,7 +53270,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(93);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55936,8 +57638,8 @@ const BinaryTransport_default_ = BinaryTransport;
 x_ite_Namespace.set ("standard/Networking/BinaryTransport", BinaryTransport_default_);
 /* harmony default export */ const Networking_BinaryTransport = (BinaryTransport_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(93);
-/* provided dependency */ var pako = __webpack_require__(777);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(718);
+/* provided dependency */ var pako = __webpack_require__(513);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -56690,6 +58392,129 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (Prototype
       generator .string += generator .Indent ();
       generator .string += "</ExternProtoDeclare>";
    },
+   toJSONStream: function (generator)
+   {
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "ExternProtoDeclare";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@name";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .JSONEncode (this .getName ());
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+
+      // Fields
+
+      const userDefinedFields = this .getUserDefinedFields ();
+
+      if (userDefinedFields .length)
+      {
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "field";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += '[';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+
+         for (const field of userDefinedFields)
+         {
+            generator .string += generator .Indent ();
+            generator .string += '{';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@accessType";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '"';
+            generator .string += generator .AccessType (field .getAccessType ());
+            generator .string += '"';
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@type";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '"';
+            generator .string += field .getTypeName ();
+            generator .string += '"';
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "@name";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += generator .JSONEncode (field .getName ());
+            generator .string += generator .TidyBreak ();
+
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += '}';
+
+            if (field !== userDefinedFields .at (-1))
+               generator .string += ',';
+
+            generator .string += generator .TidyBreak ();
+         }
+
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += ']';
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+      }
+
+
+      // URL
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@url";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+
+      this ._url .toJSONStream (generator);
+
+      generator .string += generator .TidyBreak ();
+
+
+      // End
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+   },
 });
 
 for (const key of Reflect .ownKeys (X3DExternProtoDeclaration .prototype))
@@ -56981,6 +58806,73 @@ X3DRoute .prototype = Object .assign (Object .create (Base_X3DObject.prototype),
       generator .string += generator .XMLEncode (this [_destinationField] .getName ());
       generator .string += "'";
       generator .string += "/>";
+   },
+   toJSONStream: function (generator)
+   {
+      const
+         sourceNodeName      = generator .LocalName (this [_sourceNode]),
+         destinationNodeName = generator .LocalName (this [_destinationNode]);
+
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "ROUTE";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@fromNode";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .JSONEncode (sourceNodeName);
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@fromField";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .JSONEncode (this [_sourceField] .getName ());
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@toNode";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .JSONEncode (destinationNodeName);
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@toField";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .JSONEncode (this [_destinationField] .getName ());
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
    },
    dispose: function ()
    {
@@ -57895,6 +59787,60 @@ X3DExecutionContext .prototype = Object .assign (Object .create (Base_X3DBaseNod
       generator .LeaveScope ();
       generator .PopExecutionContext ();
    },
+   toJSONStream: function (generator)
+   {
+      generator .PushExecutionContext (this);
+      generator .EnterScope ();
+      generator .ImportedNodes (this .getImportedNodes ());
+
+
+      // Extern proto declarations
+
+      this .getExternProtoDeclarations () .toJSONStream (generator, true);
+
+
+      // Proto declarations
+
+      this .getProtoDeclarations () .toJSONStream (generator, true);
+
+
+      // Root nodes
+
+      if (this .getRootNodes () .length)
+      {
+         for (const rootNode of this .getRootNodes ())
+         {
+            generator .string += generator .Indent ();
+
+            if (rootNode)
+            {
+               rootNode .toJSONStream (generator);
+            }
+            else
+            {
+               generator .string += generator .Indent ();
+               generator .string += "null";
+            }
+
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
+         }
+      }
+
+
+      // Imported nodes
+
+      this .getImportedNodes () .toJSONStream (generator, true);
+
+
+      // Routes
+
+      this .getRoutes () .toJSONStream (generator, true);
+
+
+      generator .LeaveScope ();
+      generator .PopExecutionContext ();
+   },
    dispose: function ()
    {
       this ._rootNodes .dispose ();
@@ -58169,7 +60115,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(93);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -58261,6 +60207,38 @@ ComponentInfo .prototype = Object .assign (Object .create (Base_X3DObject.protot
       generator .string += this .level;
       generator .string += "'";
       generator .string += "/>";
+   },
+   toJSONStream: function (generator)
+   {
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@name";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += this .name;
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@level";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += this .level;
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
    },
 });
 
@@ -58444,6 +60422,52 @@ UnitInfo .prototype = Object .assign (Object .create (Base_X3DObject.prototype),
       generator .string += this .conversionFactor;
       generator .string += "'";
       generator .string += "/>";
+   },
+   toJSONStream: function (generator, _throw)
+   {
+      if (this .conversionFactor === 1)
+         throw new Error ("conversionFactor is 1");
+
+      generator .string += generator .Indent ();
+
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@category";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += this .category;
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@name";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .JSONEncode (this .name);
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@conversionFactor";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .DoublePrecision (this .conversionFactor);
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
    },
 });
 
@@ -58645,6 +60669,58 @@ X3DExportedNode .prototype = Object .assign (Object .create (Base_X3DObject.prot
       }
 
       generator .string += "/>";
+   },
+   toJSONStream: function (generator)
+   {
+      const localName = generator .LocalName (this [_localNode]);
+
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "EXPORT";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@localDEF";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += generator .JSONEncode (localName);
+
+      if (this [X3DExportedNode_exportedName] !== localName)
+      {
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "@AS";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += generator .JSONEncode (this [X3DExportedNode_exportedName]);
+         generator .string += generator .TidyBreak ();
+      }
+      else
+      {
+         generator .string += generator .TidyBreak ();
+      }
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
    },
 });
 
@@ -59325,6 +61401,345 @@ X3DScene .prototype = Object .assign (Object .create (Execution_X3DExecutionCont
       generator .string += "</X3D>";
       generator .string += generator .TidyBreak ();
    },
+   toJSONStream: function (generator)
+   {
+      // X3D
+
+      generator .string += '{';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "X3D";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .IncIndent ();
+
+
+      // Encoding
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "encoding";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "UTF-8";
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+
+      // Profile
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@profile";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += this .getProfile () ? this .getProfile () .name : "Full";
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+
+      // Version
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@version";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += this .getSpecificationVersion ();
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+
+      // XSD noNamespaceSchemaLocation
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@xsd:noNamespaceSchemaLocation";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "http://www.web3d.org/specifications/x3d-";
+      generator .string += LATEST_VERSION;
+      generator .string += ".xsd";
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+
+      // JSON schema
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "JSON schema";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "http://www.web3d.org/specifications/x3d-";
+      generator .string += LATEST_VERSION;
+      generator .string += "-JSONSchema.json";
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+
+      // Head
+
+      const outputUnits = this .getUnits () .some (unit => unit .conversionFactor !== 1);
+
+      if (this .getComponents () .length || outputUnits || this .getMetaDatas () .size)
+      {
+         let headLastProperty = false;
+
+         generator .string += generator .Indent ();
+         generator .string += '"';
+         generator .string += "head";
+         generator .string += '"';
+         generator .string += ':';
+         generator .string += generator .TidySpace ();
+         generator .string += '{';
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .IncIndent ();
+
+
+         // Meta data
+
+         if (this .getMetaDatas () .size)
+         {
+            if (headLastProperty)
+            {
+               generator .string += ',';
+               generator .string += generator .TidyBreak ();
+            }
+
+
+            // Meta data begin
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "meta";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '[';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+
+
+            // Meta data
+
+            let i = 0;
+
+            for (const [key, value] of this .getMetaDatas ())
+            {
+               generator .string += generator .Indent ();
+               generator .string += '{';
+               generator .string += generator .TidyBreak ();
+               generator .string += generator .IncIndent ();
+
+               generator .string += generator .Indent ();
+               generator .string += '"';
+               generator .string += "@name";
+               generator .string += '"';
+               generator .string += ':';
+               generator .string += generator .TidySpace ();
+               generator .string += generator .JSONEncode (key);
+               generator .string += ',';
+               generator .string += generator .TidyBreak ();
+
+               generator .string += generator .Indent ();
+               generator .string += '"';
+               generator .string += "@content";
+               generator .string += '"';
+               generator .string += ':';
+               generator .string += generator .TidySpace ();
+               generator .string += generator .JSONEncode (value);
+               generator .string += generator .TidyBreak ();
+
+               generator .string += generator .DecIndent ();
+               generator .string += generator .Indent ();
+               generator .string += '}';
+
+               if (++ i !== this .getMetaDatas () .size)
+                  generator .string += ',';
+
+               generator .string += generator .TidyBreak ();
+            }
+
+
+            // Meta data end
+
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += ']';
+
+            headLastProperty = true;
+         }
+
+
+         // Components
+
+         if (this .getComponents () .length)
+         {
+            if (headLastProperty)
+            {
+               generator .string += ',';
+               generator .string += generator .TidyBreak ();
+            }
+
+
+            // Components begin
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "component";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '[';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+
+
+            // Components
+
+            this .getComponents () .toJSONStream (generator);
+
+
+            // Components end
+
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += ']';
+
+            headLastProperty = true;
+         }
+
+
+         // Units
+
+         if (outputUnits)
+         {
+            if (headLastProperty)
+            {
+               generator .string += ',';
+               generator .string += generator .TidyBreak ();
+            }
+
+
+            // Units begin
+
+            generator .string += generator .Indent ();
+            generator .string += '"';
+            generator .string += "unit";
+            generator .string += '"';
+            generator .string += ':';
+            generator .string += generator .TidySpace ();
+            generator .string += '[';
+            generator .string += generator .TidyBreak ();
+            generator .string += generator .IncIndent ();
+
+
+            // Units
+
+            this .getUnits ()  .toJSONStream (generator);
+
+
+            // Unit end
+
+            generator .string += generator .DecIndent ();
+            generator .string += generator .Indent ();
+            generator .string += ']';
+
+            headLastProperty = true;
+         }
+
+
+         // Head end
+
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .DecIndent ();
+         generator .string += generator .Indent ();
+         generator .string += '}';
+         generator .string += ',';
+         generator .string += generator .TidyBreak ();
+      }
+
+      // Scene
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "Scene";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "-children";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '[';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+      const exportedNodes = this .getExportedNodes ();
+
+      generator .PushExecutionContext (this);
+      generator .EnterScope ();
+      generator .ExportedNodes (exportedNodes);
+
+      Execution_X3DExecutionContext.prototype.toJSONStream.call (this, generator);
+
+      // Exported nodes
+
+      this .getExportedNodes () .toJSONStream (generator, true);
+
+      generator .string = generator .string .replace (/,(\s*)$/s, "$1");
+
+      generator .LeaveScope ();
+      generator .PopExecutionContext ();
+
+      // Scene end
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += ']';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+
+
+      // X3D end
+
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+   },
 });
 
 for (const key of Reflect .ownKeys (X3DScene .prototype))
@@ -59623,7 +62038,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(93);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66589,8 +69004,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(442);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(93);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(248);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67455,8 +69870,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(442);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(93);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(248);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -68395,8 +70810,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(442);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(93);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(248);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -68708,8 +71123,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(442);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(93);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(248);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70311,8 +72726,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(442);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(93);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(248);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70922,8 +73337,8 @@ const X3DPointingDeviceSensorContext_default_ = X3DPointingDeviceSensorContext;
 x_ite_Namespace.set ("x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext", X3DPointingDeviceSensorContext_default_);
 /* harmony default export */ const PointingDeviceSensor_X3DPointingDeviceSensorContext = (X3DPointingDeviceSensorContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(93);
-/* provided dependency */ var ResizeSensor = __webpack_require__(99);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(718);
+/* provided dependency */ var ResizeSensor = __webpack_require__(726);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81942,7 +84357,7 @@ const X3DRoutingContext_default_ = X3DRoutingContext;
 x_ite_Namespace.set ("x_ite/Routing/X3DRoutingContext", X3DRoutingContext_default_);
 /* harmony default export */ const Routing_X3DRoutingContext = (X3DRoutingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowserContext.js
-/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(93);
+/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -82283,7 +84698,7 @@ Object .assign (X3DBrowserContext,
       X3DBrowserContext_$("x3d-canvas, X3DCanvas") .each (function (_, canvas)
       {
          const
-            X3D     = window [Symbol .for ("X_ITE.X3D-8.3.3")],
+            X3D     = window [Symbol .for ("X_ITE.X3D-8.4.0")],
             browser = X3D .getBrowser (canvas);
 
          if (! browser)
@@ -101049,7 +103464,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(93);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103746,7 +106161,7 @@ const Components_Sound_default_ = undefined;
 x_ite_Namespace.set ("x_ite/Components/Sound", Components_Sound_default_);
 /* harmony default export */ const Components_Sound = ((/* unused pure expression or super */ null && (Components_Sound_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(93);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104669,7 +107084,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(93);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105372,7 +107787,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(93);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(718);
 /*******************************************************************************
  * MIT License
  *
@@ -105910,6 +108325,10 @@ ProfileInfo .prototype = Object .assign (Object .create (Base_X3DObject.prototyp
       generator .string += this .name;
    },
    toXMLStream: function (generator)
+   {
+      generator .string += this .name;
+   },
+   toJSONStream: function (generator)
    {
       generator .string += this .name;
    },
@@ -106605,7 +109024,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(93);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107505,7 +109924,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(93);
+/* provided dependency */ var Fallback_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107684,14 +110103,14 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(93);
+/* provided dependency */ var jquery_$ = __webpack_require__(718);
 const jquery_default_ = jquery_$;
 ;
 
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(93);
+/* provided dependency */ var X3D_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107946,7 +110365,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(93);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(718);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108196,7 +110615,7 @@ x_ite_Namespace.set ("shim", shim_default_);
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-8.3.3")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-8.4.0")] = x_ite_X3D;
 
 x_ite_X3DCanvas.define ();
 
