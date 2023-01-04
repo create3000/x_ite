@@ -66,6 +66,7 @@ import JSONParser          from "../Parser/JSONParser.js";
 import X3DCast             from "../Base/X3DCast.js";
 import X3DConstants        from "../Base/X3DConstants.js";
 import Features            from "./Networking/Features.js";
+import Algorithm           from "../../standard/Math/Algorithm.js";
 import MapUtilities        from "../../standard/Utility/MapUtilities.js";
 import _                   from "../../locale/gettext.js";
 
@@ -188,17 +189,14 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       if (component)
       {
-         if (level <= component .level || true)
-         {
-            return new ComponentInfo ({
-               name: name,
-               level: level,
-               title: component .title,
-               providerUrl: component .providerUrl,
-               external: $.data (component, "external"),
-               dependencies: $.data (component, "dependencies"),
-            });
-         }
+         return new ComponentInfo ({
+            name: name,
+            level: Algorithm .clamp (level, 1, component .level),
+            title: component .title,
+            providerUrl: component .providerUrl,
+            external: $.data (component, "external"),
+            dependencies: $.data (component, "dependencies"),
+         });
       }
 
       throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
