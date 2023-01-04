@@ -153,8 +153,8 @@ Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFro
 An object with one or more of these properties:
 
 * **style:** string, output style, one of: **"TIDY"**, "COMPACT", "SMALL", "CLEAN"
-* **precision:** integer, float precision, default: 6
-* **doublePrecision:** integer, double precision, default: 14
+* **precision:** integer, float precision, default: 7
+* **doublePrecision:** integer, double precision, default: 15
 
 #### String **toXMLString** (\[options\])
 
