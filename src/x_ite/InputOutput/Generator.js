@@ -47,7 +47,7 @@
 
 import X3DConstants from "../Base/X3DConstants.js";
 
-function Generator ({ style = "TIDY", precision = 6, doublePrecision = 14 })
+function Generator ({ style = "TIDY", precision = 7, doublePrecision = 15 })
 {
    this .Style (style);
 
