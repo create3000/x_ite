@@ -112,7 +112,7 @@ None.
 
 ### Methods
 
-#### Array<string> (*String name*)
+#### Array\<string\> (*String name*)
 
 Returns the metadata values array associated with *name*.
 
@@ -120,7 +120,7 @@ Returns the metadata values array associated with *name*.
 
 Creates or updates the metadata with *name* and *value.*
 
-#### void **setMetaData** (*String name, Array<string> values*)
+#### void **setMetaData** (*String name, Array\<string\> values*)
 
 Creates or updates the metadata with *name* and *values.* There must be at least one value in *values.*
 
