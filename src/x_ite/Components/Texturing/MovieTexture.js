@@ -139,6 +139,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    },
    loadNow: function ()
    {
+      delete this .gif;
       this .setMedia (null);
       this .urlStack .setValue (this ._url);
       this .video .on ("canplaythrough", this .setVideo .bind (this));
@@ -165,8 +166,20 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
             this .URL .searchParams .set ("_", Date .now ());
       }
 
-      this .video .attr ("src", this .URL .href);
-      this .video .get (0) .load ();
+      if (this .URL .pathname .endsWith (".gif"))
+      {
+         const
+            div = $("<div></div>"),
+            img = $("<img></img>") .attr ("rel:animated_src", this .URL) .appendTo (div),
+            gif = new SuperGif ({ gif: img [0] });
+
+         gif .load (this .setGif .bind (this, gif));
+      }
+      else
+      {
+         this .video .attr ("src", this .URL .href);
+         this .video .get (0) .load ();
+      }
    },
    setTimeout: function (event)
    {
@@ -180,7 +193,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    setError: function (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn ("Error loading movie:", decodeURI (this .URL .href), event .type);
+         console .warn ("Error loading movie:", decodeURI (this .URL .href), event ? event .type : undefined);
 
       this .loadNext ();
    },
@@ -213,8 +226,56 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
          const data = cx .getImageData (0, 0, width, height) .data;
 
-         this .setMedia (this .video);
+         this .setMedia (this .video [0]);
          this .setTexture (width, height, false, new Uint8Array (data .buffer), true);
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+      }
+      catch (error)
+      {
+         // Catch security error from cross origin requests.
+         console .log (error .message);
+         this .setError ();
+      }
+   },
+   setGif: function (gif)
+   {
+      try
+      {
+         this .gif = gif;
+
+         gif .pause ();
+         gif .move_to (0);
+
+         Object .defineProperty (gif, "currentTime",
+         {
+            get: function ()
+            {
+               return this .duration * this .get_current_frame () / (this .get_length () - 1);
+            },
+            set: function (value)
+            {
+               return this .move_to (Math .floor (value / this .duration * (this .get_length () - 1)));
+            },
+         });
+
+         Object .defineProperty (gif, "duration",
+         {
+            get: function ()
+            {
+               return this .get_duration_ms () / 1000;
+            },
+         });
+
+         const play = gif .play;
+
+         gif .play = function ()
+         {
+            play .call (gif);
+            return Promise .resolve ();
+         };
+
+         this .setMedia (gif);
+         this .setTexture (gif .get_canvas () .width, gif .get_canvas () .height, false, gif .get_canvas (), true);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       catch (error)
@@ -228,8 +289,13 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    {
       X3DSoundSourceNode .prototype .set_time .call (this);
 
-      if (this .checkLoadState () === X3DConstants .COMPLETE_STATE)
-         this .updateTexture (this .getMedia () [0], true);
+      if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+         return;
+
+      if (this .gif)
+         this .updateTexture (this .gif .get_canvas (), true);
+      else
+         this .updateTexture (this .video [0], true);
    },
    traverse: X3DTexture2DNode .prototype .traverse,
    dispose: function ()

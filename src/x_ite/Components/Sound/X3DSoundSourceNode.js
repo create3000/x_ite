@@ -91,24 +91,20 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
    {
       if (this .media)
       {
-         const media = this .media [0];
-
-         media .muted = true;
-         media .pause ();
+         this .media .muted = true;
+         this .media .pause ();
       }
 
       this .media = value;
 
       if (value)
       {
-         const media = value [0];
-
-         media .muted  = false;
-         media .volume = 0;
-         media .loop   = this ._loop .getValue ();
+         this .media .muted  = false;
+         this .media .volume = 0;
+         this .media .loop   = this ._loop .getValue ();
 
          this .setVolume (0);
-         this ._duration_changed = media .duration;
+         this ._duration_changed = this .media .duration;
 
          this .resetElapsedTime ();
 
@@ -132,10 +128,6 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
          }
       }
    },
-   getMedia: function ()
-   {
-      return this .media;
-   },
    setVolume: function (volume)
    {
       this .volume = Algorithm .clamp (volume, 0, 1);
@@ -145,7 +137,7 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
    set_loop: function ()
    {
       if (this .media)
-         this .media [0] .loop = this ._loop .getValue ();
+         this .media .loop = this ._loop .getValue ();
    },
    set_volume__: function ()
    {
@@ -157,7 +149,7 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
          intensity = Algorithm .clamp (this .getBrowser () ._volume .getValue (), 0, 1),
          volume    = (! mute) * intensity * this .volume;
 
-      this .media [0] .volume = volume;
+      this .media .volume = volume;
    },
    set_speed: function ()
    { },
@@ -169,36 +161,34 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
       {
          if (this ._speed .getValue ())
          {
-            this .media [0] .currentTime = 0;
-            this .media [0] .play () .catch (Function .prototype);
+            this .media .currentTime = 0;
+            this .media .play () .catch (Function .prototype);
          }
       }
    },
    set_pause: function ()
    {
       if (this .media)
-         this .media [0] .pause ();
+         this .media .pause ();
    },
    set_resume: function ()
    {
       if (this .media)
       {
          if (this ._speed .getValue ())
-            this .media [0] .play () .catch (Function .prototype);
+            this .media .play () .catch (Function .prototype);
       }
    },
    set_stop: function ()
    {
       if (this .media)
-         this .media [0] .pause ();
+         this .media .pause ();
    },
    set_ended: function ()
    {
       if (this .media)
       {
-         const media = this .media [0];
-
-         if (media .currentTime < media .duration)
+         if (this .media .currentTime < this .media .duration)
             return;
 
          if (!this ._loop .getValue ())

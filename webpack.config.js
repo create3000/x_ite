@@ -105,6 +105,7 @@ export default __default__;`;
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
             ResizeSensor: "css-element-queries/src/ResizeSensor.js",
+            SuperGif: "libgif/libgif.js",
          }),
          new WebpackShellPluginNext ({
             logging: false,

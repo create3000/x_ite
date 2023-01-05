@@ -1,4 +1,4 @@
-/* X_ITE v8.4.3 */(function webpackUniversalModuleDefinition(root, factory) {
+/* X_ITE v8.4.4a */(function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 161:
+/***/ 126:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(758);
+/* provided dependency */ var jQuery = __webpack_require__(603);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 829:
+/***/ 151:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(758);
+/* provided dependency */ var jQuery = __webpack_require__(603);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 364:
+/***/ 50:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(758)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(603)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 758:
+/***/ 603:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11812,7 +11812,1005 @@ return jQuery;
 
 /***/ }),
 
-/***/ 548:
+/***/ 86:
+/***/ (function(module, exports) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+	SuperGif
+
+	Example usage:
+
+		<img src="./example1_preview.gif" rel:animated_src="./example1.gif" width="360" height="360" rel:auto_play="1" />
+
+		<script type="text/javascript">
+			$$('img').each(function (img_tag) {
+				if (/.*\.gif/.test(img_tag.src)) {
+					var rub = new SuperGif({ gif: img_tag } );
+					rub.load();
+				}
+			});
+		</script>
+
+	Image tag attributes:
+
+		rel:animated_src -	If this url is specified, it's loaded into the player instead of src.
+							This allows a preview frame to be shown until animated gif data is streamed into the canvas
+
+		rel:auto_play -		Defaults to 1 if not specified. If set to zero, a call to the play() method is needed
+
+	Constructor options args
+
+		gif 				Required. The DOM element of an img tag.
+		loop_mode			Optional. Setting this to false will force disable looping of the gif.
+		auto_play 			Optional. Same as the rel:auto_play attribute above, this arg overrides the img tag info.
+		max_width			Optional. Scale images over max_width down to max_width. Helpful with mobile.
+ 		on_end				Optional. Add a callback for when the gif reaches the end of a single loop (one iteration). The first argument passed will be the gif HTMLElement.
+		loop_delay			Optional. The amount of time to pause (in ms) after each single loop (iteration).
+		draw_while_loading	Optional. Determines whether the gif will be drawn to the canvas whilst it is loaded.
+		show_progress_bar	Optional. Only applies when draw_while_loading is set to true.
+
+	Instance methods
+
+		// loading
+		load( callback )		Loads the gif specified by the src or rel:animated_src sttributie of the img tag into a canvas element and then calls callback if one is passed
+		load_url( src, callback )	Loads the gif file specified in the src argument into a canvas element and then calls callback if one is passed
+
+		// play controls
+		play -				Start playing the gif
+		pause -				Stop playing the gif
+		move_to(i) -		Move to frame i of the gif
+		move_relative(i) -	Move i frames ahead (or behind if i < 0)
+
+		// getters
+		get_canvas			The canvas element that the gif is playing in. Handy for assigning event handlers to.
+		get_playing			Whether or not the gif is currently playing
+		get_loading			Whether or not the gif has finished loading/parsing
+		get_auto_play		Whether or not the gif is set to play automatically
+		get_length			The number of frames in the gif
+		get_current_frame	The index of the currently displayed frame of the gif
+		get_frames	        An array containing the data for all parsed frames
+		get_duration	    Returns the duration of the gif in hundredths of a second (standard for GIF spec)
+		get_duration_ms	    Returns the duration of the gif in milliseconds
+
+		For additional customization (viewport inside iframe) these params may be passed:
+		c_w, c_h - width and height of canvas
+		vp_t, vp_l, vp_ w, vp_h - top, left, width and height of the viewport
+
+		A bonus: few articles to understand what is going on
+			http://enthusiasms.org/post/16976438906
+			http://www.matthewflickinger.com/lab/whatsinagif/bits_and_bytes.asp
+			http://humpy77.deviantart.com/journal/Frame-Delay-Times-for-Animated-GIFs-214150546
+
+*/
+(function (root, factory) {
+    if (true) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else {}
+}(this, function () {
+    // Generic functions
+    var bitsToNum = function (ba) {
+        return ba.reduce(function (s, n) {
+            return s * 2 + n;
+        }, 0);
+    };
+
+    var byteToBitArr = function (bite) {
+        var a = [];
+        for (var i = 7; i >= 0; i--) {
+            a.push( !! (bite & (1 << i)));
+        }
+        return a;
+    };
+
+    // Stream
+    /**
+     * @constructor
+     */
+    // Make compiler happy.
+    var Stream = function (data) {
+        this.data = data;
+        this.len = this.data.length;
+        this.pos = 0;
+
+        this.readByte = function () {
+            if (this.pos >= this.data.length) {
+                throw new Error('Attempted to read past end of stream.');
+            }
+            if (data instanceof Uint8Array)
+                return data[this.pos++];
+            else
+                return data.charCodeAt(this.pos++) & 0xFF;
+        };
+
+        this.readBytes = function (n) {
+            var bytes = [];
+            for (var i = 0; i < n; i++) {
+                bytes.push(this.readByte());
+            }
+            return bytes;
+        };
+
+        this.read = function (n) {
+            var s = '';
+            for (var i = 0; i < n; i++) {
+                s += String.fromCharCode(this.readByte());
+            }
+            return s;
+        };
+
+        this.readUnsigned = function () { // Little-endian.
+            var a = this.readBytes(2);
+            return (a[1] << 8) + a[0];
+        };
+    };
+
+    var lzwDecode = function (minCodeSize, data) {
+        // TODO: Now that the GIF parser is a bit different, maybe this should get an array of bytes instead of a String?
+        var pos = 0; // Maybe this streaming thing should be merged with the Stream?
+        var readCode = function (size) {
+            var code = 0;
+            for (var i = 0; i < size; i++) {
+                if (data.charCodeAt(pos >> 3) & (1 << (pos & 7))) {
+                    code |= 1 << i;
+                }
+                pos++;
+            }
+            return code;
+        };
+
+        var output = [];
+
+        var clearCode = 1 << minCodeSize;
+        var eoiCode = clearCode + 1;
+
+        var codeSize = minCodeSize + 1;
+
+        var dict = [];
+
+        var clear = function () {
+            dict = [];
+            codeSize = minCodeSize + 1;
+            for (var i = 0; i < clearCode; i++) {
+                dict[i] = [i];
+            }
+            dict[clearCode] = [];
+            dict[eoiCode] = null;
+
+        };
+
+        var code;
+        var last;
+
+        while (true) {
+            last = code;
+            code = readCode(codeSize);
+
+            if (code === clearCode) {
+                clear();
+                continue;
+            }
+            if (code === eoiCode) break;
+
+            if (code < dict.length) {
+                if (last !== clearCode) {
+                    dict.push(dict[last].concat(dict[code][0]));
+                }
+            }
+            else {
+                if (code !== dict.length) throw new Error('Invalid LZW code.');
+                dict.push(dict[last].concat(dict[last][0]));
+            }
+            output.push.apply(output, dict[code]);
+
+            if (dict.length === (1 << codeSize) && codeSize < 12) {
+                // If we're at the last code and codeSize is 12, the next code will be a clearCode, and it'll be 12 bits long.
+                codeSize++;
+            }
+        }
+
+        // I don't know if this is technically an error, but some GIFs do it.
+        //if (Math.ceil(pos / 8) !== data.length) throw new Error('Extraneous LZW bytes.');
+        return output;
+    };
+
+
+    // The actual parsing; returns an object with properties.
+    var parseGIF = function (st, handler) {
+        handler || (handler = {});
+
+        // LZW (GIF-specific)
+        var parseCT = function (entries) { // Each entry is 3 bytes, for RGB.
+            var ct = [];
+            for (var i = 0; i < entries; i++) {
+                ct.push(st.readBytes(3));
+            }
+            return ct;
+        };
+
+        var readSubBlocks = function () {
+            var size, data;
+            data = '';
+            do {
+                size = st.readByte();
+                data += st.read(size);
+            } while (size !== 0);
+            return data;
+        };
+
+        var parseHeader = function () {
+            var hdr = {};
+            hdr.sig = st.read(3);
+            hdr.ver = st.read(3);
+            if (hdr.sig !== 'GIF') throw new Error('Not a GIF file.'); // XXX: This should probably be handled more nicely.
+            hdr.width = st.readUnsigned();
+            hdr.height = st.readUnsigned();
+
+            var bits = byteToBitArr(st.readByte());
+            hdr.gctFlag = bits.shift();
+            hdr.colorRes = bitsToNum(bits.splice(0, 3));
+            hdr.sorted = bits.shift();
+            hdr.gctSize = bitsToNum(bits.splice(0, 3));
+
+            hdr.bgColor = st.readByte();
+            hdr.pixelAspectRatio = st.readByte(); // if not 0, aspectRatio = (pixelAspectRatio + 15) / 64
+            if (hdr.gctFlag) {
+                hdr.gct = parseCT(1 << (hdr.gctSize + 1));
+            }
+            handler.hdr && handler.hdr(hdr);
+        };
+
+        var parseExt = function (block) {
+            var parseGCExt = function (block) {
+                var blockSize = st.readByte(); // Always 4
+                var bits = byteToBitArr(st.readByte());
+                block.reserved = bits.splice(0, 3); // Reserved; should be 000.
+                block.disposalMethod = bitsToNum(bits.splice(0, 3));
+                block.userInput = bits.shift();
+                block.transparencyGiven = bits.shift();
+
+                block.delayTime = st.readUnsigned();
+
+                block.transparencyIndex = st.readByte();
+
+                block.terminator = st.readByte();
+
+                handler.gce && handler.gce(block);
+            };
+
+            var parseComExt = function (block) {
+                block.comment = readSubBlocks();
+                handler.com && handler.com(block);
+            };
+
+            var parsePTExt = function (block) {
+                // No one *ever* uses this. If you use it, deal with parsing it yourself.
+                var blockSize = st.readByte(); // Always 12
+                block.ptHeader = st.readBytes(12);
+                block.ptData = readSubBlocks();
+                handler.pte && handler.pte(block);
+            };
+
+            var parseAppExt = function (block) {
+                var parseNetscapeExt = function (block) {
+                    var blockSize = st.readByte(); // Always 3
+                    block.unknown = st.readByte(); // ??? Always 1? What is this?
+                    block.iterations = st.readUnsigned();
+                    block.terminator = st.readByte();
+                    handler.app && handler.app.NETSCAPE && handler.app.NETSCAPE(block);
+                };
+
+                var parseUnknownAppExt = function (block) {
+                    block.appData = readSubBlocks();
+                    // FIXME: This won't work if a handler wants to match on any identifier.
+                    handler.app && handler.app[block.identifier] && handler.app[block.identifier](block);
+                };
+
+                var blockSize = st.readByte(); // Always 11
+                block.identifier = st.read(8);
+                block.authCode = st.read(3);
+                switch (block.identifier) {
+                    case 'NETSCAPE':
+                        parseNetscapeExt(block);
+                        break;
+                    default:
+                        parseUnknownAppExt(block);
+                        break;
+                }
+            };
+
+            var parseUnknownExt = function (block) {
+                block.data = readSubBlocks();
+                handler.unknown && handler.unknown(block);
+            };
+
+            block.label = st.readByte();
+            switch (block.label) {
+                case 0xF9:
+                    block.extType = 'gce';
+                    parseGCExt(block);
+                    break;
+                case 0xFE:
+                    block.extType = 'com';
+                    parseComExt(block);
+                    break;
+                case 0x01:
+                    block.extType = 'pte';
+                    parsePTExt(block);
+                    break;
+                case 0xFF:
+                    block.extType = 'app';
+                    parseAppExt(block);
+                    break;
+                default:
+                    block.extType = 'unknown';
+                    parseUnknownExt(block);
+                    break;
+            }
+        };
+
+        var parseImg = function (img) {
+            var deinterlace = function (pixels, width) {
+                // Of course this defeats the purpose of interlacing. And it's *probably*
+                // the least efficient way it's ever been implemented. But nevertheless...
+                var newPixels = new Array(pixels.length);
+                var rows = pixels.length / width;
+                var cpRow = function (toRow, fromRow) {
+                    var fromPixels = pixels.slice(fromRow * width, (fromRow + 1) * width);
+                    newPixels.splice.apply(newPixels, [toRow * width, width].concat(fromPixels));
+                };
+
+                // See appendix E.
+                var offsets = [0, 4, 2, 1];
+                var steps = [8, 8, 4, 2];
+
+                var fromRow = 0;
+                for (var pass = 0; pass < 4; pass++) {
+                    for (var toRow = offsets[pass]; toRow < rows; toRow += steps[pass]) {
+                        cpRow(toRow, fromRow)
+                        fromRow++;
+                    }
+                }
+
+                return newPixels;
+            };
+
+            img.leftPos = st.readUnsigned();
+            img.topPos = st.readUnsigned();
+            img.width = st.readUnsigned();
+            img.height = st.readUnsigned();
+
+            var bits = byteToBitArr(st.readByte());
+            img.lctFlag = bits.shift();
+            img.interlaced = bits.shift();
+            img.sorted = bits.shift();
+            img.reserved = bits.splice(0, 2);
+            img.lctSize = bitsToNum(bits.splice(0, 3));
+
+            if (img.lctFlag) {
+                img.lct = parseCT(1 << (img.lctSize + 1));
+            }
+
+            img.lzwMinCodeSize = st.readByte();
+
+            var lzwData = readSubBlocks();
+
+            img.pixels = lzwDecode(img.lzwMinCodeSize, lzwData);
+
+            if (img.interlaced) { // Move
+                img.pixels = deinterlace(img.pixels, img.width);
+            }
+
+            handler.img && handler.img(img);
+        };
+
+        var parseBlock = function () {
+            var block = {};
+            block.sentinel = st.readByte();
+
+            switch (String.fromCharCode(block.sentinel)) { // For ease of matching
+                case '!':
+                    block.type = 'ext';
+                    parseExt(block);
+                    break;
+                case ',':
+                    block.type = 'img';
+                    parseImg(block);
+                    break;
+                case ';':
+                    block.type = 'eof';
+                    handler.eof && handler.eof(block);
+                    break;
+                default:
+                    throw new Error('Unknown block: 0x' + block.sentinel.toString(16)); // TODO: Pad this with a 0.
+            }
+
+            if (block.type !== 'eof') setTimeout(parseBlock, 0);
+        };
+
+        var parse = function () {
+            parseHeader();
+            setTimeout(parseBlock, 0);
+        };
+
+        parse();
+    };
+
+    var SuperGif = function ( opts ) {
+        var options = {
+            //viewport position
+            vp_l: 0,
+            vp_t: 0,
+            vp_w: null,
+            vp_h: null,
+            //canvas sizes
+            c_w: null,
+            c_h: null
+        };
+        for (var i in opts ) { options[i] = opts[i] }
+        if (options.vp_w && options.vp_h) options.is_vp = true;
+
+        var stream;
+        var hdr;
+
+        var loadError = null;
+        var loading = false;
+
+        var transparency = null;
+        var delay = null;
+        var disposalMethod = null;
+        var disposalRestoreFromIdx = null;
+        var lastDisposalMethod = null;
+        var frame = null;
+        var lastImg = null;
+
+        var playing = true;
+        var forward = true;
+
+        var ctx_scaled = false;
+
+        var frames = [];
+        var frameOffsets = []; // elements have .x and .y properties
+
+        var gif = options.gif;
+        if (typeof options.auto_play == 'undefined')
+            options.auto_play = (!gif.getAttribute('rel:auto_play') || gif.getAttribute('rel:auto_play') == '1');
+
+        var onEndListener = (options.hasOwnProperty('on_end') ? options.on_end : null);
+        var loopDelay = (options.hasOwnProperty('loop_delay') ? options.loop_delay : 0);
+        var overrideLoopMode = (options.hasOwnProperty('loop_mode') ? options.loop_mode : 'auto');
+        var drawWhileLoading = (options.hasOwnProperty('draw_while_loading') ? options.draw_while_loading : true);
+        var showProgressBar = drawWhileLoading ? (options.hasOwnProperty('show_progress_bar') ? options.show_progress_bar : true) : false;
+        var progressBarHeight = (options.hasOwnProperty('progressbar_height') ? options.progressbar_height : 25);
+        var progressBarBackgroundColor = (options.hasOwnProperty('progressbar_background_color') ? options.progressbar_background_color : 'rgba(255,255,255,0.4)');
+        var progressBarForegroundColor = (options.hasOwnProperty('progressbar_foreground_color') ? options.progressbar_foreground_color : 'rgba(255,0,22,.8)');
+
+        var clear = function () {
+            transparency = null;
+            delay = null;
+            lastDisposalMethod = disposalMethod;
+            disposalMethod = null;
+            frame = null;
+        };
+
+        // XXX: There's probably a better way to handle catching exceptions when
+        // callbacks are involved.
+        var doParse = function () {
+            try {
+                parseGIF(stream, handler);
+            }
+            catch (err) {
+                doLoadError('parse');
+            }
+        };
+
+        var doText = function (text) {
+            toolbar.innerHTML = text; // innerText? Escaping? Whatever.
+            toolbar.style.visibility = 'visible';
+        };
+
+        var setSizes = function(w, h) {
+            canvas.width = w * get_canvas_scale();
+            canvas.height = h * get_canvas_scale();
+            toolbar.style.minWidth = ( w * get_canvas_scale() ) + 'px';
+
+            tmpCanvas.width = w;
+            tmpCanvas.height = h;
+            tmpCanvas.style.width = w + 'px';
+            tmpCanvas.style.height = h + 'px';
+            tmpCanvas.getContext('2d').setTransform(1, 0, 0, 1, 0, 0);
+        };
+
+        var setFrameOffset = function(frame, offset) {
+            if (!frameOffsets[frame]) {
+                frameOffsets[frame] = offset;
+                return;
+            }
+            if (typeof offset.x !== 'undefined') {
+                frameOffsets[frame].x = offset.x;
+            }
+            if (typeof offset.y !== 'undefined') {
+                frameOffsets[frame].y = offset.y;
+            }
+        };
+
+        var doShowProgress = function (pos, length, draw) {
+            if (draw && showProgressBar) {
+                var height = progressBarHeight;
+                var left, mid, top, width;
+                if (options.is_vp) {
+                    if (!ctx_scaled) {
+                        top = (options.vp_t + options.vp_h - height);
+                        height = height;
+                        left = options.vp_l;
+                        mid = left + (pos / length) * options.vp_w;
+                        width = canvas.width;
+                    } else {
+                        top = (options.vp_t + options.vp_h - height) / get_canvas_scale();
+                        height = height / get_canvas_scale();
+                        left = (options.vp_l / get_canvas_scale() );
+                        mid = left + (pos / length) * (options.vp_w / get_canvas_scale());
+                        width = canvas.width / get_canvas_scale();
+                    }
+                    //some debugging, draw rect around viewport
+                    if (false) { var w, h, l, t; }
+                }
+                else {
+                    top = (canvas.height - height) / (ctx_scaled ? get_canvas_scale() : 1);
+                    mid = ((pos / length) * canvas.width) / (ctx_scaled ? get_canvas_scale() : 1);
+                    width = canvas.width / (ctx_scaled ? get_canvas_scale() : 1 );
+                    height /= ctx_scaled ? get_canvas_scale() : 1;
+                }
+
+                ctx.fillStyle = progressBarBackgroundColor;
+                ctx.fillRect(mid, top, width - mid, height);
+
+                ctx.fillStyle = progressBarForegroundColor;
+                ctx.fillRect(0, top, mid, height);
+            }
+        };
+
+        var doLoadError = function (originOfError) {
+            var drawError = function () {
+                ctx.fillStyle = 'black';
+                ctx.fillRect(0, 0, options.c_w ? options.c_w : hdr.width, options.c_h ? options.c_h : hdr.height);
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = 3;
+                ctx.moveTo(0, 0);
+                ctx.lineTo(options.c_w ? options.c_w : hdr.width, options.c_h ? options.c_h : hdr.height);
+                ctx.moveTo(0, options.c_h ? options.c_h : hdr.height);
+                ctx.lineTo(options.c_w ? options.c_w : hdr.width, 0);
+                ctx.stroke();
+            };
+
+            loadError = originOfError;
+            hdr = {
+                width: gif.width,
+                height: gif.height
+            }; // Fake header.
+            frames = [];
+            drawError();
+        };
+
+        var doHdr = function (_hdr) {
+            hdr = _hdr;
+            setSizes(hdr.width, hdr.height)
+        };
+
+        var doGCE = function (gce) {
+            pushFrame();
+            clear();
+            transparency = gce.transparencyGiven ? gce.transparencyIndex : null;
+            delay = gce.delayTime;
+            disposalMethod = gce.disposalMethod;
+            // We don't have much to do with the rest of GCE.
+        };
+
+        var pushFrame = function () {
+            if (!frame) return;
+            frames.push({
+                            data: frame.getImageData(0, 0, hdr.width, hdr.height),
+                            delay: delay
+                        });
+            frameOffsets.push({ x: 0, y: 0 });
+        };
+
+        var doImg = function (img) {
+            if (!frame) frame = tmpCanvas.getContext('2d');
+
+            var currIdx = frames.length;
+
+            //ct = color table, gct = global color table
+            var ct = img.lctFlag ? img.lct : hdr.gct; // TODO: What if neither exists?
+
+            /*
+            Disposal method indicates the way in which the graphic is to
+            be treated after being displayed.
+
+            Values :    0 - No disposal specified. The decoder is
+                            not required to take any action.
+                        1 - Do not dispose. The graphic is to be left
+                            in place.
+                        2 - Restore to background color. The area used by the
+                            graphic must be restored to the background color.
+                        3 - Restore to previous. The decoder is required to
+                            restore the area overwritten by the graphic with
+                            what was there prior to rendering the graphic.
+
+                            Importantly, "previous" means the frame state
+                            after the last disposal of method 0, 1, or 2.
+            */
+            if (currIdx > 0) {
+                if (lastDisposalMethod === 3) {
+                    // Restore to previous
+                    // If we disposed every frame including first frame up to this point, then we have
+                    // no composited frame to restore to. In this case, restore to background instead.
+                    if (disposalRestoreFromIdx !== null) {
+                    	frame.putImageData(frames[disposalRestoreFromIdx].data, 0, 0);
+                    } else {
+                    	frame.clearRect(lastImg.leftPos, lastImg.topPos, lastImg.width, lastImg.height);
+                    }
+                } else {
+                    disposalRestoreFromIdx = currIdx - 1;
+                }
+
+                if (lastDisposalMethod === 2) {
+                    // Restore to background color
+                    // Browser implementations historically restore to transparent; we do the same.
+                    // http://www.wizards-toolkit.org/discourse-server/viewtopic.php?f=1&t=21172#p86079
+                    frame.clearRect(lastImg.leftPos, lastImg.topPos, lastImg.width, lastImg.height);
+                }
+            }
+            // else, Undefined/Do not dispose.
+            // frame contains final pixel data from the last frame; do nothing
+
+            //Get existing pixels for img region after applying disposal method
+            var imgData = frame.getImageData(img.leftPos, img.topPos, img.width, img.height);
+
+            //apply color table colors
+            img.pixels.forEach(function (pixel, i) {
+                // imgData.data === [R,G,B,A,R,G,B,A,...]
+                if (pixel !== transparency) {
+                    imgData.data[i * 4 + 0] = ct[pixel][0];
+                    imgData.data[i * 4 + 1] = ct[pixel][1];
+                    imgData.data[i * 4 + 2] = ct[pixel][2];
+                    imgData.data[i * 4 + 3] = 255; // Opaque.
+                }
+            });
+
+            frame.putImageData(imgData, img.leftPos, img.topPos);
+
+            if (!ctx_scaled) {
+                ctx.scale(get_canvas_scale(),get_canvas_scale());
+                ctx_scaled = true;
+            }
+
+            // We could use the on-page canvas directly, except that we draw a progress
+            // bar for each image chunk (not just the final image).
+            if (drawWhileLoading) {
+                ctx.drawImage(tmpCanvas, 0, 0);
+                drawWhileLoading = options.auto_play;
+            }
+
+            lastImg = img;
+        };
+
+        var player = (function () {
+            var i = -1;
+            var iterationCount = 0;
+
+            var showingInfo = false;
+            var pinned = false;
+
+            /**
+             * Gets the index of the frame "up next".
+             * @returns {number}
+             */
+            var getNextFrameNo = function () {
+                var delta = (forward ? 1 : -1);
+                return (i + delta + frames.length) % frames.length;
+            };
+
+            var stepFrame = function (amount) { // XXX: Name is confusing.
+                i = i + amount;
+
+                putFrame();
+            };
+
+            var step = (function () {
+                var stepping = false;
+
+                var completeLoop = function () {
+                    if (onEndListener !== null)
+                        onEndListener(gif);
+                    iterationCount++;
+
+                    if (overrideLoopMode !== false || iterationCount < 0) {
+                        doStep();
+                    } else {
+                        stepping = false;
+                        playing = false;
+                    }
+                };
+
+                var doStep = function () {
+                    stepping = playing;
+                    if (!stepping) return;
+
+                    stepFrame(1);
+                    var delay = frames[i].delay * 10;
+                    if (!delay) delay = 100; // FIXME: Should this even default at all? What should it be?
+
+                    var nextFrameNo = getNextFrameNo();
+                    if (nextFrameNo === 0) {
+                        delay += loopDelay;
+                        setTimeout(completeLoop, delay);
+                    } else {
+                        setTimeout(doStep, delay);
+                    }
+                };
+
+                return function () {
+                    if (!stepping) setTimeout(doStep, 0);
+                };
+            }());
+
+            var putFrame = function () {
+                var offset;
+                i = parseInt(i, 10);
+
+                if (i > frames.length - 1){
+                    i = 0;
+                }
+
+                if (i < 0){
+                    i = 0;
+                }
+
+                offset = frameOffsets[i];
+
+                tmpCanvas.getContext("2d").putImageData(frames[i].data, offset.x, offset.y);
+                ctx.globalCompositeOperation = "copy";
+                ctx.drawImage(tmpCanvas, 0, 0);
+            };
+
+            var play = function () {
+                playing = true;
+                step();
+            };
+
+            var pause = function () {
+                playing = false;
+            };
+
+
+            return {
+                init: function () {
+                    if (loadError) return;
+
+                    if ( ! (options.c_w && options.c_h) ) {
+                        ctx.scale(get_canvas_scale(),get_canvas_scale());
+                    }
+
+                    if (options.auto_play) {
+                        step();
+                    }
+                    else {
+                        i = 0;
+                        putFrame();
+                    }
+                },
+                step: step,
+                play: play,
+                pause: pause,
+                playing: playing,
+                move_relative: stepFrame,
+                current_frame: function() { return i; },
+                length: function() { return frames.length },
+                move_to: function ( frame_idx ) {
+                    i = frame_idx;
+                    putFrame();
+                }
+            }
+        }());
+
+        var doDecodeProgress = function (draw) {
+            doShowProgress(stream.pos, stream.data.length, draw);
+        };
+
+        var doNothing = function () {};
+        /**
+         * @param{boolean=} draw Whether to draw progress bar or not; this is not idempotent because of translucency.
+         *                       Note that this means that the text will be unsynchronized with the progress bar on non-frames;
+         *                       but those are typically so small (GCE etc.) that it doesn't really matter. TODO: Do this properly.
+         */
+        var withProgress = function (fn, draw) {
+            return function (block) {
+                fn(block);
+                doDecodeProgress(draw);
+            };
+        };
+
+
+        var handler = {
+            hdr: withProgress(doHdr),
+            gce: withProgress(doGCE),
+            com: withProgress(doNothing),
+            // I guess that's all for now.
+            app: {
+                // TODO: Is there much point in actually supporting iterations?
+                NETSCAPE: withProgress(doNothing)
+            },
+            img: withProgress(doImg, true),
+            eof: function (block) {
+                //toolbar.style.display = '';
+                pushFrame();
+                doDecodeProgress(false);
+                if ( ! (options.c_w && options.c_h) ) {
+                    canvas.width = hdr.width * get_canvas_scale();
+                    canvas.height = hdr.height * get_canvas_scale();
+                }
+                player.init();
+                loading = false;
+                if (load_callback) {
+                    load_callback(gif);
+                }
+
+            }
+        };
+
+        var init = function () {
+            var parent = gif.parentNode;
+
+            var div = document.createElement('div');
+            canvas = document.createElement('canvas');
+            ctx = canvas.getContext('2d');
+            toolbar = document.createElement('div');
+
+            tmpCanvas = document.createElement('canvas');
+
+            div.width = canvas.width = gif.width;
+            div.height = canvas.height = gif.height;
+            toolbar.style.minWidth = gif.width + 'px';
+
+            div.className = 'jsgif';
+            toolbar.className = 'jsgif_toolbar';
+            div.appendChild(canvas);
+            div.appendChild(toolbar);
+
+            parent.insertBefore(div, gif);
+            parent.removeChild(gif);
+
+            if (options.c_w && options.c_h) setSizes(options.c_w, options.c_h);
+            initialized=true;
+        };
+
+        var get_canvas_scale = function() {
+            var scale;
+            if (options.max_width && hdr && hdr.width > options.max_width) {
+                scale = options.max_width / hdr.width;
+            }
+            else {
+                scale = 1;
+            }
+            return scale;
+        }
+
+        var canvas, ctx, toolbar, tmpCanvas;
+        var initialized = false;
+        var load_callback = false;
+
+        var load_setup = function(callback) {
+            if (loading) return false;
+            if (callback) load_callback = callback;
+            else load_callback = false;
+
+            loading = true;
+            frames = [];
+            clear();
+            disposalRestoreFromIdx = null;
+            lastDisposalMethod = null;
+            frame = null;
+            lastImg = null;
+
+            return true;
+        }
+
+        var calculateDuration = function() {
+            return frames.reduce(function(duration, frame) {
+                return duration + frame.delay;
+            }, 0);
+        }
+
+        return {
+            // play controls
+            play: player.play,
+            pause: player.pause,
+            move_relative: player.move_relative,
+            move_to: player.move_to,
+
+            // getters for instance vars
+            get_playing      : function() { return playing },
+            get_canvas       : function() { return canvas },
+            get_canvas_scale : function() { return get_canvas_scale() },
+            get_loading      : function() { return loading },
+            get_auto_play    : function() { return options.auto_play },
+            get_length       : function() { return player.length() },
+            get_frames       : function() { return frames },
+            get_duration     : function() { return calculateDuration() },
+            get_duration_ms  : function() { return calculateDuration() * 10 },
+            get_current_frame: function() { return player.current_frame() },
+            load_url: function(src,callback){
+                if (!load_setup(callback)) return;
+
+                var h = new XMLHttpRequest();
+                // new browsers (XMLHttpRequest2-compliant)
+                h.open('GET', src, true);
+
+                if ('overrideMimeType' in h) {
+                    h.overrideMimeType('text/plain; charset=x-user-defined');
+                }
+
+                // old browsers (XMLHttpRequest-compliant)
+                else if ('responseType' in h) {
+                    h.responseType = 'arraybuffer';
+                }
+
+                // IE9 (Microsoft.XMLHTTP-compliant)
+                else {
+                    h.setRequestHeader('Accept-Charset', 'x-user-defined');
+                }
+
+                h.onloadstart = function() {
+                    // Wait until connection is opened to replace the gif element with a canvas to avoid a blank img
+                    if (!initialized) init();
+                };
+                h.onload = function(e) {
+                    if (this.status != 200) {
+                        doLoadError('xhr - response');
+                    }
+                    // emulating response field for IE9
+                    if (!('response' in this)) {
+                        this.response = new VBArray(this.responseText).toArray().map(String.fromCharCode).join('');
+                    }
+                    var data = this.response;
+                    if (data.toString().indexOf("ArrayBuffer") > 0) {
+                        data = new Uint8Array(data);
+                    }
+
+                    stream = new Stream(data);
+                    setTimeout(doParse, 0);
+                };
+                h.onprogress = function (e) {
+                    if (e.lengthComputable) doShowProgress(e.loaded, e.total, true);
+                };
+                h.onerror = function() { doLoadError('xhr'); };
+                h.send();
+            },
+            load: function (callback) {
+                this.load_url(gif.getAttribute('rel:animated_src') || gif.src,callback);
+            },
+            load_raw: function(arr, callback) {
+                if (!load_setup(callback)) return;
+                if (!initialized) init();
+                stream = new Stream(arr);
+                setTimeout(doParse, 0);
+            },
+            set_frame_offset: setFrameOffset
+        };
+    };
+
+    return SuperGif;
+}));
+
+
+
+
+/***/ }),
+
+/***/ 487:
 /***/ ((module) => {
 
 /**
@@ -16591,7 +17589,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 363:
+/***/ 235:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -33967,7 +34965,7 @@ x_ite_Namespace.set ("x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
  *
  ******************************************************************************/
 
-const VERSION_default_ = "8.4.3";
+const VERSION_default_ = "8.4.4a";
 ;
 
 x_ite_Namespace.set ("x_ite/Browser/VERSION", VERSION_default_);
@@ -34694,7 +35692,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(758);
+/* provided dependency */ var $ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -35597,7 +36595,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(758);
+/* provided dependency */ var Notification_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -35719,8 +36717,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(829);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(758);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(151);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43815,7 +44813,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(758);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45927,7 +46925,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(548);
+/* provided dependency */ var libtess = __webpack_require__(487);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53270,7 +54268,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(758);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53411,7 +54409,7 @@ ImageTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
    setError: function (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn ("Error loading image:", decodeURI (this .URL .href), event .type);
+         console .warn ("Error loading image:", decodeURI (this .URL .href), event ? event .type : undefined);
 
       this .loadNext ();
    },
@@ -57638,8 +58636,8 @@ const BinaryTransport_default_ = BinaryTransport;
 x_ite_Namespace.set ("standard/Networking/BinaryTransport", BinaryTransport_default_);
 /* harmony default export */ const Networking_BinaryTransport = (BinaryTransport_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(758);
-/* provided dependency */ var pako = __webpack_require__(363);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(603);
+/* provided dependency */ var pako = __webpack_require__(235);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -60115,7 +61113,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(758);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -62071,7 +63069,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(758);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -69037,8 +70035,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(364);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(758);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(50);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -69903,8 +70901,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(364);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(758);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(50);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70843,8 +71841,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(364);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(758);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(50);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -71156,8 +72154,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(364);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(758);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(50);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -72759,8 +73757,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(364);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(758);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(50);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73370,8 +74368,8 @@ const X3DPointingDeviceSensorContext_default_ = X3DPointingDeviceSensorContext;
 x_ite_Namespace.set ("x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext", X3DPointingDeviceSensorContext_default_);
 /* harmony default export */ const PointingDeviceSensor_X3DPointingDeviceSensorContext = (X3DPointingDeviceSensorContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(758);
-/* provided dependency */ var ResizeSensor = __webpack_require__(161);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(603);
+/* provided dependency */ var ResizeSensor = __webpack_require__(126);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -84390,7 +85388,7 @@ const X3DRoutingContext_default_ = X3DRoutingContext;
 x_ite_Namespace.set ("x_ite/Routing/X3DRoutingContext", X3DRoutingContext_default_);
 /* harmony default export */ const Routing_X3DRoutingContext = (X3DRoutingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowserContext.js
-/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(758);
+/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -84731,7 +85729,7 @@ Object .assign (X3DBrowserContext,
       X3DBrowserContext_$("x3d-canvas, X3DCanvas") .each (function (_, canvas)
       {
          const
-            X3D     = window [Symbol .for ("X_ITE.X3D-8.4.3")],
+            X3D     = window [Symbol .for ("X_ITE.X3D-8.4.4a")],
             browser = X3D .getBrowser (canvas);
 
          if (! browser)
@@ -103363,24 +104361,20 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (Core_X3DChildNod
    {
       if (this .media)
       {
-         const media = this .media [0];
-
-         media .muted = true;
-         media .pause ();
+         this .media .muted = true;
+         this .media .pause ();
       }
 
       this .media = value;
 
       if (value)
       {
-         const media = value [0];
-
-         media .muted  = false;
-         media .volume = 0;
-         media .loop   = this ._loop .getValue ();
+         this .media .muted  = false;
+         this .media .volume = 0;
+         this .media .loop   = this ._loop .getValue ();
 
          this .setVolume (0);
-         this ._duration_changed = media .duration;
+         this ._duration_changed = this .media .duration;
 
          this .resetElapsedTime ();
 
@@ -103404,10 +104398,6 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (Core_X3DChildNod
          }
       }
    },
-   getMedia: function ()
-   {
-      return this .media;
-   },
    setVolume: function (volume)
    {
       this .volume = Algorithm.clamp (volume, 0, 1);
@@ -103417,7 +104407,7 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (Core_X3DChildNod
    set_loop: function ()
    {
       if (this .media)
-         this .media [0] .loop = this ._loop .getValue ();
+         this .media .loop = this ._loop .getValue ();
    },
    set_volume__: function ()
    {
@@ -103429,7 +104419,7 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (Core_X3DChildNod
          intensity = Algorithm.clamp (this .getBrowser () ._volume .getValue (), 0, 1),
          volume    = (! mute) * intensity * this .volume;
 
-      this .media [0] .volume = volume;
+      this .media .volume = volume;
    },
    set_speed: function ()
    { },
@@ -103441,36 +104431,34 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (Core_X3DChildNod
       {
          if (this ._speed .getValue ())
          {
-            this .media [0] .currentTime = 0;
-            this .media [0] .play () .catch (Function .prototype);
+            this .media .currentTime = 0;
+            this .media .play () .catch (Function .prototype);
          }
       }
    },
    set_pause: function ()
    {
       if (this .media)
-         this .media [0] .pause ();
+         this .media .pause ();
    },
    set_resume: function ()
    {
       if (this .media)
       {
          if (this ._speed .getValue ())
-            this .media [0] .play () .catch (Function .prototype);
+            this .media .play () .catch (Function .prototype);
       }
    },
    set_stop: function ()
    {
       if (this .media)
-         this .media [0] .pause ();
+         this .media .pause ();
    },
    set_ended: function ()
    {
       if (this .media)
       {
-         const media = this .media [0];
-
-         if (media .currentTime < media .duration)
+         if (this .media .currentTime < this .media .duration)
             return;
 
          if (!this ._loop .getValue ())
@@ -103497,7 +104485,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(758);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103671,7 +104659,7 @@ AudioClip .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.
    setError: function (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn ("Error loading audio:", decodeURI (this .URL .href), event .type);
+         console .warn ("Error loading audio:", decodeURI (this .URL .href), event ? event .type : undefined);
 
       this .loadNext ();
    },
@@ -103684,7 +104672,7 @@ AudioClip .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.
       }
 
       this .audio .unbind ("canplaythrough");
-      this .setMedia (this .audio);
+      this .setMedia (this .audio [0]);
       this .setLoadState (Base_X3DConstants.COMPLETE_STATE);
    },
    dispose: function ()
@@ -106194,7 +107182,8 @@ const Components_Sound_default_ = undefined;
 x_ite_Namespace.set ("x_ite/Components/Sound", Components_Sound_default_);
 /* harmony default export */ const Components_Sound = ((/* unused pure expression or super */ null && (Components_Sound_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(758);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(603);
+/* provided dependency */ var SuperGif = __webpack_require__(86);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106336,6 +107325,7 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
    },
    loadNow: function ()
    {
+      delete this .gif;
       this .setMedia (null);
       this .urlStack .setValue (this ._url);
       this .video .on ("canplaythrough", this .setVideo .bind (this));
@@ -106362,8 +107352,20 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
             this .URL .searchParams .set ("_", Date .now ());
       }
 
-      this .video .attr ("src", this .URL .href);
-      this .video .get (0) .load ();
+      if (this .URL .pathname .endsWith (".gif"))
+      {
+         const
+            div = MovieTexture_$("<div></div>"),
+            img = MovieTexture_$("<img></img>") .attr ("rel:animated_src", this .URL) .appendTo (div),
+            gif = new SuperGif ({ gif: img [0] });
+
+         gif .load (this .setGif .bind (this, gif));
+      }
+      else
+      {
+         this .video .attr ("src", this .URL .href);
+         this .video .get (0) .load ();
+      }
    },
    setTimeout: function (event)
    {
@@ -106377,7 +107379,7 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
    setError: function (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn ("Error loading movie:", decodeURI (this .URL .href), event .type);
+         console .warn ("Error loading movie:", decodeURI (this .URL .href), event ? event .type : undefined);
 
       this .loadNext ();
    },
@@ -106410,8 +107412,56 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
 
          const data = cx .getImageData (0, 0, width, height) .data;
 
-         this .setMedia (this .video);
+         this .setMedia (this .video [0]);
          this .setTexture (width, height, false, new Uint8Array (data .buffer), true);
+         this .setLoadState (Base_X3DConstants.COMPLETE_STATE);
+      }
+      catch (error)
+      {
+         // Catch security error from cross origin requests.
+         console .log (error .message);
+         this .setError ();
+      }
+   },
+   setGif: function (gif)
+   {
+      try
+      {
+         this .gif = gif;
+
+         gif .pause ();
+         gif .move_to (0);
+
+         Object .defineProperty (gif, "currentTime",
+         {
+            get: function ()
+            {
+               return this .duration * this .get_current_frame () / (this .get_length () - 1);
+            },
+            set: function (value)
+            {
+               return this .move_to (Math .floor (value / this .duration * (this .get_length () - 1)));
+            },
+         });
+
+         Object .defineProperty (gif, "duration",
+         {
+            get: function ()
+            {
+               return this .get_duration_ms () / 1000;
+            },
+         });
+
+         const play = gif .play;
+
+         gif .play = function ()
+         {
+            play .call (gif);
+            return Promise .resolve ();
+         };
+
+         this .setMedia (gif);
+         this .setTexture (gif .get_canvas () .width, gif .get_canvas () .height, false, gif .get_canvas (), true);
          this .setLoadState (Base_X3DConstants.COMPLETE_STATE);
       }
       catch (error)
@@ -106425,8 +107475,13 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
    {
       Sound_X3DSoundSourceNode.prototype.set_time.call (this);
 
-      if (this .checkLoadState () === Base_X3DConstants.COMPLETE_STATE)
-         this .updateTexture (this .getMedia () [0], true);
+      if (this .checkLoadState () !== Base_X3DConstants.COMPLETE_STATE)
+         return;
+
+      if (this .gif)
+         this .updateTexture (this .gif .get_canvas (), true);
+      else
+         this .updateTexture (this .video [0], true);
    },
    traverse: Texturing_X3DTexture2DNode.prototype.traverse,
    dispose: function ()
@@ -107117,7 +108172,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(758);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107820,7 +108875,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(758);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(603);
 /*******************************************************************************
  * MIT License
  *
@@ -109057,7 +110112,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(758);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109955,7 +111010,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(758);
+/* provided dependency */ var Fallback_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110134,14 +111189,14 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(758);
+/* provided dependency */ var jquery_$ = __webpack_require__(603);
 const jquery_default_ = jquery_$;
 ;
 
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(758);
+/* provided dependency */ var X3D_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110396,7 +111451,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(758);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(603);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110646,7 +111701,7 @@ x_ite_Namespace.set ("shim", shim_default_);
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-8.4.3")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-8.4.4a")] = x_ite_X3D;
 
 x_ite_X3DCanvas.define ();
 
