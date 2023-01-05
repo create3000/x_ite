@@ -99,7 +99,7 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
 
       if (value)
       {
-         this .media .muted  = false;
+         this .media .muted  = true;
          this .media .volume = 0;
          this .media .loop   = this ._loop .getValue ();
 
@@ -149,6 +149,7 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
          intensity = Algorithm .clamp (this .getBrowser () ._volume .getValue (), 0, 1),
          volume    = (! mute) * intensity * this .volume;
 
+      this .media .muted  = volume === 0;
       this .media .volume = volume;
    },
    set_speed: function ()
