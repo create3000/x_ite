@@ -242,9 +242,6 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       {
          this .gif = gif;
 
-         gif .pause ();
-         gif .move_to (0);
-
          Object .defineProperty (gif, "currentTime",
          {
             get: function ()
@@ -272,6 +269,8 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
             play .call (gif);
             return Promise .resolve ();
          };
+
+         gif .move_to (0);
 
          this .setMedia (gif);
          this .setTexture (gif .get_canvas () .width, gif .get_canvas () .height, false, gif .get_canvas (), true);
