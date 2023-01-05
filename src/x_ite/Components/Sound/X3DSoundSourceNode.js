@@ -99,6 +99,7 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
 
       if (value)
       {
+         this .lastTime      = this .media .currentTime;
          this .media .muted  = false;
          this .media .volume = 0;
          this .media .loop   = this ._loop .getValue ();
@@ -161,6 +162,7 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
       {
          if (this ._speed .getValue ())
          {
+            this .lastTime           = 0;
             this .media .currentTime = 0;
             this .media .play () .catch (Function .prototype);
          }
@@ -184,23 +186,20 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
       if (this .media)
          this .media .pause ();
    },
-   set_ended: function ()
-   {
-      if (this .media)
-      {
-         if (this .media .currentTime < this .media .duration)
-            return;
-
-         if (!this ._loop .getValue ())
-            this .stop ();
-      }
-   },
    set_time: function ()
    {
-      if (this .media)
-         this ._elapsedTime = this .getElapsedTime ();
+      if (! this .media)
+         return;
 
-      this .set_ended ();
+      this ._elapsedTime = this .getElapsedTime ();
+
+      if (! this ._loop .getValue ())
+      {
+         if (this .media .currentTime >= this .media .duration || this .lastTime > this .media .currentTime)
+            this .stop ();
+      }
+
+      this .lastTime = this .media .currentTime;
    },
    dispose: function ()
    {
