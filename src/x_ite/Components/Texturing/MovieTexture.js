@@ -192,7 +192,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    setError: function (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn ("Error loading movie:", decodeURI (this .URL .href), event ? event .type : undefined);
+         console .warn ("Error loading movie:", decodeURI (this .URL .href), event .type);
 
       this .loadNext ();
    },
@@ -232,8 +232,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       catch (error)
       {
          // Catch security error from cross origin requests.
-         console .log (error .message);
-         this .setError ();
+         this .setError ({ type: error .message });
       }
    },
    setGif: function (gif)
@@ -279,8 +278,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       catch (error)
       {
          // Catch security error from cross origin requests.
-         console .log (error .message);
-         this .setError ();
+         this .setError ({ type: error .message });
       }
    },
    set_time: function ()

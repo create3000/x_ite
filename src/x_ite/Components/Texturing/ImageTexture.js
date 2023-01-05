@@ -138,7 +138,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    setError: function (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn ("Error loading image:", decodeURI (this .URL .href), event ? event .type : undefined);
+         console .warn ("Error loading image:", decodeURI (this .URL .href), event .type);
 
       this .loadNext ();
    },
@@ -217,8 +217,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       catch (error)
       {
          // Catch security error from cross origin requests.
-         console .log (error .message);
-         this .setError ();
+         this .setError ({ type: error .message });
       }
    },
    dispose: function ()
