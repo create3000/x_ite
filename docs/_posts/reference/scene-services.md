@@ -112,7 +112,7 @@ None.
 
 ### Methods
 
-#### Array\<string\> (*String name*)
+#### Array\<string\> getMetaData (*String name*)
 
 Returns the metadata values array associated with *name*.
 
