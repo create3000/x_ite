@@ -185,6 +185,13 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
       if (this .media)
          this .media .pause ();
    },
+   set_end: function ()
+   {
+      if (this ._loop .getValue ())
+         return;
+
+      this .stop ();
+   },
    set_time: function ()
    {
       if (! this .media)
@@ -192,13 +199,10 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
 
       this ._elapsedTime = this .getElapsedTime ();
 
-      if (this ._loop .getValue ())
-         return;
-
       if (this .media .currentTime < this .media .duration)
          return;
 
-      this .stop ();
+      this .set_end ();
    },
    dispose: function ()
    {
