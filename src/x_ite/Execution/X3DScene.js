@@ -299,7 +299,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    },
    getMetaDatas: function ()
    {
-      return this [_metadata];
+      return new Map (this [_metadata]);
    },
    addExportedNode: function (exportedName, node)
    {
