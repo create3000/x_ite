@@ -169,11 +169,10 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       if (this .URL .pathname .endsWith (".gif"))
       {
          const
-            div = $("<div></div>"),
-            img = $("<img></img>") .attr ("rel:animated_src", this .URL) .appendTo (div),
+            img = $("<img></img>") .appendTo ($("<div></div>")),
             gif = new SuperGif ({ gif: img [0], on_end: this .set_end .bind (this) });
 
-         gif .load (this .setGif .bind (this, gif));
+         gif .load_url (this .URL, this .setGif .bind (this, gif));
       }
       else
       {
