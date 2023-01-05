@@ -393,7 +393,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (metavalue === null)
          return console .warn ("XML Parser Error: Bad meta statement: Expected content attribute.");
 
-      this .getScene () .setMetaData (metakey, metavalue);
+      this .getScene () .addMetaData (metakey, metavalue);
    },
    sceneElement: function (xmlElement)
    {

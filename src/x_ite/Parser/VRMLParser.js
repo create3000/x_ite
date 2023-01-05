@@ -618,7 +618,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                var metavalue = this .value;
 
-               this .getScene () .setMetaData (metakey, metavalue);
+               this .getScene () .addMetaData (metakey, metavalue);
                return true;
             }
 

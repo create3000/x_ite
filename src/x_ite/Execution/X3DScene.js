@@ -246,16 +246,37 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       return value;
    },
-   setMetaData: function (name, value)
+   setMetaData: function (name, values)
    {
-      name = String (name)
+      name = String (name);
 
       if (!name .length)
-         return;
+         throw new Error ("Couldn't add metadata: name is empty.");
 
-      this [_metadata] .set (name, String (value));
+      if (! Array .isArray (values))
+         values = [String (values)];
+
+      if (!values .length)
+         throw new Error ("Couldn't add metadata: values length is 0.");
+
+      this [_metadata] .set (name, values .map (value => String (value)));
 
       this ._metadata_changed = this .getBrowser () .getCurrentTime ();
+   },
+   addMetaData: function (name, value)
+   {
+      name  = String (name);
+      value = String (value);
+
+      if (!name .length)
+         throw new Error ("Couldn't add metadata: name is empty.");
+
+      let values = this [_metadata] .get (name);
+
+      if (!values)
+         this [_metadata] .set (name, values = [ ]);
+
+      values .push (value);
    },
    removeMetaData: function (name)
    {
@@ -269,7 +290,12 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    {
       name = String (name);
 
-      return this [_metadata] .get (name);
+      const values = this [_metadata] .get (name);
+
+      if (values)
+         return values .slice ();
+
+      return undefined;
    },
    getMetaDatas: function ()
    {
@@ -419,15 +445,18 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       if (metadata .size)
       {
-         metadata .forEach (function (value, key)
+         for (const [key, values] of metadata .entries ())
          {
-            generator .string += "META";
-            generator .string += generator .Space ();
-            generator .string += new Fields .SFString (key) .toString ();
-            generator .string += generator .Space ();
-            generator .string += new Fields .SFString (value) .toString ();
-            generator .string += generator .Break ();
-         });
+            for (const value of values)
+            {
+               generator .string += "META";
+               generator .string += generator .Space ();
+               generator .string += new Fields .SFString (key) .toString ();
+               generator .string += generator .Space ();
+               generator .string += new Fields .SFString (value) .toString ();
+               generator .string += generator .Break ();
+            }
+         }
 
          generator .string += generator .TidyBreak ();
       }
@@ -504,21 +533,24 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
             }
          }
 
-         this .getMetaDatas () .forEach (function (value, key)
+         for (const [key, values] of this .getMetaDatas () .entries ())
          {
-            generator .string += generator .Indent ();
-            generator .string += "<meta";
-            generator .string += generator .Space ();
-            generator .string += "name='";
-            generator .string += generator .XMLEncode (key);
-            generator .string += "'";
-            generator .string += generator .Space ();
-            generator .string += "content='";
-            generator .string += generator .XMLEncode (value);
-            generator .string += "'";
-            generator .string += "/>";
-            generator .string += generator .TidyBreak ();
-         });
+            for (const value of values)
+            {
+               generator .string += generator .Indent ();
+               generator .string += "<meta";
+               generator .string += generator .Space ();
+               generator .string += "name='";
+               generator .string += generator .XMLEncode (key);
+               generator .string += "'";
+               generator .string += generator .Space ();
+               generator .string += "content='";
+               generator .string += generator .XMLEncode (value);
+               generator .string += "'";
+               generator .string += "/>";
+               generator .string += generator .TidyBreak ();
+            }
+         }
 
          // </head>
 
@@ -715,42 +747,43 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
             // Meta data
 
-            let i = 0;
-
-            for (const [key, value] of this .getMetaDatas ())
+            for (const [i, [key, values]] of [... this .getMetaDatas ()] .entries ())
             {
-               generator .string += generator .Indent ();
-               generator .string += '{';
-               generator .string += generator .TidyBreak ();
-               generator .string += generator .IncIndent ();
+               for (const [j, value] of values .entries ())
+               {
+                  generator .string += generator .Indent ();
+                  generator .string += '{';
+                  generator .string += generator .TidyBreak ();
+                  generator .string += generator .IncIndent ();
 
-               generator .string += generator .Indent ();
-               generator .string += '"';
-               generator .string += "@name";
-               generator .string += '"';
-               generator .string += ':';
-               generator .string += generator .TidySpace ();
-               generator .string += generator .JSONEncode (key);
-               generator .string += ',';
-               generator .string += generator .TidyBreak ();
-
-               generator .string += generator .Indent ();
-               generator .string += '"';
-               generator .string += "@content";
-               generator .string += '"';
-               generator .string += ':';
-               generator .string += generator .TidySpace ();
-               generator .string += generator .JSONEncode (value);
-               generator .string += generator .TidyBreak ();
-
-               generator .string += generator .DecIndent ();
-               generator .string += generator .Indent ();
-               generator .string += '}';
-
-               if (++ i !== this .getMetaDatas () .size)
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "@name";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+                  generator .string += generator .JSONEncode (key);
                   generator .string += ',';
+                  generator .string += generator .TidyBreak ();
 
-               generator .string += generator .TidyBreak ();
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += "@content";
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
+                  generator .string += generator .JSONEncode (value);
+                  generator .string += generator .TidyBreak ();
+
+                  generator .string += generator .DecIndent ();
+                  generator .string += generator .Indent ();
+                  generator .string += '}';
+
+                  if (!(i === this .getMetaDatas () .size - 1 && j === values .length - 1))
+                     generator .string += ',';
+
+                  generator .string += generator .TidyBreak ();
+               }
             }
 
 

@@ -112,13 +112,21 @@ None.
 
 ### Methods
 
-#### String **getMetaData** (*String name*)
+#### Array<string> (*String name*)
 
-Returns the metadata value associated with *name.*
+Returns the metadata values array associated with *name*.
 
 #### void **setMetaData** (*String name, String value*)
 
 Creates or updates the metadata with *name* and *value.*
+
+#### void **setMetaData** (*String name, Array<string> values*)
+
+Creates or updates the metadata with *name* and *values.* There must be at least one value in *values.*
+
+#### void **addMetaData** (*String name, String value*)
+
+Adds the metadata with *name* and *value.*
 
 #### void **removeMetaData** (*String name*)
 
