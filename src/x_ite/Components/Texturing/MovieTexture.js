@@ -247,59 +247,63 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
          this .gif = gif;
 
-         Object .defineProperty (gif, "currentTime",
+         Object .defineProperties (gif,
          {
-            get: function ()
+            currentTime:
             {
-               if (!loop && cycle < gif .cycle)
-                  return gif .duration;
+               get: function ()
+               {
+                  if (!loop && cycle < gif .cycle)
+                     return gif .duration;
 
-               return this ._elapsedTime % gif .duration;
-            }
-            .bind (this),
-            set: Function .prototype,
-         });
-
-         Object .defineProperty (gif, "duration",
-         {
-            get: function ()
+                  return this ._elapsedTime % gif .duration;
+               }
+               .bind (this),
+               set: Function .prototype,
+            },
+            duration:
             {
-               return this .get_duration_ms () / 1000;
+               get: function ()
+               {
+                  return this .get_duration_ms () / 1000;
+               },
+            },
+            loop:
+            {
+               get: function ()
+               {
+                  return loop;
+               },
+               set: function (value)
+               {
+                  cycle = this .cycle;
+                  loop  = value;
+               },
+            },
+            cycle:
+            {
+               get: function ()
+               {
+                  return Math .floor (this ._elapsedTime / gif .duration);
+               }
+               .bind (this),
+            },
+            currentFrame:
+            {
+               get: function ()
+               {
+                  return this .get_frames () [Math .floor (this .currentTime / this .duration * (this .get_length () - 1))];
+               },
+            },
+            play:
+            {
+               value: function ()
+               {
+                  cycle = this .cycle;
+                  return Promise .resolve ();
+               },
             },
          });
-
-         Object .defineProperty (gif, "loop",
-         {
-            get: function ()
-            {
-               return loop;
-            },
-            set: function (value)
-            {
-               cycle = this .cycle;
-               loop  = value;
-            },
-         });
-
-         Object .defineProperty (gif, "cycle",
-         {
-            get: function ()
-            {
-               return Math .floor (this ._elapsedTime / gif .duration);
-            }
-            .bind (this),
-         });
-
-         gif .get_frame = function ()
-         {
-            return this .get_frames () [Math .floor (this .currentTime / this .duration * (this .get_length () - 1))];
-         };
-
-         gif .play = function ()
-         {
-            cycle = this .cycle;
-            return Promise .resolve ();
-         };
 
          gif .pause ();
 
@@ -321,7 +325,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          return;
 
       if (this .gif)
-         this .updateTexture (this .gif .get_frame () .data, true);
+         this .updateTexture (this .gif .currentFrame .data, true);
       else
          this .updateTexture (this .video [0], true);
    },
