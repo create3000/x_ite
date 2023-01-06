@@ -242,8 +242,8 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       try
       {
          let
-            time = 0,
-            loop = false;
+            cycle = 0,
+            loop  = false;
 
          this .gif = gif;
 
@@ -251,10 +251,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          {
             get: function ()
             {
-               if (loop)
-                  return this ._elapsedTime % gif .duration;
-
-               if (Math .floor (time / gif .duration) < Math .floor (this ._elapsedTime / gif .duration))
+               if (!loop && cycle < gif .cycle)
                   return gif .duration;
 
                return this ._elapsedTime % gif .duration;
@@ -279,8 +276,16 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
             },
             set: function (value)
             {
-               time = this ._elapsedTime .getValue ();
-               loop = value;
+               cycle = this .cycle;
+               loop  = value;
+            },
+         });
+
+         Object .defineProperty (gif, "cycle",
+         {
+            get: function ()
+            {
+               return Math .floor (this ._elapsedTime / gif .duration);
             }
             .bind (this),
          });
@@ -292,10 +297,9 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
          gif .play = function ()
          {
-            time = this ._elapsedTime .getValue ();
-            return Promise .resolve ()
-         }
-         .bind (this);
+            cycle = this .cycle;
+            return Promise .resolve ();
+         };
 
          gif .pause ();
 
