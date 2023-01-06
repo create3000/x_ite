@@ -171,7 +171,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       {
          const
             img = $("<img></img>") .appendTo ($("<div></div>")),
-            gif = new SuperGif ({ gif: img [0] });
+            gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type: type }) });
 
          gif .load_url (this .URL, this .setGif .bind (this, gif));
 
