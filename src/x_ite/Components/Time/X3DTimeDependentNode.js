@@ -338,13 +338,13 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
       clearTimeout (this [name]);
       this [name] = null;
    },
-   set_loop: function () { },
-   set_start: function () { },
-   set_pause: function () { },
-   set_resume: function () { },
-   set_stop: function () { },
-   set_time: function () { },
-   dispose: function () { }
+   set_loop: Function .prototype,
+   set_start: Function .prototype,
+   set_pause: Function .prototype,
+   set_resume: Function .prototype,
+   set_stop: Function .prototype,
+   set_time: Function .prototype,
+   dispose: Function .prototype,
 });
 
 export default X3DTimeDependentNode;
