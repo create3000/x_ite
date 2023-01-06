@@ -134,8 +134,10 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
 
       this .set_volume__ ();
    },
-   set_loop: function ()
+   set_loop__: function ()
    {
+      X3DTimeDependentNode .prototype .set_loop__ .call (this);
+
       if (this .media)
          this .media .loop = this ._loop .getValue ();
    },

@@ -170,9 +170,11 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       {
          const
             img = $("<img></img>") .appendTo ($("<div></div>")),
-            gif = new SuperGif ({ gif: img [0], on_end: this .set_end .bind (this) });
+            gif = new SuperGif ({ gif: img [0] });
 
          gif .load_url (this .URL, this .setGif .bind (this, gif));
+
+         this .setTimeout ({ type: "timeout" });
       }
       else
       {
@@ -239,18 +241,26 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    {
       try
       {
+         let
+            time = 0,
+            loop = false;
+
          this .gif = gif;
 
          Object .defineProperty (gif, "currentTime",
          {
             get: function ()
             {
-               return this .duration * this .get_current_frame () / (this .get_length () - 1);
-            },
-            set: function (value)
-            {
-               return this .move_to (Math .floor (value / this .duration * (this .get_length () - 1)));
-            },
+               if (loop)
+                  return this ._elapsedTime % gif .duration;
+
+               if (Math .floor (time / gif .duration) < Math .floor (this ._elapsedTime / gif .duration))
+                  return gif .duration;
+
+               return this ._elapsedTime % gif .duration;
+            }
+            .bind (this),
+            set: Function .prototype,
          });
 
          Object .defineProperty (gif, "duration",
@@ -261,18 +271,36 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
             },
          });
 
-         const play = gif .play;
+         Object .defineProperty (gif, "loop",
+         {
+            get: function ()
+            {
+               return loop;
+            },
+            set: function (value)
+            {
+               time = this ._elapsedTime .getValue ();
+               loop = value;
+            }
+            .bind (this),
+         });
+
+         gif .get_frame = function ()
+         {
+            return this .get_frames () [Math .floor (this .currentTime / this .duration * (this .get_length () - 1))];
+         };
 
          gif .play = function ()
          {
-            play .call (gif);
-            return Promise .resolve ();
-         };
+            time = this ._elapsedTime .getValue ();
+            return Promise .resolve ()
+         }
+         .bind (this);
 
-         gif .move_to (0);
+         gif .pause ();
 
          this .setMedia (gif);
-         this .setTexture (gif .get_canvas () .width, gif .get_canvas () .height, false, gif .get_canvas (), true);
+         this .setTexture (gif .get_canvas () .width, gif .get_canvas () .height, false, gif .get_frames () [0] .data, true);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       catch (error)
@@ -289,7 +317,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          return;
 
       if (this .gif)
-         this .updateTexture (this .gif .get_canvas (), true);
+         this .updateTexture (this .gif .get_frame () .data, true);
       else
          this .updateTexture (this .video [0], true);
    },

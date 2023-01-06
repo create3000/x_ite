@@ -223,7 +223,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
             this .do_stop ();
 
          else
-            this .addTimeout ("stopTimeout","do_stop", this .stopTimeValue);
+            this .addTimeout ("stopTimeout", "do_stop", this .stopTimeValue);
       }
    },
    do_start: function ()
@@ -234,7 +234,8 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
 
          // The event order below is very important.
 
-         this ._isActive = true;
+         this ._isActive    = true;
+         this ._elapsedTime = 0;
 
          this .set_start ();
 
@@ -247,8 +248,6 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
             this .disabled = true;
             this .real_pause ();
          }
-
-         this ._elapsedTime = 0;
       }
    },
    do_pause: function ()
