@@ -51,6 +51,7 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DSoundSourceNode   from "../Sound/X3DSoundSourceNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
+import GifMedia             from "../../Browser/Texturing/GIFMedia.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 import DEBUG                from "../../DEBUG.js";
@@ -241,69 +242,9 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    {
       try
       {
-         let
-            cycle = 0,
-            loop  = false;
-
          this .gif = gif;
 
-         Object .defineProperties (gif,
-         {
-            currentTime:
-            {
-               get: function ()
-               {
-                  if (!loop && cycle < gif .cycle)
-                     return gif .duration;
-
-                  return this ._elapsedTime % gif .duration;
-               }
-               .bind (this),
-               set: Function .prototype,
-            },
-            duration:
-            {
-               get: function ()
-               {
-                  return this .get_duration_ms () / 1000;
-               },
-            },
-            loop:
-            {
-               get: function ()
-               {
-                  return loop;
-               },
-               set: function (value)
-               {
-                  cycle = this .cycle;
-                  loop  = value;
-               },
-            },
-            cycle:
-            {
-               get: function ()
-               {
-                  return Math .floor (this ._elapsedTime / gif .duration);
-               }
-               .bind (this),
-            },
-            currentFrame:
-            {
-               get: function ()
-               {
-                  return this .get_frames () [Math .floor (this .currentTime / this .duration * (this .get_length () - 1))];
-               },
-            },
-            play:
-            {
-               value: function ()
-               {
-                  cycle = this .cycle;
-                  return Promise .resolve ();
-               },
-            },
-         });
+         GifMedia (gif, this);
 
          gif .pause ();
 
