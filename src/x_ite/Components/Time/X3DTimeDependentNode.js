@@ -156,6 +156,8 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
             }
          }
       }
+
+      this .set_loop ();
    },
    set_startTime__: function ()
    {
@@ -336,6 +338,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
       clearTimeout (this [name]);
       this [name] = null;
    },
+   set_loop: function () { },
    set_start: function () { },
    set_pause: function () { },
    set_resume: function () { },
