@@ -13,13 +13,17 @@ html {
   --nav-border-color: rgba(158,158,158,0.17);
   --nav-active-page: rgb(168, 182, 206);
   --h2-color: #e4e45d;
-  --h4-color: rgb(175, 206, 255);
+  --h3-color: #b9894f;
+  --h3-color-strong: #e8c985;
+  --h4-color: var(--link-color);
+  --h4-color-strong: rgb(175, 206, 255);
   --example-background-color: rgba(27,27,30,0.4);
   --button-background-color: black;
 }
 
 html[data-mode=light] {
-  --h2-color: #cbca00;
+  --h2-color: #bd006a;
+  --h3-color-strong: #ad5100;
   --button-background-color: white;
 }
 
@@ -28,6 +32,10 @@ html[data-mode=light] {
 a {
   -webkit-user-select: none;
   user-select: none;
+}
+
+small, .small {
+  font-size: 60%;
 }
 
 #topbar-title {
@@ -75,15 +83,19 @@ a {
 }
 
 .post h3 {
-  color: #b9894f;
+  color: var(--h3-color);
+}
+
+.post h3 strong {
+  color: var(--h3-color-strong);
 }
 
 .post h4 {
-  color: var(--link-color);
+  color: var(--h4-color);
 }
 
 .post h4 strong {
-  color: var(--h4-color);
+  color: var(--h4-color-strong);
 }
 
 .post h5 {
