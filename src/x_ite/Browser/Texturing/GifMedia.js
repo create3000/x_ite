@@ -96,7 +96,7 @@ function GifMedia (gif, movieTexture)
          {
             const length = this .get_length ();
 
-            return this .get_frames () [Math .ceil (this .currentTime / this .duration * length) - 1];
+            return this .get_frames () [Math .max (Math .ceil (this .currentTime / this .duration * length) - 1, 0)];
          },
       },
       play:
