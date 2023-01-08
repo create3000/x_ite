@@ -3,7 +3,7 @@ title: Hello, World!
 date: 2022-11-28
 nav: tutorials-basic
 categories: [Tutorials]
-tags: [hello, world]
+tags: [Hello, World]
 ---
 ## Overview
 

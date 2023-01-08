@@ -15,7 +15,7 @@ sub tags {
 
    $text = `cat "$filename"`;
    $text =~ /tags:\s*\[(.*?)\]/;
-   $tags = join ", ", map {lc} split /,\s*/, $1;
+   $tags = join ", ", map {ucfirst} split /,\s*/, $1;
    $text =~s/tags:\s*\[(.*?)\]/tags: [$tags]/;
 
    open FILE, ">", $filename;

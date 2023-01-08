@@ -3,7 +3,7 @@ title: Controlling the Viewpoint
 date: 2022-11-28
 nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
-tags: [controlling, viewpoint]
+tags: [Controlling, Viewpoint]
 ---
 ## Motivation
 

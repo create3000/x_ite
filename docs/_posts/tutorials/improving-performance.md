@@ -3,7 +3,7 @@ title: Improving Performance
 date: 2022-11-28
 nav: tutorials-optimize-your-scene
 categories: [Tutorials]
-tags: [improving, performance]
+tags: [Improving, Performance]
 ---
 ## Overview
 

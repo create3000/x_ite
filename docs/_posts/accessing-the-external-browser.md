@@ -3,7 +3,7 @@ title: Accessing the External Browser
 date: 2022-11-28
 nav: main
 categories: []
-tags: [accessing, external, browser]
+tags: [Accessing, External, Browser]
 ---
 
 ## Overview

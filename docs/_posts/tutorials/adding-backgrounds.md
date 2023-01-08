@@ -3,7 +3,7 @@ title: Adding Backgrounds
 date: 2022-11-28
 nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
-tags: [background]
+tags: [Background]
 ---
 ## Motivation
 

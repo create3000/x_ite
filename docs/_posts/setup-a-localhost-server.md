@@ -3,7 +3,7 @@ title: Setup a localhost Server
 date: 2022-12-02
 nav: main
 categories: []
-tags: [setup, localhost, server, xhr]
+tags: [Setup, Localhost, Server, XHR]
 ---
 ## Overview
 

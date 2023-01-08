@@ -3,7 +3,7 @@ title: Build Extruded Shapes
 date: 2022-11-28
 nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
-tags: [build, extruded, shapes]
+tags: [Build, Extruded, Shapes]
 ---
 ## Motivation
 

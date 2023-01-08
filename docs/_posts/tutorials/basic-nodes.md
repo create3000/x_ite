@@ -3,7 +3,7 @@ title: Basic Nodes
 date: 2022-11-28
 nav: tutorials-basic
 categories: [Tutorials]
-tags: [basic, nodes]
+tags: [Basic, Nodes]
 ---
 ## Overview
 

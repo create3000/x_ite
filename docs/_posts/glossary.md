@@ -3,7 +3,7 @@ title: Glossary
 date: 2022-11-28
 nav: main
 categories: []
-tags: [glossary]
+tags: [Glossary]
 ---
 ## Overview
 

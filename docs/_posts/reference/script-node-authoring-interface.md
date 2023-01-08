@@ -3,7 +3,7 @@ title: Script Node Authoring Interface
 date: 2022-11-28
 nav: reference
 categories: [Reference]
-tags: [script, node, authoring, interface]
+tags: [Script, Node, Authoring, Interface]
 ---
 ## Overview
 

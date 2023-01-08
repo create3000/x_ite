@@ -3,7 +3,7 @@ title: What's New
 date: 2022-11-28
 nav: main
 categories: []
-tags: [new, releases]
+tags: [New, Releases]
 ---
 ## X_ITE v8.4.0 Released
 

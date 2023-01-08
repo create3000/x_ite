@@ -3,7 +3,7 @@ title: Getting Started
 date: 2022-11-28
 nav: main
 categories: []
-tags: [getting, started]
+tags: [Getting, Started]
 permalink: /
 x_ite: true
 ---

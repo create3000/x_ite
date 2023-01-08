@@ -3,7 +3,7 @@ title: Browser Services
 date: 2022-11-28
 nav: reference
 categories: [Reference]
-tags: [browser, services]
+tags: [Browser, Services]
 ---
 ## Browser Object
 

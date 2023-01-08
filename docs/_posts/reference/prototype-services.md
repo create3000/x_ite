@@ -3,7 +3,7 @@ title: Prototype Services
 date: 2022-11-28
 nav: reference
 categories: [Reference]
-tags: [prototype, services]
+tags: [Prototype, Services]
 ---
 ## X3DProtoDeclaration
 

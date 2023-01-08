@@ -3,7 +3,7 @@ title: Increasing Rendering Speed
 date: 2022-11-28
 nav: tutorials-optimize-your-scene
 categories: [Tutorials]
-tags: [increasing, rendering, speed]
+tags: [Increasing, Rendering, Speed]
 ---
 ## Overivew
 

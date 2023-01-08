@@ -94,7 +94,9 @@ function GifMedia (gif, movieTexture)
       {
          get: function ()
          {
-            return this .get_frames () [Math .floor (this .currentTime / this .duration * (this .get_length () - 1))];
+            const length = this .get_length ();
+
+            return this .get_frames () [Math .min (Math .floor (this .currentTime / this .duration * length), length - 1)];
          },
       },
       play:

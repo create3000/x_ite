@@ -3,7 +3,7 @@ title: Controlling Navigation
 date: 2022-11-28
 nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
-tags: [controlling, navigation]
+tags: [Controlling, Navigation]
 ---
 ## Motivation
 

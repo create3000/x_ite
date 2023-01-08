@@ -3,7 +3,7 @@ title: Report a Bug
 date: 2022-12-02
 nav: main
 categories: []
-tags: [bug, report, issue]
+tags: [Bug, Report, Issue]
 ---
 If you run into any bugs or encounter any other abnormal issues with X_ITE, let us know!
 
