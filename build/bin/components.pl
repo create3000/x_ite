@@ -26,7 +26,7 @@ sub node {
 title: $node
 date: 2022-01-07
 nav: components
-categories: [components]
+categories: [components, $component]
 tags: [$node, $component]
 ---
 <style>
@@ -58,19 +58,22 @@ tags: [$node, $component]
    $text =~ s|\\<(.*?)\\>|`<$1>`|sg;
    $text =~ s|[\s\n]*$||sg;
    $text =~ s|(\w)\\(_\w)|$1$2|g;
-   $text =~ s|,"|, "|g;
+   #$text =~ s/"\s*\|\s*"/" | "/g;
+   #$text =~ s/\s*\|\s*\.\.\./ | .../g;
+   #$text =~ s/"\s*,\s*"/", "/g;
+   #$text =~ s/\s*,\s*\.\.\./, .../g;
    $text =~ s|\bX3DAppearanceChild\b|X3DAppearanceChildNode|g;
    $text =~ s|Value_changed|value_changed|g;
+   $text =~ s|\[c3-source-example.*?url="(.*?)"\]|<x3d-canvas src="https://create3000.github.io/media/examples/$component/$node/$node.x3d"></x3d-canvas>|g;
+   1 while $text =~ s|\n(\[.*?\]\(.*?\))[ \t]*|\n- $1\n|sg;
+   $text =~ s|\n{2,}|\n\n|sg;
    $text =~ s|(\[.*?\]\(.*?\))|$1\{:target="_blank"\}|g;
    $text =~ s|## Browser Compatibility.*?</table>\n\n||s;
-   $text =~ s|http://www.web3d.org|https://www.web3d.org|sg;
+   $text =~ s/http:\/\/(www.web3d.org|www.w3.org|x3dgraphics.com|www.loc.gov|tools.ietf.org|en.wikipedia.org|www.bitmanagement.com|www.iso.org|teem.sourceforge.net)/https:\/\/$1/sg;
    $text =~ s|\[X3D Specification\]|[X3D Specification of $node]|s;
-   $text =~ s|\[c3-source-example url="(.*?)"\]|<x3d-canvas src="https://create3000.github.io/media/examples/$component/$node/$node.x3d"></x3d-canvas>|g;
-
-   $text =~ m|#### See Also\s+?((?:\[.*?\]\(.*?\)\s*)+)|;
-   $links = $1;
-   $links =~ s|\[|\n- [|sg;
-   $text =~ s|#### See Also.*?###|### See Also\n$links\n\n###|s;
+   $text =~ s|http://create3000.de/users-guide/components/(.*?)/?\)|/x_ite/components/$1)|sg;
+   $text =~ s|(\[.*?\]\(/x_ite/.*?\))\{.*?\}|$1|sg;
+   $text =~ s|Lineset|LineSet|sg;
 
    system "mkdir -p '$ref/$component'";
    open FILE, ">", "$ref/$component/$node.md";

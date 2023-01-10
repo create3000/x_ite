@@ -140,10 +140,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
       this .event = event;
 
-      const
-         offset = this .getBrowser () .getSurface () .offset (),
-         x      = event .pageX - offset .left,
-         y      = event .pageY - offset .top;
+      const [x, y] = this .getPointer (event);
 
       switch (this .getButton (event .button))
       {
@@ -177,7 +174,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
             {
                // Move.
 
-               this .fromVector .set (x, 0, y);
+               this .fromVector .set (x, 0, -y);
                this .toVector   .assign (this .fromVector);
 
                this .getFlyDirection (this .fromVector, this .toVector, this .direction);
@@ -208,7 +205,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
             this .getBrowser () .setCursor ("MOVE");
             this .addCollision ();
 
-            this .fromVector .set (x, -y, 0);
+            this .fromVector .set (x, y, 0);
             this .toVector   .assign (this .fromVector);
             this .direction  .set (0, 0, 0);
 
@@ -242,20 +239,19 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
    },
    mousemove: function (event)
    {
-      this .getBrowser () .addBrowserEvent ();
+      const browser = this .getBrowser ();
+
+      browser .addBrowserEvent ();
 
       this .event = event;
 
-      const
-         offset = this .getBrowser () .getSurface () .offset (),
-         x      = event .pageX - offset .left,
-         y      = event .pageY - offset .top;
+      const [x, y] = this .getPointer (event);
 
       switch (this .getButton (this .button))
       {
          case 0:
          {
-            if (this .getBrowser () .getControlKey () || this .lookAround)
+            if (browser .getControlKey () || this .lookAround)
             {
                // Stop event propagation.
                event .preventDefault ();
@@ -273,8 +269,9 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
             {
                // Fly
 
-               this .toVector .set (x, 0, y);
+               this .toVector .set (x, 0, -y);
                this .getFlyDirection (this .fromVector, this .toVector, this .direction);
+               this .direction .divide (browser .getContentScale ());
                break;
             }
          }
@@ -286,8 +283,9 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
             // Pan
 
-            this .toVector  .set (x, -y, 0);
+            this .toVector  .set (x, y, 0);
             this .direction .assign (this .toVector) .subtract (this .fromVector);
+            this .direction .divide (browser .getContentScale ());
             break;
          }
       }
@@ -639,15 +637,20 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
          // Display Rubberband.
 
-         if (type === MOVE)
+         switch (type)
          {
-            fromPoint .set (this .fromVector .x, height - this .fromVector .z, 0);
-            toPoint   .set (this .toVector   .x, height - this .toVector   .z, 0);
-         }
-         else
-         {
-            fromPoint .set (this .fromVector .x, height + this .fromVector .y, 0);
-            toPoint   .set (this .toVector   .x, height + this .toVector   .y, 0);
+            case MOVE:
+            {
+               fromPoint .set (this .fromVector .x, -this .fromVector .z, 0);
+               toPoint   .set (this .toVector   .x, -this .toVector   .z, 0);
+               break;
+            }
+            case PAN:
+            {
+               fromPoint .set (this .fromVector .x, this .fromVector .y, 0);
+               toPoint   .set (this .toVector   .x, this .toVector   .y, 0);
+               break;
+            }
          }
 
          // Set line vertices.

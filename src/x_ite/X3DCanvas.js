@@ -87,6 +87,7 @@ class X3DCanvas extends HTMLElement
    static get observedAttributes ()
    {
       return [
+         "contentscale",
          "splashscreen",
          "src",
          "url",

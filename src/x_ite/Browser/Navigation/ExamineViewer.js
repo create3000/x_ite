@@ -175,10 +175,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
 
       this .pressTime = Date .now ();
 
-      const
-         offset = this .getBrowser () .getSurface () .offset (),
-         x      = event .pageX - offset .left,
-         y      = event .pageY - offset .top;
+      const [x, y] = this .getPointer (event);
 
       switch (this .getButton (event .button))
       {
@@ -285,11 +282,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
       event .preventDefault ();
       event .stopImmediatePropagation ();
 
-      const
-         element = this .getBrowser () .getSurface (),
-         offset  = element .offset (),
-         x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
-         y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
+      const [x, y] = this .getPointer (event);
 
       this .disconnect ();
       this .lookAtBBox (x, y, this .getStraightenHorizon ());
@@ -300,10 +293,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
 
       return function (event)
       {
-         const
-            offset = this .getBrowser () .getSurface () .offset (),
-            x      = event .pageX - offset .left,
-            y      = event .pageY - offset .top;
+         const [x, y] = this .getPointer (event);
 
          switch (this .getButton (this .button))
          {

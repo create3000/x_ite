@@ -267,6 +267,10 @@ X3DCoreContext .prototype =
    {
       return this [_pixelPerPoint];
    },
+   getContentScale: function ()
+   {
+      return parseInt (this [_element] .attr ("contentScale")) || 1;
+   },
    connectedCallback: function ()
    {
       const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo (this [_shadow]);
@@ -277,6 +281,11 @@ X3DCoreContext .prototype =
    {
       switch (name .toLowerCase ())
       {
+         case "contentscale":
+         {
+            this .reshape ();
+            break;
+         }
          case "splashscreen":
          {
             if (newValue .toLowerCase () !== "true")

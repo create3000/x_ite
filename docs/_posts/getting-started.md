@@ -648,6 +648,10 @@ The HTML **\<x3d-canvas\>** element defines the main content of the X3D document
 
 A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the *cache* attribute is `true`. It works by appending "_={timestamp}" to the GET parameters of every request.
 
+### contentScale
+
+A Integer value that determines how much higher is the physical resolution of the internal \<canvas\> element. The default value for the *contentScale* attribute is 1, which is good for most cases. A higher value, typical 2, will increase the resolution of the internal \<canvas\> element and can be uses to increase the antialiasing effect, thus making the rendered image sharper.
+
 ### contextMenu
 
 A Boolean value (`true` or `false`) to indicate whether a context menu should be displayed on right click. The default value for the *contextMenu* attribute is `true`. The context menu can also be extended, [see here](#extending-the-context-menu).
