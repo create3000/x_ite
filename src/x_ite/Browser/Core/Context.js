@@ -114,7 +114,7 @@ const Context =
 
       if (version >= 2 && ! gl)
       {
-         gl = canvas .getContext ("webgl2", options);
+         gl = canvas .getContext ("webgl2", { ... options, antialias: false });
 
          if (gl)
             gl .getVersion = function () { return 2; };

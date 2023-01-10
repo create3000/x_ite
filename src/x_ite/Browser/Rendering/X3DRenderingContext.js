@@ -45,6 +45,9 @@
  *
  ******************************************************************************/
 
+import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
+import Algorithm              from "../../../standard/Math/Algorithm.js";
+
 const
    _viewport     = Symbol (),
    _localObjects = Symbol (),
@@ -134,6 +137,16 @@ X3DRenderingContext .prototype =
 
       return gl .getParameter (gl .DEPTH_BITS);
    },
+   getMaxSamples: function ()
+   {
+      const gl = this .getContext ();
+
+      return gl .getParameter (gl .MAX_SAMPLES);
+   },
+   getNumSamples: function ()
+   {
+      return parseInt (this .getElement () .attr ("multisampling")) || 4;
+   },
    getColorDepth: function ()
    {
       const gl = this .getContext ();
@@ -186,7 +199,8 @@ X3DRenderingContext .prototype =
          jCanvas = this .getCanvas (),
          width   = jCanvas .width (),
          height  = jCanvas .height (),
-         canvas  = jCanvas [0];
+         canvas  = jCanvas [0],
+         samples = Algorithm .clamp (this .getNumSamples (), 1, gl .getParameter (gl .MAX_SAMPLES));
 
       canvas .width  = width;
       canvas .height = height;
@@ -194,8 +208,10 @@ X3DRenderingContext .prototype =
       this [_viewport] [2] = width;
       this [_viewport] [3] = height;
 
-      gl .viewport (0, 0, width, height);
-      gl .scissor  (0, 0, width, height);
+      if (this .frameBuffer)
+         this .frameBuffer .dispose ();
+
+      this .frameBuffer = new MultiSampleFrameBuffer (this, width, height, samples);
 
       this .addBrowserEvent ();
    },

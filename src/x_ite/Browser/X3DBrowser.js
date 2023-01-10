@@ -131,6 +131,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
                       "      Shading language: " + this .getShadingLanguageVersion () + "\n" +
                       "   Rendering Properties\n" +
                       "      Antialiased: " + this .getAntialiased () + "\n" +
+                      "      Max samples: " + this .getMaxSamples () + "\n" +
                       "      Depth size: " + this .getDepthSize () + " bits\n" +
                       "      Color depth: " + this .getColorDepth () + " bits\n" +
                       "      Max clip planes per shape: " + this .getMaxClipPlanes () + "\n" +

@@ -277,6 +277,11 @@ X3DCoreContext .prototype =
    {
       switch (name .toLowerCase ())
       {
+         case "multisampling":
+         {
+            this .reshape ();
+            break;
+         }
          case "splashscreen":
          {
             if (newValue .toLowerCase () !== "true")

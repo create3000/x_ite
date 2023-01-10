@@ -105,14 +105,12 @@ function TextureBuffer (browser, width, height)
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
    }
 
-   // Always check that our framebuffer is ok.
-
-   const complete = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
-
    gl .bindTexture (gl .TEXTURE_2D, null);
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 
-   if (complete)
+   // Always check that our framebuffer is ok.
+
+   if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE)
       return;
 
    throw new Error ("Couldn't create frame buffer.");
