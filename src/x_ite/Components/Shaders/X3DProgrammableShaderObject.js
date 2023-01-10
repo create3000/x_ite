@@ -168,7 +168,6 @@ X3DProgrammableShaderObject .prototype =
       this .x3d_PointPropertiesPointSizeMaxValue    = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeMaxValue");
       this .x3d_PointPropertiesAttenuation          = gl .getUniformLocation (program, "x3d_PointProperties.attenuation");
 
-      this .x3d_LinePropertiesApplied  = gl .getUniformLocation (program, "x3d_LineProperties.applied");
       this .x3d_LinePropertiesLinetype = gl .getUniformLocation (program, "x3d_LineProperties.linetype");
       this .x3d_LineStippleScale       = gl .getUniformLocation (program, "x3d_LineProperties.lineStippleScale");
       this .x3d_LinePropertiesTexture  = gl .getUniformLocation (program, "x3d_LineProperties.texture");

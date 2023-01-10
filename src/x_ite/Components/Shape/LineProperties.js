@@ -146,7 +146,6 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
             textureUnit = browser .getTexture2DUnit ();
 
          gl .lineWidth (this .linewidthScaleFactor);
-         gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,  true);
          gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, this .linetype);
          gl .uniform1f (shaderObject .x3d_LineStippleScale,       browser .getLineStippleScale ());
 
@@ -156,8 +155,9 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
       }
       else
       {
-         gl .lineWidth (browser .getContentScale ());
-         gl .uniform1i (shaderObject .x3d_LinePropertiesApplied, false);
+         gl .lineWidth (this .linewidthScaleFactor);
+         gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, 16);
+         gl .uniform1f (shaderObject .x3d_LineStippleScale,       1);
       }
    },
 });

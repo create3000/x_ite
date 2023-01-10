@@ -90,7 +90,7 @@ X3DShapeContext .prototype =
    getDefaultLineProperties: function ()
    {
       this [_defaultLineProperties] = new LineProperties (this .getPrivateScene ());
-      this [_defaultLineProperties] ._applied = true;
+      this [_defaultLineProperties] ._applied = false;
       this [_defaultLineProperties] .setPrivate (true);
       this [_defaultLineProperties] .setup ();
 

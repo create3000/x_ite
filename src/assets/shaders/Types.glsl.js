@@ -50,7 +50,6 @@ struct x3d_PointPropertiesParameters
 #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
 struct x3d_LinePropertiesParameters
 {
-   bool          applied;
    mediump int   linetype;
    mediump float lineStippleScale;
    sampler2D     texture;
