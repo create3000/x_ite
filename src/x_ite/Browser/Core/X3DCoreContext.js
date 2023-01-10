@@ -284,7 +284,7 @@ X3DCoreContext .prototype =
       {
          case "contentscale":
          {
-            this ._contentScale = parseInt (this [_element] .attr ("contentScale")) || 1;
+            this ._contentScale = parseFloat (this [_element] .attr ("contentScale")) || 1;
 
             this .reshape ();
             break;

@@ -139,11 +139,11 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
    },
    setShaderUniforms: function (gl, shaderObject)
    {
+      const browser = this .getBrowser ();
+
       if (this .applied)
       {
-         const
-            browser     = this .getBrowser (),
-            textureUnit = browser .getTexture2DUnit ();
+         const textureUnit = browser .getTexture2DUnit ();
 
          gl .lineWidth (this .linewidthScaleFactor);
          gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, this .linetype);
@@ -155,7 +155,7 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
       }
       else
       {
-         gl .lineWidth (this .linewidthScaleFactor);
+         gl .lineWidth (browser .getContentScale ());
          gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, 16);
          gl .uniform1f (shaderObject .x3d_LineStippleScale,       1);
       }

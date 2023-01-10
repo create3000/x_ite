@@ -110,11 +110,13 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
       return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
       {
          const
+            browser            = this .getBrowser (),
+            contentScale       = browser .getContentScale (),
             modelViewMatrix    = renderObject .getModelViewMatrix () .get (),
             viewport           = renderObject .getViewVolume () .getViewport (),
             extents            = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),
             linePropertiesNode = appearanceNode .getLineProperties (),
-            lineWidth1_2       = Math .max (1.5, linePropertiesNode && linePropertiesNode .getApplied () ? linePropertiesNode .getLinewidthScaleFactor () / 2 : 1),
+            lineWidth1_2       = Math .max (1.5, linePropertiesNode && linePropertiesNode .getApplied () ? linePropertiesNode .getLinewidthScaleFactor () / 2 : contentScale),
             screenScale1       = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
             offsets1           = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (lineWidth1_2)),
             screenScale2       = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
