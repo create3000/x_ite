@@ -125,7 +125,7 @@ X3DRenderingContext .prototype =
    {
       const gl = this .getContext ();
 
-      return gl .getParameter (gl .SAMPLES) > 0;
+      return gl .getParameter (gl .SAMPLES) > 0 || (gl .getVersion () > 1 && this .getNumSamples () > 0);
    },
    getMaxClipPlanes: function ()
    {
@@ -145,7 +145,12 @@ X3DRenderingContext .prototype =
    },
    getNumSamples: function ()
    {
-      return parseInt (this .getElement () .attr ("multisampling")) || 4;
+      const samples = parseInt (this .getElement () .attr ("multisampling"));
+
+      if (isNaN (samples))
+         return 4;
+
+      return Algorithm .clamp (samples, 0, gl .getParameter (gl .MAX_SAMPLES));
    },
    getColorDepth: function ()
    {
@@ -200,7 +205,7 @@ X3DRenderingContext .prototype =
          width   = jCanvas .width (),
          height  = jCanvas .height (),
          canvas  = jCanvas [0],
-         samples = Algorithm .clamp (this .getNumSamples (), 1, gl .getParameter (gl .MAX_SAMPLES));
+         samples = this .getNumSamples ();
 
       canvas .width  = width;
       canvas .height = height;
