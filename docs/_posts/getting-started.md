@@ -650,7 +650,7 @@ A Boolean value (`true` or `false`) to indicate whether files transferred over t
 
 ### contentScale
 
-A Integer value that determines how much higher is the physical resolution of the internal \<canvas\> element. The default value for the *contentScale* attribute is 1, which is good for most cases. A higher value, typical 2, will increase the resolution of the internal \<canvas\> element and can be uses to increase the antialiasing effect, thus making the rendered image sharper.
+A Float value that determines how much higher is the physical resolution of the internal \<canvas\> element. The default value for the *contentScale* attribute is 1.0, which is good for most cases. A higher value, typical 2.0, will increase the resolution of the internal \<canvas\> element and can be uses to increase the antialiasing effect, thus making the rendered image sharper.
 
 ### contextMenu
 
