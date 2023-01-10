@@ -122,10 +122,11 @@ function X3DCoreContext (element)
 
    this [_pixelPerPoint] = 1; // default 72 dpi
 
-   this .addChildObjects ("controlKey",  new Fields .SFBool (),
-                          "shiftKey",    new Fields .SFBool (),
-                          "altKey",      new Fields .SFBool (),
-                          "altGrKey",    new Fields .SFBool ());
+   this .addChildObjects ("contentScale", new Fields .SFFloat (),
+                          "controlKey",   new Fields .SFBool (),
+                          "shiftKey",     new Fields .SFBool (),
+                          "altKey",       new Fields .SFBool (),
+                          "altGrKey",     new Fields .SFBool ());
 }
 
 X3DCoreContext .prototype =
@@ -265,11 +266,11 @@ X3DCoreContext .prototype =
    },
    getPixelPerPoint: function ()
    {
-      return this [_pixelPerPoint];
+      return this [_pixelPerPoint] * this .getContentScale ();
    },
    getContentScale: function ()
    {
-      return parseInt (this [_element] .attr ("contentScale")) || 1;
+      return this ._contentScale .getValue ();
    },
    connectedCallback: function ()
    {
@@ -283,6 +284,8 @@ X3DCoreContext .prototype =
       {
          case "contentscale":
          {
+            this ._contentScale = parseInt (this [_element] .attr ("contentScale")) || 1;
+
             this .reshape ();
             break;
          }

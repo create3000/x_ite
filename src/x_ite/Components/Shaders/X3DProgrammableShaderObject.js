@@ -177,6 +177,7 @@ X3DProgrammableShaderObject .prototype =
       this .x3d_FillPropertiesHatched    = gl .getUniformLocation (program, "x3d_FillProperties.hatched");
       this .x3d_FillPropertiesHatchColor = gl .getUniformLocation (program, "x3d_FillProperties.hatchColor");
       this .x3d_FillPropertiesTexture    = gl .getUniformLocation (program, "x3d_FillProperties.texture");
+      this .x3d_FillPropertiesScale      = gl .getUniformLocation (program, "x3d_FillProperties.scale");
 
       for (let i = 0; i < maxLights; ++ i)
       {
@@ -325,8 +326,6 @@ X3DProgrammableShaderObject .prototype =
       /*
        * Fill uniforms with defaults.
        */
-
-      gl .uniform1f (this .x3d_LineStippleScale, browser .getLineStippleScale ());
 
       // Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 

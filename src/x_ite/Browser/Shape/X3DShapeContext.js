@@ -46,16 +46,17 @@
  ******************************************************************************/
 
 import Appearance        from "../../Components/Shape/Appearance.js";
+import LineProperties    from "../../Components/Shape/LineProperties.js";
 import UnlitMaterial     from "../../Components/Shape/UnlitMaterial.js";
 import ImageTexture      from "../../Components/Texturing/ImageTexture.js";
 import TextureProperties from "../../Components/Texturing/TextureProperties.js";
 import URLs              from "../Networking/URLs.js";
 
 const
-   _lineStippleScale          = Symbol (),
    _linetypeTextures          = Symbol (),
    _hatchStyleTextures        = Symbol (),
    _defaultAppearance         = Symbol (),
+   _defaultLineProperties     = Symbol (),
    _defaultMaterial           = Symbol (),
    _lineFillTextureProperties = Symbol (),
    _lineTransformShaderNode   = Symbol (),
@@ -64,7 +65,6 @@ const
 function X3DShapeContext ()
 {
    this [_hatchStyleTextures] = [ ];
-   this [_lineStippleScale]   = 1 / (this .getPixelPerPoint () * 32); // 32px
 }
 
 X3DShapeContext .prototype =
@@ -85,7 +85,20 @@ X3DShapeContext .prototype =
    },
    getLineStippleScale: function ()
    {
-      return this [_lineStippleScale];
+      return 1 / (this .getPixelPerPoint () * 32); // 32px
+   },
+   getDefaultLineProperties: function ()
+   {
+      this [_defaultLineProperties] = new LineProperties (this .getPrivateScene ());
+      this [_defaultLineProperties] ._applied = true;
+      this [_defaultLineProperties] .setPrivate (true);
+      this [_defaultLineProperties] .setup ();
+
+      this .getDefaultLineProperties = function () { return this [_defaultLineProperties]; };
+
+      Object .defineProperty (this, "getDefaultMaterial", { enumerable: false });
+
+      return this [_defaultLineProperties];
    },
    getDefaultMaterial: function ()
    {

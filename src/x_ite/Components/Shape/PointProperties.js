@@ -88,9 +88,15 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
 
       this .pointSizeRange = gl .getParameter (gl .ALIASED_POINT_SIZE_RANGE);
+
+      browser ._contentScale .addInterest ("set_pointSizeScaleFactor__", this);
+      browser ._contentScale .addInterest ("set_pointSizeMinValue__",    this);
+      browser ._contentScale .addInterest ("set_pointSizeMaxValue__",    this);
 
       this ._pointSizeScaleFactor .addInterest ("set_pointSizeScaleFactor__", this);
       this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
@@ -105,8 +111,8 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
    getPointSize: function (point)
    {
       const
-         attenuation = this .attenuation,
-         dL          = point .magnitude ();
+         attenuation  = this .attenuation,
+         dL           = point .magnitude ();
 
       let pointSize = this .pointSizeScaleFactor;
 
@@ -117,15 +123,21 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
    },
    set_pointSizeScaleFactor__: function ()
    {
-      this .pointSizeScaleFactor = Math .max (this ._pointSizeScaleFactor .getValue (), 0);
+      const contentScale = this .getBrowser () .getContentScale ();
+
+      this .pointSizeScaleFactor = Math .max (this ._pointSizeScaleFactor .getValue (), 0) * contentScale;
    },
    set_pointSizeMinValue__: function ()
    {
-      this .pointSizeMinValue = Algorithm .clamp (this ._pointSizeMinValue .getValue (), 0, this .pointSizeRange [1]);
+      const contentScale = this .getBrowser () .getContentScale ();
+
+      this .pointSizeMinValue = Algorithm .clamp (this ._pointSizeMinValue .getValue (), 0, this .pointSizeRange [1]) * contentScale;
    },
    set_pointSizeMaxValue__: function ()
    {
-      this .pointSizeMaxValue = Algorithm .clamp (this ._pointSizeMaxValue .getValue (), 0, this .pointSizeRange [1]);
+      const contentScale = this .getBrowser () .getContentScale ();
+
+      this .pointSizeMaxValue = Algorithm .clamp (this ._pointSizeMaxValue .getValue (), 0, this .pointSizeRange [1]) * contentScale;
    },
    set_attenuation__: function ()
    {
@@ -140,7 +152,7 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
       gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeScaleFactor, this .pointSizeScaleFactor);
       gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMinValue,    this .pointSizeMinValue);
       gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMaxValue,    this .pointSizeMaxValue);
-      gl .uniform3fv (shaderObject .x3d_PointPropertiesAttenuation, this .attenuation);
+      gl .uniform3fv (shaderObject .x3d_PointPropertiesAttenuation,          this .attenuation);
    },
 });
 

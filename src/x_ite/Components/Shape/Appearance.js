@@ -226,7 +226,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
       if (this .linePropertiesNode && this .linePropertiesNode ._applied .getValue ())
          this .stylePropertiesNode [1] = this .linePropertiesNode;
       else
-         this .stylePropertiesNode [1] = null;
+         this .stylePropertiesNode [1] = this .getBrowser () .getDefaultLineProperties ();
    },
    set_fillProperties__: function ()
    {
