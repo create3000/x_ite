@@ -96,10 +96,7 @@ PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
       if (this .button >= 0)
          return;
 
-      const
-         offset = this .getBrowser () .getSurface () .offset (),
-         x      = event .pageX - offset .left,
-         y      = event .pageY - offset .top;
+      const [x, y] = this .getPointer (event);
 
       switch (this .getButton (event .button))
       {
@@ -147,10 +144,7 @@ PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
    },
    mousemove: function (event)
    {
-      const
-         offset = this .getBrowser () .getSurface () .offset (),
-         x      = event .pageX - offset .left,
-         y      = event .pageY - offset .top;
+      const [x, y] = this .getPointer (event);
 
       switch (this .getButton (this .button))
       {
@@ -183,10 +177,7 @@ PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
       event .preventDefault ();
       event .stopImmediatePropagation ();
 
-      const
-         offset = this .getBrowser () .getSurface () .offset (),
-         x      = event .pageX - offset .left,
-         y      = event .pageY - offset .top;
+      const [x, y] = this .getPointer (event);
 
       // Change viewpoint position.
 

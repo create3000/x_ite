@@ -101,6 +101,16 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       return button;
    },
+   getPointer: function (event)
+   {
+      const
+         browser = this .getBrowser (),
+         offset  = browser .getSurface () .offset (),
+         x       = (event .pageX - offset .left),
+         y       = browser .getViewport () [3] - (event .pageY - offset .top);
+
+      return [x, y];
+   },
    getPointOnCenterPlane: (function ()
    {
       const
@@ -117,7 +127,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
 
          // Far plane point
-         ViewVolume .unProjectPoint (x, this .getBrowser () .getViewport () [3] - y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
+         ViewVolume .unProjectPoint (x, y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
 
          if (viewpoint instanceof OrthoViewpoint)
             return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .magnitude ());
@@ -139,8 +149,6 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    trackballProjectToSphere: function (x, y, vector)
    {
       const viewport = this .getViewport () .getRectangle ();
-
-      y = this .getBrowser () .getViewport () [3] - y;
 
       x = (x - viewport [0]) / viewport [2] - 0.5;
       y = (y - viewport [1]) / viewport [3] - 0.5;
