@@ -127,16 +127,6 @@ X3DRenderingContext .prototype =
 
       return gl .getParameter (gl .SAMPLES) > 0 || (gl .getVersion () > 1 && this .getNumSamples () > 0);
    },
-   getMaxClipPlanes: function ()
-   {
-      return 6;
-   },
-   getDepthSize: function ()
-   {
-      const gl = this .getContext ();
-
-      return gl .getParameter (gl .DEPTH_BITS);
-   },
    getMaxSamples: function ()
    {
       const gl = this .getContext ();
@@ -151,6 +141,16 @@ X3DRenderingContext .prototype =
          return 4;
 
       return Algorithm .clamp (samples, 0, gl .getParameter (gl .MAX_SAMPLES));
+   },
+   getMaxClipPlanes: function ()
+   {
+      return 6;
+   },
+   getDepthSize: function ()
+   {
+      const gl = this .getContext ();
+
+      return gl .getParameter (gl .DEPTH_BITS);
    },
    getColorDepth: function ()
    {
