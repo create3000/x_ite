@@ -102,7 +102,8 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
 
       const browser = this .getBrowser ();
 
-      browser ._contentScale .addInterest ("set_applied__", this);
+      browser ._contentScale .addInterest ("set_pointProperties__", this);
+      browser ._contentScale .addInterest ("set_applied__",         this);
 
       this ._alphaMode  		.addInterest ("set_alphaMode__",        this);
       this ._alphaCutoff  		.addInterest ("set_alphaCutoff__",      this);
@@ -211,7 +212,12 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
    },
    set_pointProperties__: function ()
    {
+      const browser = this .getBrowser ();
+
       this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this ._pointProperties);
+
+      if (! this .stylePropertiesNode [0] && browser .getContentScale () !== 1)
+         this .stylePropertiesNode [0] = browser .getDefaultPointProperties ();
    },
    set_lineProperties__: function ()
    {

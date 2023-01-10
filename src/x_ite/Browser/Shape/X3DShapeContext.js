@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import Appearance        from "../../Components/Shape/Appearance.js";
+import PointProperties   from "../../Components/Shape/PointProperties.js";
 import LineProperties    from "../../Components/Shape/LineProperties.js";
 import UnlitMaterial     from "../../Components/Shape/UnlitMaterial.js";
 import ImageTexture      from "../../Components/Texturing/ImageTexture.js";
@@ -56,6 +57,7 @@ const
    _linetypeTextures          = Symbol (),
    _hatchStyleTextures        = Symbol (),
    _defaultAppearance         = Symbol (),
+   _defaultPointProperties    = Symbol (),
    _defaultLineProperties     = Symbol (),
    _defaultMaterial           = Symbol (),
    _lineFillTextureProperties = Symbol (),
@@ -87,6 +89,18 @@ X3DShapeContext .prototype =
    {
       return 1 / (this .getPixelPerPoint () * 32); // 32px
    },
+   getDefaultPointProperties: function ()
+   {
+      this [_defaultPointProperties] = new PointProperties (this .getPrivateScene ());
+      this [_defaultPointProperties] .setPrivate (true);
+      this [_defaultPointProperties] .setup ();
+
+      this .getDefaultPointProperties = function () { return this [_defaultPointProperties]; };
+
+      Object .defineProperty (this, "getDefaultPointProperties", { enumerable: false });
+
+      return this [_defaultPointProperties];
+   },
    getDefaultLineProperties: function ()
    {
       this [_defaultLineProperties] = new LineProperties (this .getPrivateScene ());
@@ -96,7 +110,7 @@ X3DShapeContext .prototype =
 
       this .getDefaultLineProperties = function () { return this [_defaultLineProperties]; };
 
-      Object .defineProperty (this, "getDefaultMaterial", { enumerable: false });
+      Object .defineProperty (this, "getDefaultLineProperties", { enumerable: false });
 
       return this [_defaultLineProperties];
    },
