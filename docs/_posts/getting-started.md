@@ -662,7 +662,7 @@ A Boolean value (`true` or `false`) to indicate whether a context menu should be
 
 ### multisampling
 
-A Integer value that sets the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of antialiasing.
+A Integer value that sets the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of antialiasing. Check [rendering property](reference/browser-services#rendering-properties) »MaxSamples«, which is browser dependent.
 
 ### notifications
 
@@ -682,7 +682,7 @@ Type: script code. This event handler will be called on the \<x3d-canvas\> eleme
 
 ### preserveDrawingBuffer
 
-A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for the *preserveDrawingBuffer* attribute is `false`. Set *preserveDrawingBuffer* to true if you want to save the image from the canvas. Keep in mind setting *preserveDrawingBuffer* to true can have performance implications.
+A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for the *preserveDrawingBuffer* attribute is `false`. Set *preserveDrawingBuffer* to `true` if you want to save the image from the internal canvas. Keep in mind setting *preserveDrawingBuffer* to true can have performance implications.
 
 ### splashScreen
 
