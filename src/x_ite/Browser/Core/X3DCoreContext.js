@@ -280,17 +280,14 @@ X3DCoreContext .prototype =
          this [_removeUpdateContentScale] ();
 
       const
-         mqString = `(resolution: ${window .devicePixelRatio}dppx)`,
-         media    = window .matchMedia (mqString),
-         update   = this .updateContentScale .bind (this);
+         media  = window .matchMedia (`(resolution: ${window .devicePixelRatio}dppx)`),
+         update = this .updateContentScale .bind (this);
 
       media .addListener (update);
 
       this [_removeUpdateContentScale] = function () { media .removeListener (update) };
 
       this ._contentScale = window .devicePixelRatio;
-
-      console .log ("devicePixelRatio: " + window .devicePixelRatio);
    },
    getNumSamples: function ()
    {
