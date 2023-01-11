@@ -324,9 +324,7 @@ X3DCoreContext .prototype =
          {
             const samples = parseInt (newValue);
 
-            this .getRenderingProperties () ._Multisampling = isNaN (samples) ? 4 : Algorithm .clamp (samples, 0, this .getMaxSamples ());
-            this .getRenderingProperties () ._Antialiased   = this .getAntialiased ();
-            this .reshape ();
+            this .setBrowserOption ("Multisampling", isNaN (samples) ? 4 : samples);
             break;
          }
          case "notifications":

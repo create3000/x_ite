@@ -240,6 +240,12 @@ Returns a browser option with the corresponding name.
          <td>false</td>
       </tr>
       <tr>
+         <td>Multisampling</td>
+         <td>Number of samples used for multisampling.</td>
+         <td>Integer</td>
+         <td>4</td>
+      </tr>
+      <tr>
          <td>Notifications</td>
          <td>Whether or not notifications should be displayed.</td>
          <td>Boolean</td>

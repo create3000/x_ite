@@ -53,6 +53,7 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import PrimitiveQuality     from "./PrimitiveQuality.js";
 import Shading              from "./Shading.js";
 import TextureQuality       from "./TextureQuality.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function BrowserOptions (executionContext)
 {
@@ -88,6 +89,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Notifications",          new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "Multisampling",          new Fields .SFInt32 (4)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                new Fields .SFBool (false)),
    ]),
@@ -121,6 +123,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       this ._Shading                .addInterest ("set_shading__",                this);
       this ._StraightenHorizon      .addInterest ("set_straightenHorizon__",      this);
       this ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
+      this ._Multisampling          .addInterest ("set_multisampling__",          this);
       this ._Timings                .addInterest ("set_timings__",                this);
 
       this .configure ();
@@ -254,6 +257,17 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          gl      = browser .getContext ();
 
       browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && gl .HAS_FEATURE_FRAG_DEPTH;
+   },
+   set_multisampling__: function (multisampling)
+   {
+      const
+         browser = this .getBrowser (),
+         samples = Algorithm .clamp (multisampling .getValue (), 0, browser .getMaxSamples ());
+
+      browser .getRenderingProperties () ._Multisampling = samples;
+      browser .getRenderingProperties () ._Antialiased   = browser .getAntialiased ();
+
+      browser .reshape ();
    },
    set_timings__: function (timings)
    {
