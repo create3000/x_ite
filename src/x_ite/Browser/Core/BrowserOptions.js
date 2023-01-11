@@ -145,12 +145,18 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       return function ()
       {
-         const localStorage = this .localStorage;
+         const
+            browser      = this .getBrowser (),
+            localStorage = this .localStorage;
 
          for (const { name, value } of this .getFieldDefinitions ())
          {
             if (globals .has (name))
+            {
+               const attribute = name [0] .toLowerCase () + name .slice (1);
+               browser .attributeChangedCallback (attribute, null, browser .getElement () .attr (name));
                continue;
+            }
 
             if (localStorage [name] !== undefined)
                continue;
