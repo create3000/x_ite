@@ -638,11 +638,11 @@ X3DCoreContext .prototype =
    copyToClipboard: function (text)
    {
       // The textarea must be visible to make copy work.
-      const $temp = $("<textarea></textarea>");
-      this .getShadow () .find (".x_ite-private-browser") .prepend ($temp);
-      $temp .text (text) .select ();
+      const tmp = $("<textarea></textarea>");
+      this .getShadow () .find (".x_ite-private-browser") .prepend (tmp);
+      tmp .text (text) .trigger ("select");
       document .execCommand ("copy");
-      $temp .remove ();
+      tmp .remove ();
    },
 };
 
