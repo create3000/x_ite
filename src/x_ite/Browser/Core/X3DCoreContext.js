@@ -55,31 +55,33 @@ import Notification        from "./Notification.js";
 import ContextMenu         from "./ContextMenu.js";
 import Scene               from "../../Execution/Scene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
+import Algorithm           from "../../../standard/Math/Algorithm.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import _                   from "../../../locale/gettext.js";
 
 const WEBGL_LATEST_VERSION = 2;
 
 const
-   _instanceId          = Symbol (),
-   _element             = Symbol (),
-   _shadow              = Symbol (),
-   _surface             = Symbol (),
-   _canvas              = Symbol (),
-   _context             = Symbol (),
-   _splashScreen        = Symbol (),
-   _localStorage        = Symbol (),
-   _mobile              = Symbol (),
-   _browserTimings      = Symbol (),
-   _browserOptions      = Symbol (),
-   _browserProperties   = Symbol (),
-   _renderingProperties = Symbol (),
-   _notification        = Symbol (),
-   _contextMenu         = Symbol (),
-   _privateScene        = Symbol (),
-   _keydown             = Symbol (),
-   _keyup               = Symbol (),
-   _pixelPerPoint       = Symbol ();
+   _instanceId               = Symbol (),
+   _element                  = Symbol (),
+   _shadow                   = Symbol (),
+   _surface                  = Symbol (),
+   _canvas                   = Symbol (),
+   _context                  = Symbol (),
+   _splashScreen             = Symbol (),
+   _localStorage             = Symbol (),
+   _mobile                   = Symbol (),
+   _browserTimings           = Symbol (),
+   _browserOptions           = Symbol (),
+   _browserProperties        = Symbol (),
+   _renderingProperties      = Symbol (),
+   _notification             = Symbol (),
+   _contextMenu              = Symbol (),
+   _privateScene             = Symbol (),
+   _keydown                  = Symbol (),
+   _keyup                    = Symbol (),
+   _pixelPerPoint            = Symbol (),
+   _removeUpdateContentScale = Symbol ();
 
 let instanceId = 0;
 
@@ -122,7 +124,7 @@ function X3DCoreContext (element)
 
    this [_pixelPerPoint] = 1; // default 72 dpi
 
-   this .addChildObjects ("contentScale", new Fields .SFFloat (),
+   this .addChildObjects ("contentScale", new Fields .SFFloat (1),
                           "controlKey",   new Fields .SFBool (),
                           "shiftKey",     new Fields .SFBool (),
                           "altKey",       new Fields .SFBool (),
@@ -272,6 +274,33 @@ X3DCoreContext .prototype =
    {
       return this ._contentScale .getValue ();
    },
+   updateContentScale: function ()
+   {
+      if (this [_removeUpdateContentScale])
+         this [_removeUpdateContentScale] ();
+
+      const
+         mqString = `(resolution: ${window .devicePixelRatio}dppx)`,
+         media    = window .matchMedia (mqString),
+         update   = this .updateContentScale .bind (this);
+
+      media .addListener (update);
+
+      this [_removeUpdateContentScale] = function () { media .removeListener (update) };
+
+      this ._contentScale = window .devicePixelRatio;
+
+      console .log ("devicePixelRatio: " + window .devicePixelRatio);
+   },
+   getNumSamples: function ()
+   {
+      const samples = parseInt (this .getElement () .attr ("multisampling"));
+
+      if (isNaN (samples))
+         return 4;
+
+      return Algorithm .clamp (samples, 0, this .getMaxSamples ());
+   },
    connectedCallback: function ()
    {
       const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo (this [_shadow]);
@@ -284,7 +313,13 @@ X3DCoreContext .prototype =
       {
          case "contentscale":
          {
-            this ._contentScale = parseFloat (this [_element] .attr ("contentScale")) || 1;
+            if (this [_removeUpdateContentScale])
+               this [_removeUpdateContentScale] ();
+
+            if (this [_element] .attr ("contentScale") === "auto")
+               this .updateContentScale ();
+            else
+               this ._contentScale = Math .max (parseFloat (this [_element] .attr ("contentScale")), 0) || 1;
 
             this .reshape ();
             break;

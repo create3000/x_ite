@@ -46,7 +46,6 @@
  ******************************************************************************/
 
 import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
-import Algorithm              from "../../../standard/Math/Algorithm.js";
 
 const
    _viewport     = Symbol (),
@@ -83,7 +82,7 @@ X3DRenderingContext .prototype =
       //https://github.com/sdecima/javascript-detect-element-resize
       this [_resizer] = new ResizeSensor (this .getSurface (), this .reshape .bind (this));
 
-			this .getSurface () .css ("position", ""); // Reset position, set from ResizeSensor.
+		this .getSurface () .css ("position", ""); // Reset position, set from ResizeSensor.
 
       this .reshape ();
    },
@@ -132,15 +131,6 @@ X3DRenderingContext .prototype =
       const gl = this .getContext ();
 
       return gl .getParameter (gl .MAX_SAMPLES);
-   },
-   getNumSamples: function ()
-   {
-      const samples = parseInt (this .getElement () .attr ("multisampling"));
-
-      if (isNaN (samples))
-         return 4;
-
-      return Algorithm .clamp (samples, 0, gl .getParameter (gl .MAX_SAMPLES));
    },
    getMaxClipPlanes: function ()
    {
@@ -200,7 +190,6 @@ X3DRenderingContext .prototype =
    reshape: function ()
    {
       const
-         gl           = this .getContext (),
          $canvas      = this .getCanvas (),
          contentScale = this .getContentScale (),
          samples      = this .getNumSamples (),

@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 769:
+/***/ 10:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(878);
+/* provided dependency */ var jQuery = __webpack_require__(563);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 650:
+/***/ 775:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(878);
+/* provided dependency */ var jQuery = __webpack_require__(563);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 737:
+/***/ 111:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(878)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(563)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 878:
+/***/ 563:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11812,7 +11812,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 458:
+/***/ 874:
 /***/ ((module) => {
 
 /**
@@ -16591,7 +16591,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 373:
+/***/ 574:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19836,7 +19836,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 165:
+/***/ 802:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -35144,7 +35144,7 @@ const Context =
 
       if (version >= 2 && ! gl)
       {
-         gl = canvas .getContext ("webgl2", options);
+         gl = canvas .getContext ("webgl2", { ... options, antialias: false });
 
          if (gl)
             gl .getVersion = function () { return 2; };
@@ -35694,7 +35694,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(878);
+/* provided dependency */ var $ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36597,7 +36597,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(878);
+/* provided dependency */ var Notification_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36719,8 +36719,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(650);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(878);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(775);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44815,7 +44815,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(878);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46927,7 +46927,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(458);
+/* provided dependency */ var libtess = __webpack_require__(874);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47788,14 +47788,12 @@ function TextureBuffer (browser, width, height)
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
    }
 
-   // Always check that our framebuffer is ok.
-
-   const complete = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
-
    gl .bindTexture (gl .TEXTURE_2D, null);
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 
-   if (complete)
+   // Always check that our framebuffer is ok.
+
+   if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE)
       return;
 
    throw new Error ("Couldn't create frame buffer.");
@@ -54270,7 +54268,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(878);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -58639,8 +58637,8 @@ const BinaryTransport_default_ = BinaryTransport;
 x_ite_Namespace.set ("standard/Networking/BinaryTransport", BinaryTransport_default_);
 /* harmony default export */ const Networking_BinaryTransport = (BinaryTransport_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(878);
-/* provided dependency */ var pako = __webpack_require__(373);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(563);
+/* provided dependency */ var pako = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -61116,7 +61114,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(878);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63072,7 +63070,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(878);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63119,6 +63117,7 @@ x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -63197,10 +63196,11 @@ function X3DCoreContext (element)
 
    this [_pixelPerPoint] = 1; // default 72 dpi
 
-   this .addChildObjects ("controlKey",  new x_ite_Fields.SFBool (),
-                          "shiftKey",    new x_ite_Fields.SFBool (),
-                          "altKey",      new x_ite_Fields.SFBool (),
-                          "altGrKey",    new x_ite_Fields.SFBool ());
+   this .addChildObjects ("contentScale", new x_ite_Fields.SFFloat (1),
+                          "controlKey",   new x_ite_Fields.SFBool (),
+                          "shiftKey",     new x_ite_Fields.SFBool (),
+                          "altKey",       new x_ite_Fields.SFBool (),
+                          "altGrKey",     new x_ite_Fields.SFBool ());
 }
 
 X3DCoreContext .prototype =
@@ -63340,7 +63340,20 @@ X3DCoreContext .prototype =
    },
    getPixelPerPoint: function ()
    {
-      return this [_pixelPerPoint];
+      return this [_pixelPerPoint] * this .getContentScale ();
+   },
+   getContentScale: function ()
+   {
+      return this ._contentScale .getValue ();
+   },
+   getNumSamples: function ()
+   {
+      const samples = parseInt (this .getElement () .attr ("multisampling"));
+
+      if (isNaN (samples))
+         return 4;
+
+      return Algorithm.clamp (samples, 0, this .getMaxSamples ());
    },
    connectedCallback: function ()
    {
@@ -63353,6 +63366,13 @@ X3DCoreContext .prototype =
       switch (name .toLowerCase ())
       {
          case "contentscale":
+         {
+            this ._contentScale = Math .max (parseFloat (this [_element] .attr ("contentScale")) || 1, 0);
+
+            this .reshape ();
+            break;
+         }
+         case "multisampling":
          {
             this .reshape ();
             break;
@@ -67403,11 +67423,13 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (Rendering_X3DGe
       return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
       {
          const
+            browser            = this .getBrowser (),
+            contentScale       = browser .getContentScale (),
             modelViewMatrix    = renderObject .getModelViewMatrix () .get (),
             viewport           = renderObject .getViewVolume () .getViewport (),
             extents            = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),
             linePropertiesNode = appearanceNode .getLineProperties (),
-            lineWidth1_2       = Math .max (1.5, linePropertiesNode && linePropertiesNode .getApplied () ? linePropertiesNode .getLinewidthScaleFactor () / 2 : 1),
+            lineWidth1_2       = Math .max (1.5, linePropertiesNode && linePropertiesNode .getApplied () ? linePropertiesNode .getLinewidthScaleFactor () / 2 : contentScale),
             screenScale1       = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
             offsets1           = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (lineWidth1_2)),
             screenScale2       = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
@@ -69346,10 +69368,11 @@ X3DViewer .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototyp
    getPointer: function (event)
    {
       const
-         browser = this .getBrowser (),
-         offset  = browser .getSurface () .offset (),
-         x       = (event .pageX - offset .left) * browser .getContentScale (),
-         y       = (event .pageY - offset .top)  * browser .getContentScale ();
+         browser      = this .getBrowser (),
+         contentScale = browser .getContentScale (),
+         offset       = browser .getSurface () .offset (),
+         x            = (event .pageX - offset .left) * contentScale,
+         y            = browser .getViewport () [3] - (event .pageY - offset .top) * contentScale;
 
       return [x, y];
    },
@@ -69369,7 +69392,7 @@ X3DViewer .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototyp
             projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
 
          // Far plane point
-         Geometry_ViewVolume.unProjectPoint (x, this .getBrowser () .getViewport () [3] - y, 0.9, Numbers_Matrix4.Identity, projectionMatrix, viewport, far);
+         Geometry_ViewVolume.unProjectPoint (x, y, 0.9, Numbers_Matrix4.Identity, projectionMatrix, viewport, far);
 
          if (viewpoint instanceof Navigation_OrthoViewpoint)
             return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .magnitude ());
@@ -69391,8 +69414,6 @@ X3DViewer .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototyp
    trackballProjectToSphere: function (x, y, vector)
    {
       const viewport = this .getViewport () .getRectangle ();
-
-      y = this .getBrowser () .getViewport () [3] - y;
 
       x = (x - viewport [0]) / viewport [2] - 0.5;
       y = (y - viewport [1]) / viewport [3] - 0.5;
@@ -70053,8 +70074,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(737);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(878);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(111);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70335,8 +70356,6 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
    },
    dblclick: function (event)
    {
-      const browser = this .getBrowser ();
-
       // Stop event propagation.
       event .preventDefault ();
       event .stopImmediatePropagation ();
@@ -70344,7 +70363,7 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
       const [x, y] = this .getPointer (event);
 
       this .disconnect ();
-      this .lookAtBBox (x, browser .getViewport () [3] - y, this .getStraightenHorizon ());
+      this .lookAtBBox (x, y, this .getStraightenHorizon ());
    },
    mousemove: (function ()
    {
@@ -70911,8 +70930,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(737);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(878);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(111);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -71089,7 +71108,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
             {
                // Move.
 
-               this .fromVector .set (x, 0, y);
+               this .fromVector .set (x, 0, -y);
                this .toVector   .assign (this .fromVector);
 
                this .getFlyDirection (this .fromVector, this .toVector, this .direction);
@@ -71120,7 +71139,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
             this .getBrowser () .setCursor ("MOVE");
             this .addCollision ();
 
-            this .fromVector .set (x, -y, 0);
+            this .fromVector .set (x, y, 0);
             this .toVector   .assign (this .fromVector);
             this .direction  .set (0, 0, 0);
 
@@ -71154,7 +71173,9 @@ X3DFlyViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
    },
    mousemove: function (event)
    {
-      this .getBrowser () .addBrowserEvent ();
+      const browser = this .getBrowser ();
+
+      browser .addBrowserEvent ();
 
       this .event = event;
 
@@ -71164,7 +71185,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
       {
          case 0:
          {
-            if (this .getBrowser () .getControlKey () || this .lookAround)
+            if (browser .getControlKey () || this .lookAround)
             {
                // Stop event propagation.
                event .preventDefault ();
@@ -71182,8 +71203,9 @@ X3DFlyViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
             {
                // Fly
 
-               this .toVector .set (x, 0, y);
+               this .toVector .set (x, 0, -y);
                this .getFlyDirection (this .fromVector, this .toVector, this .direction);
+               this .direction .divide (browser .getContentScale ());
                break;
             }
          }
@@ -71195,8 +71217,9 @@ X3DFlyViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
 
             // Pan
 
-            this .toVector  .set (x, -y, 0);
+            this .toVector  .set (x, y, 0);
             this .direction .assign (this .toVector) .subtract (this .fromVector);
+            this .direction .divide (browser .getContentScale ());
             break;
          }
       }
@@ -71548,15 +71571,20 @@ X3DFlyViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
 
          // Display Rubberband.
 
-         if (type === MOVE)
+         switch (type)
          {
-            fromPoint .set (this .fromVector .x, height - this .fromVector .z, 0);
-            toPoint   .set (this .toVector   .x, height - this .toVector   .z, 0);
-         }
-         else
-         {
-            fromPoint .set (this .fromVector .x, height + this .fromVector .y, 0);
-            toPoint   .set (this .toVector   .x, height + this .toVector   .y, 0);
+            case MOVE:
+            {
+               fromPoint .set (this .fromVector .x, -this .fromVector .z, 0);
+               toPoint   .set (this .toVector   .x, -this .toVector   .z, 0);
+               break;
+            }
+            case PAN:
+            {
+               fromPoint .set (this .fromVector .x, this .fromVector .y, 0);
+               toPoint   .set (this .toVector   .x, this .toVector   .y, 0);
+               break;
+            }
          }
 
          // Set line vertices.
@@ -71845,8 +71873,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(737);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(878);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(111);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -72149,8 +72177,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(737);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(878);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(111);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -72333,8 +72361,6 @@ LookAtViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
    },
    dblclick: function (event)
    {
-      const browser = this .getBrowser ();
-
       // Stop event propagation.
       event .preventDefault ();
       event .stopImmediatePropagation ();
@@ -72342,7 +72368,7 @@ LookAtViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
       const [x, y] = this .getPointer (event);
 
       this .disconnect ();
-      this .lookAtPoint (x, browser .getViewport () [3] - y, this .getStraightenHorizon ());
+      this .lookAtPoint (x, y, this .getStraightenHorizon ());
    },
    mousemove: function (event)
    {
@@ -73744,8 +73770,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(737);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(878);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(111);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73832,10 +73858,11 @@ PointingDevice .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
    getPointer: function (event)
    {
       const
-         browser = this .getBrowser (),
-         offset  = browser .getSurface () .offset (),
-         x       = (event .pageX - offset .left) * browser .getContentScale (),
-         y       = browser .getViewport () [3] - (event .pageY - offset .top) * browser .getContentScale ();
+         browser      = this .getBrowser (),
+         contentScale = browser .getContentScale (),
+         offset       = browser .getSurface () .offset (),
+         x            = (event .pageX - offset .left) * contentScale,
+         y            = browser .getViewport () [3] - (event .pageY - offset .top) * contentScale;
 
       return [x, y];
    },
@@ -74357,9 +74384,7 @@ const X3DPointingDeviceSensorContext_default_ = X3DPointingDeviceSensorContext;
 
 x_ite_Namespace.set ("x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext", X3DPointingDeviceSensorContext_default_);
 /* harmony default export */ const PointingDeviceSensor_X3DPointingDeviceSensorContext = (X3DPointingDeviceSensorContext_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(878);
-/* provided dependency */ var ResizeSensor = __webpack_require__(769);
+;// CONCATENATED MODULE: ./src/x_ite/Rendering/MultiSampleFrameBuffer.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -74407,6 +74432,158 @@ x_ite_Namespace.set ("x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensor
  *
  ******************************************************************************/
 
+function MultiSampleFrameBuffer (browser, width, height, samples)
+{
+   const gl = browser .getContext ();
+
+   if (gl .getVersion () === 1 || width === 0 || height === 0)
+      return Fallback;
+
+   this .browser = browser;
+   this .width   = width;
+   this .height  = height;
+   this .samples = Math .min (samples, gl .getParameter (gl .MAX_SAMPLES));
+
+   this .lastBuffer  = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+   this .framebuffer = gl .createFramebuffer ();
+
+   this .colorRenderbuffer = gl .createRenderbuffer ();
+
+   gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorRenderbuffer);
+   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA8, this .width, this .height);
+
+   this .depthRenderbuffer = gl .createRenderbuffer ();
+
+   gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthRenderbuffer);
+   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .DEPTH_COMPONENT16, this .width, this .height);
+
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
+   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .colorRenderbuffer);
+   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT,  gl .RENDERBUFFER, this .depthRenderbuffer);
+
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+
+   // Always check that our framebuffer is ok.
+
+   if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE)
+      return;
+
+   throw new Error ("Couldn't create frame buffer.");
+}
+
+MultiSampleFrameBuffer .prototype =
+{
+   constructor: MultiSampleFrameBuffer,
+   getWidth: function ()
+   {
+      return this .width;
+   },
+   getHeight: function ()
+   {
+      return this .height;
+   },
+   bind: function ()
+   {
+      const gl = this .browser .getContext ();
+
+      this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
+   },
+   unbind: function ()
+   {
+      const gl = this .browser .getContext ();
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+   },
+   blit: function ()
+   {
+      const gl = this .browser .getContext ();
+
+      gl .viewport (0, 0, this .width, this .height);
+      gl .scissor  (0, 0, this .width, this .height);
+
+      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .framebuffer);
+      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
+
+      gl .blitFramebuffer (0, 0, this .width, this .height,
+                           0, 0, this .width, this .height,
+                           gl .COLOR_BUFFER_BIT, gl .LINEAR);
+   },
+   dispose: function ()
+   {
+      const gl = this .browser .getContext ();
+
+      gl .deleteFramebuffer (this .framebuffer);
+      gl .deleteRenderbuffer (this .colorRenderbuffer);
+      gl .deleteRenderbuffer (this .depthRenderbuffer);
+   },
+};
+
+const Fallback = {
+   bind: Function .prototype,
+   unbind: Function .prototype,
+   blit: Function .prototype,
+   dispose: Function .prototype,
+};
+
+const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
+;
+
+x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
+/* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(563);
+/* provided dependency */ var ResizeSensor = __webpack_require__(10);
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
 const
    _viewport     = Symbol (),
    _localObjects = Symbol (),
@@ -74442,7 +74619,7 @@ X3DRenderingContext .prototype =
       //https://github.com/sdecima/javascript-detect-element-resize
       this [_resizer] = new ResizeSensor (this .getSurface (), this .reshape .bind (this));
 
-			this .getSurface () .css ("position", ""); // Reset position, set from ResizeSensor.
+		this .getSurface () .css ("position", ""); // Reset position, set from ResizeSensor.
 
       this .reshape ();
    },
@@ -74484,7 +74661,13 @@ X3DRenderingContext .prototype =
    {
       const gl = this .getContext ();
 
-      return gl .getParameter (gl .SAMPLES) > 0;
+      return gl .getParameter (gl .SAMPLES) > 0 || (gl .getVersion () > 1 && this .getNumSamples () > 0);
+   },
+   getMaxSamples: function ()
+   {
+      const gl = this .getContext ();
+
+      return gl .getParameter (gl .MAX_SAMPLES);
    },
    getMaxClipPlanes: function ()
    {
@@ -74541,16 +74724,12 @@ X3DRenderingContext .prototype =
 
       return shaderNode;
    },
-   getContentScale: function ()
-   {
-      return parseInt (this .getElement () .attr ("contentScale")) || 1;
-   },
    reshape: function ()
    {
       const
-         gl           = this .getContext (),
          $canvas      = this .getCanvas (),
          contentScale = this .getContentScale (),
+         samples      = this .getNumSamples (),
          width        = $canvas .width () * contentScale,
          height       = $canvas .height () * contentScale,
          canvas       = $canvas [0];
@@ -74561,8 +74740,10 @@ X3DRenderingContext .prototype =
       this [_viewport] [2] = width;
       this [_viewport] [3] = height;
 
-      gl .viewport (0, 0, width, height);
-      gl .scissor  (0, 0, width, height);
+      if (this .frameBuffer)
+         this .frameBuffer .dispose ();
+
+      this .frameBuffer = new Rendering_MultiSampleFrameBuffer (this, width, height, samples);
 
       this .addBrowserEvent ();
    },
@@ -74881,7 +75062,7 @@ getHatchColor (vec4 color)
 
    if (x3d_FillProperties .hatched)
    {
-      vec4 hatch = texture2D (x3d_FillProperties .texture, gl_FragCoord .xy / 32.0);
+      vec4 hatch = texture2D (x3d_FillProperties .texture, gl_FragCoord .xy / (32.0 * x3d_FillProperties .scale));
 
       hatch .rgb *= x3d_FillProperties .hatchColor;
       finalColor  = mix (finalColor, hatch, hatch .a);
@@ -76371,7 +76552,7 @@ getHatchColor (vec4 color)
 
    if (x3d_FillProperties .hatched)
    {
-      vec4 hatch = texture (x3d_FillProperties .texture, gl_FragCoord .xy / 32.0);
+      vec4 hatch = texture (x3d_FillProperties .texture, gl_FragCoord .xy / (32.0 * x3d_FillProperties .scale));
 
       hatch .rgb *= x3d_FillProperties .hatchColor;
       finalColor  = mix (finalColor, hatch, hatch .a);
@@ -80058,7 +80239,6 @@ X3DProgrammableShaderObject .prototype =
       this .x3d_PointPropertiesPointSizeMaxValue    = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeMaxValue");
       this .x3d_PointPropertiesAttenuation          = gl .getUniformLocation (program, "x3d_PointProperties.attenuation");
 
-      this .x3d_LinePropertiesApplied  = gl .getUniformLocation (program, "x3d_LineProperties.applied");
       this .x3d_LinePropertiesLinetype = gl .getUniformLocation (program, "x3d_LineProperties.linetype");
       this .x3d_LineStippleScale       = gl .getUniformLocation (program, "x3d_LineProperties.lineStippleScale");
       this .x3d_LinePropertiesTexture  = gl .getUniformLocation (program, "x3d_LineProperties.texture");
@@ -80067,6 +80247,7 @@ X3DProgrammableShaderObject .prototype =
       this .x3d_FillPropertiesHatched    = gl .getUniformLocation (program, "x3d_FillProperties.hatched");
       this .x3d_FillPropertiesHatchColor = gl .getUniformLocation (program, "x3d_FillProperties.hatchColor");
       this .x3d_FillPropertiesTexture    = gl .getUniformLocation (program, "x3d_FillProperties.texture");
+      this .x3d_FillPropertiesScale      = gl .getUniformLocation (program, "x3d_FillProperties.scale");
 
       for (let i = 0; i < maxLights; ++ i)
       {
@@ -80215,8 +80396,6 @@ X3DProgrammableShaderObject .prototype =
       /*
        * Fill uniforms with defaults.
        */
-
-      gl .uniform1f (this .x3d_LineStippleScale, browser .getLineStippleScale ());
 
       // Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
@@ -81823,7 +82002,6 @@ struct x3d_PointPropertiesParameters
 #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
 struct x3d_LinePropertiesParameters
 {
-   bool          applied;
    mediump int   linetype;
    mediump float lineStippleScale;
    sampler2D     texture;
@@ -81835,10 +82013,11 @@ struct x3d_LinePropertiesParameters
 #if (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)) && defined (X3D_STYLE_PROPERTIES)
 struct x3d_FillPropertiesParameters
 {
-   bool         filled;
-   bool         hatched;
-   mediump vec3 hatchColor;
-   sampler2D    texture;
+   bool          filled;
+   bool          hatched;
+   mediump vec3  hatchColor;
+   sampler2D     texture;
+   mediump float scale;
 };
 #endif
 
@@ -83279,6 +83458,11 @@ Appearance .prototype = Object .assign (Object .create (Shape_X3DAppearanceNode.
    {
       Shape_X3DAppearanceNode.prototype.initialize.call (this);
 
+      const browser = this .getBrowser ();
+
+      browser ._contentScale .addInterest ("set_pointProperties__", this);
+      browser ._contentScale .addInterest ("set_applied__",         this);
+
       this ._alphaMode  		.addInterest ("set_alphaMode__",        this);
       this ._alphaCutoff  		.addInterest ("set_alphaCutoff__",      this);
       this ._pointProperties  .addInterest ("set_pointProperties__",  this);
@@ -83386,7 +83570,12 @@ Appearance .prototype = Object .assign (Object .create (Shape_X3DAppearanceNode.
    },
    set_pointProperties__: function ()
    {
+      const browser = this .getBrowser ();
+
       this .stylePropertiesNode [0] = Base_X3DCast (Base_X3DConstants.PointProperties, this ._pointProperties);
+
+      if (! this .stylePropertiesNode [0] && browser .getContentScale () !== 1)
+         this .stylePropertiesNode [0] = browser .getDefaultPointProperties ();
    },
    set_lineProperties__: function ()
    {
@@ -83402,10 +83591,12 @@ Appearance .prototype = Object .assign (Object .create (Shape_X3DAppearanceNode.
    },
    set_applied__: function ()
    {
+      const browser = this .getBrowser ();
+
       if (this .linePropertiesNode && this .linePropertiesNode ._applied .getValue ())
          this .stylePropertiesNode [1] = this .linePropertiesNode;
       else
-         this .stylePropertiesNode [1] = null;
+         this .stylePropertiesNode [1] = browser .getContentScale () !== 1 ? browser .getDefaultLineProperties () : null;
    },
    set_fillProperties__: function ()
    {
@@ -83594,6 +83785,340 @@ const Appearance_default_ = Appearance;
 
 x_ite_Namespace.set ("x_ite/Components/Shape/Appearance", Appearance_default_);
 /* harmony default export */ const Shape_Appearance = (Appearance_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/PointProperties.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+function PointProperties (executionContext)
+{
+   Shape_X3DAppearanceChildNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.PointProperties);
+
+   this .attenuation = new Float32Array (3);
+}
+
+PointProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceChildNode.prototype),
+{
+   constructor: PointProperties,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeScaleFactor", new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeMinValue",    new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeMaxValue",    new x_ite_Fields.SFFloat (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "attenuation",          new x_ite_Fields.MFFloat (1, 0, 0)),
+   ]),
+   getTypeName: function ()
+   {
+      return "PointProperties";
+   },
+   getComponentName: function ()
+   {
+      return "Shape";
+   },
+   getContainerField: function ()
+   {
+      return "pointProperties";
+   },
+   initialize: function ()
+   {
+      Shape_X3DAppearanceChildNode.prototype.initialize.call (this);
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      this .pointSizeRange = gl .getParameter (gl .ALIASED_POINT_SIZE_RANGE);
+
+      browser ._contentScale .addInterest ("set_pointSizeScaleFactor__", this);
+      browser ._contentScale .addInterest ("set_pointSizeMinValue__",    this);
+      browser ._contentScale .addInterest ("set_pointSizeMaxValue__",    this);
+
+      this ._pointSizeScaleFactor .addInterest ("set_pointSizeScaleFactor__", this);
+      this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
+      this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
+      this ._attenuation          .addInterest ("set_attenuation__",          this);
+
+      this .set_pointSizeScaleFactor__ ();
+      this .set_pointSizeMinValue__ ();
+      this .set_pointSizeMaxValue__ ();
+      this .set_attenuation__ ();
+   },
+   getPointSize: function (point)
+   {
+      const
+         attenuation  = this .attenuation,
+         dL           = point .magnitude ();
+
+      let pointSize = this .pointSizeScaleFactor;
+
+      pointSize /= attenuation [0] + attenuation [1] * dL + attenuation [2] * (dL * dL);
+      pointSize  = Algorithm.clamp (pointSize, this .pointSizeMinValue, this .pointSizeMaxValue);
+
+      return pointSize;
+   },
+   set_pointSizeScaleFactor__: function ()
+   {
+      const contentScale = this .getBrowser () .getContentScale ();
+
+      this .pointSizeScaleFactor = Math .max (this ._pointSizeScaleFactor .getValue (), 0) * contentScale;
+   },
+   set_pointSizeMinValue__: function ()
+   {
+      const contentScale = this .getBrowser () .getContentScale ();
+
+      this .pointSizeMinValue = Algorithm.clamp (this ._pointSizeMinValue .getValue (), 0, this .pointSizeRange [1]) * contentScale;
+   },
+   set_pointSizeMaxValue__: function ()
+   {
+      const contentScale = this .getBrowser () .getContentScale ();
+
+      this .pointSizeMaxValue = Algorithm.clamp (this ._pointSizeMaxValue .getValue (), 0, this .pointSizeRange [1]) * contentScale;
+   },
+   set_attenuation__: function ()
+   {
+      const length = this ._attenuation .length;
+
+      this .attenuation [0] = length > 0 ? Math .max (0, this ._attenuation [0]) : 1;
+      this .attenuation [1] = length > 1 ? Math .max (0, this ._attenuation [1]) : 0;
+      this .attenuation [2] = length > 2 ? Math .max (0, this ._attenuation [2]) : 0;
+   },
+   setShaderUniforms: function (gl, shaderObject)
+   {
+      gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeScaleFactor, this .pointSizeScaleFactor);
+      gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMinValue,    this .pointSizeMinValue);
+      gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMaxValue,    this .pointSizeMaxValue);
+      gl .uniform3fv (shaderObject .x3d_PointPropertiesAttenuation,          this .attenuation);
+   },
+});
+
+const PointProperties_default_ = PointProperties;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Shape/PointProperties", PointProperties_default_);
+/* harmony default export */ const Shape_PointProperties = (PointProperties_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/LineProperties.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function LineProperties (executionContext)
+{
+   Shape_X3DAppearanceChildNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.LineProperties);
+}
+
+LineProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceChildNode.prototype),
+{
+   constructor: LineProperties,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "applied",              new x_ite_Fields.SFBool (true)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "linetype",             new x_ite_Fields.SFInt32 (1)),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "linewidthScaleFactor", new x_ite_Fields.SFFloat ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "LineProperties";
+   },
+   getComponentName: function ()
+   {
+      return "Shape";
+   },
+   getContainerField: function ()
+   {
+      return "lineProperties";
+   },
+   initialize: function ()
+   {
+      Shape_X3DAppearanceChildNode.prototype.initialize.call (this);
+
+      const browser = this .getBrowser ();
+
+      browser ._contentScale .addInterest ("set_linewidthScaleFactor__", this);
+
+      this ._applied              .addInterest ("set_applied__",              this);
+      this ._linetype             .addInterest ("set_linetype__",             this);
+      this ._linewidthScaleFactor .addInterest ("set_linewidthScaleFactor__", this);
+
+      this .set_applied__ ();
+      this .set_linetype__ ();
+      this .set_linewidthScaleFactor__ ();
+
+      // Preload texture.
+      this .getBrowser () .getLinetypeTexture ();
+   },
+   getApplied: function ()
+   {
+      return this .applied;
+   },
+   getLinetype: function ()
+   {
+      return this .linetype;
+   },
+   getLinewidthScaleFactor: function ()
+   {
+      return this .linewidthScaleFactor;
+   },
+   getTransformLines: function ()
+   {
+      return this .transformLines;
+   },
+   set_applied__: function ()
+   {
+      this .applied = this ._applied .getValue ();
+   },
+   set_linetype__: function ()
+   {
+      let linetype = this ._linetype .getValue ();
+
+      if (linetype < 1 || linetype > 16)
+         linetype = 1;
+
+      this .linetype = linetype;
+   },
+   set_linewidthScaleFactor__: function ()
+   {
+      const
+         browser      = this .getBrowser (),
+         gl           = browser .getContext (),
+         contentScale = browser .getContentScale ();
+
+      this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ()) * contentScale;
+      this .transformLines       = gl .HAS_FEATURE_TRANSFORMED_LINES && this .linewidthScaleFactor > 1;
+   },
+   setShaderUniforms: function (gl, shaderObject)
+   {
+      const browser = this .getBrowser ();
+
+      if (this .applied)
+      {
+         const textureUnit = browser .getTexture2DUnit ();
+
+         gl .lineWidth (this .linewidthScaleFactor);
+         gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, this .linetype);
+         gl .uniform1f (shaderObject .x3d_LineStippleScale,       browser .getLineStippleScale ());
+
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, browser .getLinetypeTexture () .getTexture ());
+         gl .uniform1i (shaderObject .x3d_LinePropertiesTexture, textureUnit);
+      }
+      else
+      {
+         gl .lineWidth (browser .getContentScale ());
+         gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, 16);
+         gl .uniform1f (shaderObject .x3d_LineStippleScale,       1);
+      }
+   },
+});
+
+const LineProperties_default_ = LineProperties;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Shape/LineProperties", LineProperties_default_);
+/* harmony default export */ const Shape_LineProperties = (LineProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/X3DMaterialNode.js
 /*******************************************************************************
  *
@@ -84292,11 +84817,14 @@ x_ite_Namespace.set ("x_ite/Components/Shape/UnlitMaterial", UnlitMaterial_defau
 
 
 
+
+
 const
-   _lineStippleScale          = Symbol (),
    _linetypeTextures          = Symbol (),
    _hatchStyleTextures        = Symbol (),
    _defaultAppearance         = Symbol (),
+   _defaultPointProperties    = Symbol (),
+   _defaultLineProperties     = Symbol (),
    _defaultMaterial           = Symbol (),
    _lineFillTextureProperties = Symbol (),
    _lineTransformShaderNode   = Symbol (),
@@ -84305,7 +84833,6 @@ const
 function X3DShapeContext ()
 {
    this [_hatchStyleTextures] = [ ];
-   this [_lineStippleScale]   = 1 / (this .getPixelPerPoint () * 32); // 32px
 }
 
 X3DShapeContext .prototype =
@@ -84326,7 +84853,32 @@ X3DShapeContext .prototype =
    },
    getLineStippleScale: function ()
    {
-      return this [_lineStippleScale];
+      return 1 / (this .getPixelPerPoint () * 32); // 32px
+   },
+   getDefaultPointProperties: function ()
+   {
+      this [_defaultPointProperties] = new Shape_PointProperties (this .getPrivateScene ());
+      this [_defaultPointProperties] .setPrivate (true);
+      this [_defaultPointProperties] .setup ();
+
+      this .getDefaultPointProperties = function () { return this [_defaultPointProperties]; };
+
+      Object .defineProperty (this, "getDefaultPointProperties", { enumerable: false });
+
+      return this [_defaultPointProperties];
+   },
+   getDefaultLineProperties: function ()
+   {
+      this [_defaultLineProperties] = new Shape_LineProperties (this .getPrivateScene ());
+      this [_defaultLineProperties] ._applied = false;
+      this [_defaultLineProperties] .setPrivate (true);
+      this [_defaultLineProperties] .setup ();
+
+      this .getDefaultLineProperties = function () { return this [_defaultLineProperties]; };
+
+      Object .defineProperty (this, "getDefaultLineProperties", { enumerable: false });
+
+      return this [_defaultLineProperties];
    },
    getDefaultMaterial: function ()
    {
@@ -85383,7 +85935,7 @@ const X3DRoutingContext_default_ = X3DRoutingContext;
 x_ite_Namespace.set ("x_ite/Routing/X3DRoutingContext", X3DRoutingContext_default_);
 /* harmony default export */ const Routing_X3DRoutingContext = (X3DRoutingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowserContext.js
-/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(878);
+/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -85666,9 +86218,11 @@ X3DBrowserContext .prototype = Object .assign (Object .create (Base_X3DBaseNode.
       this [_processEvents] ();
 
       const t3 = Date .now ();
+      this .frameBuffer .bind ();
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
       this [_world] .traverse (Rendering_TraverseType.DISPLAY, null);
+      this .frameBuffer .blit ();
       this [_displayTime] = Date .now () - t3;
 
       this [_browserTime]     = Date .now () - t0;
@@ -100654,14 +101208,16 @@ X3DPointGeometryNode_X3DLineGeometryNode .prototype = Object .assign (Object .cr
       return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
       {
          const
+            browser             = this .getBrowser (),
+            contentScale        = browser .getContentScale (),
             modelViewMatrix     = renderObject .getModelViewMatrix () .get (),
             viewport            = renderObject .getViewVolume () .getViewport (),
             extents             = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),
             pointPropertiesNode = appearanceNode .getPointProperties (),
-            pointSize1          = Math .max (1.5, pointPropertiesNode ? pointPropertiesNode .getPointSize (min) / 2 : 1),
+            pointSize1          = Math .max (1.5, pointPropertiesNode ? pointPropertiesNode .getPointSize (min) / 2 : contentScale),
             screenScale1        = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
             offsets1            = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (pointSize1)),
-            pointSize2          = Math .max (1.5, pointPropertiesNode ? pointPropertiesNode .getPointSize (max) / 2 : 1),
+            pointSize2          = Math .max (1.5, pointPropertiesNode ? pointPropertiesNode .getPointSize (max) / 2 : contentScale),
             screenScale2        = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
             offsets2            = invModelViewMatrix .multDirMatrix (screenScale2 .multiply (pointSize2));
 
@@ -102684,6 +103240,7 @@ FillProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
             textureUnit = browser .getTexture2DUnit ();
 
          gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
+         gl .uniform1f  (shaderObject .x3d_FillPropertiesScale,      browser .getContentScale ());
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
@@ -102697,170 +103254,6 @@ const FillProperties_default_ = FillProperties;
 
 x_ite_Namespace.set ("x_ite/Components/Shape/FillProperties", FillProperties_default_);
 /* harmony default export */ const Shape_FillProperties = (FillProperties_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/LineProperties.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-function LineProperties (executionContext)
-{
-   Shape_X3DAppearanceChildNode.call (this, executionContext);
-
-   this .addType (Base_X3DConstants.LineProperties);
-}
-
-LineProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceChildNode.prototype),
-{
-   constructor: LineProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "applied",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "linetype",             new x_ite_Fields.SFInt32 (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "linewidthScaleFactor", new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LineProperties";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "lineProperties";
-   },
-   initialize: function ()
-   {
-      Shape_X3DAppearanceChildNode.prototype.initialize.call (this);
-
-      this ._applied              .addInterest ("set_applied__",              this);
-      this ._linetype             .addInterest ("set_linetype__",             this);
-      this ._linewidthScaleFactor .addInterest ("set_linewidthScaleFactor__", this);
-
-      this .set_applied__ ();
-      this .set_linetype__ ();
-      this .set_linewidthScaleFactor__ ();
-
-      // Preload texture.
-      this .getBrowser () .getLinetypeTexture ();
-   },
-   getApplied: function ()
-   {
-      return this .applied;
-   },
-   getLinetype: function ()
-   {
-      return this .linetype;
-   },
-   getLinewidthScaleFactor: function ()
-   {
-      return this .linewidthScaleFactor;
-   },
-   getTransformLines: function ()
-   {
-      return this .transformLines;
-   },
-   set_applied__: function ()
-   {
-      this .applied = this ._applied .getValue ();
-   },
-   set_linetype__: function ()
-   {
-      let linetype = this ._linetype .getValue ();
-
-      if (linetype < 1 || linetype > 16)
-         linetype = 1;
-
-      this .linetype = linetype;
-   },
-   set_linewidthScaleFactor__: function ()
-   {
-      const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
-
-      this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ());
-      this .transformLines       = gl .HAS_FEATURE_TRANSFORMED_LINES && this .linewidthScaleFactor > 1;
-   },
-   setShaderUniforms: function (gl, shaderObject)
-   {
-      if (this .applied)
-      {
-         const
-            browser     = this .getBrowser (),
-            textureUnit = browser .getTexture2DUnit ();
-
-         gl .lineWidth (this .linewidthScaleFactor);
-         gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,  true);
-         gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, this .linetype);
-
-         gl .activeTexture (gl .TEXTURE0 + textureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, browser .getLinetypeTexture () .getTexture ());
-         gl .uniform1i (shaderObject .x3d_LinePropertiesTexture, textureUnit);
-      }
-      else
-      {
-         gl .lineWidth (1);
-         gl .uniform1i (shaderObject .x3d_LinePropertiesApplied, false);
-      }
-   },
-});
-
-const LineProperties_default_ = LineProperties;
-;
-
-x_ite_Namespace.set ("x_ite/Components/Shape/LineProperties", LineProperties_default_);
-/* harmony default export */ const Shape_LineProperties = (LineProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Material.js
 /*******************************************************************************
  *
@@ -103539,158 +103932,6 @@ const PhysicalMaterial_default_ = PhysicalMaterial;
 
 x_ite_Namespace.set ("x_ite/Components/Shape/PhysicalMaterial", PhysicalMaterial_default_);
 /* harmony default export */ const Shape_PhysicalMaterial = (PhysicalMaterial_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/PointProperties.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-
-function PointProperties (executionContext)
-{
-   Shape_X3DAppearanceChildNode.call (this, executionContext);
-
-   this .addType (Base_X3DConstants.PointProperties);
-
-   this .attenuation = new Float32Array (3);
-}
-
-PointProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceChildNode.prototype),
-{
-   constructor: PointProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeScaleFactor", new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeMinValue",    new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeMaxValue",    new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "attenuation",          new x_ite_Fields.MFFloat (1, 0, 0)),
-   ]),
-   getTypeName: function ()
-   {
-      return "PointProperties";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "pointProperties";
-   },
-   initialize: function ()
-   {
-      Shape_X3DAppearanceChildNode.prototype.initialize.call (this);
-
-      const gl = this .getBrowser () .getContext ();
-
-      this .pointSizeRange = gl .getParameter (gl .ALIASED_POINT_SIZE_RANGE);
-
-      this ._pointSizeScaleFactor .addInterest ("set_pointSizeScaleFactor__", this);
-      this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
-      this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
-      this ._attenuation          .addInterest ("set_attenuation__",          this);
-
-      this .set_pointSizeScaleFactor__ ();
-      this .set_pointSizeMinValue__ ();
-      this .set_pointSizeMaxValue__ ();
-      this .set_attenuation__ ();
-   },
-   getPointSize: function (point)
-   {
-      const
-         attenuation = this .attenuation,
-         dL          = point .magnitude ();
-
-      let pointSize = this .pointSizeScaleFactor;
-
-      pointSize /= attenuation [0] + attenuation [1] * dL + attenuation [2] * (dL * dL);
-      pointSize  = Algorithm.clamp (pointSize, this .pointSizeMinValue, this .pointSizeMaxValue);
-
-      return pointSize;
-   },
-   set_pointSizeScaleFactor__: function ()
-   {
-      this .pointSizeScaleFactor = Math .max (this ._pointSizeScaleFactor .getValue (), 0);
-   },
-   set_pointSizeMinValue__: function ()
-   {
-      this .pointSizeMinValue = Algorithm.clamp (this ._pointSizeMinValue .getValue (), 0, this .pointSizeRange [1]);
-   },
-   set_pointSizeMaxValue__: function ()
-   {
-      this .pointSizeMaxValue = Algorithm.clamp (this ._pointSizeMaxValue .getValue (), 0, this .pointSizeRange [1]);
-   },
-   set_attenuation__: function ()
-   {
-      const length = this ._attenuation .length;
-
-      this .attenuation [0] = length > 0 ? Math .max (0, this ._attenuation [0]) : 1;
-      this .attenuation [1] = length > 1 ? Math .max (0, this ._attenuation [1]) : 0;
-      this .attenuation [2] = length > 2 ? Math .max (0, this ._attenuation [2]) : 0;
-   },
-   setShaderUniforms: function (gl, shaderObject)
-   {
-      gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeScaleFactor, this .pointSizeScaleFactor);
-      gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMinValue,    this .pointSizeMinValue);
-      gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMaxValue,    this .pointSizeMaxValue);
-      gl .uniform3fv (shaderObject .x3d_PointPropertiesAttenuation, this .attenuation);
-   },
-});
-
-const PointProperties_default_ = PointProperties;
-;
-
-x_ite_Namespace.set ("x_ite/Components/Shape/PointProperties", PointProperties_default_);
-/* harmony default export */ const Shape_PointProperties = (PointProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/TwoSidedMaterial.js
 /*******************************************************************************
  *
@@ -104482,7 +104723,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(878);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107297,8 +107538,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(878);
-/* provided dependency */ var SuperGif = __webpack_require__(165);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(563);
+/* provided dependency */ var SuperGif = __webpack_require__(802);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108260,7 +108501,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(878);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108963,7 +109204,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(878);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(563);
 /*******************************************************************************
  * MIT License
  *
@@ -110200,7 +110441,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(878);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110334,6 +110575,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
                       "      Shading language: " + this .getShadingLanguageVersion () + "\n" +
                       "   Rendering Properties\n" +
                       "      Antialiased: " + this .getAntialiased () + "\n" +
+                      "      Max samples: " + this .getMaxSamples () + "\n" +
                       "      Depth size: " + this .getDepthSize () + " bits\n" +
                       "      Color depth: " + this .getColorDepth () + " bits\n" +
                       "      Max clip planes per shape: " + this .getMaxClipPlanes () + "\n" +
@@ -111098,7 +111340,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(878);
+/* provided dependency */ var Fallback_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111148,7 +111390,7 @@ x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 
 // Everything went wrong when the Error function is called.
 
-const Fallback =
+const Fallback_Fallback =
 {
    error: function (error, fallbacks)
    {
@@ -111183,7 +111425,7 @@ const Fallback =
    },
 };
 
-const Fallback_default_ = Fallback;
+const Fallback_default_ = Fallback_Fallback;
 ;
 
 x_ite_Namespace.set ("x_ite/Fallback", Fallback_default_);
@@ -111277,14 +111519,14 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(878);
+/* provided dependency */ var jquery_$ = __webpack_require__(563);
 const jquery_default_ = jquery_$;
 ;
 
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(878);
+/* provided dependency */ var X3D_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111539,7 +111781,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(878);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(563);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111630,6 +111872,7 @@ class X3DCanvas extends HTMLElement
    {
       return [
          "contentscale",
+         "multisampling",
          "splashscreen",
          "src",
          "url",

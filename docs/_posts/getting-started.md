@@ -650,11 +650,15 @@ A Boolean value (`true` or `false`) to indicate whether files transferred over t
 
 ### contentScale
 
-A Float value that determines how much higher is the physical resolution of the internal \<canvas\> element. The default value for the *contentScale* attribute is 1.0, which is good for most cases. A higher value, typical 2.0, will increase the resolution of the internal \<canvas\> element and can be uses to increase the antialiasing effect, thus making the rendered image sharper.
+A Float value that determines how much higher is the physical resolution of the internal \<canvas\> element. The default value for the *contentScale* attribute is 1.0, which is sufficient for most cases. A higher value, typical 2.0, will increase the resolution of the internal \<canvas\> element and can be uses to increase the antialiasing effect, thus making the rendered image sharper. If the value is set to "auto", then contentScale will match window.devicePixelRatio.
 
 ### contextMenu
 
 A Boolean value (`true` or `false`) to indicate whether a context menu should be displayed on right click. The default value for the *contextMenu* attribute is `true`. The context menu can also be extended, [see here](#extending-the-context-menu).
+
+### multisampling
+
+A Integer value that sets the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of antialiasing.
 
 ### notifications
 

@@ -767,6 +767,8 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
       // Calculate rectangleSize
 
       var
+         browser             = this .getBrowser (),
+         contentScale        = browser .getContentScale (),
          matrix              = this .matrix,
          viewpoint           = renderObject .getViewpoint (),
          nearValue           = renderObject .getNavigationInfo () .getNearValue (),       // in meters
@@ -778,8 +780,8 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
          rectangleSize       = this .rectangleSize,
          rectangleCenter     = this .rectangleCenter;
 
-      viewportPixel .set (viewport [2], viewport [3]);                                 // in pixel
-      pixelSize     .assign (viewportMeter) .divVec (viewportPixel);                   // size of one pixel in meter
+      viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale);             // in pixel
+      pixelSize     .assign (viewportMeter) .divVec (viewportPixel);                      // size of one pixel in meter
 
       switch (this .getSizeUnitX ())
       {
@@ -1769,6 +1771,12 @@ ScreenFontStyle .prototype = Object .assign (Object .create ((X3DFontStyleNode_d
    getContainerField: function ()
    {
       return "fontStyle";
+   },
+   initialize: function ()
+   {
+      X3DFontStyleNode_default().prototype.initialize.call (this);
+
+      this .getBrowser () ._contentScale .addInterest ("addNodeEvent", this);
    },
    getTextGeometry: function (text)
    {
