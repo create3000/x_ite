@@ -200,12 +200,13 @@ X3DRenderingContext .prototype =
    reshape: function ()
    {
       const
-         gl      = this .getContext (),
-         jCanvas = this .getCanvas (),
-         width   = jCanvas .width (),
-         height  = jCanvas .height (),
-         canvas  = jCanvas [0],
-         samples = this .getNumSamples ();
+         gl           = this .getContext (),
+         $canvas      = this .getCanvas (),
+         contentScale = this .getContentScale (),
+         samples      = this .getNumSamples (),
+         width        = $canvas .width () * contentScale,
+         height       = $canvas .height () * contentScale,
+         canvas       = $canvas [0];
 
       canvas .width  = width;
       canvas .height = height;

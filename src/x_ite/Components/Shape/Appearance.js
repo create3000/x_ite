@@ -100,6 +100,11 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
    {
       X3DAppearanceNode .prototype .initialize .call (this);
 
+      const browser = this .getBrowser ();
+
+      browser ._contentScale .addInterest ("set_pointProperties__", this);
+      browser ._contentScale .addInterest ("set_applied__",         this);
+
       this ._alphaMode  		.addInterest ("set_alphaMode__",        this);
       this ._alphaCutoff  		.addInterest ("set_alphaCutoff__",      this);
       this ._pointProperties  .addInterest ("set_pointProperties__",  this);
@@ -207,7 +212,12 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
    },
    set_pointProperties__: function ()
    {
+      const browser = this .getBrowser ();
+
       this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this ._pointProperties);
+
+      if (! this .stylePropertiesNode [0] && browser .getContentScale () !== 1)
+         this .stylePropertiesNode [0] = browser .getDefaultPointProperties ();
    },
    set_lineProperties__: function ()
    {
@@ -223,10 +233,12 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
    },
    set_applied__: function ()
    {
+      const browser = this .getBrowser ();
+
       if (this .linePropertiesNode && this .linePropertiesNode ._applied .getValue ())
          this .stylePropertiesNode [1] = this .linePropertiesNode;
       else
-         this .stylePropertiesNode [1] = null;
+         this .stylePropertiesNode [1] = browser .getContentScale () !== 1 ? browser .getDefaultLineProperties () : null;
    },
    set_fillProperties__: function ()
    {

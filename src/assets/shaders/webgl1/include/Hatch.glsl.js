@@ -10,7 +10,7 @@ getHatchColor (vec4 color)
 
    if (x3d_FillProperties .hatched)
    {
-      vec4 hatch = texture2D (x3d_FillProperties .texture, gl_FragCoord .xy / 32.0);
+      vec4 hatch = texture2D (x3d_FillProperties .texture, gl_FragCoord .xy / (32.0 * x3d_FillProperties .scale));
 
       hatch .rgb *= x3d_FillProperties .hatchColor;
       finalColor  = mix (finalColor, hatch, hatch .a);

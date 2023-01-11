@@ -86,6 +86,12 @@ ScreenFontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .p
    {
       return "fontStyle";
    },
+   initialize: function ()
+   {
+      X3DFontStyleNode .prototype .initialize .call (this);
+
+      this .getBrowser () ._contentScale .addInterest ("addNodeEvent", this);
+   },
    getTextGeometry: function (text)
    {
       return new ScreenText (text, this);

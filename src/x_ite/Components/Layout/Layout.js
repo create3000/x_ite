@@ -446,6 +446,8 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
       // Calculate rectangleSize
 
       var
+         browser             = this .getBrowser (),
+         contentScale        = browser .getContentScale (),
          matrix              = this .matrix,
          viewpoint           = renderObject .getViewpoint (),
          nearValue           = renderObject .getNavigationInfo () .getNearValue (),       // in meters
@@ -457,8 +459,8 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
          rectangleSize       = this .rectangleSize,
          rectangleCenter     = this .rectangleCenter;
 
-      viewportPixel .set (viewport [2], viewport [3]);                                 // in pixel
-      pixelSize     .assign (viewportMeter) .divVec (viewportPixel);                   // size of one pixel in meter
+      viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale);             // in pixel
+      pixelSize     .assign (viewportMeter) .divVec (viewportPixel);                      // size of one pixel in meter
 
       switch (this .getSizeUnitX ())
       {

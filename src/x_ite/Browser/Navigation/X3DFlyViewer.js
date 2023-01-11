@@ -271,6 +271,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
                this .toVector .set (x, 0, -y);
                this .getFlyDirection (this .fromVector, this .toVector, this .direction);
+               this .direction .divide (browser .getContentScale ());
                break;
             }
          }
@@ -284,6 +285,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
             this .toVector  .set (x, y, 0);
             this .direction .assign (this .toVector) .subtract (this .fromVector);
+            this .direction .divide (browser .getContentScale ());
             break;
          }
       }

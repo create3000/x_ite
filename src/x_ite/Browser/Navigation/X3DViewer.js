@@ -104,10 +104,11 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    getPointer: function (event)
    {
       const
-         browser = this .getBrowser (),
-         offset  = browser .getSurface () .offset (),
-         x       = (event .pageX - offset .left),
-         y       = browser .getViewport () [3] - (event .pageY - offset .top);
+         browser      = this .getBrowser (),
+         contentScale = browser .getContentScale (),
+         offset       = browser .getSurface () .offset (),
+         x            = (event .pageX - offset .left) * contentScale,
+         y            = browser .getViewport () [3] - (event .pageY - offset .top) * contentScale;
 
       return [x, y];
    },

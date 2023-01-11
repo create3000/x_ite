@@ -61,10 +61,11 @@ struct x3d_LinePropertiesParameters
 #if (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)) && defined (X3D_STYLE_PROPERTIES)
 struct x3d_FillPropertiesParameters
 {
-   bool         filled;
-   bool         hatched;
-   mediump vec3 hatchColor;
-   sampler2D    texture;
+   bool          filled;
+   bool          hatched;
+   mediump vec3  hatchColor;
+   sampler2D     texture;
+   mediump float scale;
 };
 #endif
 

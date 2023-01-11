@@ -83,6 +83,10 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);
 
+      const browser = this .getBrowser ();
+
+      browser ._contentScale .addInterest ("set_linewidthScaleFactor__", this);
+
       this ._applied              .addInterest ("set_applied__",              this);
       this ._linetype             .addInterest ("set_linetype__",             this);
       this ._linewidthScaleFactor .addInterest ("set_linewidthScaleFactor__", this);
@@ -126,22 +130,24 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
    set_linewidthScaleFactor__: function ()
    {
       const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
+         browser      = this .getBrowser (),
+         gl           = browser .getContext (),
+         contentScale = browser .getContentScale ();
 
-      this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ());
+      this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ()) * contentScale;
       this .transformLines       = gl .HAS_FEATURE_TRANSFORMED_LINES && this .linewidthScaleFactor > 1;
    },
    setShaderUniforms: function (gl, shaderObject)
    {
+      const browser = this .getBrowser ();
+
       if (this .applied)
       {
-         const
-            browser     = this .getBrowser (),
-            textureUnit = browser .getTexture2DUnit ();
+         const textureUnit = browser .getTexture2DUnit ();
 
          gl .lineWidth (this .linewidthScaleFactor);
          gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, this .linetype);
+         gl .uniform1f (shaderObject .x3d_LineStippleScale,       browser .getLineStippleScale ());
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, browser .getLinetypeTexture () .getTexture ());
@@ -149,7 +155,9 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
       }
       else
       {
-         gl .lineWidth (1);
+         gl .lineWidth (browser .getContentScale ());
+         gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, 16);
+         gl .uniform1f (shaderObject .x3d_LineStippleScale,       1);
       }
    },
 });
