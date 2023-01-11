@@ -119,6 +119,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       });
 
       this ._Rubberband             .addInterest ("set_rubberband__",             this);
+      this ._Antialiased            .addInterest ("set_multisampling__",          this);
       this ._PrimitiveQuality       .addInterest ("set_primitiveQuality__",       this);
       this ._TextureQuality         .addInterest ("set_textureQuality__",         this);
       this ._Shading                .addInterest ("set_shading__",                this);
@@ -300,7 +301,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          browser = this .getBrowser (),
          samples = Algorithm .clamp (multisampling .getValue (), 0, browser .getMaxSamples ());
 
-      browser .getRenderingProperties () ._Multisampling = samples;
+      browser .getRenderingProperties () ._Multisampling = this ._Antialiased .getValue () ? samples : 0;
       browser .getRenderingProperties () ._Antialiased   = browser .getAntialiased ();
 
       browser .reshape ();
