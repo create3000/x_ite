@@ -181,7 +181,7 @@ Returns a browser option with the corresponding name.
       </tr>
       <tr>
          <td>PrimitiveQuality</td>
-         <td>Render quality (tesselation level) for Box, Cone, Cylinder, Sphere</td>
+         <td>Render quality (tesselation level) for Box, Cone, Cylinder, Sphere.</td>
          <td>Low, Medium, High</td>
          <td>Medium</td>
       </tr>
@@ -210,6 +210,24 @@ Returns a browser option with the corresponding name.
          <td>Medium</td>
       </tr>
       <tr>
+         <td>Cache</td>
+         <td>Whether or not files should be cached.</td>
+         <td>Boolean</td>
+         <td>true</td>
+      </tr>
+      <tr>
+         <td>ContextMenu</td>
+         <td>Whether or not the context menu can be displayed.</td>
+         <td>Boolean</td>
+         <td>true</td>
+      </tr>
+      <tr>
+         <td>Debug</td>
+         <td>Whether or not debug message should be printed into the console.</td>
+         <td>Boolean</td>
+         <td>false</td>
+      </tr>
+      <tr>
          <td>Gravity</td>
          <td>Default is gravity of Earth. (non standard)</td>
          <td>Number</td>
@@ -217,9 +235,15 @@ Returns a browser option with the corresponding name.
       </tr>
       <tr>
          <td>LogarithmicDepthBuffer</td>
-         <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint is bound. (non standard)</td>
+         <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint is bound. (non standard).</td>
          <td>Boolean</td>
          <td>false</td>
+      </tr>
+      <tr>
+         <td>Notifications</td>
+         <td>Whether or not notifications should be displayed.</td>
+         <td>Boolean</td>
+         <td>true</td>
       </tr>
       <tr>
          <td>StraightenHorizon</td>

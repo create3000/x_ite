@@ -150,7 +150,7 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
 
       if (this .URL .protocol !== "data:")
       {
-         if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+         if (!this .getCache ())
             this .URL .searchParams .set ("_", Date .now ());
       }
 

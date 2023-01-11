@@ -85,7 +85,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
       {
          const
             browser             = this .getBrowser (),
-            contentScale        = browser .getContentScale (),
+            contentScale        = browser .getRenderingProperty ("ContentScale"),
             modelViewMatrix     = renderObject .getModelViewMatrix () .get (),
             viewport            = renderObject .getViewVolume () .getViewport (),
             extents             = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),

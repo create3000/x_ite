@@ -471,7 +471,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
                return;
             }
 
-            if (! this .getBrowserOptions () .getSplashScreen ())
+            if (! this .getBrowserOption ("SplashScreen"))
                this .getCanvas () .show ();
 
             if (scene)

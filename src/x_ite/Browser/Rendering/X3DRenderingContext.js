@@ -124,7 +124,7 @@ X3DRenderingContext .prototype =
    {
       const gl = this .getContext ();
 
-      return gl .getParameter (gl .SAMPLES) > 0 || (gl .getVersion () > 1 && this .getNumSamples () > 0);
+      return gl .getParameter (gl .SAMPLES) > 0 || (gl .getVersion () > 1 && this .getRenderingProperty ("Multisampling") > 0);
    },
    getMaxSamples: function ()
    {
@@ -191,8 +191,8 @@ X3DRenderingContext .prototype =
    {
       const
          $canvas      = this .getCanvas (),
-         contentScale = this .getContentScale (),
-         samples      = this .getNumSamples (),
+         contentScale = this .getRenderingProperty ("ContentScale"),
+         samples      = this .getRenderingProperty ("Multisampling"),
          width        = $canvas .width () * contentScale,
          height       = $canvas .height () * contentScale,
          canvas       = $canvas [0];

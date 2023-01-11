@@ -95,7 +95,7 @@ Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype
    },
    set_string__: function ()
    {
-      if (! this .getBrowser () .getBrowserOptions () .getNotifications ())
+      if (! this .getBrowser () .getBrowserOption ("Notifications"))
          return;
 
       if (this ._string .length === 0)

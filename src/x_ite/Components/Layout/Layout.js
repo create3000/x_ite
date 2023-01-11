@@ -447,7 +447,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
 
       var
          browser             = this .getBrowser (),
-         contentScale        = browser .getContentScale (),
+         contentScale        = browser .getRenderingProperty ("ContentScale"),
          matrix              = this .matrix,
          viewpoint           = renderObject .getViewpoint (),
          nearValue           = renderObject .getNavigationInfo () .getNearValue (),       // in meters

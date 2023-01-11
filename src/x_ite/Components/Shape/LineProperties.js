@@ -85,7 +85,7 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
 
       const browser = this .getBrowser ();
 
-      browser ._contentScale .addInterest ("set_linewidthScaleFactor__", this);
+      browser .getRenderingProperties () ._ContentScale .addInterest ("set_linewidthScaleFactor__", this);
 
       this ._applied              .addInterest ("set_applied__",              this);
       this ._linetype             .addInterest ("set_linetype__",             this);
@@ -132,7 +132,7 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
       const
          browser      = this .getBrowser (),
          gl           = browser .getContext (),
-         contentScale = browser .getContentScale ();
+         contentScale = browser .getRenderingProperty ("ContentScale");
 
       this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ()) * contentScale;
       this .transformLines       = gl .HAS_FEATURE_TRANSFORMED_LINES && this .linewidthScaleFactor > 1;
@@ -155,7 +155,7 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
       }
       else
       {
-         gl .lineWidth (browser .getContentScale ());
+         gl .lineWidth (browser .getRenderingProperty ("ContentScale"));
          gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, 16);
          gl .uniform1f (shaderObject .x3d_LineStippleScale,       1);
       }

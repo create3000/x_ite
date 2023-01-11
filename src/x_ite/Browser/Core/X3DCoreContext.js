@@ -124,11 +124,10 @@ function X3DCoreContext (element)
 
    this [_pixelPerPoint] = 1; // default 72 dpi
 
-   this .addChildObjects ("contentScale", new Fields .SFFloat (1),
-                          "controlKey",   new Fields .SFBool (),
-                          "shiftKey",     new Fields .SFBool (),
-                          "altKey",       new Fields .SFBool (),
-                          "altGrKey",     new Fields .SFBool ());
+   this .addChildObjects ("controlKey", new Fields .SFBool (),
+                          "shiftKey",   new Fields .SFBool (),
+                          "altKey",     new Fields .SFBool (),
+                          "altGrKey",   new Fields .SFBool ());
 }
 
 X3DCoreContext .prototype =
@@ -182,10 +181,6 @@ X3DCoreContext .prototype =
 
       this .getElement () .on ("keydown.X3DCoreContext", this [_keydown] .bind (this));
       this .getElement () .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
-   },
-   getDebug: function ()
-   {
-      return this .getBrowserOptions () .getDebug ();
    },
    getInstanceId: function ()
    {
@@ -268,11 +263,7 @@ X3DCoreContext .prototype =
    },
    getPixelPerPoint: function ()
    {
-      return this [_pixelPerPoint] * this .getContentScale ();
-   },
-   getContentScale: function ()
-   {
-      return this ._contentScale .getValue ();
+      return this [_pixelPerPoint] * this .getRenderingProperty ("ContentScale");
    },
    updateContentScale: function ()
    {
@@ -287,16 +278,7 @@ X3DCoreContext .prototype =
 
       this [_removeUpdateContentScale] = function () { media .removeEventListener ("change", update) };
 
-      this ._contentScale = window .devicePixelRatio;
-   },
-   getNumSamples: function ()
-   {
-      const samples = parseInt (this .getElement () .attr ("multisampling"));
-
-      if (isNaN (samples))
-         return 4;
-
-      return Algorithm .clamp (samples, 0, this .getMaxSamples ());
+      this .getRenderingProperties () ._ContentScale = window .devicePixelRatio;
    },
    connectedCallback: function ()
    {
@@ -306,29 +288,58 @@ X3DCoreContext .prototype =
    },
    attributeChangedCallback: function (name, oldValue, newValue)
    {
-      switch (name .toLowerCase ())
+      switch (name)
       {
+         case "cache":
+         {
+            this .setBrowserOption ("Cache", this .toBoolean (newValue, true));
+            break;
+         }
+         case "contentScale":
          case "contentscale":
          {
             if (this [_removeUpdateContentScale])
                this [_removeUpdateContentScale] ();
 
-            if (this [_element] .attr ("contentScale") === "auto")
+            if (newValue === "auto")
                this .updateContentScale ();
             else
-               this ._contentScale = Math .max (parseFloat (this [_element] .attr ("contentScale")), 0) || 1;
+               this .getRenderingProperties () ._ContentScale = Math .max (parseFloat (newValue), 0) || 1;
 
             this .reshape ();
             break;
          }
+         case "contextMenu":
+         case "contextmenu":
+         {
+            this .setBrowserOption ("ContextMenu", this .toBoolean (newValue, true));
+            break;
+         }
+         case "debug":
+         {
+            this .setBrowserOption ("Debug", this .toBoolean (newValue, false));
+            break;
+         }
          case "multisampling":
          {
+            const samples = parseInt (newValue);
+
+            this .getRenderingProperties () ._Multisampling = isNaN (samples) ? 4 : Algorithm .clamp (samples, 0, this .getMaxSamples ());
+            this .getRenderingProperties () ._Antialiased   = this .getAntialiased ();
             this .reshape ();
             break;
          }
+         case "notifications":
+         {
+            this .setBrowserOption ("Notifications", this .toBoolean (newValue, true));
+            break;
+         }
+         case "splashScreen":
          case "splashscreen":
          {
-            if (newValue .toLowerCase () !== "true")
+            this .setBrowserOption ("SplashScreen", this .toBoolean (newValue, true));
+
+            if (! this .getBrowserOption ("SplashScreen"))
             {
                this .getCanvas () .show ();
                this .getSplashScreen () .stop (true, true) .hide ();
@@ -347,6 +358,18 @@ X3DCoreContext .prototype =
             break;
          }
       }
+   },
+   toBoolean: function  (value, defaultValue)
+   {
+      value = String (value) .toLowerCase ();
+
+      if (value === "true")
+         return true;
+
+      if (value === "false")
+         return false;
+
+      return defaultValue;
    },
    parseUrlAttribute: function (urlCharacters)
    {
@@ -404,7 +427,7 @@ X3DCoreContext .prototype =
          }
          case 49: // 1
          {
-            if (this .getDebug ())
+            if (this .getBrowserOption ("Debug"))
             {
                if (this .getControlKey ())
                {
@@ -418,7 +441,7 @@ X3DCoreContext .prototype =
          }
          case 50: // 2
          {
-            if (this .getDebug ())
+            if (this .getBrowserOption ("Debug"))
             {
                if (this .getControlKey ())
                {
@@ -432,7 +455,7 @@ X3DCoreContext .prototype =
          }
          case 51: // 3
          {
-            if (this .getDebug ())
+            if (this .getBrowserOption ("Debug"))
             {
                if (this .getControlKey ())
                {
@@ -446,7 +469,7 @@ X3DCoreContext .prototype =
          }
          case 52: // 4
          {
-            if (this .getDebug ())
+            if (this .getBrowserOption ("Debug"))
             {
                if (this .getControlKey ())
                {
@@ -460,7 +483,7 @@ X3DCoreContext .prototype =
          }
          case 53: // 5
          {
-            if (this .getDebug ())
+            if (this .getBrowserOption ("Debug"))
             {
                if (this .getControlKey ())
                {
@@ -474,7 +497,7 @@ X3DCoreContext .prototype =
          }
          case 83: // s
          {
-            if (this .getDebug ())
+            if (this .getBrowserOption ("Debug"))
             {
                if (this .getControlKey ())
                {

@@ -96,7 +96,7 @@ X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    },
    getCache: function ()
    {
-      return true;
+      return this .getBrowser () .getBrowserOption ("Cache");
    },
    getLayerSet: function ()
    {

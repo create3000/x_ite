@@ -122,7 +122,7 @@ X3DUrlObject .prototype =
    },
    getCache: function ()
    {
-      return this [_cache];
+      return this [_cache] && this .getBrowser () .getBrowserOption ("Cache");
    },
    requestImmediateLoad: function (cache = true)
    {

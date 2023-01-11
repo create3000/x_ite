@@ -582,7 +582,7 @@ The HTML5 page is quite easy to create, the HTML5 code below shows you the minim
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8">
     <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
     <style>
 x3d-canvas {
@@ -642,7 +642,7 @@ For example, we could provide a text description of the X3D element or provide a
 
 ## Attributes of the \<x3d-canvas\> Element
 
-The HTML **\<x3d-canvas\>** element defines the main content of the X3D document. The \<x3d-canvas\> element has several attributes that define different behaviors. All of these attributes are optional.
+The HTML **\<x3d-canvas\>** element defines the main content of the X3D document. The \<x3d-canvas\> element has several attributes that define different behaviors. All of these attributes are optional and all can be changed during runtime.
 
 ### cache
 

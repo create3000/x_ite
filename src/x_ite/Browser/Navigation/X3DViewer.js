@@ -105,7 +105,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       const
          browser      = this .getBrowser (),
-         contentScale = browser .getContentScale (),
+         contentScale = browser .getRenderingProperty ("ContentScale"),
          offset       = browser .getSurface () .offset (),
          x            = (event .pageX - offset .left) * contentScale,
          y            = browser .getViewport () [3] - (event .pageY - offset .top) * contentScale;

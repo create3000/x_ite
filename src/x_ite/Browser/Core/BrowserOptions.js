@@ -82,9 +82,13 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       new X3DFieldDefinition (X3DConstants .inputOutput, "QualityWhenMoving",      new Fields .SFString ("MEDIUM")),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                new Fields .SFString ("GOURAUD")),
       new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "Cache",                  new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "ContextMenu",            new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "Debug",                  new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "Notifications",          new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                new Fields .SFBool (false)),
    ]),
    getTypeName: function ()
@@ -121,81 +125,59 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       this .configure ();
    },
-   configure: function ()
+   configure: (function ()
    {
-      const localStorage = this .localStorage;
+      const globals = new Set ([
+         "Cache",
+         "ContextMenu",
+         "Debug",
+         "Notifications",
+         "SplashScreen",
+      ]);
 
-      for (const fieldDefinition of this .getFieldDefinitions ())
+      return function ()
       {
-         const field = this .getField (fieldDefinition .name);
+         const localStorage = this .localStorage;
 
-         if (localStorage [fieldDefinition .name] !== undefined)
-            continue;
+         for (const { name, value } of this .getFieldDefinitions ())
+         {
+            if (globals .has (name))
+               continue;
 
-         if (! field .equals (fieldDefinition .value))
-            field .assign (fieldDefinition .value);
-      }
+            if (localStorage [name] !== undefined)
+               continue;
 
-      const
-         rubberband        = localStorage .Rubberband,
-         primitiveQuality  = localStorage .PrimitiveQuality,
-         textureQuality    = localStorage .TextureQuality,
-         straightenHorizon = localStorage .StraightenHorizon,
-         timings           = localStorage .Timings;
+            const field = this .getField (name);
 
-      if (rubberband !== this ._Rubberband .getValue ())
-         this ._Rubberband = rubberband;
+            if (field .equals (value))
+               continue;
 
-      if (primitiveQuality !== this ._PrimitiveQuality .getValue ())
-         this ._PrimitiveQuality = primitiveQuality;
+            field .assign (value);
+         }
 
-      if (textureQuality !== this ._TextureQuality .getValue ())
-         this ._TextureQuality = textureQuality;
+         const
+            rubberband        = localStorage .Rubberband,
+            primitiveQuality  = localStorage .PrimitiveQuality,
+            textureQuality    = localStorage .TextureQuality,
+            straightenHorizon = localStorage .StraightenHorizon,
+            timings           = localStorage .Timings;
 
-      if (straightenHorizon !== this ._StraightenHorizon .getValue ())
-         this ._StraightenHorizon = straightenHorizon;
+         if (rubberband !== this ._Rubberband .getValue ())
+            this ._Rubberband = rubberband;
 
-      if (timings !== this ._Timings .getValue ())
-         this ._Timings = timings;
-   },
-   getAttribute: function (name)
-   {
-      const element = this .getBrowser () .getElement ();
+         if (primitiveQuality !== this ._PrimitiveQuality .getValue ())
+            this ._PrimitiveQuality = primitiveQuality;
 
-      return element .attr (name) || element .attr (name .toLowerCase ());
-   },
-   toBoolean: function  (value, defaultValue)
-   {
-      value = String (value) .toLowerCase ();
+         if (textureQuality !== this ._TextureQuality .getValue ())
+            this ._TextureQuality = textureQuality;
 
-      if (value === "true")
-         return true;
+         if (straightenHorizon !== this ._StraightenHorizon .getValue ())
+            this ._StraightenHorizon = straightenHorizon;
 
-      if (value === "false")
-         return false;
-
-      return defaultValue;
-   },
-   getCache: function ()
-   {
-      return this .toBoolean (this .getAttribute ("cache"), true);
-   },
-   getContextMenu: function ()
-   {
-      return this .toBoolean (this .getAttribute ("contextMenu"), true);
-   },
-   getDebug: function ()
-   {
-      return this .toBoolean (this .getAttribute ("debug"), false);
-   },
-   getNotifications: function ()
-   {
-      return this .toBoolean (this .getAttribute ("notifications"), true);
-   },
-   getSplashScreen: function ()
-   {
-      return this .toBoolean (this .getAttribute ("splashScreen"), this ._SplashScreen .getValue ());
-   },
+         if (timings !== this ._Timings .getValue ())
+            this ._Timings = timings;
+      };
+   })(),
    getPrimitiveQuality: function ()
    {
       return this .primitiveQuality;

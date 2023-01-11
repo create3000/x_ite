@@ -118,7 +118,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
          browser    = this .getBrowser (),
          fullscreen = browser .getElement () .fullScreen ();
 
-      if (! browser .getBrowserOptions () .getContextMenu ())
+      if (! browser .getBrowserOption ("ContextMenu"))
          return;
 
       const menu = {
@@ -455,7 +455,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
          delete menu .items ["straighten-horizon"];
       }
 
-      if (! browser .getDebug ())
+      if (! browser .getBrowserOption ("Debug"))
       {
          delete menu .items ["shading"];
       }

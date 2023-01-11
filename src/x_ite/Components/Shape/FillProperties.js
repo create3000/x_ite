@@ -152,7 +152,7 @@ FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
             textureUnit = browser .getTexture2DUnit ();
 
          gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
-         gl .uniform1f  (shaderObject .x3d_FillPropertiesScale,      browser .getContentScale ());
+         gl .uniform1f  (shaderObject .x3d_FillPropertiesScale,      browser .getRenderingProperty ("ContentScale"));
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());

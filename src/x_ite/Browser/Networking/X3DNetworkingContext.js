@@ -117,7 +117,7 @@ X3DNetworkingContext .prototype =
 
          this .getShadow () .find (".x_ite-private-world-info") .remove ();
 
-         if (this .getBrowserOptions () .getSplashScreen ())
+         if (this .getBrowserOption ("SplashScreen"))
          {
             this .getContextMenu () .hide ();
             this .getCanvas () .hide ();
@@ -126,7 +126,7 @@ X3DNetworkingContext .prototype =
       }
       else
       {
-         if (this .getBrowserOptions () .getSplashScreen ())
+         if (this .getBrowserOption ("SplashScreen"))
          {
             this .getCanvas () .show ();
             this .getSplashScreen () .stop (true, true) .show () .fadeOut (2000);
