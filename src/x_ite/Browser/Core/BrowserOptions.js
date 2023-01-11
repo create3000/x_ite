@@ -119,7 +119,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       });
 
       this ._Rubberband             .addInterest ("set_rubberband__",             this);
-      this ._Antialiased            .addInterest ("set_multisampling__",          this);
+      this ._Antialiased            .addInterest ("set_antialiased__",            this);
       this ._PrimitiveQuality       .addInterest ("set_primitiveQuality__",       this);
       this ._TextureQuality         .addInterest ("set_textureQuality__",         this);
       this ._Shading                .addInterest ("set_shading__",                this);
@@ -208,6 +208,10 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    set_rubberband__: function (rubberband)
    {
       this .localStorage .Rubberband = rubberband .getValue ();
+   },
+   set_antialiased__: function ()
+   {
+      this .set_multisampling__ (this ._Multisampling);
    },
    set_primitiveQuality__: function (value)
    {
