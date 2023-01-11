@@ -79,7 +79,7 @@ Imports a X3D JSON document or fragment, converts it, and returns a X3DScene obj
 
 Returns a browser property with the corresponding name.
 
-#### Browser Properties
+##### Browser Properties
 
 <table>
    <thead>
@@ -137,7 +137,7 @@ Returns a browser property with the corresponding name.
 
 Returns a browser option with the corresponding name.
 
-#### Browser Options
+##### Browser Options
 
 <table>
    <thead>
@@ -211,25 +211,25 @@ Returns a browser option with the corresponding name.
       </tr>
       <tr>
          <td>Cache</td>
-         <td>Whether or not files should be cached.</td>
+         <td>Whether or not files should be cached. (non standard)</td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
       <tr>
          <td>ContentScale</td>
-         <td>Factor with which the internal canvas size should be scaled. Use -1 for window.devicePixelRatio.</td>
+         <td>Factor with which the internal canvas size should be scaled. If set to -1 window.devicePixelRatio is used. (non standard)</td>
          <td>Float</td>
          <td>1</td>
       </tr>
       <tr>
          <td>ContextMenu</td>
-         <td>Whether or not the context menu can be displayed.</td>
+         <td>Whether or not the context menu can be displayed. (non standard)</td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
       <tr>
          <td>Debug</td>
-         <td>Whether or not debug message should be printed into the console.</td>
+         <td>Whether or not debug message should be printed into the console. (non standard)</td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
@@ -247,13 +247,13 @@ Returns a browser option with the corresponding name.
       </tr>
       <tr>
          <td>Multisampling</td>
-         <td>Number of samples used for multisampling.</td>
+         <td>Number of samples used for multisampling. (non standard)</td>
          <td>Integer</td>
          <td>4</td>
       </tr>
       <tr>
          <td>Notifications</td>
-         <td>Whether or not notifications should be displayed.</td>
+         <td>Whether or not notifications should be displayed. (non standard)</td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
@@ -261,7 +261,7 @@ Returns a browser option with the corresponding name.
          <td>StraightenHorizon</td>
          <td>Whether the Examine viewer should straighten the horizon when navigating. (non standard)</td>
          <td>Boolean</td>
-         <td>false</td>
+         <td>true</td>
       </tr>
       <tr>
          <td>Timings</td>
@@ -280,7 +280,7 @@ Sets a browser option with the corresponding *name* to the given value.
 
 Returns a rendering property with the corresponding *name*.
 
-#### Rendering Properties
+##### Rendering Properties
 
 <table>
    <thead>
@@ -329,22 +329,22 @@ Returns a rendering property with the corresponding *name*.
       <tr>
          <td>ContentScale</td>
          <td>Boolean</td>
-         <td>Currently used factor to scale content.</td>
+         <td>Currently used factor to scale content. (non standard)</td>
       </tr>
       <tr>
          <td>MaxSamples</td>
          <td>Integer</td>
-         <td>The maximum number of samples supported for doing multisampling.</td>
+         <td>The maximum number of samples supported for doing multisampling. (non standard)</td>
       </tr>
       <tr>
          <td>Multisampling</td>
          <td>Integer</td>
-         <td>Number of samples currently used by multisampling.</td>
+         <td>Number of samples currently used by multisampling. (non standard)</td>
       </tr>
       <tr>
          <td>LogarithmicDepthBuffer</td>
          <td>Boolean</td>
-         <td>True or false if the logarithmic depth buffer is currently enabled or not.</td>
+         <td>True or false if the logarithmic depth buffer is currently enabled or not. (non standard)</td>
       </tr>
    </tbody>
 </table>
