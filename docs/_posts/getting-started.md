@@ -666,15 +666,15 @@ A Boolean value (`true` or `false`) to indicate whether the notification bubble 
 
 ### onerror
 
-Type: script code. This event is sent to an x3d-canvas element when an error occurs loading a scene.
+Type: script code. This event is sent to an \<x3d-canvas\> element when an error occurs loading a scene.
 
 ### oninitialized, onload
 
-Type: script code. This event handler will be called on the x3d-canvas element when a scene has finished loading. This applies whether the scene is applied via the *src* attribute or when a scene is loaded or replaced by another world. If you change the scene, the event will fire again when the new scene loads. This event will not bubble up the element tree.
+Type: script code. This event handler will be called on the \<x3d-canvas\> element when a scene has finished loading. This applies whether the scene is applied via the *src* attribute or when a scene is loaded or replaced by another world. If you change the scene, the event will fire again when the new scene loads. This event will not bubble up the element tree.
 
 ### onshutdown
 
-Type: script code. This event handler will be called on the x3d-canvas element when a scene is unloaded or replaced by another world.
+Type: script code. This event handler will be called on the \<x3d-canvas\> element when a scene is unloaded or replaced by another world.
 
 ### preserveDrawingBuffer
 
@@ -704,7 +704,7 @@ More options can be adjusted using the [Browser Object](reference/browser-servic
 
 ## Keyboard Shortcuts
 
-If the x3d-canvas element is focused, the following keyboard shortcuts are available.
+If the \<x3d-canvas\> element is focused, the following keyboard shortcuts are available.
 
 ### Home (Pos 1)
 
@@ -732,27 +732,27 @@ Copy the the current viewpoint of the active layer to clipboard.
 
 ### Ctrl+S
 
-If x3d-canvas attribute *debug* is `true`, toggle begin/end update of browser.
+If \<x3d-canvas\> attribute *debug* is `true`, toggle begin/end update of browser.
 
 ### Ctrl+1
 
-If x3d-canvas attribute *debug* is `true`, set shading to POINT.
+If \<x3d-canvas\> attribute *debug* is `true`, set shading to POINT.
 
 ### Ctrl+2
 
-If x3d-canvas attribute *debug* is `true`, set shading to WIREFRAME.
+If \<x3d-canvas\> attribute *debug* is `true`, set shading to WIREFRAME.
 
 ### Ctrl+3
 
-If x3d-canvas attribute *debug* is `true`, set shading to FLAT.
+If \<x3d-canvas\> attribute *debug* is `true`, set shading to FLAT.
 
 ### Ctrl+4
 
-If x3d-canvas attribute *debug* is `true`, set shading to GOURAUD.
+If \<x3d-canvas\> attribute *debug* is `true`, set shading to GOURAUD.
 
 ### Ctrl+5
 
-If x3d-canvas attribute *debug* is `true`, set shading to PHONG.
+If \<x3d-canvas\> attribute *debug* is `true`, set shading to PHONG.
 
 ## Extending the Context Menu
 
