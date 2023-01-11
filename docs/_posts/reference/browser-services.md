@@ -312,7 +312,7 @@ Returns a rendering property with the corresponding *name*.
          <td>The maximum number of lights supported.</td>
       </tr>
       <tr>
-         <td>AntiAliased</td>
+         <td>Antialiased</td>
          <td>Boolean</td>
          <td>True or false if the rendering is currently anti-aliased or not.</td>
       </tr>
@@ -325,6 +325,26 @@ Returns a rendering property with the corresponding *name*.
          <td>TextureMemory</td>
          <td>Float</td>
          <td>The amount of memory in megabytes available for textures to be placed on the video card.</td>
+      </tr>
+      <tr>
+         <td>ContentScale</td>
+         <td>Boolean</td>
+         <td>Currently used factor to scale content.</td>
+      </tr>
+      <tr>
+         <td>MaxSamples</td>
+         <td>Integer</td>
+         <td>The maximum number of samples supported for doing multisampling.</td>
+      </tr>
+      <tr>
+         <td>Multisampling</td>
+         <td>Integer</td>
+         <td>Number of samples currently used by multisampling.</td>
+      </tr>
+      <tr>
+         <td>LogarithmicDepthBuffer</td>
+         <td>Boolean</td>
+         <td>True or false if the logarithmic depth buffer is currently enabled or not.</td>
       </tr>
    </tbody>
 </table>
