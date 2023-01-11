@@ -95,6 +95,10 @@ MultiSampleFrameBuffer .prototype =
    {
       return this .height;
    },
+   getSamples: function ()
+   {
+      return this .samples;
+   },
    bind: function ()
    {
       const gl = this .browser .getContext ();
@@ -134,6 +138,9 @@ MultiSampleFrameBuffer .prototype =
 };
 
 const Fallback = {
+   getWidth: Function .prototype,
+   getHeight: Function .prototype,
+   getSamples: Function .prototype,
    bind: Function .prototype,
    unbind: Function .prototype,
    blit: Function .prototype,

@@ -248,7 +248,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
       {
          const browser = this .getBrowser ();
 
-         if (browser .getRenderingProperty ("ContentScale") > 1)
+         if (browser .getRenderingProperty ("ContentScale") !== 1)
             this .stylePropertiesNode [1] = browser .getDefaultLineProperties ();
          else
             this .stylePropertiesNode [1] = null;

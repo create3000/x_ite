@@ -134,7 +134,7 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
          gl           = browser .getContext (),
          contentScale = browser .getRenderingProperty ("ContentScale");
 
-      this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue () * contentScale);
+      this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ()) * contentScale;
       this .transformLines       = gl .HAS_FEATURE_TRANSFORMED_LINES && this .linewidthScaleFactor > 1;
    },
    setShaderUniforms: function (gl, shaderObject)

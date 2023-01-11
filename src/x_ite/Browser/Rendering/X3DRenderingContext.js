@@ -51,13 +51,15 @@ const
    _viewport     = Symbol (),
    _localObjects = Symbol (),
    _depthShaders = Symbol (),
-   _resizer      = Symbol ();
+   _resizer      = Symbol (),
+   _frameBuffer  = Symbol ();
 
 function X3DRenderingContext ()
 {
    this [_viewport]     = [0, 0, 300, 150];
    this [_localObjects] = [ ]; // shader objects dumpster
    this [_depthShaders] = new Map ();
+   this [_frameBuffer]  = new MultiSampleFrameBuffer (this, 300, 150, 4);
 }
 
 X3DRenderingContext .prototype =
@@ -159,6 +161,10 @@ X3DRenderingContext .prototype =
    {
       return this [_localObjects];
    },
+   getFrameBuffer: function ()
+   {
+      return this [_frameBuffer];
+   },
    getDepthShader: function (numClipPlanes, particles)
    {
       let key = "";
@@ -203,10 +209,13 @@ X3DRenderingContext .prototype =
       this [_viewport] [2] = width;
       this [_viewport] [3] = height;
 
-      if (this .frameBuffer)
-         this .frameBuffer .dispose ();
-
-      this .frameBuffer = new MultiSampleFrameBuffer (this, width, height, samples);
+      if (width   !== this [_frameBuffer] .getWidth ()  ||
+          height  !== this [_frameBuffer] .getHeight () ||
+          samples !== this [_frameBuffer] .getSamples ())
+      {
+         this [_frameBuffer] .dispose ();
+         this [_frameBuffer] = new MultiSampleFrameBuffer (this, width, height, samples);
+      }
 
       this .addBrowserEvent ();
    },

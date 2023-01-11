@@ -280,11 +280,11 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       this [_processEvents] ();
 
       const t3 = Date .now ();
-      this .frameBuffer .bind ();
+      this .getFrameBuffer () .bind ();
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
       this [_world] .traverse (TraverseType .DISPLAY, null);
-      this .frameBuffer .blit ();
+      this .getFrameBuffer () .blit ();
       this [_displayTime] = Date .now () - t3;
 
       this [_browserTime]     = Date .now () - t0;
