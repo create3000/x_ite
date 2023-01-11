@@ -271,9 +271,9 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       if (this .removeUpdateContentScale)
          this .removeUpdateContentScale ();
 
-      media .addEventListener ("change", update);
-
       this .removeUpdateContentScale = function () { media .removeEventListener ("change", update) };
+
+      media .addEventListener ("change", update);
 
       browser .getRenderingProperties () ._ContentScale = window .devicePixelRatio;
 
