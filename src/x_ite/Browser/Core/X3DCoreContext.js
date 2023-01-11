@@ -80,8 +80,7 @@ const
    _privateScene             = Symbol (),
    _keydown                  = Symbol (),
    _keyup                    = Symbol (),
-   _pixelPerPoint            = Symbol (),
-   _removeUpdateContentScale = Symbol ();
+   _pixelPerPoint            = Symbol ();
 
 let instanceId = 0;
 
@@ -265,21 +264,6 @@ X3DCoreContext .prototype =
    {
       return this [_pixelPerPoint] * this .getRenderingProperty ("ContentScale");
    },
-   updateContentScale: function ()
-   {
-      if (this [_removeUpdateContentScale])
-         this [_removeUpdateContentScale] ();
-
-      const
-         media  = window .matchMedia (`(resolution: ${window .devicePixelRatio}dppx)`),
-         update = this .updateContentScale .bind (this);
-
-      media .addEventListener ("change", update);
-
-      this [_removeUpdateContentScale] = function () { media .removeEventListener ("change", update) };
-
-      this .getRenderingProperties () ._ContentScale = window .devicePixelRatio;
-   },
    connectedCallback: function ()
    {
       const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo (this [_shadow]);
@@ -298,15 +282,7 @@ X3DCoreContext .prototype =
          case "contentScale":
          case "contentscale":
          {
-            if (this [_removeUpdateContentScale])
-               this [_removeUpdateContentScale] ();
-
-            if (newValue === "auto")
-               this .updateContentScale ();
-            else
-               this .getRenderingProperties () ._ContentScale = Math .max (parseFloat (newValue), 0) || 1;
-
-            this .reshape ();
+            this .setBrowserOption ("ContentScale", newValue === "auto" ? -1 : parseFloat (newValue));
             break;
          }
          case "contextMenu":

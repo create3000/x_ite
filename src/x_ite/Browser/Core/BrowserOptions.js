@@ -84,6 +84,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                new Fields .SFString ("GOURAUD")),
       new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Cache",                  new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "ContentScale",           new Fields .SFFloat (1)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "ContextMenu",            new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Debug",                  new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
@@ -122,6 +123,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       this ._TextureQuality         .addInterest ("set_textureQuality__",         this);
       this ._Shading                .addInterest ("set_shading__",                this);
       this ._StraightenHorizon      .addInterest ("set_straightenHorizon__",      this);
+      this ._ContentScale           .addInterest ("set_contentScale__",           this);
       this ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
       this ._Multisampling          .addInterest ("set_multisampling__",          this);
       this ._Timings                .addInterest ("set_timings__",                this);
@@ -132,8 +134,10 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    {
       const globals = new Set ([
          "Cache",
+         "ContentScale",
          "ContextMenu",
          "Debug",
+         "Multisampling",
          "Notifications",
          "SplashScreen",
       ]);
@@ -249,6 +253,38 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    set_straightenHorizon__: function (straightenHorizon)
    {
       this .localStorage .StraightenHorizon = straightenHorizon .getValue ();
+   },
+   updateContentScale: function ()
+   {
+      const
+         browser = this .getBrowser (),
+         media   = window .matchMedia (`(resolution: ${window .devicePixelRatio}dppx)`),
+         update  = this .updateContentScale .bind (this);
+
+      if (this .removeUpdateContentScale)
+         this .removeUpdateContentScale ();
+
+      media .addEventListener ("change", update);
+
+      this .removeUpdateContentScale = function () { media .removeEventListener ("change", update) };
+
+      browser .getRenderingProperties () ._ContentScale = window .devicePixelRatio;
+
+      browser .reshape ();
+   },
+   set_contentScale__: function (contentScale)
+   {
+      const browser = this .getBrowser ();
+
+      if (this .removeUpdateContentScale)
+         this .removeUpdateContentScale ();
+
+      if (contentScale .getValue () === -1)
+         this .updateContentScale ();
+      else
+         browser .getRenderingProperties () ._ContentScale = Math .max (contentScale .getValue (), 0) || 1;
+
+      browser .reshape ();
    },
    set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
    {

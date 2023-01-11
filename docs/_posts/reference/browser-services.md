@@ -216,6 +216,12 @@ Returns a browser option with the corresponding name.
          <td>true</td>
       </tr>
       <tr>
+         <td>ContentScale</td>
+         <td>Factor with which the internal canvas size should be scaled. Use -1 for window.devicePixelRatio.</td>
+         <td>Float</td>
+         <td>1</td>
+      </tr>
+      <tr>
          <td>ContextMenu</td>
          <td>Whether or not the context menu can be displayed.</td>
          <td>Boolean</td>
