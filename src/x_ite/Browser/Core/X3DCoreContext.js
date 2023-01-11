@@ -283,9 +283,9 @@ X3DCoreContext .prototype =
          media  = window .matchMedia (`(resolution: ${window .devicePixelRatio}dppx)`),
          update = this .updateContentScale .bind (this);
 
-      media .addListener (update);
+      media .addEventListener ("change", update);
 
-      this [_removeUpdateContentScale] = function () { media .removeListener (update) };
+      this [_removeUpdateContentScale] = function () { media .removeEventListener ("change", update) };
 
       this ._contentScale = window .devicePixelRatio;
    },
