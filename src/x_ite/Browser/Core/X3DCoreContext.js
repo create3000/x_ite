@@ -55,7 +55,6 @@ import Notification        from "./Notification.js";
 import ContextMenu         from "./ContextMenu.js";
 import Scene               from "../../Execution/Scene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
-import Algorithm           from "../../../standard/Math/Algorithm.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import _                   from "../../../locale/gettext.js";
 
