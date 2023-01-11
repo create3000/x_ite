@@ -1093,7 +1093,7 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturin
 
       if (this .URL .protocol !== "data:")
       {
-         if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+         if (!this .getCache ())
             this .URL .searchParams .set ("_", Date .now ());
       }
 

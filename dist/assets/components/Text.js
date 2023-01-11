@@ -1,7 +1,7 @@
 /* X_ITE v8.4.4 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 780:
+/***/ 11:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14878,7 +14878,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create ((X3DNode_default()
 
          if (this .URL .protocol !== "data:")
          {
-            if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+            if (!this .getCache ())
                this .URL .searchParams .set ("_", Date .now ());
          }
 
@@ -16474,7 +16474,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(780);
+/* provided dependency */ var opentype = __webpack_require__(11);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
