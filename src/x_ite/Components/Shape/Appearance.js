@@ -216,12 +216,12 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
    },
    set_pointProperties__: function ()
    {
-      const browser = this .getBrowser ();
-
       this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this ._pointProperties);
 
       if (! this .stylePropertiesNode [0])
       {
+         const browser = this .getBrowser ();
+
          if (browser .getRenderingProperty ("ContentScale") !== 1)
             this .stylePropertiesNode [0] = browser .getDefaultPointProperties ();
       }
@@ -247,11 +247,11 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
       else
       {
          const browser = this .getBrowser ();
-         
-         if (browser .getRenderingProperty ("ContentScale") === 1)
-            this .stylePropertiesNode [1] = null;
-         else
+
+         if (browser .getRenderingProperty ("ContentScale") > 1)
             this .stylePropertiesNode [1] = browser .getDefaultLineProperties ();
+         else
+            this .stylePropertiesNode [1] = null;
       }
    },
    set_fillProperties__: function ()
