@@ -642,7 +642,11 @@ For example, we could provide a text description of the X3D element or provide a
 
 ## Attributes of the \<x3d-canvas\> Element
 
-The HTML **\<x3d-canvas\>** element defines the main content of the X3D document. The \<x3d-canvas\> element has several attributes that define different behaviors. All of these attributes are optional and all can be changed during runtime.
+The HTML **\<x3d-canvas\>** element defines the main content of the X3D document. The \<x3d-canvas\> element has several attributes that define different behaviors. All of these attributes are optional and all can be changed during runtime except *preserveDrawingBuffer*.
+
+### antialiased
+
+A Boolean value (`true` or `false`) to indicate whether rendering should use hardware antialiasing if available. The default value for the *antialiased* attribute is `true`. Set CSS property `image-rendering` of \<x3d-canvas\> element to `pixelated`, if no filtering is desired in addition.
 
 ### cache
 

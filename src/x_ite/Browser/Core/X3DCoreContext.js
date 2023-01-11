@@ -273,6 +273,11 @@ X3DCoreContext .prototype =
    {
       switch (name)
       {
+         case "antialiased":
+         {
+            this .setBrowserOption ("Antialiased", this .toBoolean (newValue, true));
+            break;
+         }
          case "cache":
          {
             this .setBrowserOption ("Cache", this .toBoolean (newValue, true));

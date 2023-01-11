@@ -134,6 +134,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    configure: (function ()
    {
       const globals = new Set ([
+         "Antialiased",
          "Cache",
          "ContentScale",
          "ContextMenu",
