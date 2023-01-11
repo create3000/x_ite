@@ -102,7 +102,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
 
       const browser = this .getBrowser ();
 
-      browser .getRenderingProperties () ._ContentScale .addInterest ("set_contentScale", this);
+      browser .getRenderingProperties () ._ContentScale .addInterest ("set_contentScale__", this);
 
       this ._alphaMode  		.addInterest ("set_alphaMode__",        this);
       this ._alphaCutoff  		.addInterest ("set_alphaCutoff__",      this);
@@ -199,7 +199,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
    {
       return this .blendModeNode;
    },
-   set_contentScale: function ()
+   set_contentScale__: function ()
    {
       this .set_pointProperties__ ();
       this .set_applied__ ();

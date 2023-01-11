@@ -94,7 +94,7 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
 
       this .pointSizeRange = gl .getParameter (gl .ALIASED_POINT_SIZE_RANGE);
 
-      browser .getRenderingProperties () ._ContentScale .addInterest ("set_contentScale", this);
+      browser .getRenderingProperties () ._ContentScale .addInterest ("set_contentScale__", this);
 
       this ._pointSizeScaleFactor .addInterest ("set_pointSizeScaleFactor__", this);
       this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
@@ -119,7 +119,7 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
 
       return pointSize;
    },
-   set_contentScale: function ()
+   set_contentScale__: function ()
    {
       this .set_pointSizeScaleFactor__ ();
       this .set_pointSizeMinValue__ ();
