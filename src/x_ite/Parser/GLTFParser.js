@@ -129,23 +129,23 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
 
       const
-         scene     = this .getScene (),
-         worldInfo = scene .createNode ("WorldInfo", false);
+         scene         = this .getScene (),
+         worldInfoNode = scene .createNode ("WorldInfo", false);
 
-      worldInfo ._title = decodeURI (new URL (scene .getWorldURL ()) .pathname .split ("/") .at (-1));
+      worldInfoNode ._title = decodeURI (new URL (scene .getWorldURL ()) .pathname .split ("/") .at (-1));
 
       if (typeof obj .version === "string")
-         worldInfo ._info .push ("version: " + obj .version);
+         worldInfoNode ._info .push ("version: " + obj .version);
 
       if (typeof obj .generator === "string")
-         worldInfo ._info .push ("generator: " + obj .generator);
+         worldInfoNode ._info .push ("generator: " + obj .generator);
 
       if (typeof obj .copyright === "string")
-         worldInfo ._info .push ("copyright: " + obj .copyright);
+         worldInfoNode ._info .push ("copyright: " + obj .copyright);
 
-      worldInfo .setup ();
+      worldInfoNode .setup ();
 
-      scene .getRootNodes () .push (worldInfo);
+      scene .getRootNodes () .push (worldInfoNode);
    },
    buffersObject: async function (obj)
    {
