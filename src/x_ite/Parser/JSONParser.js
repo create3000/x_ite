@@ -100,6 +100,8 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       parser .setInput (child);
       parser .parseIntoScene (success, error);
 
+      this .getScene () .setEncoding ("JSON");
+
       return child;
    },
    elementSetAttribute: function (element, key, value)

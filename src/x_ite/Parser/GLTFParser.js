@@ -45,61 +45,48 @@
  *
  ******************************************************************************/
 
-import X3DParser  from "./X3DParser.js";
-import JSONParser from "./JSONParser.js";
-import VRMLParser from "./VRMLParser.js";
-import XMLParser  from "./XMLParser.js";
-import GLTFParser from "./GLTFParser.js";
+import X3DParser from "./X3DParser.js";
 
-function GoldenGate (scene)
+function GLTFParser (scene)
 {
    X3DParser .call (this, scene);
 }
 
-GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
+GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 {
-   constructor: GoldenGate,
-   parseIntoScene: function (x3dSyntax, success, error)
+   constructor: GLTFParser,
+   isValid: function ()
    {
-      for (const Parser of GoldenGate .Parser)
-      {
-         try
-         {
-            const parser = new Parser (this .getScene ());
-
-            parser .setInput (x3dSyntax);
-
-            if (parser .isValid ())
-            {
-               parser .pushExecutionContext (this .getExecutionContext ());
-               parser .parseIntoScene (success, error);
-               parser .popExecutionContext ();
-               return
-            }
-         }
-         catch (exception)
-         {
-            if (error)
-               error (exception);
-            else
-               throw exception;
-
-            return;
-         }
-      }
-
-      if (this .getScene () .worldURL .startsWith ("data:"))
-         throw new Error ("Couldn't parse X3D. No suitable file handler found for 'data:' URL.");
-      else
-         throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + this .getScene () .worldURL + "'.");
+      return this .input instanceof Object && this .input .hasOwnProperty ("scenes");
    },
+   getInput: function ()
+   {
+      return this .input;
+   },
+   setInput: function (json)
+   {
+      try
+      {
+         if (typeof json === "string")
+            json = JSON .parse (json);
+
+         this .input = json;
+      }
+      catch (error)
+      {
+         this .input = undefined;
+      }
+   },
+   parseIntoScene: function (success, error)
+   {
+      this .rootObject (this .input)
+         .then (() => success (this .getScene ()))
+         .catch (error);
+   },
+   rootObject: async function (obj)
+   {
+      this .getScene () .setEncoding ("GLTF");
+   }
 });
 
-GoldenGate .Parser = [
-   XMLParser,
-   GLTFParser,
-   JSONParser,
-   VRMLParser,
-];
-
-export default GoldenGate;
+export default GLTFParser;

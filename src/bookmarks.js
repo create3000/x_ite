@@ -126,15 +126,15 @@ const Bookmarks = (function ()
          $(".file") .text (url)
             .append ($("<a/>")
             .attr ('href', base + ".x3d")
-            .on ("click", () => this .loadURL (base + ".x3d"))
+            .on ("click", () => this .loadURL (base + ".x3d") && false)
             .text (".x3d"))
             .append ($("<a/>")
             .attr ('href', base + ".x3dv")
-            .on ("click", () => this .loadURL (base + ".x3dv"))
+            .on ("click", () => this .loadURL (base + ".x3dv") && false)
             .text (".x3dv"))
             .append ($("<a/>")
             .attr ('href', base + ".x3dj")
-            .on ("click", () => this .loadURL (base + ".x3dj"))
+            .on ("click", () => this .loadURL (base + ".x3dj") && false)
             .text (".x3dj"));
 
          const t0 = performance .now ();

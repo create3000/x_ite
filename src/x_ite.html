@@ -125,7 +125,7 @@ X3D (function ()
    $(".print-xml") .on ("click", toXMLString);
    $(".print-json") .on ("click", toJSONString);
    $("#browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = Browser .getWorldURL ());
-   
+
    $(".location-entry") .keydown (event =>
    {
       switch (event .key)

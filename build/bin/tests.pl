@@ -74,7 +74,7 @@ EOT
 }
 
 sub menu {
-   my @files = sort { "\U$a" cmp "\U$b" } `find src/tests -type f -name "*.x3d" -o -name "*.x3dv"`;
+   my @files = sort { "\U$a" cmp "\U$b" } `find src/tests -type f -name "*.x3d" -o -name "*.x3dv" -o -name "*.gltf"`;
 
    chomp @files;
 
