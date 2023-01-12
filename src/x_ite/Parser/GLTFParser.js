@@ -152,7 +152,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene         = this .getScene (),
          worldInfoNode = scene .createNode ("WorldInfo", false);
 
-      worldInfoNode ._title = decodeURI (new URL (scene .getWorldURL ()) .pathname .split ("/") .at (-1));
+      worldInfoNode ._title = decodeURI (new URL (scene .getWorldURL ()) .pathname .split ("/") .at (-1) || scene .getWorldURL ());
 
       for (const [key, value] of Object .entries (obj))
       {
