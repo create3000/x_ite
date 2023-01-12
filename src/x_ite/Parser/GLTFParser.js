@@ -88,11 +88,19 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(obj instanceof Object))
          return;
 
-      this .getScene () .setEncoding ("GLTF");
-      this .getScene () .setProfile (this .getBrowser () .getProfile ("Interchange"));
-      this .getScene () .addComponent (this .getBrowser () .getComponent ("Texturing3D", 2));
+      // Set profile and components.
+
+      const
+         browser = this .getBrowser (),
+         scene   = this .getScene ();
+
+      scene .setEncoding ("GLTF");
+      scene .setProfile (browser .getProfile ("Interchange"));
+      scene .addComponent (browser .getComponent ("Texturing3D", 2));
 
       await this .loadComponents ();
+
+      // Parse root objects.
 
       await this .assetObject       (obj .asset);
       await this .buffersObject     (obj .buffers);
