@@ -646,7 +646,10 @@ The HTML **\<x3d-canvas\>** element defines the main content of the X3D document
 
 ### antialiased
 
-A Boolean value (`true` or `false`) to indicate whether rendering should use hardware antialiasing if available. The default value for the *antialiased* attribute is `true`. Set CSS property `image-rendering` of \<x3d-canvas\> element to `pixelated`, if no filtering is desired in addition.
+A Boolean value (`true` or `false`) to indicate whether rendering should use hardware antialiasing if available. The default value for the *antialiased* attribute is `true`.
+
+>**Tip:** Set CSS property »image-rendering« of \<x3d-canvas\> element to »pixelated«, if no filtering is desired in addition.
+{: .prompt-tip }
 
 ### cache
 
@@ -654,7 +657,7 @@ A Boolean value (`true` or `false`) to indicate whether files transferred over t
 
 ### contentScale
 
-A Float value that determines how much higher is the physical resolution of the internal \<canvas\> element. The default value for the *contentScale* attribute is 1.0, which is sufficient for most cases. A higher value, will increase the resolution of the internal \<canvas\> element and can be uses to increase the antialiasing effect, thus making the rendered image sharper. If the value is set to "auto", then contentScale will match window.devicePixelRatio, which is useful for HiDPI or Retina displays. A value between 0.0 and 1.0 will result in a pixelated image, see also [*antialiased*](#antialiased) attribute.
+A Float value that determines how much higher he physical resolution of the internal \<canvas\> element is. The default value for the *contentScale* attribute is `1.0`, which is sufficient for most cases. A higher value, will increase the resolution of the internal \<canvas\> element and can be uses to increase the antialiasing effect, thus making the rendered image sharper. If the value is set to `auto`, then contentScale will match »window.devicePixelRatio«, which is useful for HiDPI or Retina displays. A value between `0.0` and `1.0` will result in a pixelated image, see also [*antialiased*](#antialiased) attribute.
 
 ### contextMenu
 
