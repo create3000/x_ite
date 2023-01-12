@@ -80,7 +80,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    parseIntoScene: function (success, error)
    {
       this .rootObject (this .input)
-         .then (() => success (this .getScene ()))
+         .then (success)
          .catch (error);
    },
    rootObject: async function (obj)
@@ -88,8 +88,95 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(obj instanceof Object))
          return;
 
+      await this .assetObject       (obj .asset);
+      await this .buffersObject     (obj .buffers);
+      await this .bufferViewsObject (obj .bufferViews);
+      await this .accessorsObject   (obj .accessors);
+      await this .samplersObject    (obj .samplers);
+      await this .imagesObject      (obj .images);
+      await this .texturesObject    (obj .textures);
+      await this .materialsObject   (obj .materials);
+      await this .meshesObject      (obj .meshes);
+      await this .nodesObject       (obj .nodes);
+      await this .scenesObject      (obj .scenes);
+      await this .sceneNumber       (obj .scene);
+      await this .animationsObject  (obj .animations);
+      await this .skinsObject       (obj .skins);
+
       this .getScene () .setEncoding ("GLTF");
-   }
+
+      return this .getScene ();
+   },
+   assetObject: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
+   buffersObject: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
+   bufferViewsObject: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
+   accessorsObject: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
+   samplersObject: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
+   imagesObject: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
+   texturesObject: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
+   materialsObject: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
+   meshesObject: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
+   nodesObject: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
+   scenesObject: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
+   sceneNumber: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
+   animationsObject: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
+   skinsObject: async function (obj)
+   {
+      if (!(obj instanceof Object))
+         return;
+   },
 });
 
 export default GLTFParser;
