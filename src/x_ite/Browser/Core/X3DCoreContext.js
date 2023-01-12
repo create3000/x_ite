@@ -339,8 +339,6 @@ X3DCoreContext .prototype =
    },
    parseBooleanAttribute: function  (value, defaultValue)
    {
-      value = String (value) .toLowerCase ();
-
       if (value === "true")
          return true;
 
