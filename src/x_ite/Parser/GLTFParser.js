@@ -154,14 +154,11 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       worldInfoNode ._title = decodeURI (new URL (scene .getWorldURL ()) .pathname .split ("/") .at (-1));
 
-      if (typeof obj .version === "string")
-         worldInfoNode ._info .push ("version: " + obj .version);
-
-      if (typeof obj .generator === "string")
-         worldInfoNode ._info .push ("generator: " + obj .generator);
-
-      if (typeof obj .copyright === "string")
-         worldInfoNode ._info .push ("copyright: " + obj .copyright);
+      for (const [key, value] of Object .entries (obj))
+      {
+         if (typeof value === "string")
+            worldInfoNode ._info .push (`${key}: ${value}`);
+      }
 
       worldInfoNode .setup ();
 
