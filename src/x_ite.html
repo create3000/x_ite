@@ -74,9 +74,7 @@ X3D (function ()
       "Bookmarks.history": ["https://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"],
    });
 
-   let
-      loadTime = 0,
-      index    = localStorage ["Bookmarks.history"] .length - 1;
+   let index = localStorage ["Bookmarks.history"] .length - 1;
 
    function loadURL (url)
    {
@@ -97,11 +95,7 @@ X3D (function ()
 
       $(".file") .removeClass ("loaded");
 
-      loadTime = performance .now ();
-
       bookmarks .loadURL (url);
-
-      return false;
    }
 
    function toVRMLString ()
@@ -125,10 +119,6 @@ X3D (function ()
    loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
 
    $(".version") .text (Browser .name + " v" + Browser .version);
-   $("#browser") .on ("initialized", () => $(".console") .empty ());
-   $("#browser") .on ("initialized", () => Browser .println ("Scene loaded in " + ((performance .now () - loadTime) / 1000) .toFixed (3) + " s."));
-   $("#browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = Browser .getWorldURL ());
-   $("#browser") .on ("shutdown", () => Browser .println ("Shutdown at " + new Date () .toUTCString () + "."));
    $(".location-entry") .val (localStorage ["Bookmarks.history"] [index])
    $(".location-go") .on ("click", () => loadURL ($(".location-entry") .val ()));
    $(".print-vrml") .on ("click", toVRMLString);

@@ -80,7 +80,7 @@ const Bookmarks = (function ()
                         .addClass ('display-example')
                         .attr ('href', `${server}/${component}/${test}/${test}.x3d`)
                         .attr ('style', `background-image:url(${server}/${component}/${test}/screenshot-small.png)`)
-                        .on ("click", () => this .loadURL (`${server}/${component}/${test}/${test}.x3d`)));
+                        .on ("click", () => this .loadURL (`${server}/${component}/${test}/${test}.x3d`) && false));
                }
                else if (path)
                {
@@ -96,7 +96,7 @@ const Bookmarks = (function ()
                      .append ($("<a/>")
                         .addClass ('display-example')
                         .attr ('href', server + '/' + path)
-                        .on ("click", () => this .loadURL (server + '/' + path))
+                        .on ("click", () => this .loadURL (server + '/' + path) && false)
                         .text (name));
                }
                else if (component)
@@ -119,7 +119,7 @@ const Bookmarks = (function ()
             this .browser .getLocalStorage () ["Bookmarks.scrollLeft"] = this .element .scrollLeft ();
          });
       },
-      loadURL: function (url)
+      loadURL: async function (url)
       {
          const base = url .replace (/\.[^\.]+$/, "");
 
@@ -137,9 +137,13 @@ const Bookmarks = (function ()
             .on ("click", () => this .loadURL (base + ".x3dj"))
             .text (".x3dj"));
 
-         $(".browser") .attr ("src", url);
+         const t0 = performance .now ();
 
-         return false;
+         await this .browser .loadURL (new X3D .MFString (url));
+
+         const loadTime = (performance .now () - t0) / 1000;
+
+         console .log (`Scene loaded in ${loadTime .toPrecision (3)}s.`)
       },
    };
 
