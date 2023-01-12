@@ -236,7 +236,7 @@ Returns a browser option with the corresponding name.
       <tr>
          <td>Gravity</td>
          <td>Default is gravity of Earth. (non standard)</td>
-         <td>Number</td>
+         <td>Float</td>
          <td>9.80665</td>
       </tr>
       <tr>
