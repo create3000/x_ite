@@ -145,32 +145,28 @@ X3DCoreContext .prototype =
 
       Object .defineProperty (this .getElement () .get (0), "src",
       {
-         get: function ()
+         get: () =>
          {
             return this .getExecutionContext () .getWorldURL ();
-         }
-         .bind (this),
-         set: function (value)
+         },
+         set: (value) =>
          {
             this .loadURL (new Fields .MFString (value), new Fields .MFString ());
-         }
-         .bind (this),
+         },
          enumerable: true,
          configurable: false,
       });
 
       Object .defineProperty (this .getElement () .get (0), "url",
       {
-         get: function ()
+         get: () =>
          {
             return new Fields .MFString (this .getExecutionContext () .getWorldURL ());
-         }
-         .bind (this),
-         set: function (value)
+         },
+         set: (value) =>
          {
             this .loadURL (value, new Fields .MFString ());
-         }
-         .bind (this),
+         },
          enumerable: true,
          configurable: false,
       });
