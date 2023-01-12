@@ -250,10 +250,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    object: function (obj)
    {
-      if (obj instanceof Object)
-         return true;
-
-      return false;
+      return obj instanceof Object;
    },
 });
 
