@@ -275,12 +275,12 @@ X3DCoreContext .prototype =
       {
          case "antialiased":
          {
-            this .setBrowserOption ("Antialiased", this .toBoolean (newValue, true));
+            this .setBrowserOption ("Antialiased", this .parseBooleanAttribute (newValue, true));
             break;
          }
          case "cache":
          {
-            this .setBrowserOption ("Cache", this .toBoolean (newValue, true));
+            this .setBrowserOption ("Cache", this .parseBooleanAttribute (newValue, true));
             break;
          }
          case "contentScale":
@@ -292,12 +292,12 @@ X3DCoreContext .prototype =
          case "contextMenu":
          case "contextmenu":
          {
-            this .setBrowserOption ("ContextMenu", this .toBoolean (newValue, true));
+            this .setBrowserOption ("ContextMenu", this .parseBooleanAttribute (newValue, true));
             break;
          }
          case "debug":
          {
-            this .setBrowserOption ("Debug", this .toBoolean (newValue, false));
+            this .setBrowserOption ("Debug", this .parseBooleanAttribute (newValue, false));
             break;
          }
          case "multisampling":
@@ -309,13 +309,13 @@ X3DCoreContext .prototype =
          }
          case "notifications":
          {
-            this .setBrowserOption ("Notifications", this .toBoolean (newValue, true));
+            this .setBrowserOption ("Notifications", this .parseBooleanAttribute (newValue, true));
             break;
          }
          case "splashScreen":
          case "splashscreen":
          {
-            this .setBrowserOption ("SplashScreen", this .toBoolean (newValue, true));
+            this .setBrowserOption ("SplashScreen", this .parseBooleanAttribute (newValue, true));
 
             if (! this .getBrowserOption ("SplashScreen"))
             {
@@ -337,7 +337,7 @@ X3DCoreContext .prototype =
          }
       }
    },
-   toBoolean: function  (value, defaultValue)
+   parseBooleanAttribute: function  (value, defaultValue)
    {
       value = String (value) .toLowerCase ();
 
