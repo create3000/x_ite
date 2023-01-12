@@ -5,6 +5,17 @@ nav: main
 categories: []
 tags: [New, Releases]
 ---
+## Upcoming Version v8.5.0
+
+With this new version it is now possible to configure antialiasing. Antialiasing can be turned on/off, multisampling and supersampling can now be configured.
+
+### New Features
+
+- Added antialiased attribute.
+- Added multisampling attribute.
+- Added contentScale attribute.
+- New browser options and rendering properties.
+
 ## X_ITE v8.4.0 Released
 
 *Leipzig, 3rd January 2023:* We right now released a new version. With this version toJSONString is implemented and available for X3DScene, SFNode, MFNode, X3DProtoDeclaration, and X3DExternProtoDeclaration.
