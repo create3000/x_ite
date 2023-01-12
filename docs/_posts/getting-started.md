@@ -663,6 +663,10 @@ A Float value that determines how much higher he physical resolution of the inte
 
 A Boolean value (`true` or `false`) to indicate whether a context menu should be displayed on right click. The default value for the *contextMenu* attribute is `true`. The context menu can also be extended, [see here](#extending-the-context-menu).
 
+### debug
+
+A Boolean value (`true` or `false`) to indicate whether additional debug message should be printed into the web browsers console and whether additional context menu items should be enabled. The default value for the *debug* attribute is `false`.
+
 ### multisampling
 
 A Integer value that sets the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of antialiasing. Check [rendering property](reference/browser-services#rendering-properties) »MaxSamples«, which is browser dependent.
