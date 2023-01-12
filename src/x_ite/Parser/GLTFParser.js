@@ -109,7 +109,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    rootObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
 
       // Set profile and components.
@@ -145,7 +145,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    assetObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
 
       const
@@ -155,10 +155,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       worldInfoNode ._title = decodeURI (new URL (scene .getWorldURL ()) .pathname .split ("/") .at (-1) || scene .getWorldURL ());
 
       for (const [key, value] of Object .entries (obj))
-      {
-         if (typeof value === "string")
-            worldInfoNode ._info .push (`${key}: ${value}`);
-      }
+         worldInfoNode ._info .push (`${key}: ${this .string (value)}`);
 
       worldInfoNode .setup ();
 
@@ -166,68 +163,96 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    buffersObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
    },
    bufferViewsObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
    },
    accessorsObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
    },
    samplersObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
    },
    imagesObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
    },
    texturesObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
    },
    materialsObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
    },
    meshesObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
    },
    nodesObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
    },
    scenesObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
    },
    sceneNumber: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
    },
    animationsObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
    },
    skinsObject: async function (obj)
    {
-      if (!(obj instanceof Object))
+      if (! this .object (obj))
          return;
+   },
+   boolean: function (value)
+   {
+      if (typeof value === "boolean")
+         return value;
+
+      throw new Error ("Expected a boolean.");
+   },
+   number: function (value)
+   {
+      if (typeof value === "number")
+         return value;
+
+      throw new Error ("Expected a number.");
+   },
+   string: function (value)
+   {
+      if (typeof value === "string")
+         return value;
+
+      throw new Error ("Expected a string.");
+   },
+   object: function (obj)
+   {
+      if (obj instanceof Object)
+         return true;
+
+      return false;
    },
 });
 
