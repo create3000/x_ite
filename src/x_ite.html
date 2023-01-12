@@ -38,7 +38,37 @@ X3D (function ()
       Browser      = X3D .getBrowser (),
       localStorage = Browser .getLocalStorage ();
 
-   Browser .getContextMenu () .setUserMenu (createTestMenu);
+   Browser .getContextMenu () .setUserMenu (function ()
+   {
+      function antialiasing (antialiased, contentScale, imageRendering)
+      {
+         $("#browser")
+            .attr ("antialiased", antialiased)
+            .attr ("contentScale", contentScale)
+            .css ("image-rendering", imageRendering);
+      }
+
+      return {
+         ... createTestMenu (),
+         "antialiasing": {
+            "name": "Antialiasing",
+            "items": {
+               "default": {
+                  "name": "Default",
+                  "callback": antialiasing .bind (this, null, null, ""),
+               },
+               "auto": {
+                  "name": "Auto",
+                  "callback": antialiasing .bind (this, true, "auto", ""),
+               },
+               "pixelated": {
+                  "name": "Pixelated",
+                  "callback": antialiasing .bind (this, false, 0.1, "pixelated"),
+               },
+            },
+         },
+      };
+   });
 
    localStorage .addDefaultValues ({
       "Bookmarks.history": ["https://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"],
@@ -95,10 +125,10 @@ X3D (function ()
    loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
 
    $(".version") .text (Browser .name + " v" + Browser .version);
-   $(".browser") .on ("initialized", () => $(".console") .empty ());
-   $(".browser") .on ("initialized", () => Browser .println ("Scene loaded in " + ((performance .now () - loadTime) / 1000) .toFixed (3) + " s."));
-   $(".browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = Browser .getWorldURL ());
-   $(".browser") .on ("shutdown", () => Browser .println ("Shutdown at " + new Date () .toUTCString () + "."));
+   $("#browser") .on ("initialized", () => $(".console") .empty ());
+   $("#browser") .on ("initialized", () => Browser .println ("Scene loaded in " + ((performance .now () - loadTime) / 1000) .toFixed (3) + " s."));
+   $("#browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = Browser .getWorldURL ());
+   $("#browser") .on ("shutdown", () => Browser .println ("Shutdown at " + new Date () .toUTCString () + "."));
    $(".location-entry") .val (localStorage ["Bookmarks.history"] [index])
    $(".location-go") .on ("click", () => loadURL ($(".location-entry") .val ()));
    $(".print-vrml") .on ("click", toVRMLString);
@@ -205,7 +235,6 @@ main.color-management .browser {
    width: 100%;
    height: auto;
    box-shadow: 0px 2px 12px 1px rgba(0, 0, 0, 0.75);
-   -image-rendering: pixelated;
 }
 
 .browser:focus {
@@ -374,7 +403,7 @@ main.color-management .browser {
       <main>
          <div>
             <form action="javascript:alert('form submitted')">
-               <x3d-canvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" contentScale="auto" onload="$('.file') .addClass ('loaded')" x-url='"tests/empty.x3dv"'>
+               <x3d-canvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" onload="$('.file') .addClass ('loaded')" x-url='"tests/empty.x3dv"'>
                   <p class="fallback">
                      Sorry,<br/>
                      it wasn't me!<br/>
@@ -390,13 +419,12 @@ main.color-management .browser {
                <button class="location-go" type="button">Load URL</button>
             </div>
             <div class="buttons">
-               <a class="print-xml" href="#">XML</a><a class="print-vrml" href="#">VRML</a><a class="print-json" href="#">JSON</a><a href="../dist/example.html">Example Page</a><a href="tests/d3-x3d/">d3-x3d</a><a href="tests/dom-integration/">dom-integration</a><a href="tests/legacy/">legacy</a>
+               <a class="print-xml" href="#">XML</a><a class="print-vrml" href="#">VRML</a><a class="print-json" href="#">JSON</a><a href="../dist/example.html">example page</a><a href="tests/d3-x3d/">d3-x3d</a><a href="tests/dom-integration/">dom-integration</a><a href="tests/legacy/">legacy</a>
             </div>
             <div class="links">
                <a href="../x_ite.min.html">x_ite.min.html</a><a href="https://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a>
             </div>
-            <div class="examples-box">
-            </div>
+            <div class="examples-box"></div>
          </div>
       </main>
       <footer><div class="console x_ite-console"></div></footer>
