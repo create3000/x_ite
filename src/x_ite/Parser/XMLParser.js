@@ -88,6 +88,10 @@ function XMLParser (scene)
 XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 {
    constructor: XMLParser,
+   getEncoding: function ()
+   {
+      return "XML";
+   },
    isValid: function ()
    {
       return (this .input instanceof XMLDocument) || (this .input instanceof HTMLElement) || (this .input === null);

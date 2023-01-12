@@ -60,6 +60,10 @@ function JSONParser (scene)
 JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 {
    constructor: JSONParser,
+   getEncoding: function ()
+   {
+      return "JSON";
+   },
    isValid: function ()
    {
       return this .input instanceof Object;

@@ -290,6 +290,10 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    MFVec3f: new Fields .MFVec3f (),
    MFVec4d: new Fields .MFVec4d (),
    MFVec4f: new Fields .MFVec4f (),
+   getEncoding: function ()
+   {
+      return "STRING";
+   },
    isValid: function ()
    {
       return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{|$))/);

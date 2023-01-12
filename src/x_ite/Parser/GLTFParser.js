@@ -55,6 +55,10 @@ function GLTFParser (scene)
 GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 {
    constructor: GLTFParser,
+   getEncoding: function ()
+   {
+      return "JSON";
+   },
    isValid: function ()
    {
       return this .input instanceof Object && this .input .hasOwnProperty ("scenes");

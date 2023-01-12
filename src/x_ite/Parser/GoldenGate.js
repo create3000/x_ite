@@ -54,6 +54,8 @@ import GLTFParser from "./GLTFParser.js";
 function GoldenGate (scene)
 {
    X3DParser .call (this, scene);
+
+   this .inputs = new Map ();
 }
 
 GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -67,7 +69,7 @@ GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const parser = new Parser (this .getScene ());
 
-            parser .setInput (x3dSyntax);
+            parser .setInput (this .getInput (parser .getEncoding (), x3dSyntax));
 
             if (parser .isValid ())
             {
@@ -92,6 +94,36 @@ GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
          throw new Error ("Couldn't parse X3D. No suitable file handler found for 'data:' URL.");
       else
          throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + this .getScene () .worldURL + "'.");
+   },
+   getInput: function (encoding, x3dSyntax)
+   {
+      if (this .inputs .has (encoding))
+         return this .inputs .get (encoding);
+
+      const input = this .createInput (encoding, x3dSyntax);
+
+      this .inputs .set (encoding, input);
+
+      return input;
+   },
+   createInput: function (encoding, x3dSyntax)
+   {
+      try
+      {
+         switch (encoding)
+         {
+            case "STRING":
+               return x3dSyntax;
+            case "XML":
+               return $.parseXML (x3dSyntax);
+            case "JSON":
+               return JSON .parse (x3dSyntax);
+         }
+      }
+      catch (error)
+      {
+         return undefined;
+      }
    },
 });
 
