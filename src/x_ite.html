@@ -49,7 +49,7 @@ X3D (function ()
       }
 
       return {
-         ... createTestMenu (),
+         ... (typeof createTestMenu !== "undefined" ? createTestMenu () : { }),
          "antialiasing": {
             "name": "Antialiasing",
             "items": {
