@@ -85,6 +85,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    rootObject: async function (obj)
    {
+      if (!(obj instanceof Object))
+         return;
+
       this .getScene () .setEncoding ("GLTF");
    }
 });
