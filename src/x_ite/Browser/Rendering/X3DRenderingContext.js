@@ -132,7 +132,7 @@ X3DRenderingContext .prototype =
    {
       const gl = this .getContext ();
 
-      return gl .getParameter (gl .MAX_SAMPLES);
+      return gl .getVersion () > 1 ? gl .getParameter (gl .MAX_SAMPLES) : 0;
    },
    getMaxClipPlanes: function ()
    {
