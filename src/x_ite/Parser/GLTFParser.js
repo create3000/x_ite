@@ -59,10 +59,30 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       return "JSON";
    },
-   isValid: function ()
+   isValid: (function ()
    {
-      return this .input instanceof Object && this .input .hasOwnProperty ("scenes");
-   },
+      const keys = new Set ([
+         "asset",
+         "buffers",
+         "bufferViews",
+         "accessors",
+         "samplers",
+         "images",
+         "textures",
+         "materials",
+         "meshes",
+         "nodes",
+         "scenes",
+         "scene",
+         "animations",
+         "skins",
+      ]);
+
+      return function ()
+      {
+         return this .input instanceof Object && Object .keys (this .input) .every (key => keys .has (key));
+      };
+   })(),
    getInput: function ()
    {
       return this .input;
