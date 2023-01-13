@@ -420,7 +420,17 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          const mesh = this .meshes [node .mesh];
 
          if (mesh)
+         {
             transformNode ._children = mesh .shapeNodes;
+
+            if (!name)
+            {
+               const name = this .sanitizeName (mesh .name);
+
+               if (name)
+                  scene .addNamedNode (scene .getUniqueName (name), transformNode);
+            }
+         }
       }
 
       node .transformNode = transformNode;
@@ -488,7 +498,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             switchNode .setup ();
 
             scene .getRootNodes () .push (switchNode);
-            
+
             return;
          }
       }
