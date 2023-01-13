@@ -452,22 +452,46 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(scenes instanceof Array))
          return;
 
-      // Root
-
       const
-         scene      = this .getScene (),
-         switchNode = scene .createNode ("Switch", false);
+         scene    = this .getScene (),
+         children = scenes .map (scene => this .sceneObject (scene));
 
-      scene .addNamedNode (scene .getUniqueName ("Scenes"), switchNode);
+      switch (children .length)
+      {
+         case 0:
+         {
+            return;
+         }
+         case 1:
+         {
+            if (sceneNumber === 0)
+            {
+               scene .getRootNodes () .push (children [0]);
+               return;
+            }
 
-      // Scenes.
+            // Proceed with next case:
+         }
+         default:
+         {
+            // Root
 
-      switchNode ._whichChoice = sceneNumber;
-      switchNode ._children    = scenes .map (scene => this .sceneObject (scene));
+            const switchNode = scene .createNode ("Switch", false);
 
-      switchNode .setup ();
+            scene .addNamedNode (scene .getUniqueName ("Scenes"), switchNode);
 
-      scene .getRootNodes () .push (switchNode);
+            // Scenes.
+
+            switchNode ._whichChoice = sceneNumber;
+            switchNode ._children    = children;
+
+            switchNode .setup ();
+
+            scene .getRootNodes () .push (switchNode);
+            
+            return;
+         }
+      }
    },
    sceneObject: function (sceneObject)
    {
