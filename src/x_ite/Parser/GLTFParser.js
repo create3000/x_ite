@@ -46,10 +46,19 @@
  ******************************************************************************/
 
 import X3DParser from "./X3DParser.js";
+import Vector3   from "../../standard/Math/Numbers/Vector3.js";
+import Rotation4 from "../../standard/Math/Numbers/Rotation4.js";
+import Matrix4   from "../../standard/Math/Numbers/Matrix4.js";
 
 function GLTFParser (scene)
 {
    X3DParser .call (this, scene);
+
+   this .buffers     = [ ];
+   this .bufferViews = [ ];
+   this .accessors   = [ ];
+   this .materials   = [ ];
+   this .nodes       = [ ];
 }
 
 GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -137,9 +146,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .texturesObject    (glTF .textures);
       this .materialsObject   (glTF .materials);
       this .meshesArray       (glTF .meshes);
-      this .nodesObject       (glTF .nodes);
-      this .scenesObject      (glTF .scenes);
-      this .sceneNumber       (glTF .scene);
+      this .nodesArray        (glTF .nodes);
+      this .scenesArray       (glTF .scenes, glTF .scene);
       this .animationsObject  (glTF .animations);
       this .skinsObject       (glTF .skins);
 
@@ -170,10 +178,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    buffersArray: async function (buffers)
    {
       if (!(buffers instanceof Array))
-      {
-         this .buffers = [ ];
          return;
-      }
 
       this .buffers = await Promise .all (buffers .map (buffer => this .bufferValue (buffer)));
    },
@@ -191,10 +196,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    bufferViewsArray: function (bufferViews)
    {
       if (!(bufferViews instanceof Array))
-      {
-         this .bufferViews = [ ];
          return;
-      }
 
       for (const bufferView of bufferViews)
          bufferView .buffer = this .buffers [bufferView .buffer];
@@ -204,10 +206,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    accessorsArray: function (accessors)
    {
       if (!(accessors instanceof Array))
-      {
-         this .accessors = [ ];
          return;
-      }
 
       for (const accessor of accessors)
          this .accessorObject (accessor);
@@ -272,10 +271,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    materialsObject: function (materials)
    {
       if (!(materials instanceof Object))
-      {
-         this .materials = [ ];
          return;
-      }
 
       this .materials = [ ];
    },
@@ -352,15 +348,170 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(targets instanceof Array))
          return;
    },
-   nodesObject: function (nodes)
+   nodesArray: function (nodes)
    {
-      if (!(nodes instanceof Object))
+      if (!(nodes instanceof Array))
          return;
+
+      this .nodes = nodes;
+
+      for (const node of nodes)
+         this .nodeValue1 (node);
+
+      for (const node of nodes)
+         this .nodeValue2 (node);
    },
-   scenesObject: function (scenes)
+   nodeValue1: function (node)
    {
-      if (!(scenes instanceof Object))
+      if (!(node instanceof Object))
          return;
+
+      // Create Transform.
+
+      const
+         scene         = this .getScene (),
+         transformNode = scene .createNode ("Transform", false),
+         name          = this .sanitizeName (node .name);
+
+      // Name
+
+      if (name)
+         scene .addNamedNode (scene .getUniqueName (name), transformNode);
+
+      // Transformation Matrix
+
+      const
+         translation      = new Vector3 (0, 0, 0),
+         rotation         = new Rotation4 (),
+         scale            = new Vector3 (1, 1, 1),
+         scaleOrientation = new Rotation4 (),
+         matrix           = new Matrix4 ();
+
+      if (this .vectorValue (node .matrix, matrix))
+      {
+         matrix .get (translation, rotation, scale, scaleOrientation);
+
+         transformNode ._translation      = translation;
+         transformNode ._rotation         = rotation;
+         transformNode ._scale            = scale;
+         transformNode ._scaleOrientation = scaleOrientation;
+      }
+      else
+      {
+         if (this .vectorValue (node .translation, translation))
+            transformNode ._translation = translation;
+
+         if (this .vectorValue (node .rotation, rotation))
+            transformNode ._rotation = rotation;
+
+         if (this .vectorValue (node .scale, scale))
+            transformNode ._scale = scale;
+      }
+
+      // Add mesh.
+
+      if (Number .isInteger (node .mesh))
+      {
+         const mesh = this .meshes [node .mesh];
+
+         if (mesh)
+            transformNode ._children = mesh .shapeNodes;
+      }
+
+      node .transformNode = transformNode;
+   },
+   nodeValue2: function (node)
+   {
+      if (!(node instanceof Object))
+         return;
+
+      this .nodeChildrenArray (node .children, node .transformNode);
+
+      node .transformNode .setup ();
+   },
+   nodeChildrenArray: function (children, transformNode)
+   {
+      if (!(children instanceof Array))
+         return;
+
+      for (const index of children)
+      {
+         const child = this .nodes [index];
+
+         if (child)
+            transformNode ._children .push (child .transformNode);
+      }
+   },
+   vectorValue: function (array, vector)
+   {
+      if (!(array instanceof Array))
+         return;
+
+      vector .set (... array);
+   },
+   scenesArray: function (scenes, sceneNumber)
+   {
+      if (!(scenes instanceof Array))
+         return;
+
+      // Root
+
+      const
+         scene      = this .getScene (),
+         switchNode = scene .createNode ("Switch", false);
+
+      scene .addNamedNode (scene .getUniqueName ("Scenes"), switchNode);
+
+      // Scenes.
+
+      switchNode ._whichChoice = sceneNumber;
+      switchNode ._children    = scenes .map (scene => this .sceneObject (scene));
+
+      switchNode .setup ();
+
+      scene .getRootNodes () .push (switchNode);
+   },
+   sceneObject: function (sceneObject)
+   {
+      if (!(sceneObject instanceof Object))
+         return null;
+
+      const nodes = this .sceneNodesArray (sceneObject .nodes);
+
+      switch (nodes .length)
+      {
+         case 0:
+         {
+            return null;
+         }
+         case 1:
+         {
+            return nodes [0] .transformNode;
+         }
+         default:
+         {
+            const
+               scene     = this .getScene (),
+               groupNode = scene .createNode ("Group", false),
+               name      = this .sanitizeName (sceneObject .name);
+
+            if (name)
+               scene .addNamedNode (scene .getUniqueName (name), groupNode);
+
+            groupNode ._children = nodes .map (node => node .transformNode);
+
+            groupNode .setup ();
+
+            return groupNode;
+         }
+      }
+   },
+   sceneNodesArray: function (nodes)
+   {
+      if (!(nodes instanceof Array))
+         return [ ];
+
+      return nodes .map (node => this .nodes [node]) .filter (node => node);
    },
    sceneNumber: function (scene)
    {
