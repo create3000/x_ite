@@ -50,8 +50,6 @@ import X3DParser from "./X3DParser.js";
 function GLTFParser (scene)
 {
    X3DParser .call (this, scene);
-
-   this .buffers = [ ];
 }
 
 GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -109,9 +107,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          .then (success)
          .catch (error);
    },
-   rootObject: async function (obj)
+   rootObject: async function (glTF)
    {
-      if (!(obj instanceof Object))
+      if (!(glTF instanceof Object))
          return;
 
       // Set profile and components.
@@ -128,28 +126,28 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Parse root objects.
 
-      this .assetObject (obj .asset);
+      this .assetObject (glTF .asset);
 
-      await this .buffersObject (obj .buffers);
+      await this .buffersObject (glTF .buffers);
 
-      this .bufferViewsObject (obj .bufferViews);
-      this .accessorsObject   (obj .accessors);
-      this .samplersObject    (obj .samplers);
-      this .imagesObject      (obj .images);
-      this .texturesObject    (obj .textures);
-      this .materialsObject   (obj .materials);
-      this .meshesObject      (obj .meshes);
-      this .nodesObject       (obj .nodes);
-      this .scenesObject      (obj .scenes);
-      this .sceneNumber       (obj .scene);
-      this .animationsObject  (obj .animations);
-      this .skinsObject       (obj .skins);
+      this .bufferViewsObject (glTF .bufferViews);
+      this .accessorsObject   (glTF .accessors);
+      this .samplersObject    (glTF .samplers);
+      this .imagesObject      (glTF .images);
+      this .texturesObject    (glTF .textures);
+      this .materialsObject   (glTF .materials);
+      this .meshesObject      (glTF .meshes);
+      this .nodesObject       (glTF .nodes);
+      this .scenesObject      (glTF .scenes);
+      this .sceneNumber       (glTF .scene);
+      this .animationsObject  (glTF .animations);
+      this .skinsObject       (glTF .skins);
 
       return this .getScene ();
    },
-   assetObject: function (obj)
+   assetObject: function (asset)
    {
-      if (!(obj instanceof Object))
+      if (!(asset instanceof Object))
          return;
 
       const
@@ -159,89 +157,233 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       worldInfoNode ._title = decodeURI (new URL (worldURL) .pathname .split ("/") .at (-1) || worldURL);
 
-      for (const key in obj)
-         worldInfoNode ._info .push (`${key}: ${obj [key]}`);
+      for (const key in asset)
+         worldInfoNode ._info .push (`${key}: ${asset [key]}`);
 
       worldInfoNode .setup ();
 
       scene .getRootNodes () .push (worldInfoNode);
    },
-   buffersObject: async function (obj)
+   buffersObject: async function (buffers)
    {
-      if (!(obj instanceof Array))
+      if (!(buffers instanceof Array))
+      {
+         this .buffers = [ ];
          return;
+      }
 
-      this .buffers = await Promise .all (obj .map (buffer => this .bufferValue (buffer)));
+      this .buffers = await Promise .all (buffers .map (buffer => this .bufferValue (buffer)));
    },
-   bufferValue: function (obj)
+   bufferValue: function (buffer)
    {
-      if (!(obj instanceof Object))
+      if (!(buffer instanceof Object))
          return;
 
-      const url = new URL (obj .uri, this .getScene () .getWorldURL ());
+      const url = new URL (buffer .uri, this .getScene () .getWorldURL ());
 
       return fetch (url)
          .then (response => response .blob ())
          .then (blob => blob .arrayBuffer ());
    },
-   bufferViewsObject: function (obj)
+   bufferViewsObject: function (bufferViews)
    {
-      if (!(obj instanceof Object))
+      if (!(bufferViews instanceof Array))
+      {
+         this .bufferViews = [ ];
+         return;
+      }
+
+      for (const bufferView of bufferViews)
+         bufferView .buffer = this .buffers [bufferView .buffer];
+
+      this .bufferViews = bufferViews;
+   },
+   accessorsObject: function (accessors)
+   {
+      if (!(accessors instanceof Array))
+      {
+         this .accessors = [ ];
+         return;
+      }
+
+      for (const accessor of accessors)
+         this .accessorObject (accessor);
+
+      this .accessors = accessors;
+   },
+   accessorObject: (function ()
+   {
+      const arrayTypes = new Map ([
+         [5120, Int8Array],
+         [5121, Uint8Array],
+         [5122, Int16Array],
+         [5123, Uint16Array],
+         [5124, Int32Array],
+         [5125, Uint32Array],
+         [5126, Float32Array],
+      ]);
+
+      const componentSizes = new Map ([
+         ["SCALAR", 1],
+         ["VEC2",   2],
+         ["VEC3",   3],
+         ["VEC4",   4],
+         ["MAT2",   4],
+         ["MAT3",   9],
+         ["MAT4",   16],
+      ]);
+
+      return function (accessor)
+      {
+         if (!(accessor instanceof Object))
+            return;
+
+         const
+            bufferView = this .bufferViews [accessor .bufferView],
+            arrayType  = arrayTypes .get (accessor .componentType),
+            byteOffset = (accessor .byteOffset || 0) + (bufferView .byteOffset || 0),
+            byteStride = bufferView .byteStride,
+            components = componentSizes .get (accessor .type),
+            length     = (byteStride ? byteStride / arrayType .BYTES_PER_ELEMENT : components) * accessor .count;
+
+         accessor .array = new arrayType (bufferView .buffer, byteOffset, length);
+      };
+   })(),
+   samplersObject: function (samplers)
+   {
+      if (!(samplers instanceof Object))
          return;
    },
-   accessorsObject: function (obj)
+   imagesObject: function (images)
    {
-      if (!(obj instanceof Object))
+      if (!(images instanceof Object))
          return;
    },
-   samplersObject: function (obj)
+   texturesObject: function (textures)
    {
-      if (!(obj instanceof Object))
+      if (!(textures instanceof Object))
          return;
    },
-   imagesObject: function (obj)
+   materialsObject: function (materials)
    {
-      if (!(obj instanceof Object))
+      if (!(materials instanceof Object))
          return;
    },
-   texturesObject: function (obj)
+   meshesObject: function (meshes)
    {
-      if (!(obj instanceof Object))
+      if (!(meshes instanceof Array))
+         return;
+
+      for (const mesh of meshes)
+         this .meshObject (mesh);
+
+      this .meshes = meshes;
+   },
+   meshObject: function (mesh)
+   {
+      if (!(mesh instanceof Object))
+         return;
+
+      this .primitivesObject (mesh .primitives);
+   },
+   primitivesObject: function (primitives)
+   {
+      if (!(primitives instanceof Array))
+         return;
+
+      for (const primitive of primitives)
+         this .primitiveValue (primitive);
+   },
+   primitiveValue: function (primitive)
+   {
+      if (!(primitive instanceof Object))
+         return;
+
+      console .log (primitive);
+
+      // // attributes
+
+      // auto attributes = attributesValue (json_object_object_get (jobj, "attributes"));
+
+      // if (not attributes)
+      //    return nullptr;
+
+      // const auto primitive = std::make_shared <Primitive> ();
+
+      // primitive -> attributes = std::move (attributes);
+
+      // // indices
+
+      // int32_t indices = -1;
+
+      // integerValue (json_object_object_get (jobj, "indices"), indices);
+
+      // if (indices > -1 and size_t (indices) < accessors .size ())
+      // {
+      //    const auto & asseccor = accessors [indices];
+
+      //    if (not asseccor)
+      //       return nullptr;
+
+      //    primitive -> indices = asseccor;
+      // }
+
+      // // material
+
+      // int32_t material = -1;
+
+      // if (integerValue (json_object_object_get (jobj, "material"), material))
+      // {
+      //    try
+      //    {
+      //       primitive -> material = materials .at (material);
+      //    }
+      //    catch (const std::out_of_range & error)
+      //    {
+      //       getBrowser () -> getConsole () -> error ("Material with index '", material, "' not found.\n");
+      //    }
+      // }
+
+      // // mode
+
+      // int32_t mode = 4;
+
+      // integerValue (json_object_object_get (jobj, "mode"), mode);
+
+      // primitive -> mode = mode;
+
+      // // targets
+
+      // primitive -> targets = targetsValue (json_object_object_get (jobj, "targets"));
+
+      // // shapeNode
+
+      // primitive -> shapeNode = createShape (primitive);
+
+   },
+   nodesObject: function (nodes)
+   {
+      if (!(nodes instanceof Object))
          return;
    },
-   materialsObject: function (obj)
+   scenesObject: function (scenes)
    {
-      if (!(obj instanceof Object))
+      if (!(scenes instanceof Object))
          return;
    },
-   meshesObject: function (obj)
+   sceneNumber: function (scene)
    {
-      if (!(obj instanceof Object))
+      if (typeof scene !== "number")
          return;
    },
-   nodesObject: function (obj)
+   animationsObject: function (animations)
    {
-      if (!(obj instanceof Object))
+      if (!(animations instanceof Object))
          return;
    },
-   scenesObject: function (obj)
+   skinsObject: function (skins)
    {
-      if (!(obj instanceof Object))
-         return;
-   },
-   sceneNumber: function (obj)
-   {
-      if (!(obj instanceof Object))
-         return;
-   },
-   animationsObject: function (obj)
-   {
-      if (!(obj instanceof Object))
-         return;
-   },
-   skinsObject: function (obj)
-   {
-      if (!(obj instanceof Object))
+      if (!(skins instanceof Object))
          return;
    },
 });
