@@ -479,7 +479,7 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
             btLinearVeloctity = this .rigidBody .getLinearVelocity (),
             btAngularVelocity = this .rigidBody .getAngularVelocity ();
 
-         orientation .value .set (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ());
+         orientation .quaternion .set (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ());
 
          this ._position        = position .set (btOrigin .x (), btOrigin .y (), btOrigin .z ());
          this ._orientation     = orientation;

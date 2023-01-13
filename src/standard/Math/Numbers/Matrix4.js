@@ -363,7 +363,7 @@ Matrix4 .prototype =
    })(),
    setRotation: function (rotation)
    {
-      return this .setQuaternion (rotation .value);
+      return this .setQuaternion (rotation .quaternion);
    },
    setQuaternion: function (quaternion)
    {
@@ -751,7 +751,7 @@ Matrix4 .prototype =
    },
    rotate: function (rotation)
    {
-      this .multLeft (m .setQuaternion (rotation .value));
+      this .multLeft (m .setQuaternion (rotation .quaternion));
 
       return this;
    },
@@ -914,7 +914,7 @@ Object .assign (Matrix4,
    Identity: new Matrix4 (),
    Rotation: function (rotation)
    {
-      return Object .create (this .prototype) .setQuaternion (rotation .value);
+      return Object .create (this .prototype) .setQuaternion (rotation .quaternion);
    },
    Quaternion: function (quaternion)
    {

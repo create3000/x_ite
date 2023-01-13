@@ -771,7 +771,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(array instanceof Array))
          return;
 
-      rotation .value .set (... array);
+      rotation .quaternion .set (... array);
    },
 });
 
