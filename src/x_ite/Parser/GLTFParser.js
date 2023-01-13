@@ -401,7 +401,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (this .vectorValue (node .scale, scale))
             matrix .scale (scale);
 
-         if (this .rotationValue (node .rotation, quaternion))
+         if (this .vectorValue (node .rotation, quaternion))
             matrix .rotate (new Rotation4 (quaternion));
 
          if (this .vectorValue (node .translation, translation))
@@ -763,19 +763,13 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    vectorValue: function (array, vector)
    {
-      if (!(array instanceof Array) || array .length !== vector .length)
+      if (!(array instanceof Array))
+         return false;
+
+      if (array .length !== vector .length)
          return false;
 
       vector .set (... array);
-
-      return true;
-   },
-   rotationValue: function (array, quaternion)
-   {
-      if (!(array instanceof Array) || array .length !== quaternion .length)
-         return false;
-
-      quaternion .set (... array);
 
       return true;
    },
