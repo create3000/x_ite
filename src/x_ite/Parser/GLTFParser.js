@@ -545,11 +545,6 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return nodes .map (node => this .nodes [node]) .filter (node => node);
    },
-   sceneNumber: function (scene)
-   {
-      if (typeof scene !== "number")
-         return;
-   },
    animationsArray: function (animations)
    {
       if (!(animations instanceof Array))
