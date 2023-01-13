@@ -50,6 +50,8 @@ import X3DParser from "./X3DParser.js";
 function GLTFParser (scene)
 {
    X3DParser .call (this, scene);
+
+   this .buffers = [ ];
 }
 
 GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -126,24 +128,26 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Parse root objects.
 
-      await this .assetObject       (obj .asset);
-      await this .buffersObject     (obj .buffers);
-      await this .bufferViewsObject (obj .bufferViews);
-      await this .accessorsObject   (obj .accessors);
-      await this .samplersObject    (obj .samplers);
-      await this .imagesObject      (obj .images);
-      await this .texturesObject    (obj .textures);
-      await this .materialsObject   (obj .materials);
-      await this .meshesObject      (obj .meshes);
-      await this .nodesObject       (obj .nodes);
-      await this .scenesObject      (obj .scenes);
-      await this .sceneNumber       (obj .scene);
-      await this .animationsObject  (obj .animations);
-      await this .skinsObject       (obj .skins);
+      this .assetObject (obj .asset);
+
+      await this .buffersObject (obj .buffers);
+
+      this .bufferViewsObject (obj .bufferViews);
+      this .accessorsObject   (obj .accessors);
+      this .samplersObject    (obj .samplers);
+      this .imagesObject      (obj .images);
+      this .texturesObject    (obj .textures);
+      this .materialsObject   (obj .materials);
+      this .meshesObject      (obj .meshes);
+      this .nodesObject       (obj .nodes);
+      this .scenesObject      (obj .scenes);
+      this .sceneNumber       (obj .scene);
+      this .animationsObject  (obj .animations);
+      this .skinsObject       (obj .skins);
 
       return this .getScene ();
    },
-   assetObject: async function (obj)
+   assetObject: function (obj)
    {
       if (!(obj instanceof Object))
          return;
@@ -164,65 +168,78 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    buffersObject: async function (obj)
    {
+      if (!(obj instanceof Array))
+         return;
+
+      this .buffers = await Promise .all (obj .map (buffer => this .bufferValue (buffer)));
+   },
+   bufferValue: function (obj)
+   {
       if (!(obj instanceof Object))
          return;
+
+      const url = new URL (obj .uri, this .getScene () .getWorldURL ());
+
+      return fetch (url)
+         .then (response => response .blob ())
+         .then (blob => blob .arrayBuffer ());
    },
-   bufferViewsObject: async function (obj)
+   bufferViewsObject: function (obj)
    {
       if (!(obj instanceof Object))
          return;
    },
-   accessorsObject: async function (obj)
+   accessorsObject: function (obj)
    {
       if (!(obj instanceof Object))
          return;
    },
-   samplersObject: async function (obj)
+   samplersObject: function (obj)
    {
       if (!(obj instanceof Object))
          return;
    },
-   imagesObject: async function (obj)
+   imagesObject: function (obj)
    {
       if (!(obj instanceof Object))
          return;
    },
-   texturesObject: async function (obj)
+   texturesObject: function (obj)
    {
       if (!(obj instanceof Object))
          return;
    },
-   materialsObject: async function (obj)
+   materialsObject: function (obj)
    {
       if (!(obj instanceof Object))
          return;
    },
-   meshesObject: async function (obj)
+   meshesObject: function (obj)
    {
       if (!(obj instanceof Object))
          return;
    },
-   nodesObject: async function (obj)
+   nodesObject: function (obj)
    {
       if (!(obj instanceof Object))
          return;
    },
-   scenesObject: async function (obj)
+   scenesObject: function (obj)
    {
       if (!(obj instanceof Object))
          return;
    },
-   sceneNumber: async function (obj)
+   sceneNumber: function (obj)
    {
       if (!(obj instanceof Object))
          return;
    },
-   animationsObject: async function (obj)
+   animationsObject: function (obj)
    {
       if (!(obj instanceof Object))
          return;
    },
-   skinsObject: async function (obj)
+   skinsObject: function (obj)
    {
       if (!(obj instanceof Object))
          return;
