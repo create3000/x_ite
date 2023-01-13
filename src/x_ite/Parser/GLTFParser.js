@@ -157,8 +157,11 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       worldInfoNode ._title = decodeURI (new URL (worldURL) .pathname .split ("/") .at (-1) || worldURL);
 
-      for (const key in asset)
-         worldInfoNode ._info .push (`${key}: ${asset [key]}`);
+      for (const [key, value] in Object .entries (asset))
+      {
+         if (typeof value === "string")
+            worldInfoNode ._info .push (`${key}: ${value}`);
+      }
 
       worldInfoNode .setup ();
 
@@ -246,7 +249,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             components = componentSizes .get (accessor .type),
             length     = (byteStride ? byteStride / arrayType .BYTES_PER_ELEMENT : components) * accessor .count;
 
-         accessor .array = new arrayType (bufferView .buffer, byteOffset, length);
+         accessor .bufferView = bufferView;
+         accessor .array      = new arrayType (bufferView .buffer, byteOffset, length);
+         accessor .components = components;
       };
    })(),
    samplersObject: function (samplers)
@@ -267,7 +272,12 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    materialsObject: function (materials)
    {
       if (!(materials instanceof Object))
+      {
+         this .materials = [ ];
          return;
+      }
+
+      this .materials = [ ];
    },
    meshesArray: function (meshes)
    {
@@ -299,67 +309,45 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(primitive instanceof Object))
          return;
 
-      console .log (primitive);
+      this .attributesValue (primitive .attributes);
+      this .targetsArray    (primitive .targets);
 
-      // // attributes
+      primitive .indices   = this .accessors [primitive .indices];
+      primitive .material  = this .materials [primitive .material];
+      primitive .shapeNode = this .createShape (primitive);
 
-      // auto attributes = attributesValue (json_object_object_get (jobj, "attributes"));
+      this .getScene () .getRootNodes () .push (primitive .shapeNode)
+   },
+   attributesValue: function (attributes)
+   {
+      if (!(attributes instanceof Object))
+         return;
 
-      // if (not attributes)
-      //    return nullptr;
+      attributes .TANGENT  = this .accessors [attributes .TANGENT];
+      attributes .NORMAL   = this .accessors [attributes .NORMAL];
+      attributes .POSITION = this .accessors [attributes .POSITION];
 
-      // const auto primitive = std::make_shared <Primitive> ();
+      attributes .TEXCOORD = [ ];
+      attributes .COLOR    = [ ];
+      attributes .JOINTS   = [ ];
+      attributes .WEIGHTS  = [ ];
 
-      // primitive -> attributes = std::move (attributes);
+      for (let i = 0; attributes ["TEXCOORD_" + i] ; ++ i)
+         attributes .TEXCOORD .push (this .accessors [attributes ["TEXCOORD_" + i]]);
 
-      // // indices
+      for (let i = 0; attributes ["COLOR_" + i] ; ++ i)
+         attributes .COLOR .push (this .accessors [attributes ["COLOR_" + i]]);
 
-      // int32_t indices = -1;
+      for (let i = 0; attributes ["JOINTS_" + i] ; ++ i)
+         attributes .JOINTS .push (this .accessors [attributes ["JOINTS_" + i]]);
 
-      // integerValue (json_object_object_get (jobj, "indices"), indices);
-
-      // if (indices > -1 and size_t (indices) < accessors .size ())
-      // {
-      //    const auto & asseccor = accessors [indices];
-
-      //    if (not asseccor)
-      //       return nullptr;
-
-      //    primitive -> indices = asseccor;
-      // }
-
-      // // material
-
-      // int32_t material = -1;
-
-      // if (integerValue (json_object_object_get (jobj, "material"), material))
-      // {
-      //    try
-      //    {
-      //       primitive -> material = materials .at (material);
-      //    }
-      //    catch (const std::out_of_range & error)
-      //    {
-      //       getBrowser () -> getConsole () -> error ("Material with index '", material, "' not found.\n");
-      //    }
-      // }
-
-      // // mode
-
-      // int32_t mode = 4;
-
-      // integerValue (json_object_object_get (jobj, "mode"), mode);
-
-      // primitive -> mode = mode;
-
-      // // targets
-
-      // primitive -> targets = targetsValue (json_object_object_get (jobj, "targets"));
-
-      // // shapeNode
-
-      // primitive -> shapeNode = createShape (primitive);
-
+      for (let i = 0; attributes ["WEIGHTS_" + i] ; ++ i)
+         attributes .WEIGHTS .push (this .accessors [attributes ["WEIGHTS_" + i]]);
+   },
+   targetsArray: function (targets)
+   {
+      if (!(targets instanceof Array))
+         return;
    },
    nodesObject: function (nodes)
    {
@@ -385,6 +373,197 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       if (!(skins instanceof Object))
          return;
+   },
+   createShape: function (primitive)
+   {
+      const
+         scene          = this .getScene (),
+         shapeNode      = scene .createNode ("Shape", false),
+         appearanceNode = primitive .appearanceNode || this .createAppearance (),
+         geometryNode   = this .createGeometry (primitive);
+
+      shapeNode ._appearance = appearanceNode;
+      shapeNode ._geometry   = geometryNode;
+
+      shapeNode .setup ();
+
+      return shapeNode;
+   },
+   createAppearance: function ()
+   {
+      const
+         scene          = this .getScene (),
+         appearanceNode = scene .createNode ("Appearance", false),
+         materialNode   = scene .createNode ("Material", false);
+
+      appearanceNode ._material = materialNode;
+
+      materialNode   .setup ();
+      appearanceNode .setup ();
+
+      return appearanceNode;
+   },
+   createGeometry: function (primitive)
+   {
+      switch (primitive .mode)
+      {
+         case 0: // POINTS
+         {
+            return null;
+         }
+         case 1: // LINES
+         {
+            return null;
+         }
+         case 2: // LINE_LOOP
+         {
+            return null;
+         }
+         case 3: // LINE_STRIP
+         {
+            return null;
+         }
+         default:
+         case 4: // TRIANGLES
+         {
+            if (primitive .indices)
+               return this .createIndexedTriangleSet (primitive);
+
+            return this .createTriangleSet (primitive);
+         }
+         case 5: // TRIANGLE_STRIP
+         {
+            return null;
+         }
+         case 6: // TRIANGLE_FAN
+         {
+            return null;
+         }
+      }
+   },
+   createIndexedTriangleSet: function (primitive)
+   {
+      const
+         scene        = this .getScene (),
+         geometryNode = scene .createNode ("IndexedTriangleSet", false),
+         attributes   = primitive .attributes,
+         indices      = this .getArray (primitive .indices);
+
+      geometryNode ._index    = indices;
+      geometryNode ._color    = this .createColor (attributes .COLOR);
+      geometryNode ._texCoord = this .createTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
+
+      geometryNode ._solid           = primitive .material ? ! primitive .material .doubleSided : true;
+      geometryNode ._normalPerVertex = geometryNode ._normal;
+
+      geometryNode .setup ();
+
+      return geometryNode;
+   },
+   createTriangleSet: function (primitive)
+   {
+
+   },
+   createColor: function (color)
+   {
+      if (!color)
+         return null;
+
+      switch (color .type)
+      {
+         case "VEC3":
+         {
+            const
+               scene     = this .getScene (),
+               colorNode = scene .createNode ("Color", false);
+
+            colorNode ._color = this .getArray (color);
+
+            colorNode .setup ();
+
+            return colorNode;
+         }
+         case "VEC4":
+         {
+            const
+               scene     = this .getScene (),
+               colorNode = scene .createNode ("ColorRGBA", false);
+
+            colorNode ._color = this .getArray (color);
+
+            colorNode .setup ();
+
+            return colorNode;
+         }
+      }
+
+      return null;
+   },
+   createTextureCoordinate: function (texCoords)
+   {
+      switch (texCoords .length)
+      {
+         case 0:
+            return null;
+         case 1:
+            return null;
+         default:
+            return null;
+      }
+   },
+   createNormal: function (normal)
+   {
+      if (!normal || normal .type !== "VEC3")
+         return null;
+
+      const
+         scene      = this .getScene (),
+         normalNode = scene .createNode ("Normal", false);
+
+      normalNode ._vector = this .getArray (normal);
+
+      normalNode .setup ();
+
+      return normalNode;
+   },
+   createCoordinate: function (position)
+   {
+      if (!position || position .type !== "VEC3")
+         return null;
+
+      const
+         scene          = this .getScene (),
+         coordinateNode = scene .createNode ("Coordinate", false);
+
+      coordinateNode ._point = this .getArray (position);
+
+      coordinateNode .setup ();
+
+      return coordinateNode;
+   },
+   getArray: function (accessor)
+   {
+      const
+         array      = accessor .array,
+         components = accessor .components,
+         stride     = (accessor .bufferView .byteStride / array .constructor .BYTES_PER_ELEMENT) || components;
+
+      if (stride === components)
+         return array;
+
+      const
+         length = accessor .count * components,
+         result = new (array .constructor) (length);
+
+      for (let i = 0, j = 0; i < length; j += stride)
+      {
+         for (let c = 0; c < components; ++ c, ++ i)
+            result [i] = array [j + c];
+      }
+
+      return result;
    },
 });
 
