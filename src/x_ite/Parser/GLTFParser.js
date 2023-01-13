@@ -45,10 +45,11 @@
  *
  ******************************************************************************/
 
-import X3DParser from "./X3DParser.js";
-import Vector3   from "../../standard/Math/Numbers/Vector3.js";
-import Rotation4 from "../../standard/Math/Numbers/Rotation4.js";
-import Matrix4   from "../../standard/Math/Numbers/Matrix4.js";
+import X3DParser  from "./X3DParser.js";
+import Vector3    from "../../standard/Math/Numbers/Vector3.js";
+import Quaternion from "../../standard/Math/Numbers/Quaternion.js";
+import Rotation4  from "../../standard/Math/Numbers/Rotation4.js";
+import Matrix4    from "../../standard/Math/Numbers/Matrix4.js";
 
 function GLTFParser (scene)
 {
@@ -389,6 +390,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          translation      = new Vector3 (0, 0, 0),
+         quaternion       = new Quaternion (0, 0, 0, 1),
          rotation         = new Rotation4 (),
          scale            = new Vector3 (1, 1, 1),
          scaleOrientation = new Rotation4 (),
@@ -399,8 +401,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (this .vectorValue (node .scale, scale))
             matrix .scale (scale);
 
-         if (this .rotationValue (node .rotation, rotation))
-            matrix .rotate (rotation);
+         if (this .rotationValue (node .rotation, quaternion))
+            matrix .rotate (new Rotation4 (quaternion));
 
          if (this .vectorValue (node .translation, translation))
             matrix .translate (translation);
@@ -761,19 +763,19 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    vectorValue: function (array, vector)
    {
-      if (!(array instanceof Array))
+      if (!(array instanceof Array) || array .length !== vector .length)
          return false;
 
       vector .set (... array);
 
       return true;
    },
-   rotationValue: function (array, rotation)
+   rotationValue: function (array, quaternion)
    {
-      if (!(array instanceof Array))
+      if (!(array instanceof Array) || array .length !== quaternion .length)
          return false;
 
-      rotation .quaternion .set (... array);
+      quaternion .set (... array);
 
       return true;
    },
