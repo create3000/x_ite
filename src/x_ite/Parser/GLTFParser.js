@@ -140,18 +140,18 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       await this .buffersArray (glTF .buffers);
 
-      this .bufferViewsArray  (glTF .bufferViews);
-      this .accessorsArray    (glTF .accessors);
-      this .samplersObject    (glTF .samplers);
-      this .imagesObject      (glTF .images);
-      this .texturesObject    (glTF .textures);
-      this .materialsObject   (glTF .materials);
-      this .meshesArray       (glTF .meshes);
-      this .camerasArray      (glTF .cameras);
-      this .nodesArray        (glTF .nodes);
-      this .scenesArray       (glTF .scenes, glTF .scene);
-      this .animationsObject  (glTF .animations);
-      this .skinsObject       (glTF .skins);
+      this .bufferViewsArray (glTF .bufferViews);
+      this .accessorsArray   (glTF .accessors);
+      this .samplersArray    (glTF .samplers);
+      this .imagesArray      (glTF .images);
+      this .texturesArray    (glTF .textures);
+      this .materialsArray   (glTF .materials);
+      this .meshesArray      (glTF .meshes);
+      this .camerasArray     (glTF .cameras);
+      this .nodesArray       (glTF .nodes);
+      this .scenesArray      (glTF .scenes, glTF .scene);
+      this .animationsArray  (glTF .animations);
+      this .skinsArray       (glTF .skins);
 
       return this .getScene ();
    },
@@ -255,24 +255,24 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          accessor .components = components;
       };
    })(),
-   samplersObject: function (samplers)
+   samplersArray: function (samplers)
    {
-      if (!(samplers instanceof Object))
+      if (!(samplers instanceof Array))
          return;
    },
-   imagesObject: function (images)
+   imagesArray: function (images)
    {
-      if (!(images instanceof Object))
+      if (!(images instanceof Array))
          return;
    },
-   texturesObject: function (textures)
+   texturesArray: function (textures)
    {
-      if (!(textures instanceof Object))
+      if (!(textures instanceof Array))
          return;
    },
-   materialsObject: function (materials)
+   materialsArray: function (materials)
    {
-      if (!(materials instanceof Object))
+      if (!(materials instanceof Array))
          return;
 
       this .materials = [ ];
@@ -550,14 +550,14 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (typeof scene !== "number")
          return;
    },
-   animationsObject: function (animations)
+   animationsArray: function (animations)
    {
-      if (!(animations instanceof Object))
+      if (!(animations instanceof Array))
          return;
    },
-   skinsObject: function (skins)
+   skinsArray: function (skins)
    {
-      if (!(skins instanceof Object))
+      if (!(skins instanceof Array))
          return;
    },
    createShape: function (primitive)
@@ -565,7 +565,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene          = this .getScene (),
          shapeNode      = scene .createNode ("Shape", false),
-         appearanceNode = primitive .appearanceNode || this .createAppearance (),
+         appearanceNode = primitive .appearanceNode || this .getDefaultAppearance (),
          geometryNode   = this .createGeometry (primitive);
 
       shapeNode ._appearance = appearanceNode;
@@ -575,8 +575,11 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return shapeNode;
    },
-   createAppearance: function ()
+   getDefaultAppearance: function ()
    {
+      if (this .defaultAppearance)
+         return this .defaultAppearance;
+
       const
          scene          = this .getScene (),
          appearanceNode = scene .createNode ("Appearance", false),
@@ -586,6 +589,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       materialNode   .setup ();
       appearanceNode .setup ();
+
+      this .defaultAppearance = appearanceNode;
 
       return appearanceNode;
    },
