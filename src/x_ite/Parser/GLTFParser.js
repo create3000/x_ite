@@ -399,7 +399,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (this .vectorValue (node .scale, scale))
             matrix .scale (scale);
 
-         if (this .vectorValue (node .rotation, rotation))
+         if (this .rotationValue (node .rotation, rotation))
             matrix .rotate (rotation);
 
          if (this .vectorValue (node .translation, translation))
@@ -765,6 +765,13 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
 
       vector .set (... array);
+   },
+   rotationValue: function (array, rotation)
+   {
+      if (!(array instanceof Array))
+         return;
+
+      rotation .value .set (... array);
    },
 });
 
