@@ -80,10 +80,10 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          "textures",
          "materials",
          "meshes",
+         "cameras",
          "nodes",
          "scenes",
          "scene",
-         "cameras",
          "animations",
          "skins",
       ]);
@@ -147,6 +147,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .texturesObject    (glTF .textures);
       this .materialsObject   (glTF .materials);
       this .meshesArray       (glTF .meshes);
+      this .camerasArray      (glTF .cameras);
       this .nodesArray        (glTF .nodes);
       this .scenesArray       (glTF .scenes, glTF .scene);
       this .animationsObject  (glTF .animations);
@@ -347,6 +348,11 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    targetsArray: function (targets)
    {
       if (!(targets instanceof Array))
+         return;
+   },
+   camerasArray: function (cameras)
+   {
+      if (!(cameras instanceof Array))
          return;
    },
    nodesArray: function (nodes)
