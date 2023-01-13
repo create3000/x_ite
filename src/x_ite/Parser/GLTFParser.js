@@ -441,13 +441,6 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             transformNode ._children .push (child .transformNode);
       }
    },
-   vectorValue: function (array, vector)
-   {
-      if (!(array instanceof Array))
-         return;
-
-      vector .set (... array);
-   },
    scenesArray: function (scenes, sceneNumber)
    {
       if (!(scenes instanceof Array))
@@ -725,6 +718,13 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
 
       return result;
+   },
+   vectorValue: function (array, vector)
+   {
+      if (!(array instanceof Array))
+         return;
+
+      vector .set (... array);
    },
 });
 
