@@ -128,15 +128,15 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .assetObject (glTF .asset);
 
-      await this .buffersObject (glTF .buffers);
+      await this .buffersArray (glTF .buffers);
 
-      this .bufferViewsObject (glTF .bufferViews);
-      this .accessorsObject   (glTF .accessors);
+      this .bufferViewsArray  (glTF .bufferViews);
+      this .accessorsArray    (glTF .accessors);
       this .samplersObject    (glTF .samplers);
       this .imagesObject      (glTF .images);
       this .texturesObject    (glTF .textures);
       this .materialsObject   (glTF .materials);
-      this .meshesObject      (glTF .meshes);
+      this .meshesArray       (glTF .meshes);
       this .nodesObject       (glTF .nodes);
       this .scenesObject      (glTF .scenes);
       this .sceneNumber       (glTF .scene);
@@ -164,7 +164,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       scene .getRootNodes () .push (worldInfoNode);
    },
-   buffersObject: async function (buffers)
+   buffersArray: async function (buffers)
    {
       if (!(buffers instanceof Array))
       {
@@ -185,7 +185,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          .then (response => response .blob ())
          .then (blob => blob .arrayBuffer ());
    },
-   bufferViewsObject: function (bufferViews)
+   bufferViewsArray: function (bufferViews)
    {
       if (!(bufferViews instanceof Array))
       {
@@ -198,7 +198,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .bufferViews = bufferViews;
    },
-   accessorsObject: function (accessors)
+   accessorsArray: function (accessors)
    {
       if (!(accessors instanceof Array))
       {
@@ -269,7 +269,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(materials instanceof Object))
          return;
    },
-   meshesObject: function (meshes)
+   meshesArray: function (meshes)
    {
       if (!(meshes instanceof Array))
          return;
@@ -284,9 +284,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(mesh instanceof Object))
          return;
 
-      this .primitivesObject (mesh .primitives);
+      this .primitivesArray (mesh .primitives);
    },
-   primitivesObject: function (primitives)
+   primitivesArray: function (primitives)
    {
       if (!(primitives instanceof Array))
          return;
