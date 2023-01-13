@@ -294,17 +294,21 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(mesh instanceof Object))
          return;
 
-      this .primitivesArray (mesh .primitives);
+      mesh .shapeNodes = this .primitivesArray (mesh .primitives);
    },
    primitivesArray: function (primitives)
    {
       if (!(primitives instanceof Array))
-         return;
+         return [ ];
+
+      const shapeNodes = [ ];
 
       for (const primitive of primitives)
-         this .primitiveValue (primitive);
+         this .primitiveValue (primitive, shapeNodes);
+
+      return shapeNodes;
    },
-   primitiveValue: function (primitive)
+   primitiveValue: function (primitive, shapeNodes)
    {
       if (!(primitive instanceof Object))
          return;
@@ -314,9 +318,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       primitive .indices   = this .accessors [primitive .indices];
       primitive .material  = this .materials [primitive .material];
-      primitive .shapeNode = this .createShape (primitive);
 
-      this .getScene () .getRootNodes () .push (primitive .shapeNode)
+      shapeNodes .push (this .createShape (primitive));
    },
    attributesValue: function (attributes)
    {
