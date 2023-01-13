@@ -167,7 +167,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       worldInfoNode ._title = decodeURI (new URL (worldURL) .pathname .split ("/") .at (-1) || worldURL);
 
-      for (const [key, value] in Object .entries (asset))
+      for (const [key, value] of Object .entries (asset))
       {
          if (typeof value === "string")
             worldInfoNode ._info .push (`${key}: ${value}`);
