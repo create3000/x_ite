@@ -762,16 +762,20 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    vectorValue: function (array, vector)
    {
       if (!(array instanceof Array))
-         return;
+         return false;
 
       vector .set (... array);
+
+      return true;
    },
    rotationValue: function (array, rotation)
    {
       if (!(array instanceof Array))
-         return;
+         return false;
 
       rotation .quaternion .set (... array);
+
+      return true;
    },
 });
 
