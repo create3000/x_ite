@@ -170,7 +170,7 @@ X3DParser .prototype = {
    {
       if (typeof name !== "string")
          return;
-         
+
       // NonIdFirstChar
       name = name .replace (/^[\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/, "");
 
@@ -178,7 +178,7 @@ X3DParser .prototype = {
       name = name .replace (/[\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]/g, "");
 
       // Spaces
-      name = name .replace (/\s+/g, "-");
+      name = name .trim () .replace (/\s+/g, "-");
 
       return name;
    },
