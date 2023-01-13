@@ -714,7 +714,10 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    createNormal: function (normal)
    {
-      if (!normal || normal .type !== "VEC3")
+      if (!normal)
+         return null;
+
+      if (normal .type !== "VEC3")
          return null;
 
       const
@@ -729,7 +732,10 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    createCoordinate: function (position)
    {
-      if (!position || position .type !== "VEC3")
+      if (!position)
+         return null;
+
+      if (position .type !== "VEC3")
          return null;
 
       const
