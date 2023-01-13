@@ -441,30 +441,41 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   createIndexedTriangleSet: function (primitive)
+   createIndexedTriangleSet: function ({ attributes, indices, material })
    {
       const
          scene        = this .getScene (),
-         geometryNode = scene .createNode ("IndexedTriangleSet", false),
-         attributes   = primitive .attributes,
-         indices      = this .getArray (primitive .indices);
+         geometryNode = scene .createNode ("IndexedTriangleSet", false);
 
-      geometryNode ._index    = indices;
+      geometryNode ._index    = this .getArray (indices);
       geometryNode ._color    = this .createColor (attributes .COLOR);
       geometryNode ._texCoord = this .createTextureCoordinate (attributes .TEXCOORD);
       geometryNode ._normal   = this .createNormal (attributes .NORMAL);
       geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
 
-      geometryNode ._solid           = primitive .material ? ! primitive .material .doubleSided : true;
+      geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._normalPerVertex = geometryNode ._normal;
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createTriangleSet: function (primitive)
+   createTriangleSet: function ({ attributes, material })
    {
+      const
+         scene        = this .getScene (),
+         geometryNode = scene .createNode ("TriangleSet", false);
 
+      geometryNode ._color    = this .createColor (attributes .COLOR);
+      geometryNode ._texCoord = this .createTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
+
+      geometryNode ._solid = material ? ! material .doubleSided : true;
+
+      geometryNode .setup ();
+
+      return geometryNode;
    },
    createColor: function (color)
    {
@@ -543,18 +554,15 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return coordinateNode;
    },
-   getArray: function (accessor)
+   getArray: function ({ array, bufferView, components, count })
    {
-      const
-         array      = accessor .array,
-         components = accessor .components,
-         stride     = (accessor .bufferView .byteStride / array .constructor .BYTES_PER_ELEMENT) || components;
+      const stride = (bufferView .byteStride / array .constructor .BYTES_PER_ELEMENT) || components;
 
       if (stride === components)
          return array;
 
       const
-         length = accessor .count * components,
+         length = count * components,
          result = new (array .constructor) (length);
 
       for (let i = 0, j = 0; i < length; j += stride)
