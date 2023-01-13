@@ -182,9 +182,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(buffers instanceof Array))
          return;
 
-      this .buffers = await Promise .all (buffers .map (buffer => this .bufferValue (buffer)));
+      this .buffers = await Promise .all (buffers .map (buffer => this .bufferObject (buffer)));
    },
-   bufferValue: function (buffer)
+   bufferObject: function (buffer)
    {
       if (!(buffer instanceof Object))
          return;
@@ -302,24 +302,24 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const shapeNodes = [ ];
 
       for (const primitive of primitives)
-         this .primitiveValue (primitive, shapeNodes);
+         this .primitiveObject (primitive, shapeNodes);
 
       return shapeNodes;
    },
-   primitiveValue: function (primitive, shapeNodes)
+   primitiveObject: function (primitive, shapeNodes)
    {
       if (!(primitive instanceof Object))
          return;
 
-      this .attributesValue (primitive .attributes);
-      this .targetsArray    (primitive .targets);
+      this .attributesObject (primitive .attributes);
+      this .targetsArray     (primitive .targets);
 
       primitive .indices   = this .accessors [primitive .indices];
       primitive .material  = this .materials [primitive .material];
 
       shapeNodes .push (this .createShape (primitive));
    },
-   attributesValue: function (attributes)
+   attributesObject: function (attributes)
    {
       if (!(attributes instanceof Object))
          return;
@@ -363,12 +363,12 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .nodes = nodes;
 
       for (const node of nodes)
-         this .nodeValue1 (node);
+         this .nodeObject1 (node);
 
       for (const node of nodes)
-         this .nodeValue2 (node);
+         this .nodeObject2 (node);
    },
-   nodeValue1: function (node)
+   nodeObject1: function (node)
    {
       if (!(node instanceof Object))
          return;
@@ -435,7 +435,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       node .transformNode = transformNode;
    },
-   nodeValue2: function (node)
+   nodeObject2: function (node)
    {
       if (!(node instanceof Object))
          return;
