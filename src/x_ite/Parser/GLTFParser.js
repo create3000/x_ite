@@ -402,9 +402,15 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          materialNode ._diffuseColor = diffuseColor .set (diffuseFactor .r, diffuseFactor .g, diffuseFactor .b);
          materialNode ._transparency = 1 - diffuseFactor .a;
       }
+      else
+      {
+         materialNode ._diffuseColor = Color3 .White;
+      }
 
       if (this .vectorValue (pbrSpecularGlossiness .specularFactor, specularFactor))
          materialNode ._specularColor = specularFactor;
+      else
+         materialNode ._specularColor = Color3 .White;
 
       materialNode ._shininess = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
 
