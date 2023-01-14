@@ -74,7 +74,7 @@ EOT
 }
 
 sub menu {
-   my @files = sort { "\U$a" cmp "\U$b" } `find src/tests -type f -name "*.x3d" -o -name "*.x3dv" -o -name "*.gltf"`;
+   my @files = sort `find src/tests -type f -name "*.x3d" -o -name "*.x3dv" -o -name "*.gltf"`;
 
    chomp @files;
 
@@ -93,15 +93,18 @@ EOT
 
    for my $file (@files)
    {
+      say $file;
+
       ++ $n;
 
       $file =~ s|src/||;
 
       my $basename = basename $file;
+      my $dirname  = basename dirname $file;
 
       say FILE <<EOT;
 "file-$n": {
-   "name": "$basename",
+   "name": "$dirname/$basename",
    "callback": function (event)
    {
       X3D .getBrowser () .loadURL (new X3D .MFString ("$file"));
