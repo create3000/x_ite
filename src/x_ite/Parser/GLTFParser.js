@@ -465,10 +465,11 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 	   this .occlusionTextureInfo (material .occlusionTexture, materialNode);
 	   this .normalTextureInfo    (material .normalTexture,    materialNode);
 
-      appearanceNode ._material         = materialNode;
-      appearanceNode ._textureTransform = this .getDefaultTextureTransform ();
+      materialNode .setup ();
 
-      materialNode   .setup ()
+      appearanceNode ._material         = materialNode;
+      appearanceNode ._textureTransform = this .getDefaultTextureTransform (materialNode);
+
       appearanceNode .setup ();
 
       material .appearanceNode = appearanceNode;
@@ -904,8 +905,11 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return appearanceNode;
    },
-   getDefaultTextureTransform: function ()
+   getDefaultTextureTransform: function (materialNode)
    {
+      if (!+materialNode .getTextureBits ())
+         return null;
+
       if (this .defaultTextureTransform)
          return this .defaultTextureTransform;
 
