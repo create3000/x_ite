@@ -258,15 +258,15 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const
                length = count * components,
-               result = new arrayType (length);
+               dense  = new arrayType (length);
 
             for (let i = 0, j = 0; i < length; j += stride)
             {
                for (let c = 0; c < components; ++ c, ++ i)
-                  result [i] = array [j + c];
+                  dense [i] = array [j + c];
             }
 
-            accessor .array = result;
+            accessor .array = dense;
          }
          else
          {
