@@ -53,6 +53,8 @@ import Matrix4    from "../../standard/Math/Numbers/Matrix4.js";
 import Color3     from "../../standard/Math/Numbers/Color3.js";
 import Color4     from "../../standard/Math/Numbers/Color4.js";
 
+// https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
+
 function GLTFParser (scene)
 {
    X3DParser .call (this, scene);
@@ -418,7 +420,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                if (name)
                   scene .addNamedNode (scene .getUniqueName (name), imageTextureNode);
 
-               imageTextureNode ._url = [new URL (image .uri, scene .getWorldURL ())]
+               imageTextureNode ._url = [image .uri];
             }
 
             imageTextureNode .setup ();
