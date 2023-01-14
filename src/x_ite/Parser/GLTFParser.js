@@ -480,7 +480,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const materials = [
          this .pbrMetallicRoughnessObject .bind (this, material .pbrMetallicRoughness),
-         this .extensionsObject .bind (this, material .extensions),
+         this .extensionsObject           .bind (this, material .extensions),
          this .pbrMetallicRoughnessObject .bind (this, { }),
       ];
 
