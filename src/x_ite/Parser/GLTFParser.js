@@ -249,11 +249,29 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             byteOffset = (accessor .byteOffset || 0) + (bufferView .byteOffset || 0),
             byteStride = bufferView .byteStride,
             components = componentSizes .get (accessor .type),
-            length     = (byteStride ? byteStride / arrayType .BYTES_PER_ELEMENT : components) * accessor .count;
+            length     = (byteStride ? byteStride / arrayType .BYTES_PER_ELEMENT : components) * accessor .count,
+            array      = new arrayType (bufferView .buffer, byteOffset, length);
 
          accessor .bufferView = bufferView;
-         accessor .array      = new arrayType (bufferView .buffer, byteOffset, length);
+         accessor .array      = array;
          accessor .components = components;
+
+         const stride = (byteStride / arrayType .BYTES_PER_ELEMENT) || components;
+
+         if (stride !== components)
+         {
+            const
+               length = accessor .count * components,
+               result = new arrayType (length);
+
+            for (let i = 0, j = 0; i < length; j += stride)
+            {
+               for (let c = 0; c < components; ++ c, ++ i)
+                  result [i] = array [j + c];
+            }
+
+            accessor .array = result;
+         }
       };
    })(),
    samplersArray: function (samplers)
@@ -294,6 +312,16 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
 
       mesh .shapeNodes = this .primitivesArray (mesh .primitives);
+
+      const
+         scene = this .getScene (),
+         name  = this .sanitizeName (mesh .name);
+
+      if (name)
+      {
+         for (const shapeNode of mesh .shapeNodes)
+            scene .addNamedNode (scene .getUniqueName (name), shapeNode);
+      }
    },
    primitivesArray: function (primitives)
    {
@@ -422,17 +450,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          const mesh = this .meshes [node .mesh];
 
          if (mesh)
-         {
             transformNode ._children = mesh .shapeNodes;
-
-            if (!name)
-            {
-               const name = this .sanitizeName (mesh .name);
-
-               if (name)
-                  scene .addNamedNode (scene .getUniqueName (name), transformNode);
-            }
-         }
       }
 
       node .transformNode = transformNode;
@@ -635,7 +653,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedTriangleSet", false);
 
-      geometryNode ._index    = this .getArray (indices);
+      geometryNode ._index    = indices .array;
       geometryNode ._color    = this .createColor (attributes .COLOR);
       geometryNode ._texCoord = this .createTextureCoordinate (attributes .TEXCOORD);
       geometryNode ._normal   = this .createNormal (attributes .NORMAL);
@@ -678,7 +696,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                scene     = this .getScene (),
                colorNode = scene .createNode ("Color", false);
 
-            colorNode ._color = this .getArray (color);
+            colorNode ._color = color .array;
 
             colorNode .setup ();
 
@@ -690,7 +708,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                scene     = this .getScene (),
                colorNode = scene .createNode ("ColorRGBA", false);
 
-            colorNode ._color = this .getArray (color);
+            colorNode ._color = color .array;
 
             colorNode .setup ();
 
@@ -724,7 +742,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene      = this .getScene (),
          normalNode = scene .createNode ("Normal", false);
 
-      normalNode ._vector = this .getArray (normal);
+      normalNode ._vector = normal .array;
 
       normalNode .setup ();
 
@@ -742,30 +760,11 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene          = this .getScene (),
          coordinateNode = scene .createNode ("Coordinate", false);
 
-      coordinateNode ._point = this .getArray (position);
+      coordinateNode ._point = position .array;
 
       coordinateNode .setup ();
 
       return coordinateNode;
-   },
-   getArray: function ({ array, bufferView, components, count })
-   {
-      const stride = (bufferView .byteStride / array .constructor .BYTES_PER_ELEMENT) || components;
-
-      if (stride === components)
-         return array;
-
-      const
-         length = count * components,
-         result = new (array .constructor) (length);
-
-      for (let i = 0, j = 0; i < length; j += stride)
-      {
-         for (let c = 0; c < components; ++ c, ++ i)
-            result [i] = array [j + c];
-      }
-
-      return result;
    },
    vectorValue: function (array, vector)
    {
