@@ -611,12 +611,13 @@ As of version 1.19, X_ITE can now parse either X3D XML Encoding or X3D Classic E
 
 Additionally files can be compressed using GZip compression.
 
-| X3D Encoding | File Extension | MIME Type      |
-|--------------|----------------|----------------|
-| XML          | .x3d, .x3dz    | model/x3d+xml  |
-| JSON         | .x3dj, .x3djz  | model/x3d+json |
-| Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml |
-| VRML         | .wrl, .wrz     | model/vrml     |
+| X3D Encoding | File Extension | MIME Type       |
+|--------------|----------------|-----------------|
+| XML          | .x3d, .x3dz    | model/x3d+xml   |
+| JSON         | .x3dj, .x3djz  | model/x3d+json  |
+| Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  |
+| VRML         | .wrl, .wrz     | model/vrml      |
+| glTF         | .gltf          | model/gltf+json |
 
 For more information see [How to Configure Your Web Server](how-to-configure-your-web-server).
 
