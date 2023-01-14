@@ -61,6 +61,7 @@ function GLTFParser (scene)
    this .buffers        = [ ];
    this .bufferViews    = [ ];
    this .accessors      = [ ];
+   this .samplers       = [ ];
    this .materials      = [ ];
    this .nodes          = [ ];
 }
@@ -304,16 +305,116 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       if (!(samplers instanceof Array))
          return;
+
+      this .samplers = samplers;
+
+      for (const sampler of samplers)
+         this .samplerObject (sampler);
    },
+   samplerObject: (function ()
+   {
+      const MinificationFilters = new Map ([
+         [9728, ["NEAREST_PIXEL",                false]],
+         [9729, ["AVG_PIXEL",                    false]],
+         [9984, ["NEAREST_PIXEL_NEAREST_MIPMAP", true]],
+         [9985, ["AVG_PIXEL_NEAREST_MIPMAP",     true]],
+         [9986, ["NEAREST_PIXEL_AVG_MIPMAP",     true]],
+         [9987, ["AVG_PIXEL_AVG_MIPMAP",         true]],
+      ]);
+
+      const MagnificationFilters = new Map ([
+         [9728, "NEAREST_PIXEL"],
+         [9729, "AVG_PIXEL"],
+      ]);
+
+	   const BoundaryModes = new Map ([
+         [33071, "CLAMP_TO_EDGE"],
+         [33648, "MIRRORED_REPEAT"],
+         [10497, "REPEAT"],
+      ]);
+
+      return function (sampler)
+      {
+         if (!(sampler instanceof Object))
+            return;
+
+         const
+            scene                 = this .getScene (),
+            texturePropertiesNode = scene .createNode ("TextureProperties", false),
+            name                  = this .sanitizeName (sampler .name);
+
+         if (name)
+            scene .addNamedNode (scene .getUniqueName (name), texturePropertiesNode);
+
+         // minFilter
+
+         const minificationFilter = MinificationFilters .get (sampler .minFilter) || ["AVG_PIXEL", false];
+
+         texturePropertiesNode ._minificationFilter = minificationFilter [0];
+         texturePropertiesNode ._generateMipMaps    = minificationFilter [1];
+
+         // magFilter
+
+         texturePropertiesNode ._magnificationFilter = MagnificationFilters .get (sampler .magFilter) || "AVG_PIXEL";
+
+         // boundaryMode
+
+         texturePropertiesNode ._boundaryModeS = BoundaryModes .get (sampler .wrapS) || "REPEAT";
+         texturePropertiesNode ._boundaryModeT = BoundaryModes .get (sampler .wrapT) || "REPEAT";
+
+         // setup
+
+         texturePropertiesNode .setup ();
+
+         sampler .texturePropertiesNode = texturePropertiesNode;
+      };
+   })(),
    imagesArray: function (images)
    {
       if (!(images instanceof Array))
          return;
+
+      this .images = images;
    },
    texturesArray: function (textures)
    {
       if (!(textures instanceof Array))
          return;
+
+      this .textures = textures;
+
+      for (const texture of textures)
+         this .textureObject (texture);
+   },
+   textureObject: function (texture)
+   {
+      if (!(texture instanceof Object))
+         return;
+
+      const
+         scene            = this .getScene (),
+         imageTextureNode = scene .createNode ("ImageTexture", false);
+
+      const sampler = this .samplers [texture .sampler];
+
+      if (sampler)
+         imageTextureNode ._textureProperties = sampler .texturePropertiesNode;
+
+      const image = this .images [texture .source];
+
+      if (image)
+      {
+         const name = this .sanitizeName (image .name);
+
+         if (name)
+            scene .addNamedNode (scene .getUniqueName (name), imageTextureNode);
+
+         imageTextureNode ._url = [new URL (image .uri, scene .getWorldURL ())]
+      }
+
+      imageTextureNode .setup ();
+
+      texture .textureNode = imageTextureNode;
    },
    materialsArray: function (materials)
    {
@@ -348,7 +449,13 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (this .vectorValue (material .emissiveFactor, emissiveFactor))
          materialNode ._emissiveColor = emissiveFactor;
 
-      appearanceNode ._material = materialNode;
+      materialNode ._emissiveTexture = this .textureInfo (material .emissiveTexture);
+
+	   this .occlusionTextureInfo (material .occlusionTexture, materialNode);
+	   this .normalTextureInfo    (material .normalTexture,    materialNode);
+
+      appearanceNode ._material         = materialNode;
+      appearanceNode ._textureTransform = this .getDefaultTextureTransform ();
 
       materialNode   .setup ()
       appearanceNode .setup ();
@@ -385,6 +492,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       physicalMaterialNode ._metallic  = this .numberValue (pbrMetallicRoughness .metallicFactor,  1);
       physicalMaterialNode ._roughness = this .numberValue (pbrMetallicRoughness .roughnessFactor, 1);
+
+      physicalMaterialNode ._baseTexture              = this .textureInfo (pbrMetallicRoughness .baseColorTexture);
+      physicalMaterialNode ._metallicRoughnessTexture = this .textureInfo (pbrMetallicRoughness .metallicRoughnessTexture);
 
       return physicalMaterialNode;
    },
@@ -438,7 +548,32 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       materialNode ._shininess = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
 
+      materialNode ._diffuseTexture   = this .textureInfo (pbrSpecularGlossiness .diffuseTexture);
+      materialNode ._specularTexture  = this .textureInfo (pbrSpecularGlossiness .specularGlossinessTexture);
+      materialNode ._shininessTexture = this .textureInfo (pbrSpecularGlossiness .specularGlossinessTexture);
+
       return materialNode;
+   },
+   occlusionTextureInfo: function (occlusionTexture, materialNode)
+   {
+      if (!(occlusionTexture instanceof Object))
+         return null;
+
+   },
+   normalTextureInfo: function (normalTexture, materialNode)
+   {
+      if (!(normalTexture instanceof Object))
+         return null;
+
+      materialNode ._normalScale   = this .numberValue (normalTexture .scale, 1);
+      materialNode ._normalTexture = this .textureInfo (normalTexture);
+   },
+   textureInfo: function (texture)
+   {
+      if (!(texture instanceof Object))
+         return null;
+
+      return this .textures [texture .index] .textureNode;
    },
    meshesArray: function (meshes)
    {
@@ -508,16 +643,16 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       attributes .JOINTS   = [ ];
       attributes .WEIGHTS  = [ ];
 
-      for (let i = 0; attributes ["TEXCOORD_" + i] ; ++ i)
+      for (let i = 0; Number .isInteger (attributes ["TEXCOORD_" + i]); ++ i)
          attributes .TEXCOORD .push (this .accessors [attributes ["TEXCOORD_" + i]]);
 
-      for (let i = 0; attributes ["COLOR_" + i] ; ++ i)
+      for (let i = 0; Number .isInteger (attributes ["COLOR_" + i]); ++ i)
          attributes .COLOR .push (this .accessors [attributes ["COLOR_" + i]]);
 
-      for (let i = 0; attributes ["JOINTS_" + i] ; ++ i)
+      for (let i = 0; Number .isInteger (attributes ["JOINTS_" + i]); ++ i)
          attributes .JOINTS .push (this .accessors [attributes ["JOINTS_" + i]]);
 
-      for (let i = 0; attributes ["WEIGHTS_" + i] ; ++ i)
+      for (let i = 0; Number .isInteger (attributes ["WEIGHTS_" + i]); ++ i)
          attributes .WEIGHTS .push (this .accessors [attributes ["WEIGHTS_" + i]]);
    },
    targetsArray: function (targets)
@@ -756,6 +891,24 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return appearanceNode;
    },
+   getDefaultTextureTransform: function ()
+   {
+      if (this .defaultTextureTransform)
+         return this .defaultTextureTransform;
+
+      const
+         scene                 = this .getScene (),
+         textureTransformNode = scene .createNode ("TextureTransform", false);
+
+      textureTransformNode ._translation .y = 1;
+      textureTransformNode ._scale .y       = -1;
+
+      textureTransformNode .setup ();
+
+      this .defaultTextureTransform = textureTransformNode;
+
+      return textureTransformNode;
+   },
    createGeometry: function (primitive)
    {
       switch (primitive .mode)
@@ -801,8 +954,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          geometryNode = scene .createNode ("IndexedTriangleSet", false);
 
       geometryNode ._index    = indices .array;
-      geometryNode ._color    = this .createColor (attributes .COLOR);
-      geometryNode ._texCoord = this .createTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
       geometryNode ._normal   = this .createNormal (attributes .NORMAL);
       geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
 
@@ -819,8 +972,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("TriangleSet", false);
 
-      geometryNode ._color    = this .createColor (attributes .COLOR);
-      geometryNode ._texCoord = this .createTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
       geometryNode ._normal   = this .createNormal (attributes .NORMAL);
       geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
 
@@ -865,20 +1018,70 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return null;
    },
-   createTextureCoordinate: function (texCoords)
+   createMultiTextureCoordinate: function (texCoords)
    {
       switch (texCoords .length)
       {
          case 0:
             return null;
          case 1:
-            return null;
+            return this .createTextureCoordinate (texCoords [0]);
          default:
             return null;
       }
    },
+   createTextureCoordinate: function (texCoords)
+   {
+      if (!texCoords)
+         return null;
+
+      switch (texCoords .type)
+      {
+         case "VEC2":
+         {
+            const
+               scene                 = this .getScene (),
+               textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
+
+            textureCoordinateNode ._point = texCoords .array;
+
+            textureCoordinateNode .setup ();
+
+            return textureCoordinateNode;
+         }
+         case "VEC3":
+         {
+            const
+               scene                 = this .getScene (),
+               textureCoordinateNode = scene .createNode ("TextureCoordinate3D", false);
+
+            textureCoordinateNode ._point = texCoords .array;
+
+            textureCoordinateNode .setup ();
+
+            return textureCoordinateNode;
+         }
+         case "VEC4":
+         {
+            const
+               scene                 = this .getScene (),
+               textureCoordinateNode = scene .createNode ("TextureCoordinate4D", false);
+
+            textureCoordinateNode ._point = texCoords .array;
+
+            textureCoordinateNode .setup ();
+
+            return textureCoordinateNode;
+         }
+      }
+
+      return null;
+   },
    createNormal: function (normal)
    {
+      if (!(normal instanceof Object))
+         return null;
+
       if (!normal)
          return null;
 
@@ -897,6 +1100,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    createCoordinate: function (position)
    {
+      if (!(position instanceof Object))
+         return null;
+
       if (!position)
          return null;
 

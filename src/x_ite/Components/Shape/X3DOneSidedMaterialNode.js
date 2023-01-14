@@ -146,7 +146,7 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterial
       if (+this .getTextureBits ())
       {
          if (this .getEmissiveTexture ())
-            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
 
          if (this .getNormalTexture ())
             options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
