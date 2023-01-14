@@ -364,6 +364,30 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .pbrMetallicRoughnessObject (material .pbrMetallicRoughness || { });
    },
+   pbrMetallicRoughnessObject: function (pbrMetallicRoughness)
+   {
+      if (!(pbrMetallicRoughness instanceof Object))
+         return null;
+
+      const
+         scene                = this .getScene (),
+         physicalMaterialNode = scene .createNode ("PhysicalMaterial", false);
+
+      const
+         baseColorFactor = new Color4 (0, 0, 0, 0),
+         baseColor       = new Color3 (0, 0, 0);
+
+      if (this .vectorValue (pbrMetallicRoughness .baseColorFactor, baseColorFactor))
+      {
+         physicalMaterialNode ._baseColor    = baseColor .set (baseColorFactor .r, baseColorFactor .g, baseColorFactor .b);
+         physicalMaterialNode ._transparency = 1 - baseColorFactor .a;
+      }
+
+      physicalMaterialNode ._metallic  = this .numberValue (pbrMetallicRoughness .metallicFactor,  1);
+      physicalMaterialNode ._roughness = this .numberValue (pbrMetallicRoughness .roughnessFactor, 1);
+
+      return physicalMaterialNode;
+   },
    extensionsObject: function (extensions)
    {
       if (!(extensions instanceof Object))
@@ -415,30 +439,6 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       materialNode ._shininess = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
 
       return materialNode;
-   },
-   pbrMetallicRoughnessObject: function (pbrMetallicRoughness)
-   {
-      if (!(pbrMetallicRoughness instanceof Object))
-         return null;
-
-      const
-         scene                = this .getScene (),
-         physicalMaterialNode = scene .createNode ("PhysicalMaterial", false);
-
-      const
-         baseColorFactor = new Color4 (0, 0, 0, 0),
-         baseColor       = new Color3 (0, 0, 0);
-
-      if (this .vectorValue (pbrMetallicRoughness .baseColorFactor, baseColorFactor))
-      {
-         physicalMaterialNode ._baseColor    = baseColor .set (baseColorFactor .r, baseColorFactor .g, baseColorFactor .b);
-         physicalMaterialNode ._transparency = 1 - baseColorFactor .a;
-      }
-
-      physicalMaterialNode ._metallic  = this .numberValue (pbrMetallicRoughness .metallicFactor,  1);
-      physicalMaterialNode ._roughness = this .numberValue (pbrMetallicRoughness .roughnessFactor, 1);
-
-      return physicalMaterialNode;
    },
    meshesArray: function (meshes)
    {
