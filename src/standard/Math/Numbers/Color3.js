@@ -93,12 +93,14 @@ Color3 .prototype =
       this [_r] = color [_r];
       this [_g] = color [_g];
       this [_b] = color [_b];
+      return this;
    },
    set: function (r, g, b)
    {
       this [_r] = clamp (r, 0, 1);
       this [_g] = clamp (g, 0, 1);
       this [_b] = clamp (b, 0, 1);
+      return this;
    },
    equals: function (color)
    {
@@ -173,6 +175,8 @@ Color3 .prototype =
             default: this [_r] = v; this [_g] = p; this [_b] = q; break;
          }
       }
+      
+      return this;
    },
    toString: function ()
    {

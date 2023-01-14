@@ -50,16 +50,19 @@ import Vector3    from "../../standard/Math/Numbers/Vector3.js";
 import Quaternion from "../../standard/Math/Numbers/Quaternion.js";
 import Rotation4  from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4    from "../../standard/Math/Numbers/Matrix4.js";
+import Color3     from "../../standard/Math/Numbers/Color3.js";
+import Color4     from "../../standard/Math/Numbers/Color4.js";
 
 function GLTFParser (scene)
 {
    X3DParser .call (this, scene);
 
-   this .buffers     = [ ];
-   this .bufferViews = [ ];
-   this .accessors   = [ ];
-   this .materials   = [ ];
-   this .nodes       = [ ];
+   this .extensionsUsed = new Set ();
+   this .buffers        = [ ];
+   this .bufferViews    = [ ];
+   this .accessors      = [ ];
+   this .materials      = [ ];
+   this .nodes          = [ ];
 }
 
 GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -73,6 +76,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const keys = new Set ([
          "asset",
+         "extensionsRequired",
+         "extensionsUsed",
          "buffers",
          "bufferViews",
          "accessors",
@@ -137,7 +142,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Parse root objects.
 
-      this .assetObject (glTF .asset);
+      this .assetObject             (glTF .asset);
+      this .extensionsRequiredArray (glTF .extensionsRequired),
+      this .extensionsUsedArray     (glTF .extensionsUsed);
 
       await this .buffersArray (glTF .buffers);
 
@@ -178,6 +185,18 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       scene .getRootNodes () .push (worldInfoNode);
    },
+   extensionsRequiredArray: function (extensionsRequired)
+   {
+      if (!(extensionsRequired instanceof Array))
+         return;
+   },
+   extensionsUsedArray: function (extensionsUsed)
+   {
+      if (!(extensionsUsed instanceof Array))
+         return;
+
+      this .extensionsUsed = new Set (extensionsUsed);
+   },
    buffersArray: async function (buffers)
    {
       if (!(buffers instanceof Array))
@@ -201,20 +220,20 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(bufferViews instanceof Array))
          return;
 
+      this .bufferViews = bufferViews;
+
       for (const bufferView of bufferViews)
          bufferView .buffer = this .buffers [bufferView .buffer];
-
-      this .bufferViews = bufferViews;
    },
    accessorsArray: function (accessors)
    {
       if (!(accessors instanceof Array))
          return;
 
+      this .accessors = accessors;
+
       for (const accessor of accessors)
          this .accessorObject (accessor);
-
-      this .accessors = accessors;
    },
    accessorObject: (function ()
    {
@@ -301,17 +320,129 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(materials instanceof Array))
          return;
 
-      this .materials = [ ];
+      this .materials = materials;
+
+      for (const material of materials)
+         this .materialObject (material)
+   },
+   materialObject: function (material)
+   {
+      if (!(material instanceof Object))
+         return;
+
+      const
+         scene          = this .getScene (),
+         appearanceNode = scene .createNode ("Appearance", false),
+         name           = this .sanitizeName (material .name);
+
+      if (name)
+         scene .addNamedNode (scene .getUniqueName (name), appearanceNode);
+
+      appearanceNode ._alphaMode   = material .alphaMode || "OPAQUE";
+      appearanceNode ._alphaCutoff = this .numberValue (material .alphaCutoff, 0.5);
+
+      const
+         materialNode   = this .materialObjectMaterial (material),
+         emissiveFactor = new Color3 (0, 0, 0);
+
+      if (this .vectorValue (material .emissiveFactor, emissiveFactor))
+         materialNode ._emissiveColor = emissiveFactor;
+
+      appearanceNode ._material = materialNode;
+
+      materialNode   .setup ()
+      appearanceNode .setup ();
+
+      material .appearanceNode = appearanceNode;
+   },
+   materialObjectMaterial: function (material)
+   {
+      const materialNode = this .extensionsObject (material .extensions);
+
+      if (materialNode)
+         return materialNode;
+
+      return this .pbrMetallicRoughnessObject (material .pbrMetallicRoughness || { });
+   },
+   extensionsObject: function (extensions)
+   {
+      if (!(extensions instanceof Object))
+         return;
+
+      for (const key in extensions)
+      {
+         if (!this .extensionsUsed .has (key))
+            continue;
+
+         switch (key)
+         {
+            case "KHR_materials_pbrSpecularGlossiness":
+               return this .pbrSpecularGlossinessObject (extensions [key]);
+         }
+      }
+
+      return null;
+   },
+   pbrSpecularGlossinessObject: function (pbrSpecularGlossiness)
+   {
+      if (!(pbrSpecularGlossiness instanceof Object))
+         return null;
+
+      const
+         scene        = this .getScene (),
+         materialNode = scene .createNode ("Material", false);
+
+      const
+         diffuseFactor  = new Color4 (0, 0, 0, 0),
+         diffuseColor   = new Color3 (0, 0, 0),
+         specularFactor = new Color3 (0, 0, 0);
+
+      if (this .vectorValue (pbrSpecularGlossiness .diffuseFactor, diffuseFactor))
+      {
+         materialNode ._diffuseColor = diffuseColor .set (diffuseFactor .r, diffuseFactor .g, diffuseFactor .b);
+         materialNode ._transparency = 1 - diffuseFactor .a;
+      }
+
+      if (this .vectorValue (pbrSpecularGlossiness .specularFactor, specularFactor))
+         materialNode ._specularColor = specularFactor;
+
+      materialNode ._shininess = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
+
+      return materialNode;
+   },
+   pbrMetallicRoughnessObject: function (pbrMetallicRoughness)
+   {
+      if (!(pbrMetallicRoughness instanceof Object))
+         return null;
+
+      const
+         scene                = this .getScene (),
+         physicalMaterialNode = scene .createNode ("PhysicalMaterial", false);
+
+      const
+         baseColorFactor = new Color4 (0, 0, 0, 0),
+         baseColor       = new Color3 (0, 0, 0);
+
+      if (this .vectorValue (pbrMetallicRoughness .baseColorFactor, baseColorFactor))
+      {
+         physicalMaterialNode ._baseColor    = baseColor .set (baseColorFactor .r, baseColorFactor .g, baseColorFactor .b);
+         physicalMaterialNode ._transparency = 1 - baseColorFactor .a;
+      }
+
+      physicalMaterialNode ._metallic  = this .numberValue (pbrMetallicRoughness .metallicFactor,  1);
+      physicalMaterialNode ._roughness = this .numberValue (pbrMetallicRoughness .roughnessFactor, 1);
+
+      return physicalMaterialNode;
    },
    meshesArray: function (meshes)
    {
       if (!(meshes instanceof Array))
          return;
 
+      this .meshes = meshes;
+
       for (const mesh of meshes)
          this .meshObject (mesh);
-
-      this .meshes = meshes;
    },
    meshObject: function (mesh)
    {
@@ -319,6 +450,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
 
       mesh .shapeNodes = this .primitivesArray (mesh .primitives);
+
+      // Name Shape nodes.
 
       const
          scene = this .getScene (),
@@ -587,7 +720,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene          = this .getScene (),
          shapeNode      = scene .createNode ("Shape", false),
-         appearanceNode = primitive .appearanceNode || this .getDefaultAppearance (),
+         appearanceNode = primitive .material ? primitive .material .appearanceNode : this .getDefaultAppearance (),
          geometryNode   = this .createGeometry (primitive);
 
       shapeNode ._appearance = appearanceNode;
@@ -605,9 +738,10 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene          = this .getScene (),
          appearanceNode = scene .createNode ("Appearance", false),
-         materialNode   = scene .createNode ("Material", false);
+         materialNode   = scene .createNode ("PhysicalMaterial", false);
 
-      appearanceNode ._material = materialNode;
+      appearanceNode ._alphaMode = "OPAQUE";
+      appearanceNode ._material  = materialNode;
 
       materialNode   .setup ();
       appearanceNode .setup ();
@@ -785,6 +919,13 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return true;
    },
+   numberValue: function (value, defaultValue)
+   {
+      if (typeof value !== "number")
+         return defaultValue;
+
+      return value;
+   }
 });
 
 export default GLTFParser;

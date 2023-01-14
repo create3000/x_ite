@@ -100,6 +100,7 @@ Color4 .prototype =
       this [_g] = color [_g];
       this [_b] = color [_b];
       this [_a] = color [_a];
+      return this;
    },
    set: function (r, g, b, a)
    {
@@ -107,6 +108,7 @@ Color4 .prototype =
       this [_g] = clamp (g, 0, 1);
       this [_b] = clamp (b, 0, 1);
       this [_a] = clamp (a, 0, 1);
+      return this;
    },
    equals: function (color)
    {
@@ -128,6 +130,8 @@ Color4 .prototype =
       Color3 .prototype .setHSV .call (this, h, s, v);
 
       this [_a] = clamp (a, 0, 1);
+
+      return this;
    },
    toString: function ()
    {

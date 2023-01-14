@@ -33,6 +33,7 @@
       "srand",
       "Struct",
       "tessellator",
+      "TEXCOORD",
       "Wireframe",
       "Wireframes",
       "xite"
