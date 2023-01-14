@@ -218,7 +218,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    accessorObject: (function ()
    {
-      const arrayTypes = new Map ([
+      const TypedArrays = new Map ([
          [5120, Int8Array],
          [5121, Uint8Array],
          [5122, Int16Array],
@@ -228,7 +228,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          [5126, Float32Array],
       ]);
 
-      const componentSizes = new Map ([
+      const Components = new Map ([
          ["SCALAR", 1],
          ["VEC2",   2],
          ["VEC3",   3],
@@ -244,21 +244,21 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
 
          const
-            arrayType  = arrayTypes .get (accessor .componentType),
-            bufferView = this .bufferViews [accessor .bufferView],
+            TypedArray = TypedArrays .get (accessor .componentType),
+            bufferView = this .bufferViews [accessor .bufferView], // TODO: can be undefined.
             byteOffset = (accessor .byteOffset || 0) + (bufferView .byteOffset || 0),
             byteStride = bufferView .byteStride,
-            components = componentSizes .get (accessor .type),
+            components = Components .get (accessor .type),
             count      = accessor .count || 0,
-            length     = (byteStride ? byteStride / arrayType .BYTES_PER_ELEMENT : components) * count,
-            array      = new arrayType (bufferView .buffer, byteOffset, length),
-            stride     = (byteStride / arrayType .BYTES_PER_ELEMENT) || components;
+            length     = (byteStride ? byteStride / TypedArray .BYTES_PER_ELEMENT : components) * count,
+            array      = new TypedArray (bufferView .buffer, byteOffset, length),
+            stride     = (byteStride / TypedArray .BYTES_PER_ELEMENT) || components;
 
          if (stride !== components)
          {
             const
                length = count * components,
-               dense  = new arrayType (length);
+               dense  = new TypedArray (length);
 
             for (let i = 0, j = 0; i < length; j += stride)
             {
