@@ -244,24 +244,24 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
 
          const
-            bufferView = this .bufferViews [accessor .bufferView],
             arrayType  = arrayTypes .get (accessor .componentType),
+            bufferView = this .bufferViews [accessor .bufferView],
             byteOffset = (accessor .byteOffset || 0) + (bufferView .byteOffset || 0),
             byteStride = bufferView .byteStride,
             components = componentSizes .get (accessor .type),
-            length     = (byteStride ? byteStride / arrayType .BYTES_PER_ELEMENT : components) * accessor .count,
+            count      = accessor .count,
+            length     = (byteStride ? byteStride / arrayType .BYTES_PER_ELEMENT : components) * count,
             array      = new arrayType (bufferView .buffer, byteOffset, length);
 
-         accessor .bufferView = bufferView;
          accessor .array      = array;
-         accessor .components = components;
+         accessor .bufferView = bufferView;
 
          const stride = (byteStride / arrayType .BYTES_PER_ELEMENT) || components;
 
          if (stride !== components)
          {
             const
-               length = accessor .count * components,
+               length = count * components,
                result = new arrayType (length);
 
             for (let i = 0, j = 0; i < length; j += stride)
