@@ -391,30 +391,41 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(texture instanceof Object))
          return;
 
-      const
-         scene            = this .getScene (),
-         imageTextureNode = scene .createNode ("ImageTexture", false);
+      let textureNode = null;
 
-      const sampler = this .samplers [texture .sampler];
-
-      if (sampler)
-         imageTextureNode ._textureProperties = sampler .texturePropertiesNode;
-
-      const image = this .images [texture .source];
-
-      if (image)
+      Object .defineProperty (texture, "textureNode",
       {
-         const name = this .sanitizeName (image .name);
+         get: () =>
+         {
+            if (textureNode)
+               return textureNode;
 
-         if (name)
-            scene .addNamedNode (scene .getUniqueName (name), imageTextureNode);
+            const
+               scene            = this .getScene (),
+               imageTextureNode = scene .createNode ("ImageTexture", false);
 
-         imageTextureNode ._url = [new URL (image .uri, scene .getWorldURL ())]
-      }
+            const sampler = this .samplers [texture .sampler];
 
-      imageTextureNode .setup ();
+            if (sampler)
+               imageTextureNode ._textureProperties = sampler .texturePropertiesNode;
 
-      texture .textureNode = imageTextureNode;
+            const image = this .images [texture .source];
+
+            if (image)
+            {
+               const name = this .sanitizeName (image .name);
+
+               if (name)
+                  scene .addNamedNode (scene .getUniqueName (name), imageTextureNode);
+
+               imageTextureNode ._url = [new URL (image .uri, scene .getWorldURL ())]
+            }
+
+            imageTextureNode .setup ();
+
+            return textureNode = imageTextureNode;
+         },
+      });
    },
    materialsArray: function (materials)
    {
