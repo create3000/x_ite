@@ -238,6 +238,13 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          ["MAT4",   16],
       ]);
 
+      const defaultBufferView =
+      {
+         "buffer": new ArrayBuffer (0),
+         "byteOffset": 0,
+         "byteLength": 0,
+      };
+
       return function (accessor)
       {
          if (!(accessor instanceof Object))
@@ -245,9 +252,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          const
             TypedArray = TypedArrays .get (accessor .componentType),
-            bufferView = this .bufferViews [accessor .bufferView], // TODO: can be undefined.
+            bufferView = this .bufferViews [accessor .bufferView] || defaultBufferView,
             byteOffset = (accessor .byteOffset || 0) + (bufferView .byteOffset || 0),
-            byteStride = bufferView .byteStride,
+            byteStride = bufferView .byteStride || 0,
             components = Components .get (accessor .type),
             count      = accessor .count || 0,
             length     = (byteStride ? byteStride / TypedArray .BYTES_PER_ELEMENT : components) * count,
