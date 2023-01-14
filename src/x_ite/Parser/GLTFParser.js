@@ -780,17 +780,6 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene    = this .getScene (),
          children = scenes .map (scene => this .sceneObject (scene));
 
-      if (!this .cameras || !this .cameras .length)
-      {
-         const viewpointNode = scene .createNode ("Viewpoint", false);
-
-         viewpointNode ._viewAll = true;
-
-         viewpointNode .setup ();
-
-         scene .getRootNodes () .push (viewpointNode);
-      }
-
       switch (children .length)
       {
          case 0:
