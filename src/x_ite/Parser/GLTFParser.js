@@ -475,10 +475,10 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    materialObjectMaterial: function (material)
    {
-      const materialNode = this .extensionsObject (material .extensions);
+      // const materialNode = this .extensionsObject (material .extensions);
 
-      if (materialNode)
-         return materialNode;
+      // if (materialNode)
+      //    return materialNode;
 
       return this .pbrMetallicRoughnessObject (material .pbrMetallicRoughness || { });
    },
@@ -488,8 +488,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return null;
 
       const
-         scene                = this .getScene (),
-         physicalMaterialNode = scene .createNode ("PhysicalMaterial", false);
+         scene        = this .getScene (),
+         materialNode = scene .createNode ("PhysicalMaterial", false);
 
       const
          baseColorFactor = new Color4 (0, 0, 0, 0),
@@ -497,17 +497,17 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (this .vectorValue (pbrMetallicRoughness .baseColorFactor, baseColorFactor))
       {
-         physicalMaterialNode ._baseColor    = baseColor .set (baseColorFactor .r, baseColorFactor .g, baseColorFactor .b);
-         physicalMaterialNode ._transparency = 1 - baseColorFactor .a;
+         materialNode ._baseColor    = baseColor .set (... baseColorFactor);
+         materialNode ._transparency = 1 - baseColorFactor .a;
       }
 
-      physicalMaterialNode ._metallic  = this .numberValue (pbrMetallicRoughness .metallicFactor,  1);
-      physicalMaterialNode ._roughness = this .numberValue (pbrMetallicRoughness .roughnessFactor, 1);
+      materialNode ._metallic  = this .numberValue (pbrMetallicRoughness .metallicFactor,  1);
+      materialNode ._roughness = this .numberValue (pbrMetallicRoughness .roughnessFactor, 1);
 
-      physicalMaterialNode ._baseTexture              = this .textureInfo (pbrMetallicRoughness .baseColorTexture);
-      physicalMaterialNode ._metallicRoughnessTexture = this .textureInfo (pbrMetallicRoughness .metallicRoughnessTexture);
+      materialNode ._baseTexture              = this .textureInfo (pbrMetallicRoughness .baseColorTexture);
+      materialNode ._metallicRoughnessTexture = this .textureInfo (pbrMetallicRoughness .metallicRoughnessTexture);
 
-      return physicalMaterialNode;
+      return materialNode;
    },
    extensionsObject: function (extensions)
    {
@@ -675,6 +675,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       if (!(cameras instanceof Array))
          return;
+
+      this .cameras = cameras;
    },
    nodesArray: function (nodes)
    {
@@ -777,6 +779,17 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene    = this .getScene (),
          children = scenes .map (scene => this .sceneObject (scene));
+
+      if (!this .cameras || !this .cameras .length)
+      {
+         const viewpointNode = scene .createNode ("Viewpoint", false);
+
+         viewpointNode ._viewAll = true;
+
+         viewpointNode .setup ();
+
+         scene .getRootNodes () .push (viewpointNode);
+      }
 
       switch (children .length)
       {

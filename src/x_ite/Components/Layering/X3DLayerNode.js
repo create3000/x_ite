@@ -238,6 +238,9 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
       this .fogStack            .pushOnTop (fogNode);
 
       viewpointNode .resetUserOffsets ();
+
+      if (viewpointNode ._viewAll .getValue ())
+         viewpointNode .viewAll (this .getBBox (new Box3 ()));
    },
    traverse: function (type, renderObject)
    {
