@@ -478,12 +478,19 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    materialObjectMaterial: function (material)
    {
-      // const materialNode = this .extensionsObject (material .extensions);
+      const materials = [
+         this .pbrMetallicRoughnessObject .bind (this, material .pbrMetallicRoughness),
+         this .extensionsObject .bind (this, material .extensions),
+         this .pbrMetallicRoughnessObject .bind (this, { }),
+      ];
 
-      // if (materialNode)
-      //    return materialNode;
+      for (const material of materials)
+      {
+         const materialNode = material ();
 
-      return this .pbrMetallicRoughnessObject (material .pbrMetallicRoughness || { });
+         if (materialNode)
+            return materialNode;
+      }
    },
    pbrMetallicRoughnessObject: function (pbrMetallicRoughness)
    {
