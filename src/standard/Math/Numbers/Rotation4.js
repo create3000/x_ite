@@ -51,10 +51,11 @@ import Vector4    from "./Vector4.js";
 import Algorithm  from "../Algorithm.js";
 
 const
-   _x     = Symbol (),
-   _y     = Symbol (),
-   _z     = Symbol (),
-   _angle = Symbol ();
+   _x          = Symbol (),
+   _y          = Symbol (),
+   _z          = Symbol (),
+   _angle      = Symbol (),
+   _quaternion = Symbol ();
 
 function Rotation4 (x, y, z, angle)
 {
@@ -67,12 +68,12 @@ function Rotation4 (x, y, z, angle)
    {
       case 0:
       {
-         this .quaternion = new Quaternion (0, 0, 0, 1);
+         this [_quaternion] = new Quaternion (0, 0, 0, 1);
          return;
       }
       case 1:
       {
-         this .quaternion = arguments [0];
+         this [_quaternion] = arguments [0];
          this .update ();
          return;
       }
@@ -82,7 +83,7 @@ function Rotation4 (x, y, z, angle)
             arg0 = arguments [0],
             arg1 = arguments [1];
 
-         this .quaternion = new Quaternion (0, 0, 0, 1);
+         this [_quaternion] = new Quaternion (0, 0, 0, 1);
 
          if (arg1 instanceof Vector3)
             return this .setFromToVec (arg0, arg1);
@@ -96,7 +97,7 @@ function Rotation4 (x, y, z, angle)
       }
       case 4:
       {
-         this .quaternion = new Quaternion (0, 0, 0, 1);
+         this [_quaternion] = new Quaternion (0, 0, 0, 1);
          this .set (x, y, z, angle);
          return;
       }
@@ -134,7 +135,7 @@ Rotation4 .prototype =
       copy [_z]     = this [_z];
       copy [_angle] = this [_angle];
 
-      copy .quaternion  = this .quaternion .copy ();
+      copy [_quaternion]  = this [_quaternion] .copy ();
 
       return copy;
    },
@@ -145,7 +146,7 @@ Rotation4 .prototype =
       this [_z]     = rotation [_z];
       this [_angle] = rotation [_angle];
 
-      this .quaternion .assign (rotation .quaternion);
+      this [_quaternion] .assign (rotation [_quaternion]);
 
       return this;
    },
@@ -160,7 +161,7 @@ Rotation4 .prototype =
 
       if (scale === 0)
       {
-         this .quaternion .set (0, 0, 0, 1);
+         this [_quaternion] .set (0, 0, 0, 1);
          return this;
       }
 
@@ -170,10 +171,10 @@ Rotation4 .prototype =
          halfTheta = Algorithm .interval (angle / 2, 0, Math .PI),
          ascale    = Math .sin (halfTheta) / scale;
 
-      this .quaternion .set (x * ascale,
-                             y * ascale,
-                             z * ascale,
-                             Math .cos (halfTheta));
+      this [_quaternion] .set (x * ascale,
+                               y * ascale,
+                               z * ascale,
+                               Math .cos (halfTheta));
       return this;
    },
    get: (function ()
@@ -182,7 +183,7 @@ Rotation4 .prototype =
 
       return function ()
       {
-         const quaternion = this .quaternion;
+         const quaternion = this [_quaternion];
 
          if (Math .abs (quaternion .w) > 1)
          {
@@ -239,7 +240,7 @@ Rotation4 .prototype =
             // Parallel vectors
             // Check if they are pointing in the same direction.
             if (cos_angle > 0)
-               this .quaternion .set (0, 0, 0, 1); // standard rotation
+               this [_quaternion] .set (0, 0, 0, 1); // standard rotation
 
             // Ok, so they are parallel and pointing in the opposite direction
             // of each other.
@@ -254,7 +255,7 @@ Rotation4 .prototype =
 
                t .normalize ();
 
-               this .quaternion .set (t .x, t .y, t .z, 0);
+               this [_quaternion] .set (t .x, t .y, t .z, 0);
             }
          }
          else
@@ -264,10 +265,10 @@ Rotation4 .prototype =
             // which can lead to sqrt () returning NaN.
             crossvec .multiply (Math .sqrt (Math .abs (1 - cos_angle) / 2));
 
-            this .quaternion .set (crossvec .x,
-                                   crossvec .y,
-                                   crossvec .z,
-                                   Math .sqrt (Math .abs (1 + cos_angle) / 2));
+            this [_quaternion] .set (crossvec .x,
+                                     crossvec .y,
+                                     crossvec .z,
+                                     Math .sqrt (Math .abs (1 + cos_angle) / 2));
          }
 
          this .update ();
@@ -279,76 +280,82 @@ Rotation4 .prototype =
    {
       this .set (vector .x, vector .y, vector .z, this [_angle]);
    },
-   getAxis: (function ()
+   getAxis: function (axis)
    {
-      const axis = new Vector3 (0, 0, 0);
-
-      return function ()
-      {
-         return axis .set (this [_x], this [_y], this [_z]);
-      };
-   })(),
+      return axis .set (this [_x], this [_y], this [_z]);
+   },
+   setQuaternion: function (quaternion)
+   {
+      this [_quaternion] .assign (quaternion) .normalize ();
+      this .update ();
+      return this;
+   },
+   getQuaternion: function (quaternion)
+   {
+      quaternion .assign (this [_quaternion]);
+      return quaternion;
+   },
    setMatrix: function (matrix)
    {
-      this .quaternion .setMatrix (matrix) .normalize ();
+      this [_quaternion] .setMatrix (matrix) .normalize ();
       this .update ();
       return this;
    },
    getMatrix: function (matrix)
    {
-      return this .quaternion .getMatrix (matrix);
+      return this [_quaternion] .getMatrix (matrix);
    },
    equals: function (rotation)
    {
-      return this .quaternion .equals (rotation .quaternion);
+      return this [_quaternion] .equals (rotation [_quaternion]);
    },
    inverse: function ()
    {
-      this .quaternion .inverse ();
+      this [_quaternion] .inverse ();
       this .update ();
       return this;
    },
    multLeft: function (rotation)
    {
-      this .quaternion .multLeft (rotation .quaternion) .normalize ();
+      this [_quaternion] .multLeft (rotation [_quaternion]) .normalize ();
       this .update ();
       return this;
    },
    multRight: function (rotation)
    {
-      this .quaternion .multRight (rotation .quaternion) .normalize ();
+      this [_quaternion] .multRight (rotation [_quaternion]) .normalize ();
       this .update ();
       return this;
    },
    multVecRot: function (vector)
    {
-      return this .quaternion .multVecQuat (vector);
+      return this [_quaternion] .multVecQuat (vector);
    },
    multRotVec: function (vector)
    {
-      return this .quaternion .multQuatVec (vector);
+      return this [_quaternion] .multQuatVec (vector);
    },
    normalize: function ()
    {
-      this .quaternion .normalize ();
+      this [_quaternion] .normalize ();
       this .update ();
       return this;
    },
    pow: function (exponent)
    {
-      this .quaternion .pow (exponent);
+      this [_quaternion] .pow (exponent);
       this .update ();
       return this;
    },
    slerp: function (dest, t)
    {
-      this .quaternion .slerp (dest .quaternion, t);
+      this [_quaternion] .slerp (dest [_quaternion], t);
       this .update ();
       return this;
    },
    squad: function (a, b, dest, t)
    {
-      this .quaternion .squad (a .quaternion, b .quaternion, dest .quaternion, t);
+      this [_quaternion] .squad (a [_quaternion], b [_quaternion], dest [_quaternion], t);
       this .update ();
       return this;
    },
@@ -417,9 +424,9 @@ const angle = {
    configurable: false
 };
 
-Object .defineProperty (Rotation4 .prototype, "x", x);
-Object .defineProperty (Rotation4 .prototype, "y", y);
-Object .defineProperty (Rotation4 .prototype, "z", z);
+Object .defineProperty (Rotation4 .prototype, "x",     x);
+Object .defineProperty (Rotation4 .prototype, "y",     y);
+Object .defineProperty (Rotation4 .prototype, "z",     z);
 Object .defineProperty (Rotation4 .prototype, "angle", angle);
 
 x     .enumerable = false;
@@ -459,7 +466,7 @@ Object .assign (Rotation4,
    bezier: function (source, a, b, destination, t)
    {
       const copy = Object .create (this .prototype);
-      copy .quaternion = Quaternion .bezier (source .quaternion, a, b, destination .quaternion, t);
+      copy [_quaternion] = Quaternion .bezier (source [_quaternion], a, b, destination [_quaternion], t);
       copy .update ();
       return copy;
    },
@@ -467,7 +474,7 @@ Object .assign (Rotation4,
    spline: function (r0, r1, r2)
    {
       const copy = Object .create (this .prototype);
-      copy .quaternion = Quaternion .spline (r0 .quaternion, r1 .quaternion, r2 .quaternion);
+      copy [_quaternion] = Quaternion .spline (r0 [_quaternion], r1 [_quaternion], r2 [_quaternion]);
       copy .update ();
       return copy;
    },

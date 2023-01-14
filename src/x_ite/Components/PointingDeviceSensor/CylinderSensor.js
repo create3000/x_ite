@@ -151,7 +151,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
    },
    getAngle: function (rotation)
    {
-      if (Vector3 .dot (rotation .getAxis (), this .cylinder .axis .direction) > 0)
+      if (Vector3 .dot (rotation .getAxis (new Vector3 (0, 0, 0)), this .cylinder .axis .direction) > 0)
          return rotation .angle;
 
       else
@@ -262,7 +262,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
             endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1))),
             deltaRotation = new Rotation4 (this .startVector, endVector),
             axis          = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
-            sign          = axis .dot (deltaRotation .getAxis ()) > 0 ? 1 : -1,
+            sign          = axis .dot (deltaRotation .getAxis (new Vector3 (0, 0, 0))) > 0 ? 1 : -1,
             min           = this ._minAngle .getValue (),
             max           = this ._maxAngle .getValue ();
 

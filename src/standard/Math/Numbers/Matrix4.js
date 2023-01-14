@@ -47,6 +47,7 @@
 
 import Vector3             from "./Vector3.js";
 import Vector4             from "./Vector4.js";
+import Quaternion          from "./Quaternion.js";
 import Rotation4           from "./Rotation4.js";
 import Matrix3             from "./Matrix3.js";
 import eigen_decomposition from "../Algorithms/eigen_decomposition.js";
@@ -363,7 +364,7 @@ Matrix4 .prototype =
    })(),
    setRotation: function (rotation)
    {
-      return this .setQuaternion (rotation .quaternion);
+      return this .setQuaternion (rotation .getQuaternion (q));
    },
    setQuaternion: function (quaternion)
    {
@@ -751,7 +752,7 @@ Matrix4 .prototype =
    },
    rotate: function (rotation)
    {
-      this .multLeft (m .setQuaternion (rotation .quaternion));
+      this .multLeft (m .setQuaternion (rotation .getQuaternion (q)));
 
       return this;
    },
@@ -914,7 +915,7 @@ Object .assign (Matrix4,
    Identity: new Matrix4 (),
    Rotation: function (rotation)
    {
-      return Object .create (this .prototype) .setQuaternion (rotation .quaternion);
+      return Object .create (this .prototype) .setQuaternion (rotation .getQuaternion (q));
    },
    Quaternion: function (quaternion)
    {
@@ -945,6 +946,8 @@ Object .assign (Matrix4,
    },
 });
 
-const m = new Matrix4 ();
+const
+   q = new Quaternion (),
+   m = new Matrix4 ();
 
 export default Matrix4;

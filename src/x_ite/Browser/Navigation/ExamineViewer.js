@@ -633,7 +633,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
 
          this .axis .assign (axis);
 
-         if (rotation .getAxis () .dot (Vector3 .yAxis) < 0 !== rotation .angle < 0)
+         if (rotation .getAxis (new Vector3 (0, 0, 0)) .dot (Vector3 .yAxis) < 0 !== rotation .angle < 0)
             this .axis .negate ();
 
          this .timeSensor ._cycleInterval = Math .PI / (rotationChange .angle * SPIN_FACTOR * 30);

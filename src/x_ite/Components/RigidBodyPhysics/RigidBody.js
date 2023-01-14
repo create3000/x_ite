@@ -52,6 +52,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Quaternion           from "../../../standard/Math/Numbers/Quaternion.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Ammo                 from "../../../lib/ammojs/AmmoClass.js";
@@ -465,6 +466,7 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
       var
          transform       = new Ammo .btTransform (),
          position        = new Vector3 (0, 0, 0),
+         quaternion      = new Quaternion (0, 0, 0, 1),
          orientation     = new Rotation4 (0, 0, 1, 0),
          linearVelocity  = new Vector3 (0, 0, 0),
          angularVelocity = new Vector3 (0, 0, 0);
@@ -479,10 +481,10 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
             btLinearVeloctity = this .rigidBody .getLinearVelocity (),
             btAngularVelocity = this .rigidBody .getAngularVelocity ();
 
-         orientation .quaternion .set (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ());
+         quaternion .set (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ());
 
          this ._position        = position .set (btOrigin .x (), btOrigin .y (), btOrigin .z ());
-         this ._orientation     = orientation;
+         this ._orientation     = orientation .setQuaternion (quaternion);
          this ._linearVelocity  = linearVelocity .set (btLinearVeloctity .x (), btLinearVeloctity .y (), btLinearVeloctity .z ());
          this ._angularVelocity = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
       };

@@ -49,6 +49,7 @@ import X3DField     from "../Base/X3DField.js";
 import SFVec3       from "./SFVec3.js";
 import SFMatrix3    from "./SFMatrix3.js";
 import X3DConstants from "../Base/X3DConstants.js";
+import Vector3      from "../../standard/Math/Numbers/Vector3.js";
 import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix3      from "../../standard/Math/Numbers/Matrix3.js";
 
@@ -125,7 +126,7 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    getAxis: function ()
    {
-      return new SFVec3f (this .getValue () .getAxis () .copy ());
+      return new SFVec3f (this .getValue () .getAxis (new Vector3 (0, 0, 0)));
    },
    setMatrix: function (matrix)
    {
