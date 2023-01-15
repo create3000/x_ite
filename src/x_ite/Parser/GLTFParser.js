@@ -733,22 +733,20 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    orthographicCamera: function (camera)
    {
-      // https://github.com/KhronosGroup/glTF/issues/1663
-
       const
          scene         = this .getScene (),
          viewpointNode = scene .createNode ("OrthoViewpoint", false);
 
       if (typeof camera .xmag === "number")
       {
-         viewpointNode ._fieldOfView [0] = -camera .xmag;
-         viewpointNode ._fieldOfView [2] = +camera .xmag;
+         viewpointNode ._fieldOfView [0] = -camera .xmag / 2;
+         viewpointNode ._fieldOfView [2] = +camera .xmag / 2;
       }
 
       if (typeof camera .ymag === "number")
       {
-         viewpointNode ._fieldOfView [1] = -camera .ymag;
-         viewpointNode ._fieldOfView [3] = +camera .ymag;
+         viewpointNode ._fieldOfView [1] = -camera .ymag / 2;
+         viewpointNode ._fieldOfView [3] = +camera .ymag / 2;
       }
 
       if (typeof camera .znear === "number")
