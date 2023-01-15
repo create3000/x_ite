@@ -815,26 +815,24 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scaleOrientation = new Rotation4 (),
          matrix           = new Matrix4 ();
 
-      if (this .vectorValue (node .matrix, matrix))
+      if (!this .vectorValue (node .matrix, matrix))
       {
-         matrix .get (translation, rotation, scale, scaleOrientation);
-
-         transformNode ._translation      = translation;
-         transformNode ._rotation         = rotation;
-         transformNode ._scale            = scale;
-         transformNode ._scaleOrientation = scaleOrientation;
-      }
-      else
-      {
-         if (this .vectorValue (node .translation, translation))
-            transformNode ._translation = translation;
+         if (this .vectorValue (node .scale, scale))
+            matrix .scale (scale);
 
          if (this .vectorValue (node .rotation, quaternion))
-            transformNode ._rotation = new Rotation4 (quaternion);
+            matrix .rotate (new Rotation4 (quaternion));
 
-         if (this .vectorValue (node .scale, scale))
-            transformNode ._scale = scale;
+         if (this .vectorValue (node .translation, translation))
+            matrix .translate (translation);
       }
+
+      matrix .get (translation, rotation, scale, scaleOrientation);
+
+      transformNode ._translation      = translation;
+      transformNode ._rotation         = rotation;
+      transformNode ._scale            = scale;
+      transformNode ._scaleOrientation = scaleOrientation;
 
       // Add camera.
 
