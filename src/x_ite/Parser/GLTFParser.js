@@ -81,6 +81,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const keys = new Set ([
          "asset",
+         "extra",
+         "extensions",
          "extensionsRequired",
          "extensionsUsed",
          "buffers",
