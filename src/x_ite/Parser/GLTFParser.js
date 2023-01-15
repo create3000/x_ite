@@ -1040,17 +1040,17 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          case 1: // LINES
          {
             if (primitive .indices)
-               return this .createIndexedLineSet (primitive);
+               return this .createIndexedLineSet (primitive, 1);
 
             return this .createLineSet (primitive);
          }
          case 2: // LINE_LOOP
          {
-            return this .createLineLoop (primitive);
+            return this .createIndexedLineSet (primitive, 2);
          }
          case 3: // LINE_STRIP
          {
-            return this .createLineStrip (primitive);
+            return this .createIndexedLineSet (primitive, 3);
          }
          default:
          case 4: // TRIANGLES
@@ -1090,17 +1090,48 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createIndexedLineSet: function ({ attributes, indices })
+   createIndexedLineSet: function ({ attributes, indices }, mode)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedLineSet", false);
 
-      geometryNode ._coordIndex = indices .array;
-      geometryNode ._color      = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord   = this .createMultiTextureCoordinate (attributes .TEXCOORD);
-      geometryNode ._normal     = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord      = this .createCoordinate (attributes .POSITION);
+      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
+
+      switch (mode)
+      {
+         case 1: // LINES
+         {
+            geometryNode ._coordIndex = indices .array;
+            break
+         }
+         case 2: // LINE_LOOP
+         {
+            const coord = geometryNode ._coord;
+
+            if (coord)
+            {
+               if (coord .point .length)
+                  coord .push (coord .point [0]);
+
+               geometryNode ._coordIndex = [... coord .point .keys ()];
+            }
+
+            break
+         }
+         case 3: // LINE_STRIP
+         {
+            const coord = geometryNode ._coord;
+
+            if (coord)
+               coordIndex = [... coord .point .keys ()];
+
+            break
+         }
+      }
 
       geometryNode .setup ();
 
@@ -1116,47 +1147,6 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
       geometryNode ._normal   = this .createNormal (attributes .NORMAL);
       geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
-
-      geometryNode .setup ();
-
-      return geometryNode;
-   },
-   createLineLoop: function ({ attributes })
-   {
-      const
-         scene        = this .getScene (),
-         geometryNode = scene .createNode ("IndexedLineSet", false);
-
-      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
-      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
-
-      if (geometryNode ._coord)
-      {
-         if (geometryNode ._coord .point .length)
-            geometryNode ._coord .push (geometryNode ._coord .point [0]);
-
-         geometryNode ._coordIndex = [... geometryNode ._coord .point .keys ()];
-      }
-
-      geometryNode .setup ();
-
-      return geometryNode;
-   },
-   createLineStrip: function ({ attributes })
-   {
-      const
-         scene        = this .getScene (),
-         geometryNode = scene .createNode ("IndexedLineSet", false);
-
-      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
-      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
-
-      if (geometryNode ._coord)
-         geometryNode ._coordIndex = [... geometryNode ._coord .point .keys ()];
 
       geometryNode .setup ();
 
