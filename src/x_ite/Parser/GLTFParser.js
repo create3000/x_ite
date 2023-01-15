@@ -1031,19 +1031,22 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          case 0: // POINTS
          {
-            return null;
+            return this .createPointSet (primitive);
          }
          case 1: // LINES
          {
-            return null;
+            if (primitive .indices)
+               return this .createIndexedLineSet (primitive);
+
+            return this .createLineSet (primitive);
          }
          case 2: // LINE_LOOP
          {
-            return null;
+            return this .createLineLoop (primitive);
          }
          case 3: // LINE_STRIP
          {
-            return null;
+            return this .createLineStrip (primitive);
          }
          default:
          case 4: // TRIANGLES
@@ -1055,13 +1058,103 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          case 5: // TRIANGLE_STRIP
          {
-            return null;
+            if (primitive .indices)
+               return this .createIndexedTriangleStripSet (primitive);
+
+            return this .createTriangleStripSet (primitive);
          }
          case 6: // TRIANGLE_FAN
          {
-            return null;
+            if (primitive .indices)
+               return this .createIndexedTriangleFanSet (primitive);
+
+            return this .createTriangleFanSet (primitive);
          }
       }
+   },
+   createPointSet: function ({ attributes })
+   {
+      const
+         scene        = this .getScene (),
+         geometryNode = scene .createNode ("PointSet", false);
+
+      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
+      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
+
+      geometryNode .setup ();
+
+      return geometryNode;
+   },
+   createIndexedLineSet: function ({ attributes, indices })
+   {
+      const
+         scene        = this .getScene (),
+         geometryNode = scene .createNode ("IndexedLineSet", false);
+
+      geometryNode ._coordIndex = indices .array;
+      geometryNode ._color      = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord   = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal     = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord      = this .createCoordinate (attributes .POSITION);
+
+      geometryNode .setup ();
+
+      return geometryNode;
+   },
+   createLineSet: function ({ attributes })
+   {
+      const
+         scene        = this .getScene (),
+         geometryNode = scene .createNode ("LineSet", false);
+
+      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
+
+      geometryNode .setup ();
+
+      return geometryNode;
+   },
+   createLineLoop: function ({ attributes })
+   {
+      const
+         scene        = this .getScene (),
+         geometryNode = scene .createNode ("LineSet", false);
+
+      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
+
+      if (geometryNode ._coord)
+      {
+         if (geometryNode ._coord .point .length)
+            geometryNode ._coord .push (geometryNode ._coord .point [0]);
+      }
+
+      geometryNode .setup ();
+
+      return geometryNode;
+   },
+   createLineStrip: function ({ attributes })
+   {
+      const
+         scene        = this .getScene (),
+         geometryNode = scene .createNode ("IndexedLineSet", false);
+
+      geometryNode ._color      = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord   = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal     = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord      = this .createCoordinate (attributes .POSITION);
+
+      if (geometryNode ._coord)
+         geometryNode ._coordIndex = [... geometryNode ._coord .point .keys ()];
+
+      geometryNode .setup ();
+
+      return geometryNode;
    },
    createIndexedTriangleSet: function ({ attributes, indices, material })
    {
@@ -1069,14 +1162,14 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedTriangleSet", false);
 
+      geometryNode ._solid    = material ? ! material .doubleSided : true;
       geometryNode ._index    = indices .array;
       geometryNode ._color    = this .createColor (attributes .COLOR [0]);
       geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
       geometryNode ._normal   = this .createNormal (attributes .NORMAL);
       geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
 
-      geometryNode ._solid           = material ? ! material .doubleSided : true;
-      geometryNode ._normalPerVertex = geometryNode ._normal;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
       geometryNode .setup ();
 
@@ -1088,12 +1181,93 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("TriangleSet", false);
 
+      geometryNode ._solid    = material ? ! material .doubleSided : true;
       geometryNode ._color    = this .createColor (attributes .COLOR [0]);
       geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
       geometryNode ._normal   = this .createNormal (attributes .NORMAL);
       geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
 
-      geometryNode ._solid = material ? ! material .doubleSided : true;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+
+      geometryNode .setup ();
+
+      return geometryNode;
+   },
+   createIndexedTriangleStripSet: function ({ attributes, indices, material })
+   {
+      const
+         scene        = this .getScene (),
+         geometryNode = scene .createNode ("IndexedTriangleStripSet", false);
+
+      geometryNode ._solid    = material ? ! material .doubleSided : true;
+      geometryNode ._index    = indices .array;
+      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
+
+      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+
+      geometryNode .setup ();
+
+      return geometryNode;
+   },
+   createTriangleStripSet: function ({ attributes, material })
+   {
+      const
+         scene        = this .getScene (),
+         geometryNode = scene .createNode ("TriangleStripSet", false);
+
+      geometryNode ._solid      = material ? ! material .doubleSided : true;
+      geometryNode ._color      = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord   = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal     = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord      = this .createCoordinate (attributes .POSITION);
+
+      if (geometryNode ._coord)
+         geometryNode ._stripCount = geometryNode ._coord .point .length;
+
+      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+
+      geometryNode .setup ();
+
+      return geometryNode;
+   },
+   createIndexedTriangleFanSet: function ({ attributes, indices, material })
+   {
+      const
+         scene        = this .getScene (),
+         geometryNode = scene .createNode ("IndexedTriangleFanSet", false);
+
+      geometryNode ._solid    = material ? ! material .doubleSided : true;
+      geometryNode ._index    = indices .array;
+      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
+
+      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+
+      geometryNode .setup ();
+
+      return geometryNode;
+   },
+   createTriangleFanSet: function ({ attributes, material })
+   {
+      const
+         scene        = this .getScene (),
+         geometryNode = scene .createNode ("TriangleFanSet", false);
+
+      geometryNode ._solid    = material ? ! material .doubleSided : true;
+      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
+
+      if (geometryNode ._coord)
+         geometryNode ._fanCount = geometryNode ._coord .point .length;
+
+      geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
       geometryNode .setup ();
 
