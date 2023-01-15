@@ -880,6 +880,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene    = this .getScene (),
          children = scenes .map (scene => this .sceneObject (scene));
 
+      if (this .cameras .length)
+         scene .getRootNodes () .push (this .perspectiveCamera ({ }));
+
       switch (children .length)
       {
          case 0:
