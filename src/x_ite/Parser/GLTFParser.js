@@ -1143,6 +1143,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          if (geometryNode ._coord .point .length)
             geometryNode ._coord .push (geometryNode ._coord .point [0]);
+
+         geometryNode ._coordIndex = [... geometryNode ._coord .point .keys ()];
       }
 
       geometryNode .setup ();
