@@ -1089,9 +1089,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("PointSet", false);
 
-      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
-      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
+      geometryNode ._color  = this .createColor (attributes .COLOR [0]);
+      geometryNode ._normal = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord  = this .createCoordinate (attributes .POSITION);
 
       geometryNode .setup ();
 
@@ -1157,10 +1157,10 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedLineSet", false);
 
-      geometryNode ._color      = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord   = this .createMultiTextureCoordinate (attributes .TEXCOORD);
-      geometryNode ._normal     = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord      = this .createCoordinate (attributes .POSITION);
+      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
 
       if (geometryNode ._coord)
          geometryNode ._coordIndex = [... geometryNode ._coord .point .keys ()];
@@ -1231,11 +1231,11 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("TriangleStripSet", false);
 
-      geometryNode ._solid      = material ? ! material .doubleSided : true;
-      geometryNode ._color      = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord   = this .createMultiTextureCoordinate (attributes .TEXCOORD);
-      geometryNode ._normal     = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord      = this .createCoordinate (attributes .POSITION);
+      geometryNode ._solid    = material ? ! material .doubleSided : true;
+      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
 
       if (geometryNode ._coord)
       {
