@@ -750,7 +750,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
 
       if (typeof camera .znear === "number")
-         viewpointNode ._nearDistance = camera .zfar;
+         viewpointNode ._nearDistance = camera .znear;
 
       if (typeof camera .zfar === "number")
          viewpointNode ._farDistance = camera .zfar;
@@ -766,10 +766,10 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          viewpointNode = scene .createNode ("Viewpoint", false);
 
       if (typeof camera .yfov === "number")
-         viewpointNode ._fieldOfView = camera .yfov;
+         viewpointNode ._fieldOfView = camera .yfov
 
       if (typeof camera .znear === "number")
-         viewpointNode ._nearDistance = camera .zfar;
+         viewpointNode ._nearDistance = camera .znear;
 
       if (typeof camera .zfar === "number")
          viewpointNode ._farDistance = camera .zfar;
@@ -883,15 +883,6 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene    = this .getScene (),
          children = scenes .map (scene => this .sceneObject (scene));
-
-      if (this .cameras .length)
-      {
-         const viewpointNode = this .perspectiveCamera ({ });
-
-         viewpointNode ._description = "Default Viewpoint";
-
-         scene .getRootNodes () .push (viewpointNode);
-      }
 
       switch (children .length)
       {
