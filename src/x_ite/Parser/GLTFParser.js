@@ -1236,7 +1236,10 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       geometryNode ._coord      = this .createCoordinate (attributes .POSITION);
 
       if (geometryNode ._coord)
-         geometryNode ._stripCount = geometryNode ._coord .point .length;
+      {
+         if (geometryNode ._coord .point .length)
+            geometryNode ._stripCount = [geometryNode ._coord .point .length];
+      }
 
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
@@ -1276,7 +1279,10 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
 
       if (geometryNode ._coord)
-         geometryNode ._fanCount = geometryNode ._coord .point .length;
+      {
+         if (geometryNode ._coord .point .length)
+            geometryNode ._fanCount = [geometryNode ._coord .point .length];
+      }
 
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
