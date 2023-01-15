@@ -65,6 +65,8 @@ function GLTFParser (scene)
    this .accessors      = [ ];
    this .samplers       = [ ];
    this .materials      = [ ];
+   this .cameras        = [ ];
+   this .viewpoints     = [ ];
    this .nodes          = [ ];
 }
 
@@ -687,6 +689,92 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
 
       this .cameras = cameras;
+
+      for (const camera of cameras)
+         this .cameraObject (camera);
+   },
+   cameraObject: function (camera)
+   {
+      if (!(camera instanceof Object))
+         return;
+
+      const viewpointNode = this .cameraType (camera);
+
+      if (!viewpointNode)
+         return;
+
+      const
+         scene = this .getScene (),
+         name  = this .sanitizeName (camera .name);
+
+      // Name
+
+      if (name)
+         scene .addNamedNode (scene .getUniqueName (name), viewpointNode);
+
+      if (camera .name)
+         viewpointNode ._description = camera .name;
+      else
+         viewpointNode ._description = `Viewpoint ${++ this .viewpoints}`;
+
+      camera .viewpointNode = viewpointNode;
+   },
+   cameraType: function (camera)
+   {
+      switch (camera .type)
+      {
+         case "orthographic":
+            return this .orthographicCamera (camera .orthographic);
+         case "perspective":
+            return this .perspectiveCamera (camera .perspective);
+      }
+   },
+   orthographicCamera: function (camera)
+   {
+      const
+         scene         = this .getScene (),
+         viewpointNode = scene .createNode ("OrthoViewpoint", false);
+
+      if (typeof camera .xmag === "number")
+      {
+         viewpointNode ._fieldOfView [0] = -camera .xmag / 2;
+         viewpointNode ._fieldOfView [2] = +camera .xmag / 2;
+      }
+
+      if (typeof camera .ymag === "number")
+      {
+         viewpointNode ._fieldOfView [1] = -camera .ymag / 2;
+         viewpointNode ._fieldOfView [3] = +camera .ymag / 2;
+      }
+
+      if (typeof camera .znear === "number")
+         viewpointNode ._nearDistance = camera .zfar;
+
+      if (typeof camera .zfar === "number")
+         viewpointNode ._farDistance = camera .zfar;
+
+      viewpointNode .setup ();
+
+      return viewpointNode;
+   },
+   perspectiveCamera: function (camera)
+   {
+      const
+         scene         = this .getScene (),
+         viewpointNode = scene .createNode ("Viewpoint", false);
+
+      if (typeof camera .yfov === "number")
+         viewpointNode ._fieldOfView = camera .yfov;
+
+      if (typeof camera .znear === "number")
+         viewpointNode ._nearDistance = camera .zfar;
+
+      if (typeof camera .zfar === "number")
+         viewpointNode ._farDistance = camera .zfar;
+
+      viewpointNode .setup ();
+
+      return viewpointNode;
    },
    nodesArray: function (nodes)
    {
@@ -694,17 +782,14 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
 
       this .nodes = nodes;
-
-      for (const node of nodes)
-         this .nodeObject1 (node);
-
-      for (const node of nodes)
-         this .nodeObject2 (node);
    },
-   nodeObject1: function (node)
+   nodeObject: function (node)
    {
       if (!(node instanceof Object))
          return;
+
+      if (node .transformNode)
+         return node .transformNode;
 
       // Create Transform.
 
@@ -747,6 +832,16 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       transformNode ._scale            = scale;
       transformNode ._scaleOrientation = scaleOrientation;
 
+      // Add camera.
+
+      if (Number .isInteger (node .camera))
+      {
+         const camera = this .cameras [node .camera];
+
+         if (camera)
+            transformNode ._children .push (camera .viewpointNode);
+      }
+
       // Add mesh.
 
       if (Number .isInteger (node .mesh))
@@ -754,32 +849,27 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          const mesh = this .meshes [node .mesh];
 
          if (mesh)
-            transformNode ._children = mesh .shapeNodes;
+            transformNode ._children .push (... mesh .shapeNodes);
       }
+
+      // Get children.
+
+      transformNode ._children .push (... this .nodeChildrenArray (node .children));
+
+      // Finish.
+
+      transformNode .setup ();
 
       node .transformNode = transformNode;
-   },
-   nodeObject2: function (node)
-   {
-      if (!(node instanceof Object))
-         return;
 
-      this .nodeChildrenArray (node .children, node .transformNode);
-
-      node .transformNode .setup ();
+      return transformNode;
    },
-   nodeChildrenArray: function (children, transformNode)
+   nodeChildrenArray: function (children)
    {
       if (!(children instanceof Array))
-         return;
+         return [ ];
 
-      for (const index of children)
-      {
-         const child = this .nodes [index];
-
-         if (child)
-            transformNode ._children .push (child .transformNode);
-      }
+      return children .map (index => this .nodeObject (this .nodes [index])) .filter (node => node);
    },
    scenesArray: function (scenes, sceneNumber)
    {
@@ -842,7 +932,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          case 1:
          {
-            return nodes [0] .transformNode;
+            return this .nodeObject (nodes [0]);
          }
          default:
          {
@@ -854,7 +944,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             if (name)
                scene .addNamedNode (scene .getUniqueName (name), groupNode);
 
-            groupNode ._children = nodes .map (node => node .transformNode);
+            groupNode ._children = nodes .map (node => this .nodeObject (node));
 
             groupNode .setup ();
 
