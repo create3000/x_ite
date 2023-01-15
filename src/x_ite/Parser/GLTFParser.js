@@ -734,7 +734,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    orthographicCamera: function (camera)
    {
       // https://github.com/KhronosGroup/glTF/issues/1663
-      
+
       const
          scene         = this .getScene (),
          viewpointNode = scene .createNode ("OrthoViewpoint", false);
