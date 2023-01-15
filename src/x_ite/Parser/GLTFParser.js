@@ -1158,13 +1158,12 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedTriangleSet", false);
 
-      geometryNode ._solid    = material ? ! material .doubleSided : true;
-      geometryNode ._index    = indices .array;
-      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
-      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
-
+      geometryNode ._solid           = material ? ! material .doubleSided : true;
+      geometryNode ._index           = indices .array;
+      geometryNode ._color           = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
       geometryNode .setup ();
@@ -1177,12 +1176,11 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("TriangleSet", false);
 
-      geometryNode ._solid    = material ? ! material .doubleSided : true;
-      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
-      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
-
+      geometryNode ._solid           = material ? ! material .doubleSided : true;
+      geometryNode ._color           = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
       geometryNode .setup ();
@@ -1195,13 +1193,12 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedTriangleStripSet", false);
 
-      geometryNode ._solid    = material ? ! material .doubleSided : true;
-      geometryNode ._index    = indices .array;
-      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
-      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
-
+      geometryNode ._solid           = material ? ! material .doubleSided : true;
+      geometryNode ._index           = indices .array;
+      geometryNode ._color           = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
       geometryNode .setup ();
@@ -1214,19 +1211,20 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("TriangleStripSet", false);
 
-      geometryNode ._solid    = material ? ! material .doubleSided : true;
-      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
-      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
-
-      if (geometryNode ._coord)
-      {
-         if (geometryNode ._coord .point .length)
-            geometryNode ._stripCount = [geometryNode ._coord .point .length];
-      }
-
+      geometryNode ._solid           = material ? ! material .doubleSided : true;
+      geometryNode ._color           = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
+
+      const coord = geometryNode ._coord;
+
+      if (coord)
+      {
+         if (coord .point .length)
+            geometryNode ._stripCount = [coord .point .length];
+      }
 
       geometryNode .setup ();
 
@@ -1238,13 +1236,12 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedTriangleFanSet", false);
 
-      geometryNode ._solid    = material ? ! material .doubleSided : true;
-      geometryNode ._index    = indices .array;
-      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
-      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
-
+      geometryNode ._solid           = material ? ! material .doubleSided : true;
+      geometryNode ._index           = indices .array;
+      geometryNode ._color           = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
       geometryNode .setup ();
@@ -1257,19 +1254,20 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("TriangleFanSet", false);
 
-      geometryNode ._solid    = material ? ! material .doubleSided : true;
-      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
-      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
-
-      if (geometryNode ._coord)
-      {
-         if (geometryNode ._coord .point .length)
-            geometryNode ._fanCount = [geometryNode ._coord .point .length];
-      }
-
+      geometryNode ._solid           = material ? ! material .doubleSided : true;
+      geometryNode ._color           = this .createColor (attributes .COLOR [0]);
+      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
+
+      const coord = geometryNode ._coord;
+
+      if (coord)
+      {
+         if (coord .point .length)
+            geometryNode ._fanCount = [coord .point .length];
+      }
 
       geometryNode .setup ();
 
