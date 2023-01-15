@@ -166,11 +166,8 @@ X3DParser .prototype = {
 
       return value;
    },
-   sanitizeName: function (name)
+   sanitizeName: function (name = "")
    {
-      if (typeof name !== "string")
-         return;
-
       // Spaces
       name = name .trim () .replace (/\s+/g, "-");
 

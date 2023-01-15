@@ -1132,7 +1132,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene        = this .getScene (),
-         geometryNode = scene .createNode ("LineSet", false);
+         geometryNode = scene .createNode ("IndexedLineSet", false);
 
       geometryNode ._color    = this .createColor (attributes .COLOR [0]);
       geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
