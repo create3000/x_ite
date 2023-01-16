@@ -143,7 +143,6 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       scene .setEncoding ("GLTF");
       scene .setProfile (browser .getProfile ("Interchange"));
-      scene .addComponent (browser .getComponent ("Texturing3D", 2));
 
       await this .loadComponents ();
 
@@ -276,35 +275,46 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (!(accessor instanceof Object))
             return;
 
-         const
-            TypedArray = TypedArrays .get (accessor .componentType),
-            bufferView = this .bufferViews [accessor .bufferView] || DefaultBufferView,
-            byteOffset = (accessor .byteOffset || 0) + (bufferView .byteOffset || 0),
-            byteStride = bufferView .byteStride || 0,
-            components = Components .get (accessor .type),
-            count      = accessor .count || 0,
-            length     = (byteStride ? byteStride / TypedArray .BYTES_PER_ELEMENT : components) * count,
-            array      = new TypedArray (bufferView .buffer, byteOffset, length),
-            stride     = (byteStride / TypedArray .BYTES_PER_ELEMENT) || components;
-
-         if (stride !== components)
+         Object .defineProperty (accessor, "array",
          {
-            const
-               length = count * components,
-               dense  = new TypedArray (length);
-
-            for (let i = 0, j = 0; i < length; j += stride)
+            get: () =>
             {
-               for (let c = 0; c < components; ++ c, ++ i)
-                  dense [i] = array [j + c];
-            }
+               const
+                  TypedArray = TypedArrays .get (accessor .componentType),
+                  bufferView = this .bufferViews [accessor .bufferView] || DefaultBufferView,
+                  byteOffset = (accessor .byteOffset || 0) + (bufferView .byteOffset || 0),
+                  byteStride = bufferView .byteStride || 0,
+                  components = Components .get (accessor .type),
+                  count      = accessor .count || 0,
+                  length     = (byteStride ? byteStride / TypedArray .BYTES_PER_ELEMENT : components) * count,
+                  array      = new TypedArray (bufferView .buffer, byteOffset, length),
+                  stride     = (byteStride / TypedArray .BYTES_PER_ELEMENT) || components;
 
-            accessor .array = dense;
-         }
-         else
-         {
-            accessor .array = array;
-         }
+               if (stride !== components)
+               {
+                  const
+                     length = count * components,
+                     dense  = new TypedArray (length);
+
+                  for (let i = 0, j = 0; i < length; j += stride)
+                  {
+                     for (let c = 0; c < components; ++ c, ++ i)
+                        dense [i] = array [j + c];
+                  }
+
+                  Object .defineProperty (accessor, "array", { value: dense });
+
+                  return dense;
+               }
+               else
+               {
+                  Object .defineProperty (accessor, "array", { value: array });
+
+                  return array;
+               }
+            },
+            configurable: true,
+         });
       };
    })(),
    samplersArray: function (samplers)
@@ -344,35 +354,44 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (!(sampler instanceof Object))
             return;
 
-         const
-            scene                 = this .getScene (),
-            texturePropertiesNode = scene .createNode ("TextureProperties", false),
-            name                  = this .sanitizeName (sampler .name);
+         Object .defineProperty (sampler, "texturePropertiesNode",
+         {
+            get: () =>
+            {
+               const
+                  scene                 = this .getScene (),
+                  texturePropertiesNode = scene .createNode ("TextureProperties", false),
+                  name                  = this .sanitizeName (sampler .name);
 
-         if (name)
-            scene .addNamedNode (scene .getUniqueName (name), texturePropertiesNode);
+               if (name)
+                  scene .addNamedNode (scene .getUniqueName (name), texturePropertiesNode);
 
-         // minFilter
+               // minFilter
 
-         const minificationFilter = MinificationFilters .get (sampler .minFilter) || ["AVG_PIXEL", false];
+               const minificationFilter = MinificationFilters .get (sampler .minFilter) || ["AVG_PIXEL", false];
 
-         texturePropertiesNode ._minificationFilter = minificationFilter [0];
-         texturePropertiesNode ._generateMipMaps    = minificationFilter [1];
+               texturePropertiesNode ._minificationFilter = minificationFilter [0];
+               texturePropertiesNode ._generateMipMaps    = minificationFilter [1];
 
-         // magFilter
+               // magFilter
 
-         texturePropertiesNode ._magnificationFilter = MagnificationFilters .get (sampler .magFilter) || "AVG_PIXEL";
+               texturePropertiesNode ._magnificationFilter = MagnificationFilters .get (sampler .magFilter) || "AVG_PIXEL";
 
-         // boundaryMode
+               // boundaryMode
 
-         texturePropertiesNode ._boundaryModeS = BoundaryModes .get (sampler .wrapS) || "REPEAT";
-         texturePropertiesNode ._boundaryModeT = BoundaryModes .get (sampler .wrapT) || "REPEAT";
+               texturePropertiesNode ._boundaryModeS = BoundaryModes .get (sampler .wrapS) || "REPEAT";
+               texturePropertiesNode ._boundaryModeT = BoundaryModes .get (sampler .wrapT) || "REPEAT";
 
-         // setup
+               // setup
 
-         texturePropertiesNode .setup ();
+               texturePropertiesNode .setup ();
 
-         sampler .texturePropertiesNode = texturePropertiesNode;
+               Object .defineProperty (sampler, "texturePropertiesNode", { value: texturePropertiesNode });
+
+               return texturePropertiesNode;
+            },
+            configurable: true,
+         });
       };
    })(),
    imagesArray: function (images)
@@ -397,23 +416,18 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(texture instanceof Object))
          return;
 
-      let textureNode = null;
-
       Object .defineProperty (texture, "textureNode",
       {
          get: () =>
          {
-            if (textureNode)
-               return textureNode;
-
             const
-               scene            = this .getScene (),
-               imageTextureNode = scene .createNode ("ImageTexture", false);
+               scene       = this .getScene (),
+               textureNode = scene .createNode ("ImageTexture", false);
 
             const sampler = this .samplers [texture .sampler];
 
             if (sampler)
-               imageTextureNode ._textureProperties = sampler .texturePropertiesNode;
+               textureNode ._textureProperties = sampler .texturePropertiesNode;
 
             const image = this .images [texture .source];
 
@@ -422,15 +436,18 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                const name = this .sanitizeName (image .name);
 
                if (name)
-                  scene .addNamedNode (scene .getUniqueName (name), imageTextureNode);
+                  scene .addNamedNode (scene .getUniqueName (name), textureNode);
 
-               imageTextureNode ._url = [image .uri];
+               textureNode ._url = [image .uri];
             }
 
-            imageTextureNode .setup ();
+            textureNode .setup ();
 
-            return textureNode = imageTextureNode;
+            Object .defineProperty (texture, "textureNode", { value: textureNode });
+
+            return textureNode;
          },
+         configurable: true,
       });
    },
    materialsArray: function (materials)
@@ -448,38 +465,47 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(material instanceof Object))
          return;
 
-      const
-         scene          = this .getScene (),
-         appearanceNode = scene .createNode ("Appearance", false),
-         name           = this .sanitizeName (material .name);
+      Object .defineProperty (material, "appearanceNode",
+      {
+         get: () =>
+         {
+            const
+               scene          = this .getScene (),
+               appearanceNode = scene .createNode ("Appearance", false),
+               name           = this .sanitizeName (material .name);
 
-      if (name)
-         scene .addNamedNode (scene .getUniqueName (name), appearanceNode);
+            if (name)
+               scene .addNamedNode (scene .getUniqueName (name), appearanceNode);
 
-      appearanceNode ._alphaMode   = material .alphaMode || "OPAQUE";
-      appearanceNode ._alphaCutoff = this .numberValue (material .alphaCutoff, 0.5);
+            appearanceNode ._alphaMode   = material .alphaMode || "OPAQUE";
+            appearanceNode ._alphaCutoff = this .numberValue (material .alphaCutoff, 0.5);
 
-      const
-         materialNode   = this .materialObjectMaterial (material),
-         emissiveFactor = new Color3 (0, 0, 0);
+            const
+               materialNode   = this .materialObjectMaterial (material),
+               emissiveFactor = new Color3 (0, 0, 0);
 
-      if (this .vectorValue (material .emissiveFactor, emissiveFactor))
-         materialNode ._emissiveColor = emissiveFactor;
+            if (this .vectorValue (material .emissiveFactor, emissiveFactor))
+               materialNode ._emissiveColor = emissiveFactor;
 
-      materialNode ._emissiveTexture        = this .textureInfo    (material .emissiveTexture);
-      materialNode ._emissiveTextureMapping = this .textureMapping (material .emissiveTexture);
+            materialNode ._emissiveTexture        = this .textureInfo    (material .emissiveTexture);
+            materialNode ._emissiveTextureMapping = this .textureMapping (material .emissiveTexture);
 
-	   this .occlusionTextureInfo (material .occlusionTexture, materialNode);
-	   this .normalTextureInfo    (material .normalTexture,    materialNode);
+            this .occlusionTextureInfo (material .occlusionTexture, materialNode);
+            this .normalTextureInfo    (material .normalTexture,    materialNode);
 
-      materialNode .setup ();
+            materialNode .setup ();
 
-      appearanceNode ._material         = materialNode;
-      appearanceNode ._textureTransform = this .getDefaultTextureTransform (materialNode);
+            appearanceNode ._material         = materialNode;
+            appearanceNode ._textureTransform = this .getDefaultTextureTransform (materialNode);
 
-      appearanceNode .setup ();
+            appearanceNode .setup ();
 
-      material .appearanceNode = appearanceNode;
+            Object .defineProperty (material, "appearanceNode", { value: appearanceNode });
+
+            return appearanceNode;
+         },
+         configurable: true,
+      })
    },
    materialObjectMaterial: function (material)
    {
