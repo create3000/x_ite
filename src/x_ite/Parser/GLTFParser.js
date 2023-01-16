@@ -466,7 +466,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (this .vectorValue (material .emissiveFactor, emissiveFactor))
          materialNode ._emissiveColor = emissiveFactor;
 
-      materialNode ._emissiveTexture = this .textureInfo (material .emissiveTexture);
+      materialNode ._emissiveTexture        = this .textureInfo    (material .emissiveTexture);
+      materialNode ._emissiveTextureMapping = this .textureMapping (material .emissiveTexture);
 
 	   this .occlusionTextureInfo (material .occlusionTexture, materialNode);
 	   this .normalTextureInfo    (material .normalTexture,    materialNode);
@@ -518,8 +519,10 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       materialNode ._metallic  = this .numberValue (pbrMetallicRoughness .metallicFactor,  1);
       materialNode ._roughness = this .numberValue (pbrMetallicRoughness .roughnessFactor, 1);
 
-      materialNode ._baseTexture              = this .textureInfo (pbrMetallicRoughness .baseColorTexture);
-      materialNode ._metallicRoughnessTexture = this .textureInfo (pbrMetallicRoughness .metallicRoughnessTexture);
+      materialNode ._baseTexture                     = this .textureInfo    (pbrMetallicRoughness .baseColorTexture);
+      materialNode ._baseTextureMapping              = this .textureMapping (pbrMetallicRoughness .baseColorTexture);
+      materialNode ._metallicRoughnessTexture        = this .textureInfo    (pbrMetallicRoughness .metallicRoughnessTexture);
+      materialNode ._metallicRoughnessTextureMapping = this .textureMapping (pbrMetallicRoughness .metallicRoughnessTexture);
 
       return materialNode;
    },
@@ -573,9 +576,12 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       materialNode ._shininess = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
 
-      materialNode ._diffuseTexture   = this .textureInfo (pbrSpecularGlossiness .diffuseTexture);
-      materialNode ._specularTexture  = this .textureInfo (pbrSpecularGlossiness .specularGlossinessTexture);
-      materialNode ._shininessTexture = this .textureInfo (pbrSpecularGlossiness .specularGlossinessTexture);
+      materialNode ._diffuseTexture          = this .textureInfo    (pbrSpecularGlossiness .diffuseTexture);
+      materialNode ._diffuseTextureMapping   = this .textureMapping (pbrSpecularGlossiness .diffuseTexture);
+      materialNode ._specularTexture         = this .textureInfo    (pbrSpecularGlossiness .specularGlossinessTexture);
+      materialNode ._specularTextureMapping  = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
+      materialNode ._shininessTexture        = this .textureInfo    (pbrSpecularGlossiness .specularGlossinessTexture);
+      materialNode ._shininessTextureMapping = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
 
       return materialNode;
    },
@@ -590,8 +596,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(normalTexture instanceof Object))
          return null;
 
-      materialNode ._normalScale   = this .numberValue (normalTexture .scale, 1);
-      materialNode ._normalTexture = this .textureInfo (normalTexture);
+      materialNode ._normalScale          = this .numberValue (normalTexture .scale, 1);
+      materialNode ._normalTexture        = this .textureInfo (normalTexture);
+      materialNode ._normalTextureMapping = this .textureMapping (normalTexture);
    },
    textureInfo: function (texture)
    {
@@ -599,6 +606,13 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return null;
 
       return this .textures [texture .index] .textureNode;
+   },
+   textureMapping: function (texture)
+   {
+      if (!(texture instanceof Object))
+         return "";
+
+      return "TEXCOORD_" + (texture .texCoord || 0);
    },
    meshesArray: function (meshes)
    {
@@ -979,7 +993,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene          = this .getScene (),
          shapeNode      = scene .createNode ("Shape", false),
          appearanceNode = primitive .material ? primitive .material .appearanceNode : this .getDefaultAppearance (),
-         geometryNode   = this .createGeometry (primitive);
+         geometryNode   = this .createGeometry (primitive, !!+appearanceNode ._material .getValue () .getTextureBits ());
 
       shapeNode ._appearance = appearanceNode;
       shapeNode ._geometry   = geometryNode;
@@ -1029,7 +1043,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return textureTransformNode;
    },
-   createGeometry: function (primitive)
+   createGeometry: function (primitive, textures)
    {
       switch (primitive .mode)
       {
@@ -1056,23 +1070,23 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          case 4: // TRIANGLES
          {
             if (primitive .indices)
-               return this .createIndexedTriangleSet (primitive);
+               return this .createIndexedTriangleSet (primitive, textures);
 
-            return this .createTriangleSet (primitive);
+            return this .createTriangleSet (primitive, textures);
          }
          case 5: // TRIANGLE_STRIP
          {
             if (primitive .indices)
-               return this .createIndexedTriangleStripSet (primitive);
+               return this .createIndexedTriangleStripSet (primitive, textures);
 
-            return this .createTriangleStripSet (primitive);
+            return this .createTriangleStripSet (primitive, textures);
          }
          case 6: // TRIANGLE_FAN
          {
             if (primitive .indices)
-               return this .createIndexedTriangleFanSet (primitive);
+               return this .createIndexedTriangleFanSet (primitive, textures);
 
-            return this .createTriangleFanSet (primitive);
+            return this .createTriangleFanSet (primitive, textures);
          }
       }
    },
@@ -1096,10 +1110,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedLineSet", false);
 
-      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
-      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
+      geometryNode ._color  = this .createColor (attributes .COLOR [0]);
+      geometryNode ._normal = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord  = this .createCoordinate (attributes .POSITION);
 
       switch (mode)
       {
@@ -1143,16 +1156,15 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene        = this .getScene (),
          geometryNode = scene .createNode ("LineSet", false);
 
-      geometryNode ._color    = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord = this .createMultiTextureCoordinate (attributes .TEXCOORD);
-      geometryNode ._normal   = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord    = this .createCoordinate (attributes .POSITION);
+      geometryNode ._color  = this .createColor (attributes .COLOR [0]);
+      geometryNode ._normal = this .createNormal (attributes .NORMAL);
+      geometryNode ._coord  = this .createCoordinate (attributes .POSITION);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createIndexedTriangleSet: function ({ attributes, indices, material })
+   createIndexedTriangleSet: function ({ attributes, indices, material }, textures)
    {
       const
          scene        = this .getScene (),
@@ -1161,7 +1173,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._texCoord        = textures ? this .createMultiTextureCoordinate (attributes .TEXCOORD) : null;
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
@@ -1170,7 +1182,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createTriangleSet: function ({ attributes, material })
+   createTriangleSet: function ({ attributes, material }, textures)
    {
       const
          scene        = this .getScene (),
@@ -1178,7 +1190,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._texCoord        = textures ? this .createMultiTextureCoordinate (attributes .TEXCOORD) : null;
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
@@ -1187,7 +1199,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createIndexedTriangleStripSet: function ({ attributes, indices, material })
+   createIndexedTriangleStripSet: function ({ attributes, indices, material }, textures)
    {
       const
          scene        = this .getScene (),
@@ -1196,7 +1208,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._texCoord        = textures ? this .createMultiTextureCoordinate (attributes .TEXCOORD) : null;
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
@@ -1205,7 +1217,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createTriangleStripSet: function ({ attributes, material })
+   createTriangleStripSet: function ({ attributes, material }, textures)
    {
       const
          scene        = this .getScene (),
@@ -1213,7 +1225,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._texCoord        = textures ? this .createMultiTextureCoordinate (attributes .TEXCOORD) : null;
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
@@ -1230,7 +1242,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createIndexedTriangleFanSet: function ({ attributes, indices, material })
+   createIndexedTriangleFanSet: function ({ attributes, indices, material }, textures)
    {
       const
          scene        = this .getScene (),
@@ -1239,7 +1251,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._texCoord        = textures ? this .createMultiTextureCoordinate (attributes .TEXCOORD) : null;
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
@@ -1248,7 +1260,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createTriangleFanSet: function ({ attributes, material })
+   createTriangleFanSet: function ({ attributes, material }, textures)
    {
       const
          scene        = this .getScene (),
@@ -1256,7 +1268,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0]);
-      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._texCoord        = textures ? this .createMultiTextureCoordinate (attributes .TEXCOORD) : null;
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
@@ -1276,8 +1288,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    createColor: (function ()
    {
       const TypeNames = new Map ([
-         ["VEC3", "Color"]
-         ["VEC4", "ColorRGBA"]
+         ["VEC3", "Color"],
+         ["VEC4", "ColorRGBA"],
       ]);
 
       return function (color)
@@ -1311,12 +1323,12 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          case 1:
          {
-            return this .createTextureCoordinate (texCoords [0]);
+            return this .createTextureCoordinate (texCoords [0], 0);
          }
          default:
          {
             const textureCoordinateNodes = texCoords
-               .map (texCoord => this .createTextureCoordinate (texCoord))
+               .map ((texCoord, i) => this .createTextureCoordinate (texCoord, i))
                .filter (node => node);
 
             if (!textureCoordinateNodes .length)
@@ -1334,7 +1346,7 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   createTextureCoordinate: function (texCoord)
+   createTextureCoordinate: function (texCoord, mapping)
    {
       if (!texCoord)
          return null;
@@ -1346,7 +1358,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene                 = this .getScene (),
          textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
 
-      textureCoordinateNode ._point = texCoord .array;
+      textureCoordinateNode ._mapping = "TEXCOORD_" + mapping;
+      textureCoordinateNode ._point   = texCoord .array;
 
       textureCoordinateNode .setup ();
 
