@@ -37,19 +37,19 @@ Creates a new default instance of the prototype.
 
 Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
 
-For options see X3DScene.toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 #### String **toXMLString** (\[options\])
 
 Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
 
-For options see X3DScene.toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 #### String **toJSONString** (\[options\])
 
 Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
 
-For options see X3DScene.toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 ## X3DExternProtoDeclaration
 
@@ -95,19 +95,19 @@ Triggers the load of the extern prototype. If the extern prototype is already lo
 
 Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this extern prototype.
 
-For options see X3DScene.toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 #### String **toXMLString** (\[options\])
 
 Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this extern prototype.
 
-For options see X3DScene.toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 #### String **toJSONString** (\[options\])
 
 Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this extern prototype.
 
-For options see X3DScene.toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 ## ProtoDeclarationArray
 

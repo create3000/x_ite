@@ -168,13 +168,13 @@ An object with one or more of these properties:
 
 Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this scene.
 
-For options see toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 #### String **toJSONString** (\[options\])
 
 Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this scene.
 
-For options see toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 ## ProfileInfo
 

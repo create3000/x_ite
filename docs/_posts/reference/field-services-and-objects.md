@@ -411,19 +411,19 @@ Removes a field callback function associated with the parameters *name* and *key
 
 Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, produce this node.
 
-For options see X3DScene.toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 #### String **toXMLString** (\[options\])
 
 Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, produce this node.
 
-For options see X3DScene.toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 #### String **toJSONString** (\[options\])
 
 Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, produce this node.
 
-For options see X3DScene.toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 ## SFRotation Object
 
@@ -980,19 +980,19 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 Returns the X3D VRML-encoded string that, if parsed as the value of an MFNode field, produce this node.
 
-For options see X3DScene.toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 #### String **toXMLString** (\[options\])
 
 Returns the X3D XML-encoded string that, if parsed as the value of an MFNode field, produce this node.
 
-For options see X3DScene.toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 #### String **toJSONString** (\[options\])
 
 Returns the X3D JSON-encoded string that, if parsed as the value of an MFNode field, produce this node.
 
-For options see X3DScene.toVRMLString.
+For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 ## MFRotation Object
 
