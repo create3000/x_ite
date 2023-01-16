@@ -909,7 +909,10 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          const camera = this .cameras [node .camera];
 
          if (camera)
-            transformNode ._children .push (camera .viewpointNode);
+         {
+            if (camera .viewpointNode)
+               transformNode ._children .push (camera .viewpointNode);
+         }
       }
 
       // Add mesh.
