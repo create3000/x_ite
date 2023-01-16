@@ -661,19 +661,30 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(mesh instanceof Object))
          return;
 
-      mesh .shapeNodes = this .primitivesArray (mesh .primitives);
-
-      // Name Shape nodes.
-
-      const
-         scene = this .getScene (),
-         name  = this .sanitizeName (mesh .name);
-
-      if (name)
+      Object .defineProperty (mesh, "shapeNodes",
       {
-         for (const shapeNode of mesh .shapeNodes)
-            scene .addNamedNode (scene .getUniqueName (name), shapeNode);
-      }
+         get: () =>
+         {
+            const shapeNodes = this .primitivesArray (mesh .primitives);
+
+            // Name Shape nodes.
+
+            const
+               scene = this .getScene (),
+               name  = this .sanitizeName (mesh .name);
+
+            if (name)
+            {
+               for (const shapeNode of shapeNodes)
+                  scene .addNamedNode (scene .getUniqueName (name), shapeNode);
+            }
+
+            Object .defineProperty (mesh, "shapeNodes", { value: shapeNodes });
+
+            return shapeNodes;
+         },
+         configurable: true,
+      });
    },
    primitivesArray: function (primitives)
    {
