@@ -1308,6 +1308,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (!typeName)
             return null;
 
+         if (color .colorNode)
+            return color .colorNode;
+
          const
             scene     = this .getScene (),
             colorNode = scene .createNode (typeName, false);
@@ -1315,6 +1318,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          colorNode ._color = color .array;
 
          colorNode .setup ();
+
+         color .colorNode = colorNode;
 
          return colorNode;
       };
@@ -1360,6 +1365,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (texCoord .type !== "VEC2")
          return null;
 
+      if (texCoord .textureCoordinateNode)
+         return texCoord .textureCoordinateNode;
+
       const
          scene                 = this .getScene (),
          textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
@@ -1368,6 +1376,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       textureCoordinateNode ._point   = texCoord .array;
 
       textureCoordinateNode .setup ();
+
+      texCoord .textureCoordinateNode = textureCoordinateNode;
 
       return textureCoordinateNode;
    },
@@ -1382,6 +1392,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (normal .type !== "VEC3")
          return null;
 
+      if (normal .normalNode)
+         return normal .normalNode;
+
       const
          scene      = this .getScene (),
          normalNode = scene .createNode ("Normal", false);
@@ -1389,6 +1402,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       normalNode ._vector = normal .array;
 
       normalNode .setup ();
+
+      normal .normalNode = normalNode;
 
       return normalNode;
    },
@@ -1403,6 +1418,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (position .type !== "VEC3")
          return null;
 
+      if (position .coordinateNode)
+         return position .coordinateNode;
+
       const
          scene          = this .getScene (),
          coordinateNode = scene .createNode ("Coordinate", false);
@@ -1410,6 +1428,8 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       coordinateNode ._point = position .array;
 
       coordinateNode .setup ();
+
+      position .coordinateNode = coordinateNode;
 
       return coordinateNode;
    },
