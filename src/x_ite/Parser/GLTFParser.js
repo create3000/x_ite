@@ -590,6 +590,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(occlusionTexture instanceof Object))
          return null;
 
+      materialNode ._occlusionStrength       = this .numberValue (occlusionTexture .strength, 1);
+      materialNode ._occlusionTexture        = this .textureInfo (occlusionTexture);
+      materialNode ._occlusionTextureMapping = this .textureMapping (occlusionTexture);
    },
    normalTextureInfo: function (normalTexture, materialNode)
    {
@@ -603,6 +606,9 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    textureInfo: function (texture)
    {
       if (!(texture instanceof Object))
+         return null;
+
+      if (!this .textures [texture .index])
          return null;
 
       return this .textures [texture .index] .textureNode;
