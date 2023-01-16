@@ -55,7 +55,7 @@ import Color4     from "../../standard/Math/Numbers/Color4.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 
-function GLTFParser (scene)
+function GLTF2Parser (scene)
 {
    X3DParser .call (this, scene);
 
@@ -70,9 +70,9 @@ function GLTFParser (scene)
    this .nodes          = [ ];
 }
 
-GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 {
-   constructor: GLTFParser,
+   constructor: GLTF2Parser,
    getEncoding: function ()
    {
       return "JSON";
@@ -103,7 +103,15 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return function ()
       {
-         return this .input instanceof Object && Object .keys (this .input) .every (key => keys .has (key));
+         if (!(this .input instanceof Object))
+            return false;
+
+         if (!Object .keys (this .input) .every (key => keys .has (key)))
+            return false;
+
+         // Check asset.version for "2.0".
+
+         return true;
       };
    })(),
    getInput: function ()
@@ -1503,4 +1511,4 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    }
 });
 
-export default GLTFParser;
+export default GLTF2Parser;
