@@ -1273,99 +1273,84 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createColor: function (color)
+   createColor: (function ()
    {
-      if (!color)
-         return null;
+      const TypeNames = new Map ([
+         ["VEC3", "Color"]
+         ["VEC4", "ColorRGBA"]
+      ]);
 
-      switch (color .type)
+      return function (color)
       {
-         case "VEC3":
-         {
-            const
-               scene     = this .getScene (),
-               colorNode = scene .createNode ("Color", false);
+         if (!color)
+            return null;
 
-            colorNode ._color = color .array;
+         const typeName = TypeNames .get (color .type);
 
-            colorNode .setup ();
+         if (!typeName)
+            return null;
 
-            return colorNode;
-         }
-         case "VEC4":
-         {
-            const
-               scene     = this .getScene (),
-               colorNode = scene .createNode ("ColorRGBA", false);
+         const
+            scene     = this .getScene (),
+            colorNode = scene .createNode (typeName, false);
 
-            colorNode ._color = color .array;
+         colorNode ._color = color .array;
 
-            colorNode .setup ();
+         colorNode .setup ();
 
-            return colorNode;
-         }
-      }
-
-      return null;
-   },
+         return colorNode;
+      };
+   })(),
    createMultiTextureCoordinate: function (texCoords)
    {
       switch (texCoords .length)
       {
          case 0:
+         {
             return null;
+         }
          case 1:
+         {
             return this .createTextureCoordinate (texCoords [0]);
+         }
          default:
-            return null;
+         {
+            const textureCoordinateNodes = texCoords
+               .map (texCoord => this .createTextureCoordinate (texCoord))
+               .filter (node => node);
+
+            if (!textureCoordinateNodes .length)
+               return null;
+
+            const
+               scene                 = this .getScene (),
+               textureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
+
+            textureCoordinateNode ._texCoord = textureCoordinateNodes;
+
+            textureCoordinateNode .setup ();
+
+            return textureCoordinateNode;
+         }
       }
    },
-   createTextureCoordinate: function (texCoords)
+   createTextureCoordinate: function (texCoord)
    {
-      if (!texCoords)
+      if (!texCoord)
          return null;
 
-      switch (texCoords .type)
-      {
-         case "VEC2":
-         {
-            const
-               scene                 = this .getScene (),
-               textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
+      if (texCoord .type !== "VEC2")
+         return null;
 
-            textureCoordinateNode ._point = texCoords .array;
+      const
+         scene                 = this .getScene (),
+         textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
 
-            textureCoordinateNode .setup ();
+      textureCoordinateNode ._point = texCoord .array;
 
-            return textureCoordinateNode;
-         }
-         case "VEC3":
-         {
-            const
-               scene                 = this .getScene (),
-               textureCoordinateNode = scene .createNode ("TextureCoordinate3D", false);
+      textureCoordinateNode .setup ();
 
-            textureCoordinateNode ._point = texCoords .array;
-
-            textureCoordinateNode .setup ();
-
-            return textureCoordinateNode;
-         }
-         case "VEC4":
-         {
-            const
-               scene                 = this .getScene (),
-               textureCoordinateNode = scene .createNode ("TextureCoordinate4D", false);
-
-            textureCoordinateNode ._point = texCoords .array;
-
-            textureCoordinateNode .setup ();
-
-            return textureCoordinateNode;
-         }
-      }
-
-      return null;
+      return textureCoordinateNode;
    },
    createNormal: function (normal)
    {
