@@ -757,28 +757,28 @@ GLTFParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(camera instanceof Object))
          return;
 
-      const viewpointNode = this .cameraType (camera);
-
-      if (!viewpointNode)
-         return;
-
       Object .defineProperty (camera, "viewpointNode",
       {
          get: () =>
          {
-            const
-               scene = this .getScene (),
-               name  = this .sanitizeName (camera .name);
+            const viewpointNode = this .cameraType (camera);
 
-            // Name
+            if (viewpointNode)
+            {
+               const
+                  scene = this .getScene (),
+                  name  = this .sanitizeName (camera .name);
 
-            if (name)
-               scene .addNamedNode (scene .getUniqueName (name), viewpointNode);
+               // Name
 
-            if (camera .name)
-               viewpointNode ._description = camera .name;
-            else
-               viewpointNode ._description = `Viewpoint ${++ this .viewpoints}`;
+               if (name)
+                  scene .addNamedNode (scene .getUniqueName (name), viewpointNode);
+
+               if (camera .name)
+                  viewpointNode ._description = camera .name;
+               else
+                  viewpointNode ._description = `Viewpoint ${++ this .viewpoints}`;
+            }
 
             Object .defineProperty (camera, "viewpointNode", { value: viewpointNode });
 
