@@ -940,49 +940,50 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const mesh = this .meshes [node .mesh];
 
       if (mesh)
+      {
          transformNode ._children .push (... mesh .shapeNodes);
 
+         // Skin
 
-      // Skin
+         const skin = this .skins [node .skin];
 
-      const skin = this .skins [node .skin];
-
-      if (skin && mesh)
-      {
-         for (const { attributes } of mesh .primitives)
+         if (skin)
          {
-            const { JOINTS, WEIGHTS } = attributes;
-
-            for (const [j, joints] of JOINTS .entries ())
+            for (const { attributes } of mesh .primitives)
             {
-               if (joints .type !== "VEC4")
-                  continue;
+               const { JOINTS, WEIGHTS } = attributes;
 
-               const weights = WEIGHTS [j];
-
-               if (!(weights instanceof Object))
-                  continue;
-
-               const
-                  array    = joints .array,
-                  wArray   = weights .array,
-                  vertices = array .length / 4;
-
-               for (let v = 0; v < vertices; ++ v)
+               for (const [j, joints] of JOINTS .entries ())
                {
-                  for (let i = 0; i < 4; ++ i)
+                  if (joints .type !== "VEC4")
+                     continue;
+
+                  const weights = WEIGHTS [j];
+
+                  if (weights .type !== "VEC4")
+                     continue;
+
+                  const
+                     array    = joints .array,
+                     wArray   = weights .array,
+                     vertices = array .length / 4;
+
+                  for (let v = 0; v < vertices; ++ v)
                   {
-                     const w = wArray [v * 4 + i];
+                     for (let i = 0; i < 4; ++ i)
+                     {
+                        const w = wArray [v * 4 + i];
 
-                     if (w === 0)
-                        continue;
+                        if (w === 0)
+                           continue;
 
-                     const
-                        index     = skin .joints [array [v * 4 + i]],
-                        jointNode = this .nodeObject (this .nodes [index], index);
+                        const
+                           index     = skin .joints [array [v * 4 + i]],
+                           jointNode = this .nodeObject (this .nodes [index], index);
 
-                     jointNode ._skinCoordIndex .push (v);
-                     jointNode ._skinCoordWeight .push (w);
+                        jointNode ._skinCoordIndex  .push (v);
+                        jointNode ._skinCoordWeight .push (w);
+                     }
                   }
                }
             }
