@@ -67,6 +67,8 @@ function GLTF2Parser (scene)
    this .materials      = [ ];
    this .cameras        = [ ];
    this .viewpoints     = [ ];
+   this .skins          = [ ];
+   this .joints         = new Set ();
    this .nodes          = [ ];
 }
 
@@ -109,7 +111,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (!Object .keys (this .input) .every (key => keys .has (key)))
             return false;
 
-         // Check asset.version for "2.0".
+         this .assetObject (this .input .asset);
+
+         if (this .version !== "2.0")
+            return false;
 
          return true;
       };
@@ -151,12 +156,12 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       scene .setEncoding ("GLTF");
       scene .setProfile (browser .getProfile ("Interchange"));
+      scene .addComponent (browser .getComponent ("HAnim", 3));
 
       await this .loadComponents ();
 
       // Parse root objects.
 
-      this .assetObject             (glTF .asset);
       this .extensionsRequiredArray (glTF .extensionsRequired),
       this .extensionsUsedArray     (glTF .extensionsUsed);
 
@@ -170,10 +175,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .materialsArray   (glTF .materials);
       this .meshesArray      (glTF .meshes);
       this .camerasArray     (glTF .cameras);
+      this .skinsArray       (glTF .skins);
       this .nodesArray       (glTF .nodes);
       this .scenesArray      (glTF .scenes, glTF .scene);
       this .animationsArray  (glTF .animations);
-      this .skinsArray       (glTF .skins);
 
       return this .getScene ();
    },
@@ -182,22 +187,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(asset instanceof Object))
          return;
 
-      const
-         scene         = this .getScene (),
-         worldURL      = scene .getWorldURL (),
-         worldInfoNode = scene .createNode ("WorldInfo", false);
-
-      worldInfoNode ._title = decodeURI (new URL (worldURL) .pathname .split ("/") .at (-1) || worldURL);
-
-      for (const [key, value] of Object .entries (asset))
-      {
-         if (typeof value === "string")
-            worldInfoNode ._info .push (`${key}: ${value}`);
-      }
-
-      worldInfoNode .setup ();
-
-      scene .getRootNodes () .push (worldInfoNode);
+      this .version = asset .version;
    },
    extensionsRequiredArray: function (extensionsRequired)
    {
@@ -852,6 +842,30 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return viewpointNode;
    },
+   skinsArray: function (skins)
+   {
+      if (!(skins instanceof Array))
+         return;
+
+      this .skins = skins;
+
+      for (const skin of skins)
+         this .skinObject (skin);
+   },
+   skinObject: function (skin)
+   {
+      if (!(skin instanceof Object))
+         return;
+
+      this .jointsArray (skin .joints);
+   },
+   jointsArray: function (joints)
+   {
+      if (!(joints instanceof Array))
+         return;
+
+      joints .forEach (index => this .joints .add (index));
+   },
    nodesArray: function (nodes)
    {
       if (!(nodes instanceof Array))
@@ -859,7 +873,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .nodes = nodes;
    },
-   nodeObject: function (node)
+   nodeObject: function (node, index)
    {
       if (!(node instanceof Object))
          return;
@@ -867,11 +881,12 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (node .transformNode)
          return node .transformNode;
 
-      // Create Transform.
+      // Create Transform or HAnimJoint.
 
       const
          scene         = this .getScene (),
-         transformNode = scene .createNode ("Transform", false),
+         typeName      = this .joints .has (index) ? "HAnimJoint" : "Transform",
+         transformNode = scene .createNode (typeName, false),
          name          = this .sanitizeName (node .name);
 
       // Name
@@ -912,25 +927,66 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Add camera.
 
-      if (Number .isInteger (node .camera))
-      {
-         const camera = this .cameras [node .camera];
+      const camera = this .cameras [node .camera];
 
-         if (camera)
-         {
-            if (camera .viewpointNode)
-               transformNode ._children .push (camera .viewpointNode);
-         }
+      if (camera)
+      {
+         if (camera .viewpointNode)
+            transformNode ._children .push (camera .viewpointNode);
       }
 
       // Add mesh.
 
-      if (Number .isInteger (node .mesh))
-      {
-         const mesh = this .meshes [node .mesh];
+      const mesh = this .meshes [node .mesh];
 
-         if (mesh)
-            transformNode ._children .push (... mesh .shapeNodes);
+      if (mesh)
+         transformNode ._children .push (... mesh .shapeNodes);
+
+
+      // Skin
+
+      const skin = this .skins [node .skin];
+
+      if (skin && mesh)
+      {
+         for (const { attributes } of mesh .primitives)
+         {
+            const { JOINTS, WEIGHTS } = attributes;
+
+            for (const [j, joints] of JOINTS .entries ())
+            {
+               if (joints .type !== "VEC4")
+                  continue;
+
+               const weights = WEIGHTS [j];
+
+               if (!(weights instanceof Object))
+                  continue;
+
+               const
+                  array    = joints .array,
+                  wArray   = weights .array,
+                  vertices = array .length / 4;
+
+               for (let v = 0; v < vertices; ++ v)
+               {
+                  for (let i = 0; i < 4; ++ i)
+                  {
+                     const w = wArray [v * 4 + i];
+
+                     if (w === 0)
+                        continue;
+
+                     const
+                        index     = skin .joints [array [v * 4 + i]],
+                        jointNode = this .nodeObject (this .nodes [index], index);
+
+                     jointNode ._skinCoordIndex .push (v);
+                     jointNode ._skinCoordWeight .push (w);
+                  }
+               }
+            }
+         }
       }
 
       // Get children.
@@ -950,7 +1006,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(children instanceof Array))
          return [ ];
 
-      return children .map (index => this .nodeObject (this .nodes [index])) .filter (node => node);
+      return children .map (index => this .nodeObject (this .nodes [index], index)) .filter (node => node);
    },
    scenesArray: function (scenes, sceneNumber)
    {
@@ -1013,7 +1069,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          case 1:
          {
-            return this .nodeObject (nodes [0]);
+            return nodes [0];
          }
          default:
          {
@@ -1025,7 +1081,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             if (name)
                scene .addNamedNode (scene .getUniqueName (name), groupNode);
 
-            groupNode ._children = nodes .map (node => this .nodeObject (node));
+            groupNode ._children = nodes;
 
             groupNode .setup ();
 
@@ -1038,16 +1094,11 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(nodes instanceof Array))
          return [ ];
 
-      return nodes .map (node => this .nodes [node]) .filter (node => node);
+      return nodes .map (index => this .nodeObject (this .nodes [index], index)) .filter (node => node);
    },
    animationsArray: function (animations)
    {
       if (!(animations instanceof Array))
-         return;
-   },
-   skinsArray: function (skins)
-   {
-      if (!(skins instanceof Array))
          return;
    },
    createShape: function (primitive)
