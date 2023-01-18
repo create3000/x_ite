@@ -675,6 +675,60 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             scene .addNamedNode (scene .getUniqueName (name), shapeNode);
       }
 
+      if (skin instanceof Object)
+      {
+         const
+            scene          = this .getScene (),
+            normalNode     = scene .createNode ("Normal", false),
+            coordinateNode = scene .createNode ("Coordinate", false);
+
+         for (const { _geometry: geometryNode } of shapeNodes)
+         {
+            const
+               start  = coordinateNode ._point .length,
+               normal = geometryNode .normal,
+               coord  = geometryNode .coord;
+
+            switch (geometryNode .getNodeTypeName ())
+            {
+               case "IndexedLineSet":
+               {
+                  geometryNode .coordIndex = geometryNode .coordIndex .map (index => index + start);
+                  break;
+               }
+               default:
+               {
+                  for (const index of geometryNode .index)
+                  {
+                     if (index < 0)
+                        console .log (index);
+
+                     if (index >= coord .point .length)
+                        console .log (index, coord .point .length)
+                  }
+
+                  geometryNode .index = geometryNode .index .map (index => index + start);
+                  break;
+               }
+            }
+
+            if (normal)
+            {
+               normal .vector .forEach ((vector, i) => normalNode ._vector [i + start] = vector);
+               geometryNode .normal = normalNode;
+            }
+
+            if (coord)
+            {
+               coord .point .forEach ((point, i) => coordinateNode ._point [i + start] = point);
+               geometryNode .coord = coordinateNode;
+            }
+         }
+
+         normalNode     .setup ();
+         coordinateNode .setup ();
+      }
+
       return mesh .shapeNodes = shapeNodes;
    },
    primitivesArray: function (primitives, skin)
@@ -1224,29 +1278,54 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          case 1: // LINES
          {
-            geometryNode ._coordIndex = indices .array;
+            const
+               coordIndex = geometryNode ._coordIndex,
+               array      = indices .array,
+               length     = array .length;
+
+            for (let i = 0; i < length; i += 2)
+               coordIndex .push (array [i], array [i + 1], -1);
+
             break
          }
          case 2: // LINE_LOOP
          {
-            const coord = geometryNode ._coord;
+            const coordIndex = geometryNode ._coordIndex;
 
-            if (coord)
+            if (indices)
             {
-               if (coord .point .length)
-                  coord .push (coord .point [0]);
+               coordIndex .push (... indices .array);
 
-               geometryNode ._coordIndex = [... coord .point .keys ()];
+               if (coordIndex .length)
+                  coordIndex .push (coordIndex [0], -1);
             }
+            else
+            {
+               const coord = geometryNode ._coord;
 
+               if (coord && coord .point .length)
+                  coordIndex .push (... coord .point .keys (), 0, -1);
+            }
             break
          }
          case 3: // LINE_STRIP
          {
-            const coord = geometryNode ._coord;
+            const coordIndex = geometryNode ._coordIndex;
 
-            if (coord)
-               coordIndex = [... coord .point .keys ()];
+            if (indices)
+            {
+               coordIndex .push (... indices .array);
+
+               if (coordIndex .length)
+                  coordIndex .push (-1);
+            }
+            else
+            {
+               const coord = geometryNode ._coord;
+
+               if (coord && coord .point .length)
+                  coordIndex .push (... coord .point .keys (), -1);
+            }
 
             break
          }
