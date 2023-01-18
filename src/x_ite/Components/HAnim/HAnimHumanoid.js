@@ -257,7 +257,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
          if (type !== TraverseType .CAMERA)
             return;
 
-         if (! this .skinCoordNode)
+         if (!this .skinCoordNode)
             return;
 
          const

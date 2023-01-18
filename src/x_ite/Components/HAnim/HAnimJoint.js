@@ -111,7 +111,8 @@ HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .protot
    {
       X3DTransformNode .prototype .initialize .call (this);
 
-      this ._displacers .addInterest ("set_displacers__", this);
+      this ._skinCoordIndex .addInterest ("set_skinCoordIndex__", this);
+      this ._displacers     .addInterest ("set_displacers__",     this);
 
       this .set_displacers__ ();
    },
@@ -126,6 +127,10 @@ HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .protot
    getDisplacers: function ()
    {
       return this .displacerNodes;
+   },
+   set_skinCoordIndex__: function ()
+   {
+      this .set_cameraObjects__ ();
    },
    set_displacers__: function ()
    {
