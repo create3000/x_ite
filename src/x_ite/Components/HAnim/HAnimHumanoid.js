@@ -236,8 +236,6 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
    },
    traverse: function (type, renderObject)
    {
-      renderObject .getJoints () .length = 0;
-
       this .transformNode .traverse (type, renderObject);
 
       if (this .isLive () .getValue ())

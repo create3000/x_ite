@@ -958,7 +958,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             humanoidNode = scene .createNode ("HAnimHumanoid", false);
 
-            humanoidNode ._skeleton .push ();
+            //humanoidNode ._skeleton .push (... skin .joints .map (index => this .nodeObject (this .nodes [index], index)));
             humanoidNode ._joints .push (... skin .joints .map (index => this .nodeObject (this .nodes [index], index)));
             humanoidNode ._skin .push (transformNode);
             humanoidNode ._skinCoord = mesh .shapeNodes [0] ._geometry .coord;
