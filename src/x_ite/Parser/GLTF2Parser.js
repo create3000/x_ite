@@ -651,41 +651,32 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
 
       this .meshes = meshes;
-
-      for (const mesh of meshes)
-         this .meshObject (mesh);
    },
-   meshObject: function (mesh)
+   meshObject: function (mesh, skin)
    {
       if (!(mesh instanceof Object))
          return;
 
-      Object .defineProperty (mesh, "shapeNodes",
+      if (mesh .shapeNodes)
+         return mesh .shapeNodes;
+
+      const shapeNodes = this .primitivesArray (mesh .primitives, skin);
+
+      // Name Shape nodes.
+
+      const
+         scene = this .getScene (),
+         name  = this .sanitizeName (mesh .name);
+
+      if (name)
       {
-         get: () =>
-         {
-            const shapeNodes = this .primitivesArray (mesh .primitives);
+         for (const shapeNode of shapeNodes)
+            scene .addNamedNode (scene .getUniqueName (name), shapeNode);
+      }
 
-            // Name Shape nodes.
-
-            const
-               scene = this .getScene (),
-               name  = this .sanitizeName (mesh .name);
-
-            if (name)
-            {
-               for (const shapeNode of shapeNodes)
-                  scene .addNamedNode (scene .getUniqueName (name), shapeNode);
-            }
-
-            Object .defineProperty (mesh, "shapeNodes", { value: shapeNodes });
-
-            return shapeNodes;
-         },
-         configurable: true,
-      });
+      return mesh .shapeNodes = shapeNodes;
    },
-   primitivesArray: function (primitives)
+   primitivesArray: function (primitives, skin)
    {
       if (!(primitives instanceof Array))
          return [ ];
@@ -693,11 +684,11 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const shapeNodes = [ ];
 
       for (const primitive of primitives)
-         this .primitiveObject (primitive, shapeNodes);
+         this .primitiveObject (primitive, skin, shapeNodes);
 
       return shapeNodes;
    },
-   primitiveObject: function (primitive, shapeNodes)
+   primitiveObject: function (primitive, skin, shapeNodes)
    {
       if (!(primitive instanceof Object))
          return;
@@ -708,7 +699,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       primitive .indices   = this .accessors [primitive .indices];
       primitive .material  = this .materials [primitive .material];
 
-      shapeNodes .push (this .createShape (primitive));
+      shapeNodes .push (this .createShape (primitive, skin));
    },
    attributesObject: function (attributes)
    {
@@ -747,44 +738,35 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
 
       this .cameras = cameras;
-
-      for (const camera of cameras)
-         this .cameraObject (camera);
    },
    cameraObject: function (camera)
    {
       if (!(camera instanceof Object))
-         return;
+         return null;
 
-      Object .defineProperty (camera, "viewpointNode",
-      {
-         get: () =>
-         {
-            const viewpointNode = this .cameraType (camera);
+      if (camera .viewpointNode)
+         return camera .viewpointNode;
 
-            if (viewpointNode)
-            {
-               const
-                  scene = this .getScene (),
-                  name  = this .sanitizeName (camera .name);
+      const viewpointNode = this .cameraType (camera);
 
-               // Name
+      if (!viewpointNode)
+         return null;
 
-               if (name)
-                  scene .addNamedNode (scene .getUniqueName (name), viewpointNode);
+      const
+         scene = this .getScene (),
+         name  = this .sanitizeName (camera .name);
 
-               if (camera .name)
-                  viewpointNode ._description = camera .name;
-               else
-                  viewpointNode ._description = `Viewpoint ${++ this .viewpoints}`;
-            }
+      // Name
 
-            Object .defineProperty (camera, "viewpointNode", { value: viewpointNode });
+      if (name)
+         scene .addNamedNode (scene .getUniqueName (name), viewpointNode);
 
-            return viewpointNode;
-         },
-         configurable: true,
-      })
+      if (camera .name)
+         viewpointNode ._description = camera .name;
+      else
+         viewpointNode ._description = `Viewpoint ${++ this .viewpoints}`;
+
+      return camera .viewpointNode = viewpointNode;
    },
    cameraType: function (camera)
    {
@@ -928,13 +910,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Add camera.
 
-      const camera = this .cameras [node .camera];
+      const viewpointNode = this .cameraObject (this .cameras [node .camera]);
 
-      if (camera)
-      {
-         if (camera .viewpointNode)
-            transformNode ._children .push (camera .viewpointNode);
-      }
+      if (viewpointNode)
+         transformNode ._children .push (viewpointNode);
 
       // Add mesh.
 
@@ -944,68 +923,16 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (mesh)
       {
-         transformNode ._children .push (... mesh .shapeNodes);
+         transformNode ._children .push (... this .meshObject (mesh, this .skins [node .skin]));
 
-         // Skin
+         // humanoidNode = scene .createNode ("HAnimHumanoid", false);
 
-         const skin = this .skins [node .skin];
+         // //humanoidNode ._skeleton .push (... skin .joints .map (index => this .nodeObject (this .nodes [index], index)));
+         // humanoidNode ._joints .push (... skin .joints .map (index => this .nodeObject (this .nodes [index], index)));
+         // humanoidNode ._skin .push (transformNode);
+         // humanoidNode ._skinCoord = mesh .shapeNodes [0] ._geometry .coord;
 
-         if (skin)
-         {
-            // HAnimHumanoid
-
-            ++ this .humanoid;
-
-            humanoidNode = scene .createNode ("HAnimHumanoid", false);
-
-            //humanoidNode ._skeleton .push (... skin .joints .map (index => this .nodeObject (this .nodes [index], index)));
-            humanoidNode ._joints .push (... skin .joints .map (index => this .nodeObject (this .nodes [index], index)));
-            humanoidNode ._skin .push (transformNode);
-            humanoidNode ._skinCoord = mesh .shapeNodes [0] ._geometry .coord;
-
-            humanoidNode .setup ();
-
-            -- this .humanoid;
-
-            for (const { attributes } of mesh .primitives)
-            {
-               const { JOINTS, WEIGHTS } = attributes;
-
-               for (const [j, joints] of JOINTS .entries ())
-               {
-                  if (joints .type !== "VEC4")
-                     continue;
-
-                  const weights = WEIGHTS [j];
-
-                  if (weights .type !== "VEC4")
-                     continue;
-
-                  const
-                     array    = joints .array,
-                     wArray   = weights .array,
-                     vertices = array .length / 4;
-
-                  for (let v = 0; v < vertices; ++ v)
-                  {
-                     for (let i = 0; i < 4; ++ i)
-                     {
-                        const w = wArray [v * 4 + i];
-
-                        if (w === 0)
-                           continue;
-
-                        const
-                           index     = skin .joints [array [v * 4 + i]],
-                           jointNode = this .nodeObject (this .nodes [index], index);
-
-                        jointNode ._skinCoordIndex  .push (v);
-                        jointNode ._skinCoordWeight .push (w);
-                     }
-                  }
-               }
-            }
-         }
+         // humanoidNode .setup ();
       }
 
       // Get children.
@@ -1024,7 +951,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return [ ];
 
       return children
-         .filter (index => this .humanoid || !this .joints .has (index))
          .map (index => this .nodeObject (this .nodes [index], index))
          .filter (node => node);
    },
@@ -1115,7 +1041,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return [ ];
 
       return nodes
-         .filter (index => !this .joints .has (index))
          .map (index => this .nodeObject (this .nodes [index], index))
          .filter (node => node);
    },
@@ -1124,13 +1049,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(animations instanceof Array))
          return;
    },
-   createShape: function (primitive)
+   createShape: function (primitive, skin)
    {
       const
          scene          = this .getScene (),
          shapeNode      = scene .createNode ("Shape", false),
          appearanceNode = primitive .material ? primitive .material .appearanceNode : this .getDefaultAppearance (),
-         geometryNode   = this .createGeometry (primitive, !!+appearanceNode ._material .getValue () .getTextureBits ());
+         geometryNode   = this .createGeometry (primitive, skin, !!+appearanceNode ._material .getValue () .getTextureBits ());
 
       shapeNode ._appearance = appearanceNode;
       shapeNode ._geometry   = geometryNode;
@@ -1180,58 +1105,60 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return textureTransformNode;
    },
-   createGeometry: function (primitive, textures)
+   createGeometry: function (primitive, skin, textures)
    {
       switch (primitive .mode)
       {
          case 0: // POINTS
          {
-            return this .createPointSet (primitive);
+            return this .createPointSet (primitive, skin);
          }
          case 1: // LINES
          {
             if (primitive .indices)
-               return this .createIndexedLineSet (primitive, 1);
+               return this .createIndexedLineSet (primitive, skin, 1);
 
-            return this .createLineSet (primitive);
+            return this .createLineSet (primitive, skin);
          }
          case 2: // LINE_LOOP
          {
-            return this .createIndexedLineSet (primitive, 2);
+            return this .createIndexedLineSet (primitive, skin, 2);
          }
          case 3: // LINE_STRIP
          {
-            return this .createIndexedLineSet (primitive, 3);
+            return this .createIndexedLineSet (primitive, skin, 3);
          }
          default:
          case 4: // TRIANGLES
          {
             if (primitive .indices)
-               return this .createIndexedTriangleSet (primitive, textures);
+               return this .createIndexedTriangleSet (primitive, skin, textures);
 
-            return this .createTriangleSet (primitive, textures);
+            return this .createTriangleSet (primitive, skin, textures);
          }
          case 5: // TRIANGLE_STRIP
          {
             if (primitive .indices)
-               return this .createIndexedTriangleStripSet (primitive, textures);
+               return this .createIndexedTriangleStripSet (primitive, skin, textures);
 
-            return this .createTriangleStripSet (primitive, textures);
+            return this .createTriangleStripSet (primitive, skin, textures);
          }
          case 6: // TRIANGLE_FAN
          {
             if (primitive .indices)
-               return this .createIndexedTriangleFanSet (primitive, textures);
+               return this .createIndexedTriangleFanSet (primitive, skin, textures);
 
-            return this .createTriangleFanSet (primitive, textures);
+            return this .createTriangleFanSet (primitive, skin, textures);
          }
       }
    },
-   createPointSet: function ({ attributes })
+   createPointSet: function ({ attributes }, skin)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("PointSet", false);
+
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
 
       geometryNode ._color  = this .createColor (attributes .COLOR [0]);
       geometryNode ._normal = this .createNormal (attributes .NORMAL);
@@ -1241,11 +1168,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createIndexedLineSet: function ({ attributes, indices }, mode)
+   createIndexedLineSet: function ({ attributes, indices }, skin, mode)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedLineSet", false);
+
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
 
       geometryNode ._color  = this .createColor (attributes .COLOR [0]);
       geometryNode ._normal = this .createNormal (attributes .NORMAL);
@@ -1287,11 +1216,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createLineSet: function ({ attributes })
+   createLineSet: function ({ attributes }, skin)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("LineSet", false);
+
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
 
       geometryNode ._color  = this .createColor (attributes .COLOR [0]);
       geometryNode ._normal = this .createNormal (attributes .NORMAL);
@@ -1301,12 +1232,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createIndexedTriangleSet: function ({ attributes, indices, material }, textures)
+   createIndexedTriangleSet: function ({ attributes, indices, material }, skin, textures)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedTriangleSet", false);
 
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0]);
@@ -1319,12 +1252,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createTriangleSet: function ({ attributes, material }, textures)
+   createTriangleSet: function ({ attributes, material }, skin, textures)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("TriangleSet", false);
 
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0]);
       geometryNode ._texCoord        = textures ? this .createMultiTextureCoordinate (attributes .TEXCOORD) : null;
@@ -1336,11 +1271,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createIndexedTriangleStripSet: function ({ attributes, indices, material }, textures)
+   createIndexedTriangleStripSet: function ({ attributes, indices, material }, skin, textures)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedTriangleStripSet", false);
+
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._index           = indices .array;
@@ -1354,11 +1291,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createTriangleStripSet: function ({ attributes, material }, textures)
+   createTriangleStripSet: function ({ attributes, material }, skin, textures)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("TriangleStripSet", false);
+
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0]);
@@ -1379,11 +1318,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createIndexedTriangleFanSet: function ({ attributes, indices, material }, textures)
+   createIndexedTriangleFanSet: function ({ attributes, indices, material }, skin, textures)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedTriangleFanSet", false);
+
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._index           = indices .array;
@@ -1397,11 +1338,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createTriangleFanSet: function ({ attributes, material }, textures)
+   createTriangleFanSet: function ({ attributes, material }, skin, textures)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("TriangleFanSet", false);
+
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0]);
@@ -1431,7 +1374,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return function (color)
       {
-         if (!color)
+         if (!(color instanceof Object))
             return null;
 
          const typeName = TypeNames .get (color .type);
@@ -1490,7 +1433,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    createTextureCoordinate: function (texCoord, mapping)
    {
-      if (!texCoord)
+      if (!(texCoord instanceof Object))
          return null;
 
       if (texCoord .type !== "VEC2")
@@ -1517,9 +1460,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(normal instanceof Object))
          return null;
 
-      if (!normal)
-         return null;
-
       if (normal .type !== "VEC3")
          return null;
 
@@ -1543,9 +1483,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(position instanceof Object))
          return null;
 
-      if (!position)
-         return null;
-
       if (position .type !== "VEC3")
          return null;
 
@@ -1563,6 +1500,57 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       position .coordinateNode = coordinateNode;
 
       return coordinateNode;
+   },
+   attributesJointsArray: function (skin, joints, weights)
+   {
+      if (!(skin instanceof Object))
+         return;
+
+      if (!(joints instanceof Array))
+         return;
+
+      if (!(weights instanceof Array))
+         return;
+
+      for (let i = 0, length = joints .length; i < length; ++ i)
+         this .attributesJointsObject (skin, joints [i], weights [i]);
+   },
+   attributesJointsObject: function (skin, joints, weights)
+   {
+      if (!(joints instanceof Object))
+         return;
+
+      if (!(weights instanceof Object))
+         return;
+
+      if (joints .type !== "VEC4")
+         return;
+
+      if (weights .type !== "VEC4")
+         return;
+
+      const
+         jArray   = joints .array,
+         wArray   = weights .array,
+         vertices = jArray .length / 4;
+
+      for (let v = 0; v < vertices; ++ v)
+      {
+         for (let i = 0; i < 4; ++ i)
+         {
+            const w = wArray [v * 4 + i];
+
+            if (w === 0)
+               continue;
+
+            const
+               index     = skin .joints [jArray [v * 4 + i]],
+               jointNode = this .nodeObject (this .nodes [index], index);
+
+            jointNode ._skinCoordIndex  .push (v);
+            jointNode ._skinCoordWeight .push (w);
+         }
+      }
    },
    vectorValue: function (array, vector)
    {
