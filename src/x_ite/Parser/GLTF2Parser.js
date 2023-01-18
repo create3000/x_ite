@@ -679,15 +679,17 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          const
             scene          = this .getScene (),
+            texCoordNode   = scene .createNode ("TextureCoordinate", false),
             normalNode     = scene .createNode ("Normal", false),
             coordinateNode = scene .createNode ("Coordinate", false);
 
          for (const { _geometry: geometryNode } of shapeNodes)
          {
             const
-               start  = coordinateNode ._point .length,
-               normal = geometryNode .normal,
-               coord  = geometryNode .coord;
+               start    = coordinateNode ._point .length,
+               texCoord = geometryNode .texCoord,
+               normal   = geometryNode .normal,
+               coord    = geometryNode .coord;
 
             switch (geometryNode .getNodeTypeName ())
             {
@@ -701,6 +703,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   geometryNode .index = geometryNode .index .map (index => index + start);
                   break;
                }
+            }
+
+            if (texCoord)
+            {
+               const point = texCoordNode ._point;
+               texCoord .point .forEach ((p, i) => point [i + start] = p);
+               geometryNode .texCoord = texCoordNode;
             }
 
             if (normal)
@@ -718,6 +727,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             }
          }
 
+         texCoordNode   .setup ();
          normalNode     .setup ();
          coordinateNode .setup ();
       }
