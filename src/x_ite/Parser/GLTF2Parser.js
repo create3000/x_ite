@@ -68,6 +68,7 @@ function GLTF2Parser (scene)
    this .cameras        = [ ];
    this .viewpoints     = [ ];
    this .skins          = [ ];
+   this .skeletons      = new Set ();
    this .joints         = new Set ();
    this .humanoid       = 0;
    this .nodes          = [ ];
@@ -176,8 +177,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .materialsArray   (glTF .materials);
       this .meshesArray      (glTF .meshes);
       this .camerasArray     (glTF .cameras);
-      this .skinsArray       (glTF .skins);
       this .nodesArray       (glTF .nodes);
+      this .skinsArray       (glTF .skins);
       this .scenesArray      (glTF .scenes, glTF .scene);
       this .animationsArray  (glTF .animations);
 
@@ -744,13 +745,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(camera instanceof Object))
          return null;
 
-      if (camera .viewpointNode)
+      if (camera .viewpointNode !== undefined)
          return camera .viewpointNode;
 
       const viewpointNode = this .cameraType (camera);
 
       if (!viewpointNode)
-         return null;
+         return camera .viewpointNode = null;
 
       const
          scene = this .getScene (),
@@ -776,6 +777,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return this .orthographicCamera (camera .orthographic);
          case "perspective":
             return this .perspectiveCamera (camera .perspective);
+         default:
+            return null;
       }
    },
    orthographicCamera: function (camera)
@@ -825,6 +828,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return viewpointNode;
    },
+   nodesArray: function (nodes)
+   {
+      if (!(nodes instanceof Array))
+         return;
+
+      this .nodes = nodes;
+   },
    skinsArray: function (skins)
    {
       if (!(skins instanceof Array))
@@ -840,7 +850,25 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(skin instanceof Object))
          return;
 
+      if (skin .skeleton === undefined)
+         skin .skeleton = this .skeleton (skin .joints);
+
+      this .skeletons .add (skin .skeleton);
+
       this .jointsArray (skin .joints);
+   },
+   skeleton: function (joints)
+   {
+      if (!(joints instanceof Array))
+         return;
+
+      const children = new Set (joints
+         .map (index => this .nodes [index])
+         .filter (node => node instanceof Object)
+         .filter (node => node .children instanceof Array)
+         .flatMap (node => node .children));
+
+      return joints .filter (index => !children .has (index)) [0];
    },
    jointsArray: function (joints)
    {
@@ -849,19 +877,12 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       joints .forEach (index => this .joints .add (index));
    },
-   nodesArray: function (nodes)
-   {
-      if (!(nodes instanceof Array))
-         return;
-
-      this .nodes = nodes;
-   },
    nodeObject: function (node, index)
    {
       if (!(node instanceof Object))
          return;
 
-      if (node .childNode)
+      if (node .childNode !== undefined)
          return node .childNode;
 
       // Create Transform or HAnimJoint.
@@ -923,16 +944,33 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (mesh)
       {
-         transformNode ._children .push (... this .meshObject (mesh, this .skins [node .skin]));
+         const
+            skin       = this .skins [node .skin],
+            shapeNodes = this .meshObject (mesh, skin);
 
-         // humanoidNode = scene .createNode ("HAnimHumanoid", false);
+         transformNode ._children .push (... shapeNodes);
 
-         // //humanoidNode ._skeleton .push (... skin .joints .map (index => this .nodeObject (this .nodes [index], index)));
-         // humanoidNode ._joints .push (... skin .joints .map (index => this .nodeObject (this .nodes [index], index)));
-         // humanoidNode ._skin .push (transformNode);
-         // humanoidNode ._skinCoord = mesh .shapeNodes [0] ._geometry .coord;
+         if (skin && shapeNodes .length)
+         {
+            const name = this .sanitizeName (skin .name);
 
-         // humanoidNode .setup ();
+            humanoidNode = scene .createNode ("HAnimHumanoid", false);
+
+            if (name)
+               scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
+
+            const skeletonNode = this .nodeObject (this .nodes [skin .skeleton], skin .skeleton);
+
+            if (skeletonNode)
+               humanoidNode ._skeleton .push (skeletonNode);
+
+            humanoidNode ._joints .push (... skin .joints .map (index => this .nodeObject (this .nodes [index], index)));
+            humanoidNode ._skin .push (transformNode);
+            humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
+            humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
+
+            humanoidNode .setup ();
+         }
       }
 
       // Get children.
@@ -943,6 +981,12 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       transformNode .setup ();
 
+      if (typeName === "Transform")
+      {
+         if (transformNode ._children .length === 0)
+            return node .childNode = null;
+      }
+
       return node .childNode = humanoidNode || transformNode;
    },
    nodeChildrenArray: function (children)
@@ -951,6 +995,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return [ ];
 
       return children
+         .filter (index => !this .skeletons .has (index))
          .map (index => this .nodeObject (this .nodes [index], index))
          .filter (node => node);
    },
@@ -1037,12 +1082,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    sceneNodesArray: function (nodes)
    {
-      if (!(nodes instanceof Array))
-         return [ ];
-
-      return nodes
-         .map (index => this .nodeObject (this .nodes [index], index))
-         .filter (node => node);
+      return this .nodeChildrenArray (nodes);
    },
    animationsArray: function (animations)
    {

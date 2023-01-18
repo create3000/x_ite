@@ -70,8 +70,8 @@ function HAnimHumanoid (executionContext)
    this ._bboxSize    .setUnit ("length");
    this ._bboxCenter  .setUnit ("length");
 
-   this .viewpointsNode = new Group (executionContext);
    this .skeletonNode   = new Group (executionContext);
+   this .viewpointsNode = new Group (executionContext);
    this .skinNode       = new Group (executionContext);
    this .transformNode  = new Transform (executionContext);
    this .jointNodes     = [ ];
@@ -106,12 +106,12 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
       new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",           new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",              new Fields .SFVec3f (-1, -1, -1)),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",            new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "skeleton",              new Fields .MFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "viewpoints",            new Fields .MFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "sites",                 new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "joints",                new Fields .MFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "segments",              new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "joints",                new Fields .MFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "motions",               new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "skeleton",              new Fields .MFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "skinBindingNormal",     new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "skinBindingCoord",      new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "skinNormal",            new Fields .SFNode ()),
@@ -137,19 +137,19 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       // Groups
 
-      this .viewpointsNode .setAllowedTypes (X3DConstants .HAnimSite);
       this .skeletonNode   .setAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSite);
+      this .viewpointsNode .setAllowedTypes (X3DConstants .HAnimSite);
 
-      this ._viewpoints .addFieldInterest (this .viewpointsNode ._children);
       this ._skeleton   .addFieldInterest (this .skeletonNode   ._children);
+      this ._viewpoints .addFieldInterest (this .viewpointsNode ._children);
       this ._skin       .addFieldInterest (this .skinNode       ._children);
 
-      this .viewpointsNode ._children = this ._viewpoints;
       this .skeletonNode   ._children = this ._skeleton;
+      this .viewpointsNode ._children = this ._viewpoints;
       this .skinNode       ._children = this ._skin;
 
-      this .viewpointsNode .setPrivate (true);
       this .skeletonNode   .setPrivate (true);
+      this .viewpointsNode .setPrivate (true);
       this .skinNode       .setPrivate (true);
 
       // Transform
@@ -173,15 +173,15 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
       this .transformNode ._bboxDisplay      = this ._bboxDisplay;
       this .transformNode ._bboxSize         = this ._bboxSize;
       this .transformNode ._bboxCenter       = this ._bboxCenter;
-      this .transformNode ._children         = [ this .viewpointsNode, this .skeletonNode, this .skinNode ];
+      this .transformNode ._children         = [ this .skeletonNode, this .viewpointsNode, this .skinNode ];
 
       this .transformNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
       this .transformNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
       // Setup
 
-      this .viewpointsNode .setup ();
       this .skeletonNode   .setup ();
+      this .viewpointsNode .setup ();
       this .skinNode       .setup ();
       this .transformNode  .setup ();
 
