@@ -705,13 +705,15 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             if (normal)
             {
-               normal .vector .forEach ((vector, i) => normalNode ._vector [i + start] = vector);
+               const vector = normalNode ._vector;
+               normal .vector .forEach ((v, i) => vector [i + start] = v);
                geometryNode .normal = normalNode;
             }
 
             if (coord)
             {
-               coord .point .forEach ((point, i) => coordinateNode ._point [i + start] = point);
+               const point = coordinateNode ._point;
+               coord .point .forEach ((p, i) => point [i + start] = p);
                geometryNode .coord = coordinateNode;
             }
          }
