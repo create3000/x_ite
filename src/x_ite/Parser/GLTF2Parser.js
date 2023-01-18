@@ -698,15 +698,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                }
                default:
                {
-                  for (const index of geometryNode .index)
-                  {
-                     if (index < 0)
-                        console .log (index);
-
-                     if (index >= coord .point .length)
-                        console .log (index, coord .point .length)
-                  }
-
                   geometryNode .index = geometryNode .index .map (index => index + start);
                   break;
                }
