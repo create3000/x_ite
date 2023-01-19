@@ -7,7 +7,7 @@ tags: [New, Releases]
 ---
 ## Upcoming Version v8.5.0
 
-With this new version it is now possible to configure antialiasing. Antialiasing can be turned on/off, multisampling and supersampling can now be configured.
+With this new version it is now possible to configure antialiasing. Antialiasing can be turned on/off, multisampling and supersampling can now be configured. Additionally glTF files can now be loaded.
 
 ### New Features
 
@@ -15,6 +15,7 @@ With this new version it is now possible to configure antialiasing. Antialiasing
 - Added multisampling attribute.
 - Added contentScale attribute.
 - New browser options and rendering properties.
+- Added glTF parser.
 
 ## X_ITE v8.4.0 Released
 
