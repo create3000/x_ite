@@ -866,18 +866,37 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(skin instanceof Object))
          return;
 
+      skin .inverseBindMatrices = this .inverseBindMatrices (skin .inverseBindMatrices);
+      skin .joints              = this .jointsArray (skin .joints);
+
       if (skin .skeleton === undefined)
          skin .skeleton = this .skeleton (skin .joints);
 
       this .skeletons .add (skin .skeleton);
+   },
+   inverseBindMatrices: function (inverseBindMatrices)
+   {
+      const
+         array    = this .accessors [inverseBindMatrices] .array,
+         length   = array .length,
+         matrices = [ ];
 
-      this .jointsArray (skin .joints);
+      for (let i = 0; i < length; i += 16)
+         matrices .push (new Matrix4 (... array .subarray (i, i + 16)));
+
+      return matrices;
+   },
+   jointsArray: function (joints)
+   {
+      if (!(joints instanceof Array))
+         return [ ];
+
+      joints .forEach (index => this .joints .add (index));
+
+      return joints;
    },
    skeleton: function (joints)
    {
-      if (!(joints instanceof Array))
-         return;
-
       const children = new Set (joints
          .map (index => this .nodes [index])
          .filter (node => node instanceof Object)
@@ -885,13 +904,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          .flatMap (node => node .children));
 
       return joints .filter (index => !children .has (index)) [0];
-   },
-   jointsArray: function (joints)
-   {
-      if (!(joints instanceof Array))
-         return;
-
-      joints .forEach (index => this .joints .add (index));
    },
    nodeObject: function (node, index)
    {
