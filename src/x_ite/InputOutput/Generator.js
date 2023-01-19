@@ -573,6 +573,17 @@ Generator .prototype =
             return value;
       }
    },
+   JSONRemoveComma: function ()
+   {
+      // this .string = this .string .replace (/,(\s*)$/s, "$1");
+
+      this .string = this .string .trimEnd ();
+
+      if (this .string .endsWith (','))
+         this .string = this .string .slice (0, -1);
+
+      this .string += this .TidyBreak ();
+   },
 };
 
 for (const key of Reflect .ownKeys (Generator .prototype))

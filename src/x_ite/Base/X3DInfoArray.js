@@ -277,7 +277,7 @@ X3DInfoArray .prototype = {
    {
       let lastProperty = false;
 
-      for (const value of this [_array])
+      for (const [i, value] of this [_array] .entries ())
       {
          try
          {
@@ -295,7 +295,7 @@ X3DInfoArray .prototype = {
       }
 
       if (lastProperty && !comma)
-         generator .string = generator .string .replace (/,(\s*)$/s, "$1");
+         generator .JSONRemoveComma ();
 
       return lastProperty;
    },

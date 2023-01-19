@@ -1225,7 +1225,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          generator .string += generator .TidyBreak ();
       }
 
-      generator .string = generator .string .replace (/,(\s*)$/s, "$1");
+      generator .JSONRemoveComma ();
 
       // End
 

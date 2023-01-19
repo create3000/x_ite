@@ -985,7 +985,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
          }
       }
 
-      generator .string = generator .string .replace (/,(\s*)$/s, "$1");
+      generator .JSONRemoveComma ();
 
 
       // End

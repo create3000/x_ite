@@ -918,7 +918,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       this .getExportedNodes () .toJSONStream (generator, true);
 
-      generator .string = generator .string .replace (/,(\s*)$/s, "$1");
+      generator .JSONRemoveComma ();
 
       generator .LeaveScope ();
       generator .PopExecutionContext ();
