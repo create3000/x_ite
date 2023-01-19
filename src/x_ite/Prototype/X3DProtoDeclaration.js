@@ -164,9 +164,9 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
    toVRMLStreamUserDefinedField: function (generator, field, fieldTypeLength, accessTypeLength)
    {
       generator .string += generator .Indent ();
-      generator .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+      generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, " ");
       generator .string += generator .Space ();
-      generator .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+      generator .string += field .getTypeName () .padEnd (fieldTypeLength, " ");
       generator .string += generator .Space ();
       generator .string += field .getName ();
 

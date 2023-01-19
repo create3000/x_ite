@@ -199,13 +199,6 @@ Generator .prototype =
 
       return "";
    },
-   PadRight: function (string, pad)
-   {
-      for (let i = 0, length = pad - string .length; i < length; ++ i)
-         string += " ";
-
-      return string;
-   },
    Precision: function (value)
    {
       return Math .fround (value) .toPrecision (this .precision) .replace (this .removeTrailingZeros, "$1");

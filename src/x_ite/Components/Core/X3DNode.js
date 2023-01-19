@@ -335,9 +335,9 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
       {
          generator .string += generator .Indent ();
-         generator .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+         generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, " ");
          generator .string += generator .Space ();
-         generator .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+         generator .string += field .getTypeName () .padEnd (fieldTypeLength, " ");
          generator .string += generator .Space ();
          generator .string += field .getName ();
 
@@ -361,9 +361,9 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             // Output user defined reference field
 
             generator .string += generator .Indent ();
-            generator .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+            generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, " ");
             generator .string += generator .Space ();
-            generator .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+            generator .string += field .getTypeName () .padEnd (fieldTypeLength, " ");
             generator .string += generator .Space ();
             generator .string += field .getName ();
             generator .string += generator .Space ();
@@ -381,9 +381,9 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          {
             generator .string += generator .Break ();
             generator .string += generator .Indent ();
-            generator .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+            generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, " ");
             generator .string += generator .Space ();
-            generator .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+            generator .string += field .getTypeName () .padEnd (fieldTypeLength, " ");
             generator .string += generator .Space ();
             generator .string += field .getName ();
 
