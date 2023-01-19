@@ -79,6 +79,7 @@ function HAnimHumanoid (executionContext)
    this .skinCoordNode  = null;
    this .restNormalNode = null;
    this .restCoordNode  = null;
+   this .changed        = false;
 }
 
 HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -206,6 +207,9 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
    {
       const jointNodes = this .jointNodes;
 
+      for (const jointNode of jointNodes)
+         jointNode .removeInterest ("set_joint__", this);
+
       jointNodes .length = 0;
 
       for (const node of this ._joints)
@@ -215,6 +219,15 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
          if (jointNode)
             jointNodes .push (jointNode);
       }
+
+      for (const jointNode of jointNodes)
+         jointNode .addInterest ("set_joint__", this);
+
+      this .set_joint__ ();
+   },
+   set_joint__: function ()
+   {
+      this .changed = true;
    },
    set_skinNormal__: function ()
    {
@@ -224,6 +237,8 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       if (this .skinNormalNode)
          this .restNormalNode = this .skinNormalNode .copy ();
+
+      this .changed = true;
    },
    set_skinCoord__: function ()
    {
@@ -232,14 +247,23 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
       this .skinCoordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._skinCoord);
 
       if (this .skinCoordNode)
+      {
          this .restCoordNode = this .skinCoordNode .copy ();
+
+         delete this .skinning;
+      }
+      else
+      {
+         this .skinning = Function .prototype
+      }
+
+      this .changed = true;
    },
    traverse: function (type, renderObject)
    {
       this .transformNode .traverse (type, renderObject);
 
-      if (this .isLive () .getValue ())
-         this .skinning (type, renderObject);
+      this .skinning (type, renderObject);
    },
    skinning: (function ()
    {
@@ -255,11 +279,13 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
          if (type !== TraverseType .CAMERA)
             return;
 
-         if (!this .skinCoordNode)
+         if (!this .changed)
             return;
 
+         this .changed = false;
+
          const
-            jointNodes     = this .jointNodes .length ? this .jointNodes : renderObject .getJoints (),
+            jointNodes     = this .jointNodes,
             skinNormalNode = this .skinNormalNode,
             skinCoordNode  = this .skinCoordNode,
             restNormalNode = this .restNormalNode,

@@ -59,19 +59,20 @@ function GLTF2Parser (scene)
 {
    X3DParser .call (this, scene);
 
-   this .extensionsUsed = new Set ();
-   this .buffers        = [ ];
-   this .bufferViews    = [ ];
-   this .accessors      = [ ];
-   this .samplers       = [ ];
-   this .materials      = [ ];
-   this .cameras        = [ ];
-   this .viewpoints     = [ ];
-   this .skins          = [ ];
-   this .skeletons      = new Set ();
-   this .joints         = new Set ();
-   this .humanoid       = 0;
-   this .nodes          = [ ];
+   this .extensionsUsed      = new Set ();
+   this .buffers             = [ ];
+   this .bufferViews         = [ ];
+   this .accessors           = [ ];
+   this .samplers            = [ ];
+   this .materials           = [ ];
+   this .cameras             = [ ];
+   this .viewpoints          = [ ];
+   this .skins               = [ ];
+   this .joints              = new Set ();
+   this .skeletons           = new Set ();
+   this .inverseBindMatrices = new Map ();
+   this .humanoid            = 0;
+   this .nodes               = [ ];
 }
 
 GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -866,30 +867,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(skin instanceof Object))
          return;
 
-      skin .inverseBindMatrices = this .inverseBindMatrices (skin .inverseBindMatrices);
-      skin .joints              = this .jointsArray (skin .joints);
+      skin .joints = this .jointsArray (skin .joints);
 
       if (skin .skeleton === undefined)
          skin .skeleton = this .skeleton (skin .joints);
 
       this .skeletons .add (skin .skeleton);
-   },
-   inverseBindMatrices: function (inverseBindMatrices)
-   {
-      const accessor = this .accessors [inverseBindMatrices];
 
-      if (!accessor)
-         return [ ];
-
-      const
-         array    = accessor .array,
-         length   = array .length,
-         matrices = [ ];
-
-      for (let i = 0; i < length; i += 16)
-         matrices .push (new Matrix4 (... array .subarray (i, i + 16)));
-
-      return matrices;
+      this .inverseBindMatricesAccessors (skin .inverseBindMatrices, skin .joints);
    },
    jointsArray: function (joints)
    {
@@ -909,6 +894,23 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          .flatMap (node => node .children));
 
       return joints .filter (index => !children .has (index)) [0];
+   },
+   inverseBindMatricesAccessors: function (inverseBindMatrices, joints)
+   {
+      const accessor = this .accessors [inverseBindMatrices];
+
+      if (!accessor)
+         return [ ];
+
+      const
+         array    = accessor .array,
+         length   = array .length,
+         matrices = [ ];
+
+      for (let i = 0; i < length; i += 16)
+         matrices .push (new Matrix4 (... array .subarray (i, i + 16)));
+
+      matrices .forEach ((matrix, i) => this .inverseBindMatrices .set (joints [i], matrix));
    },
    nodeObject: function (node, index)
    {
@@ -963,6 +965,17 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             if (this .vectorValue (node .scale, scale))
                transformNode ._scale = scale;
          }
+      }
+      else
+      {
+         const matrix = this .inverseBindMatrices .get (index);
+
+         matrix .get (translation, rotation, scale, scaleOrientation);
+
+         transformNode ._translation      = translation;
+         transformNode ._rotation         = rotation;
+         transformNode ._scale            = scale;
+         transformNode ._scaleOrientation = scaleOrientation;
       }
 
       // Add camera.
