@@ -876,8 +876,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    inverseBindMatrices: function (inverseBindMatrices)
    {
+      const accessor = this .accessors [inverseBindMatrices];
+
+      if (!accessor)
+         return [ ];
+
       const
-         array    = this .accessors [inverseBindMatrices] .array,
+         array    = accessor .array,
          length   = array .length,
          matrices = [ ];
 
