@@ -1122,230 +1122,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return interpolatorNode;
    },
-   createInterpolator: function (path, interpolation, times, keyValues, cycleInterval)
-   {
-      const scene = this .getScene ();
-
-      switch (path)
-      {
-         case "translation":
-         {
-            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName ("TranslationInterpolator"), interpolatorNode);
-
-            return interpolatorNode;
-         }
-         case "rotation":
-         {
-            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName ("RotationInterpolator"), interpolatorNode);
-
-            return interpolatorNode;
-         }
-         case "scale":
-         {
-            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues, cycleInterval);
-
-            scene .addNamedNode (scene .getUniqueName ("ScaleInterpolator"), interpolatorNode);
-
-            return interpolatorNode;
-         }
-         case "weights":
-         default:
-         {
-            return null;
-         }
-      }
-   },
-   createPositionInterpolator: function (interpolation, times, keyValues, cycleInterval)
-   {
-      const scene = this .getScene ();
-
-      switch (interpolation)
-      {
-         case "STEP":
-         {
-            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
-
-            // Key
-
-            interpolatorNode ._key .push (times [0] / cycleInterval);
-
-            for (let i = 1, length = times .length; i < length; ++ i)
-               interpolatorNode ._key .push ((times [i] - EPSILON) / cycleInterval, times [i] / cycleInterval);
-
-            // KeyValue
-
-            interpolatorNode ._keyValue .push (new Vector3 (keyValues [0], keyValues [1], keyValues [2]));
-
-            for (let i = 0, length = keyValues .length - 3; i < length; i += 3)
-            {
-               interpolatorNode ._keyValue .push (new Vector3 (keyValues [i + 0], keyValues [i + 1], keyValues [i + 2]),
-                                                  new Vector3 (keyValues [i + 3], keyValues [i + 4], keyValues [i + 5]));
-            }
-
-            // Finish
-
-            interpolatorNode .setup ();
-
-            return interpolatorNode;
-         }
-         default:
-         case "LINEAR":
-         {
-            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
-
-            interpolatorNode ._key      = times .map (t => t / cycleInterval);
-            interpolatorNode ._keyValue = keyValues;
-
-            interpolatorNode .setup ();
-
-            return interpolatorNode;
-         }
-         case "CUBICSPLINE":
-         {
-            const
-               interpolatorNode = scene .createNode ("PositionInterpolator", false),
-               vectors          = [ ];
-
-            for (let i = 0, length = keyValues .length; i < length; i += 3)
-            {
-               vectors .push (new Vector3 (keyValues [i + 0],
-                                           keyValues [i + 1],
-                                           keyValues [i + 2]));
-            }
-
-            const frames = [... Array (Math .floor (times .at (-1) * FRAMES_PER_SECOND)) .keys ()]
-               .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
-
-            for (const t of frames)
-            {
-               interpolatorNode ._key      .push (t / cycleInterval);
-               interpolatorNode ._keyValue .push (this .cubicSpline (t, times, vectors));
-            }
-
-            interpolatorNode .setup ();
-
-            return interpolatorNode;
-         }
-
-      }
-   },
-   createOrientationInterpolator: function (interpolation, times, keyValues, cycleInterval)
-   {
-      const scene = this .getScene ();
-
-      switch (interpolation)
-      {
-         case "STEP":
-         {
-            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
-
-            // Key
-
-            interpolatorNode ._key .push (times [0] / cycleInterval);
-
-            for (let i = 1, length = times .length; i < length; ++ i)
-               interpolatorNode ._key .push ((times [i] - EPSILON) / cycleInterval, times [i] / cycleInterval);
-
-            // KeyValue
-
-            interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [0],
-                                                                              keyValues [1],
-                                                                              keyValues [2],
-                                                                              keyValues [3])));
-
-            for (let i = 0, length = keyValues .length - 4; i < length; i += 4)
-            {
-               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
-                                                                                 keyValues [i + 1],
-                                                                                 keyValues [i + 2],
-                                                                                 keyValues [i + 3])),
-                                                  new Rotation4 (new Quaternion (keyValues [i + 4],
-                                                                                 keyValues [i + 5],
-                                                                                 keyValues [i + 6],
-                                                                                 keyValues [i + 7])));
-            }
-
-            // Finish
-
-            interpolatorNode .setup ();
-
-            return interpolatorNode;
-         }
-         default:
-         case "LINEAR":
-         {
-            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
-
-            interpolatorNode ._key = times .map (t => t / cycleInterval);
-
-            for (let i = 0, length = keyValues .length; i < length; i += 4)
-            {
-               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
-                                                                                 keyValues [i + 1],
-                                                                                 keyValues [i + 2],
-                                                                                 keyValues [i + 3])));
-            }
-
-            interpolatorNode .setup ();
-
-            return interpolatorNode;
-         }
-         case "CUBICSPLINE":
-         {
-            const
-               interpolatorNode = scene .createNode ("OrientationInterpolator", false),
-               quaternions      = [ ];
-
-            for (let i = 0, length = keyValues .length; i < length; i += 4)
-            {
-               quaternions .push (new Quaternion (keyValues [i + 0],
-                                                  keyValues [i + 1],
-                                                  keyValues [i + 2],
-                                                  keyValues [i + 3]));
-            }
-
-            const frames = [... Array (Math .floor (times .at (-1) * FRAMES_PER_SECOND)) .keys ()]
-               .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
-
-            for (const t of frames)
-            {
-               const q = this .cubicSpline (t, times, quaternions) .normalize ();
-
-               interpolatorNode ._key      .push (t / cycleInterval);
-               interpolatorNode ._keyValue .push (new Rotation4 (q));
-            }
-
-            interpolatorNode .setup ();
-
-            return interpolatorNode;
-         }
-      }
-   },
-   cubicSpline: function (time, times, values)
-   {
-      const
-         index1 = Algorithm .clamp (Algorithm .upperBound (times, 0, times .length, time), 1, times .length - 1),
-         index0 = index1 - 1,
-         td     = times [index1] - times [index0],
-         t      = (time - times [index0]) / td,
-         t2     = Math .pow (t, 2),
-         t3     = Math .pow (t, 3),
-         v0     = values [index0 * 3 + 1] .copy (),
-         b0     = values [index0 * 3 + 2] .copy (),
-         v1     = values [index1 * 3 + 1] .copy (),
-         a1     = values [index1 * 3 + 0] .copy ();
-
-      v0 .multiply (2 * t3 - 3 * t2 + 1);
-      b0 .multiply (td * (t3 - 2 * t2 + t));
-      v1 .multiply (-2 * t3 + 3 * t2);
-      a1 .multiply (td * (t3 - t2));
-
-      return v0 .add (b0) .add (v1) .add (a1);
-   },
    skinsArray: function (skins)
    {
       if (!(skins instanceof Array))
@@ -1813,6 +1589,230 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       coordinateNode .setup ();
 
       return position .coordinateNode = coordinateNode;
+   },
+   createInterpolator: function (path, interpolation, times, keyValues, cycleInterval)
+   {
+      const scene = this .getScene ();
+
+      switch (path)
+      {
+         case "translation":
+         {
+            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues, cycleInterval);
+
+            scene .addNamedNode (scene .getUniqueName ("TranslationInterpolator"), interpolatorNode);
+
+            return interpolatorNode;
+         }
+         case "rotation":
+         {
+            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues, cycleInterval);
+
+            scene .addNamedNode (scene .getUniqueName ("RotationInterpolator"), interpolatorNode);
+
+            return interpolatorNode;
+         }
+         case "scale":
+         {
+            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues, cycleInterval);
+
+            scene .addNamedNode (scene .getUniqueName ("ScaleInterpolator"), interpolatorNode);
+
+            return interpolatorNode;
+         }
+         case "weights":
+         default:
+         {
+            return null;
+         }
+      }
+   },
+   createPositionInterpolator: function (interpolation, times, keyValues, cycleInterval)
+   {
+      const scene = this .getScene ();
+
+      switch (interpolation)
+      {
+         case "STEP":
+         {
+            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
+
+            // Key
+
+            interpolatorNode ._key .push (times [0] / cycleInterval);
+
+            for (let i = 1, length = times .length; i < length; ++ i)
+               interpolatorNode ._key .push ((times [i] - EPSILON) / cycleInterval, times [i] / cycleInterval);
+
+            // KeyValue
+
+            interpolatorNode ._keyValue .push (new Vector3 (keyValues [0], keyValues [1], keyValues [2]));
+
+            for (let i = 0, length = keyValues .length - 3; i < length; i += 3)
+            {
+               interpolatorNode ._keyValue .push (new Vector3 (keyValues [i + 0], keyValues [i + 1], keyValues [i + 2]),
+                                                  new Vector3 (keyValues [i + 3], keyValues [i + 4], keyValues [i + 5]));
+            }
+
+            // Finish
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+         default:
+         case "LINEAR":
+         {
+            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
+
+            interpolatorNode ._key      = times .map (t => t / cycleInterval);
+            interpolatorNode ._keyValue = keyValues;
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+         case "CUBICSPLINE":
+         {
+            const
+               interpolatorNode = scene .createNode ("PositionInterpolator", false),
+               vectors          = [ ];
+
+            for (let i = 0, length = keyValues .length; i < length; i += 3)
+            {
+               vectors .push (new Vector3 (keyValues [i + 0],
+                                           keyValues [i + 1],
+                                           keyValues [i + 2]));
+            }
+
+            const frames = [... Array (Math .floor (times .at (-1) * FRAMES_PER_SECOND)) .keys ()]
+               .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
+
+            for (const t of frames)
+            {
+               interpolatorNode ._key      .push (t / cycleInterval);
+               interpolatorNode ._keyValue .push (this .cubicSpline (t, times, vectors));
+            }
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+
+      }
+   },
+   createOrientationInterpolator: function (interpolation, times, keyValues, cycleInterval)
+   {
+      const scene = this .getScene ();
+
+      switch (interpolation)
+      {
+         case "STEP":
+         {
+            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
+
+            // Key
+
+            interpolatorNode ._key .push (times [0] / cycleInterval);
+
+            for (let i = 1, length = times .length; i < length; ++ i)
+               interpolatorNode ._key .push ((times [i] - EPSILON) / cycleInterval, times [i] / cycleInterval);
+
+            // KeyValue
+
+            interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [0],
+                                                                              keyValues [1],
+                                                                              keyValues [2],
+                                                                              keyValues [3])));
+
+            for (let i = 0, length = keyValues .length - 4; i < length; i += 4)
+            {
+               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
+                                                                                 keyValues [i + 1],
+                                                                                 keyValues [i + 2],
+                                                                                 keyValues [i + 3])),
+                                                  new Rotation4 (new Quaternion (keyValues [i + 4],
+                                                                                 keyValues [i + 5],
+                                                                                 keyValues [i + 6],
+                                                                                 keyValues [i + 7])));
+            }
+
+            // Finish
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+         default:
+         case "LINEAR":
+         {
+            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
+
+            interpolatorNode ._key = times .map (t => t / cycleInterval);
+
+            for (let i = 0, length = keyValues .length; i < length; i += 4)
+            {
+               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
+                                                                                 keyValues [i + 1],
+                                                                                 keyValues [i + 2],
+                                                                                 keyValues [i + 3])));
+            }
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+         case "CUBICSPLINE":
+         {
+            const
+               interpolatorNode = scene .createNode ("OrientationInterpolator", false),
+               quaternions      = [ ];
+
+            for (let i = 0, length = keyValues .length; i < length; i += 4)
+            {
+               quaternions .push (new Quaternion (keyValues [i + 0],
+                                                  keyValues [i + 1],
+                                                  keyValues [i + 2],
+                                                  keyValues [i + 3]));
+            }
+
+            const frames = [... Array (Math .floor (times .at (-1) * FRAMES_PER_SECOND)) .keys ()]
+               .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
+
+            for (const t of frames)
+            {
+               const q = this .cubicSpline (t, times, quaternions) .normalize ();
+
+               interpolatorNode ._key      .push (t / cycleInterval);
+               interpolatorNode ._keyValue .push (new Rotation4 (q));
+            }
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+      }
+   },
+   cubicSpline: function (time, times, values)
+   {
+      const
+         index1 = Algorithm .clamp (Algorithm .upperBound (times, 0, times .length, time), 1, times .length - 1),
+         index0 = index1 - 1,
+         td     = times [index1] - times [index0],
+         t      = (time - times [index0]) / td,
+         t2     = Math .pow (t, 2),
+         t3     = Math .pow (t, 3),
+         v0     = values [index0 * 3 + 1] .copy (),
+         b0     = values [index0 * 3 + 2] .copy (),
+         v1     = values [index1 * 3 + 1] .copy (),
+         a1     = values [index1 * 3 + 0] .copy ();
+
+      v0 .multiply (2 * t3 - 3 * t2 + 1);
+      b0 .multiply (td * (t3 - 2 * t2 + t));
+      v1 .multiply (-2 * t3 + 3 * t2);
+      a1 .multiply (td * (t3 - t2));
+
+      return v0 .add (b0) .add (v1) .add (a1);
    },
    vectorValue: function (array, vector)
    {
