@@ -58,8 +58,8 @@ import Algorithm  from "../../standard/Math/Algorithm.js";
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 
 const
-   EPSILON           = 1e-4,
-   FRAMES_PER_SECOND = 30;
+   EPSILON            = 1e-4, // in seconds
+   SAMPLES_PER_SECOND = 30;
 
 function GLTF2Parser (scene)
 {
@@ -1708,10 +1708,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                            keyValues [i + 2]));
             }
 
-            const frames = [... Array (Math .floor (times .at (-1) * FRAMES_PER_SECOND)) .keys ()]
+            const samples = [... Array (Math .floor (times .at (-1) * SAMPLES_PER_SECOND)) .keys ()]
                .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
 
-            for (const t of frames)
+            for (const t of samples)
             {
                interpolatorNode ._key      .push (t / cycleInterval);
                interpolatorNode ._keyValue .push (this .cubicSpline (t, times, vectors));
@@ -1799,10 +1799,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                                   keyValues [i + 3]));
             }
 
-            const frames = [... Array (Math .floor (times .at (-1) * FRAMES_PER_SECOND)) .keys ()]
+            const samples = [... Array (Math .floor (times .at (-1) * SAMPLES_PER_SECOND)) .keys ()]
                .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
 
-            for (const t of frames)
+            for (const t of samples)
             {
                const q = this .cubicSpline (t, times, quaternions) .normalize ();
 
