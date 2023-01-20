@@ -814,7 +814,7 @@ Returns true if the passed MF* *array* of the same type is equals to this object
 
 #### Other Array functions
 
-Common Array functions like `at`, `concat`, `entries`, `every`, `fill`, `filter`, `find`, `findIndex`, `findLast`, `findLastIndex`, `flat`, `flatMap`, `forEach`, `includes`, `indexOf`, `join`, `keys`, `lastIndexOf`, `map`, `pop`, `push`, `reduce`, `reduceRight`, `shift`, `slice`, `some`, `splice`, `unshift`, `values` are also available.
+Common Array functions like `at`, `concat`, `entries`, `every`, `fill`, `filter`, `find`, `findIndex`, `findLast`, `findLastIndex`, `flat`, `flatMap`, `forEach`, `includes`, `indexOf`, `join`, `keys`, `lastIndexOf`, `map`, `pop`, `push`, `reduce`, `reduceRight`, `reverse`, `shift`, `slice`, `some`, `sort`, `splice`, `unshift`, `values` are also available.
 
 ## MFBool Object
 
