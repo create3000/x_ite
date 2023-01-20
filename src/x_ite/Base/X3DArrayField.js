@@ -77,10 +77,8 @@ X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    map: Array .prototype .map,
    reduce: Array .prototype .reduce,
    reduceRight: Array .prototype .reduceRight,
-   //Array.prototype.reverse
    slice: Array .prototype .slice,
    some: Array .prototype .some,
-   //Array.prototype.sort
    values: Array .prototype .values,
 });
 

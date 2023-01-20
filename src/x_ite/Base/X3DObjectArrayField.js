@@ -47,6 +47,7 @@
 
 import X3DField      from "./X3DField.js";
 import X3DArrayField from "./X3DArrayField.js";
+import Algorithm     from "../../standard/Math/Algorithm.js";
 
 const
    _target = Symbol (),
@@ -443,6 +444,16 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          if (! silent)
             target .addEvent ();
       }
+   },
+   reverse: function ()
+   {
+      this [_target] .getValue () .reverse ();
+      return this;
+   },
+   sort: function ()
+   {
+      this [_target] .getValue () .sort ((a, b) => Algorithm .cmp (a .valueOf (), b .valueOf ()));
+      return this;
    },
    addChildObject: function (value)
    {
