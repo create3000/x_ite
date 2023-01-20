@@ -66,16 +66,15 @@ function GLTF2Parser (scene)
 {
    X3DParser .call (this, scene);
 
-   this .extensionsUsed = new Set ();
-   this .buffers        = [ ];
-   this .bufferViews    = [ ];
-   this .accessors      = [ ];
-   this .samplers       = [ ];
-   this .materials      = [ ];
-   this .cameras        = [ ];
-   this .viewpoints     = [ ];
-   this .nodes          = [ ];
-   this .animations     = 0;
+   this .buffers     = [ ];
+   this .bufferViews = [ ];
+   this .accessors   = [ ];
+   this .samplers    = [ ];
+   this .materials   = [ ];
+   this .cameras     = [ ];
+   this .viewpoints  = [ ];
+   this .nodes       = [ ];
+   this .animations  = 0;
 }
 
 GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -167,8 +166,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Parse root objects.
 
-      this .extensionsRequiredArray (glTF .extensionsRequired),
-      this .extensionsUsedArray     (glTF .extensionsUsed);
+      if (this .worldInfoNode)
+         scene .getRootNodes () .push (this .worldInfoNode);
 
       await this .buffersArray (glTF .buffers);
 
@@ -193,18 +192,26 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
 
       this .version = asset .version;
-   },
-   extensionsRequiredArray: function (extensionsRequired)
-   {
-      if (!(extensionsRequired instanceof Array))
-         return;
-   },
-   extensionsUsedArray: function (extensionsUsed)
-   {
-      if (!(extensionsUsed instanceof Array))
-         return;
 
-      this .extensionsUsed = new Set (extensionsUsed);
+      const
+         scene         = this .getScene (),
+         worldURL      = scene .getWorldURL (),
+         worldInfoNode = scene .createNode ("WorldInfo", false);
+
+      if (asset .extras instanceof Object && asset .extras .title)
+         worldInfoNode ._title = asset .extras .title;
+      else
+         worldInfoNode ._title = decodeURI (new URL (worldURL) .pathname .split ("/") .at (-1) || worldURL);
+
+      for (const [key, value] of Object .entries (asset))
+      {
+         if (typeof value === "string")
+            worldInfoNode ._info .push (`${key}: ${value}`);
+      }
+
+      worldInfoNode .setup ();
+
+      this .worldInfoNode = worldInfoNode;
    },
    buffersArray: async function (buffers)
    {
@@ -545,9 +552,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       for (const key in extensions)
       {
-         if (!this .extensionsUsed .has (key))
-            continue;
-
          switch (key)
          {
             case "KHR_materials_pbrSpecularGlossiness":
