@@ -55,6 +55,8 @@ import Color4     from "../../standard/Math/Numbers/Color4.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 
+const EPSILON = 1e-4;
+
 function GLTF2Parser (scene)
 {
    X3DParser .call (this, scene);
@@ -68,6 +70,7 @@ function GLTF2Parser (scene)
    this .cameras        = [ ];
    this .viewpoints     = [ ];
    this .nodes          = [ ];
+   this .animations     = 0;
 }
 
 GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -998,6 +1001,294 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       if (!(animations instanceof Array))
          return;
+
+      const animationNodes = animations
+         .map (animation => this .animationObject (animation))
+         .filter (node => node);
+
+      if (!animationNodes .length)
+         return;
+
+      const
+         scene     = this .getScene (),
+         groupNode = scene .createNode ("Group", false);
+
+      scene .addNamedNode (scene .getUniqueName ("Animations"), groupNode);
+
+      groupNode ._children = animationNodes;
+
+      groupNode .setup ();
+
+      scene .getRootNodes () .push (groupNode);
+   },
+   animationObject: function (animation)
+   {
+      if (!(animation instanceof Object))
+         return null;
+
+      const
+         scene          = this .getScene (),
+         timeSensorNode = scene .createNode ("TimeSensor", false),
+         channelNodes   = this .animationChannelsArray (animation .channels, animation .samplers, timeSensorNode);
+
+      if (!channelNodes .length)
+         return null;
+
+      const
+         groupNode = scene .createNode ("Group", false),
+         name      = this .sanitizeName (animation .name);
+
+      scene .addNamedNode (scene .getUniqueName (name ? name : `Animation${++ this .animations}`), groupNode);
+
+      groupNode ._children .push (timeSensorNode, ... channelNodes);
+
+      timeSensorNode .setup ();
+      groupNode .setup ();
+
+      return groupNode;
+   },
+   animationChannelsArray: function (channels, samplers, timeSensorNode)
+   {
+      if (!(channels instanceof Array))
+         return [ ];
+
+      if (!(samplers instanceof Array))
+         return [ ];
+
+      const cycleInterval = samplers
+         .map (sampler => this .accessors [sampler .input])
+         .filter (input => input)
+         .reduce ((value, input) => Math .max (value, input .array .at (-1)), 0);
+
+      timeSensorNode ._cycleInterval = cycleInterval;
+
+      return channels
+         .map (channel => this .animationChannelObject (channel, samplers, timeSensorNode))
+         .filter (node => node);
+   },
+   animationChannelObject: function (channel, samplers, timeSensorNode)
+   {
+      if (!(channel instanceof Object))
+         return null;
+
+      const target = channel .target;
+
+      if (!(target instanceof Object))
+         return null;
+
+      const node = this .nodeObject (this .nodes [target .node]);
+
+      if (!node)
+         return null;
+
+      const sampler = samplers [channel .sampler];
+
+      if (!sampler)
+         return null;
+
+      const input = this .accessors [sampler .input];
+
+      if (!input)
+         return null;
+
+      if (!input .array .length)
+         return null;
+
+      const output = this .accessors [sampler .output];
+
+      if (!output)
+         return null;
+
+      if (!output .array .length)
+         return null;
+
+      const
+         scene            = this .getScene (),
+         interpolatorNode = this .createInterpolator (target .path, sampler .interpolation, input .array, output .array, timeSensorNode ._cycleInterval .getValue ());
+
+      if (!interpolatorNode)
+         return null;
+
+      scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+      scene .addRoute (interpolatorNode, "value_changed", node, target .path);
+
+      return interpolatorNode;
+   },
+   createInterpolator: function (path, interpolation, times, keyValues, cycleInterval)
+   {
+      const scene = this .getScene ();
+
+      switch (path)
+      {
+         case "translation":
+         {
+            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues, cycleInterval);
+
+            scene .addNamedNode (scene .getUniqueName ("TranslationInterpolator"), interpolatorNode);
+
+            return interpolatorNode;
+         }
+         case "rotation":
+         {
+            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues, cycleInterval);
+
+            scene .addNamedNode (scene .getUniqueName ("RotationInterpolator"), interpolatorNode);
+
+            return interpolatorNode;
+         }
+         case "scale":
+         {
+            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues, cycleInterval);
+
+            scene .addNamedNode (scene .getUniqueName ("ScaleInterpolator"), interpolatorNode);
+
+            return interpolatorNode;
+         }
+         case "weights":
+         default:
+         {
+            return null;
+         }
+      }
+   },
+   createPositionInterpolator: function (interpolation, times, keyValues, cycleInterval)
+   {
+      const scene = this .getScene ();
+
+      switch (interpolation)
+      {
+         case "STEP":
+         {
+            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
+
+            // Key
+
+            interpolatorNode ._key .push (times [0] / cycleInterval);
+
+            for (let i = 1, length = times .length; i < length; ++ i)
+               interpolatorNode ._key .push ((times [i] - EPSILON) / cycleInterval, times [i] / cycleInterval);
+
+            // KeyValue
+
+            interpolatorNode ._keyValue .push (new Vector3 (keyValues [0], keyValues [1], keyValues [2]));
+
+            for (let i = 0, length = keyValues .length - 3; i < length; i += 3)
+            {
+               interpolatorNode ._keyValue .push (new Vector3 (keyValues [i + 0], keyValues [i + 1], keyValues [i + 2]),
+                                                  new Vector3 (keyValues [i + 3], keyValues [i + 4], keyValues [i + 5]));
+            }
+
+            // Finish
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+         default:
+         case "LINEAR":
+         {
+            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
+
+            interpolatorNode ._key      = times .map (t => t / cycleInterval);
+            interpolatorNode ._keyValue = keyValues;
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+         case "CUBICSPLINE":
+         {
+            const interpolatorNode = scene .createNode ("SplinePositionInterpolator", false);
+
+            interpolatorNode ._key      = times .map (t => t / cycleInterval);
+            interpolatorNode ._keyValue = keyValues
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+      }
+   },
+   createOrientationInterpolator: function (interpolation, times, keyValues, cycleInterval)
+   {
+      const scene = this .getScene ();
+
+      switch (interpolation)
+      {
+         case "STEP":
+         {
+            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
+
+            // Key
+
+            interpolatorNode ._key .push (times [0] / cycleInterval);
+
+            for (let i = 1, length = times .length; i < length; ++ i)
+               interpolatorNode ._key .push ((times [i] - EPSILON) / cycleInterval, times [i] / cycleInterval);
+
+            // KeyValue
+
+            interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [0],
+                                                                              keyValues [1],
+                                                                              keyValues [2],
+                                                                              keyValues [3])));
+
+            for (let i = 0, length = keyValues .length - 4; i < length; i += 4)
+            {
+               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
+                                                                                 keyValues [i + 1],
+                                                                                 keyValues [i + 2],
+                                                                                 keyValues [i + 3])),
+                                                  new Rotation4 (new Quaternion (keyValues [i + 4],
+                                                                                 keyValues [i + 5],
+                                                                                 keyValues [i + 6],
+                                                                                 keyValues [i + 7])));
+            }
+
+            // Finish
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+         default:
+         case "LINEAR":
+         {
+            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
+
+            interpolatorNode ._key = times .map (t => t / cycleInterval);
+
+            for (let i = 0, length = keyValues .length; i < length; i += 4)
+            {
+               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
+                                                                                 keyValues [i + 1],
+                                                                                 keyValues [i + 2],
+                                                                                 keyValues [i + 3])));
+            }
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+         case "CUBICSPLINE":
+         {
+            const interpolatorNode = scene .createNode ("QuadOrientationInterpolator", false);
+
+            interpolatorNode ._key      = times .map (t => t / cycleInterval);
+
+            for (let i = 0, length = keyValues .length; i < length; i += 4)
+            {
+               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
+                                                                                 keyValues [i + 1],
+                                                                                 keyValues [i + 2],
+                                                                                 keyValues [i + 3])));
+            }
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+      }
    },
    skinsArray: function (skins)
    {
@@ -1487,5 +1778,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       return value;
    }
 });
+
+const toUpperCaseFirstLetter = (string) => string .charAt (0) .toUpperCase () + string .substr (1);
 
 export default GLTF2Parser;
