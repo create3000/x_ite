@@ -197,17 +197,31 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene         = this .getScene (),
          worldURL      = scene .getWorldURL (),
          worldInfoNode = scene .createNode ("WorldInfo", false);
-
-      if (asset .extras instanceof Object && asset .extras .title)
-         worldInfoNode ._title = asset .extras .title;
-      else
-         worldInfoNode ._title = decodeURI (new URL (worldURL) .pathname .split ("/") .at (-1) || worldURL);
-
+         
       for (const [key, value] of Object .entries (asset))
       {
-         if (typeof value === "string")
-            worldInfoNode ._info .push (`${key}: ${value}`);
+         if (typeof value !== "string")
+            continue;
+
+         worldInfoNode ._info .push (`${key}: ${value}`);
       }
+
+      if (asset .extras instanceof Object)
+      {
+         for (const [key, value] of Object .entries (asset .extras))
+         {
+            if (typeof value !== "string")
+               continue;
+
+            if (key === "title")
+               worldInfoNode ._title = value;
+            else
+               worldInfoNode ._info .push (`${key}: ${value}`);
+         }
+      }
+
+      if (!worldInfoNode ._title .getValue ())
+         worldInfoNode ._title = decodeURI (new URL (worldURL) .pathname .split ("/") .at (-1) || worldURL);
 
       worldInfoNode .setup ();
 
