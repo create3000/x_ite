@@ -50,6 +50,7 @@ import Vector2    from "../../standard/Math/Numbers/Vector2.js";
 import Vector3    from "../../standard/Math/Numbers/Vector3.js";
 import Quaternion from "../../standard/Math/Numbers/Quaternion.js";
 import Rotation4  from "../../standard/Math/Numbers/Rotation4.js";
+import Matrix3    from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4    from "../../standard/Math/Numbers/Matrix4.js";
 import Color3     from "../../standard/Math/Numbers/Color3.js";
 import Color4     from "../../standard/Math/Numbers/Color4.js";
@@ -638,18 +639,25 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          translation = new Vector2 (0, 0),
-         scale       = new Vector2 (1, 1);
-
-      if (this .vectorValue (KHR_texture_transform .offset, translation))
-         textureTransformNode ._translation = translation;
-
-      textureTransformNode ._rotation = this .numberValue (KHR_texture_transform .rotation, 0);
+         rotation    = new Vector3 (0, 0, 0),
+         scale       = new Vector2 (1, 1),
+         matrix      = new Matrix3 (),
+         flipY       = new Matrix3 (1, 0, 0, 0, -1, 0, -1, 1);
 
       if (this .vectorValue (KHR_texture_transform .scale, scale))
-         textureTransformNode ._scale = scale;
+         matrix .scale (scale);
 
-      textureTransformNode ._translation .y += -1 / textureTransformNode ._scale .y;
-      textureTransformNode ._scale .y       *= -1;
+      matrix .rotate (this .numberValue (KHR_texture_transform .rotation, 0));
+
+      if (this .vectorValue (KHR_texture_transform .offset, translation))
+         matrix .translate (translation);
+
+      matrix .multRight (flipY);
+      matrix .get (translation, rotation, scale);
+
+      textureTransformNode ._translation = translation;
+      textureTransformNode ._rotation    = rotation .z;
+      textureTransformNode ._scale       = scale;
 
       textureTransformNode .setup ();
 
