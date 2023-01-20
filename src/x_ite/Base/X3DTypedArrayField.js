@@ -727,9 +727,43 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       return this;
    },
-   sort: function ()
+   sort: function (compareFunction)
    {
-      throw new Error ("Not supported.");
+      const
+         target     = this [_target],
+         array      = target .getValue (),
+         components = target .getComponents (),
+         length     = target [_length];
+
+      if (components === 1)
+      {
+         this .setValue (array .subarray (0, length) .sort (compareFunction));
+      }
+      else
+      {
+         const result = Array .prototype .sort .call (this .map (v => v .copy ()), compareFunction ?? function (a, b)
+         {
+            for (var first1 = 0, first2 = 0; (first1 !== components) && (first2 !== components); ++ first1, ++ first2)
+            {
+               const r = Algorithm .cmp (a [first1], b [first2]);
+
+               if (r)
+                  return r;
+            }
+
+            return Algorithm .cmp (first1, first2);
+         });
+
+         for (let i = 0; i < length; ++ i)
+         {
+            const value = result [i];
+
+            for (let c = 0; c < components; ++ c)
+               array [i * components + c] = value [c];
+         }
+      }
+
+      return this;
    },
    toStream: function (generator)
    {
