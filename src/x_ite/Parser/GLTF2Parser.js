@@ -1090,7 +1090,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          .filter (input => input && input .array .length)
          .reduce ((value, input) => Math .max (value, input .array .at (-1)), 0);
 
-      //timeSensorNode ._loop          = true;
+      timeSensorNode ._loop          = true;
       timeSensorNode ._cycleInterval = cycleInterval;
 
       return channels
