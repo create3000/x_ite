@@ -52,10 +52,13 @@ import Rotation4  from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4    from "../../standard/Math/Numbers/Matrix4.js";
 import Color3     from "../../standard/Math/Numbers/Color3.js";
 import Color4     from "../../standard/Math/Numbers/Color4.js";
+import Algorithm  from "../../standard/Math/Algorithm.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 
-const EPSILON = 1e-4;
+const
+   EPSILON           = 1e-4,
+   FRAMES_PER_SECOND = 30;
 
 function GLTF2Parser (scene)
 {
@@ -1064,6 +1067,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          .filter (input => input && input .array .length)
          .reduce ((value, input) => Math .max (value, input .array .at (-1)), 0);
 
+      timeSensorNode ._loop          = true;
       timeSensorNode ._cycleInterval = cycleInterval;
 
       return channels
@@ -1202,15 +1206,31 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          case "CUBICSPLINE":
          {
-            const interpolatorNode = scene .createNode ("SplinePositionInterpolator", false);
+            const
+               interpolatorNode = scene .createNode ("PositionInterpolator", false),
+               vectors          = [ ];
 
-            interpolatorNode ._key      = times .map (t => t / cycleInterval);
-            interpolatorNode ._keyValue = keyValues
+            for (let i = 0, length = keyValues .length; i < length; i += 3)
+            {
+               vectors .push (new Vector3 (keyValues [i + 0],
+                                           keyValues [i + 1],
+                                           keyValues [i + 2]));
+            }
+
+            const frames = [... Array (Math .floor (times .at (-1) * FRAMES_PER_SECOND)) .keys ()]
+               .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
+
+            for (const t of frames)
+            {
+               interpolatorNode ._key      .push (t / cycleInterval);
+               interpolatorNode ._keyValue .push (this .cubicSpline (t, times, vectors));
+            }
 
             interpolatorNode .setup ();
 
             return interpolatorNode;
          }
+
       }
    },
    createOrientationInterpolator: function (interpolation, times, keyValues, cycleInterval)
@@ -1276,16 +1296,27 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          case "CUBICSPLINE":
          {
-            const interpolatorNode = scene .createNode ("QuadOrientationInterpolator", false);
-
-            interpolatorNode ._key      = times .map (t => t / cycleInterval);
+            const
+               interpolatorNode = scene .createNode ("OrientationInterpolator", false),
+               quaternions      = [ ];
 
             for (let i = 0, length = keyValues .length; i < length; i += 4)
             {
-               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
-                                                                                 keyValues [i + 1],
-                                                                                 keyValues [i + 2],
-                                                                                 keyValues [i + 3])));
+               quaternions .push (new Quaternion (keyValues [i + 0],
+                                                  keyValues [i + 1],
+                                                  keyValues [i + 2],
+                                                  keyValues [i + 3]));
+            }
+
+            const frames = [... Array (Math .floor (times .at (-1) * FRAMES_PER_SECOND)) .keys ()]
+               .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
+
+            for (const t of frames)
+            {
+               const q = this .cubicSpline (t, times, quaternions) .normalize ();
+
+               interpolatorNode ._key      .push (t / cycleInterval);
+               interpolatorNode ._keyValue .push (new Rotation4 (q));
             }
 
             interpolatorNode .setup ();
@@ -1293,6 +1324,27 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return interpolatorNode;
          }
       }
+   },
+   cubicSpline: function (time, times, values)
+   {
+      const
+         index1 = Algorithm .clamp (Algorithm .upperBound (times, 0, times .length, time), 1, times .length - 1),
+         index0 = index1 - 1,
+         td     = times [index1] - times [index0],
+         t      = (time - times [index0]) / td,
+         t2     = Math .pow (t, 2),
+         t3     = Math .pow (t, 3),
+         v0     = values [index0 * 3 + 1] .copy (),
+         b0     = values [index0 * 3 + 2] .copy (),
+         v1     = values [index1 * 3 + 1] .copy (),
+         a1     = values [index1 * 3 + 0] .copy ();
+
+      v0 .multiply (2 * t3 - 3 * t2 + 1);
+      b0 .multiply (td * (t3 - 2 * t2 + t));
+      v1 .multiply (-2 * t3 + 3 * t2);
+      a1 .multiply (td * (t3 - t2));
+
+      return v0 .add (b0) .add (v1) .add (a1);
    },
    skinsArray: function (skins)
    {
