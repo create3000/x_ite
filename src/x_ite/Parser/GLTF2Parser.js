@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import X3DParser  from "./X3DParser.js";
+import Vector2    from "../../standard/Math/Numbers/Vector2.js";
 import Vector3    from "../../standard/Math/Numbers/Vector3.js";
 import Quaternion from "../../standard/Math/Numbers/Quaternion.js";
 import Rotation4  from "../../standard/Math/Numbers/Rotation4.js";
@@ -160,7 +161,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       scene .setEncoding ("GLTF");
       scene .setProfile (browser .getProfile ("Interchange"));
-      scene .addComponent (browser .getComponent ("HAnim", 3));
 
       await this .loadComponents ();
 
@@ -409,48 +409,39 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
 
       this .textures = textures;
-
-      for (const texture of textures)
-         this .textureObject (texture);
    },
    textureObject: function (texture)
    {
       if (!(texture instanceof Object))
          return;
 
-      Object .defineProperty (texture, "textureNode",
+      if (texture .textureNode)
+         return texture .textureNode;
+
+      const
+         scene       = this .getScene (),
+         textureNode = scene .createNode ("ImageTexture", false);
+
+      const sampler = this .samplers [texture .sampler];
+
+      if (sampler)
+         textureNode ._textureProperties = sampler .texturePropertiesNode;
+
+      const image = this .images [texture .source];
+
+      if (image)
       {
-         get: () =>
-         {
-            const
-               scene       = this .getScene (),
-               textureNode = scene .createNode ("ImageTexture", false);
+         const name = this .sanitizeName (image .name);
 
-            const sampler = this .samplers [texture .sampler];
+         if (name)
+            scene .addNamedNode (scene .getUniqueName (name), textureNode);
 
-            if (sampler)
-               textureNode ._textureProperties = sampler .texturePropertiesNode;
+         textureNode ._url = [image .uri];
+      }
 
-            const image = this .images [texture .source];
+      textureNode .setup ();
 
-            if (image)
-            {
-               const name = this .sanitizeName (image .name);
-
-               if (name)
-                  scene .addNamedNode (scene .getUniqueName (name), textureNode);
-
-               textureNode ._url = [image .uri];
-            }
-
-            textureNode .setup ();
-
-            Object .defineProperty (texture, "textureNode", { value: textureNode });
-
-            return textureNode;
-         },
-         configurable: true,
-      });
+      return texture .textureNode = textureNode;
    },
    materialsArray: function (materials)
    {
@@ -494,7 +485,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       materialNode .setup ();
 
       appearanceNode ._material         = materialNode;
-      appearanceNode ._textureTransform = this .getDefaultTextureTransform (materialNode);
+      appearanceNode ._textureTransform = this .textureTransform || this .getDefaultTextureTransform (materialNode);
+      this .textureTransform            = undefined;
 
       appearanceNode .setup ();
 
@@ -538,7 +530,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       materialNode ._metallic  = this .numberValue (pbrMetallicRoughness .metallicFactor,  1);
       materialNode ._roughness = this .numberValue (pbrMetallicRoughness .roughnessFactor, 1);
 
-      materialNode ._baseTexture                     = this .textureInfo    (pbrMetallicRoughness .baseColorTexture);
+      materialNode ._baseTexture                     = this .textureInfo    (pbrMetallicRoughness .baseColorTexture, true);
       materialNode ._baseTextureMapping              = this .textureMapping (pbrMetallicRoughness .baseColorTexture);
       materialNode ._metallicRoughnessTexture        = this .textureInfo    (pbrMetallicRoughness .metallicRoughnessTexture);
       materialNode ._metallicRoughnessTextureMapping = this .textureMapping (pbrMetallicRoughness .metallicRoughnessTexture);
@@ -595,7 +587,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       materialNode ._shininess = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
 
-      materialNode ._diffuseTexture          = this .textureInfo    (pbrSpecularGlossiness .diffuseTexture);
+      materialNode ._diffuseTexture          = this .textureInfo    (pbrSpecularGlossiness .diffuseTexture, true);
       materialNode ._diffuseTextureMapping   = this .textureMapping (pbrSpecularGlossiness .diffuseTexture);
       materialNode ._specularTexture         = this .textureInfo    (pbrSpecularGlossiness .specularGlossinessTexture);
       materialNode ._specularTextureMapping  = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
@@ -622,15 +614,46 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       materialNode ._normalTexture        = this .textureInfo (normalTexture);
       materialNode ._normalTextureMapping = this .textureMapping (normalTexture);
    },
-   textureInfo: function (texture)
+   textureInfo: function (texture, textureTransform)
    {
       if (!(texture instanceof Object))
          return null;
 
-      if (!this .textures [texture .index])
+      if (textureTransform)
+      {
+         if (texture .extensions instanceof Object)
+            this .textureTransform = this .textureTransformObject (texture .extensions .KHR_texture_transform);
+      }
+
+      return this .textureObject (this .textures [texture .index]);
+   },
+   textureTransformObject: function (KHR_texture_transform)
+   {
+      if (!(KHR_texture_transform instanceof Object))
          return null;
 
-      return this .textures [texture .index] .textureNode;
+      const
+         scene                = this .getScene (),
+         textureTransformNode = scene .createNode ("TextureTransform", false);
+
+      const
+         translation = new Vector2 (0, 0),
+         scale       = new Vector2 (1, 1);
+
+      if (this .vectorValue (KHR_texture_transform .offset, translation))
+         textureTransformNode ._translation = translation;
+
+         textureTransformNode ._rotation = this .numberValue (KHR_texture_transform .rotation, 0);
+
+      if (this .vectorValue (KHR_texture_transform .scale, scale))
+         textureTransformNode ._scale = scale;
+
+      textureTransformNode ._translation .y += -1;
+      textureTransformNode ._scale .y       *= -1;
+
+      textureTransformNode .setup ();
+
+      return textureTransformNode;
    },
    textureMapping: function (texture)
    {
@@ -1067,7 +1090,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          .filter (input => input && input .array .length)
          .reduce ((value, input) => Math .max (value, input .array .at (-1)), 0);
 
-      timeSensorNode ._loop          = true;
+      //timeSensorNode ._loop          = true;
       timeSensorNode ._cycleInterval = cycleInterval;
 
       return channels
@@ -1171,10 +1194,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return this .defaultTextureTransform;
 
       const
-         scene                 = this .getScene (),
+         scene                = this .getScene (),
          textureTransformNode = scene .createNode ("TextureTransform", false);
 
-      textureTransformNode ._translation .y = 1;
+      textureTransformNode ._translation .y = -1;
       textureTransformNode ._scale .y       = -1;
 
       textureTransformNode .setup ();
