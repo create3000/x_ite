@@ -1038,7 +1038,11 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          groupNode = scene .createNode ("Group", false),
          name      = this .sanitizeName (animation .name);
 
-      scene .addNamedNode (scene .getUniqueName (name ? name : `Animation${++ this .animations}`), groupNode);
+      ++ this .animations;
+
+      scene .addNamedNode (scene .getUniqueName (name ? name : `Animation${this .animations}`), groupNode);
+      scene .addNamedNode (scene .getUniqueName (`Timer${this .animations}`), timeSensorNode);
+      scene .addExportedNode (`Timer${this .animations}`, timeSensorNode);
 
       groupNode ._children .push (timeSensorNode, ... channelNodes);
 
@@ -1057,7 +1061,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const cycleInterval = samplers
          .map (sampler => this .accessors [sampler .input])
-         .filter (input => input)
+         .filter (input => input && input .array .length)
          .reduce ((value, input) => Math .max (value, input .array .at (-1)), 0);
 
       timeSensorNode ._cycleInterval = cycleInterval;
