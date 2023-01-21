@@ -57,23 +57,44 @@ Optimizer .prototype = {
    {
       const removedNodes = [ ];
 
-      nodes .setValue (this .optimizeNodes (nodes, removedNodes));
+      nodes .setValue (this .optimizeNodes (nodes, true, removedNodes));
 
       removedNodes .forEach (node => node .dispose ());
    },
-   optimizeNodes: function (nodes, removedNodes)
+   optimizeNodes: function (nodes, combine, removedNodes)
    {
-      return nodes .flatMap (node => this .optimizeNode (node, removedNodes));
+      return nodes .flatMap (node => this .optimizeNode (node, combine, removedNodes));
    },
-   optimizeNode: function (node, removedNodes)
+   optimizeNode: function (node, combine, removedNodes)
    {
       if (!node)
          return [ ];
 
-      if ("children" in node)
-         node .children = this .optimizeNodes (node .children, removedNodes);
+      switch (node .getNodeTypeName ())
+      {
+         case "Transform":
+         {
+            node .children = this .optimizeNodes (node .children, true, removedNodes);
+            break;
+         }
+         case "Group":
+         {
+            node .children = this .optimizeNodes (node .children, true, removedNodes);
+            return node;
+         }
+         case "LOD":
+         case "Switch":
+         {
+            this .optimizeNodes (node .children, false, removedNodes);
+            return node;
+         }
+         default:
+         {
+            return node;
+         }
+      }
 
-      if (node .getNodeTypeName () !== "Transform")
+      if (!combine)
          return node;
 
       if (node .getValue () .hasRoutes ())
