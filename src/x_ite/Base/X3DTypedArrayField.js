@@ -758,8 +758,8 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          {
             const value = result [i];
 
-            for (let c = 0; c < components; ++ c)
-               array [i * components + c] = value [c];
+            for (let c = 0, first = i * components; c < components; ++ c, ++ first)
+               array [first] = value [c];
          }
       }
 
