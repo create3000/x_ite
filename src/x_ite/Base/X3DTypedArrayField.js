@@ -743,15 +743,15 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       {
          const result = Array .prototype .sort .call (this .map (value => value .copy ()), compareFunction ?? function (a, b)
          {
-            for (var first1 = 0, first2 = 0; (first1 !== components) && (first2 !== components); ++ first1, ++ first2)
+            for (var i = 0; i < components; ++ i)
             {
-               const r = Algorithm .cmp (a [first1], b [first2]);
+               const r = Algorithm .cmp (a [i], b [i]);
 
                if (r)
                   return r;
             }
 
-            return Algorithm .cmp (first1, first2);
+            return 0;
          });
 
          for (let i = 0; i < length; ++ i)
