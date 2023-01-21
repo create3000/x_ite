@@ -778,8 +778,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .attributesObject (primitive .attributes);
       this .targetsArray     (primitive .targets);
 
-      primitive .indices   = this .accessors [primitive .indices];
-      primitive .material  = this .materials [primitive .material];
+      primitive .indices  = this .accessors [primitive .indices];
+      primitive .material = this .materials [primitive .material];
 
       shapeNodes .push (this .createShape (primitive));
    },
