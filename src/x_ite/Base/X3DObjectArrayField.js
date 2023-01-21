@@ -447,12 +447,20 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    },
    reverse: function ()
    {
-      this [_target] .getValue () .reverse ();
+      const target = this [_target];
+
+      target .getValue () .reverse ();
+      target .addEvent ();
+
       return this;
    },
    sort: function ()
    {
-      this [_target] .getValue () .sort ((a, b) => Algorithm .cmp (a .valueOf (), b .valueOf ()));
+      const target = this [_target];
+
+      target .getValue () .sort ((a, b) => Algorithm .cmp (a .valueOf (), b .valueOf ()));
+      target .addEvent ();
+
       return this;
    },
    addChildObject: function (value)
