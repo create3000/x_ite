@@ -68,21 +68,21 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
       new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                        new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "baseColor",                       new Fields .SFColor (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "baseTexture",                     new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "baseTextureMapping",              new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "baseTexture",                     new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",                   new Fields .SFColor (0, 0, 0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",                 new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping",          new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",                 new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "metallic",                        new Fields .SFFloat (1)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "roughness",                       new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metallicRoughnessTexture",        new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "metallicRoughnessTextureMapping", new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metallicRoughnessTexture",        new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionStrength",               new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTexture",                new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTextureMapping",         new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTexture",                new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",                     new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",                   new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",            new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",                   new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",                    new Fields .SFFloat ()),
    ]),
    getTypeName: function ()
@@ -244,38 +244,44 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
 
          if (this .baseTextureNode)
          {
-            const baseTexture = shaderObject .x3d_BaseTexture;
+            const
+               baseTextureMapping = this ._baseTextureMapping .getValue (),
+               baseTexture        = shaderObject .x3d_BaseTexture;
 
             this .baseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, baseTexture);
 
-            gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._baseTextureMapping .getValue ()) || 0);
-            gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._baseTextureMapping .getValue ()) || 0);
+            gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (baseTextureMapping) || 0);
+            gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (baseTextureMapping) || 0);
          }
 
          // Metallic roughness parameters
 
          if (this .metallicRoughnessTextureNode)
          {
-            const metallicRoughnessTexture = shaderObject .x3d_MetallicRoughnessTexture;
+            const
+               metallicRoughnessTextureMapping = this ._metallicRoughnessTextureMapping .getValue (),
+               metallicRoughnessTexture        = shaderObject .x3d_MetallicRoughnessTexture;
 
             this .metallicRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, metallicRoughnessTexture);
 
-            gl .uniform1i (metallicRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
-            gl .uniform1i (metallicRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
+            gl .uniform1i (metallicRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (metallicRoughnessTextureMapping) || 0);
+            gl .uniform1i (metallicRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (metallicRoughnessTextureMapping) || 0);
          }
 
          // Occlusion parameters
 
          if (this .occlusionTextureNode)
          {
-            const occlusionTexture = shaderObject .x3d_OcclusionTexture;
+            const
+               occlusionTextureMapping = this ._occlusionTextureMapping .getValue (),
+               occlusionTexture        = shaderObject .x3d_OcclusionTexture;
 
             gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
             this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, occlusionTexture);
 
-            gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
-            gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
+            gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (occlusionTextureMapping) || 0);
+            gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (occlusionTextureMapping) || 0);
          }
       }
    },
