@@ -100,8 +100,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       this .image .on ("load",        this .setImage .bind (this));
       this .image .on ("abort error", this .setError .bind (this));
-
-      this .image [0] .crossOrigin = "Anonymous";
+      this .image .prop ("crossOrigin", "Anonymous");
 
       this .requestImmediateLoad ();
    },

@@ -119,9 +119,9 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       this .video .on ("abort error",     this .setError   .bind (this));
       this .video .on ("suspend stalled", this .setTimeout .bind (this));
 
-      this .video [0] .crossOrigin = "Anonymous";
-      this .video [0] .preload     = "auto";
-      this .video [0] .muted       = true;
+      this .video .prop ("crossOrigin", "Anonymous");
+      this .video .prop ("preload",     "auto");
+      this .video .prop ("muted",       true);
 
       this .requestImmediateLoad ();
    },

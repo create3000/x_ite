@@ -110,9 +110,9 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
       this .audio .on ("abort error",     this .setError   .bind (this));
       this .audio .on ("suspend stalled", this .setTimeout .bind (this));
 
-      this .audio [0] .crossOrigin = "Anonymous";
-      this .audio [0] .preload     = "auto";
-      this .audio [0] .muted       = true;
+      this .audio .prop ("crossOrigin", "Anonymous");
+      this .audio .prop ("preload",     "auto");
+      this .audio .prop ("muted",       true);
 
       this .requestImmediateLoad ();
    },
