@@ -1144,7 +1144,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       scene .addNamedNode (scene .getUniqueName (name || `Animation${this .animations}`), groupNode);
       scene .addNamedNode (scene .getUniqueName (`Timer${this .animations}`), timeSensorNode);
 
-      timeSensorNode ._description = animation .name || `Animation${this .animations}`;
+      timeSensorNode ._description = animation .name || `Animation ${this .animations}`;
       groupNode ._children .push (timeSensorNode, ... channelNodes);
 
       timeSensorNode .setup ();
@@ -1227,19 +1227,25 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    optimizeSceneGraph: function ()
    {
-      this .optimizeNodes (this .getScene () .getRootNodes ());
+      const
+         rootNodes    = this .getScene () .getRootNodes (),
+         removedNodes = [ ];
+
+      rootNodes .setValue (this .optimizeNodes (rootNodes, removedNodes));
+
+      removedNodes .forEach (node => node .dispose ());
    },
-   optimizeNodes: function (nodes)
+   optimizeNodes: function (nodes, removedNodes)
    {
-      return nodes .flatMap (node => this .optimizeNode (node));
+      return nodes .flatMap (node => this .optimizeNode (node, removedNodes));
    },
-   optimizeNode: function (node)
+   optimizeNode: function (node, removedNodes)
    {
       if (!node)
          return [ ];
 
       if ("children" in node)
-         node .children = this .optimizeNodes (node .children);
+         node .children = this .optimizeNodes (node .children, removedNodes);
 
       if (node .getNodeTypeName () !== "Transform")
          return node;
@@ -1255,6 +1261,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (node .getValue () .hasRoutes ())
          return node;
+
+      removedNodes .push (node .getValue ());
 
       return [... node .children];
    },
