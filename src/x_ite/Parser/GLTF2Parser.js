@@ -1262,7 +1262,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             if (!child .getValue () .hasRoutes ())
             {
                // Combine single Transform nodes.
-               
+
                const
                   translation      = new Vector3 (0, 0, 0),
                   rotation         = new Rotation4 (),
