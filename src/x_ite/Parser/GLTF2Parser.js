@@ -59,6 +59,7 @@ import Algorithm  from "../../standard/Math/Algorithm.js";
 import DEBUG      from "../DEBUG.js"
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
+// https://github.com/KhronosGroup/glTF-Sample-Models
 
 const
    STEP_TIME          = 1e-4, // in seconds
