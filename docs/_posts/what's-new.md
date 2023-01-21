@@ -16,6 +16,7 @@ With this new version it is now possible to configure antialiasing. Antialiasing
 - Added contentScale attribute.
 - New browser options and rendering properties.
 - Added glTF parser.
+- Implemented ImageTextureAtlas.
 
 ## X_ITE v8.4.0 Released
 
