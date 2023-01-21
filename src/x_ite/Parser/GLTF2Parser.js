@@ -45,17 +45,18 @@
  *
  ******************************************************************************/
 
-import X3DParser  from "./X3DParser.js";
-import Vector2    from "../../standard/Math/Numbers/Vector2.js";
-import Vector3    from "../../standard/Math/Numbers/Vector3.js";
-import Quaternion from "../../standard/Math/Numbers/Quaternion.js";
-import Rotation4  from "../../standard/Math/Numbers/Rotation4.js";
-import Matrix3    from "../../standard/Math/Numbers/Matrix3.js";
-import Matrix4    from "../../standard/Math/Numbers/Matrix4.js";
-import Color3     from "../../standard/Math/Numbers/Color3.js";
-import Color4     from "../../standard/Math/Numbers/Color4.js";
-import Algorithm  from "../../standard/Math/Algorithm.js";
-import DEBUG      from "../DEBUG.js"
+import X3DParser    from "./X3DParser.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import Vector2      from "../../standard/Math/Numbers/Vector2.js";
+import Vector3      from "../../standard/Math/Numbers/Vector3.js";
+import Quaternion   from "../../standard/Math/Numbers/Quaternion.js";
+import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
+import Matrix3      from "../../standard/Math/Numbers/Matrix3.js";
+import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
+import Color3       from "../../standard/Math/Numbers/Color3.js";
+import Color4       from "../../standard/Math/Numbers/Color4.js";
+import Algorithm    from "../../standard/Math/Algorithm.js";
+import DEBUG        from "../DEBUG.js"
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 
@@ -185,6 +186,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .scenesArray      (glTF .scenes, glTF .scene);
       this .animationsArray  (glTF .animations);
       this .skinsArray       (glTF .skins);
+
+      this .optimizeSceneGraph ();
 
       return this .getScene ();
    },
@@ -1222,6 +1225,39 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(skins instanceof Array))
          return;
    },
+   optimizeSceneGraph: function ()
+   {
+      this .optimizeNodes (this .getScene () .getRootNodes ());
+   },
+   optimizeNodes: function (nodes)
+   {
+      return nodes .flatMap (node => this .optimizeNode (node));
+   },
+   optimizeNode: function (node)
+   {
+      if (!node)
+         return [ ];
+
+      if ("children" in node)
+         node .children = this .optimizeNodes (node .children);
+
+      if (node .getNodeTypeName () !== "Transform")
+         return node;
+
+      if (!node .translation .getValue () .equals (Vector3 .Zero))
+         return node;
+
+      if (!node .rotation .getValue () .equals (Rotation4 .Identity))
+         return node;
+
+      if (!node .scale .getValue () .equals (Vector3 .One))
+         return node;
+
+      if (node .getValue () .hasRoutes ())
+         return node;
+
+      return [... node .children];
+   },
    createShape: function (primitive)
    {
       const
@@ -1959,7 +1995,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return defaultValue;
 
       return value;
-   }
+   },
 });
 
 const toUpperCaseFirstLetter = (string) => string .charAt (0) .toUpperCase () + string .substr (1);
