@@ -1,4 +1,4 @@
-/* X_ITE v8.4.4 */(() => { // webpackBootstrap
+/* X_ITE v8.5.0a */(() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};
@@ -39,25 +39,25 @@ var __webpack_exports__ = {};
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometricPropertyNode\")"
-const X3DGeometricPropertyNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Components/Rendering/X3DGeometricPropertyNode");
+const X3DGeometricPropertyNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Components/Rendering/X3DGeometricPropertyNode");
 var X3DGeometricPropertyNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometricPropertyNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimDisplacer.js
 /*******************************************************************************
@@ -153,28 +153,28 @@ const __default__ = HAnimDisplacer;
 Namespace_default().set ("x_ite/Components/HAnim/HAnimDisplacer", __default__);
 /* harmony default export */ const HAnim_HAnimDisplacer = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Components/Core/X3DChildNode");
+const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Components/Core/X3DChildNode");
 var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/Group\")"
-const Group_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Components/Grouping/Group");
+const Group_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Components/Grouping/Group");
 var Group_default = /*#__PURE__*/__webpack_require__.n(Group_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/Transform\")"
-const Transform_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Components/Grouping/Transform");
+const Transform_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Components/Grouping/Transform");
 var Transform_default = /*#__PURE__*/__webpack_require__.n(Transform_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DBoundedObject\")"
-const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
+const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
 var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObject_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Rendering/TraverseType");
+const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Rendering/TraverseType");
 var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Base/X3DCast");
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("standard/Math/Numbers/Matrix4");
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("standard/Math/Numbers/Vector3");
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimHumanoid.js
 /*******************************************************************************
@@ -249,8 +249,8 @@ function HAnimHumanoid (executionContext)
    this ._bboxSize    .setUnit ("length");
    this ._bboxCenter  .setUnit ("length");
 
-   this .viewpointsNode = new (Group_default()) (executionContext);
    this .skeletonNode   = new (Group_default()) (executionContext);
+   this .viewpointsNode = new (Group_default()) (executionContext);
    this .skinNode       = new (Group_default()) (executionContext);
    this .transformNode  = new (Transform_default()) (executionContext);
    this .jointNodes     = [ ];
@@ -258,6 +258,7 @@ function HAnimHumanoid (executionContext)
    this .skinCoordNode  = null;
    this .restNormalNode = null;
    this .restCoordNode  = null;
+   this .changed        = false;
 }
 
 HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
@@ -285,12 +286,12 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",           new (Fields_default()).SFBool ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",              new (Fields_default()).SFVec3f (-1, -1, -1)),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",            new (Fields_default()).SFVec3f ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "skeleton",              new (Fields_default()).MFNode ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "viewpoints",            new (Fields_default()).MFNode ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "sites",                 new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "joints",                new (Fields_default()).MFNode ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "segments",              new (Fields_default()).MFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "joints",                new (Fields_default()).MFNode ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "motions",               new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "skeleton",              new (Fields_default()).MFNode ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "skinBindingNormal",     new (Fields_default()).SFNode ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "skinBindingCoord",      new (Fields_default()).SFNode ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "skinNormal",            new (Fields_default()).SFNode ()),
@@ -316,19 +317,19 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
 
       // Groups
 
-      this .viewpointsNode .setAllowedTypes ((X3DConstants_default()).HAnimSite);
       this .skeletonNode   .setAllowedTypes ((X3DConstants_default()).HAnimJoint, (X3DConstants_default()).HAnimSite);
+      this .viewpointsNode .setAllowedTypes ((X3DConstants_default()).HAnimSite);
 
-      this ._viewpoints .addFieldInterest (this .viewpointsNode ._children);
       this ._skeleton   .addFieldInterest (this .skeletonNode   ._children);
+      this ._viewpoints .addFieldInterest (this .viewpointsNode ._children);
       this ._skin       .addFieldInterest (this .skinNode       ._children);
 
-      this .viewpointsNode ._children = this ._viewpoints;
       this .skeletonNode   ._children = this ._skeleton;
+      this .viewpointsNode ._children = this ._viewpoints;
       this .skinNode       ._children = this ._skin;
 
-      this .viewpointsNode .setPrivate (true);
       this .skeletonNode   .setPrivate (true);
+      this .viewpointsNode .setPrivate (true);
       this .skinNode       .setPrivate (true);
 
       // Transform
@@ -352,15 +353,15 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
       this .transformNode ._bboxDisplay      = this ._bboxDisplay;
       this .transformNode ._bboxSize         = this ._bboxSize;
       this .transformNode ._bboxCenter       = this ._bboxCenter;
-      this .transformNode ._children         = [ this .viewpointsNode, this .skeletonNode, this .skinNode ];
+      this .transformNode ._children         = [ this .skeletonNode, this .viewpointsNode, this .skinNode ];
 
       this .transformNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
       this .transformNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
       // Setup
 
-      this .viewpointsNode .setup ();
       this .skeletonNode   .setup ();
+      this .viewpointsNode .setup ();
       this .skinNode       .setup ();
       this .transformNode  .setup ();
 
@@ -385,6 +386,9 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
    {
       const jointNodes = this .jointNodes;
 
+      for (const jointNode of jointNodes)
+         jointNode .removeInterest ("set_joint__", this);
+
       jointNodes .length = 0;
 
       for (const node of this ._joints)
@@ -394,6 +398,15 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
          if (jointNode)
             jointNodes .push (jointNode);
       }
+
+      for (const jointNode of jointNodes)
+         jointNode .addInterest ("set_joint__", this);
+
+      this .set_joint__ ();
+   },
+   set_joint__: function ()
+   {
+      this .changed = true;
    },
    set_skinNormal__: function ()
    {
@@ -403,6 +416,8 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
 
       if (this .skinNormalNode)
          this .restNormalNode = this .skinNormalNode .copy ();
+
+      this .changed = true;
    },
    set_skinCoord__: function ()
    {
@@ -411,16 +426,23 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
       this .skinCoordNode = X3DCast_default() ((X3DConstants_default()).X3DCoordinateNode, this ._skinCoord);
 
       if (this .skinCoordNode)
+      {
          this .restCoordNode = this .skinCoordNode .copy ();
+
+         delete this .skinning;
+      }
+      else
+      {
+         this .skinning = Function .prototype
+      }
+
+      this .changed = true;
    },
    traverse: function (type, renderObject)
    {
-      renderObject .getJoints () .length = 0;
-
       this .transformNode .traverse (type, renderObject);
 
-      if (this .isLive () .getValue ())
-         this .skinning (type, renderObject);
+      this .skinning (type, renderObject);
    },
    skinning: (function ()
    {
@@ -436,11 +458,13 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
          if (type !== (TraverseType_default()).CAMERA)
             return;
 
-         if (! this .skinCoordNode)
+         if (!this .changed)
             return;
 
+         this .changed = false;
+
          const
-            jointNodes     = this .jointNodes .length ? this .jointNodes : renderObject .getJoints (),
+            jointNodes     = this .jointNodes,
             skinNormalNode = this .skinNormalNode,
             skinCoordNode  = this .skinCoordNode,
             restNormalNode = this .restNormalNode,
@@ -531,7 +555,7 @@ const HAnimHumanoid_default_ = HAnimHumanoid;
 Namespace_default().set ("x_ite/Components/HAnim/HAnimHumanoid", HAnimHumanoid_default_);
 /* harmony default export */ const HAnim_HAnimHumanoid = (HAnimHumanoid_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DTransformNode\")"
-const X3DTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Components/Grouping/X3DTransformNode");
+const X3DTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Components/Grouping/X3DTransformNode");
 var X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimJoint.js
 /*******************************************************************************
@@ -647,7 +671,8 @@ HAnimJoint .prototype = Object .assign (Object .create ((X3DTransformNode_defaul
    {
       X3DTransformNode_default().prototype.initialize.call (this);
 
-      this ._displacers .addInterest ("set_displacers__", this);
+      this ._skinCoordIndex .addInterest ("set_skinCoordIndex__", this);
+      this ._displacers     .addInterest ("set_displacers__",     this);
 
       this .set_displacers__ ();
    },
@@ -662,6 +687,10 @@ HAnimJoint .prototype = Object .assign (Object .create ((X3DTransformNode_defaul
    getDisplacers: function ()
    {
       return this .displacerNodes;
+   },
+   set_skinCoordIndex__: function ()
+   {
+      this .set_cameraObjects__ ();
    },
    set_displacers__: function ()
    {
@@ -682,11 +711,7 @@ HAnimJoint .prototype = Object .assign (Object .create ((X3DTransformNode_defaul
       if (type === (TraverseType_default()).CAMERA)
       {
          if (this ._skinCoordIndex .length)
-         {
-            renderObject .getJoints () .push (this);
-
             this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
-         }
       }
 
       X3DTransformNode_default().prototype.traverse.call (this, type, renderObject);
@@ -696,11 +721,7 @@ HAnimJoint .prototype = Object .assign (Object .create ((X3DTransformNode_defaul
       if (type === (TraverseType_default()).CAMERA)
       {
          if (this ._skinCoordIndex .length)
-         {
-            renderObject .getJoints () .push (this);
-
             this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-         }
       }
 
       X3DTransformNode_default().prototype.groupTraverse.call (this, type, renderObject);
@@ -821,7 +842,7 @@ const HAnimMotion_default_ = HAnimMotion;
 Namespace_default().set ("x_ite/Components/HAnim/HAnimMotion", HAnimMotion_default_);
 /* harmony default export */ const HAnim_HAnimMotion = (HAnimMotion_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
-const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.4.4")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
+const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.0a")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
 var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimSegment.js
 /*******************************************************************************
