@@ -482,6 +482,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (material .appearanceNode)
          return material .appearanceNode;
 
+      if (!(material .extensions instanceof Object))
+         material .extensions = { };
+
       const
          scene          = this .getScene (),
          appearanceNode = scene .createNode ("Appearance", false),
@@ -520,7 +523,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const materials = [
          this .pbrMetallicRoughnessObject .bind (this, material .pbrMetallicRoughness),
-         this .extensionsObject           .bind (this, material .extensions),
+         this .pbrSpecularGlossinessObject .bind (this, material .extensions .KHR_materials_pbrSpecularGlossiness),
          this .pbrMetallicRoughnessObject .bind (this, { }),
       ];
 
@@ -586,22 +589,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          return materialNode;
       }
-   },
-   extensionsObject: function (extensions, unlit)
-   {
-      if (!(extensions instanceof Object))
-         return;
-
-      for (const key in extensions)
-      {
-         switch (key)
-         {
-            case "KHR_materials_pbrSpecularGlossiness":
-               return this .pbrSpecularGlossinessObject (extensions [key], unlit);
-         }
-      }
-
-      return null;
    },
    pbrSpecularGlossinessObject: function (pbrSpecularGlossiness, unlit)
    {
