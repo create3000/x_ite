@@ -513,7 +513,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       appearanceNode ._material         = materialNode;
       appearanceNode ._textureTransform = this .textureTransform || this .getDefaultTextureTransform (materialNode);
-      this .textureTransform            = undefined;
+      this .textureTransform            = undefined; // Undef property again.
 
       appearanceNode .setup ();
 
