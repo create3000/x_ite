@@ -48,6 +48,7 @@
 import Components               from "../../x_ite/Components.js";
 import ComposedTexture3D        from "../../x_ite/Components/Texturing3D/ComposedTexture3D.js";
 import ImageTexture3D           from "../../x_ite/Components/Texturing3D/ImageTexture3D.js";
+import ImageTextureAtlas        from "../../x_ite/Components/Texturing3D/ImageTextureAtlas.js";
 import PixelTexture3D           from "../../x_ite/Components/Texturing3D/PixelTexture3D.js";
 import TextureCoordinate3D      from "../../x_ite/Components/Texturing3D/TextureCoordinate3D.js";
 import TextureCoordinate4D      from "../../x_ite/Components/Texturing3D/TextureCoordinate4D.js";
@@ -59,9 +60,10 @@ Components .addComponent ({
    name: "Texturing3D",
    types:
    {
-      ComposedTexture3D:        ComposedTexture3D,        // Not implemented yet.
-      ImageTexture3D:           ImageTexture3D,           // Not implemented yet.
-      PixelTexture3D:           PixelTexture3D,           // Not implemented yet.
+      ComposedTexture3D:        ComposedTexture3D,
+      ImageTexture3D:           ImageTexture3D,
+      ImageTextureAtlas:        ImageTextureAtlas, // non-standard
+      PixelTexture3D:           PixelTexture3D,
       TextureCoordinate3D:      TextureCoordinate3D,
       TextureCoordinate4D:      TextureCoordinate4D,
       TextureTransform3D:       TextureTransform3D,

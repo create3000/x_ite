@@ -48,28 +48,27 @@
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DTexture2DNode     from "./X3DTexture2DNode.js";
+import X3DTexture3DNode     from "./X3DTexture3DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Algorithm            from "../../../standard/Math/Algorithm.js";
 import DEBUG                from "../../DEBUG.js";
 
-function ImageTexture (executionContext)
+function ImageTextureAtlas (executionContext)
 {
-   X3DTexture2DNode .call (this, executionContext);
+   X3DTexture3DNode .call (this, executionContext);
    X3DUrlObject     .call (this, executionContext);
 
-   this .addType (X3DConstants .ImageTexture);
+   this .addType (X3DConstants .ImageTextureAtlas);
 
    this .image    = $("<img></img>");
    this .canvas   = $("<canvas></canvas>");
    this .urlStack = new Fields .MFString ();
 }
 
-ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
+ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: ImageTexture,
+   constructor: ImageTextureAtlas,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
       new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
@@ -77,17 +76,21 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "slicesOverX",          new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "slicesOverY",          new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "numberOfSlices",       new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",              new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
    ]),
    getTypeName: function ()
    {
-      return "ImageTexture";
+      return "ImageTextureAtlas";
    },
    getComponentName: function ()
    {
-      return "Texturing";
+      return "Texturing3D";
    },
    getContainerField: function ()
    {
@@ -95,7 +98,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    },
    initialize: function ()
    {
-      X3DTexture2DNode .prototype .initialize .call (this);
+      X3DTexture3DNode .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
 
       this .image .on ("load",        this .setImage .bind (this));
@@ -158,49 +161,44 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
             canvas = this .canvas [0],
             cx     = canvas .getContext ("2d", { willReadFrequently: true });
 
-         let
+         const
             width  = image .width,
             height = image .height;
 
-         // Scale image if needed and flip vertically.
+         // Slice me nice.
 
-         if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
+         const
+            slicesOverX    = this ._slicesOverX .getValue (),
+            slicesOverY    = this ._slicesOverY .getValue (),
+            maxSlices      = slicesOverX * slicesOverY,
+            numberOfSlices = Math .min (this ._numberOfSlices .getValue (), maxSlices),
+            w              = Math .floor (width / slicesOverX),
+            h              = Math .floor (height / slicesOverY),
+            data           = new Uint8Array (w * h * numberOfSlices * 4);
+
+         canvas .width  = w;
+         canvas .height = h;
+
+         for (let y = 0, i = 0; y < slicesOverY && i < numberOfSlices; ++ y)
          {
-            // Flip Y
+            for (let x = 0; x < slicesOverX && i < numberOfSlices; ++ x, ++ i)
+            {
+               const
+                  sx = Math .floor (x * width / slicesOverX),
+                  sy = Math .floor (y * height / slicesOverY);
 
-            canvas .width  = width;
-            canvas .height = height;
+               cx .clearRect (0, 0, w, h);
+               cx .drawImage (image, sx, sy, w, h, 0, 0, w, h);
 
-            cx .clearRect (0, 0, width, height);
-            cx .save ();
-            cx .translate (0, height);
-            cx .scale (1, -1);
-            cx .drawImage (image, 0, 0);
-            cx .restore ();
-         }
-         else
-         {
-            // Flip Y and scale image to next power of two.
+               const d = cx .getImageData (0, 0, w, h) .data;
 
-            width  = Algorithm .nextPowerOfTwo (width);
-            height = Algorithm .nextPowerOfTwo (height);
-
-            canvas .width  = width;
-            canvas .height = height;
-
-            cx .clearRect (0, 0, width, height);
-            cx .save ();
-            cx .translate (0, height);
-            cx .scale (1, -1);
-            cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
-            cx .restore ();
+               data .set (d, w * h * i * 4);
+            }
          }
 
          // Determine image alpha.
 
-         const data = cx .getImageData (0, 0, width, height) .data;
-
-         let transparent = false;
+         let transparent = true;
 
          for (let i = 3, length = data .length; i < length; i += 4)
          {
@@ -211,11 +209,14 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
             }
          }
 
-         this .setTexture (width, height, transparent, new Uint8Array (data .buffer), false);
+         this .setTexture (w, h, numberOfSlices, transparent, gl .RGBA, data);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       catch (error)
       {
+         if (DEBUG)
+            console .log (error)
+
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
       }
@@ -223,8 +224,8 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    dispose: function ()
    {
       X3DUrlObject     .prototype .dispose .call (this);
-      X3DTexture2DNode .prototype .dispose .call (this);
+      X3DTexture3DNode .prototype .dispose .call (this);
    },
 });
 
-export default ImageTexture;
+export default ImageTextureAtlas;
