@@ -46,7 +46,7 @@
  ******************************************************************************/
 
 import X3DParser    from "./X3DParser.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import Optimizer    from "./Optimizer.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../standard/Math/Numbers/Vector3.js";
 import Quaternion   from "../../standard/Math/Numbers/Quaternion.js";
@@ -187,7 +187,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .animationsArray  (glTF .animations);
       this .skinsArray       (glTF .skins);
 
-      this .optimizeSceneGraph ();
+      new Optimizer () .optimizeSceneGraph (this .getScene () .getRootNodes ());
 
       return this .getScene ();
    },
@@ -1224,94 +1224,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       if (!(skins instanceof Array))
          return;
-   },
-   optimizeSceneGraph: function ()
-   {
-      const
-         rootNodes    = this .getScene () .getRootNodes (),
-         removedNodes = [ ];
-
-      rootNodes .setValue (this .optimizeNodes (rootNodes, removedNodes));
-
-      removedNodes .forEach (node => node .dispose ());
-   },
-   optimizeNodes: function (nodes, removedNodes)
-   {
-      return nodes .flatMap (node => this .optimizeNode (node, removedNodes));
-   },
-   optimizeNode: function (node, removedNodes)
-   {
-      if (!node)
-         return [ ];
-
-      if ("children" in node)
-         node .children = this .optimizeNodes (node .children, removedNodes);
-
-      if (node .getNodeTypeName () !== "Transform")
-         return node;
-
-      if (node .getValue () .hasRoutes ())
-         return node;
-
-      this .combineSingleChild (node, removedNodes);
-
-      if (!node .translation .getValue () .equals (Vector3 .Zero))
-         return node;
-
-      if (!node .rotation .getValue () .equals (Rotation4 .Identity))
-         return node;
-
-      if (!node .scale .getValue () .equals (Vector3 .One))
-         return node;
-
-      removedNodes .push (node .getValue ());
-
-      return [... node .children];
-   },
-   combineSingleChild: function (node, removedNodes)
-   {
-      if (node .children .length !== 1)
-         return;
-
-      const child = node .children [0];
-
-      if (child .getNodeTypeName () !== "Transform")
-         return;
-
-      if (child .getValue () .hasRoutes ())
-         return;
-
-      // Combine single Transform nodes.
-
-      const
-         translation      = new Vector3 (0, 0, 0),
-         rotation         = new Rotation4 (),
-         scale            = new Vector3 (1, 1, 1),
-         scaleOrientation = new Rotation4 (),
-         nodeMatrix       = new Matrix4 (),
-         childMatrix      = new Matrix4 ();
-
-      nodeMatrix .set (node .translation .getValue (),
-                        node .rotation .getValue (),
-                        node .scale .getValue (),
-                        node .scaleOrientation .getValue ());
-
-      childMatrix .set (child .translation .getValue (),
-                        child .rotation .getValue (),
-                        child .scale .getValue (),
-                        child .scaleOrientation .getValue ());
-
-      nodeMatrix .multLeft (childMatrix);
-
-      nodeMatrix .get (translation, rotation, scale, scaleOrientation);
-
-      node .translation      = translation;
-      node .rotation         = rotation;
-      node .scale            = scale;
-      node .scaleOrientation = scaleOrientation;
-      node .children         = child .children;
-
-      removedNodes .push (child .getValue ());
    },
    createShape: function (primitive)
    {
