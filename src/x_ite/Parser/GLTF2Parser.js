@@ -67,6 +67,7 @@ const
 function GLTF2Parser (scene)
 {
    X3DParser .call (this, scene);
+   Optimizer .call (this),
 
    this .buffers               = [ ];
    this .bufferViews           = [ ];
@@ -81,6 +82,7 @@ function GLTF2Parser (scene)
 }
 
 GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
+   Optimizer .prototype,
 {
    constructor: GLTF2Parser,
    getEncoding: function ()
@@ -187,7 +189,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .animationsArray  (glTF .animations);
       this .skinsArray       (glTF .skins);
 
-      new Optimizer () .optimizeSceneGraph (this .getScene () .getRootNodes ());
+      this .optimizeSceneGraph (this .getScene () .getRootNodes ());
 
       return this .getScene ();
    },
