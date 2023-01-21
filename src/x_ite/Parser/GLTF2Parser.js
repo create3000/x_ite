@@ -1250,6 +1250,52 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (node .getNodeTypeName () !== "Transform")
          return node;
 
+      if (node .getValue () .hasRoutes ())
+         return node;
+
+      if (node .children .length === 1)
+      {
+         const child = node .children [0];
+
+         if (child .getNodeTypeName () === "Transform")
+         {
+            if (!child .getValue () .hasRoutes ())
+            {
+               // Combine single Transform nodes.
+               
+               const
+                  translation      = new Vector3 (0, 0, 0),
+                  rotation         = new Rotation4 (),
+                  scale            = new Vector3 (1, 1, 1),
+                  scaleOrientation = new Rotation4 (),
+                  nodeMatrix       = new Matrix4 (),
+                  childMatrix      = new Matrix4 ();
+
+               nodeMatrix .set (node .translation .getValue (),
+                                node .rotation .getValue (),
+                                node .scale .getValue (),
+                                node .scaleOrientation .getValue ());
+
+               childMatrix .set (child .translation .getValue (),
+                                 child .rotation .getValue (),
+                                 child .scale .getValue (),
+                                 child .scaleOrientation .getValue ());
+
+               nodeMatrix .multLeft (childMatrix);
+
+               nodeMatrix .get (translation, rotation, scale, scaleOrientation);
+
+               node .translation      = translation;
+               node .rotation         = rotation;
+               node .scale            = scale;
+               node .scaleOrientation = scaleOrientation;
+               node .children         = child .children;
+
+               removedNodes .push (child .getValue ());
+            }
+         }
+      }
+
       if (!node .translation .getValue () .equals (Vector3 .Zero))
          return node;
 
@@ -1257,9 +1303,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return node;
 
       if (!node .scale .getValue () .equals (Vector3 .One))
-         return node;
-
-      if (node .getValue () .hasRoutes ())
          return node;
 
       removedNodes .push (node .getValue ());
