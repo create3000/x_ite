@@ -747,10 +747,11 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          {
             for (let c = 0; c < components; ++ c)
             {
-               const r = Algorithm .cmp (a [c], b [c]);
+               if (a [c] < b [c])
+                  return -1;
 
-               if (r)
-                  return r;
+               if (b [c] < a [c])
+                  return 1;
             }
 
             return 0;
