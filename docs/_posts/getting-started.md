@@ -482,10 +482,13 @@ If you ever get in trouble, please [report a bug](report-a-bug).
       <a href="https://create3000.github.io/media/examples/Texturing3D/ImageTexture3D/ImageTexture3D.x3d" title="Texturing3D » ImageTexture3D"><img src="https://create3000.github.io/media/examples/Texturing3D/ImageTexture3D/screenshot-small.png" alt="ImageTexture3D"/></a>
     </td>
     <td>
-      <a href="https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.x3d" title="Time » TimeSensor"><img src="https://create3000.github.io/media/examples/Time/TimeSensor/screenshot-small.png" alt="TimeSensor"/></a>
+      <a href="https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/ImageTextureAtlas.x3d" title="Texturing3D » ImageTextureAtlas"><img src="https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/screenshot-small.png" alt="ImageTextureAtlas"/></a>
     </td>
   </tr>
   <tr>
+    <td>
+      <a href="https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.x3d" title="Time » TimeSensor"><img src="https://create3000.github.io/media/examples/Time/TimeSensor/screenshot-small.png" alt="TimeSensor"/></a>
+    </td>
     <td>
       <a href="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/EdgeEnhancementVolumeStyle.x3d" title="VolumeRendering » EdgeEnhancementVolumeStyle"><img src="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/screenshot-small.png" alt="EdgeEnhancementVolumeStyle"/></a>
     </td>
@@ -504,6 +507,8 @@ If you ever get in trouble, please [report a bug](report-a-bug).
     <td>
       <a href="https://create3000.github.io/media/examples/VolumeRendering/VolumeData/VolumeData.x3d" title="VolumeRendering » VolumeData"><img src="https://create3000.github.io/media/examples/VolumeRendering/VolumeData/screenshot-small.png" alt="VolumeData"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/X_ITE/BlendMode/BlendMode.x3d" title="X_ITE » BlendMode"><img src="https://create3000.github.io/media/examples/X_ITE/BlendMode/screenshot-small.png" alt="BlendMode"/></a>
     </td>

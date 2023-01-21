@@ -111,6 +111,7 @@ const X_ITE_EXAMPLES = [
    { component: "Texturing", test: "MultiTexture" },
    { component: "Texturing", test: "PixelTexture" },
    { component: "Texturing3D", test: "ImageTexture3D" },
+   { component: "Texturing3D", test: "ImageTextureAtlas" },
    { component: "Time", test: "TimeSensor" },
    { component: "VolumeRendering", test: "EdgeEnhancementVolumeStyle" },
    { component: "VolumeRendering", test: "IsoSurfaceVolumeData" },

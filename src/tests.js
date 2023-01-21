@@ -343,7 +343,6 @@ const X_ITE_TESTS = [
    { path: "Texturing3D/ComposedTexture3D.x3d" },
    { path: "Texturing3D/DEMRI.x3d" },
    { path: "Texturing3D/ImageTexture3D.x3d" },
-   { path: "Texturing3D/ImageTextureAtlas.x3dv" },
    { path: "Texturing3D/NRRD-ascii.x3d" },
    { path: "Texturing3D/NRRD-gzip.x3d" },
    { path: "Texturing3D/NRRD-hex.x3d" },
