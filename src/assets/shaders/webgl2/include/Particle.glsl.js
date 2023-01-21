@@ -38,8 +38,8 @@ getVertex (const in vec4 vertex)
 
 #else
 
-#define getVertex(vertex) vertex
-#define getTexCoord(texCoord) texCoord
+#define getVertex(vertex) (vertex)
+#define getTexCoord(texCoord) (texCoord)
 
 #endif
 `;

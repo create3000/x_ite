@@ -15,13 +15,13 @@ SRGBtoLINEAR (const in vec4 srgbIn)
    #endif //MANUAL_SRGB
 }
 
+#if defined (MANUAL_SRGB)
 vec4
 Gamma (const in vec4 color)
 {
-   #if defined (MANUAL_SRGB)
-      return vec4 (pow (color .rgb, vec3 (1.0 / 2.2)), color .a);
-   #else
-      return color;
-   #endif
+   return vec4 (pow (color .rgb, vec3 (1.0 / 2.2)), color .a);
 }
+#else
+#define Gamma(color) (color)
+#endif
 `;
