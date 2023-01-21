@@ -60,8 +60,8 @@ import DEBUG      from "../DEBUG.js"
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 
 const
-   EPSILON            = 1e-4, // in seconds
-   SAMPLES_PER_SECOND = 30;
+   STEP_TIME          = 1e-4, // in seconds
+   SAMPLES_PER_SECOND = 30;   // in 1/s
 
 function GLTF2Parser (scene)
 {
@@ -1739,7 +1739,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             interpolatorNode ._key .push (times [0] / cycleInterval);
 
             for (let i = 1, length = times .length; i < length; ++ i)
-               interpolatorNode ._key .push ((times [i] - EPSILON) / cycleInterval, times [i] / cycleInterval);
+               interpolatorNode ._key .push ((times [i] - STEP_TIME) / cycleInterval, times [i] / cycleInterval);
 
             // KeyValue
 
@@ -1813,7 +1813,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             interpolatorNode ._key .push (times [0] / cycleInterval);
 
             for (let i = 1, length = times .length; i < length; ++ i)
-               interpolatorNode ._key .push ((times [i] - EPSILON) / cycleInterval, times [i] / cycleInterval);
+               interpolatorNode ._key .push ((times [i] - STEP_TIME) / cycleInterval, times [i] / cycleInterval);
 
             // KeyValue
 
