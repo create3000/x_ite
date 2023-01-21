@@ -689,17 +689,17 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
    },
    includes: function (searchElement, fromIndex)
    {
+      const
+         target     = this [_target],
+         components = target .getComponents (),
+         length     = target [_length];
+
       if (components === 1)
       {
          return Array .prototype .includes .call (this, searchElement, fromIndex);
       }
       else
       {
-         const
-            target     = this [_target],
-            components = target .getComponents (),
-            length     = target [_length];
-
          for (let i = fromIndex === undefined ? 0 : fromIndex; i < length; ++ i)
          {
             if (this [i] .equals (searchElement))
@@ -711,17 +711,17 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
    },
    indexOf: function (searchElement, fromIndex)
    {
+      const
+         target     = this [_target],
+         components = target .getComponents (),
+         length     = target [_length];
+
       if (components === 1)
       {
          return Array .prototype .indexOf .call (this, searchElement, fromIndex);
       }
       else
       {
-         const
-            target     = this [_target],
-            components = target .getComponents (),
-            length     = target [_length];
-
          for (let i = fromIndex === undefined ? 0 : fromIndex; i < length; ++ i)
          {
             if (this [i] .equals (searchElement))
@@ -733,17 +733,17 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
    },
    lastIndexOf: function (searchElement, fromIndex)
    {
+      const
+         target     = this [_target],
+         components = target .getComponents (),
+         length     = target [_length];
+
       if (components === 1)
       {
          return Array .prototype .lastIndexOf .call (this, searchElement, fromIndex);
       }
       else
       {
-         const
-            target     = this [_target],
-            components = target .getComponents (),
-            length     = target [_length];
-
          for (let i = fromIndex === undefined ? length - 1 : fromIndex; i >= 0; -- i)
          {
             if (this [i] .equals (searchElement))
