@@ -700,7 +700,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       }
       else
       {
-         for (let i = fromIndex || 0; i < length; ++ i)
+         for (let i = fromIndex === undefined ? 0 : fromIndex; i < length; ++ i)
          {
             if (this [i] .equals (searchElement))
                return true;
@@ -722,7 +722,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       }
       else
       {
-         for (let i = fromIndex === undefined ? fromIndex : 0; i < length; ++ i)
+         for (let i = fromIndex === undefined ? 0 : fromIndex; i < length; ++ i)
          {
             if (this [i] .equals (searchElement))
                return i;
