@@ -55,6 +55,7 @@ import Matrix4    from "../../standard/Math/Numbers/Matrix4.js";
 import Color3     from "../../standard/Math/Numbers/Color3.js";
 import Color4     from "../../standard/Math/Numbers/Color4.js";
 import Algorithm  from "../../standard/Math/Algorithm.js";
+import DEBUG      from "../DEBUG.js"
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 
@@ -1105,6 +1106,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          groupNode = scene .createNode ("Group", false);
 
       scene .addNamedNode (scene .getUniqueName ("Animations"), groupNode);
+      scene .addExportedNode ("Animations", groupNode);
 
       groupNode ._children = animationNodes;
 
@@ -1131,10 +1133,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       ++ this .animations;
 
-      scene .addNamedNode (scene .getUniqueName (name ? name : `Animation${this .animations}`), groupNode);
+      scene .addNamedNode (scene .getUniqueName (name || `Animation${this .animations}`), groupNode);
       scene .addNamedNode (scene .getUniqueName (`Timer${this .animations}`), timeSensorNode);
-      scene .addExportedNode (`Timer${this .animations}`, timeSensorNode);
 
+      timeSensorNode ._description = animation .name || `Animation${this .animations}`;
       groupNode ._children .push (timeSensorNode, ... channelNodes);
 
       timeSensorNode .setup ();
@@ -1155,7 +1157,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          .filter (input => input && input .array .length)
          .reduce ((value, input) => Math .max (value, input .array .at (-1)), 0);
 
-      timeSensorNode ._loop          = true;
+      timeSensorNode ._loop          = DEBUG;
       timeSensorNode ._cycleInterval = cycleInterval;
 
       return channels
