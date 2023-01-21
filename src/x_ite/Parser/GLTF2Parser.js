@@ -547,19 +547,15 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          const
             scene        = this .getScene (),
-            materialNode = scene .createNode ("PhysicalMaterial", false);
+            materialNode = scene .createNode ("UnlitMaterial", false);
 
          const
             baseColorFactor = new Color4 (0, 0, 0, 0),
             baseColor       = new Color3 (0, 0, 0);
 
-         materialNode ._baseColor = Color3 .Black;
-         materialNode ._metallic  = 0;
-         materialNode ._roughness = 1;
-
          if (this .vectorValue (pbrMetallicRoughness .baseColorFactor, baseColorFactor))
          {
-            materialNode ._emissiveColor = baseColor .set (baseColorFactor .r, baseColorFactor .g, baseColorFactor .b);
+            materialNode ._emissiveColor = this .gamma (baseColor .set (... baseColorFactor));
             materialNode ._transparency  = 1 - baseColorFactor .a;
          }
 
@@ -580,7 +576,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          if (this .vectorValue (pbrMetallicRoughness .baseColorFactor, baseColorFactor))
          {
-            materialNode ._baseColor    = baseColor .set (baseColorFactor .r, baseColorFactor .g, baseColorFactor .b);
+            materialNode ._baseColor    = baseColor .set (... baseColorFactor);
             materialNode ._transparency = 1 - baseColorFactor .a;
          }
 
@@ -612,7 +608,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          if (this .vectorValue (pbrSpecularGlossiness .diffuseFactor, diffuseFactor))
          {
-            materialNode ._emissiveColor = diffuseColor .set (diffuseFactor .r, diffuseFactor .g, diffuseFactor .b);
+            materialNode ._emissiveColor = diffuseColor .set (... diffuseFactor);
             materialNode ._transparency  = 1 - diffuseFactor .a;
          }
 
@@ -634,7 +630,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          if (this .vectorValue (pbrSpecularGlossiness .diffuseFactor, diffuseFactor))
          {
-            materialNode ._diffuseColor = diffuseColor .set (diffuseFactor .r, diffuseFactor .g, diffuseFactor .b);
+            materialNode ._diffuseColor = diffuseColor .set (... diffuseFactor);
             materialNode ._transparency = 1 - diffuseFactor .a;
          }
          else
@@ -658,6 +654,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          return materialNode;
       }
+   },
+   gamma: function (color)
+   {
+      for (let i = 0; i < 3; ++ i)
+         color [i] = Math .pow (color [i], 1.0 / 2.2);
+
+      return color;
    },
    occlusionTextureInfo: function (occlusionTexture, materialNode)
    {
@@ -689,6 +692,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
 
       return this .textureObject (this .textures [texture .index]);
+   },
+   textureMapping: function (texture)
+   {
+      if (!(texture instanceof Object))
+         return "";
+
+      return "TEXCOORD_" + (texture .texCoord || 0);
    },
    textureTransformObject: function (KHR_texture_transform)
    {
@@ -724,13 +734,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       textureTransformNode .setup ();
 
       return textureTransformNode;
-   },
-   textureMapping: function (texture)
-   {
-      if (!(texture instanceof Object))
-         return "";
-
-      return "TEXCOORD_" + (texture .texCoord || 0);
    },
    meshesArray: function (meshes)
    {
