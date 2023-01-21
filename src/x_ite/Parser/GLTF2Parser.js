@@ -1291,7 +1291,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   getDefaultTextureTransform: function (materialNode)
+   getDefaultTextureTransform: function ()
    {
       if (this .defaultTextureTransform)
          return this .defaultTextureTransform;
