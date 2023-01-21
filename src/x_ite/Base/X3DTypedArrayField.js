@@ -687,6 +687,72 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       return newArray;
    },
+   includes: function (searchElement, fromIndex)
+   {
+      const
+         target     = this [_target],
+         components = target .getComponents (),
+         length     = target [_length];
+
+      if (components === 1)
+      {
+         return Array .prototype .includes .call (this, searchElement, fromIndex);
+      }
+      else
+      {
+         for (let i = fromIndex || 0; i < length; ++ i)
+         {
+            if (this [i] .equals (searchElement))
+               return true;
+         }
+
+         return false;
+      }
+   },
+   indexOf: function (searchElement, fromIndex)
+   {
+      const
+         target     = this [_target],
+         components = target .getComponents (),
+         length     = target [_length];
+
+      if (components === 1)
+      {
+         return Array .prototype .indexOf .call (this, searchElement, fromIndex);
+      }
+      else
+      {
+         for (let i = fromIndex === undefined ? fromIndex : 0; i < length; ++ i)
+         {
+            if (this [i] .equals (searchElement))
+               return i;
+         }
+
+         return -1;
+      }
+   },
+   lastIndexOf: function (searchElement, fromIndex)
+   {
+      const
+         target     = this [_target],
+         components = target .getComponents (),
+         length     = target [_length];
+
+      if (components === 1)
+      {
+         return Array .prototype .indexOf .call (this, searchElement, fromIndex);
+      }
+      else
+      {
+         for (let i = fromIndex === undefined ? length - 1 : fromIndex; i >= 0; -- i)
+         {
+            if (this [i] .equals (searchElement))
+               return i;
+         }
+
+         return -1;
+      }
+   },
    reverse: function ()
    {
       const
@@ -743,7 +809,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       }
       else
       {
-         const result = this .map (value => value .copy ()) .sort (compareFunction ?? function (a, b)
+         const result = this .map (value => value .copy ()) .sort (compareFunction !== undefined ? compareFunction : function (a, b)
          {
             for (let c = 0; c < components; ++ c)
             {
