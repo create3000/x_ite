@@ -739,7 +739,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         target .setValue (array .subarray (0, length) .sort (compareFunction));
+         target .set (array .subarray (0, length) .sort (compareFunction));
       }
       else
       {
@@ -763,9 +763,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
             for (let c = 0, first = i * components; c < components; ++ c, ++ first)
                array [first] = value [c];
          }
-
-         target .addEvent ();
       }
+
+      target .addEvent ();
 
       return this;
    },
