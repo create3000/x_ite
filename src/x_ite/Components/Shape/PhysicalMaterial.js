@@ -201,7 +201,7 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
 
       if (geometryContext .hasNormals)
       {
-         options .push ("X3D_PHYSICAL_MATERIAL");
+         options .push ("X3D_PHYSICAL_MATERIAL", "MANUAL_SRGB");
 
          if (+this .getTextureBits ())
          {

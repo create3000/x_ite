@@ -1,6 +1,4 @@
 export default /* glsl */ `
-#define MANUAL_SRGB
-
 vec4
 SRGBtoLINEAR (const in vec4 srgbIn)
 {

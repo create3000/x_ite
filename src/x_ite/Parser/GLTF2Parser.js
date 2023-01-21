@@ -547,11 +547,15 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          const
             scene        = this .getScene (),
-            materialNode = scene .createNode ("UnlitMaterial", false);
+            materialNode = scene .createNode ("PhysicalMaterial", false);
 
          const
             baseColorFactor = new Color4 (0, 0, 0, 0),
             baseColor       = new Color3 (0, 0, 0);
+
+         materialNode ._baseColor = Color3 .Black;
+         materialNode ._metallic  = 0;
+         materialNode ._roughness = 1;
 
          if (this .vectorValue (pbrMetallicRoughness .baseColorFactor, baseColorFactor))
          {
