@@ -740,7 +740,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         return Array .prototype .indexOf .call (this, searchElement, fromIndex);
+         return Array .prototype .lastIndexOf .call (this, searchElement, fromIndex);
       }
       else
       {
