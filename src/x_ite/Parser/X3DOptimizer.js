@@ -49,10 +49,10 @@ import Vector3   from "../../standard/Math/Numbers/Vector3.js";
 import Rotation4 from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4   from "../../standard/Math/Numbers/Matrix4.js";
 
-function Optimizer (scene) { }
+function X3DOptimizer (scene) { }
 
-Optimizer .prototype = {
-   constructor: Optimizer,
+X3DOptimizer .prototype = {
+   constructor: X3DOptimizer,
    optimizeSceneGraph: function (nodes)
    {
       const removedNodes = [ ];
@@ -162,4 +162,4 @@ Optimizer .prototype = {
    },
 };
 
-export default Optimizer;
+export default X3DOptimizer;
