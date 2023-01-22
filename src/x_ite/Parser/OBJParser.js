@@ -47,6 +47,43 @@
 
 import X3DParser from "./X3DParser.js";
 
+/*
+ *  Grammar
+ */
+
+// Lexical elements
+const Grammar =
+{
+   // General
+   Whitespaces: /([\x20\n,\t\r]+)/gy,
+   Comment:     /#(.*?)(?=[\n\r])/gy,
+
+   // Keywords
+   mtllib: /mtllib/gy,
+};
+
+function parse (parser)
+{
+   this .lastIndex = parser .lastIndex;
+
+   parser .result = this .exec (parser .input);
+
+   if (parser .result)
+   {
+      parser .lastIndex = this .lastIndex;
+      return true;
+   }
+
+   return false;
+}
+
+for (const value of Object .values (Grammar))
+   value .parse = parse;
+
+/*
+ * Parser
+ */
+
 function OBJParser (scene)
 {
    X3DParser .call (this, scene);
