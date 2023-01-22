@@ -56,155 +56,69 @@ import X3DConstants              from "../Base/X3DConstants.js";
  *  Grammar
  */
 
-//	Comment out scriptBody function fragments
-//
-//	// VRML lexical elements
-//	var Grammar =
-//	{
-//		// General
-//		Whitespaces: /^([\x20\n,\t\r]+)/,
-//		Comment:     /^#(.*?)(?=[\n\r])/,
-//
-//		// Header
-//		Header:	    /^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\n\r]/,
-//
-//		// Keywords
-//		AS:          /^AS/,
-//		COMPONENT:   /^COMPONENT/,
-//		DEF:         /^DEF/,
-//		EXPORT:      /^EXPORT/,
-//		EXTERNPROTO: /^EXTERNPROTO/,
-//		FALSE:       /^FALSE/,
-//		false:       /^false/,
-//		IMPORT:      /^IMPORT/,
-//		IS:          /^IS/,
-//		META:        /^META/,
-//		NULL:        /^NULL/,
-//		TRUE:        /^TRUE/,
-//		true:        /^true/,
-//		PROFILE:     /^PROFILE/,
-//		PROTO:       /^PROTO/,
-//		ROUTE:       /^ROUTE/,
-//		TO:          /^TO/,
-//		UNIT:        /^UNIT/,
-//		USE:         /^USE/,
-//
-//		// Terminal symbols
-//		OpenBrace:    /^\{/,
-//		CloseBrace:   /^\}/,
-//		OpenBracket:  /^\[/,
-//		CloseBracket: /^\]/,
-//		Period:       /^\./,
-//		Colon:        /^\:/,
-//
-//		Id: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*)/,
-//		ComponentNameId: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*)/,
-//
-//		initializeOnly: /^initializeOnly/,
-//		inputOnly:      /^inputOnly/,
-//		outputOnly:     /^outputOnly/,
-//		inputOutput:    /^inputOutput/,
-//
-//		field:        /^field/,
-//		eventIn:      /^eventIn/,
-//		eventOut:     /^eventOut/,
-//		exposedField: /^exposedField/,
-//
-//		FieldType: /^(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)/,
-//
-//		// Values
-//		int32:  /^((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/,
-//		double: /^([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/,
-//		string: /^"((?:[^"\\]|\\\\|\\")*)"/,
-//
-//		Inf:         /^[+]?inf/i,
-//		NegativeInf: /^-inf/i,
-//		NaN:         /^[+-]?nan/i,
-//
-//		// Misc
-//		Break: /\r?\n/g,
-//	};
-//
-//	function parse (parser)
-//	{
-//		this .lastIndex = 0;
-//		parser .result  = this .exec (parser .input);
-//
-//		if (parser .result)
-//		{
-//			parser .input = parser .input .slice (parser .result [0] .length);
-//			return true;
-//		}
-//
-//		return false;
-//	}
-
-
-// Comment out scriptBody function fragments
-//
 // VRML lexical elements
-var Grammar =
+const Grammar =
 {
    // General
-   Whitespaces: new RegExp ('([\\x20\\n,\\t\\r]+)', 'gy'),
-   Comment:     new RegExp ('#(.*?)(?=[\\n\\r])',   'gy'),
+   Whitespaces: /([\x20\n,\t\r]+)/gy,
+   Comment:     /#(.*?)(?=[\n\r])/gy,
 
    // Header
-   Header:	    new RegExp ("^#(VRML|X3D) V(.*?) (utf8)(?:[ \\t]+(.*?))?[ \\t]*[\\n\\r]", 'gy'),
+   Header:	    /^#(VRML|X3D) V(.*?) (utf8)(?:[ \t]+(.*?))?[ \t]*[\n\r]/gy,
 
    // Keywords
-   AS:          new RegExp ('AS',          'gy'),
-   COMPONENT:   new RegExp ('COMPONENT',   'gy'),
-   DEF:         new RegExp ('DEF',         'gy'),
-   EXPORT:      new RegExp ('EXPORT',      'gy'),
-   EXTERNPROTO: new RegExp ('EXTERNPROTO', 'gy'),
-   FALSE:       new RegExp ('FALSE|false', 'gy'),
-   IMPORT:      new RegExp ('IMPORT',      'gy'),
-   IS:          new RegExp ('IS',          'gy'),
-   META:        new RegExp ('META',        'gy'),
-   NULL:        new RegExp ('NULL',        'gy'),
-   TRUE:        new RegExp ('TRUE|true',   'gy'),
-   PROFILE:     new RegExp ('PROFILE',     'gy'),
-   PROTO:       new RegExp ('PROTO',       'gy'),
-   ROUTE:       new RegExp ('ROUTE',       'gy'),
-   TO:          new RegExp ('TO',          'gy'),
-   UNIT:        new RegExp ('UNIT',        'gy'),
-   USE:         new RegExp ('USE',         'gy'),
+   AS:          /AS/gy,
+   COMPONENT:   /COMPONENT/gy,
+   DEF:         /DEF/gy,
+   EXPORT:      /EXPORT/gy,
+   EXTERNPROTO: /EXTERNPROTO/gy,
+   FALSE:       /FALSE|false/gy,
+   IMPORT:      /IMPORT/gy,
+   IS:          /IS/gy,
+   META:        /META/gy,
+   NULL:        /NULL/gy,
+   TRUE:        /TRUE|true/gy,
+   PROFILE:     /PROFILE/gy,
+   PROTO:       /PROTO/gy,
+   ROUTE:       /ROUTE/gy,
+   TO:          /TO/gy,
+   UNIT:        /UNIT/gy,
+   USE:         /USE/gy,
 
    // Terminal symbols
-   OpenBrace:    new RegExp ('\\{', 'gy'),
-   CloseBrace:   new RegExp ('\\}', 'gy'),
-   OpenBracket:  new RegExp ('\\[', 'gy'),
-   CloseBracket: new RegExp ('\\]', 'gy'),
-   Period:       new RegExp ('\\.', 'gy'),
-   Colon:        new RegExp ('\\:', 'gy'),
+   OpenBrace:    /\{/gy,
+   CloseBrace:   /\}/gy,
+   OpenBracket:  /\[/gy,
+   CloseBracket: /\]/gy,
+   Period:       /\./gy,
+   Colon:        /\:/gy,
 
-   Id: new RegExp ('([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]*)', 'gy'),
-   ComponentNameId: new RegExp ('([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]*)', 'gy'),
+   Id: /([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*)/gy,
+   ComponentNameId: /([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*)/gy,
 
-   initializeOnly: new RegExp ('initializeOnly', 'gy'),
-   inputOnly:      new RegExp ('inputOnly',      'gy'),
-   outputOnly:     new RegExp ('outputOnly',     'gy'),
-   inputOutput:    new RegExp ('inputOutput',    'gy'),
+   initializeOnly: /initializeOnly/gy,
+   inputOnly:      /inputOnly/gy,
+   outputOnly:     /outputOnly/gy,
+   inputOutput:    /inputOutput/gy,
 
-   field:        new RegExp ('field', 'gy'),
-   eventIn:      new RegExp ('eventIn', 'gy'),
-   eventOut:     new RegExp ('eventOut', 'gy'),
-   exposedField: new RegExp ('exposedField', 'gy'),
+   field:        /field/gy,
+   eventIn:      /eventIn/gy,
+   eventOut:     /eventOut/gy,
+   exposedField: /exposedField/gy,
 
-   FieldType: new RegExp ('(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)', 'gy'),
+   FieldType: /(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)/gy,
 
    // Values
-   int32:  new RegExp ('((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'gy'),
-   double: new RegExp ('([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'gy'),
-   string: new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'gy'),
+   int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
+   double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
+   string: /"((?:[^\\"]|\\\\|\\")*)"/gy,
 
-   Inf:         new RegExp ('[+]?(?:inf|Infinity)', 'gy'),
-   NegativeInf: new RegExp ('-(?:inf|Infinity)',    'gy'),
-   NaN:         new RegExp ('[+-]?(nan|NaN)',       'gy'),
+   Inf:         /[+]?(?:inf|Infinity)/gy,
+   NegativeInf: /-(?:inf|Infinity)/gy,
+   NaN:         /[+-]?(nan|NaN)/gy,
 
    // Misc
-   Break: new RegExp ('\\r?\\n', 'g'),
+   Break: /\r?\n/g,
 };
 
 function parse (parser)
@@ -222,8 +136,8 @@ function parse (parser)
    return false;
 }
 
-for (var key in Grammar)
-   Grammar [key] .parse = parse;
+for (const value of Object .values (Grammar))
+   value .parse = parse;
 
 /*
  *  Parser
@@ -460,7 +374,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             }
             catch (error)
             {
-               //console .error (error);
+               console .error (error);
                this .error (new Error (this .getError (error)));
             }
          })
