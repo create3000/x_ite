@@ -16,7 +16,7 @@ tags: [New, Releases]
 - Added contentScale attribute.
 - New browser options and rendering properties.
 - Added glTF parser.
-- Implemented ImageTextureAtlas.
+- Implemented ImageTextureAtlas node.
 
 ### Bug Fixes
 

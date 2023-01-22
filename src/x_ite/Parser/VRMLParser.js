@@ -356,7 +356,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       var message = "\n"
          + "********************************************************************************" + "\n"
          + "Parser error at line " + this .lineNumber + ":" + linePos  + "\n"
-         + "in '" + this .getScene () .getWorldURL () + "'" + "\n"
+         + "in '" + this .getExecutionContext () .getWorldURL () + "'" + "\n"
          + "\n"
          + lastLine + "\n"
          + line + "\n"
@@ -451,7 +451,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             try
             {
-               this .statements (this .getScene () .rootNodes);
+               this .statements (this .getExecutionContext () .rootNodes);
 
                if (this .lastIndex < this .input .length)
                   throw new Error ("Unknown statement.");
@@ -468,7 +468,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
       else
       {
-         this .statements (this .getScene () .rootNodes);
+         this .statements (this .getExecutionContext () .rootNodes);
 
          if (this .lastIndex < this .input .length)
             throw new Error ("Unknown statement.");
