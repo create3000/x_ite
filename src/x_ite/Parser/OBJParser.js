@@ -481,7 +481,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          try
          {
-            this .shape    = this .smoothingGroups .get (this .group .getName ()) .get (this .smoothingGroup);
+            this .shape    = this .smoothingGroups .get (this .group .getNodeName ()) .get (this .smoothingGroup);
             this .geometry = this .shape .geometry;
          }
          catch (error)
@@ -501,10 +501,10 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             this .group .children .push (this .shape);
 
-            if (!this .smoothingGroups .has (this .group .getName ()))
-               this .smoothingGroups .set (this .group .getName (), new Map ());
+            if (!this .smoothingGroups .has (this .group .getNodeName ()))
+               this .smoothingGroups .set (this .group .getNodeName (), new Map ());
 
-            this .smoothingGroups .get (this .group .getName ()) .set (this .smoothingGroup, this .shape);
+            this .smoothingGroups .get (this .group .getNodeName ()) .set (this .smoothingGroup, this .shape);
          }
 
          while (this .f ())

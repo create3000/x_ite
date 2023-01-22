@@ -623,6 +623,7 @@ Additionally files can be compressed using GZip compression.
 | Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  |
 | VRML         | .wrl, .wrz     | model/vrml      |
 | glTF         | .gltf          | model/gltf+json |
+| OBJ          | .obj           | model/obj       |
 
 For more information see [How to Configure Your Web Server](how-to-configure-your-web-server).
 
