@@ -45,47 +45,16 @@
  *
  ******************************************************************************/
 
-import X3DParser    from "./X3DParser.js";
-import X3DOptimizer from "./X3DOptimizer.js";
-import Vector2      from "../../standard/Math/Numbers/Vector2.js";
-import Vector3      from "../../standard/Math/Numbers/Vector3.js";
-import Quaternion   from "../../standard/Math/Numbers/Quaternion.js";
-import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
-import Matrix3      from "../../standard/Math/Numbers/Matrix3.js";
-import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
-import Color3       from "../../standard/Math/Numbers/Color3.js";
-import Color4       from "../../standard/Math/Numbers/Color4.js";
-import Algorithm    from "../../standard/Math/Algorithm.js";
-import DEBUG        from "../DEBUG.js"
+import X3DParser from "./X3DParser.js";
 
-// https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
-// https://github.com/KhronosGroup/glTF-Sample-Models
-
-const
-   STEP_TIME          = 1e-4, // in seconds
-   SAMPLES_PER_SECOND = 30;   // in 1/s
-
-function GLTF2Parser (scene)
+function OBJParser (scene)
 {
-   X3DParser    .call (this, scene);
-   X3DOptimizer .call (this),
-
-   this .buffers               = [ ];
-   this .bufferViews           = [ ];
-   this .accessors             = [ ];
-   this .samplers              = [ ];
-   this .materials             = [ ];
-   this .textureTransformNodes = new Map ();
-   this .cameras               = [ ];
-   this .viewpoints            = [ ];
-   this .nodes                 = [ ];
-   this .animations            = 0;
+   X3DParser .call (this, scene);
 }
 
-GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
-   X3DOptimizer .prototype,
+OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 {
-   constructor: GLTF2Parser,
+   constructor: OBJParser,
    getEncoding: function ()
    {
       return "STRING";
@@ -108,4 +77,4 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
 });
 
-export default GLTF2Parser;
+export default OBJParser;
