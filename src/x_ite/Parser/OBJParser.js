@@ -153,8 +153,9 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const scene = this .getExecutionContext ();
 
+      this .object          = scene .createNode ("Group");
       this .group           = scene .createNode ("Transform");
-      this .object          = scene .createNode ("Transform");
+      this .defaultMaterial = scene .createNode ("Material");
       this .texCoord        = scene .createNode ("TextureCoordinate");
       this .normal          = scene .createNode ("Normal");
       this .coord           = scene .createNode ("Coordinate");
@@ -162,7 +163,6 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .smoothingGroups = new Map ();
       this .materials       = new Map ();
       this .textures        = new Map ();
-      this .defaultMaterial = scene .createNode ("Material");
       this .point2          = new Vector2 ();
       this .point3          = new Vector3 ();
       this .lastIndex       = 0;
@@ -226,10 +226,10 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (this .usemtl ())
          return true;
 
-      if (this .g ())
+      if (this .o ())
          return true;
 
-      if (this .o ())
+      if (this .g ())
          return true;
 
       if (this .s ())
@@ -268,7 +268,19 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             for (const mtllib of mtllibs)
             {
-               console .log ("mtllib:", mtllib)
+               const
+                  scene  = this .getExecutionContext (),
+                  url    = new URL (mtllib, scene .getWorldURL ()),
+                  input  = await fetch (url) .then (response => response .text ()),
+                  parser = new MaterialParser (scene, input);
+
+               parser .parse ();
+
+					for (const [name, material] of parser .materials)
+                  this .materials .set (name, material);
+
+               for (const [name, texture] of parser .textures)
+                  this .textures .set (name, texture);
             }
          }
 
@@ -291,6 +303,38 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             this .material = this .materials .get (name) || this .defaultMaterial;
             this .texture  = this .textures .get (name);
+         }
+
+         return true;
+      }
+
+      return false;
+   },
+   o: function ()
+   {
+      this .comments ();
+
+      if (Grammar .o .parse (this))
+      {
+         this .whitespacesNoLineTerminator ();
+
+         if (Grammar .untilEndOfLine .parse (this))
+         {
+            const
+               scene = this .getExecutionContext (),
+               name  = this .sanitizeName (this .result [1]);
+
+            if (this .group .children .length)
+            {
+               this .object = scene .createNode("Group");
+               this .group  = scene .createNode ("Transform");
+
+               this .object .children .push (this .group);
+               scene .getRootNodes () .push (this .object);
+            }
+
+            if (name)
+               scene .updateNamedNode (this .getUniqueName (name), this .object);
          }
 
          return true;
@@ -328,38 +372,6 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                if (name)
                   scene .addNamedNode (scene .getUniqueName (name), this .group);
             }
-         }
-
-         return true;
-      }
-
-      return false;
-   },
-   o: function ()
-   {
-      this .comments ();
-
-      if (Grammar .o .parse (this))
-      {
-         this .whitespacesNoLineTerminator ();
-
-         if (Grammar .untilEndOfLine .parse (this))
-         {
-            const
-               scene = this .getExecutionContext (),
-               name  = this .sanitizeName (this .result [1]);
-
-            if (this .group .children .length)
-            {
-               this .object = scene .createNode("Transform");
-               this .group  = scene .createNode ("Transform");
-
-               this .object .children .push (this .group);
-               scene .getRootNodes () .push (this .object);
-            }
-
-            if (name)
-               scene .updateNamedNode (this .getUniqueName (name), this .object);
          }
 
          return true;
@@ -648,5 +660,22 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       return false;
    },
 });
+
+function MaterialParser (scene, input)
+{
+   this .executionContext = scene;
+   this .input            = input;
+   this .material         = scene .createNode ("Material");
+   this .materials        = new Map ();
+   this .textures         = new Map ();
+}
+
+MaterialParser .prototype =
+{
+   parse: function ()
+   {
+
+   },
+};
 
 export default OBJParser;
