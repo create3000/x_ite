@@ -92,7 +92,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    isValid: function ()
    {
-      return !! this .input .match (/^(?:\s|#.*?[\r\n])*(?:mtllib)/s);
+      return !! this .input .match (/^(?:\s+|#.*?[\r\n])*(?:mtllib)/s);
    },
    getInput: function ()
    {
