@@ -50,6 +50,7 @@ import JSONParser  from "./JSONParser.js";
 import VRMLParser  from "./VRMLParser.js";
 import XMLParser   from "./XMLParser.js";
 import GLTF2Parser from "./GLTF2Parser.js";
+import OBJParser   from "./OBJParser.js";
 
 function GoldenGate (scene)
 {
@@ -132,6 +133,7 @@ GoldenGate .Parser = [
    GLTF2Parser,
    JSONParser,
    VRMLParser,
+   OBJParser,
 ];
 
 export default GoldenGate;

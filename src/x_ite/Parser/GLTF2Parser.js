@@ -1967,6 +1967,4 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
 });
 
-const toUpperCaseFirstLetter = (string) => string .charAt (0) .toUpperCase () + string .substr (1);
-
 export default GLTF2Parser;

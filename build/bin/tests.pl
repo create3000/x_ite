@@ -74,7 +74,7 @@ EOT
 }
 
 sub menu {
-   my @files = sort `find src/tests -type f -name "*.x3d" -o -name "*.x3dz" -o -name "*.x3dv" -o -name "*.x3dvz" -o -name "*.x3dj" -o -name "*.x3djz" -o -name "*.gltf"`;
+   my @files = sort `find -L src/tests -type f -name "*.x3d" -o -name "*.x3dz" -o -name "*.x3dv" -o -name "*.x3dvz" -o -name "*.x3dj" -o -name "*.x3djz" -o -name "*.gltf" -o -name "*.obj"`;
 
    chomp @files;
 
