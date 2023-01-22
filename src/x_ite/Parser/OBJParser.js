@@ -48,6 +48,7 @@
 import X3DParser from "./X3DParser.js";
 import Vector2   from "../../standard/Math/Numbers/Vector2.js";
 import Vector3   from "../../standard/Math/Numbers/Vector3.js";
+import DEBUG     from "../DEBUG.js";
 
 /*
  *  Grammar
@@ -247,7 +248,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (this .fs ())
          return true;
 
-      // Skip empty and unkown lines.
+      // Skip empty and unknown lines.
 
       if (Grammar .untilEndOfLine .parse (this))
          return true;
@@ -674,7 +675,114 @@ MaterialParser .prototype =
 {
    parse: function ()
    {
+      try
+      {
+         this .statements ();
+      }
+      catch (error)
+      {
+         if (DEBUG)
+            console .log (error);
+      }
+   },
+   comments: function ()
+   {
+      while (this .comment ())
+         ;
+   },
+   comment: function ()
+   {
+      this .whitespaces ();
 
+      if (Grammar .comment .parse (this))
+         return true;
+
+      return false;
+   },
+   whitespaces: function ()
+   {
+      Grammar .whitespaces .parse (this);
+   },
+   whitespacesNoLineTerminator: function ()
+   {
+      Grammar .whitespacesNoLineTerminator .parse (this);
+   },
+   statements: function ()
+   {
+      while (this .statement ())
+		   ;
+   },
+   statement: function ()
+   {
+      if (this .newmtl ())
+         return true;
+
+      if (this .Ka ())
+         return true;
+
+      if (this .Kd ())
+         return true;
+
+      if (this .Ks ())
+         return true;
+
+      if (this .Ns ())
+         return true;
+
+      if (this .d ())
+         return true;
+
+      if (this .Tr ())
+         return true;
+
+      if (this .illum ())
+         return true;
+
+      if (this .map_Kd ())
+         return true;
+
+      // Skip empty and unknown lines.
+
+      if (Grammar .untilEndOfLine .parse (this))
+         return true;
+
+      return false;
+   },
+   newmtl: function ()
+   {
+      return false;
+   },
+   Ka: function ()
+   {
+      return false;
+   },
+   Kd: function ()
+   {
+      return false;
+   },
+   Ks: function ()
+   {
+      return false;
+   },
+   Ns: function ()
+   {
+      return false;
+   },
+   d: function ()
+   {
+      return false;
+   },
+   Tr: function ()
+   {
+      return false;
+   },
+   illum: function ()
+   {
+      return false;
+   },
+   map_Kd: function ()
+   {
+      return false;
    },
 };
 
