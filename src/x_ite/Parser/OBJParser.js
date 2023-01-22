@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import X3DParser from "./X3DParser.js";
+import Vector2   from "../../standard/Math/Numbers/Vector2.js";
 import Vector3   from "../../standard/Math/Numbers/Vector3.js";
 
 /*
@@ -157,11 +158,13 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .texCoord        = scene .createNode ("TextureCoordinate");
       this .normal          = scene .createNode ("Normal");
       this .coord           = scene .createNode ("Coordinate");
+      this .smoothingGroup  = 0;
       this .smoothingGroups = new Map ();
       this .materials       = new Map ();
       this .textures        = new Map ();
       this .defaultMaterial = scene .createNode ("Material");
-      this .point           = new Vector3 ();
+      this .point2          = new Vector2 ();
+      this .point3          = new Vector3 ();
       this .lastIndex       = 0;
 
       this .object .children .push (this .group);
@@ -366,22 +369,89 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    s: function ()
    {
+      this .comments ();
+
+      if (Grammar .s .parse (this))
+      {
+         this .whitespacesNoLineTerminator ();
+
+         if (Grammar .off .parse (this))
+         {
+            this .smoothingGroup = 0;
+            return true;
+         }
+
+         if (this .int32 ())
+         {
+            this .smoothingGroup = this .value;
+            return true;
+         }
+
+         return true;
+      }
+
       return false;
    },
    vts: function ()
    {
+      let result = false;
+
+      while (this .vt ())
+         result = true;
+
+      return result;
+   },
+   vt: function ()
+   {
+      this .comments ();
+
+      if (Grammar .vt .parse (this))
+      {
+         if (this .vec2 ())
+         {
+            this .texCoord .point .push (this .point2);
+
+            return true;
+         }
+
+         throw new Error ("Expected a texture coodinate.");
+      }
+
       return false;
    },
    vns: function ()
    {
+      let result = false;
+
+      while (this .vn ())
+         result = true;
+
+      return result;
+   },
+   vn: function ()
+   {
+      this .comments ();
+
+      if (Grammar .vn .parse (this))
+      {
+         if (this .vec3 ())
+         {
+            this .normal .vector .push (value);
+
+            return true;
+         }
+
+         throw new Error ("Expected a normal vector.");
+      }
+
       return false;
    },
    vs: function ()
    {
-      var result = false;
+      let result = false;
 
-      while (result = this .v ())
-         ;
+      while (this .v ())
+         result = true;
 
       return result;
    },
@@ -393,7 +463,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          if (this .vec3 ())
          {
-            this .coord .point .push (this .point);
+            this .coord .point .push (this .point3);
 
             return true;
          }
@@ -516,27 +586,6 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return index - 1;
    },
-   vec3: function ()
-   {
-      if (this .double ())
-      {
-         this .point .x = this .value;
-
-         if (this .double ())
-         {
-            this .point .y = this .value;
-
-            if (this .double ())
-            {
-               this .point .z = this .value;
-
-               return true;
-            }
-         }
-      }
-
-      return false;
-   },
    int32: function ()
    {
       this .whitespaces ();
@@ -557,6 +606,43 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          this .value = parseFloat (this .result [1]);
          return true;
+      }
+
+      return false;
+   },
+   vec2: function ()
+   {
+      if (this .double ())
+      {
+         this .point2 .x = this .value;
+
+         if (this .double ())
+         {
+            this .point2 .y = this .value;
+
+            return true;
+         }
+      }
+
+      return false;
+   },
+   vec3: function ()
+   {
+      if (this .double ())
+      {
+         this .point3 .x = this .value;
+
+         if (this .double ())
+         {
+            this .point3 .y = this .value;
+
+            if (this .double ())
+            {
+               this .point3 .z = this .value;
+
+               return true;
+            }
+         }
       }
 
       return false;
