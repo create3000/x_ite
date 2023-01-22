@@ -7,7 +7,7 @@ tags: [New, Releases]
 ---
 ## Upcoming Version v8.5.0
 
-With this new version it is now possible to configure antialiasing. Antialiasing can be turned on/off, multisampling and supersampling can now be configured. Additionally glTF files can now be loaded, either directly as source of the \<x3d-canvas\> element or as source of an Inline node, as well as with API methods. The glTF file is internally converted into X3D and then made available to scene-graph.
+*Leipzig, 23rd January 2023:* With this new version it is now possible to configure antialiasing. Antialiasing can be turned on/off, multisampling and supersampling can now be configured. Additionally glTF files can now be loaded, either directly as source of the \<x3d-canvas\> element or as source of an Inline node, as well as with API methods. The glTF file is internally converted into X3D and then made available to the scene-graph. Also there is a new node ImageTextureAtlas, which makes it easy to load 3D textures.
 
 ### New Features
 
