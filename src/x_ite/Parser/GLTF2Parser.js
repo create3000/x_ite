@@ -80,6 +80,12 @@ function GLTF2Parser (scene)
    this .viewpoints            = [ ];
    this .nodes                 = [ ];
    this .animations            = 0;
+
+   // Optimizer
+
+   this .removeGroups         = false;
+   this .removeEmptyGroups    = true;
+   this .combineGroupingNodes = true;
 }
 
 GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),

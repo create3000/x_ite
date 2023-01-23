@@ -53,6 +53,9 @@ function X3DOptimizer (scene) { }
 
 X3DOptimizer .prototype = {
    constructor: X3DOptimizer,
+   removeGroups: false,
+   removeEmptyGroups: false,
+   combineGroupingNodes: false,
    optimizeSceneGraph: function (nodes)
    {
       const removedNodes = [ ];
@@ -80,6 +83,16 @@ X3DOptimizer .prototype = {
          case "Group":
          {
             node .children = this .optimizeNodes (node .children, true, removedNodes);
+
+            if (this .removeEmptyGroups)
+            {
+               if (node .children .length === 0)
+                  return [ ];
+            }
+
+            if (this .removeGroups)
+               break;
+
             return node;
          }
          case "LOD":
@@ -97,19 +110,31 @@ X3DOptimizer .prototype = {
       if (!combine)
          return node;
 
+      if (this .removeEmptyGroups)
+      {
+         if (node .children .length === 0)
+            return [ ];
+      }
+
+      if (!this .combineGroupingNodes)
+         return node;
+
       if (node .getValue () .hasRoutes ())
          return node;
 
-      this .combineSingleChild (node, removedNodes);
+      if (node .getNodeTypeName () === "Transform")
+      {
+         this .combineSingleChild (node, removedNodes);
 
-      if (!node .translation .getValue () .equals (Vector3 .Zero))
-         return node;
+         if (!node .translation .getValue () .equals (Vector3 .Zero))
+            return node;
 
-      if (!node .rotation .getValue () .equals (Rotation4 .Identity))
-         return node;
+         if (!node .rotation .getValue () .equals (Rotation4 .Identity))
+            return node;
 
-      if (!node .scale .getValue () .equals (Vector3 .One))
-         return node;
+         if (!node .scale .getValue () .equals (Vector3 .One))
+            return node;
+      }
 
       removedNodes .push (node .getValue ());
 

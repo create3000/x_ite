@@ -45,11 +45,12 @@
  *
  ******************************************************************************/
 
-import X3DParser from "./X3DParser.js";
-import Vector2   from "../../standard/Math/Numbers/Vector2.js";
-import Vector3   from "../../standard/Math/Numbers/Vector3.js";
-import Color3    from "../../standard/Math/Numbers/Color3.js";
-import DEBUG     from "../DEBUG.js";
+import X3DParser    from "./X3DParser.js";
+import X3DOptimizer from "./X3DOptimizer.js";
+import Vector2      from "../../standard/Math/Numbers/Vector2.js";
+import Vector3      from "../../standard/Math/Numbers/Vector3.js";
+import Color3       from "../../standard/Math/Numbers/Color3.js";
+import DEBUG        from "../DEBUG.js";
 
 /*
  *  Grammar
@@ -130,9 +131,16 @@ for (const value of Object .values (Grammar))
 function OBJParser (scene)
 {
    X3DParser .call (this, scene);
+
+   // Optimizer
+
+   this .removeGroups         = true;
+   this .removeEmptyGroups    = true;
+   this .combineGroupingNodes = false;
 }
 
 OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+   X3DOptimizer .prototype,
 {
    constructor: OBJParser,
    getEncoding: function ()
@@ -192,6 +200,8 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Parse scene.
 
       await this .statements ();
+
+      this .optimizeSceneGraph (scene .getRootNodes ());
    },
    comments: function ()
    {
