@@ -367,8 +367,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    circleElement: function (xmlElement)
    {
-      console .log (xmlElement)
-
       // Determine style.
 
       if (!this .styleAttributes (xmlElement))
@@ -396,7 +394,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             shapeNode = scene .createNode ("Shape"),
             diskNode  = scene .createNode ("Disk2D");
 
-         shapeNode .appearance = this .createFillAppearance (this .style, bbox);
+         shapeNode .appearance = this .createFillAppearance (bbox);
          shapeNode .geometry   = diskNode;
          diskNode .solid       = false;
          diskNode .outerRadius = r;
@@ -410,7 +408,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             shapeNode  = scene .createNode ("Shape"),
             circleNode = scene .createNode ("Circle2D");
 
-         shapeNode .appearance = this .createStrokeAppearance (this .style);
+         shapeNode .appearance = this .createStrokeAppearance ();
          shapeNode .geometry   = circleNode;
          circleNode .radius    = r;
 
@@ -425,7 +423,61 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    ellipseElement: function (xmlElement)
    {
+      // Determine style.
 
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Get transform.
+
+      const
+         cx = this .lengthAttribute (xmlElement .getAttribute ("cx"), 0),
+         cy = this .lengthAttribute (xmlElement .getAttribute ("cy"), 0),
+         rx = this .lengthAttribute (xmlElement .getAttribute ("rx"), 0),
+         ry = this .lengthAttribute (xmlElement .getAttribute ("ry"), 0);
+
+      const
+         scene         = this .getExecutionContext (),
+         rMin          = Math .min (rx, ry),
+         bbox          = new Box2 (new Vector2 (rx * 2, ry * 2), new Vector2 (cx, cy)),
+         transformNode = this .createTransform (xmlElement, new Vector2 (cx, cy), new Vector2 (rx / rMin, ry / rMin));
+
+      this .groupNodes .push (transformNode);
+
+      // Create nodes.
+
+      if (this .style .fillType !== "NONE")
+      {
+         const
+            shapeNode = scene .createNode ("Shape"),
+            diskNode  = scene .createNode ("Disk2D");
+
+         shapeNode .appearance = this .createFillAppearance (bbox);
+         shapeNode .geometry   = diskNode;
+         diskNode .solid       = false;
+         diskNode .outerRadius = rMin;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      if (this .style .strokeType !== "NONE")
+      {
+         const
+            shapeNode  = scene .createNode ("Shape"),
+            circleNode = scene .createNode ("Circle2D");
+
+         shapeNode .appearance = this .createStrokeAppearance ();
+         shapeNode .geometry   = circleNode;
+         circleNode .radius    = rMin;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      this .groupNodes .pop ();
+      this .styles     .pop ();
+
+      if (transformNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
    },
    polygonElement: function (xmlElement)
    {
@@ -608,11 +660,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return transformNode;
    },
-   createFillAppearance: function (style, bbox)
+   createFillAppearance: function (bbox)
    {
 
    },
-   createStrokeAppearance: function (style)
+   createStrokeAppearance: function ()
    {
 
    },
