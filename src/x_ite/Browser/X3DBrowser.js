@@ -633,7 +633,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    viewAll: function (layerNode)
    {
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
 
       if (! layerNode)
          layerNode = this .getActiveLayer ();
@@ -645,7 +645,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    firstViewpoint: function (layerNode)
    {
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
 
       if (! layerNode)
          layerNode = this .getActiveLayer ();
@@ -660,7 +660,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    previousViewpoint: function (layerNode)
    {
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
 
       if (! layerNode)
          layerNode = this .getActiveLayer ();
@@ -692,7 +692,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    nextViewpoint: function (layerNode)
    {
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
 
       if (! layerNode)
          layerNode = this .getActiveLayer ();
@@ -724,7 +724,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    lastViewpoint: function (layerNode)
    {
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
 
       if (! layerNode)
          layerNode = this .getActiveLayer ();
@@ -745,7 +745,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          layerNode = this .getActiveLayer ();
       }
 
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
 
       if (! layerNode)
          layerNode = this .getActiveLayer ();
@@ -764,8 +764,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    bindViewpoint: function (layerNode, viewpointNode)
    {
-      layerNode     = X3DCast (X3DConstants .X3DLayerNode,     layerNode,     false);
-      viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, viewpointNode, false);
+      layerNode     = X3DCast (X3DConstants .X3DLayerNode,     layerNode);
+      viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, viewpointNode);
 
       if (! layerNode)
          throw new Error ("Browser.bindViewpoint: layerNode must be of type X3DLayerNode.")
