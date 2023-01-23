@@ -306,8 +306,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          const
             scene = this .getExecutionContext (),
-            id    = this .sanitizeName (xmlElement .getAttribute ("id")),
-            node  = scene .getNamedNode (id);
+            id    = xmlElement .getAttribute ("id"),
+            name  = this .sanitizeName (id),
+            node  = scene .getNamedNode (name);
 
          this .groupNodes .at (-1) .children .push (node);
 
