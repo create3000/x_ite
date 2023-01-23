@@ -232,7 +232,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    statement: async function ()
    {
-      if (await this .mtllib ())
+      if (await this .mtllibs ())
          return true;
 
       if (this .usemtl ())
@@ -266,7 +266,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mtllib: async function ()
+   mtllibs: async function ()
    {
       this .comments ();
 
@@ -278,42 +278,43 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const mtllibs = this .result [1] .trim () .split (/\s+/);
 
-            for (const mtllib of mtllibs)
-            {
-               const
-                  scene  = this .getExecutionContext (),
-                  url    = new URL (mtllib, scene .getWorldURL ()),
-                  input  = await fetch (url) .then (response => response .text ()) .catch (Function .prototype),
-                  parser = new MaterialParser (scene, input);
-
-               parser .parse ();
-
-					for (const [name, material] of parser .materials)
-               {
-                  const nodeName = this .sanitizeName (name);
-
-                  if (nodeName)
-                     scene .addNamedNode (scene .getUniqueName (nodeName), material);
-
-                  this .materials .set (name, material);
-               }
-
-               for (const [name, texture] of parser .textures)
-               {
-                  const nodeName = this .sanitizeName (name);
-
-                  if (nodeName)
-                     scene .addNamedNode (scene .getUniqueName (nodeName), texture);
-
-                  this .textures .set (name, texture);
-               }
-            }
+            await Promise .all (mtllibs .map (path => this .mtllib (path)));
          }
 
          return true;
       }
 
       return false;
+   },
+   mtllib: async function (path)
+   {
+      const
+         scene  = this .getExecutionContext (),
+         url    = new URL (path, scene .getWorldURL ()),
+         input  = await fetch (url) .then (response => response .text ()) .catch (Function .prototype),
+         parser = new MaterialParser (scene, input);
+
+      parser .parse ();
+
+      for (const [name, material] of parser .materials)
+      {
+         const nodeName = this .sanitizeName (name);
+
+         if (nodeName)
+            scene .addNamedNode (scene .getUniqueName (nodeName), material);
+
+         this .materials .set (name, material);
+      }
+
+      for (const [name, texture] of parser .textures)
+      {
+         const nodeName = this .sanitizeName (name);
+
+         if (nodeName)
+            scene .addNamedNode (scene .getUniqueName (nodeName), texture);
+
+         this .textures .set (name, texture);
+      }
    },
    usemtl: function ()
    {
