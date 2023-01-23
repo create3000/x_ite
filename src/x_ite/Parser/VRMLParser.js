@@ -1563,6 +1563,8 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return true;
       }
 
+      // Constants
+
       const lastIndex = this .lastIndex;
 
       Grammar .SIGN .parse (this);
