@@ -273,7 +273,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                const
                   scene  = this .getExecutionContext (),
                   url    = new URL (mtllib, scene .getWorldURL ()),
-                  input  = await fetch (url) .then (response => response .text ()),
+                  input  = await fetch (url) .then (response => response .text ()) .catch (Function .prototype),
                   parser = new MaterialParser (scene, input);
 
                parser .parse ();
@@ -464,7 +464,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          if (this .vec3 ())
          {
-            this .normal .vector .push (value);
+            this .normal .vector .push (this .point3);
 
             return true;
          }
@@ -621,6 +621,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (Grammar .int32 .parse (this))
       {
          this .value = parseInt (this .result [1]);
+
          return true;
       }
 
@@ -633,6 +634,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (Grammar .double .parse (this))
       {
          this .value = parseFloat (this .result [1]);
+
          return true;
       }
 
@@ -980,6 +982,7 @@ MaterialParser .prototype =
       if (Grammar .int32 .parse (this))
       {
          this .value = parseInt (this .result [1]);
+
          return true;
       }
 
@@ -992,6 +995,7 @@ MaterialParser .prototype =
       if (Grammar .double .parse (this))
       {
          this .value = parseFloat (this .result [1]);
+
          return true;
       }
 
