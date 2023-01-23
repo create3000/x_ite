@@ -390,8 +390,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (this .style .fillType !== "NONE")
       {
          const
-            shapeNode = scene .createNode ("Shape"),
-            rectangleNode  = scene .createNode ("Rectangle2D");
+            shapeNode     = scene .createNode ("Shape"),
+            rectangleNode = scene .createNode ("Rectangle2D");
 
          shapeNode .appearance = this .createFillAppearance (bbox);
          shapeNode .geometry   = rectangleNode;
@@ -404,7 +404,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (this .style .strokeType !== "NONE")
       {
          const
-            shapeNode  = scene .createNode ("Shape"),
+            shapeNode     = scene .createNode ("Shape"),
             rectangleNode = scene .createNode ("Rectangle2D");
 
          shapeNode .appearance = this .createStrokeAppearance ();
