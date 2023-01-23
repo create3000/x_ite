@@ -141,7 +141,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    isValid: function ()
    {
-      return !! this .input .match (/^(?:\s+|#.*?[\r\n])*\b(?:mtllib|usemtl|newmtl|Ka|Kd|Ks|Ns|d|Tr|illum|map_Kd|o|v|vt|vn|g|s|off|f)\b/s);
+      return !! this .input .match (/^(?:\s+|#.*?[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
    },
    getInput: function ()
    {
