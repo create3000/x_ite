@@ -612,7 +612,7 @@ To get X_ITE working you need to include the JavaScript file »x_ite.min.js«. O
 
 ### Supported File Formats
 
-X_ITE can load various file formats, either directly as the source of the \<x3d-canvas\> element or as the source of an Inline node, as well as using API methods of the [Browser object](reference/browser-services.md). Foreign formats such as glTF are converted internally to X3D and then made available to the scene graph.
+X_ITE can load several file formats, either directly as the source of the \<x3d-canvas\> element or as the source of an Inline node, as well as using API methods of the [Browser object](reference/browser-services.md). Foreign formats such as glTF are converted internally to X3D and then made available to the scene graph.
 
 Additionally files can be compressed using GZip compression.
 
