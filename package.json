@@ -27,7 +27,7 @@
 		"node",
 		"electron",
 		"glTF2",
-		"obj"
+		"wavefront-obj"
 	],
 	"contributors": [
 		{
