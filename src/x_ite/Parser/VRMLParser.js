@@ -204,25 +204,25 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    MFVec3f: new Fields .MFVec3f (),
    MFVec4d: new Fields .MFVec4d (),
    MFVec4f: new Fields .MFVec4f (),
-   CONSTANTS: new Map ([
-      ["INFINITY", Number .POSITIVE_INFINITY],
-      ["INF",      Number .POSITIVE_INFINITY],
-      ["NAN",      Number .NaN],
-      ["PI1_4", Math .PI * 1/4],
-      ["PI2_4", Math .PI * 2/4],
-      ["PI1_2", Math .PI * 1/2],
-      ["PI3_4", Math .PI * 3/4],
-      ["PI",    Math .PI],
-      ["PI5_4", Math .PI * 5/4],
-      ["PI6_4", Math .PI * 6/4],
-      ["PI3_2", Math .PI * 3/2],
-      ["PI7_4", Math .PI * 7/4],
-      ["PI2",   Math .PI * 2],
-      ["PI1_3", Math .PI * 1/3],
-      ["PI2_3", Math .PI * 2/3],
-      ["PI4_3", Math .PI * 4/3],
-      ["PI5_3", Math .PI * 5/3],
-   ]),
+   CONSTANTS: {
+      "INFINITY": Number .POSITIVE_INFINITY,
+      "INF": Number .POSITIVE_INFINITY,
+      "NAN": Number .NaN,
+      "PI1_4": Math .PI * 1/4,
+      "PI2_4": Math .PI * 2/4,
+      "PI1_2": Math .PI * 1/2,
+      "PI3_4": Math .PI * 3/4,
+      "PI":    Math .PI,
+      "PI5_4": Math .PI * 5/4,
+      "PI6_4": Math .PI * 6/4,
+      "PI3_2": Math .PI * 3/2,
+      "PI7_4": Math .PI * 7/4,
+      "PI2":   Math .PI * 2,
+      "PI1_3": Math .PI * 1/3,
+      "PI2_3": Math .PI * 2/3,
+      "PI4_3": Math .PI * 4/3,
+      "PI5_3": Math .PI * 5/3,
+   },
    getEncoding: function ()
    {
       return "STRING";
@@ -1570,7 +1570,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (Grammar .CONSTANTS .parse (this))
       {
-         this .value = this .CONSTANTS .get (this .result [1] .toUpperCase ());
+         this .value = this .CONSTANTS [this .result [1] .toUpperCase ()];
 
          if (sign === "-")
             this .value = - this .value;
