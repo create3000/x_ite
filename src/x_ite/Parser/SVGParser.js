@@ -363,7 +363,62 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    rectElement: function (xmlElement)
    {
+      // Determine style.
 
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Get transform.
+
+      const
+         x      = this .lengthAttribute (xmlElement .getAttribute ("x"), 0),
+         y      = this .lengthAttribute (xmlElement .getAttribute ("y"), 0),
+         width  = this .lengthAttribute (xmlElement .getAttribute ("width"), 0),
+         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0);
+
+      const
+         scene         = this .getExecutionContext (),
+         size          = new Vector2 (width, height),
+         center        = new Vector2 (x + width / 2, y + height / 2),
+         bbox          = new Box2 (size, center),
+         transformNode = this .createTransform (xmlElement, center);
+
+      this .groupNodes .push (transformNode);
+
+      // Create nodes.
+
+      if (this .style .fillType !== "NONE")
+      {
+         const
+            shapeNode = scene .createNode ("Shape"),
+            rectangleNode  = scene .createNode ("Rectangle2D");
+
+         shapeNode .appearance = this .createFillAppearance (bbox);
+         shapeNode .geometry   = rectangleNode;
+         rectangleNode .solid  = false;
+         rectangleNode .size   = size;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      if (this .style .strokeType !== "NONE")
+      {
+         const
+            shapeNode  = scene .createNode ("Shape"),
+            rectangleNode = scene .createNode ("Rectangle2D");
+
+         shapeNode .appearance = this .createStrokeAppearance ();
+         shapeNode .geometry   = rectangleNode;
+         rectangleNode .size   = size;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      this .groupNodes .pop ();
+      this .styles     .pop ();
+
+      if (transformNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
    },
    circleElement: function (xmlElement)
    {
