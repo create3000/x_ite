@@ -92,25 +92,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    parseIntoScene: function (success, error)
    {
-      try
-      {
-         const
-            browser = this .getBrowser (),
-            scene   = this .getScene ();
-
-         scene .setEncoding ("SVG");
-         scene .setProfile (browser .getProfile ("Interchange"));
-
-         this .xmlElement (this .input);
-
-         success (scene);
-      }
-      catch (exception)
-      {
-         error (exception);
-      }
+      this .xmlElement (this .input)
+         .then (success)
+         .catch (error);
    },
-   xmlElement: function (xmlElement)
+   xmlElement: async function (xmlElement)
    {
       switch (xmlElement .nodeName)
       {
@@ -124,20 +110,32 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             for (var i = 0; i < svg .length; ++ i)
                this .svgElement (svg [i]);
 
-            return;
+            break;
          }
          case "svg":
          case "SVG":
          {
             this .svgElement (xmlElement);
-            return;
+            break;
          }
       }
-   },
-   svgElement: function (xmlElement)
-   {
-      console .log (xmlElement)
 
+      return this .getScene ();
+   },
+   svgElement: async function (xmlElement)
+   {
+      const
+         browser = this .getBrowser (),
+         scene   = this .getScene ();
+
+      scene .setEncoding ("SVG");
+      scene .setProfile (browser .getProfile ("Interchange"));
+      scene .addComponent (browser .getComponent ("Geometry2D", 2));
+      scene .addComponent (browser .getComponent ("Layering", 1));
+
+      await this .loadComponents ();
+
+      console .log (xmlElement)
    },
 });
 
