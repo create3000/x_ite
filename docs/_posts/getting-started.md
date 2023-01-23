@@ -718,7 +718,7 @@ A MFString value with urls that should be loaded on page load. If no *url* attri
 
 ### More Options
 
-More options can be adjusted using the [Browser Object](reference/browser-services#browser-object) and [Browser Options](reference/browser-services#browser-options) for scene specific adjustments.
+More options can be adjusted using the [Browser object](reference/browser-services#browser-object) and [Browser Options](reference/browser-services#browser-options) for scene specific adjustments.
 
 ## Keyboard Shortcuts
 
