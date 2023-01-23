@@ -15,7 +15,7 @@ Runs completely standalone, ie. there are no other library dependencies. You jus
 
 Competitive performance for most frequently used functions and nodes. All function within X_ITE are optimized to give your the best performance that JavaScript can offer.
 
-The X_ITE package is optimized in size with Terser to achieve the smallest size we can reach. **X_ITE has only 273kB in size minified and compressed.**
+The X_ITE package is optimized in size with Terser to achieve the smallest size we can reach. **X_ITE has only 275kB in size minified and compressed.**
 
 X_ITE is designed for optimal performance with event driven programming. The flow of the program is determined by events such as user actions (mouse clicks, key presses), sensor outputs, or messages from other scripts.
 
