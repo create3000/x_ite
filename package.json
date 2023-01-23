@@ -25,7 +25,9 @@
 		"JSON",
 		"xite",
 		"node",
-		"electron"
+		"electron",
+		"glTF",
+		"obj"
 	],
 	"contributors": [
 		{
