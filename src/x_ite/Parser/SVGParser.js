@@ -61,13 +61,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    isValid: function ()
    {
-      if (!(this .input instanceof XMLDocument) || (this .input instanceof HTMLElement))
+      if (!(this .input instanceof XMLDocument))
          return false;
 
       if ($(this .input) .children ("svg") .length)
          return true;
 
-      if (this .input .nodeName .toLowerCase () === "svg")
+      if (this .input .nodeName === "svg")
          return true;
 
       return false;
@@ -104,16 +104,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const svg = $(xmlElement) .children ("svg");
 
-            if (!svg .length)
-               return;
-
-            for (var i = 0; i < svg .length; ++ i)
+            for (let i = 0; i < svg .length; ++ i)
                this .svgElement (svg [i]);
 
             break;
          }
          case "svg":
-         case "SVG":
          {
             this .svgElement (xmlElement);
             break;
