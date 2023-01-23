@@ -202,6 +202,14 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       await this .loadComponents ();
 
+      // Create background.
+
+      const background = scene .createNode ("Background");
+
+      background .skyColor = [0, 0, 0];
+
+      scene .getRootNodes () .push (background);
+
       // Create navigation info.
 
       const navigationInfo = scene .createNode ("NavigationInfo");
@@ -249,23 +257,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .elements (xmlElement);
 
-      // Add Transform or LayerSet.
+      // Add root Transform node.
 
-      if (this .rootTransform)
-      {
-         scene .addNamedNode (scene .getUniqueName ("SVG"), this .rootTransform);
-         scene .getRootNodes () .push (this .rootTransform);
-      }
-      else
-      {
-         scene .addNamedNode (scene .getUniqueName ("SVG"), this .layerSet);
-         scene .getRootNodes () .push (this .layerSet);
-
-         this .layerSet .activeLayer = 0;
-
-         for (let i = 0, length = this .layerSet .layers .length; i < length; ++ i)
-            this .layerSet .order .push (i + 1);
-      }
+      scene .addNamedNode (scene .getUniqueName ("ViewBox"), this .rootTransform);
+      scene .getRootNodes () .push (this .rootTransform);
    },
    elements: function (xmlElement)
    {
