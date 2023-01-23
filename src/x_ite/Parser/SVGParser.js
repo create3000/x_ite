@@ -127,6 +127,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
          }
          case "svg":
+         case "SVG":
          {
             this .svgElement (xmlElement);
             return;
