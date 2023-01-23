@@ -48,6 +48,7 @@
 import X3DParser from "./X3DParser.js";
 import Vector2   from "../../standard/Math/Numbers/Vector2.js";
 import Vector3   from "../../standard/Math/Numbers/Vector3.js";
+import Color3    from "../../standard/Math/Numbers/Color3.js";
 import DEBUG     from "../DEBUG.js";
 
 /*
@@ -278,10 +279,24 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                parser .parse ();
 
 					for (const [name, material] of parser .materials)
+               {
+                  const nodeName = this .sanitizeName (name);
+
+                  if (nodeName)
+                     scene .addNamedNode (scene .getUniqueName (nodeName), material);
+
                   this .materials .set (name, material);
+               }
 
                for (const [name, texture] of parser .textures)
+               {
+                  const nodeName = this .sanitizeName (name);
+
+                  if (nodeName)
+                     scene .addNamedNode (scene .getUniqueName (nodeName), texture);
+
                   this .textures .set (name, texture);
+               }
             }
          }
 
@@ -300,7 +315,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          if (Grammar .untilEndOfLine .parse (this))
          {
-            const name = this .sanitizeName (this .result [1]);
+            const name = this .result [1];
 
             this .material = this .materials .get (name) || this .defaultMaterial;
             this .texture  = this .textures .get (name);
@@ -669,6 +684,8 @@ function MaterialParser (scene, input)
    this .material         = scene .createNode ("Material");
    this .materials        = new Map ();
    this .textures         = new Map ();
+   this .color3           = new Color3 ();
+   this .name             = "";
 }
 
 MaterialParser .prototype =
@@ -750,38 +767,255 @@ MaterialParser .prototype =
    },
    newmtl: function ()
    {
+      this .comments ();
+
+      if (Grammar .newmtl .parse (this))
+      {
+         this .whitespacesNoLineTerminator ();
+
+         this .name = "";
+
+         if (Grammar .untilEndOfLine .parse (this))
+         {
+            this .name = this .result [1];
+
+            this .material = this .executionContext .createNode ("Material");
+
+            this .materials .set (this .name, this .material);
+
+            return true;
+         }
+
+         Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
       return false;
    },
    Ka: function ()
    {
+      this .comments ();
+
+      if (Grammar .Ka .parse (this))
+      {
+         if (this .col3 ())
+         {
+            const hsv = this .color3 .getHSV ([ ]);
+
+            this .material .ambientIntensity = hsv [2];
+
+            return true;
+         }
+
+         Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
       return false;
    },
    Kd: function ()
    {
+      this .comments ();
+
+      if (Grammar .Kd .parse (this))
+      {
+         if (this .col3 ())
+         {
+            this .material .diffuseColor = this .color3;
+
+            return true;
+         }
+
+         Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
       return false;
    },
    Ks: function ()
    {
+      this .comments ();
+
+      if (Grammar .Ks .parse (this))
+      {
+         if (this .col3 ())
+         {
+            this .material .specularColor = this .color3;
+
+            return true;
+         }
+
+         Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
       return false;
    },
    Ns: function ()
    {
+      this .comments ();
+
+      if (Grammar .Ns .parse (this))
+      {
+         if (this .double ())
+         {
+            this .material .shininess = this .value / 1000;
+
+            return true;
+         }
+
+         Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
       return false;
    },
    d: function ()
    {
+      this .comments ();
+
+      if (Grammar .d .parse (this))
+      {
+         if (this .double ())
+         {
+            this .material .transparency = 1 - this .value;
+
+            return true;
+         }
+
+         Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
       return false;
    },
    Tr: function ()
    {
+      this .comments ();
+
+      if (Grammar .Tr .parse (this))
+      {
+         if (this .double ())
+         {
+            this .material .transparency = this .value;
+
+            return true;
+         }
+
+         Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
       return false;
    },
    illum: function ()
    {
+      this .comments ();
+
+      if (Grammar .illum .parse (this))
+      {
+         if (this .int32 ())
+         {
+            // Don't know what to do with illum value in X3D.
+            return true;
+         }
+
+         Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
       return false;
    },
    map_Kd: function ()
    {
+      this .comments ();
+
+      if (Grammar .map_Kd .parse (this))
+      {
+         this .whiteSpacesNoLineTerminator ();
+
+         if (Grammar .untilEndOfLine .parse (this))
+         {
+            const string = this .result [1];
+
+            if (string .length && this .name .length)
+            {
+               const paths = string .trim () .split (/\s+/);
+
+               if (paths .length)
+               {
+                  const
+                     scene   = this .executionContext,
+                     texture = scene .createNode ("ImageTexture"),
+                     path    = paths .at (-1) .replace (/\\/g, "/");
+
+                  texture .url = [path];
+
+                  this .textures .set (this .name, texture);
+               }
+            }
+
+            return true;
+         }
+
+         Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
+      return false;
+   },
+   int32: function ()
+   {
+      this .whitespaces ();
+
+      if (Grammar .int32 .parse (this))
+      {
+         this .value = parseInt (this .result [1]);
+         return true;
+      }
+
+      return false;
+   },
+   double: function ()
+   {
+      this .whitespaces ();
+
+      if (Grammar .double .parse (this))
+      {
+         this .value = parseFloat (this .result [1]);
+         return true;
+      }
+
+      return false;
+   },
+   col3: function ()
+   {
+      if (this .double ())
+      {
+         this .color3 .r = this .value;
+
+         if (this .double ())
+         {
+            this .color3 .g = this .value;
+
+            if (this .double ())
+            {
+               this .color3 .b = this .value;
+
+               return true;
+            }
+         }
+      }
+
       return false;
    },
 };
