@@ -1,4 +1,4 @@
-/* X_ITE v8.5.0 */(function webpackUniversalModuleDefinition(root, factory) {
+/* X_ITE v8.5.1 */(function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 816:
+/***/ 853:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(113);
+/* provided dependency */ var jQuery = __webpack_require__(124);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 807:
+/***/ 213:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(113);
+/* provided dependency */ var jQuery = __webpack_require__(124);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 871:
+/***/ 740:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(113)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(124)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 113:
+/***/ 124:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11812,7 +11812,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 308:
+/***/ 515:
 /***/ ((module) => {
 
 /**
@@ -16591,7 +16591,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 365:
+/***/ 408:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19836,7 +19836,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 24:
+/***/ 849:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -35156,7 +35156,7 @@ x_ite_Namespace.set ("x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
  *
  ******************************************************************************/
 
-const VERSION_default_ = "8.5.0";
+const VERSION_default_ = "8.5.1";
 ;
 
 x_ite_Namespace.set ("x_ite/Browser/VERSION", VERSION_default_);
@@ -35883,7 +35883,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(113);
+/* provided dependency */ var $ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36834,7 +36834,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(113);
+/* provided dependency */ var Notification_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36956,8 +36956,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(807);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(113);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(213);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42161,155 +42161,69 @@ x_ite_Namespace.set ("x_ite/Parser/X3DParser", X3DParser_default_);
  *  Grammar
  */
 
-//	Comment out scriptBody function fragments
-//
-//	// VRML lexical elements
-//	var Grammar =
-//	{
-//		// General
-//		Whitespaces: /^([\x20\n,\t\r]+)/,
-//		Comment:     /^#(.*?)(?=[\n\r])/,
-//
-//		// Header
-//		Header:	    /^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\n\r]/,
-//
-//		// Keywords
-//		AS:          /^AS/,
-//		COMPONENT:   /^COMPONENT/,
-//		DEF:         /^DEF/,
-//		EXPORT:      /^EXPORT/,
-//		EXTERNPROTO: /^EXTERNPROTO/,
-//		FALSE:       /^FALSE/,
-//		false:       /^false/,
-//		IMPORT:      /^IMPORT/,
-//		IS:          /^IS/,
-//		META:        /^META/,
-//		NULL:        /^NULL/,
-//		TRUE:        /^TRUE/,
-//		true:        /^true/,
-//		PROFILE:     /^PROFILE/,
-//		PROTO:       /^PROTO/,
-//		ROUTE:       /^ROUTE/,
-//		TO:          /^TO/,
-//		UNIT:        /^UNIT/,
-//		USE:         /^USE/,
-//
-//		// Terminal symbols
-//		OpenBrace:    /^\{/,
-//		CloseBrace:   /^\}/,
-//		OpenBracket:  /^\[/,
-//		CloseBracket: /^\]/,
-//		Period:       /^\./,
-//		Colon:        /^\:/,
-//
-//		Id: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*)/,
-//		ComponentNameId: /^([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*)/,
-//
-//		initializeOnly: /^initializeOnly/,
-//		inputOnly:      /^inputOnly/,
-//		outputOnly:     /^outputOnly/,
-//		inputOutput:    /^inputOutput/,
-//
-//		field:        /^field/,
-//		eventIn:      /^eventIn/,
-//		eventOut:     /^eventOut/,
-//		exposedField: /^exposedField/,
-//
-//		FieldType: /^(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)/,
-//
-//		// Values
-//		int32:  /^((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/,
-//		double: /^([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/,
-//		string: /^"((?:[^"\\]|\\\\|\\")*)"/,
-//
-//		Inf:         /^[+]?inf/i,
-//		NegativeInf: /^-inf/i,
-//		NaN:         /^[+-]?nan/i,
-//
-//		// Misc
-//		Break: /\r?\n/g,
-//	};
-//
-//	function parse (parser)
-//	{
-//		this .lastIndex = 0;
-//		parser .result  = this .exec (parser .input);
-//
-//		if (parser .result)
-//		{
-//			parser .input = parser .input .slice (parser .result [0] .length);
-//			return true;
-//		}
-//
-//		return false;
-//	}
-
-
-// Comment out scriptBody function fragments
-//
 // VRML lexical elements
-var Grammar =
+const Grammar =
 {
    // General
-   Whitespaces: new RegExp ('([\\x20\\n,\\t\\r]+)', 'gy'),
-   Comment:     new RegExp ('#(.*?)(?=[\\n\\r])',   'gy'),
+   Whitespaces: /([\x20\n,\t\r]+)/gy,
+   Comment:     /#(.*?)(?=[\n\r])/gy,
 
    // Header
-   Header:	    new RegExp ("^#(VRML|X3D) V(.*?) (utf8)(?:[ \\t]+(.*?))?[ \\t]*[\\n\\r]", 'gy'),
+   Header:	    /^#(VRML|X3D) V(.*?) (utf8)(?:[ \t]+(.*?))?[ \t]*[\n\r]/gy,
 
    // Keywords
-   AS:          new RegExp ('AS',          'gy'),
-   COMPONENT:   new RegExp ('COMPONENT',   'gy'),
-   DEF:         new RegExp ('DEF',         'gy'),
-   EXPORT:      new RegExp ('EXPORT',      'gy'),
-   EXTERNPROTO: new RegExp ('EXTERNPROTO', 'gy'),
-   FALSE:       new RegExp ('FALSE|false', 'gy'),
-   IMPORT:      new RegExp ('IMPORT',      'gy'),
-   IS:          new RegExp ('IS',          'gy'),
-   META:        new RegExp ('META',        'gy'),
-   NULL:        new RegExp ('NULL',        'gy'),
-   TRUE:        new RegExp ('TRUE|true',   'gy'),
-   PROFILE:     new RegExp ('PROFILE',     'gy'),
-   PROTO:       new RegExp ('PROTO',       'gy'),
-   ROUTE:       new RegExp ('ROUTE',       'gy'),
-   TO:          new RegExp ('TO',          'gy'),
-   UNIT:        new RegExp ('UNIT',        'gy'),
-   USE:         new RegExp ('USE',         'gy'),
+   AS:          /AS/gy,
+   COMPONENT:   /COMPONENT/gy,
+   DEF:         /DEF/gy,
+   EXPORT:      /EXPORT/gy,
+   EXTERNPROTO: /EXTERNPROTO/gy,
+   FALSE:       /FALSE|false/gy,
+   IMPORT:      /IMPORT/gy,
+   IS:          /IS/gy,
+   META:        /META/gy,
+   NULL:        /NULL/gy,
+   TRUE:        /TRUE|true/gy,
+   PROFILE:     /PROFILE/gy,
+   PROTO:       /PROTO/gy,
+   ROUTE:       /ROUTE/gy,
+   TO:          /TO/gy,
+   UNIT:        /UNIT/gy,
+   USE:         /USE/gy,
 
    // Terminal symbols
-   OpenBrace:    new RegExp ('\\{', 'gy'),
-   CloseBrace:   new RegExp ('\\}', 'gy'),
-   OpenBracket:  new RegExp ('\\[', 'gy'),
-   CloseBracket: new RegExp ('\\]', 'gy'),
-   Period:       new RegExp ('\\.', 'gy'),
-   Colon:        new RegExp ('\\:', 'gy'),
+   OpenBrace:    /\{/gy,
+   CloseBrace:   /\}/gy,
+   OpenBracket:  /\[/gy,
+   CloseBracket: /\]/gy,
+   Period:       /\./gy,
+   Colon:        /\:/gy,
 
-   Id: new RegExp ('([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f]*)', 'gy'),
-   ComponentNameId: new RegExp ('([^\\x30-\\x39\\x00-\\x20\\x22\\x23\\x27\\x2b\\x2c\\x2d\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]{1}[^\\x00-\\x20\\x22\\x23\\x27\\x2c\\x2e\\x5b\\x5c\\x5d\\x7b\\x7d\\x7f\\x3a]*)', 'gy'),
+   Id: /([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*)/gy,
+   ComponentNameId: /([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*)/gy,
 
-   initializeOnly: new RegExp ('initializeOnly', 'gy'),
-   inputOnly:      new RegExp ('inputOnly',      'gy'),
-   outputOnly:     new RegExp ('outputOnly',     'gy'),
-   inputOutput:    new RegExp ('inputOutput',    'gy'),
+   initializeOnly: /initializeOnly/gy,
+   inputOnly:      /inputOnly/gy,
+   outputOnly:     /outputOnly/gy,
+   inputOutput:    /inputOutput/gy,
 
-   field:        new RegExp ('field', 'gy'),
-   eventIn:      new RegExp ('eventIn', 'gy'),
-   eventOut:     new RegExp ('eventOut', 'gy'),
-   exposedField: new RegExp ('exposedField', 'gy'),
+   field:        /field/gy,
+   eventIn:      /eventIn/gy,
+   eventOut:     /eventOut/gy,
+   exposedField: /exposedField/gy,
 
-   FieldType: new RegExp ('(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)', 'gy'),
+   FieldType: /(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)/gy,
 
    // Values
-   int32:  new RegExp ('((?:0[xX][\\da-fA-F]+)|(?:[+-]?\\d+))', 'gy'),
-   double: new RegExp ('([+-]?(?:(?:(?:\\d*\\.\\d+)|(?:\\d+(?:\\.)?))(?:[eE][+-]?\\d+)?))', 'gy'),
-   string: new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'gy'),
+   int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
+   double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
+   string: /"((?:[^\\"]|\\\\|\\")*)"/gy,
 
-   Inf:         new RegExp ('[+]?(?:inf|Infinity)', 'gy'),
-   NegativeInf: new RegExp ('-(?:inf|Infinity)',    'gy'),
-   NaN:         new RegExp ('[+-]?(nan|NaN)',       'gy'),
+   Inf:         /[+]?(?:inf|Infinity)/gy,
+   NegativeInf: /-(?:inf|Infinity)/gy,
+   NaN:         /[+-]?(nan|NaN)/gy,
 
    // Misc
-   Break: new RegExp ('\\r?\\n', 'g'),
+   Break: /\r?\n/g,
 };
 
 function parse (parser)
@@ -42327,8 +42241,8 @@ function parse (parser)
    return false;
 }
 
-for (var key in Grammar)
-   Grammar [key] .parse = parse;
+for (const value of Object .values (Grammar))
+   value .parse = parse;
 
 /*
  *  Parser
@@ -42565,7 +42479,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             }
             catch (error)
             {
-               //console .error (error);
+               console .error (error);
                this .error (new Error (this .getError (error)));
             }
          })
@@ -45072,7 +44986,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(113);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46970,6 +46884,9 @@ function X3DOptimizer (scene) { }
 
 X3DOptimizer .prototype = {
    constructor: X3DOptimizer,
+   removeGroups: false,
+   removeEmptyGroups: false,
+   combineGroupingNodes: false,
    optimizeSceneGraph: function (nodes)
    {
       const removedNodes = [ ];
@@ -46997,6 +46914,16 @@ X3DOptimizer .prototype = {
          case "Group":
          {
             node .children = this .optimizeNodes (node .children, true, removedNodes);
+
+            if (this .removeEmptyGroups)
+            {
+               if (node .children .length === 0)
+                  return [ ];
+            }
+
+            if (this .removeGroups)
+               break;
+
             return node;
          }
          case "LOD":
@@ -47014,19 +46941,31 @@ X3DOptimizer .prototype = {
       if (!combine)
          return node;
 
+      if (this .removeEmptyGroups)
+      {
+         if (node .children .length === 0)
+            return [ ];
+      }
+
+      if (!this .combineGroupingNodes)
+         return node;
+
       if (node .getValue () .hasRoutes ())
          return node;
 
-      this .combineSingleChild (node, removedNodes);
+      if (node .getNodeTypeName () === "Transform")
+      {
+         this .combineSingleChild (node, removedNodes);
 
-      if (!node .translation .getValue () .equals (Numbers_Vector3.Zero))
-         return node;
+         if (!node .translation .getValue () .equals (Numbers_Vector3.Zero))
+            return node;
 
-      if (!node .rotation .getValue () .equals (Numbers_Rotation4.Identity))
-         return node;
+         if (!node .rotation .getValue () .equals (Numbers_Rotation4.Identity))
+            return node;
 
-      if (!node .scale .getValue () .equals (Numbers_Vector3.One))
-         return node;
+         if (!node .scale .getValue () .equals (Numbers_Vector3.One))
+            return node;
+      }
 
       removedNodes .push (node .getValue ());
 
@@ -47167,6 +47106,12 @@ function GLTF2Parser (scene)
    this .viewpoints            = [ ];
    this .nodes                 = [ ];
    this .animations            = 0;
+
+   // Optimizer
+
+   this .removeGroups         = false;
+   this .removeEmptyGroups    = true;
+   this .combineGroupingNodes = true;
 }
 
 GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.prototype),
@@ -49054,15 +48999,12 @@ GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.protot
    },
 });
 
-const toUpperCaseFirstLetter = (string) => string .charAt (0) .toUpperCase () + string .substr (1);
-
 const GLTF2Parser_default_ = GLTF2Parser;
 ;
 
 x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(113);
+;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49109,6 +49051,1050 @@ x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
+
+
+
+
+
+
+
+/*
+ *  Grammar
+ */
+
+// Lexical elements
+const OBJParser_Grammar =
+{
+   // General
+   whitespaces: /[\x20\n\t\r]+/gy,
+   whitespacesNoLineTerminator: /[\x20\t]+/gy,
+   comment: /#.*?(?=[\n\r])/gy,
+   untilEndOfLine: /([^\r\n]+)/gy,
+
+   // Keywords
+   mtllib: /\bmtllib\b/gy,
+   usemtl: /\busemtl\b/gy,
+   newmtl: /\bnewmtl\b/gy,
+   Ka: /\bKa\b/gy,
+   Kd: /\bKd\b/gy,
+   Ks: /\bKs\b/gy,
+   Ns: /\bNs\b/gy,
+   d: /\bd\b/gy,
+   Tr: /\bTr\b/gy,
+   illum: /\billum\b/gy,
+   map_Kd: /\bmap_Kd\b/gy,
+   o: /\bo\b/gy,
+   v: /\bv\b/gy,
+   vt: /\bvt\b/gy,
+   vn: /\bvn\b/gy,
+   g: /\bg\b/gy,
+   s: /\bs\b/gy,
+   off: /\boff\b/gy,
+   f: /\bf\b/gy,
+   slash: /\//gy,
+
+   // Values
+   int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
+   double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
+};
+
+function OBJParser_parse (parser)
+{
+   this .lastIndex = parser .lastIndex;
+
+   parser .result = this .exec (parser .input);
+
+   if (parser .result)
+   {
+      parser .lastIndex = this .lastIndex;
+      return true;
+   }
+
+   return false;
+}
+
+function lookahead (parser)
+{
+   const
+      lastIndex = parser .lastIndex,
+      result    = this .parse (parser);
+
+   parser .lastIndex = lastIndex;
+
+   return result;
+}
+
+for (const value of Object .values (OBJParser_Grammar))
+{
+   value .parse     = OBJParser_parse;
+   value .lookahead = lookahead;
+}
+
+/*
+ * Parser
+ */
+
+function OBJParser (scene)
+{
+   Parser_X3DParser.call (this, scene);
+
+   // Optimizer
+
+   this .removeGroups         = true;
+   this .removeEmptyGroups    = true;
+   this .combineGroupingNodes = false;
+}
+
+OBJParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototype),
+   Parser_X3DOptimizer.prototype,
+{
+   constructor: OBJParser,
+   getEncoding: function ()
+   {
+      return "STRING";
+   },
+   isValid: function ()
+   {
+      return !! this .input .match (/^(?:\s+|#.*?[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
+   },
+   getInput: function ()
+   {
+      return this .input;
+   },
+   setInput: function (string)
+   {
+      this .input = string;
+   },
+   parseIntoScene: function (success, error)
+   {
+      const scene = this .getExecutionContext ();
+
+      this .object          = scene .createNode ("Transform");
+      this .group           = scene .createNode ("Group");
+      this .defaultMaterial = scene .createNode ("Material");
+      this .texCoord        = scene .createNode ("TextureCoordinate");
+      this .normal          = scene .createNode ("Normal");
+      this .coord           = scene .createNode ("Coordinate");
+      this .smoothingGroup  = 0;
+      this .smoothingGroups = new Map ();
+      this .materials       = new Map ();
+      this .textures        = new Map ();
+      this .point2          = new Numbers_Vector2 ();
+      this .point3          = new Numbers_Vector3 ();
+      this .lastIndex       = 0;
+
+      this .object .children .push (this .group);
+      scene .getRootNodes () .push (this .object);
+
+      this .obj ()
+         .then (success)
+         .catch (error);
+   },
+   obj: async function ()
+   {
+      // Set profile and components.
+
+      const
+         browser = this .getBrowser (),
+         scene   = this .getScene ();
+
+      scene .setEncoding ("OBJ");
+      scene .setProfile (browser .getProfile ("Interchange"));
+
+      await this .loadComponents ();
+
+      // Parse scene.
+
+      await this .statements ();
+
+      this .optimizeSceneGraph (scene .getRootNodes ());
+   },
+   comments: function ()
+   {
+      while (this .comment ())
+         ;
+   },
+   comment: function ()
+   {
+      this .whitespaces ();
+
+      if (OBJParser_Grammar .comment .parse (this))
+         return true;
+
+      return false;
+   },
+   whitespaces: function ()
+   {
+      OBJParser_Grammar .whitespaces .parse (this);
+   },
+   whitespacesNoLineTerminator: function ()
+   {
+      OBJParser_Grammar .whitespacesNoLineTerminator .parse (this);
+   },
+   statements: async function ()
+   {
+      while (await this .statement ())
+         ;
+   },
+   statement: async function ()
+   {
+      if (await this .mtllib ())
+         return true;
+
+      if (this .usemtl ())
+         return true;
+
+      if (this .o ())
+         return true;
+
+      if (this .g ())
+         return true;
+
+      if (this .s ())
+         return true;
+
+      if (this .vts ())
+         return true;
+
+      if (this .vns ())
+         return true;
+
+      if (this .vs ())
+         return true;
+
+      if (this .fs ())
+         return true;
+
+      // Skip empty and unknown lines.
+
+      if (OBJParser_Grammar .untilEndOfLine .parse (this))
+         return true;
+
+      return false;
+   },
+   mtllib: async function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .mtllib .parse (this))
+      {
+         this .whitespacesNoLineTerminator ();
+
+         if (OBJParser_Grammar .untilEndOfLine .parse (this))
+         {
+            const mtllibs = this .result [1] .trim () .split (/\s+/);
+
+            for (const mtllib of mtllibs)
+            {
+               const
+                  scene  = this .getExecutionContext (),
+                  url    = new URL (mtllib, scene .getWorldURL ()),
+                  input  = await fetch (url) .then (response => response .text ()) .catch (Function .prototype),
+                  parser = new MaterialParser (scene, input);
+
+               parser .parse ();
+
+					for (const [name, material] of parser .materials)
+               {
+                  const nodeName = this .sanitizeName (name);
+
+                  if (nodeName)
+                     scene .addNamedNode (scene .getUniqueName (nodeName), material);
+
+                  this .materials .set (name, material);
+               }
+
+               for (const [name, texture] of parser .textures)
+               {
+                  const nodeName = this .sanitizeName (name);
+
+                  if (nodeName)
+                     scene .addNamedNode (scene .getUniqueName (nodeName), texture);
+
+                  this .textures .set (name, texture);
+               }
+            }
+         }
+
+         return true;
+      }
+
+      return false;
+   },
+   usemtl: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .usemtl .parse (this))
+      {
+         this .whitespacesNoLineTerminator ();
+
+         if (OBJParser_Grammar .untilEndOfLine .parse (this))
+         {
+            const name = this .result [1];
+
+            this .material = this .materials .get (name) || this .defaultMaterial;
+            this .texture  = this .textures .get (name);
+         }
+
+         return true;
+      }
+
+      return false;
+   },
+   o: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .o .parse (this))
+      {
+         this .whitespacesNoLineTerminator ();
+
+         if (OBJParser_Grammar .untilEndOfLine .parse (this))
+         {
+            const
+               scene = this .getExecutionContext (),
+               name  = this .sanitizeName (this .result [1]);
+
+            if (this .group .children .length)
+            {
+               this .object = scene .createNode("Transform");
+               this .group  = scene .createNode ("Group");
+
+               this .object .children .push (this .group);
+               scene .getRootNodes () .push (this .object);
+            }
+
+            if (name)
+               scene .addNamedNode (scene .getUniqueName (name), this .object);
+         }
+
+         return true;
+      }
+
+      return false;
+   },
+   g: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .g .parse (this))
+      {
+         this .whitespacesNoLineTerminator ();
+
+         if (OBJParser_Grammar .untilEndOfLine .parse (this))
+         {
+            const
+               scene = this .getExecutionContext (),
+               name  = this .sanitizeName (this .result [1]);
+
+            try
+            {
+               this .group = scene .getNamedNode (name);
+            }
+            catch (error)
+            {
+               if (this .group .children .length)
+               {
+                  this .group = scene .createNode ("Group");
+
+                  this .object .children .push (this .group);
+               }
+
+               if (name)
+                  scene .addNamedNode (scene .getUniqueName (name), this .group);
+            }
+         }
+
+         return true;
+      }
+
+      return false;
+   },
+   s: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .s .parse (this))
+      {
+         this .whitespacesNoLineTerminator ();
+
+         if (OBJParser_Grammar .off .parse (this))
+         {
+            this .smoothingGroup = 0;
+            return true;
+         }
+
+         if (this .int32 ())
+         {
+            this .smoothingGroup = this .value;
+            return true;
+         }
+
+         return true;
+      }
+
+      return false;
+   },
+   vts: function ()
+   {
+      let result = false;
+
+      while (this .vt ())
+         result = true;
+
+      return result;
+   },
+   vt: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .vt .parse (this))
+      {
+         if (this .vec2 ())
+         {
+            this .texCoord .point .push (this .point2);
+
+            return true;
+         }
+
+         throw new Error ("Expected a texture coodinate.");
+      }
+
+      return false;
+   },
+   vns: function ()
+   {
+      let result = false;
+
+      while (this .vn ())
+         result = true;
+
+      return result;
+   },
+   vn: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .vn .parse (this))
+      {
+         if (this .vec3 ())
+         {
+            this .normal .vector .push (this .point3);
+
+            return true;
+         }
+
+         throw new Error ("Expected a normal vector.");
+      }
+
+      return false;
+   },
+   vs: function ()
+   {
+      let result = false;
+
+      while (this .v ())
+         result = true;
+
+      return result;
+   },
+   v: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .v .parse (this))
+      {
+         if (this .vec3 ())
+         {
+            this .coord .point .push (this .point3);
+
+            return true;
+         }
+
+         throw new Error ("Expected a vertex coordinate.");
+      }
+
+      return false;
+   },
+   fs: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .f .lookahead (this))
+      {
+         try
+         {
+            this .shape    = this .smoothingGroups .get (this .group .getNodeName ()) .get (this .smoothingGroup);
+            this .geometry = this .shape .geometry;
+         }
+         catch (error)
+         {
+            const
+               scene      = this .getExecutionContext (),
+               appearance = scene .createNode ("Appearance");
+
+            this .geometry = scene .createNode ("IndexedFaceSet");
+            this .shape    = scene .createNode ("Shape");
+
+            appearance .material        = this .material;
+            appearance .texture         = this .texture;
+            this .geometry .creaseAngle = this .smoothingGroup ? Math .PI : 0;
+            this .shape .appearance     = appearance;
+            this .shape .geometry       = this .geometry;
+
+            this .group .children .push (this .shape);
+
+            if (!this .smoothingGroups .has (this .group .getNodeName ()))
+               this .smoothingGroups .set (this .group .getNodeName (), new Map ());
+
+            this .smoothingGroups .get (this .group .getNodeName ()) .set (this .smoothingGroup, this .shape);
+         }
+
+         while (this .f ())
+            ;
+
+         if (this .geometry .texCoordIndex .length)
+            this .geometry .texCoord = this .texCoord;
+
+         if (this .geometry .normalIndex .length)
+            this .geometry .normal = this .normal;
+
+         this .geometry .coord = this .coord;
+
+         return true;
+      }
+
+      return false;
+   },
+   f: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .f .parse (this))
+      {
+         const
+            texCoords = this .geometry .texCoordIndex .length,
+            normals   = this .geometry .normalIndex .length;
+
+         while (this .indices ())
+            ;
+
+         if (this .geometry .texCoordIndex .length !== texCoords)
+            this .geometry .texCoordIndex .push (-1);
+
+         if (this .geometry .normalIndex .length !== normals)
+            this .geometry .normalIndex .push (-1);
+
+         this .geometry .coordIndex .push (-1);
+
+         return true;
+      }
+
+      return false;
+   },
+   indices: function ()
+   {
+      if (this .int32 ())
+      {
+         this .geometry .coordIndex .push (this .index (this .value, this .coord .point .length));
+
+         if (OBJParser_Grammar .slash .parse (this))
+         {
+            if (this .int32 ())
+            {
+               this .geometry .texCoordIndex .push (this .index (this .value, this .texCoord .point .length));
+            }
+
+            if (OBJParser_Grammar .slash .parse (this))
+            {
+               if (this .int32 ())
+               {
+                  this .geometry .normalIndex .push (this .index (this .value, this .normal .vector .length));
+               }
+            }
+         }
+
+         return true;
+      }
+
+      return false;
+   },
+   index: function (index, length)
+   {
+      if (index === 0)
+         throw new Error ("Invalid index.");
+
+      if (index < 0)
+         return length + index;
+
+      return index - 1;
+   },
+   int32: function ()
+   {
+      this .whitespaces ();
+
+      if (OBJParser_Grammar .int32 .parse (this))
+      {
+         this .value = parseInt (this .result [1]);
+
+         return true;
+      }
+
+      return false;
+   },
+   double: function ()
+   {
+      this .whitespaces ();
+
+      if (OBJParser_Grammar .double .parse (this))
+      {
+         this .value = parseFloat (this .result [1]);
+
+         return true;
+      }
+
+      return false;
+   },
+   vec2: function ()
+   {
+      if (this .double ())
+      {
+         this .point2 .x = this .value;
+
+         if (this .double ())
+         {
+            this .point2 .y = this .value;
+
+            return true;
+         }
+      }
+
+      return false;
+   },
+   vec3: function ()
+   {
+      if (this .double ())
+      {
+         this .point3 .x = this .value;
+
+         if (this .double ())
+         {
+            this .point3 .y = this .value;
+
+            if (this .double ())
+            {
+               this .point3 .z = this .value;
+
+               return true;
+            }
+         }
+      }
+
+      return false;
+   },
+});
+
+function MaterialParser (scene, input)
+{
+   this .executionContext = scene;
+   this .input            = input;
+   this .material         = scene .createNode ("Material");
+   this .materials        = new Map ();
+   this .textures         = new Map ();
+   this .color3           = new Numbers_Color3 ();
+   this .name             = "";
+}
+
+MaterialParser .prototype =
+{
+   parse: function ()
+   {
+      try
+      {
+         this .statements ();
+      }
+      catch (error)
+      {
+         if (DEBUG)
+            console .log (error);
+      }
+   },
+   comments: function ()
+   {
+      while (this .comment ())
+         ;
+   },
+   comment: function ()
+   {
+      this .whitespaces ();
+
+      if (OBJParser_Grammar .comment .parse (this))
+         return true;
+
+      return false;
+   },
+   whitespaces: function ()
+   {
+      OBJParser_Grammar .whitespaces .parse (this);
+   },
+   whitespacesNoLineTerminator: function ()
+   {
+      OBJParser_Grammar .whitespacesNoLineTerminator .parse (this);
+   },
+   statements: function ()
+   {
+      while (this .statement ())
+		   ;
+   },
+   statement: function ()
+   {
+      if (this .newmtl ())
+         return true;
+
+      if (this .Ka ())
+         return true;
+
+      if (this .Kd ())
+         return true;
+
+      if (this .Ks ())
+         return true;
+
+      if (this .Ns ())
+         return true;
+
+      if (this .d ())
+         return true;
+
+      if (this .Tr ())
+         return true;
+
+      if (this .illum ())
+         return true;
+
+      if (this .map_Kd ())
+         return true;
+
+      // Skip empty and unknown lines.
+
+      if (OBJParser_Grammar .untilEndOfLine .parse (this))
+         return true;
+
+      return false;
+   },
+   newmtl: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .newmtl .parse (this))
+      {
+         this .whitespacesNoLineTerminator ();
+
+         this .name = "";
+
+         if (OBJParser_Grammar .untilEndOfLine .parse (this))
+         {
+            this .name = this .result [1];
+
+            this .material = this .executionContext .createNode ("Material");
+
+            this .materials .set (this .name, this .material);
+
+            return true;
+         }
+
+         OBJParser_Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
+      return false;
+   },
+   Ka: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .Ka .parse (this))
+      {
+         if (this .col3 ())
+         {
+            const hsv = this .color3 .getHSV ([ ]);
+
+            this .material .ambientIntensity = hsv [2];
+
+            return true;
+         }
+
+         OBJParser_Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
+      return false;
+   },
+   Kd: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .Kd .parse (this))
+      {
+         if (this .col3 ())
+         {
+            this .material .diffuseColor = this .color3;
+
+            return true;
+         }
+
+         OBJParser_Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
+      return false;
+   },
+   Ks: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .Ks .parse (this))
+      {
+         if (this .col3 ())
+         {
+            this .material .specularColor = this .color3;
+
+            return true;
+         }
+
+         OBJParser_Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
+      return false;
+   },
+   Ns: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .Ns .parse (this))
+      {
+         if (this .double ())
+         {
+            this .material .shininess = this .value / 1000;
+
+            return true;
+         }
+
+         OBJParser_Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
+      return false;
+   },
+   d: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .d .parse (this))
+      {
+         if (this .double ())
+         {
+            this .material .transparency = 1 - this .value;
+
+            return true;
+         }
+
+         OBJParser_Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
+      return false;
+   },
+   Tr: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .Tr .parse (this))
+      {
+         if (this .double ())
+         {
+            this .material .transparency = this .value;
+
+            return true;
+         }
+
+         OBJParser_Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
+      return false;
+   },
+   illum: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .illum .parse (this))
+      {
+         if (this .int32 ())
+         {
+            // Don't know what to do with illum value in X3D.
+            return true;
+         }
+
+         OBJParser_Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
+      return false;
+   },
+   map_Kd: function ()
+   {
+      this .comments ();
+
+      if (OBJParser_Grammar .map_Kd .parse (this))
+      {
+         this .whiteSpacesNoLineTerminator ();
+
+         if (OBJParser_Grammar .untilEndOfLine .parse (this))
+         {
+            const string = this .result [1];
+
+            if (string .length && this .name .length)
+            {
+               const paths = string .trim () .split (/\s+/);
+
+               if (paths .length)
+               {
+                  const
+                     scene   = this .executionContext,
+                     texture = scene .createNode ("ImageTexture"),
+                     path    = paths .at (-1) .replace (/\\/g, "/");
+
+                  texture .url = [path];
+
+                  this .textures .set (this .name, texture);
+               }
+            }
+
+            return true;
+         }
+
+         OBJParser_Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
+      return false;
+   },
+   int32: function ()
+   {
+      this .whitespaces ();
+
+      if (OBJParser_Grammar .int32 .parse (this))
+      {
+         this .value = parseInt (this .result [1]);
+
+         return true;
+      }
+
+      return false;
+   },
+   double: function ()
+   {
+      this .whitespaces ();
+
+      if (OBJParser_Grammar .double .parse (this))
+      {
+         this .value = parseFloat (this .result [1]);
+
+         return true;
+      }
+
+      return false;
+   },
+   col3: function ()
+   {
+      if (this .double ())
+      {
+         this .color3 .r = this .value;
+
+         if (this .double ())
+         {
+            this .color3 .g = this .value;
+
+            if (this .double ())
+            {
+               this .color3 .b = this .value;
+
+               return true;
+            }
+         }
+      }
+
+      return false;
+   },
+};
+
+const OBJParser_default_ = OBJParser;
+;
+
+x_ite_Namespace.set ("x_ite/Parser/OBJParser", OBJParser_default_);
+/* harmony default export */ const Parser_OBJParser = (OBJParser_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(124);
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
 
 
 
@@ -49197,6 +50183,7 @@ GoldenGate .Parser = [
    Parser_GLTF2Parser,
    Parser_JSONParser,
    Parser_VRMLParser,
+   Parser_OBJParser,
 ];
 
 const GoldenGate_default_ = GoldenGate;
@@ -49376,7 +50363,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(308);
+/* provided dependency */ var libtess = __webpack_require__(515);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -56712,7 +57699,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(113);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -61083,8 +62070,8 @@ const BinaryTransport_default_ = BinaryTransport;
 x_ite_Namespace.set ("standard/Networking/BinaryTransport", BinaryTransport_default_);
 /* harmony default export */ const Networking_BinaryTransport = (BinaryTransport_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(113);
-/* provided dependency */ var pako = __webpack_require__(365);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(124);
+/* provided dependency */ var pako = __webpack_require__(408);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63560,7 +64547,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(113);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65516,7 +66503,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(113);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -72537,8 +73524,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(871);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(113);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(740);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73393,8 +74380,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(871);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(113);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(740);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -74336,8 +75323,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(871);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(113);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(740);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -74640,8 +75627,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(871);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(113);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(740);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -76233,8 +77220,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(871);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(113);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(740);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77003,8 +77990,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(113);
-/* provided dependency */ var ResizeSensor = __webpack_require__(816);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(124);
+/* provided dependency */ var ResizeSensor = __webpack_require__(853);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -88432,7 +89419,7 @@ const X3DRoutingContext_default_ = X3DRoutingContext;
 x_ite_Namespace.set ("x_ite/Routing/X3DRoutingContext", X3DRoutingContext_default_);
 /* harmony default export */ const Routing_X3DRoutingContext = (X3DRoutingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowserContext.js
-/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(113);
+/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -88775,7 +89762,7 @@ Object .assign (X3DBrowserContext,
       X3DBrowserContext_$("x3d-canvas, X3DCanvas") .each (function (_, canvas)
       {
          const
-            X3D     = window [Symbol .for ("X_ITE.X3D-8.5.0")],
+            X3D     = window [Symbol .for ("X_ITE.X3D-8.5.1")],
             browser = X3D .getBrowser (canvas);
 
          if (! browser)
@@ -107236,7 +108223,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(113);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110051,8 +111038,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(113);
-/* provided dependency */ var SuperGif = __webpack_require__(24);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(124);
+/* provided dependency */ var SuperGif = __webpack_require__(849);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111014,7 +112001,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(113);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111717,7 +112704,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(113);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(124);
 /*******************************************************************************
  * MIT License
  *
@@ -112954,7 +113941,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(113);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113853,7 +114840,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(113);
+/* provided dependency */ var Fallback_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114032,14 +115019,14 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(113);
+/* provided dependency */ var jquery_$ = __webpack_require__(124);
 const jquery_default_ = jquery_$;
 ;
 
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(113);
+/* provided dependency */ var X3D_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114294,7 +115281,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(113);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(124);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114554,7 +115541,7 @@ x_ite_Namespace.set ("shim", shim_default_);
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-8.5.0")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-8.5.1")] = x_ite_X3D;
 
 x_ite_X3DCanvas.define ();
 
