@@ -115,7 +115,7 @@ const Grammar =
 
    SIGN : /([+-]?)/gy,
    CONSTANTS: /\b(INFINITY|INF|NAN|PI1_4|PI2_4|PI1_2|PI3_4|PI|PI5_4|PI6_4|PI3_2|PI7_4|PI2|PI1_3|PI2_3|PI4_3|PI5_3|SQRT1_2|SQRT2)\b/igy,
-   HTMLColor: /([a-z]+|0x[0-9a-f]+|rgba?\(.*?\))/igy,
+   HTMLColor: /([a-zA-Z]+|0[xX][\da-fA-F]+|rgba?\(.*?\))/gy,
 
    // Misc
    Break: /\r?\n/g,
@@ -350,8 +350,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       if (Grammar .Whitespaces .parse (this))
       {
-         if (!this .xml)
-            this .lines (this .result [1]);
+         this .lines (this .result [1]);
 
          return true;
       }
