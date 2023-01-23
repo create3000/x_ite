@@ -113,9 +113,9 @@ const Grammar =
    double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
    string: /"((?:[^\\"]|\\\\|\\")*)"/gy,
 
-   Inf:         /[+]?(?:inf|Infinity)/gy,
-   NegativeInf: /-(?:inf|Infinity)/gy,
-   NaN:         /[+-]?(nan|NaN)/gy,
+   SIGN : /([+-]?)/gy,
+   CONSTANTS: /\b(INFINITY|INF|NAN|PI1_4|PI2_4|PI1_2|PI3_4|PI|PI5_4|PI6_4|PI3_2|PI7_4|PI2|PI1_3|PI2_3|PI4_3|PI5_3)\b/igy,
+   HTMLColor: /([a-z]+|0x[0-9a-f]+|rgba?\(.*?\))/igy,
 
    // Misc
    Break: /\r?\n/g,
@@ -204,6 +204,25 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    MFVec3f: new Fields .MFVec3f (),
    MFVec4d: new Fields .MFVec4d (),
    MFVec4f: new Fields .MFVec4f (),
+   CONSTANTS: new Map ([
+      ["INFINITY", Number .POSITIVE_INFINITY],
+      ["INF",      Number .POSITIVE_INFINITY],
+      ["NAN",      Number .NaN],
+      ["PI1_4", Math .PI * 1/4],
+      ["PI2_4", Math .PI * 2/4],
+      ["PI1_2", Math .PI * 1/2],
+      ["PI3_4", Math .PI * 3/4],
+      ["PI",    Math .PI],
+      ["PI5_4", Math .PI * 5/4],
+      ["PI6_4", Math .PI * 6/4],
+      ["PI3_2", Math .PI * 3/2],
+      ["PI7_4", Math .PI * 7/4],
+      ["PI2",   Math .PI * 2],
+      ["PI1_3", Math .PI * 1/3],
+      ["PI2_3", Math .PI * 2/3],
+      ["PI4_3", Math .PI * 4/3],
+      ["PI5_3", Math .PI * 5/3],
+   ]),
    getEncoding: function ()
    {
       return "STRING";
@@ -1543,23 +1562,23 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return true;
       }
 
-      if (Grammar .Inf .parse (this))
+      const lastIndex = this .lastIndex;
+
+      Grammar .SIGN .parse (this);
+
+      const sign = this .result [1];
+
+      if (Grammar .CONSTANTS .parse (this))
       {
-         this .value = Number .POSITIVE_INFINITY;
+         this .value = this .CONSTANTS .get (this .result [1] .toUpperCase ());
+
+         if (sign === "-")
+            this .value = - this .value;
+
          return true;
       }
 
-      if (Grammar .NegativeInf .parse (this))
-      {
-         this .value = Number .NEGATIVE_INFINITY;
-         return true;
-      }
-
-      if (Grammar .NaN .parse (this))
-      {
-         this .value = Number .NaN;
-         return true;
-      }
+      this .lastIndex = lastIndex;
 
       return false;
    },
@@ -1644,6 +1663,8 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    sfcolorValue: function (field)
    {
+      const lastIndex = this .lastIndex;
+
       if (this .double ())
       {
          var r = this .value;
@@ -1663,6 +1684,21 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                return true;
             }
          }
+      }
+
+      this .lastIndex = lastIndex;
+
+      this .comments ();
+
+      if (Grammar .HTMLColor .parse (this))
+      {
+         const color = this .convertColor (this .result [1]);
+
+         field .r = color [0];
+         field .g = color [1];
+         field .b = color [2];
+
+         return true;
       }
 
       return false;
@@ -1703,6 +1739,8 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    sfcolorrgbaValue: function (field)
    {
+      const lastIndex = this .lastIndex;
+
       if (this .double ())
       {
          var r = this .value;
@@ -1728,6 +1766,22 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                }
             }
          }
+      }
+
+      this .lastIndex = lastIndex;
+
+      this .comments ();
+
+      if (Grammar .HTMLColor .parse (this))
+      {
+         const color = this .convertColor (this .result [1]);
+
+         field .r = color [0];
+         field .g = color [1];
+         field .b = color [2];
+         field .a = color [3];
+
+         return true;
       }
 
       return false;

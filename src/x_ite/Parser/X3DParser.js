@@ -166,6 +166,24 @@ X3DParser .prototype = {
 
       return value;
    },
+   convertColor: function (value)
+   {
+      const
+         div    = $("<div></div>") .css ("color", value .replace (/0x/i, "#")) .appendTo (this .getBrowser () .getShadow ()),
+         rgb    = window .getComputedStyle (div [0]) .color,
+         values = rgb .replace (/^rgba?\(|\)$/g, "") .split (/[\s,]+/) .map (s => parseFloat (s));
+
+      div .remove ();
+
+      values [0] /= 255;
+      values [1] /= 255;
+      values [2] /= 255;
+
+      if (typeof values [3] !== "number")
+         values [3] = 1;
+
+      return values;
+   },
    sanitizeName: function (name = "")
    {
       // Spaces
