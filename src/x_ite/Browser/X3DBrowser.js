@@ -631,12 +631,27 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       return this .getRenderingProperties () .getField (name) .getValue ();
    },
+   viewAll: function (layerNode)
+   {
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
+
+      if (! layerNode)
+         layerNode = this .getActiveLayer ();
+
+      if (! layerNode)
+         return;
+
+      layerNode .getViewpoint () ._viewAll = true;
+   },
    firstViewpoint: function (layerNode)
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
 
       if (! layerNode)
          layerNode = this .getActiveLayer ();
+
+      if (! layerNode)
+         return;
 
       const viewpoints = layerNode .getUserViewpoints ();
 
@@ -649,6 +664,9 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       if (! layerNode)
          layerNode = this .getActiveLayer ();
+
+      if (! layerNode)
+         return;
 
       const viewpoints = layerNode .getUserViewpoints ();
 
@@ -679,6 +697,9 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       if (! layerNode)
          layerNode = this .getActiveLayer ();
 
+      if (! layerNode)
+         return;
+
       const viewpoints = layerNode .getUserViewpoints ();
 
       if (viewpoints .length === 0)
@@ -708,6 +729,9 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       if (! layerNode)
          layerNode = this .getActiveLayer ();
 
+      if (! layerNode)
+         return;
+
       const viewpoints = layerNode .getUserViewpoints ();
 
       if (viewpoints .length)
@@ -726,15 +750,15 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       if (! layerNode)
          layerNode = this .getActiveLayer ();
 
-      if (layerNode instanceof X3DLayerNode)
+      if (! layerNode)
+         return;
+
+      for (const viewpointNode of layerNode .getViewpoints () .get ())
       {
-         for (const viewpointNode of layerNode .getViewpoints () .get ())
+         if (viewpointNode .getName () === name)
          {
-            if (viewpointNode .getName () === name)
-            {
-               this .bindViewpoint (layerNode, viewpointNode);
-               break;
-            }
+            this .bindViewpoint (layerNode, viewpointNode);
+            break;
          }
       }
    },
