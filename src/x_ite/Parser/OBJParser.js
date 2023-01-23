@@ -350,7 +350,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             }
 
             if (name)
-               scene .updateNamedNode (this .getUniqueName (name), this .object);
+               scene .updateNamedNode (scene .getUniqueName (name), this .object);
          }
 
          return true;
