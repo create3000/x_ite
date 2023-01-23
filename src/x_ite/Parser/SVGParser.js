@@ -405,11 +405,18 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          const
             shapeNode     = scene .createNode ("Shape"),
-            rectangleNode = scene .createNode ("Rectangle2D");
+            polylineNode  = scene .createNode ("Polyline2D"),
+            width1_2      = width / 2,
+            height1_2     = height / 2;
 
          shapeNode .appearance = this .createStrokeAppearance ();
-         shapeNode .geometry   = rectangleNode;
-         rectangleNode .size   = size;
+         shapeNode .geometry   = polylineNode;
+
+         polylineNode .lineSegments .push ( width1_2,  height1_2,
+                                           -width1_2,  height1_2,
+                                           -width1_2, -height1_2,
+                                            width1_2, -height1_2,
+                                            width1_2,  height1_2);
 
          transformNode .children .push (shapeNode);
       }
