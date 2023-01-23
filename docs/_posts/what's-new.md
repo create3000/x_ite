@@ -16,6 +16,7 @@ tags: [New, Releases]
 - Added contentScale attribute.
 - New browser options and rendering properties.
 - Added glTF parser.
+- Added Wavefront OBJ parser.
 - Implemented ImageTextureAtlas node.
 
 ### Bug Fixes

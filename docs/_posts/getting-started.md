@@ -602,17 +602,17 @@ x3d-canvas {
 </html>
 ```
 
-To get X_ITE working you must include the JavaScript file »x_ite.min.js«. After x_ite is successfully loaded a new HTML element \<x3d-canvas\> is available on your page.
+To get X_ITE working you need to include the JavaScript file »x_ite.min.js«. Once x_ite has loaded successfully, a new HTML element \<x3d-canvas\> will be available on your page.
 
 >**Attention:** If you test a page locally on your desktop computer, you must setup a **localhost** server if you want to load a file via *src* attribute or Inline node, see [Setup a localhost Server](setup-a-localhost-server). Or use [DOM Integration](dom-integration) methods to directly combine HTML with X3D.
 {: .prompt-danger }
 
->**Tip:** You can style the \<x3d-canvas\> element as every HTML element with CSS as well as you can place it everywhere within the DOM tree.
+>**Tip:** You can style the \<x3d-canvas\> element with CSS like any other HTML element, and you can place it anywhere in the DOM tree.
 {: .prompt-tip }
 
 ### Supported File Formats
 
-As of version 1.19, X_ITE can now parse either X3D XML Encoding or X3D Classic Encoding. This gives authors the capability to use X_ITE also as VRML viewer.
+X_ITE can load various file formats, either directly as the source of the \<x3d-canvas\> element or as the source of an Inline node, as well as using API methods. Foreign formats such as glTF are converted internally to X3D and then made available to the scene graph.
 
 Additionally files can be compressed using GZip compression.
 
