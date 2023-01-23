@@ -71,32 +71,16 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
    },
    getBound: function (name)
    {
-      if (this .array .length > 1)
+      if (this .array .length === 1)
+         return this .array [0]; // Return default viewpoint.
+
+      const
+         enableInlineBindables = false,
+         mainScene             = this .getMainScene ();
+
+      if (name)
       {
-         const
-            enableInlineBindables = false,
-            mainScene             = this .getMainScene ();
-
-         if (name && name .length)
-         {
-            // Return first viewpoint with @name.
-
-            for (let i = 1, length = this .array .length; i < length; ++ i)
-            {
-               const
-                  node      = this .array [i],
-                  outerNode = node .getExecutionContext () .getOuterNode (),
-                  scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
-
-               if (!enableInlineBindables && scene !== mainScene)
-                  continue;
-
-               if (node .getName () == name)
-                  return node;
-            }
-         }
-
-         // Return first bound viewpoint in scene.
+         // Return first viewpoint with @name.
 
          for (let i = 1, length = this .array .length; i < length; ++ i)
          {
@@ -108,29 +92,41 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
             if (!enableInlineBindables && scene !== mainScene)
                continue;
 
-            if (node ._isBound .getValue ())
+            if (node .getName () == name)
                return node;
-         }
-
-         // Return first viewpoint in scene.
-
-         for (let i = 1, length = this .array .length; i < length; ++ i)
-         {
-            const
-               node      = this .array [i],
-               outerNode = node .getExecutionContext () .getOuterNode (),
-               scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
-
-            if (!enableInlineBindables && scene !== mainScene)
-               continue;
-
-            return node;
          }
       }
 
-      // Return default viewpoint.
+      // Return first bound viewpoint in scene.
 
-      return this .array [0];
+      for (let i = 1, length = this .array .length; i < length; ++ i)
+      {
+         const
+            node      = this .array [i],
+            outerNode = node .getExecutionContext () .getOuterNode (),
+            scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
+
+         if (!enableInlineBindables && scene !== mainScene)
+            continue;
+
+         if (node ._isBound .getValue ())
+            return node;
+      }
+
+      // Return first viewpoint in scene.
+
+      for (let i = 1, length = this .array .length; i < length; ++ i)
+      {
+         const
+            node      = this .array [i],
+            outerNode = node .getExecutionContext () .getOuterNode (),
+            scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
+
+         if (!enableInlineBindables && scene !== mainScene)
+            continue;
+
+         return node;
+      }
    },
    push: function (node)
    {
