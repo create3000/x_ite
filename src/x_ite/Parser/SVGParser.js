@@ -202,6 +202,14 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       await this .loadComponents ();
 
+      // Create navigation info.
+
+      const navigationInfo = scene .createNode ("NavigationInfo");
+
+      navigationInfo .type = ["PLANE_create3000.github.io", "PLANE", "EXAMINE", "ANY"];
+
+      scene .getRootNodes () .push (navigationInfo);
+
       // Get attributes of svg element.
 
       const
@@ -216,7 +224,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          x         =  (viewBox .x + width  / 2) * PIXEL,
          y         = -(viewBox .y + height / 2) * PIXEL;
 
-      viewpoint. description      = "SVG";
       viewpoint .position         = new Vector3 (x, y, 10);
       viewpoint .centerOfRotation = new Vector3 (x, y, 0);
 
