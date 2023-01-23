@@ -163,8 +163,8 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const scene = this .getExecutionContext ();
 
-      this .object          = scene .createNode ("Group");
-      this .group           = scene .createNode ("Transform");
+      this .object          = scene .createNode ("Transform");
+      this .group           = scene .createNode ("Group");
       this .defaultMaterial = scene .createNode ("Material");
       this .texCoord        = scene .createNode ("TextureCoordinate");
       this .normal          = scene .createNode ("Normal");
@@ -352,8 +352,8 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             if (this .group .children .length)
             {
-               this .object = scene .createNode("Group");
-               this .group  = scene .createNode ("Transform");
+               this .object = scene .createNode("Transform");
+               this .group  = scene .createNode ("Group");
 
                this .object .children .push (this .group);
                scene .getRootNodes () .push (this .object);
@@ -390,7 +390,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                if (this .group .children .length)
                {
-                  this .group = scene .createNode ("Transform");
+                  this .group = scene .createNode ("Group");
 
                   this .object .children .push (this .group);
                }
