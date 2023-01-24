@@ -607,6 +607,14 @@ Matrix3 .prototype =
 
       return this;
    },
+   skewX: function (skewAngle)
+   {
+      this .multLeft (m .set (1, Math .tan (skewAngle), 0, 0, 1, 0, 0, 0, 1));
+   },
+   skewY: function (skewAngle)
+   {
+      this .multLeft (m .set (1, 0, 0, Math .tan (skewAngle), 1, 0, 0, 0, 1));
+   },
    toString: function ()
    {
       return this [0] + " " + this [1] + " " + this [2] + " " +

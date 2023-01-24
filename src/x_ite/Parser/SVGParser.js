@@ -66,6 +66,9 @@ const Grammar =
 {
    // General
    whitespaces: /[\x20\n\t\r]+/gy,
+   comma: /,/gy,
+   openParenthesis: /\(/gy,
+   closeParenthesis: /\)/gy,
 
    // Units
    em: /em/gy,
@@ -81,6 +84,12 @@ const Grammar =
    // Values
    int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
    double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
+   matrix: /matrix/gy,
+   translate: /translate/gy,
+   rotate: /rotate/gy,
+   scale: /scale/gy,
+   skewX: /skewX/gy,
+   skewY: /skewY/gy,
    color: /([a-zA-Z]+|#[\da-fA-F]+|rgba?\(.*?\))/gy,
    url: /url\("?(.*?)"?\)/gy,
 };
@@ -653,6 +662,249 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (attribute === null)
          return matrix;
 
+      this .setString (attribute);
+
+      while (true)
+      {
+         this .whitespaces ();
+
+         if (Grammar .matrix .parse (this))
+         {
+            this .whitespaces ();
+
+            if (Grammar .openParenthesis .parse (this))
+            {
+               this .whitespaces ();
+
+               if (Grammar .double .parse (this))
+               {
+                  const a = parseFloat (this .result [1]);
+
+                  if (this .commaWhitespaces ())
+                  {
+                     if (Grammar .double .parse (this))
+                     {
+                        const b = parseFloat (this .result [1]);
+
+                        if (this .commaWhitespaces ())
+                        {
+                           if (Grammar .double .parse (this))
+                           {
+                              const c = parseFloat (this .result [1]);
+
+                              if (this .commaWhitespaces ())
+                              {
+                                 if (Grammar .double .parse (this))
+                                 {
+                                    const d = parseFloat (this .result [1]);
+
+                                    if (this .commaWhitespaces ())
+                                    {
+                                       if (Grammar .double .parse (this))
+                                       {
+                                          const e = parseFloat (this .result [1]);
+
+                                          if (this .commaWhitespaces ())
+                                          {
+                                             if (Grammar .double .parse (this))
+                                             {
+                                                const f = parseFloat (this .result [1]);
+
+                                                this .whitespaces ();
+
+                                                if (Grammar .closeParenthesis .parse (this))
+                                                {
+                                                   matrix .multLeft (new Matrix3 (a, b, 0,  c, d, 0,  e, f, 1));
+                                                   continue;
+                                                }
+                                             }
+                                          }
+                                       }
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+
+            break;
+         }
+         else if (Grammar .translate .parse (this))
+         {
+            this .whitespaces ();
+
+            if (Grammar .openParenthesis .parse (this))
+            {
+               this .whitespaces ();
+
+               if (this .double ())
+               {
+                  const tx = this .value;
+
+                  if (this .commaWhitespaces ())
+                  {
+                     if (this .double ())
+                     {
+                        const ty = this .value;
+
+                        this .whitespaces ();
+
+                        if (Grammar .closeParenthesis .parse (this))
+                        {
+                           matrix .translate (new Vector2 (tx, ty));
+                           continue;
+                        }
+                     }
+                  }
+               }
+            }
+
+            break;
+         }
+         else if (Grammar .rotate .parse (this))
+         {
+            this .whitespaces ();
+
+            if (Grammar .openParenthesis .parse (this))
+            {
+               this .whitespaces ();
+
+               if (this .double ())
+               {
+                  const angle = this .value;
+
+                  let commaWithWhitespaces = false;
+
+                  commaWithWhitespaces |= this .whitespaces ();
+
+                  if (Grammar .closeParenthesis .parse (this))
+                  {
+                     matrix .rotate (Algorithm .radians (angle));
+                     continue;
+                  }
+                  else
+                  {
+                     commaWithWhitespaces |= Grammar .comma .parse (this);
+                     commaWithWhitespaces |= this .whitespaces ();
+
+                     if (commaWithWhitespaces)
+                     {
+                        if (this .double ())
+                        {
+                           const cx = this .value;
+
+                           if (this .commaWhitespaces ())
+                           {
+                              if (this .double ())
+                              {
+                                 const cy = this .value;
+
+                                 this .whitespaces ();
+
+                                 if (Grammar .closeParenthesis .parse (this))
+                                 {
+                                    matrix .translate (new Vector2 (cx, cy));
+                                    matrix .rotate (Algorithm .radians (angle));
+                                    matrix .translate (new Vector2 (-cx, -cy));
+                                    continue;
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+
+            break;
+         }
+         else if (Grammar .scale .parse (this))
+         {
+            this .whitespaces ();
+
+            if (Grammar .openParenthesis .parse (this))
+            {
+               this .whitespaces ();
+
+               if (this .double ())
+               {
+                  const sx = this .value;
+
+                  if (this .commaWhitespaces ())
+                  {
+                     if (this .double ())
+                     {
+                        const sy = this .value;
+
+                        this .whitespaces ();
+
+                        if (Grammar .closeParenthesis .parse (this))
+                        {
+                           matrix .scale (new Vector2 (sx, sy));
+                           continue;
+                        }
+                     }
+                  }
+               }
+            }
+
+            break;
+         }
+         else if (Grammar .skewX .parse (this))
+         {
+            this .whitespaces ();
+
+            if (Grammar .openParenthesis .parse (this))
+            {
+               this .whitespaces ();
+
+               if (this .double ())
+               {
+                  const angle = this .value;
+
+                  this .whitespaces ();
+
+                  if (Grammar .closeParenthesis .parse (this))
+                  {
+                     matrix .skewX (Algorithm .radians (angle));
+                     continue;
+                  }
+               }
+            }
+
+            break;
+         }
+         else if (Grammar .skewY .parse (this))
+         {
+            this .whitespaces ();
+
+            if (Grammar .openParenthesis .parse (this))
+            {
+               this .whitespaces ();
+
+               if (this .double ())
+               {
+                  const angle = this .value;
+
+                  this .whitespaces ();
+
+                  if (Grammar .closeParenthesis .parse (this))
+                  {
+                     matrix .skewY (Algorithm .radians (angle));
+                     continue;
+                  }
+               }
+            }
+
+            break;
+         }
+
+         break;
+      }
+
       return matrix;
    },
    styleAttributes: (function ()
@@ -975,27 +1227,20 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
    },
-   colorValue: function (color)
-   {
-      if (!Grammar .color .parse (this))
-         return false;
-
-      color .set (... this .convertColor (this .input));
-
-      return true;
-   },
-   urlValue: function ()
-   {
-      return Grammar .url .parse (this);
-   },
-   whitespaces: function ()
-   {
-      Grammar .whitespaces .parse (this);
-   },
    setString: function (attribute)
    {
       this .input     = attribute;
       this .lastIndex = 0;
+   },
+   whitespaces: function ()
+   {
+      return Grammar .whitespaces .parse (this);
+   },
+   commaWhitespaces: function ()
+   {
+      return Grammar .whitespaces .parse (this) ||
+             Grammar .comma .parse (this) ||
+             Grammar .whitespaces .parse (this);
    },
    double: function ()
    {
@@ -1009,6 +1254,19 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
 
       return false;
+   },
+   colorValue: function (color)
+   {
+      if (!Grammar .color .parse (this))
+         return false;
+
+      color .set (... this .convertColor (this .input));
+
+      return true;
+   },
+   urlValue: function ()
+   {
+      return Grammar .url .parse (this);
    },
    createTransform: function (xmlElement, t = Vector2 .Zero, s = Vector2 .One)
    {
