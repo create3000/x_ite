@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import X3DParser from "./X3DParser.js";
+import Color3    from "../../standard/Math/Numbers/Color3.js";
 import Color4    from "../../standard/Math/Numbers/Color4.js";
 import Vector2   from "../../standard/Math/Numbers/Vector2.js";
 import Vector3   from "../../standard/Math/Numbers/Vector3.js";
@@ -54,6 +55,7 @@ import Rotation4 from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix3   from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4   from "../../standard/Math/Numbers/Matrix4.js";
 import Box2      from "../../standard/Math/Geometry/Box2.js"
+import Algorithm from "../../standard/Math/Algorithm.js";
 
 /*
  *  Grammar
@@ -79,6 +81,8 @@ const Grammar =
    // Values
    int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
    double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
+   color: /([a-zA-Z]+|#[\da-fA-F]+|rgba?\(.*?\))/gy,
+   url: /url\("?(.*?)"?\)/gy,
 };
 
 function parse (parser)
@@ -162,7 +166,22 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .rootTransform         = scene .createNode ("Transform");
       this .groupNodes            = [this .rootTransform];
       this .texturePropertiesNode = scene .createNode ("TextureProperties");
-      this .styles                = [ ];
+      this .styles                = [{
+         display: "inline",
+         fillType: "COLOR",
+         fillColor: Color4 .Black,
+         fillURL: "",
+         fillOpacity: 1,
+         fillRule: "nonzero",
+         strokeType: "NONE",
+         strokeColor: Color4 .Black,
+         strokeURL: "",
+         strokeOpacity: 1,
+         strokeWidth: 1,
+         opacity: 1,
+         stopColor: Color4 .Black,
+         stopOpacity: 1,
+      }];
 
       this .xmlElement (this .input)
          .then (success)
@@ -206,7 +225,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const background = scene .createNode ("Background");
 
-      background .skyColor = [0, 0, 0];
+      background .skyColor = [1, 1, 1];
 
       scene .getRootNodes () .push (background);
 
@@ -408,11 +427,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          shapeNode .appearance = this .createStrokeAppearance ();
          shapeNode .geometry   = polylineNode;
 
-         polylineNode .lineSegments .push ( width1_2,  height1_2,
-                                           -width1_2,  height1_2,
-                                           -width1_2, -height1_2,
-                                            width1_2, -height1_2,
-                                            width1_2,  height1_2);
+         polylineNode .lineSegments = [ width1_2,  height1_2,
+                                       -width1_2,  height1_2,
+                                       -width1_2, -height1_2,
+                                        width1_2, -height1_2,
+                                        width1_2,  height1_2];
 
          transformNode .children .push (shapeNode);
       }
@@ -574,7 +593,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (attribute === null)
          return defaultValue;
 
-      this .setAttribute (attribute);
+      this .setString (attribute);
 
       if (this .double ())
       {
@@ -607,7 +626,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (attribute === null)
          return defaultValue;
 
-      this .setAttribute (attribute);
+      this .setString (attribute);
 
       if (this .double ())
       {
@@ -636,37 +655,344 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return matrix;
    },
-   styleAttributes: function (xmlElement)
+   styleAttributes: (function ()
    {
-      this .style = {
-         display: "inline",
-         fillType: "COLOR",
-         fillColor: Color4 .Black,
-         fillURL: "",
-         fillOpacity: 1,
-         fillRule: "nonzero",
-         strokeType: "NONE",
-         strokeColor: Color4 .Black,
-         strokeURL: "",
-         strokeOpacity: 1,
-         strokeWidth: 1,
-         opacity: 1,
-         stopColor: Color4 .Black,
-         stopOpacity: 1,
-      };
+      const Styles = [
+         "display",
+         "fill",
+         "fill-opacity",
+         "fill-rule",
+         "stroke",
+         "stroke-opacity",
+         "stroke-width",
+         "opacity",
+         "stop-color",
+         "stop-opacity",
+      ];
 
-      if (this .style .display === "none")
+      return function (xmlElement)
+      {
+         this .style = Object .assign ({ }, this .styles [0]);
+
+         if (this .style .display === "none")
+            return false;
+
+         for (const style of Styles)
+         {
+            const attribute = xmlElement .getAttribute (style);
+
+            if (attribute === null)
+               continue;
+
+            this .setString (attribute);
+
+            switch (style)
+            {
+               case "display":
+                  this .displayStyle (attribute);
+                  break;
+               case "fill":
+                  this .fillStyle (attribute);
+                  break;
+               case "fill-opacity":
+                  this .fillOpacityStyle (attribute);
+                  break;
+               case "fill-rule":
+                  this .fillRuleStyle (attribute);
+                  break;
+               case "stroke":
+                  this .strokeStyle (attribute);
+                  break;
+               case "stroke-opacity":
+                  this .strokeOpacityStyle (attribute);
+                  break;
+               case "stroke-width":
+                  this .strokeWidthStyle (attribute);
+                  break;
+               case "opacity":
+                  this .opacityStyle (attribute);
+                  break;
+               case "stop-color":
+                  this .stopColorStyle (attribute);
+                  break;
+               case "stop-opacity":
+                  this .stopOpacityStyle (attribute);
+                  break;
+            }
+         }
+
+         // Style attribute has higher precedence.
+
+         this .styleAttribute (xmlElement .getAttribute ("style"));
+
+         this .styles .push (this .style);
+
+         return true;
+      };
+   })(),
+   styleAttribute: function (attribute)
+   {
+      if (attribute === null)
+         return;
+
+      const values = attribute .split (";");
+
+      for (const value of values)
+      {
+         const pair = value .split (":");
+
+         if (pair .length !== 2)
+            continue;
+
+         const
+            style     = pair [0] .trim (),
+            attribute = pair [1] .trim ();
+
+         this .setString (attribute);
+
+         switch (style)
+         {
+            case "display":
+               this .displayStyle (pair [1]);
+               break;
+            case "fill":
+               this .fillStyle (pair [1]);
+               break;
+            case "fill-opacity":
+               this .fillOpacityStyle (attribute);
+               break;
+            case "fill-rule":
+               this .fillRuleStyle (attribute);
+               break;
+            case "stroke":
+               this .strokeStyle (attribute);
+               break;
+            case "stroke-opacity":
+               this .strokeOpacityStyle (attribute);
+               break;
+            case "stroke-width":
+               this .strokeWidthStyle (attribute);
+               break;
+            case "opacity":
+               this .opacityStyle (attribute);
+               break;
+            case "stop-color":
+               this .stopColorStyle (attribute);
+               break;
+            case "stop-opacity":
+               this .stopOpacityStyle (attribute);
+               break;
+         }
+      }
+   },
+   displayStyle: function (value)
+   {
+      if (value === null)
+         return;
+
+      if (value == "inherit")
+      {
+         this .style .display = styles .at (-1) .display;
+         return;
+      }
+
+      style .display = value;
+   },
+   fillStyle: (function ()
+   {
+      const color = new Color4 (0, 0, 0, 0);
+
+      return function (value)
+      {
+         if (this .colorValue (color))
+         {
+            this .style .fillType  = "COLOR";
+            this .style .fillColor = color .copy ();
+            return;
+         }
+
+         if (this .urlValue ())
+         {
+            this .style .fillType = "URL";
+            this .style .fillURL  = this .result [1] .trim ();
+            return;
+         }
+
+         if (value == "transparent")
+         {
+            this .style .fillType = "NONE";
+            return;
+         }
+
+         if (value == "none")
+         {
+            this .style .fillType ="NONE";
+            return;
+         }
+
+         // inherit
+
+         this .style .fillType  = this .styles .at (-1) .fillType;
+         this .style .fillColor = this .styles .at (-1) .fillColor;
+         this .style .fillURL   = this .styles .at (-1) .fillURL;
+      };
+   })(),
+   fillOpacityStyle: function (value)
+   {
+      if (this .double ())
+      {
+         this .style .fillOpacity = Algorithm .clamp (this .value, 0, 1);
+         return;
+      }
+
+      if (value == "transparent")
+      {
+         this .style .fillOpacity = 0;
+         return;
+      }
+
+      // inherit
+
+      this .style .fillOpacity = this .styles .at (-1) .fillOpacity;
+   },
+   fillRuleStyle: function (value)
+   {
+      this .style .fillRule = value;
+   },
+   strokeStyle: (function ()
+   {
+      const color = new Color4 (0, 0, 0, 0);
+
+      return function (value)
+      {
+         if (this .colorValue (color))
+         {
+            this .style .strokeType  = "COLOR";
+            this .style .strokeColor = color .copy ();
+            return;
+         }
+
+         if (this .urlValue ())
+         {
+            this .style .strokeType = "URL";
+            this .style .strokeURL  = this .result [1] .trim ();
+            return;
+         }
+
+         if (value == "transparent")
+         {
+            this .style .strokeType = "NONE";
+            return;
+         }
+
+         if (value == "none")
+         {
+            this .style .strokeType ="NONE";
+            return;
+         }
+
+         // inherit
+
+         this .style .strokeType  = this .styles .at (-1) .strokeType;
+         this .style .strokeColor = this .styles .at (-1) .strokeColor;
+         this .style .strokeURL   = this .styles .at (-1) .strokeURL;
+      };
+   })(),
+   strokeOpacityStyle: function (value)
+   {
+      if (this .double ())
+      {
+         this .style .strokeOpacity = Algorithm .clamp (this .value, 0, 1);
+         return;
+      }
+
+      if (value == "transparent")
+      {
+         this .style .strokeOpacity = 0;
+         return;
+      }
+
+      // inherit
+
+      this .style .strokeOpacity = this .styles .at (-1) .strokeOpacity;
+   },
+   strokeWidthStyle: function (value)
+   {
+      if (this .double ())
+      {
+         this .style .strokeWidth = this .value / (1000 * PIXEL);
+         return;
+      }
+
+      if (value == "none")
+      {
+         this .style .strokeWidth = 0;
+         return;
+      }
+
+      // inherit
+
+      this .style .strokeWidth = this .styles .at (-1) .strokeWidth;
+   },
+   opacityStyle: function (value)
+   {
+      if (this .double ())
+      {
+         this .style .opacity = Algorithm .clamp (this .value, 0, 1) * this .styles .at (-1) .opacity;
+         return;
+      }
+
+      if (value == "transparent")
+      {
+         this .style .opacity = 0;
+         return;
+      }
+   },
+   stopColorStyle: (function ()
+   {
+      const color = new Color4 (0, 0, 0, 0);
+
+      return function (value)
+      {
+         if (this .colorValue (color))
+         {
+            this .style .stopColor = color .copy ();
+            return;
+         }
+      };
+   })(),
+   stopOpacityStyle: function (value)
+   {
+      if (this .double ())
+      {
+         this .style .stopOpacity = Algorithm .clamp (this .value, 0, 1);
+         return;
+      }
+
+      if (value == "transparent")
+      {
+         this .style .stopOpacity = 0;
+         return;
+      }
+   },
+   colorValue: function (color)
+   {
+      if (!Grammar .color .parse (this))
          return false;
 
-      this .styles .push (this .style);
+      color .set (... this .convertColor (this .input));
 
       return true;
+   },
+   urlValue: function ()
+   {
+      return Grammar .url .parse (this);
    },
    whitespaces: function ()
    {
       Grammar .whitespaces .parse (this);
    },
-   setAttribute: function (attribute)
+   setString: function (attribute)
    {
       this .input     = attribute;
       this .lastIndex = 0;
@@ -720,11 +1046,55 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    createFillAppearance: function (bbox)
    {
+      const
+         scene          = this .getExecutionContext (),
+         appearanceNode = scene .createNode ("Appearance");
 
+      switch (this .style .fillType)
+      {
+         case "NONE":
+         {
+            return null;
+         }
+         case "COLOR":
+         {
+            const materialNode = scene .createNode ("Material");
+
+            appearanceNode .material   = materialNode;
+            materialNode .diffuseColor = new Color3 (... this .style .fillColor);
+            materialNode .transparency = 1 - this .style .fillOpacity * this .style .opacity;
+
+            break;
+         }
+         case "URL":
+         {
+            // Gradient
+            break;
+         }
+      }
+
+      return appearanceNode;
    },
    createStrokeAppearance: function ()
    {
+      const
+         scene          = this .getExecutionContext (),
+         appearanceNode = scene .createNode ("Appearance"),
+         materialNode   = scene .createNode ("Material");
 
+      appearanceNode .material    = materialNode;
+      materialNode .emissiveColor = new Color3 (... this .style .strokeColor);
+      materialNode .transparency  = 1 - this .style .strokeOpacity * this .style .opacity;
+
+      if (this .style .strokeWidth !== 1)
+      {
+         const lineProperties = scene .createNode ("LineProperties");
+
+         appearanceNode .lineProperties       = lineProperties;
+         lineProperties .linewidthScaleFactor = this .style .strokeWidth;
+      }
+
+      return appearanceNode;
    },
 });
 
