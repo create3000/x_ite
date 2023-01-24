@@ -1964,7 +1964,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    comma: function ()
    {
-      return this .whitespaces () | Grammar .comma .parse (this);
+      return !! (this .whitespaces () | Grammar .comma .parse (this));
    },
    int32: function ()
    {
