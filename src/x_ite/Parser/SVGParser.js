@@ -56,7 +56,6 @@ import Matrix3   from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4   from "../../standard/Math/Numbers/Matrix4.js";
 import Box2      from "../../standard/Math/Geometry/Box2.js"
 import Algorithm from "../../standard/Math/Algorithm.js";
-import Triangle3 from "../../standard/Math/Geometry/Triangle3.js";
 
 /*
  *  Grammar
@@ -67,7 +66,7 @@ const Grammar =
 {
    // General
    whitespaces: /[\x20\n\t\r]+/gy,
-   comma: /,/gy,
+   whitespacesWithComma: /[\x20\n\t\r,]+/gy,
    openParenthesis: /\(/gy,
    closeParenthesis: /\)/gy,
 
@@ -739,7 +738,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const x = this .value;
 
-            if (this .commaOrWhitespaces ())
+            if (this .whitespacesWithComma ())
             {
                if (this .double ())
                {
@@ -747,7 +746,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                   points .push (new Vector2 (x, y));
 
-                  if (this .commaOrWhitespaces ())
+                  if (this .whitespacesWithComma ())
                      continue;
                }
             }
@@ -769,7 +768,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       while (true)
       {
-         this .commaOrWhitespaces ();
+         this .whitespacesWithComma ();
          this .whitespaces ();
 
          if (Grammar .matrix .parse (this))
@@ -784,31 +783,31 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                {
                   const a = this .value;
 
-                  if (this .commaOrWhitespaces ())
+                  if (this .whitespacesWithComma ())
                   {
                      if (this .double ())
                      {
                         const b = this .value;
 
-                        if (this .commaOrWhitespaces ())
+                        if (this .whitespacesWithComma ())
                         {
                            if (this .double ())
                            {
                               const c = this .value;
 
-                              if (this .commaOrWhitespaces ())
+                              if (this .whitespacesWithComma ())
                               {
                                  if (this .double ())
                                  {
                                     const d = this .value;
 
-                                    if (this .commaOrWhitespaces ())
+                                    if (this .whitespacesWithComma ())
                                     {
                                        if (this .double ())
                                        {
                                           const e = this .value;
 
-                                          if (this .commaOrWhitespaces ())
+                                          if (this .whitespacesWithComma ())
                                           {
                                              if (this .double ())
                                              {
@@ -846,7 +845,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                {
                   const tx = this .value;
 
-                  if (this .commaOrWhitespaces ())
+                  if (this .whitespacesWithComma ())
                   {
                      if (this .double ())
                      {
@@ -885,13 +884,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   }
                   else
                   {
-                     if (this .commaOrWhitespaces ())
+                     if (this .whitespacesWithComma ())
                      {
                         if (this .double ())
                         {
                            const cx = this .value;
 
-                           if (this .commaOrWhitespaces ())
+                           if (this .whitespacesWithComma ())
                            {
                               if (this .double ())
                               {
@@ -926,7 +925,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                {
                   const sx = this .value;
 
-                  if (this .commaOrWhitespaces ())
+                  if (this .whitespacesWithComma ())
                   {
                      if (this .double ())
                      {
@@ -1289,9 +1288,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       return Grammar .whitespaces .parse (this);
    },
-   commaOrWhitespaces: function ()
+   whitespacesWithComma: function ()
    {
-      return !! (this .whitespaces () | Grammar .comma .parse (this) | this .whitespaces ());
+      return Grammar .whitespacesWithComma .parse (this);
    },
    double: function ()
    {
