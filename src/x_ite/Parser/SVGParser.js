@@ -785,7 +785,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   }
                   else
                   {
-                     if (whitespaces || this .commaWhitespaces ())
+                     if (this .commaWhitespaces () || whitespaces)
                      {
                         if (this .double ())
                         {
