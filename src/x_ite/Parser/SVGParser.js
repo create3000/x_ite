@@ -973,8 +973,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                // lineto
 
-               this .whitespaces ();
-
                while (true)
                {
                   if (this .double ())
