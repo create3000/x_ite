@@ -609,15 +609,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .groupNodes .pop ();
       this .groupNodes .at (-1) .children .push (transformNode);
    },
-   polylineElement: function (xmlElement)
+   polylineElement: function (xmlElement, closed = false)
    {
       const points = [ ];
 
       if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
          return;
-
-      if (xmlElement .nodeName === "polygon")
-         points .push (points [0]);
 
       // Determine style.
 
@@ -644,19 +641,14 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          const
             shapeNode    = scene .createNode ("Shape"),
-            geometryNode = scene .createNode ("IndexedTriangleSet"),
-            texCoordNode = scene .createNode ("TextureCoordinate"),
-            invMatrix    = Matrix3 .inverse (bbox .matrix);
+            geometryNode = scene .createNode ("IndexedTriangleSet");
 
          shapeNode .appearance  = this .createFillAppearance (bbox);
          shapeNode .geometry    = geometryNode;
          geometryNode .solid    = false;
          geometryNode .index    = this .triangulatePolygon (points, coordinateNode) .map (p => p .index);
-         geometryNode .texCoord = texCoordNode;
+         geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
          geometryNode .coord    = coordinateNode;
-
-         for (const point of coordinateNode .point)
-            texCoordNode .point .push (invMatrix .multVecMatrix (new Vector2 (point .x, point .y)) .add (Vector2 .One) .divide (2));
 
          transformNode .children .push (shapeNode);
       }
@@ -669,7 +661,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          shapeNode .appearance    = this .createStrokeAppearance ();
          shapeNode .geometry      = geometryNode;
-         geometryNode .coordIndex = [... points .keys (), -1];
+         geometryNode .coordIndex = [... points .keys (), ... (closed ? [points [0]] : [ ]), -1];
          geometryNode .coord      = coordinateNode;
 
          transformNode .children .push (shapeNode);
@@ -683,7 +675,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    polygonElement: function (xmlElement)
    {
-      this .polylineElement (xmlElement);
+      this .polylineElement (xmlElement, true);
    },
    pathElement: function (xmlElement)
    {
@@ -1453,6 +1445,18 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       texturePropertiesNode .textureCompression  = "DEFAULT";
 
       return texturePropertiesNode;
+   },
+   createTextureCoordinate: function (coordinateNode, bbox)
+   {
+      const
+         scene        = this .getExecutionContext (),
+         texCoordNode = scene .createNode ("TextureCoordinate"),
+         invMatrix    = Matrix3 .inverse (bbox .matrix);
+
+      for (const point of coordinateNode .point)
+         texCoordNode .point .push (invMatrix .multVecMatrix (new Vector2 (point .x, point .y)) .add (Vector2 .One) .divide (2));
+
+      return texCoordNode;
    },
    createTesselator: function ()
    {
