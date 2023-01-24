@@ -897,8 +897,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .parseValue (attribute);
 
       const
-         dimension = 7,
-         circle    = 64;
+         steps  = 10,
+         circle = 64;
 
       let
          points   = [ ],
@@ -1109,7 +1109,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                               const curve = new Bezier (ax, ay, x1, y1, x, y);
 
-                              points .push (... curve .getPoints ("quadric", dimension));
+                              points .push (... curve .getPoints ("quadric", steps));
 
                               ax = x;
                               ay = y;
@@ -1174,7 +1174,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                         const curve = new Bezier (ax, ay, x1, y1, x, y);
 
-                        points .push (... curve .getPoints ("quadric", dimension));
+                        points .push (... curve .getPoints ("quadric", steps));
 
                         ax = x;
                         ay = y;
@@ -1244,7 +1244,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                                     const curve = new Bezier (ax, ay, x1, y1, x2, y2, x, y);
 
-                                    points .push (... curve .getPoints ("cubic", dimension));
+                                    points .push (... curve .getPoints ("cubic", steps));
 
                                     ax = x;
                                     ay = y;
@@ -1325,7 +1325,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                               const curve = new Bezier (ax, ay, x1, y1, x2, y2, x, y);
 
-                              points .push (... curve .getPoints ("cubic", dimension));
+                              points .push (... curve .getPoints ("cubic", steps));
 
                               ax = x;
                               ay = y;
