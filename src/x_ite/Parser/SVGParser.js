@@ -319,14 +319,14 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return this .circleElement (xmlElement);
          case "ellipse":
             return this .ellipseElement (xmlElement);
-         case "polygon":
-            return this .polygonElement (xmlElement);
          case "text":
             return this .textElement (xmlElement);
          case "image":
             return this .imageElement (xmlElement);
          case "polyline":
             return this .polylineElement (xmlElement);
+         case "polygon":
+            return this .polygonElement (xmlElement);
          case "path":
             return this .pathElement (xmlElement);
       }
@@ -568,10 +568,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (transformNode .children .length)
          this .groupNodes .at (-1) .children .push (transformNode);
    },
-   polygonElement: function (xmlElement)
-   {
-
-   },
    textElement: function (xmlElement)
    {
 
@@ -586,6 +582,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
          return;
+
+      if (xmlElement .nodeName === "polygon")
+         points .push (points [0]);
 
       // Determine style.
 
@@ -612,13 +611,19 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          const
             shapeNode    = scene .createNode ("Shape"),
-            geometryNode = scene .createNode ("IndexedTriangleSet");
+            geometryNode = scene .createNode ("IndexedTriangleSet"),
+            texCoordNode = scene .createNode ("TextureCoordinate"),
+            invMatrix    = Matrix3 .inverse (bbox .matrix);
 
-         shapeNode .appearance = this .createFillAppearance (bbox);
-         shapeNode .geometry   = geometryNode;
-         geometryNode .solid   = false;
-         geometryNode .index   = this .triangulatePolygon (points, coordinateNode) .map (p => p .index);
-         geometryNode .coord   = coordinateNode;
+         shapeNode .appearance  = this .createFillAppearance (bbox);
+         shapeNode .geometry    = geometryNode;
+         geometryNode .solid    = false;
+         geometryNode .index    = this .triangulatePolygon (points, coordinateNode) .map (p => p .index);
+         geometryNode .texCoord = texCoordNode;
+         geometryNode .coord    = coordinateNode;
+
+         for (const point of coordinateNode .point)
+            texCoordNode .point .push (invMatrix .multVecMatrix (new Vector2 (point .x, point .y)) .add (Vector2 .One) .divide (2));
 
          transformNode .children .push (shapeNode);
       }
@@ -642,6 +647,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (transformNode .children .length)
          this .groupNodes .at (-1) .children .push (transformNode);
+   },
+   polygonElement: function (xmlElement)
+   {
+      this .polylineElement (xmlElement);
    },
    pathElement: function (xmlElement)
    {
