@@ -96,10 +96,9 @@ const Triangle3 = {
       const tessy = (function ()
       {
          // Function called for each vertex of tesselator output.
-         function vertexCallback (data, polyVertArray)
+         function vertexCallback (point, triangles)
          {
-            //console .log (data);
-            polyVertArray [polyVertArray .length] = data;
+            triangles .push (point);
          }
 
          function beginCallback (type)

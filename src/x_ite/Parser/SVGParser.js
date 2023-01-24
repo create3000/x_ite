@@ -129,6 +129,8 @@ const
 function SVGParser (scene)
 {
    X3DParser .call (this, scene);
+
+   this .tessy = this .createTesselator ();
 }
 
 SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -1394,62 +1396,59 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return appearanceNode;
    },
-   triangulatePolygon: (function ()
+   createTesselator: function ()
    {
-      const tessy = (function ()
+      // Function called for each vertex of tessellator output.
+
+      function vertexCallback (point, triangles)
       {
-         // Function called for each vertex of tessellator output.
-         function vertexCallback (data, polyVertArray)
-         {
-            //console .log (data);
-            polyVertArray [polyVertArray .length] = data;
-         }
+         triangles .push (point);
+      }
 
-         const tessy = new libtess .GluTesselator ();
+      const tessy = new libtess .GluTesselator ();
 
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,        Function .prototype);
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,        Function .prototype);
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,    Function .prototype);
-         tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_TOLERANCE,    0);
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA, vertexCallback);
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,       Function .prototype);
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,       Function .prototype);
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,   Function .prototype);
+      tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_TOLERANCE,   0);
 
-         return tessy;
-      })();
-
-      return function (points, coordinateNode)
+      return tessy;
+   },
+   triangulatePolygon: function (points, coordinateNode)
+   {
+      // Callback for when segments intersect and must be split.
+      function combineCallback (coords, data, weight)
       {
-         // Callback for when segments intersect and must be split.
-         function combineCallback (coords, data, weight)
-         {
-            const point = new Vector3 (... coords);
+         const point = new Vector3 (... coords);
 
-            point .index = coordinateNode .point .length;
+         point .index = coordinateNode .point .length;
 
-            coordinateNode .point .push (point);
+         coordinateNode .point .push (point);
 
-            return point;
-         }
+         return point;
+      }
 
-         const
-            WINDING   = this .style .fillRule === "evenodd" ? "GLU_TESS_WINDING_ODD" : "GLU_TESS_WINDING_NONZERO",
-            triangles = [ ];
+      const
+         WINDING   = this .style .fillRule === "evenodd" ? "GLU_TESS_WINDING_ODD" : "GLU_TESS_WINDING_NONZERO",
+         tessy     = this .tessy,
+         triangles = [ ];
 
-         tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule [WINDING]);
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE, combineCallback);
-         tessy .gluTessBeginPolygon (triangles);
-         tessy .gluTessBeginContour ();
+      tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule [WINDING]);
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE, combineCallback);
+      tessy .gluTessBeginPolygon (triangles);
+      tessy .gluTessBeginContour ();
 
-         const contour = points .map (p => new Vector3 (p .x, p. y, 0));
+      const contour = points .map (p => new Vector3 (p .x, p. y, 0));
 
-         contour .forEach ((p, i) => p .index = i);
-         contour .forEach (p => tessy .gluTessVertex (p, p));
+      contour .forEach ((p, i) => p .index = i);
+      contour .forEach (p => tessy .gluTessVertex (p, p));
 
-         tessy .gluTessEndContour ();
-         tessy .gluTessEndPolygon ();
+      tessy .gluTessEndContour ();
+      tessy .gluTessEndPolygon ();
 
-         return triangles;
-      };
-   })(),
+      return triangles;
+   },
 });
 
 export default SVGParser;
