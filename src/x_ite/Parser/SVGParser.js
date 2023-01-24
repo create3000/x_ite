@@ -176,7 +176,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .rootTransform         = scene .createNode ("Transform");
       this .groupNodes            = [this .rootTransform];
-      this .texturePropertiesNode = scene .createNode ("TextureProperties");
+      this .texturePropertiesNode = this .createTextureProperties ();
       this .styles                = [{
          display: "inline",
          fillType: "COLOR",
@@ -573,7 +573,41 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    imageElement: function (xmlElement)
    {
+      // Get transform.
 
+      const
+         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0),
+         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0),
+         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0),
+         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0),
+         href   = xmlElement .getAttribute ("xlink:href");
+
+      const
+         scene         = this .getExecutionContext (),
+         transformNode = this .createTransform (xmlElement, new Vector2 (x + width / 2, y + height / 2), new Vector2 (1, -1));
+
+      this .groupNodes .push (transformNode);
+
+      // Create nodes.
+
+      const
+         shapeNode      = scene .createNode ("Shape"),
+         appearanceNode = scene .createNode ("Appearance"),
+         textureNode    = scene .createNode ("ImageTexture"),
+         rectangleNode  = scene .createNode ("Rectangle2D");
+
+      shapeNode .appearance          = appearanceNode;
+      shapeNode .geometry            = rectangleNode;
+      appearanceNode .texture        = textureNode;
+      textureNode .url               = [href];
+      textureNode .textureProperties = this .texturePropertiesNode;
+      rectangleNode .solid           = false;
+      rectangleNode .size            = new Vector2 (width, height);
+
+      transformNode .children .push (shapeNode);
+
+      this .groupNodes .pop ();
+      this .groupNodes .at (-1) .children .push (transformNode);
    },
    polylineElement: function (xmlElement)
    {
@@ -1403,6 +1437,22 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
 
       return appearanceNode;
+   },
+   createTextureProperties: function ()
+   {
+      const
+         scene                 = this .getExecutionContext (),
+         texturePropertiesNode = scene .createNode ("TextureProperties");
+
+      texturePropertiesNode .generateMipMaps     = true;
+      texturePropertiesNode .minificationFilter  = "NICEST";
+      texturePropertiesNode .magnificationFilter = "NICEST";
+      texturePropertiesNode .boundaryModeS       = "CLAMP_TO_EDGE";
+      texturePropertiesNode .boundaryModeT       = "CLAMP_TO_EDGE";
+      texturePropertiesNode .boundaryModeR       = "CLAMP_TO_EDGE";
+      texturePropertiesNode .textureCompression  = "DEFAULT";
+
+      return texturePropertiesNode;
    },
    createTesselator: function ()
    {
