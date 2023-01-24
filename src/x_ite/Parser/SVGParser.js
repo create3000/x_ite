@@ -932,8 +932,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                if (points .length)
                   contours .push (Object .assign (points, { index: index, closed: false }));
 
-               index  += points .length;
-               points  = [ ];
+               index += points .length;
+               points = [ ];
 
                while (true)
                {
@@ -1417,8 +1417,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                   contours .push (Object .assign (points, { index: index, closed: true }));
 
-                  index  += points .length;
-                  points  = [ ];
+                  index += points .length;
+                  points = [ ];
                }
 
                this .comma ();
