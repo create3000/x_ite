@@ -776,6 +776,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                {
                   const angle = this .value;
 
+                  this .whitespaces ();
+
                   if (Grammar .closeParenthesis .parse (this))
                   {
                      matrix .rotate (Algorithm .radians (angle));
