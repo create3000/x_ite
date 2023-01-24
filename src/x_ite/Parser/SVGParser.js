@@ -1751,45 +1751,43 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .style .display = value;
    },
-   fillStyle: (function ()
+   fillStyle: function (value)
    {
-      const color = new Color4 (0, 0, 0, 0);
-
-      return function (value)
+      if (this .urlValue ())
       {
-         if (this .urlValue ())
-         {
-            this .style .fillType = "URL";
-            this .style .fillURL  = this .result [1] .trim ();
-            return;
-         }
+         this .style .fillType = "URL";
+         this .style .fillURL  = this .result [1] .trim ();
+         return;
+      }
 
-         if (value === "transparent")
-         {
-            this .style .fillType = "NONE";
-            return;
-         }
+      if (value === "transparent")
+      {
+         this .style .fillType = "NONE";
+         return;
+      }
 
-         if (value === "none")
-         {
-            this .style .fillType ="NONE";
-            return;
-         }
+      if (value === "none")
+      {
+         this .style .fillType ="NONE";
+         return;
+      }
 
-         if (this .colorValue (color))
+      if (!value .match (/^(?:inherit|unset)$/))
+      {
+         if (this .colorValue ())
          {
             this .style .fillType  = "COLOR";
-            this .style .fillColor = color .copy ();
+            this .style .fillColor = this .value .copy ();
             return;
          }
+      }
 
-         // inherit
+      // inherit
 
-         this .style .fillType  = this .styles .at (-1) .fillType;
-         this .style .fillColor = this .styles .at (-1) .fillColor;
-         this .style .fillURL   = this .styles .at (-1) .fillURL;
-      };
-   })(),
+      this .style .fillType  = this .styles .at (-1) .fillType;
+      this .style .fillColor = this .styles .at (-1) .fillColor;
+      this .style .fillURL   = this .styles .at (-1) .fillURL;
+   },
    fillOpacityStyle: function (value)
    {
       if (this .double ())
@@ -1812,45 +1810,43 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       this .style .fillRule = value;
    },
-   strokeStyle: (function ()
+   strokeStyle: function (value)
    {
-      const color = new Color4 (0, 0, 0, 0);
-
-      return function (value)
+      if (this .urlValue ())
       {
-         if (this .urlValue ())
-         {
-            this .style .strokeType = "URL";
-            this .style .strokeURL  = this .result [1] .trim ();
-            return;
-         }
+         this .style .strokeType = "URL";
+         this .style .strokeURL  = this .result [1] .trim ();
+         return;
+      }
 
-         if (value === "transparent")
-         {
-            this .style .strokeType = "NONE";
-            return;
-         }
+      if (value === "transparent")
+      {
+         this .style .strokeType = "NONE";
+         return;
+      }
 
-         if (value === "none")
-         {
-            this .style .strokeType ="NONE";
-            return;
-         }
+      if (value === "none")
+      {
+         this .style .strokeType ="NONE";
+         return;
+      }
 
-         if (this .colorValue (color))
+      if (!value .match (/^(?:inherit|unset)$/))
+      {
+         if (this .colorValue ())
          {
             this .style .strokeType  = "COLOR";
-            this .style .strokeColor = color .copy ();
+            this .style .strokeColor = this .value .copy ();
             return;
          }
+      }
 
-         // inherit
+      // inherit
 
-         this .style .strokeType  = this .styles .at (-1) .strokeType;
-         this .style .strokeColor = this .styles .at (-1) .strokeColor;
-         this .style .strokeURL   = this .styles .at (-1) .strokeURL;
-      };
-   })(),
+      this .style .strokeType  = this .styles .at (-1) .strokeType;
+      this .style .strokeColor = this .styles .at (-1) .strokeColor;
+      this .style .strokeURL   = this .styles .at (-1) .strokeURL;
+   },
    strokeOpacityStyle: function (value)
    {
       if (this .double ())
@@ -1901,19 +1897,14 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
    },
-   stopColorStyle: (function ()
+   stopColorStyle: function (value)
    {
-      const color = new Color4 (0, 0, 0, 0);
-
-      return function (value)
+      if (this .colorValue ())
       {
-         if (this .colorValue (color))
-         {
-            this .style .stopColor = color .copy ();
-            return;
-         }
-      };
-   })(),
+         this .style .stopColor = this .value .copy ();
+         return;
+      }
+   },
    stopOpacityStyle: function (value)
    {
       if (this .double ())
@@ -1968,15 +1959,20 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   colorValue: function (color)
+   colorValue: (function ()
    {
-      if (!Grammar .color .parse (this))
-         return false;
+      const color = new Color4 (0, 0, 0, 0);
 
-      color .set (... this .convertColor (this .result [1]));
+      return function ()
+      {
+         if (!Grammar .color .parse (this))
+            return false;
 
-      return true;
-   },
+         this .value = color .set (... this .convertColor (this .result [1]));
+
+         return true;
+      };
+   })(),
    urlValue: function ()
    {
       return Grammar .url .parse (this);
