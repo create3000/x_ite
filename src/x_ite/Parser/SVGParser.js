@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import X3DParser from "./X3DParser.js";
+import Algorithm from "../../standard/Math/Algorithm.js";
 import Color3    from "../../standard/Math/Numbers/Color3.js";
 import Color4    from "../../standard/Math/Numbers/Color4.js";
 import Vector2   from "../../standard/Math/Numbers/Vector2.js";
@@ -55,7 +56,7 @@ import Rotation4 from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix3   from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4   from "../../standard/Math/Numbers/Matrix4.js";
 import Box2      from "../../standard/Math/Geometry/Box2.js"
-import Algorithm from "../../standard/Math/Algorithm.js";
+import Bezier    from "../../standard/Math/Algorithms/Bezier.js";
 
 /*
  *  Grammar
@@ -66,7 +67,7 @@ const Grammar =
 {
    // General
    whitespaces: /[\x20\n\t\r]+/gy,
-   whitespacesWithComma: /[\x20\n\t\r,]+/gy,
+   commaWithWhitespaces: /[\x20\n\t\r,]+/gy,
    openParenthesis: /\(/gy,
    closeParenthesis: /\)/gy,
 
@@ -82,7 +83,7 @@ const Grammar =
    PercentSign: /%/gy,
 
    // Values
-   int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
+   int32: /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
    double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
    matrix: /matrix/gy,
    translate: /translate/gy,
@@ -92,6 +93,7 @@ const Grammar =
    skewY: /skewY/gy,
    color: /([a-zA-Z]+|#[\da-fA-F]+|rgba?\(.*?\))/gy,
    url: /url\("?(.*?)"?\)/gy,
+   path: /([mMlLhHvVqQtTcCsSaAzZ])/gy,
 };
 
 function parse (parser)
@@ -637,7 +639,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    polylineElement: function (xmlElement, closed = false)
    {
-      const points = [ ];
+      const points = Object .assign ([ ], { index: 0 });
 
       if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
          return;
@@ -672,7 +674,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          shapeNode .appearance  = this .createFillAppearance (bbox);
          shapeNode .geometry    = geometryNode;
          geometryNode .solid    = false;
-         geometryNode .index    = this .triangulatePolygon (points, coordinateNode) .map (p => p .index);
+         geometryNode .index    = this .triangulatePolygon ([points], coordinateNode) .map (p => p .index);
          geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
          geometryNode .coord    = coordinateNode;
 
@@ -705,7 +707,82 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    pathElement: function (xmlElement)
    {
+      // Get path points.
 
+      const contours = [ ];
+
+      if (!this .dAttribute (xmlElement .getAttribute ("d"), contours))
+         return;
+
+      // Determine style.
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Get transform.
+
+      const
+         scene         = this .getExecutionContext (),
+         transformNode = this .createTransform (xmlElement),
+         bbox          = new Box2 ();
+
+      for (const points of contours)
+         bbox .add (new Box2 (Vector2 .min (... points), Vector2 .max (... points), true));
+
+      this .groupNodes .push (transformNode);
+
+      // Create nodes.
+
+      const coordinateNode = scene .createNode ("Coordinate");
+
+      for (const points of contours)
+      {
+         for (const point of points)
+            coordinateNode .point .push (new Vector3 (point .x, point .y, 0));
+      }
+
+      if (this .style .fillType !== "NONE")
+      {
+         const
+            shapeNode    = scene .createNode ("Shape"),
+            geometryNode = scene .createNode ("IndexedTriangleSet");
+
+         shapeNode .appearance  = this .createFillAppearance (bbox);
+         shapeNode .geometry    = geometryNode;
+         geometryNode .solid    = false;
+         geometryNode .index    = this .triangulatePolygon (contours, coordinateNode) .map (p => p .index);
+         geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
+         geometryNode .coord    = coordinateNode;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      if (this .style .strokeType !== "NONE")
+      {
+         const
+            shapeNode    = scene .createNode ("Shape"),
+            geometryNode = scene .createNode ("IndexedLineSet");
+
+         shapeNode .appearance = this .createStrokeAppearance ();
+         shapeNode .geometry   = geometryNode;
+         geometryNode .coord   = coordinateNode;
+
+         for (const points of contours)
+         {
+            for (const i of points .keys ())
+               geometryNode .coordIndex .push (points .index + i);
+
+            geometryNode .coordIndex .push (-1);
+         }
+
+         transformNode .children .push (shapeNode);
+      }
+
+      this .groupNodes .pop ();
+      this .styles     .pop ();
+
+      if (transformNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
    },
    idAttribute: function (attribute, node)
    {
@@ -790,7 +867,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const x = this .value;
 
-            if (this .whitespacesWithComma ())
+            if (this .commaWithWhitespaces ())
             {
                if (this .double ())
                {
@@ -798,7 +875,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                   points .push (new Vector2 (x, y));
 
-                  if (this .whitespacesWithComma ())
+                  if (this .commaWithWhitespaces ())
                      continue;
                }
             }
@@ -808,6 +885,561 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
 
       return !! points .length;
+   },
+   dAttribute: function (attribute, contours)
+   {
+      if (attribute === null)
+         return false;
+
+      this .parseValue (attribute);
+
+      const dimension = 7;
+
+      let
+         points   = Object .assign ([ ], { index: 0 }),
+         previous = "",
+         command  = "",
+         relative = false,
+         ax       = 0,
+         ay       = 0,
+         px       = 0,
+         py       = 0;
+
+      while (true)
+      {
+         if (!Grammar .path .parse (this))
+            break;
+
+         previous = command;
+         command  = this .result [1];
+         relative = command === command .toLowerCase ();
+
+         console .log (command);
+
+         switch (command)
+         {
+            case "m":
+            case "M":
+            {
+               // moveto
+
+               if (points .length)
+                  contours .push (points);
+
+               this .whitespaces ();
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x = this .value;
+
+                     this .commaWithWhitespaces ();
+
+                     if (this .double ())
+                     {
+                        let y = this .value;
+
+                        if (relative)
+                        {
+                           x += ax;
+                           y += ay;
+                        }
+
+                        points .push (new Vector2 (x, y));
+
+                        ax = x;
+                        ay = y;
+
+                        this .commaWithWhitespaces ();
+                        continue;
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "l":
+            case "L":
+            {
+               // lineto
+
+               this .whitespaces ();
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x = this .value;
+
+                     this .commaWithWhitespaces ();
+
+                     if (this .double ())
+                     {
+                        let y = this .value;
+
+                        if (relative)
+                        {
+                           x += ax;
+                           y += ay;
+                        }
+
+                        points .push (new Vector2 (x, y));
+
+                        ax = x;
+                        ay = y;
+
+                        this .commaWithWhitespaces ();
+                        continue;
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "h":
+            case "H":
+            {
+               // horizontal lineto
+
+               this .whitespaces ();
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x = this .value;
+
+                     if (relative)
+                        x += ax;
+
+                     points .push (x, ay);
+
+                     ax = x;
+
+                     this .commaWithWhitespaces ();
+                     continue;
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "v":
+            case "V":
+            {
+               // vertical lineto
+
+               this .whitespaces ();
+
+               while (this)
+               {
+                  if (this .double ())
+                  {
+                     let y = this .value;
+
+                     if (relative)
+                        y += ay;
+
+                     points .push (ax, y);
+
+                     ay = y;
+
+                     this .commaWithWhitespaces ();
+                     continue;
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "q":
+            case "Q":
+            {
+               // quadratic Bézier curveto
+
+               this .whitespaces ();
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x1 = this .value;
+
+                     this .commaWithWhitespaces ();
+
+                     if (this .double ())
+                     {
+                        let y1 = this .value;
+
+                        this .commaWithWhitespaces ();
+
+                        if (this .double ())
+                        {
+                           let x = this .value;
+
+                           this .commaWithWhitespaces ();
+
+                           if (this .double ())
+                           {
+                              let y = this .value;
+
+                              if (relative)
+                              {
+                                 x1 += ax;
+                                 y1 += ay;
+                                 x  += ax;
+                                 y  += ay;
+                              }
+
+                              const curve = new Bezier (ax, ay, x1, y1, x, y);
+
+                              points .push (... curve .getPoints ("quadric", dimension));
+
+                              ax = x;
+                              ay = y;
+                              px = x1;
+                              py = y1;
+
+                              this .commaWithWhitespaces ();
+                              continue;
+                           }
+                        }
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "t":
+            case "T":
+            {
+               // Shorthand/smooth quadratic Bézier curveto
+
+               this .whitespaces ();
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x = this .value;
+
+                     this .commaWithWhitespaces ();
+
+                     if (this .double ())
+                     {
+                        let y = this .value;
+
+                        if (relative)
+                        {
+                           x += ax;
+                           y += ay;
+                        }
+
+                        switch (previous)
+                        {
+                           case 'Q':
+                           case 'q':
+                           case 'T':
+                           case 't':
+                           {
+                              x1 = ax + (ax - px);
+                              y1 = ay + (ay - py);
+                              break;
+                           }
+                           default:
+                           {
+                              x1 = ax;
+                              y1 = ay;
+                              break;
+                           }
+                        }
+
+                        const curve = new Bezier (ax, ay, x1, y1, x, y);
+
+                        points .push (... curve .getPoints ("quadric", dimension));
+
+                        ax = x;
+                        ay = y;
+
+                        this .commaWithWhitespaces ();
+                        continue;
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "c":
+            case "C":
+            {
+               // curveto, cubic Bézier curve
+
+               this .whitespaces ();
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x1 = this .value;
+
+                     this .commaWithWhitespaces ();
+
+                     if (this .double ())
+                     {
+                        let y1 = this .value;
+
+                        this .commaWithWhitespaces ();
+
+                        if (this .double ())
+                        {
+                           let x2 = this .value;
+
+                           this .commaWithWhitespaces ();
+
+                           if (this .double ())
+                           {
+                              let y2 = this .value;
+
+                              this .commaWithWhitespaces ();
+
+                              if (this .double ())
+                              {
+                                 let x = this .value;
+
+                                 this .commaWithWhitespaces ();
+
+                                 if (this .double ())
+                                 {
+                                    let y = this .value;
+
+                                    if (relative)
+                                    {
+                                       x1 += ax;
+                                       y1 += ay;
+                                       x2 += ax;
+                                       y2 += ay;
+                                       x  += ax;
+                                       y  += ay;
+                                    }
+
+                                    const curve = new Bezier (ax, ay, x1, y1, x2, y2, x, y);
+
+                                    points .push (... curve .getPoints ("cubic", dimension));
+
+                                    ax = x;
+                                    ay = y;
+                                    px = x2;
+                                    py = y2;
+
+                                    this .commaWithWhitespaces ();
+                                    continue;
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "s":
+            case "S":
+            {
+               // shorthand/smooth curveto, cubic Bézier curve
+
+               this .whitespaces ();
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x2 = this .value;
+
+                     this .commaWithWhitespaces ();
+
+                     if (this .double ())
+                     {
+                        let y2 = this .value;
+
+                        this .commaWithWhitespaces ();
+
+                        if (this .double ())
+                        {
+                           let x = this .value;
+
+                           this .commaWithWhitespaces ();
+
+                           if (this .double ())
+                           {
+                              let y = this .value;
+
+                              if (relative)
+                              {
+                                 x2 += ax;
+                                 y2 += ay;
+                                 x  += ax;
+                                 y  += ay;
+                              }
+
+                              switch (previous)
+                              {
+                                 case 'C':
+                                 case 'c':
+                                 case 'S':
+                                 case 's':
+                                 {
+                                    x1 = ax + (ax - px);
+                                    y1 = ay + (ay - py);
+                                    break;
+                                 }
+                                 default:
+                                 {
+                                    x1 = ax;
+                                    y1 = ay;
+                                    break;
+                                 }
+                              }
+
+                              const curve = new Bezier (ax, ay, x1, y1, x2, y2, x, y);
+
+                              points .push (... curve .getPoints ("cubic", dimension));
+
+                              ax = x;
+                              ay = y;
+                              px = x2;
+                              py = y2;
+
+                              this .commaWithWhitespaces ();
+                              continue;
+                           }
+                        }
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "a":
+            case "A":
+            {
+               // elliptical arc
+
+               this .whitespaces ();
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let rx = this .value;
+
+                     this .commaWithWhitespaces ();
+
+                     if (this .double ())
+                     {
+                        let ry = this .value;
+
+                        this .commaWithWhitespaces ();
+
+                        if (this .double ())
+                        {
+                           let xAxisRotation = this .value;
+
+                           this .commaWithWhitespaces ();
+
+                           if (this .int32 ())
+                           {
+                              let largeArcFlag = this .value;
+
+                              this .commaWithWhitespaces ();
+
+                              if (this .int32 ())
+                              {
+                                 let sweepFlag = this .value;
+
+                                 this .commaWithWhitespaces ();
+
+                                 if (this .double ())
+                                 {
+                                    let x = this .value;
+
+                                    this .commaWithWhitespaces ();
+
+                                    if (this .double ())
+                                    {
+                                       let y = this .value;
+
+                                       if (relative)
+                                       {
+                                          x += ax;
+                                          y += ay;
+                                       }
+
+                                       const curve = new Bezier (ax, ay, rx, ry, Algorithm .radians (xAxisRotation), largeArcFlag, sweepFlag, x, y);
+
+                                       points .push (... curve .getPoints ("arc", dimension));
+
+                                       ax = x;
+                                       ay = y;
+
+                                       this .commaWithWhitespaces ();
+                                       continue;
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "z":
+            case "Z":
+            {
+               // closepath
+
+               if (points .length)
+               {
+                  ax = points [0] .x;
+                  ay = points [0] .y;
+
+                  contours .push (points);
+
+                  points = Object .assign ([ ], { index: points .index + points .length });
+               }
+
+               this .commaWithWhitespaces ();
+               continue;
+            }
+            default:
+            {
+               break;
+            }
+         }
+
+         break;
+      }
+
+      return !! contours .length;
    },
    transformAttribute: function (attribute)
    {
@@ -820,7 +1452,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       while (true)
       {
-         this .whitespacesWithComma ();
+         this .commaWithWhitespaces ();
          this .whitespaces ();
 
          if (Grammar .matrix .parse (this))
@@ -835,31 +1467,31 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                {
                   const a = this .value;
 
-                  if (this .whitespacesWithComma ())
+                  if (this .commaWithWhitespaces ())
                   {
                      if (this .double ())
                      {
                         const b = this .value;
 
-                        if (this .whitespacesWithComma ())
+                        if (this .commaWithWhitespaces ())
                         {
                            if (this .double ())
                            {
                               const c = this .value;
 
-                              if (this .whitespacesWithComma ())
+                              if (this .commaWithWhitespaces ())
                               {
                                  if (this .double ())
                                  {
                                     const d = this .value;
 
-                                    if (this .whitespacesWithComma ())
+                                    if (this .commaWithWhitespaces ())
                                     {
                                        if (this .double ())
                                        {
                                           const e = this .value;
 
-                                          if (this .whitespacesWithComma ())
+                                          if (this .commaWithWhitespaces ())
                                           {
                                              if (this .double ())
                                              {
@@ -897,7 +1529,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                {
                   const tx = this .value;
 
-                  if (this .whitespacesWithComma ())
+                  if (this .commaWithWhitespaces ())
                   {
                      if (this .double ())
                      {
@@ -936,13 +1568,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   }
                   else
                   {
-                     if (this .whitespacesWithComma ())
+                     if (this .commaWithWhitespaces ())
                      {
                         if (this .double ())
                         {
                            const cx = this .value;
 
-                           if (this .whitespacesWithComma ())
+                           if (this .commaWithWhitespaces ())
                            {
                               if (this .double ())
                               {
@@ -977,7 +1609,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                {
                   const sx = this .value;
 
-                  if (this .whitespacesWithComma ())
+                  if (this .commaWithWhitespaces ())
                   {
                      if (this .double ())
                      {
@@ -1335,14 +1967,28 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       this .input     = value;
       this .lastIndex = 0;
+      this .value     = undefined;
    },
    whitespaces: function ()
    {
       return Grammar .whitespaces .parse (this);
    },
-   whitespacesWithComma: function ()
+   commaWithWhitespaces: function ()
    {
-      return Grammar .whitespacesWithComma .parse (this);
+      return Grammar .commaWithWhitespaces .parse (this);
+   },
+   int32: function ()
+   {
+      this .whitespaces ();
+
+      if (Grammar .int32 .parse (this))
+      {
+         this .value = parseInt (this .result [1]);
+
+         return true;
+      }
+
+      return false;
    },
    double: function ()
    {
@@ -1503,7 +2149,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return tessy;
    },
-   triangulatePolygon: function (points, coordinateNode)
+   triangulatePolygon: function (contours, coordinateNode)
    {
       // Callback for when segments intersect and must be split.
       function combineCallback (coords, data, weight)
@@ -1525,14 +2171,19 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule [WINDING]);
       tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE, combineCallback);
       tessy .gluTessBeginPolygon (triangles);
-      tessy .gluTessBeginContour ();
 
-      const contour = points .map (p => new Vector3 (p .x, p. y, 0));
+      for (const points of contours)
+      {
+         tessy .gluTessBeginContour ();
 
-      contour .forEach ((p, i) => p .index = i);
-      contour .forEach (p => tessy .gluTessVertex (p, p));
+         const contour = points .map (p => new Vector3 (p .x, p. y, 0));
 
-      tessy .gluTessEndContour ();
+         contour .forEach ((p, i) => p .index = points .index + i);
+         contour .forEach (p => tessy .gluTessVertex (p, p));
+
+         tessy .gluTessEndContour ();
+      }
+
       tessy .gluTessEndPolygon ();
 
       return triangles;

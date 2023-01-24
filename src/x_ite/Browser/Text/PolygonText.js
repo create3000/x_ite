@@ -301,7 +301,7 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
                {
                   var
                      curve = new Bezier (x, -y, command .x1, -command .y1, command .x, -command .y),
-                     lut   = curve .getLUT (dimension);
+                     lut   = curve .getPoints ("quadric", dimension);
 
                   for (var l = 1, ll = lut .length; l < ll; ++ l)
                      points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
@@ -312,7 +312,7 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
                {
                   var
                      curve = new Bezier (x, -y, command .x1, -command .y1, command .x2, -command .y2, command .x, -command .y),
-                     lut   = curve .getLUT (dimension);
+                     lut   = curve .getPoints ("cubic", dimension);
 
                   for (var l = 1, ll = lut .length; l < ll; ++ l)
                      points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));

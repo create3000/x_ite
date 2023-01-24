@@ -46,61 +46,203 @@
  ******************************************************************************/
 
 import Algorithm from "../Algorithm.js";
+import Vector2   from "../Numbers/Vector2.js";
 
 const lerp = Algorithm .lerp;
 
-function Bezier (x0, y0, x1, y1, x2, y2, x3, y3)
+function Bezier (/*x0, y0, x1, y1, x2, y2, x3, y3*/)
 {
-   this .x0 = x0;
-   this .y0 = y0;
-   this .x1 = x1;
-   this .y1 = y1;
-   this .x2 = x2;
-   this .y2 = y2;
-   this .x3 = x3;
-   this .y3 = y3;
-
-   this .order = arguments .length / 2 - 1;
+   this .args = arguments;
 }
 
 Bezier .prototype =
 {
-   getLUT: function (dimension)
+   getPoints: function (type, steps)
    {
-      const
-         x0  = this .x0,
-         y0  = this .y0,
-         x1  = this .x1,
-         y1  = this .y1,
-         x2  = this .x2,
-         y2  = this .y2,
-         x3  = this .x3,
-         y3  = this .y3,
-         lut = [ ];
+      const points = [ ];
 
-      switch (this .order)
+      switch (type)
       {
-         case 2:
+         case "quadric":
          {
-            for (let i = 0, d = dimension - 1; i < dimension; ++ i)
+            const
+               x0 = this .args [0],
+               y0 = this .args [1],
+               x1 = this .args [2],
+               y1 = this .args [3],
+               x2 = this .args [4],
+               y2 = this .args [5];
+
+            for (let i = 0, d = steps - 1; i < steps; ++ i)
             {
-               lut .push (quadric (x0, y0, x1, y1, x2, y2, i / d));
+               points .push (quadric (x0, y0, x1, y1, x2, y2, i / d));
             }
 
             break;
          }
-         case 3:
+         case "cubic":
          {
-            for (let i = 0, d = dimension - 1; i < dimension; ++ i)
+            const
+               x0 = this .args [0],
+               y0 = this .args [1],
+               x1 = this .args [2],
+               y1 = this .args [3],
+               x2 = this .args [4],
+               y2 = this .args [5],
+               x3 = this .args [6],
+               y3 = this .args [7];
+
+            for (let i = 0, d = steps - 1; i < steps; ++ i)
             {
-               lut .push (cubic (x0, y0, x1, y1, x2, y2, x3, y3, i / d));
+               points .push (cubic (x0, y0, x1, y1, x2, y2, x3, y3, i / d));
             }
 
+            break;
+         }
+         case "arc":
+         {
+            let
+               ax            = this .args [0],
+               ay            = this .args [1],
+               rx            = this .args [2],
+               ry            = this .args [3],
+               xAxisRotation = this .args [4],
+               largeArcFlag  = this .args [5],
+               sweepFlag     = this .args [6],
+               x             = this .args [7],
+               y             = this .args [8];
+
+            // https://ericeastwood.com/blog/25/curves-and-arcs-quadratic-cubic-elliptical-svg-implementations
+            // See https://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes.
+
+            // If the endpoints are identical, then this is equivalent to omitting the elliptical arc segment entirely.
+            if (ax === x && ay === y)
+            {
+               points .push (new Vector2 (x, y));
+               return;
+            }
+
+            // In accordance to: http://www.w3.org/TR/SVG/implnote.html#ArcOutOfRangeParameters
+
+            rx = Math .abs (rx);
+            ry = Math .abs (ry);
+
+            // If rx = 0 or ry = 0 then this arc is treated as a straight line segment joining the endpoints.
+            if (rx === 0 || ry === 0)
+            {
+               points .push (new Vector2 (ax, ay));
+               points .push (new Vector2 (x, y));
+               return;
+            }
+
+            const rx2 = rx * rx;
+            const ry2 = ry * ry;
+
+            // In accordance to: http://www.w3.org/TR/SVG/implnote.html#ArcOutOfRangeParameters
+
+            xAxisRotation = Algorithm .interval (xAxisRotation, 0, 2 * Math .PI);
+
+            const
+               sinRotation = Math .sin (xAxisRotation),
+               cosRotation = Math .cos (xAxisRotation);
+
+            // Following "Conversion from endpoint to center parameterization"
+            // http://www.w3.org/TR/SVG/implnote.html#ArcConversionEndpointToCenter
+
+            // Step #1: Compute transformedPoint
+            const d = (p0 - p1) / 2;
+
+            const transformedPoint = new Vector2 ( cosRotation * d .x () + sinRotation * d .y (),
+                                                  -sinRotation * d .x () + cosRotation * d .y ());
+
+            const transformedPoint2 = transformedPoint .copy () .multVec (transformedPoint);
+
+            // Ensure radii are large enough
+            const radiiCheck = transformedPoint2 .x / rx2 + transformedPoint2 .y / ry2;
+
+            if (radiiCheck > 1)
+            {
+               rx = Math .sqrt (radiiCheck) * rx;
+               ry = Math .sqrt (radiiCheck) * ry;
+            }
+
+            // Step #2: Compute transformedCenter
+            const cSquareNumerator = rx2 * ry2 - rx2 * transformedPoint2 .y - ry2 * transformedPoint2 .x;
+            const cSquareRootDenom =             rx2 * transformedPoint2 .y + ry2 * transformedPoint2 .x;
+            let   cRadicand        = cSquareNumerator / cSquareRootDenom;
+
+            // Make sure this never drops below zero because of precision
+            cRadicand = Math .max (0, cRadicand);
+
+            const cCoef = (largeArcFlag !== sweepFlag ? 1 : -1) * Math .sqrt (cRadicand);
+
+            const transformedCenter = new Vector2 ( cCoef * rx * transformedPoint .y / ry,
+                                                   -cCoef * ry * transformedPoint .x / rx);
+
+            // Step #3: Compute center
+            const center = new Vector2 (cosRotation * transformedCenter .x - sinRotation * transformedCenter .y + ((ax + x) / 2),
+                                        sinRotation * transformedCenter .x + cosRotation * transformedCenter .y + ((ay + y) / 2));
+
+            // Step #4: Compute start/sweep angles
+            const startVector = new Vector2 ((transformedPoint .x - transformedCenter .x) / rx,
+                                             (transformedPoint .y - transformedCenter .y) / ry);
+
+            const endVector = new Vector2 ((-transformedPoint .x - transformedCenter .x) / rx,
+                                           (-transformedPoint .y - transformedCenter .y) / ry);
+
+            const get_angle  = (x) => { return x > 0 ? x : 2 * Math .PI + x; }; // transform angle to range [0, 2pi]
+            const startAngle = get_angle (Math .atan2 (startVector .y, startVector .x));
+            const endAngle   = get_angle (Math .atan2 (endVector   .y, endVector   .x));
+
+            sweepAngle = endAngle - startAngle;
+
+            if (largeArcFlag)
+            {
+               // sweepAngle must be positive
+               if (sweepAngle < 0)
+                  sweepAngle += 2 * Math .PI;
+            }
+            else
+            {
+               // sweepAngle must be negative
+               if (sweepAngle > 0)
+                  sweepAngle -= 2 * Math .PI;
+            }
+
+            if (sweepFlag && sweepAngle < 0)
+               sweepAngle += 2 *Math .PI;
+
+            else if (!sweepFlag && sweepAngle > 0)
+               sweepAngle -= 2 * Math .PI;
+
+            // Interpolate:
+
+            const bezier_steps   = Math .max (4, Math .abs (sweepAngle) * steps / (2 * Math .PI));
+            const bezier_steps_1 = bezier_steps - 1;
+
+            points .push (new Vector2 (ax, ay));
+
+            for (let i = 1; i < bezier_steps_1; ++ i)
+            {
+               const t = i / bezier_steps_1;
+
+               // From http://www.w3.org/TR/SVG/implnote.html#ArcParameterizationAlternatives
+               const angle = startAngle + (sweepAngle * t);
+               const x     = rx * Math .cos (angle);
+               const y     = ry * Math .sin (angle);
+
+               const point = new Vector2 (cosRotation * x - sinRotation * y + center .x,
+                                          sinRotation * x + cosRotation * y + center .y);
+
+               points .push (point);
+            }
+
+            points .push (new Vector2 (x, y));
             break;
          }
       }
 
-      return lut;
+      return points;
    }
 };
 
@@ -114,7 +256,7 @@ function quadric (x0, y0, x1, y1, x2, y2, t)
       bx0 = lerp (ax0, ax1, t),
       by0 = lerp (ay0, ay1, t);
 
-   return {x: bx0, y: by0};
+   return new Vector2 (bx0, by0);
 }
 
 function cubic (x0, y0, x1, y1, x2, y2, x3, y3, t)
@@ -133,7 +275,7 @@ function cubic (x0, y0, x1, y1, x2, y2, x3, y3, t)
       cx0 = lerp (bx0, bx1, t),
       cy0 = lerp (by0, by1, t);
 
-   return {x: cx0, y: cy0};
+   return new Vector2 (cx0, cy0);
 }
 
 export default Bezier;
