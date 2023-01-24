@@ -1210,7 +1210,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!Grammar .color .parse (this))
          return false;
 
-      color .set (... this .convertColor (this .input));
+      color .set (... this .convertColor (this .result [1]));
 
       return true;
    },
