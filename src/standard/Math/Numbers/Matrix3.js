@@ -575,6 +575,8 @@ Matrix3 .prototype =
       this [0] = 1; this [1] = 0; this [2] = 0;
       this [3] = 0; this [4] = 1; this [5] = 0;
       this [6] = 0; this [7] = 0; this [8] = 1;
+
+      return this;
    },
    translate: function (translation)
    {
@@ -589,9 +591,7 @@ Matrix3 .prototype =
    },
    rotate: function (rotation)
    {
-      this .multLeft (Matrix3 .Rotation (rotation));
-
-      return this;
+      return this .multLeft (Matrix3 .Rotation (rotation));
    },
    scale: function (scale)
    {
@@ -607,13 +607,13 @@ Matrix3 .prototype =
 
       return this;
    },
-   skewX: function (skewAngle)
+   skewX: function (angle)
    {
-      this .multLeft (m .set (1, Math .tan (skewAngle), 0, 0, 1, 0, 0, 0, 1));
+      return this .multLeft (m .set (1, 0, 0, Math .tan (angle), 1, 0, 0, 0, 1));
    },
-   skewY: function (skewAngle)
+   skewY: function (angle)
    {
-      this .multLeft (m .set (1, 0, 0, Math .tan (skewAngle), 1, 0, 0, 0, 1));
+      return this .multLeft (m .set (1, Math .tan (angle), 0, 0, 1, 0, 0, 0, 1));
    },
    toString: function ()
    {

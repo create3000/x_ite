@@ -736,6 +736,8 @@ Matrix4 .prototype =
       this [ 4] = 0; this [ 5] = 1; this [ 6] = 0; this [ 7] = 0;
       this [ 8] = 0; this [ 9] = 0; this [10] = 1; this [11] = 0;
       this [12] = 0; this [13] = 0; this [14] = 0; this [15] = 1;
+
+      return this;
    },
    translate: function (translation)
    {
@@ -752,9 +754,7 @@ Matrix4 .prototype =
    },
    rotate: function (rotation)
    {
-      this .multLeft (m .setQuaternion (rotation .getQuaternion (q)));
-
-      return this;
+      return this .multLeft (m .setQuaternion (rotation .getQuaternion (q)));
    },
    scale: function (scale)
    {
