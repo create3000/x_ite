@@ -666,7 +666,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       while (true)
       {
-         this .whitespaces ();
+         this .commaWhitespaces ();
 
          if (Grammar .matrix .parse (this))
          {
@@ -774,11 +774,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                if (this .double ())
                {
-                  const angle = this .value;
-
-                  let commaWithWhitespaces = false;
-
-                  commaWithWhitespaces |= this .whitespaces ();
+                  const
+                     angle       = this .value,
+                     whitespaces = this .whitespaces ();
 
                   if (Grammar .closeParenthesis .parse (this))
                   {
@@ -787,10 +785,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   }
                   else
                   {
-                     commaWithWhitespaces |= Grammar .comma .parse (this);
-                     commaWithWhitespaces |= this .whitespaces ();
-
-                     if (commaWithWhitespaces)
+                     if (whitespaces || this .commaWhitespaces ())
                      {
                         if (this .double ())
                         {
