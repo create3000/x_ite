@@ -56,6 +56,7 @@ import Matrix3   from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4   from "../../standard/Math/Numbers/Matrix4.js";
 import Box2      from "../../standard/Math/Geometry/Box2.js"
 import Algorithm from "../../standard/Math/Algorithm.js";
+import Triangle3 from "../../standard/Math/Geometry/Triangle3.js";
 
 /*
  *  Grammar
@@ -579,7 +580,66 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    polylineElement: function (xmlElement)
    {
+      const points = [ ];
 
+      if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
+         return;
+
+      // Determine style.
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Get transform.
+
+      const
+         scene         = this .getExecutionContext (),
+         transformNode = this .createTransform (xmlElement),
+         bbox          = new Box2 (Vector2 .min (... points), Vector2 .max (... points), true);
+
+      this .groupNodes .push (transformNode);
+
+      // Create nodes.
+
+      const coordinateNode = scene .createNode ("Coordinate");
+
+      for (const point of points)
+         coordinateNode .point .push (new Vector3 (point .x, point .y, 0));
+
+      if (this .style .fillType !== "NONE")
+      {
+         const
+            shapeNode    = scene .createNode ("Shape"),
+            geometryNode = scene .createNode ("IndexedTriangleSet");
+
+         shapeNode .appearance = this .createFillAppearance (bbox);
+         shapeNode .geometry   = geometryNode;
+         geometryNode .solid   = false;
+         geometryNode .index   = this .triangulatePolygon (points, coordinateNode) .map (p => p .index);
+         geometryNode .coord   = coordinateNode;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      if (this .style .strokeType !== "NONE")
+      {
+         const
+            shapeNode    = scene .createNode ("Shape"),
+            geometryNode = scene .createNode ("IndexedLineSet");
+
+         shapeNode .appearance    = this .createStrokeAppearance ();
+         shapeNode .geometry      = geometryNode;
+         geometryNode .coordIndex = [... points .keys (), -1];
+         geometryNode .coord      = coordinateNode;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      this .groupNodes .pop ();
+      this .styles     .pop ();
+
+      if (transformNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
    },
    pathElement: function (xmlElement)
    {
@@ -655,6 +715,38 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return defaultValue;
    },
+   pointsAttribute: function (attribute, points)
+   {
+      if (attribute === null)
+         return false;
+
+      this .parseValue (attribute);
+
+      while (true)
+      {
+         if (this .double ())
+         {
+            const x = this .value;
+
+            if (this .commaOrWhitespaces ())
+            {
+               if (this .double ())
+               {
+                  const y = this .value;
+
+                  points .push (new Vector2 (x, y));
+
+                  if (this .commaOrWhitespaces ())
+                     continue;
+               }
+            }
+         }
+
+         break;
+      }
+
+      return !! points .length;
+   },
    transformAttribute: function (attribute)
    {
       const matrix = new Matrix3 ();
@@ -666,7 +758,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       while (true)
       {
-         this .comma ();
+         this .commaOrWhitespaces ();
          this .whitespaces ();
 
          if (Grammar .matrix .parse (this))
@@ -681,31 +773,31 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                {
                   const a = this .value;
 
-                  if (this .comma ())
+                  if (this .commaOrWhitespaces ())
                   {
                      if (this .double ())
                      {
                         const b = this .value;
 
-                        if (this .comma ())
+                        if (this .commaOrWhitespaces ())
                         {
                            if (this .double ())
                            {
                               const c = this .value;
 
-                              if (this .comma ())
+                              if (this .commaOrWhitespaces ())
                               {
                                  if (this .double ())
                                  {
                                     const d = this .value;
 
-                                    if (this .comma ())
+                                    if (this .commaOrWhitespaces ())
                                     {
                                        if (this .double ())
                                        {
                                           const e = this .value;
 
-                                          if (this .comma ())
+                                          if (this .commaOrWhitespaces ())
                                           {
                                              if (this .double ())
                                              {
@@ -743,7 +835,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                {
                   const tx = this .value;
 
-                  if (this .comma ())
+                  if (this .commaOrWhitespaces ())
                   {
                      if (this .double ())
                      {
@@ -782,13 +874,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   }
                   else
                   {
-                     if (this .comma ())
+                     if (this .commaOrWhitespaces ())
                      {
                         if (this .double ())
                         {
                            const cx = this .value;
 
-                           if (this .comma ())
+                           if (this .commaOrWhitespaces ())
                            {
                               if (this .double ())
                               {
@@ -823,7 +915,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                {
                   const sx = this .value;
 
-                  if (this .comma ())
+                  if (this .commaOrWhitespaces ())
                   {
                      if (this .double ())
                      {
@@ -1186,11 +1278,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       return Grammar .whitespaces .parse (this);
    },
-   comma: function ()
+   commaOrWhitespaces: function ()
    {
-      this .whitespaces ();
-
-      return Grammar .comma .parse (this);
+      return !! (this .whitespaces () | Grammar .comma .parse (this) | this .whitespaces ());
    },
    double: function ()
    {
@@ -1304,6 +1394,62 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return appearanceNode;
    },
+   triangulatePolygon: (function ()
+   {
+      const tessy = (function ()
+      {
+         // Function called for each vertex of tessellator output.
+         function vertexCallback (data, polyVertArray)
+         {
+            //console .log (data);
+            polyVertArray [polyVertArray .length] = data;
+         }
+
+         const tessy = new libtess .GluTesselator ();
+
+         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
+         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,        Function .prototype);
+         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,        Function .prototype);
+         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,    Function .prototype);
+         tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_TOLERANCE,    0);
+
+         return tessy;
+      })();
+
+      return function (points, coordinateNode)
+      {
+         // Callback for when segments intersect and must be split.
+         function combineCallback (coords, data, weight)
+         {
+            const point = new Vector3 (... coords);
+
+            point .index = coordinateNode .point .length;
+
+            coordinateNode .point .push (point);
+
+            return point;
+         }
+
+         const
+            WINDING   = this .style .fillRule === "evenodd" ? "GLU_TESS_WINDING_ODD" : "GLU_TESS_WINDING_NONZERO",
+            triangles = [ ];
+
+         tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule [WINDING]);
+         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE, combineCallback);
+         tessy .gluTessBeginPolygon (triangles);
+         tessy .gluTessBeginContour ();
+
+         const contour = points .map (p => new Vector3 (p .x, p. y, 0));
+
+         contour .forEach ((p, i) => p .index = i);
+         contour .forEach (p => tessy .gluTessVertex (p, p));
+
+         tessy .gluTessEndContour ();
+         tessy .gluTessEndPolygon ();
+
+         return triangles;
+      };
+   })(),
 });
 
 export default SVGParser;

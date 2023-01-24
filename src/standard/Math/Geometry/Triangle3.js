@@ -150,9 +150,9 @@ const Triangle3 = {
          {
             tessy .gluTessBeginContour ();
 
-            for (const contour of arguments [i])
+            for (const point of arguments [i])
             {
-               tessy .gluTessVertex (contour, contour);
+               tessy .gluTessVertex (point, point);
             }
 
             tessy .gluTessEndContour ();
