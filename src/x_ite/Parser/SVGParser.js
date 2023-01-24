@@ -931,41 +931,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             if (attribute === null)
                continue;
 
-            this .parse (attribute);
-
-            switch (style)
-            {
-               case "display":
-                  this .displayStyle (attribute);
-                  break;
-               case "fill":
-                  this .fillStyle (attribute);
-                  break;
-               case "fill-opacity":
-                  this .fillOpacityStyle (attribute);
-                  break;
-               case "fill-rule":
-                  this .fillRuleStyle (attribute);
-                  break;
-               case "stroke":
-                  this .strokeStyle (attribute);
-                  break;
-               case "stroke-opacity":
-                  this .strokeOpacityStyle (attribute);
-                  break;
-               case "stroke-width":
-                  this .strokeWidthStyle (attribute);
-                  break;
-               case "opacity":
-                  this .opacityStyle (attribute);
-                  break;
-               case "stop-color":
-                  this .stopColorStyle (attribute);
-                  break;
-               case "stop-opacity":
-                  this .stopOpacityStyle (attribute);
-                  break;
-            }
+            this .parseStyle (style, attribute);
          }
 
          // Style attribute has higher precedence.
@@ -991,45 +957,45 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (pair .length !== 2)
             continue;
 
-         const
-            style     = pair [0] .trim (),
-            attribute = pair [1] .trim ();
+         this .parseStyle (pair [0] .trim (), pair [1] .trim ());
+      }
+   },
+   parseStyle: function (style, value)
+   {
+      this .parse (value);
 
-         this .parse (attribute);
-
-         switch (style)
-         {
-            case "display":
-               this .displayStyle (pair [1]);
-               break;
-            case "fill":
-               this .fillStyle (pair [1]);
-               break;
-            case "fill-opacity":
-               this .fillOpacityStyle (attribute);
-               break;
-            case "fill-rule":
-               this .fillRuleStyle (attribute);
-               break;
-            case "stroke":
-               this .strokeStyle (attribute);
-               break;
-            case "stroke-opacity":
-               this .strokeOpacityStyle (attribute);
-               break;
-            case "stroke-width":
-               this .strokeWidthStyle (attribute);
-               break;
-            case "opacity":
-               this .opacityStyle (attribute);
-               break;
-            case "stop-color":
-               this .stopColorStyle (attribute);
-               break;
-            case "stop-opacity":
-               this .stopOpacityStyle (attribute);
-               break;
-         }
+      switch (style)
+      {
+         case "display":
+            this .displayStyle (value);
+            break;
+         case "fill":
+            this .fillStyle (value);
+            break;
+         case "fill-opacity":
+            this .fillOpacityStyle (value);
+            break;
+         case "fill-rule":
+            this .fillRuleStyle (value);
+            break;
+         case "stroke":
+            this .strokeStyle (value);
+            break;
+         case "stroke-opacity":
+            this .strokeOpacityStyle (value);
+            break;
+         case "stroke-width":
+            this .strokeWidthStyle (value);
+            break;
+         case "opacity":
+            this .opacityStyle (value);
+            break;
+         case "stop-color":
+            this .stopColorStyle (value);
+            break;
+         case "stop-opacity":
+            this .stopOpacityStyle (value);
+            break;
       }
    },
    displayStyle: function (value)
