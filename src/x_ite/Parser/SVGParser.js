@@ -772,6 +772,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             for (const i of points .keys ())
                geometryNode .coordIndex .push (points .index + i);
 
+            if (points .closed)
+               geometryNode .coordIndex .push (points .index);
+
             geometryNode .coordIndex .push (-1);
          }
 
@@ -893,10 +896,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .parseValue (attribute);
 
-      const dimension = 7;
+      const
+         dimension = 7,
+         circle    = 64;
 
       let
-         points   = Object .assign ([ ], { index: 0 }),
+         points   = [ ],
+         index    = 0,
          previous = "",
          command  = "",
          relative = false,
@@ -914,8 +920,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          command  = this .result [1];
          relative = command === command .toLowerCase ();
 
-         console .log (command);
-
          switch (command)
          {
             case "m":
@@ -923,8 +927,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                // moveto
 
+               points = points .filter ((p, i, a) => i === 0 || !p .equals (a [i - 1]));
+
                if (points .length)
-                  contours .push (points);
+                  contours .push (Object .assign (points, { index: index, closed: false }));
+
+               index  += points .length;
+               points  = [ ];
 
                this .whitespaces ();
 
@@ -1392,7 +1401,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                                        const curve = new Bezier (ax, ay, rx, ry, Algorithm .radians (xAxisRotation), largeArcFlag, sweepFlag, x, y);
 
-                                       points .push (... curve .getPoints ("arc", dimension));
+                                       points .push (... curve .getPoints ("arc", circle));
 
                                        ax = x;
                                        ay = y;
@@ -1417,14 +1426,17 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                // closepath
 
+               points = points .filter ((p, i, a) => i === 0 || !p .equals (a [i - 1]));
+
                if (points .length)
                {
                   ax = points [0] .x;
                   ay = points [0] .y;
 
-                  contours .push (points);
+                  contours .push (Object .assign (points, { index: index, closed: true }));
 
-                  points = Object .assign ([ ], { index: points .index + points .length });
+                  index  += points .length;
+                  points  = [ ];
                }
 
                this .commaWithWhitespaces ();
@@ -1438,6 +1450,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          break;
       }
+
+      points = points .filter ((p, i, a) => i === 0 || !p .equals (a [i - 1]));
+
+      if (points .length)
+		   contours .push (Object .assign (points, { index: index, closed: false }));
 
       return !! contours .length;
    },
@@ -1778,13 +1795,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (value === null)
          return;
 
-      if (value == "inherit")
+      if (value === "inherit")
       {
          this .style .display = styles .at (-1) .display;
          return;
       }
 
-      style .display = value;
+      this .style .display = value;
    },
    fillStyle: (function ()
    {
@@ -1792,13 +1809,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return function (value)
       {
-         if (this .colorValue (color))
-         {
-            this .style .fillType  = "COLOR";
-            this .style .fillColor = color .copy ();
-            return;
-         }
-
          if (this .urlValue ())
          {
             this .style .fillType = "URL";
@@ -1806,15 +1816,22 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
          }
 
-         if (value == "transparent")
+         if (value === "transparent")
          {
             this .style .fillType = "NONE";
             return;
          }
 
-         if (value == "none")
+         if (value === "none")
          {
             this .style .fillType ="NONE";
+            return;
+         }
+
+         if (this .colorValue (color))
+         {
+            this .style .fillType  = "COLOR";
+            this .style .fillColor = color .copy ();
             return;
          }
 
@@ -1833,7 +1850,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
 
-      if (value == "transparent")
+      if (value === "transparent")
       {
          this .style .fillOpacity = 0;
          return;
@@ -1853,13 +1870,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return function (value)
       {
-         if (this .colorValue (color))
-         {
-            this .style .strokeType  = "COLOR";
-            this .style .strokeColor = color .copy ();
-            return;
-         }
-
          if (this .urlValue ())
          {
             this .style .strokeType = "URL";
@@ -1867,15 +1877,22 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
          }
 
-         if (value == "transparent")
+         if (value === "transparent")
          {
             this .style .strokeType = "NONE";
             return;
          }
 
-         if (value == "none")
+         if (value === "none")
          {
             this .style .strokeType ="NONE";
+            return;
+         }
+
+         if (this .colorValue (color))
+         {
+            this .style .strokeType  = "COLOR";
+            this .style .strokeColor = color .copy ();
             return;
          }
 
@@ -1894,7 +1911,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
 
-      if (value == "transparent")
+      if (value === "transparent")
       {
          this .style .strokeOpacity = 0;
          return;
@@ -1912,7 +1929,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
 
-      if (value == "none")
+      if (value === "none")
       {
          this .style .strokeWidth = 0;
          return;
@@ -1930,7 +1947,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
 
-      if (value == "transparent")
+      if (value === "transparent")
       {
          this .style .opacity = 0;
          return;
@@ -1957,7 +1974,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
 
-      if (value == "transparent")
+      if (value === "transparent")
       {
          this .style .stopOpacity = 0;
          return;
@@ -2146,6 +2163,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,       Function .prototype);
       tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,   Function .prototype);
       tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_TOLERANCE,   0);
+      tessy .gluTessNormal (0, 0, 1);
 
       return tessy;
    },

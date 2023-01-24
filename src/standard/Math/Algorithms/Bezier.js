@@ -130,13 +130,13 @@ Bezier .prototype =
             // If rx = 0 or ry = 0 then this arc is treated as a straight line segment joining the endpoints.
             if (rx === 0 || ry === 0)
             {
-               points .push (new Vector2 (ax, ay));
-               points .push (new Vector2 (x, y));
+               points .push (new Vector2 (ax, ay), new Vector2 (x, y));
                return;
             }
 
-            const rx2 = rx * rx;
-            const ry2 = ry * ry;
+            const
+               rx2 = rx * rx,
+               ry2 = ry * ry;
 
             // In accordance to: http://www.w3.org/TR/SVG/implnote.html#ArcOutOfRangeParameters
 
@@ -150,10 +150,10 @@ Bezier .prototype =
             // http://www.w3.org/TR/SVG/implnote.html#ArcConversionEndpointToCenter
 
             // Step #1: Compute transformedPoint
-            const d = (p0 - p1) / 2;
+            const d = new Vector2 (ax - x, ay - y) .divide (2);
 
-            const transformedPoint = new Vector2 ( cosRotation * d .x () + sinRotation * d .y (),
-                                                  -sinRotation * d .x () + cosRotation * d .y ());
+            const transformedPoint = new Vector2 ( cosRotation * d .x + sinRotation * d .y,
+                                                  -sinRotation * d .x + cosRotation * d .y);
 
             const transformedPoint2 = transformedPoint .copy () .multVec (transformedPoint);
 
@@ -194,7 +194,7 @@ Bezier .prototype =
             const startAngle = get_angle (Math .atan2 (startVector .y, startVector .x));
             const endAngle   = get_angle (Math .atan2 (endVector   .y, endVector   .x));
 
-            sweepAngle = endAngle - startAngle;
+            let sweepAngle = endAngle - startAngle;
 
             if (largeArcFlag)
             {
