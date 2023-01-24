@@ -370,7 +370,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .elements (xmlElement);
 
-      this .styles .pop ();
+      this .styles     .pop ();
       this .groupNodes .pop ();
 
       // Add node.
@@ -401,7 +401,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .elements (xmlElement);
 
-      this .styles .pop ();
+      this .styles     .pop ();
       this .groupNodes .pop ();
 
       // Add node.
