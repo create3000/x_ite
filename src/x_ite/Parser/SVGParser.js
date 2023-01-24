@@ -602,7 +602,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (attribute === null)
          return defaultValue;
 
-      this .parse (attribute);
+      this .parseValue (attribute);
 
       if (this .double ())
       {
@@ -635,7 +635,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (attribute === null)
          return defaultValue;
 
-      this .parse (attribute);
+      this .parseValue (attribute);
 
       if (this .double ())
       {
@@ -662,7 +662,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (attribute === null)
          return matrix;
 
-      this .parse (attribute);
+      this .parseValue (attribute);
 
       while (true)
       {
@@ -951,7 +951,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    parseStyle: function (style, value)
    {
-      this .parse (value);
+      this .parseValue (value);
 
       switch (style)
       {
@@ -1177,9 +1177,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
    },
-   parse: function (attribute)
+   parseValue: function (value)
    {
-      this .input     = attribute;
+      this .input     = value;
       this .lastIndex = 0;
    },
    whitespaces: function ()
