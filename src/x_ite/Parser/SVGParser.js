@@ -730,8 +730,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   }
                }
             }
-
-            break;
          }
          else if (Grammar .translate .parse (this))
          {
@@ -762,8 +760,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   }
                }
             }
-
-            break;
          }
          else if (Grammar .rotate .parse (this))
          {
@@ -814,8 +810,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   }
                }
             }
-
-            break;
          }
          else if (Grammar .scale .parse (this))
          {
@@ -846,8 +840,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   }
                }
             }
-
-            break;
          }
          else if (Grammar .skewX .parse (this))
          {
@@ -870,8 +862,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   }
                }
             }
-
-            break;
          }
          else if (Grammar .skewY .parse (this))
          {
@@ -894,8 +884,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   }
                }
             }
-
-            break;
          }
 
          break;
