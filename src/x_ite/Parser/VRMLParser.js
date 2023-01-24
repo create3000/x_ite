@@ -1305,10 +1305,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          lastIndex  = this .lastIndex,
          lineNumber = this .lineNumber;
 
-//			var
-//				input      = this .input,
-//				lineNumber = this .lineNumber;
-
       if (this .Id ())
       {
          var accessType = this .accessTypes [this .result [1]];
@@ -1386,9 +1382,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .lastIndex  = lastIndex;
       this .lineNumber = lineNumber;
-
-//			this .input      = input;
-//			this .lineNumber = lineNumber;
 
       var field = this .interfaceDeclaration ();
 
