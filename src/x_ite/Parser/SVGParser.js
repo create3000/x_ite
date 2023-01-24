@@ -67,7 +67,7 @@ const Grammar =
 {
    // General
    whitespaces: /[\x20\n\t\r]+/gy,
-   commaWithWhitespaces: /[\x20\n\t\r,]+/gy,
+   comma: /,/gy,
    openParenthesis: /\(/gy,
    closeParenthesis: /\)/gy,
 
@@ -870,7 +870,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const x = this .value;
 
-            if (this .commaWithWhitespaces ())
+            if (this .comma ())
             {
                if (this .double ())
                {
@@ -878,7 +878,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                   points .push (new Vector2 (x, y));
 
-                  if (this .commaWithWhitespaces ())
+                  if (this .comma ())
                      continue;
                }
             }
@@ -935,15 +935,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                index  += points .length;
                points  = [ ];
 
-               this .whitespaces ();
-
                while (true)
                {
                   if (this .double ())
                   {
                      let x = this .value;
 
-                     this .commaWithWhitespaces ();
+                     this .comma ();
 
                      if (this .double ())
                      {
@@ -960,7 +958,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                         ax = x;
                         ay = y;
 
-                        this .commaWithWhitespaces ();
+                        this .comma ();
                         continue;
                      }
                   }
@@ -983,7 +981,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   {
                      let x = this .value;
 
-                     this .commaWithWhitespaces ();
+                     this .comma ();
 
                      if (this .double ())
                      {
@@ -1000,7 +998,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                         ax = x;
                         ay = y;
 
-                        this .commaWithWhitespaces ();
+                        this .comma ();
                         continue;
                      }
                   }
@@ -1015,8 +1013,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                // horizontal lineto
 
-               this .whitespaces ();
-
                while (true)
                {
                   if (this .double ())
@@ -1030,7 +1026,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                      ax = x;
 
-                     this .commaWithWhitespaces ();
+                     this .comma ();
                      continue;
                   }
 
@@ -1043,8 +1039,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             case "V":
             {
                // vertical lineto
-
-               this .whitespaces ();
 
                while (this)
                {
@@ -1059,7 +1053,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                      ay = y;
 
-                     this .commaWithWhitespaces ();
+                     this .comma ();
                      continue;
                   }
 
@@ -1073,27 +1067,25 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                // quadratic Bézier curveto
 
-               this .whitespaces ();
-
                while (true)
                {
                   if (this .double ())
                   {
                      let x1 = this .value;
 
-                     this .commaWithWhitespaces ();
+                     this .comma ();
 
                      if (this .double ())
                      {
                         let y1 = this .value;
 
-                        this .commaWithWhitespaces ();
+                        this .comma ();
 
                         if (this .double ())
                         {
                            let x = this .value;
 
-                           this .commaWithWhitespaces ();
+                           this .comma ();
 
                            if (this .double ())
                            {
@@ -1116,7 +1108,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                               px = x1;
                               py = y1;
 
-                              this .commaWithWhitespaces ();
+                              this .comma ();
                               continue;
                            }
                         }
@@ -1133,15 +1125,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                // Shorthand/smooth quadratic Bézier curveto
 
-               this .whitespaces ();
-
                while (true)
                {
                   if (this .double ())
                   {
                      let x = this .value;
 
-                     this .commaWithWhitespaces ();
+                     this .comma ();
 
                      if (this .double ())
                      {
@@ -1179,7 +1169,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                         ax = x;
                         ay = y;
 
-                        this .commaWithWhitespaces ();
+                        this .comma ();
                         continue;
                      }
                   }
@@ -1194,39 +1184,37 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                // curveto, cubic Bézier curve
 
-               this .whitespaces ();
-
                while (true)
                {
                   if (this .double ())
                   {
                      let x1 = this .value;
 
-                     this .commaWithWhitespaces ();
+                     this .comma ();
 
                      if (this .double ())
                      {
                         let y1 = this .value;
 
-                        this .commaWithWhitespaces ();
+                        this .comma ();
 
                         if (this .double ())
                         {
                            let x2 = this .value;
 
-                           this .commaWithWhitespaces ();
+                           this .comma ();
 
                            if (this .double ())
                            {
                               let y2 = this .value;
 
-                              this .commaWithWhitespaces ();
+                              this .comma ();
 
                               if (this .double ())
                               {
                                  let x = this .value;
 
-                                 this .commaWithWhitespaces ();
+                                 this .comma ();
 
                                  if (this .double ())
                                  {
@@ -1251,7 +1239,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                     px = x2;
                                     py = y2;
 
-                                    this .commaWithWhitespaces ();
+                                    this .comma ();
                                     continue;
                                  }
                               }
@@ -1270,27 +1258,25 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                // shorthand/smooth curveto, cubic Bézier curve
 
-               this .whitespaces ();
-
                while (true)
                {
                   if (this .double ())
                   {
                      let x2 = this .value;
 
-                     this .commaWithWhitespaces ();
+                     this .comma ();
 
                      if (this .double ())
                      {
                         let y2 = this .value;
 
-                        this .commaWithWhitespaces ();
+                        this .comma ();
 
                         if (this .double ())
                         {
                            let x = this .value;
 
-                           this .commaWithWhitespaces ();
+                           this .comma ();
 
                            if (this .double ())
                            {
@@ -1332,7 +1318,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                               px = x2;
                               py = y2;
 
-                              this .commaWithWhitespaces ();
+                              this .comma ();
                               continue;
                            }
                         }
@@ -1349,45 +1335,43 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                // elliptical arc
 
-               this .whitespaces ();
-
                while (true)
                {
                   if (this .double ())
                   {
                      let rx = this .value;
 
-                     this .commaWithWhitespaces ();
+                     this .comma ();
 
                      if (this .double ())
                      {
                         let ry = this .value;
 
-                        this .commaWithWhitespaces ();
+                        this .comma ();
 
                         if (this .double ())
                         {
                            let xAxisRotation = this .value;
 
-                           this .commaWithWhitespaces ();
+                           this .comma ();
 
                            if (this .int32 ())
                            {
                               let largeArcFlag = this .value;
 
-                              this .commaWithWhitespaces ();
+                              this .comma ();
 
                               if (this .int32 ())
                               {
                                  let sweepFlag = this .value;
 
-                                 this .commaWithWhitespaces ();
+                                 this .comma ();
 
                                  if (this .double ())
                                  {
                                     let x = this .value;
 
-                                    this .commaWithWhitespaces ();
+                                    this .comma ();
 
                                     if (this .double ())
                                     {
@@ -1406,7 +1390,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                        ax = x;
                                        ay = y;
 
-                                       this .commaWithWhitespaces ();
+                                       this .comma ();
                                        continue;
                                     }
                                  }
@@ -1439,7 +1423,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   points  = [ ];
                }
 
-               this .commaWithWhitespaces ();
+               this .comma ();
                continue;
             }
             default:
@@ -1469,7 +1453,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       while (true)
       {
-         this .commaWithWhitespaces ();
+         this .comma ();
          this .whitespaces ();
 
          if (Grammar .matrix .parse (this))
@@ -1478,37 +1462,35 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             if (Grammar .openParenthesis .parse (this))
             {
-               this .whitespaces ();
-
                if (this .double ())
                {
                   const a = this .value;
 
-                  if (this .commaWithWhitespaces ())
+                  if (this .comma ())
                   {
                      if (this .double ())
                      {
                         const b = this .value;
 
-                        if (this .commaWithWhitespaces ())
+                        if (this .comma ())
                         {
                            if (this .double ())
                            {
                               const c = this .value;
 
-                              if (this .commaWithWhitespaces ())
+                              if (this .comma ())
                               {
                                  if (this .double ())
                                  {
                                     const d = this .value;
 
-                                    if (this .commaWithWhitespaces ())
+                                    if (this .comma ())
                                     {
                                        if (this .double ())
                                        {
                                           const e = this .value;
 
-                                          if (this .commaWithWhitespaces ())
+                                          if (this .comma ())
                                           {
                                              if (this .double ())
                                              {
@@ -1540,13 +1522,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             if (Grammar .openParenthesis .parse (this))
             {
-               this .whitespaces ();
-
                if (this .double ())
                {
                   const tx = this .value;
 
-                  if (this .commaWithWhitespaces ())
+                  if (this .comma ())
                   {
                      if (this .double ())
                      {
@@ -1570,8 +1550,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             if (Grammar .openParenthesis .parse (this))
             {
-               this .whitespaces ();
-
                if (this .double ())
                {
                   const angle = this .value;
@@ -1585,13 +1563,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   }
                   else
                   {
-                     if (this .commaWithWhitespaces ())
+                     if (this .comma ())
                      {
                         if (this .double ())
                         {
                            const cx = this .value;
 
-                           if (this .commaWithWhitespaces ())
+                           if (this .comma ())
                            {
                               if (this .double ())
                               {
@@ -1620,13 +1598,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             if (Grammar .openParenthesis .parse (this))
             {
-               this .whitespaces ();
-
                if (this .double ())
                {
                   const sx = this .value;
 
-                  if (this .commaWithWhitespaces ())
+                  if (this .comma ())
                   {
                      if (this .double ())
                      {
@@ -1650,8 +1626,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             if (Grammar .openParenthesis .parse (this))
             {
-               this .whitespaces ();
-
                if (this .double ())
                {
                   const angle = this .value;
@@ -1672,8 +1646,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             if (Grammar .openParenthesis .parse (this))
             {
-               this .whitespaces ();
-
                if (this .double ())
                {
                   const angle = this .value;
@@ -1990,9 +1962,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       return Grammar .whitespaces .parse (this);
    },
-   commaWithWhitespaces: function ()
+   comma: function ()
    {
-      return Grammar .commaWithWhitespaces .parse (this);
+      return this .whitespaces () | Grammar .comma .parse (this);
    },
    int32: function ()
    {
