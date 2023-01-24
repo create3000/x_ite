@@ -1701,7 +1701,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (Grammar .HTMLColor .parse (this))
       {
-         const color = this .convertColor (this .result [1]);
+         const color = this .convertColor (this .result [1] .replace (/0x/i, "#"));
 
          field .r = color [0];
          field .g = color [1];
@@ -1783,7 +1783,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (Grammar .HTMLColor .parse (this))
       {
-         const color = this .convertColor (this .result [1]);
+         const color = this .convertColor (this .result [1] .replace (/0x/i, "#"));
 
          field .r = color [0];
          field .g = color [1];
