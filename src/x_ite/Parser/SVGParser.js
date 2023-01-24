@@ -602,7 +602,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (attribute === null)
          return defaultValue;
 
-      this .setString (attribute);
+      this .parse (attribute);
 
       if (this .double ())
       {
@@ -635,7 +635,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (attribute === null)
          return defaultValue;
 
-      this .setString (attribute);
+      this .parse (attribute);
 
       if (this .double ())
       {
@@ -662,7 +662,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (attribute === null)
          return matrix;
 
-      this .setString (attribute);
+      this .parse (attribute);
 
       while (true)
       {
@@ -931,7 +931,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             if (attribute === null)
                continue;
 
-            this .setString (attribute);
+            this .parse (attribute);
 
             switch (style)
             {
@@ -995,7 +995,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             style     = pair [0] .trim (),
             attribute = pair [1] .trim ();
 
-         this .setString (attribute);
+         this .parse (attribute);
 
          switch (style)
          {
@@ -1222,7 +1222,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
    },
-   setString: function (attribute)
+   parse: function (attribute)
    {
       this .input     = attribute;
       this .lastIndex = 0;
