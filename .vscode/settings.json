@@ -33,6 +33,7 @@
       "srand",
       "Struct",
       "tessellator",
+      "tessy",
       "TEXCOORD",
       "Wireframe",
       "Wireframes",
