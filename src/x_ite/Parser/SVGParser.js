@@ -1424,10 +1424,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                this .comma ();
                continue;
             }
-            default:
-            {
-               break;
-            }
          }
 
          break;
