@@ -667,7 +667,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (true)
       {
          this .comma ();
-
          this .whitespaces ();
 
          if (Grammar .matrix .parse (this))
