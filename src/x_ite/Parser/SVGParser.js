@@ -371,10 +371,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .elements (xmlElement);
 
       this .styles .pop ();
+      this .groupNodes .pop ();
 
       // Add node.
-
-      this .groupNodes .pop ();
 
       if (transformNode .children .length)
          this .groupNodes .at (-1) .children .push (transformNode);
@@ -403,10 +402,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .elements (xmlElement);
 
       this .styles .pop ();
+      this .groupNodes .pop ();
 
       // Add node.
-
-      this .groupNodes .pop ();
 
       if (switchNode .children .length)
          this .groupNodes .at (-1) .children .push (transformNode);
