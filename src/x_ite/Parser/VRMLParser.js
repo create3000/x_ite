@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
+import X3DParser                 from "./X3DParser.js";
+import Expressions               from "./Expressions.js";
 import Fields                    from "../Fields.js";
 import X3DField                  from "../Base/X3DField.js";
-import X3DParser                 from "./X3DParser.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
 import X3DConstants              from "../Base/X3DConstants.js";
@@ -57,11 +58,11 @@ import X3DConstants              from "../Base/X3DConstants.js";
  */
 
 // VRML lexical elements
-const Grammar =
-{
+const Grammar = Expressions ({
    // General
    Whitespaces: /([\x20\n,\t\r]+)/gy,
    Comment:     /#(.*?)(?=[\n\r])/gy,
+   Break:       /\r?\n/g,
 
    // Header
    Header:	    /^#(VRML|X3D) V(.*?) (utf8)(?:[ \t]+(.*?))?[ \t]*[\n\r]/gy,
@@ -116,28 +117,7 @@ const Grammar =
    SIGN : /([+-]?)/gy,
    CONSTANTS: /\b(NAN|INFINITY|INF|PI|PI2|PI1_4|PI2_4|PI3_4|PI4_4|PI5_4|PI6_4|PI7_4|PI8_4|PI1_2|PI2_2|PI3_2|PI4_2|PI1_3|PI2_3|PI3_3|PI4_3|PI5_3|PI6_3|SQRT1_2|SQRT2)\b/igy,
    HTMLColor: /([a-zA-Z]+|0[xX][\da-fA-F]+|rgba?\(.*?\))/gy,
-
-   // Misc
-   Break: /\r?\n/g,
-};
-
-function parse (parser)
-{
-   this .lastIndex = parser .lastIndex;
-
-   parser .result = this .exec (parser .input);
-
-   if (parser .result)
-   {
-      parser .lastIndex = this .lastIndex;
-      return true;
-   }
-
-   return false;
-}
-
-for (const value of Object .values (Grammar))
-   value .parse = parse;
+});
 
 /*
  *  Parser

@@ -47,6 +47,7 @@
 
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
+import Expressions  from "./Expressions.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../standard/Math/Numbers/Vector3.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
@@ -57,8 +58,7 @@ import DEBUG        from "../DEBUG.js";
  */
 
 // Lexical elements
-const Grammar =
-{
+const Grammar = Expressions ({
    // General
    whitespaces: /[\x20\n\t\r]+/gy,
    whitespacesNoLineTerminator: /[\x20\t]+/gy,
@@ -90,39 +90,7 @@ const Grammar =
    // Values
    int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
    double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
-};
-
-function parse (parser)
-{
-   this .lastIndex = parser .lastIndex;
-
-   parser .result = this .exec (parser .input);
-
-   if (parser .result)
-   {
-      parser .lastIndex = this .lastIndex;
-      return true;
-   }
-
-   return false;
-}
-
-function lookahead (parser)
-{
-   const
-      lastIndex = parser .lastIndex,
-      result    = this .parse (parser);
-
-   parser .lastIndex = lastIndex;
-
-   return result;
-}
-
-for (const value of Object .values (Grammar))
-{
-   value .parse     = parse;
-   value .lookahead = lookahead;
-}
+});
 
 /*
  * Parser

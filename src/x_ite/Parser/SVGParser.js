@@ -45,26 +45,26 @@
  *
  ******************************************************************************/
 
-import X3DParser from "./X3DParser.js";
-import Algorithm from "../../standard/Math/Algorithm.js";
-import Color3    from "../../standard/Math/Numbers/Color3.js";
-import Color4    from "../../standard/Math/Numbers/Color4.js";
-import Vector2   from "../../standard/Math/Numbers/Vector2.js";
-import Vector3   from "../../standard/Math/Numbers/Vector3.js";
-import Vector4   from "../../standard/Math/Numbers/Vector4.js";
-import Rotation4 from "../../standard/Math/Numbers/Rotation4.js";
-import Matrix3   from "../../standard/Math/Numbers/Matrix3.js";
-import Matrix4   from "../../standard/Math/Numbers/Matrix4.js";
-import Box2      from "../../standard/Math/Geometry/Box2.js"
-import Bezier    from "../../standard/Math/Algorithms/Bezier.js";
+import X3DParser   from "./X3DParser.js";
+import Expressions from "./Expressions.js";
+import Algorithm   from "../../standard/Math/Algorithm.js";
+import Color3      from "../../standard/Math/Numbers/Color3.js";
+import Color4      from "../../standard/Math/Numbers/Color4.js";
+import Vector2     from "../../standard/Math/Numbers/Vector2.js";
+import Vector3     from "../../standard/Math/Numbers/Vector3.js";
+import Vector4     from "../../standard/Math/Numbers/Vector4.js";
+import Rotation4   from "../../standard/Math/Numbers/Rotation4.js";
+import Matrix3     from "../../standard/Math/Numbers/Matrix3.js";
+import Matrix4     from "../../standard/Math/Numbers/Matrix4.js";
+import Box2        from "../../standard/Math/Geometry/Box2.js"
+import Bezier      from "../../standard/Math/Algorithms/Bezier.js";
 
 /*
  *  Grammar
  */
 
 // Lexical elements
-const Grammar =
-{
+const Grammar = Expressions ({
    // General
    whitespaces: /[\x20\n\t\r]+/gy,
    comma: /,/gy,
@@ -94,25 +94,7 @@ const Grammar =
    color: /([a-zA-Z]+|#[\da-fA-F]+|rgba?\(.*?\))/gy,
    url: /url\("?(.*?)"?\)/gy,
    path: /([mMlLhHvVqQtTcCsSaAzZ])/gy,
-};
-
-function parse (parser)
-{
-   this .lastIndex = parser .lastIndex;
-
-   parser .result = this .exec (parser .input);
-
-   if (parser .result)
-   {
-      parser .lastIndex = this .lastIndex;
-      return true;
-   }
-
-   return false;
-}
-
-for (const value of Object .values (Grammar))
-   value .parse = parse;
+});
 
 /*
  *  Constants
