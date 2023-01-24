@@ -381,7 +381,35 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    switchElement: function (xmlElement)
    {
+      // Determine style.
 
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Get transform.
+
+      const
+         scene         = this .getExecutionContext (),
+         transformNode = this .createTransform (xmlElement),
+         switchNode    = scene .createNode ("Switch");
+
+      transformNode .children .push (switchNode);
+      switchNode .whichChoice = 0;
+
+      // Get child elements.
+
+      this .groupNodes .push (switchNode);
+
+      this .elements (xmlElement);
+
+      this .styles .pop ();
+
+      // Add node.
+
+      this .groupNodes .pop ();
+
+      if (switchNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
    },
    aElement: function (xmlElement)
    {
