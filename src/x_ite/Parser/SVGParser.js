@@ -104,6 +104,8 @@ const
    INCH            = 0.0254,    // One inch in meters.
    POINT           = INCH / 72, // One point in meters.
    PIXEL           = INCH / 90, // One pixel in meters.
+   BEZIER_STEPS    = 10,
+   CIRCLE_STEPS    = 64,
    GRADIENT_WIDTH  = 256,
    GRADIENT_HEIGHT = 256;
 
@@ -1056,10 +1058,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .parseValue (attribute);
 
-      const
-         steps  = 10,
-         circle = 64;
-
       let
          points   = [ ],
          index    = 0,
@@ -1264,7 +1262,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                               const curve = new Bezier (ax, ay, x1, y1, x, y);
 
-                              points .push (... curve .getPoints ("quadric", steps));
+                              points .push (... curve .getPoints ("quadric", BEZIER_STEPS));
 
                               ax = x;
                               ay = y;
@@ -1327,7 +1325,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                         const curve = new Bezier (ax, ay, x1, y1, x, y);
 
-                        points .push (... curve .getPoints ("quadric", steps));
+                        points .push (... curve .getPoints ("quadric", BEZIER_STEPS));
 
                         ax = x;
                         ay = y;
@@ -1395,7 +1393,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                                     const curve = new Bezier (ax, ay, x1, y1, x2, y2, x, y);
 
-                                    points .push (... curve .getPoints ("cubic", steps));
+                                    points .push (... curve .getPoints ("cubic", BEZIER_STEPS));
 
                                     ax = x;
                                     ay = y;
@@ -1474,7 +1472,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                               const curve = new Bezier (ax, ay, x1, y1, x2, y2, x, y);
 
-                              points .push (... curve .getPoints ("cubic", steps));
+                              points .push (... curve .getPoints ("cubic", BEZIER_STEPS));
 
                               ax = x;
                               ay = y;
@@ -1548,7 +1546,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                                        const curve = new Bezier (ax, ay, rx, ry, Algorithm .radians (xAxisRotation), largeArcFlag, sweepFlag, x, y);
 
-                                       points .push (... curve .getPoints ("arc", circle));
+                                       points .push (... curve .getPoints ("arc", CIRCLE_STEPS));
 
                                        ax = x;
                                        ay = y;
