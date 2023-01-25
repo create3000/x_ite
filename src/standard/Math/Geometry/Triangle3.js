@@ -93,30 +93,25 @@ const Triangle3 = {
    },
    triangulatePolygon: (function ()
    {
-      const tessy = (function ()
+      // Function called for each vertex of tesselator output.
+
+      function vertexCallback (point, triangles)
       {
-         // Function called for each vertex of tesselator output.
+         triangles .push (point);
+      }
 
-         function vertexCallback (point, triangles)
-         {
-            triangles .push (point);
-         }
+      // Callback for when segments intersect and must be split.
 
-         // Callback for when segments intersect and must be split.
+      function combineCallback (coords, data, weight)
+      {
+         return data [0];
+      }
 
-         function combineCallback (coords, data, weight)
-         {
-            return data [0];
-         }
+      const tessy = new libtess .GluTesselator ();
 
-         const tessy = new libtess .GluTesselator ();
-
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
-         tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
-
-         return tessy;
-      })();
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
+      tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
 
       return function (polygon, triangles)
       {
