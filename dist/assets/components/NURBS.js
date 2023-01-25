@@ -2353,13 +2353,13 @@ const sample_default_ = function (mesh, surface, opts)
             }
 
             var
-               curves    = [ ],
+               contours  = [ ],
                triangles = [ ],
                trimmed   = [ ];
 
             for (var v = 0, fLength = faces .length; v < fLength; v += 3)
             {
-               curves    .length = 0;
+               contours  .length = 0;
                triangles .length = 0;
 
                var
@@ -2376,11 +2376,9 @@ const sample_default_ = function (mesh, surface, opts)
                vertex2 .index = v + 1;
                vertex3 .index = v + 2;
 
-               curves .push ([ vertex1, vertex2, vertex3 ]);
-               curves .push .apply (curves, holes);
-               curves .push (triangles);
+               contours .push ([ vertex1, vertex2, vertex3 ], ... holes);
 
-               Triangle3 .triangulatePolygon .apply (Triangle3, curves);
+               Triangle3 .triangulatePolygon (contours, triangles);
 
                for (var t = 0, tLength = triangles .length; t < tLength; ++ t)
                   trimmed .push (triangles [t] .index);
@@ -2393,7 +2391,7 @@ const sample_default_ = function (mesh, surface, opts)
          break;
       }
       default:
-         throw new Error("Can only sample curves and surfaces");
+         throw new Error("Can only sample contours and surfaces");
    }
 
    return mesh;

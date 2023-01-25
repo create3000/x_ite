@@ -348,12 +348,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       // Get href.
 
-      const
-         scene = this .getExecutionContext (),
-         href  = xmlElement .getAttribute ("xlink:href"),
-         hash  = new URL (href, scene .getWorldURL ()) .hash .slice (1);
-
-      const usedElement = this .document .getElementById ("hash");
+      const usedElement = this .hrefAttribute (xmlElement .getAttribute ("xlink:href"));
 
       if (!usedElement)
          return;
@@ -835,16 +830,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Attribute xlink:href
 
-      const href = xmlElement .getAttribute ("xlink:href");
+      const refElement = this .hrefAttribute (xmlElement .getAttribute ("xlink:href"));
 
-      if (href)
-      {
-         const
-            scene = this .getExecutionContext (),
-            hash  = new URL (href, scene .getWorldURL ()) .hash .slice (1);
-
-         this .gradientElement (this .document .getElementById (hash), gradient);
-      }
+      if (refElement)
+         this .gradientElement (refElement, gradient);
 
       // Attributes
 
@@ -877,16 +866,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       // Attribute xlink:href
 
-      const href = xmlElement .getAttribute ("xlink:href");
+      const refElement = this .hrefAttribute (xmlElement .getAttribute ("xlink:href"));
 
-      if (href)
-      {
-         const
-            scene = this .getExecutionContext (),
-            hash  = new URL (href, scene .getWorldURL ()) .hash .slice (1);
-
-         this .gradientElement (this .document .getElementById (hash), gradient);
-      }
+      if (refElement)
+         this .gradientElement (refElement, gradient);
 
       // Attributes
 
@@ -1005,6 +988,14 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
 
       return defaultValue;
+   },
+   hrefAttribute: function (attribute)
+   {
+      const
+         scene = this .getExecutionContext (),
+         hash  = new URL (attribute, scene .getWorldURL ()) .hash .slice (1);
+
+      return this .document .getElementById (hash);
    },
    lengthAttribute: function (attribute, defaultValue)
    {
@@ -2277,11 +2268,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    getFillUrl: function (fillURL, bbox)
    {
-      const
-         scene = this .getExecutionContext (),
-         hash  = new URL (fillURL, scene .getWorldURL ()) .hash .slice (1);
-
-      const xmlElement = this .document .getElementById (hash);
+      const xmlElement = this .hrefAttribute (fillURL);
 
       if (!xmlElement)
          return;
