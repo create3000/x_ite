@@ -182,8 +182,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    parseIntoScene: function (success, error)
    {
-      const scene = this .getExecutionContext ();
-
       this .xmlElement (this .input)
          .then (success)
          .catch (error);
