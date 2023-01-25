@@ -780,38 +780,22 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    linearGradientElementURL: function (xmlElement, bbox)
    {
-      const gradient = this .linearGradientElement (xmlElement);
+      const
+         g        = this .linearGradientElement (xmlElement),
+         gradient = this .cx .createLinearGradient (g .x1, g .y1, g .x2, g .y2);
 
-      this .drawGradient (gradient, bbox);
+      for (const [o, c, a] of g .stops)
+         gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
 
-      return this .canvas .toDataURL ("image/png");
+      return this .drawGradient (gradient, g .transform, bbox);
    },
-   linearGradientElement: function (xmlElement, gradient)
+   linearGradientElement: function (xmlElement, gradient = { stops: [ ] })
    {
       if (!xmlElement)
          return;
 
-      // Attributes
-
-      if (!gradient)
-      {
-         const
-            x1 = this .lengthAttribute (xmlElement .getAttribute ("x1"), 0),
-            y1 = this .lengthAttribute (xmlElement .getAttribute ("y1"), 0),
-            x2 = this .lengthAttribute (xmlElement .getAttribute ("x2"), 0),
-            y2 = this .lengthAttribute (xmlElement .getAttribute ("y2"), 0);
-
-         console .log (x1, y1, x2, y2)
-
-         gradient            = this .cx .createLinearGradient (x1, y1, x2, y2);
-         gradient .units     = xmlElement .getAttribute ("gradientUnits");
-         gradient .transform = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
-      }
-
-      // Stops
-
-      for (const childNode of xmlElement .childNodes)
-         this .gradientChild (childNode, gradient);
+      if (xmlElement .nodeName !== "linearGradient")
+         return;
 
       // Attribute xlink:href
 
@@ -824,14 +808,87 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             hash  = new URL (href, scene .getWorldURL ()) .hash .slice (1);
 
          if (hash)
-            this .linearGradientElement (this .document .getElementById (hash), gradient);
+            this .gradientElement (this .document .getElementById (hash), gradient);
       }
+
+      // Attributes
+
+      gradient .x1        = this .lengthAttribute (xmlElement .getAttribute ("x1"), gradient .x1 || 0);
+      gradient .y1        = this .lengthAttribute (xmlElement .getAttribute ("y1"), gradient .y1 || 0);
+      gradient .x2        = this .lengthAttribute (xmlElement .getAttribute ("x2"), gradient .x2 || 0);
+      gradient .y2        = this .lengthAttribute (xmlElement .getAttribute ("y2"), gradient .y2 || 0);
+      gradient .units     = xmlElement .getAttribute ("gradientUnits");
+      gradient .transform = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
+
+      // Stops
+
+      for (const childNode of xmlElement .childNodes)
+         this .gradientChild (childNode, gradient);
 
       return gradient;
    },
    radialGradientElementURL: function (xmlElement, bbox)
    {
+      const
+         g        = this .radialGradientElement (xmlElement),
+         gradient = this .cx .createRadialGradient (g .fx, g .fy, 0, g .cx, g .cy, g .r);
 
+      console .log (g .fx, g .fy, 0, g .cx, g .cy, g .r)
+      console .log (g .stops)
+
+      for (const [o, c, a] of g .stops)
+         gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
+
+      return this .drawGradient (gradient, g .transform, bbox);
+   },
+   radialGradientElement: function (xmlElement, gradient = { stops: [ ] })
+   {
+      // Attribute xlink:href
+
+      const href = xmlElement .getAttribute ("xlink:href");
+
+      if (href)
+      {
+         const
+            scene = this .getExecutionContext (),
+            hash  = new URL (href, scene .getWorldURL ()) .hash .slice (1);
+
+         if (hash)
+            this .gradientElement (this .document .getElementById (hash), gradient);
+      }
+
+      // Attributes
+
+      gradient .cx           = this .lengthAttribute (xmlElement .getAttribute ("cx"), gradient .cx || 0),
+      gradient .cy           = this .lengthAttribute (xmlElement .getAttribute ("cy"), gradient .cy || 0),
+      gradient .x2           = this .lengthAttribute (xmlElement .getAttribute ("x2"), gradient .x2 || 0),
+      gradient .y2           = this .lengthAttribute (xmlElement .getAttribute ("y2"), gradient .y2 || 0),
+      gradient .r            = this .lengthAttribute (xmlElement .getAttribute ("r"),  gradient .cx),
+      gradient .fx           = this .lengthAttribute (xmlElement .getAttribute ("fx"), gradient .cx),
+      gradient .fy           = this .lengthAttribute (xmlElement .getAttribute ("fy"), gradient .cy),
+      gradient .units        = xmlElement .getAttribute ("gradientUnits");
+      gradient .spreadMethod = xmlElement .getAttribute ("spreadMethod");
+      gradient .transform    = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
+
+      // Stops
+
+      for (const childNode of xmlElement .childNodes)
+         this .gradientChild (childNode, gradient);
+
+      return gradient;
+   },
+   gradientElement: function (xmlElement, gradient)
+   {
+      if (!xmlElement)
+         return;
+
+      switch (xmlElement .nodeName)
+      {
+         case "linearGradient":
+            return this .linearGradientElement (xmlElement, gradient);
+         case "radialGradient":
+            return this .radialGradientElement (xmlElement, gradient);
+      }
    },
    gradientChild: function (xmlElement, gradient)
    {
@@ -847,11 +904,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const { stopColor, stopOpacity } = this .style;
 
-      gradient .addColorStop (offset, `rgba(${stopColor .r * 255},${stopColor .g * 255},${stopColor .b * 255},${stopOpacity})`);
+      gradient .stops .push ([offset, stopColor, stopOpacity]);
 
       this .styles .pop ();
    },
-   drawGradient: function (gradient, bbox)
+   drawGradient: function (gradient, transform, bbox)
    {
       const m = new Matrix3 ();
 
@@ -859,7 +916,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       m .translate (Vector2 .One);
       m .scale     (new Vector2 (1, -1));
       m .multLeft  (Matrix3 .inverse (bbox .matrix));
-      m .multLeft  (gradient .transform);
+      m .multLeft  (transform);
 
       // Paint.
 
@@ -870,6 +927,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       cx .fillStyle = gradient;
       cx .clearRect (0, 0, GRADIENT_WIDTH, GRADIENT_HEIGHT);
       cx .fillRect (0, 0, GRADIENT_WIDTH, GRADIENT_HEIGHT);
+
+      return this .canvas .toDataURL ("image/png");
    },
    idAttribute: function (attribute, node)
    {
