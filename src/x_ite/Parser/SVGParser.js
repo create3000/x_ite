@@ -893,10 +893,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          px       = 0,
          py       = 0;
 
-      this .whitespaces ();
-
       while (true)
       {
+         this .whitespaces ();
+
          if (!Grammar .path .parse (this))
             break;
 
