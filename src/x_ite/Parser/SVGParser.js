@@ -80,7 +80,7 @@ const Grammar = Expressions ({
    mm: /mm/gy,
    pt: /pt/gy,
    pc: /pc/gy,
-   PercentSign: /%/gy,
+   percentSign: /%/gy,
 
    // Values
    int32: /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
@@ -101,9 +101,11 @@ const Grammar = Expressions ({
  */
 
 const
-   INCH  = 0.0254,    // One inch in meters.
-   POINT = INCH / 72, // One point in meters.
-   PIXEL = INCH / 90; // One pixel in meters.
+   INCH            = 0.0254,    // One inch in meters.
+   POINT           = INCH / 72, // One point in meters.
+   PIXEL           = INCH / 90, // One pixel in meters.
+   GRADIENT_WIDTH  = 256,
+   GRADIENT_HEIGHT = 256;
 
 /*
  *  Parser
@@ -113,8 +115,13 @@ function SVGParser (scene)
 {
    X3DParser .call (this, scene);
 
-   this .solid = false;
-   this .tessy = this .createTesselator ();
+   this .solid  = false;
+   this .tessy  = this .createTesselator ();
+   this .canvas = document .createElement ("canvas");
+   this .cx     = this .canvas .getContext ("2d");
+
+   this .canvas .width  = GRADIENT_WIDTH;
+   this .canvas .height = GRADIENT_HEIGHT;
 }
 
 SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -773,11 +780,96 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    linearGradientElementURL: function (xmlElement, bbox)
    {
-      console .log (xmlElement)
+      const gradient = this .linearGradientElement (xmlElement);
+
+      this .drawGradient (gradient, bbox);
+
+      return this .canvas .toDataURL ("image/png");
+   },
+   linearGradientElement: function (xmlElement, gradient)
+   {
+      if (!xmlElement)
+         return;
+
+      // Attributes
+
+      if (!gradient)
+      {
+         const
+            x1 = this .lengthAttribute (xmlElement .getAttribute ("x1"), 0),
+            y1 = this .lengthAttribute (xmlElement .getAttribute ("y1"), 0),
+            x2 = this .lengthAttribute (xmlElement .getAttribute ("x2"), 0),
+            y2 = this .lengthAttribute (xmlElement .getAttribute ("y2"), 0);
+
+         console .log (x1, y1, x2, y2)
+
+         gradient            = this .cx .createLinearGradient (x1, y1, x2, y2);
+         gradient .units     = xmlElement .getAttribute ("gradientUnits");
+         gradient .transform = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
+      }
+
+      // Stops
+
+      for (const childNode of xmlElement .childNodes)
+         this .gradientChild (childNode, gradient);
+
+      // Attribute xlink:href
+
+      const href = xmlElement .getAttribute ("xlink:href");
+
+      if (href)
+      {
+         const
+            scene = this .getExecutionContext (),
+            hash  = new URL (href, scene .getWorldURL ()) .hash .slice (1);
+
+         if (hash)
+            this .linearGradientElement (this .document .getElementById (hash), gradient);
+      }
+
+      return gradient;
    },
    radialGradientElementURL: function (xmlElement, bbox)
    {
 
+   },
+   gradientChild: function (xmlElement, gradient)
+   {
+      if (xmlElement .nodeName === "stop")
+		   return this .stopElement (xmlElement, gradient);
+   },
+   stopElement: function (xmlElement, gradient)
+   {
+      const offset = this .percentAttribute (xmlElement .getAttribute ("offset"), 0);
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      const { stopColor, stopOpacity } = this .style;
+
+      gradient .addColorStop (offset, `rgba(${stopColor .r * 255},${stopColor .g * 255},${stopColor .b * 255},${stopOpacity})`);
+
+      this .styles .pop ();
+   },
+   drawGradient: function (gradient, bbox)
+   {
+      const m = new Matrix3 ();
+
+      m .scale     (new Vector2 (GRADIENT_WIDTH / 2, GRADIENT_HEIGHT / 2));
+      m .translate (Vector2 .One);
+      m .scale     (new Vector2 (1, -1));
+      m .multLeft  (Matrix3 .inverse (bbox .matrix));
+      m .multLeft  (gradient .transform);
+
+      // Paint.
+
+      const cx = this .cx;
+
+      cx .resetTransform ();
+      cx .transform (m [0], m [1], m [3], m [4], m [6], m [7]);
+      cx .fillStyle = gradient;
+      cx .clearRect (0, 0, GRADIENT_WIDTH, GRADIENT_HEIGHT);
+      cx .fillRect (0, 0, GRADIENT_WIDTH, GRADIENT_HEIGHT);
    },
    idAttribute: function (attribute, node)
    {
@@ -845,6 +937,24 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             this .value *= INCH / PIXEL;
 
          return this .value;
+      }
+
+      return defaultValue;
+   },
+   percentAttribute: function (attribute, defaultValue)
+   {
+      this .parseValue (attribute);
+
+      if (this .double ())
+      {
+         let value = this .value;
+
+         // Parse unit
+
+         if (Grammar .percentSign .parse (this))
+            value /= 100;
+
+         return Algorithm .clamp (value, 0, 1);
       }
 
       return defaultValue;
@@ -2067,7 +2177,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             if (!url)
                return null;
 
-            textureNode .url               = url;
+            textureNode .url               = [url];
             textureNode .textureProperties = this .texturePropertiesNode;
             appearanceNode .texture        = textureNode;
 
@@ -2086,12 +2196,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!hash)
          return;
 
-      const elements = $(this .document) .find ("#" + hash);
+      const xmlElement = this .document .getElementById (hash);
 
-      if (!elements .length)
+      if (!xmlElement)
          return;
-
-      const xmlElement = elements [0];
 
       switch (xmlElement .nodeName)
       {
