@@ -287,7 +287,7 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
                   lut   = curve .getPoints ("quadric", steps);
 
                for (const p of lut)
-                  points .push (new Vector3 (p .x,p .y, 0));
+                  points .push (new Vector3 (p .x, p .y, 0));
 
                break;
             }
