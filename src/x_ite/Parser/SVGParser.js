@@ -346,7 +346,44 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    useElement: function (xmlElement)
    {
+      // Get href.
 
+      const
+         scene = this .getExecutionContext (),
+         href  = xmlElement .getAttribute ("xlink:href"),
+         hash  = new URL (href, scene .getWorldURL ()) .hash .slice (1);
+
+      const usedElement = this .document .getElementById (hash);
+
+      if (!usedElement)
+         return;
+
+      // Determine style.
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Create Transform node.
+
+      const
+         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0),
+         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0),
+         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0),
+         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0);
+
+      const transformNode = this .createTransform (xmlElement, new Vector2 (x, y));
+
+      this .groupNodes .push (transformNode);
+
+      this .element (usedElement);
+
+      this .styles     .pop ();
+      this .groupNodes .pop ();
+
+      // Add node.
+
+      if (transformNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
    },
    gElement: function (xmlElement)
    {
