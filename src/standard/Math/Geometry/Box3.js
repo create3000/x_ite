@@ -54,24 +54,7 @@ function Box3 (size, center)
 {
    this .matrix = new Matrix4 ();
 
-   switch (arguments .length)
-   {
-      case 0:
-      {
-         this .set ();
-         return;
-      }
-      case 2:
-      {
-         this .set (size, center);
-         return;
-      }
-      case 3:
-      {
-         this .setExtents (arguments [0], arguments [1]);
-         return;
-      }
-   }
+   this .set .apply (this, arguments);
 }
 
 Box3 .prototype =
