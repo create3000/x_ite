@@ -127,6 +127,8 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
 
          return node;
       }
+
+      return this .array [0]; // Return default viewpoint.
    },
    push: function (node)
    {
