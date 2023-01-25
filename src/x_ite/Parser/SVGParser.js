@@ -919,11 +919,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const cx = this .cx;
 
-      cx .resetTransform ();
-      cx .transform (m [0], m [1], m [3], m [4], m [6], m [7]);
       cx .fillStyle = gradient;
+      cx .save ();
       cx .clearRect (0, 0, GRADIENT_WIDTH, GRADIENT_HEIGHT);
-      cx .fillRect (0, 0, GRADIENT_WIDTH, GRADIENT_HEIGHT);
+      cx .rect (0, 0, GRADIENT_WIDTH, GRADIENT_HEIGHT);
+      cx .transform (m [0], m [1], m [3], m [4], m [6], m [7]);
+      cx .fill ();
+      cx .restore ();
 
       return this .canvas .toDataURL ("image/png");
    },

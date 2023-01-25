@@ -73,6 +73,7 @@ import X3DConstants                from "./Base/X3DConstants.js";
 import Fallback                    from "./Fallback.js";
 import MicroTime                   from "../standard/Time/MicroTime.js";
 import jQuery                      from "../lib/jquery.js";
+import libtess                     from "../lib/libtess.js";
 
 const
    callbacks = $.Deferred (),
