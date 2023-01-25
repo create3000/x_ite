@@ -1847,26 +1847,26 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return function (xmlElement)
       {
-         this .style = Object .assign ({ }, this .styles [0]);
+         const style = Object .assign ({ }, this .styles [0]);
 
          if (this .style .display === "none")
             return false;
+
+         this .styles .push (style);
 
          for (const style of Styles)
          {
             const attribute = xmlElement .getAttribute (style);
 
             if (attribute === null)
-               continue;
-
-            this .parseStyle (style, attribute);
+               this .parseStyle (style, "default");
+            else
+               this .parseStyle (style, attribute);
          }
 
          // Style attribute has higher precedence.
 
          this .styleAttribute (xmlElement .getAttribute ("style"));
-
-         this .styles .push (this .style);
 
          return true;
       };
@@ -1931,6 +1931,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (value === null)
          return;
 
+      if (value === "default")
+         return;
+
       if (value === "inherit")
       {
          this .style .display = styles .at (-1) .display;
@@ -1960,7 +1963,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
 
-      if (!value .match (/^(?:inherit|unset)$/))
+      if (!value .match (/^(?:inherit|unset|default)$/))
       {
          if (this .colorValue ())
          {
@@ -2019,7 +2022,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
 
-      if (!value .match (/^(?:inherit|unset)$/))
+      if (!value .match (/^(?:inherit|unset|default)$/))
       {
          if (this .colorValue ())
          {
@@ -2373,5 +2376,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       return triangles;
    },
 });
+
+Object .defineProperty (SVGParser .prototype, "style",
+{
+   get: function ()
+   {
+      return this .styles .at (-1);
+   },
+})
 
 export default SVGParser;
