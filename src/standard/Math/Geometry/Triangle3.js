@@ -95,22 +95,14 @@ const Triangle3 = {
    {
       // Function called for each vertex of tesselator output.
 
-      function vertexCallback (point, triangles)
+      function vertexCallback (index, triangles)
       {
-         triangles .push (point);
-      }
-
-      // Callback for when segments intersect and must be split.
-
-      function combineCallback (coords, data, weight)
-      {
-         return data [0];
+         triangles .push (index);
       }
 
       const tessy = new libtess .GluTesselator ();
 
       tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
-      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
       tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
 
       return function (polygon, triangles)
@@ -119,11 +111,12 @@ const Triangle3 = {
          tessy .gluTessBeginContour ();
 
          for (const point of polygon)
-            tessy .gluTessVertex (point, point);
+            tessy .gluTessVertex (point, point .index);
 
          tessy .gluTessEndContour ();
          tessy .gluTessEndPolygon ();
 
+         // Return array of indices.
          return triangles;
       };
    })(),

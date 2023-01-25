@@ -590,6 +590,8 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
             {
                const
                   j         = 0, // spine
+                  convex    = this ._convex .getValue (),
+                  texCoord  = { },
                   polygon   = [ ],
                   triangles = [ ];
 
@@ -599,12 +601,12 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
                      index = INDEX (j, numCapPoints - 1 - k),
                      point = points [index] .copy ();
 
-                  point .index    = index;
-                  point .texCoord = Vector2 .subtract (crossSection [numCapPoints - 1 - k] .getValue (), min) .divide (capMax);
-                  polygon .push (point);
+                  point .index     = index;
+                  texCoord [index] = Vector2 .subtract (crossSection [numCapPoints - 1 - k] .getValue (), min) .divide (capMax);
+                  polygon .push (convex ? index : point);
                }
 
-               if (this ._convex .getValue ())
+               if (convex)
                   Triangle3 .triangulateConvexPolygon (polygon, triangles);
 
                else
@@ -612,15 +614,15 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
 
                if (triangles .length >= 3)
                {
-                  const normal = Triangle3 .normal (points [triangles [0] .index],
-                                                    points [triangles [1] .index],
-                                                    points [triangles [2] .index],
+                  const normal = Triangle3 .normal (points [triangles [0]],
+                                                    points [triangles [1]],
+                                                    points [triangles [2]],
                                                     new Vector3 (0, 0, 0));
 
                   if (cw)
                      normal .negate ();
 
-                  this .addCap (texCoordArray, normal, points, triangles);
+                  this .addCap (texCoordArray, texCoord, normal, points, triangles);
                }
             }
 
@@ -628,6 +630,8 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
             {
                const
                   j         = numSpines - 1, // spine
+                  convex    = this ._convex .getValue (),
+                  texCoord  = { },
                   polygon   = [ ],
                   triangles = [ ];
 
@@ -637,12 +641,12 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
                      index = INDEX (j, k),
                      point = points [index] .copy ();
 
-                  point .index    = index;
-                  point .texCoord = Vector2 .subtract (crossSection [k] .getValue (), min) .divide (capMax);
-                  polygon .push (point);
+                  point .index     = index;
+                  texCoord [index] = Vector2 .subtract (crossSection [k] .getValue (), min) .divide (capMax);
+                  polygon .push (convex ? index : point);
                }
 
-               if (this ._convex .getValue ())
+               if (convex)
                   Triangle3 .triangulateConvexPolygon (polygon, triangles);
 
                else
@@ -650,15 +654,15 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
 
                if (triangles .length >= 3)
                {
-                  const normal = Triangle3 .normal (points [triangles [0] .index],
-                                                    points [triangles [1] .index],
-                                                    points [triangles [2] .index],
+                  const normal = Triangle3 .normal (points [triangles [0]],
+                                                    points [triangles [1]],
+                                                    points [triangles [2]],
                                                     new Vector3 (0, 0, 0));
 
                   if (cw)
                      normal .negate ();
 
-                  this .addCap (texCoordArray, normal, points, triangles);
+                  this .addCap (texCoordArray, texCoord, normal, points, triangles);
                }
             }
          }
@@ -667,7 +671,7 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
          this .setCCW (this ._ccw .getValue ());
       };
    })(),
-   addCap: function (texCoordArray, normal, vertices, triangles)
+   addCap: function (texCoordArray, texCoord, normal, vertices, triangles)
    {
       const
          normalArray = this .getNormals (),
@@ -676,12 +680,12 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
       for (let i = 0, length = triangles .length; i < length; i += 3)
       {
          const
-            p0 = vertices [triangles [i]     .index],
-            p1 = vertices [triangles [i + 1] .index],
-            p2 = vertices [triangles [i + 2] .index],
-            t0 = triangles [i]     .texCoord,
-            t1 = triangles [i + 1] .texCoord,
-            t2 = triangles [i + 2] .texCoord;
+            p0 = vertices [triangles [i]],
+            p1 = vertices [triangles [i + 1]],
+            p2 = vertices [triangles [i + 2]],
+            t0 = texCoord [triangles [i]],
+            t1 = texCoord [triangles [i + 1]],
+            t2 = texCoord [triangles [i + 2]];
 
          texCoordArray .push (t0 .x, t0 .y, 0, 1);
          texCoordArray .push (t1 .x, t1 .y, 0, 1);

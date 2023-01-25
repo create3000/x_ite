@@ -294,7 +294,7 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
                            polygon   = { vertices: vertices, triangles: triangles, face: face };
 
                         if (convex)
-                           this .triangulateConvexPolygon (vertices, triangles);
+                           Triangle3 .triangulateConvexPolygon (vertices, triangles);
                         else
                            this .triangulatePolygon (vertices, triangles);
 
@@ -331,34 +331,25 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
             coord      = this .getCoord (),
             length     = vertices .length;
 
-         for (let v = 0; v < length; ++ v)
+         for (let i = polygon .length; i < length; ++ i)
+            polygon .push (new Vector3 (0, 0, 0));
+
+         for (let i = 0; i < length; ++ i)
          {
-            const i = vertices [v];
+            const
+               index = vertices [i],
+               point = polygon [i];
 
-            let vertex = polygon [v];
+            point .index = index;
 
-            if (!vertex)
-               vertex = polygon [v] = new Vector3 (0, 0, 0);
-
-            vertex .index = i;
-
-            coord .get1Point (coordIndex [i], vertex);
+            coord .get1Point (coordIndex [index], point);
          }
 
          polygon .length = length;
 
          Triangle3 .triangulatePolygon (polygon, triangles);
-
-         for (let i = 0, length = triangles .length; i < length; ++ i)
-            triangles [i] = triangles [i] .index;
       };
    })(),
-   triangulateConvexPolygon: function (vertices, triangles)
-   {
-      // Fallback: Very simple triangulation for convex polygons.
-      for (let i = 1, length = vertices .length - 1; i < length; ++ i)
-         triangles .push (vertices [0], vertices [i], vertices [i + 1]);
-   },
    buildNormals: function (polygons)
    {
       const
