@@ -101,13 +101,12 @@ const Grammar = Expressions ({
  */
 
 const
-   INCH            = 0.0254,    // One inch in meters.
-   POINT           = INCH / 72, // One point in meters.
-   PIXEL           = INCH / 90, // One pixel in meters.
-   BEZIER_STEPS    = 10,
-   CIRCLE_STEPS    = 64,
-   GRADIENT_WIDTH  = 256,
-   GRADIENT_HEIGHT = 256;
+   INCH          = 0.0254,    // One inch in meters.
+   POINT         = INCH / 72, // One point in meters.
+   PIXEL         = INCH / 90, // One pixel in meters.
+   BEZIER_STEPS  = 10,
+   CIRCLE_STEPS  = 64,
+   GRADIENT_SIZE = 256; // In pixels.
 
 /*
  *  Parser
@@ -117,13 +116,13 @@ function SVGParser (scene)
 {
    X3DParser .call (this, scene);
 
-   this .solid  = false;
-   this .tessy  = this .createTesselator ();
-   this .canvas = document .createElement ("canvas");
-   this .cx     = this .canvas .getContext ("2d");
+   this .solid   = false;
+   this .tessy   = this .createTesselator ();
+   this .canvas  = document .createElement ("canvas");
+   this .context = this .canvas .getContext ("2d");
 
-   this .canvas .width  = GRADIENT_WIDTH;
-   this .canvas .height = GRADIENT_HEIGHT;
+   this .canvas .width  = GRADIENT_SIZE;
+   this .canvas .height = GRADIENT_SIZE;
 }
 
 SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -816,7 +815,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          g        = this .linearGradientElement (xmlElement, { stops: [ ] }),
-         gradient = this .cx .createLinearGradient (g .x1, g .y1, g .x2, g .y2);
+         gradient = this .context .createLinearGradient (g .x1, g .y1, g .x2, g .y2);
 
       for (const [o, c, a] of g .stops)
          gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
@@ -855,7 +854,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          g        = this .radialGradientElement (xmlElement, { stops: [ ] }),
-         gradient = this .cx .createRadialGradient (g .fx, g .fy, 0, g .cx, g .cy, g .r);
+         gradient = this .context .createRadialGradient (g .fx, g .fy, 0, g .cx, g .cy, g .r);
 
       for (const [o, c, a] of g .stops)
          gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
@@ -926,20 +925,20 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const m = new Matrix3 ();
 
-      m .scale     (new Vector2 (GRADIENT_WIDTH / 2, GRADIENT_HEIGHT / 2));
+      m .scale (new Vector2 (GRADIENT_SIZE / 2, GRADIENT_SIZE / 2));
       m .translate (Vector2 .One);
-      m .scale     (new Vector2 (1, -1));
-      m .multLeft  (Matrix3 .inverse (bbox .matrix));
-      m .multLeft  (transform);
+      m .scale (new Vector2 (1, -1));
+      m .multLeft (Matrix3 .inverse (bbox .matrix));
+      m .multLeft (transform);
 
       // Paint.
 
-      const cx = this .cx;
+      const cx = this .context;
 
       cx .fillStyle = gradient;
       cx .save ();
-      cx .clearRect (0, 0, GRADIENT_WIDTH, GRADIENT_HEIGHT);
-      cx .rect (0, 0, GRADIENT_WIDTH, GRADIENT_HEIGHT);
+      cx .clearRect (0, 0, GRADIENT_SIZE, GRADIENT_SIZE);
+      cx .rect (0, 0, GRADIENT_SIZE, GRADIENT_SIZE);
       cx .transform (m [0], m [1], m [3], m [4], m [6], m [7]);
       cx .fill ();
       cx .restore ();
