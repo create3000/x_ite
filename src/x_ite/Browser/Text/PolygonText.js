@@ -262,6 +262,7 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
             case "M": // Start
             case "Z": // End
             {
+               // Filter consecutive identical points.
                points = points .filter ((p, i, a) => !p .equals (a [(i + 1) % a .length]));
 
                if (points .length > 2)
@@ -297,7 +298,7 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
                   lut   = curve .getPoints ("cubic", steps);
 
                for (const p of lut)
-                  points .push (new Vector3 (p .x,p .y, 0));
+                  points .push (new Vector3 (p .x, p .y, 0));
 
                break;
             }
