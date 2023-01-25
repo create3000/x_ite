@@ -781,7 +781,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    linearGradientElementURL: function (xmlElement, bbox)
    {
       const
-         g        = this .linearGradientElement (xmlElement),
+         g        = this .linearGradientElement (xmlElement, { stops: [ ] }),
          gradient = this .cx .createLinearGradient (g .x1, g .y1, g .x2, g .y2);
 
       for (const [o, c, a] of g .stops)
@@ -789,7 +789,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .drawGradient (gradient, g .transform, bbox);
    },
-   linearGradientElement: function (xmlElement, gradient = { stops: [ ] })
+   linearGradientElement: function (xmlElement, gradient)
    {
       if (!xmlElement)
          return;
@@ -830,7 +830,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    radialGradientElementURL: function (xmlElement, bbox)
    {
       const
-         g        = this .radialGradientElement (xmlElement),
+         g        = this .radialGradientElement (xmlElement, { stops: [ ] }),
          gradient = this .cx .createRadialGradient (g .fx, g .fy, 0, g .cx, g .cy, g .r);
 
       for (const [o, c, a] of g .stops)
@@ -838,7 +838,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .drawGradient (gradient, g .transform, bbox);
    },
-   radialGradientElement: function (xmlElement, gradient = { stops: [ ] })
+   radialGradientElement: function (xmlElement, gradient)
    {
       // Attribute xlink:href
 
