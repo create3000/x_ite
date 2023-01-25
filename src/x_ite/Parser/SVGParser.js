@@ -2082,7 +2082,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene    = this .getExecutionContext (),
          hash     = new URL (fillURL, scene .getWorldURL ()) .hash .slice (1),
-         elements = $(this .document) .find (`[id=${hash}]`);
+         elements = $(this .document) .find (`#${hash}`);
 
       if (!hash)
          return;
