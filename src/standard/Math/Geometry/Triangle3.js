@@ -96,6 +96,7 @@ const Triangle3 = {
       const tessy = (function ()
       {
          // Function called for each vertex of tesselator output.
+
          function vertexCallback (point, triangles)
          {
             triangles .push (point);
@@ -114,6 +115,7 @@ const Triangle3 = {
          }
 
          // Callback for when segments intersect and must be split.
+
          function combineCallback (coords, data, weight)
          {
             //console.log ('combine callback');
@@ -167,28 +169,6 @@ const Triangle3 = {
       // Fallback: Very simple triangulation for convex polygons.
       for (let i = 1, length = vertices .length - 1; i < length; ++ i)
          triangles .push (vertices [0], vertices [i], vertices [i + 1]);
-   },
-   getPolygonNormal: function (vertices, normal)
-   {
-      // Determine polygon normal.
-      // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
-
-      normal .set (0, 0, 0);
-
-      var next = vertices [0];
-
-      for (let i = 0, length = vertices .length; i < length; ++ i)
-      {
-         var
-            current = next,
-            next    = vertices [(i + 1) % length];
-
-         normal .x += (current .y - next .y) * (current .z + next .z);
-         normal .y += (current .z - next .z) * (current .x + next .x);
-         normal .z += (current .x - next .x) * (current .y + next .y);
-      }
-
-      return normal .normalize ();
    },
 };
 

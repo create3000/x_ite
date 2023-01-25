@@ -913,10 +913,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                points = this .removeConsecutiveIdenticalPoints (points);
 
-               if (points .length)
+               if (points .length > 2)
+               {
                   contours .push (Object .assign (points, { index: index, closed: false }));
 
-               index += points .length;
+                  index += points .length;
+               }
+
                points = [ ];
 
                while (true)
@@ -1394,7 +1397,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                points = this .removeConsecutiveIdenticalPoints (points);
 
-               if (points .length)
+               if (points .length > 2)
                {
                   ax = points [0] .x;
                   ay = points [0] .y;
@@ -1402,8 +1405,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   contours .push (Object .assign (points, { index: index, closed: true }));
 
                   index += points .length;
-                  points = [ ];
                }
+
+               points = [ ];
 
                this .comma ();
                continue;
@@ -1415,7 +1419,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       points = this .removeConsecutiveIdenticalPoints (points);
 
-      if (points .length)
+      if (points .length > 2)
 		   contours .push (Object .assign (points, { index: index, closed: false }));
 
       return !! contours .length;
@@ -2109,10 +2113,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const tessy = new libtess .GluTesselator ();
 
       tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA, vertexCallback);
-      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,       Function .prototype);
-      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,       Function .prototype);
-      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,   Function .prototype);
-      tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_TOLERANCE,   0);
       tessy .gluTessNormal (0, 0, 1);
 
       return tessy;
