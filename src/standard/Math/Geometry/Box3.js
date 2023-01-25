@@ -52,40 +52,23 @@ import SAT       from "../Algorithms/SAT.js";
 
 function Box3 (size, center)
 {
+   this .matrix = new Matrix4 ();
+
    switch (arguments .length)
    {
       case 0:
       {
-         this .matrix = new Matrix4 (0, 0, 0, 0,
-                                     0, 0, 0, 0,
-                                     0, 0, 0, 0,
-                                     0, 0, 0, 0);
+         this .set ();
          return;
       }
       case 2:
       {
-         this .matrix = new Matrix4 (size .x / 2, 0, 0, 0,
-                                     0, size .y / 2, 0, 0,
-                                     0, 0, size .z / 2, 0,
-                                     center .x, center .y, center .z, 1);
+         this .set (size, center);
          return;
       }
       case 3:
       {
-         const
-            min = arguments [0],
-            max = arguments [1],
-            sx  = (max .x - min .x) / 2,
-            sy  = (max .y - min .y) / 2,
-            sz  = (max .z - min .z) / 2,
-            cx  = (max .x + min .x) / 2,
-            cy  = (max .y + min .y) / 2,
-            cz  = (max .z + min .z) / 2;
-
-         this .matrix = new Matrix4 (sx, 0,  0,  0,
-                                     0,  sy, 0,  0,
-                                     0,  0,  sz, 0,
-                                     cx, cy, cz, 1);
+         this .setExtents (arguments [0], arguments [1]);
          return;
       }
    }
@@ -115,43 +98,29 @@ Box3 .prototype =
    },
    set: function (size, center)
    {
-      const m = this .matrix;
-
       switch (arguments .length)
       {
          case 0:
          {
-            m [ 0] = 0.5; m [ 1] = 0;   m [ 2] = 0;   m [ 3] = 0;
-            m [ 4] = 0;   m [ 5] = 0.5; m [ 6] = 0;   m [ 7] = 0;
-            m [ 8] = 0;   m [ 9] = 0;   m [10] = 0.5; m [11] = 0;
-            m [12] = 0;   m [13] = 0;   m [14] = 0;   m [15] = 0;
+            this .matrix .set (0, 0, 0, 0,
+                               0, 0, 0, 0,
+                               0, 0, 0, 0,
+                               0, 0, 0, 0);
+
             return this;
          }
          case 2:
          {
-            m [ 0] = size .x / 2; m [ 1] = 0;           m [ 2] = 0;           m [ 3] = 0;
-            m [ 4] = 0;           m [ 5] = size .y / 2; m [ 6] = 0;           m [ 7] = 0;
-            m [ 8] = 0;           m [ 9] = 0;           m [10] = size .z / 2; m [11] = 0;
-            m [12] = center .x;   m [13] = center .y;   m [14] = center .z;   m [15] = 1;
+            this .matrix .set (size .x / 2, 0, 0, 0,
+                               0, size .y / 2, 0, 0,
+                               0, 0, size .z / 2, 0,
+                               center .x, center .y, center .z, 1);
+
             return this;
          }
          case 3:
          {
-            const
-               min = arguments [0],
-               max = arguments [1],
-               sx  = (max .x - min .x) / 2,
-               sy  = (max .y - min .y) / 2,
-               sz  = (max .z - min .z) / 2,
-               cx  = (max .x + min .x) / 2,
-               cy  = (max .y + min .y) / 2,
-               cz  = (max .z + min .z) / 2;
-
-            this .matrix .set (sx, 0,  0,  0,
-                               0,  sy, 0,  0,
-                               0,  0,  sz, 0,
-                               cx, cy, cz, 1);
-            return this;
+            return this .setExtents (arguments [0], arguments [1]);
          }
       }
    },
@@ -166,10 +135,11 @@ Box3 .prototype =
          cy = (max .y + min .y) / 2,
          cz = (max .z + min .z) / 2;
 
-      m [ 0] = sx; m [ 1] = 0;  m [ 2] = 0;  m [ 3] = 0;
-      m [ 4] = 0;  m [ 5] = sy; m [ 6] = 0;  m [ 7] = 0;
-      m [ 8] = 0;  m [ 9] = 0;  m [10] = sz; m [11] = 0;
-      m [12] = cx; m [13] = cy; m [14] = cz; m [15] = 1;
+      this .matrix .set (sx, 0,  0,  0,
+                         0,  sy, 0,  0,
+                         0,  0,  sz, 0,
+                         cx, cy, cz, 1);
+
       return this;
    },
    getExtents: function (min, max)
