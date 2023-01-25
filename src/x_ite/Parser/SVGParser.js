@@ -656,7 +656,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          shapeNode .appearance  = this .createFillAppearance (bbox);
          shapeNode .geometry    = geometryNode;
          geometryNode .solid    = false;
-         geometryNode .index    = this .triangulatePolygon ([points], coordinateNode) .map (p => p .index);
+         geometryNode .index    = this .triangulatePolygon ([points], coordinateNode);
          geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
          geometryNode .coord    = coordinateNode;
 
@@ -732,7 +732,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          shapeNode .appearance  = this .createFillAppearance (bbox);
          shapeNode .geometry    = geometryNode;
          geometryNode .solid    = false;
-         geometryNode .index    = this .triangulatePolygon (contours, coordinateNode) .map (p => p .index);
+         geometryNode .index    = this .triangulatePolygon (contours, coordinateNode);
          geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
          geometryNode .coord    = coordinateNode;
 
@@ -2117,6 +2117,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    triangulatePolygon: function (contours, coordinateNode)
    {
       // Callback for when segments intersect and must be split.
+
       function combineCallback (coords, data, weight)
       {
          const point = new Vector3 (... coords);
@@ -2129,11 +2130,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
 
       const
-         WINDING   = this .style .fillRule === "evenodd" ? "GLU_TESS_WINDING_ODD" : "GLU_TESS_WINDING_NONZERO",
          tessy     = this .tessy,
+         winding   = this .style .fillRule === "evenodd" ? "GLU_TESS_WINDING_ODD" : "GLU_TESS_WINDING_NONZERO",
          triangles = [ ];
 
-      tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule [WINDING]);
+      tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule [winding]);
       tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE, combineCallback);
       tessy .gluTessBeginPolygon (triangles);
 
@@ -2151,7 +2152,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       tessy .gluTessEndPolygon ();
 
-      return triangles;
+      return triangles .map (p => p .index);
    },
 });
 
