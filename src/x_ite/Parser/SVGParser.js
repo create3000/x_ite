@@ -2080,12 +2080,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    getFillUrl: function (fillURL, bbox)
    {
       const
-         scene    = this .getExecutionContext (),
-         hash     = new URL (fillURL, scene .getWorldURL ()) .hash .slice (1),
-         elements = $(this .document) .find (`#${hash}`);
+         scene = this .getExecutionContext (),
+         hash  = new URL (fillURL, scene .getWorldURL ()) .hash .slice (1);
 
       if (!hash)
          return;
+
+      const elements = $(this .document) .find ("#" + hash);
 
       if (!elements .length)
          return;
