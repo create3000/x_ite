@@ -344,7 +344,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!this .styleAttributes (xmlElement))
          return;
 
-      // Get transform.
+      // Create Transform node.
 
       const transformNode = this .createTransform (xmlElement);
 
@@ -369,7 +369,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!this .styleAttributes (xmlElement))
          return;
 
-      // Get transform.
+      // Create Transform node.
 
       const
          scene         = this .getExecutionContext (),
@@ -404,7 +404,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!this .styleAttributes (xmlElement))
          return;
 
-      // Get transform.
+      // Create Transform node.
 
       const
          x      = this .lengthAttribute (xmlElement .getAttribute ("x"), 0),
@@ -470,7 +470,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!this .styleAttributes (xmlElement))
          return;
 
-      // Get transform.
+      // Create Transform node.
 
       const
          cx = this .lengthAttribute (xmlElement .getAttribute ("cx"), 0),
@@ -526,7 +526,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!this .styleAttributes (xmlElement))
          return;
 
-      // Get transform.
+      // Create Transform node.
 
       const
          cx = this .lengthAttribute (xmlElement .getAttribute ("cx"), 0),
@@ -583,7 +583,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    imageElement: function (xmlElement)
    {
-      // Get transform.
+      // Create Transform node.
 
       const
          x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0),
@@ -631,7 +631,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!this .styleAttributes (xmlElement))
          return;
 
-      // Get transform.
+      // Create Transform node.
 
       const
          scene         = this .getExecutionContext (),
@@ -701,7 +701,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!this .styleAttributes (xmlElement))
          return;
 
-      // Get transform.
+      // Create Transform node.
 
       const
          scene         = this .getExecutionContext (),
@@ -909,6 +909,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                // moveto
 
+               // Remove the consecutive identical elements.
                points = points .filter ((p, i, a) => i === 0 || !p .equals (a [i - 1]));
 
                if (points .length)
@@ -1390,6 +1391,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                // closepath
 
+               // Remove the consecutive identical elements.
                points = points .filter ((p, i, a) => i === 0 || !p .equals (a [i - 1]));
 
                if (points .length)
@@ -1411,6 +1413,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          break;
       }
 
+      // Remove the consecutive identical elements.
       points = points .filter ((p, i, a) => i === 0 || !p .equals (a [i - 1]));
 
       if (points .length)
