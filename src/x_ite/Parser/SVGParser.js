@@ -1858,10 +1858,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const attribute = xmlElement .getAttribute (style);
 
-            if (attribute === null)
-               this .parseStyle (style, "default");
-            else
-               this .parseStyle (style, attribute);
+            this .parseStyle (style, attribute ?? "default");
          }
 
          // Style attribute has higher precedence.
