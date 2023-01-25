@@ -353,7 +353,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          href  = xmlElement .getAttribute ("xlink:href"),
          hash  = new URL (href, scene .getWorldURL ()) .hash .slice (1);
 
-      const usedElement = this .document .getElementById (hash);
+      const usedElement = this .document .getElementById ("hash");
 
       if (!usedElement)
          return;
@@ -843,8 +843,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             scene = this .getExecutionContext (),
             hash  = new URL (href, scene .getWorldURL ()) .hash .slice (1);
 
-         if (hash)
-            this .gradientElement (this .document .getElementById (hash), gradient);
+         this .gradientElement (this .document .getElementById (hash), gradient);
       }
 
       // Attributes
@@ -886,8 +885,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             scene = this .getExecutionContext (),
             hash  = new URL (href, scene .getWorldURL ()) .hash .slice (1);
 
-         if (hash)
-            this .gradientElement (this .document .getElementById (hash), gradient);
+         this .gradientElement (this .document .getElementById (hash), gradient);
       }
 
       // Attributes
@@ -2282,9 +2280,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene = this .getExecutionContext (),
          hash  = new URL (fillURL, scene .getWorldURL ()) .hash .slice (1);
-
-      if (!hash)
-         return;
 
       const xmlElement = this .document .getElementById (hash);
 
