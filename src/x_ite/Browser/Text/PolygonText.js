@@ -279,7 +279,7 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
                {
                   if (points .length > 2)
                   {
-                     if (points [0] .x === points .at (-1) .x && points [0] .y === points .at (-1) .y)
+                     if (points [0] .equals (points .at (-1)))
                         points .pop ();
 
                      curves .push (points);

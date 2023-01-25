@@ -2098,9 +2098,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       // Function called for each vertex of tessellator output.
 
-      function vertexCallback (point, triangles)
+      function vertexCallback (index, triangles)
       {
-         triangles .push (point);
+         triangles .push (index);
       }
 
       const tessy = new libtess .GluTesselator ();
@@ -2120,13 +2120,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       function combineCallback (coords, data, weight)
       {
-         const point = new Vector3 (... coords);
-
-         point .index = coordinateNode .point .length;
+         const
+            point = new Vector3 (... coords),
+            index = coordinateNode .point .length;
 
          coordinateNode .point .push (point);
 
-         return point;
+         return index;
       }
 
       const
@@ -2142,17 +2142,15 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          tessy .gluTessBeginContour ();
 
-         const contour = points .map (p => new Vector3 (p .x, p. y, 0));
-
-         contour .forEach ((p, i) => p .index = points .index + i);
-         contour .forEach (p => tessy .gluTessVertex (p, p));
+         for (const [i, p] of points .entries ())
+            tessy .gluTessVertex (new Vector3 (p .x, p. y, 0), points .index + i);
 
          tessy .gluTessEndContour ();
       }
 
       tessy .gluTessEndPolygon ();
 
-      return triangles .map (p => p .index);
+      return triangles;
    },
 });
 
