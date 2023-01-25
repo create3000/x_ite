@@ -101,9 +101,9 @@ const Grammar = Expressions ({
  */
 
 const
-   INCH  = 0.0254,    // One inch in meter.
-   POINT = INCH / 72, // One point in meter.
-   PIXEL = INCH / 90; // One pixel in meter.
+   INCH  = 0.0254,    // One inch in meters.
+   POINT = INCH / 72, // One point in meters.
+   PIXEL = INCH / 90; // One pixel in meters.
 
 /*
  *  Parser
@@ -113,6 +113,7 @@ function SVGParser (scene)
 {
    X3DParser .call (this, scene);
 
+   this .solid = false;
    this .tessy = this .createTesselator ();
 }
 
@@ -431,7 +432,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          shapeNode .appearance = this .createFillAppearance (bbox);
          shapeNode .geometry   = rectangleNode;
-         rectangleNode .solid  = false;
+         rectangleNode .solid  = this .solid;
          rectangleNode .size   = size;
 
          transformNode .children .push (shapeNode);
@@ -494,7 +495,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          shapeNode .appearance = this .createFillAppearance (bbox);
          shapeNode .geometry   = diskNode;
-         diskNode .solid       = false;
+         diskNode .solid       = this .solid;
          diskNode .outerRadius = r;
 
          transformNode .children .push (shapeNode);
@@ -552,7 +553,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          shapeNode .appearance = this .createFillAppearance (bbox);
          shapeNode .geometry   = diskNode;
-         diskNode .solid       = false;
+         diskNode .solid       = this .solid;
          diskNode .outerRadius = rMin;
 
          transformNode .children .push (shapeNode);
@@ -611,7 +612,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       appearanceNode .texture        = textureNode;
       textureNode .url               = [href];
       textureNode .textureProperties = this .texturePropertiesNode;
-      rectangleNode .solid           = false;
+      rectangleNode .solid           = this .solid;
       rectangleNode .size            = new Vector2 (width, height);
 
       transformNode .children .push (shapeNode);
@@ -655,7 +656,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          shapeNode .appearance  = this .createFillAppearance (bbox);
          shapeNode .geometry    = geometryNode;
-         geometryNode .solid    = false;
+         geometryNode .solid    = this .solid;
          geometryNode .index    = this .triangulatePolygon ([points], coordinateNode);
          geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
          geometryNode .coord    = coordinateNode;
@@ -731,7 +732,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          shapeNode .appearance  = this .createFillAppearance (bbox);
          shapeNode .geometry    = geometryNode;
-         geometryNode .solid    = false;
+         geometryNode .solid    = this .solid;
          geometryNode .index    = this .triangulatePolygon (contours, coordinateNode);
          geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
          geometryNode .coord    = coordinateNode;
