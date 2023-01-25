@@ -793,9 +793,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    linearGradientElement: function (xmlElement, gradient)
    {
-      if (!xmlElement)
-         return;
-
       if (xmlElement .nodeName !== "linearGradient")
          return;
 
