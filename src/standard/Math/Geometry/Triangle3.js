@@ -102,63 +102,31 @@ const Triangle3 = {
             triangles .push (point);
          }
 
-         function beginCallback (type)
-         {
-            if (type !== libtess .primitiveType .GL_TRIANGLES)
-               console .log ('expected TRIANGLES but got type: ' + type);
-         }
-
-         function errorCallback (errno)
-         {
-            console .log ('error callback');
-            console .log ('error number: ' + errno);
-         }
-
          // Callback for when segments intersect and must be split.
 
          function combineCallback (coords, data, weight)
          {
-            //console.log ('combine callback');
             return data [0];
-         }
-
-         function edgeCallback (flag)
-         {
-            // Don't really care about the flag, but need no-strip/no-fan behavior.
-            // console .log ('edge flag: ' + flag);
          }
 
          const tessy = new libtess .GluTesselator ();
 
          tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,        beginCallback);
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,        errorCallback);
          tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,    edgeCallback);
-         tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_TOLERANCE,    0);
          tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
 
          return tessy;
       })();
 
-      return function (/* contour, [ contour, ..., ] triangles */)
+      return function (polygon, triangles)
       {
-         const triangles = arguments [arguments .length - 1];
-
          tessy .gluTessBeginPolygon (triangles);
+         tessy .gluTessBeginContour ();
 
-         for (let i = 0, length = arguments .length - 1; i < length; ++ i)
-         {
-            tessy .gluTessBeginContour ();
+         for (const point of polygon)
+            tessy .gluTessVertex (point, point);
 
-            for (const point of arguments [i])
-            {
-               tessy .gluTessVertex (point, point);
-            }
-
-            tessy .gluTessEndContour ();
-         }
-
+         tessy .gluTessEndContour ();
          tessy .gluTessEndPolygon ();
 
          return triangles;
