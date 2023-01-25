@@ -893,10 +893,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    stopElement: function (xmlElement, gradient)
    {
-      const offset = this .percentAttribute (xmlElement .getAttribute ("offset"), 0);
-
       if (!this .styleAttributes (xmlElement))
          return;
+
+      const offset = this .percentAttribute (xmlElement .getAttribute ("offset"), 0);
 
       const { stopColor, stopOpacity } = this .style;
 
