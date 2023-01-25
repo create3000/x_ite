@@ -191,8 +191,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const svg = $(xmlElement) .children ("svg");
 
-            for (let i = 0; i < svg .length; ++ i)
-               await this .svgElement (svg [i]);
+            for (const xmlElement of svg)
+               await this .svgElement (xmlElement);
 
             break;
          }

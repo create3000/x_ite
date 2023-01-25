@@ -147,12 +147,12 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          case "#document":
          {
-            var X3D = $(xmlElement) .children ("X3D");
+            const X3D = $(xmlElement) .children ("X3D");
 
             if (X3D .length)
             {
-               for (var i = 0; i < X3D .length; ++ i)
-                  this .x3dElement (X3D [i]);
+               for (const xmlElement of X3D)
+                  this .x3dElement (xmlElement);
             }
             else
             {
