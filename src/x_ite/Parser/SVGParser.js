@@ -909,8 +909,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                // moveto
 
-               // Remove the consecutive identical elements.
-               points = points .filter ((p, i, a) => !p .equals (a [(i + 1) % a .length]));
+               points = this .removeConsecutiveIdenticalPoints (points);
 
                if (points .length)
                   contours .push (Object .assign (points, { index: index, closed: false }));
@@ -1391,8 +1390,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                // closepath
 
-               // Remove the consecutive identical elements.
-               points = points .filter ((p, i, a) => !p .equals (a [(i + 1) % a .length]));
+               points = this .removeConsecutiveIdenticalPoints (points);
 
                if (points .length)
                {
@@ -1413,13 +1411,16 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          break;
       }
 
-      // Remove the consecutive identical elements.
-      points = points .filter ((p, i, a) => !p .equals (a [(i + 1) % a .length]));
+      points = this .removeConsecutiveIdenticalPoints (points);
 
       if (points .length)
 		   contours .push (Object .assign (points, { index: index, closed: false }));
 
       return !! contours .length;
+   },
+   removeConsecutiveIdenticalPoints: function (points)
+   {
+      return points .filter ((p, i, a) => !p .equals (a [(i + 1) % a .length]));
    },
    transformAttribute: function (attribute)
    {
