@@ -2150,6 +2150,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       tessy .gluTessEndPolygon ();
 
+      // Array of indices of triangles.
       return triangles;
    },
 });
