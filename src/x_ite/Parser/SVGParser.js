@@ -833,9 +833,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          g        = this .radialGradientElement (xmlElement),
          gradient = this .cx .createRadialGradient (g .fx, g .fy, 0, g .cx, g .cy, g .r);
 
-      console .log (g .fx, g .fy, 0, g .cx, g .cy, g .r)
-      console .log (g .stops)
-
       for (const [o, c, a] of g .stops)
          gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
 
