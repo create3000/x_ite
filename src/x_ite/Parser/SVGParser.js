@@ -771,6 +771,14 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (transformNode .children .length)
          this .groupNodes .at (-1) .children .push (transformNode);
    },
+   linearGradientElementURL: function (xmlElement, bbox)
+   {
+      console .log (xmlElement)
+   },
+   radialGradientElementURL: function (xmlElement, bbox)
+   {
+
+   },
    idAttribute: function (attribute, node)
    {
       if (attribute === null)
@@ -2082,9 +2090,16 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!elements .length)
          return;
 
-      console .log (elements .length)
+      const xmlElement = elements [0];
 
-      return;
+      switch (xmlElement .nodeName)
+      {
+         case "linearGradient":
+            return this .linearGradientElementURL (xmlElement, bbox);
+
+         case "radialGradient":
+            return this .radialGradientElementURL (xmlElement, bbox);
+      }
    },
    createStrokeAppearance: function ()
    {
