@@ -2143,7 +2143,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          tessy .gluTessBeginContour ();
 
          for (const [i, p] of points .entries ())
-            tessy .gluTessVertex (new Vector3 (p .x, p. y, 0), points .index + i);
+            tessy .gluTessVertex ([p .x, p. y, 0], points .index + i);
 
          tessy .gluTessEndContour ();
       }
