@@ -123,6 +123,23 @@ function SVGParser (scene)
 
    this .canvas .width  = GRADIENT_SIZE;
    this .canvas .height = GRADIENT_SIZE;
+
+   this .styles = [{
+      display: "inline",
+      fillType: "COLOR",
+      fillColor: Color4 .Black,
+      fillURL: "",
+      fillOpacity: 1,
+      fillRule: "nonzero",
+      strokeType: "NONE",
+      strokeColor: Color4 .Black,
+      strokeURL: "",
+      strokeOpacity: 1,
+      strokeWidth: 1,
+      opacity: 1,
+      stopColor: Color4 .Black,
+      stopOpacity: 1,
+   }];
 }
 
 SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -167,27 +184,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const scene = this .getExecutionContext ();
 
-      this .document              = this .input;
-      this .rootTransform         = scene .createNode ("Transform");
-      this .groupNodes            = [this .rootTransform];
-      this .texturePropertiesNode = this .createTextureProperties ();
-      this .styles                = [{
-         display: "inline",
-         fillType: "COLOR",
-         fillColor: Color4 .Black,
-         fillURL: "",
-         fillOpacity: 1,
-         fillRule: "nonzero",
-         strokeType: "NONE",
-         strokeColor: Color4 .Black,
-         strokeURL: "",
-         strokeOpacity: 1,
-         strokeWidth: 1,
-         opacity: 1,
-         stopColor: Color4 .Black,
-         stopOpacity: 1,
-      }];
-
       this .xmlElement (this .input)
          .then (success)
          .catch (error);
@@ -225,6 +221,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       scene .addComponent (browser .getComponent ("Geometry2D", 2));
 
       await this .loadComponents ();
+
+      // Init nodes.
+
+      this .document              = this .input;
+      this .rootTransform         = scene .createNode ("Transform");
+      this .groupNodes            = [this .rootTransform];
+      this .texturePropertiesNode = this .createTextureProperties ();
 
       // Create background.
 
