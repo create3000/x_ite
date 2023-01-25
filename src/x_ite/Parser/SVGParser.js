@@ -159,6 +159,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const scene = this .getExecutionContext ();
 
+      this .document              = this .input;
       this .rootTransform         = scene .createNode ("Transform");
       this .groupNodes            = [this .rootTransform];
       this .texturePropertiesNode = this .createTextureProperties ();
@@ -2047,11 +2048,43 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          case "URL":
          {
             // Gradient
+
+            const
+               scene       = this .getExecutionContext (),
+               textureNode = scene.createNode ("ImageTexture"),
+               url         = this .getFillUrl (this .style .fillURL, bbox);
+
+            // Get image from url.
+
+            if (!url)
+               return null;
+
+            textureNode .url               = url;
+            textureNode .textureProperties = this .texturePropertiesNode;
+            appearanceNode .texture        = textureNode;
+
             break;
          }
       }
 
       return appearanceNode;
+   },
+   getFillUrl: function (fillURL, bbox)
+   {
+      const
+         scene    = this .getExecutionContext (),
+         hash     = new URL (fillURL, scene .getWorldURL ()) .hash .slice (1),
+         elements = $(this .document) .find (`[id=${hash}]`);
+
+      if (!hash)
+         return;
+
+      if (!elements .length)
+         return;
+
+      console .log (elements .length)
+
+      return;
    },
    createStrokeAppearance: function ()
    {
