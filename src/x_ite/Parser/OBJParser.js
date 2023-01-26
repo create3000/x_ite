@@ -111,6 +111,7 @@ function OBJParser (scene)
 
    this .smoothingGroup  = 0;
    this .smoothingGroups = new Map ();
+   this .groups          = new Map ();
    this .materials       = new Map ();
    this .textures        = new Map ();
    this .point2          = new Vector2 ();
@@ -299,6 +300,11 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             this .material = this .materials .get (name) || this .defaultMaterial;
             this .texture  = this .textures .get (name);
+
+            const smoothingGroup = this .smoothingGroups .get (this .group .getNodeName ());
+
+            if (smoothingGroup)
+               smoothingGroup .delete (this .smoothingGroup);
          }
 
          return true;
@@ -331,6 +337,8 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             if (name)
                scene .addNamedNode (scene .getUniqueName (name), this .object);
+
+            this .smoothingGroup = 0;
          }
 
          return true;
@@ -350,13 +358,14 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const
                scene = this .getExecutionContext (),
-               name  = this .sanitizeName (this .result [1]);
+               name  = this .sanitizeName (this .result [1]),
+               group = this .groups .get (this .result [1]);
 
-            try
+            if (group)
             {
-               this .group = scene .getNamedNode (name);
+               this .group = group;
             }
-            catch (error)
+            else
             {
                if (this .group .children .length)
                {
@@ -364,6 +373,8 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                   this .object .children .push (this .group);
                }
+
+               this .groups .set (this .result [1], this .group);
 
                if (name)
                   scene .addNamedNode (scene .getUniqueName (name), this .group);
@@ -402,14 +413,16 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    vts: function ()
    {
+      const point = this .texCoord .point;
+
       let result = false;
 
-      while (this .vt ())
+      while (this .vt (point))
          result = true;
 
       return result;
    },
-   vt: function ()
+   vt: function (point)
    {
       this .comments ();
 
@@ -417,26 +430,28 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          if (this .vec2 ())
          {
-            this .texCoord .point .push (this .point2);
+            point .push (this .point2);
 
             return true;
          }
 
-         throw new Error ("Expected a texture coodinate.");
+         throw new Error ("Expected a texture coordinate.");
       }
 
       return false;
    },
    vns: function ()
    {
+      const vector = this .normal .vector;
+
       let result = false;
 
-      while (this .vn ())
+      while (this .vn (vector))
          result = true;
 
       return result;
    },
-   vn: function ()
+   vn: function (vector)
    {
       this .comments ();
 
@@ -444,7 +459,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          if (this .vec3 ())
          {
-            this .normal .vector .push (this .point3);
+            vector .push (this .point3);
 
             return true;
          }
@@ -456,14 +471,16 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    vs: function ()
    {
+      const point = this .coord .point;
+
       let result = false;
 
-      while (this .v ())
+      while (this .v (point))
          result = true;
 
       return result;
    },
-   v: function ()
+   v: function (point)
    {
       this .comments ();
 
@@ -471,7 +488,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          if (this .vec3 ())
          {
-            this .coord .point .push (this .point3);
+            point .push (this .point3);
 
             return true;
          }
@@ -538,43 +555,50 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (Grammar .f .parse (this))
       {
          const
-            texCoords = this .geometry .texCoordIndex .length,
-            normals   = this .geometry .normalIndex .length;
+            geometry           = this .geometry,
+            texCoordIndex      = geometry .texCoordIndex,
+            normalIndex        = geometry .normalIndex,
+            coordIndex         = geometry .coordIndex,
+            numTexCoordIndices = texCoordIndex .length,
+            numNormalIndices   = normalIndex .length,
+            numTexCoords       = this .texCoord .point .length,
+            numNormals         = this .normal .vector .length,
+            numCoords          = this .coord .point .length;
 
-         while (this .indices ())
+         while (this .indices (texCoordIndex, normalIndex, coordIndex, numTexCoords, numNormals, numCoords))
             ;
 
-         if (this .geometry .texCoordIndex .length !== texCoords)
-            this .geometry .texCoordIndex .push (-1);
+         if (texCoordIndex .length !== numTexCoordIndices)
+            texCoordIndex .push (-1);
 
-         if (this .geometry .normalIndex .length !== normals)
-            this .geometry .normalIndex .push (-1);
+         if (normalIndex .length !== numNormalIndices)
+            normalIndex .push (-1);
 
-         this .geometry .coordIndex .push (-1);
+         coordIndex .push (-1);
 
          return true;
       }
 
       return false;
    },
-   indices: function ()
+   indices: function (texCoordIndex, normalIndex, coordIndex, numTexCoords, numNormals, numCoords)
    {
       if (this .int32 ())
       {
-         this .geometry .coordIndex .push (this .index (this .value, this .coord .point .length));
+         coordIndex .push (this .index (this .value, numCoords));
 
          if (Grammar .slash .parse (this))
          {
             if (this .int32 ())
             {
-               this .geometry .texCoordIndex .push (this .index (this .value, this .texCoord .point .length));
+               texCoordIndex .push (this .index (this .value, numTexCoords));
             }
 
             if (Grammar .slash .parse (this))
             {
                if (this .int32 ())
                {
-                  this .geometry .normalIndex .push (this .index (this .value, this .normal .vector .length));
+                  normalIndex .push (this .index (this .value, numNormals));
                }
             }
          }
