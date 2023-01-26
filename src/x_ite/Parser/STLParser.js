@@ -45,10 +45,10 @@
  *
  ******************************************************************************/
 
-import X3DParser    from "./X3DParser.js";
-import X3DOptimizer from "./X3DOptimizer.js";
-import Expressions  from "./Expressions.js";
-import Vector3      from "../../standard/Math/Numbers/Vector3.js";
+import X3DParser   from "./X3DParser.js";
+import Expressions from "./Expressions.js";
+import Color3      from "../../standard/Math/Numbers/Color3.js";
+import Vector3     from "../../standard/Math/Numbers/Vector3.js";
 
 // http://paulbourke.net/dataformats/obj/
 // https://people.sc.fsu.edu/~jburkardt/data/obj/obj.html
@@ -61,6 +61,7 @@ import Vector3      from "../../standard/Math/Numbers/Vector3.js";
 const Grammar = Expressions ({
    // General
    whitespaces: /[\x20\n\t\r]+/gy,
+   whitespacesNoLineTerminator: /[\x20\t]+/gy,
    comment: /;.*?(?=[\n\r])/gy,
    untilEndOfLine: /([^\r\n]+)/gy,
 
@@ -87,8 +88,7 @@ const Grammar = Expressions ({
 
 function STLParser (scene)
 {
-   X3DParser    .call (this, scene);
-   X3DOptimizer .call (this);
+   X3DParser .call (this, scene);
 
    // Optimizer
 
@@ -103,7 +103,6 @@ function STLParser (scene)
 }
 
 STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
-   X3DOptimizer .prototype,
 {
    constructor: STLParser,
    CONSTANTS: new Map ([
@@ -147,13 +146,12 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .material   = scene .createNode ("Material");
       this .appearance = scene .createNode ("Appearance");
 
-      this .appearance .material = this .material;
+      this .material .diffuseColor = Color3 .White;
+      this .appearance .material   = this .material;
 
       // Parse scene.
 
       this .statements ();
-
-      //this .optimizeSceneGraph (scene .getRootNodes ());
    },
    comments: function ()
    {
@@ -173,6 +171,10 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       Grammar .whitespaces .parse (this);
    },
+   whitespacesNoLineTerminator: function ()
+   {
+      Grammar .whitespacesNoLineTerminator .parse (this);
+   },
    statements: function ()
    {
       while (this .solid ())
@@ -184,7 +186,7 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (Grammar .solid .parse (this))
       {
-         this .whitespaces ();
+         this .whitespacesNoLineTerminator ();
 
          const
             scene      = this .getExecutionContext (),
@@ -248,7 +250,7 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    normal: function (vector)
    {
-      this .whitespaces ();
+      this .whitespacesNoLineTerminator ();
 
       if (Grammar .normal .parse (this))
       {
@@ -286,7 +288,7 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (Grammar .outer .parse (this))
       {
-         this .whitespaces ();
+         this .whitespacesNoLineTerminator ();
 
          if (Grammar .loop .parse (this))
          {
@@ -348,7 +350,7 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    double: function ()
    {
-      this .whitespaces ();
+      this .whitespacesNoLineTerminator ();
 
       if (Grammar .double .parse (this))
       {

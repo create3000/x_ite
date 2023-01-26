@@ -114,8 +114,7 @@ const Grammar = Expressions ({
    double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
    string: /"((?:[^\\"]|\\\\|\\")*)"/gy,
 
-   SIGN : /([+-]?)/gy,
-   CONSTANTS: /\b(NAN|INFINITY|INF|PI|PI2|PI1_4|PI2_4|PI3_4|PI4_4|PI5_4|PI6_4|PI7_4|PI8_4|PI1_2|PI2_2|PI3_2|PI4_2|PI1_3|PI2_3|PI3_3|PI4_3|PI5_3|PI6_3|SQRT1_2|SQRT2)\b/igy,
+   CONSTANTS: /([+-]?)\b(NAN|INFINITY|INF|PI|PI2|PI1_4|PI2_4|PI3_4|PI4_4|PI5_4|PI6_4|PI7_4|PI8_4|PI1_2|PI2_2|PI3_2|PI4_2|PI1_3|PI2_3|PI3_3|PI4_3|PI5_3|PI6_3|SQRT1_2|SQRT2)\b/igy,
    HTMLColor: /([a-zA-Z]+|0[xX][\da-fA-F]+|rgba?\(.*?\))/gy,
 });
 
@@ -1540,23 +1539,15 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Constants
 
-      const lastIndex = this .lastIndex;
-
-      Grammar .SIGN .parse (this);
-
-      const sign = this .result [1];
-
       if (Grammar .CONSTANTS .parse (this))
       {
-         this .value = this .CONSTANTS [this .result [1] .toUpperCase ()];
+         this .value = this .CONSTANTS [this .result [2] .toUpperCase ()];
 
-         if (sign === "-")
+         if (this .result [1] === "-")
             this .value = - this .value;
 
          return true;
       }
-
-      this .lastIndex = lastIndex;
 
       return false;
    },
