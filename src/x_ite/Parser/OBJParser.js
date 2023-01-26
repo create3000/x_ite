@@ -105,6 +105,16 @@ function OBJParser (scene)
    this .removeGroups         = true;
    this .removeEmptyGroups    = true;
    this .combineGroupingNodes = false;
+
+   // Globals
+
+   this .smoothingGroup  = 0;
+   this .smoothingGroups = new Map ();
+   this .materials       = new Map ();
+   this .textures        = new Map ();
+   this .point2          = new Vector2 ();
+   this .point3          = new Vector3 ();
+   this .lastIndex       = 0;
 }
 
 OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -125,25 +135,6 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    parseIntoScene: function (success, error)
    {
-      const scene = this .getExecutionContext ();
-
-      this .object          = scene .createNode ("Transform");
-      this .group           = scene .createNode ("Group");
-      this .defaultMaterial = scene .createNode ("Material");
-      this .texCoord        = scene .createNode ("TextureCoordinate");
-      this .normal          = scene .createNode ("Normal");
-      this .coord           = scene .createNode ("Coordinate");
-      this .smoothingGroup  = 0;
-      this .smoothingGroups = new Map ();
-      this .materials       = new Map ();
-      this .textures        = new Map ();
-      this .point2          = new Vector2 ();
-      this .point3          = new Vector3 ();
-      this .lastIndex       = 0;
-
-      this .object .children .push (this .group);
-      scene .getRootNodes () .push (this .object);
-
       this .obj ()
          .then (success)
          .catch (error);
@@ -160,6 +151,19 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       scene .setProfile (browser .getProfile ("Interchange"));
 
       await this .loadComponents ();
+
+      // Init nodes.
+
+      this .object          = scene .createNode ("Transform");
+      this .group           = scene .createNode ("Group");
+      this .defaultMaterial = scene .createNode ("Material");
+      this .texCoord        = scene .createNode ("TextureCoordinate");
+      this .normal          = scene .createNode ("Normal");
+      this .coord           = scene .createNode ("Coordinate");
+
+      this .object .children .push (this .group);
+
+      scene .getRootNodes () .push (this .object);
 
       // Parse scene.
 

@@ -116,7 +116,12 @@ function SVGParser (scene)
 {
    X3DParser .call (this, scene);
 
-   this .solid   = false;
+   // Options
+
+   this .solid = false;
+
+   // Globals
+
    this .tessy   = this .createTesselator ();
    this .canvas  = document .createElement ("canvas");
    this .context = this .canvas .getContext ("2d");
