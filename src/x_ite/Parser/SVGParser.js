@@ -122,6 +122,7 @@ function SVGParser (scene)
 
    // Globals
 
+   this .nodes   = new Map ();
    this .tessy   = this .createTesselator ();
    this .canvas  = document .createElement ("canvas");
    this .context = this .canvas .getContext ("2d");
@@ -328,22 +329,14 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    used: function (xmlElement)
    {
-      try
-      {
-         const
-            scene = this .getExecutionContext (),
-            id    = xmlElement .getAttribute ("id"),
-            name  = this .sanitizeName (id),
-            node  = scene .getNamedNode (name);
+      const node = this .nodes .get (xmlElement);
 
-         this .groupNodes .at (-1) .children .push (node);
-
-         return true;
-      }
-      catch (error)
-      {
+      if (!node)
          return false;
-      }
+
+      this .groupNodes .at (-1) .children .push (node);
+
+      return true;
    },
    useElement: function (xmlElement)
    {
@@ -439,7 +432,44 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    aElement: function (xmlElement)
    {
+      // Determine style.
 
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Get attributes.
+
+      const
+         href   = xmlElement .getAttribute ("xlink:href"),
+         title  = xmlElement .getAttribute ("xlink:title"),
+         target = xmlElement .getAttribute ("target");
+
+      // Create Transform node.
+
+      const
+         scene         = this .getExecutionContext (),
+         transformNode = this .createTransform (xmlElement),
+         anchorNode    = scene .createNode ("Anchor");
+
+      transformNode .children .push (anchorNode);
+
+      anchorNode .description = title;
+      anchorNode .url         = [href];
+
+      if (target)
+         anchorNode .parameter = ["target=" + target];
+
+      // Get child elements.
+
+      this .groupNodes .push (anchorNode);
+
+      this .elements (xmlElement);
+
+      this .groupNodes .pop ();
+      this .styles     .pop ();
+
+      if (anchorNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
    },
    rectElement: function (xmlElement)
    {
@@ -958,7 +988,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          name  = this .sanitizeName (attribute);
 
       if (name)
-		   scene.addNamedNode (scene .getUniqueName (name), node);
+		   scene .addNamedNode (scene .getUniqueName (name), node);
    },
    viewBoxAttribute: function (attribute, defaultValue)
    {
@@ -2219,6 +2249,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Set name.
 
       this .idAttribute (xmlElement .getAttribute ("id"), transformNode);
+
+      // Nodes
+
+      this .nodes .set (xmlElement, transformNode);
 
       return transformNode;
    },
