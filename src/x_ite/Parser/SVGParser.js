@@ -1055,6 +1055,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          else if (Grammar .in .parse (this))
             this .value *= INCH / PIXEL;
 
+         else if (Grammar .pt .parse (this))
+            this .value *= POINT / PIXEL;
+
          return this .value;
       }
 
