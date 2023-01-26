@@ -285,7 +285,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
                   renderObject        = renderContext .renderObject,
                   viewport            = renderObject .getViewVolume () .getViewport (),
                   projectionMatrix    = renderObject .getProjectionMatrix () .get (),
-                  primitiveMode       = browser .getPrimitiveMode (gl .TRIANGLES),
+                  primitiveMode       = browser .getWireframe () ? gl .TRIANGLES : browser .getPrimitiveMode (gl .TRIANGLES),
                   transformShaderNode = browser .getLineTransformShader ();
 
                modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));
@@ -408,17 +408,9 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
                   gl .bindBuffer (gl .ARRAY_BUFFER, null);
                }
 
-               if (browser .getWireframe ())
-               {
-                  for (let i = 0, length = this .vertexCount * 3; i < length; i += 3)
-                     gl .drawArrays (primitiveMode, i, 3);
-               }
-               else
-               {
-                  gl .frontFace (gl .CCW);
-                  gl .enable (gl .CULL_FACE);
-                  gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
-               }
+               gl .frontFace (gl .CCW);
+               gl .enable (gl .CULL_FACE);
+               gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
 
                if (blendModeNode)
                   blendModeNode .disable (gl);
