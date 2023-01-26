@@ -616,7 +616,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 
 Additionally files can be compressed using GZip compression.
 
-| X3D Encoding  | File Extension | MIME Type       |
+| Encoding      | File Extension | MIME Type       |
 |---------------|----------------|-----------------|
 | XML           | .x3d, .x3dz    | model/x3d+xml   |
 | JSON          | .x3dj, .x3djz  | model/x3d+json  |
