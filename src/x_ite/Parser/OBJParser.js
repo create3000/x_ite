@@ -922,7 +922,7 @@ MaterialParser .prototype =
 
       if (Grammar .map_Kd .parse (this))
       {
-         this .whiteSpacesNoLineTerminator ();
+         this .whitespacesNoLineTerminator ();
 
          if (Grammar .untilEndOfLine .parse (this))
          {
