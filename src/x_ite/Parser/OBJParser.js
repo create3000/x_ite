@@ -119,10 +119,6 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       return !! this .input .match (/^(?:\s+|#.*?[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
    },
-   getInput: function ()
-   {
-      return this .input;
-   },
    setInput: function (string)
    {
       this .input = string;

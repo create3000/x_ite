@@ -136,10 +136,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return true;
       };
    })(),
-   getInput: function ()
-   {
-      return this .input;
-   },
    setInput: function (json)
    {
       try

@@ -68,10 +68,6 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       return this .input instanceof Object;
    },
-   getInput: function ()
-   {
-      return this .input;
-   },
    setInput: function (json)
    {
       try

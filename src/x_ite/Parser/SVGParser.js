@@ -162,10 +162,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   getInput: function ()
-   {
-      return this .input;
-   },
    setInput (xmlElement)
    {
       try

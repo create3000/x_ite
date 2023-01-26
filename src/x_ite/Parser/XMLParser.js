@@ -96,10 +96,6 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       return (this .input instanceof XMLDocument) || (this .input instanceof HTMLElement) || (this .input === null);
    },
-   getInput: function ()
-   {
-      return this .input;
-   },
    setInput (xmlElement)
    {
       try
@@ -1247,7 +1243,7 @@ XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4f] =
 XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d] =
 XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f] = function (field)
 {
-   field .setValue (prepareFloats (this .getInput ()) .map (function (value)
+   field .setValue (prepareFloats (this .input) .map (function (value)
    {
       return parseFloat (value);
    }));
@@ -1255,7 +1251,7 @@ XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f] = function (field)
 
 XMLParser .prototype .fieldTypes [X3DConstants .MFBool] = function (field)
 {
-   field .setValue (prepareBools (this .getInput ()) .map (function (value)
+   field .setValue (prepareBools (this .input) .map (function (value)
    {
       if (value === "true" || value === "TRUE")
          return true;
@@ -1266,7 +1262,7 @@ XMLParser .prototype .fieldTypes [X3DConstants .MFBool] = function (field)
 
 XMLParser .prototype .fieldTypes [X3DConstants .MFInt32] = function (field)
 {
-   field .setValue (prepareInts (this .getInput ()) .map (function (value)
+   field .setValue (prepareInts (this .input) .map (function (value)
    {
       return parseInt (value);
    }));
@@ -1283,7 +1279,7 @@ XMLParser .prototype .fieldTypes [X3DConstants .MFVec3f] = function (field)
 {
    var category = field .getUnit ();
 
-   field .setValue (prepareFloats (this .getInput ()) .map (function (value)
+   field .setValue (prepareFloats (this .input) .map (function (value)
    {
       return this .fromUnit (category, parseFloat (value));
    },
@@ -1292,7 +1288,7 @@ XMLParser .prototype .fieldTypes [X3DConstants .MFVec3f] = function (field)
 
 XMLParser .prototype .fieldTypes [X3DConstants .MFString] = function (field)
 {
-   field .setValue (prepareStrings (this .getInput ()));
+   field .setValue (prepareStrings (this .input));
 };
 
 // HTML Support
