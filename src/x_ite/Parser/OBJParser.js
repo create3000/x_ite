@@ -53,6 +53,8 @@ import Vector3      from "../../standard/Math/Numbers/Vector3.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import DEBUG        from "../DEBUG.js";
 
+// http://paulbourke.net/dataformats/obj/
+
 /*
  *  Grammar
  */
@@ -323,8 +325,8 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (Grammar .untilEndOfLine .parse (this))
          {
             const
-               scene = this .getExecutionContext (),
-               name  = this .sanitizeName (this .result [1]);
+               scene    = this .getExecutionContext (),
+               nodeName = this .sanitizeName (this .result [1]);
 
             if (this .group .children .length)
             {
@@ -335,10 +337,8 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                scene .getRootNodes () .push (this .object);
             }
 
-            if (name)
-               scene .addNamedNode (scene .getUniqueName (name), this .object);
-
-            this .smoothingGroup = 0;
+            if (nodeName)
+               scene .addNamedNode (scene .getUniqueName (nodeName), this .object);
          }
 
          return true;
@@ -357,9 +357,10 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (Grammar .untilEndOfLine .parse (this))
          {
             const
-               scene = this .getExecutionContext (),
-               name  = this .sanitizeName (this .result [1]),
-               group = this .groups .get (this .result [1]);
+               scene    = this .getExecutionContext (),
+               name     = this .result [1],
+               nodeName = this .sanitizeName (name),
+               group    = this .groups .get (name);
 
             if (group)
             {
@@ -373,12 +374,14 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                   this .object .children .push (this .group);
                }
-
-               this .groups .set (this .result [1], this .group);
-
-               if (name)
-                  scene .addNamedNode (scene .getUniqueName (name), this .group);
             }
+
+            this .groups .set (name, this .group);
+
+            if (nodeName)
+               scene .addNamedNode (scene .getUniqueName (nodeName), this .group);
+
+            this .smoothingGroup = 0;
          }
 
          return true;
