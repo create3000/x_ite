@@ -210,7 +210,7 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (Grammar .endsolid .parse (this))
             return true;
 
-         console .log ("Expected endsolid statement.");
+         throw new Error ("Expected endsolid statement.");
       }
 
       return false;
@@ -235,7 +235,7 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                if (Grammar .endfacet .parse (this))
                   return true;
 
-               console .log ("Expected endfacet statement.");
+               throw new Error ("Expected endfacet statement.");
             }
          }
       }
@@ -264,17 +264,17 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                   return true;
                }
-               else
-                  console .log ("Expected a double.");
+
+               throw new Error ("Expected a double.");
             }
-            else
-               console .log ("Expected a double.");
+
+            throw new Error ("Expected a double.");
          }
-         else
-            console .log ("Expected a double.");
+
+         throw new Error ("Expected a double.");
       }
 
-      return false;
+      throw new Error ("Expected normal statement.");
    },
    loop: function (point)
    {
@@ -297,18 +297,16 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                      if (Grammar .endloop .parse (this))
                         return true;
 
-                     console .log ("Expected endloop statement.");
+                     throw new Error ("Expected endloop statement.");
                   }
                }
             }
          }
-         else
-            console .log ("Expected loop statement.");
-      }
-      else
-         console .log ("Expected outer statement.");
 
-      return false;
+         throw new Error ("Expected loop statement.");
+      }
+
+      throw new Error ("Expected outer statement.");
    },
    vertex: function (point)
    {
@@ -332,19 +330,17 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                   return true;
                }
-               else
-                  console .log ("Expected a double.");
-            }
-            else
-               console .log ("Expected a double.");
-         }
-         else
-            console .log ("Expected a double.");
-      }
-      else
-         console .log ("Expected vertex statement.");
 
-      return false;
+               throw new Error ("Expected a double.");
+            }
+
+            throw new Error ("Expected a double.");
+         }
+
+         throw new Error ("Expected a double.");
+      }
+
+      throw new Error ("Expected vertex statement.");
    },
    double: function ()
    {
