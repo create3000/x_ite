@@ -1,7 +1,7 @@
 /* X_ITE v8.5.2 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 503:
+/***/ 355:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 310:
+/***/ 928:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 619:
+/***/ 436:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2022-12-05 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 971:
+/***/ 475:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 358:
+/***/ 869:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=undefined;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=undefined;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
@@ -6948,7 +6948,7 @@ if ((moduleType !== 'undefined') && module.exports) {
 
 /***/ }),
 
-/***/ 355:
+/***/ 896:
 /***/ ((module) => {
 
 "use strict";
@@ -8126,11 +8126,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().set ("x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(619);
-/* provided dependency */ var JpegImage = __webpack_require__(971);
-/* provided dependency */ var jpeg = __webpack_require__(358);
-/* provided dependency */ var CharLS = __webpack_require__(503);
-/* provided dependency */ var OpenJPEG = __webpack_require__(310);
+/* provided dependency */ var dicomParser = __webpack_require__(436);
+/* provided dependency */ var JpegImage = __webpack_require__(475);
+/* provided dependency */ var jpeg = __webpack_require__(869);
+/* provided dependency */ var CharLS = __webpack_require__(355);
+/* provided dependency */ var OpenJPEG = __webpack_require__(928);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9417,7 +9417,7 @@ Namespace_default().set ("x_ite/Components/Texturing3D/ImageTexture3D", ImageTex
 const DEBUG_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2")] .require ("x_ite/DEBUG");
 var DEBUG_default = /*#__PURE__*/__webpack_require__.n(DEBUG_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ImageTextureAtlas.js
-/* provided dependency */ var $ = __webpack_require__(355);
+/* provided dependency */ var $ = __webpack_require__(896);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

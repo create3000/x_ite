@@ -54,6 +54,7 @@ import Color3       from "../../standard/Math/Numbers/Color3.js";
 import DEBUG        from "../DEBUG.js";
 
 // http://paulbourke.net/dataformats/obj/
+// https://people.sc.fsu.edu/~jburkardt/data/obj/obj.html
 
 /*
  *  Grammar
