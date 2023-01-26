@@ -98,7 +98,8 @@ const Grammar = Expressions ({
 
 function OBJParser (scene)
 {
-   X3DParser .call (this, scene);
+   X3DParser    .call (this, scene);
+   X3DOptimizer .call (this);
 
    // Optimizer
 

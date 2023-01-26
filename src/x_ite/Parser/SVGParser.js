@@ -45,19 +45,20 @@
  *
  ******************************************************************************/
 
-import X3DParser   from "./X3DParser.js";
-import Expressions from "./Expressions.js";
-import Algorithm   from "../../standard/Math/Algorithm.js";
-import Color3      from "../../standard/Math/Numbers/Color3.js";
-import Color4      from "../../standard/Math/Numbers/Color4.js";
-import Vector2     from "../../standard/Math/Numbers/Vector2.js";
-import Vector3     from "../../standard/Math/Numbers/Vector3.js";
-import Vector4     from "../../standard/Math/Numbers/Vector4.js";
-import Rotation4   from "../../standard/Math/Numbers/Rotation4.js";
-import Matrix3     from "../../standard/Math/Numbers/Matrix3.js";
-import Matrix4     from "../../standard/Math/Numbers/Matrix4.js";
-import Box2        from "../../standard/Math/Geometry/Box2.js"
-import Bezier      from "../../standard/Math/Algorithms/Bezier.js";
+import X3DParser    from "./X3DParser.js";
+import X3DOptimizer from "./X3DOptimizer.js";
+import Expressions  from "./Expressions.js";
+import Algorithm    from "../../standard/Math/Algorithm.js";
+import Color3       from "../../standard/Math/Numbers/Color3.js";
+import Color4       from "../../standard/Math/Numbers/Color4.js";
+import Vector2      from "../../standard/Math/Numbers/Vector2.js";
+import Vector3      from "../../standard/Math/Numbers/Vector3.js";
+import Vector4      from "../../standard/Math/Numbers/Vector4.js";
+import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
+import Matrix3      from "../../standard/Math/Numbers/Matrix3.js";
+import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
+import Box2         from "../../standard/Math/Geometry/Box2.js"
+import Bezier       from "../../standard/Math/Algorithms/Bezier.js";
 
 /*
  *  Grammar
@@ -114,7 +115,14 @@ const
 
 function SVGParser (scene)
 {
-   X3DParser .call (this, scene);
+   X3DParser    .call (this, scene);
+   X3DOptimizer .call (this);
+
+   // Optimizer
+
+   this .removeGroups         = true;
+   this .removeEmptyGroups    = true;
+   this .combineGroupingNodes = false;
 
    // Options
 
@@ -149,6 +157,7 @@ function SVGParser (scene)
 }
 
 SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+   X3DOptimizer .prototype,
 {
    constructor: SVGParser,
    getEncoding: function ()
@@ -288,6 +297,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       scene .addNamedNode (scene .getUniqueName ("ViewBox"), this .rootTransform);
       scene .getRootNodes () .push (this .rootTransform);
+
+      // Optimize scene graph.
+
+      this .optimizeSceneGraph (scene .getRootNodes ());
    },
    elements: function (xmlElement)
    {
@@ -371,8 +384,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Add node.
 
-      if (transformNode .children .length)
-         this .groupNodes .at (-1) .children .push (transformNode);
+      this .groupNodes .at (-1) .children .push (transformNode);
    },
    gElement: function (xmlElement)
    {
@@ -396,8 +408,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Add node.
 
-      if (transformNode .children .length)
-         this .groupNodes .at (-1) .children .push (transformNode);
+      this .groupNodes .at (-1) .children .push (transformNode);
    },
    switchElement: function (xmlElement)
    {
@@ -427,8 +438,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Add node.
 
-      if (switchNode .children .length)
-         this .groupNodes .at (-1) .children .push (transformNode);
+      this .groupNodes .at (-1) .children .push (transformNode);
    },
    aElement: function (xmlElement)
    {
@@ -468,8 +478,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .groupNodes .pop ();
       this .styles     .pop ();
 
-      if (anchorNode .children .length)
-         this .groupNodes .at (-1) .children .push (transformNode);
+      this .groupNodes .at (-1) .children .push (transformNode);
    },
    rectElement: function (xmlElement)
    {
@@ -534,8 +543,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .groupNodes .pop ();
       this .styles     .pop ();
 
-      if (transformNode .children .length)
-         this .groupNodes .at (-1) .children .push (transformNode);
+      this .groupNodes .at (-1) .children .push (transformNode);
    },
    circleElement: function (xmlElement)
    {
@@ -590,8 +598,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .groupNodes .pop ();
       this .styles     .pop ();
 
-      if (transformNode .children .length)
-         this .groupNodes .at (-1) .children .push (transformNode);
+      this .groupNodes .at (-1) .children .push (transformNode);
    },
    ellipseElement: function (xmlElement)
    {
@@ -648,8 +655,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .groupNodes .pop ();
       this .styles     .pop ();
 
-      if (transformNode .children .length)
-         this .groupNodes .at (-1) .children .push (transformNode);
+      this .groupNodes .at (-1) .children .push (transformNode);
    },
    textElement: function (xmlElement)
    {
@@ -754,8 +760,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .groupNodes .pop ();
       this .styles     .pop ();
 
-      if (transformNode .children .length)
-         this .groupNodes .at (-1) .children .push (transformNode);
+      this .groupNodes .at (-1) .children .push (transformNode);
    },
    polygonElement: function (xmlElement)
    {
@@ -840,8 +845,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .groupNodes .pop ();
       this .styles     .pop ();
 
-      if (transformNode .children .length)
-         this .groupNodes .at (-1) .children .push (transformNode);
+      this .groupNodes .at (-1) .children .push (transformNode);
    },
    linearGradientElementURL: function (xmlElement, bbox)
    {

@@ -68,7 +68,7 @@ const
 function GLTF2Parser (scene)
 {
    X3DParser    .call (this, scene);
-   X3DOptimizer .call (this),
+   X3DOptimizer .call (this);
 
    // Optimizer
 
