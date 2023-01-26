@@ -2235,11 +2235,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          case "COLOR":
          {
-            const materialNode = scene .createNode ("Material");
+            const materialNode = scene .createNode ("UnlitMaterial");
 
-            appearanceNode .material   = materialNode;
-            materialNode .diffuseColor = new Color3 (... this .style .fillColor);
-            materialNode .transparency = 1 - this .style .fillOpacity * this .style .opacity;
+            appearanceNode .material    = materialNode;
+            materialNode .emissiveColor = new Color3 (... this .style .fillColor);
+            materialNode .transparency  = 1 - this .style .fillOpacity * this .style .opacity;
 
             break;
          }
@@ -2249,7 +2249,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             const
                scene       = this .getExecutionContext (),
-               textureNode = scene.createNode ("ImageTexture"),
+               textureNode = scene .createNode ("ImageTexture"),
                url         = this .getFillUrl (this .style .fillURL, bbox);
 
             // Get image from url.
@@ -2377,7 +2377,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          tessy .gluTessBeginContour ();
 
          for (const [i, p] of points .entries ())
-            tessy .gluTessVertex ([p .x, p. y, 0], points .index + i);
+            tessy .gluTessVertex ([p .x, p .y, 0], points .index + i);
 
          tessy .gluTessEndContour ();
       }
