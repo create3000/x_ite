@@ -1,7 +1,7 @@
-/* X_ITE v8.5.1 */(() => { // webpackBootstrap
+/* X_ITE v8.5.2a */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 250:
+/***/ 714:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14488,7 +14488,7 @@
 /***/ ((module) => {
 
 "use strict";
-module.exports = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("lib/jquery");
+module.exports = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("lib/jquery");
 
 /***/ }),
 
@@ -14564,25 +14564,25 @@ var __webpack_exports__ = {};
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DNode\")"
-const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("x_ite/Components/Core/X3DNode");
+const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("x_ite/Components/Core/X3DNode");
 var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Networking/X3DUrlObject\")"
-const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("x_ite/Components/Networking/X3DUrlObject");
+const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("x_ite/Components/Networking/X3DUrlObject");
 var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/TextAlignment.js
 /*******************************************************************************
@@ -14648,13 +14648,13 @@ const __default__ = TextAlignment;
 Namespace_default().set ("x_ite/Browser/Text/TextAlignment", __default__);
 /* harmony default export */ const Text_TextAlignment = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/InputOutput/FileLoader\")"
-const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("x_ite/InputOutput/FileLoader");
+const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("x_ite/InputOutput/FileLoader");
 var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Networking/URLs\")"
-const URLs_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("x_ite/Browser/Networking/URLs");
+const URLs_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("x_ite/Browser/Networking/URLs");
 var URLs_default = /*#__PURE__*/__webpack_require__.n(URLs_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Text/X3DFontStyleNode.js
 /*******************************************************************************
@@ -14922,300 +14922,19 @@ const X3DFontStyleNode_default_ = X3DFontStyleNode;
 Namespace_default().set ("x_ite/Components/Text/X3DFontStyleNode", X3DFontStyleNode_default_);
 /* harmony default export */ const Text_X3DFontStyleNode = (X3DFontStyleNode_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Core/PrimitiveQuality\")"
-const PrimitiveQuality_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("x_ite/Browser/Core/PrimitiveQuality");
+const PrimitiveQuality_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("x_ite/Browser/Core/PrimitiveQuality");
 var PrimitiveQuality_default = /*#__PURE__*/__webpack_require__.n(PrimitiveQuality_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix3\")"
-const Matrix3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("standard/Math/Numbers/Matrix3");
-var Matrix3_default = /*#__PURE__*/__webpack_require__.n(Matrix3_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector2\")"
-const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("standard/Math/Numbers/Vector2");
-var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Box2.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-function Box2 (size, center)
-{
-   switch (arguments .length)
-   {
-      case 0:
-      {
-         this .matrix = new (Matrix3_default()) (0, 0, 0,
-                                     0, 0, 0,
-                                     0, 0, 0);
-         return;
-      }
-      case 2:
-      {
-         this .matrix = new (Matrix3_default()) (size .x / 2, 0, 0,
-                                     0, size .y / 2, 0,
-                                     center .x, center .y, 1);
-         return;
-      }
-      case 3:
-      {
-         const
-            min = arguments [0],
-            max = arguments [1],
-            sx  = (max .x - min .x) / 2,
-            sy  = (max .y - min .y) / 2,
-            cx  = (max .x + min .x) / 2,
-            cy  = (max .y + min .y) / 2;
-
-         this .matrix = new (Matrix3_default()) (sx, 0,  0,
-                                     0,  sy, 0,
-                                     cx, cy, 1);
-         return;
-      }
-   }
-}
-
-Box2 .prototype =
-{
-   constructor: Box2,
-   copy: function ()
-   {
-      const copy = Object .create (Box2 .prototype);
-      copy .matrix = this .matrix .copy ();
-      return copy;
-   },
-   assign: function (box)
-   {
-      this .matrix .assign (box .matrix);
-      return this;
-   },
-   equals: function (box)
-   {
-      return this .matrix .equals (box .matrix);
-   },
-   set: function (size, center)
-   {
-      const m = this .matrix;
-
-      switch (arguments .length)
-      {
-         case 0:
-         {
-            m [0] = 0.5; m [1] = 0;   m [2] = 0;
-            m [3] = 0;   m [4] = 0.5; m [5] = 0;
-            m [6] = 0;   m [7] = 0;   m [8] = 0;
-            return this;
-         }
-         case 2:
-         {
-            // size, center
-            m [0] = size .x / 2; m [1] = 0;           m [2] = 0;
-            m [3] = 0;           m [4] = size .y / 2; m [5] = 0;
-            m [6] = center .x;   m [7] = center .y;   m [8] = 1;
-            return this;
-         }
-         case 3:
-         {
-            const
-               min = arguments [0],
-               max = arguments [1],
-               sx  = (max .x - min .x) / 2,
-               sy  = (max .y - min .y) / 2,
-               cx  = (max .x + min .x) / 2,
-               cy  = (max .y + min .y) / 2;
-
-            this .matrix .set (sx, 0,  0,
-                               0,  sy, 0,
-                               cx, cy, 1);
-            return this;
-         }
-      }
-   },
-   setExtents: function (min, max)
-   {
-      const
-         m  = this .matrix,
-         sx = (max .x - min .x) / 2,
-         sy = (max .y - min .y) / 2,
-         cx = (max .x + min .x) / 2,
-         cy = (max .y + min .y) / 2;
-
-      m [0] = sx; m [1] = 0;  m [2] = 0;
-      m [3] = 0;  m [4] = sy; m [5] = 0;
-      m [6] = cx; m [7] = cy; m [8] = 1;
-      return this;
-   },
-   isEmpty: function ()
-   {
-      return this .matrix [8] === 0;
-   },
-   add: (function ()
-   {
-      const
-         lhs_min = new (Vector2_default()) (0, 0),
-         lhs_max = new (Vector2_default()) (0, 0),
-         rhs_min = new (Vector2_default()) (0, 0),
-         rhs_max = new (Vector2_default()) (0, 0);
-
-      return function (box)
-      {
-         if (this .isEmpty ())
-            return this .assign (box);
-
-         if (box .isEmpty ())
-            return this;
-
-         this .getExtents (lhs_min, lhs_max);
-         box  .getExtents (rhs_min, rhs_max);
-
-         return this .set (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true);
-      };
-   })(),
-   multLeft: function (matrix)
-   {
-      this .matrix .multLeft (matrix);
-      return this;
-   },
-   multRight: function (matrix)
-   {
-      this .matrix .multRight (matrix);
-      return this;
-   },
-   getExtents: function (min, max)
-   {
-      this .getAbsoluteExtents (min, max);
-
-      min .add (this .center);
-      max .add (this .center);
-   },
-   getAbsoluteExtents: (function ()
-   {
-      const p1 = new (Vector2_default()) (0, 0);
-
-      return function (min, max)
-      {
-         const
-            m = this .matrix,
-            x = m .xAxis,
-            y = m .yAxis;
-
-         p1 .assign (x) .add (y);
-
-         const p2 = y .subtract (x);
-
-         min .assign (p1) .min (p2);
-         max .assign (p1) .max (p2);
-
-         p1 .negate ();
-         p2 .negate ();
-
-         min .min (p1, p2);
-         max .max (p1, p2);
-      };
-   })(),
-   containsPoint: (function ()
-   {
-      const
-         min = new (Vector2_default()) (0, 0),
-         max = new (Vector2_default()) (0, 0);
-
-      return function (point)
-      {
-         this .getExtents (min, max);
-
-         return min .x <= point .x &&
-                max .x >= point .x &&
-                min .y <= point .y &&
-                max .y >= point .y;
-      };
-   })(),
-   toString: function ()
-   {
-      return this .size + ", " + this .center;
-   },
-};
-
-Object .defineProperty (Box2 .prototype, "size",
-{
-   get: (function ()
-   {
-      const
-         min = new (Vector2_default()) (0, 0),
-         max = new (Vector2_default()) (0, 0);
-
-      return function ()
-      {
-         this .getAbsoluteExtents (min, max);
-
-         return max .subtract (min);
-      };
-   })(),
-   enumerable: true,
-   configurable: false
-});
-
-Object .defineProperty (Box2 .prototype, "center",
-{
-   get: function ()
-   {
-      return this .matrix .origin;
-   },
-   enumerable: true,
-   configurable: false
-});
-
-const Box2_default_ = Box2;
-;
-
-Namespace_default().set ("standard/Math/Geometry/Box2", Box2_default_);
-/* harmony default export */ const Geometry_Box2 = (Box2_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Box2\")"
+const Box2_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("standard/Math/Geometry/Box2");
+var Box2_default = /*#__PURE__*/__webpack_require__.n(Box2_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Box3\")"
-const Box3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("standard/Math/Geometry/Box3");
+const Box3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("standard/Math/Geometry/Box3");
 var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector2\")"
+const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("standard/Math/Numbers/Vector2");
+var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("standard/Math/Numbers/Vector3");
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextGeometry.js
 /*******************************************************************************
@@ -15272,8 +14991,8 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
 
 
 var
-   bbox        = new Geometry_Box2 (),
-   lineBBox    = new Geometry_Box2 (),
+   bbox        = new (Box2_default()) (),
+   lineBBox    = new (Box2_default()) (),
    min         = new (Vector2_default()) (0, 0),
    max         = new (Vector2_default()) (0, 0),
    glyphMin    = new (Vector2_default()) (0, 0),
@@ -15287,7 +15006,7 @@ var
    lineBound   = new (Vector2_default()) (0, 0),
    origin      = new (Vector3_default()) (0, 0, 0),
    vector      = new (Vector2_default()) (0, 0),
-   box2        = new Geometry_Box2 (),
+   box2        = new (Box2_default()) (),
    zero2       = new (Vector2_default()) (0, 0),
    zero3       = new (Vector3_default()) (0, 0, 0);
 
@@ -15839,161 +15558,17 @@ const X3DTextGeometry_default_ = X3DTextGeometry;
 Namespace_default().set ("x_ite/Browser/Text/X3DTextGeometry", X3DTextGeometry_default_);
 /* harmony default export */ const Text_X3DTextGeometry = (X3DTextGeometry_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
-const X3DGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("x_ite/Components/Rendering/X3DGeometryNode");
+const X3DGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("x_ite/Components/Rendering/X3DGeometryNode");
 var X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometryNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("standard/Math/Numbers/Matrix4");
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Triangle3\")"
-const Triangle3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("standard/Math/Geometry/Triangle3");
-var Triangle3_default = /*#__PURE__*/__webpack_require__.n(Triangle3_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("standard/Math/Algorithm");
-var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
-;// CONCATENATED MODULE: ./src/standard/Math/Algorithms/Bezier.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-const lerp = (Algorithm_default()).lerp;
-
-function Bezier (x0, y0, x1, y1, x2, y2, x3, y3)
-{
-   this .x0 = x0;
-   this .y0 = y0;
-   this .x1 = x1;
-   this .y1 = y1;
-   this .x2 = x2;
-   this .y2 = y2;
-   this .x3 = x3;
-   this .y3 = y3;
-
-   this .order = arguments .length / 2 - 1;
-}
-
-Bezier .prototype =
-{
-   getLUT: function (dimension)
-   {
-      const
-         x0  = this .x0,
-         y0  = this .y0,
-         x1  = this .x1,
-         y1  = this .y1,
-         x2  = this .x2,
-         y2  = this .y2,
-         x3  = this .x3,
-         y3  = this .y3,
-         lut = [ ];
-
-      switch (this .order)
-      {
-         case 2:
-         {
-            for (let i = 0, d = dimension - 1; i < dimension; ++ i)
-            {
-               lut .push (quadric (x0, y0, x1, y1, x2, y2, i / d));
-            }
-
-            break;
-         }
-         case 3:
-         {
-            for (let i = 0, d = dimension - 1; i < dimension; ++ i)
-            {
-               lut .push (cubic (x0, y0, x1, y1, x2, y2, x3, y3, i / d));
-            }
-
-            break;
-         }
-      }
-
-      return lut;
-   }
-};
-
-function quadric (x0, y0, x1, y1, x2, y2, t)
-{
-   const
-      ax0 = lerp (x0, x1, t),
-      ay0 = lerp (y0, y1, t),
-      ax1 = lerp (x1, x2, t),
-      ay1 = lerp (y1, y2, t),
-      bx0 = lerp (ax0, ax1, t),
-      by0 = lerp (ay0, ay1, t);
-
-   return {x: bx0, y: by0};
-}
-
-function cubic (x0, y0, x1, y1, x2, y2, x3, y3, t)
-{
-   const
-      ax0 = lerp (x0, x1, t),
-      ay0 = lerp (y0, y1, t),
-      ax1 = lerp (x1, x2, t),
-      ay1 = lerp (y1, y2, t),
-      ax2 = lerp (x2, x3, t),
-      ay2 = lerp (y2, y3, t),
-      bx0 = lerp (ax0, ax1, t),
-      by0 = lerp (ay0, ay1, t),
-      bx1 = lerp (ax1, ax2, t),
-      by1 = lerp (ay1, ay2, t),
-      cx0 = lerp (bx0, bx1, t),
-      cy0 = lerp (by0, by1, t);
-
-   return {x: cx0, y: cy0};
-}
-
-const Bezier_default_ = Bezier;
-;
-
-Namespace_default().set ("standard/Math/Algorithms/Bezier", Bezier_default_);
-/* harmony default export */ const Algorithms_Bezier = (Bezier_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithms/Bezier\")"
+const Bezier_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("standard/Math/Algorithms/Bezier");
+var Bezier_default = /*#__PURE__*/__webpack_require__.n(Bezier_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"lib/libtess\")"
+const libtess_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("lib/libtess");
+var libtess_default = /*#__PURE__*/__webpack_require__.n(libtess_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/PolygonText.js
 /*******************************************************************************
  *
@@ -16072,20 +15647,20 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
    },
    build: (function ()
    {
-      var
+      const
          min = new (Vector3_default()) (0, 0, 0),
          max = new (Vector3_default()) (0, 0, 0);
 
       return function ()
       {
-         var
+         const
             fontStyle = this .getFontStyle (),
             font      = fontStyle .getFont ();
 
-         if (! font)
+         if (!font)
             return;
 
-         var
+         const
             text             = this .getText (),
             glyphs           = this .getGlyphs (),
             minorAlignment   = this .getMinorAlignment (),
@@ -16110,25 +15685,26 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
 
          if (fontStyle ._horizontal .getValue ())
          {
-            for (var l = 0, length = glyphs .length; l < length; ++ l)
+            for (let l = 0, length = glyphs .length; l < length; ++ l)
             {
-               var
-                  line         = glyphs [l],
-                  charSpacing  = charSpacings [l],
-                  translation  = translations [l],
-                  advanceWidth = 0;
+               const
+                  line        = glyphs [l],
+                  charSpacing = charSpacings [l],
+                  translation = translations [l];
 
-               for (var g = 0, gl = line .length; g < gl; ++ g)
+               let advanceWidth = 0;
+
+               for (let g = 0, gl = line .length; g < gl; ++ g)
                {
-                  var
+                  const
                      glyph         = line [g],
                      glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality),
                      xOffset       = minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
                      yOffset       = minorAlignment .y + translation .y;
 
-                  for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
+                  for (let v = 0, vl = glyphVertices .length; v < vl; ++ v)
                   {
-                     var
+                     const
                         x = glyphVertices [v] .x * size + xOffset,
                         y = glyphVertices [v] .y * size + yOffset;
 
@@ -16139,7 +15715,7 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
 
                   // Calculate advanceWidth.
 
-                  var kerning = 0;
+                  let kerning = 0;
 
                   if (g + 1 < line .length)
                      kerning = font .getKerningValue (glyph, line [g + 1]);
@@ -16150,32 +15726,31 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
          }
          else
          {
-            var
+            const
                leftToRight = fontStyle ._leftToRight .getValue (),
                topToBottom = fontStyle ._topToBottom .getValue (),
                first       = leftToRight ? 0 : text ._string .length - 1,
                last        = leftToRight ? text ._string .length  : -1,
                step        = leftToRight ? 1 : -1;
 
-            for (var l = first, t = 0; l !== last; l += step)
+            for (let l = first, t = 0; l !== last; l += step)
             {
-               var line = glyphs [l];
-
-               var
+               const
+                  line     = glyphs [l],
                   numChars = line .length,
                   firstG   = topToBottom ? 0 : numChars - 1,
                   lastG    = topToBottom ? numChars : -1,
                   stepG    = topToBottom ? 1 : -1;
 
-               for (var g = firstG; g !== lastG; g += stepG, ++ t)
+               for (let g = firstG; g !== lastG; g += stepG, ++ t)
                {
-                  var
+                  const
                      translation   = translations [t],
                      glyphVertices = this .getGlyphGeometry (font, line [g], primitiveQuality);
 
-                  for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
+                  for (let v = 0, vl = glyphVertices .length; v < vl; ++ v)
                   {
-                     var
+                     const
                         x = glyphVertices [v] .x * size + minorAlignment .x + translation .x,
                         y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
 
@@ -16190,7 +15765,7 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
    })(),
    getGlyphExtents: function (font, glyph, primitiveQuality, min, max)
    {
-      var
+      const
          glyphCache = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
          extents    = glyphCache .extents;
 
@@ -16198,150 +15773,119 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
       {
          min .assign (extents .min);
          max .assign (extents .max);
-         return;
-      }
-
-      var vertices = this .getGlyphGeometry (font, glyph, primitiveQuality);
-
-      if (vertices .length)
-      {
-         var vertex = vertices [0];
-
-         min .assign (vertex);
-         max .assign (vertex);
-
-         for (var i = 1, length = vertices .length; i < length; ++ i)
-         {
-            var vertex = vertices [i];
-
-            min .min (vertex);
-            max .max (vertex);
-         }
       }
       else
       {
-         min .set (0, 0, 0);
-         max .set (0, 0, 0);
+         const vertices = this .getGlyphGeometry (font, glyph, primitiveQuality);
+
+         if (vertices .length)
+         {
+            min .assign (vertices [0]) .min (... vertices);
+            max .assign (vertices [0]) .max (... vertices);
+         }
+         else
+         {
+            min .set (0, 0, 0);
+            max .set (0, 0, 0);
+         }
+
+         const extents = glyphCache .extents = { };
+
+         extents .min = min .copy ();
+         extents .max = max .copy ();
       }
-
-      var extents = glyphCache .extents = { };
-
-      extents .min = min .copy ();
-      extents .max = max .copy ();
    },
    getGlyphGeometry: function (font, glyph, primitiveQuality)
    {
-      var
+      const
          glyphCache    = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
          glyphGeometry = glyphCache .geometry;
 
       if (glyphGeometry)
-         return glyphGeometry;
-
-      glyphGeometry = glyphCache .geometry = [ ];
-
-      this .createGlyphGeometry (glyph, glyphGeometry, primitiveQuality);
-
-      return glyphGeometry;
-   },
-   createGlyphGeometry: (function ()
-   {
-      var
-         points = [ ],
-         curves = [ ],
-         normal = new (Vector3_default()) (0, 0, 0);
-
-      return function (glyph, vertices, primitiveQuality)
       {
-         // Get curves for the current glyph.
+         return glyphGeometry;
+      }
+      else
+      {
+         const glyphGeometry = glyphCache .geometry = [ ];
 
-         var
-            dimension  = this .getBezierDimension (primitiveQuality),
-            path       = glyph .getPath (0, 0, 1),
-            commands   = path .commands,
-            x          = 0,
-            y          = 0;
+         this .createGlyphGeometry (glyph, glyphGeometry, primitiveQuality);
 
-         points .length = 0;
-         curves .length = 0;
+         return glyphGeometry;
+      }
+   },
+   createGlyphGeometry: function (glyph, vertices, primitiveQuality)
+   {
+      // Get contours for the current glyph.
 
-         for (var i = 0, cl = commands .length; i < cl; ++ i)
+      const
+         steps = this .getBezierSteps (primitiveQuality),
+         path  = glyph .getPath (0, 0, 1);
+
+      let
+         contours = [ ],
+         points   = [ ],
+         x        = 0,
+         y        = 0;
+
+      for (const command of path .commands)
+      {
+         switch (command .type)
          {
-            var command = commands [i];
-
-            switch (command .type)
+            case "M": // Start
+            case "Z": // End
             {
-               case "M": // Start
-               case "Z": // End
-               {
-                  if (points .length > 2)
-                  {
-                     if (points [0] .x === points .at (-1) .x && points [0] .y === points .at (-1) .y)
-                        points .pop ();
+               // Filter consecutive identical points.
+               points = points .filter ((p, i, a) => !p .equals (a [(i + 1) % a .length]));
 
-                     curves .push (points);
-                  }
+               if (points .length > 2)
+                  contours .push (points);
 
-                  points = [ ];
+               points = [ ];
 
-                  if (command .type === "M")
-                     points .push (new (Vector3_default()) (command .x, -command .y, 0));
-
-                  break;
-               }
-               case "L": // Linear
-               {
+               if (command .type === "M")
                   points .push (new (Vector3_default()) (command .x, -command .y, 0));
-                  break;
-               }
-               case "Q": // Quadric
-               {
-                  var
-                     curve = new Algorithms_Bezier (x, -y, command .x1, -command .y1, command .x, -command .y),
-                     lut   = curve .getLUT (dimension);
 
-                  for (var l = 1, ll = lut .length; l < ll; ++ l)
-                     points .push (new (Vector3_default()) (lut [l] .x, lut [l] .y, 0));
-
-                  break;
-               }
-               case "C": // Cubic
-               {
-                  var
-                     curve = new Algorithms_Bezier (x, -y, command .x1, -command .y1, command .x2, -command .y2, command .x, -command .y),
-                     lut   = curve .getLUT (dimension);
-
-                  for (var l = 1, ll = lut .length; l < ll; ++ l)
-                     points .push (new (Vector3_default()) (lut [l] .x, lut [l] .y, 0));
-
-                  break;
-               }
-               default:
-                  continue;
+               break;
             }
+            case "L": // Linear
+            {
+               points .push (new (Vector3_default()) (command .x, -command .y, 0));
+               break;
+            }
+            case "Q": // Quadric
+            {
+               const
+                  curve = new (Bezier_default()) (x, -y, command .x1, -command .y1, command .x, -command .y),
+                  lut   = curve .getPoints ("quadric", steps);
 
-            x = command .x;
-            y = command .y;
+               for (const p of lut)
+                  points .push (new (Vector3_default()) (p .x, p .y, 0));
+
+               break;
+            }
+            case "C": // Cubic
+            {
+               const
+                  curve = new (Bezier_default()) (x, -y, command .x1, -command .y1, command .x2, -command .y2, command .x, -command .y),
+                  lut   = curve .getPoints ("cubic", steps);
+
+               for (const p of lut)
+                  points .push (new (Vector3_default()) (p .x, p .y, 0));
+
+               break;
+            }
+            default:
+               continue;
          }
 
-         // Triangulate contours.
+         x = command .x;
+         y = command .y;
+      }
 
-         curves = curves .map (function (curve)
-         {
-            Triangle3_default().getPolygonNormal (curve, normal);
-
-            if (normal .dot ((Vector3_default()).zAxis) > 0)
-               return curve;
-
-            return curve .reverse ();
-         });
-
-         curves .push (vertices);
-
-         Triangle3_default().triangulatePolygon.apply ((Triangle3_default()), curves);
-      };
-   })(),
-   getBezierDimension: function (primitiveQuality)
+      return this .triangulatePolygon (contours, vertices);
+   },
+   getBezierSteps: function (primitiveQuality)
    {
       switch (primitiveQuality)
       {
@@ -16353,6 +15897,40 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
             return 5;
       }
    },
+   triangulatePolygon: (function ()
+   {
+      // Function called for each vertex of tessellator output.
+
+      function vertexCallback (point, triangles)
+      {
+         triangles .push (point);
+      }
+
+      const tessy = new (libtess_default()).GluTesselator ();
+
+      tessy .gluTessCallback ((libtess_default()).gluEnum.GLU_TESS_VERTEX_DATA,  vertexCallback);
+      tessy .gluTessProperty ((libtess_default()).gluEnum.GLU_TESS_WINDING_RULE, (libtess_default()).windingRule.GLU_TESS_WINDING_ODD);
+      tessy .gluTessNormal (0, 0, 1);
+
+      return function (contours, triangles)
+      {
+         tessy .gluTessBeginPolygon (triangles);
+
+         for (const points of contours)
+         {
+            tessy .gluTessBeginContour ();
+
+            for (const point of points)
+               tessy .gluTessVertex (point, point);
+
+            tessy .gluTessEndContour ();
+         }
+
+         tessy .gluTessEndPolygon ();
+
+         return triangles;
+      };
+   })(),
    display: function (gl, renderContext)
    { },
    transformLine: function (line)
@@ -16474,7 +16052,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(250);
+/* provided dependency */ var opentype = __webpack_require__(714);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16600,7 +16178,7 @@ const X3DTextContext_default_ = X3DTextContext;
 Namespace_default().set ("x_ite/Browser/Text/X3DTextContext", X3DTextContext_default_);
 /* harmony default export */ const Text_X3DTextContext = (X3DTextContext_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.1")] .require ("x_ite/Base/X3DCast");
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2a")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Text/Text.js
 /*******************************************************************************

@@ -1,4 +1,4 @@
-/* X_ITE v8.5.1 */(function webpackUniversalModuleDefinition(root, factory) {
+/* X_ITE v8.5.2a */(function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 485:
+/***/ 82:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(702);
+/* provided dependency */ var jQuery = __webpack_require__(912);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 794:
+/***/ 868:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(702);
+/* provided dependency */ var jQuery = __webpack_require__(912);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 25:
+/***/ 276:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(702)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(912)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 702:
+/***/ 912:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11812,7 +11812,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 230:
+/***/ 525:
 /***/ ((module) => {
 
 /**
@@ -16591,7 +16591,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 171:
+/***/ 385:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19836,7 +19836,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 974:
+/***/ 509:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -27292,6 +27292,8 @@ Matrix3 .prototype =
       this [0] = 1; this [1] = 0; this [2] = 0;
       this [3] = 0; this [4] = 1; this [5] = 0;
       this [6] = 0; this [7] = 0; this [8] = 1;
+
+      return this;
    },
    translate: function (translation)
    {
@@ -27306,9 +27308,7 @@ Matrix3 .prototype =
    },
    rotate: function (rotation)
    {
-      this .multLeft (Matrix3 .Rotation (rotation));
-
-      return this;
+      return this .multLeft (Matrix3 .Rotation (rotation));
    },
    scale: function (scale)
    {
@@ -27323,6 +27323,14 @@ Matrix3 .prototype =
       this [4] *= y;
 
       return this;
+   },
+   skewX: function (angle)
+   {
+      return this .multLeft (m .set (1, 0, 0, Math .tan (angle), 1, 0, 0, 0, 1));
+   },
+   skewY: function (angle)
+   {
+      return this .multLeft (m .set (1, Math .tan (angle), 0, 0, 1, 0, 0, 0, 1));
    },
    toString: function ()
    {
@@ -29943,6 +29951,8 @@ Matrix4_Matrix4 .prototype =
       this [ 4] = 0; this [ 5] = 1; this [ 6] = 0; this [ 7] = 0;
       this [ 8] = 0; this [ 9] = 0; this [10] = 1; this [11] = 0;
       this [12] = 0; this [13] = 0; this [14] = 0; this [15] = 1;
+
+      return this;
    },
    translate: function (translation)
    {
@@ -29959,9 +29969,7 @@ Matrix4_Matrix4 .prototype =
    },
    rotate: function (rotation)
    {
-      this .multLeft (Matrix4_m .setQuaternion (rotation .getQuaternion (q)));
-
-      return this;
+      return this .multLeft (Matrix4_m .setQuaternion (rotation .getQuaternion (q)));
    },
    scale: function (scale)
    {
@@ -35156,7 +35164,7 @@ x_ite_Namespace.set ("x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
  *
  ******************************************************************************/
 
-const VERSION_default_ = "8.5.1";
+const VERSION_default_ = "8.5.2a";
 ;
 
 x_ite_Namespace.set ("x_ite/Browser/VERSION", VERSION_default_);
@@ -35883,7 +35891,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(702);
+/* provided dependency */ var $ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36834,7 +36842,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(702);
+/* provided dependency */ var Notification_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36956,8 +36964,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(794);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(702);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(868);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41911,7 +41919,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 x_ite_Namespace.set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(702);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42083,7 +42091,7 @@ X3DParser .prototype = {
    convertColor: function (value)
    {
       const
-         div    = X3DParser_$("<div></div>") .css ("color", value .replace (/0x/i, "#")) .appendTo (this .getBrowser () .getShadow ()),
+         div    = X3DParser_$("<div></div>") .css ("color", value) .appendTo (this .getBrowser () .getShadow ()),
          rgb    = window .getComputedStyle (div [0]) .color,
          values = rgb .replace (/^rgba?\(|\)$/g, "") .split (/[\s,]+/) .map (s => parseFloat (s));
 
@@ -42121,6 +42129,96 @@ const X3DParser_default_ = X3DParser;
 
 x_ite_Namespace.set ("x_ite/Parser/X3DParser", X3DParser_default_);
 /* harmony default export */ const Parser_X3DParser = (X3DParser_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Parser/Expressions.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+function parse (parser)
+{
+   this .lastIndex = parser .lastIndex;
+
+   parser .result = this .exec (parser .input);
+
+   if (parser .result)
+   {
+      parser .lastIndex = this .lastIndex;
+      return true;
+   }
+
+   return false;
+}
+
+function lookahead (parser)
+{
+   const
+      lastIndex = parser .lastIndex,
+      result    = this .parse (parser);
+
+   parser .lastIndex = lastIndex;
+
+   return result;
+}
+
+function Expressions (Grammar)
+{
+   for (const value of Object .values (Grammar))
+   {
+      value .parse     = parse;
+      value .lookahead = lookahead;
+   }
+
+   return Grammar;
+}
+
+const Expressions_default_ = Expressions;
+;
+
+x_ite_Namespace.set ("x_ite/Parser/Expressions", Expressions_default_);
+/* harmony default export */ const Parser_Expressions = (Expressions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
 /*******************************************************************************
  *
@@ -42176,16 +42274,17 @@ x_ite_Namespace.set ("x_ite/Parser/X3DParser", X3DParser_default_);
 
 
 
+
 /*
  *  Grammar
  */
 
 // VRML lexical elements
-const Grammar =
-{
+const Grammar = Parser_Expressions ({
    // General
    Whitespaces: /([\x20\n,\t\r]+)/gy,
    Comment:     /#(.*?)(?=[\n\r])/gy,
+   Break:       /\r?\n/g,
 
    // Header
    Header:	    /^#(VRML|X3D) V(.*?) (utf8)(?:[ \t]+(.*?))?[ \t]*[\n\r]/gy,
@@ -42240,28 +42339,7 @@ const Grammar =
    SIGN : /([+-]?)/gy,
    CONSTANTS: /\b(NAN|INFINITY|INF|PI|PI2|PI1_4|PI2_4|PI3_4|PI4_4|PI5_4|PI6_4|PI7_4|PI8_4|PI1_2|PI2_2|PI3_2|PI4_2|PI1_3|PI2_3|PI3_3|PI4_3|PI5_3|PI6_3|SQRT1_2|SQRT2)\b/igy,
    HTMLColor: /([a-zA-Z]+|0[xX][\da-fA-F]+|rgba?\(.*?\))/gy,
-
-   // Misc
-   Break: /\r?\n/g,
-};
-
-function parse (parser)
-{
-   this .lastIndex = parser .lastIndex;
-
-   parser .result = this .exec (parser .input);
-
-   if (parser .result)
-   {
-      parser .lastIndex = this .lastIndex;
-      return true;
-   }
-
-   return false;
-}
-
-for (const value of Object .values (Grammar))
-   value .parse = parse;
+});
 
 /*
  *  Parser
@@ -42362,10 +42440,6 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    isValid: function ()
    {
       return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{|$))/);
-   },
-   getInput: function ()
-   {
-      return this .input;
    },
    setInput: function (vrmlSyntax)
    {
@@ -43449,10 +43523,6 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
          lastIndex  = this .lastIndex,
          lineNumber = this .lineNumber;
 
-//			var
-//				input      = this .input,
-//				lineNumber = this .lineNumber;
-
       if (this .Id ())
       {
          var accessType = this .accessTypes [this .result [1]];
@@ -43530,9 +43600,6 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       this .lastIndex  = lastIndex;
       this .lineNumber = lineNumber;
-
-//			this .input      = input;
-//			this .lineNumber = lineNumber;
 
       var field = this .interfaceDeclaration ();
 
@@ -43825,7 +43892,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       if (Grammar .HTMLColor .parse (this))
       {
-         const color = this .convertColor (this .result [1]);
+         const color = this .convertColor (this .result [1] .replace (/0x/i, "#"));
 
          field .r = color [0];
          field .g = color [1];
@@ -43907,7 +43974,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       if (Grammar .HTMLColor .parse (this))
       {
-         const color = this .convertColor (this .result [1]);
+         const color = this .convertColor (this .result [1] .replace (/0x/i, "#"));
 
          field .r = color [0];
          field .g = color [1];
@@ -45068,7 +45135,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(702);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45167,10 +45234,6 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    {
       return (this .input instanceof XMLDocument) || (this .input instanceof HTMLElement) || (this .input === null);
    },
-   getInput: function ()
-   {
-      return this .input;
-   },
    setInput (xmlElement)
    {
       try
@@ -45218,12 +45281,12 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       {
          case "#document":
          {
-            var X3D = XMLParser_$(xmlElement) .children ("X3D");
+            const X3D = XMLParser_$(xmlElement) .children ("X3D");
 
             if (X3D .length)
             {
-               for (var i = 0; i < X3D .length; ++ i)
-                  this .x3dElement (X3D [i]);
+               for (const xmlElement of X3D)
+                  this .x3dElement (xmlElement);
             }
             else
             {
@@ -46318,7 +46381,7 @@ XMLParser .prototype .fieldTypes [Base_X3DConstants.MFMatrix4f] =
 XMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec4d] =
 XMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec4f] = function (field)
 {
-   field .setValue (prepareFloats (this .getInput ()) .map (function (value)
+   field .setValue (prepareFloats (this .input) .map (function (value)
    {
       return parseFloat (value);
    }));
@@ -46326,7 +46389,7 @@ XMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec4f] = function (field)
 
 XMLParser .prototype .fieldTypes [Base_X3DConstants.MFBool] = function (field)
 {
-   field .setValue (prepareBools (this .getInput ()) .map (function (value)
+   field .setValue (prepareBools (this .input) .map (function (value)
    {
       if (value === "true" || value === "TRUE")
          return true;
@@ -46337,7 +46400,7 @@ XMLParser .prototype .fieldTypes [Base_X3DConstants.MFBool] = function (field)
 
 XMLParser .prototype .fieldTypes [Base_X3DConstants.MFInt32] = function (field)
 {
-   field .setValue (prepareInts (this .getInput ()) .map (function (value)
+   field .setValue (prepareInts (this .input) .map (function (value)
    {
       return parseInt (value);
    }));
@@ -46354,7 +46417,7 @@ XMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec3f] = function (field)
 {
    var category = field .getUnit ();
 
-   field .setValue (prepareFloats (this .getInput ()) .map (function (value)
+   field .setValue (prepareFloats (this .input) .map (function (value)
    {
       return this .fromUnit (category, parseFloat (value));
    },
@@ -46363,7 +46426,7 @@ XMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec3f] = function (field)
 
 XMLParser .prototype .fieldTypes [Base_X3DConstants.MFString] = function (field)
 {
-   field .setValue (prepareStrings (this .getInput ()));
+   field .setValue (prepareStrings (this .input));
 };
 
 // HTML Support
@@ -46506,10 +46569,6 @@ JSONParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    isValid: function ()
    {
       return this .input instanceof Object;
-   },
-   getInput: function ()
-   {
-      return this .input;
    },
    setInput: function (json)
    {
@@ -47178,6 +47237,14 @@ function GLTF2Parser (scene)
    Parser_X3DParser.call (this, scene);
    Parser_X3DOptimizer.call (this),
 
+   // Optimizer
+
+   this .removeGroups         = false;
+   this .removeEmptyGroups    = true;
+   this .combineGroupingNodes = true;
+
+   // Globals
+
    this .buffers               = [ ];
    this .bufferViews           = [ ];
    this .accessors             = [ ];
@@ -47188,12 +47255,6 @@ function GLTF2Parser (scene)
    this .viewpoints            = [ ];
    this .nodes                 = [ ];
    this .animations            = 0;
-
-   // Optimizer
-
-   this .removeGroups         = false;
-   this .removeEmptyGroups    = true;
-   this .combineGroupingNodes = true;
 }
 
 GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.prototype),
@@ -47244,10 +47305,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.protot
          return true;
       };
    })(),
-   getInput: function ()
-   {
-      return this .input;
-   },
    setInput: function (json)
    {
       try
@@ -49141,13 +49198,13 @@ x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 
 
 
+
 /*
  *  Grammar
  */
 
 // Lexical elements
-const OBJParser_Grammar =
-{
+const OBJParser_Grammar = Parser_Expressions ({
    // General
    whitespaces: /[\x20\n\t\r]+/gy,
    whitespacesNoLineTerminator: /[\x20\t]+/gy,
@@ -49179,39 +49236,7 @@ const OBJParser_Grammar =
    // Values
    int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
    double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
-};
-
-function OBJParser_parse (parser)
-{
-   this .lastIndex = parser .lastIndex;
-
-   parser .result = this .exec (parser .input);
-
-   if (parser .result)
-   {
-      parser .lastIndex = this .lastIndex;
-      return true;
-   }
-
-   return false;
-}
-
-function lookahead (parser)
-{
-   const
-      lastIndex = parser .lastIndex,
-      result    = this .parse (parser);
-
-   parser .lastIndex = lastIndex;
-
-   return result;
-}
-
-for (const value of Object .values (OBJParser_Grammar))
-{
-   value .parse     = OBJParser_parse;
-   value .lookahead = lookahead;
-}
+});
 
 /*
  * Parser
@@ -49226,6 +49251,16 @@ function OBJParser (scene)
    this .removeGroups         = true;
    this .removeEmptyGroups    = true;
    this .combineGroupingNodes = false;
+
+   // Globals
+
+   this .smoothingGroup  = 0;
+   this .smoothingGroups = new Map ();
+   this .materials       = new Map ();
+   this .textures        = new Map ();
+   this .point2          = new Numbers_Vector2 ();
+   this .point3          = new Numbers_Vector3 ();
+   this .lastIndex       = 0;
 }
 
 OBJParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototype),
@@ -49240,35 +49275,12 @@ OBJParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    {
       return !! this .input .match (/^(?:\s+|#.*?[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
    },
-   getInput: function ()
-   {
-      return this .input;
-   },
    setInput: function (string)
    {
       this .input = string;
    },
    parseIntoScene: function (success, error)
    {
-      const scene = this .getExecutionContext ();
-
-      this .object          = scene .createNode ("Transform");
-      this .group           = scene .createNode ("Group");
-      this .defaultMaterial = scene .createNode ("Material");
-      this .texCoord        = scene .createNode ("TextureCoordinate");
-      this .normal          = scene .createNode ("Normal");
-      this .coord           = scene .createNode ("Coordinate");
-      this .smoothingGroup  = 0;
-      this .smoothingGroups = new Map ();
-      this .materials       = new Map ();
-      this .textures        = new Map ();
-      this .point2          = new Numbers_Vector2 ();
-      this .point3          = new Numbers_Vector3 ();
-      this .lastIndex       = 0;
-
-      this .object .children .push (this .group);
-      scene .getRootNodes () .push (this .object);
-
       this .obj ()
          .then (success)
          .catch (error);
@@ -49285,6 +49297,19 @@ OBJParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       scene .setProfile (browser .getProfile ("Interchange"));
 
       await this .loadComponents ();
+
+      // Init nodes.
+
+      this .object          = scene .createNode ("Transform");
+      this .group           = scene .createNode ("Group");
+      this .defaultMaterial = scene .createNode ("Material");
+      this .texCoord        = scene .createNode ("TextureCoordinate");
+      this .normal          = scene .createNode ("Normal");
+      this .coord           = scene .createNode ("Coordinate");
+
+      this .object .children .push (this .group);
+
+      scene .getRootNodes () .push (this .object);
 
       // Parse scene.
 
@@ -50129,8 +50154,7 @@ const OBJParser_default_ = OBJParser;
 
 x_ite_Namespace.set ("x_ite/Parser/OBJParser", OBJParser_default_);
 /* harmony default export */ const Parser_OBJParser = (OBJParser_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(702);
+;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Box2.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50177,6 +50201,2943 @@ x_ite_Namespace.set ("x_ite/Parser/OBJParser", OBJParser_default_);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
+
+
+
+function Box2 (size, center)
+{
+   this .matrix = new Numbers_Matrix3 ();
+
+   this .set .apply (this, arguments);
+}
+
+Box2 .prototype =
+{
+   constructor: Box2,
+   copy: function ()
+   {
+      const copy = Object .create (Box2 .prototype);
+      copy .matrix = this .matrix .copy ();
+      return copy;
+   },
+   assign: function (box)
+   {
+      this .matrix .assign (box .matrix);
+      return this;
+   },
+   equals: function (box)
+   {
+      return this .matrix .equals (box .matrix);
+   },
+   set: function (size, center)
+   {
+      switch (arguments .length)
+      {
+         case 0:
+         {
+            this .matrix .set (0, 0, 0,
+                               0, 0, 0,
+                               0, 0, 0);
+
+            return this;
+         }
+         case 2:
+         {
+            this .matrix .set (size .x / 2, 0, 0,
+                               0, size .y / 2, 0,
+                               center .x, center .y, 1);
+
+            return this;
+         }
+         case 3:
+         {
+            return this .setExtents (arguments [0], arguments [1]);
+         }
+      }
+   },
+   setExtents: function (min, max)
+   {
+      const
+         m  = this .matrix,
+         sx = (max .x - min .x) / 2,
+         sy = (max .y - min .y) / 2,
+         cx = (max .x + min .x) / 2,
+         cy = (max .y + min .y) / 2;
+
+      this .matrix .set (sx,  0, 0,
+                          0, sy, 0,
+                         cx, cy, 1);
+
+      return this;
+   },
+   isEmpty: function ()
+   {
+      return this .matrix [8] === 0;
+   },
+   add: (function ()
+   {
+      const
+         lhs_min = new Numbers_Vector2 (0, 0),
+         lhs_max = new Numbers_Vector2 (0, 0),
+         rhs_min = new Numbers_Vector2 (0, 0),
+         rhs_max = new Numbers_Vector2 (0, 0);
+
+      return function (box)
+      {
+         if (this .isEmpty ())
+            return this .assign (box);
+
+         if (box .isEmpty ())
+            return this;
+
+         this .getExtents (lhs_min, lhs_max);
+         box  .getExtents (rhs_min, rhs_max);
+
+         return this .set (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true);
+      };
+   })(),
+   multLeft: function (matrix)
+   {
+      this .matrix .multLeft (matrix);
+      return this;
+   },
+   multRight: function (matrix)
+   {
+      this .matrix .multRight (matrix);
+      return this;
+   },
+   getExtents: function (min, max)
+   {
+      this .getAbsoluteExtents (min, max);
+
+      min .add (this .center);
+      max .add (this .center);
+   },
+   getAbsoluteExtents: (function ()
+   {
+      const p1 = new Numbers_Vector2 (0, 0);
+
+      return function (min, max)
+      {
+         const
+            m = this .matrix,
+            x = m .xAxis,
+            y = m .yAxis;
+
+         p1 .assign (x) .add (y);
+
+         const p2 = y .subtract (x);
+
+         min .assign (p1) .min (p2);
+         max .assign (p1) .max (p2);
+
+         p1 .negate ();
+         p2 .negate ();
+
+         min .min (p1, p2);
+         max .max (p1, p2);
+      };
+   })(),
+   containsPoint: (function ()
+   {
+      const
+         min = new Numbers_Vector2 (0, 0),
+         max = new Numbers_Vector2 (0, 0);
+
+      return function (point)
+      {
+         this .getExtents (min, max);
+
+         return min .x <= point .x &&
+                max .x >= point .x &&
+                min .y <= point .y &&
+                max .y >= point .y;
+      };
+   })(),
+   toString: function ()
+   {
+      return this .size + ", " + this .center;
+   },
+};
+
+Object .defineProperty (Box2 .prototype, "size",
+{
+   get: (function ()
+   {
+      const
+         min = new Numbers_Vector2 (0, 0),
+         max = new Numbers_Vector2 (0, 0);
+
+      return function ()
+      {
+         this .getAbsoluteExtents (min, max);
+
+         return max .subtract (min);
+      };
+   })(),
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (Box2 .prototype, "center",
+{
+   get: function ()
+   {
+      return this .matrix .origin;
+   },
+   enumerable: true,
+   configurable: false
+});
+
+const Box2_default_ = Box2;
+;
+
+x_ite_Namespace.set ("standard/Math/Geometry/Box2", Box2_default_);
+/* harmony default export */ const Geometry_Box2 = (Box2_default_);
+;// CONCATENATED MODULE: ./src/standard/Math/Algorithms/Bezier.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+const lerp = Algorithm.lerp;
+
+function Bezier (/*x0, y0, x1, y1, x2, y2, x3, y3*/)
+{
+   this .args = arguments;
+}
+
+Bezier .prototype =
+{
+   getPoints: function (type, steps)
+   {
+      const points = [ ];
+
+      switch (type)
+      {
+         case "quadric":
+         {
+            const
+               x0 = this .args [0],
+               y0 = this .args [1],
+               x1 = this .args [2],
+               y1 = this .args [3],
+               x2 = this .args [4],
+               y2 = this .args [5];
+
+            for (let i = 0, d = steps - 1; i < steps; ++ i)
+            {
+               points .push (quadric (x0, y0, x1, y1, x2, y2, i / d));
+            }
+
+            break;
+         }
+         case "cubic":
+         {
+            const
+               x0 = this .args [0],
+               y0 = this .args [1],
+               x1 = this .args [2],
+               y1 = this .args [3],
+               x2 = this .args [4],
+               y2 = this .args [5],
+               x3 = this .args [6],
+               y3 = this .args [7];
+
+            for (let i = 0, d = steps - 1; i < steps; ++ i)
+            {
+               points .push (cubic (x0, y0, x1, y1, x2, y2, x3, y3, i / d));
+            }
+
+            break;
+         }
+         case "arc":
+         {
+            let
+               ax            = this .args [0],
+               ay            = this .args [1],
+               rx            = this .args [2],
+               ry            = this .args [3],
+               xAxisRotation = this .args [4],
+               largeArcFlag  = this .args [5],
+               sweepFlag     = this .args [6],
+               x             = this .args [7],
+               y             = this .args [8];
+
+            // https://ericeastwood.com/blog/25/curves-and-arcs-quadratic-cubic-elliptical-svg-implementations
+            // See https://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes.
+
+            // If the endpoints are identical, then this is equivalent to omitting the elliptical arc segment entirely.
+            if (ax === x && ay === y)
+            {
+               points .push (new Numbers_Vector2 (x, y));
+               return;
+            }
+
+            // In accordance to: http://www.w3.org/TR/SVG/implnote.html#ArcOutOfRangeParameters
+
+            rx = Math .abs (rx);
+            ry = Math .abs (ry);
+
+            // If rx = 0 or ry = 0 then this arc is treated as a straight line segment joining the endpoints.
+            if (rx === 0 || ry === 0)
+            {
+               points .push (new Numbers_Vector2 (ax, ay), new Numbers_Vector2 (x, y));
+               return;
+            }
+
+            const
+               rx2 = rx * rx,
+               ry2 = ry * ry;
+
+            // In accordance to: http://www.w3.org/TR/SVG/implnote.html#ArcOutOfRangeParameters
+
+            xAxisRotation = Algorithm.interval (xAxisRotation, 0, 2 * Math .PI);
+
+            const
+               sinRotation = Math .sin (xAxisRotation),
+               cosRotation = Math .cos (xAxisRotation);
+
+            // Following "Conversion from endpoint to center parameterization"
+            // http://www.w3.org/TR/SVG/implnote.html#ArcConversionEndpointToCenter
+
+            // Step #1: Compute transformedPoint
+            const d = new Numbers_Vector2 (ax - x, ay - y) .divide (2);
+
+            const transformedPoint = new Numbers_Vector2 ( cosRotation * d .x + sinRotation * d .y,
+                                                  -sinRotation * d .x + cosRotation * d .y);
+
+            const transformedPoint2 = transformedPoint .copy () .multVec (transformedPoint);
+
+            // Ensure radii are large enough
+            const radiiCheck = transformedPoint2 .x / rx2 + transformedPoint2 .y / ry2;
+
+            if (radiiCheck > 1)
+            {
+               rx = Math .sqrt (radiiCheck) * rx;
+               ry = Math .sqrt (radiiCheck) * ry;
+            }
+
+            // Step #2: Compute transformedCenter
+            const cSquareNumerator = rx2 * ry2 - rx2 * transformedPoint2 .y - ry2 * transformedPoint2 .x;
+            const cSquareRootDenom =             rx2 * transformedPoint2 .y + ry2 * transformedPoint2 .x;
+            let   cRadicand        = cSquareNumerator / cSquareRootDenom;
+
+            // Make sure this never drops below zero because of precision
+            cRadicand = Math .max (0, cRadicand);
+
+            const cCoef = (largeArcFlag !== sweepFlag ? 1 : -1) * Math .sqrt (cRadicand);
+
+            const transformedCenter = new Numbers_Vector2 ( cCoef * rx * transformedPoint .y / ry,
+                                                   -cCoef * ry * transformedPoint .x / rx);
+
+            // Step #3: Compute center
+            const center = new Numbers_Vector2 (cosRotation * transformedCenter .x - sinRotation * transformedCenter .y + ((ax + x) / 2),
+                                        sinRotation * transformedCenter .x + cosRotation * transformedCenter .y + ((ay + y) / 2));
+
+            // Step #4: Compute start/sweep angles
+            const startVector = new Numbers_Vector2 ((transformedPoint .x - transformedCenter .x) / rx,
+                                             (transformedPoint .y - transformedCenter .y) / ry);
+
+            const endVector = new Numbers_Vector2 ((-transformedPoint .x - transformedCenter .x) / rx,
+                                           (-transformedPoint .y - transformedCenter .y) / ry);
+
+            const get_angle  = (x) => { return x > 0 ? x : 2 * Math .PI + x; }; // transform angle to range [0, 2pi]
+            const startAngle = get_angle (Math .atan2 (startVector .y, startVector .x));
+            const endAngle   = get_angle (Math .atan2 (endVector   .y, endVector   .x));
+
+            let sweepAngle = endAngle - startAngle;
+
+            if (largeArcFlag)
+            {
+               // sweepAngle must be positive
+               if (sweepAngle < 0)
+                  sweepAngle += 2 * Math .PI;
+            }
+            else
+            {
+               // sweepAngle must be negative
+               if (sweepAngle > 0)
+                  sweepAngle -= 2 * Math .PI;
+            }
+
+            if (sweepFlag && sweepAngle < 0)
+               sweepAngle += 2 *Math .PI;
+
+            else if (!sweepFlag && sweepAngle > 0)
+               sweepAngle -= 2 * Math .PI;
+
+            // Interpolate:
+
+            const bezier_steps   = Math .max (4, Math .abs (sweepAngle) * steps / (2 * Math .PI));
+            const bezier_steps_1 = bezier_steps - 1;
+
+            points .push (new Numbers_Vector2 (ax, ay));
+
+            for (let i = 1; i < bezier_steps_1; ++ i)
+            {
+               const t = i / bezier_steps_1;
+
+               // From http://www.w3.org/TR/SVG/implnote.html#ArcParameterizationAlternatives
+               const angle = startAngle + (sweepAngle * t);
+               const x     = rx * Math .cos (angle);
+               const y     = ry * Math .sin (angle);
+
+               const point = new Numbers_Vector2 (cosRotation * x - sinRotation * y + center .x,
+                                          sinRotation * x + cosRotation * y + center .y);
+
+               points .push (point);
+            }
+
+            points .push (new Numbers_Vector2 (x, y));
+            break;
+         }
+      }
+
+      return points;
+   }
+};
+
+function quadric (x0, y0, x1, y1, x2, y2, t)
+{
+   const
+      ax0 = lerp (x0, x1, t),
+      ay0 = lerp (y0, y1, t),
+      ax1 = lerp (x1, x2, t),
+      ay1 = lerp (y1, y2, t),
+      bx0 = lerp (ax0, ax1, t),
+      by0 = lerp (ay0, ay1, t);
+
+   return new Numbers_Vector2 (bx0, by0);
+}
+
+function cubic (x0, y0, x1, y1, x2, y2, x3, y3, t)
+{
+   const
+      ax0 = lerp (x0, x1, t),
+      ay0 = lerp (y0, y1, t),
+      ax1 = lerp (x1, x2, t),
+      ay1 = lerp (y1, y2, t),
+      ax2 = lerp (x2, x3, t),
+      ay2 = lerp (y2, y3, t),
+      bx0 = lerp (ax0, ax1, t),
+      by0 = lerp (ay0, ay1, t),
+      bx1 = lerp (ax1, ax2, t),
+      by1 = lerp (ay1, ay2, t),
+      cx0 = lerp (bx0, bx1, t),
+      cy0 = lerp (by0, by1, t);
+
+   return new Numbers_Vector2 (cx0, cy0);
+}
+
+const Bezier_default_ = Bezier;
+;
+
+x_ite_Namespace.set ("standard/Math/Algorithms/Bezier", Bezier_default_);
+/* harmony default export */ const Algorithms_Bezier = (Bezier_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
+/* provided dependency */ var SVGParser_$ = __webpack_require__(912);
+/* provided dependency */ var libtess = __webpack_require__(525);
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ *  Grammar
+ */
+
+// Lexical elements
+const SVGParser_Grammar = Parser_Expressions ({
+   // General
+   whitespaces: /[\x20\n\t\r]+/gy,
+   comma: /,/gy,
+   openParenthesis: /\(/gy,
+   closeParenthesis: /\)/gy,
+
+   // Units
+   em: /em/gy,
+   ex: /ex/gy,
+   px: /px/gy,
+   in: /in/gy,
+   cm: /cm/gy,
+   mm: /mm/gy,
+   pt: /pt/gy,
+   pc: /pc/gy,
+   percentSign: /%/gy,
+
+   // Values
+   int32: /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
+   double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
+   matrix: /matrix/gy,
+   translate: /translate/gy,
+   rotate: /rotate/gy,
+   scale: /scale/gy,
+   skewX: /skewX/gy,
+   skewY: /skewY/gy,
+   color: /([a-zA-Z]+|#[\da-fA-F]+|rgba?\(.*?\))/gy,
+   url: /url\("?(.*?)"?\)/gy,
+   path: /([mMlLhHvVqQtTcCsSaAzZ])/gy,
+});
+
+/*
+ *  Constants
+ */
+
+const
+   INCH          = 0.0254,    // One inch in meters.
+   POINT         = INCH / 72, // One point in meters.
+   PIXEL         = INCH / 90, // One pixel in meters.
+   BEZIER_STEPS  = 10,
+   CIRCLE_STEPS  = 64,
+   GRADIENT_SIZE = 256; // In pixels.
+
+/*
+ *  Parser
+ */
+
+function SVGParser (scene)
+{
+   Parser_X3DParser.call (this, scene);
+
+   // Options
+
+   this .solid = false;
+
+   // Globals
+
+   this .tessy   = this .createTesselator ();
+   this .canvas  = document .createElement ("canvas");
+   this .context = this .canvas .getContext ("2d");
+
+   this .canvas .width  = GRADIENT_SIZE;
+   this .canvas .height = GRADIENT_SIZE;
+
+   this .styles = [{
+      display: "inline",
+      fillType: "COLOR",
+      fillColor: Numbers_Color4.Black,
+      fillURL: "",
+      fillOpacity: 1,
+      fillRule: "nonzero",
+      strokeType: "NONE",
+      strokeColor: Numbers_Color4.Black,
+      strokeURL: "",
+      strokeOpacity: 1,
+      strokeWidth: 1,
+      opacity: 1,
+      stopColor: Numbers_Color4.Black,
+      stopOpacity: 1,
+   }];
+}
+
+SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototype),
+{
+   constructor: SVGParser,
+   getEncoding: function ()
+   {
+      return "XML";
+   },
+   isValid: function ()
+   {
+      if (!(this .input instanceof XMLDocument))
+         return false;
+
+      if (SVGParser_$(this .input) .children ("svg") .length)
+         return true;
+
+      if (this .input .nodeName === "svg")
+         return true;
+
+      return false;
+   },
+   setInput (xmlElement)
+   {
+      try
+      {
+         if (typeof xmlElement === "string")
+            xmlElement = SVGParser_$.parseXML (xmlElement);
+
+         this .input = xmlElement;
+      }
+      catch (error)
+      {
+         this .input = undefined;
+      }
+   },
+   parseIntoScene: function (success, error)
+   {
+      this .xmlElement (this .input)
+         .then (success)
+         .catch (error);
+   },
+   xmlElement: async function (xmlElement)
+   {
+      switch (xmlElement .nodeName)
+      {
+         case "#document":
+         {
+            const svg = SVGParser_$(xmlElement) .children ("svg");
+
+            for (const xmlElement of svg)
+               await this .svgElement (xmlElement);
+
+            break;
+         }
+         case "svg":
+         {
+            await this .svgElement (xmlElement);
+            break;
+         }
+      }
+
+      return this .getScene ();
+   },
+   svgElement: async function (xmlElement)
+   {
+      const
+         browser = this .getBrowser (),
+         scene   = this .getScene ();
+
+      scene .setEncoding ("SVG");
+      scene .setProfile (browser .getProfile ("Interchange"));
+      scene .addComponent (browser .getComponent ("Geometry2D", 2));
+
+      await this .loadComponents ();
+
+      // Init nodes.
+
+      this .document              = this .input;
+      this .rootTransform         = scene .createNode ("Transform");
+      this .groupNodes            = [this .rootTransform];
+      this .texturePropertiesNode = this .createTextureProperties ();
+
+      // Create background.
+
+      const background = scene .createNode ("Background");
+
+      background .skyColor = [1, 1, 1];
+
+      scene .getRootNodes () .push (background);
+
+      // Create navigation info.
+
+      const navigationInfo = scene .createNode ("NavigationInfo");
+
+      navigationInfo .type = ["PLANE_create3000.github.io", "PLANE", "EXAMINE", "ANY"];
+
+      scene .getRootNodes () .push (navigationInfo);
+
+      // Get attributes of svg element.
+
+      const
+         viewBox = this .viewBoxAttribute (xmlElement .getAttribute ("viewBox"), new Numbers_Vector4 (0, 0, 100, 100)),
+         width   = this .lengthAttribute (xmlElement .getAttribute ("width", viewBox [2])),
+         height  = this .lengthAttribute (xmlElement .getAttribute ("height", viewBox [3]));
+
+      // Create viewpoint.
+
+      const
+         viewpoint = scene .createNode ("OrthoViewpoint",),
+         x         =  (viewBox .x + width  / 2) * PIXEL,
+         y         = -(viewBox .y + height / 2) * PIXEL;
+
+      viewpoint .position         = new Numbers_Vector3 (x, y, 10);
+      viewpoint .centerOfRotation = new Numbers_Vector3 (x, y, 0);
+
+      viewpoint .fieldOfView = [
+         -width  / 2 * PIXEL,
+         -height / 2 * PIXEL,
+          width  / 2 * PIXEL,
+          height / 2 * PIXEL,
+      ];
+
+      scene .getRootNodes () .push (viewpoint);
+
+      // Create view matrix.
+
+      const
+         scale       = new Numbers_Vector3 (width * PIXEL / viewBox [2], -height * PIXEL / viewBox [3], 1),
+         translation = new Numbers_Vector3 (-viewBox .x, viewBox .y, 0) .multVec (scale);
+
+      this .rootTransform .translation = translation;
+      this .rootTransform .scale       = scale;
+
+      // Parse elements.
+
+      this .elements (xmlElement);
+
+      // Add root Transform node.
+
+      scene .addNamedNode (scene .getUniqueName ("ViewBox"), this .rootTransform);
+      scene .getRootNodes () .push (this .rootTransform);
+   },
+   elements: function (xmlElement)
+   {
+      for (const childNode of xmlElement .childNodes)
+		   this .element (childNode);
+   },
+   element: function (xmlElement)
+   {
+      if (this .used (xmlElement))
+			return;
+
+      switch (xmlElement .nodeName)
+      {
+         case "use":
+            return this .useElement (xmlElement);
+         case "g":
+            return this .gElement (xmlElement);
+         case "switch":
+            return this .switchElement (xmlElement);
+         case "a":
+            return this .aElement (xmlElement);
+         case "rect":
+            return this .rectElement (xmlElement);
+         case "circle":
+            return this .circleElement (xmlElement);
+         case "ellipse":
+            return this .ellipseElement (xmlElement);
+         case "text":
+            return this .textElement (xmlElement);
+         case "image":
+            return this .imageElement (xmlElement);
+         case "polyline":
+            return this .polylineElement (xmlElement);
+         case "polygon":
+            return this .polygonElement (xmlElement);
+         case "path":
+            return this .pathElement (xmlElement);
+      }
+   },
+   used: function (xmlElement)
+   {
+      try
+      {
+         const
+            scene = this .getExecutionContext (),
+            id    = xmlElement .getAttribute ("id"),
+            name  = this .sanitizeName (id),
+            node  = scene .getNamedNode (name);
+
+         this .groupNodes .at (-1) .children .push (node);
+
+         return true;
+      }
+      catch (error)
+      {
+         return false;
+      }
+   },
+   useElement: function (xmlElement)
+   {
+      // Get href.
+
+      const usedElement = this .hrefAttribute (xmlElement .getAttribute ("xlink:href"));
+
+      if (!usedElement)
+         return;
+
+      // Determine style.
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Create Transform node.
+
+      const
+         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0),
+         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0),
+         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0),
+         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0);
+
+      const transformNode = this .createTransform (xmlElement, new Numbers_Vector2 (x, y));
+
+      this .groupNodes .push (transformNode);
+
+      this .element (usedElement);
+
+      this .styles     .pop ();
+      this .groupNodes .pop ();
+
+      // Add node.
+
+      if (transformNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
+   },
+   gElement: function (xmlElement)
+   {
+      // Determine style.
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Create Transform node.
+
+      const transformNode = this .createTransform (xmlElement);
+
+      // Get child elements.
+
+      this .groupNodes .push (transformNode);
+
+      this .elements (xmlElement);
+
+      this .styles     .pop ();
+      this .groupNodes .pop ();
+
+      // Add node.
+
+      if (transformNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
+   },
+   switchElement: function (xmlElement)
+   {
+      // Determine style.
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Create Transform node.
+
+      const
+         scene         = this .getExecutionContext (),
+         transformNode = this .createTransform (xmlElement),
+         switchNode    = scene .createNode ("Switch");
+
+      transformNode .children .push (switchNode);
+      switchNode .whichChoice = 0;
+
+      // Get child elements.
+
+      this .groupNodes .push (switchNode);
+
+      this .elements (xmlElement);
+
+      this .styles     .pop ();
+      this .groupNodes .pop ();
+
+      // Add node.
+
+      if (switchNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
+   },
+   aElement: function (xmlElement)
+   {
+
+   },
+   rectElement: function (xmlElement)
+   {
+      // Determine style.
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Create Transform node.
+
+      const
+         x      = this .lengthAttribute (xmlElement .getAttribute ("x"), 0),
+         y      = this .lengthAttribute (xmlElement .getAttribute ("y"), 0),
+         width  = this .lengthAttribute (xmlElement .getAttribute ("width"), 0),
+         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0);
+
+      const
+         scene         = this .getExecutionContext (),
+         size          = new Numbers_Vector2 (width, height),
+         center        = new Numbers_Vector2 (x + width / 2, y + height / 2),
+         bbox          = new Geometry_Box2 (size, center),
+         transformNode = this .createTransform (xmlElement, center);
+
+      this .groupNodes .push (transformNode);
+
+      // Create nodes.
+
+      if (this .style .fillType !== "NONE")
+      {
+         const
+            shapeNode     = scene .createNode ("Shape"),
+            rectangleNode = scene .createNode ("Rectangle2D");
+
+         shapeNode .appearance = this .createFillAppearance (bbox);
+         shapeNode .geometry   = rectangleNode;
+         rectangleNode .solid  = this .solid;
+         rectangleNode .size   = size;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      if (this .style .strokeType !== "NONE")
+      {
+         const
+            shapeNode     = scene .createNode ("Shape"),
+            polylineNode  = scene .createNode ("Polyline2D"),
+            width1_2      = width / 2,
+            height1_2     = height / 2;
+
+         shapeNode .appearance = this .createStrokeAppearance ();
+         shapeNode .geometry   = polylineNode;
+
+         polylineNode .lineSegments = [ width1_2,  height1_2,
+                                       -width1_2,  height1_2,
+                                       -width1_2, -height1_2,
+                                        width1_2, -height1_2,
+                                        width1_2,  height1_2];
+
+         transformNode .children .push (shapeNode);
+      }
+
+      this .groupNodes .pop ();
+      this .styles     .pop ();
+
+      if (transformNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
+   },
+   circleElement: function (xmlElement)
+   {
+      // Determine style.
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Create Transform node.
+
+      const
+         cx = this .lengthAttribute (xmlElement .getAttribute ("cx"), 0),
+         cy = this .lengthAttribute (xmlElement .getAttribute ("cy"), 0),
+         r  = this .lengthAttribute (xmlElement .getAttribute ("r"),  0);
+
+      const
+         scene         = this .getExecutionContext (),
+         bbox          = new Geometry_Box2 (new Numbers_Vector2 (r * 2, r * 2), new Numbers_Vector2 (cx, cy)),
+         transformNode = this .createTransform (xmlElement, new Numbers_Vector2 (cx, cy));
+
+      this .groupNodes .push (transformNode);
+
+      // Create nodes.
+
+      if (this .style .fillType !== "NONE")
+      {
+         const
+            shapeNode = scene .createNode ("Shape"),
+            diskNode  = scene .createNode ("Disk2D");
+
+         shapeNode .appearance = this .createFillAppearance (bbox);
+         shapeNode .geometry   = diskNode;
+         diskNode .solid       = this .solid;
+         diskNode .outerRadius = r;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      if (this .style .strokeType !== "NONE")
+      {
+         const
+            shapeNode  = scene .createNode ("Shape"),
+            circleNode = scene .createNode ("Circle2D");
+
+         shapeNode .appearance = this .createStrokeAppearance ();
+         shapeNode .geometry   = circleNode;
+         circleNode .radius    = r;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      this .groupNodes .pop ();
+      this .styles     .pop ();
+
+      if (transformNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
+   },
+   ellipseElement: function (xmlElement)
+   {
+      // Determine style.
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Create Transform node.
+
+      const
+         cx = this .lengthAttribute (xmlElement .getAttribute ("cx"), 0),
+         cy = this .lengthAttribute (xmlElement .getAttribute ("cy"), 0),
+         rx = this .lengthAttribute (xmlElement .getAttribute ("rx"), 0),
+         ry = this .lengthAttribute (xmlElement .getAttribute ("ry"), 0);
+
+      const
+         scene         = this .getExecutionContext (),
+         rMin          = Math .min (rx, ry),
+         bbox          = new Geometry_Box2 (new Numbers_Vector2 (rx * 2, ry * 2), new Numbers_Vector2 (cx, cy)),
+         transformNode = this .createTransform (xmlElement, new Numbers_Vector2 (cx, cy), new Numbers_Vector2 (rx / rMin, ry / rMin));
+
+      this .groupNodes .push (transformNode);
+
+      // Create nodes.
+
+      if (this .style .fillType !== "NONE")
+      {
+         const
+            shapeNode = scene .createNode ("Shape"),
+            diskNode  = scene .createNode ("Disk2D");
+
+         shapeNode .appearance = this .createFillAppearance (bbox);
+         shapeNode .geometry   = diskNode;
+         diskNode .solid       = this .solid;
+         diskNode .outerRadius = rMin;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      if (this .style .strokeType !== "NONE")
+      {
+         const
+            shapeNode  = scene .createNode ("Shape"),
+            circleNode = scene .createNode ("Circle2D");
+
+         shapeNode .appearance = this .createStrokeAppearance ();
+         shapeNode .geometry   = circleNode;
+         circleNode .radius    = rMin;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      this .groupNodes .pop ();
+      this .styles     .pop ();
+
+      if (transformNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
+   },
+   textElement: function (xmlElement)
+   {
+
+   },
+   imageElement: function (xmlElement)
+   {
+      // Create Transform node.
+
+      const
+         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0),
+         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0),
+         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0),
+         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0),
+         href   = xmlElement .getAttribute ("xlink:href");
+
+      const
+         scene         = this .getExecutionContext (),
+         transformNode = this .createTransform (xmlElement, new Numbers_Vector2 (x + width / 2, y + height / 2), new Numbers_Vector2 (1, -1));
+
+      this .groupNodes .push (transformNode);
+
+      // Create nodes.
+
+      const
+         shapeNode      = scene .createNode ("Shape"),
+         appearanceNode = scene .createNode ("Appearance"),
+         textureNode    = scene .createNode ("ImageTexture"),
+         rectangleNode  = scene .createNode ("Rectangle2D");
+
+      shapeNode .appearance          = appearanceNode;
+      shapeNode .geometry            = rectangleNode;
+      appearanceNode .texture        = textureNode;
+      textureNode .url               = [href];
+      textureNode .textureProperties = this .texturePropertiesNode;
+      rectangleNode .solid           = this .solid;
+      rectangleNode .size            = new Numbers_Vector2 (width, height);
+
+      transformNode .children .push (shapeNode);
+
+      this .groupNodes .pop ();
+      this .groupNodes .at (-1) .children .push (transformNode);
+   },
+   polylineElement: function (xmlElement, closed = false)
+   {
+      const points = Object .assign ([ ], { index: 0 });
+
+      if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
+         return;
+
+      // Determine style.
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Create Transform node.
+
+      const
+         scene         = this .getExecutionContext (),
+         transformNode = this .createTransform (xmlElement),
+         bbox          = new Geometry_Box2 (Numbers_Vector2.min (... points), Numbers_Vector2.max (... points), true);
+
+      this .groupNodes .push (transformNode);
+
+      // Create nodes.
+
+      const coordinateNode = scene .createNode ("Coordinate");
+
+      for (const point of points)
+         coordinateNode .point .push (new Numbers_Vector3 (point .x, point .y, 0));
+
+      if (this .style .fillType !== "NONE")
+      {
+         const
+            shapeNode    = scene .createNode ("Shape"),
+            geometryNode = scene .createNode ("IndexedTriangleSet");
+
+         shapeNode .appearance  = this .createFillAppearance (bbox);
+         shapeNode .geometry    = geometryNode;
+         geometryNode .solid    = this .solid;
+         geometryNode .index    = this .triangulatePolygon ([points], coordinateNode);
+         geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
+         geometryNode .coord    = coordinateNode;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      if (this .style .strokeType !== "NONE")
+      {
+         const
+            shapeNode    = scene .createNode ("Shape"),
+            geometryNode = scene .createNode ("IndexedLineSet");
+
+         shapeNode .appearance    = this .createStrokeAppearance ();
+         shapeNode .geometry      = geometryNode;
+         geometryNode .coordIndex = [... points .keys (), ... (closed ? [points [0]] : [ ]), -1];
+         geometryNode .coord      = coordinateNode;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      this .groupNodes .pop ();
+      this .styles     .pop ();
+
+      if (transformNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
+   },
+   polygonElement: function (xmlElement)
+   {
+      this .polylineElement (xmlElement, true);
+   },
+   pathElement: function (xmlElement)
+   {
+      // Get path points.
+
+      const contours = [ ];
+
+      if (!this .dAttribute (xmlElement .getAttribute ("d"), contours))
+         return;
+
+      // Determine style.
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      // Create Transform node.
+
+      const
+         scene         = this .getExecutionContext (),
+         transformNode = this .createTransform (xmlElement),
+         bbox          = new Geometry_Box2 ();
+
+      for (const points of contours)
+         bbox .add (new Geometry_Box2 (Numbers_Vector2.min (... points), Numbers_Vector2.max (... points), true));
+
+      this .groupNodes .push (transformNode);
+
+      // Create nodes.
+
+      const coordinateNode = scene .createNode ("Coordinate");
+
+      for (const points of contours)
+      {
+         for (const point of points)
+            coordinateNode .point .push (new Numbers_Vector3 (point .x, point .y, 0));
+      }
+
+      if (this .style .fillType !== "NONE")
+      {
+         const
+            shapeNode    = scene .createNode ("Shape"),
+            geometryNode = scene .createNode ("IndexedTriangleSet");
+
+         shapeNode .appearance  = this .createFillAppearance (bbox);
+         shapeNode .geometry    = geometryNode;
+         geometryNode .solid    = this .solid;
+         geometryNode .index    = this .triangulatePolygon (contours, coordinateNode);
+         geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
+         geometryNode .coord    = coordinateNode;
+
+         transformNode .children .push (shapeNode);
+      }
+
+      if (this .style .strokeType !== "NONE")
+      {
+         const
+            shapeNode    = scene .createNode ("Shape"),
+            geometryNode = scene .createNode ("IndexedLineSet");
+
+         shapeNode .appearance = this .createStrokeAppearance ();
+         shapeNode .geometry   = geometryNode;
+         geometryNode .coord   = coordinateNode;
+
+         for (const points of contours)
+         {
+            for (const i of points .keys ())
+               geometryNode .coordIndex .push (points .index + i);
+
+            if (points .closed)
+               geometryNode .coordIndex .push (points .index);
+
+            geometryNode .coordIndex .push (-1);
+         }
+
+         transformNode .children .push (shapeNode);
+      }
+
+      this .groupNodes .pop ();
+      this .styles     .pop ();
+
+      if (transformNode .children .length)
+         this .groupNodes .at (-1) .children .push (transformNode);
+   },
+   linearGradientElementURL: function (xmlElement, bbox)
+   {
+      const
+         g        = this .linearGradientElement (xmlElement, { stops: [ ] }),
+         gradient = this .context .createLinearGradient (g .x1, g .y1, g .x2, g .y2);
+
+      for (const [o, c, a] of g .stops)
+         gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
+
+      return this .drawGradient (gradient, g .transform, bbox);
+   },
+   linearGradientElement: function (xmlElement, gradient)
+   {
+      if (xmlElement .nodeName !== "linearGradient")
+         return;
+
+      // Attribute xlink:href
+
+      const refElement = this .hrefAttribute (xmlElement .getAttribute ("xlink:href"));
+
+      if (refElement)
+         this .gradientElement (refElement, gradient);
+
+      // Attributes
+
+      gradient .x1        = this .lengthAttribute (xmlElement .getAttribute ("x1"), gradient .x1 || 0);
+      gradient .y1        = this .lengthAttribute (xmlElement .getAttribute ("y1"), gradient .y1 || 0);
+      gradient .x2        = this .lengthAttribute (xmlElement .getAttribute ("x2"), gradient .x2 || 0);
+      gradient .y2        = this .lengthAttribute (xmlElement .getAttribute ("y2"), gradient .y2 || 0);
+      gradient .units     = xmlElement .getAttribute ("gradientUnits");
+      gradient .transform = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
+
+      // Stops
+
+      for (const childNode of xmlElement .childNodes)
+         this .gradientChild (childNode, gradient);
+
+      return gradient;
+   },
+   radialGradientElementURL: function (xmlElement, bbox)
+   {
+      const
+         g        = this .radialGradientElement (xmlElement, { stops: [ ] }),
+         gradient = this .context .createRadialGradient (g .fx, g .fy, 0, g .cx, g .cy, g .r);
+
+      for (const [o, c, a] of g .stops)
+         gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
+
+      return this .drawGradient (gradient, g .transform, bbox);
+   },
+   radialGradientElement: function (xmlElement, gradient)
+   {
+      // Attribute xlink:href
+
+      const refElement = this .hrefAttribute (xmlElement .getAttribute ("xlink:href"));
+
+      if (refElement)
+         this .gradientElement (refElement, gradient);
+
+      // Attributes
+
+      gradient .cx           = this .lengthAttribute (xmlElement .getAttribute ("cx"), gradient .cx || 0),
+      gradient .cy           = this .lengthAttribute (xmlElement .getAttribute ("cy"), gradient .cy || 0),
+      gradient .x2           = this .lengthAttribute (xmlElement .getAttribute ("x2"), gradient .x2 || 0),
+      gradient .y2           = this .lengthAttribute (xmlElement .getAttribute ("y2"), gradient .y2 || 0),
+      gradient .r            = this .lengthAttribute (xmlElement .getAttribute ("r"),  gradient .cx),
+      gradient .fx           = this .lengthAttribute (xmlElement .getAttribute ("fx"), gradient .cx),
+      gradient .fy           = this .lengthAttribute (xmlElement .getAttribute ("fy"), gradient .cy),
+      gradient .units        = xmlElement .getAttribute ("gradientUnits");
+      gradient .spreadMethod = xmlElement .getAttribute ("spreadMethod");
+      gradient .transform    = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
+
+      // Stops
+
+      for (const childNode of xmlElement .childNodes)
+         this .gradientChild (childNode, gradient);
+
+      return gradient;
+   },
+   gradientElement: function (xmlElement, gradient)
+   {
+      if (!xmlElement)
+         return;
+
+      switch (xmlElement .nodeName)
+      {
+         case "linearGradient":
+            return this .linearGradientElement (xmlElement, gradient);
+         case "radialGradient":
+            return this .radialGradientElement (xmlElement, gradient);
+      }
+   },
+   gradientChild: function (xmlElement, gradient)
+   {
+      if (xmlElement .nodeName === "stop")
+		   return this .stopElement (xmlElement, gradient);
+   },
+   stopElement: function (xmlElement, gradient)
+   {
+      if (!this .styleAttributes (xmlElement))
+         return;
+
+      const offset = this .percentAttribute (xmlElement .getAttribute ("offset"), 0);
+
+      const { stopColor, stopOpacity } = this .style;
+
+      gradient .stops .push ([offset, stopColor, stopOpacity]);
+
+      this .styles .pop ();
+   },
+   drawGradient: function (gradient, transform, bbox)
+   {
+      const m = new Numbers_Matrix3 ();
+
+      m .scale (new Numbers_Vector2 (GRADIENT_SIZE / 2, GRADIENT_SIZE / 2));
+      m .translate (Numbers_Vector2.One);
+      m .scale (new Numbers_Vector2 (1, -1));
+      m .multLeft (Numbers_Matrix3.inverse (bbox .matrix));
+      m .multLeft (transform);
+
+      // Paint.
+
+      const cx = this .context;
+
+      cx .fillStyle = gradient;
+      cx .save ();
+      cx .clearRect (0, 0, GRADIENT_SIZE, GRADIENT_SIZE);
+      cx .rect (0, 0, GRADIENT_SIZE, GRADIENT_SIZE);
+      cx .transform (m [0], m [1], m [3], m [4], m [6], m [7]);
+      cx .fill ();
+      cx .restore ();
+
+      // Use PNG because image can have alpha channel.
+      return this .canvas .toDataURL ("image/png");
+   },
+   idAttribute: function (attribute, node)
+   {
+      if (attribute === null)
+         return;
+
+      const
+         scene = this .getExecutionContext (),
+         name  = this .sanitizeName (attribute);
+
+      if (name)
+		   scene.addNamedNode (scene .getUniqueName (name), node);
+   },
+   viewBoxAttribute: function (attribute, defaultValue)
+   {
+      if (attribute === null)
+         return defaultValue;
+
+      this .parseValue (attribute);
+
+      if (this .double ())
+      {
+         const x = this .value;
+
+         if (this .double ())
+         {
+            const y = this .value;
+
+            if (this .double ())
+            {
+               const width = this .value;
+
+               if (this .double ())
+               {
+                  const height = this .value;
+
+                  return new Numbers_Vector4 (x, y, width, height);
+               }
+            }
+         }
+      }
+
+      return defaultValue;
+   },
+   hrefAttribute: function (attribute)
+   {
+      const
+         scene = this .getExecutionContext (),
+         hash  = new URL (attribute, scene .getWorldURL ()) .hash .slice (1);
+
+      return this .document .getElementById (hash);
+   },
+   lengthAttribute: function (attribute, defaultValue)
+   {
+      // Returns length in pixel.
+
+      if (attribute === null)
+         return defaultValue;
+
+      this .parseValue (attribute);
+
+      if (this .double ())
+      {
+         // Parse unit
+
+         if (SVGParser_Grammar .mm .parse (this))
+            this .value /= 1000 * PIXEL;
+
+         else if (SVGParser_Grammar .cm .parse (this))
+            this .value /= 100 * PIXEL;
+
+         else if (SVGParser_Grammar .in .parse (this))
+            this .value *= INCH / PIXEL;
+
+         return this .value;
+      }
+
+      return defaultValue;
+   },
+   percentAttribute: function (attribute, defaultValue)
+   {
+      this .parseValue (attribute);
+
+      if (this .double ())
+      {
+         let value = this .value;
+
+         // Parse unit
+
+         if (SVGParser_Grammar .percentSign .parse (this))
+            value /= 100;
+
+         return Algorithm.clamp (value, 0, 1);
+      }
+
+      return defaultValue;
+   },
+   pointsAttribute: function (attribute, points)
+   {
+      if (attribute === null)
+         return false;
+
+      this .parseValue (attribute);
+
+      while (true)
+      {
+         if (this .double ())
+         {
+            const x = this .value;
+
+            if (this .comma ())
+            {
+               if (this .double ())
+               {
+                  const y = this .value;
+
+                  points .push (new Numbers_Vector2 (x, y));
+
+                  if (this .comma ())
+                     continue;
+               }
+            }
+         }
+
+         break;
+      }
+
+      return !! points .length;
+   },
+   dAttribute: function (attribute, contours)
+   {
+      if (attribute === null)
+         return false;
+
+      this .parseValue (attribute);
+
+      let
+         points   = [ ],
+         index    = 0,
+         previous = "",
+         command  = "",
+         relative = false,
+         ax       = 0,
+         ay       = 0,
+         px       = 0,
+         py       = 0;
+
+      while (true)
+      {
+         this .whitespaces ();
+
+         if (!SVGParser_Grammar .path .parse (this))
+            break;
+
+         previous = command;
+         command  = this .result [1];
+         relative = command === command .toLowerCase ();
+
+         switch (command)
+         {
+            case "m":
+            case "M":
+            {
+               // moveto
+
+               points = this .removeConsecutiveIdenticalPoints (points);
+
+               if (points .length > 2)
+               {
+                  contours .push (Object .assign (points, { index: index, closed: false }));
+
+                  index += points .length;
+               }
+
+               points = [ ];
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x = this .value;
+
+                     this .comma ();
+
+                     if (this .double ())
+                     {
+                        let y = this .value;
+
+                        if (relative)
+                        {
+                           x += ax;
+                           y += ay;
+                        }
+
+                        points .push (new Numbers_Vector2 (x, y));
+
+                        ax = x;
+                        ay = y;
+
+                        this .comma ();
+                        continue;
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "l":
+            case "L":
+            {
+               // lineto
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x = this .value;
+
+                     this .comma ();
+
+                     if (this .double ())
+                     {
+                        let y = this .value;
+
+                        if (relative)
+                        {
+                           x += ax;
+                           y += ay;
+                        }
+
+                        points .push (new Numbers_Vector2 (x, y));
+
+                        ax = x;
+                        ay = y;
+
+                        this .comma ();
+                        continue;
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "h":
+            case "H":
+            {
+               // horizontal lineto
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x = this .value;
+
+                     if (relative)
+                        x += ax;
+
+                     points .push (new Numbers_Vector2 (x, ay));
+
+                     ax = x;
+
+                     this .comma ();
+                     continue;
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "v":
+            case "V":
+            {
+               // vertical lineto
+
+               while (this)
+               {
+                  if (this .double ())
+                  {
+                     let y = this .value;
+
+                     if (relative)
+                        y += ay;
+
+                     points .push (new Numbers_Vector2 (ax, y));
+
+                     ay = y;
+
+                     this .comma ();
+                     continue;
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "q":
+            case "Q":
+            {
+               // quadratic Bézier curveto
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x1 = this .value;
+
+                     this .comma ();
+
+                     if (this .double ())
+                     {
+                        let y1 = this .value;
+
+                        this .comma ();
+
+                        if (this .double ())
+                        {
+                           let x = this .value;
+
+                           this .comma ();
+
+                           if (this .double ())
+                           {
+                              let y = this .value;
+
+                              if (relative)
+                              {
+                                 x1 += ax;
+                                 y1 += ay;
+                                 x  += ax;
+                                 y  += ay;
+                              }
+
+                              const curve = new Algorithms_Bezier (ax, ay, x1, y1, x, y);
+
+                              points .push (... curve .getPoints ("quadric", BEZIER_STEPS));
+
+                              ax = x;
+                              ay = y;
+                              px = x1;
+                              py = y1;
+
+                              this .comma ();
+                              continue;
+                           }
+                        }
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "t":
+            case "T":
+            {
+               // Shorthand/smooth quadratic Bézier curveto
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x = this .value;
+
+                     this .comma ();
+
+                     if (this .double ())
+                     {
+                        let y = this .value;
+
+                        if (relative)
+                        {
+                           x += ax;
+                           y += ay;
+                        }
+
+                        switch (previous)
+                        {
+                           case 'Q':
+                           case 'q':
+                           case 'T':
+                           case 't':
+                           {
+                              x1 = ax + (ax - px);
+                              y1 = ay + (ay - py);
+                              break;
+                           }
+                           default:
+                           {
+                              x1 = ax;
+                              y1 = ay;
+                              break;
+                           }
+                        }
+
+                        const curve = new Algorithms_Bezier (ax, ay, x1, y1, x, y);
+
+                        points .push (... curve .getPoints ("quadric", BEZIER_STEPS));
+
+                        ax = x;
+                        ay = y;
+
+                        this .comma ();
+                        continue;
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "c":
+            case "C":
+            {
+               // curveto, cubic Bézier curve
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x1 = this .value;
+
+                     this .comma ();
+
+                     if (this .double ())
+                     {
+                        let y1 = this .value;
+
+                        this .comma ();
+
+                        if (this .double ())
+                        {
+                           let x2 = this .value;
+
+                           this .comma ();
+
+                           if (this .double ())
+                           {
+                              let y2 = this .value;
+
+                              this .comma ();
+
+                              if (this .double ())
+                              {
+                                 let x = this .value;
+
+                                 this .comma ();
+
+                                 if (this .double ())
+                                 {
+                                    let y = this .value;
+
+                                    if (relative)
+                                    {
+                                       x1 += ax;
+                                       y1 += ay;
+                                       x2 += ax;
+                                       y2 += ay;
+                                       x  += ax;
+                                       y  += ay;
+                                    }
+
+                                    const curve = new Algorithms_Bezier (ax, ay, x1, y1, x2, y2, x, y);
+
+                                    points .push (... curve .getPoints ("cubic", BEZIER_STEPS));
+
+                                    ax = x;
+                                    ay = y;
+                                    px = x2;
+                                    py = y2;
+
+                                    this .comma ();
+                                    continue;
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "s":
+            case "S":
+            {
+               // shorthand/smooth curveto, cubic Bézier curve
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let x2 = this .value;
+
+                     this .comma ();
+
+                     if (this .double ())
+                     {
+                        let y2 = this .value;
+
+                        this .comma ();
+
+                        if (this .double ())
+                        {
+                           let x = this .value;
+
+                           this .comma ();
+
+                           if (this .double ())
+                           {
+                              let y = this .value;
+
+                              if (relative)
+                              {
+                                 x2 += ax;
+                                 y2 += ay;
+                                 x  += ax;
+                                 y  += ay;
+                              }
+
+                              switch (previous)
+                              {
+                                 case 'C':
+                                 case 'c':
+                                 case 'S':
+                                 case 's':
+                                 {
+                                    x1 = ax + (ax - px);
+                                    y1 = ay + (ay - py);
+                                    break;
+                                 }
+                                 default:
+                                 {
+                                    x1 = ax;
+                                    y1 = ay;
+                                    break;
+                                 }
+                              }
+
+                              const curve = new Algorithms_Bezier (ax, ay, x1, y1, x2, y2, x, y);
+
+                              points .push (... curve .getPoints ("cubic", BEZIER_STEPS));
+
+                              ax = x;
+                              ay = y;
+                              px = x2;
+                              py = y2;
+
+                              this .comma ();
+                              continue;
+                           }
+                        }
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "a":
+            case "A":
+            {
+               // elliptical arc
+
+               while (true)
+               {
+                  if (this .double ())
+                  {
+                     let rx = this .value;
+
+                     this .comma ();
+
+                     if (this .double ())
+                     {
+                        let ry = this .value;
+
+                        this .comma ();
+
+                        if (this .double ())
+                        {
+                           let xAxisRotation = this .value;
+
+                           this .comma ();
+
+                           if (this .int32 ())
+                           {
+                              let largeArcFlag = this .value;
+
+                              this .comma ();
+
+                              if (this .int32 ())
+                              {
+                                 let sweepFlag = this .value;
+
+                                 this .comma ();
+
+                                 if (this .double ())
+                                 {
+                                    let x = this .value;
+
+                                    this .comma ();
+
+                                    if (this .double ())
+                                    {
+                                       let y = this .value;
+
+                                       if (relative)
+                                       {
+                                          x += ax;
+                                          y += ay;
+                                       }
+
+                                       const curve = new Algorithms_Bezier (ax, ay, rx, ry, Algorithm.radians (xAxisRotation), largeArcFlag, sweepFlag, x, y);
+
+                                       points .push (... curve .getPoints ("arc", CIRCLE_STEPS));
+
+                                       ax = x;
+                                       ay = y;
+
+                                       this .comma ();
+                                       continue;
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+
+                  break;
+               }
+
+               continue;
+            }
+            case "z":
+            case "Z":
+            {
+               // closepath
+
+               points = this .removeConsecutiveIdenticalPoints (points);
+
+               if (points .length > 2)
+               {
+                  ax = points [0] .x;
+                  ay = points [0] .y;
+
+                  contours .push (Object .assign (points, { index: index, closed: true }));
+
+                  index += points .length;
+               }
+
+               points = [ ];
+
+               this .comma ();
+               continue;
+            }
+         }
+
+         break;
+      }
+
+      points = this .removeConsecutiveIdenticalPoints (points);
+
+      if (points .length > 2)
+		   contours .push (Object .assign (points, { index: index, closed: false }));
+
+      return !! contours .length;
+   },
+   removeConsecutiveIdenticalPoints: function (points)
+   {
+      return points .filter ((p, i, a) => !p .equals (a [(i + 1) % a .length]));
+   },
+   transformAttribute: function (attribute)
+   {
+      const matrix = new Numbers_Matrix3 ();
+
+      if (attribute === null)
+         return matrix;
+
+      this .parseValue (attribute);
+
+      while (true)
+      {
+         this .comma ();
+         this .whitespaces ();
+
+         if (SVGParser_Grammar .matrix .parse (this))
+         {
+            this .whitespaces ();
+
+            if (SVGParser_Grammar .openParenthesis .parse (this))
+            {
+               if (this .double ())
+               {
+                  const a = this .value;
+
+                  if (this .comma ())
+                  {
+                     if (this .double ())
+                     {
+                        const b = this .value;
+
+                        if (this .comma ())
+                        {
+                           if (this .double ())
+                           {
+                              const c = this .value;
+
+                              if (this .comma ())
+                              {
+                                 if (this .double ())
+                                 {
+                                    const d = this .value;
+
+                                    if (this .comma ())
+                                    {
+                                       if (this .double ())
+                                       {
+                                          const e = this .value;
+
+                                          if (this .comma ())
+                                          {
+                                             if (this .double ())
+                                             {
+                                                const f = this .value;
+
+                                                this .whitespaces ();
+
+                                                if (SVGParser_Grammar .closeParenthesis .parse (this))
+                                                {
+                                                   matrix .multLeft (new Numbers_Matrix3 (a, b, 0, c, d, 0, e, f, 1));
+                                                   continue;
+                                                }
+                                             }
+                                          }
+                                       }
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+         else if (SVGParser_Grammar .translate .parse (this))
+         {
+            this .whitespaces ();
+
+            if (SVGParser_Grammar .openParenthesis .parse (this))
+            {
+               if (this .double ())
+               {
+                  const tx = this .value;
+
+                  if (this .comma ())
+                  {
+                     if (this .double ())
+                     {
+                        const ty = this .value;
+
+                        this .whitespaces ();
+
+                        if (SVGParser_Grammar .closeParenthesis .parse (this))
+                        {
+                           matrix .translate (new Numbers_Vector2 (tx, ty));
+                           continue;
+                        }
+                     }
+                  }
+               }
+            }
+         }
+         else if (SVGParser_Grammar .rotate .parse (this))
+         {
+            this .whitespaces ();
+
+            if (SVGParser_Grammar .openParenthesis .parse (this))
+            {
+               if (this .double ())
+               {
+                  const angle = this .value;
+
+                  this .whitespaces ();
+
+                  if (SVGParser_Grammar .closeParenthesis .parse (this))
+                  {
+                     matrix .rotate (Algorithm.radians (angle));
+                     continue;
+                  }
+                  else
+                  {
+                     if (this .comma ())
+                     {
+                        if (this .double ())
+                        {
+                           const cx = this .value;
+
+                           if (this .comma ())
+                           {
+                              if (this .double ())
+                              {
+                                 const cy = this .value;
+
+                                 this .whitespaces ();
+
+                                 if (SVGParser_Grammar .closeParenthesis .parse (this))
+                                 {
+                                    matrix .translate (new Numbers_Vector2 (cx, cy));
+                                    matrix .rotate (Algorithm.radians (angle));
+                                    matrix .translate (new Numbers_Vector2 (-cx, -cy));
+                                    continue;
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+         else if (SVGParser_Grammar .scale .parse (this))
+         {
+            this .whitespaces ();
+
+            if (SVGParser_Grammar .openParenthesis .parse (this))
+            {
+               if (this .double ())
+               {
+                  const sx = this .value;
+
+                  if (this .comma ())
+                  {
+                     if (this .double ())
+                     {
+                        const sy = this .value;
+
+                        this .whitespaces ();
+
+                        if (SVGParser_Grammar .closeParenthesis .parse (this))
+                        {
+                           matrix .scale (new Numbers_Vector2 (sx, sy));
+                           continue;
+                        }
+                     }
+                  }
+               }
+            }
+         }
+         else if (SVGParser_Grammar .skewX .parse (this))
+         {
+            this .whitespaces ();
+
+            if (SVGParser_Grammar .openParenthesis .parse (this))
+            {
+               if (this .double ())
+               {
+                  const angle = this .value;
+
+                  this .whitespaces ();
+
+                  if (SVGParser_Grammar .closeParenthesis .parse (this))
+                  {
+                     matrix .skewX (Algorithm.radians (angle));
+                     continue;
+                  }
+               }
+            }
+         }
+         else if (SVGParser_Grammar .skewY .parse (this))
+         {
+            this .whitespaces ();
+
+            if (SVGParser_Grammar .openParenthesis .parse (this))
+            {
+               if (this .double ())
+               {
+                  const angle = this .value;
+
+                  this .whitespaces ();
+
+                  if (SVGParser_Grammar .closeParenthesis .parse (this))
+                  {
+                     matrix .skewY (Algorithm.radians (angle));
+                     continue;
+                  }
+               }
+            }
+         }
+
+         break;
+      }
+
+      return matrix;
+   },
+   styleAttributes: (function ()
+   {
+      const Styles = [
+         "display",
+         "fill",
+         "fill-opacity",
+         "fill-rule",
+         "stroke",
+         "stroke-opacity",
+         "stroke-width",
+         "opacity",
+         "stop-color",
+         "stop-opacity",
+      ];
+
+      return function (xmlElement)
+      {
+         const style = Object .assign ({ }, this .styles [0]);
+
+         if (this .style .display === "none")
+            return false;
+
+         this .styles .push (style);
+
+         for (const style of Styles)
+         {
+            const attribute = xmlElement .getAttribute (style);
+
+            this .parseStyle (style, attribute ?? "default");
+         }
+
+         // Style attribute has higher precedence.
+
+         this .styleAttribute (xmlElement .getAttribute ("style"));
+
+         return true;
+      };
+   })(),
+   styleAttribute: function (attribute)
+   {
+      if (attribute === null)
+         return;
+
+      const values = attribute .split (";");
+
+      for (const value of values)
+      {
+         const pair = value .split (":");
+
+         if (pair .length !== 2)
+            continue;
+
+         this .parseStyle (pair [0] .trim (), pair [1] .trim ());
+      }
+   },
+   parseStyle: function (style, value)
+   {
+      this .parseValue (value);
+
+      switch (style)
+      {
+         case "display":
+            this .displayStyle (value);
+            break;
+         case "fill":
+            this .fillStyle (value);
+            break;
+         case "fill-opacity":
+            this .fillOpacityStyle (value);
+            break;
+         case "fill-rule":
+            this .fillRuleStyle (value);
+            break;
+         case "stroke":
+            this .strokeStyle (value);
+            break;
+         case "stroke-opacity":
+            this .strokeOpacityStyle (value);
+            break;
+         case "stroke-width":
+            this .strokeWidthStyle (value);
+            break;
+         case "opacity":
+            this .opacityStyle (value);
+            break;
+         case "stop-color":
+            this .stopColorStyle (value);
+            break;
+         case "stop-opacity":
+            this .stopOpacityStyle (value);
+            break;
+      }
+   },
+   displayStyle: function (value)
+   {
+      if (value === null)
+         return;
+
+      if (value === "default")
+         return;
+
+      if (value === "inherit")
+      {
+         this .style .display = styles .at (-1) .display;
+         return;
+      }
+
+      this .style .display = value;
+   },
+   fillStyle: function (value)
+   {
+      if (this .urlValue ())
+      {
+         this .style .fillType = "URL";
+         this .style .fillURL  = this .result [1] .trim ();
+         return;
+      }
+
+      if (value === "transparent")
+      {
+         this .style .fillType = "NONE";
+         return;
+      }
+
+      if (value === "none")
+      {
+         this .style .fillType ="NONE";
+         return;
+      }
+
+      if (!value .match (/^(?:inherit|unset|default)$/))
+      {
+         if (this .colorValue ())
+         {
+            this .style .fillType  = "COLOR";
+            this .style .fillColor = this .value .copy ();
+            return;
+         }
+      }
+
+      // inherit
+
+      this .style .fillType  = this .styles .at (-1) .fillType;
+      this .style .fillColor = this .styles .at (-1) .fillColor;
+      this .style .fillURL   = this .styles .at (-1) .fillURL;
+   },
+   fillOpacityStyle: function (value)
+   {
+      if (this .double ())
+      {
+         this .style .fillOpacity = Algorithm.clamp (this .value, 0, 1);
+         return;
+      }
+
+      if (value === "transparent")
+      {
+         this .style .fillOpacity = 0;
+         return;
+      }
+
+      // inherit
+
+      this .style .fillOpacity = this .styles .at (-1) .fillOpacity;
+   },
+   fillRuleStyle: function (value)
+   {
+      this .style .fillRule = value;
+   },
+   strokeStyle: function (value)
+   {
+      if (this .urlValue ())
+      {
+         this .style .strokeType = "URL";
+         this .style .strokeURL  = this .result [1] .trim ();
+         return;
+      }
+
+      if (value === "transparent")
+      {
+         this .style .strokeType = "NONE";
+         return;
+      }
+
+      if (value === "none")
+      {
+         this .style .strokeType ="NONE";
+         return;
+      }
+
+      if (!value .match (/^(?:inherit|unset|default)$/))
+      {
+         if (this .colorValue ())
+         {
+            this .style .strokeType  = "COLOR";
+            this .style .strokeColor = this .value .copy ();
+            return;
+         }
+      }
+
+      // inherit
+
+      this .style .strokeType  = this .styles .at (-1) .strokeType;
+      this .style .strokeColor = this .styles .at (-1) .strokeColor;
+      this .style .strokeURL   = this .styles .at (-1) .strokeURL;
+   },
+   strokeOpacityStyle: function (value)
+   {
+      if (this .double ())
+      {
+         this .style .strokeOpacity = Algorithm.clamp (this .value, 0, 1);
+         return;
+      }
+
+      if (value === "transparent")
+      {
+         this .style .strokeOpacity = 0;
+         return;
+      }
+
+      // inherit
+
+      this .style .strokeOpacity = this .styles .at (-1) .strokeOpacity;
+   },
+   strokeWidthStyle: function (value)
+   {
+      if (this .double ())
+      {
+         this .style .strokeWidth = this .value / (1000 * PIXEL);
+         return;
+      }
+
+      if (value === "none")
+      {
+         this .style .strokeWidth = 0;
+         return;
+      }
+
+      // inherit
+
+      this .style .strokeWidth = this .styles .at (-1) .strokeWidth;
+   },
+   opacityStyle: function (value)
+   {
+      if (this .double ())
+      {
+         this .style .opacity = Algorithm.clamp (this .value, 0, 1) * this .styles .at (-1) .opacity;
+         return;
+      }
+
+      if (value === "transparent")
+      {
+         this .style .opacity = 0;
+         return;
+      }
+   },
+   stopColorStyle: function (value)
+   {
+      if (this .colorValue ())
+      {
+         this .style .stopColor = this .value .copy ();
+         return;
+      }
+   },
+   stopOpacityStyle: function (value)
+   {
+      if (this .double ())
+      {
+         this .style .stopOpacity = Algorithm.clamp (this .value, 0, 1);
+         return;
+      }
+
+      if (value === "transparent")
+      {
+         this .style .stopOpacity = 0;
+         return;
+      }
+   },
+   parseValue: function (value)
+   {
+      this .input     = value;
+      this .lastIndex = 0;
+      this .value     = undefined;
+   },
+   whitespaces: function ()
+   {
+      return SVGParser_Grammar .whitespaces .parse (this);
+   },
+   comma: function ()
+   {
+      return !! (this .whitespaces () | SVGParser_Grammar .comma .parse (this));
+   },
+   int32: function ()
+   {
+      this .whitespaces ();
+
+      if (SVGParser_Grammar .int32 .parse (this))
+      {
+         this .value = parseInt (this .result [1]);
+
+         return true;
+      }
+
+      return false;
+   },
+   double: function ()
+   {
+      this .whitespaces ();
+
+      if (SVGParser_Grammar .double .parse (this))
+      {
+         this .value = parseFloat (this .result [1]);
+
+         return true;
+      }
+
+      return false;
+   },
+   colorValue: (function ()
+   {
+      const color = new Numbers_Color4 (0, 0, 0, 0);
+
+      return function ()
+      {
+         if (!SVGParser_Grammar .color .parse (this))
+            return false;
+
+         this .value = color .set (... this .convertColor (this .result [1]));
+
+         return true;
+      };
+   })(),
+   urlValue: function ()
+   {
+      return SVGParser_Grammar .url .parse (this);
+   },
+   createTransform: function (xmlElement, t = Numbers_Vector2.Zero, s = Numbers_Vector2.One)
+   {
+      // Determine matrix.
+
+      const
+         scene  = this .getExecutionContext (),
+         m      = this .transformAttribute (xmlElement .getAttribute ("transform"));
+
+      m .translate (t);
+      m .scale (s);
+
+      // Create node.
+
+      const
+         transformNode    = scene .createNode ("Transform"),
+         matrix           = new Numbers_Matrix4 (m [0], m [1], 0, 0, m [3], m [4], 0, 0, 0, 0, 1, 0, m [6], m [7], 0, 1),
+         translation      = new Numbers_Vector3 (0, 0, 0),
+         rotation         = new Numbers_Rotation4 (),
+         scale            = new Numbers_Vector3 (1, 1, 1),
+         scaleOrientation = new Numbers_Rotation4 ();
+
+      matrix .get (translation, rotation, scale, scaleOrientation);
+
+      transformNode .translation      = translation;
+      transformNode .rotation         = rotation;
+      transformNode .scale            = scale;
+      transformNode .scaleOrientation = scaleOrientation;
+
+      // Set name.
+
+      this .idAttribute (xmlElement .getAttribute ("id"), transformNode);
+
+      return transformNode;
+   },
+   createFillAppearance: function (bbox)
+   {
+      const
+         scene          = this .getExecutionContext (),
+         appearanceNode = scene .createNode ("Appearance");
+
+      switch (this .style .fillType)
+      {
+         case "NONE":
+         {
+            return null;
+         }
+         case "COLOR":
+         {
+            const materialNode = scene .createNode ("UnlitMaterial");
+
+            appearanceNode .material    = materialNode;
+            materialNode .emissiveColor = new Numbers_Color3 (... this .style .fillColor);
+            materialNode .transparency  = 1 - this .style .fillOpacity * this .style .opacity;
+
+            break;
+         }
+         case "URL":
+         {
+            // Gradient
+
+            const
+               scene       = this .getExecutionContext (),
+               textureNode = scene .createNode ("ImageTexture"),
+               url         = this .getFillUrl (this .style .fillURL, bbox);
+
+            // Get image from url.
+
+            if (!url)
+               return null;
+
+            textureNode .url               = [url];
+            textureNode .textureProperties = this .texturePropertiesNode;
+            appearanceNode .texture        = textureNode;
+
+            break;
+         }
+      }
+
+      return appearanceNode;
+   },
+   getFillUrl: function (fillURL, bbox)
+   {
+      const xmlElement = this .hrefAttribute (fillURL);
+
+      if (!xmlElement)
+         return;
+
+      switch (xmlElement .nodeName)
+      {
+         case "linearGradient":
+            return this .linearGradientElementURL (xmlElement, bbox);
+
+         case "radialGradient":
+            return this .radialGradientElementURL (xmlElement, bbox);
+      }
+   },
+   createStrokeAppearance: function ()
+   {
+      const
+         scene          = this .getExecutionContext (),
+         appearanceNode = scene .createNode ("Appearance"),
+         materialNode   = scene .createNode ("Material");
+
+      appearanceNode .material    = materialNode;
+      materialNode .emissiveColor = new Numbers_Color3 (... this .style .strokeColor);
+      materialNode .transparency  = 1 - this .style .strokeOpacity * this .style .opacity;
+
+      if (this .style .strokeWidth !== 1)
+      {
+         const lineProperties = scene .createNode ("LineProperties");
+
+         appearanceNode .lineProperties       = lineProperties;
+         lineProperties .linewidthScaleFactor = this .style .strokeWidth;
+      }
+
+      return appearanceNode;
+   },
+   createTextureProperties: function ()
+   {
+      const
+         scene                 = this .getExecutionContext (),
+         texturePropertiesNode = scene .createNode ("TextureProperties");
+
+      texturePropertiesNode .generateMipMaps     = true;
+      texturePropertiesNode .minificationFilter  = "NICEST";
+      texturePropertiesNode .magnificationFilter = "NICEST";
+      texturePropertiesNode .boundaryModeS       = "CLAMP_TO_EDGE";
+      texturePropertiesNode .boundaryModeT       = "CLAMP_TO_EDGE";
+      texturePropertiesNode .boundaryModeR       = "CLAMP_TO_EDGE";
+      texturePropertiesNode .textureCompression  = "DEFAULT";
+
+      return texturePropertiesNode;
+   },
+   createTextureCoordinate: function (coordinateNode, bbox)
+   {
+      const
+         scene        = this .getExecutionContext (),
+         texCoordNode = scene .createNode ("TextureCoordinate"),
+         invMatrix    = Numbers_Matrix3.inverse (bbox .matrix);
+
+      for (const point of coordinateNode .point)
+         texCoordNode .point .push (invMatrix .multVecMatrix (new Numbers_Vector2 (point .x, point .y)) .add (Numbers_Vector2.One) .divide (2));
+
+      return texCoordNode;
+   },
+   createTesselator: function ()
+   {
+      // Function called for each vertex of tessellator output.
+
+      function vertexCallback (index, triangles)
+      {
+         triangles .push (index);
+      }
+
+      const tessy = new libtess .GluTesselator ();
+
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA, vertexCallback);
+      tessy .gluTessNormal (0, 0, 1);
+
+      return tessy;
+   },
+   triangulatePolygon: function (contours, coordinateNode)
+   {
+      // Callback for when segments intersect and must be split.
+
+      function combineCallback (coords, data, weight)
+      {
+         const
+            point = new Numbers_Vector3 (... coords),
+            index = coordinateNode .point .length;
+
+         coordinateNode .point .push (point);
+
+         return index;
+      }
+
+      const
+         tessy     = this .tessy,
+         winding   = this .style .fillRule === "evenodd" ? "GLU_TESS_WINDING_ODD" : "GLU_TESS_WINDING_NONZERO",
+         triangles = [ ];
+
+      tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule [winding]);
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
+      tessy .gluTessBeginPolygon (triangles);
+
+      for (const points of contours)
+      {
+         tessy .gluTessBeginContour ();
+
+         for (const [i, p] of points .entries ())
+            tessy .gluTessVertex ([p .x, p .y, 0], points .index + i);
+
+         tessy .gluTessEndContour ();
+      }
+
+      tessy .gluTessEndPolygon ();
+
+      // Array of indices of triangles.
+      return triangles;
+   },
+});
+
+Object .defineProperty (SVGParser .prototype, "style",
+{
+   get: function ()
+   {
+      return this .styles .at (-1);
+   },
+})
+
+const SVGParser_default_ = SVGParser;
+;
+
+x_ite_Namespace.set ("x_ite/Parser/SVGParser", SVGParser_default_);
+/* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(912);
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
 
 
 
@@ -50262,6 +53223,7 @@ GoldenGate .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 });
 
 GoldenGate .Parser = [
+   Parser_SVGParser,
    Parser_XMLParser,
    Parser_GLTF2Parser,
    Parser_JSONParser,
@@ -50446,7 +53408,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(230);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(525);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50542,73 +53504,30 @@ const Triangle3 = {
    },
    triangulatePolygon: (function ()
    {
-      const tessy = (function ()
+      // Function called for each vertex of tesselator output.
+
+      function vertexCallback (index, triangles)
       {
-         // Function called for each vertex of tesselator output.
-         function vertexCallback (data, polyVertArray)
-         {
-            //console .log (data);
-            polyVertArray [polyVertArray .length] = data;
-         }
+         triangles .push (index);
+      }
 
-         function beginCallback (type)
-         {
-            if (type !== libtess .primitiveType .GL_TRIANGLES)
-               console .log ('expected TRIANGLES but got type: ' + type);
-         }
+      const tessy = new Triangle3_libtess .GluTesselator ();
 
-         function errorCallback (errno)
-         {
-            console .log ('error callback');
-            console .log ('error number: ' + errno);
-         }
+      tessy .gluTessCallback (Triangle3_libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
+      tessy .gluTessProperty (Triangle3_libtess .gluEnum .GLU_TESS_WINDING_RULE, Triangle3_libtess .windingRule .GLU_TESS_WINDING_ODD);
 
-         // Callback for when segments intersect and must be split.
-         function combineCallback (coords, data, weight)
-         {
-            //console.log ('combine callback');
-            return data [0];
-         }
-
-         function edgeCallback (flag)
-         {
-            // Don't really care about the flag, but need no-strip/no-fan behavior.
-            // console .log ('edge flag: ' + flag);
-         }
-
-         const tessy = new libtess .GluTesselator ();
-
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,        beginCallback);
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,        errorCallback);
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
-         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,    edgeCallback);
-         tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_TOLERANCE,    0);
-         tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
-
-         return tessy;
-      })();
-
-      return function (/* contour, [ contour, ..., ] triangles */)
+      return function (polygon, triangles)
       {
-         const triangles = arguments [arguments .length - 1];
-
          tessy .gluTessBeginPolygon (triangles);
+         tessy .gluTessBeginContour ();
 
-         for (let i = 0, length = arguments .length - 1; i < length; ++ i)
-         {
-            tessy .gluTessBeginContour ();
+         for (const point of polygon)
+            tessy .gluTessVertex (point, point .index);
 
-            for (const contour of arguments [i])
-            {
-               tessy .gluTessVertex (contour, contour);
-            }
-
-            tessy .gluTessEndContour ();
-         }
-
+         tessy .gluTessEndContour ();
          tessy .gluTessEndPolygon ();
 
+         // Return array of indices.
          return triangles;
       };
    })(),
@@ -50617,28 +53536,6 @@ const Triangle3 = {
       // Fallback: Very simple triangulation for convex polygons.
       for (let i = 1, length = vertices .length - 1; i < length; ++ i)
          triangles .push (vertices [0], vertices [i], vertices [i + 1]);
-   },
-   getPolygonNormal: function (vertices, normal)
-   {
-      // Determine polygon normal.
-      // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
-
-      normal .set (0, 0, 0);
-
-      var next = vertices [0];
-
-      for (let i = 0, length = vertices .length; i < length; ++ i)
-      {
-         var
-            current = next,
-            next    = vertices [(i + 1) % length];
-
-         normal .x += (current .y - next .y) * (current .z + next .z);
-         normal .y += (current .z - next .z) * (current .x + next .x);
-         normal .z += (current .x - next .x) * (current .y + next .y);
-      }
-
-      return normal .normalize ();
    },
 };
 
@@ -51786,43 +54683,9 @@ x_ite_Namespace.set ("standard/Math/Geometry/Camera", Camera_default_);
 
 function Box3 (size, center)
 {
-   switch (arguments .length)
-   {
-      case 0:
-      {
-         this .matrix = new Numbers_Matrix4 (0, 0, 0, 0,
-                                     0, 0, 0, 0,
-                                     0, 0, 0, 0,
-                                     0, 0, 0, 0);
-         return;
-      }
-      case 2:
-      {
-         this .matrix = new Numbers_Matrix4 (size .x / 2, 0, 0, 0,
-                                     0, size .y / 2, 0, 0,
-                                     0, 0, size .z / 2, 0,
-                                     center .x, center .y, center .z, 1);
-         return;
-      }
-      case 3:
-      {
-         const
-            min = arguments [0],
-            max = arguments [1],
-            sx  = (max .x - min .x) / 2,
-            sy  = (max .y - min .y) / 2,
-            sz  = (max .z - min .z) / 2,
-            cx  = (max .x + min .x) / 2,
-            cy  = (max .y + min .y) / 2,
-            cz  = (max .z + min .z) / 2;
+   this .matrix = new Numbers_Matrix4 ();
 
-         this .matrix = new Numbers_Matrix4 (sx, 0,  0,  0,
-                                     0,  sy, 0,  0,
-                                     0,  0,  sz, 0,
-                                     cx, cy, cz, 1);
-         return;
-      }
-   }
+   this .set .apply (this, arguments);
 }
 
 Box3 .prototype =
@@ -51849,43 +54712,29 @@ Box3 .prototype =
    },
    set: function (size, center)
    {
-      const m = this .matrix;
-
       switch (arguments .length)
       {
          case 0:
          {
-            m [ 0] = 0.5; m [ 1] = 0;   m [ 2] = 0;   m [ 3] = 0;
-            m [ 4] = 0;   m [ 5] = 0.5; m [ 6] = 0;   m [ 7] = 0;
-            m [ 8] = 0;   m [ 9] = 0;   m [10] = 0.5; m [11] = 0;
-            m [12] = 0;   m [13] = 0;   m [14] = 0;   m [15] = 0;
+            this .matrix .set (0, 0, 0, 0,
+                               0, 0, 0, 0,
+                               0, 0, 0, 0,
+                               0, 0, 0, 0);
+
             return this;
          }
          case 2:
          {
-            m [ 0] = size .x / 2; m [ 1] = 0;           m [ 2] = 0;           m [ 3] = 0;
-            m [ 4] = 0;           m [ 5] = size .y / 2; m [ 6] = 0;           m [ 7] = 0;
-            m [ 8] = 0;           m [ 9] = 0;           m [10] = size .z / 2; m [11] = 0;
-            m [12] = center .x;   m [13] = center .y;   m [14] = center .z;   m [15] = 1;
+            this .matrix .set (size .x / 2, 0, 0, 0,
+                               0, size .y / 2, 0, 0,
+                               0, 0, size .z / 2, 0,
+                               center .x, center .y, center .z, 1);
+
             return this;
          }
          case 3:
          {
-            const
-               min = arguments [0],
-               max = arguments [1],
-               sx  = (max .x - min .x) / 2,
-               sy  = (max .y - min .y) / 2,
-               sz  = (max .z - min .z) / 2,
-               cx  = (max .x + min .x) / 2,
-               cy  = (max .y + min .y) / 2,
-               cz  = (max .z + min .z) / 2;
-
-            this .matrix .set (sx, 0,  0,  0,
-                               0,  sy, 0,  0,
-                               0,  0,  sz, 0,
-                               cx, cy, cz, 1);
-            return this;
+            return this .setExtents (arguments [0], arguments [1]);
          }
       }
    },
@@ -51900,10 +54749,11 @@ Box3 .prototype =
          cy = (max .y + min .y) / 2,
          cz = (max .z + min .z) / 2;
 
-      m [ 0] = sx; m [ 1] = 0;  m [ 2] = 0;  m [ 3] = 0;
-      m [ 4] = 0;  m [ 5] = sy; m [ 6] = 0;  m [ 7] = 0;
-      m [ 8] = 0;  m [ 9] = 0;  m [10] = sz; m [11] = 0;
-      m [12] = cx; m [13] = cy; m [14] = cz; m [15] = 1;
+      this .matrix .set (sx, 0,  0,  0,
+                         0,  sy, 0,  0,
+                         0,  0,  sz, 0,
+                         cx, cy, cz, 1);
+
       return this;
    },
    getExtents: function (min, max)
@@ -53812,32 +56662,16 @@ BindableList .prototype = Object .assign (Object .create (Base_X3DBaseNode.proto
    },
    getBound: function (name)
    {
-      if (this .array .length > 1)
+      if (this .array .length === 1)
+         return this .array [0]; // Return default viewpoint.
+
+      const
+         enableInlineBindables = false,
+         mainScene             = this .getMainScene ();
+
+      if (name)
       {
-         const
-            enableInlineBindables = false,
-            mainScene             = this .getMainScene ();
-
-         if (name && name .length)
-         {
-            // Return first viewpoint with @name.
-
-            for (let i = 1, length = this .array .length; i < length; ++ i)
-            {
-               const
-                  node      = this .array [i],
-                  outerNode = node .getExecutionContext () .getOuterNode (),
-                  scene     = outerNode instanceof Core_X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
-
-               if (!enableInlineBindables && scene !== mainScene)
-                  continue;
-
-               if (node .getName () == name)
-                  return node;
-            }
-         }
-
-         // Return first bound viewpoint in scene.
+         // Return first viewpoint with @name.
 
          for (let i = 1, length = this .array .length; i < length; ++ i)
          {
@@ -53849,29 +56683,43 @@ BindableList .prototype = Object .assign (Object .create (Base_X3DBaseNode.proto
             if (!enableInlineBindables && scene !== mainScene)
                continue;
 
-            if (node ._isBound .getValue ())
+            if (node .getName () == name)
                return node;
-         }
-
-         // Return first viewpoint in scene.
-
-         for (let i = 1, length = this .array .length; i < length; ++ i)
-         {
-            const
-               node      = this .array [i],
-               outerNode = node .getExecutionContext () .getOuterNode (),
-               scene     = outerNode instanceof Core_X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
-
-            if (!enableInlineBindables && scene !== mainScene)
-               continue;
-
-            return node;
          }
       }
 
-      // Return default viewpoint.
+      // Return first bound viewpoint in scene.
 
-      return this .array [0];
+      for (let i = 1, length = this .array .length; i < length; ++ i)
+      {
+         const
+            node      = this .array [i],
+            outerNode = node .getExecutionContext () .getOuterNode (),
+            scene     = outerNode instanceof Core_X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
+
+         if (!enableInlineBindables && scene !== mainScene)
+            continue;
+
+         if (node ._isBound .getValue ())
+            return node;
+      }
+
+      // Return first viewpoint in scene.
+
+      for (let i = 1, length = this .array .length; i < length; ++ i)
+      {
+         const
+            node      = this .array [i],
+            outerNode = node .getExecutionContext () .getOuterNode (),
+            scene     = outerNode instanceof Core_X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
+
+         if (!enableInlineBindables && scene !== mainScene)
+            continue;
+
+         return node;
+      }
+
+      return this .array [0]; // Return default viewpoint.
    },
    push: function (node)
    {
@@ -57782,7 +60630,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(702);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -58237,8 +61085,9 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    if (executionContext .getSpecificationVersion () < 4.0)
       this .addAlias ("isPickable", this ._pickable);
 
-   this .groupNode       = groupNode;
-   this .currentViewport = null;
+   this .pickableGroupNode = executionContext .createNode ("PickableGroup", false);
+   this .groupNode         = groupNode;
+   this .currentViewport   = null;
 
    this .defaultNavigationInfo = new Navigation_NavigationInfo (executionContext);
    this .defaultViewpoint      = defaultViewpoint;
@@ -58270,6 +61119,21 @@ X3DLayerNode .prototype = Object .assign (Object .create (Core_X3DNode.prototype
    {
       Core_X3DNode.prototype.initialize.call (this);
       Rendering_X3DRenderObject.prototype.initialize.call (this);
+
+      // if (this .pickableGroupNode)
+      // {
+      //    this ._pickable   .addFieldInterest (this .pickableGroupNode ._pickable);
+      //    this ._objectType .addFieldInterest (this .pickableGroupNode ._objectType);
+
+      //    this .pickableGroupNode ._pickable   = this ._pickable;
+      //    this .pickableGroupNode ._objectType = this ._objectType;
+
+      //    this .pickableGroupNode .setup ();
+      // }
+      // else
+      // {
+      //    this .pickableGroupNode = this .groupNode;
+      // }
 
       this .defaultNavigationInfo .setup ();
       this .defaultViewpoint      .setup ();
@@ -62153,8 +65017,8 @@ const BinaryTransport_default_ = BinaryTransport;
 x_ite_Namespace.set ("standard/Networking/BinaryTransport", BinaryTransport_default_);
 /* harmony default export */ const Networking_BinaryTransport = (BinaryTransport_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(702);
-/* provided dependency */ var pako = __webpack_require__(171);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(912);
+/* provided dependency */ var pako = __webpack_require__(385);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -64630,7 +67494,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(702);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66586,7 +69450,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(702);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67184,9 +70048,9 @@ X3DCoreContext .prototype =
                text += "\n";
 
                this .copyToClipboard (text);
-               this .getNotification () ._string = locale_gettext ("Viewpoint is copied to clipboard.");
+               this .getNotification () ._string = locale_gettext ("Viewpoint copied to clipboard.");
 
-               console .log ("Copied Viewpoint to Clipboard.");
+               console .log ("Viewpoint copied to clipboard.");
                console .debug (text);
             }
 
@@ -68212,7 +71076,7 @@ IndexedFaceSet .prototype = Object .assign (Object .create (Rendering_X3DCompose
                            polygon   = { vertices: vertices, triangles: triangles, face: face };
 
                         if (convex)
-                           this .triangulateConvexPolygon (vertices, triangles);
+                           Geometry_Triangle3.triangulateConvexPolygon (vertices, triangles);
                         else
                            this .triangulatePolygon (vertices, triangles);
 
@@ -68249,34 +71113,25 @@ IndexedFaceSet .prototype = Object .assign (Object .create (Rendering_X3DCompose
             coord      = this .getCoord (),
             length     = vertices .length;
 
-         for (let v = 0; v < length; ++ v)
+         for (let i = polygon .length; i < length; ++ i)
+            polygon .push (new Numbers_Vector3 (0, 0, 0));
+
+         for (let i = 0; i < length; ++ i)
          {
-            const i = vertices [v];
+            const
+               index = vertices [i],
+               point = polygon [i];
 
-            let vertex = polygon [v];
+            point .index = index;
 
-            if (!vertex)
-               vertex = polygon [v] = new Numbers_Vector3 (0, 0, 0);
-
-            vertex .index = i;
-
-            coord .get1Point (coordIndex [i], vertex);
+            coord .get1Point (coordIndex [index], point);
          }
 
          polygon .length = length;
 
          Geometry_Triangle3.triangulatePolygon (polygon, triangles);
-
-         for (let i = 0, length = triangles .length; i < length; ++ i)
-            triangles [i] = triangles [i] .index;
       };
    })(),
-   triangulateConvexPolygon: function (vertices, triangles)
-   {
-      // Fallback: Very simple triangulation for convex polygons.
-      for (let i = 1, length = vertices .length - 1; i < length; ++ i)
-         triangles .push (vertices [0], vertices [i], vertices [i + 1]);
-   },
    buildNormals: function (polygons)
    {
       const
@@ -71131,7 +73986,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (Rendering_X3DGe
                   renderObject        = renderContext .renderObject,
                   viewport            = renderObject .getViewVolume () .getViewport (),
                   projectionMatrix    = renderObject .getProjectionMatrix () .get (),
-                  primitiveMode       = browser .getPrimitiveMode (gl .TRIANGLES),
+                  primitiveMode       = browser .getWireframe () ? gl .TRIANGLES : browser .getPrimitiveMode (gl .TRIANGLES),
                   transformShaderNode = browser .getLineTransformShader ();
 
                modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));
@@ -71254,17 +74109,9 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (Rendering_X3DGe
                   gl .bindBuffer (gl .ARRAY_BUFFER, null);
                }
 
-               if (browser .getWireframe ())
-               {
-                  for (let i = 0, length = this .vertexCount * 3; i < length; i += 3)
-                     gl .drawArrays (primitiveMode, i, 3);
-               }
-               else
-               {
-                  gl .frontFace (gl .CCW);
-                  gl .enable (gl .CULL_FACE);
-                  gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
-               }
+               gl .frontFace (gl .CCW);
+               gl .enable (gl .CULL_FACE);
+               gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
 
                if (blendModeNode)
                   blendModeNode .disable (gl);
@@ -73607,8 +76454,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(25);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(702);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(276);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -74463,8 +77310,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(25);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(702);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(276);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -75406,8 +78253,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(25);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(702);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(276);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -75710,8 +78557,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(25);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(702);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(276);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77303,8 +80150,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(25);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(702);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(276);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78073,8 +80920,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(702);
-/* provided dependency */ var ResizeSensor = __webpack_require__(485);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(912);
+/* provided dependency */ var ResizeSensor = __webpack_require__(82);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89502,7 +92349,7 @@ const X3DRoutingContext_default_ = X3DRoutingContext;
 x_ite_Namespace.set ("x_ite/Routing/X3DRoutingContext", X3DRoutingContext_default_);
 /* harmony default export */ const Routing_X3DRoutingContext = (X3DRoutingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowserContext.js
-/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(702);
+/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89845,7 +92692,7 @@ Object .assign (X3DBrowserContext,
       X3DBrowserContext_$("x3d-canvas, X3DCanvas") .each (function (_, canvas)
       {
          const
-            X3D     = window [Symbol .for ("X_ITE.X3D-8.5.1")],
+            X3D     = window [Symbol .for ("X_ITE.X3D-8.5.2a")],
             browser = X3D .getBrowser (canvas);
 
          if (! browser)
@@ -95856,6 +98703,8 @@ Extrusion .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode
             {
                const
                   j         = 0, // spine
+                  convex    = this ._convex .getValue (),
+                  texCoord  = { },
                   polygon   = [ ],
                   triangles = [ ];
 
@@ -95865,12 +98714,12 @@ Extrusion .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode
                      index = INDEX (j, numCapPoints - 1 - k),
                      point = points [index] .copy ();
 
-                  point .index    = index;
-                  point .texCoord = Numbers_Vector2.subtract (crossSection [numCapPoints - 1 - k] .getValue (), min) .divide (capMax);
-                  polygon .push (point);
+                  point .index     = index;
+                  texCoord [index] = Numbers_Vector2.subtract (crossSection [numCapPoints - 1 - k] .getValue (), min) .divide (capMax);
+                  polygon .push (convex ? index : point);
                }
 
-               if (this ._convex .getValue ())
+               if (convex)
                   Geometry_Triangle3.triangulateConvexPolygon (polygon, triangles);
 
                else
@@ -95878,15 +98727,15 @@ Extrusion .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode
 
                if (triangles .length >= 3)
                {
-                  const normal = Geometry_Triangle3.normal (points [triangles [0] .index],
-                                                    points [triangles [1] .index],
-                                                    points [triangles [2] .index],
+                  const normal = Geometry_Triangle3.normal (points [triangles [0]],
+                                                    points [triangles [1]],
+                                                    points [triangles [2]],
                                                     new Numbers_Vector3 (0, 0, 0));
 
                   if (cw)
                      normal .negate ();
 
-                  this .addCap (texCoordArray, normal, points, triangles);
+                  this .addCap (texCoordArray, texCoord, normal, points, triangles);
                }
             }
 
@@ -95894,6 +98743,8 @@ Extrusion .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode
             {
                const
                   j         = numSpines - 1, // spine
+                  convex    = this ._convex .getValue (),
+                  texCoord  = { },
                   polygon   = [ ],
                   triangles = [ ];
 
@@ -95903,12 +98754,12 @@ Extrusion .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode
                      index = INDEX (j, k),
                      point = points [index] .copy ();
 
-                  point .index    = index;
-                  point .texCoord = Numbers_Vector2.subtract (crossSection [k] .getValue (), min) .divide (capMax);
-                  polygon .push (point);
+                  point .index     = index;
+                  texCoord [index] = Numbers_Vector2.subtract (crossSection [k] .getValue (), min) .divide (capMax);
+                  polygon .push (convex ? index : point);
                }
 
-               if (this ._convex .getValue ())
+               if (convex)
                   Geometry_Triangle3.triangulateConvexPolygon (polygon, triangles);
 
                else
@@ -95916,15 +98767,15 @@ Extrusion .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode
 
                if (triangles .length >= 3)
                {
-                  const normal = Geometry_Triangle3.normal (points [triangles [0] .index],
-                                                    points [triangles [1] .index],
-                                                    points [triangles [2] .index],
+                  const normal = Geometry_Triangle3.normal (points [triangles [0]],
+                                                    points [triangles [1]],
+                                                    points [triangles [2]],
                                                     new Numbers_Vector3 (0, 0, 0));
 
                   if (cw)
                      normal .negate ();
 
-                  this .addCap (texCoordArray, normal, points, triangles);
+                  this .addCap (texCoordArray, texCoord, normal, points, triangles);
                }
             }
          }
@@ -95933,7 +98784,7 @@ Extrusion .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode
          this .setCCW (this ._ccw .getValue ());
       };
    })(),
-   addCap: function (texCoordArray, normal, vertices, triangles)
+   addCap: function (texCoordArray, texCoord, normal, vertices, triangles)
    {
       const
          normalArray = this .getNormals (),
@@ -95942,12 +98793,12 @@ Extrusion .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode
       for (let i = 0, length = triangles .length; i < length; i += 3)
       {
          const
-            p0 = vertices [triangles [i]     .index],
-            p1 = vertices [triangles [i + 1] .index],
-            p2 = vertices [triangles [i + 2] .index],
-            t0 = triangles [i]     .texCoord,
-            t1 = triangles [i + 1] .texCoord,
-            t2 = triangles [i + 2] .texCoord;
+            p0 = vertices [triangles [i]],
+            p1 = vertices [triangles [i + 1]],
+            p2 = vertices [triangles [i + 2]],
+            t0 = texCoord [triangles [i]],
+            t1 = texCoord [triangles [i + 1]],
+            t2 = texCoord [triangles [i + 2]];
 
          texCoordArray .push (t0 .x, t0 .y, 0, 1);
          texCoordArray .push (t1 .x, t1 .y, 0, 1);
@@ -108306,7 +111157,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(702);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111121,8 +113972,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(702);
-/* provided dependency */ var SuperGif = __webpack_require__(974);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(912);
+/* provided dependency */ var SuperGif = __webpack_require__(509);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112084,7 +114935,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(702);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112787,7 +115638,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(702);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(912);
 /*******************************************************************************
  * MIT License
  *
@@ -114024,7 +116875,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(702);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114947,7 +117798,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(702);
+/* provided dependency */ var Fallback_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115126,14 +117977,21 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(702);
+/* provided dependency */ var jquery_$ = __webpack_require__(912);
 const jquery_default_ = jquery_$;
 ;
 
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
+;// CONCATENATED MODULE: ./src/lib/libtess.js
+/* provided dependency */ var libtess_libtess = __webpack_require__(525);
+const libtess_default_ = libtess_libtess;
+;
+
+x_ite_Namespace.set ("lib/libtess", libtess_default_);
+/* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(702);
+/* provided dependency */ var X3D_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115180,6 +118038,7 @@ x_ite_Namespace.set ("lib/jquery", jquery_default_);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -115388,7 +118247,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(702);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115648,7 +118507,7 @@ x_ite_Namespace.set ("shim", shim_default_);
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-8.5.1")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-8.5.2a")] = x_ite_X3D;
 
 x_ite_X3DCanvas.define ();
 
