@@ -62,6 +62,7 @@ const Grammar = Expressions ({
    // General
    whitespaces: /[\x20\n\t\r]+/gy,
    comment: /;.*?(?=[\n\r])/gy,
+   untilEndOfLine: /([^\r\n]+)/gy,
 
    // Keywords
    solid: /solid/gy,
@@ -97,7 +98,8 @@ function STLParser (scene)
 
    // Globals
 
-   this .point3 = new Vector3 (0, 0, 0);
+   this .vector = new Vector3 (0, 0, 0);
+   this .point  = new Vector3 (0, 0, 0);
 }
 
 STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -192,6 +194,8 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             coordinate = scene .createNode ("Coordinate"),
             name       = this .sanitizeName (Grammar .name .parse (this) ? this .result [1] : "");
 
+         Grammar .untilEndOfLine .parse (this);
+
          this .facets (normal .vector, coordinate .point);
 
          shape .appearance         = this .appearance;
@@ -210,7 +214,7 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (Grammar .endsolid .parse (this))
             return true;
 
-         throw new Error ("Expected endsolid statement.");
+         throw new Error ("Expected 'endsolid' statement.");
       }
 
       return false;
@@ -235,7 +239,7 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                if (Grammar .endfacet .parse (this))
                   return true;
 
-               throw new Error ("Expected endfacet statement.");
+               throw new Error ("Expected 'endfacet' statement.");
             }
          }
       }
@@ -250,17 +254,17 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          if (this .double ())
          {
-            this .point3 .x = this .value;
+            this .vector .x = this .value;
 
             if (this .double ())
             {
-               this .point3 .y = this .value;
+               this .vector .y = this .value;
 
                if (this .double ())
                {
-                  this .point3 .z = this .value;
+                  this .vector .z = this .value;
 
-                  vector .push (this .point3);
+                  vector .push (this .vector);
 
                   return true;
                }
@@ -274,7 +278,7 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          throw new Error ("Expected a double.");
       }
 
-      throw new Error ("Expected normal statement.");
+      throw new Error ("Expected 'normal' statement.");
    },
    loop: function (point)
    {
@@ -297,16 +301,16 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                      if (Grammar .endloop .parse (this))
                         return true;
 
-                     throw new Error ("Expected endloop statement.");
+                     throw new Error ("Expected 'endloop' statement.");
                   }
                }
             }
          }
 
-         throw new Error ("Expected loop statement.");
+         throw new Error ("Expected 'loop' statement.");
       }
 
-      throw new Error ("Expected outer statement.");
+      throw new Error ("Expected 'outer' statement.");
    },
    vertex: function (point)
    {
@@ -316,17 +320,17 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          if (this .double ())
          {
-            this .point3 .x = this .value;
+            this .point .x = this .value;
 
             if (this .double ())
             {
-               this .point3 .y = this .value;
+               this .point .y = this .value;
 
                if (this .double ())
                {
-                  this .point3 .z = this .value;
+                  this .point .z = this .value;
 
-                  point .push (this .point3);
+                  point .push (this .point);
 
                   return true;
                }
@@ -340,7 +344,7 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          throw new Error ("Expected a double.");
       }
 
-      throw new Error ("Expected vertex statement.");
+      throw new Error ("Expected 'vertex' statement.");
    },
    double: function ()
    {
