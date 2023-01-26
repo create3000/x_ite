@@ -27,7 +27,8 @@
 		"node",
 		"electron",
 		"glTF2",
-		"wavefront-obj"
+		"wavefront-obj",
+		"SVG"
 	],
 	"contributors": [
 		{
