@@ -2369,7 +2369,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          triangles = [ ];
 
       tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule [winding]);
-      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE, combineCallback);
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
       tessy .gluTessBeginPolygon (triangles);
 
       for (const points of contours)
