@@ -95,9 +95,13 @@ const Grammar = Expressions ({
  */
 
 const
+   MM            = 0.001,     // One mm in meters.
+   CM            = 0.01,      // One cm in meters.
    INCH          = 0.0254,    // One inch in meters.
    POINT         = INCH / 72, // One point in meters.
+   PICA          = INCH / 6   // One pica in meters.
    PIXEL         = INCH / 90, // One pixel in meters.
+   EM            = 16,        // One em in pixels,
    BEZIER_STEPS  = 10,
    CIRCLE_STEPS  = 64,
    GRADIENT_SIZE = 256; // In pixels.
@@ -1046,7 +1050,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             switch (this .result [1])
             {
                case "em":
-                  // TODO
+                  value *= EM;
                   break;
                case "ex":
                   // TODO
@@ -1058,16 +1062,16 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   value *= INCH / PIXEL;
                   break;
                case "cm":
-                  value /= 100 * PIXEL;
+                  value *= CM / PIXEL;
                   break;
                case "mm":
-                  value /= 1000 * PIXEL;
+                  value *= MM / PIXEL;
                   break;
                case "pt":
                   value *= POINT / PIXEL;
                   break;
                case "pc":
-                  // TODO
+                  value *= PICA / PIXEL;
                   break;
             }
          }
