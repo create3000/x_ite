@@ -49,7 +49,7 @@ import X3DField     from "../Base/X3DField.js";
 import X3DConstants from "../Base/X3DConstants.js";
 
 const
-   unescape = /\\(.)/g,
+   unescape = /\\([\\"])/g,
    escape   = /([\\"])/g;
 
 function SFString (value)

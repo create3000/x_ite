@@ -1199,7 +1199,8 @@ const
    nans            = /\bnan\b/g,
    trimWhitespaces = /^[\x20\n,\t\r"]+|[\x20\n,\t\r"]+$/g,
    whitespaces     = /[\x20\n,\t\r"]+/,
-   strings         = new RegExp ('"((?:[^\\\\"]|\\\\\\\\|\\\\\\")*)"', 'g');
+   strings         = /"((?:[^\\"]|\\\\|\\"|\\.)*)"/g;
+
 
 function prepareBools (string)
 {

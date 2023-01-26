@@ -116,6 +116,19 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    isValid: function ()
    {
+      const inputArray = new Uint8Array (this .input .length);
+
+      for (let i = 0, length = this .input .length; i < length; ++ i)
+         inputArray [i] = this .input .charCodeAt (i);
+
+      const dataView = new DataView (inputArray .buffer);
+
+      const
+         numFaces   = dataView .getInt32 (80, true),
+         byteLength = numFaces * 50 + 84;
+
+      console .log (byteLength, dataView .byteLength, inputArray .length, new TextEncoder () .encode (this .input) .length)
+
       return !! this .input .match (/^(?:[\x20\n\t\r]+|;.*?[\r\n])*\b(?:solid)\b/);
    },
    setInput: function (string)
