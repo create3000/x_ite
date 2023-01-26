@@ -945,6 +945,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       cx .fill ();
       cx .restore ();
 
+      // Use PNG because image can have alpha channel.
       return this .canvas .toDataURL ("image/png");
    },
    idAttribute: function (attribute, node)
