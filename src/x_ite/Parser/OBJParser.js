@@ -93,6 +93,7 @@ const Grammar = Expressions ({
    // Values
    int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
    double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
+   constants: /([+-])((?:NAN|INF|INFINITY))/igy,
 });
 
 /*
@@ -126,6 +127,11 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    X3DOptimizer .prototype,
 {
    constructor: OBJParser,
+   CONSTANTS: new Map ([
+      ["NAN", NaN],
+      ["INF", Infinity],
+      ["INFINITY", Infinity],
+   ]),
    getEncoding: function ()
    {
       return "STRING";
@@ -646,6 +652,16 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return true;
       }
 
+      if (Grammar .constants .parse (this))
+      {
+         this .value = this .CONSTANTS .get (this .result [2] .toUpperCase ());
+
+         if (this .result [1] === "-")
+            this .value = - this .value;
+
+         return true;
+      }
+
       return false;
    },
    vec2: function ()
@@ -700,6 +716,11 @@ function MaterialParser (scene, input)
 
 MaterialParser .prototype =
 {
+   CONSTANTS: new Map ([
+      ["NAN", NaN],
+      ["INF", Infinity],
+      ["INFINITY", Infinity],
+   ]),
    parse: function ()
    {
       try
@@ -1003,6 +1024,16 @@ MaterialParser .prototype =
       if (Grammar .double .parse (this))
       {
          this .value = parseFloat (this .result [1]);
+
+         return true;
+      }
+
+      if (Grammar .constants .parse (this))
+      {
+         this .value = this .CONSTANTS .get (this .result [2] .toUpperCase ());
+
+         if (this .result [1] === "-")
+            this .value = - this .value;
 
          return true;
       }
