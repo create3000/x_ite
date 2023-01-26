@@ -1208,7 +1208,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                      if (relative)
                         x += ax;
 
-                     points .push (x, ay);
+                     points .push (new Vector2 (x, ay));
 
                      ax = x;
 
@@ -1235,7 +1235,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                      if (relative)
                         y += ay;
 
-                     points .push (ax, y);
+                     points .push (new Vector2 (ax, y));
 
                      ay = y;
 

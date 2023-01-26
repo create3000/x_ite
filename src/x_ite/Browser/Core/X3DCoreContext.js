@@ -595,9 +595,9 @@ X3DCoreContext .prototype =
                text += "\n";
 
                this .copyToClipboard (text);
-               this .getNotification () ._string = _ ("Viewpoint is copied to clipboard.");
+               this .getNotification () ._string = _ ("Viewpoint copied to clipboard.");
 
-               console .log ("Copied Viewpoint to Clipboard.");
+               console .log ("Viewpoint copied to clipboard.");
                console .debug (text);
             }
 
