@@ -73,15 +73,8 @@ const Grammar = Expressions ({
    closeParenthesis: /\)/gy,
 
    // Units
-   em: /em/gy,
-   ex: /ex/gy,
-   px: /px/gy,
-   in: /in/gy,
-   cm: /cm/gy,
-   mm: /mm/gy,
-   pt: /pt/gy,
-   pc: /pc/gy,
-   percentSign: /%/gy,
+   length: /(em|ex|px|in|cm|mm|pt|pc)/gy,
+   percent: /%/gy,
 
    // Values
    int32: /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
@@ -1044,21 +1037,42 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (this .double ())
       {
+         let value = this .value;
+
          // Parse unit
 
-         if (Grammar .mm .parse (this))
-            this .value /= 1000 * PIXEL;
+         if (Grammar .length .parse (this))
+         {
+            switch (this .result [1])
+            {
+               case "em":
+                  // TODO
+                  break;
+               case "ex":
+                  // TODO
+                  break;
+               case "px":
+                  // We are pixels :)
+                  break;
+               case "in":
+                  value *= INCH / PIXEL;
+                  break;
+               case "cm":
+                  value /= 100 * PIXEL;
+                  break;
+               case "mm":
+                  value /= 1000 * PIXEL;
+                  break;
+               case "pt":
+                  value *= POINT / PIXEL;
+                  break;
+               case "pc":
+                  // TODO
+                  break;
+            }
+         }
 
-         else if (Grammar .cm .parse (this))
-            this .value /= 100 * PIXEL;
-
-         else if (Grammar .in .parse (this))
-            this .value *= INCH / PIXEL;
-
-         else if (Grammar .pt .parse (this))
-            this .value *= POINT / PIXEL;
-
-         return this .value;
+         return value;
       }
 
       return defaultValue;
@@ -1073,7 +1087,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          // Parse unit
 
-         if (Grammar .percentSign .parse (this))
+         if (Grammar .percent .parse (this))
             value /= 100;
 
          return Algorithm .clamp (value, 0, 1);
