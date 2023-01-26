@@ -99,7 +99,7 @@ const
    CM            = 0.01,      // One cm in meters.
    INCH          = 0.0254,    // One inch in meters.
    POINT         = INCH / 72, // One point in meters.
-   PICA          = INCH / 6   // One pica in meters.
+   PICA          = INCH / 6,  // One pica in meters.
    PIXEL         = INCH / 90, // One pixel in meters.
    EM            = 16,        // One em in pixels,
    BEZIER_STEPS  = 10,
