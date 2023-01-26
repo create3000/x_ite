@@ -5,6 +5,14 @@ nav: main
 categories: []
 tags: [New, Releases]
 ---
+## X_ITE v8.5.2 Released
+
+*Leipzig, 26th January 2023:* Now, X_ITE has support for SVG.
+
+### New Features
+
+- Added SVG parser.
+
 ## X_ITE v8.5.0 Released
 
 *Leipzig, 23rd January 2023:* With this new version it is now possible to configure antialiasing. Antialiasing can be turned on/off, multisampling and supersampling can now be configured. Additionally glTF files can now be loaded, either directly as source of the \<x3d-canvas\> element or as source of an Inline node, as well as with API methods. The glTF file is internally converted into X3D and then made available to the scene-graph. Also there is a new node ImageTextureAtlas, which makes it easy to load 3D textures.
@@ -15,6 +23,7 @@ tags: [New, Releases]
 - Added multisampling attribute.
 - Added contentScale attribute.
 - New browser options and rendering properties.
+- Animated GIF support for MovieTexture.
 - Added glTF parser.
 - Added Wavefront OBJ parser.
 - Implemented ImageTextureAtlas node.
