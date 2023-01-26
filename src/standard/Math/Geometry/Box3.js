@@ -54,7 +54,7 @@ function Box3 (size, center)
 {
    this .matrix = new Matrix4 ();
 
-   this .set .apply (this, arguments);
+   this .set (... arguments);
 }
 
 Box3 .prototype =

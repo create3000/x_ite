@@ -12,6 +12,11 @@ tags: [New, Releases]
 ### New Features
 
 - Added SVG parser.
+- Parse HTML colors and constants like PI or PI1_2.
+
+### Bug Fixes
+
+- Fixed wireframe shading of thick lines.
 
 ## X_ITE v8.5.0 Released
 
