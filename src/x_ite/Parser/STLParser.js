@@ -98,8 +98,8 @@ function STLParser (scene)
 
    // Globals
 
-   this .vector = new Vector3 (0, 0, 0);
-   this .point  = new Vector3 (0, 0, 0);
+   this .vector = [ ];
+   this .point  = [ ];
 }
 
 STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -198,13 +198,15 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          Grammar .untilEndOfLine .parse (this);
 
-         this .facets (normal .vector, coordinate .point);
+         this .facets ();
 
          shape .appearance         = this .appearance;
          shape .geometry           = geometry;
          geometry .normalPerVertex = false;
          geometry .normal          = normal;
          geometry .coord           = coordinate;
+         normal .vector            = this .vector;
+         coordinate .point         = this .point;
 
          if (name)
             scene .addNamedNode (scene .getUniqueName (name), shape);
@@ -221,20 +223,23 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   facets: function (vector, point)
+   facets: function ()
    {
-      while (this .facet (vector, point))
+      this .vector .length = 0;
+      this .point  .length = 0;
+
+      while (this .facet ())
          ;
    },
-   facet: function (vector, point)
+   facet: function ()
    {
       this .comments ()
 
       if (Grammar .facet .parse (this))
       {
-         if (this .normal (vector))
+         if (this .normal ())
          {
-            if (this .loop (point))
+            if (this .loop ())
             {
                this .comments ();
 
@@ -248,7 +253,7 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   normal: function (vector)
+   normal: function ()
    {
       this .whitespacesNoLineTerminator ();
 
@@ -256,17 +261,15 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          if (this .double ())
          {
-            this .vector .x = this .value;
+            this .vector .push (this .value);
 
             if (this .double ())
             {
-               this .vector .y = this .value;
+               this .vector .push (this .value);
 
                if (this .double ())
                {
-                  this .vector .z = this .value;
-
-                  vector .push (this .vector);
+                  this .vector .push (this .value);
 
                   return true;
                }
@@ -282,7 +285,7 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       throw new Error ("Expected 'normal' statement.");
    },
-   loop: function (point)
+   loop: function ()
    {
       this .comments ();
 
@@ -292,11 +295,11 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          if (Grammar .loop .parse (this))
          {
-            if (this .vertex (point))
+            if (this .vertex ())
             {
-               if (this .vertex (point))
+               if (this .vertex ())
                {
-                  if (this .vertex (point))
+                  if (this .vertex ())
                   {
                      this .comments ();
 
@@ -314,7 +317,7 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       throw new Error ("Expected 'outer' statement.");
    },
-   vertex: function (point)
+   vertex: function ()
    {
       this .comments ();
 
@@ -322,17 +325,15 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          if (this .double ())
          {
-            this .point .x = this .value;
+            this .point .push (this .value);
 
             if (this .double ())
             {
-               this .point .y = this .value;
+               this .point .push (this .value);
 
                if (this .double ())
                {
-                  this .point .z = this .value;
-
-                  point .push (this .point);
+                  this .point .push (this .value);
 
                   return true;
                }
