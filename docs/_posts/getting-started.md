@@ -624,6 +624,7 @@ Additionally files can be compressed using GZip compression.
 | VRML             | .wrl, .wrz     | model/vrml      |
 | glTF             | .gltf          | model/gltf+json |
 | Wavefront OBJ    | .obj           | model/obj       |
+| STL ASCII        | .stl           | model/stl       |
 | SVG Document     | .svg, .svgz    | image/svg+xml   |
 
 For more information see [How to Configure Your Web Server](how-to-configure-your-web-server).
