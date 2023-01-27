@@ -11,6 +11,10 @@ X_ITE makes use of the XMLHttpRequest object to load files and there's no way ro
 
 To work around this problem you must set up a localhost server, then you can access your local files under the web address http://**localhost**/...
 
+### Using a Browser Extension
+
+You can use this [Browser Extension](https://webextension.org/listing/access-control.html) to unlock the CORS restrictions imposed by your browser. This is useful if you are in development mode.
+
 ## Using an Application
 
 There are several applications on the Internet which can make a localhost server. Here I would like to recommend you two of them:
