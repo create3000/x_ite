@@ -71,9 +71,14 @@ GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          try
          {
-            const parser = new Parser (this .getScene ());
+            const
+               parser = new Parser (this .getScene ()),
+               input  = this .getInput (parser .getEncoding (), x3dSyntax);
 
-            parser .setInput (this .getInput (parser .getEncoding (), x3dSyntax));
+            if (input === undefined)
+               continue;
+
+            parser .setInput (input);
 
             if (!parser .isValid ())
                continue;

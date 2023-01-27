@@ -463,7 +463,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
          else
          {
             this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
-            this .initialize__ (typeof data === "string" ? data : new TextDecoder () .decode (data));
+            this .initialize__ ($.decodeText (data));
          }
       }
       .bind (this));
