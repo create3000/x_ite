@@ -6,4 +6,16 @@ $.decodeText = function (input)
    return new TextDecoder () .decode (input);
 };
 
+$.ungzip = function (arrayBuffer)
+{
+   try
+   {
+      return pako .ungzip (arrayBuffer, { to: "raw" }) .buffer;
+   }
+   catch (exception)
+   {
+      return arrayBuffer;
+   }
+}
+
 export default $;

@@ -257,7 +257,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return fetch (url)
          .then (response => response .blob ())
-         .then (blob => blob .arrayBuffer ());
+         .then (blob => blob .arrayBuffer ())
+         .then (arrayBuffer => $.ungzip (arrayBuffer));
    },
    bufferViewsArray: function (bufferViews)
    {

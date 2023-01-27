@@ -287,16 +287,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
             return this .foreign (this .URL .href, this .target);
       }
 
-      const arrayBuffer = await response .arrayBuffer ();
-
-      try
-      {
-         this .callback (pako .ungzip (arrayBuffer, { to: "raw" }) .buffer, this .URL);
-      }
-      catch (exception)
-      {
-         this .callback (arrayBuffer);
-      }
+      this .callback ($.ungzip (await response .arrayBuffer ()), this .URL);
    },
    loadDocumentError: function (exception)
    {
