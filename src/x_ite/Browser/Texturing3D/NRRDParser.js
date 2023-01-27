@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import Expressions from "../../Parser/Expressions.js";
+import $           from "../../../lib/jquery.js";
 
 // Grammar
 
@@ -87,7 +88,7 @@ NRRDParser .prototype =
    setInput: function (value)
    {
       this .dataView     = new DataView (value);
-      this .input        = new TextDecoder ("ascii") .decode (value);
+      this .input        = $.decodeText (value);
       this .lastIndex    = 0;
       this .nrrd         = { };
       this .littleEndian = true;
@@ -440,10 +441,10 @@ NRRDParser .prototype =
             throw new Error ("Invalid NRRD data.");
 
          const
-            input = new Uint8Array (this .dataView .buffer, this .lastIndex),
-            array = pako .ungzip (input, { to: "raw" });
+            input       = this .dataView .buffer .slice (this .lastIndex),
+            arrayBuffer = $.ungzip (input);
 
-         this .dataView = new DataView (array .buffer);
+         this .dataView = new DataView (arrayBuffer);
 
          this .raw ();
       }
