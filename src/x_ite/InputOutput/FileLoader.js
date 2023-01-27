@@ -329,7 +329,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       try
       {
-         this .callback (pako .ungzip (arrayBuffer, { to: "binary" }), this .URL);
+         this .callback (pako .ungzip (arrayBuffer, { to: "raw" }) .buffer, this .URL);
       }
       catch (exception)
       {

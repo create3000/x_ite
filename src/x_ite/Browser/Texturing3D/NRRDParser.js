@@ -572,24 +572,24 @@ NRRDParser .prototype =
          Grammar .data .parse (this);
 
          const
-            buffer = this .binaryStringToBuffer (this .result [1]),
-            raw    = pako .ungzip (buffer, { to: "raw" });
+            array = this .binaryStringToBuffer (this .result [1]),
+            raw   = pako .ungzip (array, { to: "raw" });
 
          this .rawArray (raw);
       }
       catch (error)
       {
-         throw new Error ("Invalid NRRD data.");
+         throw new Error (`Invalid NRRD data: ${error}.`);
       }
    },
    binaryStringToBuffer: function (string)
    {
-      const buffer = new Uint8Array (string .length);
+      const array = new Uint8Array (string .length);
 
       for (let i = 0, length = string .length; i < length; ++ i)
-         buffer [i] = string .charCodeAt (i);
+         array [i] = string .charCodeAt (i);
 
-      return buffer;
+      return array;
    },
    getEndianess: function ()
    {
