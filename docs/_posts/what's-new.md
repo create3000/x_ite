@@ -818,7 +818,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 ### Bug Fixes
 
 - Fixed bug when parsing XML field values.
-- Fixed SFRotation handling of unnormalized values.
+- Fixed SFRotation handling of un-normalized values.
 
 ## X_ITE v4.2.5 Released
 
