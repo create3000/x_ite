@@ -117,7 +117,7 @@ GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
          switch (encoding)
          {
             case "STRING":
-               return typeof x3dSyntax === "string" ? x3dSyntax : new TextDecoder () .decode (x3dSyntax);
+               return $.decodeText (x3dSyntax);
             case "XML":
                return $.parseXML (this .getInput ("STRING", x3dSyntax));
             case "JSON":

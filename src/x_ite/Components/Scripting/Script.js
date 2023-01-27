@@ -164,7 +164,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          else
          {
             this .setLoadState (X3DConstants .COMPLETE_STATE);
-            this .initialize__ (typeof data === "string" ? data : new TextDecoder () .decode (data));
+            this .initialize__ ($.decodeText (data));
          }
       }
       .bind (this));

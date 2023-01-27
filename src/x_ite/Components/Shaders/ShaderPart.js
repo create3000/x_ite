@@ -176,8 +176,7 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
                type           = this .getShaderType (),
                options        = ["X3D_" + type] .concat (this .options),
                shaderCompiler = new ShaderCompiler (gl),
-               string         = typeof data === "string" ? data : new TextDecoder () .decode (data),
-               source         = ShaderSource .getSource (gl, browser, shaderCompiler .process (string), options),
+               source         = ShaderSource .getSource (gl, browser, shaderCompiler .process ($.decodeText (data)), options),
                shader         = gl .createShader (gl [type]);
 
             gl .deleteShader (this .shader);
