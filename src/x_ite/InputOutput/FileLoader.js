@@ -52,9 +52,8 @@ import X3DWorld   from "../Execution/X3DWorld.js";
 import DEBUG      from "../DEBUG.js";
 
 const
-   ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
-   dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,(.*)$/s,
-   contentTypeRx = /^(?:(.*?);(.*?)$)/;
+   ECMAScript = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
+   dataURL    = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,(.*)$/s;
 
 const foreignExtensions = new RegExp ("\.(?:html|xhtml)$");
 
@@ -369,17 +368,6 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       }
 
       return this .executionContext .getWorldURL ();
-   },
-   getContentType: function (xhr)
-   {
-      const
-         contentType = xhr .getResponseHeader ("Content-Type"),
-         result      = contentTypeRx .exec (contentType);
-
-      if (result)
-         return result [1];
-
-      return "";
    },
 });
 
