@@ -152,38 +152,40 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
 
       // Do transition, use transition node for multiple layers support.
 
-      this .transitionNode = top .create (this .getExecutionContext ());
+      this .transitionNode .dispose ();
 
-      this .transitionNode .setup ();
-      this .transitionNode .transitionStart (layerNode, fromNode, top);
+      const transitionNode = this .transitionNode = top .create (this .getExecutionContext ());
 
-      if (this .transitionNode ._transitionActive .getValue ())
+      transitionNode .setup ();
+      transitionNode .transitionStart (layerNode, fromNode, top);
+
+      if (transitionNode ._transitionActive .getValue ())
       {
-         top ._position         .addFieldInterest (this .transitionNode ._position);
-         top ._orientation      .addFieldInterest (this .transitionNode ._orientation);
-         top ._centerOfRotation .addFieldInterest (this .transitionNode ._centerOfRotation);
-         top ._fieldOfView      .addFieldInterest (this .transitionNode ._fieldOfView);
-         top ._nearDistance     .addFieldInterest (this .transitionNode ._nearDistance);
-         top ._farDistance      .addFieldInterest (this .transitionNode ._farDistance);
+         top ._position         .addFieldInterest (transitionNode ._position);
+         top ._orientation      .addFieldInterest (transitionNode ._orientation);
+         top ._centerOfRotation .addFieldInterest (transitionNode ._centerOfRotation);
+         top ._fieldOfView      .addFieldInterest (transitionNode ._fieldOfView);
+         top ._nearDistance     .addFieldInterest (transitionNode ._nearDistance);
+         top ._farDistance      .addFieldInterest (transitionNode ._farDistance);
 
-         this .transitionNode ._transitionActive .addInterest ("set_transitionActive__", this, top);
+         transitionNode ._transitionActive .addInterest ("set_transitionActive__", this, top, transitionNode);
       }
 
       this .addNodeEvent ();
    },
-   set_transitionActive__: function (top, transitionActive)
+   set_transitionActive__: function (top, transitionNode, transitionActive)
    {
       if (transitionActive .getValue ())
          return;
 
-      top ._position         .removeFieldInterest (this .transitionNode ._position);
-      top ._orientation      .removeFieldInterest (this .transitionNode ._orientation);
-      top ._centerOfRotation .removeFieldInterest (this .transitionNode ._centerOfRotation);
-      top ._fieldOfView      .removeFieldInterest (this .transitionNode ._fieldOfView);
-      top ._nearDistance     .removeFieldInterest (this .transitionNode ._nearDistance);
-      top ._farDistance      .removeFieldInterest (this .transitionNode ._farDistance);
+      top ._position         .removeFieldInterest (transitionNode ._position);
+      top ._orientation      .removeFieldInterest (transitionNode ._orientation);
+      top ._centerOfRotation .removeFieldInterest (transitionNode ._centerOfRotation);
+      top ._fieldOfView      .removeFieldInterest (transitionNode ._fieldOfView);
+      top ._nearDistance     .removeFieldInterest (transitionNode ._nearDistance);
+      top ._farDistance      .removeFieldInterest (transitionNode ._farDistance);
 
-      this .transitionNode ._transitionActive .removeInterest ("set_transitionActive__", this);
+      transitionNode ._transitionActive .removeInterest ("set_transitionActive__", this);
 
       this .addNodeEvent ();
    },
