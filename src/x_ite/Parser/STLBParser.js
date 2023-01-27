@@ -75,7 +75,7 @@ STLBParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .dataView = new DataView (this .input);
 
       const
-         numFaces   = this .dataView .getInt32 (80, true),
+         numFaces   = this .dataView .getUint32 (80, true),
          byteLength = numFaces * 50 + 84;
 
       return byteLength === this .dataView .byteLength;
