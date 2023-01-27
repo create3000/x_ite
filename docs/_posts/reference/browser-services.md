@@ -57,21 +57,21 @@ Replace the current world with this new scene that has been loaded or constructe
 
 The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 
-#### void|Promise <X3DScene> **createX3DFromURL** (*MFString url [, Node node, String event]*)
+#### void|Promise \<X3DScene\> **createX3DFromURL** (*MFString url [, Node node, String event]*)
 
 Parse the passed URL into a X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
 
 If event and node are omitted a Promise that resolves to a X3DScene object is returned.
 
-#### Promise **loadURL** (*MFString url [, MFString parameter]*)
+#### Promise \<void\> **loadURL** (*MFString url [, MFString parameter]*)
 
 Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return. The return value is a Promise object, that is resolved when the new scene is loaded.
 
-#### Promise <X3DScene> **importDocument** (*DOMObject dom*)
+#### Promise \<X3DScene\> **importDocument** (*DOMObject dom*)
 
 Imports a X3D XML DOM document or fragment, converts it, and returns a Promise that resolves to a X3DScene object.
 
-#### Promise <X3DScene> **importJS** (*Object json*)
+#### Promise \<X3DScene\> **importJS** (*Object json*)
 
 Imports a X3D JSON document or fragment, converts it, and returns a Promise that resolves to a X3DScene object.
 
