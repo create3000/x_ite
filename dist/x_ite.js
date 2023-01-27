@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 862:
+/***/ 37:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(46);
+/* provided dependency */ var jQuery = __webpack_require__(486);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 895:
+/***/ 657:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(46);
+/* provided dependency */ var jQuery = __webpack_require__(486);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 781:
+/***/ 352:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(46)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(486)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 46:
+/***/ 486:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11812,7 +11812,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 204:
+/***/ 826:
 /***/ ((module) => {
 
 /**
@@ -16591,7 +16591,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 327:
+/***/ 8:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19836,7 +19836,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 660:
+/***/ 775:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -35891,7 +35891,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(46);
+/* provided dependency */ var $ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36842,7 +36842,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(46);
+/* provided dependency */ var Notification_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36964,8 +36964,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(895);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(46);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(657);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41919,7 +41919,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 x_ite_Namespace.set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(46);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42438,6 +42438,9 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    },
    isValid: function ()
    {
+      if (!(typeof this .input === "string"))
+         return false;
+
       return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{|$))/);
    },
    setInput: function (vrmlSyntax)
@@ -45126,7 +45129,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(46);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49277,6 +49280,9 @@ OBJParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    isValid: function ()
    {
+      if (!(typeof this .input === "string"))
+         return false;
+
       return !! this .input .match (/^(?:[\x20\n\t\r]+|#.*?[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
    },
    setInput: function (string)
@@ -50320,18 +50326,8 @@ STLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    isValid: function ()
    {
-      // const inputArray = new Uint8Array (this .input .length);
-
-      // for (let i = 0, length = this .input .length; i < length; ++ i)
-      //    inputArray [i] = this .input .charCodeAt (i);
-
-      // const dataView = new DataView (inputArray .buffer);
-
-      // const
-      //    numFaces   = dataView .getInt32 (80, true),
-      //    byteLength = numFaces * 50 + 84;
-
-      // console .log (byteLength, dataView .byteLength, inputArray .length)
+      if (!(typeof this .input === "string"))
+         return false;
 
       return !! this .input .match (/^(?:[\x20\n\t\r]+|;.*?[\r\n])*\b(?:solid)\b/);
    },
@@ -51289,8 +51285,8 @@ const Bezier_default_ = Bezier;
 x_ite_Namespace.set ("standard/Math/Algorithms/Bezier", Bezier_default_);
 /* harmony default export */ const Algorithms_Bezier = (Bezier_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(46);
-/* provided dependency */ var libtess = __webpack_require__(204);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(486);
+/* provided dependency */ var libtess = __webpack_require__(826);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53772,7 +53768,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace.set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(46);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53849,9 +53845,6 @@ GoldenGate .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             const
                parser = new Parser (this .getScene ()),
                input  = this .getInput (parser .getEncoding (), x3dSyntax);
-
-            if (input === undefined)
-               continue;
 
             parser .setInput (input);
 
@@ -54101,7 +54094,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(204);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(826);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -61323,7 +61316,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(46);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65588,130 +65581,8 @@ const X3DWorld_default_ = X3DWorld;
 
 x_ite_Namespace.set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
-;// CONCATENATED MODULE: ./src/standard/Networking/BinaryTransport.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-function BinaryTransport ($)
-{
-   // Use this transport for "binary" data type
-   $.ajaxTransport ("+binary", function (options, originalOptions, jqXHR)
-   {
-      // Check for conditions and support for blob / arraybuffer response type
-      if (options .dataType && options .dataType == 'binary')
-      {
-         return {
-            send: function (headers, callback)
-            {
-               // Setup all variables
-               const xhr = options .xhr ();
-
-               xhr .open (options .type, options .url, options .async, options .username, options .password);
-
-               // Apply custom fields if provided
-               if (options .xhrFields)
-               {
-                  for (const i in options .xhrFields)
-                     xhr [i] = options .xhrFields [i];
-               }
-
-               // Override mime type if needed
-               if (options .mimeType && xhr .overrideMimeType)
-                  xhr .overrideMimeType (options .mimeType);
-
-               // Setup custom headers
-               for (const i in headers)
-                  xhr .setRequestHeader (i, headers [i]);
-
-               // Setup onload callback
-               xhr .onload = function ()
-               {
-                  xhr .onload = xhr .onerror = null;
-
-                  const data = { };
-
-                  data [options .dataType] = xhr .response;
-
-                  callback (xhr .status || 200, xhr .statusText, data, xhr .getAllResponseHeaders ());
-               };
-
-               // Setup onerror callback
-               xhr .onerror = function ()
-               {
-                  xhr .onload = xhr .onerror = null;
-
-                  callback (xhr .status || 404, xhr .statusText);
-               };
-
-               // Send data
-               xhr .responseType = options .responseType || "blob";
-               xhr .send (options .hasContent && options .data || null);
-            },
-            abort: function ()
-            {
-               const xhr = options .xhr ();
-
-               xhr .onload = xhr .onerror = null;
-
-               xhr .abort ();
-            }
-         };
-      }
-   });
-}
-
-const BinaryTransport_default_ = BinaryTransport;
-;
-
-x_ite_Namespace.set ("standard/Networking/BinaryTransport", BinaryTransport_default_);
-/* harmony default export */ const Networking_BinaryTransport = (BinaryTransport_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(46);
-/* provided dependency */ var pako = __webpack_require__(327);
+/* provided dependency */ var pako = __webpack_require__(8);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65764,14 +65635,10 @@ x_ite_Namespace.set ("standard/Networking/BinaryTransport", BinaryTransport_defa
 
 
 
-
-
-Networking_BinaryTransport (FileLoader_$);
 
 const
-   ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
-   dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,(.*)$/s,
-   contentTypeRx = /^(?:(.*?);(.*?)$)/;
+   ECMAScript = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
+   dataURL    = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,(.*)$/s;
 
 const foreignExtensions = new RegExp ("\.(?:html|xhtml)$");
 
@@ -65813,6 +65680,31 @@ FileLoader .prototype = Object .assign (Object .create (Base_X3DObject.prototype
    getWorldURL: function ()
    {
       return this .URL;
+   },
+   getReferer: function ()
+   {
+      if (this .node .getTypeName () === "X3DWorld")
+      {
+         if (this .external)
+            return this .browser .getLocation ();
+      }
+
+      return this .executionContext .getWorldURL ();
+   },
+   getTarget: function (parameters)
+   {
+      for (const parameter of parameters)
+      {
+         const pair = parameter .split ("=");
+
+         if (pair .length !== 2)
+            continue;
+
+         if (pair [0] === "target")
+            return pair [1];
+      }
+
+      return "";
    },
    createX3DFromString: function (worldURL, string = "", success, error)
    {
@@ -65880,10 +65772,7 @@ FileLoader .prototype = Object .assign (Object .create (Base_X3DObject.prototype
       this .foreign       = foreign;
       this .target        = this .getTarget (parameter || defaultParameter);
 
-      if (callback)
-         return this .loadDocument (url, this .createX3DFromURLAsync .bind (this, callback));
-
-      return this .createX3DFromURLSync (url);
+      return this .loadDocument (url, this .createX3DFromURLAsync .bind (this, callback));
    },
    createX3DFromURLAsync: function (callback, data)
    {
@@ -65892,188 +65781,106 @@ FileLoader .prototype = Object .assign (Object .create (Base_X3DObject.prototype
       else
          this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
    },
-   createX3DFromURLSync: function (urls)
-   {
-      if (urls .length === 0)
-         throw new Error ("No URL given.");
-
-      let
-         scene   = null,
-         success = false;
-
-      for (const url of urls)
-      {
-         this .URL = new URL (url, this .getReferer ());
-
-         FileLoader_$.ajax ({
-            url: decodeURI (this .URL .href),
-            dataType: "text",
-            async: false,
-            cache: this .node .getCache (),
-            //timeout: 15000,
-            global: false,
-            context: this,
-            success: function (data)
-            {
-               try
-               {
-                  scene   = this .createX3DFromString (this .URL, data);
-                  success = true;
-               }
-               catch (exception)
-               {
-                  this .error (exception);
-               }
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-               //console .warn ("Couldn't load URL '" + this .URL .href + "': " + errorThrown + ".");
-            },
-         });
-
-         if (success)
-            return scene;
-      }
-
-      throw new Error ("Couldn't load any url of '" + Array .prototype .join .call (urls, ", ") + "'.");
-   },
    loadDocument: function (url, callback)
    {
-      this .url       = url .copy ();
-      this .callback  = callback;
+      this .url      = url .copy ();
+      this .callback = callback;
 
       if (url .length === 0)
          return this .loadDocumentError (new Error ("No URL given."));
 
-      this .loadDocumentAsync (this .url .shift ());
+      this .loadDocumentAsync (this .url .shift ())
+         .catch (this .loadDocumentError .bind (this));
    },
-   getTarget: function (parameters)
+   loadDocumentAsync: async function (url)
    {
-      for (const parameter of parameters)
+      if (url .length === 0)
       {
-         const pair = parameter .split ("=");
-
-         if (pair .length !== 2)
-            continue;
-
-         if (pair [0] === "target")
-            return pair [1];
-      }
-
-      return "";
-   },
-   loadDocumentAsync: function (url)
-   {
-      try
-      {
-         if (url .length === 0)
-         {
-            this .loadDocumentError (new Error ("URL is empty."));
-            return;
-         }
-
-         // Script
-         {
-            const result = ECMAScript .exec (url);
-
-            if (result)
-            {
-               this .callback (result [1]);
-               return;
-            }
-         }
-
-         // Data URL
-         {
-            const result = dataURL .exec (url);
-
-            if (result)
-            {
-               //const mimeType = result [1];
-
-               // ??? If called from loadURL and mime type is text/html do a window.open or window.location=URL and return; ???
-
-               let data = result [4];
-
-               if (result [3] === "base64")
-                  data = atob (data);
-               else
-                  data = unescape (data);
-
-               this .callback (data);
-               return;
-            }
-         }
-
-         this .URL = new URL (url, this .getReferer ());
-
-         if (this .bindViewpoint)
-         {
-            if (this .URL .href .substr (0, this .getReferer () .length) === this .getReferer ())
-            {
-               this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
-               return;
-            }
-         }
-
-         if (this .foreign)
-         {
-            // Handle target
-
-            if (this .target .length && this .target !== "_self")
-               return this .foreign (this .URL .href, this .target);
-
-            // Handle well known foreign content depending on extension or if path looks like directory.
-
-            if (this .URL .href .match (foreignExtensions))
-               return this .foreign (this .URL .href, this .target);
-         }
-
-         // Load URL async
-
-         FileLoader_$.ajax ({
-            url: decodeURI (this .URL .href),
-            dataType: "binary",
-            async: true,
-            cache: this .node .getCache (),
-            //timeout: 15000,
-            global: false,
-            context: this,
-            success: function (blob, status, xhr)
-            {
-               if (this .foreign)
-               {
-                  //console .log (this .getContentType (xhr));
-
-                  if (foreign [this .getContentType (xhr)])
-                     return this .foreign (this .URL .href, this .target);
-               }
-
-               this .fileReader .onload = this .readAsArrayBuffer .bind (this);
-
-               this .fileReader .readAsArrayBuffer (blob);
-            },
-            error: function (xhr, textStatus, exception)
-            {
-               this .loadDocumentError (new Error (exception));
-            },
-         });
-      }
-      catch (exception)
-      {
-         this .loadDocumentError (exception);
+         this .loadDocumentError (new Error ("URL is empty."));
          return;
       }
-   },
-   readAsArrayBuffer: function (blob)
-   {
+
+      // Script
+      {
+         const result = ECMAScript .exec (url);
+
+         if (result)
+         {
+            this .callback (result [1]);
+            return;
+         }
+      }
+
+      // Data URL
+      {
+         const result = dataURL .exec (url);
+
+         if (result)
+         {
+            //const mimeType = result [1];
+
+            // ??? If called from loadURL and mime type is text/html do a window.open or window.location=URL and return; ???
+
+            let data = result [4];
+
+            if (result [3] === "base64")
+               data = atob (data);
+            else
+               data = unescape (data);
+
+            this .callback (data);
+            return;
+         }
+      }
+
+      this .URL = new URL (url, this .getReferer ());
+
+      if (this .bindViewpoint)
+      {
+         if (this .URL .href .substr (0, this .getReferer () .length) === this .getReferer ())
+         {
+            this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
+            return;
+         }
+      }
+
+      if (this .foreign)
+      {
+         // Handle target
+
+         if (this .target .length && this .target !== "_self")
+            return this .foreign (this .URL .href, this .target);
+
+         // Handle well known foreign content depending on extension or if path looks like directory.
+
+         if (this .URL .href .match (foreignExtensions))
+            return this .foreign (this .URL .href, this .target);
+      }
+
+      // Load URL async
+
+      const
+         options     = { cache: this .node .getCache () ? "default" : "reload" },
+         response    = await fetch (decodeURI (this .URL .href), options),
+         contentType = response .headers .get ("content-type");
+
+      if (this .foreign)
+      {
+         //console .log (contentType);
+
+         if (foreign [contentType])
+            return this .foreign (this .URL .href, this .target);
+      }
+
+      const arrayBuffer = await response .arrayBuffer ();
+
       try
       {
-         this .callback (pako .ungzip (this .fileReader .result, { to: "binary" }), this .URL);
+         this .callback (pako .ungzip (arrayBuffer, { to: "raw" }) .buffer, this .URL);
       }
       catch (exception)
       {
-         this .callback (this .fileReader .result);
+         this .callback (arrayBuffer);
       }
    },
    loadDocumentError: function (exception)
@@ -66085,10 +65892,14 @@ FileLoader .prototype = Object .assign (Object .create (Base_X3DObject.prototype
       // Try to load next URL.
 
       if (this .url .length)
-         this .loadDocumentAsync (this .url .shift ());
-
+      {
+         this .loadDocumentAsync (this .url .shift ())
+            .catch (this .loadDocumentError .bind (this));
+      }
       else
+      {
          this .callback (null);
+      }
    },
    error: function (exception)
    {
@@ -66099,27 +65910,6 @@ FileLoader .prototype = Object .assign (Object .create (Base_X3DObject.prototype
 
       if (DEBUG)
          console .error (exception);
-   },
-   getReferer: function ()
-   {
-      if (this .node .getTypeName () === "X3DWorld")
-      {
-         if (this .external)
-            return this .browser .getLocation ();
-      }
-
-      return this .executionContext .getWorldURL ();
-   },
-   getContentType: function (xhr)
-   {
-      const
-         contentType = xhr .getResponseHeader ("Content-Type"),
-         result      = contentTypeRx .exec (contentType);
-
-      if (result)
-         return result [1];
-
-      return "";
    },
 });
 
@@ -68133,7 +67923,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(46);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70089,7 +69879,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(46);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77093,8 +76883,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(781);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(46);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(352);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77949,8 +77739,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(781);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(46);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(352);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78892,8 +78682,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(781);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(46);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(352);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79196,8 +78986,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(781);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(46);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(352);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -80789,8 +80579,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(781);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(46);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(352);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81559,8 +81349,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(46);
-/* provided dependency */ var ResizeSensor = __webpack_require__(862);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(486);
+/* provided dependency */ var ResizeSensor = __webpack_require__(37);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89879,7 +89669,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace.set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(46);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -92989,7 +92779,7 @@ const X3DRoutingContext_default_ = X3DRoutingContext;
 x_ite_Namespace.set ("x_ite/Routing/X3DRoutingContext", X3DRoutingContext_default_);
 /* harmony default export */ const Routing_X3DRoutingContext = (X3DRoutingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowserContext.js
-/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(46);
+/* provided dependency */ var X3DBrowserContext_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111797,7 +111587,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(46);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114612,8 +114402,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(46);
-/* provided dependency */ var SuperGif = __webpack_require__(660);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(486);
+/* provided dependency */ var SuperGif = __webpack_require__(775);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115575,7 +115365,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(46);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116278,7 +116068,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(46);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(486);
 /*******************************************************************************
  * MIT License
  *
@@ -117515,7 +117305,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(46);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117587,10 +117377,9 @@ x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_
 
 
 
-
 const
    _DOMIntegration   = Symbol (),
-   _loader           = Symbol (),
+   _fileLoader       = Symbol (),
    _browserCallbacks = Symbol (),
    _console          = Symbol ();
 
@@ -117739,7 +117528,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
 
          await loadComponents (browser, X3DBrowser_$.data (component, "dependencies"), seen);
 
-         if (! X3DBrowser_$.data (component, "external"))
+         if (!X3DBrowser_$.data (component, "external"))
             return;
 
          if (Networking_Features.NODE_ENV)
@@ -117776,7 +117565,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
 
       if (arguments .length)
       {
-         if (! (profile instanceof Configuration_ProfileInfo))
+         if (!(profile instanceof Configuration_ProfileInfo))
             throw new Error ("Couldn't create scene: profile must be of type ProfileInfo.");
 
          scene .setProfile (profile);
@@ -117785,7 +117574,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
          {
             const component = arguments [i];
 
-            if (! (component instanceof Configuration_ComponentInfo))
+            if (!(component instanceof Configuration_ComponentInfo))
                throw new Error ("Couldn't create scene: component must be of type ComponentInfo.");
 
             scene .addComponent (component);
@@ -117798,8 +117587,8 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
    },
    replaceWorld: function (scene)
    {
-       if (this [_loader])
-         this [_loader] .abort ();
+       if (this [_fileLoader])
+         this [_fileLoader] .abort ();
 
       // Remove world.
 
@@ -117827,7 +117616,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
          scene .setRootNodes (rootNodes);
       }
 
-      if (! (scene instanceof Execution_X3DScene))
+      if (!(scene instanceof Execution_X3DScene))
          scene = this .createScene ();
 
       // Detach scene from parent.
@@ -117876,7 +117665,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
          fileLoader   = new InputOutput_FileLoader (this .getWorld ()),
          scene        = fileLoader .createX3DFromString (currentScene .getWorldURL (), x3dSyntax);
 
-      if (! external)
+      if (!external)
       {
          currentScene .isLive () .addInterest ("setLive", scene);
          scene .setExecutionContext (currentScene);
@@ -117890,15 +117679,15 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
       node  = Base_X3DCast (Base_X3DConstants.X3DNode, node, false);
       event = String (event);
 
-      if (! (url instanceof x_ite_Fields.MFString))
+      if (!(url instanceof x_ite_Fields.MFString))
          throw new Error ("Browser.createVrmlFromURL: url must be of type MFString.");
 
-      if (! node)
+      if (!node)
          throw new Error ("Browser.createVrmlFromURL: node must be of type X3DNode.");
 
       const field = node .getField (event);
 
-      if (! field .isInput ())
+      if (!field .isInput ())
          throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be a input field.");
 
       if (field .getType () !== Base_X3DConstants.MFNode)
@@ -117907,19 +117696,19 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
       const
          currentScene = this .currentScene,
          external     = this .isExternal (),
-         loader       = new InputOutput_FileLoader (this .getWorld ());
+         fileLoader   = new InputOutput_FileLoader (this .getWorld ());
 
-      this .addLoadingObject (loader);
+      this .addLoadingObject (fileLoader);
 
-      loader .createX3DFromURL (url, null, (scene) =>
+      fileLoader .createX3DFromURL (url, null, (scene) =>
       {
-         this .removeLoadingObject (loader);
+         this .removeLoadingObject (fileLoader);
 
          if (scene)
          {
             // Handle isLive for script scenes here:
 
-            if (! external)
+            if (!external)
             {
                currentScene .isLive () .addInterest ("setLive", scene);
                scene .setExecutionContext (currentScene);
@@ -117938,32 +117727,48 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
 
       // arguments .length === 1
 
-      if (! (url instanceof x_ite_Fields.MFString))
+      if (!(url instanceof x_ite_Fields.MFString))
          throw new Error ("Browser.createX3DFromURL: url must be of type MFString.");
 
-      const
-         currentScene = this .currentScene,
-         external     = this .isExternal (),
-         fileLoader   = new InputOutput_FileLoader (this .getWorld ()),
-         scene        = fileLoader .createX3DFromURL (url, null);
-
-      if (! external)
+      return new Promise ((resolve, reject) =>
       {
-         currentScene .isLive () .addInterest ("setLive", scene);
-         scene .setExecutionContext (currentScene);
-         scene .setLive (currentScene .getLive ());
-      }
+         const
+            currentScene = this .currentScene,
+            external     = this .isExternal (),
+            fileLoader   = new InputOutput_FileLoader (this .getWorld ());
 
-      return scene;
+         this .addLoadingObject (fileLoader);
+
+         fileLoader .createX3DFromURL (url, null, (scene) =>
+         {
+            this .removeLoadingObject (fileLoader);
+
+            if (scene)
+            {
+               if (!external)
+               {
+                  currentScene .isLive () .addInterest ("setLive", scene);
+                  scene .setExecutionContext (currentScene);
+                  scene .setLive (currentScene .getLive ());
+               }
+
+               resolve (scene);
+            }
+            else
+            {
+               reject (new Error ("Couldn't load X3D file."));
+            }
+         })
+      });
    },
    loadURL: function (url, parameter = new x_ite_Fields.MFString ())
    {
       return new Promise ((resolve, reject) =>
       {
-         if (! (url instanceof x_ite_Fields.MFString))
+         if (!(url instanceof x_ite_Fields.MFString))
             throw new Error ("Browser.loadURL: url must be of type MFString.");
 
-         if (! (parameter instanceof x_ite_Fields.MFString))
+         if (!(parameter instanceof x_ite_Fields.MFString))
             throw new Error ("Browser.loadURL: parameter must be of type MFString.");
 
          // Cancel any loading.
@@ -117971,25 +117776,25 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
          this ._loadCount       .removeInterest ("checkLoadCount",    this);
          this .prepareEvents () .removeInterest ("updateInitialized", this);
 
-         if (this [_loader])
-            this [_loader] .abort ();
+         if (this [_fileLoader])
+            this [_fileLoader] .abort ();
 
          // Start loading.
 
          this .setBrowserLoading (true);
          this .addLoadingObject (this);
 
-         const loader = this [_loader] = new InputOutput_FileLoader (this .getWorld ());
+         const fileLoader = this [_fileLoader] = new InputOutput_FileLoader (this .getWorld ());
 
-         loader .createX3DFromURL (url, parameter, (scene) =>
+         fileLoader .createX3DFromURL (url, parameter, (scene) =>
          {
-            if (loader !== this [_loader])
+            if (fileLoader !== this [_fileLoader])
             {
-               reject ("Loading of X3D file aborted.");
+               reject (new Error ("Loading of X3D file aborted."));
                return;
             }
 
-            if (! this .getBrowserOption ("SplashScreen"))
+            if (!this .getBrowserOption ("SplashScreen"))
                this .getCanvas () .show ();
 
             if (scene)
@@ -118011,14 +117816,14 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
                      .text (locale_gettext ("Failed loading world."));
                });
 
-               reject ("Couldn't load X3D file.");
+               reject (new Error ("Couldn't load X3D file."));
             }
          },
          (fragment) =>
          {
-            if (loader !== this [_loader])
+            if (fileLoader !== this [_fileLoader])
             {
-               reject ("Change viewpoint aborted.");
+               reject (new Error ("Change viewpoint aborted."));
                return;
             }
 
@@ -118030,9 +117835,9 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
          },
          (url, target) =>
          {
-            if (loader !== this [_loader])
+            if (fileLoader !== this [_fileLoader])
             {
-               reject ("Loading of file aborted.");
+               reject (new Error ("Loading of file aborted."));
                return;
             }
 
@@ -118083,14 +117888,14 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
          }
       };
    })(),
-   importDocument: function (dom, async = false)
+   importDocument: function (dom)
    {
       const
          currentScene = this .currentScene,
          scene        = this .createScene (),
          external     = this .isExternal ();
 
-      if (! external)
+      if (!external)
       {
          currentScene .isLive () .addInterest ("setLive", scene);
          scene .setExecutionContext (currentScene);
@@ -118101,21 +117906,16 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
 
       parser .setInput (dom)
 
-      if (async)
-         return new Promise (parser .parseIntoScene .bind (parser));
-
-      parser .parseIntoScene ();
-
-      return scene;
+      return new Promise (parser .parseIntoScene .bind (parser));
    },
-   importJS: function (json, async = false)
+   importJS: function (json)
    {
       const
          currentScene = this .currentScene,
          scene        = this .createScene (),
          external     = this .isExternal ();
 
-      if (! external)
+      if (!external)
       {
          currentScene .isLive () .addInterest ("setLive", scene);
          scene .setExecutionContext (currentScene);
@@ -118126,12 +117926,7 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
 
       parser .setInput (json);
 
-      if (async)
-         return new Promise (parser .parseIntoScene .bind (parser));
-
-      parser .parseIntoScene ();
-
-      return scene;
+      return new Promise (parser .parseIntoScene .bind (parser));
    },
    getBrowserProperty: function (name)
    {
@@ -118153,10 +117948,10 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
    {
       layerNode = Base_X3DCast (Base_X3DConstants.X3DLayerNode, layerNode);
 
-      if (! layerNode)
+      if (!layerNode)
          layerNode = this .getActiveLayer ();
 
-      if (! layerNode)
+      if (!layerNode)
          return;
 
       layerNode .getViewpoint () ._viewAll = true;
@@ -118165,10 +117960,10 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
    {
       layerNode = Base_X3DCast (Base_X3DConstants.X3DLayerNode, layerNode);
 
-      if (! layerNode)
+      if (!layerNode)
          layerNode = this .getActiveLayer ();
 
-      if (! layerNode)
+      if (!layerNode)
          return;
 
       const viewpoints = layerNode .getUserViewpoints ();
@@ -118180,10 +117975,10 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
    {
       layerNode = Base_X3DCast (Base_X3DConstants.X3DLayerNode, layerNode);
 
-      if (! layerNode)
+      if (!layerNode)
          layerNode = this .getActiveLayer ();
 
-      if (! layerNode)
+      if (!layerNode)
          return;
 
       const viewpoints = layerNode .getUserViewpoints ();
@@ -118212,10 +118007,10 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
    {
       layerNode = Base_X3DCast (Base_X3DConstants.X3DLayerNode, layerNode);
 
-      if (! layerNode)
+      if (!layerNode)
          layerNode = this .getActiveLayer ();
 
-      if (! layerNode)
+      if (!layerNode)
          return;
 
       const viewpoints = layerNode .getUserViewpoints ();
@@ -118244,10 +118039,10 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
    {
       layerNode = Base_X3DCast (Base_X3DConstants.X3DLayerNode, layerNode);
 
-      if (! layerNode)
+      if (!layerNode)
          layerNode = this .getActiveLayer ();
 
-      if (! layerNode)
+      if (!layerNode)
          return;
 
       const viewpoints = layerNode .getUserViewpoints ();
@@ -118265,10 +118060,10 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
 
       layerNode = Base_X3DCast (Base_X3DConstants.X3DLayerNode, layerNode);
 
-      if (! layerNode)
+      if (!layerNode)
          layerNode = this .getActiveLayer ();
 
-      if (! layerNode)
+      if (!layerNode)
          return;
 
       for (const viewpointNode of layerNode .getViewpoints () .get ())
@@ -118285,10 +118080,10 @@ X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContex
       layerNode     = Base_X3DCast (Base_X3DConstants.X3DLayerNode,     layerNode);
       viewpointNode = Base_X3DCast (Base_X3DConstants.X3DViewpointNode, viewpointNode);
 
-      if (! layerNode)
+      if (!layerNode)
          throw new Error ("Browser.bindViewpoint: layerNode must be of type X3DLayerNode.")
 
-      if (! viewpointNode)
+      if (!viewpointNode)
          throw new Error ("Browser.bindViewpoint: viewpointNode must be of type X3DViewpointNode.")
 
       viewpointNode .setVRMLTransition (true);
@@ -118438,7 +118233,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(46);
+/* provided dependency */ var Fallback_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118617,7 +118412,7 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(46);
+/* provided dependency */ var jquery_$ = __webpack_require__(486);
 jquery_$.decodeText = function (input)
 {
    if (typeof input === "string")
@@ -118632,14 +118427,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(204);
+/* provided dependency */ var libtess_libtess = __webpack_require__(826);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace.set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(46);
+/* provided dependency */ var X3D_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118895,7 +118690,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(46);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(486);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

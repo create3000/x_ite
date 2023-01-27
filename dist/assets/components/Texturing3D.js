@@ -1,7 +1,7 @@
 /* X_ITE v8.5.2 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 843:
+/***/ 275:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 966:
+/***/ 850:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 106:
+/***/ 970:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2022-12-05 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 88:
+/***/ 852:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 661:
+/***/ 759:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=undefined;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=undefined;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
@@ -7753,7 +7753,7 @@ NRRDParser .prototype =
    },
    ascii: function ()
    {
-      var
+      const
          dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
          data       = new Uint8Array (dataLength);
 
@@ -7762,55 +7762,47 @@ NRRDParser .prototype =
       if (! Grammar .data .parse (this))
          return;
 
-      var numbers = this .result [1] .trim () .split (/\s+/);
+      const
+         numbers    = this .result [1] .trim () .split (/\s+/),
+         numNumbers = numbers .length;
 
       switch (this .byteType)
       {
          case "signed char":
          case "unsigned char":
          {
-            numbers .forEach (function (value, i)
-            {
-               data [i] = parseInt (value);
-            });
+            for (let i = 0; i < numNumbers; ++ i)
+               data [i] = parseInt (numbers [i]);
 
             return;
          }
          case "signed short":
          case "unsigned short":
          {
-            numbers .forEach (function (value, i)
-            {
-               data [i] = parseInt (value) / 256;
-            });
+            for (let i = 0; i < numNumbers; ++ i)
+               data [i] = parseInt (numbers [i]) / 256;
 
             return;
          }
          case "signed int":
          case "unsigned int":
          {
-            numbers .forEach (function (value, i)
-            {
-               data [i] = parseInt (value) / 16777216;
-            });
+            for (let i = 0; i < numNumbers; ++ i)
+               data [i] = parseInt (numbers [i]) / 16777216;
 
             return;
          }
          case "float":
          {
-            numbers .forEach (function (value, i)
-            {
-               data [i] = parseFloat (value) / 256;
-            });
+            for (let i = 0; i < numNumbers; ++ i)
+               data [i] = parseFloat (numbers [i]) / 256;
 
             return;
          }
          case "double":
          {
-            numbers .forEach (function (value, i)
-            {
-               data [i] = parseFloat (value) / 16777216;
-            });
+            for (let i = 0; i < numNumbers; ++ i)
+               data [i] = parseFloat (numbers [i]) / 16777216;
 
             return;
          }
@@ -8016,24 +8008,24 @@ NRRDParser .prototype =
          Grammar .data .parse (this);
 
          const
-            buffer = this .binaryStringToBuffer (this .result [1]),
-            raw    = pako .ungzip (buffer, { to: "raw" });
+            array = this .binaryStringToBuffer (this .result [1]),
+            raw   = pako .ungzip (array, { to: "raw" });
 
          this .rawArray (raw);
       }
       catch (error)
       {
-         throw new Error ("Invalid NRRD data.");
+         throw new Error (`Invalid NRRD data: ${error}.`);
       }
    },
    binaryStringToBuffer: function (string)
    {
-      const buffer = new Uint8Array (string .length);
+      const array = new Uint8Array (string .length);
 
       for (let i = 0, length = string .length; i < length; ++ i)
-         buffer [i] = string .charCodeAt (i);
+         array [i] = string .charCodeAt (i);
 
-      return buffer;
+      return array;
    },
    getEndianess: function ()
    {
@@ -8126,11 +8118,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().set ("x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(106);
-/* provided dependency */ var JpegImage = __webpack_require__(88);
-/* provided dependency */ var jpeg = __webpack_require__(661);
-/* provided dependency */ var CharLS = __webpack_require__(843);
-/* provided dependency */ var OpenJPEG = __webpack_require__(966);
+/* provided dependency */ var dicomParser = __webpack_require__(970);
+/* provided dependency */ var JpegImage = __webpack_require__(852);
+/* provided dependency */ var jpeg = __webpack_require__(759);
+/* provided dependency */ var CharLS = __webpack_require__(275);
+/* provided dependency */ var OpenJPEG = __webpack_require__(850);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
