@@ -159,11 +159,12 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
 
       if (this .transitionNode ._transitionActive .getValue ())
       {
-         top ._position     .addFieldInterest (this .transitionNode ._position);
-         top ._orientation  .addFieldInterest (this .transitionNode ._orientation);
-         top ._fieldOfView  .addFieldInterest (this .transitionNode ._fieldOfView);
-         top ._nearDistance .addFieldInterest (this .transitionNode ._nearDistance);
-         top ._farDistance  .addFieldInterest (this .transitionNode ._farDistance);
+         top ._position         .addFieldInterest (this .transitionNode ._position);
+         top ._orientation      .addFieldInterest (this .transitionNode ._orientation);
+         top ._centerOfRotation .addFieldInterest (this .transitionNode ._centerOfRotation);
+         top ._fieldOfView      .addFieldInterest (this .transitionNode ._fieldOfView);
+         top ._nearDistance     .addFieldInterest (this .transitionNode ._nearDistance);
+         top ._farDistance      .addFieldInterest (this .transitionNode ._farDistance);
 
          this .transitionNode ._transitionActive .addInterest ("set_transitionActive__", this, top);
       }
@@ -175,11 +176,12 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
       if (transitionActive .getValue ())
          return;
 
-      top ._position     .removeFieldInterest (this .transitionNode ._position);
-      top ._orientation  .removeFieldInterest (this .transitionNode ._orientation);
-      top ._fieldOfView  .removeFieldInterest (this .transitionNode ._fieldOfView);
-      top ._nearDistance .removeFieldInterest (this .transitionNode ._nearDistance);
-      top ._farDistance  .removeFieldInterest (this .transitionNode ._farDistance);
+      top ._position         .removeFieldInterest (this .transitionNode ._position);
+      top ._orientation      .removeFieldInterest (this .transitionNode ._orientation);
+      top ._centerOfRotation .removeFieldInterest (this .transitionNode ._centerOfRotation);
+      top ._fieldOfView      .removeFieldInterest (this .transitionNode ._fieldOfView);
+      top ._nearDistance     .removeFieldInterest (this .transitionNode ._nearDistance);
+      top ._farDistance      .removeFieldInterest (this .transitionNode ._farDistance);
 
       this .transitionNode ._transitionActive .removeInterest ("set_transitionActive__", this);
 
