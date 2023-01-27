@@ -7,7 +7,7 @@ tags: [New, Releases]
 ---
 ## X_ITE v8.5.2 Released
 
-*Leipzig, 26th January 2023:* Now, X_ITE has support for SVG as well as STL support. When a scene is parsed you can, instead of a number use special constants like PI or PI5_4.
+*Leipzig, 26th January 2023:* Now, X_ITE has support for SVG as well as STL support. When a scene is parsed you can, instead of a number use special constants like PI or PI3_4.
 
 ### New Features
 

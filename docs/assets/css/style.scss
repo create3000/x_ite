@@ -9,22 +9,26 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
 
 @import "{{ site.theme }}";
 
-html {
-  --nav-border-color: rgba(158,158,158,0.17);
-  --nav-active-page: rgb(168, 182, 206);
-  --h2-color: #e4e45d;
-  --h3-color: #b9894f;
-  --h3-color-strong: #e8c985;
-  --h4-color: var(--link-color);
-  --h4-color-strong: rgb(175, 206, 255);
-  --example-background-color: rgba(27,27,30,0.4);
-  --button-background-color: black;
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]), html[data-mode=dark] {
+    --nav-border-color: rgba(158,158,158,0.17);
+    --nav-active-page: rgb(168, 182, 206);
+    --h2-color: #e4e45d;
+    --h3-color: #b9894f;
+    --h3-color-strong: #e8c985;
+    --h4-color: var(--link-color);
+    --h4-color-strong: rgb(175, 206, 255);
+    --example-background-color: rgba(27,27,30,0.4);
+    --button-background-color: black;
+  }
 }
 
-html[data-mode=light] {
-  --h2-color: #bd006a;
-  --h3-color-strong: #ad5100;
-  --button-background-color: white;
+@media (prefers-color-scheme: light) {
+  html:not([data-mode]), html[data-mode=light] {
+    --h2-color: #bd006a;
+    --h3-color-strong: #ad5100;
+    --button-background-color: white;
+  }
 }
 
 /* append your custom style below */
