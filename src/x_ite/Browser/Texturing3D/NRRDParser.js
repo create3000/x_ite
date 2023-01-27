@@ -263,19 +263,19 @@ NRRDParser .prototype =
    },
    getEndian: function (value)
    {
-      if (value === 'little')
+      if (value === "little")
       {
          this .littleEndian = true;
          return;
       }
 
-      if (value === 'big')
+      if (value === "big")
       {
          this .littleEndian = false;
          return;
       }
 
-      throw new Error ("Unsupported NRRD endian, must be 'little' or 'big'.");
+      throw new Error ("Unsupported NRRD endian, must be either 'little' or 'big'.");
    },
    getData: function ()
    {
@@ -288,7 +288,7 @@ NRRDParser .prototype =
          }
          case "raw":
          {
-            this .rawData ();
+            this .raw ();
             break;
          }
          case "hex":
@@ -360,7 +360,7 @@ NRRDParser .prototype =
          }
       }
    },
-   rawData: function ()
+   raw: function ()
    {
       const
          dataView   = this .dataView,
@@ -425,7 +425,7 @@ NRRDParser .prototype =
 
             this .dataView = new DataView (array .buffer);
 
-            this .rawData ();
+            this .raw ();
             return;
          }
       }
@@ -445,7 +445,7 @@ NRRDParser .prototype =
 
          this .dataView = new DataView (array .buffer);
 
-         this .rawData ();
+         this .raw ();
       }
       catch (error)
       {
