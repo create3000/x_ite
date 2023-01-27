@@ -223,12 +223,6 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       throw new Error ("Couldn't load any url of '" + Array .prototype .join .call (urls, ", ") + "'.");
    },
-   loadScript: function (url, callback)
-   {
-      this .script = true;
-
-      this .loadDocument (url, callback);
-   },
    loadDocument: function (url, callback)
    {
       this .url       = url .copy ();
@@ -265,8 +259,6 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
          }
 
          // Script
-
-         if (this .script)
          {
             const result = ECMAScript .exec (url);
 
@@ -277,8 +269,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
             }
          }
 
-         // Test for data URL here.
-
+         // Data URL
          {
             const result = dataURL .exec (url);
 

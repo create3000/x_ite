@@ -153,7 +153,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       this .initialized = false;
 
-      new FileLoader (this) .loadScript (this ._url,
+      new FileLoader (this) .loadDocument (this ._url,
       function (data)
       {
          if (data === null)
