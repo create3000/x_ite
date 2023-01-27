@@ -216,6 +216,9 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    isValid: function ()
    {
+      if (!(typeof this .input === "string"))
+         return false;
+
       return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{|$))/);
    },
    setInput: function (vrmlSyntax)
