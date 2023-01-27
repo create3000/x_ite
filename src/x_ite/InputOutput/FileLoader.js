@@ -45,14 +45,11 @@
  *
  ******************************************************************************/
 
-import X3DObject       from "../Base/X3DObject.js";
-import Fields          from "../Fields.js";
-import GoldenGate      from "../Parser/GoldenGate.js";
-import X3DWorld        from "../Execution/X3DWorld.js";
-import BinaryTransport from "../../standard/Networking/BinaryTransport.js";
-import DEBUG           from "../DEBUG.js";
-
-BinaryTransport ($);
+import X3DObject  from "../Base/X3DObject.js";
+import Fields     from "../Fields.js";
+import GoldenGate from "../Parser/GoldenGate.js";
+import X3DWorld   from "../Execution/X3DWorld.js";
+import DEBUG      from "../DEBUG.js";
 
 const
    ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
@@ -231,7 +228,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       if (url .length === 0)
          return this .loadDocumentError (new Error ("No URL given."));
 
-      this .loadDocumentAsync (this .url .shift ());
+      this .loadDocumentAsync (this .url .shift ()) .catch (this .loadDocumentError .bind (this));
    },
    getTarget: function (parameters)
    {
@@ -248,118 +245,97 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       return "";
    },
-   loadDocumentAsync: function (url)
+   loadDocumentAsync: async function (url)
    {
-      try
+      if (url .length === 0)
       {
-         if (url .length === 0)
-         {
-            this .loadDocumentError (new Error ("URL is empty."));
-            return;
-         }
-
-         // Script
-         {
-            const result = ECMAScript .exec (url);
-
-            if (result)
-            {
-               this .callback (result [1]);
-               return;
-            }
-         }
-
-         // Data URL
-         {
-            const result = dataURL .exec (url);
-
-            if (result)
-            {
-               //const mimeType = result [1];
-
-               // ??? If called from loadURL and mime type is text/html do a window.open or window.location=URL and return; ???
-
-               let data = result [4];
-
-               if (result [3] === "base64")
-                  data = atob (data);
-               else
-                  data = unescape (data);
-
-               this .callback (data);
-               return;
-            }
-         }
-
-         this .URL = new URL (url, this .getReferer ());
-
-         if (this .bindViewpoint)
-         {
-            if (this .URL .href .substr (0, this .getReferer () .length) === this .getReferer ())
-            {
-               this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
-               return;
-            }
-         }
-
-         if (this .foreign)
-         {
-            // Handle target
-
-            if (this .target .length && this .target !== "_self")
-               return this .foreign (this .URL .href, this .target);
-
-            // Handle well known foreign content depending on extension or if path looks like directory.
-
-            if (this .URL .href .match (foreignExtensions))
-               return this .foreign (this .URL .href, this .target);
-         }
-
-         // Load URL async
-
-         $.ajax ({
-            url: decodeURI (this .URL .href),
-            dataType: "binary",
-            async: true,
-            cache: this .node .getCache (),
-            //timeout: 15000,
-            global: false,
-            context: this,
-            success: function (blob, status, xhr)
-            {
-               if (this .foreign)
-               {
-                  //console .log (this .getContentType (xhr));
-
-                  if (foreign [this .getContentType (xhr)])
-                     return this .foreign (this .URL .href, this .target);
-               }
-
-               this .fileReader .onload = this .readAsArrayBuffer .bind (this);
-
-               this .fileReader .readAsArrayBuffer (blob);
-            },
-            error: function (xhr, textStatus, exception)
-            {
-               this .loadDocumentError (new Error (exception));
-            },
-         });
-      }
-      catch (exception)
-      {
-         this .loadDocumentError (exception);
+         this .loadDocumentError (new Error ("URL is empty."));
          return;
       }
-   },
-   readAsArrayBuffer: function (blob)
-   {
+
+      // Script
+      {
+         const result = ECMAScript .exec (url);
+
+         if (result)
+         {
+            this .callback (result [1]);
+            return;
+         }
+      }
+
+      // Data URL
+      {
+         const result = dataURL .exec (url);
+
+         if (result)
+         {
+            //const mimeType = result [1];
+
+            // ??? If called from loadURL and mime type is text/html do a window.open or window.location=URL and return; ???
+
+            let data = result [4];
+
+            if (result [3] === "base64")
+               data = atob (data);
+            else
+               data = unescape (data);
+
+            this .callback (data);
+            return;
+         }
+      }
+
+      this .URL = new URL (url, this .getReferer ());
+
+      if (this .bindViewpoint)
+      {
+         if (this .URL .href .substr (0, this .getReferer () .length) === this .getReferer ())
+         {
+            this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
+            return;
+         }
+      }
+
+      if (this .foreign)
+      {
+         // Handle target
+
+         if (this .target .length && this .target !== "_self")
+            return this .foreign (this .URL .href, this .target);
+
+         // Handle well known foreign content depending on extension or if path looks like directory.
+
+         if (this .URL .href .match (foreignExtensions))
+            return this .foreign (this .URL .href, this .target);
+      }
+
+      // Load URL async
+
+      if (!this .node .getCache ())
+         this .URL .searchParams .set ("_", Date .now ());
+
+      const
+         response    = await fetch (decodeURI (this .URL .href)),
+         contentType = response .headers .get ("content-type");
+
+      if (this .foreign)
+      {
+         //console .log (contentType);
+
+         if (foreign [contentType])
+            return this .foreign (this .URL .href, this .target);
+      }
+
+      const arrayBuffer = await response .arrayBuffer ();
+
       try
       {
-         this .callback (pako .ungzip (this .fileReader .result, { to: "binary" }), this .URL);
+         this .callback (pako .ungzip (arrayBuffer, { to: "binary" }), this .URL);
       }
       catch (exception)
       {
-         this .callback (this .fileReader .result);
+         this .callback (arrayBuffer);
       }
    },
    loadDocumentError: function (exception)
@@ -371,7 +347,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       // Try to load next URL.
 
       if (this .url .length)
-         this .loadDocumentAsync (this .url .shift ());
+         this .loadDocumentAsync (this .url .shift ()) .catch (this .loadDocumentError .bind (this));
 
       else
          this .callback (null);
