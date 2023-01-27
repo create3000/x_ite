@@ -617,8 +617,6 @@ To get X_ITE working you need to include the JavaScript file »x_ite.min.js«. O
 
 X_ITE can load several file formats, either directly as the source of the \<x3d-canvas\> element or as the source of an Inline node, as well as using API methods of the [Browser object](reference/browser-services.md). Foreign formats such as glTF are converted internally to X3D and then made available to the scene graph.
 
-Additionally files can be compressed using GZip compression.
-
 | Encoding         | File Extension | MIME Type       |
 |------------------|----------------|-----------------|
 | X3D XML          | .x3d, .x3dz    | model/x3d+xml   |
@@ -629,6 +627,9 @@ Additionally files can be compressed using GZip compression.
 | Wavefront OBJ    | .obj           | model/obj       |
 | STL              | .stl           | model/stl       |
 | SVG Document     | .svg, .svgz    | image/svg+xml   |
+
+>**Tip:** All files can be compressed using GZip compression. This saves bandwidth and speeds up download time.
+{: .prompt-tip }
 
 For more information see [How to Configure Your Web Server](how-to-configure-your-web-server).
 
