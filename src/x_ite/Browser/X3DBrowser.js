@@ -760,11 +760,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       for (const viewpointNode of layerNode .getViewpoints () .get ())
       {
-         if (viewpointNode .getName () === name)
-         {
-            this .bindViewpoint (layerNode, viewpointNode);
-            break;
-         }
+         if (viewpointNode .getName () !== name)
+            continue;
+
+         this .bindViewpoint (layerNode, viewpointNode);
+         break;
       }
    },
    bindViewpoint: function (layerNode, viewpointNode)

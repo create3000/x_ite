@@ -158,14 +158,28 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
       this .transitionNode .transitionStart (layerNode, fromNode, top);
 
       if (this .transitionNode ._transitionActive .getValue ())
-         this .transitionNode ._transitionActive .addInterest ("set_transitionActive__", this);
+      {
+         top ._position     .addFieldInterest (this .transitionNode ._position);
+         top ._orientation  .addFieldInterest (this .transitionNode ._orientation);
+         top ._fieldOfView  .addFieldInterest (this .transitionNode ._fieldOfView);
+         top ._nearDistance .addFieldInterest (this .transitionNode ._nearDistance);
+         top ._farDistance  .addFieldInterest (this .transitionNode ._farDistance);
+
+         this .transitionNode ._transitionActive .addInterest ("set_transitionActive__", this, top);
+      }
 
       this .addNodeEvent ();
    },
-   set_transitionActive__: function (transitionActive)
+   set_transitionActive__: function (top, transitionActive)
    {
       if (transitionActive .getValue ())
          return;
+
+      top ._position     .removeFieldInterest (this .transitionNode ._position);
+      top ._orientation  .removeFieldInterest (this .transitionNode ._orientation);
+      top ._fieldOfView  .removeFieldInterest (this .transitionNode ._fieldOfView);
+      top ._nearDistance .removeFieldInterest (this .transitionNode ._nearDistance);
+      top ._farDistance  .removeFieldInterest (this .transitionNode ._farDistance);
 
       this .transitionNode ._transitionActive .removeInterest ("set_transitionActive__", this);
 
