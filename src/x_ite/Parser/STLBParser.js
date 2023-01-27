@@ -123,10 +123,10 @@ STLBParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          geometry   = scene .createNode ("TriangleSet"),
          normal     = scene .createNode ("Normal"),
          coordinate = scene .createNode ("Coordinate"),
-         vector     = [ ],
-         point      = [ ],
          dataView   = this .dataView,
-         byteLength = this .dataView .byteLength;
+         byteLength = this .dataView .byteLength,
+         vector     = [ ],
+         point      = [ ];
 
       for (let i = 84; i < byteLength; i += 50)
       {

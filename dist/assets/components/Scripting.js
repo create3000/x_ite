@@ -452,7 +452,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
    {
       this .initialized = false;
 
-      new (FileLoader_default()) (this) .loadScript (this ._url,
+      new (FileLoader_default()) (this) .loadDocument (this ._url,
       function (data)
       {
          if (data === null)
@@ -463,7 +463,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
          else
          {
             this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
-            this .initialize__ (data);
+            this .initialize__ (typeof data === "string" ? data : new TextDecoder () .decode (data));
          }
       }
       .bind (this));
