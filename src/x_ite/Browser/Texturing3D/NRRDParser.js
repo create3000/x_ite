@@ -317,7 +317,7 @@ NRRDParser .prototype =
    },
    ascii: function ()
    {
-      var
+      const
          dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
          data       = new Uint8Array (dataLength);
 
@@ -326,55 +326,47 @@ NRRDParser .prototype =
       if (! Grammar .data .parse (this))
          return;
 
-      var numbers = this .result [1] .trim () .split (/\s+/);
+      const
+         numbers    = this .result [1] .trim () .split (/\s+/),
+         numNumbers = numbers .length;
 
       switch (this .byteType)
       {
          case "signed char":
          case "unsigned char":
          {
-            numbers .forEach (function (value, i)
-            {
-               data [i] = parseInt (value);
-            });
+            for (let i = 0; i < numNumbers; ++ i)
+               data [i] = parseInt (numbers [i]);
 
             return;
          }
          case "signed short":
          case "unsigned short":
          {
-            numbers .forEach (function (value, i)
-            {
-               data [i] = parseInt (value) / 256;
-            });
+            for (let i = 0; i < numNumbers; ++ i)
+               data [i] = parseInt (numbers [i]) / 256;
 
             return;
          }
          case "signed int":
          case "unsigned int":
          {
-            numbers .forEach (function (value, i)
-            {
-               data [i] = parseInt (value) / 16777216;
-            });
+            for (let i = 0; i < numNumbers; ++ i)
+               data [i] = parseInt (numbers [i]) / 16777216;
 
             return;
          }
          case "float":
          {
-            numbers .forEach (function (value, i)
-            {
-               data [i] = parseFloat (value) / 256;
-            });
+            for (let i = 0; i < numNumbers; ++ i)
+               data [i] = parseFloat (numbers [i]) / 256;
 
             return;
          }
          case "double":
          {
-            numbers .forEach (function (value, i)
-            {
-               data [i] = parseFloat (value) / 16777216;
-            });
+            for (let i = 0; i < numNumbers; ++ i)
+               data [i] = parseFloat (numbers [i]) / 16777216;
 
             return;
          }
