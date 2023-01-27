@@ -113,9 +113,9 @@ STLBParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Parse scene.
 
-      this .data ();
+      this .shape ();
    },
-   data: function ()
+   shape: function ()
    {
       const
          scene      = this .getExecutionContext (),
