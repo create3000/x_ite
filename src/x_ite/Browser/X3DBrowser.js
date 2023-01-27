@@ -221,7 +221,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
          await loadComponents (browser, $.data (component, "dependencies"), seen);
 
-         if (! $.data (component, "external"))
+         if (!$.data (component, "external"))
             return;
 
          if (Features .NODE_ENV)
@@ -258,7 +258,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       if (arguments .length)
       {
-         if (! (profile instanceof ProfileInfo))
+         if (!(profile instanceof ProfileInfo))
             throw new Error ("Couldn't create scene: profile must be of type ProfileInfo.");
 
          scene .setProfile (profile);
@@ -267,7 +267,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          {
             const component = arguments [i];
 
-            if (! (component instanceof ComponentInfo))
+            if (!(component instanceof ComponentInfo))
                throw new Error ("Couldn't create scene: component must be of type ComponentInfo.");
 
             scene .addComponent (component);
@@ -309,7 +309,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          scene .setRootNodes (rootNodes);
       }
 
-      if (! (scene instanceof X3DScene))
+      if (!(scene instanceof X3DScene))
          scene = this .createScene ();
 
       // Detach scene from parent.
@@ -358,7 +358,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          fileLoader   = new FileLoader (this .getWorld ()),
          scene        = fileLoader .createX3DFromString (currentScene .getWorldURL (), x3dSyntax);
 
-      if (! external)
+      if (!external)
       {
          currentScene .isLive () .addInterest ("setLive", scene);
          scene .setExecutionContext (currentScene);
@@ -372,15 +372,15 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       node  = X3DCast (X3DConstants .X3DNode, node, false);
       event = String (event);
 
-      if (! (url instanceof Fields .MFString))
+      if (!(url instanceof Fields .MFString))
          throw new Error ("Browser.createVrmlFromURL: url must be of type MFString.");
 
-      if (! node)
+      if (!node)
          throw new Error ("Browser.createVrmlFromURL: node must be of type X3DNode.");
 
       const field = node .getField (event);
 
-      if (! field .isInput ())
+      if (!field .isInput ())
          throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be a input field.");
 
       if (field .getType () !== X3DConstants .MFNode)
@@ -389,19 +389,19 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       const
          currentScene = this .currentScene,
          external     = this .isExternal (),
-         loader       = new FileLoader (this .getWorld ());
+         fileLoader   = new FileLoader (this .getWorld ());
 
-      this .addLoadingObject (loader);
+      this .addLoadingObject (fileLoader);
 
-      loader .createX3DFromURL (url, null, (scene) =>
+      fileLoader .createX3DFromURL (url, null, (scene) =>
       {
-         this .removeLoadingObject (loader);
+         this .removeLoadingObject (fileLoader);
 
          if (scene)
          {
             // Handle isLive for script scenes here:
 
-            if (! external)
+            if (!external)
             {
                currentScene .isLive () .addInterest ("setLive", scene);
                scene .setExecutionContext (currentScene);
@@ -420,7 +420,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       // arguments .length === 1
 
-      if (! (url instanceof Fields .MFString))
+      if (!(url instanceof Fields .MFString))
          throw new Error ("Browser.createX3DFromURL: url must be of type MFString.");
 
       return new Promise ((resolve, reject) =>
@@ -430,11 +430,15 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             external     = this .isExternal (),
             fileLoader   = new FileLoader (this .getWorld ());
 
+         this .addLoadingObject (fileLoader);
+
          fileLoader .createX3DFromURL (url, null, (scene) =>
          {
+            this .removeLoadingObject (fileLoader);
+
             if (scene)
             {
-               if (! external)
+               if (!external)
                {
                   currentScene .isLive () .addInterest ("setLive", scene);
                   scene .setExecutionContext (currentScene);
@@ -454,10 +458,10 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       return new Promise ((resolve, reject) =>
       {
-         if (! (url instanceof Fields .MFString))
+         if (!(url instanceof Fields .MFString))
             throw new Error ("Browser.loadURL: url must be of type MFString.");
 
-         if (! (parameter instanceof Fields .MFString))
+         if (!(parameter instanceof Fields .MFString))
             throw new Error ("Browser.loadURL: parameter must be of type MFString.");
 
          // Cancel any loading.
@@ -473,17 +477,17 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          this .setBrowserLoading (true);
          this .addLoadingObject (this);
 
-         const loader = this [_loader] = new FileLoader (this .getWorld ());
+         const fileLoader = this [_loader] = new FileLoader (this .getWorld ());
 
-         loader .createX3DFromURL (url, parameter, (scene) =>
+         fileLoader .createX3DFromURL (url, parameter, (scene) =>
          {
-            if (loader !== this [_loader])
+            if (fileLoader !== this [_loader])
             {
                reject (new Error ("Loading of X3D file aborted."));
                return;
             }
 
-            if (! this .getBrowserOption ("SplashScreen"))
+            if (!this .getBrowserOption ("SplashScreen"))
                this .getCanvas () .show ();
 
             if (scene)
@@ -510,7 +514,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          },
          (fragment) =>
          {
-            if (loader !== this [_loader])
+            if (fileLoader !== this [_loader])
             {
                reject (new Error ("Change viewpoint aborted."));
                return;
@@ -524,7 +528,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          },
          (url, target) =>
          {
-            if (loader !== this [_loader])
+            if (fileLoader !== this [_loader])
             {
                reject (new Error ("Loading of file aborted."));
                return;
@@ -577,14 +581,14 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          }
       };
    })(),
-   importDocument: function (dom, async = false)
+   importDocument: function (dom)
    {
       const
          currentScene = this .currentScene,
          scene        = this .createScene (),
          external     = this .isExternal ();
 
-      if (! external)
+      if (!external)
       {
          currentScene .isLive () .addInterest ("setLive", scene);
          scene .setExecutionContext (currentScene);
@@ -595,21 +599,16 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       parser .setInput (dom)
 
-      if (async)
-         return new Promise (parser .parseIntoScene .bind (parser));
-
-      parser .parseIntoScene ();
-
-      return scene;
+      return new Promise (parser .parseIntoScene .bind (parser));
    },
-   importJS: function (json, async = false)
+   importJS: function (json)
    {
       const
          currentScene = this .currentScene,
          scene        = this .createScene (),
          external     = this .isExternal ();
 
-      if (! external)
+      if (!external)
       {
          currentScene .isLive () .addInterest ("setLive", scene);
          scene .setExecutionContext (currentScene);
@@ -620,12 +619,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       parser .setInput (json);
 
-      if (async)
-         return new Promise (parser .parseIntoScene .bind (parser));
-
-      parser .parseIntoScene ();
-
-      return scene;
+      return new Promise (parser .parseIntoScene .bind (parser));
    },
    getBrowserProperty: function (name)
    {
@@ -647,10 +641,10 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
 
-      if (! layerNode)
+      if (!layerNode)
          layerNode = this .getActiveLayer ();
 
-      if (! layerNode)
+      if (!layerNode)
          return;
 
       layerNode .getViewpoint () ._viewAll = true;
@@ -659,10 +653,10 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
 
-      if (! layerNode)
+      if (!layerNode)
          layerNode = this .getActiveLayer ();
 
-      if (! layerNode)
+      if (!layerNode)
          return;
 
       const viewpoints = layerNode .getUserViewpoints ();
@@ -674,10 +668,10 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
 
-      if (! layerNode)
+      if (!layerNode)
          layerNode = this .getActiveLayer ();
 
-      if (! layerNode)
+      if (!layerNode)
          return;
 
       const viewpoints = layerNode .getUserViewpoints ();
@@ -706,10 +700,10 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
 
-      if (! layerNode)
+      if (!layerNode)
          layerNode = this .getActiveLayer ();
 
-      if (! layerNode)
+      if (!layerNode)
          return;
 
       const viewpoints = layerNode .getUserViewpoints ();
@@ -738,10 +732,10 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
 
-      if (! layerNode)
+      if (!layerNode)
          layerNode = this .getActiveLayer ();
 
-      if (! layerNode)
+      if (!layerNode)
          return;
 
       const viewpoints = layerNode .getUserViewpoints ();
@@ -759,10 +753,10 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
 
-      if (! layerNode)
+      if (!layerNode)
          layerNode = this .getActiveLayer ();
 
-      if (! layerNode)
+      if (!layerNode)
          return;
 
       for (const viewpointNode of layerNode .getViewpoints () .get ())
@@ -779,10 +773,10 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       layerNode     = X3DCast (X3DConstants .X3DLayerNode,     layerNode);
       viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, viewpointNode);
 
-      if (! layerNode)
+      if (!layerNode)
          throw new Error ("Browser.bindViewpoint: layerNode must be of type X3DLayerNode.")
 
-      if (! viewpointNode)
+      if (!viewpointNode)
          throw new Error ("Browser.bindViewpoint: viewpointNode must be of type X3DViewpointNode.")
 
       viewpointNode .setVRMLTransition (true);

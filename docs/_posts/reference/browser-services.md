@@ -67,13 +67,13 @@ If event and node are omitted a Promise that resolves to a X3DScene object is re
 
 Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return. The return value is a Promise object, that is resolved when the new scene is loaded.
 
-#### X3DScene **importDocument** (*DOMObject dom*)
+#### Promise <X3DScene> **importDocument** (*DOMObject dom*)
 
-Imports a X3D XML DOM document or fragment, converts it, and returns a X3DScene object.
+Imports a X3D XML DOM document or fragment, converts it, and returns a Promise that resolves to a X3DScene object.
 
-#### X3DScene **importJS** (*Object json*)
+#### Promise <X3DScene> **importJS** (*Object json*)
 
-Imports a X3D JSON document or fragment, converts it, and returns a X3DScene object.
+Imports a X3D JSON document or fragment, converts it, and returns a Promise that resolves to a X3DScene object.
 
 #### String **getBrowserProperty** (*String name*)
 
