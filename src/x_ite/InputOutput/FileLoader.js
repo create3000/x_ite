@@ -81,7 +81,6 @@ function FileLoader (node, external)
    this .url              = [ ];
    this .URL              = new URL (this .getReferer (), this .getReferer ());
    this .fileReader       = new FileReader ();
-   this .text             = true;
 }
 
 FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
@@ -240,17 +239,6 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       this .loadDocumentAsync (this .url .shift ());
    },
-   loadBinaryDocument: function (url, callback)
-   {
-      this .url       = url .copy ();
-      this .callback  = callback;
-      this .text      = false;
-
-      if (url .length === 0)
-         return this .loadDocumentError (new Error ("No URL given."));
-
-      this .loadDocumentAsync (this .url .shift ());
-   },
    getTarget: function (parameters)
    {
       for (const parameter of parameters)
@@ -356,18 +344,9 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
                      return this .foreign (this .URL .href, this .target);
                }
 
-               if (this .text)
-               {
-                  this .fileReader .onload = this .readAsArrayBuffer .bind (this, blob);
+               this .fileReader .onload = this .readAsArrayBuffer .bind (this);
 
-                  this .fileReader .readAsArrayBuffer (blob);
-               }
-               else
-               {
-                  this .fileReader .onload = this .readAsBinaryString .bind (this);
-
-                  this .fileReader .readAsBinaryString (blob);
-               }
+               this .fileReader .readAsArrayBuffer (blob);
             },
             error: function (xhr, textStatus, exception)
             {
@@ -385,35 +364,11 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       try
       {
-         this .callback (pako .ungzip (this .fileReader .result, { to: "string" }), this .URL);
+         this .callback (pako .ungzip (this .fileReader .result, { to: "binary" }), this .URL);
       }
       catch (exception)
       {
-         this .fileReader .onload = this .readAsText .bind (this, blob);
-
-         this .fileReader .readAsText (blob);
-      }
-   },
-   readAsText: function (blob)
-   {
-      try
-      {
-         this .callback (this .fileReader .result, this .URL);
-      }
-      catch (exception)
-      {
-         this .loadDocumentError (exception);
-      }
-   },
-   readAsBinaryString: function ()
-   {
-      try
-      {
-         this .callback (this .fileReader .result, this .URL);
-      }
-      catch (exception)
-      {
-         this .loadDocumentError (exception);
+         this .callback (this .fileReader .result);
       }
    },
    loadDocumentError: function (exception)

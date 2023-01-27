@@ -56,12 +56,7 @@ DicomParser .prototype =
    {
       try
       {
-         const inputArray = new Uint8Array (input .length);
-
-         for (let i = 0, length = input .length; i < length; ++ i)
-            inputArray [i] = input .charCodeAt (i);
-
-         this .dataSet      = dicomParser .parseDicom (inputArray);
+         this .dataSet      = dicomParser .parseDicom (new Uint8Array (input));
          this .dicom .dicom = true;
       }
       catch (error)

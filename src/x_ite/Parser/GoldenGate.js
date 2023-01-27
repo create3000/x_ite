@@ -52,6 +52,7 @@ import XMLParser   from "./XMLParser.js";
 import GLTF2Parser from "./GLTF2Parser.js";
 import OBJParser   from "./OBJParser.js";
 import STLParser   from "./STLParser.js";
+import STLBParser  from "./STLBParser.js";
 import SVGParser   from "./SVGParser.js";
 
 function GoldenGate (scene)
@@ -116,11 +117,13 @@ GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
          switch (encoding)
          {
             case "STRING":
-               return x3dSyntax;
+               return typeof x3dSyntax === "string" ? x3dSyntax : new TextDecoder () .decode (x3dSyntax);
             case "XML":
-               return $.parseXML (x3dSyntax);
+               return $.parseXML (this .getInput ("STRING", x3dSyntax));
             case "JSON":
-               return JSON .parse (x3dSyntax);
+               return JSON .parse (this .getInput ("STRING", x3dSyntax));
+            case "ARRAY_BUFFER":
+               return x3dSyntax instanceof ArrayBuffer ? x3dSyntax : undefined;
          }
       }
       catch (error)
@@ -138,6 +141,7 @@ GoldenGate .Parser = [
    VRMLParser,
    OBJParser,
    STLParser,
+   STLBParser,
 ];
 
 export default GoldenGate;

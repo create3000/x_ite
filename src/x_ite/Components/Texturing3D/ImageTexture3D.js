@@ -120,7 +120,7 @@ ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
    },
    loadNow: function ()
    {
-      new FileLoader (this) .loadBinaryDocument (this ._url,
+      new FileLoader (this) .loadDocument (this ._url,
       function (data)
       {
          if (data === null)
@@ -129,7 +129,7 @@ ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
             this .setLoadState (X3DConstants .FAILED_STATE);
             this .clearTexture ();
          }
-         else
+         else if (data instanceof ArrayBuffer)
          {
             const nrrd = new NRRDParser () .parse (data);
 

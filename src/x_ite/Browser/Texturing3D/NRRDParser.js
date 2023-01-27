@@ -91,7 +91,7 @@ NRRDParser .prototype =
 {
    parse: function (input)
    {
-      this .setInput (input);
+      this .setInput (new TextDecoder ("ascii") .decode (input));
 
       if (this .getNRRD ())
       {
