@@ -349,6 +349,8 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          this ._orientationOffset      = relative .orientation;
          this ._scaleOffset            = relative .scale;
          this ._scaleOrientationOffset = relative .scaleOrientation;
+         this ._nearDistance           = toViewpointNode ._nearDistance;
+         this ._farDistance            = toViewpointNode ._farDistance;
 
          this .setInterpolators (fromViewpointNode, toViewpointNode, relative);
 
