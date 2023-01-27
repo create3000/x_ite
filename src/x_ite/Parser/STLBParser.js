@@ -113,7 +113,47 @@ STLBParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Parse scene.
 
-      // this .statements ();
+      this .data ();
+   },
+   data: function ()
+   {
+      const
+         scene      = this .getExecutionContext (),
+         shape      = scene .createNode ("Shape"),
+         geometry   = scene .createNode ("TriangleSet"),
+         normal     = scene .createNode ("Normal"),
+         coordinate = scene .createNode ("Coordinate"),
+         vector     = [ ],
+         point      = [ ],
+         dataView   = this .dataView,
+         byteLength = this .dataView .byteLength;
+
+      for (let i = 84; i < byteLength; i += 50)
+      {
+         vector .push (dataView .getFloat32 (i + 0, true),
+                       dataView .getFloat32 (i + 4, true),
+                       dataView .getFloat32 (i + 8, true));
+
+         point .push (dataView .getFloat32 (i + 12, true),
+                      dataView .getFloat32 (i + 16, true),
+                      dataView .getFloat32 (i + 20, true),
+                      dataView .getFloat32 (i + 24, true),
+                      dataView .getFloat32 (i + 28, true),
+                      dataView .getFloat32 (i + 32, true),
+                      dataView .getFloat32 (i + 36, true),
+                      dataView .getFloat32 (i + 40, true),
+                      dataView .getFloat32 (i + 44, true));
+      }
+
+      shape .appearance         = this .appearance;
+      shape .geometry           = geometry;
+      geometry .normalPerVertex = false;
+      geometry .normal          = normal;
+      geometry .coord           = coordinate;
+      normal .vector            = vector;
+      coordinate .point         = point;
+
+      scene .getRootNodes () .push (shape);
    },
 });
 
