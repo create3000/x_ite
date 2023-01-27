@@ -19,6 +19,7 @@ tags: [New, Releases]
 
 - Fixed wireframe shading of thick lines.
 - Fixed XML MFString parsing.
+- Fixed and optimized NRRD parser.
 
 ## X_ITE v8.5.0 Released
 
