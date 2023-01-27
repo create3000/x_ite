@@ -7,16 +7,18 @@ tags: [New, Releases]
 ---
 ## X_ITE v8.5.2 Released
 
-*Leipzig, 26th January 2023:* Now, X_ITE has support for SVG.
+*Leipzig, 26th January 2023:* Now, X_ITE has support for SVG as well as STL support.
 
 ### New Features
 
 - Added SVG parser.
+- Added STL parser.
 - Parse HTML colors and constants like PI or PI1_2.
 
 ### Bug Fixes
 
 - Fixed wireframe shading of thick lines.
+- Fixed XML MFString parsing.
 
 ## X_ITE v8.5.0 Released
 
