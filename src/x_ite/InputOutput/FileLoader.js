@@ -96,6 +96,31 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       return this .URL;
    },
+   getReferer: function ()
+   {
+      if (this .node .getTypeName () === "X3DWorld")
+      {
+         if (this .external)
+            return this .browser .getLocation ();
+      }
+
+      return this .executionContext .getWorldURL ();
+   },
+   getTarget: function (parameters)
+   {
+      for (const parameter of parameters)
+      {
+         const pair = parameter .split ("=");
+
+         if (pair .length !== 2)
+            continue;
+
+         if (pair [0] === "target")
+            return pair [1];
+      }
+
+      return "";
+   },
    createX3DFromString: function (worldURL, string = "", success, error)
    {
       try
@@ -173,29 +198,14 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
    },
    loadDocument: function (url, callback)
    {
-      this .url       = url .copy ();
-      this .callback  = callback;
+      this .url      = url .copy ();
+      this .callback = callback;
 
       if (url .length === 0)
          return this .loadDocumentError (new Error ("No URL given."));
 
       this .loadDocumentAsync (this .url .shift ())
          .catch (this .loadDocumentError .bind (this));
-   },
-   getTarget: function (parameters)
-   {
-      for (const parameter of parameters)
-      {
-         const pair = parameter .split ("=");
-
-         if (pair .length !== 2)
-            continue;
-
-         if (pair [0] === "target")
-            return pair [1];
-      }
-
-      return "";
    },
    loadDocumentAsync: async function (url)
    {
@@ -315,16 +325,6 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       if (DEBUG)
          console .error (exception);
-   },
-   getReferer: function ()
-   {
-      if (this .node .getTypeName () === "X3DWorld")
-      {
-         if (this .external)
-            return this .browser .getLocation ();
-      }
-
-      return this .executionContext .getWorldURL ();
    },
 });
 
