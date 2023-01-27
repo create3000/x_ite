@@ -312,11 +312,9 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       // Load URL async
 
-      if (!this .node .getCache ())
-         this .URL .searchParams .set ("_", Date .now ());
-
       const
-         response    = await fetch (decodeURI (this .URL .href)),
+         options     = { cache: this .node .getCache () ? "default" : "reload" },
+         response    = await fetch (decodeURI (this .URL .href), options),
          contentType = response .headers .get ("content-type");
 
       if (this .foreign)
