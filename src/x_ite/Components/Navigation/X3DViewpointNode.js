@@ -125,7 +125,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .orientationInterpolator      ._set_fraction);
       this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleInterpolator            ._set_fraction);
       this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleOrientationInterpolator ._set_fraction);
-      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewScaleInterpolator      ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewScaleInterpolator ._set_fraction);
 
       this .positionInterpolator         ._value_changed .addFieldInterest (this ._positionOffset);
       this .orientationInterpolator      ._value_changed .addFieldInterest (this ._orientationOffset);
