@@ -86,7 +86,7 @@ const Grammar = Expressions ({
  * Parser
  */
 
-function STLParser (scene)
+function STLAParser (scene)
 {
    X3DParser .call (this, scene);
 
@@ -96,9 +96,9 @@ function STLParser (scene)
    this .point  = [ ];
 }
 
-STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+STLAParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 {
-   constructor: STLParser,
+   constructor: STLAParser,
    CONSTANTS: new Map ([
       ["NAN", NaN],
       ["INF", Infinity],
@@ -371,4 +371,4 @@ STLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
 });
 
-export default STLParser;
+export default STLAParser;
