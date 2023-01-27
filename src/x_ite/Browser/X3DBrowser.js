@@ -423,20 +423,32 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       if (! (url instanceof Fields .MFString))
          throw new Error ("Browser.createX3DFromURL: url must be of type MFString.");
 
-      const
-         currentScene = this .currentScene,
-         external     = this .isExternal (),
-         fileLoader   = new FileLoader (this .getWorld ()),
-         scene        = fileLoader .createX3DFromURL (url, null);
-
-      if (! external)
+      return new Promise ((resolve, reject) =>
       {
-         currentScene .isLive () .addInterest ("setLive", scene);
-         scene .setExecutionContext (currentScene);
-         scene .setLive (currentScene .getLive ());
-      }
+         const
+            currentScene = this .currentScene,
+            external     = this .isExternal (),
+            fileLoader   = new FileLoader (this .getWorld ());
 
-      return scene;
+         fileLoader .createX3DFromURL (url, null, (scene) =>
+         {
+            if (scene)
+            {
+               if (! external)
+               {
+                  currentScene .isLive () .addInterest ("setLive", scene);
+                  scene .setExecutionContext (currentScene);
+                  scene .setLive (currentScene .getLive ());
+               }
+
+               resolve (scene);
+            }
+            else
+            {
+               reject (new Error ("Couldn't load X3D file."));
+            }
+         })
+      });
    },
    loadURL: function (url, parameter = new Fields .MFString ())
    {
@@ -467,7 +479,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          {
             if (loader !== this [_loader])
             {
-               reject ("Loading of X3D file aborted.");
+               reject (new Error ("Loading of X3D file aborted."));
                return;
             }
 
@@ -493,14 +505,14 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
                      .text (_ ("Failed loading world."));
                });
 
-               reject ("Couldn't load X3D file.");
+               reject (new Error ("Couldn't load X3D file."));
             }
          },
          (fragment) =>
          {
             if (loader !== this [_loader])
             {
-               reject ("Change viewpoint aborted.");
+               reject (new Error ("Change viewpoint aborted."));
                return;
             }
 
@@ -514,7 +526,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          {
             if (loader !== this [_loader])
             {
-               reject ("Loading of file aborted.");
+               reject (new Error ("Loading of file aborted."));
                return;
             }
 

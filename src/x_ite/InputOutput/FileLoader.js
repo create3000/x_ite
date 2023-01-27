@@ -162,10 +162,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       this .foreign       = foreign;
       this .target        = this .getTarget (parameter || defaultParameter);
 
-      if (callback)
-         return this .loadDocument (url, this .createX3DFromURLAsync .bind (this, callback));
-
-      return this .createX3DFromURLSync (url);
+      return this .loadDocument (url, this .createX3DFromURLAsync .bind (this, callback));
    },
    createX3DFromURLAsync: function (callback, data)
    {
@@ -173,51 +170,6 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
          callback (null, this .URL);
       else
          this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
-   },
-   createX3DFromURLSync: function (urls)
-   {
-      if (urls .length === 0)
-         throw new Error ("No URL given.");
-
-      let
-         scene   = null,
-         success = false;
-
-      for (const url of urls)
-      {
-         this .URL = new URL (url, this .getReferer ());
-
-         $.ajax ({
-            url: decodeURI (this .URL .href),
-            dataType: "text",
-            async: false,
-            cache: this .node .getCache (),
-            //timeout: 15000,
-            global: false,
-            context: this,
-            success: function (data)
-            {
-               try
-               {
-                  scene   = this .createX3DFromString (this .URL, data);
-                  success = true;
-               }
-               catch (exception)
-               {
-                  this .error (exception);
-               }
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-               //console .warn ("Couldn't load URL '" + this .URL .href + "': " + errorThrown + ".");
-            },
-         });
-
-         if (success)
-            return scene;
-      }
-
-      throw new Error ("Couldn't load any url of '" + Array .prototype .join .call (urls, ", ") + "'.");
    },
    loadDocument: function (url, callback)
    {

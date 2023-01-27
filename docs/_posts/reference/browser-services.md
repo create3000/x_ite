@@ -57,11 +57,11 @@ Replace the current world with this new scene that has been loaded or constructe
 
 The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 
-#### void|X3DScene **createX3DFromURL** (*MFString url [, Node node, String event]*)
+#### void|Promise <X3DScene> **createX3DFromURL** (*MFString url [, Node node, String event]*)
 
 Parse the passed URL into a X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
 
-If event and node are omitted a X3DScene object is returned.
+If event and node are omitted a Promise that resolves to a X3DScene object is returned.
 
 #### Promise **loadURL** (*MFString url [, MFString parameter]*)
 
