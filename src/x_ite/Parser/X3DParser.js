@@ -196,7 +196,7 @@ X3DParser .prototype = {
       name = name .replace (/[\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]+/g, "_");
 
       // Trim
-      name = name .replace (/_+$/, "");
+      name = name .replace (/^[_-]+|[_-]+$/g, "");
 
       return name;
    },
