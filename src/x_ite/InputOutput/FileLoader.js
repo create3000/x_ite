@@ -227,7 +227,8 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       if (url .length === 0)
          return this .loadDocumentError (new Error ("No URL given."));
 
-      this .loadDocumentAsync (this .url .shift ()) .catch (this .loadDocumentError .bind (this));
+      this .loadDocumentAsync (this .url .shift ())
+         .catch (this .loadDocumentError .bind (this));
    },
    getTarget: function (parameters)
    {
@@ -344,10 +345,14 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       // Try to load next URL.
 
       if (this .url .length)
-         this .loadDocumentAsync (this .url .shift ()) .catch (this .loadDocumentError .bind (this));
-
+      {
+         this .loadDocumentAsync (this .url .shift ())
+            .catch (this .loadDocumentError .bind (this));
+      }
       else
+      {
          this .callback (null);
+      }
    },
    error: function (exception)
    {
