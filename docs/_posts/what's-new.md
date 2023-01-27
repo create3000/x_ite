@@ -14,6 +14,7 @@ tags: [New, Releases]
 - Added SVG parser.
 - Added STL parser.
 - Parse HTML colors and constants like PI or PI1_2.
+- Better GZip support.
 
 ### Bug Fixes
 
