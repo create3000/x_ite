@@ -1,7 +1,7 @@
 /* X_ITE v8.5.2 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 434:
+/***/ 504:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 64:
+/***/ 268:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 38:
+/***/ 606:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2022-12-05 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 192:
+/***/ 657:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 681:
+/***/ 631:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=undefined;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=undefined;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
@@ -7436,6 +7436,9 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Parser/Expressions\")"
 const Expressions_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.5.2")] .require ("x_ite/Parser/Expressions");
 var Expressions_default = /*#__PURE__*/__webpack_require__.n(Expressions_namespaceObject);
+// EXTERNAL MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"lib/jquery\")"
+var jquery_ = __webpack_require__(355);
+var jquery_default = /*#__PURE__*/__webpack_require__.n(jquery_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/NRRDParser.js
 /*******************************************************************************
  *
@@ -7486,6 +7489,7 @@ var Expressions_default = /*#__PURE__*/__webpack_require__.n(Expressions_namespa
 
 
 
+
 // Grammar
 
 const Grammar = Expressions_default() ({
@@ -7526,7 +7530,7 @@ NRRDParser .prototype =
    setInput: function (value)
    {
       this .dataView     = new DataView (value);
-      this .input        = new TextDecoder ("ascii") .decode (value);
+      this .input        = jquery_default().decodeText (value);
       this .lastIndex    = 0;
       this .nrrd         = { };
       this .littleEndian = true;
@@ -7879,10 +7883,10 @@ NRRDParser .prototype =
             throw new Error ("Invalid NRRD data.");
 
          const
-            input = new Uint8Array (this .dataView .buffer, this .lastIndex),
-            array = pako .ungzip (input, { to: "raw" });
+            input       = this .dataView .buffer .slice (this .lastIndex),
+            arrayBuffer = jquery_default().ungzip (input);
 
-         this .dataView = new DataView (array .buffer);
+         this .dataView = new DataView (arrayBuffer);
 
          this .raw ();
       }
@@ -7899,11 +7903,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().set ("x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(38);
-/* provided dependency */ var JpegImage = __webpack_require__(192);
-/* provided dependency */ var jpeg = __webpack_require__(681);
-/* provided dependency */ var CharLS = __webpack_require__(434);
-/* provided dependency */ var OpenJPEG = __webpack_require__(64);
+/* provided dependency */ var dicomParser = __webpack_require__(606);
+/* provided dependency */ var JpegImage = __webpack_require__(657);
+/* provided dependency */ var jpeg = __webpack_require__(631);
+/* provided dependency */ var CharLS = __webpack_require__(504);
+/* provided dependency */ var OpenJPEG = __webpack_require__(268);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
