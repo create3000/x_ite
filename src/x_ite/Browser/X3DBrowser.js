@@ -111,14 +111,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       X3DBrowserContext .prototype .initialize .call (this);
 
-      const
-         scene      = this .createScene (),
-         background = scene .createNode ("Background");
-
-      background .transparency = 1;
-      scene .rootNodes .push (background);
-
-      this .replaceWorld (scene);
+      this .replaceWorld (this .createScene ());
 
       this [_DOMIntegration] = new DOMIntegration (this);
 

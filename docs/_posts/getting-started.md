@@ -12,9 +12,7 @@ x_ite: true
   src="/x_ite/assets/X3D/teaser.x3d"
   splashScreen="false"
   contextMenu="false"
-  notifications="false"
-  cache="false"
-  debug="true">
+  notifications="false">
 </x3d-canvas>
 
 ## Overview
