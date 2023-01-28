@@ -347,9 +347,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   byteStride = bufferView .byteStride || 0,
                   components = Components .get (accessor .type),
                   count      = accessor .count || 0,
-                  length     = (byteStride ? byteStride / TypedArray .BYTES_PER_ELEMENT : components) * count,
-                  array      = new TypedArray (bufferView .buffer, byteOffset, length),
-                  stride     = (byteStride / TypedArray .BYTES_PER_ELEMENT) || components;
+                  stride     = byteStride ? byteStride / TypedArray .BYTES_PER_ELEMENT : components,
+                  length     = stride * count,
+                  array      = new TypedArray (bufferView .buffer, byteOffset, length);
 
                if (stride !== components)
                {
