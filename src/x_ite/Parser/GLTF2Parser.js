@@ -130,9 +130,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (!Object .keys (this .input) .every (key => keys .has (key)))
             return false;
 
-         this .assetObject (this .input .asset);
-
-         if (this .version !== "2.0")
+         if (!(this .input .asset instanceof Object && this .input .asset .version === "2.0"))
             return false;
 
          return true;
@@ -180,8 +178,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Parse root objects.
 
-      if (this .worldInfoNode)
-         scene .getRootNodes () .push (this .worldInfoNode);
+      this .assetObject (glTF .asset);
 
       await this .buffersArray (glTF .buffers);
 
@@ -208,8 +205,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       if (!(asset instanceof Object))
          return;
-
-      this .version = asset .version;
 
       const
          scene         = this .getExecutionContext (),
@@ -245,7 +240,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       worldInfoNode .setup ();
 
-      this .worldInfoNode = worldInfoNode;
+      this .getExecutionContext () .getRootNodes () .push (worldInfoNode);
    },
    buffersArray: async function (buffers)
    {
