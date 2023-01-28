@@ -194,9 +194,6 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          str = y;
          y   = str .replace (/'([^'\r\n]*)\n([^']*)'/g, "'$1\\n$2'");
-
-         if (str !== y)
-            console .log ("CDATA Replacing", str, "with", y);
       }
       while (y !== str);
 
@@ -273,14 +270,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
        * convert a comment string in JavaScript to XML.  Pass the string
        */
 
-      let y = str;
-
-      str = str .replace (/\\\\/g, "\\");
-
-      if (y !== str)
-         console .log ("X3DJSONLD <!-> replacing", y, "with", str);
-
-      return str;
+      return str .replace (/\\\\/g, "\\");
    },
    SFStringToXML: function (str)
    {
@@ -288,21 +278,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
        * convert an SFString to XML.
        */
 
-      const y = str;
-
-      /*
-      str = (""+str).replace(/\\\\/g, "\\\\");
-      str = str.replace(/\\\\\\\\/g, "\\\\");
-      str = str.replace(/(\\+)"/g, "\\"");
-      */
-
-      str = str .replace (/\\/g, "\\\\");
-      str = str .replace (/"/g, "\\\"");
-
-      if (y !== str)
-         console .log ("X3DJSONLD [] replacing", y, "with", str);
-
-      return str;
+      return str .replace (/([\\"])/g, "\\$1");
    },
    JSONStringToXML: function (str)
    {
@@ -310,13 +286,8 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
        * convert a JSON String to XML.
        */
 
-      const y = str;
-
       str = str .replace (/\\/g, "\\\\");
       str = str .replace (/\n/g, "\\n");
-
-      if (y !== str)
-         console .log ("X3DJSONLD replacing", y, "with", str);
 
       return str;
    },
