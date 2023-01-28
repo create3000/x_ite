@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Geometry2D' level='2'/>
+    <component name='Scripting' level='1'/>
+    <component name='Text' level='1'/>
+    <meta name='created' content='Sat, 28 Jan 2023 13:31:50 GMT'/>
+    <meta name='comment' content='Rise and Shine'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrise X3D Editor V1.0.8, https://create3000.github.io/sunrise/'/>
+    <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/assets/X3D/teaser.x3d'/>
+    <meta name='modified' content='Sat, 28 Jan 2023 14:49:19 GMT'/>
+  </head>
+  <Scene>
+    <NavigationInfo
+        type='"NONE"'/>
+    <Background DEF='White'
+        transparency='1'/>
+    <Transform DEF='Rectangle2D_1'
+        scale='16 5 1'>
+      <Shape>
+        <Appearance>
+          <Material
+              diffuseColor='0.6 0.6 0.6'/>
+          <ImageTexture
+              url='"peakpx.jpg"'/>
+        </Appearance>
+        <Rectangle2D/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Text'
+        translation='-9 -1 1'>
+      <Shape>
+        <Text DEF='_1'
+            string='"X_ITE v8.5.2"'>
+          <FontStyle
+              family='"Michroma-Regular.ttf", "SANS"'
+              size='1.2'/>
+        </Text>
+      </Shape>
+    </Transform>
+    <Script DEF='X_ITE'>
+      <field accessType='outputOnly' type='MFString' name='string_changed'/>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   string_changed = new MFString (Browser .name + " v" + Browser .version);
+}
+]]>
+    </Script>
+    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_1' toField='set_string'/>
+  </Scene>
+</X3D>
