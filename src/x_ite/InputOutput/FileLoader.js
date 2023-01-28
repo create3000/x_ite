@@ -252,10 +252,18 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       if (this .bindViewpoint)
       {
-         if (this .URL .href .substr (0, this .getReferer () .length) === this .getReferer ())
+			const referer = new URL (this .getReferer ());
+
+         if (this .URL .protocol === referer .protocol &&
+				 this .URL .hostname === referer .hostname &&
+				 this .URL .port === referer .port &&
+				 this .URL .pathname === referer .pathname)
          {
-            this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
-            return;
+				if (this .URL .hash)
+				{
+            	this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
+            	return;
+				}
          }
       }
 

@@ -7,7 +7,15 @@ tags: [Getting, Started]
 permalink: /
 x_ite: true
 ---
-<x3d-canvas src="/x_ite/assets/X3D/teaser.x3d" splashScreen="false" contextMenu="false"></x3d-canvas>
+<x3d-canvas
+  class="teaser"
+  src="/x_ite/assets/X3D/teaser.x3d"
+  splashScreen="false"
+  contextMenu="false"
+  notifications="false"
+  cache="false"
+  debug="true">
+</x3d-canvas>
 
 ## Overview
 

@@ -160,6 +160,10 @@ small, .small {
   aspect-ratio: 16 / 9;
 }
 
+.post x3d-canvas.teaser {
+  aspect-ratio: 16 / 5;
+}
+
 .example {
   z-index: 2;
   position: fixed;
