@@ -130,7 +130,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (!Object .keys (this .input) .every (key => keys .has (key)))
             return false;
 
-         if (!(this .input .asset instanceof Object && this .input .asset .version === "2.0"))
+         const asset = this .input .asset;
+
+         if (!(asset instanceof Object && asset .version === "2.0"))
             return false;
 
          return true;
