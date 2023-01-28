@@ -50,6 +50,7 @@ import JSONParser  from "./JSONParser.js";
 import VRMLParser  from "./VRMLParser.js";
 import XMLParser   from "./XMLParser.js";
 import GLTF2Parser from "./GLTF2Parser.js";
+import GLB2Parser  from "./GLB2Parser.js";
 import OBJParser   from "./OBJParser.js";
 import STLAParser  from "./STLAParser.js";
 import STLBParser  from "./STLBParser.js";
@@ -139,6 +140,7 @@ GoldenGate .Parser = [
    SVGParser,
    XMLParser,
    GLTF2Parser,
+   GLB2Parser,
    JSONParser,
    VRMLParser,
    OBJParser,

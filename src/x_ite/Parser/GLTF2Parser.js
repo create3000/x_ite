@@ -152,6 +152,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .input = undefined;
       }
    },
+   setBuffers: function (buffers)
+   {
+      this .buffers = buffers;
+   },
    parseIntoScene: function (success, error)
    {
       this .rootObject (this .input)
@@ -184,15 +188,17 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .bufferViewsArray (glTF .bufferViews);
       this .accessorsArray   (glTF .accessors);
       this .samplersArray    (glTF .samplers);
-      this .imagesArray      (glTF .images);
-      this .texturesArray    (glTF .textures);
-      this .materialsArray   (glTF .materials);
-      this .meshesArray      (glTF .meshes);
-      this .camerasArray     (glTF .cameras);
-      this .nodesArray       (glTF .nodes);
-      this .scenesArray      (glTF .scenes, glTF .scene);
-      this .animationsArray  (glTF .animations);
-      this .skinsArray       (glTF .skins);
+
+      await this .imagesArray (glTF .images);
+
+      this .texturesArray   (glTF .textures);
+      this .materialsArray  (glTF .materials);
+      this .meshesArray     (glTF .meshes);
+      this .camerasArray    (glTF .cameras);
+      this .nodesArray      (glTF .nodes);
+      this .scenesArray     (glTF .scenes, glTF .scene);
+      this .animationsArray (glTF .animations);
+      this .skinsArray      (glTF .skins);
 
       this .optimizeSceneGraph (this .getExecutionContext () .getRootNodes ());
 
@@ -244,6 +250,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    buffersArray: async function (buffers)
    {
       if (!(buffers instanceof Array))
+         return;
+
+      if (this .buffers .length)
          return;
 
       this .buffers = await Promise .all (buffers .map (buffer => this .bufferObject (buffer)));
@@ -433,12 +442,47 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          });
       };
    })(),
-   imagesArray: function (images)
+   imagesArray: async function (images)
    {
       if (!(images instanceof Array))
          return;
 
-      this .images = images;
+      this .images = await Promise .all (images .map (image => this .imageObject (image)));
+   },
+   imageObject: async function (image)
+   {
+      if (!(image instanceof Object))
+         return;
+
+      if (image .uri)
+         return image;
+
+      const bufferView = this .bufferViews [image .bufferView];
+
+      if (!bufferView)
+         return image;
+
+      const
+         buffer = bufferView .buffer .slice (bufferView .byteOffset, bufferView .byteOffset + bufferView .byteLength),
+         blob   = new Blob ([new Uint8Array (buffer)], { type: image .mimeType }),
+         uri    = await this .blobToDataUrl (blob);
+
+      image .uri = uri;
+
+      return image;
+   },
+   blobToDataUrl: function (blob)
+   {
+      return new Promise ((resolve, reject) =>
+      {
+         const fileReader = new FileReader ();
+
+         fileReader .onload  = resolve;
+         fileReader .onerror = reject;
+
+         fileReader .readAsDataURL (blob);
+      })
+      .then (event => event .target .result);
    },
    texturesArray: function (textures)
    {
