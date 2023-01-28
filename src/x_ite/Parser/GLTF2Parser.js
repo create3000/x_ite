@@ -286,7 +286,11 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!buffer)
          return;
 
-      return buffer .slice (bufferView .byteOffset, bufferView .byteOffset + bufferView .byteLength);
+      const
+         byteOffset = bufferView .byteOffset || 0,
+         byteLength = bufferView .byteLength;
+
+      return buffer .slice (byteOffset, byteOffset + byteLength);
    },
    accessorsArray: function (accessors)
    {
