@@ -184,6 +184,8 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       await this .statements ();
 
       this .optimizeSceneGraph (scene .getRootNodes ());
+
+      return this .getScene ();
    },
    comments: function ()
    {
