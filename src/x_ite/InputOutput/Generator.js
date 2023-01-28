@@ -503,7 +503,7 @@ Generator .prototype =
    {
       return string
          .replace (/&/g, "&amp;")
-         .replace (/\\/g, "&#92;")
+         .replace (/\\/g, "\\\\")
          .replace (/\t/g, "&#x9;")
          .replace (/\n/g, "&#xA;")
          .replace (/\r/g, "&#xD;")

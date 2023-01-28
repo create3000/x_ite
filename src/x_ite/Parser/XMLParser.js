@@ -1195,42 +1195,25 @@ XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = VRMLParser .proto
  */
 
 const
-   infs            = /\binf\b/g,
-   nans            = /\bnan\b/g,
    trimWhitespaces = /^[\x20\n,\t\r"]+|[\x20\n,\t\r"]+$/g,
    whitespaces     = /[\x20\n,\t\r"]+/,
-   strings         = /"((?:[^\\"]|\\\\|\\"|\\.)*)"/g;
+   strings         = /"((?:[^\\"]|\\\\|\\")*)"/g;
 
-
-function prepareBools (string)
-{
-   return string .replace (trimWhitespaces, "") .split (whitespaces);
-}
-
-function prepareFloats (string)
-{
-   return (string
-      .replace (infs, "Infinity")
-      .replace (nans, "NaN")
-      .replace (trimWhitespaces, "")
-      .split (whitespaces));
-}
-
-function prepareInts (string)
+function prepareValues (string)
 {
    return string .replace (trimWhitespaces, "") .split (whitespaces);
 }
 
 function prepareStrings (string)
 {
-   var
+   let
       match = null,
       array = [ ];
 
    while (match = strings .exec (string))
-      array .push (match [1]);
+      array .push (Fields .SFString .unescape (match [1]));
 
-   return array .map (Fields .SFString .unescape);
+   return array;
 }
 
 // Unitless fields.
@@ -1244,15 +1227,12 @@ XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4f] =
 XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d] =
 XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f] = function (field)
 {
-   field .setValue (prepareFloats (this .input) .map (function (value)
-   {
-      return parseFloat (value);
-   }));
+   field .setValue (prepareValues (this .input) .map (value => parseFloat (value)));
 };
 
 XMLParser .prototype .fieldTypes [X3DConstants .MFBool] = function (field)
 {
-   field .setValue (prepareBools (this .input) .map (function (value)
+   field .setValue (prepareValues (this .input) .map (function (value)
    {
       if (value === "true" || value === "TRUE")
          return true;
@@ -1263,10 +1243,7 @@ XMLParser .prototype .fieldTypes [X3DConstants .MFBool] = function (field)
 
 XMLParser .prototype .fieldTypes [X3DConstants .MFInt32] = function (field)
 {
-   field .setValue (prepareInts (this .input) .map (function (value)
-   {
-      return parseInt (value);
-   }));
+   field .setValue (prepareValues (this .input) .map (value => parseInt (value)));
 };
 
 // Unit fields.
@@ -1278,13 +1255,9 @@ XMLParser .prototype .fieldTypes [X3DConstants .MFVec2f] =
 XMLParser .prototype .fieldTypes [X3DConstants .MFVec3d] =
 XMLParser .prototype .fieldTypes [X3DConstants .MFVec3f] = function (field)
 {
-   var category = field .getUnit ();
+   const category = field .getUnit ();
 
-   field .setValue (prepareFloats (this .input) .map (function (value)
-   {
-      return this .fromUnit (category, parseFloat (value));
-   },
-   this));
+   field .setValue (prepareValues (this .input) .map (value => this .fromUnit (category, parseFloat (value))));
 };
 
 XMLParser .prototype .fieldTypes [X3DConstants .MFString] = function (field)
