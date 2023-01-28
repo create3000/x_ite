@@ -274,7 +274,19 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .bufferViews = bufferViews;
 
       for (const bufferView of bufferViews)
-         bufferView .buffer = this .buffers [bufferView .buffer];
+         bufferView .buffer = this .bufferViewObject (bufferView);
+   },
+   bufferViewObject: function (bufferView)
+   {
+      if (!(bufferView instanceof Object))
+         return;
+
+      const buffer = this .buffers [bufferView .buffer];
+
+      if (!buffer)
+         return;
+
+      return buffer .slice (bufferView .byteOffset, bufferView .byteOffset + bufferView .byteLength);
    },
    accessorsArray: function (accessors)
    {
@@ -327,7 +339,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                const
                   TypedArray = TypedArrays .get (accessor .componentType),
                   bufferView = this .bufferViews [accessor .bufferView] || DefaultBufferView,
-                  byteOffset = (accessor .byteOffset || 0) + (bufferView .byteOffset || 0),
+                  byteOffset = accessor .byteOffset || 0,
                   byteStride = bufferView .byteStride || 0,
                   components = Components .get (accessor .type),
                   count      = accessor .count || 0,
@@ -460,7 +472,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return image;
 
       const
-         buffer = bufferView .buffer .slice (bufferView .byteOffset, bufferView .byteOffset + bufferView .byteLength),
+         buffer = bufferView .buffer,
          blob   = new Blob ([new Uint8Array (buffer)], { type: image .mimeType }),
          uri    = await this .blobToDataUrl (blob);
 
