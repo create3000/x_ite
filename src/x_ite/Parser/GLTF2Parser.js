@@ -242,22 +242,22 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       worldInfoNode .setup ();
 
-      this .getExecutionContext () .getRootNodes () .push (worldInfoNode);
+      scene .getRootNodes () .push (worldInfoNode);
    },
    buffersArray: async function (buffers)
    {
       if (!(buffers instanceof Array))
          return;
 
-      if (this .buffers .length)
-         return;
-
-      this .buffers = await Promise .all (buffers .map (buffer => this .bufferObject (buffer)));
+      this .buffers = await Promise .all (buffers .map ((buffer, i) => this .bufferObject (buffer, i)));
    },
-   bufferObject: function (buffer)
+   bufferObject: function (buffer, i)
    {
       if (!(buffer instanceof Object))
          return;
+
+      if (!buffer .uri)
+         return Promise .resolve (this .buffers [i]);
 
       const url = new URL (buffer .uri, this .getExecutionContext () .getWorldURL ());
 
