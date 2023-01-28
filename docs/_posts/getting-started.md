@@ -626,7 +626,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 | X3D JSON         | .x3dj, .x3djz  | model/x3d+json  |
 | X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  |
 | VRML             | .wrl, .wrz     | model/vrml      |
-| glTF             | .gltf          | model/gltf+json |
+| glTF             | .gltf, .glb    | model/gltf+json |
 | Wavefront OBJ    | .obj           | model/obj       |
 | STL              | .stl           | model/stl       |
 | SVG Document     | .svg, .svgz    | image/svg+xml   |
