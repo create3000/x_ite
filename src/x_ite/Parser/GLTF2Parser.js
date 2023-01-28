@@ -351,7 +351,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   length     = stride * count,
                   array      = new TypedArray (bufferView .buffer, byteOffset, length);
 
-               if (stride !== components)
+               if (stride === components)
+               {
+                  Object .defineProperty (accessor, "array", { value: array });
+
+                  return array;
+               }
+               else
                {
                   const
                      length = count * components,
@@ -366,12 +372,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   Object .defineProperty (accessor, "array", { value: dense });
 
                   return dense;
-               }
-               else
-               {
-                  Object .defineProperty (accessor, "array", { value: array });
-
-                  return array;
                }
             },
             configurable: true,
