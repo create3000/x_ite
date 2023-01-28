@@ -7,6 +7,8 @@ tags: [Getting, Started]
 permalink: /
 x_ite: true
 ---
+<x3d-canvas src="/x_ite/assets/X3D/teaser.x3d" splashScreen="false" contextMenu="false"></x3d-canvas>
+
 ## Overview
 
 X_ITE is a new 3D JavaScript library entirely written in JavaScript and uses WebGL for 3D rendering. Authors can publish X3D and VRML source online within an HTML5 page with X_ITE that works with Web browsers **without** prior plugin installation. This gives X3D authors the ability to displays content in 3D, using WebGL 3D graphics technology to display X3D content in several different browsers across several different operating systems. Since X3D is backwardly compatible, X_ITE can also be used as a VRML viewer.
