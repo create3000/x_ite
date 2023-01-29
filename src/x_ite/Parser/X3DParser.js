@@ -186,17 +186,17 @@ X3DParser .prototype = {
    },
    sanitizeName: function (name = "")
    {
-      // Spaces
-      name = name .trim () .replace (/\s+/g, "-");
-
       // NonIdFirstChar
       name = name .replace (/^[\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/, "");
 
       // NonIdChars
-      name = name .replace (/[\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]+/g, "_");
+      name = name .replace (/[\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]+/g, "-");
+
+      // Spaces
+      name = name .trim () .replace (/[\s_-]+/g, "-");
 
       // Trim
-      name = name .replace (/^[_-]+|[_-]+$/g, "");
+      name = name .replace (/^-+|-+$/g, "");
 
       return name;
    },
