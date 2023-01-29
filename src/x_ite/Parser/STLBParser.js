@@ -74,15 +74,18 @@ STLBParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .dataView = new DataView (this .input);
 
+      if (this .dataView .byteLength < 84)
+         return false;
+
       const
          numFaces   = this .dataView .getUint32 (80, true),
          byteLength = numFaces * 50 + 84;
 
       return byteLength === this .dataView .byteLength;
    },
-   setInput: function (string)
+   setInput: function (input)
    {
-      this .input = string;
+      this .input = input;
    },
    parseIntoScene: function (success, error)
    {

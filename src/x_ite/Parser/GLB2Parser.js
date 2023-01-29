@@ -68,6 +68,9 @@ GLB2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(this .arrayBuffer instanceof ArrayBuffer))
          return false;
 
+      if (this .arrayBuffer .byteLength < 12)
+         return false;
+
       if (this .dataView .getUint32 (0, true) !== 0x46546C67)
          return false;
 
