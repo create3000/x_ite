@@ -257,13 +257,11 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
          if (this .URL .protocol === referer .protocol &&
 				 this .URL .hostname === referer .hostname &&
 				 this .URL .port === referer .port &&
-				 this .URL .pathname === referer .pathname)
+				 this .URL .pathname === referer .pathname &&
+             this .URL .hash)
          {
-				if (this .URL .hash)
-				{
-            	this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
-            	return;
-				}
+            this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
+            return;
          }
       }
 
