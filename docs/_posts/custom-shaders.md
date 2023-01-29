@@ -116,7 +116,9 @@ main ()
 
 ## Lighting and Transparency
 
-Lighting is enabled if a Material node is available. If a transparent Material node is attached to the Appearance of the Shape node, the Shape is treated as transparent and thus the shader.
+Lighting is enabled if a Material node is used and some lights are on.
+
+Normally the browser automatically determines the alpha treatment based on material, colors, and images, but you can force a alpha mode by setting the *alphaMode* field of a Appearance node.
 
 ## Data Type Mapping
 
