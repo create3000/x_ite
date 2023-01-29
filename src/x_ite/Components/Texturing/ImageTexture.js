@@ -77,6 +77,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "flipVertically",       new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
@@ -172,8 +173,11 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
             cx .clearRect (0, 0, width, height);
             cx .save ();
-            cx .translate (0, height);
-            cx .scale (1, -1);
+            if (!this ._flipVertically .getValue ())
+            {
+               cx .translate (0, height);
+               cx .scale (1, -1);
+            }
             cx .drawImage (image, 0, 0);
             cx .restore ();
          }
@@ -189,8 +193,11 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
             cx .clearRect (0, 0, width, height);
             cx .save ();
-            cx .translate (0, height);
-            cx .scale (1, -1);
+            if (!this ._flipVertically .getValue ())
+            {
+               cx .translate (0, height);
+               cx .scale (1, -1);
+            }
             cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
             cx .restore ();
          }

@@ -525,7 +525,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (name)
          scene .addNamedNode (scene .getUniqueName (name), textureNode);
 
-      textureNode ._url = [image .uri];
+      textureNode ._url            = [image .uri];
+      textureNode ._flipVertically = true;
 
       const sampler = this .samplers [texture .sampler];
 
@@ -777,8 +778,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          translation = new Vector2 (0, 0),
          rotation    = new Vector3 (0, 0, 0),
          scale       = new Vector2 (1, 1),
-         matrix      = new Matrix3 (),
-         flipY       = new Matrix3 (1, 0, 0, 0, -1, 0, -1, 1);
+         matrix      = new Matrix3 ();
 
       if (this .vectorValue (KHR_texture_transform .scale, scale))
          matrix .scale (scale);
@@ -788,7 +788,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (this .vectorValue (KHR_texture_transform .offset, translation))
          matrix .translate (translation);
 
-      matrix .multRight (flipY);
       matrix .get (translation, rotation, scale);
 
       textureTransformNode ._mapping     = mapping;
@@ -1338,7 +1337,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          case 0:
          {
-            return this .getDefaultTextureTransform ();
+            return null;
          }
          case 1:
          {
@@ -1357,24 +1356,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return textureTransformNode;
          }
       }
-   },
-   getDefaultTextureTransform: function ()
-   {
-      if (this .defaultTextureTransform)
-         return this .defaultTextureTransform;
-
-      const
-         scene                = this .getExecutionContext (),
-         textureTransformNode = scene .createNode ("TextureTransform", false);
-
-      textureTransformNode ._translation .y = -1;
-      textureTransformNode ._scale .y       = -1;
-
-      textureTransformNode .setup ();
-
-      this .defaultTextureTransform = textureTransformNode;
-
-      return textureTransformNode;
    },
    createGeometry: function (primitive)
    {
