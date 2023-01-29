@@ -69,8 +69,6 @@ function Inline (executionContext)
 
    this .scene     = this .getBrowser () .getDefaultScene ();
    this .groupNode = new Group (executionContext);
-
-   this .groupNode .addParent (this);
 }
 
 Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),

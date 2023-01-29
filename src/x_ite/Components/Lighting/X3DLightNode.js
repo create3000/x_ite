@@ -170,10 +170,10 @@ X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
       {
          const lightContainer = renderObject .getLightContainer ();
 
+         lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
+
          if (this ._global .getValue ())
          {
-            lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-
             renderObject .getGlobalObjects () .push (lightContainer);
             renderObject .getLights ()        .push (lightContainer);
 
@@ -181,8 +181,6 @@ X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
          }
          else
          {
-            lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-
             renderObject .getLocalObjects () .push (lightContainer);
             renderObject .getLights ()       .push (lightContainer);
 
