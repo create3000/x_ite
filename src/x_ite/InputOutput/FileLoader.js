@@ -284,7 +284,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       const
          options     = { cache: this .node .getCache () ? "default" : "reload" },
-         response    = await fetch (decodeURI (this .URL .href), options),
+         response    = this .handleErrors (await fetch (decodeURI (this .URL .href), options)),
          contentType = response .headers .get ("content-type");
 
       if (this .foreign)
@@ -296,6 +296,13 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       }
 
       this .callback ($.ungzip (await response .arrayBuffer ()), this .URL);
+   },
+   handleErrors: function (response)
+   {
+      if (!response .ok)
+         throw Error (response .statusText || response .status);
+
+      return response;
    },
    loadDocumentError: function (exception)
    {
