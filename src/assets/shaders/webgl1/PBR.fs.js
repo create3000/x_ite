@@ -1,8 +1,8 @@
 export default /* glsl */ `
+
 // https://github.com/cx20/gltf-test/blob/master/examples/khronos-gltf-loader/shaders/pbr-frag.glsl
 
 #extension GL_EXT_shader_texture_lod: enable
-#extension GL_OES_standard_derivatives : enable
 
 precision highp float;
 precision highp int;

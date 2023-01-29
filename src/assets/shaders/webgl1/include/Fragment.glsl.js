@@ -1,4 +1,6 @@
 export default /* glsl */ `
+#extension GL_OES_standard_derivatives : enable
+
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    #extension GL_EXT_frag_depth : enable
 #endif
