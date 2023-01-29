@@ -141,6 +141,7 @@ const X_ITE_TESTS = [
    { component: "Networking" },
    { path: "Networking/Anchor.x3d" },
    { path: "Networking/autoRefresh.x3dv" },
+   { path: "Networking/BoxWithLight.x3d" },
    { path: "Networking/InlineGlobal.x3d" },
    { path: "Networking/LoadSensor.x3d" },
    { component: "NURBS" },
