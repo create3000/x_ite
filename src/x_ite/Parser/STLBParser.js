@@ -69,10 +69,8 @@ STLBParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    isValid: function ()
    {
-      if (!(this .input instanceof ArrayBuffer))
+      if (!(this .arrayBuffer instanceof ArrayBuffer))
          return false;
-
-      this .dataView = new DataView (this .input);
 
       if (this .dataView .byteLength < 84)
          return false;
@@ -85,7 +83,8 @@ STLBParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    setInput: function (input)
    {
-      this .input = input;
+      this .arrayBuffer = input;
+      this .dataView    = new DataView (input);
    },
    parseIntoScene: function (success, error)
    {
