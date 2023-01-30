@@ -147,7 +147,7 @@ icon: fas fa-th-large
 
       foreach $node (@nodes)
       {
-         $text .= "- [$node]($component/$node)\n";
+         $text .= "- [$node](\L$component/\L$node)\n";
       }
 
       $text .= "\n";
@@ -166,10 +166,10 @@ sub supported {
 
    foreach $component (sort keys %{$components})
    {
-      $c{$_} = $component foreach @{$components -> {$component}};
+      $c{lc $_} = lc $component foreach @{$components -> {$component}};
    }
 
-   $text =~ s|\[([a-zA-Z0-9]+)\]\(.*?\){.*?}|[$1](components/$c{$1}/$1)|sg;
+   $text =~ s|\[([a-zA-Z0-9]+)\]\(.*?\)|[\L$1](components/$c{$1}/\L$1)|sg;
 
    open FILE, ">", "$posts/supported-nodes.md";
    print FILE $text;
