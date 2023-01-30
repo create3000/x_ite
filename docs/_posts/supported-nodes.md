@@ -7,9 +7,9 @@ tags: [Supported, Nodes, Components, Profiles]
 ---
 ## Overview
 
-X\_ITE supports a certain number of X3D nodes. Objects in a X3D scene are also called nodes. These nodes are grouped into components and the components are grouped in profiles.
+X_ITE supports a certain number of X3D nodes. Objects in a X3D scene are also called nodes. These nodes are grouped into components and the components are grouped in profiles.
 
-The following lists outlines the profiles and nodes that are supported in X\_ITE.
+The following lists outlines the profiles and nodes that are supported in X_ITE.
 
 ## Supported Statements
 
@@ -34,13 +34,13 @@ The following lists outlines the profiles and nodes that are supported in X\_ITE
 
 ## Supported Profiles
 
-X\_ITE has achieved the [X3D Immersive Profile](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/immersive.html){:target="_blank"} support (which matches the VRML97 palette) verified by the X3D consortium at [web3d.org](https://www.web3d.org){:target="_blank"}.
+X_ITE has achieved the [X3D Immersive Profile](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/immersive.html){:target="_blank"} support (which matches the VRML97 palette) verified by the X3D consortium at [web3d.org](https://www.web3d.org){:target="_blank"}.
 
 ## Supported Components
 
-This section documents all of supported nodes by X\_ITE.
+This section documents all of supported nodes by X_ITE.
 
-X\_ITE supports a limited set of nodes defined by the X3D specification. There are currently 223 of 236 nodes (94 %) implemented. The implementation of these nodes is complete in that that the nodes will support all the required fields and features for that implementation unless otherwise stated.
+X_ITE supports a limited set of nodes defined by the X3D specification. There are currently 223 of 236 nodes (94 %) implemented. The implementation of these nodes is complete in that that the nodes will support all the required fields and features for that implementation unless otherwise stated.
 
 ### CADGeometry
 
@@ -258,11 +258,6 @@ X\_ITE supports a limited set of nodes defined by the X3D specification. There a
 - [SphereSensor](components/pointingdevicesensor/spheresensor)
 - [TouchSensor](components/pointingdevicesensor/touchsensor)
 
-### ProjectiveTextureMapping
-
-- [](components//textureprojector)
-- [](components//textureprojectorparallel)
-
 ### Rendering
 
 - [ClipPlane](components/rendering/clipplane)
@@ -313,11 +308,11 @@ X\_ITE supports a limited set of nodes defined by the X3D specification. There a
 - [FillProperties](components/shape/fillproperties)
 - [LineProperties](components/shape/lineproperties)
 - [Material](components/shape/material)
-- [](components//physicalmaterial)
+- [PhysicalMaterial](components/shape/physicalmaterial)
 - [PointProperties](components/shape/pointproperties)
 - [Shape](components/shape/shape)
 - [TwoSidedMaterial](components/shape/twosidedmaterial)
-- [](components//unlitmaterial)
+- [UnlitMaterial](components/shape/unlitmaterial)
 
 ### Sound
 
@@ -328,6 +323,11 @@ X\_ITE supports a limited set of nodes defined by the X3D specification. There a
 
 - [FontStyle](components/text/fontstyle)
 - [Text](components/text/text)
+
+### TextureProjector
+
+- [TextureProjector](components/textureprojector/textureprojector)
+- [TextureProjectorParallel](components/textureprojector/textureprojectorparallel)
 
 ### Texturing
 
@@ -373,6 +373,6 @@ X\_ITE supports a limited set of nodes defined by the X3D specification. There a
 - [ToneMappedVolumeStyle](components/volumerendering/tonemappedvolumestyle)
 - [VolumeData](components/volumerendering/volumedata)
 
-### X\_ITE
+### X_ITE
 
-- BlendMode
+- [BlendMode](components/x-ite/blendmode)
