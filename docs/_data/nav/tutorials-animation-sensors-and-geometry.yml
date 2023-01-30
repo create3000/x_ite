@@ -1,0 +1,18 @@
+- title: "Animation, Sensors, and Geometry"
+  children:
+    - title: "Introducing Animation"
+      url: /tutorials/introducing-animation
+    - title: "Animating Transforms"
+      url: /tutorials/animating-transforms
+    - title: "Sensing Viewer Actions"
+      url: /tutorials/sensing-viewer-actions
+    - title: "Building Shapes out of Points, Lines, and Faces"
+      url: /tutorials/building-shapes-out-of-points-lines-and-faces
+    - title: "Building Elevation Grids"
+      url: /tutorials/building-elevation-grids
+    - title: "Building Extruded Shapes"
+      url: /tutorials/building-extruded-shapes
+    - title: "Controlling Color on Coordinate-Based Geometry"
+      url: /tutorials/controlling-color-on-coordinate-based-geometry
+    - title: "Controlling Shading on Coordinate-Based Geometry"
+      url: /tutorials/controlling-shading-on-coordinate-based-geometry

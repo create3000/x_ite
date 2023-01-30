@@ -1,10 +1,10 @@
 {% assign enable_nav = false %}
-{% if site.nav[page.nav] %}
+{% if site.data.nav[page.nav] %}
   {% assign enable_nav = true %}
 {% endif %}
 
 {% if enable_nav %}
-{% for item in site.nav[page.nav] %}
+{% for item in site.data.nav[page.nav] %}
 <div id="nav-wrapper">
   <div class="panel-heading pl-3 pt-2 mb-2">{{ item.title }}</div>
   <nav id="pages">

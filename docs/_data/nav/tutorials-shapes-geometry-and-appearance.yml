@@ -1,0 +1,16 @@
+- title: "Shapes, Geometry, and Appearance"
+  children:
+    - title: "Introducing X3D"
+      url: /tutorials/introducing-x3d
+    - title: "Building a X3D World"
+      url: /tutorials/building-a-x3d-world
+    - title: "Building Primitive Shapes"
+      url: /tutorials/building-primitive-shapes
+    - title: "Transforming Shapes"
+      url: /tutorials/transforming-shapes
+    - title: "Controlling Appearance with Materials"
+      url: /tutorials/controlling-appearance-with-materials
+    - title: "Grouping Nodes"
+      url: /tutorials/grouping-nodes
+    - title: "Naming Nodes"
+      url: /tutorials/naming-nodes
