@@ -1,0 +1,10 @@
+- title: "PointingDeviceSensor"
+  children:
+    - title: "CylinderSensor"
+      url: /components/PointingDeviceSensor/CylinderSensor
+    - title: "PlaneSensor"
+      url: /components/PointingDeviceSensor/PlaneSensor
+    - title: "SphereSensor"
+      url: /components/PointingDeviceSensor/SphereSensor
+    - title: "TouchSensor"
+      url: /components/PointingDeviceSensor/TouchSensor

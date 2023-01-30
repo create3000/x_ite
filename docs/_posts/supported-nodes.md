@@ -44,334 +44,334 @@ X\_ITE supports a limited set of nodes defined by the X3D specification. There a
 
 ### CADGeometry
 
-- [CADAssembly](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#CADAssembly){:target="_blank"}
-- [CADFace](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#CADFace){:target="_blank"}
-- [CADLayer](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#CADLayer){:target="_blank"}
-- [CADPart](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#CADPart){:target="_blank"}
-- [IndexedQuadSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#IndexedQuadSet){:target="_blank"}
-- [QuadSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#QuadSet){:target="_blank"}
+- [CADAssembly](components/CADGeometry/CADAssembly)
+- [CADFace](components/CADGeometry/CADFace)
+- [CADLayer](components/CADGeometry/CADLayer)
+- [CADPart](components/CADGeometry/CADPart)
+- [IndexedQuadSet](components/CADGeometry/IndexedQuadSet)
+- [QuadSet](components/CADGeometry/QuadSet)
 
 ### Core
 
-- [MetadataBoolean](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataBoolean){:target="_blank"}
-- [MetadataDouble](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataDouble){:target="_blank"}
-- [MetadataFloat](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataFloat){:target="_blank"}
-- [MetadataInteger](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataInteger){:target="_blank"}
-- [MetadataSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataSet){:target="_blank"}
-- [MetadataString](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataString){:target="_blank"}
-- [WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#WorldInfo){:target="_blank"}
+- [MetadataBoolean](components/Core/MetadataBoolean)
+- [MetadataDouble](components/Core/MetadataDouble)
+- [MetadataFloat](components/Core/MetadataFloat)
+- [MetadataInteger](components/Core/MetadataInteger)
+- [MetadataSet](components/Core/MetadataSet)
+- [MetadataString](components/Core/MetadataString)
+- [WorldInfo](components/Core/WorldInfo)
 
 ### CubeMapTexturing
 
-- [ComposedCubeMapTexture](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalTexturing.html#ComposedCubeMapTexture){:target="_blank"}
-- [GeneratedCubeMapTexture](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalTexturing.html#GeneratedCubeMapTexture){:target="_blank"}
-- [ImageCubeMapTexture](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalTexturing.html#ImageCubeMapTexture){:target="_blank"}
+- [ComposedCubeMapTexture](components/CubeMapTexturing/ComposedCubeMapTexture)
+- [GeneratedCubeMapTexture](components/CubeMapTexturing/GeneratedCubeMapTexture)
+- [ImageCubeMapTexture](components/CubeMapTexturing/ImageCubeMapTexture)
 
 ### EnvironmentalEffects
 
-- [Background](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Background){:target="_blank"}
-- [Fog](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Fog){:target="_blank"}
-- [FogCoordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#FogCoordinate){:target="_blank"}
-- [LocalFog](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#LocalFog){:target="_blank"}
-- [TextureBackground](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#TextureBackground){:target="_blank"}
+- [Background](components/EnvironmentalEffects/Background)
+- [Fog](components/EnvironmentalEffects/Fog)
+- [FogCoordinate](components/EnvironmentalEffects/FogCoordinate)
+- [LocalFog](components/EnvironmentalEffects/LocalFog)
+- [TextureBackground](components/EnvironmentalEffects/TextureBackground)
 
 ### EnvironmentalSensor
 
-- [ProximitySensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalSensor.html#ProximitySensor){:target="_blank"}
-- [TransformSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalSensor.html#TransformSensor){:target="_blank"}
-- [VisibilitySensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalSensor.html#VisibilitySensor){:target="_blank"}
+- [ProximitySensor](components/EnvironmentalSensor/ProximitySensor)
+- [TransformSensor](components/EnvironmentalSensor/TransformSensor)
+- [VisibilitySensor](components/EnvironmentalSensor/VisibilitySensor)
 
 ### EventUtilities
 
-- [BooleanFilter](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#BooleanFilter){:target="_blank"}
-- [BooleanSequencer](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#BooleanSequencer){:target="_blank"}
-- [BooleanToggle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#BooleanToggle){:target="_blank"}
-- [BooleanTrigger](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#BooleanTrigger){:target="_blank"}
-- [IntegerSequencer](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#IntegerSequencer){:target="_blank"}
-- [IntegerTrigger](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#IntegerTrigger){:target="_blank"}
-- [TimeTrigger](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#TimeTrigger){:target="_blank"}
+- [BooleanFilter](components/EventUtilities/BooleanFilter)
+- [BooleanSequencer](components/EventUtilities/BooleanSequencer)
+- [BooleanToggle](components/EventUtilities/BooleanToggle)
+- [BooleanTrigger](components/EventUtilities/BooleanTrigger)
+- [IntegerSequencer](components/EventUtilities/IntegerSequencer)
+- [IntegerTrigger](components/EventUtilities/IntegerTrigger)
+- [TimeTrigger](components/EventUtilities/TimeTrigger)
 
 ### Followers
 
-- [ColorChaser](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#ColorChaser){:target="_blank"}
-- [ColorDamper](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#ColorDamper){:target="_blank"}
-- [CoordinateChaser](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#CoordinateChaser){:target="_blank"}
-- [CoordinateDamper](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#CoordinateDamper){:target="_blank"}
-- [OrientationChaser](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#OrientationChaser){:target="_blank"}
-- [OrientationDamper](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#OrientationDamper){:target="_blank"}
-- [PositionChaser](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#PositionChaser){:target="_blank"}
-- [PositionChaser2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#PositionChaser2D){:target="_blank"}
-- [PositionDamper](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#PositionDamper){:target="_blank"}
-- [PositionDamper2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#PositionDamper2D){:target="_blank"}
-- [ScalarChaser](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#ScalarChaser){:target="_blank"}
-- [ScalarDamper](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#ScalarDamper){:target="_blank"}
-- [TexCoordChaser2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#TexCoordChaser2D){:target="_blank"}
-- [TexCoordDamper2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#TexCoordDamper2D){:target="_blank"}
+- [ColorChaser](components/Followers/ColorChaser)
+- [ColorDamper](components/Followers/ColorDamper)
+- [CoordinateChaser](components/Followers/CoordinateChaser)
+- [CoordinateDamper](components/Followers/CoordinateDamper)
+- [OrientationChaser](components/Followers/OrientationChaser)
+- [OrientationDamper](components/Followers/OrientationDamper)
+- [PositionChaser](components/Followers/PositionChaser)
+- [PositionChaser2D](components/Followers/PositionChaser2D)
+- [PositionDamper](components/Followers/PositionDamper)
+- [PositionDamper2D](components/Followers/PositionDamper2D)
+- [ScalarChaser](components/Followers/ScalarChaser)
+- [ScalarDamper](components/Followers/ScalarDamper)
+- [TexCoordChaser2D](components/Followers/TexCoordChaser2D)
+- [TexCoordDamper2D](components/Followers/TexCoordDamper2D)
 
 ### Geometry2D
 
-- [Arc2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Arc2D){:target="_blank"}
-- [ArcClose2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#ArcClose2D){:target="_blank"}
-- [Circle2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Circle2D){:target="_blank"}
-- [Disk2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Disk2D){:target="_blank"}
-- [Polyline2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Polyline2D){:target="_blank"}
-- [Polypoint2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Polypoint2D){:target="_blank"}
-- [Rectangle2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Rectangle2D){:target="_blank"}
-- [TriangleSet2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#TriangleSet2D){:target="_blank"}
+- [Arc2D](components/Geometry2D/Arc2D)
+- [ArcClose2D](components/Geometry2D/ArcClose2D)
+- [Circle2D](components/Geometry2D/Circle2D)
+- [Disk2D](components/Geometry2D/Disk2D)
+- [Polyline2D](components/Geometry2D/Polyline2D)
+- [Polypoint2D](components/Geometry2D/Polypoint2D)
+- [Rectangle2D](components/Geometry2D/Rectangle2D)
+- [TriangleSet2D](components/Geometry2D/TriangleSet2D)
 
 ### Geometry3D
 
-- [Box](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Box){:target="_blank"}
-- [Cone](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cone){:target="_blank"}
-- [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cylinder){:target="_blank"}
-- [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"}
-- [Extrusion](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Extrusion){:target="_blank"}
-- [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"}
-- [Sphere](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Sphere){:target="_blank"}
+- [Box](components/Geometry3D/Box)
+- [Cone](components/Geometry3D/Cone)
+- [Cylinder](components/Geometry3D/Cylinder)
+- [ElevationGrid](components/Geometry3D/ElevationGrid)
+- [Extrusion](components/Geometry3D/Extrusion)
+- [IndexedFaceSet](components/Geometry3D/IndexedFaceSet)
+- [Sphere](components/Geometry3D/Sphere)
 
 ### Geospatial
 
-- [GeoCoordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoCoordinate){:target="_blank"}
-- [GeoElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoElevationGrid){:target="_blank"}
-- [GeoLOD](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoLOD){:target="_blank"}
-- [GeoLocation](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoLocation){:target="_blank"}
-- [GeoMetadata](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoMetadata){:target="_blank"}
-- [GeoOrigin](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoOrigin){:target="_blank"}
-- [GeoPositionInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoPositionInterpolator){:target="_blank"}
-- [GeoProximitySensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoProximitySensor){:target="_blank"}
-- [GeoTouchSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoTouchSensor){:target="_blank"}
-- [GeoTransform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoTransform){:target="_blank"}
-- [GeoViewpoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoViewpoint){:target="_blank"}
+- [GeoCoordinate](components/Geospatial/GeoCoordinate)
+- [GeoElevationGrid](components/Geospatial/GeoElevationGrid)
+- [GeoLOD](components/Geospatial/GeoLOD)
+- [GeoLocation](components/Geospatial/GeoLocation)
+- [GeoMetadata](components/Geospatial/GeoMetadata)
+- [GeoOrigin](components/Geospatial/GeoOrigin)
+- [GeoPositionInterpolator](components/Geospatial/GeoPositionInterpolator)
+- [GeoProximitySensor](components/Geospatial/GeoProximitySensor)
+- [GeoTouchSensor](components/Geospatial/GeoTouchSensor)
+- [GeoTransform](components/Geospatial/GeoTransform)
+- [GeoViewpoint](components/Geospatial/GeoViewpoint)
 
 ### Grouping
 
-- [Group](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Group){:target="_blank"}
-- [StaticGroup](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#StaticGroup){:target="_blank"}
-- [Switch](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Switch){:target="_blank"}
-- [Transform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform){:target="_blank"}
+- [Group](components/Grouping/Group)
+- [StaticGroup](components/Grouping/StaticGroup)
+- [Switch](components/Grouping/Switch)
+- [Transform](components/Grouping/Transform)
 
 ### H-Anim
 
-- [HAnimDisplacer](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimDisplacer){:target="_blank"}
-- [HAnimHumanoid](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimHumanoid){:target="_blank"}
-- [HAnimJoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimJoint){:target="_blank"}
-- [HAnimSegment](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimSegment){:target="_blank"}
-- [HAnimSite](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimSite){:target="_blank"}
+- [HAnimDisplacer](components/HAnim/HAnimDisplacer)
+- [HAnimHumanoid](components/HAnim/HAnimHumanoid)
+- [HAnimJoint](components/HAnim/HAnimJoint)
+- [HAnimSegment](components/HAnim/HAnimSegment)
+- [HAnimSite](components/HAnim/HAnimSite)
 
 ### Interpolation
 
-- [ColorInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#ColorInterpolator){:target="_blank"}
-- [CoordinateInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#CoordinateInterpolator){:target="_blank"}
-- [CoordinateInterpolator2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#CoordinateInterpolator2D){:target="_blank"}
-- [EaseInEaseOut](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#EaseInEaseOut){:target="_blank"}
-- [NormalInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#NormalInterpolator){:target="_blank"}
-- [OrientationInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#OrientationInterpolator){:target="_blank"}
-- [PositionInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#PositionInterpolator){:target="_blank"}
-- [PositionInterpolator2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#PositionInterpolator2D){:target="_blank"}
-- [ScalarInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#ScalarInterpolator){:target="_blank"}
-- [SplinePositionInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#SplinePositionInterpolator){:target="_blank"}
-- [SplinePositionInterpolator2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#SplinePositionInterpolator2D){:target="_blank"}
-- [SplineScalarInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#SplineScalarInterpolator){:target="_blank"}
-- [SquadOrientationInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#SquadOrientationInterpolator){:target="_blank"}
+- [ColorInterpolator](components/Interpolation/ColorInterpolator)
+- [CoordinateInterpolator](components/Interpolation/CoordinateInterpolator)
+- [CoordinateInterpolator2D](components/Interpolation/CoordinateInterpolator2D)
+- [EaseInEaseOut](components/Interpolation/EaseInEaseOut)
+- [NormalInterpolator](components/Interpolation/NormalInterpolator)
+- [OrientationInterpolator](components/Interpolation/OrientationInterpolator)
+- [PositionInterpolator](components/Interpolation/PositionInterpolator)
+- [PositionInterpolator2D](components/Interpolation/PositionInterpolator2D)
+- [ScalarInterpolator](components/Interpolation/ScalarInterpolator)
+- [SplinePositionInterpolator](components/Interpolation/SplinePositionInterpolator)
+- [SplinePositionInterpolator2D](components/Interpolation/SplinePositionInterpolator2D)
+- [SplineScalarInterpolator](components/Interpolation/SplineScalarInterpolator)
+- [SquadOrientationInterpolator](components/Interpolation/SquadOrientationInterpolator)
 
 ### KeyDeviceSensor
 
-- [KeySensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/keyDeviceSensor.html#KeySensor){:target="_blank"}
-- [StringSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/keyDeviceSensor.html#StringSensor){:target="_blank"}
+- [KeySensor](components/KeyDeviceSensor/KeySensor)
+- [StringSensor](components/KeyDeviceSensor/StringSensor)
 
 ### Layering
 
-- [Layer](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#Layer){:target="_blank"}
-- [LayerSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#LayerSet){:target="_blank"}
-- [Viewport](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#Viewport){:target="_blank"}
+- [Layer](components/Layering/Layer)
+- [LayerSet](components/Layering/LayerSet)
+- [Viewport](components/Layering/Viewport)
 
 ### Layout
 
-- [Layout](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#Layout){:target="_blank"}
-- [LayoutGroup](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#LayoutGroup){:target="_blank"}
-- [LayoutLayer](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#LayoutLayer){:target="_blank"}
-- [ScreenFontStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#ScreenFontStyle){:target="_blank"}
-- [ScreenGroup](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#ScreenGroup){:target="_blank"}
+- [Layout](components/Layout/Layout)
+- [LayoutGroup](components/Layout/LayoutGroup)
+- [LayoutLayer](components/Layout/LayoutLayer)
+- [ScreenFontStyle](components/Layout/ScreenFontStyle)
+- [ScreenGroup](components/Layout/ScreenGroup)
 
 ### Lighting
 
-- [DirectionalLight](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#DirectionalLight){:target="_blank"}
-- [PointLight](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#PointLight){:target="_blank"}
-- [SpotLight](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#SpotLight){:target="_blank"}
+- [DirectionalLight](components/Lighting/DirectionalLight)
+- [PointLight](components/Lighting/PointLight)
+- [SpotLight](components/Lighting/SpotLight)
 
 ### Navigation
 
-- [Billboard](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#Billboard){:target="_blank"}
-- [Collision](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#Collision){:target="_blank"}
-- [LOD](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#LOD){:target="_blank"}
-- [NavigationInfo](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo){:target="_blank"}
-- [OrthoViewpoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#OrthoViewpoint){:target="_blank"}
-- [Viewpoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#Viewpoint){:target="_blank"}
-- [ViewpointGroup](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#ViewpointGroup){:target="_blank"}
+- [Billboard](components/Navigation/Billboard)
+- [Collision](components/Navigation/Collision)
+- [LOD](components/Navigation/LOD)
+- [NavigationInfo](components/Navigation/NavigationInfo)
+- [OrthoViewpoint](components/Navigation/OrthoViewpoint)
+- [Viewpoint](components/Navigation/Viewpoint)
+- [ViewpointGroup](components/Navigation/ViewpointGroup)
 
 ### Networking
 
-- [Anchor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Anchor){:target="_blank"}
-- [Inline](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Inline){:target="_blank"}
-- [LoadSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#LoadSensor){:target="_blank"}
+- [Anchor](components/Networking/Anchor)
+- [Inline](components/Networking/Inline)
+- [LoadSensor](components/Networking/LoadSensor)
 
 ### NURBS
 
-- [ContourPolyline2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#ContourPolyline2D){:target="_blank"}
-- [CoordinateDouble](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#CoordinateDouble){:target="_blank"}
-- [NurbsCurve](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsCurve){:target="_blank"}
-- [NurbsCurve2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsCurve2D){:target="_blank"}
-- [NurbsOrientationInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsOrientationInterpolator){:target="_blank"}
-- [NurbsPatchSurface](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsPatchSurface){:target="_blank"}
-- [NurbsPositionInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsPositionInterpolator){:target="_blank"}
-- [NurbsSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsSet){:target="_blank"}
-- [NurbsSurfaceInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsSurfaceInterpolator){:target="_blank"}
-- [NurbsSweptSurface](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsSweptSurface){:target="_blank"}
-- [NurbsSwungSurface](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsSwungSurface){:target="_blank"}
-- [NurbsTextureCoordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsTextureCoordinate){:target="_blank"}
+- [ContourPolyline2D](components/NURBS/ContourPolyline2D)
+- [CoordinateDouble](components/NURBS/CoordinateDouble)
+- [NurbsCurve](components/NURBS/NurbsCurve)
+- [NurbsCurve2D](components/NURBS/NurbsCurve2D)
+- [NurbsOrientationInterpolator](components/NURBS/NurbsOrientationInterpolator)
+- [NurbsPatchSurface](components/NURBS/NurbsPatchSurface)
+- [NurbsPositionInterpolator](components/NURBS/NurbsPositionInterpolator)
+- [NurbsSet](components/NURBS/NurbsSet)
+- [NurbsSurfaceInterpolator](components/NURBS/NurbsSurfaceInterpolator)
+- [NurbsSweptSurface](components/NURBS/NurbsSweptSurface)
+- [NurbsSwungSurface](components/NURBS/NurbsSwungSurface)
+- [NurbsTextureCoordinate](components/NURBS/NurbsTextureCoordinate)
 
 ### ParticleSystems
 
-- [BoundedPhysicsModel](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#BoundedPhysicsModel){:target="_blank"}
-- [ConeEmitter](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ConeEmitter){:target="_blank"}
-- [ExplosionEmitter](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ExplosionEmitter){:target="_blank"}
-- [ForcePhysicsModel](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ForcePhysicsModel){:target="_blank"}
-- [ParticleSystem](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ParticleSystem){:target="_blank"}
-- [PointEmitter](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#PointEmitter){:target="_blank"}
-- [PolylineEmitter](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#PolylineEmitter){:target="_blank"}
-- [SurfaceEmitter](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#SurfaceEmitter){:target="_blank"}
-- [VolumeEmitter](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#VolumeEmitter){:target="_blank"}
-- [WindPhysicsModel](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#WindPhysicsModel){:target="_blank"}
+- [BoundedPhysicsModel](components/ParticleSystems/BoundedPhysicsModel)
+- [ConeEmitter](components/ParticleSystems/ConeEmitter)
+- [ExplosionEmitter](components/ParticleSystems/ExplosionEmitter)
+- [ForcePhysicsModel](components/ParticleSystems/ForcePhysicsModel)
+- [ParticleSystem](components/ParticleSystems/ParticleSystem)
+- [PointEmitter](components/ParticleSystems/PointEmitter)
+- [PolylineEmitter](components/ParticleSystems/PolylineEmitter)
+- [SurfaceEmitter](components/ParticleSystems/SurfaceEmitter)
+- [VolumeEmitter](components/ParticleSystems/VolumeEmitter)
+- [WindPhysicsModel](components/ParticleSystems/WindPhysicsModel)
 
 ### Picking
 
-- [LinePickSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/picking.html#LinePickSensor){:target="_blank"}
-- [PickableGroup](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/picking.html#PickableGroup){:target="_blank"}
-- [PointPickSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/picking.html#PointPickSensor){:target="_blank"}
-- [PrimitivePickSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/picking.html#PrimitivePickSensor){:target="_blank"}
-- [VolumePickSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/picking.html#VolumePickSensor){:target="_blank"}
+- [LinePickSensor](components/Picking/LinePickSensor)
+- [PickableGroup](components/Picking/PickableGroup)
+- [PointPickSensor](components/Picking/PointPickSensor)
+- [PrimitivePickSensor](components/Picking/PrimitivePickSensor)
+- [VolumePickSensor](components/Picking/VolumePickSensor)
 
 ### PointingDeviceSensor
 
-- [CylinderSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#CylinderSensor){:target="_blank"}
-- [PlaneSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#PlaneSensor){:target="_blank"}
-- [SphereSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#SphereSensor){:target="_blank"}
-- [TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#TouchSensor){:target="_blank"}
+- [CylinderSensor](components/PointingDeviceSensor/CylinderSensor)
+- [PlaneSensor](components/PointingDeviceSensor/PlaneSensor)
+- [SphereSensor](components/PointingDeviceSensor/SphereSensor)
+- [TouchSensor](components/PointingDeviceSensor/TouchSensor)
 
 ### ProjectiveTextureMapping
 
-- [TextureProjector](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/textureProjector.html#TextureProjector){:target="_blank"}
-- [TextureProjectorParallel](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/textureProjector.html#TextureProjectorParallel){:target="_blank"}
+- [TextureProjector](components//TextureProjector)
+- [TextureProjectorParallel](components//TextureProjectorParallel)
 
 ### Rendering
 
-- [ClipPlane](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#ClipPlane){:target="_blank"}
-- [Color](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Color){:target="_blank"}
-- [ColorRGBA](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#ColorRGBA){:target="_blank"}
-- [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Coordinate){:target="_blank"}
-- [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#IndexedLineSet){:target="_blank"}
-- [IndexedTriangleFanSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#IndexedTriangleFanSet){:target="_blank"}
-- [IndexedTriangleSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#IndexedTriangleSet){:target="_blank"}
-- [IndexedTriangleStripSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#IndexedTriangleStripSet){:target="_blank"}
-- [LineSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#LineSet){:target="_blank"}
-- [Normal](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Normal){:target="_blank"}
-- [PointSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#PointSet){:target="_blank"}
-- [TriangleFanSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#TriangleFanSet){:target="_blank"}
-- [TriangleSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#TriangleSet){:target="_blank"}
-- [TriangleStripSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#TriangleStripSet){:target="_blank"}
+- [ClipPlane](components/Rendering/ClipPlane)
+- [Color](components/Rendering/Color)
+- [ColorRGBA](components/Rendering/ColorRGBA)
+- [Coordinate](components/Rendering/Coordinate)
+- [IndexedLineSet](components/Rendering/IndexedLineSet)
+- [IndexedTriangleFanSet](components/Rendering/IndexedTriangleFanSet)
+- [IndexedTriangleSet](components/Rendering/IndexedTriangleSet)
+- [IndexedTriangleStripSet](components/Rendering/IndexedTriangleStripSet)
+- [LineSet](components/Rendering/LineSet)
+- [Normal](components/Rendering/Normal)
+- [PointSet](components/Rendering/PointSet)
+- [TriangleFanSet](components/Rendering/TriangleFanSet)
+- [TriangleSet](components/Rendering/TriangleSet)
+- [TriangleStripSet](components/Rendering/TriangleStripSet)
 
 ### RigidBodyCollection
 
-- [BallJoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#BallJoint){:target="_blank"}
-- [CollidableOffset](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollidableOffset){:target="_blank"}
-- [CollidableShape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollidableShape){:target="_blank"}
-- [CollisionCollection](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollisionCollection){:target="_blank"}
-- [CollisionSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollisionSensor){:target="_blank"}
-- [CollisionSpace](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollisionSpace){:target="_blank"}
-- [Contact](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#Contact){:target="_blank"}
-- [DoubleAxisHingeJoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#DoubleAxisHingeJoint){:target="_blank"}
-- [RigidBody](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#RigidBody){:target="_blank"}
-- [RigidBodyCollection](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#RigidBodyCollection){:target="_blank"}
-- [SingleAxisHingeJoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#SingleAxisHingeJoint){:target="_blank"}
-- [SliderJoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#SliderJoint){:target="_blank"}
+- [BallJoint](components/RigidBodyPhysics/BallJoint)
+- [CollidableOffset](components/RigidBodyPhysics/CollidableOffset)
+- [CollidableShape](components/RigidBodyPhysics/CollidableShape)
+- [CollisionCollection](components/RigidBodyPhysics/CollisionCollection)
+- [CollisionSensor](components/RigidBodyPhysics/CollisionSensor)
+- [CollisionSpace](components/RigidBodyPhysics/CollisionSpace)
+- [Contact](components/RigidBodyPhysics/Contact)
+- [DoubleAxisHingeJoint](components/RigidBodyPhysics/DoubleAxisHingeJoint)
+- [RigidBody](components/RigidBodyPhysics/RigidBody)
+- [RigidBodyCollection](components/RigidBodyPhysics/RigidBodyCollection)
+- [SingleAxisHingeJoint](components/RigidBodyPhysics/SingleAxisHingeJoint)
+- [SliderJoint](components/RigidBodyPhysics/SliderJoint)
 
 ### Scripting
 
-- [Script](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/scripting.html#Script){:target="_blank"}
+- [Script](components/Scripting/Script)
 
 ### Shaders
 
-- [ComposedShader](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ComposedShader){:target="_blank"}
-- [FloatVertexAttribute](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#FloatVertexAttribute){:target="_blank"}
-- [Matrix3VertexAttribute](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#Matrix3VertexAttribute){:target="_blank"}
-- [Matrix4VertexAttribute](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#Matrix4VertexAttribute){:target="_blank"}
-- [ShaderPart](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ShaderPart){:target="_blank"}
+- [ComposedShader](components/Shaders/ComposedShader)
+- [FloatVertexAttribute](components/Shaders/FloatVertexAttribute)
+- [Matrix3VertexAttribute](components/Shaders/Matrix3VertexAttribute)
+- [Matrix4VertexAttribute](components/Shaders/Matrix4VertexAttribute)
+- [ShaderPart](components/Shaders/ShaderPart)
 
 ### Shape
 
-- [Appearance](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance){:target="_blank"}
-- [FillProperties](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#FillProperties){:target="_blank"}
-- [LineProperties](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#LineProperties){:target="_blank"}
-- [Material](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Material){:target="_blank"}
-- [PhysicalMaterial](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shape.html#PhysicalMaterial){:target="_blank"}
-- [PointProperties](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shape.html#PointProperties){:target="_blank"}
-- [Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"}
-- [TwoSidedMaterial](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#TwoSidedMaterial){:target="_blank"}
-- [UnlitMaterial](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shape.html#UnlitMaterial){:target="_blank"}
+- [Appearance](components/Shape/Appearance)
+- [FillProperties](components/Shape/FillProperties)
+- [LineProperties](components/Shape/LineProperties)
+- [Material](components/Shape/Material)
+- [PhysicalMaterial](components//PhysicalMaterial)
+- [PointProperties](components/Shape/PointProperties)
+- [Shape](components/Shape/Shape)
+- [TwoSidedMaterial](components/Shape/TwoSidedMaterial)
+- [UnlitMaterial](components//UnlitMaterial)
 
 ### Sound
 
-- [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#AudioClip){:target="_blank"}
-- [Sound](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Sound){:target="_blank"}
+- [AudioClip](components/Sound/AudioClip)
+- [Sound](components/Sound/Sound)
 
 ### Text
 
-- [FontStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#FontStyle){:target="_blank"}
-- [Text](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#Text){:target="_blank"}
+- [FontStyle](components/Text/FontStyle)
+- [Text](components/Text/Text)
 
 ### Texturing
 
-- [ImageTexture](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#ImageTexture){:target="_blank"}
-- [MovieTexture](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MovieTexture){:target="_blank"}
-- [MultiTexture](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MultiTexture){:target="_blank"}
-- [MultiTextureCoordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MultiTextureCoordinate){:target="_blank"}
-- [MultiTextureTransform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MultiTextureTransform){:target="_blank"}
-- [PixelTexture](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#PixelTexture){:target="_blank"}
-- [TextureCoordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureCoordinate){:target="_blank"}
-- [TextureCoordinateGenerator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureCoordinateGenerator){:target="_blank"}
-- [TextureProperties](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureProperties){:target="_blank"}
-- [TextureTransform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureTransform){:target="_blank"}
+- [ImageTexture](components/Texturing/ImageTexture)
+- [MovieTexture](components/Texturing/MovieTexture)
+- [MultiTexture](components/Texturing/MultiTexture)
+- [MultiTextureCoordinate](components/Texturing/MultiTextureCoordinate)
+- [MultiTextureTransform](components/Texturing/MultiTextureTransform)
+- [PixelTexture](components/Texturing/PixelTexture)
+- [TextureCoordinate](components/Texturing/TextureCoordinate)
+- [TextureCoordinateGenerator](components/Texturing/TextureCoordinateGenerator)
+- [TextureProperties](components/Texturing/TextureProperties)
+- [TextureTransform](components/Texturing/TextureTransform)
 
 ### Texturing3D
 
-- [ComposedTexture3D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#ComposedTexture3D){:target="_blank"}
-- [ImageTexture3D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#ImageTexture3D){:target="_blank"}
+- [ComposedTexture3D](components/Texturing3D/ComposedTexture3D)
+- [ImageTexture3D](components/Texturing3D/ImageTexture3D)
 - ImageTextureAtlas
-- [PixelTexture3D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#PixelTexture3D){:target="_blank"}
-- [TextureCoordinate3D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureCoordinate3D){:target="_blank"}
-- [TextureCoordinate4D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureCoordinate4D){:target="_blank"}
-- [TextureTransform3D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureTransform3D){:target="_blank"}
-- [TextureTransformMatrix3D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureTransformMatrix3D){:target="_blank"}
+- [PixelTexture3D](components/Texturing3D/PixelTexture3D)
+- [TextureCoordinate3D](components/Texturing3D/TextureCoordinate3D)
+- [TextureCoordinate4D](components/Texturing3D/TextureCoordinate4D)
+- [TextureTransform3D](components/Texturing3D/TextureTransform3D)
+- [TextureTransformMatrix3D](components/Texturing3D/TextureTransformMatrix3D)
 
 ### Time
 
-- [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/time.html#TimeSensor){:target="_blank"}
+- [TimeSensor](components/Time/TimeSensor)
 
 ### VolumeRendering
 
-- [BlendedVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#BlendedVolumeStyle){:target="_blank"}
-- [BoundaryEnhancementVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#BoundaryEnhancementVolumeStyle){:target="_blank"}
-- [CartoonVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#CartoonVolumeStyle){:target="_blank"}
-- [ComposedVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#ComposedVolumeStyle){:target="_blank"}
-- [EdgeEnhancementVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#EdgeEnhancementVolumeStyle){:target="_blank"}
-- [IsoSurfaceVolumeData](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#IsoSurfaceVolumeData){:target="_blank"}
-- [OpacityMapVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#OpacityMapVolumeStyle){:target="_blank"}
-- [ProjectionVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#ProjectionVolumeStyle){:target="_blank"}
-- [SegmentedVolumeData](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#SegmentedVolumeData){:target="_blank"}
-- [ShadedVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#ShadedVolumeStyle){:target="_blank"}
-- [SilhouetteEnhancementVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#SilhouetteEnhancementVolumeStyle){:target="_blank"}
-- [ToneMappedVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#ToneMappedVolumeStyle){:target="_blank"}
-- [VolumeData](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#VolumeData){:target="_blank"}
+- [BlendedVolumeStyle](components/VolumeRendering/BlendedVolumeStyle)
+- [BoundaryEnhancementVolumeStyle](components/VolumeRendering/BoundaryEnhancementVolumeStyle)
+- [CartoonVolumeStyle](components/VolumeRendering/CartoonVolumeStyle)
+- [ComposedVolumeStyle](components/VolumeRendering/ComposedVolumeStyle)
+- [EdgeEnhancementVolumeStyle](components/VolumeRendering/EdgeEnhancementVolumeStyle)
+- [IsoSurfaceVolumeData](components/VolumeRendering/IsoSurfaceVolumeData)
+- [OpacityMapVolumeStyle](components/VolumeRendering/OpacityMapVolumeStyle)
+- [ProjectionVolumeStyle](components/VolumeRendering/ProjectionVolumeStyle)
+- [SegmentedVolumeData](components/VolumeRendering/SegmentedVolumeData)
+- [ShadedVolumeStyle](components/VolumeRendering/ShadedVolumeStyle)
+- [SilhouetteEnhancementVolumeStyle](components/VolumeRendering/SilhouetteEnhancementVolumeStyle)
+- [ToneMappedVolumeStyle](components/VolumeRendering/ToneMappedVolumeStyle)
+- [VolumeData](components/VolumeRendering/VolumeData)
 
 ### X\_ITE
 

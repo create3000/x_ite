@@ -1,0 +1,10 @@
+- title: "Grouping"
+  children:
+    - title: "Group"
+      url: /components/Grouping/Group
+    - title: "StaticGroup"
+      url: /components/Grouping/StaticGroup
+    - title: "Switch"
+      url: /components/Grouping/Switch
+    - title: "Transform"
+      url: /components/Grouping/Transform

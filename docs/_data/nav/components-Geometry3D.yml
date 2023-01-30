@@ -1,0 +1,16 @@
+- title: "Geometry3D"
+  children:
+    - title: "Box"
+      url: /components/Geometry3D/Box
+    - title: "Cone"
+      url: /components/Geometry3D/Cone
+    - title: "Cylinder"
+      url: /components/Geometry3D/Cylinder
+    - title: "ElevationGrid"
+      url: /components/Geometry3D/ElevationGrid
+    - title: "Extrusion"
+      url: /components/Geometry3D/Extrusion
+    - title: "IndexedFaceSet"
+      url: /components/Geometry3D/IndexedFaceSet
+    - title: "Sphere"
+      url: /components/Geometry3D/Sphere

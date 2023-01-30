@@ -1,0 +1,8 @@
+- title: "Lighting"
+  children:
+    - title: "DirectionalLight"
+      url: /components/Lighting/DirectionalLight
+    - title: "PointLight"
+      url: /components/Lighting/PointLight
+    - title: "SpotLight"
+      url: /components/Lighting/SpotLight

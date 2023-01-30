@@ -1,0 +1,18 @@
+- title: "Geometry2D"
+  children:
+    - title: "Arc2D"
+      url: /components/Geometry2D/Arc2D
+    - title: "ArcClose2D"
+      url: /components/Geometry2D/ArcClose2D
+    - title: "Circle2D"
+      url: /components/Geometry2D/Circle2D
+    - title: "Disk2D"
+      url: /components/Geometry2D/Disk2D
+    - title: "Polyline2D"
+      url: /components/Geometry2D/Polyline2D
+    - title: "Polypoint2D"
+      url: /components/Geometry2D/Polypoint2D
+    - title: "Rectangle2D"
+      url: /components/Geometry2D/Rectangle2D
+    - title: "TriangleSet2D"
+      url: /components/Geometry2D/TriangleSet2D

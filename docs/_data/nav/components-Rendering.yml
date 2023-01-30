@@ -1,0 +1,30 @@
+- title: "Rendering"
+  children:
+    - title: "ClipPlane"
+      url: /components/Rendering/ClipPlane
+    - title: "Color"
+      url: /components/Rendering/Color
+    - title: "ColorRGBA"
+      url: /components/Rendering/ColorRGBA
+    - title: "Coordinate"
+      url: /components/Rendering/Coordinate
+    - title: "IndexedLineSet"
+      url: /components/Rendering/IndexedLineSet
+    - title: "IndexedTriangleFanSet"
+      url: /components/Rendering/IndexedTriangleFanSet
+    - title: "IndexedTriangleSet"
+      url: /components/Rendering/IndexedTriangleSet
+    - title: "IndexedTriangleStripSet"
+      url: /components/Rendering/IndexedTriangleStripSet
+    - title: "LineSet"
+      url: /components/Rendering/LineSet
+    - title: "Normal"
+      url: /components/Rendering/Normal
+    - title: "PointSet"
+      url: /components/Rendering/PointSet
+    - title: "TriangleFanSet"
+      url: /components/Rendering/TriangleFanSet
+    - title: "TriangleSet"
+      url: /components/Rendering/TriangleSet
+    - title: "TriangleStripSet"
+      url: /components/Rendering/TriangleStripSet
