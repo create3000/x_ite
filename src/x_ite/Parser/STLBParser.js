@@ -134,19 +134,11 @@ STLBParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       for (let i = 84; i < byteLength; i += 50)
       {
-         vector .push (dataView .getFloat32 (i + 0, true),
-                       dataView .getFloat32 (i + 4, true),
-                       dataView .getFloat32 (i + 8, true));
+         for (let f = 0; f < 3; ++ f)
+            vector .push (dataView .getFloat32 (i + f * 4, true));
 
-         point .push (dataView .getFloat32 (i + 12, true),
-                      dataView .getFloat32 (i + 16, true),
-                      dataView .getFloat32 (i + 20, true),
-                      dataView .getFloat32 (i + 24, true),
-                      dataView .getFloat32 (i + 28, true),
-                      dataView .getFloat32 (i + 32, true),
-                      dataView .getFloat32 (i + 36, true),
-                      dataView .getFloat32 (i + 40, true),
-                      dataView .getFloat32 (i + 44, true));
+         for (let f = 3; f < 12; ++ f)
+            point .push (dataView .getFloat32 (i + f * 4, true));
       }
 
       shape .appearance         = this .appearance;
