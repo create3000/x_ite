@@ -166,10 +166,10 @@ sub supported {
 
    foreach $component (sort keys %{$components})
    {
-      $c{lc $_} = lc $component foreach @{$components -> {$component}};
+      $c{$_} = lc $component foreach @{$components -> {$component}};
    }
 
-   $text =~ s|\[([a-zA-Z0-9]+)\]\(.*?\)|[\L$1](components/$c{$1}/\L$1)|sg;
+   $text =~ s|\[([a-zA-Z0-9]+)\]\(.*?\)|[$1](components/$c{$1}/\L$1)|sg;
 
    open FILE, ">", "$posts/supported-nodes.md";
    print FILE $text;
