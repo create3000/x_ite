@@ -78,6 +78,7 @@ function GLTF2Parser (scene)
 
    // Globals
 
+   this .lights                = [ ];
    this .buffers               = [ ];
    this .bufferViews           = [ ];
    this .accessors             = [ ];
@@ -180,7 +181,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Parse root objects.
 
-      this .assetObject (glTF .asset);
+      this .assetObject      (glTF .asset);
+      this .extensionsObject (glTF .extensions);
 
       await this .buffersArray (glTF .buffers);
 
@@ -243,6 +245,104 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       worldInfoNode .setup ();
 
       scene .getRootNodes () .push (worldInfoNode);
+   },
+   extensionsObject: function (extensions)
+   {
+      if (!(extensions instanceof Object))
+         return;
+
+      for (const [key, value] of Object .entries (extensions))
+      {
+         switch (key)
+         {
+            case "KHR_lights_punctual":
+               return this .khrLightsPunctualObject (value);
+         }
+      }
+   },
+   khrLightsPunctualObject: function (khrLightsPunctual)
+   {
+      if (!(khrLightsPunctual instanceof Object))
+         return;
+
+      this .lightsArray (khrLightsPunctual .lights);
+   },
+   lightsArray: function (lights)
+   {
+      if (!(lights instanceof Array))
+         return;
+
+      this .lights = lights;
+   },
+   lightObject: function (light)
+   {
+      if (!(light instanceof Object))
+         return null;
+
+      const lightNode = this .lightType (light);
+
+      if (!lightNode)
+         return null;
+
+      const
+         scene = this .getExecutionContext (),
+         name  = this .sanitizeName (light .name);
+
+      if (light .color instanceof Array)
+         lightNode ._color = new Color3 (... light .color);
+
+      lightNode ._intensity = light .intensity ?? 1;
+
+      lightNode .setup ();
+
+      if (name)
+         scene .addNamedNode (scene .getUniqueName (name), lightNode);
+
+      return lightNode;
+   },
+   lightType: function (light)
+   {
+      switch (light .type)
+      {
+         case "directional":
+            return this .directionalLight (light);
+         case "spot":
+            return this .spotLight (light);
+         case "point":
+            return this .pointLight (light);
+      }
+   },
+   directionalLight: function (light)
+   {
+      const
+         scene     = this .getExecutionContext (),
+         lightNode = scene .createNode ("DirectionalLight", false);
+
+      return lightNode;
+   },
+   spotLight: function (light)
+   {
+      const
+         scene     = this .getExecutionContext (),
+         lightNode = scene .createNode ("SpotLight", false);
+
+      lightNode ._radius      = light .range || 1_000_000_000;
+      lightNode ._cutOffAngle = light .outerConeAngle ?? Math .PI / 4;
+      lightNode ._beamWidth   = light .innerConeAngle ?? 0;
+      lightNode ._attenuation = new Vector3 (0, 0, 1);
+
+      return lightNode;
+   },
+   pointLight: function (light)
+   {
+      const
+         scene     = this .getExecutionContext (),
+         lightNode = scene .createNode ("PointLight", false);
+
+      lightNode ._radius      = light .range || 1_000_000_000;
+      lightNode ._attenuation = new Vector3 (0, 0, 1);
+
+      return lightNode;
    },
    buffersArray: async function (buffers)
    {
@@ -1046,6 +1146,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (viewpointNode)
          transformNode ._children .push (viewpointNode);
 
+      // Add light.
+
+      this .nodeExtensions (node .extensions, transformNode);
+
       // Add mesh.
 
       const mesh = this .meshes [node .mesh];
@@ -1065,6 +1169,25 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return node .childNode = null;
 
       return node .childNode = transformNode;
+   },
+   nodeExtensions: function (extensions, transformNode)
+   {
+      if (!(extensions instanceof Object))
+         return;
+
+      this .nodeLight (extensions .KHR_lights_punctual, transformNode);
+   },
+   nodeLight: function (khrLightsPunctual, transformNode)
+   {
+      if (!(khrLightsPunctual instanceof Object))
+         return;
+
+      const lightNode = this .lightObject (this .lights [khrLightsPunctual .light]);
+
+      if (!lightNode)
+         return;
+
+      transformNode ._children .push (lightNode);
    },
    nodeChildrenArray: function (children)
    {
