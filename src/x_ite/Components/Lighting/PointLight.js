@@ -118,6 +118,7 @@ PointLightContainer .prototype =
       this .browser   = lightNode .getBrowser ();
       this .lightNode = lightNode;
       this .groupNode = groupNode;
+      this .global    = lightNode .getGlobal ();
 
       this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
 
@@ -133,14 +134,6 @@ PointLightContainer .prototype =
             console .warn ("Couldn't create shadow buffer.");
       }
    },
-   setGroup: function (groupNode)
-   {
-      this .groupNode = groupNode;
-   },
-   getModelViewMatrix: function ()
-   {
-      return this .modelViewMatrix;
-   },
    renderShadowMap: function (renderObject)
    {
       if (! this .shadowBuffer)
@@ -150,7 +143,7 @@ PointLightContainer .prototype =
          lightNode           = this .lightNode,
          cameraSpaceMatrix   = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix         = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invLightSpaceMatrix = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+         invLightSpaceMatrix = this .invLightSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .Identity);
 
       invLightSpaceMatrix .translate (lightNode .getLocation ());
       invLightSpaceMatrix .inverse ();
@@ -180,7 +173,7 @@ PointLightContainer .prototype =
 
       this .shadowBuffer .unbind ();
 
-      if (! lightNode .getGlobal ())
+      if (!this .global)
          invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
       this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix);
@@ -201,7 +194,7 @@ PointLightContainer .prototype =
 
       if (this .shadowBuffer)
       {
-         const textureUnit = this .lightNode .getGlobal ()
+         const textureUnit = this .this .global
             ? (this .textureUnit = this .textureUnit !== undefined
                ? this .textureUnit
                : this .browser .popTexture2DUnit ())

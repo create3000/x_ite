@@ -837,8 +837,8 @@ X3DRenderObject .prototype =
          globalShadows              = this .globalShadows,
          shadows                    = globalShadows .at (-1),
          headlight                  = this .getNavigationInfo () ._headlight .getValue (),
-         numGlobalLights            = globalObjects .reduce ((v, c) => v + !!c .lightNode, 0),
-         numGlobalTextureProjectors = globalObjects .reduce ((v, c) => v + !!c .textureProjectorNode, 0);
+         numGlobalLights            = globalObjects .reduce ((n, c) => n + !!c .lightNode, 0),
+         numGlobalTextureProjectors = globalObjects .reduce ((n, c) => n + !!c .textureProjectorNode, 0);
 
 
       this .renderTime = Date .now ();

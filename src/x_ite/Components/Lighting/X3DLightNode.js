@@ -135,7 +135,7 @@ X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
          return biasMatrix;
       };
    })(),
-   push: function (renderObject, group)
+   push: function (renderObject, groupNode)
    {
       if (renderObject .isIndependent ())
       {
@@ -155,7 +155,7 @@ X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
          else
          {
             lightContainer .set (this,
-                                 group,
+                                 groupNode,
                                  renderObject .getModelViewMatrix () .get ());
 
             renderObject .getLocalObjects () .push (lightContainer);
@@ -170,7 +170,7 @@ X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
       {
          const lightContainer = renderObject .getLightContainer ();
 
-         lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
+         lightContainer .modelViewMatrix .pushMatrix (renderObject .getModelViewMatrix () .get ());
 
          if (this ._global .getValue ())
          {

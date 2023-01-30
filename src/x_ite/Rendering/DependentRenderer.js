@@ -119,7 +119,7 @@ DependentRenderer .prototype = Object .assign (Object .create (X3DBaseNode .prot
             X3DRenderObject .prototype .render .call (this, type, callback, group);
 
             for (const light of this .renderObject .getLights ())
-               light .getModelViewMatrix () .pop ();
+               light .modelViewMatrix .pop ();
 
             break;
          }

@@ -67,8 +67,10 @@ function Inline (executionContext)
    if (executionContext .getSpecificationVersion () < 4.0)
       this ._global = true;
 
-   this .scene     = this .getBrowser () .getDefaultScene ();
-   this .groupNode = new Group (executionContext);
+   this .scene        = this .getBrowser () .getDefaultScene ();
+   this .groupNode    = new Group (executionContext);
+   this .localObjects = [ ];
+   this .localShadows = false;
 }
 
 Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -223,73 +225,56 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
             else
             {
                const
-                  globalsBegin           = renderObject .getGlobalObjects () .length,
-                  shadowsBegin           = renderObject .getGlobalShadows () .length,
-                  opaqueShapesBegin      = renderObject .getNumOpaqueShapes (),
-                  transparentShapesBegin = renderObject .getNumTransparentShapes ();
+                  globalObjects        = renderObject .getGlobalObjects (),
+                  globalShadows        = renderObject .getGlobalShadows (),
+                  globalsBegin         = globalObjects .length,
+                  shadowsBegin         = globalShadows .length,
+                  localObjects         = this .localObjects,
+                  numLocalObjects      = localObjects .length,
+                  numLights            = localObjects .reduce ((n, c) => n + !!c .lightNode, 0),
+                  numTextureProjectors = localObjects .reduce ((n, c) => n + !!c .textureProjectorNode, 0);
+
+               renderObject .getLocalObjects () .push (... localObjects);
+               renderObject .pushLocalShadows (this .localShadows);
+               renderObject .getLocalObjectsCount () [1] += numLights;
+               renderObject .getLocalObjectsCount () [2] += numTextureProjectors;
 
                this .groupNode .traverse (type, renderObject);
 
-               const globalsEnd = renderObject .getGlobalObjects () .length;
-
-               if (globalsBegin === globalsEnd)
-                  return;
-
-               const
-                  browser              = this .getBrowser (),
-                  globalObjects        = renderObject .getGlobalObjects (),
-                  globalShadow         = renderObject .getGlobalShadows () .at (-1),
-                  opaqueShapesEnd      = renderObject .getNumOpaqueShapes (),
-                  transparentShapesEnd = renderObject .getNumTransparentShapes (),
-                  opaqueShapes         = renderObject .getOpaqueShapes (),
-                  transparentShapes    = renderObject .getTransparentShapes ();
-
-               let
-                  numGlobalLights            = 0,
-                  numGlobalTextureProjectors = 0;
-
-               for (let g = globalsBegin; g < globalsEnd; ++ g)
+               if (renderObject .isIndependent ())
                {
-                  const globalObject = globalObjects [g];
+                  const browser = this .getBrowser ();
 
-                  globalObject .setGroup (this .groupNode);
-
-                  numGlobalLights            += !!globalObject .lightNode;
-                  numGlobalTextureProjectors += !!globalObject .textureProjectorNode;
-
-                  browser .getLocalObjects () .push (globalObject);
+                  for (let i = 0; i < numLocalObjects; ++ i)
+                     browser .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+               }
+               else
+               {
+                  for (let i = 0; i < numLocalObjects; ++ i)
+                     renderObject .getLocalObjects () .pop ();
                }
 
-               for (let i = opaqueShapesBegin; i < opaqueShapesEnd; ++ i)
+               renderObject .popLocalShadows ();
+               renderObject .getLocalObjectsCount () [1] -= numLights;
+               renderObject .getLocalObjectsCount () [2] -= numTextureProjectors;
+
+               const numGlobalObjects = globalObjects .length - globalsBegin;
+
+               for (let i = 0; i < numGlobalObjects; ++ i)
                {
-                  const
-                     renderContext = opaqueShapes [i],
-                     localObjects  = renderContext .localObjects;
+                  const globalObject = globalObjects [globalsBegin + i];
 
-                  renderContext .shadows           = renderContext .shadows || globalShadow;
-                  renderContext .objectsCount [1] += numGlobalLights;
-                  renderContext .objectsCount [2] += numGlobalTextureProjectors;
+                  globalObject .groupNode = this .groupNode;
+                  globalObject .global    = false;
 
-                  for (let g = globalsBegin; g < globalsEnd; ++ g)
-                     localObjects .push (globalObjects [g]);
+                  localObjects [i] = globalObject;
                }
 
-               for (let i = transparentShapesBegin; i < transparentShapesEnd; ++ i)
-               {
-                  const
-                     renderContext = transparentShapes [i],
-                     localObjects  = renderContext .localObjects;
+               localObjects .length = numGlobalObjects;
+               this .localShadows   = globalShadows .at (-1);
 
-                  renderContext .shadows           = renderContext .shadows || globalShadow;
-                  renderContext .objectsCount [1] += numGlobalLights;
-                  renderContext .objectsCount [2] += numGlobalTextureProjectors;
-
-                  for (let g = globalsBegin; g < globalsEnd; ++ g)
-                     localObjects .push (globalObjects [g]);
-               }
-
-               renderObject .getGlobalObjects () .length = globalsBegin;
-               renderObject .getGlobalShadows () .length = shadowsBegin;
+               globalObjects .length = globalsBegin;
+               globalShadows .length = shadowsBegin;
             }
 
             return;
