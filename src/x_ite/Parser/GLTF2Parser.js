@@ -79,6 +79,7 @@ function GLTF2Parser (scene)
    // Globals
 
    this .lights                = [ ];
+   this .usedLights            = 0;
    this .buffers               = [ ];
    this .bufferViews           = [ ];
    this .accessors             = [ ];
@@ -1187,6 +1188,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!lightNode)
          return;
 
+      ++ this .usedLights;
+
       transformNode ._children .push (lightNode);
    },
    nodeChildrenArray: function (children)
@@ -1217,6 +1220,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             if (sceneNumber === 0)
             {
+               if (this .usedLights)
+                  scene .getRootNodes () .push (this .createNavigationInfo ());
+
                scene .getRootNodes () .push (children [0]);
                return;
             }
@@ -1226,6 +1232,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          default:
          {
             // Root
+
+            if (this .usedLights)
+               scene .getRootNodes () .push (this .createNavigationInfo ());
 
             const switchNode = scene .createNode ("Switch", false);
 
@@ -1410,6 +1419,18 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       if (!(skins instanceof Array))
          return;
+   },
+   createNavigationInfo: function ()
+   {
+      const
+         scene              = this .getExecutionContext (),
+         navigationInfoNode = scene .createNode ("NavigationInfo", false);
+
+      navigationInfoNode ._headlight = false;
+
+      navigationInfoNode .setup ();
+
+      return navigationInfoNode;
    },
    createShape: function (primitive)
    {
