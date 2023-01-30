@@ -346,7 +346,7 @@ X_ITE supports a limited set of nodes defined by the X3D specification. There ar
 
 - [ComposedTexture3D](components/texturing3d/composedtexture3d)
 - [ImageTexture3D](components/texturing3d/imagetexture3d)
-- ImageTextureAtlas
+- [ImageTextureAtlas](components/texturing3d/imagetextureatlas)
 - [PixelTexture3D](components/texturing3d/pixeltexture3d)
 - [TextureCoordinate3D](components/texturing3d/texturecoordinate3d)
 - [TextureCoordinate4D](components/texturing3d/texturecoordinate4d)

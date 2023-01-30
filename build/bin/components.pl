@@ -160,20 +160,20 @@ icon: fas fa-th-large
 
 components;
 
-sub supported {
-   $text = `cat '$posts/supported-nodes.md'`;
-   %c    = ();
+# sub supported {
+#    $text = `cat '$posts/supported-nodes.md'`;
+#    %c    = ();
 
-   foreach $component (sort keys %{$components})
-   {
-      $c{$_} = lc $component foreach @{$components -> {$component}};
-   }
+#    foreach $component (sort keys %{$components})
+#    {
+#       $c{$_} = lc $component foreach @{$components -> {$component}};
+#    }
 
-   $text =~ s|\[([a-zA-Z0-9]+)\]\(.*?\)|[$1](components/$c{$1}/\L$1)|sg;
+#    $text =~ s|\[([a-zA-Z0-9]+)\]\(.*?\)|[$1](components/$c{$1}/\L$1)|sg;
 
-   open FILE, ">", "$posts/supported-nodes.md";
-   print FILE $text;
-   close FILE;
-}
+#    open FILE, ">", "$posts/supported-nodes.md";
+#    print FILE $text;
+#    close FILE;
+# }
 
-supported;
+# supported;
