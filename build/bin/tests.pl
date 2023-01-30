@@ -123,6 +123,81 @@ EOT
    close FILE;
 }
 
+# sub menu {
+#    my $items = submenu ("src/tests");
+
+#    open FILE, ">", "src/tests/menu.js";
+
+#    say FILE <<EOT;
+# function createTestMenu ()
+# {
+#    return {
+#       "tests": {
+# $items
+#       }
+#    };
+# }
+# EOT
+
+#    close FILE;
+# }
+
+# sub submenu {
+#    my $folder  = shift;
+#    my @folders = sort { "\U$a" cmp "\U$b" } `find '$folder' -type d -maxdepth 1`;
+#    my @files   = sort { "\U$a" cmp "\U$b" } `find -L '$folder' -type f -maxdepth 1 -name "*.x3d" -o -name "*.x3dz" -o -name "*.x3dv" -o -name "*.x3dvz" -o -name "*.x3dj" -o -name "*.x3djz" -o -name "*.gltf" -o -name "*.glb" -o -name "*.obj" -o -name "*.stl" -o -name "*.svg"`;
+
+#    chomp @folders;
+#    chomp @files;
+
+#    my $title = ucfirst basename ($folder);
+#    my $items = "";
+#    my $n     = 0;
+
+#    $items .= <<EOT;
+# "name": "$title",
+# "items": {
+# EOT
+
+#    for my $f (grep { $_ ne $folder } @folders)
+#    {
+#       my $item = submenu ($f);
+
+#       ++ $n;
+
+#       $items .= <<EOT;
+# "item-$n": {
+# $item
+# },
+# EOT
+#    }
+
+#    for my $file (@files)
+#    {
+#       ++ $n;
+
+#       $file =~ s|src/||;
+
+#       my $basename = basename $file;
+
+#       $items .= <<EOT;
+# "item-$n": {
+#    "name": "$basename",
+#    "callback": function (event)
+#    {
+#       X3D .getBrowser () .loadURL (new X3D .MFString ("$file"));
+#    },
+# },
+# EOT
+#    }
+
+#    $items .= <<EOT;
+# },
+# EOT
+
+#    return $items;
+# }
+
 examples;
 tests;
 menu;
