@@ -234,29 +234,35 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
                   numLights            = localObjects .reduce ((n, c) => n + !!c .lightNode, 0),
                   numTextureProjectors = localObjects .reduce ((n, c) => n + !!c .textureProjectorNode, 0);
 
-               renderObject .getLocalObjects () .push (... localObjects);
-               renderObject .pushLocalShadows (this .localShadows);
-               renderObject .getLocalObjectsCount () [1] += numLights;
-               renderObject .getLocalObjectsCount () [2] += numTextureProjectors;
+               if (numLocalObjects)
+               {
+                  renderObject .getLocalObjects () .push (... localObjects);
+                  renderObject .pushLocalShadows (this .localShadows);
+                  renderObject .getLocalObjectsCount () [1] += numLights;
+                  renderObject .getLocalObjectsCount () [2] += numTextureProjectors;
+               }
 
                this .groupNode .traverse (type, renderObject);
 
-               if (renderObject .isIndependent ())
+               if (numLocalObjects)
                {
-                  const browser = this .getBrowser ();
+                  if (renderObject .isIndependent ())
+                  {
+                     const browser = this .getBrowser ();
 
-                  for (let i = 0; i < numLocalObjects; ++ i)
-                     browser .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
-               }
-               else
-               {
-                  for (let i = 0; i < numLocalObjects; ++ i)
-                     renderObject .getLocalObjects () .pop ();
-               }
+                     for (let i = 0; i < numLocalObjects; ++ i)
+                        browser .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+                  }
+                  else
+                  {
+                     for (let i = 0; i < numLocalObjects; ++ i)
+                        renderObject .getLocalObjects () .pop ();
+                  }
 
-               renderObject .popLocalShadows ();
-               renderObject .getLocalObjectsCount () [1] -= numLights;
-               renderObject .getLocalObjectsCount () [2] -= numTextureProjectors;
+                  renderObject .popLocalShadows ();
+                  renderObject .getLocalObjectsCount () [1] -= numLights;
+                  renderObject .getLocalObjectsCount () [2] -= numTextureProjectors;
+               }
 
                const numGlobalObjects = globalObjects .length - globalsBegin;
 
