@@ -36,6 +36,10 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Author-provided prose that describes intended purpose of the url asset.
 
+#### Hint
+
+Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
 
 The color field defines the RGB base values for mode operations.

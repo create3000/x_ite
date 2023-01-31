@@ -38,6 +38,10 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Author-provided prose that describes intended purpose of the url asset.
 
+#### Hint
+
+Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+
 ### SFImage [in, out] **image** 0 0 0
 
 Defines image: width height number_of_components pixel_values. width and height are pixel count, number_of_components = 1 (intensity), 2 (intensity alpha), 3 (red green blue), 4 (red green blue alpha-opacity).
