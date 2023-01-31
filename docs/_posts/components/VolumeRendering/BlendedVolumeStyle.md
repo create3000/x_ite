@@ -72,17 +72,9 @@ Do not wrap extra quotation marks around these SFString enumeration values, sinc
 
 The weightTransferFunction1 and weightTransferFunction2 fields specify two-dimensional textures that are used to determine the weight values when the weight function is set to "TABLE". The output weight value depends on the number of components in the textures as specified in Table 41.4.
 
-#### Hint
-
-- [Transfer function to weight mapping](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#t-transferFunctionToWeightMapping){:target="_blank"}
-
 ### SFNode [in, out] **weightTransferFunction2** NULL <small>[X3DTexture2DNode]</small>
 
 The weightTransferFunction1 and weightTransferFunction2 fields specify two-dimensional textures that are used to determine the weight values when the weight function is set to "TABLE". The output weight value depends on the number of components in the textures as specified in Table 41.4.
-
-#### Hint
-
-- [Transfer function to weight mapping](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#t-transferFunctionToWeightMapping){:target="_blank"}
 
 #### See Also
 
