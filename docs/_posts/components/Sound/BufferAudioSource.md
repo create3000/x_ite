@@ -25,19 +25,19 @@ The BufferAudioSource node belongs to the **Sound** component and its default co
 
 ## Fields
 
-### SFNode [in, out] **metadata** <small></small>
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-### SFString [in, out] **description** <small></small>
+### SFString [in, out] **description** ""
 
 ### SFBool [in, out] **enabled** <small></small>
 
-### SFBool [in, out] **load** <small></small>
+### SFBool [in, out] **load** TRUE
 
 ### MFString [in, out] **url** <small></small>
 
 ### SFTime [in, out] **autoRefresh** <small></small>
 
-### SFTime [in, out] **autoRefreshTimeLimit** <small></small>
+### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
 
 ### SFFloat [in, out] **gain** <small></small>
 

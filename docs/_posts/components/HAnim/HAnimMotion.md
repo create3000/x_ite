@@ -25,9 +25,9 @@ The HAnimMotion node belongs to the **HAnim** component and its default containe
 
 ## Fields
 
-### SFNode [in, out] **metadata** <small></small>
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-### SFString [in, out] **description** <small></small>
+### SFString [in, out] **description** ""
 
 ### SFBool [in, out] **enabled** <small></small>
 

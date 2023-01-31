@@ -25,31 +25,53 @@ The ImageTextureAtlas node belongs to the **Texturing3D** component and its defa
 
 ## Fields
 
-### SFNode [in, out] **metadata** <small></small>
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-### SFString [in, out] **description** <small></small>
+### SFString [in, out] **description** ""
 
-### SFBool [in, out] **load** <small></small>
+### SFBool [in, out] **load** TRUE
 
-### MFString [in, out] **url** <small></small>
+### MFString [in, out] **url** [ ] <small>[URI]</small>
 
-### SFTime [in, out] **autoRefresh** <small></small>
+Location and filename of image. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
 
-### SFTime [in, out] **autoRefreshTimeLimit** <small></small>
+#### Hints
 
-### SFInt32 [in, out] **slicesOverX** <small></small>
+MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
 
-### SFInt32 [in, out] **slicesOverY** <small></small>
+#### Warning
 
-### SFInt32 [in, out] **numberOfSlices** <small></small>
+Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
-### SFBool [] **repeatS** <small></small>
+#### See Also
 
-### SFBool [] **repeatT** <small></small>
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
 
-### SFBool [] **repeatR** <small></small>
+### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 
-### SFNode [] **textureProperties** <small></small>
+### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
+
+### SFInt32 [in, out] **slicesOverX** 0 <small>[0,∞)</small>
+
+### SFInt32 [in, out] **slicesOverY** 0 <small>[0,∞)</small>
+
+### SFInt32 [in, out] **numberOfSlices** 0 <small>[0,∞)</small>
+
+### SFBool [ ] **repeatS** FALSE
+
+Whether to horizontally repeat texture along S axis.
+
+### SFBool [ ] **repeatT** FALSE
+
+Whether to vertically repeat texture along T axis.
+
+### SFBool [ ] **repeatR** FALSE
+
+Whether to vertically repeat texture along R axis.
+
+### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
+
+Field textureProperties.
 
 ## External Links
 

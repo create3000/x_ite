@@ -35,6 +35,10 @@ The ImageTexture3D node belongs to the **Texturing3D** component and its default
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFString [in, out] **description** ""
+
+### SFBool [in, out] **load** TRUE
+
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
 Location and filename of image. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
@@ -50,6 +54,10 @@ Strictly match directory and filename capitalization for http links! This is imp
 #### See Also
 
 - [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+
+### SFTime [in, out] **autoRefresh** <small></small>
+
+### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
 
 ### SFBool [ ] **repeatS** FALSE
 

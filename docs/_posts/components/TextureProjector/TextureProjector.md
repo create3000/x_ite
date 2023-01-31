@@ -25,9 +25,9 @@ The TextureProjector node belongs to the **TextureProjector** component and its 
 
 ## Fields
 
-### SFNode [in, out] **metadata** <small></small>
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-### SFString [in, out] **description** <small></small>
+### SFString [in, out] **description** ""
 
 ### SFBool [in, out] **on** <small></small>
 

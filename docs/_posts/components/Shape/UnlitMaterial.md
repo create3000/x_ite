@@ -29,7 +29,7 @@ The UnlitMaterial node belongs to the **Shape** component and its default contai
 
 ## Fields
 
-### SFNode [in, out] **metadata** <small></small>
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 ### SFColor [in, out] **emissiveColor** <small></small>
 

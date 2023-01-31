@@ -25,7 +25,7 @@ The EnvironmentLight node belongs to the **Lighting** component and its default 
 
 ## Fields
 
-### SFNode [in, out] **metadata** <small></small>
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 ### SFBool [in, out] **global** <small></small>
 

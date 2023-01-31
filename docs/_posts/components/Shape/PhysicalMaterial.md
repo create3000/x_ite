@@ -29,7 +29,7 @@ The PhysicalMaterial node belongs to the **Shape** component and its default con
 
 ## Fields
 
-### SFNode [in, out] **metadata** <small></small>
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 ### SFColor [in, out] **baseColor** <small></small>
 
