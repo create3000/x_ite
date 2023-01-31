@@ -70,7 +70,7 @@ Geometry beyond the visibilityLimit may not be rendered (far culling plane of th
 
 #### Hints
 
-Keep visibilityLimit >`= zero. Keep (visibilityLimit / avatarSize.CollisionDistance) \< 10,000 to avoid aliasing artifacts (i.e. polygon "tearing"). Interchange profile hint: this field may be ignored, applying the default value regardless.
+Keep visibilityLimit >= zero. Keep (visibilityLimit / avatarSize.CollisionDistance) \< 10,000 to avoid aliasing artifacts (i.e. polygon "tearing"). Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### MFString [in, out] **transitionType** "LINEAR" <small>["TELEPORT","LINEAR",</small>
 

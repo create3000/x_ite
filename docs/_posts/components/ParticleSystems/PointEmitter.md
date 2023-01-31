@@ -39,7 +39,7 @@ Point from which particles emanate.
 
 Initial direction from which particles emanate.
 
-### SFFloat [in, out] **speed**<small>[0,∞)</small>
+### SFFloat [in, out] **speed** <small>[0,∞)</small>
 
 Initial linear speed (default is m/s) imparted to all particles along their direction of movement.
 
@@ -51,7 +51,7 @@ Multiplier for the randomness used to control the range of possible output value
 
 Variation of zero does not allow any randomness.
 
-### SFFloat [ ] **mass**<small>[0,∞)</small>
+### SFFloat [ ] **mass** <small>[0,∞)</small>
 
 Basic mass of each particle in mass base units (default is grams).
 
@@ -59,7 +59,7 @@ Basic mass of each particle in mass base units (default is grams).
 
 Mass is needed if gravity or other force-related calculations are performed per-particle.
 
-### SFFloat [ ] **surfaceArea**<small>[0,∞)</small>
+### SFFloat [ ] **surfaceArea** <small>[0,∞)</small>
 
 Particle surface area in area base units (default is meters squared). Surface area is used for calculations such as wind effects per particle.
 

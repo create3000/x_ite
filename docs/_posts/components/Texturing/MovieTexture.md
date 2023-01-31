@@ -97,7 +97,7 @@ Not supported in VRML97.
 
 ### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
 
-When time now >`= pauseTime, isPaused becomes true and MovieTexture becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now >= pauseTime, isPaused becomes true and MovieTexture becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 

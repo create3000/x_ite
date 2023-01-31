@@ -70,12 +70,12 @@ MaxAngle1 is maximum rotation angle for hinge.
 
 DesiredAngularVelocity1 is goal rotation rate for hinge connection to body1.
 
-### SFFloat [in, out] **desiredAngularVelocity2**<small>(-∞,∞) <span class="no">not supported</span>
+### SFFloat [in, out] **desiredAngularVelocity2** <small>(-∞,∞) <span class="no">not supported</span>
 </small>
 
 DesiredAngularVelocity2 is goal rotation rate for hinge connection to body2.
 
-### SFFloat [in, out] **maxTorque1**<small>(-∞,∞) <span class="no">not supported</span></small>
+### SFFloat [in, out] **maxTorque1** <small>(-∞,∞) <span class="no">not supported</span></small>
 
 MaxTorque1 is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity1.
 

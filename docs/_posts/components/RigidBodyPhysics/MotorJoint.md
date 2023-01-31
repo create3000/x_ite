@@ -63,11 +63,11 @@ Motor3Axis defines axis vector of corresponding motor axis.
 
 0 0 0 means motor disabled.
 
-### SFFloat [in, out] **axis1Angle**<small>[-π,π]</small>
+### SFFloat [in, out] **axis1Angle** <small>[-π,π]</small>
 
 Axis1Angle (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
 
-### SFFloat [in, out] **axis2Angle**<small>[-π,π]</small>
+### SFFloat [in, out] **axis2Angle** <small>[-π,π]</small>
 
 Axis2Angle (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
 
@@ -87,7 +87,7 @@ Axis2Torque is rotational torque applied by corresponding motor axis when in use
 
 Axis3Torque is rotational torque applied by corresponding motor axis when in user-calculated mode.
 
-### SFFloat [in, out] **stop1Bounce**<small>[0,1]</small>
+### SFFloat [in, out] **stop1Bounce** <small>[0,1]</small>
 
 Stop1Bounce is velocity factor for bounce back once stop point is reached.
 
@@ -95,7 +95,7 @@ Stop1Bounce is velocity factor for bounce back once stop point is reached.
 
 0 means no bounce, 1 means return velocity matches.
 
-### SFFloat [in, out] **stop2Bounce**<small>[0,1]</small>
+### SFFloat [in, out] **stop2Bounce** <small>[0,1]</small>
 
 Stop2Bounce is velocity factor for bounce back once stop point is reached.
 

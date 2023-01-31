@@ -82,7 +82,7 @@ BeamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero i
 
 #### Warning
 
-If beamWidth >` cutOffAngle, then beamWidth reset to equal cutOffAngle.
+If beamWidth > cutOffAngle, then beamWidth reset to equal cutOffAngle.
 
 ### SFFloat [in, out] **cutOffAngle** 1.5708 <small>(0,π/2]</small>
 
@@ -94,7 +94,7 @@ BeamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero i
 
 #### Warning
 
-If beamWidth >` cutOffAngle, then beamWidth reset to equal cutOffAngle.
+If beamWidth > cutOffAngle, then beamWidth reset to equal cutOffAngle.
 
 ### SFColor [in, out] **shadowColor** 0 0 0 <small class="small">[0,1]</small>
 

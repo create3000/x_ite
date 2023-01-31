@@ -67,7 +67,7 @@ This allows joints and bodies to be a fraction springy, and helps to eliminate n
 
 Or -1, maxCorrectionSpeed .
 
-### SFFloat [in, out] **contactSurfaceThickness**<small>[0,∞)</small>
+### SFFloat [in, out] **contactSurfaceThickness** <small>[0,∞)</small>
 
 ContactSurfaceThickness defines how far bodies may interpenetrate after a collision, allowing simulation of softer bodies that deform somewhat during collision.
 
@@ -75,7 +75,7 @@ ContactSurfaceThickness defines how far bodies may interpenetrate after a collis
 
 AutoDisable toggles operation of disableAngularSpeed, disableLinearSpeed, disableTime.
 
-### SFFloat [in, out] **disableTime**<small>[0,∞) <span class="no">not supported</span></small>
+### SFFloat [in, out] **disableTime** <small>[0,∞) <span class="no">not supported</span></small>
 
 DisableTime defines interval when body becomes at rest and not part of rigid body calculations, reducing numeric instabilities.
 
@@ -83,7 +83,7 @@ DisableTime defines interval when body becomes at rest and not part of rigid bod
 
 Only activated if autoDisable='true'
 
-### SFFloat [in, out] **disableLinearSpeed**<small>[0,∞)</small>
+### SFFloat [in, out] **disableLinearSpeed** <small>[0,∞)</small>
 
 DisableLinearSpeed defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculation, reducing numeric instabilitiess.
 
@@ -91,7 +91,7 @@ DisableLinearSpeed defines lower-limit tolerance value when body is considered a
 
 Only activated if autoDisable='true'
 
-### SFFloat [in, out] **disableAngularSpeed**<small>[0,∞)</small>
+### SFFloat [in, out] **disableAngularSpeed** <small>[0,∞)</small>
 
 DisableAngularSpeed defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculations, reducing numeric instabilities.
 

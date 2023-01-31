@@ -31,7 +31,7 @@ The Disk2D node belongs to the **Geometry2D** component and its default containe
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFFloat [ ] **innerRadius**<small>[0,∞)</small>
+### SFFloat [ ] **innerRadius** <small>[0,∞)</small>
 
 Inner circle radius, greater than or equal to 0.
 
