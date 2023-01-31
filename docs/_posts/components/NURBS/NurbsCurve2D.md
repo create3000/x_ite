@@ -57,8 +57,7 @@ ControlPoint defines a set of control points of dimension uDimension by vDimensi
 
 ## Description
 
-Warning
--------
+### Warning
 
 - NurbsCurve2D is not a renderable geometry node.
 

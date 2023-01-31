@@ -141,8 +141,7 @@ Height array values are given in row-major order from left to right along X axis
 - Insert a Shape node before adding geometry or Appearance.
 - You can also substitute a type-matched ProtoInstance node for contained content.
 
-Warning
--------
+### Warning
 
 - Generated quadrilaterals can be nonplanar. Tessellation splits quadrilaterals into triangles along seam starting at initial vertex of the quadrilateral and proceeding to opposite vertex.
 

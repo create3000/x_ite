@@ -163,8 +163,7 @@ Height array values are in row-major order from west to east, south to north. Ge
 - Insert a Shape node before adding geometry or Appearance.
 - Include `<component name='Geospatial' level='1'/>`
 
-Warning
--------
+### Warning
 
 - Generated quadrilaterals can be nonplanar. Tessellation splits quadrilaterals into triangles along seam starting at initial vertex of the quadrilateral and proceeding to opposite vertex.
 

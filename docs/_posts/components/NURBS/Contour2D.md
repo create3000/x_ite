@@ -48,8 +48,7 @@ Input/Output field children.
 
 - Contour2D is used as the trimmingContour field of the NurbsTrimmedSurface node.
 
-Warning
--------
+### Warning
 
 - Contour2D is not a renderable geometry node.
 

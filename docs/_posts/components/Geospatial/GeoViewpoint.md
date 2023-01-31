@@ -113,8 +113,7 @@ Event sent when node becomes active/inactive.
 
 - Include `<component name='Geospatial' level='1'/>`
 
-Warning
--------
+### Warning
 
 - The navType and headlight fields were removed as part of X3D version 3.3, instead use a NavigationInfo node for those fields.
 

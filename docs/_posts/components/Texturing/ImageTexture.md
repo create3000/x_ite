@@ -119,8 +119,7 @@ Field textureProperties.
 - Authors can provide multiple image formats for the same image, with each source address listed separately in the url field.
 - Player support is required for .png and .jpg formats, support is suggested for .gif format. Other image formats are optionally supported.
 
-Warnings
---------
+### Warnings
 
 - Bright Material emissiveColor values can wash out some textures.
 - See ComposedCubeMapTexture and TextureBackground for special containerField values.

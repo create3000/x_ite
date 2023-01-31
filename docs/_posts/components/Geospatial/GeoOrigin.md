@@ -60,8 +60,7 @@ Whether to rotate coordinates of nodes using this GeoOrigin so that local-up dir
 - Include `<component name='Geospatial' level='1'/>`
 - GeoOrigin is likely to be restored in X3D v4.0 for special use on devices with limited floating-point resolution.
 
-Warning
--------
+### Warning
 
 - GeoOrigin is deprecated and discouraged (but nevertheless allowed) in X3D v3.3.
 

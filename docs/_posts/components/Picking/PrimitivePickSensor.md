@@ -98,8 +98,7 @@ Do not wrap extra quotation marks around these SFString enumeration values, sinc
 - Picking notification is performed at the start of the frame for all enabled pick sensors once all other sensors are processed.
 - Box, Cone, Cylinder or Sphere can be used for pickingGeometry node.
 
-Warnings
---------
+### Warnings
 
 - Boolean fields used to control visibility of primitive pickingGeometry subsections are ignored when evaluating picking intersections.
 - Order of contained nodes is significant, single pickingGeometry node must precede pickTarget node array.

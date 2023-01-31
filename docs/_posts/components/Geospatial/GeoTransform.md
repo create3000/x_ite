@@ -112,8 +112,7 @@ Each grouping node defines a coordinate space for its children, relative to the 
 - Insert a Shape node before adding geometry or Appearance.
 - Include `<component name='Geospatial' level='2'/>`
 
-Warning
--------
+### Warning
 
 - Avoid having GeoLocation or GeoTransform as a parent of ancestor node, since multiple geospatial transformations then occur with unpredictable results.
 

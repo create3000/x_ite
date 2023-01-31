@@ -63,8 +63,7 @@ Input/Output field bottom.
 
 - 0..6 child image nodes are allowed (ImageTexture MovieTexture PixelTexture) with corresponding containerField values: front back left right top bottom.
 
-Warning
--------
+### Warning
 
 - Child ImageTexture nodes must have unique containerField values for back, bottom, front, left, right, or top.
 

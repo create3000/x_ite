@@ -77,8 +77,7 @@ Only valid geometry shall be used.
 
 - Ff surface is not solid (solid=false), randomly choose from which side of the surface to emit, negating the normal direction when generating from the back side.
 
-Warning
--------
+### Warning
 
 - Only valid geometry shall be used.
 

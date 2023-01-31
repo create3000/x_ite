@@ -68,8 +68,7 @@ Input/Output field parts.
 
 - ComposedShader contains field definitions, IS/connect, and `<ShaderPart containerField='parts'/>` nodes.
 
-Warning
--------
+### Warning
 
 - ComposedShader can contain field declarations, but no CDATA section of plain-text source code. All source programs are contained in child ShaderPart nodes.
 

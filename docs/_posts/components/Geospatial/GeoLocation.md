@@ -84,8 +84,7 @@ Input/Output field children.
 
 - Include `<component name='Geospatial' level='1'/>`
 
-Warning
--------
+### Warning
 
 - Avoid having GeoLocation or GeoTransform as a parent of ancestor node, since multiple geospatial transformations then occur with unpredictable results.
 

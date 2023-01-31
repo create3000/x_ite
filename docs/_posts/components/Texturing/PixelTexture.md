@@ -66,8 +66,7 @@ Field textureProperties.
 - Can contain a single TextureProperties node.
 - Insert Shape and Appearance nodes before adding texture.
 
-Warning
--------
+### Warning
 
 - Aggregate file size can grow dramatically.
 

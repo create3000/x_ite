@@ -75,8 +75,7 @@ Each grouping node defines a coordinate space for its children, relative to the 
 - Put Billboard as close to the geometry as possible, nested inside Transform for local coordinate system.
 - Insert a Shape node before adding geometry or Appearance.
 
-Warning
--------
+### Warning
 
 - Don't put Viewpoint inside a Billboard.
 

@@ -98,8 +98,7 @@ Output event containing 3D points on surface of underlying pickingGeometry compu
 - Picking notification is performed at the start of the frame for all enabled pick sensors once all other sensors are processed.
 - PointSet can be used for pickingGeometry node.
 
-Warning
--------
+### Warning
 
 - Order of contained nodes is significant, single pickingGeometry node must precede pickTarget node array.
 

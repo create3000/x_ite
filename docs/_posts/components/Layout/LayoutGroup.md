@@ -76,8 +76,7 @@ Each grouping node defines a coordinate space for its children, relative to the 
 - Insert a Shape node before adding geometry or Appearance.
 - LayoutGroup does not directly have any pixel-dependent concepts. However, it can contain a Layout node that does have pixel-specific options.
 
-Warning
--------
+### Warning
 
 - A LayoutGroup can only be a child of a LayoutLayer node or another LayoutGroup node.
 

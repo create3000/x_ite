@@ -65,8 +65,7 @@ Each grouping node defines a coordinate space for its children, relative to the 
 
 - Insert a Shape node before adding geometry or Appearance.
 
-Warning
--------
+### Warning
 
 - Better functional description needed in X3D specification.
 

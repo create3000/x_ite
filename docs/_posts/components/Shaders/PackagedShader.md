@@ -68,8 +68,7 @@ Recognized values include "CG" "GLSL" "HLSL" "FX"
 
 - PackagedShader contains IS/connect and field definitions.
 
-Warning
--------
+### Warning
 
 - PackagedShader can contain field declarations, but no CDATA section of plain-text source code.
 

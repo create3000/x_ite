@@ -75,8 +75,7 @@ Each grouping node defines a coordinate space for its children, relative to the 
 - Insert a Shape node before adding geometry or Appearance.
 - Authors can temporarily hide test geometry under an unselected child of a Switch. This is a good alternative to "commenting out" nodes.
 
-Warnings
---------
+### Warnings
 
 - Do not include Viewpoint or OrthoViewpoint as a child of LOD or Switch, instead use ViewpointGroup as parent to constrain location proximity where the viewpoint is available to user.
 - Results are undefined if a bindable node (Viewpoint, OrthoViewpoint, NavigationInfo, Fog, Background, TextureBackground) is a contained child of LOD or Switch.

@@ -103,8 +103,7 @@ Event sent when node becomes active/inactive.
 
 - NavigationInfo, Background, TextureBackground, Fog, OrthoViewpoint and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
 
-Warning
--------
+### Warning
 
 - Do not include Viewpoint or OrthoViewpoint as a child of LOD or Switch, instead use ViewpointGroup as parent to constrain location proximity where the viewpoint is available to user.
 

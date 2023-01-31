@@ -82,8 +82,7 @@ Input/Output field source.
 
 - If the audio source is stereo or multi-channel, channel separation is retained during playback.
 
-Warning
--------
+### Warning
 
 - While providing sounds on the ground plane, ensure that the audible auralization ellipse is sufficiently elevated to match avatar height.
 

@@ -108,8 +108,7 @@ Input/Output field body2.
 
 - Each Contact node contains two RigidBody (containerField='body1,body2') and two CollidableShape or CollidableOffset nodes (containerField='geometry1,geometry2').
 
-Warning
--------
+### Warning
 
 - Contact nodes are transient and can only occur at run time, not in saved X3D files.
 

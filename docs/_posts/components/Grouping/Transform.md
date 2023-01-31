@@ -115,8 +115,7 @@ Each grouping node defines a coordinate space for its children, relative to the 
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Grouping/Transform/Transform.x3d"></x3d-canvas>
 
-Warning
--------
+### Warning
 
 - Transform contained by CADFace can only hold a single LOD or Shape node.
 

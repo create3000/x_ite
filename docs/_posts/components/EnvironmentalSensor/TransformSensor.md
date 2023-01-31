@@ -76,8 +76,7 @@ TargetObject is the movable geometry represented by any valid X3DGroupingNode or
 - Each TransformSensor node behaves independently of all other TransformSensor nodes, so that every enabled TransformSensor node affected by targetObject motion sends output events.
 - Multiply instanced (DEF/USE) TransformSensor nodes in different locations use the union of all boxes to check for enter and exit, detecting enter and exit for all instances of the box, and sending enter/exit events appropriately. For non-overlapping bounding boxes, position_changed and orientation_changed events are calculated relative to the coordinate system associated with the bounding box in which the proximity was detected.
 
-Warnings
---------
+### Warnings
 
 - Results are undefined if boxes overlap for multiply instanced TransformSensor nodes.
 - A TransformSensor node with a zero-volume box (i.e. any size dimension equal to 0.0) cannot generate events, equivalent to enabled=false.

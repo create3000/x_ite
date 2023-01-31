@@ -47,8 +47,7 @@ ColorRGBA requires Rendering component level 3 (alpha fully supported), Renderin
 - Colors are often controlled by Material instead.
 - Alpha channel may be ignored under Interchange profile.
 
-Warning
--------
+### Warning
 
 - ColorRGBA requires Rendering component level 3 (alpha fully supported), Rendering component level 1 (alpha optional), otherwise Full profile.
 

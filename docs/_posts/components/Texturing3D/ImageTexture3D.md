@@ -118,8 +118,7 @@ Field textureProperties.
 - Insert Shape and Appearance nodes before adding texture.
 - Supported file formats are [NRRD](https://teem.sourceforge.net/nrrd/format.html){:target="_blank"}, and also [DICOM](https://en.wikipedia.org/wiki/DICOM){:target="_blank"}.
 
-Warning
--------
+### Warning
 
 - There are no required file formats. Nevertheless: DDS, DICOM, and/or .vol formats are recommended.
 

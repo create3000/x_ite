@@ -71,8 +71,7 @@ VisibilityRange 0 disables Fog.
 
 ## Description
 
-Warning
--------
+### Warning
 
 - LocalFog is not a bindable node.
 

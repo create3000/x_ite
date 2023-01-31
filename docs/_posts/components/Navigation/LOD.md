@@ -88,8 +88,7 @@ Each grouping node defines a coordinate space for its children, relative to the 
 - Insert a Shape node before adding geometry or Appearance.
 - Security mechanisms such as encryption and authentication can be applied to high levels of detail, allowing authors to protect intellectual property at high resolution for authorized users while still rendering simple unrestricted models for other users.
 
-Warnings
---------
+### Warnings
 
 - Do not include Viewpoint or OrthoViewpoint as a child of LOD or Switch, instead use ViewpointGroup as parent to constrain location proximity where the viewpoint is available to user.
 - Results are undefined if a bindable node (Viewpoint, OrthoViewpoint, NavigationInfo, Fog, Background, TextureBackground) is a contained child of LOD or Switch.

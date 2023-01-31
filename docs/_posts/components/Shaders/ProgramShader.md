@@ -62,8 +62,7 @@ Input/Output field programs.
 
 ## Description
 
-Warning
--------
+### Warning
 
 - ProgramShader contains no field declarations and no plain-text source code.
 

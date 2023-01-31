@@ -96,8 +96,7 @@ Do not wrap extra quotation marks around these SFString enumeration values, sinc
 - Picking notification is performed at the start of the frame for all enabled pick sensors once all other sensors are processed.
 - Any geometry can be used for pickingGeometry node.
 
-Warnings
---------
+### Warnings
 
 - PickingGeometry volume is defined by the convex hull of the enclosing planes of the provided X3DGeometryNode. If the provided volume is not manifold, pick results are undefined.
 - Order of contained nodes is significant, single pickingGeometry node must precede pickTarget node array.

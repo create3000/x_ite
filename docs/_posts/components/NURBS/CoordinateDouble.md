@@ -38,8 +38,7 @@ Point contains a set of 3D coordinate triplet values.
 
 ## Description
 
-Warning
--------
+### Warning
 
 - CoordinateDouble requires NURBS component level 1, otherwise Full profile.
 

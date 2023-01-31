@@ -128,8 +128,7 @@ Input/Output field bottomTexture.
 - NavigationInfo, Background, TextureBackground, Fog, OrthoViewpoint and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
 - Authors can have LoadSensor nodes receive notification when background texture node(s) are loaded.
 
-Warnings
---------
+### Warnings
 
 - Results are undefined if a bindable node (Viewpoint, OrthoViewpoint, NavigationInfo, Fog, Background, TextureBackground) is a contained child of LOD or Switch.
 - Child ImageTexture nodes must have unique containerField values for backTexture, bottomTexture, frontTexture, leftTexture, rightTexture, or topTexture.

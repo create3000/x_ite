@@ -115,8 +115,7 @@ Output field children.
 - RootNode specifies the geometry of the root tile.
 - Include `<component name='Geospatial' level='1'/>`
 
-Warning
--------
+### Warning
 
 - Do not use rootUrl and rootNode simultaneously, since each specifies the root tile.
 

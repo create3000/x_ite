@@ -110,8 +110,7 @@ If the target object has multiple textures defined, only texture coordinates for
 - Picking notification is performed at the start of the frame for all enabled pick sensors once all other sensors are processed.
 - IndexedLineSet or LineSet can be used for pickingGeometry node.
 
-Warning
--------
+### Warning
 
 - Order of contained nodes is significant, single pickingGeometry node must precede pickTarget node array.
 

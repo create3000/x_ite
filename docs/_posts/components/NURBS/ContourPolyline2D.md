@@ -37,8 +37,7 @@ ControlPoint specifies the end points of each segment of the piecewise linear cu
 
 ## Description
 
-Warning
--------
+### Warning
 
 - ContourPolyline2D is not a renderable geometry node.
 

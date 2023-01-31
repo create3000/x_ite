@@ -77,8 +77,7 @@ Input/Output field watchList.
 - Background is not sensed due to multiple-image ambiguity.
 - Use Inline 'load' field to prompt or defer loading.
 
-Warnings
---------
+### Warnings
 
 - WatchList child nodes are not rendered, so normally USE copies of other nodes to sense load status.
 - New X3D node, not supported in VRML97.

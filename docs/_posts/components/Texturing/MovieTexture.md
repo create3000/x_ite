@@ -207,8 +207,7 @@ Field textureProperties.
 - Player support for MPEG-1 video format is required, other formats are optional.
 - The underlying `<video/>` element can be accessed via movieTexture.getValue().getElement().
 
-Warning
--------
+### Warning
 
 - MovieTexture has containerField='texture' when parent is an Appearance node, otherwise containerField='source' when parent is a Sound node.
 

@@ -154,8 +154,7 @@ Always contains 3 values, one for each local axis.
 - Visualization shapes for HAnimJoint nodes can be placed in child HAnimSegment or HAnimSite nodes.
 - Include `<component name='HAnim' level='1'/>`
 
-Warning
--------
+### Warning
 
 - An HAnimJoint may not be a child of an HAnimSegment.
 

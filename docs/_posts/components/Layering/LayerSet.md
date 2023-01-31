@@ -64,8 +64,7 @@ Ordinal values start with the numeral 1 representing the first item in the list.
 
 - The layer first specified in the order field is the first layer rendered and appears below any other layers. The layer last specified in the order field is the last layer rendered and correspondingly appears on top of all other layers.
 
-Warning
--------
+### Warning
 
 - Only one LayerSet node is allowed in a scene, and it shall be a root node at the top of the scene graph.
 

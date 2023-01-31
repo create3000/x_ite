@@ -63,8 +63,7 @@ Strictly match directory and filename capitalization for http links! This is imp
 - ShaderPart can contain a CDATA section of plain-text source code.
 - ShaderPart subprograms are written in the same language, which is specified in the parent ComposedShader node.
 
-Warning
--------
+### Warning
 
 - ShaderPart contains no field definitions.
 

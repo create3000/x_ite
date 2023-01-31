@@ -60,8 +60,7 @@ Center point in 2D (s,t) texture coordinates for rotation and scaling.
 - Order of operations is translation, rotation about center, non-uniform scale about center.
 - Insert Shape and Appearance nodes before adding TextureTransform.
 
-Warning
--------
+### Warning
 
 - Resulting visible effects appear reversed because image changes occur before mapping to geometry.
 
