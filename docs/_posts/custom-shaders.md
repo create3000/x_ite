@@ -716,5 +716,5 @@ main ()
 
 ## See Also
 
-- [ComposedShader](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ComposedShader){:target="_blank"}
-- [ShaderPart](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ShaderPart){:target="_blank"}
+- [ComposedShader](components/shaders/composedshader)
+- [ShaderPart](components/shaders/shaderpart)

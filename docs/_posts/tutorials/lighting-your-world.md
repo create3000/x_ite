@@ -43,7 +43,7 @@ Directional lights and spot lights also have:
 
 ## Syntax: PointLight
 
-A [PointLight](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#PointLight){:target="_blank"} node illuminates radially from a point:
+A [PointLight](../components/lighting/pointlight) node illuminates radially from a point:
 
 ### XML Encoding
 
@@ -66,7 +66,7 @@ PointLight {
 
 ## Syntax: DirectionalLight
 
-A [DirectionalLight](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#DirectionalLight){:target="_blank"} node illuminates in one direction from infinitely far away:
+A [DirectionalLight](../components/lighting/directionallight) node illuminates in one direction from infinitely far away:
 
 ### XML Encoding
 
@@ -89,7 +89,7 @@ DirectionalLight {
 
 ## Syntax: SpotLight
 
-A [SpotLight](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#SpotLight){:target="_blank"} node illuminates from a point, in one direction, within a cone:
+A [SpotLight](../components/lighting/spotlight) node illuminates from a point, in one direction, within a cone:
 
 ### XML Encoding
 

@@ -36,7 +36,7 @@ How does the background look like:
 
 ## Syntax: Background
 
-A [Background](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Background){:target="_blank"} node describes background colors;
+A [Background](../components/environmentaleffects/background) node describes background colors;
 
 - *skyColor* and *skyAngle* - sky gradation
 - *groundColor* and *groundAngle* - ground gradation
@@ -145,7 +145,7 @@ DEF Summer Background {
 
 ## Syntax: Background
 
-A [Background](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Background){:target="_blank"} node describes background images:
+A [Background](../components/environmentaleffects/background) node describes background images:
 
 - *frontUrl,* etc - texture image URLs for box
 

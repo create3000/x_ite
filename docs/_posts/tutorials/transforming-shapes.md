@@ -33,7 +33,7 @@ Shapes built in the new coordinate system are positioned, rotated, and scaled al
 
 ## Syntax: Transform
 
-The [Transform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform){:target="_blank"} group node creates a group with its own coordinate system
+The [Transform](../components/grouping/transform) group node creates a group with its own coordinate system
 
 - *translation* - position
 - *rotation* - orientation
@@ -268,8 +268,8 @@ Transform {
 ## Summary
 
 - All shapes are built in a coordinate system
-- The [Transform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform){:target="_blank"} node creates a new coordinate system relative to its parent
-- [Transform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform){:target="_blank"} node fields do
+- The [Transform](../components/grouping/transform) node creates a new coordinate system relative to its parent
+- [Transform](../components/grouping/transform) node fields do
   - *translation*
   - *rotation*
   - *scale*

@@ -233,8 +233,3 @@ function set_over (value, time)
 ]]>
 </Script>
 ```
-
-## See Also
-
-* [X3D Encoding : XML](https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html){:target="_blank"}
-* [X3D Abstract : Node Definitions](https://www.web3d.org/documents/specifications/19775-1/V4.0/index.html){:target="_blank"}

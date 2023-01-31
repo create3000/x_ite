@@ -9,16 +9,16 @@ tags: [Building, Primitive, Shapes]
 
 Shapes are the building blocks of a X3D world. Primitive Shapes are standard building blocks:
 
-- [Box](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Box){:target="_blank"}
-- [Cone](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cone){:target="_blank"}
-- [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cylinder){:target="_blank"}
-- [Sphere](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Sphere){:target="_blank"}
-- [Text](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#Text){:target="_blank"}
-- and more from the [CADGeometry](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html){:target="_blank"}**,** [Geometry2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html){:target="_blank"}**,** and [Rendering](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html){:target="_blank"} component
+- [Box](../components/geometry3d/box)
+- [Cone](../components/geometry3d/cone)
+- [Cylinder](../components/geometry3d/cylinder)
+- [Sphere](../components/geometry3d/sphere)
+- [Text](../components/text/text)
+- and more from the [CADGeometry](../components//cadgeometry)**,** [Geometry2D](../components//geometry2d)**,** and [Rendering](../components//rendering) component
 
 ## Syntax: Shape
 
-- A [Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"} node builds a shape
+- A [Shape](../components/shape/shape) node builds a shape
   - *appearance* - color and texture
   - *geometry* - form, or structure
 
@@ -42,7 +42,7 @@ Shape {
 
 ## Specifying appearance
 
-- [Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"} appearance is described by appearance nodes
+- [Shape](../components/shape/shape) appearance is described by appearance nodes
 - For now, we'll use nodes to create a shaded white appearance:
 
 ### XML Encoding
@@ -69,7 +69,7 @@ Shape {
 
 ## Specifying geometry
 
-[Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"} geometry is built with geometry nodes:
+[Shape](../components/shape/shape) geometry is built with geometry nodes:
 
 ### XML Encoding
 
@@ -206,6 +206,6 @@ Shape {
 
 ## Summary
 
-- Shapes are built using a [Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"} node
-- [Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"} geometry is built using geometry nodes, such as [Box](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Box){:target="_blank"}, [Cone](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cone){:target="_blank"}, [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cylinder){:target="_blank"}, [Sphere](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Sphere){:target="_blank"}, and [Text](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#Text){:target="_blank"}
-- Text fonts are controlled using a [FontStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#FontStyle){:target="_blank"} node
+- Shapes are built using a [Shape](../components/shape/shape) node
+- [Shape](../components/shape/shape) geometry is built using geometry nodes, such as [Box](../components/geometry3d/box), [Cone](../components/geometry3d/cone), [Cylinder](../components/geometry3d/cylinder), [Sphere](../components/geometry3d/sphere), and [Text](../components/text/text)
+- Text fonts are controlled using a [FontStyle](../components/text/fontstyle) node

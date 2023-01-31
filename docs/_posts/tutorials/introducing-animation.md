@@ -7,7 +7,7 @@ tags: [Introducing, Animations]
 ---
 ## Motivation
 
-- Nodes like [Billboard](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#Billboard){:target="_blank"} and [Anchor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Anchor){:target="_blank"} have built-in behavior
+- Nodes like [Billboard](../components/navigation/billboard) and [Anchor](../components/networking/anchor) have built-in behavior
 - You can create your own behaviors to make shapes move, rotate, scale, blink, and more
 - We need a means to trigger, time, and respond to a sequence of events in order to provide better user/world interactions
 
@@ -28,11 +28,11 @@ An event is a message sent between nodes
 
 To spin a shape:
 
-- Connect a node that sends rotation events to a [Transform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform){:target="_blank"} node's *rotation* field
+- Connect a node that sends rotation events to a [Transform](../components/grouping/transform) node's *rotation* field
 
 To blink a shape:
 
-- Connect a node that sends color events to a [Material](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Material){:target="_blank"} node's *diffuseColor* field
+- Connect a node that sends color events to a [Material](../components/shape/material) node's *diffuseColor* field
 
 ## Routing events
 
@@ -56,13 +56,13 @@ An inputOutput field is a short-hand for a initializeOnly, inputOnly, and output
 
 ## Sample inputs
 
-A [Transform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform){:target="_blank"} node has these input fields:
+A [Transform](../components/grouping/transform) node has these input fields:
 
 - *set\_translation*
 - *set\_rotation*
 - *set\_scale*
 
-A [Material](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Material){:target="_blank"} node has these input fields:
+A [Material](../components/shape/material) node has these input fields:
 
 - *set\_diffuseColor*
 - *set\_emissiveColor*
@@ -70,15 +70,15 @@ A [Material](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/
 
 ## Sample outputs
 
-An [OrientationInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#OrientationInterpolator){:target="_blank"} node has this output field:
+An [OrientationInterpolator](../components/interpolation/orientationinterpolator) node has this output field:
 
 - *value\_changed* to send rotation values
 
-A [PositionInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#PositionInterpolator){:target="_blank"} node has this output field:
+A [PositionInterpolator](../components/interpolation/positioninterpolator) node has this output field:
 
 - *value\_changed* to send position (translation) values
 
-A [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/time.html#TimeSensor){:target="_blank"} node has this output field:
+A [TimeSensor](../components/time/timesensor) node has this output field:
 
 - *time* to send time values
 
@@ -151,7 +151,7 @@ If the inputOutput field name is *xxx*, then:
 - *xxx\_changed* is an output that sends when the field changes
 - The *set\_* and *\_changed* sufixes are optional but recommended for clarity
 
-The [Transform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform){:target="_blank"} node has:
+The [Transform](../components/grouping/transform) node has:
 
 - *rotation* field
 - *set\_rotation* input

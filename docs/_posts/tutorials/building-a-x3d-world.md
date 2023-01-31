@@ -103,7 +103,7 @@ Cylinder {
 
 - Nodes describe shapes, lights, sounds, etc.
 - Every node has:
-  - A node type ([Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"}, [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cylinder){:target="_blank"}, etc.)
+  - A node type ([Shape](../components/shape/shape), [Cylinder](../components/geometry3d/cylinder), etc.)
   - A pair of curly-braces
   - Zero or more fields inside the curly-braces
 
@@ -116,7 +116,7 @@ Node type names are case sensitive:
 
 Some examples:
 
-[Appearance](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance){:target="_blank"}, [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cylinder){:target="_blank"}, [Material](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Material){:target="_blank"}, [Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"}
+[Appearance](../components/shape/appearance), [Cylinder](../components/geometry3d/cylinder), [Material](../components/shape/material), [Shape](../components/shape/shape)
 
 ## Using fields and values
 

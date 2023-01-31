@@ -36,7 +36,7 @@ The visibility range selects the distance where the fog reaches maximum thicknes
 
 ## Syntax: Fog
 
-A [Fog](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Fog){:target="_blank"} node creates colored fog
+A [Fog](../components/environmentaleffects/fog) node creates colored fog
 
 - *color* - fog color
 - *fogType* - **LINEAR** or **EXPONENTIAL**

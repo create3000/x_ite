@@ -177,9 +177,9 @@ BouncingBall {
 
 Recall that node use must be appropriate for the context:
 
-- A [Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"} node specifies shape, not color
-- A [Material](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Material){:target="_blank"} node specifies color, not shape
-- A [Box](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Box){:target="_blank"} node specifies geometry, not shape or color
+- A [Shape](../components/shape/shape) node specifies shape, not color
+- A [Material](../components/shape/material) node specifies color, not shape
+- A [Box](../components/geometry3d/box) node specifies geometry, not shape or color
 
 The context for a new node type depends upon the first node in the **PROTO** body.
 

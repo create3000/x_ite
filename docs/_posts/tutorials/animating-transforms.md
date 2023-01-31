@@ -20,14 +20,14 @@ Animation requires control over time:
 
 ## Controlling time
 
-- A [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/time.html#TimeSensor){:target="_blank"} node is similar to a stop watch
+- A [TimeSensor](../components/time/timesensor) node is similar to a stop watch
   - You control the start and stop time
 - The sensor generates time events while it is running
 - To animate, route time events into other nodes
 
 ## Using absolute time
 
-- A [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/time.html#TimeSensor){:target="_blank"} node generates absolute and fractional time events
+- A [TimeSensor](../components/time/timesensor) node generates absolute and fractional time events
 - Absolute time events give the wall-clock time
   - Absolute time is measured in seconds since 12:00am January 1, 1970!
   - Useful for triggering events at specific dates and times
@@ -42,7 +42,7 @@ Animation requires control over time:
 
 ## Syntax: TimeSensor
 
-- A [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/time.html#TimeSensor){:target="_blank"} node generates events based upon time
+- A [TimeSensor](../components/time/timesensor) node generates events based upon time
   - *startTime* and *stopTime* - when to run
   - *cycleInterval* - how long a cycle is
   - *loop* - whether or not to repeat cycles
@@ -186,7 +186,7 @@ Interpolation fills in values between your key values:
 
 ## Syntax: PositionInterpolator
 
-A [PositionInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#PositionInterpolator){:target="_blank"} node describes a position path
+A [PositionInterpolator](../components/interpolation/positioninterpolator) node describes a position path
 
 - *key* - key fractional times
 - *keyValue* - key positions
@@ -208,7 +208,7 @@ PositionInterpolator {
 }
 ```
 
-Typically route into a [Transform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform){:target="_blank"} node's *set\_translation* input
+Typically route into a [Transform](../components/grouping/transform) node's *set\_translation* input
 
 ## Using position interpolatorsolator inputs and outputs
 
@@ -285,7 +285,7 @@ ROUTE Position1.value_changed TO Particle1.set_translation
 
 ## Syntax: OrientationInterpolator
 
-A [OrientationInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#OrientationInterpolator){:target="_blank"} node describes an orientation path
+A [OrientationInterpolator](../components/interpolation/orientationinterpolator) node describes an orientation path
 
 - *key* - key fractional times
 - *keyValue* - key rotations (axis and angle)
@@ -307,11 +307,11 @@ OrientationInterpolator {
 }
 ```
 
-Typically route into a [Transform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform){:target="_blank"} node's *set\_rotation* input
+Typically route into a [Transform](../components/grouping/transform) node's *set\_rotation* input
 
 ## Syntax: ColorInterpolator
 
-[ColorInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#ColorInterpolator){:target="_blank"} node describes a color path
+[ColorInterpolator](../components/interpolation/colorinterpolator) node describes a color path
 
 - *key* - key fractional times
 - *keyValue* - key colors (red, green, blue)
@@ -333,11 +333,11 @@ ColorInterpolator {
 }
 ```
 
-Typically route into a [Material](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Material){:target="_blank"} node's *set\_diffuseColor* or *set\_emissiveColor* inputs
+Typically route into a [Material](../components/shape/material) node's *set\_diffuseColor* or *set\_emissiveColor* inputs
 
 ## Syntax: ScalarInterpolator
 
-[ScalarInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#ScalarInterpolator){:target="_blank"} node describes a scalar path
+[ScalarInterpolator](../components/interpolation/scalarinterpolator) node describes a scalar path
 
 - *key* - key fractional times
 - *keyValue* - key scalars (used for anything)
@@ -359,11 +359,11 @@ ScalarInterpolator {
 }
 ```
 
-Often route into a [Material](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Material){:target="_blank"} node's *set\_transparency* input
+Often route into a [Material](../components/shape/material) node's *set\_transparency* input
 
 ## Summary
 
-The [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/time.html#TimeSensor){:target="_blank"} node's fields control:
+The [TimeSensor](../components/time/timesensor) node's fields control:
 
 - Timer start and stop times
 - The cycle interval
@@ -384,7 +384,7 @@ All interpolatorsolators have:
 
 Some interpolatorsolators are:
 
-- The [PositionInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#PositionInterpolator){:target="_blank"} node converts times to positions (or scales)
-- The [OrientationInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#OrientationInterpolator){:target="_blank"} node converts times to rotations
-- The [ColorInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#ColorInterpolator){:target="_blank"} node converts times to colors
-- The [ScalarInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#ScalarInterpolator){:target="_blank"} node converts times to scalars (such as transparencies)
+- The [PositionInterpolator](../components/interpolation/positioninterpolator) node converts times to positions (or scales)
+- The [OrientationInterpolator](../components/interpolation/orientationinterpolator) node converts times to rotations
+- The [ColorInterpolator](../components/interpolation/colorinterpolator) node converts times to colors
+- The [ScalarInterpolator](../components/interpolation/scalarinterpolator) node converts times to scalars (such as transparencies)

@@ -35,11 +35,11 @@ Some browsers support additional navigation types.
 - By default, a headlight is placed on the avatar's head and aimed in the head direction
 - You can turn this headlight on and off
   - Most browsers provide a menu option to control the headlight
-  - You can also control the headlight with the [NavigationInfo](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo){:target="_blank"} node
+  - You can also control the headlight with the [NavigationInfo](../components/navigation/navigationinfo) node
 
 ## Syntax: NavigationInfo
 
-A [NavigationInfo](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo){:target="_blank"} node selects the navigation type and avatar characteristics:
+A [NavigationInfo](../components/navigation/navigationinfo) node selects the navigation type and avatar characteristics:
 
 - *type* - navigation style
 - *avatarSize* and speed - avatar characteristics

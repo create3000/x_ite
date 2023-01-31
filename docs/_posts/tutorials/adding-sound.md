@@ -24,11 +24,11 @@ Sounds have two components:
 
 ## Syntax: AudioClip
 
-An [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#AudioClip){:target="_blank"} node creates a digital sound source:
+An [AudioClip](../components/sound/audioclip) node creates a digital sound source:
 
 - *url* - a sound file URL
 - *pitch* - playback speed
-- playback controls, like a [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/time.html#TimeSensor){:target="_blank"} node
+- playback controls, like a [TimeSensor](../components/time/timesensor) node
 
 ### XML Encoding
 
@@ -59,11 +59,11 @@ Sound {
 
 ## Syntax: MovieTexture
 
-A [MovieTexture](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MovieTexture){:target="_blank"} node creates a movie sound source:
+A [MovieTexture](../components/texturing/movietexture) node creates a movie sound source:
 
 - *url* - a texture movie file URL
 - *speed* - playback speed
-- playback controls, like a [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/time.html#TimeSensor){:target="_blank"} node
+- playback controls, like a [TimeSensor](../components/time/timesensor) node
 
 ### XML Encoding
 
@@ -94,21 +94,21 @@ Sound {
 
 ## Selecting sound source types
 
-Supported by the [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#AudioClip){:target="_blank"} node:
+Supported by the [AudioClip](../components/sound/audioclip) node:
 
 - MP3 or WAV - digital sound files
   Good for sound effects
 
-Supported by the [MovieTexture](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MovieTexture){:target="_blank"} node:
+Supported by the [MovieTexture](../components/texturing/movietexture) node:
 
 - MP4 - movie file with sound
   Good for virtual TVs
 
 ## Syntax: Sound
 
-A [Sound](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Sound){:target="_blank"} node describes a sound emitter:
+A [Sound](../components/sound/sound) node describes a sound emitter:
 
-- *source* - [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#AudioClip){:target="_blank"} or [MovieTexture](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MovieTexture){:target="_blank"} node
+- *source* - [AudioClip](../components/sound/audioclip) or [MovieTexture](../components/texturing/movietexture) node
 - *location* and *direction* - emitter placement
 
 ### XML Encoding
@@ -131,7 +131,7 @@ Sound {
 }
 ```
 
-A [Sound](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Sound){:target="_blank"} node describes a sound emitter:
+A [Sound](../components/sound/sound) node describes a sound emitter:
 
 - *intensity* - volume
 - *spatialize* - use spatialize processing
@@ -159,7 +159,7 @@ Sound {
 }
 ```
 
-A [Sound](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Sound){:target="_blank"} node describes a sound emitter:
+A [Sound](../components/sound/sound) node describes a sound emitter:
 
 - *minFront, minBack* - inner ellipsoid
 - *maxFront, maxBack* - outer ellipsoid
@@ -174,12 +174,12 @@ A [Sound](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/com
 
 ## Creating triggered sounds
 
-[AudioClip](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#AudioClip){:target="_blank"} node:
+[AudioClip](../components/sound/audioclip) node:
 
 - *loop* **FALSE**
 - Set *startTime* from a sensor node
 
-[Sound](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Sound){:target="_blank"} node:
+[Sound](../components/sound/sound) node:
 
 - *spatialize* **TRUE**
 - *minFront* etc. with small values
@@ -249,13 +249,13 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 
 ## Creating continuous localized sounds
 
-[AudioClip](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#AudioClip){:target="_blank"} node:
+[AudioClip](../components/sound/audioclip) node:
 
 - *loop* **TRUE**
 - *startTime* 0.0 (default)
 - *stopTime* 0.0 (default)
 
-[Sound](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Sound){:target="_blank"} node:
+[Sound](../components/sound/sound) node:
 
 - *spatialize* **TRUE** (default)
 - *minFront* etc. with medium values
@@ -308,13 +308,13 @@ Transform {
 
 ## Creating continuous background sounds
 
-[AudioClip](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#AudioClip){:target="_blank"} node:
+[AudioClip](../components/sound/audioclip) node:
 
 - *loop* **TRUE**
 - *startTime* 0.0 (default)
 - *stopTime* 0.0 (default)
 
-[Sound](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Sound){:target="_blank"} node:
+[Sound](../components/sound/sound) node:
 
 - *spatialize* **FALSE** (default)
 - *minFront* etc. with large values
@@ -322,12 +322,12 @@ Transform {
 
 ## Summary
 
-An [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#AudioClip){:target="_blank"} node or a [MovieTexture](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MovieTexture){:target="_blank"} node describe a sound source:
+An [AudioClip](../components/sound/audioclip) node or a [MovieTexture](../components/texturing/movietexture) node describe a sound source:
 
 - A URL gives the sound file
 - Looping, start time, and stop time control playback
 
-A [Sound](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Sound){:target="_blank"} node describes a sound emitter:
+A [Sound](../components/sound/sound) node describes a sound emitter:
 
 - A source node provides the sound
 - Range fields describe the sound volume

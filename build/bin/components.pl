@@ -6,6 +6,7 @@ use open qw/:std :utf8/;
 use File::Basename;
 
 $ref   = "/Users/holger/Desktop/X_ITE/x_ite/docs/_posts/components";
+$tut   = "/Users/holger/Desktop/X_ITE/x_ite/docs/_posts/tutorials";
 $nav   = "/Users/holger/Desktop/X_ITE/x_ite/docs/_data/nav";
 $tabs  = "/Users/holger/Desktop/X_ITE/x_ite/docs/_tabs";
 $posts = "/Users/holger/Desktop/X_ITE/x_ite/docs/_posts";
@@ -160,20 +161,43 @@ icon: fas fa-th-large
 
 components;
 
-# sub supported {
-#    $text = `cat '$posts/supported-nodes.md'`;
-#    %c    = ();
+sub supported {
+   $text = `cat '$posts/supported-nodes.md'`;
+   %c    = ();
 
-#    foreach $component (sort keys %{$components})
-#    {
-#       $c{$_} = lc $component foreach @{$components -> {$component}};
-#    }
+   foreach $component (sort keys %{$components})
+   {
+      $c{$_} = lc $component foreach @{$components -> {$component}};
+   }
 
-#    $text =~ s|\[([a-zA-Z0-9]+)\]\(.*?\)|[$1](components/$c{$1}/\L$1)|sg;
+   $text =~ s|\[([a-zA-Z0-9]+)\]\(.*?\)|[$1](components/$c{$1}/\L$1)|sg;
 
-#    open FILE, ">", "$posts/supported-nodes.md";
-#    print FILE $text;
-#    close FILE;
-# }
+   open FILE, ">", "$posts/supported-nodes.md";
+   print FILE $text;
+   close FILE;
+}
 
 # supported;
+
+sub tutorials {
+   $filename = shift;
+   chomp $filename;
+
+   $text = `cat '$filename'`;
+
+   %c = ();
+
+   foreach $component (sort keys %{$components})
+   {
+      $c{$_}    = lc $component foreach @{$components -> {$component}};
+      $c{lc $_} = lc $component foreach @{$components -> {$component}};
+   }
+
+   $text =~ s|\[([a-zA-Z0-9]+)\]\(https://www.web3d.org/documents/specifications.*?\){.*?}|[$1](../components/$c{$1}/\L$1)|sg;
+
+   open FILE, ">", "$filename";
+   print FILE $text;
+   close FILE;
+}
+
+#tutorials $_ foreach sort `find $tut -type f`;

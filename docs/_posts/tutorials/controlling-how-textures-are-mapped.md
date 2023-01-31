@@ -74,7 +74,7 @@ Bind the texture to a face (stretch the cookie and stick it):
 
 ## Syntax: TextureCoordinate
 
-A [TextureCoordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureCoordinate){:target="_blank"} node contains a list of texture coordinates:
+A [TextureCoordinate](../components/texturing/texturecoordinate) node contains a list of texture coordinates:
 
 ### XML Encoding
 
@@ -91,11 +91,11 @@ TextureCoordinate {
 }
 ```
 
-Used as the *texCoord* field value of [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"} or [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} nodes.
+Used as the *texCoord* field value of [IndexedFaceSet](../components/geometry3d/indexedfaceset) or [ElevationGrid](../components/geometry3d/elevationgrid) nodes.
 
 ## Syntax: IndexedFaceSet
 
-An [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#IndexedFaceSet){:target="_blank"} geometry node creates geometry out of faces:
+An [IndexedFaceSet](../components/geometry3d/indexedfaceset) geometry node creates geometry out of faces:
 
 - texCoord and texCoordIndex - specify texture pieces
 
@@ -129,7 +129,7 @@ Shape {
 
 ## Syntax: ElevationGrid
 
-An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"} geometry node creates terrains:
+An [ElevationGrid](../components/geometry3d/elevationgrid) geometry node creates terrains:
 
 - *texCoord* - specify texture pieces
 - Automatically generated texture coordinate indexes
@@ -160,7 +160,7 @@ Shape {
 
 ## Syntax: Appearance
 
-An [Appearance](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance){:target="_blank"} node describes overall shape appearance:
+An [Appearance](../components/shape/appearance) node describes overall shape appearance:
 
 - *textureTransform* - transform
 
@@ -192,7 +192,7 @@ Shape {
 
 ## Syntax: TextureTransform
 
-A [TextureTransform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureTransform){:target="_blank"} node transforms texture coordinates:
+A [TextureTransform](../components/texturing/texturetransform) node transforms texture coordinates:
 
 - *translation* - position
 - *rotation* - orientation
