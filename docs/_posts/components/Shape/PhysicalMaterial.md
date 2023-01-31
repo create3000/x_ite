@@ -21,6 +21,10 @@ The PhysicalMaterial node belongs to the **Shape** component and its default con
 
 ```
 + X3DNode
+  + X3DAppearanceChildNode
+    + X3DMaterialNode
+      + X3DOneSidedMaterialNode
+        + PhysicalMaterial
 ```
 
 ## Fields

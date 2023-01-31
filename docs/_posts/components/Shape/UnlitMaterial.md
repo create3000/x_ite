@@ -21,6 +21,10 @@ The UnlitMaterial node belongs to the **Shape** component and its default contai
 
 ```
 + X3DNode
+  + X3DAppearanceChildNode
+    + X3DMaterialNode
+      + X3DOneSidedMaterialNode
+        + UnlitMaterial
 ```
 
 ## Fields

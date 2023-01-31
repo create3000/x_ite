@@ -23,7 +23,8 @@ The Material node belongs to the **Shape** component and its default container f
 + X3DNode
   + X3DAppearanceChildNode
     + X3DMaterialNode
-      + Material
+      + X3DOneSidedMaterialNode
+        + Material
 ```
 
 ## Fields
