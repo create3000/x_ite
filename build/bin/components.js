@@ -1,9 +1,11 @@
-import fs            from "fs"
-import path          from "path"
-import child_process from "child_process"
+const
+   fs            = require ("fs"),
+   path          = require ("path"),
+   child_process = require ("child_process")
 
 const
    components = path .resolve ("./", "src/x_ite/Components"),
+   comp       = path .resolve ("./", "docs/_posts/components"),
    nav        = path .resolve ("./", "docs/_data/nav"),
    tabs       = path .resolve ("./", "docs/_tabs");
 
@@ -87,15 +89,81 @@ function updateComponents ()
 
 async function addNodeStubs ()
 {
+   const access = new Map ([
+      ["initializeOnly", ""],
+      ["inputOutput", "in"],
+      ["outputOnly", "out"],
+      ["inputOutput", "in, out"],
+   ])
+
    for (const [component, nodes] of createIndex ())
    {
       for (const node of nodes .sort ())
       {
-         const module = await import (path .resolve (components, `${component}/${node}.js`))
+         const
+            js = path .resolve (components, `${component}/${node}.js`),
+            md = path .resolve (comp, `${component}/${node}.md`)
 
-         console .log (module)
+         if (fs .existsSync (md))
+            continue
 
-         return
+         const file = fs .readFileSync (js) .toString ()
+
+         let m = file .match (/getContainerField.*?"(.*?)"/s)
+
+         const containerField = m [1]
+
+         m = file .match (/X3DFieldDefinition\s*\(X3DConstants\s*\.(\w+),\s*"(\w+)",\s*new\s*Fields\s*\.(\w+)/sg)
+
+         let fields = ""
+
+         for (const s of m)
+         {
+            let sm = s .match (/X3DFieldDefinition\s*\(X3DConstants\s*\.(\w+),\s*"(\w+)",\s*new\s*Fields\s*\.(\w+)/s)
+
+            fields += `### ${sm [3]} [${access .get (sm [1])}] **${sm [2]}** <small></small>\n\n`
+         }
+
+         let text = `
+---
+title: ${node}
+date: ${new Date() .toISOString () .slice (0, 10)}
+nav: components-${component}
+categories: [components, ${component}]
+tags: [${node}, ${component}]
+---
+<style>
+.post h3 {
+   word-spacing: 0.2em;
+}
+</style>
+
+## Overview
+
+${node} ...
+
+The ${node} node belongs to the **${component}** component and its default container field is *${containerField}.* It is available since X3D version 4.0 or later.
+
+## Hierarchy
+
+\`\`\`
++ X3DNode
+\`\`\`
+
+## Fields
+
+${fields}
+
+## External Links
+
+- [X3D Specification of ${node}](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/${component .toLowerCase ()}.html#${node}){:target="_blank"}
+`;
+
+         text = text .trim () .replace (/\n{3,}/g, "\n\n")
+
+         child_process .execSync (`mkdir -p ${path .dirname (md)}`)
+
+         fs .writeFileSync (md, text)
       }
    }
 }
