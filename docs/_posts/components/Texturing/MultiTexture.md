@@ -32,6 +32,10 @@ The MultiTexture node belongs to the **Texturing** component and its default con
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of the url asset.
+
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
 
 The color field defines the RGB base values for mode operations.

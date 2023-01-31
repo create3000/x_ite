@@ -34,6 +34,10 @@ The PixelTexture node belongs to the **Texturing** component and its default con
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of the url asset.
+
 ### SFImage [in, out] **image** 0 0 0
 
 Defines image: width height number_of_components pixel_values. width and height are pixel count, number_of_components = 1 (intensity), 2 (intensity alpha), 3 (red green blue), 4 (red green blue alpha-opacity).
