@@ -56,9 +56,17 @@ WeightConstant2 is used when weightFunction2=CONSTANT
 
 Specifies 2D textures used to determine weight values when weight function is set to TABLE.
 
+#### Warning
+
+Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+
 ### SFString [in, out] **weightFunction2** "CONSTANT" <small>["CONSTANT", "ALPHA0", "ALPHA1", "TABLE", "ONE_MINUS_ALPHA0", "ONE_MINUS_ALPHA1"]</small>
 
 Specifies 2D textures used to determine weight values when weight function is set to TABLE.
+
+#### Warning
+
+Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFNode [in, out] **weightTransferFunction1** NULL <small>[X3DTexture2DNode]</small>
 
@@ -75,10 +83,6 @@ The weightTransferFunction1 and weightTransferFunction2 fields specify two-dimen
 #### Hint
 
 - [Transfer function to weight mapping](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#t-transferFunctionToWeightMapping){:target="_blank"}
-
-#### Warning
-
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 #### See Also
 
