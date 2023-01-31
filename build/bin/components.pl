@@ -159,7 +159,7 @@ icon: fas fa-th-large
    close FILE;
 }
 
-components;
+#components;
 
 sub supported {
    $text = `cat '$posts/supported-nodes.md'`;

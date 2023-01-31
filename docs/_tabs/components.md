@@ -344,5 +344,4 @@ icon: fas fa-th-large
 
 ## X_ITE
 
-- [BlendMode](x_ite/blendmode)
-
+- [BlendMode](x-ite/blendmode)

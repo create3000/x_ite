@@ -26,8 +26,6 @@ The BlendMode node belongs to the **X_ITE** component and its container field is
       + BlendMode
 ```
 
-<small>\* Derived from multiple interfaces.</small>
-
 ## Fields
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
