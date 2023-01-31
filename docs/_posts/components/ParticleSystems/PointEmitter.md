@@ -15,7 +15,7 @@ tags: [PointEmitter, ParticleSystems]
 
 PointEmitter generates particles from a specific point in space using the specified direction and speed.
 
-The PointEmitter node belongs to the **ParticleSystems** component and its container field is *emitter.* It is available since X3D version 3.2 or later.
+The PointEmitter node belongs to the **ParticleSystems** component and its default container field is *emitter.* It is available since X3D version 3.2 or later.
 
 ## Hierarchy
 

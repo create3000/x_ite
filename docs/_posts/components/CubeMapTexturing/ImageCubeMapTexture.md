@@ -15,7 +15,7 @@ tags: [ImageCubeMapTexture, CubeMapTexturing]
 
 ImageCubeMapTexture defines a cubic environment map source as a single file format that contains multiple images, one for each side.
 
-The ImageCubeMapTexture node belongs to the **CubeMapTexturing** component and its container field is *texture.* It is available since X3D version 3.0 or later.
+The ImageCubeMapTexture node belongs to the **CubeMapTexturing** component and its default container field is *texture.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [PositionInterpolator, Interpolation]
 
 PositionInterpolator generates a series of triplet values. Results can be ROUTEd to a `<Transform>` node's 'translation' attribute or another Vector3Float attribute
 
-The PositionInterpolator node belongs to the **Interpolation** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The PositionInterpolator node belongs to the **Interpolation** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

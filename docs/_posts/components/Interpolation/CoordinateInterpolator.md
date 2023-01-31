@@ -15,7 +15,7 @@ tags: [CoordinateInterpolator, Interpolation]
 
 CoordinateInterpolator generates a series of Coordinate values that can be ROUTEd to a `<Coordinate>` node's 'point' attribute or another Vector3FloatArray attribute.
 
-The CoordinateInterpolator node belongs to the **Interpolation** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The CoordinateInterpolator node belongs to the **Interpolation** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

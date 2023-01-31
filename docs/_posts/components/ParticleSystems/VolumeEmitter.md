@@ -15,7 +15,7 @@ tags: [VolumeEmitter, ParticleSystems]
 
 VolumeEmitter emits particles from a random position confined within the given closed geometry volume.
 
-The VolumeEmitter node belongs to the **ParticleSystems** component and its container field is *emitter.* It is available since X3D version 3.2 or later.
+The VolumeEmitter node belongs to the **ParticleSystems** component and its default container field is *emitter.* It is available since X3D version 3.2 or later.
 
 ## Hierarchy
 

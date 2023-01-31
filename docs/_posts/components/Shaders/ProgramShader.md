@@ -15,7 +15,7 @@ tags: [ProgramShader, Shaders]
 
 ProgramShader defines a shader that consists of one or more individually programmable, self-contained pieces. ProgramShader contains IS/connect, programs [ShaderProgram] nodes and field definitions.
 
-The ProgramShader node belongs to the **Shaders** component and its container field is *shaders.* It is available since X3D version 3.0 or later.
+The ProgramShader node belongs to the **Shaders** component and its default container field is *shaders.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

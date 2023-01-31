@@ -15,7 +15,7 @@ tags: [SplinePositionInterpolator2D, Interpolation]
 
 SplinePositionInterpolator2D performs non-linear interpolation among paired lists of 2-tuple values and velocities to produce an SFVec2f value_changed output event.
 
-The SplinePositionInterpolator2D node belongs to the **Interpolation** component and its container field is *children.* It is available since X3D version 3.2 or later.
+The SplinePositionInterpolator2D node belongs to the **Interpolation** component and its default container field is *children.* It is available since X3D version 3.2 or later.
 
 ## Hierarchy
 

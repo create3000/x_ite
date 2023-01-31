@@ -15,7 +15,7 @@ tags: [SliderJoint, RigidBodyPhysics]
 
 SliderJoint constrains all movement between body1 and body2 along a single axis. Contains two RigidBody nodes (containerField values body1, body2).
 
-The SliderJoint node belongs to the **RigidBodyPhysics** component and its container field is *joints.* It is available since X3D version 3.2 or later.
+The SliderJoint node belongs to the **RigidBodyPhysics** component and its default container field is *joints.* It is available since X3D version 3.2 or later.
 
 ## Hierarchy
 
@@ -75,7 +75,7 @@ StopErrorCorrection is fraction of error correction performed during time step o
 
 0 means no error correction, 1 means all error corrected in single step.
 
-### SFFloat [out] **separation** <span class="no"><small class="small">not supported</small></span>  
+### SFFloat [out] **separation** <span class="no"><small class="small">not supported</small></span>
 
 Separation indicates final separation distance between the two bodies.
 

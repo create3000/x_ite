@@ -15,7 +15,7 @@ tags: [ScreenGroup, Layout]
 
 ScreenGroup is a Grouping node that can contain most nodes. ScreenGroup modifies the screen scale in such a way that one unit is equal to one pixel in both the horizontal and vertical directions.
 
-The ScreenGroup node belongs to the **Layout** component and its container field is *children.* It is available since X3D version 3.2 or later.
+The ScreenGroup node belongs to the **Layout** component and its default container field is *children.* It is available since X3D version 3.2 or later.
 
 ## Hierarchy
 

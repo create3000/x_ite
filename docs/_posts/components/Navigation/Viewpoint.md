@@ -15,7 +15,7 @@ tags: [Viewpoint, Navigation]
 
 Viewpoint provides a specific location and direction where the user may view the scene.
 
-The Viewpoint node belongs to the **Navigation** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The Viewpoint node belongs to the **Navigation** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

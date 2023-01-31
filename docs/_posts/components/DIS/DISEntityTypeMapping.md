@@ -15,7 +15,7 @@ tags: [DISEntityTypeMapping, DIS]
 
 DISEntityTypeMapping provides a best-match mapping from DIS ESPDU entity type information to a specific X3D model, thus providing a visual and behavioral representation that best matches the entity type. Fields are processed in order: kind, domain, country, category, subcategory, specific, extra.
 
-The DISEntityTypeMapping node belongs to the **DIS** component and its container field is *mapping.* It is available since X3D version 3.0 or later.
+The DISEntityTypeMapping node belongs to the **DIS** component and its default container field is *mapping.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

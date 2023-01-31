@@ -15,7 +15,7 @@ tags: [Switch, Grouping]
 
 Switch is a Grouping node that only renders one (or zero) child at a time. Switch can contain most nodes. (Contained nodes are now called 'children' rather than 'choice', for consistent naming among all GroupingNodeType nodes.) All child choices continue to receive &amp; send events regardless of whichChoice is active.
 
-The Switch node belongs to the **Grouping** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The Switch node belongs to the **Grouping** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

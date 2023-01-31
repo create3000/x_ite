@@ -15,7 +15,7 @@ tags: [Text, Text]
 
 Text is a 2D (flat) geometry node that can contain multiple lines of string values. Layout and styling is controlled by a contained FontStyle node.
 
-The Text node belongs to the **Text** component and its container field is *geometry.* It is available since X3D version 3.0 or later.
+The Text node belongs to the **Text** component and its default container field is *geometry.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

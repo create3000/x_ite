@@ -15,7 +15,7 @@ tags: [SingleAxisHingeJoint, RigidBodyPhysics]
 
 SingleAxisHingeJoint has single axis about which to rotate, similar to a traditional door hinge. Contains two RigidBody nodes (containerField values body1, body2).
 
-The SingleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and its container field is *joints.* It is available since X3D version 3.2 or later.
+The SingleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and its default container field is *joints.* It is available since X3D version 3.2 or later.
 
 ## Hierarchy
 
@@ -51,7 +51,7 @@ MinAngle is minimum rotation angle for hinge.
 
 MaxAngle is maximum rotation angle for hinge.
 
-### SFFloat [in, out] **stopBounce** <small>[0,1] <span class="no">not supported</span>  
+### SFFloat [in, out] **stopBounce** <small>[0,1] <span class="no">not supported</span>
 </small>
 
 StopBounce is velocity factor for bounce back once stop point is reached.
@@ -60,7 +60,7 @@ StopBounce is velocity factor for bounce back once stop point is reached.
 
 0 means no bounce, 1 means return velocity matches.
 
-### SFFloat [in, out] **stopErrorCorrection** 0.8 <small>[0,1] <span class="no">not supported</span>  
+### SFFloat [in, out] **stopErrorCorrection** 0.8 <small>[0,1] <span class="no">not supported</span>
 </small>
 
 StopErrorCorrection is fraction of error correction performed during time step once stop point is reached.

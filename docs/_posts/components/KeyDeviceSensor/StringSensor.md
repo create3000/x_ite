@@ -15,7 +15,7 @@ tags: [StringSensor, KeyDeviceSensor]
 
 StringSensor generates events as the user presses keys on the keyboard.
 
-The StringSensor node belongs to the **KeyDeviceSensor** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The StringSensor node belongs to the **KeyDeviceSensor** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

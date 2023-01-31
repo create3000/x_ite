@@ -15,7 +15,7 @@ tags: [GeoLocation, Geospatial]
 
 GeoLocation positions a regular X3D model onto earth's surface. GeoLocation can contain children and GeoOrigin nodes.
 
-The GeoLocation node belongs to the **Geospatial** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The GeoLocation node belongs to the **Geospatial** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [TransmitterPdu, DIS]
 
 TransmitterPdu is a networked Protocol Data Unit (PDU) information node that provides detailed information about a radio transmitter modeled in a simulation.
 
-The TransmitterPdu node belongs to the **DIS** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The TransmitterPdu node belongs to the **DIS** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

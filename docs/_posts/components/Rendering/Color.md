@@ -15,7 +15,7 @@ tags: [Color, Rendering]
 
 Color node defines a set of RGB color values that apply either to a sibling Coordinate/CoordinateDouble node, or else to a parent ElevationGrid node. Color is only used by ElevationGrid, IndexedFaceSet, IndexedLineSet, LineSet, PointSet, Triangle\* and IndexedTriangle\* nodes.
 
-The Color node belongs to the **Rendering** component and its container field is *color.* It is available since X3D version 3.0 or later.
+The Color node belongs to the **Rendering** component and its default container field is *color.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

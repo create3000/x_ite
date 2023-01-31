@@ -15,7 +15,7 @@ tags: [OrientationDamper, Followers]
 
 OrientationDamper generates a series of rotation values that progressively change from initial value to destination value.
 
-The OrientationDamper node belongs to the **Followers** component and its container field is *children.* It is available since X3D version 3.2 or later.
+The OrientationDamper node belongs to the **Followers** component and its default container field is *children.* It is available since X3D version 3.2 or later.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [GeoPositionInterpolator, Geospatial]
 
 GeoPositionInterpolator animates objects within a geographic coordinate system. GeoPositionInterpolator can contain a GeoOrigin node.
 
-The GeoPositionInterpolator node belongs to the **Geospatial** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The GeoPositionInterpolator node belongs to the **Geospatial** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

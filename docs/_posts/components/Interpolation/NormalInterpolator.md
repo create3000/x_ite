@@ -15,7 +15,7 @@ tags: [NormalInterpolator, Interpolation]
 
 NormalInterpolator generates a series of normal (perpendicular) vector sets along the surface of a unit sphere ROUTE values to vector attribute of a `<Normal>` node or another Vector3FloatArray attribute
 
-The NormalInterpolator node belongs to the **Interpolation** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The NormalInterpolator node belongs to the **Interpolation** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

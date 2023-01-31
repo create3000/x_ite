@@ -15,7 +15,7 @@ tags: [NurbsCurve2D, NURBS]
 
 NurbsCurve2D defines a trimming segment that is part of a trimming contour in the u-v domain of a surface. NurbsCurve2D and ContourPolyline2D nodes that together form a closed contour, defined in the u-v parametric space of a NURBS surface, may be used as children in a Contour2D node.
 
-The NurbsCurve2D node belongs to the **NURBS** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The NurbsCurve2D node belongs to the **NURBS** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

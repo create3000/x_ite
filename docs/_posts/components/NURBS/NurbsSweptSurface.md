@@ -15,7 +15,7 @@ tags: [NurbsSweptSurface, NURBS]
 
 NurbsSweptSurface contains a crossSectionCurve [X3DNurbsControlCurveNode] and a trajectoryCurve [NurbsCurve].
 
-The NurbsSweptSurface node belongs to the **NURBS** component and its container field is *geometry.* It is available since X3D version 3.0 or later.
+The NurbsSweptSurface node belongs to the **NURBS** component and its default container field is *geometry.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

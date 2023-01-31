@@ -15,7 +15,7 @@ tags: [TwoSidedMaterial, Shape]
 
 TwoSidedMaterial specifies surface rendering properties for associated geometry nodes, for outer (front) and inner (back) sides of polygons. Material attributes are used by the X3D lighting equations during rendering.
 
-The TwoSidedMaterial node belongs to the **Shape** component and its container field is *material.* It is available since X3D version 3.2 or later.
+The TwoSidedMaterial node belongs to the **Shape** component and its default container field is *material.* It is available since X3D version 3.2 or later.
 
 ## Hierarchy
 

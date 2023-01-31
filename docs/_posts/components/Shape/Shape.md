@@ -15,7 +15,7 @@ tags: [Shape, Shape]
 
 Shape can appear under any grouping node. Shape can contain an Appearance node and a geometry node (Box Cone Cylinder ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet Sphere Text).
 
-The Shape node belongs to the **Shape** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The Shape node belongs to the **Shape** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [HAnimJoint, HAnim]
 
 Each joint in the body is represented by an HAnimJoint node.
 
-The HAnimJoint node belongs to the **HAnim** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The HAnimJoint node belongs to the **HAnim** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

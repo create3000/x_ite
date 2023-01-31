@@ -15,7 +15,7 @@ tags: [PixelTexture, Texturing]
 
 PixelTexture creates a 2D-image texture map using a numeric array of pixel values. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) values in range [0.0, 1.0] for opposite corners of the image.
 
-The PixelTexture node belongs to the **Texturing** component and its container field is *texture.* It is available since X3D version 3.0 or later.
+The PixelTexture node belongs to the **Texturing** component and its default container field is *texture.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

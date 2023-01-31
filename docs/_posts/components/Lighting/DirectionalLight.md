@@ -15,7 +15,7 @@ tags: [DirectionalLight, Lighting]
 
 DirectionalLight creates parallel light rays to illuminate geometric shapes. Light is scoped and only illuminates geometry within its enclosing parent group! No source location is needed since rays are parallel from an infinitely distant source. DirectionalLight nodes do not attenuate with distance. Lights have no visible shape themselves and shine through occluding geometry.
 
-The DirectionalLight node belongs to the **Lighting** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The DirectionalLight node belongs to the **Lighting** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 
@@ -72,11 +72,11 @@ Color of shadow, applied to colors of objects.
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
-### SFFloat [in, out] **shadowIntensity** 0 <small class="small">[0,1]</small>  
+### SFFloat [in, out] **shadowIntensity** 0 <small class="small">[0,1]</small>
 
 Intensity of shadow.
 
-### SFFloat [in, out] **shadowBias** 0.005 <small class="small">[0,1]</small>  
+### SFFloat [in, out] **shadowBias** 0.005 <small class="small">[0,1]</small>
 
 The shadowBias value controls the visibility of *shadow acne*.
 

@@ -15,7 +15,7 @@ tags: [HAnimSegment, HAnim]
 
 Each body segment is stored in an HAnimSegment node. HAnimSegment contains Coordinate/CoordinateDouble with containerField='coord', HAnimDisplacer with containerField='displacers' and Shape or grouping nodes with containerField='children'.
 
-The HAnimSegment node belongs to the **HAnim** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The HAnimSegment node belongs to the **HAnim** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

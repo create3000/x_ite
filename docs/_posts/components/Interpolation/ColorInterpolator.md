@@ -15,7 +15,7 @@ tags: [ColorInterpolator, Interpolation]
 
 ColorInterpolator generates a range of Color values that can be ROUTEd to a `<Color>` node's color attribute.
 
-The ColorInterpolator node belongs to the **Interpolation** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The ColorInterpolator node belongs to the **Interpolation** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

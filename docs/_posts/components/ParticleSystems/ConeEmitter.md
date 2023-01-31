@@ -15,7 +15,7 @@ tags: [ConeEmitter, ParticleSystems]
 
 ConeEmitter generates all available particles from a specific point in space. Particles are emitted from the single point specified by the position field emanating in a direction randomly distributed within the cone specified by the angle and direction fields.
 
-The ConeEmitter node belongs to the **ParticleSystems** component and its container field is *emitter.* It is available since X3D version 3.2 or later.
+The ConeEmitter node belongs to the **ParticleSystems** component and its default container field is *emitter.* It is available since X3D version 3.2 or later.
 
 ## Hierarchy
 

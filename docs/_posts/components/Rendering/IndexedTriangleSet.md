@@ -15,7 +15,7 @@ tags: [IndexedTriangleSet, Rendering]
 
 IndexedTriangleSet is a geometry node that can contain a Color/ColorRGBA, Coordinate/CoordinateDouble, Normal and TextureCoordinate nodes.
 
-The IndexedTriangleSet node belongs to the **Rendering** component and its container field is *geometry.* It is available since X3D version 3.0 or later.
+The IndexedTriangleSet node belongs to the **Rendering** component and its default container field is *geometry.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

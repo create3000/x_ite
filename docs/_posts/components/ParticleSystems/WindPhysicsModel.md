@@ -15,7 +15,7 @@ tags: [WindPhysicsModel, ParticleSystems]
 
 WindPhysicsModel applies a wind effect to the particles. The wind includes a random variation factor to model gustiness.
 
-The WindPhysicsModel node belongs to the **ParticleSystems** component and its container field is *physics.* It is available since X3D version 3.2 or later.
+The WindPhysicsModel node belongs to the **ParticleSystems** component and its default container field is *physics.* It is available since X3D version 3.2 or later.
 
 ## Hierarchy
 

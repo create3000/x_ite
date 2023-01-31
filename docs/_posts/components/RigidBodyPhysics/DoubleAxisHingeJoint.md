@@ -15,7 +15,7 @@ tags: [DoubleAxisHingeJoint, RigidBodyPhysics]
 
 DoubleAxisHingeJoint has two independent axes located around a common anchor point. axis1 has limits and a motor, axis 2 only has a motor Contains two RigidBody nodes (containerField values body1, body2).
 
-The DoubleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and its container field is *joints.* It is available since X3D version 3.2 or later.
+The DoubleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and its default container field is *joints.* It is available since X3D version 3.2 or later.
 
 ## Hierarchy
 
@@ -55,22 +55,22 @@ Axis2 defines axis vector of joint connection to body2.
 
 0 0 0 means motor disabled.
 
-### SFFloat [in, out] **minAngle1** -3.14159 <small>π [-π,π] <span class="no">not supported</span>  
+### SFFloat [in, out] **minAngle1** -3.14159 <small>π [-π,π] <span class="no">not supported</span>
 </small>
 
 MinAngle1 is minimum rotation angle for hinge.
 
-### SFFloat [in, out] **maxAngle1** 3.14159 <small>[-π,π] <span class="no">not supported</span>  
+### SFFloat [in, out] **maxAngle1** 3.14159 <small>[-π,π] <span class="no">not supported</span>
 </small>
 
 MaxAngle1 is maximum rotation angle for hinge.
 
-### SFFloat [in, out] **desiredAngularVelocity1** <small>(-∞,∞) <span class="no">not supported</span>  
+### SFFloat [in, out] **desiredAngularVelocity1** <small>(-∞,∞) <span class="no">not supported</span>
 </small>
 
 DesiredAngularVelocity1 is goal rotation rate for hinge connection to body1.
 
-### SFFloat [in, out] **desiredAngularVelocity2**<small>(-∞,∞) <span class="no">not supported</span>  
+### SFFloat [in, out] **desiredAngularVelocity2**<small>(-∞,∞) <span class="no">not supported</span>
 </small>
 
 DesiredAngularVelocity2 is goal rotation rate for hinge connection to body2.

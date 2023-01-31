@@ -15,7 +15,7 @@ tags: [FloatVertexAttribute, Shaders]
 
 FloatVertexAttribute defines a set of per-vertex single-precision floating-point attributes.
 
-The FloatVertexAttribute node belongs to the **Shaders** component and its container field is *attrib.* It is available since X3D version 3.0 or later.
+The FloatVertexAttribute node belongs to the **Shaders** component and its default container field is *attrib.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

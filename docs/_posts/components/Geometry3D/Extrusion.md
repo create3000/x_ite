@@ -15,7 +15,7 @@ tags: [Extrusion, Geometry3D]
 
 Extrusion is a geometry node stretching a 2D cross section along a 3D-spine path in the local coordinate system. Scaling/rotating cross-sections can produce a variety of shapes.
 
-The Extrusion node belongs to the **Geometry3D** component and its container field is *geometry.* It is available since X3D version 3.0 or later.
+The Extrusion node belongs to the **Geometry3D** component and its default container field is *geometry.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [Disk2D, Geometry2D]
 
 Disk2D is a geometry node that defines a filled (or partially filled) planar circle with center (0,0).
 
-The Disk2D node belongs to the **Geometry2D** component and its container field is *geometry.* It is available since X3D version 3.0 or later.
+The Disk2D node belongs to the **Geometry2D** component and its default container field is *geometry.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

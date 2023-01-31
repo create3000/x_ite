@@ -15,7 +15,7 @@ tags: [CoordinateDamper, Followers]
 
 CoordinateDamper generates a series of coordinate arrays that progressively change from initial value to destination value.
 
-The CoordinateDamper node belongs to the **Followers** component and its container field is *children.* It is available since X3D version 3.2 or later.
+The CoordinateDamper node belongs to the **Followers** component and its default container field is *children.* It is available since X3D version 3.2 or later.
 
 ## Hierarchy
 

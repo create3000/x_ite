@@ -15,7 +15,7 @@ tags: [OrientationInterpolator, Interpolation]
 
 OrientationInterpolator generates a series of rotation values. Results can be ROUTEd to a `<Transform>` node's 'rotation' attribute or another Rotations attribute
 
-The OrientationInterpolator node belongs to the **Interpolation** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The OrientationInterpolator node belongs to the **Interpolation** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

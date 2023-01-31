@@ -15,7 +15,7 @@ tags: [GeoLOD, Geospatial]
 
 GeoLOD provides quadtree level-of-detail loading/unloading for multi-resolution terrains. GeoLOD can contain children and GeoOrigin nodes.
 
-The GeoLOD node belongs to the **Geospatial** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The GeoLOD node belongs to the **Geospatial** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

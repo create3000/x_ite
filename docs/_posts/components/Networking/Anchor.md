@@ -15,7 +15,7 @@ tags: [Anchor, Networking]
 
 Anchor is a Grouping node that can contain most nodes. When the user selects any of the geometry contained by the Anchor node, it jumps to another viewpoint or loads content (such as X3D, an image or HTML) specified by the url field. Loaded content completely replaces current content, if parameter is same window.
 
-The Anchor node belongs to the **Networking** component and its container field is *children.* It is available since X3D version 3.0 or later.
+The Anchor node belongs to the **Networking** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
 ## Hierarchy
 

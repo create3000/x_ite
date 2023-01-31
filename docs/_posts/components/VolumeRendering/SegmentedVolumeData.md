@@ -15,7 +15,7 @@ tags: [SegmentedVolumeData, VolumeRendering]
 
 SegmentedVolumeData displays a segmented voxel dataset with different RenderStyle nodes.
 
-The SegmentedVolumeData node belongs to the **VolumeRendering** component and its container field is *children.* It is available since X3D version 3.3 or later.
+The SegmentedVolumeData node belongs to the **VolumeRendering** component and its default container field is *children.* It is available since X3D version 3.3 or later.
 
 ## Hierarchy
 
