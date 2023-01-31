@@ -52,9 +52,29 @@ WeightConstant1 is used when weightFunction1=CONSTANT
 
 WeightConstant2 is used when weightFunction2=CONSTANT
 
-### SFString [in, out] **weightFunction1** "CONSTANT" <small>["CONSTANT", "ALPHA0", "ALPHA1", "TABLE",</small>
+### SFString [in, out] **weightFunction1** "CONSTANT" <small>["CONSTANT", "ALPHA0", "ALPHA1", "TABLE", "ONE_MINUS_ALPHA0", "ONE_MINUS_ALPHA1"]</small>
 
 Specifies 2D textures used to determine weight values when weight function is set to TABLE.
+
+### SFString [in, out] **weightFunction2** "CONSTANT" <small>["CONSTANT", "ALPHA0", "ALPHA1", "TABLE", "ONE_MINUS_ALPHA0", "ONE_MINUS_ALPHA1"]</small>
+
+Specifies 2D textures used to determine weight values when weight function is set to TABLE.
+
+### SFNode [in, out] **weightTransferFunction1** NULL <small>[X3DTexture2DNode]</small>
+
+The weightTransferFunction1 and weightTransferFunction2 fields specify two-dimensional textures that are used to determine the weight values when the weight function is set to "TABLE". The output weight value depends on the number of components in the textures as specified in Table 41.4.
+
+#### Hint
+
+- [Transfer function to weight mapping](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#t-transferFunctionToWeightMapping){:target="_blank"}
+
+### SFNode [in, out] **weightTransferFunction2** NULL <small>[X3DTexture2DNode]</small>
+
+The weightTransferFunction1 and weightTransferFunction2 fields specify two-dimensional textures that are used to determine the weight values when the weight function is set to "TABLE". The output weight value depends on the number of components in the textures as specified in Table 41.4.
+
+#### Hint
+
+- [Transfer function to weight mapping](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#t-transferFunctionToWeightMapping){:target="_blank"}
 
 #### Warning
 
