@@ -1,6 +1,44 @@
 - title: "Sound"
   children:
+    - title: "Analyser"
+      url: /components/sound/analyser
     - title: "AudioClip"
       url: /components/sound/audioclip
+    - title: "AudioDestination"
+      url: /components/sound/audiodestination
+    - title: "BiquadFilter"
+      url: /components/sound/biquadfilter
+    - title: "BufferAudioSource"
+      url: /components/sound/bufferaudiosource
+    - title: "ChannelMerger"
+      url: /components/sound/channelmerger
+    - title: "ChannelSelector"
+      url: /components/sound/channelselector
+    - title: "ChannelSplitter"
+      url: /components/sound/channelsplitter
+    - title: "Convolver"
+      url: /components/sound/convolver
+    - title: "Delay"
+      url: /components/sound/delay
+    - title: "DynamicsCompressor"
+      url: /components/sound/dynamicscompressor
+    - title: "Gain"
+      url: /components/sound/gain
+    - title: "ListenerPointSource"
+      url: /components/sound/listenerpointsource
+    - title: "MicrophoneSource"
+      url: /components/sound/microphonesource
+    - title: "OscillatorSource"
+      url: /components/sound/oscillatorsource
+    - title: "PeriodicWave"
+      url: /components/sound/periodicwave
     - title: "Sound"
       url: /components/sound/sound
+    - title: "SpatialSound"
+      url: /components/sound/spatialsound
+    - title: "StreamAudioDestination"
+      url: /components/sound/streamaudiodestination
+    - title: "StreamAudioSource"
+      url: /components/sound/streamaudiosource
+    - title: "WaveShaper"
+      url: /components/sound/waveshaper

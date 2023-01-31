@@ -2,6 +2,8 @@
   children:
     - title: "DirectionalLight"
       url: /components/lighting/directionallight
+    - title: "EnvironmentLight"
+      url: /components/lighting/environmentlight
     - title: "PointLight"
       url: /components/lighting/pointlight
     - title: "SpotLight"

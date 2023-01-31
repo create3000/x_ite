@@ -6,6 +6,8 @@
       url: /components/hanim/hanimhumanoid
     - title: "HAnimJoint"
       url: /components/hanim/hanimjoint
+    - title: "HAnimMotion"
+      url: /components/hanim/hanimmotion
     - title: "HAnimSegment"
       url: /components/hanim/hanimsegment
     - title: "HAnimSite"

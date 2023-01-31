@@ -4,6 +4,8 @@
       url: /components/texturing3d/composedtexture3d
     - title: "ImageTexture3D"
       url: /components/texturing3d/imagetexture3d
+    - title: "ImageTextureAtlas"
+      url: /components/texturing3d/imagetextureatlas
     - title: "PixelTexture3D"
       url: /components/texturing3d/pixeltexture3d
     - title: "TextureCoordinate3D"

@@ -3,6 +3,10 @@ title: Components
 order: 1
 icon: fas fa-th-large
 ---
+This index lists the components and nodes in alphabetical order for quick access to the X3D documentation.
+
+<!-- COMPONENTS BEGIN -->
+
 ## CADGeometry
 
 - [CADAssembly](cadgeometry/cadassembly)
@@ -125,6 +129,7 @@ icon: fas fa-th-large
 - [HAnimDisplacer](hanim/hanimdisplacer)
 - [HAnimHumanoid](hanim/hanimhumanoid)
 - [HAnimJoint](hanim/hanimjoint)
+- [HAnimMotion](hanim/hanimmotion)
 - [HAnimSegment](hanim/hanimsegment)
 - [HAnimSite](hanim/hanimsite)
 
@@ -166,6 +171,7 @@ icon: fas fa-th-large
 ## Lighting
 
 - [DirectionalLight](lighting/directionallight)
+- [EnvironmentLight](lighting/environmentlight)
 - [PointLight](lighting/pointlight)
 - [SpotLight](lighting/spotlight)
 
@@ -281,23 +287,50 @@ icon: fas fa-th-large
 
 ## Shape
 
+- [AcousticProperties](shape/acousticproperties)
 - [Appearance](shape/appearance)
 - [FillProperties](shape/fillproperties)
 - [LineProperties](shape/lineproperties)
 - [Material](shape/material)
+- [PhysicalMaterial](shape/physicalmaterial)
 - [PointProperties](shape/pointproperties)
 - [Shape](shape/shape)
 - [TwoSidedMaterial](shape/twosidedmaterial)
+- [UnlitMaterial](shape/unlitmaterial)
 
 ## Sound
 
+- [Analyser](sound/analyser)
 - [AudioClip](sound/audioclip)
+- [AudioDestination](sound/audiodestination)
+- [BiquadFilter](sound/biquadfilter)
+- [BufferAudioSource](sound/bufferaudiosource)
+- [ChannelMerger](sound/channelmerger)
+- [ChannelSelector](sound/channelselector)
+- [ChannelSplitter](sound/channelsplitter)
+- [Convolver](sound/convolver)
+- [Delay](sound/delay)
+- [DynamicsCompressor](sound/dynamicscompressor)
+- [Gain](sound/gain)
+- [ListenerPointSource](sound/listenerpointsource)
+- [MicrophoneSource](sound/microphonesource)
+- [OscillatorSource](sound/oscillatorsource)
+- [PeriodicWave](sound/periodicwave)
 - [Sound](sound/sound)
+- [SpatialSound](sound/spatialsound)
+- [StreamAudioDestination](sound/streamaudiodestination)
+- [StreamAudioSource](sound/streamaudiosource)
+- [WaveShaper](sound/waveshaper)
 
 ## Text
 
 - [FontStyle](text/fontstyle)
 - [Text](text/text)
+
+## TextureProjector
+
+- [TextureProjector](textureprojector/textureprojector)
+- [TextureProjectorParallel](textureprojector/textureprojectorparallel)
 
 ## Texturing
 
@@ -316,6 +349,7 @@ icon: fas fa-th-large
 
 - [ComposedTexture3D](texturing3d/composedtexture3d)
 - [ImageTexture3D](texturing3d/imagetexture3d)
+- [ImageTextureAtlas](texturing3d/imagetextureatlas)
 - [PixelTexture3D](texturing3d/pixeltexture3d)
 - [TextureCoordinate3D](texturing3d/texturecoordinate3d)
 - [TextureCoordinate4D](texturing3d/texturecoordinate4d)
@@ -345,3 +379,5 @@ icon: fas fa-th-large
 ## X_ITE
 
 - [BlendMode](x-ite/blendmode)
+
+<!-- COMPONENTS END -->
