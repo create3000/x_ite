@@ -73,7 +73,7 @@ Set mustEvaluate true when sending/receiving values via the network.
 ### Hints
 
 - Insert a CDATA node to contain source code embedded within an X3D scene.
-- CDATA blocks can protect literal characters (such as &amp; < and >) in source code from unintended escape-character modifications by XML parsers.
+- CDATA blocks can protect literal characters (such as &amp; '<' and '>') in source code from unintended escape-character modifications by XML parsers.
 
 ## External Links
 
