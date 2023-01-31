@@ -23,7 +23,8 @@ The TextureCoordinate4D node belongs to the **Texturing3D** component and its de
 + X3DNode
   + X3DGeometricPropertyNode
     + X3DTextureCoordinateNode
-      + TextureCoordinate4D
+      + X3DSingleTextureCoordinateNode
+        + TextureCoordinate4D
 ```
 
 ## Fields
@@ -31,6 +32,10 @@ The TextureCoordinate4D node belongs to the **Texturing3D** component and its de
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+
+### SFString [in, out] **mapping** ""
+
+The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
 
 ### MFVec4f [in, out] **point** [ ] <small>(-∞,∞)</small>
 

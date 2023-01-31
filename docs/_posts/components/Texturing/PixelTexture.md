@@ -23,8 +23,9 @@ The PixelTexture node belongs to the **Texturing** component and its default con
 + X3DNode
   + X3DAppearanceChildNode
     + X3DTextureNode
-      + X3DTexture2DNode
-        + PixelTexture
+      + X3DSingleTextureNode
+        + X3DTexture2DNode
+          + PixelTexture
 ```
 
 ## Fields
