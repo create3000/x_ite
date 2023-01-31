@@ -51,6 +51,10 @@ Strictly match directory and filename capitalization for http links! This is imp
 
 - [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
 
+### SFBool [ ] **flipVertically** FALSE
+
+Whether to flip the image vertically. This parameter is in particular useful when using a model with [PhysicalMaterial](../Shape/PhysicalMaterial).
+
 ### SFBool [ ] **repeatS** TRUE
 
 Whether to horizontally repeat texture along S axis.
