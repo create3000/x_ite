@@ -58,7 +58,7 @@ Help decide rotation behavior from initial relative bearing of pointer drag: acu
 
 DiskAngle 0 forces disk-like behavior, diskAngle 1.570796 (90 degrees) forces cylinder-like behavior.
 
-### SFFloat [in, out] **minAngle** <small>[-2π,2π]</small>
+### SFFloat [in, out] **minAngle** 0 <small>[-2π,2π]</small>
 
 Clamps rotation_changed events within range of min/max values
 
@@ -74,7 +74,7 @@ Clamps rotation_changed events within range of min/max values
 
 If minAngle \> maxAngle, rotation is not clamped.
 
-### SFFloat [in, out] **offset** <small>(-∞,∞)</small>
+### SFFloat [in, out] **offset** 0 <small>(-∞,∞)</small>
 
 Sends event and remembers last value sensed.
 

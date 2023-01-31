@@ -31,7 +31,7 @@ The Arc2D node belongs to the **Geometry2D** component and its default container
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFFloat [ ] **startAngle** <small>[-2π,2π]</small>
+### SFFloat [ ] **startAngle** 0 <small>[-2π,2π]</small>
 
 Arc extends from startAngle counterclockwise to endAngle, in radians.
 
@@ -39,7 +39,7 @@ Arc extends from startAngle counterclockwise to endAngle, in radians.
 
 Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
 
-### SFFloat [ ] **endAngle** 1.5708 <small>[-2π,2π]</small>
+### SFFloat [ ] **endAngle** π/2 <small>[-2π,2π]</small>
 
 Arc extends from startAngle counterclockwise to endAngle, in radians.
 

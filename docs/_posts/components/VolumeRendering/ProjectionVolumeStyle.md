@@ -35,7 +35,7 @@ Enables/disables node operation.
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFFloat [in, out] **intensityThreshold** <small>[0,1]</small>
+### SFFloat [in, out] **intensityThreshold** 0 <small>[0,1]</small>
 
 Threshold value used when type=MIN (LMIP) or type=MAX (MIP).
 

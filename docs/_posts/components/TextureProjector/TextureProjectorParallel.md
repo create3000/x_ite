@@ -39,9 +39,9 @@ The TextureProjectorParallel node belongs to the **TextureProjector** component 
 
 ### SFVec3f [in, out] **upVector** <small></small>
 
-### SFFloat [in, out] **nearDistance** <small></small>
+### SFFloat [in, out] **nearDistance** 0 <small></small>
 
-### SFFloat [in, out] **farDistance** <small></small>
+### SFFloat [in, out] **farDistance** 0 <small></small>
 
 ### SFFloat [out] **aspectRatio** <small></small>
 

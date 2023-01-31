@@ -33,9 +33,9 @@ The EnvironmentLight node belongs to the **Lighting** component and its default 
 
 ### SFColor [in, out] **color** <small></small>
 
-### SFFloat [in, out] **intensity** <small></small>
+### SFFloat [in, out] **intensity** 0 <small></small>
 
-### SFFloat [in, out] **ambientIntensity** <small></small>
+### SFFloat [in, out] **ambientIntensity** 0 <small></small>
 
 ### SFRotation [in, out] **rotation** <small></small>
 
@@ -51,9 +51,9 @@ The EnvironmentLight node belongs to the **Lighting** component and its default 
 
 ### SFColor [in, out] **shadowColor** <small></small>
 
-### SFFloat [in, out] **shadowIntensity** <small></small>
+### SFFloat [in, out] **shadowIntensity** 0 <small></small>
 
-### SFFloat [in, out] **shadowBias** <small></small>
+### SFFloat [in, out] **shadowBias** 0 <small></small>
 
 ### SFInt32 [] **shadowMapSize** <small></small>
 

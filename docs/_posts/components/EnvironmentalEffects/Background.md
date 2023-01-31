@@ -157,7 +157,7 @@ You must have one more groundColor value than groundAngle values. Interchange pr
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
-### SFFloat [in, out] **transparency** <small>[0,1]</small>
+### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 
 How "clear" the background is, allows underlying page to show through: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: transparency < .5 opaque, transparency > .5 transparent.
 

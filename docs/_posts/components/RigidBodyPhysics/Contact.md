@@ -38,7 +38,7 @@ Position (x, y, z in meters) of exact location of collision.
 
 ContactNormal is unit vector describing normal between two colliding bodies.
 
-### SFFloat [in, out] **depth** <small>(-∞,∞)</small>
+### SFFloat [in, out] **depth** 0 <small>(-∞,∞)</small>
 
 Depth indicates how deep the current intersection is along normal vector.
 
@@ -50,7 +50,7 @@ Default global parameters for collision outputs of rigid body physics system. Co
 
 BOUNCE: bounce value is used; USER_FRICTION: apply user-supplied value; FRICTION_COEFFICIENT-2: apply frictionCoefficients values; ERROR_REDUCTION: apply softnessErrorCorrection value; CONSTANT_FORCE: apply softnessConstantForceMix value; SPEED-1: apply first component of surfaceSpeed array; SPEED-2: apply second component of surfaceSpeed array; SLIP-1: apply first component of slipFactors array; SLIP-2: apply second component of slipFactors array.
 
-### SFFloat [in, out] **bounce** <small>[0,1]</small>
+### SFFloat [in, out] **bounce** 0 <small>[0,1]</small>
 
 Bounce indicates bounciness (0 = no bounce at all, 1 = maximum bounce).
 

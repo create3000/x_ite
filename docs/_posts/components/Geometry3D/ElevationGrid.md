@@ -83,7 +83,7 @@ Ccw = counterclockwise: ordering of vertex coordinates orientation.
 
 Ccw false can reverse solid (backface culling) and normal-vector orientation.
 
-### SFFloat [ ] **creaseAngle** <small>[0,∞)</small>
+### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
 
 CreaseAngle defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than creaseAngle, smooth shading is rendered across the shared line segment.
 

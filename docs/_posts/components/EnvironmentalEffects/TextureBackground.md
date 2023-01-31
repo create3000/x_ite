@@ -85,7 +85,7 @@ You must have one more groundColor value than groundAngle values. Interchange pr
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
-### SFFloat [in, out] **transparency** <small>[0,1]</small>
+### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 
 Transparency applied to texture images, enabling an X3D scene to overlay an HTML page or desktop.
 

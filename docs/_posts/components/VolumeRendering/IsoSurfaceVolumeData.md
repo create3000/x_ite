@@ -30,7 +30,7 @@ The IsoSurfaceVolumeData node belongs to the **VolumeRendering** component and i
 
 ## Fields
 
-### SFFloat [in, out] **contourStepSize** <small>(-∞,∞)</small>
+### SFFloat [in, out] **contourStepSize** 0 <small>(-∞,∞)</small>
 
 If contourStepSize is non-zero, also render all isosurfaces that are multiples of that step size from initial surface value.
 
@@ -54,7 +54,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Input/Output field renderStyle.
 
-### SFFloat [in, out] **surfaceTolerance** <small>[0,∞)</small>
+### SFFloat [in, out] **surfaceTolerance** 0 <small>[0,∞)</small>
 
 Threshold for gradient magnitude for voxel inolusion in isosurface.
 

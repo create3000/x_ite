@@ -31,13 +31,13 @@ The AcousticProperties node belongs to the **Shape** component and its default c
 
 ### SFBool [in, out] **enabled** <small></small>
 
-### SFFloat [in, out] **absorption** <small></small>
+### SFFloat [in, out] **absorption** 0 <small></small>
 
-### SFFloat [in, out] **refraction** <small></small>
+### SFFloat [in, out] **refraction** 0 <small></small>
 
-### SFFloat [in, out] **diffuse** <small></small>
+### SFFloat [in, out] **diffuse** 0 <small></small>
 
-### SFFloat [in, out] **specular** <small></small>
+### SFFloat [in, out] **specular** 0 <small></small>
 
 ## External Links
 

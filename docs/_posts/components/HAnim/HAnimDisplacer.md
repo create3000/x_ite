@@ -60,7 +60,7 @@ Name is not included if this instance is a USE node. Examples: sellion r_infraor
 - [HAnim Feature Points](https://www.web3d.org/x3d/content/examples/Basic/HumanoidAnimation/tables/HAnimSurfaceFeaturePoints19774V1.0.txt){:target="_blank"}
 - [HAnim Specification, Feature points for the human body](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/FeaturePoints.html){:target="_blank"}
 
-### SFFloat [in, out] **weight** <small>(-∞,∞)</small>
+### SFFloat [in, out] **weight** 0 <small>(-∞,∞)</small>
 
 The weigh factor has typical range [0,1] and defines the scale factor applied to displacement values before adding them to neutral vertex positions.
 

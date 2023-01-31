@@ -138,7 +138,7 @@ Torques defines rotational force values applied to the object every frame.
 
 AutoDisable toggles operation of disableAngularSpeed, disableLinearSpeed, disableTime.
 
-### SFFloat [in, out] **disableTime** <small>[0,∞) <span class="no">not supported</span></small>
+### SFFloat [in, out] **disableTime** 0 <small>[0,∞) <span class="no">not supported</span></small>
 
 DisableTime defines interval when body becomes at rest and not part of rigid body calculations, reducing numeric instabilities.
 
@@ -146,7 +146,7 @@ DisableTime defines interval when body becomes at rest and not part of rigid bod
 
 Only activated if autoDisable='true'
 
-### SFFloat [in, out] **disableLinearSpeed** <small>[0,∞)</small>
+### SFFloat [in, out] **disableLinearSpeed** 0 <small>[0,∞)</small>
 
 DisableLinearSpeed defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculation, reducing numeric instabilitiess.
 
@@ -154,7 +154,7 @@ DisableLinearSpeed defines lower-limit tolerance value when body is considered a
 
 Only activated if autoDisable='true'
 
-### SFFloat [in, out] **disableAngularSpeed** <small>[0,∞)</small>
+### SFFloat [in, out] **disableAngularSpeed** 0 <small>[0,∞)</small>
 
 DisableAngularSpeed defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculations, reducing numeric instabilities.
 

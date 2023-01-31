@@ -51,7 +51,7 @@ MinAngle is minimum rotation angle for hinge.
 
 MaxAngle is maximum rotation angle for hinge.
 
-### SFFloat [in, out] **stopBounce** <small>[0,1] <span class="no">not supported</span>
+### SFFloat [in, out] **stopBounce** 0 <small>[0,1] <span class="no">not supported</span>
 </small>
 
 StopBounce is velocity factor for bounce back once stop point is reached.

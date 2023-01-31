@@ -39,7 +39,7 @@ Defines whether pair of line segments connect to center (PIE), or single line-se
 
 Simple-geometry parameters cannot be changed after initial creation.
 
-### SFFloat [ ] **startAngle** <small>[-2π,2π]</small>
+### SFFloat [ ] **startAngle** 0 <small>[-2π,2π]</small>
 
 Arc extends from startAngle counterclockwise to endAngle, in radians.
 
@@ -47,7 +47,7 @@ Arc extends from startAngle counterclockwise to endAngle, in radians.
 
 Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
 
-### SFFloat [ ] **endAngle** 1.5708 <small>[-2π,2π]</small>
+### SFFloat [ ] **endAngle** π/2 <small>[-2π,2π]</small>
 
 Arc extends from startAngle counterclockwise to endAngle, in radians.
 

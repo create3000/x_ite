@@ -65,7 +65,7 @@ Bright emissiveColor values can wash out other colors and some textures.
 
 Lower shininess values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
-### SFFloat [in, out] **transparency** <small>[0,1]</small>
+### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 
 How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque.
 

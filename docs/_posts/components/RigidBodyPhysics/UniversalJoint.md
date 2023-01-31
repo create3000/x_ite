@@ -55,11 +55,11 @@ Axis2 defines axis vector of joint connection to body2.
 
 0 0 0 means motor disabled.
 
-### SFFloat [in, out] **stop1Bounce** <small>[0,1]</small>
+### SFFloat [in, out] **stop1Bounce** 0 <small>[0,1]</small>
 
 Input/Output field stop1Bounce.
 
-### SFFloat [in, out] **stop2Bounce** <small>[0,1]</small>
+### SFFloat [in, out] **stop2Bounce** 0 <small>[0,1]</small>
 
 Stop2Bounce is velocity factor for bounce back once stop point is reached.
 

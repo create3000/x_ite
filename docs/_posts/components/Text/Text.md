@@ -47,7 +47,7 @@ MFString arrays can have multiple values, so separate each individual string by 
 
 Array of length values for each text string in the local coordinate system. Each string is stretched or compressed to fit.
 
-### SFFloat [in, out] **maxExtent** <small>[0,∞)</small>
+### SFFloat [in, out] **maxExtent** 0 <small>[0,∞)</small>
 
 Limits/compresses all text strings if max string length is longer than maxExtent, as measured in local coordinate system.
 

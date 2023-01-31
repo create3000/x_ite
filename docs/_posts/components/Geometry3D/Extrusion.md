@@ -111,7 +111,7 @@ Whether all polygons in a shape are convex (true), or possibly concave (false). 
 
 Concave geometry may be invisible default convex=true.
 
-### SFFloat [ ] **creaseAngle** <small>[0,∞)</small>
+### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
 
 CreaseAngle defines angle (in radians) where adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than creaseAngle, smooth shading is rendered across the shared line segment.
 

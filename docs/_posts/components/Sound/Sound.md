@@ -68,7 +68,7 @@ Outer (zero volume) ellipsoid distance along back direction. Ensure minBack \<= 
 
 Outer (zero volume) ellipsoid distance along front direction. Ensure minFront \<= maxFront.
 
-### SFFloat [in, out] **priority** <small>[0,1]</small>
+### SFFloat [in, out] **priority** 0 <small>[0,1]</small>
 
 Player hint [0,1] if needed to choose which sounds to play.
 

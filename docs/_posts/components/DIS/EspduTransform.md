@@ -222,7 +222,7 @@ Has the secondary weapon (Fire PDU) been fired?
 
 Input/Output field fireMissionIndex.
 
-### SFFloat [in, out] **firingRange** <small>(0,∞)</small>
+### SFFloat [in, out] **firingRange** 0 <small>(0,∞)</small>
 
 Range (three dimension, straight-line distance) that the firing entity's fire control system has assumed for computing the fire control solution if a weapon and if the value is known
 

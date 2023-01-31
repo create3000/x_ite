@@ -43,7 +43,7 @@ Linetype selects a line pattern, with solid default if defined value isn't suppo
 
 Detailed descriptions of lineType values are found at the [ISO/IEC International Register of Graphical Items](https://www.iso.org/jtc1/sc24/register){:target="_blank"} (may require login)
 
-### SFFloat [in, out] **linewidthScaleFactor** <small>(-∞,∞)</small>
+### SFFloat [in, out] **linewidthScaleFactor** 0 <small>(-∞,∞)</small>
 
 LinewidthScaleFactor is a scale factor multiplied by browser-dependent nominal linewidth, mapped to nearest available line width. Values zero or less provide minimum available line width.
 

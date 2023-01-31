@@ -122,7 +122,7 @@ See X3D Specification [Table 18.10 Texture compression modes](https://www.web3d.
 
 Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
-### SFFloat [in, out] **texturePriority** <small>[0,1]</small>
+### SFFloat [in, out] **texturePriority** 0 <small>[0,1]</small>
 
 TexturePriority defines priority for allocating texture memory.
 

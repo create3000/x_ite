@@ -68,7 +68,7 @@ Input/Output field coord.
 
 Input/Output field displacers.
 
-### SFFloat [in, out] **mass** <small>[0,∞)</small>
+### SFFloat [in, out] **mass** 0 <small>[0,∞)</small>
 
 Total mass of the segment, 0 if not available.
 

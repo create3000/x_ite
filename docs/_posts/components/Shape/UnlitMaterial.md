@@ -31,19 +31,19 @@ The UnlitMaterial node belongs to the **Shape** component and its default contai
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-### SFColor [in, out] **emissiveColor** <small></small>
+### SFColor [in, out] **emissiveColor** 1 1 1 <small></small>
 
-### SFString [in, out] **emissiveTextureMapping** <small></small>
+### SFString [in, out] **emissiveTextureMapping** ""
 
-### SFNode [in, out] **emissiveTexture** <small></small>
+### SFNode [in, out] **emissiveTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-### SFFloat [in, out] **normalScale** <small></small>
+### SFFloat [in, out] **normalScale** 1 <small></small>
 
-### SFString [in, out] **normalTextureMapping** <small></small>
+### SFString [in, out] **normalTextureMapping** ""
 
-### SFNode [in, out] **normalTexture** <small></small>
+### SFNode [in, out] **normalTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-### SFFloat [in, out] **transparency** <small></small>
+### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 
 ## External Links
 

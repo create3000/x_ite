@@ -61,7 +61,7 @@ Match Background color to make objects fade away.
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
-### SFFloat [in, out] **visibilityRange** <small>[0,-∞)</small>
+### SFFloat [in, out] **visibilityRange** 0 <small>[0,-∞)</small>
 
 Distance in meters where objects are totally obscured by the fog, using local coordinate system.
 

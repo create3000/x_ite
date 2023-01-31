@@ -63,31 +63,31 @@ Motor3Axis defines axis vector of corresponding motor axis.
 
 0 0 0 means motor disabled.
 
-### SFFloat [in, out] **axis1Angle** <small>[-π,π]</small>
+### SFFloat [in, out] **axis1Angle** 0 <small>[-π,π]</small>
 
 Axis1Angle (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
 
-### SFFloat [in, out] **axis2Angle** <small>[-π,π]</small>
+### SFFloat [in, out] **axis2Angle** 0 <small>[-π,π]</small>
 
 Axis2Angle (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
 
-### SFFloat [in, out] **axis3Angle** <small>[-π,π]</small>
+### SFFloat [in, out] **axis3Angle** 0 <small>[-π,π]</small>
 
 Axis3Angle (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
 
-### SFFloat [in, out] **axis1Torque** <small>(-∞,∞)</small>
+### SFFloat [in, out] **axis1Torque** 0 <small>(-∞,∞)</small>
 
 Axis1Torque is rotational torque applied by corresponding motor axis when in user-calculated mode.
 
-### SFFloat [in, out] **axis2Torque** <small>(-∞,∞)</small>
+### SFFloat [in, out] **axis2Torque** 0 <small>(-∞,∞)</small>
 
 Axis2Torque is rotational torque applied by corresponding motor axis when in user-calculated mode.
 
-### SFFloat [in, out] **axis3Torque** <small>(-∞,∞)</small>
+### SFFloat [in, out] **axis3Torque** 0 <small>(-∞,∞)</small>
 
 Axis3Torque is rotational torque applied by corresponding motor axis when in user-calculated mode.
 
-### SFFloat [in, out] **stop1Bounce** <small>[0,1]</small>
+### SFFloat [in, out] **stop1Bounce** 0 <small>[0,1]</small>
 
 Stop1Bounce is velocity factor for bounce back once stop point is reached.
 
@@ -95,7 +95,7 @@ Stop1Bounce is velocity factor for bounce back once stop point is reached.
 
 0 means no bounce, 1 means return velocity matches.
 
-### SFFloat [in, out] **stop2Bounce** <small>[0,1]</small>
+### SFFloat [in, out] **stop2Bounce** 0 <small>[0,1]</small>
 
 Stop2Bounce is velocity factor for bounce back once stop point is reached.
 
@@ -103,7 +103,7 @@ Stop2Bounce is velocity factor for bounce back once stop point is reached.
 
 0 means no bounce, 1 means return velocity matches.
 
-### SFFloat [in, out] **stop3Bounce** <small>[0,1]</small>
+### SFFloat [in, out] **stop3Bounce** 0 <small>[0,1]</small>
 
 Stop3Bounce is velocity factor for bounce back once stop point is reached.
 

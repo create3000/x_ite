@@ -65,25 +65,25 @@ MinAngle1 is minimum rotation angle for hinge.
 
 MaxAngle1 is maximum rotation angle for hinge.
 
-### SFFloat [in, out] **desiredAngularVelocity1** <small>(-∞,∞) <span class="no">not supported</span>
+### SFFloat [in, out] **desiredAngularVelocity1** 0 <small>(-∞,∞) <span class="no">not supported</span>
 </small>
 
 DesiredAngularVelocity1 is goal rotation rate for hinge connection to body1.
 
-### SFFloat [in, out] **desiredAngularVelocity2** <small>(-∞,∞) <span class="no">not supported</span>
+### SFFloat [in, out] **desiredAngularVelocity2** 0 <small>(-∞,∞) <span class="no">not supported</span>
 </small>
 
 DesiredAngularVelocity2 is goal rotation rate for hinge connection to body2.
 
-### SFFloat [in, out] **maxTorque1** <small>(-∞,∞) <span class="no">not supported</span></small>
+### SFFloat [in, out] **maxTorque1** 0 <small>(-∞,∞) <span class="no">not supported</span></small>
 
 MaxTorque1 is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity1.
 
-### SFFloat [in, out] **maxTorque2** <small>(-∞,∞) <span class="no">not supported</span></small>
+### SFFloat [in, out] **maxTorque2** 0 <small>(-∞,∞) <span class="no">not supported</span></small>
 
 MaxTorque2 is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity2.
 
-### SFFloat [in, out] **stopBounce1** <small>[0,1]<span class="no"> not supported</span></small>
+### SFFloat [in, out] **stopBounce1** 0 <small>[0,1]<span class="no"> not supported</span></small>
 
 Input/Output field stopBounce1.
 
@@ -95,7 +95,7 @@ Input/Output field stopConstantForceMix1.
 
 Input/Output field stopErrorCorrection1.
 
-### SFFloat [in, out] **suspensionForce** <small>[0,∞)<span class="no"> not supported</span></small>
+### SFFloat [in, out] **suspensionForce** 0 <small>[0,∞)<span class="no"> not supported</span></small>
 
 SuspensionForce describes how quickly the system resolves intersection errors due to floating-point inaccuracies.
 

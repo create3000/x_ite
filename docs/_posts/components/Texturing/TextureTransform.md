@@ -41,7 +41,7 @@ The mapping label identifies which texture coordinates and transformations are u
 
 Lateral/vertical shift in 2D (s,t) texture coordinates (opposite effect appears on geometry).
 
-### SFFloat [in, out] **rotation** <small>(-∞,∞)</small>
+### SFFloat [in, out] **rotation** 0 <small>(-∞,∞)</small>
 
 Single rotation angle of texture about center (opposite effect appears on geometry).
 

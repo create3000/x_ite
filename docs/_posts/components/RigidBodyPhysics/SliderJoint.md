@@ -39,7 +39,7 @@ ForceOutput controls which output fields are generated for the next frame. Value
 
 Axis is normalized vector specifying direction of motion.
 
-### SFFloat [in, out] **minSeparation** <small>[0,∞)</small>
+### SFFloat [in, out] **minSeparation** 0 <small>[0,∞)</small>
 
 MinSeparation is minimum separation distance between the two bodies.
 
@@ -59,7 +59,7 @@ If (minSeparation is less than maxSeparation) then no stop is effective.
 
 Input/Output field sliderForce.
 
-### SFFloat [in, out] **stopBounce** <small>[0,1] <span class="no">not supported</span></small>
+### SFFloat [in, out] **stopBounce** 0 <small>[0,1] <span class="no">not supported</span></small>
 
 StopBounce is velocity factor for bounce back once stop point is reached.
 
