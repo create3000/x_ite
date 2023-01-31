@@ -78,7 +78,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 #### Interchange profile hint:
 
-Transparency `< .5 opaque, transparency >` .5 transparent.
+Transparency < .5 opaque, transparency > .5 transparent.
 
 #### Hint
 
@@ -122,7 +122,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 #### Interchange profile hint
 
-Transparency `< .5 opaque, transparency >` .5 transparent.
+Transparency < .5 opaque, transparency > .5 transparent.
 
 #### Hint
 

@@ -45,7 +45,7 @@ PointSizeMinValue is minimum allowed scaling factor on nominal browser point sca
 
 #### Warning
 
-Maintain pointSizeMinValue `<= pointSizeMaxValue.
+Maintain pointSizeMinValue <= pointSizeMaxValue.
 
 ### SFFloat [in, out] **pointSizeMaxValue** 1 <small>(0,∞)</small>
 

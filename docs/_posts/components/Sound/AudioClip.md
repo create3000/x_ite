@@ -77,7 +77,7 @@ Usually receives a ROUTEd time value.
 
 ### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
 
-When resumeTime becomes `<= time now, isPaused becomes false and AudioClip becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 

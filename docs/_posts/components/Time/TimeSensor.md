@@ -13,7 +13,7 @@ tags: [TimeSensor, Time]
 
 ## Overview
 
-TimeSensor continuously generates events as time passes. Typical use: ROUTE thisTimeSensor.fraction_changed TO someInterpolator.set_fraction. Interchange profile hint: TimeSensor may be ignored if cycleInterval `< 0.01 second.
+TimeSensor continuously generates events as time passes. Typical use: ROUTE thisTimeSensor.fraction_changed TO someInterpolator.set_fraction. Interchange profile hint: TimeSensor may be ignored if cycleInterval < 0.01 second.
 
 The TimeSensor node belongs to the **Time** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 
@@ -60,7 +60,7 @@ Usually receives a ROUTEd time value.
 
 ### SFTime [in, out] **resumeTime**
 
-When resumeTime becomes `<= time now, isPaused becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When resumeTime becomes <= time now, isPaused becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 

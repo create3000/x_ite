@@ -50,7 +50,7 @@ AvatarSize triplet values are: (a) collision distance between user and geometry 
 
 #### Hint
 
-Keep (visibilityLimit / avatarSize.CollisionDistance) `< 10,000 to avoid aliasing artifacts (i.e. polygon "tearing"). Interchange profile hint: this field may be ignored, applying the default value regardless.
+Keep (visibilityLimit / avatarSize.CollisionDistance) < 10,000 to avoid aliasing artifacts (i.e. polygon "tearing"). Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### SFFloat [in, out] **speed** 1 <small>[0,∞)</small>
 

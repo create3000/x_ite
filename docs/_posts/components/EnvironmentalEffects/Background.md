@@ -159,7 +159,7 @@ You must have one more groundColor value than groundAngle values. Interchange pr
 
 ### SFFloat [in, out] **transparency** <small>[0,1]</small>
 
-How "clear" the background is, allows underlying page to show through: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: transparency `< .5 opaque, transparency >` .5 transparent.
+How "clear" the background is, allows underlying page to show through: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: transparency < .5 opaque, transparency > .5 transparent.
 
 ### SFBool [out] **isBound**
 

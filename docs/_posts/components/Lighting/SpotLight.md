@@ -78,7 +78,7 @@ Inner conical solid angle (in radians) where light source has uniform full inten
 
 #### Hint
 
-BeamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero intensity. Therefore set beamWidth `<= cutOffAngle.
+BeamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero intensity. Therefore set beamWidth <= cutOffAngle.
 
 #### Warning
 
@@ -90,7 +90,7 @@ Outer conical solid angle (in radians) where light source intensity becomes zero
 
 #### Hint
 
-BeamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero intensity. Therefore set beamWidth `<= cutOffAngle.
+BeamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero intensity. Therefore set beamWidth <= cutOffAngle.
 
 #### Warning
 
