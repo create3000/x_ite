@@ -1,6 +1,6 @@
 - title: "KeyDeviceSensor"
   children:
     - title: "KeySensor"
-      url: /components/KeyDeviceSensor/KeySensor
+      url: /components/keydevicesensor/keysensor
     - title: "StringSensor"
-      url: /components/KeyDeviceSensor/StringSensor
+      url: /components/keydevicesensor/stringsensor

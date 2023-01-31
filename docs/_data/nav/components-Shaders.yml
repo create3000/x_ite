@@ -1,18 +1,18 @@
 - title: "Shaders"
   children:
     - title: "ComposedShader"
-      url: /components/Shaders/ComposedShader
+      url: /components/shaders/composedshader
     - title: "FloatVertexAttribute"
-      url: /components/Shaders/FloatVertexAttribute
+      url: /components/shaders/floatvertexattribute
     - title: "Matrix3VertexAttribute"
-      url: /components/Shaders/Matrix3VertexAttribute
+      url: /components/shaders/matrix3vertexattribute
     - title: "Matrix4VertexAttribute"
-      url: /components/Shaders/Matrix4VertexAttribute
+      url: /components/shaders/matrix4vertexattribute
     - title: "PackagedShader"
-      url: /components/Shaders/PackagedShader
+      url: /components/shaders/packagedshader
     - title: "ProgramShader"
-      url: /components/Shaders/ProgramShader
+      url: /components/shaders/programshader
     - title: "ShaderPart"
-      url: /components/Shaders/ShaderPart
+      url: /components/shaders/shaderpart
     - title: "ShaderProgram"
-      url: /components/Shaders/ShaderProgram
+      url: /components/shaders/shaderprogram

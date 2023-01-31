@@ -1,16 +1,16 @@
 - title: "Navigation"
   children:
     - title: "Billboard"
-      url: /components/Navigation/Billboard
+      url: /components/navigation/billboard
     - title: "Collision"
-      url: /components/Navigation/Collision
+      url: /components/navigation/collision
     - title: "LOD"
-      url: /components/Navigation/LOD
+      url: /components/navigation/lod
     - title: "NavigationInfo"
-      url: /components/Navigation/NavigationInfo
+      url: /components/navigation/navigationinfo
     - title: "OrthoViewpoint"
-      url: /components/Navigation/OrthoViewpoint
+      url: /components/navigation/orthoviewpoint
     - title: "Viewpoint"
-      url: /components/Navigation/Viewpoint
+      url: /components/navigation/viewpoint
     - title: "ViewpointGroup"
-      url: /components/Navigation/ViewpointGroup
+      url: /components/navigation/viewpointgroup

@@ -1,16 +1,16 @@
 - title: "Shape"
   children:
     - title: "Appearance"
-      url: /components/Shape/Appearance
+      url: /components/shape/appearance
     - title: "FillProperties"
-      url: /components/Shape/FillProperties
+      url: /components/shape/fillproperties
     - title: "LineProperties"
-      url: /components/Shape/LineProperties
+      url: /components/shape/lineproperties
     - title: "Material"
-      url: /components/Shape/Material
+      url: /components/shape/material
     - title: "PointProperties"
-      url: /components/Shape/PointProperties
+      url: /components/shape/pointproperties
     - title: "Shape"
-      url: /components/Shape/Shape
+      url: /components/shape/shape
     - title: "TwoSidedMaterial"
-      url: /components/Shape/TwoSidedMaterial
+      url: /components/shape/twosidedmaterial

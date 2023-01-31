@@ -1,12 +1,12 @@
 - title: "Layout"
   children:
     - title: "Layout"
-      url: /components/Layout/Layout
+      url: /components/layout/layout
     - title: "LayoutGroup"
-      url: /components/Layout/LayoutGroup
+      url: /components/layout/layoutgroup
     - title: "LayoutLayer"
-      url: /components/Layout/LayoutLayer
+      url: /components/layout/layoutlayer
     - title: "ScreenFontStyle"
-      url: /components/Layout/ScreenFontStyle
+      url: /components/layout/screenfontstyle
     - title: "ScreenGroup"
-      url: /components/Layout/ScreenGroup
+      url: /components/layout/screengroup

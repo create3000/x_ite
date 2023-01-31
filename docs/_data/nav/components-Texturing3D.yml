@@ -1,16 +1,16 @@
 - title: "Texturing3D"
   children:
     - title: "ComposedTexture3D"
-      url: /components/Texturing3D/ComposedTexture3D
+      url: /components/texturing3d/composedtexture3d
     - title: "ImageTexture3D"
-      url: /components/Texturing3D/ImageTexture3D
+      url: /components/texturing3d/imagetexture3d
     - title: "PixelTexture3D"
-      url: /components/Texturing3D/PixelTexture3D
+      url: /components/texturing3d/pixeltexture3d
     - title: "TextureCoordinate3D"
-      url: /components/Texturing3D/TextureCoordinate3D
+      url: /components/texturing3d/texturecoordinate3d
     - title: "TextureCoordinate4D"
-      url: /components/Texturing3D/TextureCoordinate4D
+      url: /components/texturing3d/texturecoordinate4d
     - title: "TextureTransform3D"
-      url: /components/Texturing3D/TextureTransform3D
+      url: /components/texturing3d/texturetransform3d
     - title: "TextureTransformMatrix3D"
-      url: /components/Texturing3D/TextureTransformMatrix3D
+      url: /components/texturing3d/texturetransformmatrix3d

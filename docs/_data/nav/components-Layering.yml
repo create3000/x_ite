@@ -1,8 +1,8 @@
 - title: "Layering"
   children:
     - title: "Layer"
-      url: /components/Layering/Layer
+      url: /components/layering/layer
     - title: "LayerSet"
-      url: /components/Layering/LayerSet
+      url: /components/layering/layerset
     - title: "Viewport"
-      url: /components/Layering/Viewport
+      url: /components/layering/viewport

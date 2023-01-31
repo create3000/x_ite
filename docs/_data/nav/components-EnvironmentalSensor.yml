@@ -1,8 +1,8 @@
 - title: "EnvironmentalSensor"
   children:
     - title: "ProximitySensor"
-      url: /components/EnvironmentalSensor/ProximitySensor
+      url: /components/environmentalsensor/proximitysensor
     - title: "TransformSensor"
-      url: /components/EnvironmentalSensor/TransformSensor
+      url: /components/environmentalsensor/transformsensor
     - title: "VisibilitySensor"
-      url: /components/EnvironmentalSensor/VisibilitySensor
+      url: /components/environmentalsensor/visibilitysensor

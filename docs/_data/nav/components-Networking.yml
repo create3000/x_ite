@@ -1,8 +1,8 @@
 - title: "Networking"
   children:
     - title: "Anchor"
-      url: /components/Networking/Anchor
+      url: /components/networking/anchor
     - title: "Inline"
-      url: /components/Networking/Inline
+      url: /components/networking/inline
     - title: "LoadSensor"
-      url: /components/Networking/LoadSensor
+      url: /components/networking/loadsensor

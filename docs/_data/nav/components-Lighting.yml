@@ -1,8 +1,8 @@
 - title: "Lighting"
   children:
     - title: "DirectionalLight"
-      url: /components/Lighting/DirectionalLight
+      url: /components/lighting/directionallight
     - title: "PointLight"
-      url: /components/Lighting/PointLight
+      url: /components/lighting/pointlight
     - title: "SpotLight"
-      url: /components/Lighting/SpotLight
+      url: /components/lighting/spotlight

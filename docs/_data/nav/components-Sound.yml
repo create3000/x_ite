@@ -1,6 +1,6 @@
 - title: "Sound"
   children:
     - title: "AudioClip"
-      url: /components/Sound/AudioClip
+      url: /components/sound/audioclip
     - title: "Sound"
-      url: /components/Sound/Sound
+      url: /components/sound/sound

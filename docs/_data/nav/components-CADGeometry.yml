@@ -1,14 +1,14 @@
 - title: "CADGeometry"
   children:
     - title: "CADAssembly"
-      url: /components/CADGeometry/CADAssembly
+      url: /components/cadgeometry/cadassembly
     - title: "CADFace"
-      url: /components/CADGeometry/CADFace
+      url: /components/cadgeometry/cadface
     - title: "CADLayer"
-      url: /components/CADGeometry/CADLayer
+      url: /components/cadgeometry/cadlayer
     - title: "CADPart"
-      url: /components/CADGeometry/CADPart
+      url: /components/cadgeometry/cadpart
     - title: "IndexedQuadSet"
-      url: /components/CADGeometry/IndexedQuadSet
+      url: /components/cadgeometry/indexedquadset
     - title: "QuadSet"
-      url: /components/CADGeometry/QuadSet
+      url: /components/cadgeometry/quadset

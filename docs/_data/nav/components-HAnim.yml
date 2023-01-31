@@ -1,12 +1,12 @@
 - title: "HAnim"
   children:
     - title: "HAnimDisplacer"
-      url: /components/HAnim/HAnimDisplacer
+      url: /components/hanim/hanimdisplacer
     - title: "HAnimHumanoid"
-      url: /components/HAnim/HAnimHumanoid
+      url: /components/hanim/hanimhumanoid
     - title: "HAnimJoint"
-      url: /components/HAnim/HAnimJoint
+      url: /components/hanim/hanimjoint
     - title: "HAnimSegment"
-      url: /components/HAnim/HAnimSegment
+      url: /components/hanim/hanimsegment
     - title: "HAnimSite"
-      url: /components/HAnim/HAnimSite
+      url: /components/hanim/hanimsite

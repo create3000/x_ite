@@ -121,7 +121,7 @@ sub nav {
    foreach $node (sort @nodes)
    {
       $text .= "    - title: \"$node\"
-      url: /components/$component/$node
+      url: /components/\L$component/$node
 ";
    }
 

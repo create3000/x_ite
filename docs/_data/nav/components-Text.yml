@@ -1,6 +1,6 @@
 - title: "Text"
   children:
     - title: "FontStyle"
-      url: /components/Text/FontStyle
+      url: /components/text/fontstyle
     - title: "Text"
-      url: /components/Text/Text
+      url: /components/text/text

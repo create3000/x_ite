@@ -1,8 +1,8 @@
 - title: "CubeMapTexturing"
   children:
     - title: "ComposedCubeMapTexture"
-      url: /components/CubeMapTexturing/ComposedCubeMapTexture
+      url: /components/cubemaptexturing/composedcubemaptexture
     - title: "GeneratedCubeMapTexture"
-      url: /components/CubeMapTexturing/GeneratedCubeMapTexture
+      url: /components/cubemaptexturing/generatedcubemaptexture
     - title: "ImageCubeMapTexture"
-      url: /components/CubeMapTexturing/ImageCubeMapTexture
+      url: /components/cubemaptexturing/imagecubemaptexture

@@ -1,16 +1,16 @@
 - title: "EventUtilities"
   children:
     - title: "BooleanFilter"
-      url: /components/EventUtilities/BooleanFilter
+      url: /components/eventutilities/booleanfilter
     - title: "BooleanSequencer"
-      url: /components/EventUtilities/BooleanSequencer
+      url: /components/eventutilities/booleansequencer
     - title: "BooleanToggle"
-      url: /components/EventUtilities/BooleanToggle
+      url: /components/eventutilities/booleantoggle
     - title: "BooleanTrigger"
-      url: /components/EventUtilities/BooleanTrigger
+      url: /components/eventutilities/booleantrigger
     - title: "IntegerSequencer"
-      url: /components/EventUtilities/IntegerSequencer
+      url: /components/eventutilities/integersequencer
     - title: "IntegerTrigger"
-      url: /components/EventUtilities/IntegerTrigger
+      url: /components/eventutilities/integertrigger
     - title: "TimeTrigger"
-      url: /components/EventUtilities/TimeTrigger
+      url: /components/eventutilities/timetrigger
