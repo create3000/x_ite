@@ -106,7 +106,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .input = xmlElement;
          this .xml   = this .isXML (xmlElement);
 
-         if (! this .xml)
+         if (!this .xml)
             Object .assign (this, HTMLParser);
       }
       catch (error)

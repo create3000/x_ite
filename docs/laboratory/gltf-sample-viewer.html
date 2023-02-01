@@ -1,0 +1,298 @@
+---
+title: glTF Sample Viewer
+layout: wide
+collection: tabs
+categories: [Laboratory]
+tags: [glTF, sample, viewer]
+---
+<style>
+.post, .post-content {
+   height: 100%;
+}
+
+.dynamic-title {
+   display: none;
+}
+
+/* Table */
+
+.row {
+   display: flex;
+   height: calc(100vh - 180px);
+}
+
+.column1 {
+   flex: 20%;
+   width: 20%;
+   height: 100%;
+   overflow: scroll;
+   background-color: rgba(0, 0, 0, 0.3);
+   padding: 1rem;
+}
+
+.column1 div {
+   color: var(--h2-color);
+}
+
+.column2 {
+   flex: 80%;
+   width: 80%;
+   height: 100%;
+}
+
+/* Viewer */
+
+@media (prefers-color-scheme: dark) {
+	html:not([data-mode]), html[data-mode=dark] {
+	 	--list-color: rgba(0, 0, 0, 0.3);
+	}
+
+	html[data-mode=light] {
+		--list-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+	html[data-mode=dark] {
+		--list-color: rgba(0, 0, 0, 0.3);
+  }
+
+  html:not([data-mode]), html[data-mode=light] {
+      --list-color: rgba(0, 0, 0, 0.1);
+	}
+}
+
+.post x3d-canvas {
+   display: block;
+   width: 100%;
+   height: 100%;
+   aspect-ratio: unset;
+}
+</style>
+
+<div class="row">
+   <div class="column1">
+   </div>
+   <div class="column2">
+      <x3d-canvas src="/x_ite/assets/X3D/glTF.x3d"></x3d-canvas>
+   </div>
+</div>
+
+<script>
+const glTF = [
+   "2CylinderEngine/glTF/2CylinderEngine.gltf",
+   "ABeautifulGame/glTF/ABeautifulGame.gltf",
+   "AlphaBlendModeTest/glTF/AlphaBlendModeTest.gltf",
+   "AnimatedCube/glTF/AnimatedCube.gltf",
+   "AnimatedMorphCube/glTF/AnimatedMorphCube.gltf",
+   "AnimatedMorphSphere/glTF/AnimatedMorphSphere.gltf",
+   "AnimatedTriangle/glTF/AnimatedTriangle.gltf",
+   "AntiqueCamera/glTF/AntiqueCamera.gltf",
+   "AttenuationTest/glTF/AttenuationTest.gltf",
+   "Avocado/glTF/Avocado.gltf",
+   "BarramundiFish/glTF/BarramundiFish.gltf",
+   "BoomBox/glTF/BoomBox.gltf",
+   "BoomBoxWithAxes/glTF/BoomBoxWithAxes.gltf",
+   "Box With Spaces/glTF/Box With Spaces.gltf",
+   "Box/glTF/Box.gltf",
+   "BoxAnimated/glTF/BoxAnimated.gltf",
+   "BoxInterleaved/glTF/BoxInterleaved.gltf",
+   "BoxTextured/glTF/BoxTextured.gltf",
+   "BoxTexturedNonPowerOfTwo/glTF/BoxTexturedNonPowerOfTwo.gltf",
+   "BoxVertexColors/glTF/BoxVertexColors.gltf",
+   "BrainStem/glTF/BrainStem.gltf",
+   "Buggy/glTF/Buggy.gltf",
+   "Cameras/glTF/Cameras.gltf",
+   "CesiumMan/glTF/CesiumMan.gltf",
+   "CesiumMilkTruck/glTF/CesiumMilkTruck.gltf",
+   "ClearCoatTest/glTF/ClearCoatTest.gltf",
+   "Corset/glTF/Corset.gltf",
+   "Cube/glTF/Cube.gltf",
+   "DamagedHelmet/glTF/DamagedHelmet.gltf",
+   "DragonAttenuation/glTF/DragonAttenuation.gltf",
+   "Duck/glTF/Duck.gltf",
+   "EmissiveStrengthTest/glTF/EmissiveStrengthTest.gltf",
+   "EnvironmentTest/glTF/EnvironmentTest.gltf",
+   "FlightHelmet/glTF/FlightHelmet.gltf",
+   "Fox/glTF/Fox.gltf",
+   "GearboxAssy/glTF/GearboxAssy.gltf",
+   "GlamVelvetSofa/glTF/GlamVelvetSofa.gltf",
+   "InterpolationTest/glTF/InterpolationTest.gltf",
+   "IridescenceDielectricSpheres/glTF/IridescenceDielectricSpheres.gltf",
+   "IridescenceLamp/glTF/IridescenceLamp.gltf",
+   "IridescenceMetallicSpheres/glTF/IridescenceMetallicSpheres.gltf",
+   "IridescenceSuzanne/glTF/IridescenceSuzanne.gltf",
+   "IridescentDishWithOlives/glTF/IridescentDishWithOlives.gltf",
+   "Lantern/glTF/Lantern.gltf",
+   "LightsPunctualLamp/glTF/LightsPunctualLamp.gltf",
+   "MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf",
+   "MetalRoughSpheres/glTF/MetalRoughSpheres.gltf",
+   "MetalRoughSpheresNoTextures/glTF/MetalRoughSpheresNoTextures.gltf",
+   "MorphPrimitivesTest/glTF/MorphPrimitivesTest.gltf",
+   "MorphStressTest/glTF/MorphStressTest.gltf",
+   "MosquitoInAmber/glTF/MosquitoInAmber.gltf",
+   "MultiUVTest/glTF/MultiUVTest.gltf",
+   "MultipleScenes/glTF/MultipleScenes.gltf",
+   "NormalTangentMirrorTest/glTF/NormalTangentMirrorTest.gltf",
+   "NormalTangentTest/glTF/NormalTangentTest.gltf",
+   "OrientationTest/glTF/OrientationTest.gltf",
+   "ReciprocatingSaw/glTF/ReciprocatingSaw.gltf",
+   "RecursiveSkeletons/glTF/RecursiveSkeletons.gltf",
+   "RiggedFigure/glTF/RiggedFigure.gltf",
+   "RiggedSimple/glTF/RiggedSimple.gltf",
+   "SciFiHelmet/glTF/SciFiHelmet.gltf",
+   "SheenChair/glTF/SheenChair.gltf",
+   "SheenCloth/glTF/SheenCloth.gltf",
+   "SimpleMeshes/glTF/SimpleMeshes.gltf",
+   "SimpleMorph/glTF/SimpleMorph.gltf",
+   "SimpleSkin/glTF/SimpleSkin.gltf",
+   "SimpleSparseAccessor/glTF/SimpleSparseAccessor.gltf",
+   "SpecGlossVsMetalRough/glTF/SpecGlossVsMetalRough.gltf",
+   "SpecularTest/glTF/SpecularTest.gltf",
+   "Sponza/glTF/Sponza.gltf",
+   "StainedGlassLamp/glTF/StainedGlassLamp.gltf",
+   "Suzanne/glTF/Suzanne.gltf",
+   "TextureCoordinateTest/glTF/TextureCoordinateTest.gltf",
+   "TextureEncodingTest/glTF/TextureEncodingTest.gltf",
+   "TextureLinearInterpolationTest/glTF/TextureLinearInterpolationTest.gltf",
+   "TextureSettingsTest/glTF/TextureSettingsTest.gltf",
+   "TextureTransformMultiTest/glTF/TextureTransformMultiTest.gltf",
+   "TextureTransformTest/glTF/TextureTransformTest.gltf",
+   "ToyCar/glTF/ToyCar.gltf",
+   "TransmissionRoughnessTest/glTF/TransmissionRoughnessTest.gltf",
+   "TransmissionTest/glTF/TransmissionTest.gltf",
+   "Triangle/glTF/Triangle.gltf",
+   "TriangleWithoutIndices/glTF/TriangleWithoutIndices.gltf",
+   "TwoSidedPlane/glTF/TwoSidedPlane.gltf",
+   "Unicode❤♻Test/glTF/Unicode❤♻Test.gltf",
+   "UnlitTest/glTF/UnlitTest.gltf",
+   "VC/glTF/VC.gltf",
+   "VertexColorTest/glTF/VertexColorTest.gltf",
+   "WaterBottle/glTF/WaterBottle.gltf",
+];
+
+const glb = [
+   "2CylinderEngine/glTF-Binary/2CylinderEngine.glb",
+   "AlphaBlendModeTest/glTF-Binary/AlphaBlendModeTest.glb",
+   "AnimatedMorphCube/glTF-Binary/AnimatedMorphCube.glb",
+   "AnimatedMorphSphere/glTF-Binary/AnimatedMorphSphere.glb",
+   "AntiqueCamera/glTF-Binary/AntiqueCamera.glb",
+   "AttenuationTest/glTF-Binary/AttenuationTest.glb",
+   "Avocado/glTF-Binary/Avocado.glb",
+   "BarramundiFish/glTF-Binary/BarramundiFish.glb",
+   "BoomBox/glTF-Binary/BoomBox.glb",
+   "Box/glTF-Binary/Box.glb",
+   "BoxAnimated/glTF-Binary/BoxAnimated.glb",
+   "BoxInterleaved/glTF-Binary/BoxInterleaved.glb",
+   "BoxTextured/glTF-Binary/BoxTextured.glb",
+   "BoxTexturedNonPowerOfTwo/glTF-Binary/BoxTexturedNonPowerOfTwo.glb",
+   "BoxVertexColors/glTF-Binary/BoxVertexColors.glb",
+   "BrainStem/glTF-Binary/BrainStem.glb",
+   "Buggy/glTF-Binary/Buggy.glb",
+   "CesiumMan/glTF-Binary/CesiumMan.glb",
+   "CesiumMilkTruck/glTF-Binary/CesiumMilkTruck.glb",
+   "ClearCoatTest/glTF-Binary/ClearCoatTest.glb",
+   "Corset/glTF-Binary/Corset.glb",
+   "DamagedHelmet/glTF-Binary/DamagedHelmet.glb",
+   "DragonAttenuation/glTF-Binary/DragonAttenuation.glb",
+   "Duck/glTF-Binary/Duck.glb",
+   "EmissiveStrengthTest/glTF-Binary/EmissiveStrengthTest.glb",
+   "Fox/glTF-Binary/Fox.glb",
+   "GearboxAssy/glTF-Binary/GearboxAssy.glb",
+   "GlamVelvetSofa/glTF-Binary/GlamVelvetSofa.glb",
+   "InterpolationTest/glTF-Binary/InterpolationTest.glb",
+   "IridescenceLamp/glTF-Binary/IridescenceLamp.glb",
+   "IridescenceSuzanne/glTF-Binary/IridescenceSuzanne.glb",
+   "IridescentDishWithOlives/glTF-Binary/IridescentDishWithOlives.glb",
+   "Lantern/glTF-Binary/Lantern.glb",
+   "LightsPunctualLamp/glTF-Binary/LightsPunctualLamp.glb",
+   "MaterialsVariantsShoe/glTF-Binary/MaterialsVariantsShoe.glb",
+   "MetalRoughSpheres/glTF-Binary/MetalRoughSpheres.glb",
+   "MetalRoughSpheresNoTextures/glTF-Binary/MetalRoughSpheresNoTextures.glb",
+   "MorphPrimitivesTest/glTF-Binary/MorphPrimitivesTest.glb",
+   "MorphStressTest/glTF-Binary/MorphStressTest.glb",
+   "MosquitoInAmber/glTF-Binary/MosquitoInAmber.glb",
+   "MultiUVTest/glTF-Binary/MultiUVTest.glb",
+   "NormalTangentMirrorTest/glTF-Binary/NormalTangentMirrorTest.glb",
+   "NormalTangentTest/glTF-Binary/NormalTangentTest.glb",
+   "OrientationTest/glTF-Binary/OrientationTest.glb",
+   "ReciprocatingSaw/glTF-Binary/ReciprocatingSaw.glb",
+   "RecursiveSkeletons/glTF-Binary/RecursiveSkeletons.glb",
+   "RiggedFigure/glTF-Binary/RiggedFigure.glb",
+   "RiggedSimple/glTF-Binary/RiggedSimple.glb",
+   "SheenChair/glTF-Binary/SheenChair.glb",
+   "SpecGlossVsMetalRough/glTF-Binary/SpecGlossVsMetalRough.glb",
+   "SpecularTest/glTF-Binary/SpecularTest.glb",
+   "TextureCoordinateTest/glTF-Binary/TextureCoordinateTest.glb",
+   "TextureEncodingTest/glTF-Binary/TextureEncodingTest.glb",
+   "TextureLinearInterpolationTest/glTF-Binary/TextureLinearInterpolationTest.glb",
+   "TextureSettingsTest/glTF-Binary/TextureSettingsTest.glb",
+   "TextureTransformMultiTest/glTF-Binary/TextureTransformMultiTest.glb",
+   "ToyCar/glTF-Binary/ToyCar.glb",
+   "TransmissionRoughnessTest/glTF-Binary/TransmissionRoughnessTest.glb",
+   "TransmissionTest/glTF-Binary/TransmissionTest.glb",
+   "Unicode❤♻Test/glTF-Binary/Unicode❤♻Test.glb",
+   "UnlitTest/glTF-Binary/UnlitTest.glb",
+   "VC/glTF-Binary/VC.glb",
+   "VertexColorTest/glTF-Binary/VertexColorTest.glb",
+   "WaterBottle/glTF-Binary/WaterBottle.glb",
+];
+
+const server = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/";
+
+const Browser = X3D .getBrowser ();
+
+function createList (description, array)
+{
+   const column = $(".column1");
+
+   $("<div></div>") .append ($("<strong></strong>") .text (description)) .appendTo (column);
+
+   const list = $("<ul></ul>") .appendTo (column);
+
+   for (const filename of array)
+   {
+      const m = filename .match (/^([^\/]+)/);
+
+      $("<a></a>")
+         .text (m [1])
+         .attr ("href", server + filename)
+         .appendTo ($("<li></li>") .appendTo (list))
+         .on ("click", loadURL .bind (null, filename));
+   }
+}
+
+function loadURL (filename)
+{
+   Browser .loadURL (new X3D .MFString (server + filename));
+
+   return false;
+}
+
+function browserCallback (event)
+{
+   if (event !== X3D .X3DConstants .INITIALIZED_EVENT)
+      return;
+
+   try
+   {
+      const animations = Browser .currentScene .getExportedNode ("Animations");
+
+      for (const group of animations .children)
+      {
+         group .children [0] .loop      = true;
+         group .children [0] .startTime = Date .now () / 1000;
+      }
+   }
+   catch (error)
+   { }
+
+   if (!Browser .getActiveViewpoint () ._description .getValue ())
+      Browser .viewAll ();
+}
+
+createList ("glTF Samples", glTF);
+createList ("glb Samples", glb);
+
+Browser .addBrowserCallback ("samples", browserCallback);
+</script>
