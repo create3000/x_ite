@@ -43,7 +43,7 @@ Time in seconds of maximum load duration prior to declaring failure. Default val
 
 ### SFBool [out] **isActive**
 
-IsActive true/false events are sent when sensing starts/stops.
+*isActive* true/false events are sent when sensing starts/stops.
 
 ### SFBool [out] **isLoaded**
 

@@ -38,11 +38,11 @@ If set_boolean input is true, trigger output of integer value.
 
 ### SFInt32 [in, out] **integerKey** -1 <small>(-∞,∞)</small>
 
-IntegerKey is value for output when triggered.
+*integerKey* is value for output when triggered.
 
 ### SFInt32 [out] **triggerValue**
 
-TriggerValue provides integer event output matching integerKey when true set_boolean received.
+*triggerValue* provides integer event output matching integerKey when true set_boolean received.
 
 ## External Links
 

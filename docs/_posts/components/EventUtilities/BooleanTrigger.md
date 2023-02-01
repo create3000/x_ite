@@ -34,11 +34,11 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFTime [in] **set_triggerTime**
 
-Set_triggerTime provides input time event, typical event sent is TouchSensor touchTime.
+*set_triggerTime* provides input time event, typical event sent is TouchSensor touchTime.
 
 ### SFBool [out] **triggerTrue**
 
-TriggerTrue outputs a true value whenever a triggerTime event is received.
+*triggerTrue* outputs a true value whenever a triggerTime event is received.
 
 ## External Links
 

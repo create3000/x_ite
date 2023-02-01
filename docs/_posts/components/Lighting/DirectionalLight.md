@@ -34,7 +34,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFBool [in, out] **global** FALSE
 
-Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+*global* lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
 
 ### SFBool [in, out] **on** TRUE
 
@@ -42,7 +42,7 @@ Enables/disables this light source.
 
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
 
-Color of light, applied to colors of objects.
+*color* of light, applied to colors of objects.
 
 #### See Also
 

@@ -34,7 +34,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFBool [in, out] **separateBackColor** FALSE
 
-SeparateBackColor determines whether separate Material values are used for back faces.
+*separateBackColor* determines whether separate Material values are used for back faces.
 
 #### Warning
 

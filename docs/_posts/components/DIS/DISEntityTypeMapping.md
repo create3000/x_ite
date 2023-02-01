@@ -67,7 +67,7 @@ Enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM, ENVIRO
 
 ### SFInt32 [ ] **specific**
 
-Specific information about an entity based on the Subcategory field. See DIS Enumerations values.
+*specific* information about an entity based on the Subcategory field. See DIS Enumerations values.
 
 ### SFInt32 [ ] **subcategory**
 

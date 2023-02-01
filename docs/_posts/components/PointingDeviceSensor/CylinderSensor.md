@@ -48,7 +48,7 @@ Author-provided text tooltip that tells users the expected action of this node.
 
 ### SFRotation [in, out] **axisRotation** 0 0 1 0
 
-AxisRotation determines local sensor coordinate system by rotating the local coordinate system.
+*axisRotation* determines local sensor coordinate system by rotating the local coordinate system.
 
 ### SFFloat [in, out] **diskAngle** 0.261792 <small>[0,π/2]</small>
 
@@ -88,11 +88,11 @@ Determines whether previous offset values are remembered/accumulated.
 
 ### SFVec3f [out] **trackPoint_changed**
 
-TrackPoint_changed events give intersection point of bearing with sensor's virtual geometry.
+*trackPoint_changed* events give intersection point of bearing with sensor's virtual geometry.
 
 ### SFRotation [out] **rotation_changed**
 
-Rotation_changed events equal sum of relative bearing changes plus offset value about Y-axis in local coordinate system.
+*rotation_changed* events equal sum of relative bearing changes plus offset value about Y-axis in local coordinate system.
 
 ### SFBool [out] **isOver**
 

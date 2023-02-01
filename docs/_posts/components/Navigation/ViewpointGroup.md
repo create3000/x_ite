@@ -33,7 +33,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFBool [in, out] **displayed** TRUE
 
-Displayed determines whether this ViewpointGroup is displayed in the current viewpoint list.
+*displayed* determines whether this ViewpointGroup is displayed in the current viewpoint list.
 
 ### SFString [in, out] **description** ""
 
@@ -53,7 +53,7 @@ Retain (true) or reset to zero (false) any prior user navigation offsets from de
 
 ### SFVec3f [in, out] **size** 0 0 0 <small>(-∞,∞)</small>
 
-Size of proximity box around center location within which ViewpointGroup is usable and displayed on viewpoint list.
+*size* of proximity box around center location within which ViewpointGroup is usable and displayed on viewpoint list.
 
 #### Hint
 
@@ -61,7 +61,7 @@ Size of proximity box around center location within which ViewpointGroup is usab
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
 
-Center specifies center point of proximity box within which ViewpointGroup is usable and displayed on viewpoint list.
+*center* specifies center point of proximity box within which ViewpointGroup is usable and displayed on viewpoint list.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DViewpointNode | ViewpointGroup]</small>
 

@@ -43,7 +43,7 @@ Lateral/vertical shift in 2D (s,t) texture coordinates (opposite effect appears 
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞)</small>
 
-Rotation angle of texture about center (opposite effect appears on geometry).
+*rotation* angle of texture about center (opposite effect appears on geometry).
 
 ### SFVec3f [in, out] **scale** 1 1 1 <small>(-∞,∞)</small>
 
@@ -51,7 +51,7 @@ Non-uniform planar scaling of texture about center (opposite effect appears on g
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
 
-Center point in 2D (s,t) texture coordinates for rotation and scaling.
+*center* point in 2D (s,t) texture coordinates for rotation and scaling.
 
 ## Description
 

@@ -65,7 +65,7 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 ### SFVec3f [out] **origin**
 
-Origin of the text local coordinate system, in units of the coordinate system in which the Text node is embedded. The value of the origin field represents the upper left corner of the textBounds.
+*origin* of the text local coordinate system, in units of the coordinate system in which the Text node is embedded. The value of the origin field represents the upper left corner of the textBounds.
 
 ### SFVec2f [out] **textBounds**
 

@@ -232,7 +232,7 @@ Rate at which munitions are fired.
 
 ### SFInt32 [in, out] **forceID** <small>[0,255]</small>
 
-ForceID determines the team membership of the issuing entity, and whether FRIENDLY OPPOSING or NEUTRAL or OTHER.
+*forceID* determines the team membership of the issuing entity, and whether FRIENDLY OPPOSING or NEUTRAL or OTHER.
 
 ### SFInt32 [in, out] **fuse** <small>[0,65535]</small>
 
@@ -260,7 +260,7 @@ Fallback server port if multicast not available locally.
 
 ### SFInt32 [in, out] **munitionApplicationID** 1 <small>[0,65535]</small>
 
-MunitionApplicationID, unique for application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
+*munitionApplicationID*, unique for application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
 
 ### SFVec3f [in, out] **munitionEndPoint** 0 0 0 <small>(-∞,∞)</small>
 
@@ -268,7 +268,7 @@ Final point of the munition path from firing weapon to detonation or impact, in 
 
 ### SFInt32 [in, out] **munitionEntityID** <small>[0,65535]</small>
 
-MunitionEntityID is unique ID for entity firing munition within that application.
+*munitionEntityID* is unique ID for entity firing munition within that application.
 
 ### SFInt32 [in, out] **munitionQuantity** <small>[0,65535]</small>
 

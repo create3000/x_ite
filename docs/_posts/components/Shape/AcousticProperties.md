@@ -39,7 +39,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFBool [in, out] **load** TRUE
 
-load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
+*load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
 
 #### Hints
 

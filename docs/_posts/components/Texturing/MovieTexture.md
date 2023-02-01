@@ -46,7 +46,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFBool [in, out] **load** TRUE
 
-load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
+*load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
 
 #### Hints
 
@@ -71,7 +71,7 @@ Location and filename of movie file or stream. Multiple locations are more relia
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 
-autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
+*autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
 
 #### Hints
 
@@ -84,7 +84,7 @@ autoRefresh defines interval in seconds before automatic reload of current url a
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
 
-autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
+*autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
 
 #### Hint
 
@@ -120,7 +120,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 ### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
 
-When resumeTime becomes <= time now, isPaused becomes false and MovieTexture becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When resumeTime becomes\<= time now, isPaused becomes false and MovieTexture becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -132,7 +132,7 @@ When resumeTime becomes <= time now, isPaused becomes false and MovieTexture bec
 
 ### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
 
-When time now >= pauseTime, isPaused becomes true and MovieTexture becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= pauseTime, isPaused becomes true and MovieTexture becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -156,7 +156,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 ### SFBool [out] **isPaused**
 
-IsPaused true/false events are sent when MovieTexture is paused/resumed.
+*isPaused* true/false events are sent when MovieTexture is paused/resumed.
 
 #### Warning
 
@@ -164,7 +164,7 @@ IsPaused true/false events are sent when MovieTexture is paused/resumed.
 
 ### SFBool [out] **isActive**
 
-IsActive true/false events are sent when playback starts/stops.
+*isActive* true/false events are sent when playback starts/stops.
 
 ### SFTime [out] **elapsedTime**
 

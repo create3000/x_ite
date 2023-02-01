@@ -87,7 +87,7 @@ Color of the ground at the various angles on the ground partial sphere. First va
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 
-Transparency applied to texture images, enabling an X3D scene to overlay an HTML page or desktop.
+*transparency* applied to texture images, enabling an X3D scene to overlay an HTML page or desktop.
 
 ### SFBool [out] **isBound**
 

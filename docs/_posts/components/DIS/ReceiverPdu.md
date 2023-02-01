@@ -65,7 +65,7 @@ Each simulation application that can respond to simulation management PDUs needs
 
 ### SFInt32 [in, out] **entityID** <small>[0,65535]</small>
 
-EntityID unique ID for entity within that application.
+*entityID* unique ID for entity within that application.
 
 ### SFString [in, out] **multicastRelayHost** ""
 
@@ -97,11 +97,11 @@ Seconds between read updates, 0 means no reading.
 
 ### SFFloat [in, out] **receivedPower**
 
-ReceivedPower indicates radio frequency (RF) power received, in units of decibel-milliwatts (dBm), after applying any propagation loss and antenna gain
+*receivedPower* indicates radio frequency (RF) power received, in units of decibel-milliwatts (dBm), after applying any propagation loss and antenna gain
 
 ### SFInt32 [in, out] **receiverState**
 
-ReceiverState indicates if receiver is currently idle or busy via one of these enumerated values: 0 = off, 1 = on but not receiving, or 2 = on and receiving.
+*receiverState* indicates if receiver is currently idle or busy via one of these enumerated values: 0 = off, 1 = on but not receiving, or 2 = on and receiving.
 
 ### SFBool [in, out] **rtpHeaderExpected** FALSE
 

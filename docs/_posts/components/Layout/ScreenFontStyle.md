@@ -33,7 +33,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFString [ ] **language** ""
 
-Language codes consist of a primary code and a (possibly empty) series of subcodes. [ language-code = primary-code ( "-" subcode )\* ] Two-letter primary codes are reserved for language abbreviations. Two-letter primary codes include en (English), fr (French), de (German), it (Italian), nl (Dutch), el (Greek), es (Spanish), pt (Portuguese), ar (Arabic), he (Hebrew), ru (Russian), zh (Chinese), ja (Japanese), hi (Hindi), ur (Urdu), and sa (Sanskrit). Any two-letter subcode is understood to be a country code.
+*language* codes consist of a primary code and a (possibly empty) series of subcodes. [ language-code = primary-code ( "-" subcode )\* ] Two-letter primary codes are reserved for language abbreviations. Two-letter primary codes include en (English), fr (French), de (German), it (Italian), nl (Dutch), el (Greek), es (Spanish), pt (Portuguese), ar (Arabic), he (Hebrew), ru (Russian), zh (Chinese), ja (Japanese), hi (Hindi), ur (Urdu), and sa (Sanskrit). Any two-letter subcode is understood to be a country code.
 
 #### Warning
 
@@ -76,7 +76,7 @@ Pick one of four values for text style.
 
 ### SFFloat [ ] **pointSize** 12 <small>(0,∞)</small>
 
-PointSize field specifies the size of text in points. Nominal height (in local coordinate system) of text glyphs Also sets default spacing between adjacent lines of text.
+*pointSize* field specifies the size of text in points. Nominal height (in local coordinate system) of text glyphs Also sets default spacing between adjacent lines of text.
 
 #### Hint
 

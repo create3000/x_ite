@@ -34,7 +34,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFVec3d [in, out] **point** [ ] <small>(-∞,∞)</small>
 
-Point contains a set of 3D coordinate triplet values.
+*point* contains a set of 3D coordinate triplet values.
 
 ## Description
 

@@ -34,7 +34,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFVec3f [in, out] **axisOfRotation** 0 1 0 <small>(-∞,∞)</small>
 
-AxisOfRotation direction is relative to local coordinate system.
+*axisOfRotation* direction is relative to local coordinate system.
 
 #### Hint
 

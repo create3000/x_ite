@@ -52,7 +52,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
 
-Set_fraction selects input key for corresponding keyValue output.
+*set_fraction* selects input key for corresponding keyValue output.
 
 ### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
 

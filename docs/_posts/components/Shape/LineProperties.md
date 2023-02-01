@@ -37,7 +37,7 @@ Whether or not LineProperties are applied to associated geometry.
 
 ### SFInt32 [in, out] **linetype** 1 <small>[1,∞)</small>
 
-Linetype selects a line pattern, with solid default if defined value isn't supported. Values with guaranteed support are 1 Solid, 2 Dashed, 3 Dotted, 4 Dashed-dotted, 5 Dash-dot-dot. Optionally supported values are 6 single-headed arrow (arrow tip occurs at last point of each individual list of points), 7 single dot, 8 double-headed arrow, 10 chain line, 11 center line, 12 hidden line, 13 phantom line, 14 break line 1, 15 break line 2, 16 User-specified dash pattern.
+*linetype* selects a line pattern, with solid default if defined value isn't supported. Values with guaranteed support are 1 Solid, 2 Dashed, 3 Dotted, 4 Dashed-dotted, 5 Dash-dot-dot. Optionally supported values are 6 single-headed arrow (arrow tip occurs at last point of each individual list of points), 7 single dot, 8 double-headed arrow, 10 chain line, 11 center line, 12 hidden line, 13 phantom line, 14 break line 1, 15 break line 2, 16 User-specified dash pattern.
 
 #### Hint
 
@@ -45,7 +45,7 @@ Linetype selects a line pattern, with solid default if defined value isn't suppo
 
 ### SFFloat [in, out] **linewidthScaleFactor** 0 <small>(-∞,∞)</small>
 
-LinewidthScaleFactor is a scale factor multiplied by browser-dependent nominal linewidth, mapped to nearest available line width. Values zero or less provide minimum available line width.
+*linewidthScaleFactor* is a scale factor multiplied by browser-dependent nominal linewidth, mapped to nearest available line width. Values zero or less provide minimum available line width.
 
 ## Description
 

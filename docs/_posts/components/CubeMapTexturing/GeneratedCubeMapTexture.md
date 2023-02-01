@@ -35,7 +35,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFString [in, out] **update** "NONE" <small>["NONE"|"NEXT_FRAME_ONLY"|"ALWAYS"]</small>
 
-Update controls regeneration of the texture.
+*update* controls regeneration of the texture.
 
 #### Warnings
 
@@ -43,7 +43,7 @@ Update controls regeneration of the texture.
 
 ### SFInt32 [ ] **size** 128 <small>(0,∞)</small>
 
-Size indicates the resolution of the generated images in number of pixels per side.
+*size* indicates the resolution of the generated images in number of pixels per side.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 

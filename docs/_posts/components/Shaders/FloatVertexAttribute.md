@@ -42,7 +42,7 @@ Required name for this particular VertexAttribute instance.
 
 ### SFInt32 [ ] **numComponents** 4 <small>[1..4]</small>
 
-NumComponents pecifies how many consecutive floating-point values should be grouped together per vertex.
+*numComponents* pecifies how many consecutive floating-point values should be grouped together per vertex.
 
 #### Hint
 
@@ -50,7 +50,7 @@ NumComponents pecifies how many consecutive floating-point values should be grou
 
 ### MFFloat [in, out] **value** [ ] <small>[] (-∞,∞)</small>
 
-Value specifies an arbitrary collection of floating-point values that will be passed to the shader as per-vertex information.
+*value* specifies an arbitrary collection of floating-point values that will be passed to the shader as per-vertex information.
 
 #### Hint
 

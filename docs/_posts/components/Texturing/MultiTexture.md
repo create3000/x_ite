@@ -54,7 +54,7 @@ The alpha field defines the alpha (1-transparency) base value for mode operation
 
 ### MFString [in, out] **mode** [ ]
 
-Mode field indicates the type of blending operation, both for color and for alpha channel.
+*mode* field indicates the type of blending operation, both for color and for alpha channel.
 
 #### Hints
 
@@ -66,7 +66,7 @@ Mode field indicates the type of blending operation, both for color and for alph
 
 ### MFString [in, out] **source** [ ]
 
-Source field determines whether each image source is treated as DIFFUSE, SPECULAR or a multiplicative FACTOR. Empty string value "" indicates that no source modifier is applied for that stage.
+*source* field determines whether each image source is treated as DIFFUSE, SPECULAR or a multiplicative FACTOR. Empty string value "" indicates that no source modifier is applied for that stage.
 
 #### Hints
 
@@ -74,7 +74,7 @@ Source field determines whether each image source is treated as DIFFUSE, SPECULA
 
 ### MFString [in, out] **function** [ ]
 
-Function operators COMPLEMENT or ALPHAREPLICATE can be applied after the mode blending operation. Empty string value "" indicates that no function operation is applied for that stage.
+*function* operators COMPLEMENT or ALPHAREPLICATE can be applied after the mode blending operation. Empty string value "" indicates that no function operation is applied for that stage.
 
 #### Hints
 

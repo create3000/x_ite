@@ -41,7 +41,7 @@ Defines index values into the parent HAnimSegment or HAnimBody/HAnimHumanoid coo
 
 ### MFVec3f [in, out] **displacements** [ ]
 
-Displacements are a set of SFVec3f values added to neutral/resting position of each of the corresponding HAnimSegment vertices (or HAnimJoint/HAnimHumanoid vertices) referenced by coordIndex field.
+*displacements* are a set of SFVec3f values added to neutral/resting position of each of the corresponding HAnimSegment vertices (or HAnimJoint/HAnimHumanoid vertices) referenced by coordIndex field.
 
 #### Hint
 

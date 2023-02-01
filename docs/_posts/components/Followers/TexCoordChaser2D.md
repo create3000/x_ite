@@ -35,11 +35,11 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFVec2f [in] **set_value**
 
-Set_value resets current value of this node.
+*set_value* resets current value of this node.
 
 ### MFVec2f [in] **set_destination**
 
-Set_destination resets destination value of this node.
+*set_destination* resets destination value of this node.
 
 ### MFVec2f [ ] **initialValue** [ ]
 
@@ -51,11 +51,11 @@ Initial destination value for this node.
 
 ### SFTime [ ] **duration** 1 <small>[0,∞)</small>
 
-Duration is the time interval for filter response in seconds.
+*duration* is the time interval for filter response in seconds.
 
 ### SFBool [out] **isActive**
 
-IsActive true/false events are sent when follower-node computation starts/stops.
+*isActive* true/false events are sent when follower-node computation starts/stops.
 
 ### MFVec2f [out] **value_changed**
 

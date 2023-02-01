@@ -39,7 +39,7 @@ The mapping label identifies which texture coordinates and transformations are u
 
 ### SFMatrix4f [in, out] **matrix** 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 <small>(-∞,∞)</small>
 
-Matrix is a generalized, unfiltered 4x4 transformation matrix to modify texture (opposite effect appears on geometry).
+*matrix* is a generalized, unfiltered 4x4 transformation matrix to modify texture (opposite effect appears on geometry).
 
 ## Description
 

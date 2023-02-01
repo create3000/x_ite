@@ -33,15 +33,15 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFString [in, out] **forceOutput** "NONE" <small>["ALL","NONE",...]</small>
 
-ForceOutput controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
+*forceOutput* controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
 
 ### SFVec3f [in, out] **anchorPoint** 0 0 0
 
-AnchorPoint is joint center, specified in world coordinates.
+*anchorPoint* is joint center, specified in world coordinates.
 
 ### SFVec3f [in, out] **axis1** 0 0 0
 
-Axis1 defines axis vector of joint connection to body1.
+*axis1* defines axis vector of joint connection to body1.
 
 #### Hint
 
@@ -49,7 +49,7 @@ Axis1 defines axis vector of joint connection to body1.
 
 ### SFVec3f [in, out] **axis2** 0 0 0
 
-Axis2 defines axis vector of joint connection to body2.
+*axis2* defines axis vector of joint connection to body2.
 
 #### Hint
 
@@ -77,11 +77,11 @@ DesiredAngularVelocity2 is goal rotation rate for hinge connection to body2.
 
 ### SFFloat [in, out] **maxTorque1** 0 <small>(-∞,∞) <span class="no">not supported</span></small>
 
-MaxTorque1 is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity1.
+*maxTorque1* is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity1.
 
 ### SFFloat [in, out] **maxTorque2** 0 <small>(-∞,∞) <span class="no">not supported</span></small>
 
-MaxTorque2 is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity2.
+*maxTorque2* is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity2.
 
 ### SFFloat [in, out] **stopBounce1** 0 <small>[0,1]<span class="no"> not supported</span></small>
 
@@ -97,7 +97,7 @@ Input/Output field stopErrorCorrection1.
 
 ### SFFloat [in, out] **suspensionForce** 0 <small>[0,∞)<span class="no"> not supported</span></small>
 
-SuspensionForce describes how quickly the system resolves intersection errors due to floating-point inaccuracies.
+*suspensionForce* describes how quickly the system resolves intersection errors due to floating-point inaccuracies.
 
 #### Hints
 
@@ -105,7 +105,7 @@ SuspensionForce describes how quickly the system resolves intersection errors du
 
 ### SFFloat [in, out] **suspensionErrorCorrection** 0.8 <small>[0,1]<span class="no"> not supported</span></small>
 
-SuspensionErrorCorrection describes how quickly the system resolves intersection errors due to floating-point inaccuracies.
+*suspensionErrorCorrection* describes how quickly the system resolves intersection errors due to floating-point inaccuracies.
 
 #### Hints
 

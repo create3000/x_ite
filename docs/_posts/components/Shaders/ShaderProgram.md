@@ -34,7 +34,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFString [ ] **type** "VERTEX" <small>["VERTEX"|"FRAGMENT"]</small>
 
-Type indicates whether this ShaderProgram is a vertex or fragment (pixel) shader.
+*type* indicates whether this ShaderProgram is a vertex or fragment (pixel) shader.
 
 #### Warning
 

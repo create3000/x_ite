@@ -97,7 +97,7 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 ### SFBool [ ] **ccw** TRUE
 
-Ccw = counterclockwise: ordering of vertex-coordinates orientation.
+*ccw* = counterclockwise: ordering of vertex-coordinates orientation.
 
 #### Hint
 
@@ -113,7 +113,7 @@ Whether all polygons in a shape are convex (true), or possibly concave (false). 
 
 ### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
 
-CreaseAngle defines angle (in radians) where adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than creaseAngle, smooth shading is rendered across the shared line segment.
+*creaseAngle* defines angle (in radians) where adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than creaseAngle, smooth shading is rendered across the shared line segment.
 
 #### Hint
 
@@ -129,7 +129,7 @@ An ordered set of 2D points drawing a piecewise-linear curve and forming a plana
 
 ### MFRotation [ ] **orientation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
-Orientation is a list of axis-angle orientation 4-tuples applied at each spine-aligned cross-section plane.
+*orientation* is a list of axis-angle orientation 4-tuples applied at each spine-aligned cross-section plane.
 
 #### Hint
 
@@ -137,7 +137,7 @@ Orientation is a list of axis-angle orientation 4-tuples applied at each spine-a
 
 ### MFVec2f [ ] **scale** 1 1 <small>(0,∞)</small>
 
-Scale is a list of 2D-scale parameters applied at each spine-aligned cross-section plane.
+*scale* is a list of 2D-scale parameters applied at each spine-aligned cross-section plane.
 
 #### Hint
 
@@ -149,7 +149,7 @@ Scale is a list of 2D-scale parameters applied at each spine-aligned cross-secti
 
 ### MFVec3f [ ] **spine** [ 0 0 0, 0 1 0 ] <small>(-∞,∞)</small>
 
-Spine is a list of 3D points for a piecewise-linear curve forming a series of connected vertices, open or closed. This is the path along which the crossSection is extruded.
+*spine* is a list of 3D points for a piecewise-linear curve forming a series of connected vertices, open or closed. This is the path along which the crossSection is extruded.
 
 #### Hint
 

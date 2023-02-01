@@ -33,15 +33,15 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFString [in, out] **forceOutput** "NONE" <small>["ALL","NONE",...]</small>
 
-ForceOutput controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
+*forceOutput* controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
 
 ### SFVec3f [in, out] **axis** 0 1 0
 
-Axis is normalized vector specifying direction of motion.
+*axis* is normalized vector specifying direction of motion.
 
 ### SFFloat [in, out] **minSeparation** 0 <small>[0,∞)</small>
 
-MinSeparation is minimum separation distance between the two bodies.
+*minSeparation* is minimum separation distance between the two bodies.
 
 #### Hint
 
@@ -49,7 +49,7 @@ MinSeparation is minimum separation distance between the two bodies.
 
 ### SFFloat [in, out] **maxSeparation** 1 <small>[0,∞)</small>
 
-MaxSeparation is maximum separation distance between the two bodies.
+*maxSeparation* is maximum separation distance between the two bodies.
 
 #### Hint
 
@@ -61,7 +61,7 @@ Input/Output field sliderForce.
 
 ### SFFloat [in, out] **stopBounce** 0 <small>[0,1] <span class="no">not supported</span></small>
 
-StopBounce is velocity factor for bounce back once stop point is reached.
+*stopBounce* is velocity factor for bounce back once stop point is reached.
 
 #### Hint
 
@@ -69,7 +69,7 @@ StopBounce is velocity factor for bounce back once stop point is reached.
 
 ### SFFloat [in, out] **stopErrorCorrection** 1 <small>[0,1] <span class="no">not supported</span></small>
 
-StopErrorCorrection is fraction of error correction performed during time step once stop point is reached.
+*stopErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
 
 #### Hint
 
@@ -77,11 +77,11 @@ StopErrorCorrection is fraction of error correction performed during time step o
 
 ### SFFloat [out] **separation** <span class="no"><small class="small">not supported</small></span>
 
-Separation indicates final separation distance between the two bodies.
+*separation* indicates final separation distance between the two bodies.
 
 ### SFFloat [out] **separationRate** <span class="no"><small class="small">not supported</small></span>
 
-SeparationRate indicates change in separation distance over time between the two bodies.
+*separationRate* indicates change in separation distance over time between the two bodies.
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 

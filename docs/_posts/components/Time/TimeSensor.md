@@ -40,7 +40,7 @@ Enables/disables node operation.
 
 ### SFTime [in, out] **cycleInterval** 1 <small>(0,∞)</small>
 
-CycleInterval is loop duration in seconds. Interchange profile hint: TimeSensor may be ignored if cycleInterval \< 0.01 second.
+*cycleInterval* is loop duration in seconds. Interchange profile hint: TimeSensor may be ignored if cycleInterval \< 0.01 second.
 
 #### Warning
 
@@ -52,7 +52,7 @@ Repeat indefinitely when loop=true, repeat only once when loop=false.
 
 ### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
 
-When time now >= startTime, isActive becomes true and TimeSensor becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= startTime, isActive becomes true and TimeSensor becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -60,7 +60,7 @@ When time now >= startTime, isActive becomes true and TimeSensor becomes active.
 
 ### SFTime [in, out] **resumeTime**
 
-When resumeTime becomes <= time now, isPaused becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When *resumeTime* becomes\<= time now, isPaused becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -72,7 +72,7 @@ When resumeTime becomes <= time now, isPaused becomes false and TimeSensor becom
 
 ### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
 
-When time now >= pauseTime, isPaused becomes true and TimeSensor becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= *pauseTime*, *isPaused* becomes true and TimeSensor becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -96,7 +96,7 @@ When stopTime becomes \<= time now, isActive becomes false and TimeSensor become
 
 ### SFBool [out] **isPaused**
 
-IsPaused true/false events are sent when TimeSensor is paused/resumed.
+*isPaused* true/false events are sent when TimeSensor is paused/resumed.
 
 #### Warning
 
@@ -104,11 +104,11 @@ IsPaused true/false events are sent when TimeSensor is paused/resumed.
 
 ### SFBool [out] **isActive**
 
-IsActive true/false events are sent when TimeSensor starts/stops running.
+*isActive* true/false events are sent when TimeSensor starts/stops running.
 
 ### SFTime [out] **cycleTime**
 
-CycleTime sends a time outputOnly at startTime, and also at the beginning of each new cycle (useful for synchronization with other time-based objects).
+*cycleTime* sends a time outputOnly at startTime, and also at the beginning of each new cycle (useful for synchronization with other time-based objects).
 
 ### SFTime [out] **elapsedTime**
 
@@ -120,11 +120,11 @@ Current elapsed time since TimeSensor activated/running, cumulative in seconds, 
 
 ### SFFloat [out] **fraction_changed**
 
-Fraction_changed continuously sends value in range [0,1] showing time progress in the current cycle.
+*fraction_changed* continuously sends value in range [0,1] showing time progress in the current cycle.
 
 ### SFTime [out] **time**
 
-Time continuously sends the absolute time (since January 1, 1970) for a given simulation tick.
+*time* continuously sends the absolute time (since January 1, 1970) for a given simulation tick.
 
 ## Example
 

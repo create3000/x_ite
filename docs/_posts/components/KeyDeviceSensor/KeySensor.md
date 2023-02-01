@@ -39,15 +39,15 @@ Enables/disables node operation.
 
 ### SFBool [out] **controlKey**
 
-ControlKey generates true event when pressed, false event when released.
+*controlKey* generates true event when pressed, false event when released.
 
 ### SFBool [out] **shiftKey**
 
-ShiftKey generates true event when pressed, false event when released.
+*shiftKey* generates true event when pressed, false event when released.
 
 ### SFBool [out] **altKey**
 
-AltKey generates true event when pressed, false event when released.
+*altKey* generates true event when pressed, false event when released.
 
 ### SFInt32 [out] **actionKeyPress**
 

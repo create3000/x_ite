@@ -33,7 +33,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFVec2d [in, out] **controlPoint** [ ] <small>(-∞, ∞)</small>
 
-ControlPoint specifies the end points of each segment of the piecewise linear curve.
+*controlPoint* specifies the end points of each segment of the piecewise linear curve.
 
 ## Description
 

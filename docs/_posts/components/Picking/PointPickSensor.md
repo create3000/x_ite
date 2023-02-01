@@ -39,7 +39,7 @@ Enables/disables node operation.
 
 ### SFBool [out] **isActive**
 
-IsActive indicates when the intersecting object is picked by the picking geometry. Output event isActive=true gets sent once a picked item is found. Output event isActive=false gets sent once no picked item is found.
+*isActive* indicates when the intersecting object is picked by the picking geometry. Output event isActive=true gets sent once a picked item is found. Output event isActive=false gets sent once no picked item is found.
 
 ### MFString [in, out] **objectType** "ALL" <small>["ALL","NONE","TERRAIN",...]</small>
 
@@ -51,11 +51,11 @@ The objectType field specifies a set of labels used in the picking process. Each
 
 ### SFNode [in, out] **pickingGeometry** NULL <small>[PointSet]</small>
 
-PickingGeometry specifies the exact geometry coordinates that are used to perform the intersection testing of the picking operation.
+*pickingGeometry* specifies the exact geometry coordinates that are used to perform the intersection testing of the picking operation.
 
 ### MFNode [in, out] **pickTarget** [ ] <small>[X3DGroupingNode|X3DShapeNode|Inline]</small>
 
-PickTarget specifies the list of nodes against which picking operations are performed. All nodes declared in this field and their descendents are evaluated for intersections.
+*pickTarget* specifies the list of nodes against which picking operations are performed. All nodes declared in this field and their descendents are evaluated for intersections.
 
 ### MFNode [out] **pickedGeometry**
 
@@ -63,7 +63,7 @@ Output event containing the node or nodes that have been found to intersect with
 
 ### SFString [ ] **intersectionType** "BOUNDS" <small>["GEOMETRY"|"BOUNDS"|...]</small>
 
-IntersectionType specifies precision of the collision computation.
+*intersectionType* specifies precision of the collision computation.
 
 #### Hint
 

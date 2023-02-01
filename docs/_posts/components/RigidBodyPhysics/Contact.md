@@ -32,15 +32,15 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFVec3f [in, out] **position** 0 0 0 <small>(-∞,∞)</small>
 
-Position (x, y, z in meters) of exact location of collision.
+*position* (x, y, z in meters) of exact location of collision.
 
 ### SFVec3f [in, out] **contactNormal** 0 1 0 <small>(-∞,∞)</small>
 
-ContactNormal is unit vector describing normal between two colliding bodies.
+*contactNormal* is unit vector describing normal between two colliding bodies.
 
 ### SFFloat [in, out] **depth** 0 <small>(-∞,∞)</small>
 
-Depth indicates how deep the current intersection is along normal vector.
+*depth* indicates how deep the current intersection is along normal vector.
 
 ### MFString [in, out] **appliedParameters** "BOUNCE"
 
@@ -52,15 +52,15 @@ Default global parameters for collision outputs of rigid body physics system. Co
 
 ### SFFloat [in, out] **bounce** 0 <small>[0,1]</small>
 
-Bounce indicates bounciness (0 = no bounce at all, 1 = maximum bounce).
+*bounce* indicates bounciness (0 = no bounce at all, 1 = maximum bounce).
 
 ### SFFloat [in, out] **minBounceSpeed**
 
-MinBounceSpeed m/s needed to bounce.
+*minBounceSpeed* m/s needed to bounce.
 
 ### SFVec3f [in, out] **frictionDirection** 0 1 0 <small>(-∞,∞)</small>
 
-FrictionDirection controls friction vector.
+*frictionDirection* controls friction vector.
 
 #### Hint
 
@@ -68,23 +68,23 @@ FrictionDirection controls friction vector.
 
 ### SFVec2f [in, out] **frictionCoefficients** 0 0 <small>[0,∞)</small>
 
-FrictionCoefficients used for computing surface drag.
+*frictionCoefficients* used for computing surface drag.
 
 ### SFVec2f [in, out] **surfaceSpeed** 0 0 <small>(-∞,∞)</small>
 
-SurfaceSpeed defines speed vectors for computing surface drag, if contact surfaces move independently of bodies.
+*surfaceSpeed* defines speed vectors for computing surface drag, if contact surfaces move independently of bodies.
 
 ### SFVec2f [in, out] **slipCoefficients** 0 0 <small>(-∞,∞)</small>
 
-SlipCoefficients used for computing surface drag.
+*slipCoefficients* used for computing surface drag.
 
 ### SFFloat [in, out] **softnessConstantForceMix** 0.0001 <small>[0,1]</small>
 
-SoftnessConstantForceMix value applies a constant force value to make colliding surfaces appear to be somewhat soft.
+*softnessConstantForceMix* value applies a constant force value to make colliding surfaces appear to be somewhat soft.
 
 ### SFFloat [in, out] **softnessErrorCorrection** 0.8 <small>[0,1]</small>
 
-SoftnessErrorCorrection indicates fraction of collision error fixed in a set of evaluations (0 = no error correction, 1 = all errors corrected in single step).
+*softnessErrorCorrection* indicates fraction of collision error fixed in a set of evaluations (0 = no error correction, 1 = all errors corrected in single step).
 
 ### SFNode [in, out] **geometry1** NULL <small>[X3DNBodyCollidableNode]</small>
 

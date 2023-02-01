@@ -77,7 +77,7 @@ Designates both Encoding Class and Encoding Type. Encoding Class enumerated valu
 
 ### SFInt32 [in, out] **entityID** <small>[0,65535]</small>
 
-EntityID unique ID for entity within that application.
+*entityID* unique ID for entity within that application.
 
 ### SFString [in, out] **multicastRelayHost** ""
 
@@ -113,7 +113,7 @@ Whether RTP headers are prepended to DIS PDUs.
 
 ### SFInt32 [in, out] **sampleRate**
 
-SampleRate gives either (1) sample rate in samples per second if Encoding Class is encoded audio, or (2) data rate in bits per second for data transmissions. If Encoding Class is database index, sampleRate is set to zero.
+*sampleRate* gives either (1) sample rate in samples per second if Encoding Class is encoded audio, or (2) data rate in bits per second for data transmissions. If Encoding Class is database index, sampleRate is set to zero.
 
 ### SFInt32 [in, out] **samples**
 

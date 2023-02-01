@@ -33,11 +33,11 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFBool [in] **set_boolean**
 
-Set_boolean is the input value to be filtered.
+*set_boolean* is the input value to be filtered.
 
 ### SFBool [out] **inputFalse**
 
-InputFalse only passes a false value, which occurs when set_boolean is false.
+*inputFalse* only passes a false value, which occurs when set_boolean is false.
 
 #### Hint
 
@@ -45,7 +45,7 @@ InputFalse only passes a false value, which occurs when set_boolean is false.
 
 ### SFBool [out] **inputTrue**
 
-InputTrue only passes a true value, which occurs when set_boolean input is true.
+*inputTrue* only passes a true value, which occurs when set_boolean input is true.
 
 #### Hint
 
@@ -53,7 +53,7 @@ InputTrue only passes a true value, which occurs when set_boolean input is true.
 
 ### SFBool [out] **inputNegate**
 
-InputNegate provides an opposite value by negating set_boolean input.
+*inputNegate* provides an opposite value by negating set_boolean input.
 
 ## External Links
 

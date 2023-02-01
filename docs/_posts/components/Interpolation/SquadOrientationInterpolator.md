@@ -34,7 +34,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
 
-Set_fraction selects input key for corresponding use of keyValue, keyVelocity values for output computation.
+*set_fraction* selects input key for corresponding use of keyValue, keyVelocity values for output computation.
 
 ### SFBool [in, out] **closed** FALSE
 

@@ -30,7 +30,7 @@ The ToneMappedVolumeStyle node belongs to the **VolumeRendering** component and 
 
 ### SFColorRGBA [in, out] **coolColor** 0 0 1 0 <small>[0,1]</small>
 
-CoolColor is used for surfaces facing away from the light direction.
+*coolColor* is used for surfaces facing away from the light direction.
 
 #### See Also
 
@@ -50,7 +50,7 @@ Input/Output field surfaceNormals.
 
 ### SFColorRGBA [in, out] **warmColor** 1 1 0 0 <small>[0,1]</small>
 
-WarmColor is used for surfaces facing towards the light.
+*warmColor* is used for surfaces facing towards the light.
 
 #### See Also
 

@@ -35,11 +35,11 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFVec2f [in] **set_value**
 
-Set_value resets current value of this node.
+*set_value* resets current value of this node.
 
 ### SFVec2f [in] **set_destination**
 
-Set_destination resets destination value of this node.
+*set_destination* resets destination value of this node.
 
 ### SFVec2f [ ] **initialValue** 0 0
 
@@ -51,11 +51,11 @@ Initial destination value for this node.
 
 ### SFInt32 [ ] **order** 3 <small>[0..5]</small>
 
-Order defines the number of internal filters (larger means smoother response, longer delay).
+*order* defines the number of internal filters (larger means smoother response, longer delay).
 
 ### SFTime [in, out] **tau** 0.3 <small>[0,∞)</small>
 
-Tau is the exponential-decay time constant for filter response in seconds.
+*tau* is the exponential-decay time constant for filter response in seconds.
 
 ### SFFloat [in, out] **tolerance** -1 <small>-1 or [0..∞]</small>
 
@@ -63,7 +63,7 @@ Tau is the exponential-decay time constant for filter response in seconds.
 
 ### SFBool [out] **isActive**
 
-IsActive true/false events are sent when follower-node computation starts/stops.
+*isActive* true/false events are sent when follower-node computation starts/stops.
 
 ### SFVec2f [out] **value_changed**
 

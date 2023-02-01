@@ -58,7 +58,7 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 ### SFBool [ ] **ccw** TRUE
 
-Ccw = counterclockwise: ordering of vertex coordinates orientation.
+*ccw* = counterclockwise: ordering of vertex coordinates orientation.
 
 #### Hint
 
@@ -78,7 +78,7 @@ Whether Normal node vector values are applied to each vertex (true) or to each p
 
 ### MFInt32 [ ] **index** [ ] <small>[0,∞)</small>
 
-Index values provide order in which coordinates are applied. Order starts at index 0, commas are optional between sets. Four unique indices are defined for each quad. Four unique indices are defined for each quad.
+*index* values provide order in which coordinates are applied. Order starts at index 0, commas are optional between sets. Four unique indices are defined for each quad. Four unique indices are defined for each quad.
 
 #### Warning
 

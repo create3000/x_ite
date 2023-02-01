@@ -60,11 +60,11 @@ Sends event and remembers last value sensed.
 
 ### SFVec3f [out] **trackPoint_changed**
 
-TrackPoint_changed events give intersection point of bearing with sensor's virtual geometry.
+*trackPoint_changed* events give intersection point of bearing with sensor's virtual geometry.
 
 ### SFRotation [out] **rotation_changed**
 
-Rotation_changed events equal sum of relative bearing changes plus offset value.
+*rotation_changed* events equal sum of relative bearing changes plus offset value.
 
 ### SFBool [out] **isOver**
 

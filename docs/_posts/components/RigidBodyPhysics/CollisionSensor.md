@@ -38,7 +38,7 @@ Enables/disables node operation.
 
 ### SFBool [out] **isActive**
 
-IsActive true/false events are sent when sensing starts/stops.
+*isActive* true/false events are sent when sensing starts/stops.
 
 ### MFNode [out] **intersections** <small>[X3DNBodyCollidableNode]</small>
 

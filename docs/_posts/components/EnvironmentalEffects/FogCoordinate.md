@@ -33,7 +33,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFFloat [in, out] **depth** [ ] <small>[0,1]</small>
 
-Depth contains a set depth values.
+*depth* contains a set depth values.
 
 ## External Links
 

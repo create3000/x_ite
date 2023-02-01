@@ -41,15 +41,15 @@ Nominal rendered point size is a browser-dependent minimum renderable point size
 
 ### SFFloat [in, out] **pointSizeMinValue** 1 <small>[0,∞)</small>
 
-PointSizeMinValue is minimum allowed scaling factor on nominal browser point scaling.
+*pointSizeMinValue* is minimum allowed scaling factor on nominal browser point scaling.
 
 #### Warning
 
-- Maintain pointSizeMinValue <= pointSizeMaxValue.
+- Maintain pointSizeMinValue\<= pointSizeMaxValue.
 
 ### SFFloat [in, out] **pointSizeMaxValue** 1 <small>(0,∞)</small>
 
-PointSizeMaxValue is maximum allowed scaling factor on nominal browser point scaling
+*pointSizeMaxValue* is maximum allowed scaling factor on nominal browser point scaling
 
 #### Warning
 
@@ -57,7 +57,7 @@ PointSizeMaxValue is maximum allowed scaling factor on nominal browser point sca
 
 ### MFFloat [in, out] **pointSizeAttenuation** 1 0 0 <small>(0,∞)</small>
 
-PointSizeAttenuation array values [a, b, c] are set to default values if undefined. Together these parameters define attenuation factor 1/(a + b×r + c×r^2) where r is the distance from observer position (current viewpoint) to each point.
+*pointSizeAttenuation* array values [a, b, c] are set to default values if undefined. Together these parameters define attenuation factor 1/(a + b×r + c×r^2) where r is the distance from observer position (current viewpoint) to each point.
 
 #### Hint
 
@@ -65,7 +65,7 @@ PointSizeAttenuation array values [a, b, c] are set to default values if undefin
 
 ### SFString [in, out] **colorMode** "TEXTURE_AND_POINT_COLOR" <small>["POINT_COLOR", "TEXTURE_COLOR", "TEXTURE_AND_POINT_COLOR"]</small>
 
-ColorMode has blending effect on the rendering of point sprites, applying supplied color (Color node or Material emissiveColor) and texture color
+*colorMode* has blending effect on the rendering of point sprites, applying supplied color (Color node or Material emissiveColor) and texture color
 
 #### Hint
 

@@ -33,15 +33,15 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFString [in, out] **forceOutput** "NONE" <small>["ALL","NONE",...]</small>
 
-ForceOutput controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
+*forceOutput* controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
 
 ### SFVec3f [in, out] **anchorPoint** 0 0 0
 
-AnchorPoint is joint center, specified in world coordinates.
+*anchorPoint* is joint center, specified in world coordinates.
 
 ### SFVec3f [out] **body1AnchorPoint**
 
-Body1AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
+*body1AnchorPoint* describes anchorPoint position relative to local coordinate reference frame.
 
 #### Hint
 
@@ -49,7 +49,7 @@ Body1AnchorPoint describes anchorPoint position relative to local coordinate ref
 
 ### SFVec3f [out] **body2AnchorPoint**
 
-Body2AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
+*body2AnchorPoint* describes anchorPoint position relative to local coordinate reference frame.
 
 #### Hint
 

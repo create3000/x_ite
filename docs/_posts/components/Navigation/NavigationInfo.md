@@ -46,7 +46,7 @@ Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLO
 
 ### MFFloat [in, out] **avatarSize** [ 0.25, 1.6, 0.75 ] <small>[0,∞)</small>
 
-AvatarSize triplet values are: (a) collision distance between user and geometry (near culling plane of the view frustrum) (b) viewer height above terrain (c) tallest height viewer can WALK over.
+*avatarSize* triplet values are: (a) collision distance between user and geometry (near culling plane of the view frustrum) (b) viewer height above terrain (c) tallest height viewer can WALK over.
 
 #### Hint
 
@@ -70,7 +70,7 @@ Geometry beyond the visibilityLimit may not be rendered (far culling plane of th
 
 #### Hints
 
-- Keep visibilityLimit >= zero. Keep (visibilityLimit / avatarSize.CollisionDistance) \< 10,000 to avoid aliasing artifacts (i.e. polygon "tearing"). Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Keep visibilityLimit \>= zero. Keep (visibilityLimit / avatarSize.CollisionDistance) \< 10,000 to avoid aliasing artifacts (i.e. polygon "tearing"). Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### MFString [in, out] **transitionType** "LINEAR" <small>["TELEPORT","LINEAR",</small>
 

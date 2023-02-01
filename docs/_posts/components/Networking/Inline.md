@@ -35,7 +35,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFBool [in, out] **load** TRUE
 
-load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+*load*=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
 
 #### Hints
 
@@ -64,7 +64,7 @@ Address of X3D world to load into current scene.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 
-autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
+*autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
 
 #### Hints
 
@@ -77,7 +77,7 @@ autoRefresh defines interval in seconds before automatic reload of current url a
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
 
-autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
+*autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
 
 #### Hint
 

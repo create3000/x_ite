@@ -45,7 +45,7 @@ Define order of surface by polynomials of degree = order-1.
 
 ### MFDouble [ ] **knot** [ ] <small>(-∞,∞)</small>
 
-Knot vector, where size = number of control points + order of curve.
+*knot* vector, where size = number of control points + order of curve.
 
 ### MFDouble [in, out] **weight** [ ] <small>(0,∞)</small>
 
@@ -53,7 +53,7 @@ Vector assigning relative weight value to each control point.
 
 ### MFVec2d [in, out] **controlPoint** [ ] <small>(-∞,∞)</small>
 
-ControlPoint defines a set of control points of dimension uDimension by vDimension, and defines a mesh where the points do not have uniform spacing.
+*controlPoint* defines a set of control points of dimension uDimension by vDimension, and defines a mesh where the points do not have uniform spacing.
 
 ## Description
 

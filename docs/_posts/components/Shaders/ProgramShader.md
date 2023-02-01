@@ -34,15 +34,15 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFBool [in] **activate**
 
-Activate forces the shader to activate the contained objects.
+*activate* forces the shader to activate the contained objects.
 
 ### SFBool [out] **isSelected**
 
-IsSelected indicates this shader instance is selected for use by browser
+*isSelected* indicates this shader instance is selected for use by browser
 
 ### SFBool [out] **isValid**
 
-IsValid indicates whether current shader objects can be run as a shader program.
+*isValid* indicates whether current shader objects can be run as a shader program.
 
 ### SFString [ ] **language** "" <small>["Cg"|"GLSL"|"HLSL"|...]</small>
 

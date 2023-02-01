@@ -46,7 +46,7 @@ Define order of surface by polynomials of degree = order-1.
 
 ### MFDouble [ ] **knot** [ ] <small>(-∞,∞)</small>
 
-Knot vector, where size = number of control points + order of curve.
+*knot* vector, where size = number of control points + order of curve.
 
 ### MFDouble [in, out] **weight** [ ] <small>(0,∞)</small>
 

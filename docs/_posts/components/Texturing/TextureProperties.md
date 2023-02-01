@@ -32,7 +32,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFColorRGBA [in, out] **borderColor** 0 0 0 0 <small>[0,1]</small>
 
-BorderColor defines border pixel color.
+*borderColor* defines border pixel color.
 
 #### See Also
 
@@ -40,11 +40,11 @@ BorderColor defines border pixel color.
 
 ### SFInt32 [in, out] **borderWidth** <small>[0,1]</small>
 
-BorderWidth number of pixels for texture border.
+*borderWidth* number of pixels for texture border.
 
 ### SFFloat [in, out] **anisotropicDegree** 1 <small>[1,∞)</small>
 
-AnisotropicDegree defines minimum degree of anisotropy to account for in texture filtering (1=none or higher value).
+*anisotropicDegree* defines minimum degree of anisotropy to account for in texture filtering (1=none or higher value).
 
 ### SFBool [ ] **generateMipMaps** FALSE
 
@@ -52,7 +52,7 @@ Whether MIPMAPs are generated for texture (required for MIPMAP filtering modes)
 
 ### SFString [in, out] **minificationFilter** "FASTEST"
 
-MinificationFilter indicates texture filter when image is larger than screen space representation.
+*minificationFilter* indicates texture filter when image is larger than screen space representation.
 
 #### Hint
 
@@ -64,7 +64,7 @@ MinificationFilter indicates texture filter when image is larger than screen spa
 
 ### SFString [in, out] **magnificationFilter** "FASTEST"
 
-MagnificationFilter indicates texture filter when image is smaller than screen space representation.
+*magnificationFilter* indicates texture filter when image is smaller than screen space representation.
 
 #### Hint
 
@@ -76,7 +76,7 @@ MagnificationFilter indicates texture filter when image is smaller than screen s
 
 ### SFString [in, out] **boundaryModeS** "REPEAT"
 
-BoundaryModeS describes handling of texture-coordinate boundaries.
+*boundaryModeS* describes handling of texture-coordinate boundaries.
 
 #### Hint
 
@@ -88,7 +88,7 @@ BoundaryModeS describes handling of texture-coordinate boundaries.
 
 ### SFString [in, out] **boundaryModeT** "REPEAT"
 
-BoundaryModeT describes handling of texture-coordinate boundaries.
+*boundaryModeT* describes handling of texture-coordinate boundaries.
 
 #### Hint
 
@@ -100,7 +100,7 @@ BoundaryModeT describes handling of texture-coordinate boundaries.
 
 ### SFString [in, out] **boundaryModeR** "REPEAT"
 
-BoundaryModeR describes handling of texture-coordinate boundaries.
+*boundaryModeR* describes handling of texture-coordinate boundaries.
 
 #### Hint
 
@@ -112,7 +112,7 @@ BoundaryModeR describes handling of texture-coordinate boundaries.
 
 ### SFString [in, out] **textureCompression** "FASTEST"
 
-TextureCompression indicates compression algorithm selection mode.
+*textureCompression* indicates compression algorithm selection mode.
 
 #### Hint
 
@@ -124,7 +124,7 @@ TextureCompression indicates compression algorithm selection mode.
 
 ### SFFloat [in, out] **texturePriority** 0 <small>[0,1]</small>
 
-TexturePriority defines priority for allocating texture memory.
+*texturePriority* defines priority for allocating texture memory.
 
 ## Description
 

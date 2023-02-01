@@ -33,7 +33,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFVec3f [ ] **size** 2 2 2 <small>(0,∞)</small>
 
-Size x y z in meters.
+*size* x y z in meters.
 
 #### Warning
 

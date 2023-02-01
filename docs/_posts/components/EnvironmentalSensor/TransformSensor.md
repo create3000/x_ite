@@ -39,7 +39,7 @@ Enables/disables node operation.
 
 ### SFVec3f [in, out] **size** 0 0 0 <small>[0,∞)</small>
 
-Size of intersection box, measured from center in meters.
+*size* of intersection box, measured from center in meters.
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
 
@@ -55,7 +55,7 @@ Time event generated when targetObject exits the box region for sensor.
 
 ### SFBool [out] **isActive**
 
-IsActive true/false events are sent when triggering the sensor. isActive=true when targetObject enters the box region, isActive=false when targetObject exits the box region.
+*isActive* true/false events are sent when triggering the sensor. isActive=true when targetObject enters the box region, isActive=false when targetObject exits the box region.
 
 ### SFVec3f [out] **position_changed**
 
@@ -67,7 +67,7 @@ Sends rotation event relative to center whenever the target object is contained 
 
 ### SFNode [in, out] **targetObject** NULL <small>[X3DGroupingNode|X3DShapeNode]</small>
 
-TargetObject is the movable geometry represented by any valid X3DGroupingNode or X3DShapeNode which may enter or exit the box.
+*targetObject* is the movable geometry represented by any valid X3DGroupingNode or X3DShapeNode which may enter or exit the box.
 
 ## Description
 

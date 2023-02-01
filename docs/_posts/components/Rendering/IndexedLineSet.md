@@ -57,7 +57,7 @@ Whether Color node color values are applied to each vertex (true) or per polylin
 
 ### MFInt32 [ ] **colorIndex** [ ] <small>[0,∞) or -1</small>
 
-ColorIndex indices provide order in which colors are applied.
+*colorIndex* indices provide order in which colors are applied.
 
 #### Hints
 
@@ -65,7 +65,7 @@ ColorIndex indices provide order in which colors are applied.
 
 ### MFInt32 [ ] **coordIndex** [ ] <small>[0,∞) or -1</small>
 
-CoordIndex indices provide the order in which coordinates are applied to construct each polygon face. Order starts at index 0, commas are optional between sets, use -1 to separate indices for each polyline.
+*coordIndex* indices provide the order in which coordinates are applied to construct each polygon face. Order starts at index 0, commas are optional between sets, use -1 to separate indices for each polyline.
 
 #### Hint
 

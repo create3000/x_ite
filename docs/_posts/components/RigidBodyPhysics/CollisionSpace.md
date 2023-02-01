@@ -39,7 +39,7 @@ Enables/disables node operation.
 
 ### SFBool [in, out] **useGeometry** FALSE
 
-UseGeometry indicates whether collision-detection code checks down to level of geometry, or only make approximations using geometry bounds.
+*useGeometry* indicates whether collision-detection code checks down to level of geometry, or only make approximations using geometry bounds.
 
 #### Hint
 

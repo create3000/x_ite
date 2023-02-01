@@ -33,7 +33,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFBool [in, out] **isPickable** TRUE
 
-IsPickable determines whether pick traversal is performed for this layer.
+*isPickable* determines whether pick traversal is performed for this layer.
 
 ### SFNode [in, out] **viewport** NULL <small>[X3DViewportNode]</small>
 

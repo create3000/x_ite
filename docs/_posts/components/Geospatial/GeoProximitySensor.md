@@ -57,7 +57,7 @@ Enables/disables node operation.
 
 ### SFVec3f [in, out] **size** 0 0 0 <small>[0,∞)</small>
 
-Size of Proximity box.
+*size* of Proximity box.
 
 #### Hint
 
@@ -69,7 +69,7 @@ Size of Proximity box.
 
 ### SFBool [out] **isActive**
 
-IsActive true/false events are sent as viewer enters/exits Proximity box. isActive=true when viewer enters Proximity box, isActive=false when viewer exits Proximity box.
+*isActive* true/false events are sent as viewer enters/exits Proximity box. isActive=true when viewer enters Proximity box, isActive=false when viewer exits Proximity box.
 
 ### SFTime [out] **enterTime**
 

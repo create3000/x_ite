@@ -77,7 +77,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 ### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
 
-When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When resumeTime becomes\<= time now, isPaused becomes false and AudioClip becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -85,7 +85,7 @@ When resumeTime becomes <= time now, isPaused becomes false and AudioClip become
 
 ### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
 
-When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= pauseTime, isPaused becomes true and AudioClip becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -105,11 +105,11 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 ### SFBool [out] **isPaused**
 
-IsPaused true/false events are sent when AudioClip is paused/resumed.
+*isPaused* true/false events are sent when AudioClip is paused/resumed.
 
 ### SFBool [out] **isActive**
 
-IsActive true/false events are sent when playback starts/stops.
+*isActive* true/false events are sent when playback starts/stops.
 
 ### SFTime [out] **elapsedTime**
 
@@ -117,7 +117,7 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 
 ### SFTime [out] **duration_changed**
 
-Duration_changed is length of time in seconds for one cycle of audio.
+*duration_changed* is length of time in seconds for one cycle of audio.
 
 ## Description
 

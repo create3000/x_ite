@@ -45,31 +45,31 @@ Default global parameters for collision outputs of rigid body physics system. Co
 
 ### SFFloat [in, out] **bounce** 0 <small>[0,1]</small>
 
-Bounce indicates bounciness (0 = no bounce at all, 1 = maximum bounce).
+*bounce* indicates bounciness (0 = no bounce at all, 1 = maximum bounce).
 
 ### SFFloat [in, out] **minBounceSpeed** 0.1
 
-MinBounceSpeed m/s needed to bounce.
+*minBounceSpeed* m/s needed to bounce.
 
 ### SFVec2f [in, out] **frictionCoefficients** 0 0
 
-FrictionCoefficients used for computing surface drag.
+*frictionCoefficients* used for computing surface drag.
 
 ### SFVec2f [in, out] **surfaceSpeed** 0 0
 
-SurfaceSpeed defines speed vectors for computing surface drag, if contact surfaces move independently of bodies.
+*surfaceSpeed* defines speed vectors for computing surface drag, if contact surfaces move independently of bodies.
 
 ### SFVec2f [in, out] **slipFactors** 0 0
 
-SlipFactors used for computing surface drag.
+*slipFactors* used for computing surface drag.
 
 ### SFFloat [in, out] **softnessConstantForceMix** 0.0001
 
-SoftnessConstantForceMix value applies a constant force value to make colliding surfaces appear to be somewhat soft.
+*softnessConstantForceMix* value applies a constant force value to make colliding surfaces appear to be somewhat soft.
 
 ### SFFloat [in, out] **softnessErrorCorrection** 0.8
 
-SoftnessErrorCorrection indicates fraction of collision error fixed in a set of evaluations (0 = no error correction, 1 = all errors corrected in single step).
+*softnessErrorCorrection* indicates fraction of collision error fixed in a set of evaluations (0 = no error correction, 1 = all errors corrected in single step).
 
 ### MFNode [in, out] **collidables** [ ] <small>[X3DNBodyCollisionSpaceNode,</small>
 

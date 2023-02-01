@@ -65,7 +65,7 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 ### MFInt32 [in, out] **coordIndex** -1 <small>[0,∞) or -1</small>
 
-CoordIndex indices are applied to contained Coordinate values in order to define randomly generated initial geometry of the particles.
+*coordIndex* indices are applied to contained Coordinate values in order to define randomly generated initial geometry of the particles.
 
 #### Warning
 
@@ -73,7 +73,7 @@ CoordIndex indices are applied to contained Coordinate values in order to define
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 
-Coordinates for the line along which particles are randomly generated.
+*coord*inates for the line along which particles are randomly generated.
 
 #### Warning
 

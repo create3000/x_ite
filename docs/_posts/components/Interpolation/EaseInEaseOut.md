@@ -32,7 +32,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
 
-Set_fraction selects input fraction for computation of corresponding easeInEaseOut output value, modifiedFraction_changed.
+*set_fraction* selects input fraction for computation of corresponding easeInEaseOut output value, modifiedFraction_changed.
 
 ### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
 

@@ -37,7 +37,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFFloat [in, out] **clipBoundary** [ 0, 1, 0, 1 ] <small>[0,1]</small>
 
-ClipBoundary is specified in fractions of the normal render surface in the sequence left/right/bottom/top. When children are rendered, the output will only appear in the specified subset of the render surface.
+*clipBoundary* is specified in fractions of the normal render surface in the sequence left/right/bottom/top. When children are rendered, the output will only appear in the specified subset of the render surface.
 
 #### Hint
 

@@ -53,7 +53,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 ### SFBool [in] **set_bind**
 
-Set_bind true makes this node active, set_bind false makes this node inactive.
+*set_bind* true makes this node active, set_bind false makes this node inactive.
 
 ### SFString [in, out] **description** ""
 
@@ -65,7 +65,7 @@ Author-provided text tooltip that tells users the expected action of this node.
 
 ### SFVec3d [in, out] **position** 0 0 100000 <small>(-∞,∞)</small>
 
-Position relative to local georeferenced coordinate system, in proper format
+*position* relative to local georeferenced coordinate system, in proper format
 
 ### SFRotation [in, out] **orientation** 0 0 1 0 <small>(-∞,∞) or -1 1</small>
 
@@ -77,7 +77,7 @@ Rotation of Viewpoint, relative to default -Z axis direction in local coordinate
 
 ### SFVec3d [in, out] **centerOfRotation** 0 0 0 <small>(-∞,∞)</small>
 
-CenterOfRotation specifies center point about which to rotate user's eyepoint when in EXAMINE or LOOKAT mode.
+*centerOfRotation* specifies center point about which to rotate user's eyepoint when in EXAMINE or LOOKAT mode.
 
 ### SFFloat [in, out] **fieldOfView** π/4 <small>(0,π)</small>
 
@@ -93,7 +93,7 @@ Input/Output field retainUserOffsets.
 
 ### SFFloat [ ] **speedFactor** 1 <small>[0,∞)</small>
 
-SpeedFactor is a multiplier to modify the original elevation-based speed that is set automatically by the browser.
+*speedFactor* is a multiplier to modify the original elevation-based speed that is set automatically by the browser.
 
 #### Hint
 

@@ -62,7 +62,7 @@ When applying emissiveColor for this material node, the contained texture provid
 
 ### SFFloat [in, out] **normalScale** 1 <small>[0,∞)</small>
 
-normalScale controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
+*normalScale* controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
 
 #### Hints
 

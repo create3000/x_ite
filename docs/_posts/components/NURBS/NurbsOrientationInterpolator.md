@@ -41,7 +41,7 @@ Input/Output field controlPoint.
 
 ### MFDouble [in, out] **knot** [ ] <small>(-∞,∞)</small>
 
-Knot vector, where size = number of control points + order of curve.
+*knot* vector, where size = number of control points + order of curve.
 
 ### SFInt32 [in, out] **order** 3 <small>(2,∞)</small>
 

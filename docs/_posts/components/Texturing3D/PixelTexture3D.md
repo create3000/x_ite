@@ -56,7 +56,7 @@ Whether to vertically repeat texture along R axis.
 
 ### MFInt32 [in, out] **image** [ 0, 0, 0, 0 ]
 
-Image describes raw data for this 3D texture: number of components to the image [0,.4], width, height and depth of the texture, followed by (width x height x depth) pixel values.
+*image* describes raw data for this 3D texture: number of components to the image [0,.4], width, height and depth of the texture, followed by (width x height x depth) pixel values.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 

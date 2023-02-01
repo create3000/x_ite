@@ -78,7 +78,7 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 ### SFBool [ ] **ccw** TRUE
 
-Ccw = counterclockwise: ordering of vertex coordinates orientation.
+*ccw* = counterclockwise: ordering of vertex coordinates orientation.
 
 #### Hint
 
@@ -94,7 +94,7 @@ Whether all polygons in a shape are convex (true), or possibly concave (false) A
 
 ### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
 
-CreaseAngle defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than creaseAngle, smooth shading is rendered across the shared line segment. Interchange profile hint: only 0 and π radians supported.
+*creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than creaseAngle, smooth shading is rendered across the shared line segment. Interchange profile hint: only 0 and π radians supported.
 
 #### Hint
 
@@ -114,7 +114,7 @@ Whether Normal node vector values are applied to each vertex (true) or to each p
 
 ### MFInt32 [ ] **colorIndex** [ ] <small>[0,∞) or -1</small>
 
-ColorIndex indices provide order in which colors are applied.
+*colorIndex* indices provide order in which colors are applied.
 
 #### Hints
 
@@ -130,7 +130,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 ### MFInt32 [ ] **normalIndex** [ ] <small>[0,∞) or -1</small>
 
-NormalIndex indices define the order in which normal vectors are applied.
+*normalIndex* indices define the order in which normal vectors are applied.
 
 #### Hints
 
@@ -138,7 +138,7 @@ NormalIndex indices define the order in which normal vectors are applied.
 
 ### MFInt32 [ ] **coordIndex** [ ] <small>[0,∞) or -1</small>
 
-CoordIndex indices provide the order in which coordinates are applied to construct each polygon face. Order starts at index 0, commas are optional between sets.
+*coordIndex* indices provide the order in which coordinates are applied to construct each polygon face. Order starts at index 0, commas are optional between sets.
 
 #### Hint
 

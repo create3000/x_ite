@@ -42,7 +42,7 @@ Depending on the metadata vocabulary, the attribute name is usually required for
 
 ### SFString [in, out] **reference** ""
 
-Reference to the metadata standard or definition defining this particular metadata value.
+*reference* to the metadata standard or definition defining this particular metadata value.
 
 ### MFDouble [in, out] **value** [ ]
 

@@ -68,7 +68,7 @@ TODO not properly defined in X3D spedification. Multiplier for the randomness us
 
 ### SFVec2f [in, out] **particleSize** 0.02 0.02 <small>[0,∞)</small>
 
-ParticleSize describes width and height dimensions for each particle in length base units (default is meters). Changing this value dynamically will only change new particles created after the change.
+*particleSize* describes width and height dimensions for each particle in length base units (default is meters). Changing this value dynamically will only change new particles created after the change.
 
 #### Hints
 
@@ -132,7 +132,7 @@ Texture coordinates of the provided texture(s) in the Appearance node, over time
 
 ### SFBool [out] **isActive**
 
-IsActive true/false events are sent when playback starts/stops.
+*isActive* true/false events are sent when playback starts/stops.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>(0,∞) or -1 -1 -1</small>
 

@@ -48,7 +48,7 @@ Author-provided text tooltip that tells users the expected action of this node.
 
 ### SFRotation [in, out] **axisRotation** 0 0 1 0
 
-AxisRotation determines local sensor coordinate system by rotating the local coordinate system.
+*axisRotation* determines local sensor coordinate system by rotating the local coordinate system.
 
 ### SFBool [in, out] **autoOffset** TRUE
 
@@ -64,7 +64,7 @@ Sends event and remembers last value sensed.
 
 ### SFVec2f [in, out] **minPosition** 0 0 <small>(-∞,∞)</small>
 
-MinPosition and maxPosition clamp translations to a range of values measured from origin of Z=0 plane default maxPosition \< minPosition means no clamping.
+*minPosition* and maxPosition clamp translations to a range of values measured from origin of Z=0 plane default maxPosition \< minPosition means no clamping.
 
 #### Hint
 
@@ -80,11 +80,11 @@ MinPosition and maxPosition clamp translations to a range of values measured fro
 
 ### SFVec3f [out] **trackPoint_changed**
 
-TrackPoint_changed events give intersection point of bearing with sensor's virtual geometry.
+*trackPoint_changed* events give intersection point of bearing with sensor's virtual geometry.
 
 ### SFVec3f [out] **translation_changed**
 
-Translation_changed events equal sum of relative translation change plus offset value.
+*translation_changed* events equal sum of relative translation change plus offset value.
 
 ### SFBool [out] **isOver**
 

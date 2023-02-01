@@ -55,7 +55,7 @@ Non-uniform planar scaling of texture about center (opposite effect appears on g
 
 ### SFVec2f [in, out] **center** 0 0 <small>(-∞,∞)</small>
 
-Center point in 2D (s,t) texture coordinates for rotation and scaling.
+*center* point in 2D (s,t) texture coordinates for rotation and scaling.
 
 ## Description
 

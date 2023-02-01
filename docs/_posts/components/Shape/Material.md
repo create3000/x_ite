@@ -132,7 +132,7 @@ When applying shininess for this material node, the contained texture provides P
 
 ### SFFloat [in, out] **occlusionStrength** 1 <small>[0,1]</small>
 
-occlusionStrength indicates areas of indirect lighting, typically called ambient occlusion. Higher values indicate areas that should receive full indirect lighting and lower values indicate no indirect lighting.
+*occlusionStrength* indicates areas of indirect lighting, typically called ambient occlusion. Higher values indicate areas that should receive full indirect lighting and lower values indicate no indirect lighting.
 
 #### Hints
 
@@ -154,7 +154,7 @@ When applying occlusionStrength for this material node, the contained texture pr
 
 ### SFFloat [in, out] **normalScale** 1 <small>[0,∞)</small>
 
-normalScale controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
+*normalScale* controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
 
 #### Hints
 

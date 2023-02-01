@@ -33,15 +33,15 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFString [in, out] **forceOutput** "NONE" <small>["ALL","NONE",...]</small>
 
-ForceOutput controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
+*forceOutput* controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
 
 ### SFVec3f [in, out] **anchorPoint** 0 0 0
 
-AnchorPoint is joint center, specified in world coordinates.
+*anchorPoint* is joint center, specified in world coordinates.
 
 ### SFVec3f [in, out] **axis1** 0 0 0
 
-Axis1 defines axis vector of joint connection to body1.
+*axis1* defines axis vector of joint connection to body1.
 
 #### Hint
 
@@ -49,7 +49,7 @@ Axis1 defines axis vector of joint connection to body1.
 
 ### SFVec3f [in, out] **axis2** 0 0 0
 
-Axis2 defines axis vector of joint connection to body2.
+*axis2* defines axis vector of joint connection to body2.
 
 #### Hint
 
@@ -61,7 +61,7 @@ Input/Output field stop1Bounce.
 
 ### SFFloat [in, out] **stop2Bounce** 0 <small>[0,1]</small>
 
-Stop2Bounce is velocity factor for bounce back once stop point is reached.
+*stop2Bounce* is velocity factor for bounce back once stop point is reached.
 
 #### Hint
 
@@ -69,7 +69,7 @@ Stop2Bounce is velocity factor for bounce back once stop point is reached.
 
 ### SFFloat [in, out] **stop1ErrorCorrection** 0.8 <small>[0,1]</small>
 
-Stop1ErrorCorrection is fraction of error correction performed during time step once stop point is reached.
+*stop1ErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
 
 #### Hint
 
@@ -77,7 +77,7 @@ Stop1ErrorCorrection is fraction of error correction performed during time step 
 
 ### SFFloat [in, out] **stop2ErrorCorrection** 0.8 <small>[0,1]</small>
 
-Stop2ErrorCorrection is fraction of error correction performed during time step once stop point is reached.
+*stop2ErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
 
 #### Hint
 

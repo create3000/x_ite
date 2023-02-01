@@ -38,7 +38,7 @@ If set_boolean input is true, trigger output time value.
 
 ### SFTime [out] **triggerTime**
 
-TriggerTime is output time event, sent when set_boolean input is true.
+*triggerTime* is output time event, sent when set_boolean input is true.
 
 ## External Links
 

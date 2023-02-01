@@ -46,7 +46,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFBool [in, out] **load** TRUE
 
-load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
+*load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
 
 #### Hints
 
@@ -71,7 +71,7 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 
-autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
+*autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
 
 #### Hints
 
@@ -84,7 +84,7 @@ autoRefresh defines interval in seconds before automatic reload of current url a
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
 
-autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
+*autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
 
 #### Hint
 

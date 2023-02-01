@@ -37,7 +37,7 @@ Enables/disables node operation.
 
 ### SFVec3f [in, out] **direction** 0 0 0 <small>(∞,∞)</small>
 
-Direction in which wind is travelling in the form of a normalized, unit vector.
+*direction* in which wind is travelling in the form of a normalized, unit vector.
 
 ### SFFloat [in, out] **speed** 0.1 <small>[0,∞)</small>
 
@@ -45,7 +45,7 @@ Initial linear speed (default is m/s) imparted to all particles along their dire
 
 ### SFFloat [in, out] **gustiness** 0.1 <small>[0,∞)</small>
 
-Gustiness specifies how much wind speed varies from the average speed.
+*gustiness* specifies how much wind speed varies from the average speed.
 
 #### Hint
 
@@ -53,7 +53,7 @@ Gustiness specifies how much wind speed varies from the average speed.
 
 ### SFFloat [in, out] **turbulence** 0 <small>[0,1]</small>
 
-Turbulence field specifies how much the wind acts directly in line with the direction, and how much variation is applied in directions other than the wind direction.
+*turbulence* field specifies how much the wind acts directly in line with the direction, and how much variation is applied in directions other than the wind direction.
 
 #### Hint
 

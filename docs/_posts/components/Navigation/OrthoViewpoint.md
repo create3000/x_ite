@@ -51,7 +51,7 @@ Text description or navigation hint to identify this Viewpoint.
 
 ### SFVec3f [in, out] **position** 0 0 10 <small>(-∞,∞)</small>
 
-Position (x, y, z in meters) relative to local coordinate system.
+*position* (x, y, z in meters) relative to local coordinate system.
 
 ### SFRotation [in, out] **orientation** 0 0 1 0 <small>[-1,1],(-∞,∞)</small>
 
@@ -63,7 +63,7 @@ Rotation (axis, angle in radians) of Viewpoint, relative to default -Z axis dire
 
 ### SFVec3f [in, out] **centerOfRotation** 0 0 0 <small>(-∞,∞)</small>
 
-CenterOfRotation specifies center point about which to rotate user's eyepoint when in EXAMINE or LOOKAT mode.
+*centerOfRotation* specifies center point about which to rotate user's eyepoint when in EXAMINE or LOOKAT mode.
 
 ### MFFloat [in, out] **fieldOfView** [ -1, -1, 1, 1 ] <small>(-∞,∞)</small>
 

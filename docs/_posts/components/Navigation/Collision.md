@@ -44,7 +44,7 @@ Enables/disables collision detection for children and all descendants.
 
 ### SFBool [out] **isActive**
 
-IsActive true/false events are sent when triggering the sensor. isActive=true when view-object collision occurs, isActive=false when view-object collision no longer occurs.
+*isActive* true/false events are sent when triggering the sensor. isActive=true when view-object collision occurs, isActive=false when view-object collision no longer occurs.
 
 ### SFTime [out] **collideTime**
 

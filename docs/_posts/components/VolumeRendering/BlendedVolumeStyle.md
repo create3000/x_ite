@@ -46,11 +46,11 @@ Input/Output field voxels.
 
 ### SFFloat [in, out] **weightConstant1** 0.5 <small>[0,1]</small>
 
-WeightConstant1 is used when weightFunction1=CONSTANT
+*weightConstant1* is used when weightFunction1=CONSTANT
 
 ### SFFloat [in, out] **weightConstant2** 0.5 <small>[0,1]</small>
 
-WeightConstant2 is used when weightFunction2=CONSTANT
+*weightConstant2* is used when weightFunction2=CONSTANT
 
 ### SFString [in, out] **weightFunction1** "CONSTANT" <small>["CONSTANT", "ALPHA0", "ALPHA1", "TABLE", "ONE_MINUS_ALPHA0", "ONE_MINUS_ALPHA1"]</small>
 

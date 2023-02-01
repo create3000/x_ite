@@ -37,27 +37,27 @@ Enables/disables node operation.
 
 ### MFNode [in] **set_contacts**<span class="no"><small class="small"> not supported</small></span>
 
-Set_contacts input field for Contact nodes provides per-frame information about contacts between bodies.
+*set_contacts* input field for Contact nodes provides per-frame information about contacts between bodies.
 
 ### SFVec3f [in, out] **gravity** 0 -9.8 0
 
-Gravity indicates direction and strength of local gravity vector for this collection of bodies (units m/sec^2).
+*gravity* indicates direction and strength of local gravity vector for this collection of bodies (units m/sec^2).
 
 ### SFBool [in, out] **preferAccuracy** FALSE
 
-PreferAccuracy provides hint for performance preference: higher accuracy or faster computational speed.
+*preferAccuracy* provides hint for performance preference: higher accuracy or faster computational speed.
 
 ### SFFloat [in, out] **errorCorrection** 0.8 <small>[0,1] <span class="no">not supported</span></small>
 
-ErrorCorrection describes how quickly intersection errors due to floating-point inaccuracies are resolved (0=no correction, 1=all corrected in single step).
+*errorCorrection* describes how quickly intersection errors due to floating-point inaccuracies are resolved (0=no correction, 1=all corrected in single step).
 
 ### SFInt32 [in, out] **iterations** 10 <small>[0,∞)</small>
 
-Iterations controls number of iterations performed over collectioned joints and bodies during each evaluation.
+*iterations* controls number of iterations performed over collectioned joints and bodies during each evaluation.
 
 ### SFFloat [in, out] **constantForceMix** 0.0001 <small>[0,∞) <span class="no">not supported</span></small>
 
-ConstantForceMix modifies damping calculations by violating normal constraints while applying small, constant forces in those calculations.
+*constantForceMix* modifies damping calculations by violating normal constraints while applying small, constant forces in those calculations.
 
 #### Hints
 
@@ -69,15 +69,15 @@ Or -1, maxCorrectionSpeed .
 
 ### SFFloat [in, out] **contactSurfaceThickness** 0 <small>[0,∞)</small>
 
-ContactSurfaceThickness defines how far bodies may interpenetrate after a collision, allowing simulation of softer bodies that deform somewhat during collision.
+*contactSurfaceThickness* defines how far bodies may interpenetrate after a collision, allowing simulation of softer bodies that deform somewhat during collision.
 
 ### SFBool [in, out] **autoDisable** FALSE
 
-AutoDisable toggles operation of disableAngularSpeed, disableLinearSpeed, disableTime.
+*autoDisable* toggles operation of disableAngularSpeed, disableLinearSpeed, disableTime.
 
 ### SFFloat [in, out] **disableTime** 0 <small>[0,∞) <span class="no">not supported</span></small>
 
-DisableTime defines interval when body becomes at rest and not part of rigid body calculations, reducing numeric instabilities.
+*disableTime* defines interval when body becomes at rest and not part of rigid body calculations, reducing numeric instabilities.
 
 #### Hint
 
@@ -85,7 +85,7 @@ DisableTime defines interval when body becomes at rest and not part of rigid bod
 
 ### SFFloat [in, out] **disableLinearSpeed** 0 <small>[0,∞)</small>
 
-DisableLinearSpeed defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculation, reducing numeric instabilitiess.
+*disableLinearSpeed* defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculation, reducing numeric instabilitiess.
 
 #### Hint
 
@@ -93,7 +93,7 @@ DisableLinearSpeed defines lower-limit tolerance value when body is considered a
 
 ### SFFloat [in, out] **disableAngularSpeed** 0 <small>[0,∞)</small>
 
-DisableAngularSpeed defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculations, reducing numeric instabilities.
+*disableAngularSpeed* defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculations, reducing numeric instabilities.
 
 #### Hint
 

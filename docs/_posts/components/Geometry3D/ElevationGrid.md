@@ -77,7 +77,7 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 ### SFBool [ ] **ccw** TRUE
 
-Ccw = counterclockwise: ordering of vertex coordinates orientation.
+*ccw* = counterclockwise: ordering of vertex coordinates orientation.
 
 #### Hint
 
@@ -85,7 +85,7 @@ Ccw = counterclockwise: ordering of vertex coordinates orientation.
 
 ### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
 
-CreaseAngle defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than creaseAngle, smooth shading is rendered across the shared line segment.
+*creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than creaseAngle, smooth shading is rendered across the shared line segment.
 
 #### Hint
 

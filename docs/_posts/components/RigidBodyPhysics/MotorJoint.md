@@ -33,15 +33,15 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFString [in, out] **forceOutput** "NONE" <small>["ALL","NONE",...]</small>
 
-ForceOutput controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
+*forceOutput* controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
 
 ### SFInt32 [in, out] **enabledAxes** 1 <small>[0,3]</small>
 
-EnabledAxes indicates which motor axes are active. (0) none, (1) axis 1, (2) axes 1 and 2, (3) all three axes.
+*enabledAxes* indicates which motor axes are active. (0) none, (1) axis 1, (2) axes 1 and 2, (3) all three axes.
 
 ### SFVec3f [in, out] **motor1Axis** 0 0 0
 
-Motor1Axis defines axis vector of corresponding motor axis.
+*motor1Axis* defines axis vector of corresponding motor axis.
 
 #### Hint
 
@@ -49,7 +49,7 @@ Motor1Axis defines axis vector of corresponding motor axis.
 
 ### SFVec3f [in, out] **motor2Axis** 0 0 0
 
-Motor2Axis defines axis vector of corresponding motor axis.
+*motor2Axis* defines axis vector of corresponding motor axis.
 
 #### Hint
 
@@ -57,7 +57,7 @@ Motor2Axis defines axis vector of corresponding motor axis.
 
 ### SFVec3f [in, out] **motor3Axis** 0 0 0
 
-Motor3Axis defines axis vector of corresponding motor axis.
+*motor3Axis* defines axis vector of corresponding motor axis.
 
 #### Hint
 
@@ -65,31 +65,31 @@ Motor3Axis defines axis vector of corresponding motor axis.
 
 ### SFFloat [in, out] **axis1Angle** 0 <small>[-π,π]</small>
 
-Axis1Angle (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
+*axis1Angle* (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
 
 ### SFFloat [in, out] **axis2Angle** 0 <small>[-π,π]</small>
 
-Axis2Angle (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
+*axis2Angle* (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
 
 ### SFFloat [in, out] **axis3Angle** 0 <small>[-π,π]</small>
 
-Axis3Angle (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
+*axis3Angle* (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
 
 ### SFFloat [in, out] **axis1Torque** 0 <small>(-∞,∞)</small>
 
-Axis1Torque is rotational torque applied by corresponding motor axis when in user-calculated mode.
+*axis1Torque* is rotational torque applied by corresponding motor axis when in user-calculated mode.
 
 ### SFFloat [in, out] **axis2Torque** 0 <small>(-∞,∞)</small>
 
-Axis2Torque is rotational torque applied by corresponding motor axis when in user-calculated mode.
+*axis2Torque* is rotational torque applied by corresponding motor axis when in user-calculated mode.
 
 ### SFFloat [in, out] **axis3Torque** 0 <small>(-∞,∞)</small>
 
-Axis3Torque is rotational torque applied by corresponding motor axis when in user-calculated mode.
+*axis3Torque* is rotational torque applied by corresponding motor axis when in user-calculated mode.
 
 ### SFFloat [in, out] **stop1Bounce** 0 <small>[0,1]</small>
 
-Stop1Bounce is velocity factor for bounce back once stop point is reached.
+*stop1Bounce* is velocity factor for bounce back once stop point is reached.
 
 #### Hint
 
@@ -97,7 +97,7 @@ Stop1Bounce is velocity factor for bounce back once stop point is reached.
 
 ### SFFloat [in, out] **stop2Bounce** 0 <small>[0,1]</small>
 
-Stop2Bounce is velocity factor for bounce back once stop point is reached.
+*stop2Bounce* is velocity factor for bounce back once stop point is reached.
 
 #### Hint
 
@@ -105,7 +105,7 @@ Stop2Bounce is velocity factor for bounce back once stop point is reached.
 
 ### SFFloat [in, out] **stop3Bounce** 0 <small>[0,1]</small>
 
-Stop3Bounce is velocity factor for bounce back once stop point is reached.
+*stop3Bounce* is velocity factor for bounce back once stop point is reached.
 
 #### Hint
 
@@ -113,7 +113,7 @@ Stop3Bounce is velocity factor for bounce back once stop point is reached.
 
 ### SFFloat [in, out] **stop1ErrorCorrection** 0.8 <small>[0,1]</small>
 
-Stop1ErrorCorrection is fraction of error correction performed during time step once stop point is reached.
+*stop1ErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
 
 #### Hint
 
@@ -121,7 +121,7 @@ Stop1ErrorCorrection is fraction of error correction performed during time step 
 
 ### SFFloat [in, out] **stop2ErrorCorrection** 0.8 <small>[0,1]</small>
 
-Stop2ErrorCorrection is fraction of error correction performed during time step once stop point is reached.
+*stop2ErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
 
 #### Hint
 
@@ -129,7 +129,7 @@ Stop2ErrorCorrection is fraction of error correction performed during time step 
 
 ### SFFloat [in, out] **stop3ErrorCorrection** 0.8 <small>[0,1]</small>
 
-Stop3ErrorCorrection is fraction of error correction performed during time step once stop point is reached.
+*stop3ErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
 
 #### Hint
 
@@ -137,31 +137,31 @@ Stop3ErrorCorrection is fraction of error correction performed during time step 
 
 ### SFFloat [out] **motor1Angle**
 
-Motor1Angle provides calculated angle of rotation (radians) for this motor joint from last frame.
+*motor1Angle* provides calculated angle of rotation (radians) for this motor joint from last frame.
 
 ### SFFloat [out] **motor2Angle**
 
-Motor2Angle provides calculated angle of rotation (radians) for this motor joint from last frame.
+*motor2Angle* provides calculated angle of rotation (radians) for this motor joint from last frame.
 
 ### SFFloat [out] **motor3Angle**
 
-Motor3Angle provides calculated angle of rotation (radians) for this motor joint from last frame.
+*motor3Angle* provides calculated angle of rotation (radians) for this motor joint from last frame.
 
 ### SFFloat [out] **motor1AngleRate**
 
-Motor1AngleRate provides calculated anglular rotation rate (radians/second) for this motor joint from last frame.
+*motor1AngleRate* provides calculated anglular rotation rate (radians/second) for this motor joint from last frame.
 
 ### SFFloat [out] **motor2AngleRate**
 
-Motor2AngleRate provides calculated anglular rotation rate (radians/second) for this motor joint from last frame.
+*motor2AngleRate* provides calculated anglular rotation rate (radians/second) for this motor joint from last frame.
 
 ### SFFloat [out] **motor3AngleRate**
 
-Motor3AngleRate provides calculated anglular rotation rate (radians/second) for this motor joint from last frame.
+*motor3AngleRate* provides calculated anglular rotation rate (radians/second) for this motor joint from last frame.
 
 ### SFBool [ ] **autoCalc** FALSE
 
-AutoCalc controls whether user manually provides individual angle rotations each frame (false) or if angle values are automatically calculated by motor implementations (true).
+*autoCalc* controls whether user manually provides individual angle rotations each frame (false) or if angle values are automatically calculated by motor implementations (true).
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 

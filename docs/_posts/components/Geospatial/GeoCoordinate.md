@@ -52,7 +52,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 ### MFVec3d [in, out] **point** [ ] <small>(-∞,∞)</small>
 
-Point contains a set of actual 3D geographic coordinates, provided in geoSystem format can split strings if desired: "x1 y1 z1 x2 y2 z2" or "x1 y1 z1", "x2 y2 z2"
+*point* contains a set of actual 3D geographic coordinates, provided in geoSystem format can split strings if desired: "x1 y1 z1 x2 y2 z2" or "x1 y1 z1", "x2 y2 z2"
 
 ## Description
 

@@ -46,7 +46,7 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 ### SFBool [ ] **ccw** TRUE
 
-Ccw = counterclockwise: ordering of vertex coordinates orientation.
+*ccw* = counterclockwise: ordering of vertex coordinates orientation.
 
 #### Hint
 

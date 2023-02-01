@@ -36,7 +36,7 @@ Enables/disables node operation.
 
 ### SFBool [in, out] **fixed** FALSE
 
-Fixed indicates whether body is able to move.
+*fixed* indicates whether body is able to move.
 
 #### Hint
 
@@ -44,15 +44,15 @@ Fixed indicates whether body is able to move.
 
 ### SFVec3f [in, out] **position** 0 0 0
 
-Position sets body location in world space, then reports physics updates.
+*position* sets body location in world space, then reports physics updates.
 
 ### SFRotation [in, out] **orientation** 0 0 1 0
 
-Orientation sets body direction in world space, then reports physics updates.
+*orientation* sets body direction in world space, then reports physics updates.
 
 ### SFVec3f [in, out] **linearVelocity** 0 0 0
 
-LinearVelocity sets constant velocity value to object every frame, and reports updates by physics model.
+*linearVelocity* sets constant velocity value to object every frame, and reports updates by physics model.
 
 #### Hint
 
@@ -64,7 +64,7 @@ LinearVelocity sets constant velocity value to object every frame, and reports u
 
 ### SFVec3f [in, out] **angularVelocity** 0 0 0 <small>(-∞,∞)</small>
 
-AngularVelocity sets constant velocity value to object every frame, and reports updates by physics model.
+*angularVelocity* sets constant velocity value to object every frame, and reports updates by physics model.
 
 #### Hint
 
@@ -76,27 +76,27 @@ AngularVelocity sets constant velocity value to object every frame, and reports 
 
 ### SFBool [in, out] **useFiniteRotation** FALSE
 
-UseFiniteRotation enables/disables higher-resolution, higher-cost computational method for calculating rotations.
+*useFiniteRotation* enables/disables higher-resolution, higher-cost computational method for calculating rotations.
 
 ### SFVec3f [in, out] **finiteRotationAxis** 0 0 0 <small>[-1,1]</small>
 
-FiniteRotationAxis specifies vector around which the object rotates.
+*finiteRotationAxis* specifies vector around which the object rotates.
 
 ### SFBool [in, out] **autoDamp** FALSE
 
-AutoDamp enables/disables angularDampingFactor and linearDampingFactor.
+*autoDamp* enables/disables angularDampingFactor and linearDampingFactor.
 
 ### SFFloat [in, out] **linearDampingFactor** 0.001
 
-LinearDampingFactor automatically damps a portion of body motion over time.
+*linearDampingFactor* automatically damps a portion of body motion over time.
 
 ### SFFloat [in, out] **angularDampingFactor** 0.001 <small>[0,1]</small>
 
-AngularDampingFactor automatically damps a portion of body motion over time.
+*angularDampingFactor* automatically damps a portion of body motion over time.
 
 ### SFFloat [in, out] **mass** 1
 
-Mass of the body in kilograms.
+*mass* of the body in kilograms.
 
 #### Warning
 
@@ -104,7 +104,7 @@ Mass of the body in kilograms.
 
 ### SFMatrix3f [in, out] **inertia** 1 0 0 0 1 0 0 0 1 <small>1 0 0</small>
 
-Inertia matrix defines a 3x2 inertia tensor matrix.
+*inertia* matrix defines a 3x2 inertia tensor matrix.
 
 #### Warning
 
@@ -112,7 +112,7 @@ Inertia matrix defines a 3x2 inertia tensor matrix.
 
 ### SFVec3f [in, out] **centerOfMass** 0 0 0 <small>(-∞,∞)</small>
 
-CenterOfMass defines local center of mass for physics calculations.
+*centerOfMass* defines local center of mass for physics calculations.
 
 ### SFNode [in, out] **massDensityModel** NULL <small class="small"><span class="no">not supported</span></small>
 
@@ -120,7 +120,7 @@ Input/Output field massDensityModel.
 
 ### SFBool [in, out] **useGlobalGravity** TRUE
 
-UseGlobalGravity indicates whether this particular body is influenced by parent RigidBodyCollection's gravity setting.
+*useGlobalGravity* indicates whether this particular body is influenced by parent RigidBodyCollection's gravity setting.
 
 #### Hint
 
@@ -128,19 +128,19 @@ UseGlobalGravity indicates whether this particular body is influenced by parent 
 
 ### MFVec3f [in, out] **forces** [ ]
 
-Forces defines linear force values applied to the object every frame.
+*forces* defines linear force values applied to the object every frame.
 
 ### MFVec3f [in, out] **torques** [ ]
 
-Torques defines rotational force values applied to the object every frame.
+*torques* defines rotational force values applied to the object every frame.
 
 ### SFBool [in, out] **autoDisable** FALSE
 
-AutoDisable toggles operation of disableAngularSpeed, disableLinearSpeed, disableTime.
+*autoDisable* toggles operation of disableAngularSpeed, disableLinearSpeed, disableTime.
 
 ### SFFloat [in, out] **disableTime** 0 <small>[0,∞) <span class="no">not supported</span></small>
 
-DisableTime defines interval when body becomes at rest and not part of rigid body calculations, reducing numeric instabilities.
+*disableTime* defines interval when body becomes at rest and not part of rigid body calculations, reducing numeric instabilities.
 
 #### Hint
 
@@ -148,7 +148,7 @@ DisableTime defines interval when body becomes at rest and not part of rigid bod
 
 ### SFFloat [in, out] **disableLinearSpeed** 0 <small>[0,∞)</small>
 
-DisableLinearSpeed defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculation, reducing numeric instabilitiess.
+*disableLinearSpeed* defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculation, reducing numeric instabilitiess.
 
 #### Hint
 
@@ -156,7 +156,7 @@ DisableLinearSpeed defines lower-limit tolerance value when body is considered a
 
 ### SFFloat [in, out] **disableAngularSpeed** 0 <small>[0,∞)</small>
 
-DisableAngularSpeed defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculations, reducing numeric instabilities.
+*disableAngularSpeed* defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculations, reducing numeric instabilities.
 
 #### Hint
 

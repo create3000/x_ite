@@ -34,7 +34,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFBool [in, out] **global** TRUE
 
-Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+*global* lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
 
 ### SFBool [in, out] **on** TRUE
 
@@ -42,7 +42,7 @@ Enables/disables this light source.
 
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
 
-Color of light, applied to colors of objects.
+*color* of light, applied to colors of objects.
 
 #### See Also
 
@@ -78,7 +78,7 @@ Inner conical solid angle (in radians) where light source has uniform full inten
 
 #### Hint
 
-- BeamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero intensity. Therefore set beamWidth <= cutOffAngle.
+- BeamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero intensity. Therefore set beamWidth\<= cutOffAngle.
 
 #### Warning
 
@@ -90,7 +90,7 @@ Outer conical solid angle (in radians) where light source intensity becomes zero
 
 #### Hint
 
-- beamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero intensity. Therefore set beamWidth <= cutOffAngle.
+- beamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero intensity. Therefore set beamWidth\<= cutOffAngle.
 
 #### Warnings
 

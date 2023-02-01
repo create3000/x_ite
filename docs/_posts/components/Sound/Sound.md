@@ -50,7 +50,7 @@ Position of sound center, relative to local coordinate system.
 
 ### SFVec3f [in, out] **direction** 0 0 1 <small>(-∞,∞)</small>
 
-Direction of sound axis, relative to local coordinate system.
+*direction* of sound axis, relative to local coordinate system.
 
 ### SFFloat [in, out] **minBack** 1 <small>[0,∞)</small>
 

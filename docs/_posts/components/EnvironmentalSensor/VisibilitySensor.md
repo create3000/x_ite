@@ -39,7 +39,7 @@ Enables/disables node operation.
 
 ### SFVec3f [in, out] **size** 0 0 0 <small>[0,∞)</small>
 
-Size of visibility box, measured from center in meters.
+*size* of visibility box, measured from center in meters.
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
 
@@ -55,7 +55,7 @@ Time event generated when user's camera exits visibility region for sensor.
 
 ### SFBool [out] **isActive**
 
-IsActive true/false events are sent when triggering the sensor. isActive=true when entering visibility region, isActive=false when exiting visibility region.
+*isActive* true/false events are sent when triggering the sensor. isActive=true when entering visibility region, isActive=false when exiting visibility region.
 
 ## Description
 

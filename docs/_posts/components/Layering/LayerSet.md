@@ -32,7 +32,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFInt32 [in, out] **activeLayer** <small>(0,∞)</small>
 
-ActiveLayer field specifies the layer in which navigation takes place.
+*activeLayer* field specifies the layer in which navigation takes place.
 
 #### Hint
 

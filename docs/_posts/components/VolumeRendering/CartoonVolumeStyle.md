@@ -46,7 +46,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFColorRGBA [in, out] **orthogonalColor** 1 1 1 1 <small>[0,1]</small>
 
-OrthogonalColor is used for surface normals that are orthogonal (perpendicular) to viewer's current location.
+*orthogonalColor* is used for surface normals that are orthogonal (perpendicular) to viewer's current location.
 
 #### Hint
 
@@ -58,7 +58,7 @@ OrthogonalColor is used for surface normals that are orthogonal (perpendicular) 
 
 ### SFColorRGBA [in, out] **parallelColor** 0 0 0 1 <small>[0,1]</small>
 
-ParallelColor is used for surface normals that are orthogonal to viewer's current location.
+*parallelColor* is used for surface normals that are orthogonal to viewer's current location.
 
 #### Hint
 

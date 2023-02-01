@@ -42,7 +42,7 @@ Required name for this particular VertexAttribute instance.
 
 ### MFMatrix3f [in, out] **value** [ ] <small>(-∞,∞)</small>
 
-Value specifies an arbitrary collection of matrix values that will be passed to the shader as per-vertex information.
+*value* specifies an arbitrary collection of matrix values that will be passed to the shader as per-vertex information.
 
 #### Hint
 

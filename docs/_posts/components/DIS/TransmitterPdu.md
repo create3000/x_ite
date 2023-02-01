@@ -85,7 +85,7 @@ Indicates type of crypto system being used, even if the encryption equipment is 
 
 ### SFInt32 [in, out] **entityID** <small>[0,65535]</small>
 
-EntityID unique ID for entity within that application.
+*entityID* unique ID for entity within that application.
 
 ### SFInt32 [in, out] **frequency**
 
@@ -137,7 +137,7 @@ Multicast network port, for example: 62040.
 
 ### SFFloat [in, out] **power**
 
-Power that radio would be capable of outputting if on and transmitting, independent of actual transmit state of the radio.
+*power* that radio would be capable of outputting if on and transmitting, independent of actual transmit state of the radio.
 
 ### SFInt32 [in, out] **radioEntityTypeCategory**
 
