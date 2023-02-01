@@ -28,59 +28,11 @@ icon: fas fa-rocket
 
 /* Editor */
 
-@media (prefers-color-scheme: dark) {
-  html:not([data-mode]), html[data-mode=dark] {
-      --editor-background: rgba(0,0,0,0.2);
-      --editor-gutter: rgba(255,255,255,0.05);
-      --editor-active-line: #202d40;
-      --editor-selected-word: #274f79;
-      --xml-tag: var(--text-color);
-      --xml-tag-name: #5a9cd8;
-      --xml-attribute-name: #9fdcfe;
-      --xml-attribute-equals: #d4d4d4;
-      --xml-attribute-value: #cd9177;
-      --json-parenthesis: #fdd601;
-      --json-identifier: #9fdcfe;
-      --json-variable: #9fdcfe;
-      --json-numeric: #b7cea5;
-      --json-string: #cd9177;
-      --json-boolean: #5a9cd8;
-      --json-punctuation: #d4d4d4;
-      --system-red: rgb(255, 69, 58);
-      --system-yellow: rgb(255, 214, 10);
-      --system-blue: rgb(10, 132, 255);
-   }
-}
-
-@media (prefers-color-scheme: light) {
-  html:not([data-mode]), html[data-mode=light] {
-      --editor-background: rgba(0,0,0,0.01);
-      --editor-gutter: #f3f3f3;
-      --editor-active-line: #d7e5f8;
-      --editor-selected-word: #aed6ff;
-      --xml-tag: var(--text-color);
-      --xml-tag-name: #7e0000;
-      --xml-attribute-name: #e20200;
-      --xml-attribute-equals: #000000;
-      --xml-attribute-value: #1000ff;
-      --json-parenthesis: #369327;
-      --json-identifier: #1251a6;
-      --json-variable: #1251a6;
-      --json-numeric: #1e8657;
-      --json-string: #a01515;
-      --json-boolean: #1000ff;
-      --json-punctuation: #000000;
-      --system-red: rgb(255, 59, 48);
-      --system-yellow: rgb(255, 204, 0);
-      --system-blue: rgb(0, 122, 255);
-   }
-}
-
 #editor, .console {
    outline: none;
    border: none;
    padding: 0.5rem;
-   background: var(--editor-background);
+   background: var(--playground-editor-background);
    width: 100%;
    height: 100%;
    resize: none;
@@ -102,71 +54,71 @@ icon: fas fa-rocket
 }
 
 .ace_gutter {
-   background: var(--editor-gutter) !important;
+   background: var(--playground-editor-gutter) !important;
 }
 
 .ace_gutter-active-line,
 .ace_active-line {
-   background: var(--editor-active-line) !important;
+   background: var(--playground-editor-active-line) !important;
 }
 
 .ace_selected-word,
 .ace_selection {
    border: none !important;
-   background: var(--editor-selected-word) !important;
+   background: var(--playground-editor-selected-word) !important;
 }
 
 /* XML */
 
 .ace_tag-open, .ace_tag-close, .ace_end-tag-open {
-   color: var(--xml-tag) !important;
+   color: var(--playground-xml-tag) !important;
 }
 
 .ace_tag-name {
-   color: var(--xml-tag-name) !important;
+   color: var(--playground-xml-tag-name) !important;
 }
 
 .ace_attribute-name {
-   color: var(--xml-attribute-name) !important;
+   color: var(--playground-xml-attribute-name) !important;
 }
 
 .ace_attribute-equals {
-   color: var(--xml-attribute-equals) !important;
+   color: var(--playground-xml-attribute-equals) !important;
 }
 
 .ace_attribute-value {
-   color: var(--xml-attribute-value) !important;
+   color: var(--playground-xml-attribute-value) !important;
 }
 
 /* JSON */
 
 .ace_paren {
-   color: var(--json-parenthesis) !important;
+   color: var(--playground-json-parenthesis) !important;
 }
 
 .ace_identifier {
-   color: var(--json-identifier) !important;
+   color: var(--playground-json-identifier) !important;
 }
 
 .ace_variable {
-   color: var(--json-variable) !important;
+   color: var(--playground-json-variable) !important;
 }
 
 .ace_numeric,
 .ace_keyword.ace_operator {
-   color: var(--json-numeric) !important;
+   color: var(--playground-json-numeric) !important;
 }
 
 .ace_string {
-   color: var(--json-string) !important;
+   color: var(--playground-json-string) !important;
 }
 
 .ace_boolean {
-   color: var(--json-boolean) !important;
+   color: var(--playground-json-boolean) !important;
 }
 
 .ace_punctuation.ace_operator {
-   color: var(--json-punctuation) !important;
+   color: var(--playground-json-punctuation) !important;
 }
 
 /* Console */

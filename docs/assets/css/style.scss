@@ -10,14 +10,14 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
 @import "{{ site.theme }}";
 
 @mixin x_ite-dark-scheme {
-  --nav-border-color: rgba(158,158,158,0.17);
+  --nav-border-color: rgba(158, 158, 158, 0.17);
   --nav-active-page: rgb(168, 182, 206);
   --h2-color: rgb(228, 228, 93);
   --h3-color: rgb(185, 137, 79);
   --h3-color-strong: rgb(232, 201, 133);
   --h4-color: rgb(60, 107, 184);
   --h4-color-strong: rgb(175, 206, 255);
-  --example-background-color: rgba(27,27,30,0.4);
+  --example-background-color: rgba(27, 27, 30, 0.4);
   --button-background-color: black;
 }
 
@@ -30,23 +30,71 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   --button-background-color: white;
 }
 
+@mixin playground-dark-scheme {
+  --playground-editor-background: rgba(0, 0, 0, 0.2);
+  --playground-editor-gutter: rgba(255, 255, 255, 0.05);
+  --playground-editor-active-line: rgb(32, 45, 64);
+  --playground-editor-selected-word: rgb(39, 79, 121);
+  --playground-xml-tag: var(--text-color);
+  --playground-xml-tag-name: rgb(90, 156, 216);
+  --playground-xml-attribute-name: rgb(159, 220, 254);
+  --playground-xml-attribute-equals: rgb(212, 212, 212);
+  --playground-xml-attribute-value: rgb(205, 145, 119);
+  --playground-json-parenthesis: rgb(253, 214, 1);
+  --playground-json-identifier: rgb(159, 220, 254);
+  --playground-json-variable: rgb(159, 220, 254);
+  --playground-json-numeric: rgb(183, 206, 165);
+  --playground-json-string: rgb(205, 145, 119);
+  --playground-json-boolean: rgb(90, 156, 216);
+  --playground-json-punctuation: rgb(212, 212, 212);
+  --system-red: rgb(255, 69, 58);
+  --system-yellow: rgb(255, 214, 10);
+  --system-blue: rgb(10, 132, 255);
+}
+
+@mixin playground-light-scheme {
+  --playground-editor-background: rgba(0, 0, 0, 0.01);
+  --playground-editor-gutter: rgb(243, 243, 243);
+  --playground-editor-active-line: rgb(215, 229, 248);
+  --playground-editor-selected-word: rgb(174, 214, 255);
+  --playground-xml-tag: var(--text-color);
+  --playground-xml-tag-name: rgb(126, 0, 0);
+  --playground-xml-attribute-name: rgb(226, 2, 0);
+  --playground-xml-attribute-equals: rgb(0, 0, 0);
+  --playground-xml-attribute-value: rgb(16, 0, 255);
+  --playground-json-parenthesis: rgb(54, 147, 39);
+  --playground-json-identifier: rgb(18, 81, 166);
+  --playground-json-variable: rgb(18, 81, 166);
+  --playground-json-numeric: rgb(30, 134, 87);
+  --playground-json-string: rgb(160, 21, 21);
+  --playground-json-boolean: rgb(16, 0, 255);
+  --playground-json-punctuation: rgb(0, 0, 0);
+  --system-red: rgb(255, 59, 48);
+  --system-yellow: rgb(255, 204, 0);
+  --system-blue: rgb(0, 122, 255);
+}
+
 @media (prefers-color-scheme: dark) {
   html:not([data-mode]), html[data-mode=dark] {
     @include x_ite-dark-scheme;
+    @include playground-dark-scheme;
   }
 
   html[data-mode=light] {
     @include x_ite-light-scheme;
+    @include playground-light-scheme;
   }
 }
 
 @media (prefers-color-scheme: light) {
   html[data-mode=dark] {
     @include x_ite-dark-scheme;
+    @include playground-dark-scheme;
   }
 
   html:not([data-mode]), html[data-mode=light] {
     @include x_ite-light-scheme;
+    @include playground-light-scheme;
   }
 }
 
