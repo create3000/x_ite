@@ -50,7 +50,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
 
-### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞, ∞)</small>
+### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
 Bounding box center: optional hint for position offset from origin of local coordinate system.
 

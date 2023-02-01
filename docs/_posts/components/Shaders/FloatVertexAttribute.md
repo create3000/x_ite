@@ -48,7 +48,7 @@ Required name for this particular VertexAttribute instance.
 
 - The length of the value field shall be a multiple of numComponents.
 
-### MFFloat [in, out] **value** [ ] <small>[] (-∞,∞)</small>
+### MFFloat [in, out] **value** [ ] <small>(-∞,∞)</small>
 
 *value* specifies an arbitrary collection of floating-point values that will be passed to the shader as per-vertex information.
 

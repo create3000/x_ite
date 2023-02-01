@@ -80,7 +80,7 @@ Camera transition between viewpoints. Enter one or more quoted SFString values: 
 
 - "ANIMATE" behavior is browser-specific, "TELEPORT" is immediate, and "LINEAR" may proceed directly through intervening objects.
 
-### SFTime [in, out] **transitionTime** 1 <small>[0, ∞)</small>
+### SFTime [in, out] **transitionTime** 1 <small>[0,∞)</small>
 
 Duration of viewpoint transition in seconds.
 

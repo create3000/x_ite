@@ -31,7 +31,7 @@ The ContourPolyline2D node belongs to the **NURBS** component and its default co
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### MFVec2d [in, out] **controlPoint** [ ] <small>(-∞, ∞)</small>
+### MFVec2d [in, out] **controlPoint** [ ] <small>(-∞,∞)</small>
 
 *controlPoint* specifies the end points of each segment of the piecewise linear curve.
 
