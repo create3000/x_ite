@@ -55,12 +55,12 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 - 0 0 0 means motor disabled.
 
-### SFFloat [in, out] **minAngle1** -3.14159 <small>π [-π,π] <span class="red">not supported</span>
+### SFFloat [in, out] **minAngle1** -π <small>π [-π,π] <span class="red">not supported</span>
 </small>
 
 MinAngle1 is minimum rotation angle for hinge.
 
-### SFFloat [in, out] **maxAngle1** 3.14159 <small>[-π,π] <span class="red">not supported</span>
+### SFFloat [in, out] **maxAngle1** π <small>[-π,π] <span class="red">not supported</span>
 </small>
 
 MaxAngle1 is maximum rotation angle for hinge.
