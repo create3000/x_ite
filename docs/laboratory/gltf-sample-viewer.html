@@ -16,6 +16,28 @@ tags: [glTF, sample, viewer]
 
 /* Table */
 
+/* Viewer */
+
+@media (prefers-color-scheme: dark) {
+	html:not([data-mode]), html[data-mode=dark] {
+	 	--list-color: rgba(0, 0, 0, 0.3);
+	}
+
+	html[data-mode=light] {
+		--list-color: rgba(0, 0, 0, 0.1);
+   }
+}
+
+@media (prefers-color-scheme: light) {
+	html[data-mode=dark] {
+		--list-color: rgba(0, 0, 0, 0.3);
+   }
+
+   html:not([data-mode]), html[data-mode=light] {
+      --list-color: rgba(0, 0, 0, 0.1);
+   }
+}
+
 .row {
    display: flex;
    height: calc(100vh - 180px);
@@ -26,7 +48,7 @@ tags: [glTF, sample, viewer]
    width: 20%;
    height: 100%;
    overflow: scroll;
-   background-color: rgba(0, 0, 0, 0.3);
+   background-color: var(--list-color);
    padding: 1rem;
 }
 
@@ -38,28 +60,6 @@ tags: [glTF, sample, viewer]
    flex: 80%;
    width: 80%;
    height: 100%;
-}
-
-/* Viewer */
-
-@media (prefers-color-scheme: dark) {
-	html:not([data-mode]), html[data-mode=dark] {
-	 	--list-color: rgba(0, 0, 0, 0.3);
-	}
-
-	html[data-mode=light] {
-		--list-color: rgba(0, 0, 0, 0.1);
-  }
-}
-
-@media (prefers-color-scheme: light) {
-	html[data-mode=dark] {
-		--list-color: rgba(0, 0, 0, 0.3);
-  }
-
-  html:not([data-mode]), html[data-mode=light] {
-      --list-color: rgba(0, 0, 0, 0.1);
-	}
 }
 
 .post x3d-canvas {
