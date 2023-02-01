@@ -44,6 +44,12 @@ tags: [glTF, sample, viewer]
 }
 
 .column1 {
+   flex: 80%;
+   width: 80%;
+   height: 100%;
+}
+
+.column2 {
    flex: 20%;
    width: 20%;
    height: 100%;
@@ -52,14 +58,8 @@ tags: [glTF, sample, viewer]
    padding: 1rem;
 }
 
-.column1 div {
+.column2 div {
    color: var(--h2-color);
-}
-
-.column2 {
-   flex: 80%;
-   width: 80%;
-   height: 100%;
 }
 
 .post x3d-canvas {
@@ -72,10 +72,9 @@ tags: [glTF, sample, viewer]
 
 <div class="row">
    <div class="column1">
-   </div>
-   <div class="column2">
       <x3d-canvas src="/x_ite/assets/X3D/glTF.x3d"></x3d-canvas>
    </div>
+   <div class="column2"></div>
 </div>
 
 <script>
@@ -244,7 +243,7 @@ const Browser = X3D .getBrowser ();
 
 function createList (description, array)
 {
-   const column = $(".column1");
+   const column = $(".column2");
 
    $("<div></div>") .append ($("<strong></strong>") .text (description)) .appendTo (column);
 
