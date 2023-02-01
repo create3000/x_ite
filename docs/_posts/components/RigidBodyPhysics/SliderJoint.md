@@ -55,11 +55,11 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 - If (minSeparation is less than maxSeparation) then no stop is effective.
 
-### SFFLoat [in, out] **sliderForce** 0 <span class="no"><small class="small">not supported</small></span>
+### SFFLoat [in, out] **sliderForce** 0 <span class="red"><small class="small">not supported</small></span>
 
 Input/Output field sliderForce.
 
-### SFFloat [in, out] **stopBounce** 0 <small>[0,1] <span class="no">not supported</span></small>
+### SFFloat [in, out] **stopBounce** 0 <small>[0,1] <span class="red">not supported</span></small>
 
 *stopBounce* is velocity factor for bounce back once stop point is reached.
 
@@ -67,7 +67,7 @@ Input/Output field sliderForce.
 
 - 0 means no bounce, 1 means return velocity matches.
 
-### SFFloat [in, out] **stopErrorCorrection** 1 <small>[0,1] <span class="no">not supported</span></small>
+### SFFloat [in, out] **stopErrorCorrection** 1 <small>[0,1] <span class="red">not supported</span></small>
 
 *stopErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
 
@@ -75,11 +75,11 @@ Input/Output field sliderForce.
 
 - 0 means no error correction, 1 means all error corrected in single step.
 
-### SFFloat [out] **separation** <span class="no"><small class="small">not supported</small></span>
+### SFFloat [out] **separation** <span class="red"><small class="small">not supported</small></span>
 
 *separation* indicates final separation distance between the two bodies.
 
-### SFFloat [out] **separationRate** <span class="no"><small class="small">not supported</small></span>
+### SFFloat [out] **separationRate** <span class="red"><small class="small">not supported</small></span>
 
 *separationRate* indicates change in separation distance over time between the two bodies.
 

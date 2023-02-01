@@ -43,15 +43,15 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 *axis* defines vector of joint connection between body1 and body2.
 
-### SFFloat [in, out] **minAngle** [-π,π)<small> <span class="no">not supported</span></small>
+### SFFloat [in, out] **minAngle** [-π,π)<small> <span class="red">not supported</span></small>
 
 *minAngle* is minimum rotation angle for hinge.
 
-### SFFloat [in, out] **maxAngle** [-π,π) <small class="small"><span class="no">not supported</span></small>
+### SFFloat [in, out] **maxAngle** [-π,π) <small class="small"><span class="red">not supported</span></small>
 
 *maxAngle* is maximum rotation angle for hinge.
 
-### SFFloat [in, out] **stopBounce** 0 <small>[0,1] <span class="no">not supported</span>
+### SFFloat [in, out] **stopBounce** 0 <small>[0,1] <span class="red">not supported</span>
 </small>
 
 StopBounce is velocity factor for bounce back once stop point is reached.
@@ -60,7 +60,7 @@ StopBounce is velocity factor for bounce back once stop point is reached.
 
 - 0 means no bounce, 1 means return velocity matches.
 
-### SFFloat [in, out] **stopErrorCorrection** 0.8 <small>[0,1] <span class="no">not supported</span>
+### SFFloat [in, out] **stopErrorCorrection** 0.8 <small>[0,1] <span class="red">not supported</span>
 </small>
 
 StopErrorCorrection is fraction of error correction performed during time step once stop point is reached.

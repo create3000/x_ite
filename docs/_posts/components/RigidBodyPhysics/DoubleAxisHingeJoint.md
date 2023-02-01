@@ -55,47 +55,47 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 - 0 0 0 means motor disabled.
 
-### SFFloat [in, out] **minAngle1** -3.14159 <small>π [-π,π] <span class="no">not supported</span>
+### SFFloat [in, out] **minAngle1** -3.14159 <small>π [-π,π] <span class="red">not supported</span>
 </small>
 
 MinAngle1 is minimum rotation angle for hinge.
 
-### SFFloat [in, out] **maxAngle1** 3.14159 <small>[-π,π] <span class="no">not supported</span>
+### SFFloat [in, out] **maxAngle1** 3.14159 <small>[-π,π] <span class="red">not supported</span>
 </small>
 
 MaxAngle1 is maximum rotation angle for hinge.
 
-### SFFloat [in, out] **desiredAngularVelocity1** 0 <small>(-∞,∞) <span class="no">not supported</span>
+### SFFloat [in, out] **desiredAngularVelocity1** 0 <small>(-∞,∞) <span class="red">not supported</span>
 </small>
 
 DesiredAngularVelocity1 is goal rotation rate for hinge connection to body1.
 
-### SFFloat [in, out] **desiredAngularVelocity2** 0 <small>(-∞,∞) <span class="no">not supported</span>
+### SFFloat [in, out] **desiredAngularVelocity2** 0 <small>(-∞,∞) <span class="red">not supported</span>
 </small>
 
 DesiredAngularVelocity2 is goal rotation rate for hinge connection to body2.
 
-### SFFloat [in, out] **maxTorque1** 0 <small>(-∞,∞) <span class="no">not supported</span></small>
+### SFFloat [in, out] **maxTorque1** 0 <small>(-∞,∞) <span class="red">not supported</span></small>
 
 *maxTorque1* is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity1.
 
-### SFFloat [in, out] **maxTorque2** 0 <small>(-∞,∞) <span class="no">not supported</span></small>
+### SFFloat [in, out] **maxTorque2** 0 <small>(-∞,∞) <span class="red">not supported</span></small>
 
 *maxTorque2* is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity2.
 
-### SFFloat [in, out] **stopBounce1** 0 <small>[0,1]<span class="no"> not supported</span></small>
+### SFFloat [in, out] **stopBounce1** 0 <small>[0,1]<span class="red"> not supported</span></small>
 
 Input/Output field stopBounce1.
 
-### SFFloat [in, out] **stopConstantForceMix1** 0.001 <small>[0,∞)<span class="no"> not supported</span></small>
+### SFFloat [in, out] **stopConstantForceMix1** 0.001 <small>[0,∞)<span class="red"> not supported</span></small>
 
 Input/Output field stopConstantForceMix1.
 
-### SFFloat [in, out] **stopErrorCorrection1** 0.8 <small>[0,1]<span class="no"> not supported</span></small>
+### SFFloat [in, out] **stopErrorCorrection1** 0.8 <small>[0,1]<span class="red"> not supported</span></small>
 
 Input/Output field stopErrorCorrection1.
 
-### SFFloat [in, out] **suspensionForce** 0 <small>[0,∞)<span class="no"> not supported</span></small>
+### SFFloat [in, out] **suspensionForce** 0 <small>[0,∞)<span class="red"> not supported</span></small>
 
 *suspensionForce* describes how quickly the system resolves intersection errors due to floating-point inaccuracies.
 
@@ -103,7 +103,7 @@ Input/Output field stopErrorCorrection1.
 
 - Use with stop1ConstantForceMix to improve softness and numerical stability. 0 means no stop adjustment, 1 means springier stop response.
 
-### SFFloat [in, out] **suspensionErrorCorrection** 0.8 <small>[0,1]<span class="no"> not supported</span></small>
+### SFFloat [in, out] **suspensionErrorCorrection** 0.8 <small>[0,1]<span class="red"> not supported</span></small>
 
 *suspensionErrorCorrection* describes how quickly the system resolves intersection errors due to floating-point inaccuracies.
 

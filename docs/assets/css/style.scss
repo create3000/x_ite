@@ -19,6 +19,10 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   --h4-color-strong: rgb(175, 206, 255);
   --example-background-color: rgba(27, 27, 30, 0.4);
   --button-background-color: black;
+  --system-red: rgb(255, 69, 58);
+  --system-yellow: rgb(255, 214, 10);
+  --system-blue: rgb(10, 132, 255);
+  --system-green: rgb(48, 209, 88);
 }
 
 @mixin x_ite-light-scheme {
@@ -28,6 +32,10 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   --h4-color: rgb(29, 80, 163);
   --h4-color-strong: rgb(10, 80, 144);
   --button-background-color: white;
+  --system-red: rgb(255, 59, 48);
+  --system-yellow: rgb(255, 204, 0);
+  --system-blue: rgb(0, 122, 255);
+  --system-green: rgb(52, 199, 89);
 }
 
 @mixin playground-dark-scheme {
@@ -47,9 +55,6 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   --playground-json-string: rgb(205, 145, 119);
   --playground-json-boolean: rgb(90, 156, 216);
   --playground-json-punctuation: rgb(212, 212, 212);
-  --system-red: rgb(255, 69, 58);
-  --system-yellow: rgb(255, 214, 10);
-  --system-blue: rgb(10, 132, 255);
 }
 
 @mixin playground-light-scheme {
@@ -69,9 +74,6 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   --playground-json-string: rgb(160, 21, 21);
   --playground-json-boolean: rgb(16, 0, 255);
   --playground-json-punctuation: rgb(0, 0, 0);
-  --system-red: rgb(255, 59, 48);
-  --system-yellow: rgb(255, 204, 0);
-  --system-blue: rgb(0, 122, 255);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -171,6 +173,22 @@ small, .small {
 
 .post h5 {
   font-weight: bold;
+}
+
+span.red {
+  color: var(--system-red);
+}
+
+span.green {
+  color: var(--system-green);
+}
+
+span.blue {
+  color: var(--system-blue);
+}
+
+span.yellow {
+  color: var(--system-yellow);
 }
 
 .table-wrapper > table tbody tr td,

@@ -55,7 +55,7 @@ Input/Output field textureTransform.
 
 Input/Output field shaders.
 
-### SFNode [in, out] **blendMode** NULL <small>[BlendMode]</small>
+### SFNode [in, out] **blendMode** NULL <small>[BlendMode] <span class="yellow">non standard</span></small>
 
 Input/Output field blendMode.
 
