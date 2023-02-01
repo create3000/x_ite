@@ -57,6 +57,7 @@ import Scene               from "../../Execution/Scene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import _                   from "../../../locale/gettext.js";
+import DEBUG from "../../DEBUG.js";
 
 const WEBGL_LATEST_VERSION = 2;
 
@@ -175,6 +176,18 @@ X3DCoreContext .prototype =
 
       this .getElement () .on ("keydown.X3DCoreContext", this [_keydown] .bind (this));
       this .getElement () .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
+
+      $(window) .on ("resize scroll", () =>
+      {
+         if (this .getElement () .isInViewport ())
+         {
+            // do something
+         }
+         else
+         {
+            // do something else
+         }
+     });
    },
    getInstanceId: function ()
    {

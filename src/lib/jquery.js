@@ -1,3 +1,14 @@
+$ .fn .isInViewport = function ()
+{
+   const
+      elementTop     = $(this) .offset () .top,
+      elementBottom  = elementTop + $(this) .outerHeight (),
+      viewportTop    = $(window) .scrollTop (),
+      viewportBottom = viewportTop + $(window) .height ();
+
+   return elementBottom > viewportTop && elementTop < viewportBottom;
+};
+
 $.decodeText = function (input)
 {
    if (typeof input === "string")
