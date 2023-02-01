@@ -37,17 +37,56 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 How much ambient omnidirectional light is reflected from all light sources. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
+### SFString [in, out] **ambientTextureMapping** ""
+
+The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+
+### SFNode [in, out] **ambientTexture** NULL <small>[X3DSingleTextureNode]</small>
+
+When applying ambientIntensity for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
+
+#### Hint
+
+- If texture node is NULL or unspecified, no effect is applied to material values.
+- Contained texture node must include containerField='ambientTexture'
+
 ### SFColor [in, out] **diffuseColor** 0.8 0.8 0.8 <small>[0,1]</small>
 
 How much direct, angle-dependent light is reflected from all light sources.
 
 #### Hints
 
-- Only emissiveColor affects IndexedLineSet, LineSet and PointSet. If a texture is present the diffuseColor is always multiplied with the texture color, <span class="tlid-translation translation" lang="en"><span class="" title="">in contrast to the specification</span></span>. Set diffuseColor to (1 1 1) to get maximum texture color intensity.
+- Only emissiveColor affects IndexedLineSet, LineSet and PointSet. If a texture is present the diffuseColor is always multiplied with the texture color, in contrast to the specification. Set diffuseColor to (1 1 1) to get maximum texture color intensity.
+
+### SFString [in, out] **diffuseTextureMapping** ""
+
+The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+
+### SFNode [in, out] **diffuseTexture** NULL <small>[X3DSingleTextureNode]</small>
+
+When applying diffuseColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
+
+#### Hints
+
+- If texture node is NULL or unspecified, no effect is applied to material values.
+- Contained texture node must include containerField='diffuseTexture'
 
 ### SFColor [in, out] **specularColor** 0 0 0 <small>[0,1]</small>
 
 Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile hint: this field may be ignored, applying the default value regardless.
+
+### SFString [in, out] **specularTextureMapping** ""
+
+The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+
+### SFNode [in, out] **specularTexture** NULL <small>[X3DSingleTextureNode]</small>
+
+When applying specularColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
+
+#### Hints
+
+- If texture node is NULL or unspecified, no effect is applied to material values.
+- Contained texture node must include containerField='specularTexture'
 
 ### SFColor [in, out] **emissiveColor** 0 0 0 <small>[0,1]</small>
 
@@ -61,9 +100,80 @@ How much glowing light is emitted from this object.
 
 - Bright emissiveColor values can wash out other colors and some textures.
 
+### SFString [in, out] **emissiveTextureMapping** ""
+
+The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+
+### SFNode [in, out] **emissiveTexture** NULL <small>[X3DSingleTextureNode]</small>
+
+When applying emissiveColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
+
+#### Hints
+
+- If texture node is NULL or unspecified, no effect is applied to material values.
+- Contained texture node must include containerField='emissiveTexture'
+
 ### SFFloat [in, out] **shininess** 0.2 <small>[0,1]</small>
 
 Lower shininess values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile hint: this field may be ignored, applying the default value regardless.
+
+### SFString [in, out] **shininessTextureMapping** ""
+
+The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+
+### SFNode [in, out] *shininessTexture** NULL <small>[X3DSingleTextureNode]</small>
+
+When applying shininess for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
+
+#### Hints
+
+- If texture node is NULL or unspecified, no effect is applied to material values.
+- Contained texture node must include containerField='shininessTexture'
+
+### SFFloat [in, out] **occlusionStrength** 1 <small>[0,1]</small>
+
+occlusionStrength indicates areas of indirect lighting, typically called ambient occlusion. Higher values indicate areas that should receive full indirect lighting and lower values indicate no indirect lighting.
+
+#### Hints
+
+- Only the Red channel of the texture is used for occlusion computations, other channels are ignored.
+- https://en.wikipedia.org/wiki/Ambient_occlusion
+
+### SFString [in, out] **occlusionTextureMapping** ""
+
+The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+
+### SFNode [in, out] **occlusionTexture** NULL <small>[X3DSingleTextureNode]</small>
+
+When applying occlusionStrength for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
+
+#### Hints
+
+- If texture node is NULL or unspecified, no effect is applied to material values.
+- Contained texture node must include containerField='occlusionTexture'
+
+### SFFloat [in, out] **normalScale** 1 <small>[0,∞)</small>
+
+normalScale controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
+
+#### Hints
+
+- normalScale only affects computation of normalTexture modulations that affect lighting of characteristics of the parent Material and has no relation to normal vectors defined by corresponding geometry.
+- normalTexture techniques apply Bump mapping https://en.wikipedia.org/wiki/Bump_mapping
+
+### SFString [in, out] **normalTextureMapping** ""
+
+The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+
+### SFNode [in, out] **normalTexture** NULL <small>[X3DSingleTextureNode]</small>
+
+When applying normalScale for this material node, the contained texture modulates the texture across the surface.
+
+#### Hints
+
+- normalTexture techniques apply Bump mapping https://en.wikipedia.org/wiki/Bump_mapping
+- If texture node is NULL or unspecified, no effect is applied to material values.
+- Contained texture node must include containerField='normalTexture'
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 
@@ -75,7 +185,7 @@ Transparency < .5 opaque, transparency > .5 transparent.
 
 #### Hint
 
-- If a texture is present the transparency is always multiplied with the texture's transparency, <span class="tlid-translation translation" lang="en"><span class="" title="">in contrast to the specification</span></span>. Set transparency to (0) to get a full opaque texture color.
+- If a texture is present the transparency is always multiplied with the texture's transparency, in contrast to the specification. Set transparency to (0) to get a full opaque texture color.
 
 ## Description
 
