@@ -8,6 +8,7 @@ order: 5
 * [3D L-System Generator](/x_ite/laboratory/3d-l-system-generator)
 * [Online DICOM and NRRD File Viewer](/x_ite/laboratory/online-dicom-and-nrrd-file-viewer)
 * [Real time Earth Quake Information](/x_ite/laboratory/real-time-earth-quake-information)
+* [glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer)
 
 ## D3-X3D
 

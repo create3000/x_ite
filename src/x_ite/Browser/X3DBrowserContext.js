@@ -127,7 +127,7 @@ function X3DBrowserContext (element)
    this [_cameraTime]      = 0;
    this [_collisionTime]   = 0;
    this [_displayTime]     = 0;
-   this [_isInViewport]    = this .getElement () .isInViewport ();
+   this [_isInViewport]    = true;
 };
 
 X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -179,7 +179,7 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
             browserContext .prototype .initialize .call (this);
       }
 
-      $(window) .on ("resize scroll", () =>
+      $(window) .on ("resize scroll load", () =>
       {
          if (this .getElement () .isInViewport ())
          {
@@ -230,14 +230,14 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
    {
       return this [_world];
    },
+   getExecutionContext: function ()
+   {
+      return this [_world] .getExecutionContext ();
+   },
    setExecutionContext: function (executionContext)
    {
       this [_world] = new X3DWorld (executionContext);
       this [_world] .setup ();
-   },
-   getExecutionContext: function ()
-   {
-      return this [_world] .getExecutionContext ();
    },
    addBrowserEvent: function ()
    {
