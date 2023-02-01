@@ -194,13 +194,6 @@ Transparency < .5 opaque, transparency > .5 transparent.
 - Insert Shape and Appearance nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 
-## Description
-
-### Hints
-
-- Insert Shape and Appearance nodes before adding material.
-- DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
-
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Shape/Material/Material.x3d"></x3d-canvas>
