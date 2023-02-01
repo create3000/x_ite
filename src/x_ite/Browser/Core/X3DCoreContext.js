@@ -176,18 +176,6 @@ X3DCoreContext .prototype =
 
       this .getElement () .on ("keydown.X3DCoreContext", this [_keydown] .bind (this));
       this .getElement () .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
-
-      $(window) .on ("resize scroll", () =>
-      {
-         if (this .getElement () .isInViewport ())
-         {
-            // do something
-         }
-         else
-         {
-            // do something else
-         }
-     });
    },
    getInstanceId: function ()
    {

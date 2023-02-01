@@ -81,6 +81,7 @@ const
    _cameraTime      = Symbol (),
    _collisionTime   = Symbol (),
    _displayTime     = Symbol (),
+   _isInViewport    = Symbol (),
    _processEvents   = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
 
 const browserContexts = [ ];
@@ -126,6 +127,7 @@ function X3DBrowserContext (element)
    this [_cameraTime]      = 0;
    this [_collisionTime]   = 0;
    this [_displayTime]     = 0;
+   this [_isInViewport]    = this .getElement () .isInViewport ();
 };
 
 X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -176,6 +178,21 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
          if (typeof browserContext .prototype .initialize === "function")
             browserContext .prototype .initialize .call (this);
       }
+
+      $(window) .on ("resize scroll", () =>
+      {
+         if (this .getElement () .isInViewport ())
+         {
+            if (!this [_isInViewport])
+               this .addBrowserEvent ();
+
+            this [_isInViewport] = true;
+         }
+         else
+         {
+            this [_isInViewport] = false;
+         }
+      });
 
       // Process events from context creation. This will setup nodes like
       // geometry option nodes before any node is created.
@@ -260,6 +277,9 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       const t0 = Date .now ();
       this [_systemTime] = t0 - this [_systemStartTime];
       this .advanceTime ();
+
+      if (!this [_isInViewport])
+         return;
 
       this ._prepareEvents .processInterests ();
       this [_processEvents] ();
