@@ -43,11 +43,11 @@ UseGeometry indicates whether collision-detection code checks down to level of g
 
 #### Hint
 
-Testing against object bounds is usually sufficient.
+- Testing against object bounds is usually sufficient.
 
 #### Warning
 
-Using geometry is more accurate but slower.
+- Using geometry is more accurate but slower.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1
 
@@ -55,7 +55,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0
 

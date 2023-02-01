@@ -44,7 +44,7 @@ Author-provided text tooltip that tells users the expected action of this node.
 
 #### Hints
 
-Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+- Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
 
 ### SFBool [in, out] **autoOffset** TRUE
 
@@ -56,7 +56,7 @@ Sends event and remembers last value sensed.
 
 #### Warning
 
-ROUTE connecting rotation_changed to set_offset creates a self-reinforcing positive feedback loop and results in unmanageable response.
+- ROUTE connecting rotation_changed to set_offset creates a self-reinforcing positive feedback loop and results in unmanageable response.
 
 ### SFVec3f [out] **trackPoint_changed**
 

@@ -38,7 +38,7 @@ ColorIndex indices provide order in which colors are applied.
 
 #### Hints
 
-If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
+- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 
 ### MFInt32 [in] **set_texCoordIndex** <small>[-1,∞)</small>
 
@@ -46,7 +46,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 #### Hint
 
-Use a tool!
+- Use a tool!
 
 ### MFInt32 [in] **set_normalIndex** <small>[0,∞) or -1</small>
 
@@ -54,7 +54,7 @@ NormalIndex indices define the order in which normal vectors are applied.
 
 #### Hints
 
-If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### MFInt32 [in] **set_coordIndex** <small>[0,∞) or -1</small>
 
@@ -62,7 +62,7 @@ CoordIndex indices provide the order in which coordinates are applied to constru
 
 #### Hint
 
-Sentinel value -1 is used to separate indices for each successive polygon.
+- Sentinel value -1 is used to separate indices for each successive polygon.
 
 ### SFBool [ ] **solid** TRUE
 
@@ -70,11 +70,11 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 #### Hint
 
-If in doubt, use solid='false' for maximum visibility.
+- If in doubt, use solid='false' for maximum visibility.
 
 #### Warning
 
-Default value true can completely hide geometry if viewed from wrong side!
+- Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFBool [ ] **ccw** TRUE
 
@@ -82,7 +82,7 @@ Ccw = counterclockwise: ordering of vertex coordinates orientation.
 
 #### Hint
 
-Ccw false can reverse solid (backface culling) and normal-vector orientation.
+- Ccw false can reverse solid (backface culling) and normal-vector orientation.
 
 ### SFBool [ ] **convex** TRUE
 
@@ -90,7 +90,7 @@ Whether all polygons in a shape are convex (true), or possibly concave (false) A
 
 #### Warning
 
-Concave geometry may be invisible default convex=true.
+- Concave geometry may be invisible default convex=true.
 
 ### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
 
@@ -98,7 +98,7 @@ CreaseAngle defines angle (in radians) for determining whether adjacent polygons
 
 #### Hint
 
-CreaseAngle=0 means render all edges sharply, creaseAngle=3.14159 means render all edges smoothly.
+- CreaseAngle=0 means render all edges sharply, creaseAngle=3.14159 means render all edges smoothly.
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
@@ -118,7 +118,7 @@ ColorIndex indices provide order in which colors are applied.
 
 #### Hints
 
-If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
+- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 
 ### MFInt32 [ ] **texCoordIndex** [ ] <small>[-1,∞)</small>
 
@@ -126,7 +126,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 #### Hint
 
-Use a tool!
+- Use a tool!
 
 ### MFInt32 [ ] **normalIndex** [ ] <small>[0,∞) or -1</small>
 
@@ -134,7 +134,7 @@ NormalIndex indices define the order in which normal vectors are applied.
 
 #### Hints
 
-If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### MFInt32 [ ] **coordIndex** [ ] <small>[0,∞) or -1</small>
 
@@ -142,7 +142,7 @@ CoordIndex indices provide the order in which coordinates are applied to constru
 
 #### Hint
 
-Sentinel value -1 is used to separate indices for each successive polygon.
+- Sentinel value -1 is used to separate indices for each successive polygon.
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 

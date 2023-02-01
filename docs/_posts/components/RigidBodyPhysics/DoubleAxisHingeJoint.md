@@ -45,7 +45,7 @@ Axis1 defines axis vector of joint connection to body1.
 
 #### Hint
 
-0 0 0 means motor disabled.
+- 0 0 0 means motor disabled.
 
 ### SFVec3f [in, out] **axis2** 0 0 0
 
@@ -53,7 +53,7 @@ Axis2 defines axis vector of joint connection to body2.
 
 #### Hint
 
-0 0 0 means motor disabled.
+- 0 0 0 means motor disabled.
 
 ### SFFloat [in, out] **minAngle1** -3.14159 <small>π [-π,π] <span class="no">not supported</span>
 </small>
@@ -101,7 +101,7 @@ SuspensionForce describes how quickly the system resolves intersection errors du
 
 #### Hints
 
-Use with stop1ConstantForceMix to improve softness and numerical stability. 0 means no stop adjustment, 1 means springier stop response.
+- Use with stop1ConstantForceMix to improve softness and numerical stability. 0 means no stop adjustment, 1 means springier stop response.
 
 ### SFFloat [in, out] **suspensionErrorCorrection** 0.8 <small>[0,1]<span class="no"> not supported</span></small>
 
@@ -109,7 +109,7 @@ SuspensionErrorCorrection describes how quickly the system resolves intersection
 
 #### Hints
 
-Use with stop1ConstantForceMix to improve softness and numerical stability. 0 means no stop adjustment, 1 means springier stop response.
+- Use with stop1ConstantForceMix to improve softness and numerical stability. 0 means no stop adjustment, 1 means springier stop response.
 
 ### SFVec3f [out] **body1AnchorPoint**
 

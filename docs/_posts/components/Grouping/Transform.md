@@ -38,7 +38,7 @@ Position (x, y, z in meters) of children relative to local coordinate system.
 
 #### Hint
 
-The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
+- The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
@@ -46,7 +46,7 @@ Orientation (axis, angle in radians) of children relative to local coordinate sy
 
 #### Hint
 
-The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
+- The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
 
 ### SFVec3f [in, out] **scale** 1 1 1 <small>(-∞, ∞)</small>
 
@@ -54,7 +54,7 @@ Non-uniform x-y-z scale of child coordinate system, adjusted by center and scale
 
 #### Hint
 
-The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
+- The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
 
 ### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
@@ -62,7 +62,7 @@ Preliminary rotation of coordinate system before scaling (to allow scaling aroun
 
 #### Hint
 
-The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
+- The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
 
@@ -70,7 +70,7 @@ Translation offset from origin of local coordinate system, applied prior to rota
 
 #### Hint
 
-The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
+- The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
 
@@ -78,7 +78,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
@@ -98,7 +98,7 @@ Grouping nodes contain a list of children nodes.
 
 #### Hint
 
-Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
+- Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
 
 ## Description
 

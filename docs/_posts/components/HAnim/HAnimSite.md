@@ -38,7 +38,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
@@ -66,11 +66,11 @@ Unique name attribute must be defined so that HAnimSite node can be identified a
 
 #### Hints
 
-HAnimSite nodes used as end effectors have '\_tip' suffix appended to the name. HAnimSite nodes containing a Viewpoint location have '\_view' suffix appended to the name. HAnimSite nodes serving other purposes have '\_pt' suffix appended to the name. Examples: cervicale l_infraorbitale supramenton etc. as listed in HAnim Specification.
+- HAnimSite nodes used as end effectors have '\_tip' suffix appended to the name. HAnimSite nodes containing a Viewpoint location have '\_view' suffix appended to the name. HAnimSite nodes serving other purposes have '\_pt' suffix appended to the name. Examples: cervicale l_infraorbitale supramenton etc. as listed in HAnim Specification.
 
 #### Warning
 
-Name is not included if this instance is a USE node.
+- Name is not included if this instance is a USE node.
 
 #### See Also
 

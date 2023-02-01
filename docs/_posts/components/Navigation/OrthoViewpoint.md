@@ -43,11 +43,11 @@ Text description or navigation hint to identify this Viewpoint.
 
 #### Hints
 
-Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+- Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
 
 #### Warning
 
-Without description, this OrthoViewpoint is unlikely to appear on browser Viewpoints menu.
+- Without description, this OrthoViewpoint is unlikely to appear on browser Viewpoints menu.
 
 ### SFVec3f [in, out] **position** 0 0 10 <small>(-∞,∞)</small>
 
@@ -59,7 +59,7 @@ Rotation (axis, angle in radians) of Viewpoint, relative to default -Z axis dire
 
 #### Hints
 
-This is orientation \_change\_ from default direction (0 0 -1). Complex rotations can be accomplished axis-by-axis using parent Transforms.
+- This is orientation \_change\_ from default direction (0 0 -1). Complex rotations can be accomplished axis-by-axis using parent Transforms.
 
 ### SFVec3f [in, out] **centerOfRotation** 0 0 0 <small>(-∞,∞)</small>
 
@@ -71,11 +71,11 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 
 #### Hint
 
-Rectangular display width/height = (maxX-minX) / (maxY-minY)
+- Rectangular display width/height = (maxX-minX) / (maxY-minY)
 
 #### Warning
 
-Minimum corner must remain less than maximum corner.
+- Minimum corner must remain less than maximum corner.
 
 ### SFBool [in, out] **jump** TRUE
 
@@ -83,7 +83,7 @@ Transition instantly by jumping, or smoothly adjust offsets in place when changi
 
 #### Hint
 
-Set jump=true for smooth camera motion when going to this viewpoint.
+- Set jump=true for smooth camera motion when going to this viewpoint.
 
 ### SFBool [in, out] **retainUserOffsets** FALSE
 

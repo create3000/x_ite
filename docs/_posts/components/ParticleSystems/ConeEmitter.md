@@ -53,7 +53,7 @@ Multiplier for the randomness used to control the range of possible output value
 
 #### Hint
 
-Variation of zero does not allow any randomness.
+- Variation of zero does not allow any randomness.
 
 ### SFFloat [ ] **mass** 0 <small>[0,∞)</small>
 
@@ -65,7 +65,7 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 #### Hints
 
-SurfaceArea value represents average frontal area presented to the wind. Assumes spherical model for each particle (i.e., surface area is the same regardless of direction).
+- SurfaceArea value represents average frontal area presented to the wind. Assumes spherical model for each particle (i.e., surface area is the same regardless of direction).
 
 ## Example
 

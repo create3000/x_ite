@@ -43,7 +43,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 #### Warning
 
-Deprecated values are GDC (use GD) and GCC (use GC).
+- Deprecated values are GDC (use GD) and GCC (use GC).
 
 #### See Also
 
@@ -81,7 +81,7 @@ Viewer range from geographic-coordinates center triggers quadtree loading/unload
 
 #### Hint
 
-Not setting range values indicates that level switching can be optimized automatically based on performance.
+- Not setting range values indicates that level switching can be optimized automatically based on performance.
 
 ### SFInt32 [out] **level_changed**
 
@@ -97,7 +97,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 

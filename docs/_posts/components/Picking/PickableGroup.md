@@ -40,11 +40,11 @@ The pickable field determines whether pick traversal is performed on this node o
 
 #### Hint
 
-Pickable only affects children accessed through the transformation hierarchy of the parent.
+- Pickable only affects children accessed through the transformation hierarchy of the parent.
 
 #### Warning
 
-If one or more of the children of this instance is accessible through another transformation hierarchy through DEF/USE that still has picking enabled, they are still pickable through that path only.
+- If one or more of the children of this instance is accessible through another transformation hierarchy through DEF/USE that still has picking enabled, they are still pickable through that path only.
 
 ### MFString [in, out] **objectType** "ALL" <small>["ALL","NONE","TERRAIN",...]</small>
 
@@ -52,7 +52,7 @@ The objectType field specifies a set of labels used in the picking process. Each
 
 #### Hints
 
-Authors may define any value for objectType. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
+- Authors may define any value for objectType. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or -1 -1 -1</small>
 
@@ -60,7 +60,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
@@ -80,7 +80,7 @@ Grouping nodes contain a list of children nodes.
 
 #### Hint
 
-Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
+- Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
 
 ## Description
 

@@ -38,7 +38,7 @@ SeparateBackColor determines whether separate Material values are used for back 
 
 #### Warning
 
-Backface Material values are ignored unless you set separateBackColor='true'
+- Backface Material values are ignored unless you set separateBackColor='true'
 
 ### SFFloat [in, out] **ambientIntensity** 0.2 <small>[0,1]</small>
 
@@ -50,7 +50,7 @@ How much direct, angle-dependent light is reflected from all light sources.
 
 #### Hints
 
-Only emissiveColor affects IndexedLineSet, LineSet and PointSet. If a texture is present the diffuseColor is always multiplied with the texture color, in contrast to the specification. Set diffuseColor to (1 1 1) to get maximum texture color intensity.
+- Only emissiveColor affects IndexedLineSet, LineSet and PointSet. If a texture is present the diffuseColor is always multiplied with the texture color, in contrast to the specification. Set diffuseColor to (1 1 1) to get maximum texture color intensity.
 
 ### SFColor [in, out] **specularColor** 0 0 0 <small>[0,1]</small>
 
@@ -62,11 +62,11 @@ How much glowing light is emitted from this object.
 
 #### Hints
 
-EmissiveColors glow even when all lights are off. Reset diffuseColor from default (.8 .8 .8) to (0 0 0) to avoid washout. Only emissiveColor affects IndexedLineSet, LineSet and PointSet.
+- EmissiveColors glow even when all lights are off. Reset diffuseColor from default (.8 .8 .8) to (0 0 0) to avoid washout. Only emissiveColor affects IndexedLineSet, LineSet and PointSet.
 
 #### Warning
 
-Bright emissiveColor values can wash out other colors and some textures.
+- Bright emissiveColor values can wash out other colors and some textures.
 
 ### SFFloat [in, out] **shininess** 0.2 <small>[0,1]</small>
 
@@ -82,7 +82,7 @@ Transparency < .5 opaque, transparency > .5 transparent.
 
 #### Hint
 
-If a texture is present the transparency is always multiplied with the texture's transparency, in contrast to the specification. Set transparency to (0) to get a full opaque texture color.
+- If a texture is present the transparency is always multiplied with the texture's transparency, in contrast to the specification. Set transparency to (0) to get a full opaque texture color.
 
 ### SFFloat [in, out] **backAmbientIntensity** 0.2 <small>[0,1]</small>
 
@@ -94,7 +94,7 @@ How much direct, angle-dependent light is reflected from all light sources.
 
 #### Hints
 
-Only emissiveColor affects IndexedLineSet, LineSet and PointSet. If a texture is present the diffuseColor is always multiplied with the texture color, in contrast to the specification. Set diffuseColor to (1 1 1) to get maximum texture color intensity.
+- Only emissiveColor affects IndexedLineSet, LineSet and PointSet. If a texture is present the diffuseColor is always multiplied with the texture color, in contrast to the specification. Set diffuseColor to (1 1 1) to get maximum texture color intensity.
 
 ### SFColor [in, out] **backSpecularColor** 0 0 0 <small>[0,1]</small>
 
@@ -106,11 +106,11 @@ How much glowing light is emitted from this object.
 
 #### Hints
 
-EmissiveColors glow even when all lights are off. Reset diffuseColor from default (.8 .8 .8) to (0 0 0) to avoid washout. Only emissiveColor affects IndexedLineSet, LineSet and PointSet.
+- EmissiveColors glow even when all lights are off. Reset diffuseColor from default (.8 .8 .8) to (0 0 0) to avoid washout. Only emissiveColor affects IndexedLineSet, LineSet and PointSet.
 
 #### Warning
 
-Bright emissiveColor values can wash out other colors and some textures.
+- Bright emissiveColor values can wash out other colors and some textures.
 
 ### SFFloat [in, out] **backShininess** 0.2 <small>[0,1]</small>
 
@@ -126,7 +126,7 @@ Transparency < .5 opaque, transparency > .5 transparent.
 
 #### Hint
 
-If a texture is present the transparency is always multiplied with the texture's transparency, in contrast to the specification. Set transparency to (0) to get a full opaque texture color.
+- If a texture is present the transparency is always multiplied with the texture's transparency, in contrast to the specification. Set transparency to (0) to get a full opaque texture color.
 
 ## Description
 

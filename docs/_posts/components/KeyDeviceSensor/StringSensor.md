@@ -43,7 +43,7 @@ If deletionAllowed is true, then previously entered character in enteredText can
 
 #### Hint
 
-Deletion key is typically defined by local system.
+- Deletion key is typically defined by local system.
 
 ### SFString [out] **enteredText**
 
@@ -55,7 +55,7 @@ Events generated when sequence of keystrokes matches keys in terminationText str
 
 #### Hint
 
-Termination key is typically defined by local system.
+- Termination key is typically defined by local system.
 
 ### SFBool [out] **isActive**
 

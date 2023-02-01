@@ -38,7 +38,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
@@ -82,11 +82,11 @@ Unique name attribute must be defined so that HAnimSegment node can be identifie
 
 #### Hint
 
-For abitrary humanoids, HAnimSegment name can describe geometry between parent HAnimJoint and sibling HAnimJoint nodes (for example LeftHip_to_LeftKnee).
+- For abitrary humanoids, HAnimSegment name can describe geometry between parent HAnimJoint and sibling HAnimJoint nodes (for example LeftHip_to_LeftKnee).
 
 #### Warning
 
-Name is not included if this instance is a USE node. Examples: sacrum pelvis l_thigh l_calf etc. as listed in HAnim Specification.
+- Name is not included if this instance is a USE node. Examples: sacrum pelvis l_thigh l_calf etc. as listed in HAnim Specification.
 
 #### See Also
 

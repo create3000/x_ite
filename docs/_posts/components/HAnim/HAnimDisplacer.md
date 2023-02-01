@@ -37,7 +37,7 @@ Defines index values into the parent HAnimSegment or HAnimBody/HAnimHumanoid coo
 
 #### Warning
 
--1 sentinel values are not allowed.
+- -1 sentinel values are not allowed.
 
 ### MFVec3f [in, out] **displacements** [ ]
 
@@ -45,7 +45,7 @@ Displacements are a set of SFVec3f values added to neutral/resting position of e
 
 #### Hint
 
-Individual displacement values are scaled by the weight factor, if present.
+- Individual displacement values are scaled by the weight factor, if present.
 
 ### SFString [in, out] **name** ""
 
@@ -53,7 +53,7 @@ Unique name attribute must be defined so that HAnimDisplacer node can be identif
 
 #### Warning
 
-Name is not included if this instance is a USE node. Examples: sellion r_infraorbitale etc. as listed in HAnim Specification.
+- Name is not included if this instance is a USE node. Examples: sellion r_infraorbitale etc. as listed in HAnim Specification.
 
 #### See Also
 
@@ -66,7 +66,7 @@ The weigh factor has typical range [0,1] and defines the scale factor applied to
 
 #### Hint
 
-Apply a non-zero weight factor to see the effect of HAnimDisplacer displacements.
+- Apply a non-zero weight factor to see the effect of HAnimDisplacer displacements.
 
 ## Description
 

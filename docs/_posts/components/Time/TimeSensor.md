@@ -44,7 +44,7 @@ CycleInterval is loop duration in seconds. Interchange profile hint: TimeSensor 
 
 #### Warning
 
-An active TimeSensor node ignores set_cycleInterval and set_startTime events.
+- An active TimeSensor node ignores set_cycleInterval and set_startTime events.
 
 ### SFBool [in, out] **loop** FALSE
 
@@ -56,7 +56,7 @@ When time now >= startTime, isActive becomes true and TimeSensor becomes active.
 
 #### Hint
 
-Usually receives a ROUTEd time value.
+- Usually receives a ROUTEd time value.
 
 ### SFTime [in, out] **resumeTime**
 
@@ -64,11 +64,11 @@ When resumeTime becomes <= time now, isPaused becomes false and TimeSensor becom
 
 #### Hint
 
-Usually receives a ROUTEd time value.
+- Usually receives a ROUTEd time value.
 
 #### Warning
 
-Not supported in VRML97.
+- Not supported in VRML97.
 
 ### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
 
@@ -76,11 +76,11 @@ When time now >= pauseTime, isPaused becomes true and TimeSensor becomes paused.
 
 #### Hint
 
-Usually receives a ROUTEd time value.
+- Usually receives a ROUTEd time value.
 
 #### Warning
 
-Not supported in VRML97.
+- Not supported in VRML97.
 
 ### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
 
@@ -88,11 +88,11 @@ When stopTime becomes \<= time now, isActive becomes false and TimeSensor become
 
 #### Hint
 
-Usually receives a ROUTEd time value.
+- Usually receives a ROUTEd time value.
 
 #### Warnings
 
-An active TimeSensor node ignores set_cycleInterval and set_startTime events. An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
+- An active TimeSensor node ignores set_cycleInterval and set_startTime events. An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
 
@@ -100,7 +100,7 @@ IsPaused true/false events are sent when TimeSensor is paused/resumed.
 
 #### Warning
 
-Not supported in VRML97.
+- Not supported in VRML97.
 
 ### SFBool [out] **isActive**
 
@@ -116,7 +116,7 @@ Current elapsed time since TimeSensor activated/running, cumulative in seconds, 
 
 #### Warning
 
-Not supported in VRML97.
+- Not supported in VRML97.
 
 ### SFFloat [out] **fraction_changed**
 

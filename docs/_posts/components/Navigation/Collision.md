@@ -40,7 +40,7 @@ Enables/disables collision detection for children and all descendants.
 
 #### Hint
 
-Former name "collide" in VRML97 specification.
+- Former name "collide" in VRML97 specification.
 
 ### SFBool [out] **isActive**
 
@@ -56,7 +56,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
@@ -80,7 +80,7 @@ Grouping nodes contain a list of children nodes.
 
 #### Hint
 
-Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
+- Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
 
 ## Description
 

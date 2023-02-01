@@ -38,7 +38,7 @@ Depending on the metadata vocabulary, the attribute name is usually required for
 
 #### Warning
 
-Name is not included if this instance is a USE node.
+- Name is not included if this instance is a USE node.
 
 ### SFString [in, out] **reference** ""
 
@@ -50,7 +50,7 @@ The value attribute is a strictly typed data array providing relevant metadata i
 
 #### Hint
 
-Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+- Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
 
 ## Description
 

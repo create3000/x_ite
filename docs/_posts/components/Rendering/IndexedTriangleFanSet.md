@@ -38,7 +38,7 @@ Index list specifies triangles by connecting Coordinate vertices, each individua
 
 #### Hint
 
-First indexed coordinate in each sequence is fan center.
+- First indexed coordinate in each sequence is fan center.
 
 ### SFBool [ ] **solid** TRUE
 
@@ -46,11 +46,11 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 #### Hint
 
-If in doubt, use solid='false' for maximum visibility.
+- If in doubt, use solid='false' for maximum visibility.
 
 #### Warning
 
-Default value true can completely hide geometry if viewed from wrong side!
+- Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFBool [ ] **ccw** TRUE
 
@@ -58,7 +58,7 @@ Ccw = counterclockwise: ordering of vertex coordinates orientation.
 
 #### Hint
 
-Ccw false can reverse solid (backface culling) and normal-vector orientation.
+- Ccw false can reverse solid (backface culling) and normal-vector orientation.
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
@@ -78,7 +78,7 @@ Index list specifies triangles by connecting Coordinate vertices, each individua
 
 #### Hint
 
-First indexed coordinate in each sequence is fan center.
+- First indexed coordinate in each sequence is fan center.
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 

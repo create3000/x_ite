@@ -39,7 +39,7 @@ Update controls regeneration of the texture.
 
 #### Warnings
 
-An object trying to render itself in the scene graph can cause infinite loops. Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- An object trying to render itself in the scene graph can cause infinite loops. Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFInt32 [ ] **size** 128 <small>(0,∞)</small>
 

@@ -37,7 +37,7 @@ Coordinates of vertices connected into contiguous Polyline2D.
 
 #### Warning
 
-Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
 
 ## Description
 

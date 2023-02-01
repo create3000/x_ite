@@ -61,7 +61,7 @@ ConstantForceMix modifies damping calculations by violating normal constraints w
 
 #### Hints
 
-This allows joints and bodies to be a fraction springy, and helps to eliminate numerical instability. Spring-driven or spongy connections can be emulated by combined use of errorCorrection and constantForceMix.
+- This allows joints and bodies to be a fraction springy, and helps to eliminate numerical instability. Spring-driven or spongy connections can be emulated by combined use of errorCorrection and constantForceMix.
 
 ### SFFloat [in, out] **maxCorrectionSpeed** -1 <small>[0,∞) or -1 <span class="no">not supported</span></small>
 
@@ -81,7 +81,7 @@ DisableTime defines interval when body becomes at rest and not part of rigid bod
 
 #### Hint
 
-Only activated if autoDisable='true'
+- Only activated if autoDisable='true'
 
 ### SFFloat [in, out] **disableLinearSpeed** 0 <small>[0,∞)</small>
 
@@ -89,7 +89,7 @@ DisableLinearSpeed defines lower-limit tolerance value when body is considered a
 
 #### Hint
 
-Only activated if autoDisable='true'
+- Only activated if autoDisable='true'
 
 ### SFFloat [in, out] **disableAngularSpeed** 0 <small>[0,∞)</small>
 
@@ -97,7 +97,7 @@ DisableAngularSpeed defines lower-limit tolerance value when body is considered 
 
 #### Hint
 
-Only activated if autoDisable='true'
+- Only activated if autoDisable='true'
 
 ### SFNode [ ] **collider** NULL <small>[CollisionCollection]</small>
 

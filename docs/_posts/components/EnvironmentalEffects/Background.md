@@ -43,11 +43,11 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 #### Hints
 
-MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning
 
-Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
 ### MFString [in, out] **backUrl** [ ] <small>[URI]</small>
 
@@ -55,11 +55,11 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 #### Hints
 
-MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning
 
-Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
 ### MFString [in, out] **leftUrl** [ ] <small>[URI]</small>
 
@@ -67,11 +67,11 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 #### Hints
 
-MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning
 
-Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
 ### MFString [in, out] **rightUrl** [ ] <small>[URI]</small>
 
@@ -79,11 +79,11 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 #### Hints
 
-MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning
 
-Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
 ### MFString [in, out] **topUrl** [ ] <small>[URI]</small>
 
@@ -91,11 +91,11 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 #### Hints
 
-MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning
 
-Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
 ### MFString [in, out] **bottomUrl** [ ] <small>[URI]</small>
 
@@ -103,11 +103,11 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 #### Hints
 
-MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning
 
-Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
 ### MFFloat [in, out] **skyAngle** [ ] <small>[0,π]</small>
 
@@ -115,7 +115,7 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 
 #### Warnings
 
-You must have one more skyColor value than skyAngle values. Colors at skyAngle=0 are ignored. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- You must have one more skyColor value than skyAngle values. Colors at skyAngle=0 are ignored. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### MFColor [in, out] **skyColor** 0 0 0 <small>[0,1]</small>
 
@@ -123,11 +123,11 @@ Color of the sky at various angles on the sky sphere. First value is color of sk
 
 #### Hint
 
-Setting the same color at two consecutive angles produces a solid color band.
+- Setting the same color at two consecutive angles produces a solid color band.
 
 #### Warning
 
-You must have one more skyColor value than skyAngle values. Interchange profile hint: only one color might be rendered, others can be ignored.
+- You must have one more skyColor value than skyAngle values. Interchange profile hint: only one color might be rendered, others can be ignored.
 
 #### See Also
 
@@ -139,7 +139,7 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 
 #### Warnings
 
-You must have one more groundColor value than groundAngle values. Colors at groundAngle=0 are ignored. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- You must have one more groundColor value than groundAngle values. Colors at groundAngle=0 are ignored. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### MFColor [in, out] **groundColor** [ ] <small>[0,1]</small>
 
@@ -147,11 +147,11 @@ Color of the ground at the various angles on the ground partial sphere. First va
 
 #### Hint
 
-Setting the same color at two consecutive angles produces a solid color band.
+- Setting the same color at two consecutive angles produces a solid color band.
 
 #### Warning
 
-You must have one more groundColor value than groundAngle values. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- You must have one more groundColor value than groundAngle values. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### See Also
 

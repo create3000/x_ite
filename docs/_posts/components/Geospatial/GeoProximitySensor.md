@@ -43,7 +43,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 #### Warning
 
-Deprecated values are GDC (use GD) and GCC (use GC).
+- Deprecated values are GDC (use GD) and GCC (use GC).
 
 #### See Also
 
@@ -61,7 +61,7 @@ Size of Proximity box.
 
 #### Hint
 
-Size 0 0 0 is same as enabled false.
+- Size 0 0 0 is same as enabled false.
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞) (starting with vs. 3.3)</small>
 

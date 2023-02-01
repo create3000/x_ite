@@ -55,11 +55,11 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 #### Hint
 
-If in doubt, use solid='false' for maximum visibility.
+- If in doubt, use solid='false' for maximum visibility.
 
 #### Warning
 
-Default value true can completely hide geometry if viewed from wrong side!
+- Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFInt32 [ ] **uOrder** 3 <small>[2,∞)</small>
 

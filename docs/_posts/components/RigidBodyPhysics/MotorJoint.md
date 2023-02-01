@@ -45,7 +45,7 @@ Motor1Axis defines axis vector of corresponding motor axis.
 
 #### Hint
 
-0 0 0 means motor disabled.
+- 0 0 0 means motor disabled.
 
 ### SFVec3f [in, out] **motor2Axis** 0 0 0
 
@@ -53,7 +53,7 @@ Motor2Axis defines axis vector of corresponding motor axis.
 
 #### Hint
 
-0 0 0 means motor disabled.
+- 0 0 0 means motor disabled.
 
 ### SFVec3f [in, out] **motor3Axis** 0 0 0
 
@@ -61,7 +61,7 @@ Motor3Axis defines axis vector of corresponding motor axis.
 
 #### Hint
 
-0 0 0 means motor disabled.
+- 0 0 0 means motor disabled.
 
 ### SFFloat [in, out] **axis1Angle** 0 <small>[-π,π]</small>
 
@@ -93,7 +93,7 @@ Stop1Bounce is velocity factor for bounce back once stop point is reached.
 
 #### Hint
 
-0 means no bounce, 1 means return velocity matches.
+- 0 means no bounce, 1 means return velocity matches.
 
 ### SFFloat [in, out] **stop2Bounce** 0 <small>[0,1]</small>
 
@@ -101,7 +101,7 @@ Stop2Bounce is velocity factor for bounce back once stop point is reached.
 
 #### Hint
 
-0 means no bounce, 1 means return velocity matches.
+- 0 means no bounce, 1 means return velocity matches.
 
 ### SFFloat [in, out] **stop3Bounce** 0 <small>[0,1]</small>
 
@@ -109,7 +109,7 @@ Stop3Bounce is velocity factor for bounce back once stop point is reached.
 
 #### Hint
 
-0 means no bounce, 1 means return velocity matches.
+- 0 means no bounce, 1 means return velocity matches.
 
 ### SFFloat [in, out] **stop1ErrorCorrection** 0.8 <small>[0,1]</small>
 
@@ -117,7 +117,7 @@ Stop1ErrorCorrection is fraction of error correction performed during time step 
 
 #### Hint
 
-0 means no error correction, 1 means all error corrected in single step.
+- 0 means no error correction, 1 means all error corrected in single step.
 
 ### SFFloat [in, out] **stop2ErrorCorrection** 0.8 <small>[0,1]</small>
 
@@ -125,7 +125,7 @@ Stop2ErrorCorrection is fraction of error correction performed during time step 
 
 #### Hint
 
-0 means no error correction, 1 means all error corrected in single step.
+- 0 means no error correction, 1 means all error corrected in single step.
 
 ### SFFloat [in, out] **stop3ErrorCorrection** 0.8 <small>[0,1]</small>
 
@@ -133,7 +133,7 @@ Stop3ErrorCorrection is fraction of error correction performed during time step 
 
 #### Hint
 
-0 means no error correction, 1 means all error corrected in single step.
+- 0 means no error correction, 1 means all error corrected in single step.
 
 ### SFFloat [out] **motor1Angle**
 

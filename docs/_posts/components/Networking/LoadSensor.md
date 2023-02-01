@@ -51,7 +51,7 @@ Notify when all watchList child nodes are loaded, or at least one has failed. Se
 
 #### Hint
 
-Use multiple LoadSensor nodes to track multiple loading nodes individually.
+- Use multiple LoadSensor nodes to track multiple loading nodes individually.
 
 ### SFFloat [out] **progress**
 
@@ -59,7 +59,7 @@ Sends 0.0 on start and 1.0 on completion. Intermediate values are browser depend
 
 #### Hint
 
-Only 0 and 1 events are guaranteed.
+- Only 0 and 1 events are guaranteed.
 
 ### SFTime [out] **loadTime**
 

@@ -41,11 +41,11 @@ Text description or navigation hint to identify this ViewpointGroup.
 
 #### Hints
 
-Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+- Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
 
 #### Warning
 
-Without description, this ViewpointGroup is unlikely to appear on browser Viewpoints menu.
+- Without description, this ViewpointGroup is unlikely to appear on browser Viewpoints menu.
 
 ### SFBool [in, out] **retainUserOffsets** FALSE
 
@@ -57,7 +57,7 @@ Size of proximity box around center location within which ViewpointGroup is usab
 
 #### Hint
 
-Size 0 0 0 specifies that ViewpointGroup is always usable and displayable.
+- Size 0 0 0 specifies that ViewpointGroup is always usable and displayable.
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
 

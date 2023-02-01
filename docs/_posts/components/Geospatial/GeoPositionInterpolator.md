@@ -42,7 +42,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 #### Warning
 
-Deprecated values are GDC (use GD) and GCC (use GC).
+- Deprecated values are GDC (use GD) and GCC (use GC).
 
 #### See Also
 
@@ -60,7 +60,7 @@ Definition parameters for linear-interpolation function time intervals, in incre
 
 #### Warning
 
-Number of keys must match number of keyValues!
+- Number of keys must match number of keyValues!
 
 ### MFVec3d [in, out] **keyValue** [ ]
 
@@ -68,7 +68,7 @@ Output values for linear interpolation, each corresponding to time-fraction keys
 
 #### Warning
 
-Number of keys must match number of keyValues!
+- Number of keys must match number of keyValues!
 
 ### SFVec3d [out] **value_changed**
 
@@ -80,7 +80,7 @@ Interpolated coordinate in the geographic coordinate system specified by geoSyst
 
 #### Hint
 
-Include `<component name='Geospatial' level='1'/>`
+- Include `<component name='Geospatial' level='1'/>`
 
 ## Description
 

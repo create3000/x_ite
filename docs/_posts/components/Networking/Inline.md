@@ -44,7 +44,7 @@ load=true means load immediately, load=false means defer loading or else unload 
 
 #### Hint
 
-Use LoadSensor to detect when loading is complete.
+- Use LoadSensor to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
@@ -52,11 +52,11 @@ Address of X3D world to load into current scene.
 
 #### Hints
 
-MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
 
 #### Warning
 
-Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
 #### See Also
 
@@ -73,7 +73,7 @@ autoRefresh defines interval in seconds before automatic reload of current url a
 
 #### Warning
 
-Automatically reloading content has security considerations and needs to be considered carefully.
+- Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
 
@@ -81,11 +81,11 @@ autoRefreshTimeLimit defines maximum duration that automatic refresh activity ca
 
 #### Hint
 
-Automatic refresh is different than query and response timeouts performed by a networking library while sequentially attempting to retrieve addressed content from a url list.
+- Automatic refresh is different than query and response timeouts performed by a networking library while sequentially attempting to retrieve addressed content from a url list.
 
 #### Warning
 
-Automatically reloading content has security considerations and needs to be considered carefully.
+- Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
 
@@ -93,7 +93,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 

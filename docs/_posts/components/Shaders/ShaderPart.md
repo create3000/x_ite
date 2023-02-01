@@ -38,7 +38,7 @@ Type indicates whether this ShaderProgram is a vertex or fragment (pixel) shader
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
@@ -46,11 +46,11 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 
 #### Hints
 
-MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
 
 #### Warning
 
-Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
 #### See Also
 

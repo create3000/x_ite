@@ -37,7 +37,7 @@ Defines whether pair of line segments connect to center (PIE), or single line-se
 
 #### Warning
 
-Simple-geometry parameters cannot be changed after initial creation.
+- Simple-geometry parameters cannot be changed after initial creation.
 
 ### SFFloat [ ] **startAngle** 0 <small>[-2π,2π]</small>
 
@@ -45,7 +45,7 @@ Arc extends from startAngle counterclockwise to endAngle, in radians.
 
 #### Warning
 
-Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
 
 ### SFFloat [ ] **endAngle** π/2 <small>[-2π,2π]</small>
 
@@ -53,7 +53,7 @@ Arc extends from startAngle counterclockwise to endAngle, in radians.
 
 #### Warning
 
-Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
 
 ### SFFloat [ ] **radius** 1 <small>(0,∞)</small>
 
@@ -61,7 +61,7 @@ Circle radius, of which the arc is a portion.
 
 #### Warning
 
-Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
 
 ### SFBool [ ] **solid** FALSE
 
@@ -69,11 +69,11 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 #### Hint
 
-If in doubt, use solid='false' for maximum visibility.
+- If in doubt, use solid='false' for maximum visibility.
 
 #### Warnings
 
-Default value true can completely hide geometry if viewed from wrong side! Solid false not supported in VRML97.
+- Default value true can completely hide geometry if viewed from wrong side! Solid false not supported in VRML97.
 
 ## Description
 

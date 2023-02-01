@@ -40,7 +40,7 @@ Definition parameters for linear-interpolation function time intervals, in incre
 
 #### Hint
 
-Number of keys must be one more than the number of easeInEaseOut values!
+- Number of keys must be one more than the number of easeInEaseOut values!
 
 ### MFVec2f [in, out] **easeInEaseOut** [ ] <small>(-∞,∞)</small>
 
@@ -48,7 +48,7 @@ Array of paired values for easeOut fraction and easeIn fraction within each key 
 
 #### Hint
 
-Number of easeInEaseOut values must be one less than the number of keys.
+- Number of easeInEaseOut values must be one less than the number of keys.
 
 ### SFFloat [out] **modifiedFraction_changed**
 

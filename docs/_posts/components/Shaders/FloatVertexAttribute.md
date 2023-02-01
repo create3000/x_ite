@@ -38,7 +38,7 @@ Required name for this particular VertexAttribute instance.
 
 #### Warning
 
-Name is not specified if this instance is a USE node.
+- Name is not specified if this instance is a USE node.
 
 ### SFInt32 [ ] **numComponents** 4 <small>[1..4]</small>
 
@@ -46,7 +46,7 @@ NumComponents pecifies how many consecutive floating-point values should be grou
 
 #### Hint
 
-The length of the value field shall be a multiple of numComponents.
+- The length of the value field shall be a multiple of numComponents.
 
 ### MFFloat [in, out] **value** [ ] <small>[] (-∞,∞)</small>
 
@@ -54,7 +54,7 @@ Value specifies an arbitrary collection of floating-point values that will be pa
 
 #### Hint
 
-The length of the value field shall be a multiple of numComponents.
+- The length of the value field shall be a multiple of numComponents.
 
 ## Example
 

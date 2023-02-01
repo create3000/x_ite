@@ -45,7 +45,7 @@ MinSeparation is minimum separation distance between the two bodies.
 
 #### Hint
 
-If (minSeparation is less than maxSeparation) then no stop is effective.
+- If (minSeparation is less than maxSeparation) then no stop is effective.
 
 ### SFFloat [in, out] **maxSeparation** 1 <small>[0,∞)</small>
 
@@ -53,7 +53,7 @@ MaxSeparation is maximum separation distance between the two bodies.
 
 #### Hint
 
-If (minSeparation is less than maxSeparation) then no stop is effective.
+- If (minSeparation is less than maxSeparation) then no stop is effective.
 
 ### SFFLoat [in, out] **sliderForce** 0 <span class="no"><small class="small">not supported</small></span>
 
@@ -65,7 +65,7 @@ StopBounce is velocity factor for bounce back once stop point is reached.
 
 #### Hint
 
-0 means no bounce, 1 means return velocity matches.
+- 0 means no bounce, 1 means return velocity matches.
 
 ### SFFloat [in, out] **stopErrorCorrection** 1 <small>[0,1] <span class="no">not supported</span></small>
 
@@ -73,7 +73,7 @@ StopErrorCorrection is fraction of error correction performed during time step o
 
 #### Hint
 
-0 means no error correction, 1 means all error corrected in single step.
+- 0 means no error correction, 1 means all error corrected in single step.
 
 ### SFFloat [out] **separation** <span class="no"><small class="small">not supported</small></span>
 

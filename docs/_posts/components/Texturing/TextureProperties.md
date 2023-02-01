@@ -56,11 +56,11 @@ MinificationFilter indicates texture filter when image is larger than screen spa
 
 #### Hint
 
-See X3D Specification [Table 18.9 Texture minification modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-TextureMinificationModes){:target="_blank"} for details.
+- See X3D Specification [Table 18.9 Texture minification modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-TextureMinificationModes){:target="_blank"} for details.
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFString [in, out] **magnificationFilter** "FASTEST"
 
@@ -68,11 +68,11 @@ MagnificationFilter indicates texture filter when image is smaller than screen s
 
 #### Hint
 
-See X3D Specification [Table 18.8 Texture magnification modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-TextureMagnificationModes){:target="_blank"} for details.
+- See X3D Specification [Table 18.8 Texture magnification modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-TextureMagnificationModes){:target="_blank"} for details.
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFString [in, out] **boundaryModeS** "REPEAT"
 
@@ -80,11 +80,11 @@ BoundaryModeS describes handling of texture-coordinate boundaries.
 
 #### Hint
 
-See X3D Specification T[able 18.7 Texture boundary modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-TextureBoundaryModes){:target="_blank"} for details.
+- See X3D Specification T[able 18.7 Texture boundary modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-TextureBoundaryModes){:target="_blank"} for details.
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFString [in, out] **boundaryModeT** "REPEAT"
 
@@ -92,11 +92,11 @@ BoundaryModeT describes handling of texture-coordinate boundaries.
 
 #### Hint
 
-See X3D Specification [Table 18.7 Texture boundary modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-TextureBoundaryModes){:target="_blank"} for details.
+- See X3D Specification [Table 18.7 Texture boundary modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-TextureBoundaryModes){:target="_blank"} for details.
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFString [in, out] **boundaryModeR** "REPEAT"
 
@@ -104,11 +104,11 @@ BoundaryModeR describes handling of texture-coordinate boundaries.
 
 #### Hint
 
-See X3D Specification [Table 18.7 Texture boundary modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-TextureBoundaryModes){:target="_blank"} for details.
+- See X3D Specification [Table 18.7 Texture boundary modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-TextureBoundaryModes){:target="_blank"} for details.
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFString [in, out] **textureCompression** "FASTEST"
 
@@ -116,11 +116,11 @@ TextureCompression indicates compression algorithm selection mode.
 
 #### Hint
 
-See X3D Specification [Table 18.10 Texture compression modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-TextureCompressionModes){:target="_blank"} for details.
+- See X3D Specification [Table 18.10 Texture compression modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-TextureCompressionModes){:target="_blank"} for details.
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFFloat [in, out] **texturePriority** 0 <small>[0,1]</small>
 

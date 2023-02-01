@@ -48,7 +48,7 @@ Default global parameters for collision outputs of rigid body physics system. Co
 
 #### Hint
 
-BOUNCE: bounce value is used; USER_FRICTION: apply user-supplied value; FRICTION_COEFFICIENT-2: apply frictionCoefficients values; ERROR_REDUCTION: apply softnessErrorCorrection value; CONSTANT_FORCE: apply softnessConstantForceMix value; SPEED-1: apply first component of surfaceSpeed array; SPEED-2: apply second component of surfaceSpeed array; SLIP-1: apply first component of slipFactors array; SLIP-2: apply second component of slipFactors array.
+- BOUNCE: bounce value is used; USER_FRICTION: apply user-supplied value; FRICTION_COEFFICIENT-2: apply frictionCoefficients values; ERROR_REDUCTION: apply softnessErrorCorrection value; CONSTANT_FORCE: apply softnessConstantForceMix value; SPEED-1: apply first component of surfaceSpeed array; SPEED-2: apply second component of surfaceSpeed array; SLIP-1: apply first component of slipFactors array; SLIP-2: apply second component of slipFactors array.
 
 ### SFFloat [in, out] **bounce** 0 <small>[0,1]</small>
 
@@ -64,7 +64,7 @@ FrictionDirection controls friction vector.
 
 #### Hint
 
-Value of (0 0 0) indicates no friction.
+- Value of (0 0 0) indicates no friction.
 
 ### SFVec2f [in, out] **frictionCoefficients** 0 0 <small>[0,∞)</small>
 

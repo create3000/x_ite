@@ -38,7 +38,7 @@ Depending on the metadata vocabulary, the attribute name is usually required for
 
 #### Warning
 
-Name is not included if this instance is a USE node.
+- Name is not included if this instance is a USE node.
 
 ### SFString [in, out] **reference** ""
 
@@ -50,7 +50,7 @@ The value attribute is a strictly typed data array providing relevant metadata i
 
 #### Warning
 
-Use lower-case values ("true false") for .x3d XML encoding, and upper-case values ("TRUE FALSE") for .x3dv ClassicVRML encoding.
+- Use lower-case values ("true false") for .x3d XML encoding, and upper-case values ("TRUE FALSE") for .x3dv ClassicVRML encoding.
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
@@ -62,7 +62,7 @@ Depending on the metadata vocabulary, the attribute name is usually required for
 
 #### Warning
 
-Name is not included if this instance is a USE node.
+- Name is not included if this instance is a USE node.
 
 ### SFString [in, out] **reference** ""
 
@@ -74,7 +74,7 @@ The value attribute is a strictly typed data array providing relevant metadata i
 
 #### Warning
 
-Use lower-case values ("true false") for .x3d XML encoding, and upper-case values ("TRUE FALSE") for .x3dv ClassicVRML encoding.
+- Use lower-case values ("true false") for .x3d XML encoding, and upper-case values ("TRUE FALSE") for .x3dv ClassicVRML encoding.
 
 ## Description
 

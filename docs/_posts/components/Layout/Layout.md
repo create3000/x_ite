@@ -38,11 +38,11 @@ The align field values align the sized rectangle to an edge or center of the par
 
 #### Hint
 
-MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
+- MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 
 #### Warnings
 
-Two values (or possibly one value) only. If the align field has only one value, that value shall be "CENTER" and apply both horizontally and vertically.
+- Two values (or possibly one value) only. If the align field has only one value, that value shall be "CENTER" and apply both horizontally and vertically.
 
 ### MFString [in, out] **offsetUnits** [ "WORLD", "WORLD" ]
 
@@ -50,11 +50,11 @@ The offsetUnits field values are used to interprete the offset values. Two quote
 
 #### Hints
 
-If the value of the offsetUnits field is FRACTION, the size of the corresponding dimension is interpreted as a fraction of the corresponding parent’s dimension. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
+- If the value of the offsetUnits field is FRACTION, the size of the corresponding dimension is interpreted as a fraction of the corresponding parent’s dimension. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 
 #### Warning
 
-If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
+- If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
 ### MFFloat [in, out] **offset** [ 0, 0 ]
 
@@ -62,7 +62,7 @@ The values of the offset field are used to translate the location of this rectan
 
 #### Warning
 
-If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
+- If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
 ### MFString [in, out] **sizeUnits** [ "WORLD", "WORLD" ]
 
@@ -70,11 +70,11 @@ The sizeUnits field values are used to interprete the offset values. Two quoted 
 
 #### Hints
 
-If the value of the sizeUnits field is FRACTION, the size of the corresponding dimension is interpreted as a fraction of the corresponding parent’s dimension. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
+- If the value of the sizeUnits field is FRACTION, the size of the corresponding dimension is interpreted as a fraction of the corresponding parent’s dimension. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 
 #### Warning
 
-If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
+- If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
 ### MFFloat [in, out] **size** [ 1, 1 ]
 
@@ -82,7 +82,7 @@ The two values in the size field define the width and height of the layout recta
 
 #### Warning
 
-If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
+- If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
 ### MFString [in, out] **scaleMode** [ "NONE", "NONE" ]
 
@@ -90,11 +90,11 @@ The scaleMode field specifies how the scale of the parent is modified. Two quote
 
 #### Hints
 
-A scaleMode field value of NONE specifies that the corresponding scale value is not modified. Instead, the scale is inherited from its parent. Since a LayoutLayer node does not have a parent, the value of NONE reverts to FRACTION. A scaleMode value of FRACTION specifies a scale in the corresponding direction so that one unit is equal to the dimension (width or height) of this rectangle. A scaleMode value of STRETCH specifies a scale in the corresponding direction such that the resulting scale in the horizontal direction is equal to the scale in the vertical direction, thus producing a uniform scale. A value of PIXEL specifies a scale in the corresponding direction such that one unit is equal to one pixel. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
+- A scaleMode field value of NONE specifies that the corresponding scale value is not modified. Instead, the scale is inherited from its parent. Since a LayoutLayer node does not have a parent, the value of NONE reverts to FRACTION. A scaleMode value of FRACTION specifies a scale in the corresponding direction so that one unit is equal to the dimension (width or height) of this rectangle. A scaleMode value of STRETCH specifies a scale in the corresponding direction such that the resulting scale in the horizontal direction is equal to the scale in the vertical direction, thus producing a uniform scale. A value of PIXEL specifies a scale in the corresponding direction such that one unit is equal to one pixel. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 
 #### Warning
 
-If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
+- If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
 ## Description
 

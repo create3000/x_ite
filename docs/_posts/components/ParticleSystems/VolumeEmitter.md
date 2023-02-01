@@ -49,7 +49,7 @@ Multiplier for the randomness used to control the range of possible output value
 
 #### Hint
 
-Variation of zero does not allow any randomness.
+- Variation of zero does not allow any randomness.
 
 ### SFFloat [ ] **mass** 0 <small>[0,∞)</small>
 
@@ -57,7 +57,7 @@ Basic mass of each particle in mass base units (default is grams).
 
 #### Hint
 
-Mass is needed if gravity or other force-related calculations are performed per-particle.
+- Mass is needed if gravity or other force-related calculations are performed per-particle.
 
 ### SFFloat [ ] **surfaceArea** 0 <small>[0,∞)</small>
 
@@ -65,7 +65,7 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 #### Hints
 
-SurfaceArea value represents average frontal area presented to the wind. Assumes spherical model for each particle (i.e., surface area is the same regardless of direction).
+- SurfaceArea value represents average frontal area presented to the wind. Assumes spherical model for each particle (i.e., surface area is the same regardless of direction).
 
 ### MFInt32 [in, out] **coordIndex** -1 <small>[0,∞) or -1</small>
 

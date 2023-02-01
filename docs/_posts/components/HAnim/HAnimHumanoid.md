@@ -39,7 +39,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
@@ -63,7 +63,7 @@ Unique name attribute must be defined so that HAnimHumanoid node can be identifi
 
 #### Warning
 
-Name is not included if this instance is a USE node.
+- Name is not included if this instance is a USE node.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞)|[-1,1]</small>
 
@@ -111,7 +111,7 @@ HAnimHumanoid version, where standardized ISO 19774 value is 2.0.
 
 #### Warning
 
-Prior versions of HAnim nodes might not validate correctly.
+- Prior versions of HAnim nodes might not validate correctly.
 
 ### MFNode [in, out] **viewpoints** [ ] <small>[HAnimSite]</small>
 

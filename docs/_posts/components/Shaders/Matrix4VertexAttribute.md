@@ -38,7 +38,7 @@ Required name for this particular VertexAttribute instance.
 
 #### Warning
 
-Name is not specified if this instance is a USE node.
+- Name is not specified if this instance is a USE node.
 
 ### MFMatrix4f [in, out] **value** [ ] <small>(-∞,∞)</small>
 
@@ -46,7 +46,7 @@ Value specifies an arbitrary collection of matrix values that will be passed to 
 
 #### Hint
 
-The length of the value field shall be a multiple of numComponents.
+- The length of the value field shall be a multiple of numComponents.
 
 ## External Links
 

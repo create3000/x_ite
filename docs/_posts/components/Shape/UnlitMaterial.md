@@ -31,7 +31,21 @@ The UnlitMaterial node belongs to the **Shape** component and its default contai
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
+Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+
 ### SFColor [in, out] **emissiveColor** 1 1 1 <small>[0,1]</small>
+
+How much glowing light is emitted from this object.
+
+#### Hints
+
+- emissiveColors glow even when all lights are off.
+- Reset diffuseColor from default (0.8 0.8 0.8) to (0 0 0) to avoid washout.
+- Only emissiveColor affects IndexedLineSet, LineSet and PointSet.
+
+#### Warning
+
+- Bright emissiveColor values can wash out other colors and some textures.
 
 ### SFString [in, out] **emissiveTextureMapping** ""
 

@@ -41,7 +41,7 @@ Author-provided text tooltip that tells users the expected action of this node.
 
 #### Hint
 
-Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+- Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
@@ -49,11 +49,11 @@ Location and filename of sound file or stream. Support for .wav format is requir
 
 #### Hints
 
-MFString arrays can have multiple values, so separate each individual string by quote marks. "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
+- MFString arrays can have multiple values, so separate each individual string by quote marks. "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
 
 #### Warning
 
-Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
 #### See Also
 
@@ -73,7 +73,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-Usually receives a ROUTEd time value.
+- Usually receives a ROUTEd time value.
 
 ### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
 
@@ -81,7 +81,7 @@ When resumeTime becomes <= time now, isPaused becomes false and AudioClip become
 
 #### Hint
 
-Usually receives a ROUTEd time value.
+- Usually receives a ROUTEd time value.
 
 ### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
 
@@ -89,7 +89,7 @@ When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused. 
 
 #### Hint
 
-Usually receives a ROUTEd time value.
+- Usually receives a ROUTEd time value.
 
 ### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
 
@@ -97,11 +97,11 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-Usually receives a ROUTEd time value.
+- Usually receives a ROUTEd time value.
 
 #### Warnings
 
-An active TimeSensor node ignores set_cycleInterval and set_startTime events. An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
+- An active TimeSensor node ignores set_cycleInterval and set_startTime events. An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
 

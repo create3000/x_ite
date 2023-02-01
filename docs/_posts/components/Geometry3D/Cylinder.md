@@ -37,7 +37,7 @@ Whether to draw top (inside faces are never drawn).
 
 #### Warning
 
-Cannot be changed after initial creation.
+- Cannot be changed after initial creation.
 
 ### SFBool [ ] **side** TRUE
 
@@ -45,7 +45,7 @@ Whether to draw sides (inside faces are never drawn).
 
 #### Warning
 
-Cannot be changed after initial creation.
+- Cannot be changed after initial creation.
 
 ### SFBool [ ] **bottom** TRUE
 
@@ -53,7 +53,7 @@ Whether to draw bottom (inside faces are never drawn).
 
 #### Warning
 
-Cannot be changed after initial creation.
+- Cannot be changed after initial creation.
 
 ### SFFloat [ ] **height** 2 <small>(0,∞)</small>
 
@@ -61,7 +61,7 @@ Size in meters.
 
 #### Warning
 
-Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
 
 ### SFFloat [ ] **radius** 1 <small>(0,∞)</small>
 
@@ -69,7 +69,7 @@ Size in meters.
 
 #### Warning
 
-Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
 
 ### SFBool [ ] **solid** TRUE
 
@@ -77,11 +77,11 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 #### Hint
 
-If in doubt, use solid='false' for maximum visibility.
+- If in doubt, use solid='false' for maximum visibility.
 
 #### Warnings
 
-Default value true can completely hide geometry if viewed from wrong side! Solid false not supported in VRML97.
+- Default value true can completely hide geometry if viewed from wrong side! Solid false not supported in VRML97.
 
 ## Description
 

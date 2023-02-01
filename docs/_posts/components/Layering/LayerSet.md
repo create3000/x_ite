@@ -36,7 +36,7 @@ ActiveLayer field specifies the layer in which navigation takes place.
 
 #### Hint
 
-Nodes that are not part of a layer are considered to be in layer 0.
+- Nodes that are not part of a layer are considered to be in layer 0.
 
 ### MFInt32 [in, out] **order** <small>(0,∞)</small>
 
@@ -44,11 +44,11 @@ The order list defines the order in which layers are rendered. Each value corres
 
 #### Hint
 
-The order list may contain repetitions of ordinal values, in which case the layer is rendered again.
+- The order list may contain repetitions of ordinal values, in which case the layer is rendered again.
 
 #### Warnings
 
-If order contains number values that are not ordinals assigned to layers, such numbers are ignored. Layers that are not included in the order list are not rendered.
+- If order contains number values that are not ordinals assigned to layers, such numbers are ignored. Layers that are not included in the order list are not rendered.
 
 ### MFNode [in, out] **layers** [ ] <small>[X3DLayerNode]</small>
 
@@ -56,7 +56,7 @@ The layers list defines a list of Layer nodes that contain the constituent parts
 
 #### Hints
 
-Ordinal values start with the numeral 1 representing the first item in the list. Nodes that are not part of a layer are considered to be in layer 0.
+- Ordinal values start with the numeral 1 representing the first item in the list. Nodes that are not part of a layer are considered to be in layer 0.
 
 ## Description
 

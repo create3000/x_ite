@@ -44,11 +44,11 @@ Specifies algorithm for rate of increasing Fog, either LINEAR or EXPONENTIAL.
 
 #### Hint
 
-EXPONENTIAL is more natural but also more computationally expensive.
+- EXPONENTIAL is more natural but also more computationally expensive.
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
 
@@ -56,7 +56,7 @@ Fog color.
 
 #### Hint
 
-Match Background color to make objects fade away.
+- Match Background color to make objects fade away.
 
 #### See Also
 
@@ -68,7 +68,7 @@ Distance in meters where objects are totally obscured by the fog, using local co
 
 #### Hint
 
-VisibilityRange 0 disables Fog.
+- VisibilityRange 0 disables Fog.
 
 ### SFBool [out] **isBound**
 

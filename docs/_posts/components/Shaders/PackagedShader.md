@@ -56,7 +56,7 @@ The language field indicates to the X3D player which shading language is used. T
 
 #### Hint
 
-Recognized values include "CG" "GLSL" "HLSL" "FX"
+- Recognized values include "CG" "GLSL" "HLSL" "FX"
 
 #### See Also
 

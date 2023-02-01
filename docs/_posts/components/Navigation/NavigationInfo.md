@@ -42,7 +42,7 @@ Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLO
 
 #### Hints
 
-For inspection of simple objects, usability often improves with type="EXAMINE" "ANY". Types WALK and FLY force strict camera-to-object collision detection. See Collision node for further details on camera-to-object collision detection. MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." ] Interchange profile hint: this field may be ignored, applying the default value regardless.
+- For inspection of simple objects, usability often improves with type="EXAMINE" "ANY". Types WALK and FLY force strict camera-to-object collision detection. See Collision node for further details on camera-to-object collision detection. MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." ] Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### MFFloat [in, out] **avatarSize** [ 0.25, 1.6, 0.75 ] <small>[0,∞)</small>
 
@@ -50,7 +50,7 @@ AvatarSize triplet values are: (a) collision distance between user and geometry 
 
 #### Hint
 
-Keep (visibilityLimit / avatarSize.CollisionDistance) < 10,000 to avoid aliasing artifacts (i.e. polygon "tearing"). Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Keep (visibilityLimit / avatarSize.CollisionDistance) < 10,000 to avoid aliasing artifacts (i.e. polygon "tearing"). Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### SFFloat [in, out] **speed** 1 <small>[0,∞)</small>
 
@@ -58,7 +58,7 @@ Default rate at which viewer travels through scene, meters/second.
 
 #### Warning
 
-Default 1 m/s usually seems slow for ordinary navigation. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Default 1 m/s usually seems slow for ordinary navigation. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### SFBool [in, out] **headlight** TRUE
 
@@ -70,7 +70,7 @@ Geometry beyond the visibilityLimit may not be rendered (far culling plane of th
 
 #### Hints
 
-Keep visibilityLimit >= zero. Keep (visibilityLimit / avatarSize.CollisionDistance) \< 10,000 to avoid aliasing artifacts (i.e. polygon "tearing"). Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Keep visibilityLimit >= zero. Keep (visibilityLimit / avatarSize.CollisionDistance) \< 10,000 to avoid aliasing artifacts (i.e. polygon "tearing"). Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### MFString [in, out] **transitionType** "LINEAR" <small>["TELEPORT","LINEAR",</small>
 
@@ -78,7 +78,7 @@ Camera transition between viewpoints. Enter one or more quoted SFString values: 
 
 #### Hint
 
-"ANIMATE" behavior is browser-specific, "TELEPORT" is immediate, and "LINEAR" may proceed directly through intervening objects.
+- "ANIMATE" behavior is browser-specific, "TELEPORT" is immediate, and "LINEAR" may proceed directly through intervening objects.
 
 ### SFTime [in, out] **transitionTime** 1 <small>[0, ∞)</small>
 
@@ -86,7 +86,7 @@ Duration of viewpoint transition in seconds.
 
 #### Hint
 
-If transitionType is "ANIMATE", transitionTime provides browser-dependent animation parameters. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- If transitionType is "ANIMATE", transitionTime provides browser-dependent animation parameters. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### SFBool [out] **transitionComplete**
 

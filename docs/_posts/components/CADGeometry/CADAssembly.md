@@ -40,7 +40,7 @@ Optional name for this particular CAD node.
 
 #### Warning
 
-Name is not included if this instance is a USE node.
+- Name is not included if this instance is a USE node.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
 
@@ -48,7 +48,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
@@ -68,7 +68,7 @@ Grouping nodes contain a list of children nodes.
 
 #### Hint
 
-Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
+- Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
 
 ## Description
 

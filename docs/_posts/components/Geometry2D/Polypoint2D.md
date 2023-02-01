@@ -37,7 +37,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Warning
 
-Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
 
 ## Description
 

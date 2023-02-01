@@ -41,7 +41,7 @@ Force field indicates strength and direction of the propelling force on the part
 
 #### Hints
 
-Force is specified in force base units (usually newtons). If particles have zero mass, ForcePhysicsModel node has no effect.
+- Force is specified in force base units (usually newtons). If particles have zero mass, ForcePhysicsModel node has no effect.
 
 ## Description
 

@@ -45,7 +45,7 @@ Axis1 defines axis vector of joint connection to body1.
 
 #### Hint
 
-0 0 0 means motor disabled.
+- 0 0 0 means motor disabled.
 
 ### SFVec3f [in, out] **axis2** 0 0 0
 
@@ -53,7 +53,7 @@ Axis2 defines axis vector of joint connection to body2.
 
 #### Hint
 
-0 0 0 means motor disabled.
+- 0 0 0 means motor disabled.
 
 ### SFFloat [in, out] **stop1Bounce** 0 <small>[0,1]</small>
 
@@ -65,7 +65,7 @@ Stop2Bounce is velocity factor for bounce back once stop point is reached.
 
 #### Hint
 
-0 means no bounce, 1 means return velocity matches.
+- 0 means no bounce, 1 means return velocity matches.
 
 ### SFFloat [in, out] **stop1ErrorCorrection** 0.8 <small>[0,1]</small>
 
@@ -73,7 +73,7 @@ Stop1ErrorCorrection is fraction of error correction performed during time step 
 
 #### Hint
 
-0 means no error correction, 1 means all error corrected in single step.
+- 0 means no error correction, 1 means all error corrected in single step.
 
 ### SFFloat [in, out] **stop2ErrorCorrection** 0.8 <small>[0,1]</small>
 
@@ -81,7 +81,7 @@ Stop2ErrorCorrection is fraction of error correction performed during time step 
 
 #### Hint
 
-0 means no error correction, 1 means all error corrected in single step.
+- 0 means no error correction, 1 means all error corrected in single step.
 
 ### SFVec3f [out] **body1AnchorPoint**
 

@@ -41,7 +41,7 @@ InputFalse only passes a false value, which occurs when set_boolean is false.
 
 #### Hint
 
-InputFalse can only provide a value of false.
+- InputFalse can only provide a value of false.
 
 ### SFBool [out] **inputTrue**
 
@@ -49,7 +49,7 @@ InputTrue only passes a true value, which occurs when set_boolean input is true.
 
 #### Hint
 
-InputTrue can only provide a value of true.
+- InputTrue can only provide a value of true.
 
 ### SFBool [out] **inputNegate**
 

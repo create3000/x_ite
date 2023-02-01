@@ -41,7 +41,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 #### Warning
 
-Deprecated values are GDC (use GD) and GCC (use GC).
+- Deprecated values are GDC (use GD) and GCC (use GC).
 
 #### See Also
 
@@ -59,7 +59,7 @@ Number of elements in the height array along east-west X direction.
 
 #### Hint
 
-Total horizontal x-axis distance equals (xDimension-1) \* xSpacing.
+- Total horizontal x-axis distance equals (xDimension-1) \* xSpacing.
 
 ### SFInt32 [ ] **zDimension** <small>(0,∞)</small>
 
@@ -67,7 +67,7 @@ Number of elements in the height array along north-south Z direction.
 
 #### Hint
 
-Total lateral z-axis distance equals (zDimension-1) \* zSpacing.
+- Total lateral z-axis distance equals (zDimension-1) \* zSpacing.
 
 ### SFDouble [ ] **xSpacing** 1 <small>[0,∞)</small>
 
@@ -75,7 +75,7 @@ Distance between grid-array vertices along east-west X direction.
 
 #### Hints
 
-When geoSystem is GDC, xSpacing is number of degrees of longitude. When geoSystem is UTM, xSpacing is number of eastings (meters).
+- When geoSystem is GDC, xSpacing is number of degrees of longitude. When geoSystem is UTM, xSpacing is number of eastings (meters).
 
 ### SFDouble [ ] **zSpacing** 1 <small>[0,∞)</small>
 
@@ -83,7 +83,7 @@ Distance between grid-array vertices along north-south Z direction.
 
 #### Hints
 
-When geoSystem is GDC, zSpacing is number of degrees of latitude. When geoSystem is UTM, zSpacing is number of northings (meters).
+- When geoSystem is GDC, zSpacing is number of degrees of latitude. When geoSystem is UTM, zSpacing is number of northings (meters).
 
 ### SFFloat [in, out] **yScale** 1 <small>[0,∞)</small>
 
@@ -95,11 +95,11 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 #### Hint
 
-If in doubt, use solid='false' for maximum visibility.
+- If in doubt, use solid='false' for maximum visibility.
 
 #### Warning
 
-Default value true can completely hide geometry if viewed from wrong side!
+- Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFBool [ ] **ccw** TRUE
 
@@ -107,7 +107,7 @@ Ccw = counterclockwise: ordering of vertex coordinates orientation.
 
 #### Hint
 
-Ccw false can reverse solid (backface culling) and normal-vector orientation.
+- Ccw false can reverse solid (backface culling) and normal-vector orientation.
 
 ### SFDouble [ ] **creaseAngle** <small>[0,∞)</small>
 
@@ -115,11 +115,11 @@ CreaseAngle defines angle (in radians) for determining whether adjacent polygons
 
 #### Hint
 
-CreaseAngle=0 means render all edges sharply, creaseAngle=3.14159 means render all edges smoothly.
+- CreaseAngle=0 means render all edges sharply, creaseAngle=3.14159 means render all edges smoothly.
 
 #### Warning
 
-Note type double, unlike ElevationGrid creaseAngle.
+- Note type double, unlike ElevationGrid creaseAngle.
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
@@ -151,7 +151,7 @@ Contains xDimension rows \* zDimension columns floating-point values for elevati
 
 #### Hints
 
-Height array values are in row-major order from west to east, south to north. GeoGridOrigin is in southwest (lower-left) corner of height dataset.
+- Height array values are in row-major order from west to east, south to north. GeoGridOrigin is in southwest (lower-left) corner of height dataset.
 
 ## Description
 

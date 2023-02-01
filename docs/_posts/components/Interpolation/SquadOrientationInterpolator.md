@@ -46,7 +46,7 @@ Definition parameters for nonlinear-interpolation function time intervals, in in
 
 #### Warning
 
-Number of keys must match number of keyValues!
+- Number of keys must match number of keyValues!
 
 ### MFRotation [in, out] **keyValue** [ ] <small>(-∞,∞)</small>
 
@@ -54,7 +54,7 @@ Output values for nonlinear interpolation, each corresponding to time-fraction k
 
 #### Warning
 
-Number of keys must match number of keyValues!
+- Number of keys must match number of keyValues!
 
 ### SFRotation [out] **value_changed**
 

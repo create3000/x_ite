@@ -40,11 +40,11 @@ Points to a script file url. Also (as deprecated alternative to CDATA block) can
 
 #### Hint
 
-If Script contains both external url reference and internal CDATA source then external url takes precedence, but will fall back to contained CDATA source if no external script is found.
+- If Script contains both external url reference and internal CDATA source then external url takes precedence, but will fall back to contained CDATA source if no external script is found.
 
 #### Warnings
 
-Do not use the ecmascript: protocol prefix within external script files. Replace javascript: or vrmlscript: protocol prefix with ecmascript: for source code embedded within an X3D scene.
+- Do not use the ecmascript: protocol prefix within external script files. Replace javascript: or vrmlscript: protocol prefix with ecmascript: for source code embedded within an X3D scene.
 
 #### See Also
 
@@ -58,7 +58,7 @@ Set directOutput true if Script has field reference(s) of type SFNode/MFNode, an
 
 #### Hints
 
-Set directOutput true if Script dynamically establishes or breaks ROUTEs. DirectOutput is a browser hint to avoid overoptimizing referenced nodes, since the Script may change their attribute values without ROUTEd events. DirectOutput false means Script cannot modify referenced nodes or change ROUTEs.
+- Set directOutput true if Script dynamically establishes or breaks ROUTEs. DirectOutput is a browser hint to avoid overoptimizing referenced nodes, since the Script may change their attribute values without ROUTEd events. DirectOutput false means Script cannot modify referenced nodes or change ROUTEs.
 
 ### SFBool [ ] **mustEvaluate** FALSE
 
@@ -66,7 +66,7 @@ If mustEvaluate false, then browser may delay sending input events to Script unt
 
 #### Hint
 
-Set mustEvaluate true when sending/receiving values via the network.
+- Set mustEvaluate true when sending/receiving values via the network.
 
 ## Description
 

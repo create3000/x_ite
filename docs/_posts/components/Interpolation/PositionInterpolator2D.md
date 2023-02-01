@@ -42,7 +42,7 @@ Definition parameters for linear-interpolation function time intervals, in incre
 
 #### Hints
 
-Number of keyValues must be an integer multiple of the number of keys! KeyValue/key integer multiple defines how many coordinates are sent in value_changed outputOnlys.
+- Number of keyValues must be an integer multiple of the number of keys! KeyValue/key integer multiple defines how many coordinates are sent in value_changed outputOnlys.
 
 ### MFVec2f [in, out] **keyValue** [ ] <small>(-∞,∞)</small>
 
@@ -50,7 +50,7 @@ Output values for linear interpolation, each corresponding to time-fraction keys
 
 #### Hints
 
-Number of keyValues must be an integer multiple of the number of keys! KeyValue/key integer multiple defines how many coordinates are sent in value_changed outputOnlys.
+- Number of keyValues must be an integer multiple of the number of keys! KeyValue/key integer multiple defines how many coordinates are sent in value_changed outputOnlys.
 
 ### SFVec2f [out] **value_changed**
 
@@ -58,7 +58,7 @@ Linearly interpolated output value determined by current key time and correspond
 
 #### Hint
 
-KeyValue/key integer multiple defines how many coordinates are sent in value_changed outputOnlys.
+- KeyValue/key integer multiple defines how many coordinates are sent in value_changed outputOnlys.
 
 ## Description
 

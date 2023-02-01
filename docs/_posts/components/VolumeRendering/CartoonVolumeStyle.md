@@ -34,7 +34,7 @@ Number of distinct colors taken from interpolated colors and used to render the 
 
 #### Hints
 
-ColorSteps=1 means no color interpolation takes place, only use orthogonalColor. ParallelColor and orthogonalColor interpolation is in HSV color space for RGB components, linearly for alpha component.
+- ColorSteps=1 means no color interpolation takes place, only use orthogonalColor. ParallelColor and orthogonalColor interpolation is in HSV color space for RGB components, linearly for alpha component.
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -50,7 +50,7 @@ OrthogonalColor is used for surface normals that are orthogonal (perpendicular) 
 
 #### Hint
 
-Plane of surface itself is orthogonal to user's view direction.
+- Plane of surface itself is orthogonal to user's view direction.
 
 #### See Also
 
@@ -62,7 +62,7 @@ ParallelColor is used for surface normals that are orthogonal to viewer's curren
 
 #### Hint
 
-Plane of surface itself is parallel to user's view direction.
+- Plane of surface itself is parallel to user's view direction.
 
 #### See Also
 

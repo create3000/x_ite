@@ -42,7 +42,7 @@ Send previous output value in keyValue array, and reset internal fraction field 
 
 #### Hint
 
-"wrap around" boundary of keyValue array, i.e. continue from first to last if necessary.
+- "wrap around" boundary of keyValue array, i.e. continue from first to last if necessary.
 
 ### SFBool [in] **next**
 
@@ -50,7 +50,7 @@ Send next output value in keyValue array, and reset internal fraction field to m
 
 #### Hint
 
-"wrap around" boundary of keyValue array, i.e. continue from last to first if necessary.
+- "wrap around" boundary of keyValue array, i.e. continue from last to first if necessary.
 
 ### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
 
@@ -58,7 +58,7 @@ Definition parameters for linear-interpolation function time intervals, in incre
 
 #### Warning
 
-Number of keys must match number of keyValues!
+- Number of keys must match number of keyValues!
 
 ### MFBool [in, out] **keyValue** [ ] <small>[]</small>
 
@@ -66,7 +66,7 @@ Output values for linear interpolation, each corresponding to time-fraction keys
 
 #### Warning
 
-Number of keys must match number of keyValues!
+- Number of keys must match number of keyValues!
 
 ### SFBool [out] **value_changed**
 

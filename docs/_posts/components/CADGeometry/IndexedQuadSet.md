@@ -38,11 +38,11 @@ Index values provide order in which coordinates are applied. Order starts at ind
 
 #### Warning
 
--1 sentinel values are not allowed.
+- -1 sentinel values are not allowed.
 
 #### Warning
 
--1 sentinel values are not allowed.
+- -1 sentinel values are not allowed.
 
 ### SFBool [ ] **solid** TRUE
 
@@ -50,11 +50,11 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 #### Hint
 
-If in doubt, use solid='false' for maximum visibility.
+- If in doubt, use solid='false' for maximum visibility.
 
 #### Warning
 
-Default value true can completely hide geometry if viewed from wrong side!
+- Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFBool [ ] **ccw** TRUE
 
@@ -62,7 +62,7 @@ Ccw = counterclockwise: ordering of vertex coordinates orientation.
 
 #### Hint
 
-Ccw false can reverse solid (backface culling) and normal-vector orientation.
+- Ccw false can reverse solid (backface culling) and normal-vector orientation.
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
@@ -82,7 +82,7 @@ Index values provide order in which coordinates are applied. Order starts at ind
 
 #### Warning
 
--1 sentinel values are not allowed.
+- -1 sentinel values are not allowed.
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 

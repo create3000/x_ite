@@ -53,7 +53,7 @@ Nodes making up this layer.
 
 #### Hint
 
-No transformations are possible above each Layerset/Layer combination in the scene graph hierarchy.
+- No transformations are possible above each Layerset/Layer combination in the scene graph hierarchy.
 
 ## Description
 

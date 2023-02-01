@@ -37,7 +37,7 @@ Grid array of height vertices with upward direction along +Y axis, with xDimensi
 
 #### Hint
 
-Height array values are given in row-major order from left to right along X axis, then back to front along Z axis.
+- Height array values are given in row-major order from left to right along X axis, then back to front along Z axis.
 
 ### SFInt32 [ ] **xDimension** <small>[0,∞)</small>
 
@@ -53,7 +53,7 @@ Meters distance between grid-array vertices along X direction.
 
 #### Hint
 
-Total horizontal x-axis distance equals (xDimension-1) \* xSpacing.
+- Total horizontal x-axis distance equals (xDimension-1) \* xSpacing.
 
 ### SFFloat [ ] **zSpacing** 1 <small>(0,∞)</small>
 
@@ -61,7 +61,7 @@ Meters distance between grid-array vertices along Z direction.
 
 #### Hint
 
-Total lateral z-axis distance equals (zDimension-1) \* zSpacing.
+- Total lateral z-axis distance equals (zDimension-1) \* zSpacing.
 
 ### SFBool [ ] **solid** TRUE
 
@@ -69,11 +69,11 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 #### Hint
 
-If in doubt, use solid='false' for maximum visibility.
+- If in doubt, use solid='false' for maximum visibility.
 
 #### Warning
 
-Default value true can completely hide geometry if viewed from wrong side!
+- Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFBool [ ] **ccw** TRUE
 
@@ -81,7 +81,7 @@ Ccw = counterclockwise: ordering of vertex coordinates orientation.
 
 #### Hint
 
-Ccw false can reverse solid (backface culling) and normal-vector orientation.
+- Ccw false can reverse solid (backface culling) and normal-vector orientation.
 
 ### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
 
@@ -89,7 +89,7 @@ CreaseAngle defines angle (in radians) for determining whether adjacent polygons
 
 #### Hint
 
-CreaseAngle=0 means render all edges sharply, creaseAngle=3.14159 means render all edges smoothly.
+- CreaseAngle=0 means render all edges sharply, creaseAngle=3.14159 means render all edges smoothly.
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
@@ -129,7 +129,7 @@ Grid array of height vertices with upward direction along +Y axis, with xDimensi
 
 #### Hint
 
-Height array values are given in row-major order from left to right along X axis, then back to front along Z axis.
+- Height array values are given in row-major order from left to right along X axis, then back to front along Z axis.
 
 ## Description
 

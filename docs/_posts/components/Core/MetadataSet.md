@@ -38,7 +38,7 @@ Depending on the metadata vocabulary, the attribute name is usually required for
 
 #### Warning
 
-Name is not included if this instance is a USE node.
+- Name is not included if this instance is a USE node.
 
 ### SFString [in, out] **reference** ""
 

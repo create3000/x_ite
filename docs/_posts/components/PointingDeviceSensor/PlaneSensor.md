@@ -44,7 +44,7 @@ Author-provided text tooltip that tells users the expected action of this node.
 
 #### Hints
 
-Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+- Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
 
 ### SFRotation [in, out] **axisRotation** 0 0 1 0
 
@@ -60,7 +60,7 @@ Sends event and remembers last value sensed.
 
 #### Warning
 
-ROUTE connecting translation_changed to set_offset creates a self-reinforcing positive feedback loop and results in unmanageable response.
+- ROUTE connecting translation_changed to set_offset creates a self-reinforcing positive feedback loop and results in unmanageable response.
 
 ### SFVec2f [in, out] **minPosition** 0 0 <small>(-∞,∞)</small>
 
@@ -68,7 +68,7 @@ MinPosition and maxPosition clamp translations to a range of values measured fro
 
 #### Hint
 
-Create a LineSensor by constraining one axis (minPosition.x=maxPosition.x) or (minPosition.y=maxPosition.y).
+- Create a LineSensor by constraining one axis (minPosition.x=maxPosition.x) or (minPosition.y=maxPosition.y).
 
 ### SFVec2f [in, out] **maxPosition** -1 -1 <small>(-∞,∞)</small>
 
@@ -76,7 +76,7 @@ MinPosition and maxPosition clamp translations to a range of values measured fro
 
 #### Hint
 
-Create a LineSensor by constraining one axis (minPosition.x=maxPosition.x) or (minPosition.y=maxPosition.y).
+- Create a LineSensor by constraining one axis (minPosition.x=maxPosition.x) or (minPosition.y=maxPosition.y).
 
 ### SFVec3f [out] **trackPoint_changed**
 

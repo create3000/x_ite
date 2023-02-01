@@ -41,7 +41,7 @@ The geometry node provides the geometry used for each particle when the parent P
 
 #### Hint
 
-Include `<component name='Geospatial' level='1'/>`
+- Include `<component name='Geospatial' level='1'/>`
 
 ## Description
 

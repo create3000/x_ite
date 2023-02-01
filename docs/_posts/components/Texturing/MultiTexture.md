@@ -38,7 +38,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
 
@@ -58,11 +58,11 @@ Mode field indicates the type of blending operation, both for color and for alph
 
 #### Hints
 
-Include the same number of mode values as textures, otherwise the default value MODULATE is added for each remaining stage. See X3D Specification [Table 18.3 Multitexture modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-MultitextureModes){:target="_blank"} for further details.
+- Include the same number of mode values as textures, otherwise the default value MODULATE is added for each remaining stage. See X3D Specification [Table 18.3 Multitexture modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-MultitextureModes){:target="_blank"} for further details.
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### MFString [in, out] **source** [ ]
 
@@ -70,7 +70,7 @@ Source field determines whether each image source is treated as DIFFUSE, SPECULA
 
 #### Hints
 
-Include the same number of source values as textures, otherwise the default of no source interpretation is applied for each remaining stage. See X3D Specification [Table 18.4 Values for the source field](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-ValuesForSourceField){:target="_blank"} for further details.
+- Include the same number of source values as textures, otherwise the default of no source interpretation is applied for each remaining stage. See X3D Specification [Table 18.4 Values for the source field](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-ValuesForSourceField){:target="_blank"} for further details.
 
 ### MFString [in, out] **function** [ ]
 
@@ -78,7 +78,7 @@ Function operators COMPLEMENT or ALPHAREPLICATE can be applied after the mode bl
 
 #### Hints
 
-Include the same number of function values as textures, otherwise the default of no function operation is applied for each remaining stage. See X3D Specification [Table 18.5 Values for the function field](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-ValuesForFunctionField){:target="_blank"} for further details.
+- Include the same number of function values as textures, otherwise the default of no function operation is applied for each remaining stage. See X3D Specification [Table 18.5 Values for the function field](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-ValuesForFunctionField){:target="_blank"} for further details.
 
 ### MFNode [in, out] **texture** [ ] <small>[X3DTextureNode]</small>
 

@@ -58,7 +58,7 @@ StopBounce is velocity factor for bounce back once stop point is reached.
 
 #### Hint
 
-0 means no bounce, 1 means return velocity matches.
+- 0 means no bounce, 1 means return velocity matches.
 
 ### SFFloat [in, out] **stopErrorCorrection** 0.8 <small>[0,1] <span class="no">not supported</span>
 </small>
@@ -67,7 +67,7 @@ StopErrorCorrection is fraction of error correction performed during time step o
 
 #### Hint
 
-0 means no error correction, 1 means all error corrected in single step.
+- 0 means no error correction, 1 means all error corrected in single step.
 
 ### SFVec3f [out] **body1AnchorPoint**
 

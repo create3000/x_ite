@@ -42,7 +42,7 @@ Definition parameters for linear-interpolation function time intervals, in incre
 
 #### Warning
 
-Number of keys must match number of keyValues!
+- Number of keys must match number of keyValues!
 
 ### MFVec3f [in, out] **keyValue** [ ] <small>(-∞,∞)</small>
 
@@ -50,7 +50,7 @@ Output values for linear interpolation, each corresponding to time-fraction keys
 
 #### Warning
 
-Number of keys must match number of keyValues!
+- Number of keys must match number of keyValues!
 
 ### MFVec3f [out] **value_changed**
 

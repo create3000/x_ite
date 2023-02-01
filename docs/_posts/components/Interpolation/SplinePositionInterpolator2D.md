@@ -42,7 +42,7 @@ Whether or not the curve is closed (i.e. matching end values), with continuous v
 
 #### Warnings
 
-If velocity vectors at first and last keys are specified, the closed field is ignored. If keyValues at first and last key are not identical, the closed field is ignored.
+- If velocity vectors at first and last keys are specified, the closed field is ignored. If keyValues at first and last key are not identical, the closed field is ignored.
 
 ### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
 
@@ -50,7 +50,7 @@ Definition parameters for nonlinear-interpolation function time intervals, in in
 
 #### Warning
 
-Number of keys must match number of keyValues!
+- Number of keys must match number of keyValues!
 
 ### MFVec2f [in, out] **keyValue** [ ] <small>(-∞,∞)</small>
 
@@ -58,7 +58,7 @@ Output values for nonlinear interpolation, each corresponding to time-fraction k
 
 #### Warning
 
-Number of keys must match number of keyValues!
+- Number of keys must match number of keyValues!
 
 ### MFVec2f [in, out] **keyVelocity** [ ] <small>(-∞,∞)</small>
 
@@ -66,7 +66,7 @@ Output values for nonlinear interpolation, each corresponding to time-fraction k
 
 #### Warning
 
-Number of keys must match number of keyVelocity values!
+- Number of keys must match number of keyVelocity values!
 
 ### SFBool [in, out] **normalizeVelocity** FALSE
 

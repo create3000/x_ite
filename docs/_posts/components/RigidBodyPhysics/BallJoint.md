@@ -45,7 +45,7 @@ Body1AnchorPoint describes anchorPoint position relative to local coordinate ref
 
 #### Hint
 
-Can detect separation if body1AnchorPoint!=body2AnchorPoint.
+- Can detect separation if body1AnchorPoint!=body2AnchorPoint.
 
 ### SFVec3f [out] **body2AnchorPoint**
 
@@ -53,7 +53,7 @@ Body2AnchorPoint describes anchorPoint position relative to local coordinate ref
 
 #### Hint
 
-Can detect separation if body1AnchorPoint!=body2AnchorPoint.
+- Can detect separation if body1AnchorPoint!=body2AnchorPoint.
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 

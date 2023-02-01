@@ -41,7 +41,7 @@ Threshold value used when type=MIN (LMIP) or type=MAX (MIP).
 
 #### Hint
 
-Ignored if type=AVERAGE (no thresholding).
+- Ignored if type=AVERAGE (no thresholding).
 
 ## External Links
 

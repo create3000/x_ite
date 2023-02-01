@@ -37,7 +37,7 @@ Arc extends from startAngle counterclockwise to endAngle, in radians.
 
 #### Warning
 
-Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
 
 ### SFFloat [ ] **endAngle** π/2 <small>[-2π,2π]</small>
 
@@ -45,7 +45,7 @@ Arc extends from startAngle counterclockwise to endAngle, in radians.
 
 #### Warning
 
-Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
 
 ### SFFloat [ ] **radius** 1 <small>(0,∞)</small>
 
@@ -53,7 +53,7 @@ Circle radius, of which the arc is a portion.
 
 #### Warning
 
-Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
 
 ## Description
 

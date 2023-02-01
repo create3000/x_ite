@@ -44,7 +44,7 @@ Author-provided text tooltip that tells users the expected action of this node.
 
 #### Hints
 
-Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+- Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
 
 ### SFRotation [in, out] **axisRotation** 0 0 1 0
 
@@ -56,7 +56,7 @@ Help decide rotation behavior from initial relative bearing of pointer drag: acu
 
 #### Hint
 
-DiskAngle 0 forces disk-like behavior, diskAngle 1.570796 (90 degrees) forces cylinder-like behavior.
+- DiskAngle 0 forces disk-like behavior, diskAngle 1.570796 (90 degrees) forces cylinder-like behavior.
 
 ### SFFloat [in, out] **minAngle** 0 <small>[-2π,2π]</small>
 
@@ -64,7 +64,7 @@ Clamps rotation_changed events within range of min/max values
 
 #### Hint
 
-If minAngle \> maxAngle, rotation is not clamped.
+- If minAngle \> maxAngle, rotation is not clamped.
 
 ### SFFloat [in, out] **maxAngle** -1 <small>[-2π,2π]</small>
 
@@ -72,7 +72,7 @@ Clamps rotation_changed events within range of min/max values
 
 #### Hint
 
-If minAngle \> maxAngle, rotation is not clamped.
+- If minAngle \> maxAngle, rotation is not clamped.
 
 ### SFFloat [in, out] **offset** 0 <small>(-∞,∞)</small>
 
@@ -80,7 +80,7 @@ Sends event and remembers last value sensed.
 
 #### Warning
 
-ROUTE connecting rotation_changed to set_offset creates a self-reinforcing positive feedback loop and results in unmanageable response.
+- ROUTE connecting rotation_changed to set_offset creates a self-reinforcing positive feedback loop and results in unmanageable response.
 
 ### SFBool [in, out] **autoOffset** TRUE
 

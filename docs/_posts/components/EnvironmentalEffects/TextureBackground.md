@@ -43,7 +43,7 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 
 #### Warnings
 
-You must have one more skyColor value than skyAngle values. Colors at skyAngle=0 are ignored. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- You must have one more skyColor value than skyAngle values. Colors at skyAngle=0 are ignored. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### MFColor [in, out] **skyColor** 0 0 0 <small>[0,1]</small>
 
@@ -51,11 +51,11 @@ Color of the sky at various angles on the sky sphere. First value is color of sk
 
 #### Hint
 
-Setting the same color at two consecutive angles produces a solid color band.
+- Setting the same color at two consecutive angles produces a solid color band.
 
 #### Warning
 
-You must have one more skyColor value than skyAngle values. Interchange profile hint: only one color might be rendered, others can be ignored.
+- You must have one more skyColor value than skyAngle values. Interchange profile hint: only one color might be rendered, others can be ignored.
 
 #### See Also
 
@@ -67,7 +67,7 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 
 #### Warnings
 
-You must have one more groundColor value than groundAngle values. Colors at groundAngle=0 are ignored. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- You must have one more groundColor value than groundAngle values. Colors at groundAngle=0 are ignored. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### MFColor [in, out] **groundColor** [ ] <small>[0,1]</small>
 
@@ -75,11 +75,11 @@ Color of the ground at the various angles on the ground partial sphere. First va
 
 #### Hint
 
-Setting the same color at two consecutive angles produces a solid color band.
+- Setting the same color at two consecutive angles produces a solid color band.
 
 #### Warning
 
-You must have one more groundColor value than groundAngle values. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- You must have one more groundColor value than groundAngle values. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### See Also
 

@@ -37,7 +37,7 @@ Nominal rendered point size is a browser-dependent minimum renderable point size
 
 #### Hint
 
-Additional sizing modifications are determined by pointSizeMinValue, pointSizeMaxValue, and pointSizeAttenuation array.
+- Additional sizing modifications are determined by pointSizeMinValue, pointSizeMaxValue, and pointSizeAttenuation array.
 
 ### SFFloat [in, out] **pointSizeMinValue** 1 <small>[0,∞)</small>
 
@@ -45,7 +45,7 @@ PointSizeMinValue is minimum allowed scaling factor on nominal browser point sca
 
 #### Warning
 
-Maintain pointSizeMinValue <= pointSizeMaxValue.
+- Maintain pointSizeMinValue <= pointSizeMaxValue.
 
 ### SFFloat [in, out] **pointSizeMaxValue** 1 <small>(0,∞)</small>
 
@@ -53,7 +53,7 @@ PointSizeMaxValue is maximum allowed scaling factor on nominal browser point sca
 
 #### Warning
 
-Maintain pointSizeMinValue \<= pointSizeMaxValue.
+- Maintain pointSizeMinValue \<= pointSizeMaxValue.
 
 ### MFFloat [in, out] **pointSizeAttenuation** 1 0 0 <small>(0,∞)</small>
 
@@ -61,7 +61,7 @@ PointSizeAttenuation array values [a, b, c] are set to default values if undefin
 
 #### Hint
 
-Nominal point size is multiplied by attenuation factor and then clipped to a minimum value of pointSizeMinValue × minimum renderable point size, then clipped to maximum size of pointSizeMaxValue × minimum renderable point size.
+- Nominal point size is multiplied by attenuation factor and then clipped to a minimum value of pointSizeMinValue × minimum renderable point size, then clipped to maximum size of pointSizeMaxValue × minimum renderable point size.
 
 ### SFString [in, out] **colorMode** "TEXTURE_AND_POINT_COLOR" <small>["POINT_COLOR", "TEXTURE_COLOR", "TEXTURE_AND_POINT_COLOR"]</small>
 
@@ -69,7 +69,7 @@ ColorMode has blending effect on the rendering of point sprites, applying suppli
 
 #### Hint
 
-POINT_COLOR shall display the RGB channels of the color instance defined in X3DMaterialNode or X3DColorNode, and the A channel of the texture if any. If no color is associated to the point, the default RGB color (0, 0, 0) shall be used. TEXTURE_COLOR shall display the original texture with its RGBA channels and regardless to the X3DMaterialNode or X3DColorNode which might be associated to the point set. TEXTURE_AND_POINT_COLOR shall display the RGBA channels of a texture added to the RGB channels of the color defined in X3DMaterialNode or X3DColorNode node, and the A channel of the texture if any. If no color is associated to the point, the result shall be exactly the same as TEXTURE_COLOR.
+- POINT_COLOR shall display the RGB channels of the color instance defined in X3DMaterialNode or X3DColorNode, and the A channel of the texture if any. If no color is associated to the point, the default RGB color (0, 0, 0) shall be used. TEXTURE_COLOR shall display the original texture with its RGBA channels and regardless to the X3DMaterialNode or X3DColorNode which might be associated to the point set. TEXTURE_AND_POINT_COLOR shall display the RGBA channels of a texture added to the RGB channels of the color defined in X3DMaterialNode or X3DColorNode node, and the A channel of the texture if any. If no color is associated to the point, the result shall be exactly the same as TEXTURE_COLOR.
 
 ## Description
 

@@ -31,6 +31,8 @@ The PhysicalMaterial node belongs to the **Shape** component and its default con
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
+Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+
 ### SFColor [in, out] **baseColor** 1 1 1 <small>[0,1]</small>
 
 ### SFString [in, out] **baseTextureMapping** ""

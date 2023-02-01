@@ -58,7 +58,7 @@ Specifies 2D textures used to determine weight values when weight function is se
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFString [in, out] **weightFunction2** "CONSTANT" <small>["CONSTANT", "ALPHA0", "ALPHA1", "TABLE", "ONE_MINUS_ALPHA0", "ONE_MINUS_ALPHA1"]</small>
 
@@ -66,7 +66,7 @@ Specifies 2D textures used to determine weight values when weight function is se
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFNode [in, out] **weightTransferFunction1** NULL <small>[X3DTexture2DNode]</small>
 

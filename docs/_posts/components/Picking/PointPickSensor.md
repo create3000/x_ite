@@ -47,7 +47,7 @@ The objectType field specifies a set of labels used in the picking process. Each
 
 #### Hints
 
-Authors may define any value for objectType. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
+- Authors may define any value for objectType. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 
 ### SFNode [in, out] **pickingGeometry** NULL <small>[PointSet]</small>
 
@@ -67,11 +67,11 @@ IntersectionType specifies precision of the collision computation.
 
 #### Hint
 
-IntersectionType constants may be extended by the browser to provide additional options.
+- IntersectionType constants may be extended by the browser to provide additional options.
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFString [ ] **sortOrder** "CLOSEST" <small>["CLOSEST"|"ALL"|"ALL_SORTED"]</small>
 
@@ -79,11 +79,11 @@ The sortOrder field determines the order provided for picked output events.
 
 #### Hint
 
-Browser implementations may define additional values and algorithms beyond these four required values.
+- Browser implementations may define additional values and algorithms beyond these four required values.
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### MFVec3f [out] **pickedPoint**
 

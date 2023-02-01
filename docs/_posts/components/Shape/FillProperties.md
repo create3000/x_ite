@@ -45,7 +45,7 @@ HatchStyle selects a hatch pattern from International Register of Graphical Item
 
 #### Hint
 
-Detailed descriptions of hatchstyle values are found at the [ISO/IEC International Register of Graphical Items](https://www.iso.org/jtc1/sc24/register){:target="_blank"} (may require login)
+- Detailed descriptions of hatchstyle values are found at the [ISO/IEC International Register of Graphical Items](https://www.iso.org/jtc1/sc24/register){:target="_blank"} (may require login)
 
 ### SFColor [in, out] **hatchColor** 1 1 1 <small>[0,1]</small>
 

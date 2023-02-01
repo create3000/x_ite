@@ -42,7 +42,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **load** TRUE
 
@@ -59,11 +59,11 @@ Location and filename of movie file or stream. Multiple locations are more relia
 
 #### Hints
 
-MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
 
 #### Warning
 
-Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
 #### See Also
 
@@ -80,7 +80,7 @@ autoRefresh defines interval in seconds before automatic reload of current url a
 
 #### Warning
 
-Automatically reloading content has security considerations and needs to be considered carefully.
+- Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
 
@@ -88,11 +88,11 @@ autoRefreshTimeLimit defines maximum duration that automatic refresh activity ca
 
 #### Hint
 
-Automatic refresh is different than query and response timeouts performed by a networking library while sequentially attempting to retrieve addressed content from a url list.
+- Automatic refresh is different than query and response timeouts performed by a networking library while sequentially attempting to retrieve addressed content from a url list.
 
 #### Warning
 
-Automatically reloading content has security considerations and needs to be considered carefully.
+- Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFFloat [in, out] **speed** 1 <small>(-∞,∞)</small>
 
@@ -100,7 +100,7 @@ Factor for how fast the movie (or soundtrack) is played.
 
 #### Hints
 
-A MovieTexture node shall display frame 0 if speed = 0. A negative speed value sets the movie to play in reverse.
+- A MovieTexture node shall display frame 0 if speed = 0. A negative speed value sets the movie to play in reverse.
 
 ### SFFloat [in, out] **pitch** 1 <small>(0,∞)</small>
 
@@ -116,7 +116,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-Usually receives a ROUTEd time value.
+- Usually receives a ROUTEd time value.
 
 ### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
 
@@ -124,11 +124,11 @@ When resumeTime becomes <= time now, isPaused becomes false and MovieTexture bec
 
 #### Hint
 
-Usually receives a ROUTEd time value.
+- Usually receives a ROUTEd time value.
 
 #### Warning
 
-Not supported in VRML97.
+- Not supported in VRML97.
 
 ### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
 
@@ -136,11 +136,11 @@ When time now >= pauseTime, isPaused becomes true and MovieTexture becomes pause
 
 #### Hint
 
-Usually receives a ROUTEd time value.
+- Usually receives a ROUTEd time value.
 
 #### Warning
 
-Not supported in VRML97.
+- Not supported in VRML97.
 
 ### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
 
@@ -148,11 +148,11 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-Usually receives a ROUTEd time value.
+- Usually receives a ROUTEd time value.
 
 #### Warnings
 
-An active TimeSensor node ignores set_cycleInterval and set_startTime events. An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
+- An active TimeSensor node ignores set_cycleInterval and set_startTime events. An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
 
@@ -160,7 +160,7 @@ IsPaused true/false events are sent when MovieTexture is paused/resumed.
 
 #### Warning
 
-Not supported in VRML97.
+- Not supported in VRML97.
 
 ### SFBool [out] **isActive**
 
@@ -172,7 +172,7 @@ Current elapsed time since MovieTexture activated/running, cumulative in seconds
 
 #### Warning
 
-Not supported in VRML97.
+- Not supported in VRML97.
 
 ### SFTime [out] **duration_changed**
 

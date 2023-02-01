@@ -40,7 +40,7 @@ Author-provided text tooltip that tells users the expected action of this node.
 
 #### Hint
 
-Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+- Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
@@ -48,11 +48,11 @@ Address of replacement world or #ViewpointDEFName, activated by clicking Anchor 
 
 #### Hints
 
-Jump to a world's internal viewpoint by appending viewpoint name (e.g. #ViewpointName, someOtherCoolWorld.x3d#GrandTour). Jump to a local viewpoint by only using viewpoint name (e.g. #GrandTour). MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Pop up a new window with url value as follows: "JavaScript:window.open('popup.html','popup','width=240,height=240');location.href='HelloWorld.x3d'"
+- Jump to a world's internal viewpoint by appending viewpoint name (e.g. #ViewpointName, someOtherCoolWorld.x3d#GrandTour). Jump to a local viewpoint by only using viewpoint name (e.g. #GrandTour). MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character. Pop up a new window with url value as follows: "JavaScript:window.open('popup.html','popup','width=240,height=240');location.href='HelloWorld.x3d'"
 
 #### Warning
 
-Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
 #### See Also
 
@@ -64,7 +64,7 @@ If provided, parameter tells the X3D player where to to redirect the loaded url.
 
 #### Hints
 
-Set parameter value as target=\_blank to load the target url into a new browser frame. Set parameter value as target=frame_name to load target url into another browser frame. MFString arrays can have multiple values, so separate each individual string by quote marks. "https://www.web3d.org" "https://www.web3d.org/about" "etc." Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Set parameter value as target=\_blank to load the target url into a new browser frame. Set parameter value as target=frame_name to load target url into another browser frame. MFString arrays can have multiple values, so separate each individual string by quote marks. "https://www.web3d.org" "https://www.web3d.org/about" "etc." Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
 
@@ -72,7 +72,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
@@ -92,7 +92,7 @@ Grouping nodes contain a list of children nodes.
 
 #### Hint
 
-Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
+- Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
 
 ## Description
 

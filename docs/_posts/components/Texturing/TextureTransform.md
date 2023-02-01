@@ -47,7 +47,7 @@ Single rotation angle of texture about center (opposite effect appears on geomet
 
 #### Warning
 
-Use a single radian angle value, not a 4-tuple Rotation.
+- Use a single radian angle value, not a 4-tuple Rotation.
 
 ### SFVec2f [in, out] **scale** 1 1 <small>(-∞,∞)</small>
 

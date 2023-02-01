@@ -44,7 +44,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0
 
@@ -132,7 +132,7 @@ Information required for representation of the entity's visual appearance and po
 
 #### Hint
 
-Renamed as Variable Parameter in IEEE DIS 2012 revised standard.
+- Renamed as Variable Parameter in IEEE DIS 2012 revised standard.
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
 
@@ -204,7 +204,7 @@ Sequential number of each event issued by an application.
 
 #### Warning
 
-Reuse of numbers may be necessary during long simulation exercises.
+- Reuse of numbers may be necessary during long simulation exercises.
 
 ### SFInt32 [in, out] **eventSiteID** <small>[0,65535]</small>
 
@@ -288,7 +288,7 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 
 #### Warnings
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values. Network activity may have associated security issues.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values. Network activity may have associated security issues.
 
 ### SFInt32 [in, out] **port**
 

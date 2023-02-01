@@ -43,7 +43,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 #### Warning
 
-Deprecated values are GDC (use GD) and GCC (use GC).
+- Deprecated values are GDC (use GD) and GCC (use GC).
 
 #### See Also
 
@@ -61,7 +61,7 @@ Author-provided text tooltip that tells users the expected action of this node.
 
 #### Hints
 
-Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+- Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
 
 ### SFVec3d [in, out] **position** 0 0 100000 <small>(-∞,∞)</small>
 
@@ -73,7 +73,7 @@ Rotation of Viewpoint, relative to default -Z axis direction in local coordinate
 
 #### Hint
 
-This is orientation \_change\_ from default direction (0 0 -1) +Y axis is the up vector for the local area (the normal to the tangent plane on the ellipsoid), -Z points towards the north pole, and +X is east 1 0 0 -1.570796 always looks down.
+- This is orientation \_change\_ from default direction (0 0 -1) +Y axis is the up vector for the local area (the normal to the tangent plane on the ellipsoid), -Z points towards the north pole, and +X is east 1 0 0 -1.570796 always looks down.
 
 ### SFVec3d [in, out] **centerOfRotation** 0 0 0 <small>(-∞,∞)</small>
 
@@ -97,7 +97,7 @@ SpeedFactor is a multiplier to modify the original elevation-based speed that is
 
 #### Hint
 
-SpeedFactor is a relative value and not an absolute speed as defined by NavigationInfo.
+- SpeedFactor is a relative value and not an absolute speed as defined by NavigationInfo.
 
 ### SFBool [out] **isBound**
 

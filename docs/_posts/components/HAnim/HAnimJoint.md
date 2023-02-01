@@ -38,7 +38,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
@@ -62,7 +62,7 @@ Translation offset from origin of local coordinate system.
 
 #### Hint
 
-Usually HAnimJoint position is controlled by the center field, not the translation field.
+- Usually HAnimJoint position is controlled by the center field, not the translation field.
 
 ### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
 
@@ -78,7 +78,7 @@ Lower limit for minimum joint rotation in radians.
 
 #### Hint
 
-Always contains 3 values, one for each local axis.
+- Always contains 3 values, one for each local axis.
 
 ### SFString [in, out] **name** ""
 
@@ -86,7 +86,7 @@ Unique name attribute must be defined so that HAnimJoint node can be identified 
 
 #### Warning
 
-Name is not included if this instance is a USE node. Examples: HumanoidRoot sacroiliac l_hip l_knee l_ankle etc. as listed in HAnim Specification.
+- Name is not included if this instance is a USE node. Examples: HumanoidRoot sacroiliac l_hip l_knee l_ankle etc. as listed in HAnim Specification.
 
 #### See Also
 
@@ -111,11 +111,11 @@ Coordinate index values referencing which vertices are influenced by the HAnimJo
 
 #### Hint
 
-Corresponding skinCoord Coordinate and skinNormal Normal nodes are directly contained within the ancestor HAnimHumanoid node for this HAnimJoint.
+- Corresponding skinCoord Coordinate and skinNormal Normal nodes are directly contained within the ancestor HAnimHumanoid node for this HAnimJoint.
 
 #### Warning
 
--1 sentinel values are not allowed.
+- -1 sentinel values are not allowed.
 
 ### MFFloat [in, out] **skinCoordWeight** [ ]
 
@@ -127,7 +127,7 @@ Axial values (0,1) indicating willingness of joint to move (about local X, Y, Z 
 
 #### Hint
 
-Used by inverse kinematics (IK) systems.
+- Used by inverse kinematics (IK) systems.
 
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
 
@@ -135,7 +135,7 @@ Position of children relative to local coordinate system.
 
 #### Warning
 
-Usually HAnimJoint position is controlled by the center field, not the translation field.
+- Usually HAnimJoint position is controlled by the center field, not the translation field.
 
 ### MFFloat [in, out] **ulimit** [ ] <small>(-∞,∞)</small>
 
@@ -143,7 +143,7 @@ Upper limit for maximum joint rotation in radians.
 
 #### Hint
 
-Always contains 3 values, one for each local axis.
+- Always contains 3 values, one for each local axis.
 
 ## Description
 

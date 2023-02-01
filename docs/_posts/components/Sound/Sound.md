@@ -42,7 +42,7 @@ Whether to spatialize sound playback relative to viewer.
 
 #### Hint
 
-Only effective between minimum and maximum ellipsoids.
+- Only effective between minimum and maximum ellipsoids.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 

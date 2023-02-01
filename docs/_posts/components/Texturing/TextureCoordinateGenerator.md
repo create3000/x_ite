@@ -43,11 +43,11 @@ Parameter field defines the algorithm used to compute texture coordinates.
 
 #### Hint
 
-See X3D Specification [Table 18.6 Texture coordinate generation modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-Texturecoordgeneration){:target="_blank"} for further details.
+- See X3D Specification [Table 18.6 Texture coordinate generation modes](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/texturing.html#t-Texturecoordgeneration){:target="_blank"} for further details.
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### MFFloat [in, out] **parameter** [ ]
 

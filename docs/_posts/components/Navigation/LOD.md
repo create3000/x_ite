@@ -46,7 +46,7 @@ Specifies ideal distances at which to switch between levels. The range field is 
 
 #### Hints
 
-Can add `<WorldInfo info='null node'/>` as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale. Not setting range values indicates that level switching can be optimized automatically based on performance.
+- Can add `<WorldInfo info='null node'/>` as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale. Not setting range values indicates that level switching can be optimized automatically based on performance.
 
 ### SFInt32 [out] **level_changed**
 
@@ -58,7 +58,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
@@ -78,7 +78,7 @@ Grouping nodes contain a list of children nodes.
 
 #### Hint
 
-Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
+- Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
 
 ## Description
 

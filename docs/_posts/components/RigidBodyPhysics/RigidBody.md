@@ -40,7 +40,7 @@ Fixed indicates whether body is able to move.
 
 #### Hint
 
-Fixed is useful for indicating objects that do not move: walls, ground, etc.
+- Fixed is useful for indicating objects that do not move: walls, ground, etc.
 
 ### SFVec3f [in, out] **position** 0 0 0
 
@@ -56,11 +56,11 @@ LinearVelocity sets constant velocity value to object every frame, and reports u
 
 #### Hint
 
-Initial value only applied during first frame if forces applied.
+- Initial value only applied during first frame if forces applied.
 
 #### Warning
 
-Instantaneous velocity changes may lead to numerical instability.
+- Instantaneous velocity changes may lead to numerical instability.
 
 ### SFVec3f [in, out] **angularVelocity** 0 0 0 <small>(-∞,∞)</small>
 
@@ -68,11 +68,11 @@ AngularVelocity sets constant velocity value to object every frame, and reports 
 
 #### Hint
 
-Initial value only applied during first frame if forces applied.
+- Initial value only applied during first frame if forces applied.
 
 #### Warning
 
-Instantaneous velocity changes may lead to numerical instability.
+- Instantaneous velocity changes may lead to numerical instability.
 
 ### SFBool [in, out] **useFiniteRotation** FALSE
 
@@ -100,7 +100,7 @@ Mass of the body in kilograms.
 
 #### Warning
 
-Mass must be greater than 0.
+- Mass must be greater than 0.
 
 ### SFMatrix3f [in, out] **inertia** 1 0 0 0 1 0 0 0 1 <small>1 0 0</small>
 
@@ -108,7 +108,7 @@ Inertia matrix defines a 3x2 inertia tensor matrix.
 
 #### Warning
 
-Only the first 6 values are used.
+- Only the first 6 values are used.
 
 ### SFVec3f [in, out] **centerOfMass** 0 0 0 <small>(-∞,∞)</small>
 
@@ -124,7 +124,7 @@ UseGlobalGravity indicates whether this particular body is influenced by parent 
 
 #### Hint
 
-Contained sub-bodies are not affected by this setting.
+- Contained sub-bodies are not affected by this setting.
 
 ### MFVec3f [in, out] **forces** [ ]
 
@@ -144,7 +144,7 @@ DisableTime defines interval when body becomes at rest and not part of rigid bod
 
 #### Hint
 
-Only activated if autoDisable='true'
+- Only activated if autoDisable='true'
 
 ### SFFloat [in, out] **disableLinearSpeed** 0 <small>[0,∞)</small>
 
@@ -152,7 +152,7 @@ DisableLinearSpeed defines lower-limit tolerance value when body is considered a
 
 #### Hint
 
-Only activated if autoDisable='true'
+- Only activated if autoDisable='true'
 
 ### SFFloat [in, out] **disableAngularSpeed** 0 <small>[0,∞)</small>
 
@@ -160,7 +160,7 @@ DisableAngularSpeed defines lower-limit tolerance value when body is considered 
 
 #### Hint
 
-Only activated if autoDisable='true'
+- Only activated if autoDisable='true'
 
 ### MFNode [in, out] **geometry** [ ] <small>[X3DNBodyCollidableNode]</small>
 

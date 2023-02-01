@@ -36,7 +36,7 @@ If contourStepSize is non-zero, also render all isosurfaces that are multiples o
 
 #### Hint
 
-ContourStepSize can be negative so that steppping can proceed in a negative direction.
+- ContourStepSize can be negative so that steppping can proceed in a negative direction.
 
 ### SFVec3f [in, out] **dimensions** 1 1 1 <small>(0,∞)</small>
 
@@ -60,7 +60,7 @@ Threshold for gradient magnitude for voxel inolusion in isosurface.
 
 #### Hint
 
-Contained Texture3D node with containerField='gradients' can provide explicit per-voxel gradient direction information for determining surface boundaries.
+- Contained Texture3D node with containerField='gradients' can provide explicit per-voxel gradient direction information for determining surface boundaries.
 
 ### MFFloat [in, out] **surfaceValues** [ ] <small>(-∞,∞)</small>
 
@@ -80,7 +80,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ## Description
 

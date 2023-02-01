@@ -37,7 +37,7 @@ An ordered set of 2D points drawing a piecewise-linear curve and forming a plana
 
 #### Warning
 
-Match clockwise/counterclockwise or impossible/inverted geometry can result!
+- Match clockwise/counterclockwise or impossible/inverted geometry can result!
 
 ### MFRotation [in] **set_orientation** <small>[-1,1] or (-∞,∞)</small>
 
@@ -45,7 +45,7 @@ Orientation is a list of axis-angle orientation 4-tuples applied at each spine-a
 
 #### Hint
 
-Number of spine points, scale values and orientation values must be the same.
+- Number of spine points, scale values and orientation values must be the same.
 
 ### MFVec2f [in] **set_scale** <small>(0,∞)</small>
 
@@ -53,11 +53,11 @@ Scale is a list of 2D-scale parameters applied at each spine-aligned cross-secti
 
 #### Hint
 
-Number of spine points, scale values and orientation values must be the same.
+- Number of spine points, scale values and orientation values must be the same.
 
 #### Warning
 
-Zero or negative scale values not allowed.
+- Zero or negative scale values not allowed.
 
 ### MFVec3f [in] **set_spine** <small>(-∞,∞)</small>
 
@@ -65,7 +65,7 @@ Spine is a list of 3D points for a piecewise-linear curve forming a series of co
 
 #### Hint
 
-Number of spine points, scale values and orientation values must be the same.
+- Number of spine points, scale values and orientation values must be the same.
 
 ### SFBool [ ] **beginCap** TRUE
 
@@ -73,7 +73,7 @@ Whether beginning cap is drawn (similar to Cylinder top cap).
 
 #### Warning
 
-Cannot be changed after initial creation.
+- Cannot be changed after initial creation.
 
 ### SFBool [ ] **endCap** TRUE
 
@@ -81,7 +81,7 @@ Whether end cap is drawn (similar to Cylinder end cap).
 
 #### Warning
 
-Cannot be changed after initial creation.
+- Cannot be changed after initial creation.
 
 ### SFBool [ ] **solid** TRUE
 
@@ -89,11 +89,11 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 #### Hint
 
-If in doubt, use solid='false' for maximum visibility.
+- If in doubt, use solid='false' for maximum visibility.
 
 #### Warning
 
-Default value true can completely hide geometry if viewed from wrong side!
+- Default value true can completely hide geometry if viewed from wrong side!
 
 ### SFBool [ ] **ccw** TRUE
 
@@ -101,7 +101,7 @@ Ccw = counterclockwise: ordering of vertex-coordinates orientation.
 
 #### Hint
 
-Ccw false can reverse solid (backface culling) and normal-vector orientation.
+- Ccw false can reverse solid (backface culling) and normal-vector orientation.
 
 ### SFBool [ ] **convex** TRUE
 
@@ -109,7 +109,7 @@ Whether all polygons in a shape are convex (true), or possibly concave (false). 
 
 #### Warning
 
-Concave geometry may be invisible default convex=true.
+- Concave geometry may be invisible default convex=true.
 
 ### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
 
@@ -117,7 +117,7 @@ CreaseAngle defines angle (in radians) where adjacent polygons are drawn with sh
 
 #### Hint
 
-CreaseAngle=0 means render all edges sharply, creaseAngle=3.14159 means render all edges smoothly.
+- CreaseAngle=0 means render all edges sharply, creaseAngle=3.14159 means render all edges smoothly.
 
 ### MFVec2f [ ] **crossSection** [ 1 1, 1 -1, -1 -1, -1 1, 1 1 ] <small>(-∞,∞)</small>
 
@@ -125,7 +125,7 @@ An ordered set of 2D points drawing a piecewise-linear curve and forming a plana
 
 #### Warning
 
-Match clockwise/counterclockwise or impossible/inverted geometry can result!
+- Match clockwise/counterclockwise or impossible/inverted geometry can result!
 
 ### MFRotation [ ] **orientation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
@@ -133,7 +133,7 @@ Orientation is a list of axis-angle orientation 4-tuples applied at each spine-a
 
 #### Hint
 
-Number of spine points, scale values and orientation values must be the same.
+- Number of spine points, scale values and orientation values must be the same.
 
 ### MFVec2f [ ] **scale** 1 1 <small>(0,∞)</small>
 
@@ -141,11 +141,11 @@ Scale is a list of 2D-scale parameters applied at each spine-aligned cross-secti
 
 #### Hint
 
-Number of spine points, scale values and orientation values must be the same.
+- Number of spine points, scale values and orientation values must be the same.
 
 #### Warning
 
-Zero or negative scale values not allowed.
+- Zero or negative scale values not allowed.
 
 ### MFVec3f [ ] **spine** [ 0 0 0, 0 1 0 ] <small>(-∞,∞)</small>
 
@@ -153,7 +153,7 @@ Spine is a list of 3D points for a piecewise-linear curve forming a series of co
 
 #### Hint
 
-Number of spine points, scale values and orientation values must be the same.
+- Number of spine points, scale values and orientation values must be the same.
 
 ## Description
 

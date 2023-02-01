@@ -53,7 +53,7 @@ Output values for linear interpolation, each corresponding to knots.
 
 #### Hint
 
-Number of weights must match number of knots!
+- Number of weights must match number of knots!
 
 ### SFVec3f [out] **value_changed**
 

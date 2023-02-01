@@ -37,7 +37,7 @@ Single or multiple string values to present as Text. Each value in the string ar
 
 #### Hints
 
-MFString arrays can have multiple values, so separate each individual string by quote marks. Strings can contain quote marks by first escaping them with a backslash example: "say "hello" please" Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+- MFString arrays can have multiple values, so separate each individual string by quote marks. Strings can contain quote marks by first escaping them with a backslash example: "say "hello" please" Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
 
 #### See Also
 
@@ -57,11 +57,11 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 #### Hint
 
-If in doubt, use solid='false' for maximum visibility.
+- If in doubt, use solid='false' for maximum visibility.
 
 #### Warnings
 
-Default value true can completely hide geometry if viewed from wrong side! Solid false not supported in VRML97.
+- Default value true can completely hide geometry if viewed from wrong side! Solid false not supported in VRML97.
 
 ### SFVec3f [out] **origin**
 

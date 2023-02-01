@@ -42,7 +42,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **load** TRUE
 
@@ -59,11 +59,11 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 #### Hints
 
-MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
 
 #### Warning
 
-Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
 #### See Also
 
@@ -80,7 +80,7 @@ autoRefresh defines interval in seconds before automatic reload of current url a
 
 #### Warning
 
-Automatically reloading content has security considerations and needs to be considered carefully.
+- Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
 
@@ -88,11 +88,11 @@ autoRefreshTimeLimit defines maximum duration that automatic refresh activity ca
 
 #### Hint
 
-Automatic refresh is different than query and response timeouts performed by a networking library while sequentially attempting to retrieve addressed content from a url list.
+- Automatic refresh is different than query and response timeouts performed by a networking library while sequentially attempting to retrieve addressed content from a url list.
 
 #### Warning
 
-Automatically reloading content has security considerations and needs to be considered carefully.
+- Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFBool [ ] **repeatS** FALSE
 

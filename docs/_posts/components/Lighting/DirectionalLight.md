@@ -62,7 +62,7 @@ Orientation vector of light relative to local coordinate system.
 
 #### Hint
 
-Animate direction to simulate time-of-day sunlight effects.
+- Animate direction to simulate time-of-day sunlight effects.
 
 ### SFColor [in, out] **shadowColor** 0 0 0 <small class="small">[0,1]</small>
 

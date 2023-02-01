@@ -49,7 +49,7 @@ Gustiness specifies how much wind speed varies from the average speed.
 
 #### Hint
 
-Wind speed variation is calculated once per frame and applied equally to all particles.
+- Wind speed variation is calculated once per frame and applied equally to all particles.
 
 ### SFFloat [in, out] **turbulence** 0 <small>[0,1]</small>
 
@@ -57,7 +57,7 @@ Turbulence field specifies how much the wind acts directly in line with the dire
 
 #### Hint
 
-This is determined per-particle to model how each is effected by turbulence.
+- This is determined per-particle to model how each is effected by turbulence.
 
 ## Example
 

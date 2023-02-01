@@ -52,7 +52,7 @@ Enables/disables creation of new particles, while any existing particles remain 
 
 #### Hint
 
-If no particles are left in scene, system is considered both active and enabled.
+- If no particles are left in scene, system is considered both active and enabled.
 
 ### SFFloat [in, out] **particleLifetime** 5 <small>[0,∞)</small>
 
@@ -64,7 +64,7 @@ TODO not properly defined in X3D spedification. Multiplier for the randomness us
 
 #### Hint
 
-Variation of zero does not allow any randomness.
+- Variation of zero does not allow any randomness.
 
 ### SFVec2f [in, out] **particleSize** 0.02 0.02 <small>[0,∞)</small>
 
@@ -72,7 +72,7 @@ ParticleSize describes width and height dimensions for each particle in length b
 
 #### Hints
 
-Particles created before this timestamp will remain at the old size. His field only effects particles using LINE, QUAD, SPRITE, and TRIANGLE geometry types.
+- Particles created before this timestamp will remain at the old size. His field only effects particles using LINE, QUAD, SPRITE, and TRIANGLE geometry types.
 
 ### SFNode [ ] **emitter** NULL <small>[X3DParticleEmitterNode]</small>
 
@@ -88,11 +88,11 @@ Array of time intervals in seconds, corresponding to particle lifetime, that are
 
 #### Hints
 
-Color values are interpolated in linear Hue Saturation Value (HSV) space, similar to ColorInterpolator node. Color values are defined as per-vertex colour values. Number of colorKey values must match length of the per-vertex colorRamp arrays!
+- Color values are interpolated in linear Hue Saturation Value (HSV) space, similar to ColorInterpolator node. Color values are defined as per-vertex colour values. Number of colorKey values must match length of the per-vertex colorRamp arrays!
 
 #### Warning
 
-If an Appearance and Material nodes are provided, those material properties override colorRamp interpolation.
+- If an Appearance and Material nodes are provided, those material properties override colorRamp interpolation.
 
 #### See Also
 
@@ -104,11 +104,11 @@ The colorRamp Color/ColorRGBA node holds a series of colour values to be used at
 
 #### Hints
 
-Color values are defined as per-vertex colour values. Number of colorKey values must match length of the per-vertex colorRamp arrays!
+- Color values are defined as per-vertex colour values. Number of colorKey values must match length of the per-vertex colorRamp arrays!
 
 #### Warning
 
-If an Appearance and Material nodes are provided, those material properties override colorRamp interpolation.
+- If an Appearance and Material nodes are provided, those material properties override colorRamp interpolation.
 
 #### See Also
 
@@ -120,7 +120,7 @@ Array of time intervals in seconds, corresponding to particle lifetime, that are
 
 #### Hints
 
-No interpolation is performed, texture coordinates are simply sequenced in order. Texture-coordinate values map textures to vertices in the geometry. Number of texCoordKey values must match length of the per-vertex texCoordRamp arrays!
+- No interpolation is performed, texture coordinates are simply sequenced in order. Texture-coordinate values map textures to vertices in the geometry. Number of texCoordKey values must match length of the per-vertex texCoordRamp arrays!
 
 ### SFNode [ ] **texCoordRamp** NULL <small>[TextureCoordinate]</small>
 
@@ -128,7 +128,7 @@ Texture coordinates of the provided texture(s) in the Appearance node, over time
 
 #### Hints
 
-Texture-coordinate values map textures to vertices in the geometry. Number of texCoordKey values must match length of the per-vertex texCoordRamp arrays!
+- Texture-coordinate values map textures to vertices in the geometry. Number of texCoordKey values must match length of the per-vertex texCoordRamp arrays!
 
 ### SFBool [out] **isActive**
 
@@ -140,7 +140,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0
 
@@ -152,7 +152,7 @@ The appearance field holds an Appearance node that is used for the geometry. All
 
 #### Hints
 
-If a texture coordinate ramp and key is supplied with this geometry, it shall be used in preference to any automatic texture coordinate generation. If automatic texture coordinate generation is used, results shall be based on the entire volume that the particles consume, not locally applied to each particle.
+- If a texture coordinate ramp and key is supplied with this geometry, it shall be used in preference to any automatic texture coordinate generation. If automatic texture coordinate generation is used, results shall be based on the entire volume that the particles consume, not locally applied to each particle.
 
 ### SFNode [in, out] **geometry** NULL <small>[X3DGeometryNode]</small>
 
@@ -160,7 +160,7 @@ The geometry node provides geometry used for each particle when geometryType=GEO
 
 #### Hint
 
-Include `<component name='Geospatial' level='1'/>`
+- Include `<component name='Geospatial' level='1'/>`
 
 ## Hints
 

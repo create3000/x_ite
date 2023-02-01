@@ -42,7 +42,7 @@ Position (x, y, z in meters) of children relative to local coordinate system.
 
 #### Hint
 
-The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
+- The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>[0,1]</small>
 
@@ -50,7 +50,7 @@ Orientation (axis, angle in radians) of children relative to local coordinate sy
 
 #### Hint
 
-The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
+- The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or -1 -1 -1</small>
 
@@ -58,7 +58,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 #### Hint
 
-Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 

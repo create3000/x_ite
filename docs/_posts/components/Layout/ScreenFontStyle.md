@@ -37,7 +37,7 @@ Language codes consist of a primary code and a (possibly empty) series of subcod
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 #### See Also
 
@@ -52,11 +52,11 @@ Array of quoted font family names in preference order, browsers use the first su
 
 #### Hints
 
-Example family array might be "Times" "SERIF" Values with guaranteed support include "SERIF" "SANS" "TYPEWRITER". SERIF and SANS are variable-width fonts (for example, Times Roman and Arial). TYPEWRITER is a fixed-width font (for example, Courier). MFString arrays can have multiple values, so "separate each individual string" "by using quote marks". See [15.2.2.2 Font family and style](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Fontfamilyandstyle){:target="_blank"} for details.
+- Example family array might be "Times" "SERIF" Values with guaranteed support include "SERIF" "SANS" "TYPEWRITER". SERIF and SANS are variable-width fonts (for example, Times Roman and Arial). TYPEWRITER is a fixed-width font (for example, Courier). MFString arrays can have multiple values, so "separate each individual string" "by using quote marks". See [15.2.2.2 Font family and style](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Fontfamilyandstyle){:target="_blank"} for details.
 
 #### Warning
 
-Font family support often varies.
+- Font family support often varies.
 
 #### See Also
 
@@ -68,11 +68,11 @@ Pick one of four values for text style.
 
 #### Hint
 
-See [15.2.2.2 Font family and style](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Fontfamilyandstyle){:target="_blank"} for details.
+- See [15.2.2.2 Font family and style](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Fontfamilyandstyle){:target="_blank"} for details.
 
 #### Warning
 
-Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFFloat [ ] **pointSize** 12 <small>(0,∞)</small>
 
@@ -80,7 +80,7 @@ PointSize field specifies the size of text in points. Nominal height (in local c
 
 #### Hint
 
-PointSize replaces the size field of the FontStyle node.
+- PointSize replaces the size field of the FontStyle node.
 
 ### SFFloat [ ] **spacing** 1 <small>[0,∞)</small>
 
@@ -92,7 +92,7 @@ Whether text direction is horizontal (true) or vertical (false).
 
 #### Hint
 
-See [15.2.2.3 Direction and justification](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
+- See [15.2.2.3 Direction and justification](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
 
 #### See Also
 
@@ -108,7 +108,7 @@ Whether text direction is top-to-bottom (true) or bottom-to-top (false).
 
 #### Hint
 
-See [15.2.2.3 Direction and justification](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
+- See [15.2.2.3 Direction and justification](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
 
 #### See Also
 
@@ -120,11 +120,11 @@ The justify field determines alignment of the above text layout relative to the 
 
 #### Hints
 
-Preferred value is usually justify=' "MIDDLE" "MIDDLE" ' for centered justification horizontally and vertically. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks". See [15.2.2.3 Direction and justification](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
+- Preferred value is usually justify=' "MIDDLE" "MIDDLE" ' for centered justification horizontally and vertically. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks". See [15.2.2.3 Direction and justification](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
 
 #### Warnings
 
-Exactly two string values are provided for major and minor axis alignment. Do not use illegal values such as LEFT RIGHT TOP BOTTOM or CENTER.
+- Exactly two string values are provided for major and minor axis alignment. Do not use illegal values such as LEFT RIGHT TOP BOTTOM or CENTER.
 
 ## Description
 

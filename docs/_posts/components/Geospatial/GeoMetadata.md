@@ -38,11 +38,11 @@ Hypertext link to an external, complete metadata description.
 
 #### Hints
 
-MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
 
 #### Warning
 
-Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
 
 #### See Also
 
@@ -54,7 +54,7 @@ The summary string array contains a set of keyword/value pairs, with each keywor
 
 #### Hints
 
-Example `<GeoMetadata summary=' "title" "San Francisco, California USA" '/>`. There should always be an even (or zero) number of strings to match key-value pairs.
+- Example `<GeoMetadata summary=' "title" "San Francisco, California USA" '/>`. There should always be an even (or zero) number of strings to match key-value pairs.
 
 #### See Also
 

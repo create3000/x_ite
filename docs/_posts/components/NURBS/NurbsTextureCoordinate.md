@@ -40,7 +40,7 @@ Output values for linear interpolation, each corresponding to knots.
 
 #### Hint
 
-Number of weights must match number of knots!
+- Number of weights must match number of knots!
 
 ### SFInt32 [ ] **uDimension** <small>[0,∞)</small>
 
