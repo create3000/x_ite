@@ -79,7 +79,7 @@ This is orientation \_change\_ from default direction (0 0 -1) +Y axis is the up
 
 CenterOfRotation specifies center point about which to rotate user's eyepoint when in EXAMINE or LOOKAT mode.
 
-### SFFloat [in, out] **fieldOfView** 0.7854 <small>(0,π)</small>
+### SFFloat [in, out] **fieldOfView** π/4 <small>(0,π)</small>
 
 Preferred minimum viewing angle from this viewpoint in radians. Small field of view roughly corresponds to a telephoto lens, large field of view roughly corresponds to a wide-angle lens.
 

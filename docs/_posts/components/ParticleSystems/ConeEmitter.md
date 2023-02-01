@@ -39,7 +39,7 @@ Point from which particles emanate.
 
 Initial direction from which particles emanate.
 
-### SFFloat [in, out] **angle** 0.7854 <small>[0,π]</small>
+### SFFloat [in, out] **angle** π/4 <small>[0,π]</small>
 
 Cone boundary for random distribution of particles about initial direction.
 

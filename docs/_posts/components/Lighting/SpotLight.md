@@ -72,7 +72,7 @@ Orientation vector of light relative to local coordinate system.
 
 Maximum effective distance of light relative to local light position, affected by ancestor scaling.
 
-### SFFloat [in, out] **beamWidth** 0.7854 <small>(0,π/2]</small>
+### SFFloat [in, out] **beamWidth** π/4 <small>(0,π/2]</small>
 
 Inner conical solid angle (in radians) where light source has uniform full intensity.
 
@@ -84,17 +84,18 @@ BeamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero i
 
 If beamWidth > cutOffAngle, then beamWidth reset to equal cutOffAngle.
 
-### SFFloat [in, out] **cutOffAngle** 1.5708 <small>(0,π/2]</small>
+### SFFloat [in, out] **cutOffAngle** π/2 <small>(0,π/2]</small>
 
 Outer conical solid angle (in radians) where light source intensity becomes zero.
 
 #### Hint
 
-BeamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero intensity. Therefore set beamWidth <= cutOffAngle.
+beamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero intensity. Therefore set beamWidth <= cutOffAngle.
 
-#### Warning
+#### Warnings
 
-If beamWidth > cutOffAngle, then beamWidth reset to equal cutOffAngle.
+- If beamWidth > cutOffAngle, then beamWidth reset to equal cutOffAngle.
+- If shadows is `TRUE`, cutOffAngle must be significantly smaller than π/2.
 
 ### SFColor [in, out] **shadowColor** 0 0 0 <small class="small">[0,1]</small>
 
