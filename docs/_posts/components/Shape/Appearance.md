@@ -31,33 +31,56 @@ The Appearance node belongs to the **Shape** component and its default container
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFNode [in, out] **acousticProperties** NULL <small>[AcousticProperties]</small>
+
+Single contained acousticProperties node that can specify additional acoustic attributes applied to associated surface geometry.
+
 ### SFNode [in, out] **fillProperties** NULL <small>[FillProperties]</small>
 
-Input/Output field fillProperties.
+Single contained FillProperties node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
 
 ### SFNode [in, out] **lineProperties** NULL <small>[LineProperties]</small>
 
-Input/Output field lineProperties.
+Single contained LineProperties node that can specify additional visual attributes applied to corresponding line geometry.
 
 ### SFNode [in, out] **material** NULL <small>[X3DMaterialNode]</small>
 
-Input/Output field material.
+Single contained Material node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to corresponding geometry.
+
+#### Warning
+
+- If material is NULL or unspecified, lighting is off (all lights ignored) for this Shape and unlit object color is (1, 1, 1).
 
 ### SFNode [in, out] **texture** NULL <small>[X3DTextureNode]</small>
 
-Input/Output field texture.
+Single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
+
+#### Hints
+
+- If texture node is NULL or unspecified, corresponding Shape geometry for this Appearance is not textured.
+- [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images){:target="_blank"}
+- [3D Architecture 18 Texturing component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html){:target="_blank"}
+- [X3D Architecture 33 Texturing3D component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texture3D.html){:target="_blank"}
 
 ### SFNode [in, out] **textureTransform** NULL <small>[X3DTextureTransformNode]</small>
 
-Input/Output field textureTransform.
+Single contained TextureTransform node that defines 2D transformation applied to texture coordinates.
+
+#### Hint
+
+- If textureTransform array is empty, then this field has no effect.
 
 ### MFNode [in, out] **shaders** [ ] <small>[X3DShaderNode]</small>
 
-Input/Output field shaders.
+Zero or more contained programmable shader nodes (ComposedShader, PackagedShader, ProgramShader) that specify, in order of preference, author-programmed rendering characteristics.
+
+#### Hint
+
+- [X3D Architecture 31 Programmable shaders component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shaders.html){:target="_blank"}
 
 ### SFNode [in, out] **blendMode** NULL <small>[BlendMode] <span class="yellow">non standard</span></small>
 
-Input/Output field blendMode.
+Single contained BlendMode node that defines blend mode properties.
 
 ## Description
 
