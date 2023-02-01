@@ -194,6 +194,19 @@ Transparency < .5 opaque, transparency > .5 transparent.
 - Insert Shape and Appearance nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 
+## Description
+
+### Hints
+
+- Insert Shape and Appearance nodes before adding material.
+- DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+- [X3D Example Archives, Basic, Universal Media Materials](https://www.web3d.org/x3d/content/examples/Basic/UniversalMediaMaterials){:target="_blank"}
+- [3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#Lightingmodel){:target="_blank"}
+- [Rendering](https://en.wikipedia.org/wiki/Rendering_(computer_graphics)){:target="_blank"}
+- [3D rendering](https://en.wikipedia.org/wiki/3D_rendering){:target="_blank"}
+- [Phong reflection model](https://en.wikipedia.org/wiki/Phong_reflection_model){:target="_blank"}
+
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Shape/Material/Material.x3d"></x3d-canvas>
