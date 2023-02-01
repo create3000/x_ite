@@ -27,7 +27,24 @@ The AcousticProperties node belongs to the **Shape** component and its default c
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
+Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+
 ### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of the url asset.
+
+#### Hint
+
+Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+
+### SFBool [in, out] **load** TRUE
+
+load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
+
+#### Hints
+
+- Allows author to design when ImageTexture loading occurs via user interaction, event chains or scripting.
+- Use a separate LoadSensor node to detect when loading is complete.
 
 ### SFBool [in, out] **enabled** <small></small>
 

@@ -9,28 +9,44 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
 
 @import "{{ site.theme }}";
 
+@mixin x_ite-dark-scheme {
+  --nav-border-color: rgba(158,158,158,0.17);
+  --nav-active-page: rgb(168, 182, 206);
+  --h2-color: rgb(228, 228, 93);
+  --h3-color: rgb(185, 137, 79);
+  --h3-color-strong: rgb(232, 201, 133);
+  --h4-color: rgb(60, 107, 184);
+  --h4-color-strong: rgb(175, 206, 255);
+  --example-background-color: rgba(27,27,30,0.4);
+  --button-background-color: black;
+}
+
+@mixin x_ite-light-scheme {
+  --h2-color: rgb(189, 0, 106);
+  --h3-color: rgb(159, 103, 34);;
+  --h3-color-strong: rgb(173, 81, 0);
+  --h4-color: rgb(29, 80, 163);
+  --h4-color-strong: rgb(10, 80, 144);
+  --button-background-color: white;
+}
+
 @media (prefers-color-scheme: dark) {
   html:not([data-mode]), html[data-mode=dark] {
-    --nav-border-color: rgba(158,158,158,0.17);
-    --nav-active-page: rgb(168, 182, 206);
-    --h2-color: #e4e45d;
-    --h3-color: #b9894f;
-    --h3-color-strong: #e8c985;
-    --h4-color: rgb(60, 107, 184);
-    --h4-color-strong: rgb(175, 206, 255);
-    --example-background-color: rgba(27,27,30,0.4);
-    --button-background-color: black;
+    @include x_ite-dark-scheme;
+  }
+
+  html[data-mode=light] {
+    @include x_ite-light-scheme;
   }
 }
 
 @media (prefers-color-scheme: light) {
+  html[data-mode=dark] {
+    @include x_ite-dark-scheme;
+  }
+
   html:not([data-mode]), html[data-mode=light] {
-    --h2-color: #bd006a;
-    --h3-color: #9f6722;;
-    --h3-color-strong: #ad5100;
-    --h4-color: rgb(29, 80, 163);
-    --h4-color-strong: rgb(10, 80, 144);
-    --button-background-color: white;
+    @include x_ite-light-scheme;
   }
 }
 
