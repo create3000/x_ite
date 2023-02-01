@@ -176,19 +176,19 @@ small, .small {
 }
 
 span.red {
-  color: var(--system-red);
+  color: var(--system-red) !important;
 }
 
 span.green {
-  color: var(--system-green);
+  color: var(--system-green) !important;
 }
 
 span.blue {
-  color: var(--system-blue);
+  color: var(--system-blue) !important;
 }
 
 span.yellow {
-  color: var(--system-yellow);
+  color: var(--system-yellow) !important;
 }
 
 .table-wrapper > table tbody tr td,
