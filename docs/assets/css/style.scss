@@ -204,7 +204,11 @@ span.yellow {
 .table-wrapper > table.examples tbody tr td {
   border: 3px solid var(--tb-odd-bg);
   padding: 0;
-  font-size: 0;
+}
+
+.table-wrapper > table.examples a.img-link {
+  position: relative;
+  display: block;
 }
 
 .table-wrapper > table.examples a.popup {
