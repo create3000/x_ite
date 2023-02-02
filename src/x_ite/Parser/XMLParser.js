@@ -264,6 +264,9 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       for (var i = 0; i < childNodes .length; ++ i)
          this .x3dElementChildHead (childNodes [i])
 
+      if (!this .xml)
+         this .headElement (xmlElement);
+
       if (this .success)
       {
          this .loadComponents () .then (function ()
