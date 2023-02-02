@@ -381,6 +381,9 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this ._scaleOrientationOffset = Rotation4 .Identity;
       this ._centerOfRotationOffset = Vector3   .Zero;
       this ._fieldOfViewScale       = 1;
+
+      this .set_nearDistance__ ();
+      this .set_farDistance__ ();
    },
    getRelativeTransformation: (function ()
    {
@@ -540,16 +543,17 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
    viewAll: function (bbox)
    {
       const
-         center          = bbox .center,
-         direction       = this .getUserPosition () .copy () .subtract (center),
+         direction       = this .getUserPosition () .copy () .subtract (bbox .center) .normalize (),
          distance        = this .getLookAtDistance (bbox),
-         userPosition    = center .copy () .add (direction .normalize () .multiply (distance)),
-         userOrientation = this .getLookAtRotation (userPosition, center);
+         userPosition    = bbox .center .copy () .add (direction .multiply (distance)),
+         userOrientation = this .getLookAtRotation (userPosition, bbox .center);
 
       this ._positionOffset         = userPosition .subtract (this .getPosition ());
       this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
-      this ._centerOfRotationOffset = center .subtract (this .getCenterOfRotation ());
+      this ._centerOfRotationOffset = bbox .center .copy () .subtract (this .getCenterOfRotation ());
       this ._fieldOfViewScale       = 1;
+      this .nearDistance            = Math .min ((distance - bbox .size .magnitude ()) / 2, 0.125);
+      this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
    },
    traverse: function (type, renderObject)
    {
