@@ -237,11 +237,9 @@ const glb = [
    "WaterBottle/glTF-Binary/WaterBottle.glb",
 ];
 
-const server = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/";
+const khr = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/";
 
-const Browser = X3D .getBrowser ();
-
-function createList (description, array)
+function createList (description, array, server)
 {
    const column = $(".column2");
 
@@ -257,21 +255,17 @@ function createList (description, array)
          .text (m [1])
          .attr ("href", server + filename)
          .appendTo ($("<li></li>") .appendTo (list))
-         .on ("click", loadURL .bind (null, filename));
+         .on ("click", loadURL .bind (null, filename, server));
    }
 }
 
-function loadURL (filename)
+async function loadURL (filename, server, event)
 {
-   Browser .loadURL (new X3D .MFString (server + filename));
+   event .preventDefault ();
 
-   return false;
-}
+   const Browser = X3D .getBrowser ();
 
-function browserCallback (event)
-{
-   if (event !== X3D .X3DConstants .INITIALIZED_EVENT)
-      return;
+   await Browser .loadURL (new X3D .MFString (server + filename));
 
    try
    {
@@ -290,8 +284,6 @@ function browserCallback (event)
       Browser .viewAll ();
 }
 
-createList ("glTF Samples", glTF);
-createList ("glb Samples", glb);
-
-Browser .addBrowserCallback ("samples", browserCallback);
+createList ("glTF Samples", glTF, khr);
+createList ("glb Samples",  glb,  khr);
 </script>

@@ -71,6 +71,7 @@ import _                   from "../../locale/gettext.js";
 
 const
    _DOMIntegration   = Symbol (),
+   _reject           = Symbol (),
    _fileLoader       = Symbol (),
    _browserCallbacks = Symbol (),
    _console          = Symbol ();
@@ -86,6 +87,7 @@ function X3DBrowser (element)
 
    X3DBrowserContext .call (this, element);
 
+   this [_reject]           = Function .prototype;
    this [_browserCallbacks] = new Map ();
    this [_console]          = document .getElementsByClassName ("x_ite-console");
 
@@ -279,69 +281,77 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    replaceWorld: function (scene)
    {
-       if (this [_fileLoader])
-         this [_fileLoader] .abort ();
-
-      // Remove world.
-
-      if (this .initialized () .getValue ())
+      return new Promise ((resolve, reject) =>
       {
-         this .getExecutionContext () .setLive (false);
-         this .shutdown () .processInterests ();
-         this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
-         this .callBrowserEventHandler ("shutdown");
-      }
+         this [_reject] ("Replacing world aborted.");
 
-      // Replace world.
+         if (this [_fileLoader])
+            this [_fileLoader] .abort ();
 
-      if (scene instanceof Fields .MFNode)
-      {
-         // VRML version of replaceWorld has a MFNode value as argument.
+         this [_reject] = reject;
 
-         const rootNodes = scene;
+         // Remove world.
 
-         scene = this .createScene ();
+         if (this .initialized () .getValue ())
+         {
+            this .getExecutionContext () .setLive (false);
+            this .shutdown () .processInterests ();
+            this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
+            this .callBrowserEventHandler ("shutdown");
+         }
 
-         for (const rootNode of rootNodes)
-            scene .isLive () .addInterest (rootNode .getValue () .getExecutionContext () .isLive ());
+         // Replace world.
 
-         scene .setRootNodes (rootNodes);
-      }
+         if (scene instanceof Fields .MFNode)
+         {
+            // VRML version of replaceWorld has a MFNode value as argument.
 
-      if (!(scene instanceof X3DScene))
-         scene = this .createScene ();
+            const rootNodes = scene;
 
-      // Detach scene from parent.
+            scene = this .createScene ();
 
-      scene .getExecutionContext () .isLive () .removeInterest ("setLive", scene);
-      scene .setExecutionContext (scene);
+            for (const rootNode of rootNodes)
+               scene .isLive () .addInterest (rootNode .getValue () .getExecutionContext () .isLive ());
 
-      // Replace.
+            scene .setRootNodes (rootNodes);
+         }
 
-      this .setDescription ("");
-      this .getBrowserOptions () .configure ();
-      this .setBrowserLoading (true);
-      this ._loadCount .addInterest ("checkLoadCount", this);
+         if (!(scene instanceof X3DScene))
+            scene = this .createScene ();
 
-      for (const object of scene .getLoadingObjects ())
-         this .addLoadingObject (object);
+         // Detach scene from parent.
 
-      this .setExecutionContext (scene);
-      this .getWorld () .bindBindables ();
+         scene .getExecutionContext () .isLive () .removeInterest ("setLive", scene);
+         scene .setExecutionContext (scene);
 
-      scene .setLive (this .isLive () .getValue ());
+         // Replace.
+
+         this .setDescription ("");
+         this .getBrowserOptions () .configure ();
+         this .setBrowserLoading (true);
+         this ._loadCount .addInterest ("checkLoadCount", this, resolve);
+
+         for (const object of scene .getLoadingObjects ())
+            this .addLoadingObject (object);
+
+         this .setExecutionContext (scene);
+         this .getWorld () .bindBindables ();
+
+         scene .setLive (this .isLive () .getValue ());
+      });
    },
-   checkLoadCount: function (loadCount)
+   checkLoadCount: function (resolve, loadCount)
    {
       if (loadCount .getValue ())
          return;
 
       loadCount .removeInterest ("checkLoadCount", this);
+      this .setBrowserLoading (false);
       this .initialized () .set (this .getCurrentTime ());
       this .initialized () .processInterests ();
       this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
       this .callBrowserEventHandler ("initialized load");
-      this .setBrowserLoading (false);
+      resolve ();
    },
    createVrmlFromString: function (vrmlSyntax)
    {
@@ -491,10 +501,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
             if (scene)
             {
-               this .replaceWorld (scene);
+               this .replaceWorld (scene) .then (resolve) .catch (reject);
                this .removeLoadingObject (this);
-
-               resolve ();
             }
             else
             {
