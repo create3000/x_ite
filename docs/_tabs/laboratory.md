@@ -8,25 +8,25 @@ order: 5
   <tr>
     <td>
       <a href="x3d-visual-blend-mode-editor"><img src="/assets/img/laboratory/blend-mode.png" alt="Visual Blend Mode Editor"/></a>
-      <a href="x3d-visual-blend-mode-editor">Visual Blend Mode Editor</a>
+      Visual Blend Mode Editor
     </td>
     <td>
       <a href="3d-l-system-generator"><img src="/assets/img/laboratory/l-system.png" alt="3D L-System Generator"/></a>
-      <a href="3d-l-system-generator">3D L-System Generator</a>
+      3D L-System Generator
     </td>
     <td>
       <a href="online-dicom-and-nrrd-file-viewer"><img src="/assets/img/laboratory/dicom-nrrd.png" alt="DICOM and NRRD File Viewer"/></a>
-      <a href="online-dicom-and-nrrd-file-viewer">DICOM and NRRD File Viewer</a>
+      DICOM and NRRD File Viewer
     </td>
   </tr>
   <tr>
     <td>
       <a href="real-time-earth-quake-information"><img src="/assets/img/laboratory/earthquake.png" alt="Real time Earth Quake Information"/></a>
-      <a href="real-time-earth-quake-information">Real time Earth Quake Information</a>
+      Real time Earth Quake Information
     </td>
     <td>
       <a href="gltf-sample-viewer"><img src="/assets/img/laboratory/gltf.png" alt="glTF Sample Viewer"/></a>
-      <a href="gltf-sample-viewer">glTF Sample Viewer</a>
+      glTF Sample Viewer
     </td>
   </tr>
 </table>
