@@ -34,7 +34,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFString [in, out] **align** [ "CENTER", "CENTER" ] <small>["LEFT"|"CENTER"|"RIGHT"&amp;</small>
 
-The align field values align the sized rectangle to an edge or center of the parent rectangle. Two quoted string values are provided. The first value is for horizontal direction (LEFT | CENTER | RIGHT) and the second value is for vertical direction (BOTTOM | CENTER | TOP). Examples: "CENTER" "CENTER" (default value), "LEFT" "TOP" or "RIGHT" "BOTTOM".
+The align field values align the sized rectangle to an edge or center of the parent rectangle. Two quoted string values are provided. The first value is for horizontal direction (LEFT \| CENTER \| RIGHT) and the second value is for vertical direction (BOTTOM \| CENTER \| TOP). Examples: "CENTER" "CENTER" (default value), "LEFT" "TOP" or "RIGHT" "BOTTOM".
 
 #### Hint
 
