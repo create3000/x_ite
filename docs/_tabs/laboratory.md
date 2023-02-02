@@ -4,6 +4,12 @@ title: Laboratory
 icon: fas fa-flask-vial
 order: 5
 ---
+<style>
+table.examples td {
+  width: 33.33333%;
+}
+</style>
+
 <table class="examples">
   <tr>
     <td>
