@@ -8,26 +8,30 @@ order: 5
   <tr>
     <td>
       <a href="x3d-visual-blend-mode-editor"><img src="/assets/img/laboratory/blend-mode.png" alt="Visual Blend Mode Editor"/></a>
-      Visual Blend Mode Editor
     </td>
     <td>
       <a href="3d-l-system-generator"><img src="/assets/img/laboratory/l-system.png" alt="3D L-System Generator"/></a>
-      3D L-System Generator
     </td>
     <td>
       <a href="online-dicom-and-nrrd-file-viewer"><img src="/assets/img/laboratory/dicom-nrrd.png" alt="DICOM and NRRD File Viewer"/></a>
-      DICOM and NRRD File Viewer
     </td>
+  </tr>
+  <tr>
+    <td>Visual Blend Mode Editor</td>
+    <td>3D L-System Generator</td>
+    <td>DICOM and NRRD File Viewer</td>
   </tr>
   <tr>
     <td>
       <a href="real-time-earth-quake-information"><img src="/assets/img/laboratory/earthquake.png" alt="Real time Earth Quake Information"/></a>
-      Real time Earth Quake Information
     </td>
     <td>
       <a href="gltf-sample-viewer"><img src="/assets/img/laboratory/gltf.png" alt="glTF Sample Viewer"/></a>
-      glTF Sample Viewer
     </td>
+  </tr>
+  <tr>
+    <td>Real time Earth Quake Information</td>
+    <td>glTF Sample Viewer</td>
   </tr>
 </table>
 
