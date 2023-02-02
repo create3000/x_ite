@@ -14,8 +14,6 @@ tags: [glTF, sample, viewer]
    display: none;
 }
 
-/* Table */
-
 /* Viewer */
 
 @media (prefers-color-scheme: dark) {
@@ -38,18 +36,18 @@ tags: [glTF, sample, viewer]
    }
 }
 
-.row {
+.viewer-row {
    display: flex;
    height: calc(100vh - 180px);
 }
 
-.column1 {
+.viewer-column1 {
    flex: 80%;
    width: 80%;
    height: 100%;
 }
 
-.column2 {
+.viewer-column2 {
    flex: 20%;
    width: 20%;
    height: 100%;
@@ -58,7 +56,7 @@ tags: [glTF, sample, viewer]
    padding: 1rem;
 }
 
-.column2 div {
+.viewer-column2 div {
    color: var(--h2-color);
 }
 
@@ -70,11 +68,24 @@ tags: [glTF, sample, viewer]
 }
 </style>
 
-<div class="row">
-   <div class="column1">
-      <x3d-canvas src="/x_ite/assets/X3D/glTF.x3d"></x3d-canvas>
+<div class="viewer-row">
+   <div class="viewer-column1">
+      <x3d-canvas>
+         <X3D profile='Interchange' version='4.0'>
+            <head>
+               <component name='Text' level='1'></component>
+            </head>
+            <Scene>
+               <Shape>
+                  <Text string='"glTF Sample Viewer"'>
+                     <FontStyle justify='"MIDDLE", "MIDDLE"'></FontStyle>
+                  </Text>
+               </Shape>
+            </Scene>
+          </X3D>
+      </x3d-canvas>
    </div>
-   <div class="column2"></div>
+   <div class="viewer-column2"></div>
 </div>
 
 <script>
@@ -241,7 +252,7 @@ const khr = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/m
 
 function createList (description, array, server)
 {
-   const column = $(".column2");
+   const column = $(".viewer-column2");
 
    $("<div></div>") .append ($("<strong></strong>") .text (description)) .appendTo (column);
 
