@@ -34,13 +34,9 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFInt32 [in] **set_index** <small>[0,∞)</small>
 
-Index values provide order in which coordinates are applied. Order starts at index 0, commas are optional between sets. Four unique indices are defined for each quadrilateral.
+*index* values provide order in which coordinates are applied. Order starts at index 0, commas are optional between sets. Four unique indices are defined for each quadrilateral.
 
-#### Warning
-
-- -1 sentinel values are not allowed.
-
-#### Warning
+#### Warning:
 
 - -1 sentinel values are not allowed.
 
@@ -78,9 +74,9 @@ Whether Normal node vector values are applied to each vertex (true) or to each p
 
 ### MFInt32 [ ] **index** [ ] <small>[0,∞)</small>
 
-*index* values provide order in which coordinates are applied. Order starts at index 0, commas are optional between sets. Four unique indices are defined for each quad. Four unique indices are defined for each quad.
+*index* values provide order in which coordinates are applied. Order starts at index 0, commas are optional between sets. Four unique indices are defined for each quadrilateral.
 
-#### Warning
+#### Warning:
 
 - -1 sentinel values are not allowed.
 

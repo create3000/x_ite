@@ -34,7 +34,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFInt32 [in] **set_index** <small>[0,∞)</small>
 
-Index list specifies triangles by connecting Coordinate vertices.
+*index* list specifies triangles by connecting Coordinate vertices.
 
 #### Warning
 

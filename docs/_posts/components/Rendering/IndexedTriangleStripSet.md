@@ -34,7 +34,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFInt32 [in] **set_index** <small>[0,∞) or −1</small>
 
-Index list specifies triangles by connecting Coordinate vertices for each individual strip, separated by -1 sentinel values.
+*index* list specifies triangles by connecting Coordinate vertices for each individual strip, separated by -1 sentinel values.
 
 ### SFBool [ ] **solid** TRUE
 
