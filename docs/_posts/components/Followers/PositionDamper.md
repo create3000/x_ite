@@ -55,7 +55,7 @@ Initial destination value for this node.
 
 ### SFFloat [in, out] **tolerance** -1 <small>-1 or [0,∞)</small>
 
--1 or [0,+∞) Absolute value for satisfactory completion proximity (-1 lets browser choose).
+-1 or [0,∞) Absolute value for satisfactory completion proximity (-1 lets browser choose).
 
 ### SFTime [in, out] **tau** 0.3 <small>[0,∞)</small>
 

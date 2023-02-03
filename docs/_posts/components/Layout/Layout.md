@@ -56,7 +56,7 @@ The offsetUnits field values are used to interprete the offset values. Two quote
 
 - If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
-### MFFloat [in, out] **offset** [ 0, 0 ]
+### MFFloat [in, out] **offset** [ 0, 0 ] <small>(-∞,∞)</small>
 
 The values of the offset field are used to translate the location of this rectangle after the initial alignment. The offsetUnits field specifies how to interpret the offset field.
 
@@ -76,7 +76,7 @@ The sizeUnits field values are used to interprete the offset values. Two quoted 
 
 - If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
-### MFFloat [in, out] **size** [ 1, 1 ]
+### MFFloat [in, out] **size** [ 1, 1 ] <small>(0,∞)</small>
 
 The two values in the size field define the width and height of the layout rectangle. The sizeUnits field specifies how to interpret the size values.
 
