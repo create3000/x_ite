@@ -33,19 +33,27 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFInt32 [in] **set_colorIndex** <small>[0,∞) or -1</small>
 
-ColorIndex indices provide order in which colors are applied.
+*colorIndex* values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
 
 #### Hints
 
-- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions. If rendering Coordinate points originally defined for an IndexedFaceSet, index values may need to repeat initial each initial vertex to close the polygons.
+- If colorIndex array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
+- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
+- If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual
 
 ### MFInt32 [in] **set_coordIndex** <small class="small">[0,∞) or -1</small>
 
-CoordIndex indices provide the order in which coordinates are applied to construct each polyline. Order starts at index 0, commas are optional between sets.
+**colorIndex** values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
 
-#### Hint
+#### Hints
 
-- Sentinel value -1 is used to separate indices for each successive polyline.
+- If colorIndex array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
+- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
+- If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
@@ -57,11 +65,13 @@ Whether Color node color values are applied to each vertex (true) or per polylin
 
 ### MFInt32 [ ] **colorIndex** [ ] <small>[0,∞) or -1</small>
 
-*colorIndex* indices provide order in which colors are applied.
+*colorIndex* values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
 
 #### Hints
 
-- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions. If rendering Coordinate points originally defined for an IndexedFaceSet, index values may need to repeat initial each initial vertex to close the polygons.
+- If colorIndex array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
+- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
+- If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual
 
 ### MFInt32 [ ] **coordIndex** [ ] <small>[0,∞) or -1</small>
 

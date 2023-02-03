@@ -34,11 +34,13 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFInt32 [in] **set_colorIndex** <small>[0,∞) or -1</small>
 
-ColorIndex indices provide order in which colors are applied.
+*colorIndex* values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
 
 #### Hints
 
-- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
+- If colorIndex array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
+- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
+- If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual
 
 ### MFInt32 [in] **set_texCoordIndex** <small>[-1,∞)</small>
 
@@ -46,23 +48,28 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 #### Hint
 
+- If texCoordIndex array is not provided, then TextureCoordinate values are indexed according to the coordIndex field.
 - Use a tool!
 
 ### MFInt32 [in] **set_normalIndex** <small>[0,∞) or -1</small>
 
-NormalIndex indices define the order in which normal vectors are applied.
+*normalIndex* values define the order in which normal vectors are applied to polygons (or vertices).
 
 #### Hints
 
-- If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
+- If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
+- if no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
-### MFInt32 [in] **set_coordIndex** <small>[0,∞) or -1</small>
+### MFInt32 [in] **set_coordIndex** <small class="small">[0,∞) or -1</small>
 
-CoordIndex indices provide the order in which coordinates are applied to construct each polygon face. Order starts at index 0, commas are optional between sets.
+**colorIndex** values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
 
-#### Hint
+#### Hints
 
-- Sentinel value -1 is used to separate indices for each successive polygon.
+- If colorIndex array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
+- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
+- If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 
 ### SFBool [ ] **solid** TRUE
 
@@ -114,11 +121,13 @@ Whether Normal node vector values are applied to each vertex (true) or to each p
 
 ### MFInt32 [ ] **colorIndex** [ ] <small>[0,∞) or -1</small>
 
-*colorIndex* indices provide order in which colors are applied.
+*colorIndex* values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
 
 #### Hints
 
-- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
+- If colorIndex array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
+- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
+- If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual
 
 ### MFInt32 [ ] **texCoordIndex** [ ] <small>[-1,∞)</small>
 
@@ -126,15 +135,22 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 #### Hint
 
+- If texCoordIndex array is not provided, then TextureCoordinate values are indexed according to the coordIndex field.
 - Use a tool!
 
 ### MFInt32 [ ] **normalIndex** [ ] <small>[0,∞) or -1</small>
 
-*normalIndex* indices define the order in which normal vectors are applied.
+*normalIndex* values define the order in which normal vectors are applied to polygons (or vertices).
 
 #### Hints
 
-- If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included. If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
+- If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
+- if no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
+
+#### Warning
+
+- If normalIndex array is not provided, then Normal values are indexed according to the coordIndex field.
 
 ### MFInt32 [ ] **coordIndex** [ ] <small>[0,∞) or -1</small>
 

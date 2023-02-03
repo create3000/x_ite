@@ -33,7 +33,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFInt32 [in, out] **vertexCount** [ ] <small>[2,∞)</small>
 
-Vertices at a time.
+*vertexCount* describes how many vertices are used in each individual polyline segment from the Coordinate point values. Coordinate point values are assigned as a block of points to each line by taking vertexCount[n] vertices at a time.
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 
