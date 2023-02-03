@@ -33,19 +33,31 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 
-Input/Output field attrib.
+Multiple contained FloatVertexAttribute nodes that can specify list of per-vertex attribute information for programmable shaders.
+
+#### Hint
+
+- [X3D Architecture 32.2.2.4 Per-vertex attributes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shaders.html#Pervertexattributes)
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
 
-Input/Output field fogCoord.
+Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Input/Output field color.
+Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+
+### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
+
+Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+
+#### Hint
+
+- Useful for special effects. Normal vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 
-Input/Output field coord.
+Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
 
 ## Description
 

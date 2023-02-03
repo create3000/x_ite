@@ -135,15 +135,19 @@ Whether Normal node vector values are applied to each vertex (true) or per quadr
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Input/Output field color.
+Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
 
-Input/Output field texCoord.
+Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
-Input/Output field normal.
+Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+
+#### Hint
+
+- Useful for special effects. Normal vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
 
 ### MFDouble [in, out] **height** [ 0, 0 ] <small>(-∞,∞)</small>
 

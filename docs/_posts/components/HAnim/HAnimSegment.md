@@ -62,7 +62,7 @@ Location within segment of center of mass.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 
-Input/Output field coord.
+Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
 
 ### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
 
@@ -82,7 +82,7 @@ Unique name attribute must be defined so that HAnimSegment node can be identifie
 
 #### Hint
 
-- For abitrary humanoids, HAnimSegment name can describe geometry between parent HAnimJoint and sibling HAnimJoint nodes (for example LeftHip_to_LeftKnee).
+- For arbitrary humanoids, HAnimSegment name can describe geometry between parent HAnimJoint and sibling HAnimJoint nodes (for example LeftHip_to_LeftKnee).
 
 #### Warning
 
