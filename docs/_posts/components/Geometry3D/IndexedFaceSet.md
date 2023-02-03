@@ -38,7 +38,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hints
 
-- If colorIndex array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual
 
@@ -48,7 +48,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 #### Hint
 
-- If texCoordIndex array is not provided, then TextureCoordinate values are indexed according to the coordIndex field.
+- If *texCoordIndex* array is not provided, then TextureCoordinate values are indexed according to the coordIndex field.
 - Use a tool!
 
 ### MFInt32 [in] **set_normalIndex** <small>[0,∞) or -1</small>
@@ -67,7 +67,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 #### Hints
 
-- If colorIndex array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 
@@ -125,7 +125,7 @@ Whether Normal node vector values are applied to each vertex (true) or to each p
 
 #### Hints
 
-- If colorIndex array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual
 
@@ -135,7 +135,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 #### Hint
 
-- If texCoordIndex array is not provided, then TextureCoordinate values are indexed according to the coordIndex field.
+- If *texCoordIndex* array is not provided, then TextureCoordinate values are indexed according to the coordIndex field.
 - Use a tool!
 
 ### MFInt32 [ ] **normalIndex** [ ] <small>[0,∞) or -1</small>
@@ -150,7 +150,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 #### Warning
 
-- If normalIndex array is not provided, then Normal values are indexed according to the coordIndex field.
+- If *normalIndex* array is not provided, then Normal values are indexed according to the coordIndex field.
 
 ### MFInt32 [ ] **coordIndex** [ ] <small>[0,∞) or -1</small>
 

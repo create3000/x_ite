@@ -37,7 +37,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hints
 
-- If colorIndex array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual
 
@@ -47,7 +47,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hints
 
-- If colorIndex array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 
@@ -69,7 +69,7 @@ Whether Color node color values are applied to each vertex (true) or per polylin
 
 #### Hints
 
-- If colorIndex array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual
 
