@@ -31,7 +31,7 @@ The ScreenFontStyle node belongs to the **Layout** component and its default con
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFString [ ] **language** ""
+### SFString [in, out] **language** ""
 
 *language* codes consist of a primary code and a (possibly empty) series of subcodes. [ language-code = primary-code ( "-" subcode )\* ] Two-letter primary codes are reserved for language abbreviations. Two-letter primary codes include en (English), fr (French), de (German), it (Italian), nl (Dutch), el (Greek), es (Spanish), pt (Portuguese), ar (Arabic), he (Hebrew), ru (Russian), zh (Chinese), ja (Japanese), hi (Hindi), ur (Urdu), and sa (Sanskrit). Any two-letter subcode is understood to be a country code.
 
@@ -46,7 +46,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 - [See ISO3166 or](http://xml.coverpages.org/languageIdentifiers.html){:target="_blank"}
 - [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
 
-### MFString [ ] **family** "SERIF"
+### MFString [in, out] **family** "SERIF"
 
 Array of quoted font family names in preference order, browsers use the first supported family.
 
@@ -62,7 +62,7 @@ Array of quoted font family names in preference order, browsers use the first su
 
 - [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
 
-### SFString [ ] **style** "PLAIN" <small>["PLAIN"|"BOLD"|"ITALIC"|"BOLDITALIC"|""]</small>
+### SFString [in, out] **style** "PLAIN" <small>["PLAIN"|"BOLD"|"ITALIC"|"BOLDITALIC"|""]</small>
 
 Pick one of four values for text style.
 
@@ -74,7 +74,7 @@ Pick one of four values for text style.
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
-### SFFloat [ ] **pointSize** 12 <small>(0,∞)</small>
+### SFFloat [in, out] **pointSize** 12 <small>(0,∞)</small>
 
 *pointSize* field specifies the size of text in points. Nominal height (in local coordinate system) of text glyphs Also sets default spacing between adjacent lines of text.
 
@@ -82,11 +82,11 @@ Pick one of four values for text style.
 
 - PointSize replaces the size field of the FontStyle node.
 
-### SFFloat [ ] **spacing** 1 <small>[0,∞)</small>
+### SFFloat [in, out] **spacing** 1 <small>[0,∞)</small>
 
 Adjustment factor for line spacing between adjacent lines of text.
 
-### SFBool [ ] **horizontal** TRUE
+### SFBool [in, out] **horizontal** TRUE
 
 Whether text direction is horizontal (true) or vertical (false).
 
@@ -98,11 +98,11 @@ Whether text direction is horizontal (true) or vertical (false).
 
 - [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
 
-### SFBool [ ] **leftToRight** TRUE
+### SFBool [in, out] **leftToRight** TRUE
 
 Field leftToRight.
 
-### SFBool [ ] **topToBottom** TRUE
+### SFBool [in, out] **topToBottom** TRUE
 
 Whether text direction is top-to-bottom (true) or bottom-to-top (false).
 
@@ -114,7 +114,7 @@ Whether text direction is top-to-bottom (true) or bottom-to-top (false).
 
 - [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
 
-### MFString [ ] **justify** "BEGIN" <small>["BEGIN"|"END"|"FIRST","MIDDLE"|""]</small>
+### MFString [in, out] **justify** "BEGIN" <small>["BEGIN"|"END"|"FIRST","MIDDLE"|""]</small>
 
 The justify field determines alignment of the above text layout relative to the origin of the object coordinate system.
 

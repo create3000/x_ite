@@ -50,7 +50,7 @@ Enables/disables this light source.
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
-### SFFloat [in, out] **intensity** 1 <small>[0,1]</small>
+### SFFloat [in, out] **intensity** 1 <small>[0,∞)</small>
 
 Brightness of direct emission from the light.
 
