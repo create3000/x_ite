@@ -61,7 +61,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 Bounding box center: optional hint for position offset from origin of local coordinate system.
 
-### MFNode [in, out] **collidables** [ ] <small>[X3DNBodyCollisionSpaceNode,</small>
+### MFNode [in, out] **collidables** [ ] <small>[X3DNBodyCollisionSpaceNode,X3DNBodyCollidableNode]</small>
 
 Input/Output field collidables.
 

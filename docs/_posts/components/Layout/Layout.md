@@ -32,7 +32,7 @@ The Layout node belongs to the **Layout** component and its default container fi
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### MFString [in, out] **align** [ "CENTER", "CENTER" ] <small>["LEFT"|"CENTER"|"RIGHT"&amp;</small>
+### MFString [in, out] **align** [ "CENTER", "CENTER" ] <small>["LEFT"|"CENTER"|"RIGHT"]</small>
 
 The align field values align the sized rectangle to an edge or center of the parent rectangle. Two quoted string values are provided. The first value is for horizontal direction (LEFT \| CENTER \| RIGHT) and the second value is for vertical direction (BOTTOM \| CENTER \| TOP). Examples: "CENTER" "CENTER" (default value), "LEFT" "TOP" or "RIGHT" "BOTTOM".
 
@@ -44,7 +44,7 @@ The align field values align the sized rectangle to an edge or center of the par
 
 - Two values (or possibly one value) only. If the align field has only one value, that value shall be "CENTER" and apply both horizontally and vertically.
 
-### MFString [in, out] **offsetUnits** [ "WORLD", "WORLD" ]
+### MFString [in, out] **offsetUnits** [ "WORLD", "WORLD" ] <small>["WORLD"|"FRACTION"|"PIXEL"]</small>
 
 The offsetUnits field values are used to interprete the offset values. Two quoted string values are provided. The first value is for horizontal offset, and the second value is for vertical offset. Examples: "WORLD" "WORLD" (default value), "FRACTION" "FRACTION" or "PIXEL" "PIXEL".
 
@@ -64,7 +64,7 @@ The values of the offset field are used to translate the location of this rectan
 
 - If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
-### MFString [in, out] **sizeUnits** [ "WORLD", "WORLD" ]
+### MFString [in, out] **sizeUnits** [ "WORLD", "WORLD" ] <small>["WORLD"|"FRACTION"|"PIXEL"]</small>
 
 The sizeUnits field values are used to interprete the offset values. Two quoted string values are provided. The first value is for horizontal size, and the second value is for vertical size. Examples: "WORLD" "WORLD" (default value), "FRACTION" "FRACTION" or "PIXEL" "PIXEL".
 
@@ -84,7 +84,7 @@ The two values in the size field define the width and height of the layout recta
 
 - If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
-### MFString [in, out] **scaleMode** [ "NONE", "NONE" ]
+### MFString [in, out] **scaleMode** [ "NONE", "NONE" ] <small>["NONE"|"FRACTION"|"STRETCH"|"PIXEL"]</small>
 
 The scaleMode field specifies how the scale of the parent is modified. Two quoted string values are provided. The first value is for horizontal scale and the second value is for vertical scale. Examples: "NONE" "NONE" (default value), "FRACTION" "FRACTION", "STRETCH" "STRETCH" or "PIXEL" "PIXEL".
 

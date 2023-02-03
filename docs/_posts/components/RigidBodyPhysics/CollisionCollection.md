@@ -71,7 +71,7 @@ Default global parameters for collision outputs of rigid body physics system. Co
 
 *softnessErrorCorrection* indicates fraction of collision error fixed in a set of evaluations (0 = no error correction, 1 = all errors corrected in single step).
 
-### MFNode [in, out] **collidables** [ ] <small>[X3DNBodyCollisionSpaceNode,</small>
+### MFNode [in, out] **collidables** [ ] <small>[X3DNBodyCollisionSpaceNode,X3DNBodyCollidableNode]</small>
 
 Input/Output field collidables.
 

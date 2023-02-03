@@ -31,17 +31,33 @@ The Appearance node belongs to the **Shape** component and its default container
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFNode [in, out] **acousticProperties** NULL <small>[AcousticProperties]</small>
+### SFString [in, out] **alphaMode** "AUTO" <small>["AUTO"|"OPAQUE"|"MASK"|"BLEND"]</small>
 
-Single contained acousticProperties node that can specify additional acoustic attributes applied to associated surface geometry.
+Provides options for control of alpha transparency handling for textures. AUTO means Material transparency is applied to texture transparency for full backwards compatibility with X3D3, OPAQUE means ignore alpha transparency to render texture as opaque, MASK means alpha-testing of pixels as fully transparent when alpha value is less than alphaCutoff and fully opaque when alpha value is greater than or equal to alphaCutoff, BLEND combines partial transparency of textures and materials.
 
-### SFNode [in, out] **fillProperties** NULL <small>[FillProperties]</small>
+#### Hint
 
-Single contained FillProperties node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
+- [glTF version 2 Alpha Coverage](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html#alpha-coverage){:target="_blank"}
+
+### SFFloat [in, out] **alphaCutoff** 0.5 <small>[0,1]</small>
+
+Threshold value used for pixel rendering either transparent or opaque, used when alphaMode="MASK".
+
+#### Hint
+
+- [glTF version 2 Alpha Coverage](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html#alpha-coverage){:target="_blank"}
+
+### SFNode [in, out] **pointProperties** NULL <small>[PointProperties]</small>
+
+Single contained PointProperties node that can specify additional visual attributes applied to corresponding point geometry.
 
 ### SFNode [in, out] **lineProperties** NULL <small>[LineProperties]</small>
 
 Single contained LineProperties node that can specify additional visual attributes applied to corresponding line geometry.
+
+### SFNode [in, out] **fillProperties** NULL <small>[FillProperties]</small>
+
+Single contained FillProperties node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
 
 ### SFNode [in, out] **material** NULL <small>[X3DMaterialNode]</small>
 
@@ -50,6 +66,10 @@ Single contained Material node that can specify visual attributes for lighting r
 #### Warning
 
 - If material is NULL or unspecified, lighting is off (all lights ignored) for this Shape and unlit object color is (1, 1, 1).
+
+### SFNode [in, out] **backMaterial** NULL <small>[X3DOneSidedMaterialNode]</small>
+
+Single contained Material node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to corresponding geometry.
 
 ### SFNode [in, out] **texture** NULL <small>[X3DTextureNode]</small>
 
@@ -81,6 +101,10 @@ Zero or more contained programmable shader nodes (ComposedShader, PackagedShader
 ### SFNode [in, out] **blendMode** NULL <small>[BlendMode] <span class="yellow">non standard</span></small>
 
 Single contained BlendMode node that defines blend mode properties.
+
+### SFNode [in, out] **acousticProperties** NULL <small>[AcousticProperties]</small>
+
+Single contained acousticProperties node that can specify additional acoustic attributes applied to associated surface geometry.
 
 ## Description
 

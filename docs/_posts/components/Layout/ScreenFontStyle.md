@@ -114,7 +114,7 @@ Whether text direction is top-to-bottom (true) or bottom-to-top (false).
 
 - [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
 
-### MFString [ ] **justify** "BEGIN" <small>["BEGIN","END","FIRST","MIDDLE",""]</small>
+### MFString [ ] **justify** "BEGIN" <small>["BEGIN"|"END"|"FIRST","MIDDLE"|""]</small>
 
 The justify field determines alignment of the above text layout relative to the origin of the object coordinate system.
 

@@ -37,7 +37,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
 
-### SFString [in, out] **mode** "SPHERE"
+### SFString [in, out] **mode** "SPHERE" <small>["SPHERE"|"CAMERASPACENORMAL"|"CAMERASPACEPOSITION"|"CAMERASPACEREFLECTIONVECTOR"|"SPHERE-LOCAL"|"COORD"|"COORD-EYE"|"NOISE"|"NOISE-EYE"|"SPHERE-REFLECT"|"SPHERE-REFLECT-LOCAL"]</small>
 
 Parameter field defines the algorithm used to compute texture coordinates.
 

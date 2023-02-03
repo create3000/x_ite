@@ -123,7 +123,7 @@ Fallback server address if multicast not available locally. For example: track.n
 
 Fallback server port if multicast not available locally. For example: 8010.
 
-### SFString [in, out] **networkMode** "standAlone" <small>["standAlone"|</small>
+### SFString [in, out] **networkMode** "standAlone" <small>["standAlone"|"networkReader"|"networkWriter"]</small>
 
 Whether this entity is ignoring the network, sending DIS packets to the network, or receiving DIS packets from the network. (1) standAlone: ignore network but still respond to events in local scene. (2) networkReader: listen to network and read PDU packets at readInterval, act as remotely linked copy of entity. (3) networkWriter: send PDU packets to network at writeInterval, act as master entity. Default value "standAlone" ensures that DIS network activation within a scene as networkReader or networkWriter is intentional.
 
