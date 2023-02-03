@@ -59,7 +59,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 - If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
-- if no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
+- If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
 ### MFInt32 [in] **set_coordIndex** <small class="small">[0,∞) or -1</small>
 
@@ -146,7 +146,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 - If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
-- if no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
+- If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
 #### Warning
 
