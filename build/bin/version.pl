@@ -76,13 +76,18 @@ sub docs
 {
 	my $VERSION = shift;
 
-	my $config = `cat '$CWD/docs/_config.yml'`;
+	my $config        = `cat '$CWD/docs/_config.yml'`;
+	my $contentLength = `wget -S --header="accept-encoding: gzip" -q --spider https://create3000.github.io/code/x_ite/latest/x_ite.min.js 2>&1 | grep "Content-Length"`;
 
-	$config =~ s|version:\s*[\d\.]+|version: $VERSION|sgo;
+	$contentLength =~ s/^.*?(\d+).*$/$1/s;
+	$contentLength = int ($contentLength / 1000);
 
-	open HOME, ">", "$CWD/docs/_config.yml";
-	print HOME $config;
-	close HOME;
+	$config =~ s|\bversion:\s*[\d\.]+|version: $VERSION|sgo;
+	$config =~ s|\bsize:\s*[\d\.]+|size: $contentLength|sgo;
+
+	open CONFIG, ">", "$CWD/docs/_config.yml";
+	print CONFIG $config;
+	close CONFIG;
 }
 
 say "Waiting for confirmation ...";
