@@ -63,9 +63,6 @@ docs-force:
 docs-update:
 	cd docs && bundle update
 
-open-docs-in-browser:
-	open http://localhost:4000
-
 .PHONY: tests
 tests:
 	perl build/bin/tests.pl
