@@ -78,7 +78,7 @@ Multiple contained FloatVertexAttribute nodes that can specify list of per-verte
 
 #### Hint
 
-- [X3D Architecture 32.2.2.4 Per-vertex attributes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shaders.html#Pervertexattributes)
+- [X3D Architecture 32.2.2.4 Per-vertex attributes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shaders.html#Pervertexattributes){:target="_blank"}
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
 
