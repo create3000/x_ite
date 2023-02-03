@@ -64,23 +64,23 @@ Orientation vector of light relative to local coordinate system.
 
 - Animate direction to simulate time-of-day sunlight effects.
 
-### SFColor [in, out] **shadowColor** 0 0 0 <small class="small">[0,1]</small>
+### SFBool [in, out] **shadows** FALSE
+
+*shadows* field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
+
+### SFColor [in, out] **shadowColor** 0 0 0 <small class="small">[0,1] <span class="yellow">non standard</span></small>
 
 Color of shadow, applied to colors of objects.
 
-#### See Also
-
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
-
 ### SFFloat [in, out] **shadowIntensity** 0 <small class="small">[0,1]</small>
 
-Intensity of shadow.
+*shadowIntensity* field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
 
-### SFFloat [in, out] **shadowBias** 0.005 <small class="small">[0,1]</small>
+### SFFloat [in, out] **shadowBias** 0.005 <small class="small">[0,1] <span class="yellow">non standard</span></small>
 
 The shadowBias value controls the visibility of *shadow acne*.
 
-### SFInt32 [ ] **shadowMapSize** 1024 <small class="small">[0,∞)</small>
+### SFInt32 [ ] **shadowMapSize** 1024 <small class="small">[0,∞) <span class="yellow">non standard</span></small>
 
 Size of the shadow map in pixels, must be power of two.
 
@@ -89,7 +89,7 @@ Size of the shadow map in pixels, must be power of two.
 ### Hints
 
 - Animate direction to simulate time-of-day sunlight effects.
-- HeadLight enabled on/off is controlled by NavigationInfo. Interchange profile hint: light might not be scoped by parent Group or Transform.
+- HeadLight enabled on/off is controlled by NavigationInfo.
 
 ## Example
 

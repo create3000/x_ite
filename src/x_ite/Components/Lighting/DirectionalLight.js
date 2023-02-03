@@ -162,7 +162,7 @@ DirectionalLightContainer .prototype =
 
       if (this .shadowBuffer)
       {
-         const textureUnit = this .this .global
+         const textureUnit = this .global
             ? (this .textureUnit = this .textureUnit !== undefined
                ? this .textureUnit
                : this .browser .popTexture2DUnit ())

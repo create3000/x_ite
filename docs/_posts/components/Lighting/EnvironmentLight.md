@@ -21,41 +21,70 @@ The EnvironmentLight node belongs to the **Lighting** component and its default 
 
 ```
 + X3DNode
+  + X3DChildNode
+    + X3DLightNode
+      + EnvironmentLight
 ```
 
 ## Fields
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-### SFBool [in, out] **global** <small></small>
+Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFBool [in, out] **on** <small></small>
+### SFBool [in, out] **global** TRUE
 
-### SFColor [in, out] **color** <small></small>
+*global* lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
 
-### SFFloat [in, out] **intensity** 0 <small></small>
+### SFBool [in, out] **on** TRUE
 
-### SFFloat [in, out] **ambientIntensity** 0 <small></small>
+Enables/disables this light source.
 
-### SFRotation [in, out] **rotation** <small></small>
+### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
-### MFFloat [in, out] **diffuseCoefficients** <small></small>
+### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
 
-### SFNode [in, out] **diffuse** <small></small>
+*color* of light, applied to colors of objects.
 
-### SFNode [in, out] **diffuseTexture** <small></small>
+#### See Also
 
-### SFNode [in, out] **specularTexture** <small></small>
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
-### SFBool [in, out] **shadows** <small></small>
+### SFFloat [in, out] **intensity** 1 <small>[0,1]</small>
 
-### SFColor [in, out] **shadowColor** <small></small>
+Brightness of direct emission from the light.
 
-### SFFloat [in, out] **shadowIntensity** 0 <small></small>
+### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
 
-### SFFloat [in, out] **shadowBias** 0 <small></small>
+Brightness of ambient (nondirectional background) emission from the light.
 
-### SFInt32 [] **shadowMapSize** <small></small>
+### MFFloat [in, out] **diffuseCoefficients** [ ]
+
+### SFNode [in, out] **diffuse** NULL <small>[X3DSingleTextureNode]</small>
+
+### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
+
+### SFNode [in, out] **specularTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
+
+### SFBool [in, out] **shadows** FALSE
+
+*shadows* field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
+
+### SFColor [in, out] **shadowColor** 0 0 0 <small class="small">[0,1] <span class="yellow">non standard</span></small>
+
+Color of shadow, applied to colors of objects.
+
+### SFFloat [in, out] **shadowIntensity** 0 <small class="small">[0,1]</small>
+
+*shadowIntensity* field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
+
+### SFFloat [in, out] **shadowBias** 0.005 <small class="small">[0,1] <span class="yellow">non standard</span></small>
+
+The shadowBias value controls the visibility of *shadow acne*.
+
+### SFInt32 [ ] **shadowMapSize** 1024 <small class="small">[0,∞) <span class="yellow">non standard</span></small>
+
+Size of the shadow map in pixels, must be power of two.
 
 ## External Links
 
