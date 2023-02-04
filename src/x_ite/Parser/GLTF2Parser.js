@@ -882,12 +882,12 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   khrMaterialsEmissiveStrengthObject: function (khrMaterialsEmissiveStrength, materialNode)
+   khrMaterialsEmissiveStrengthObject: function (KHR_materials_emissive_strength, materialNode)
    {
-      if (!(khrMaterialsEmissiveStrength instanceof Object))
+      if (!(KHR_materials_emissive_strength instanceof Object))
          return;
 
-      const emissiveStrength = khrMaterialsEmissiveStrength .emissiveStrength ?? 1;
+      const emissiveStrength = KHR_materials_emissive_strength .emissiveStrength ?? 1;
 
       materialNode ._emissiveColor .r *= emissiveStrength;
       materialNode ._emissiveColor .g *= emissiveStrength;
