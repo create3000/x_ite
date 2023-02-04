@@ -1301,11 +1301,11 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          case "Transform":
          {
-            const m = new Matrix4 ()
+            const matrix = new Matrix4 ()
 
-            m .set (node ._translation .getValue (), node ._rotation .getValue (), node ._scale .getValue (), node ._scaleOrientation .getValue ());
+            matrix .set (node ._translation .getValue (), node ._rotation .getValue (), node ._scale .getValue (), node ._scaleOrientation .getValue ());
 
-            modelMatrix .multLeft (m);
+            modelMatrix .multLeft (matrix);
 
             // Proceed with next case:
          }
