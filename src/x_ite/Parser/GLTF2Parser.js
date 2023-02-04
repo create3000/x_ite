@@ -679,6 +679,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .occlusionTextureInfo (material .occlusionTexture, materialNode);
       this .normalTextureInfo    (material .normalTexture,    materialNode);
+      this .materialExtensions   (material .extensions,       materialNode);
 
       materialNode .setup ();
 
@@ -865,6 +866,32 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .textureTransformObject (texture .extensions .KHR_texture_transform, this .textureMapping (texture));
 
       return this .textureObject (this .textures [texture .index]);
+   },
+   materialExtensions: function (extensions, materialNode)
+   {
+      if (!(extensions instanceof Object))
+         return;
+
+      for (const [key, value] of Object .entries (extensions))
+      {
+         switch (key)
+         {
+            case "KHR_materials_emissive_strength":
+               this .khrMaterialsEmissiveStrengthObject (value, materialNode);
+               break;
+         }
+      }
+   },
+   khrMaterialsEmissiveStrengthObject: function (khrMaterialsEmissiveStrength, materialNode)
+   {
+      if (!(khrMaterialsEmissiveStrength instanceof Object))
+         return;
+
+      const emissiveStrength = khrMaterialsEmissiveStrength .emissiveStrength || 1;
+
+      materialNode ._emissiveColor .r *= emissiveStrength;
+      materialNode ._emissiveColor .g *= emissiveStrength;
+      materialNode ._emissiveColor .b *= emissiveStrength;
    },
    textureTransformObject: function (KHR_texture_transform, mapping)
    {
