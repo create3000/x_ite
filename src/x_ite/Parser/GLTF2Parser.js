@@ -79,6 +79,7 @@ function GLTF2Parser (scene)
 
    // Globals
 
+   this .extensionsUsed        = new Set ();
    this .lights                = [ ];
    this .usedLights            = 0;
    this .buffers               = [ ];
@@ -179,13 +180,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       scene .setEncoding ("GLTF");
       scene .setProfile (browser .getProfile ("Interchange"));
 
-      await this .loadComponents ();
-
       // Parse root objects.
 
-      this .assetObject      (glTF .asset);
-      this .extensionsObject (glTF .extensions);
+      this .assetObject          (glTF .asset);
+      this .extensionsUsedObject (glTF .extensionsUsed);
+      this .extensionsObject     (glTF .extensions);
 
+      await this .loadComponents ();
       await this .buffersArray (glTF .buffers);
 
       this .bufferViewsArray (glTF .bufferViews);
@@ -247,6 +248,27 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       worldInfoNode .setup ();
 
       scene .getRootNodes () .push (worldInfoNode);
+   },
+   extensionsUsedObject: function (extensionsUsed)
+   {
+      if (!(extensionsUsed instanceof Array))
+         return;
+
+      const
+         browser = this .getBrowser (),
+         scene   = this .getExecutionContext ();
+
+      this .extensionsUsed = new Set (extensionsUsed);
+
+      for (const extension of extensionsUsed)
+      {
+         switch (extension)
+         {
+            case "KHR_texture_transform":
+               scene .addComponent (browser .getComponent ("Texturing3D", 2));
+               break;
+         }
+      }
    },
    extensionsObject: function (extensions)
    {
@@ -865,31 +887,28 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(KHR_texture_transform instanceof Object))
          return;
 
+      if (!this .extensionsUsed .has ("KHR_texture_transform"))
+         return;
+
       const
          scene                = this .getExecutionContext (),
-         textureTransformNode = scene .createNode ("TextureTransform", false);
+         textureTransformNode = scene .createNode ("TextureTransformMatrix3D", false);
 
       const
          translation = new Vector2 (0, 0),
          scale       = new Vector2 (1, 1),
-         T           = new Matrix3 (),
-         R           = new Matrix3 (),
-         S           = new Matrix3 ();
+         matrix      = new Matrix4 ();
 
       if (this .vectorValue (KHR_texture_transform .offset, translation))
-         T .translate (translation);
+         matrix .translate (new Vector3 (... translation, 0));
 
-      R .rotate (- this .numberValue (KHR_texture_transform .rotation, 0));
+      matrix .rotate (new Rotation4 (0, 0, -1,  this .numberValue (KHR_texture_transform .rotation, 0)));
 
       if (this .vectorValue (KHR_texture_transform .scale, scale))
-         S .scale (scale);
+         matrix .scale (new Vector3 (... scale, 1));
 
-      T .multLeft (R) .multLeft (S) .multRight (R .multRight (S) .inverse ()) .get (translation);
-
-      textureTransformNode ._mapping     = mapping;
-      textureTransformNode ._translation = translation;
-      textureTransformNode ._rotation    = - this .numberValue (KHR_texture_transform .rotation, 0);
-      textureTransformNode ._scale       = scale;
+      textureTransformNode ._mapping = mapping;
+      textureTransformNode ._matrix  = matrix;
 
       textureTransformNode .setup ();
 
