@@ -291,6 +291,8 @@ async function loadURL (filename, server, event)
    catch (error)
    { }
 
+   Browser .setBrowserOption ("LogarithmicDepthBuffer", true);
+
    if (!Browser .getActiveViewpoint () ._description .getValue ())
       Browser .viewAll ();
 }
