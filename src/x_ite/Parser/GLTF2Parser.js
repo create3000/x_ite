@@ -1307,10 +1307,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             modelMatrix .multLeft (m);
 
-            for (const child of node ._children)
-               this .centerOfRotation (child .getValue (), bbox .copy (), modelMatrix .copy ());
-
-            break;
+            // Proceed with next case:
          }
          case "Group":
          {
