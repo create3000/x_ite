@@ -902,7 +902,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (this .vectorValue (KHR_texture_transform .offset, translation))
          matrix .translate (new Vector3 (... translation, 0));
 
-      matrix .rotate (new Rotation4 (0, 0, -1,  this .numberValue (KHR_texture_transform .rotation, 0)));
+      matrix .rotate (new Rotation4 (0, 0, -1, this .numberValue (KHR_texture_transform .rotation, 0)));
 
       if (this .vectorValue (KHR_texture_transform .scale, scale))
          matrix .scale (new Vector3 (... scale, 1));
