@@ -20,8 +20,7 @@ getTextureMatrix (const in int i)
       textureMatrix = x3d_TextureMatrix [1];
    #endif
 
-   // Should never happen.
-   return x3d_TextureMatrix [0];
+   return textureMatrix;
 }
 
 vec4
@@ -39,8 +38,7 @@ getTexCoord (const in int i)
       texCoord = texCoord1;
    #endif
 
-   // Should never happen.
-   return texCoord0;
+   return texCoord;
 }
 
 vec4
