@@ -20,6 +20,7 @@ getTextureMatrix (const in int i)
       textureMatrix = x3d_TextureMatrix [1];
    #endif
 
+   // Should never happen.
    return x3d_TextureMatrix [0];
 }
 
@@ -38,7 +39,8 @@ getTexCoord (const in int i)
       texCoord = texCoord1;
    #endif
 
-   return texCoord;
+   // Should never happen.
+   return texCoord0;
 }
 
 vec4
@@ -470,7 +472,7 @@ getProjectiveTextureColor (in vec4 currentColor)
       if (texCoord .p < 0.0 || texCoord .p > 1.0)
          continue;
 
-      // We do not need to normalze p, as we only need the sign of the dot product.
+      // We do not need to normalize p, as we only need the sign of the dot product.
       vec3 p = x3d_ProjectiveTextureLocation [i] - vertex;
 
       if (dot (N, p) < 0.0)
