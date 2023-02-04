@@ -77,9 +77,9 @@ sub docs
 	my $VERSION = shift;
 
 	my $config        = `cat '$CWD/docs/_config.yml'`;
-	my $contentLength = `wget -S --header="accept-encoding: gzip" -q --spider https://create3000.github.io/code/x_ite/latest/x_ite.min.js 2>&1 | grep "Content-Length"`;
+	my $contentLength = `gzip -5 dist/x_ite.min.js --stdout | wc -c`;
 
-	$contentLength =~ s/^.*?(\d+).*$/$1/s;
+	$contentLength =~s/^\s+|\s+$//g;
 	$contentLength = int ($contentLength / 1000);
 
 	$config =~ s|\bversion:\s*[\d\.]+|version: $VERSION|sgo;
