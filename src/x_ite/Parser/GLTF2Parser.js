@@ -1044,6 +1044,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       else
          viewpointNode ._description = `Viewpoint ${++ this .viewpoints}`;
 
+      viewpointNode ._position         = Vector3 .Zero;
+      viewpointNode ._centerOfRotation = new Vector3 (0, 0, -10);
+
       return camera .viewpointNode = viewpointNode;
    },
    cameraType: function (camera)

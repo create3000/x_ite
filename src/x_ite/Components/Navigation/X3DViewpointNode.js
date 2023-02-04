@@ -542,6 +542,8 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
    })(),
    viewAll: function (bbox)
    {
+      bbox .multRight (this .viewMatrix);
+
       const
          direction       = this .getUserPosition () .copy () .subtract (bbox .center) .normalize (),
          distance        = this .getLookAtDistance (bbox),

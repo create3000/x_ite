@@ -8,45 +8,37 @@ uniform mat4 x3d_TextureMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
 mat4
 getTextureMatrix (const in int i)
 {
-   #if defined (X3D_MULTI_TEXTURING)
-      mat4 textureMatrix = mat4 (0.0);
+   mat4 textureMatrix = mat4 (0.0);
 
-      #if X3D_NUM_TEXTURE_TRANSFORMS > 0
-      if (i == 0)
-         textureMatrix = x3d_TextureMatrix [0];
-      #endif
-
-      #if X3D_NUM_TEXTURE_TRANSFORMS > 1
-      else if (i == 1)
-         textureMatrix = x3d_TextureMatrix [1];
-      #endif
-
-      return textureMatrix;
-   #else
-      return x3d_TextureMatrix [0];
+   #if X3D_NUM_TEXTURE_TRANSFORMS > 0
+   if (i == 0)
+      textureMatrix = x3d_TextureMatrix [0];
    #endif
+
+   #if X3D_NUM_TEXTURE_TRANSFORMS > 1
+   else if (i == 1)
+      textureMatrix = x3d_TextureMatrix [1];
+   #endif
+
+   return x3d_TextureMatrix [0];
 }
 
 vec4
 getTexCoord (const in int i)
 {
-   #if defined (X3D_MULTI_TEXTURING)
-      vec4 texCoord = vec4 (0.0);
+   vec4 texCoord = vec4 (0.0);
 
-      #if X3D_NUM_TEXTURE_COORDINATES > 0
-      if (i == 0)
-         texCoord = texCoord0;
-      #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 1
-      else if (i == 1)
-         texCoord = texCoord1;
-      #endif
-
-      return texCoord;
-   #else
-      return texCoord0;
+   #if X3D_NUM_TEXTURE_COORDINATES > 0
+   if (i == 0)
+      texCoord = texCoord0;
    #endif
+
+   #if X3D_NUM_TEXTURE_COORDINATES > 1
+   else if (i == 1)
+      texCoord = texCoord1;
+   #endif
+
+   return texCoord;
 }
 
 vec4

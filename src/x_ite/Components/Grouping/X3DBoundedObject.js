@@ -87,10 +87,8 @@ X3DBoundedObject .prototype =
 
       bbox .set ();
 
-      for (var i = 0, length = nodes .length; i < length; ++ i)
+      for (const node of nodes)
       {
-         const node = nodes [i];
-
          if (node .getBBox)
             bbox .add (node .getBBox (childBBox, shadows));
       }

@@ -6,23 +6,19 @@ export default /* glsl */ `
 vec4
 getTexCoord (const in int i)
 {
-   #if defined (X3D_MULTI_TEXTURING)
-      switch (i)
-      {
-         #if X3D_NUM_TEXTURE_COORDINATES > 0
-         case 0:
-            return texCoord0;
-         #endif
-         #if X3D_NUM_TEXTURE_COORDINATES > 1
-         case 1:
-            return texCoord1;
-         #endif
-      }
+   switch (i)
+   {
+      #if X3D_NUM_TEXTURE_COORDINATES > 0
+      case 0:
+         return texCoord0;
+      #endif
+      #if X3D_NUM_TEXTURE_COORDINATES > 1
+      case 1:
+         return texCoord1;
+      #endif
+   }
 
-      return vec4 (0.0);
-   #else
-      return texCoord0;
-   #endif
+   return texCoord0;
 }
 
 uniform mat4 x3d_TextureMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
