@@ -1245,7 +1245,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             switchNode .setup ();
 
             scene .getRootNodes () .push (switchNode);
-
             return;
          }
       }
