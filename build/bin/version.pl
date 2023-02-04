@@ -10,8 +10,8 @@ use Cwd;
 my $NO_GIT = 0;
 
 # https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
-# Set post buffer to 150 MiB.
-system "git", "config", "--global", "http.postBuffer", "157286400";
+# Set post buffer to 250 MiB.
+system "git config --global http.postBuffer 262144000";
 
 my $CWD = cwd;
 say $CWD;

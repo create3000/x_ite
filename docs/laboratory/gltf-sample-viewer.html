@@ -89,6 +89,18 @@ tags: [glTF, sample, viewer]
 </div>
 
 <script>
+const models = [
+   "glTF/Bonsai 1/Bonsai 1.gltf",
+   "glTF/Bus Stop 1/Bus Stop 1.gltf",
+   "glTF/Dorky the Bot/Dorky the Bot.gltf",
+   "glTF/NeilArmstrong/NeilArmstrong.glb",
+   "glTF/Sphinx/Sphinx.gltf",
+   "glTF/StreetFood/scene.gltf",
+   "glTF/YetiWarrior/scene.gltf",
+];
+
+models .server = "https://create3000.github.io/media/";
+
 const glTF = [
    "2CylinderEngine/glTF/2CylinderEngine.gltf",
    "ABeautifulGame/glTF/ABeautifulGame.gltf",
@@ -181,6 +193,8 @@ const glTF = [
    "WaterBottle/glTF/WaterBottle.gltf",
 ];
 
+glTF .server = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/";
+
 const glb = [
    "2CylinderEngine/glTF-Binary/2CylinderEngine.glb",
    "AlphaBlendModeTest/glTF-Binary/AlphaBlendModeTest.glb",
@@ -248,9 +262,9 @@ const glb = [
    "WaterBottle/glTF-Binary/WaterBottle.glb",
 ];
 
-const khr = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/";
+glb .server = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/";
 
-function createList (description, array, server)
+function createList (description, array)
 {
    const column = $(".viewer-column2");
 
@@ -264,9 +278,9 @@ function createList (description, array, server)
 
       $("<a></a>")
          .text (m [1])
-         .attr ("href", server + filename)
+         .attr ("href", array .server + filename)
          .appendTo ($("<li></li>") .appendTo (list))
-         .on ("click", loadURL .bind (null, filename, server));
+         .on ("click", loadURL .bind (null, filename, array .server));
    }
 }
 
@@ -297,6 +311,7 @@ async function loadURL (filename, server, event)
       Browser .viewAll ();
 }
 
-createList ("glTF Samples", glTF, khr);
-createList ("glb Samples",  glb,  khr);
+createList ("glTF Random Models", models);
+createList ("glTF Sample Models", glTF);
+createList ("glb Sample Models",  glb);
 </script>
