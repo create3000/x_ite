@@ -68,7 +68,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples)
    this .depthRenderbuffer = gl .createRenderbuffer ();
 
    gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthRenderbuffer);
-   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .DEPTH_COMPONENT16, this .width, this .height);
+   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .DEPTH_COMPONENT24, this .width, this .height);
 
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
    gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .colorRenderbuffer);
