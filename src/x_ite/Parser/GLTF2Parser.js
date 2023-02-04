@@ -292,7 +292,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (light .color instanceof Array)
          lightNode ._color = new Color3 (... light .color);
 
-      lightNode ._intensity = light .intensity ?? 1;
+      lightNode ._intensity = this .numberValue (light .intensity, 1);
 
       lightNode .setup ();
 
@@ -327,9 +327,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene     = this .getExecutionContext (),
          lightNode = scene .createNode ("SpotLight", false);
 
-      lightNode ._radius      = light .range || 1_000_000_000;
-      lightNode ._cutOffAngle = light .outerConeAngle ?? Math .PI / 4;
-      lightNode ._beamWidth   = light .innerConeAngle ?? 0;
+      lightNode ._radius      = this .numberValue (light .range, 0) || 1_000_000_000;
+      lightNode ._cutOffAngle = this .numberValue (light .outerConeAngle, Math .PI / 4);
+      lightNode ._beamWidth   = this .numberValue (light .innerConeAngle, 0);
       lightNode ._attenuation = new Vector3 (0, 0, 1);
 
       return lightNode;
@@ -340,7 +340,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene     = this .getExecutionContext (),
          lightNode = scene .createNode ("PointLight", false);
 
-      lightNode ._radius      = light .range || 1_000_000_000;
+      lightNode ._radius      = this .numberValue (light .range, 0) || 1_000_000_000;
       lightNode ._attenuation = new Vector3 (0, 0, 1);
 
       return lightNode;
@@ -887,7 +887,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(KHR_materials_emissive_strength instanceof Object))
          return;
 
-      materialNode ._emissiveStrength = KHR_materials_emissive_strength .emissiveStrength ?? 1;
+      materialNode ._emissiveStrength = this .numberValue( KHR_materials_emissive_strength .emissiveStrength, 1);
    },
    textureTransformObject: function (KHR_texture_transform, mapping)
    {
@@ -900,23 +900,24 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          translation = new Vector2 (0, 0),
-         rotation    = new Vector3 (0, 0, 0),
          scale       = new Vector2 (1, 1),
-         matrix      = new Matrix3 ();
-
-      if (this .vectorValue (KHR_texture_transform .scale, scale))
-         matrix .scale (scale);
-
-      matrix .rotate (this .numberValue (KHR_texture_transform .rotation, 0));
+         T           = new Matrix3 (),
+         R           = new Matrix3 (),
+         S           = new Matrix3 ();
 
       if (this .vectorValue (KHR_texture_transform .offset, translation))
-         matrix .translate (translation);
+         T .translate (translation);
 
-      matrix .get (translation, rotation, scale);
+      R .rotate (- this .numberValue (KHR_texture_transform .rotation, 0));
+
+      if (this .vectorValue (KHR_texture_transform .scale, scale))
+         S .scale (scale);
+
+      T .multLeft (R) .multLeft (S) .multRight (R .multRight (S) .inverse ()) .get (translation);
 
       textureTransformNode ._mapping     = mapping;
       textureTransformNode ._translation = translation;
-      textureTransformNode ._rotation    = rotation .z;
+      textureTransformNode ._rotation    = - this .numberValue (KHR_texture_transform .rotation, 0);
       textureTransformNode ._scale       = scale;
 
       textureTransformNode .setup ();
