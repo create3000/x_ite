@@ -659,26 +659,16 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene          = this .getExecutionContext (),
          appearanceNode = scene .createNode ("Appearance", false),
+         materialNode   = this .materialObjectMaterial (material),
          name           = this .sanitizeName (material .name);
 
-      if (name)
-         scene .addNamedNode (scene .getUniqueName (name), appearanceNode);
+      const emissiveFactor = new Color3 (0, 0, 0);
 
-      appearanceNode ._alphaMode   = material .alphaMode || "OPAQUE";
-      appearanceNode ._alphaCutoff = this .numberValue (material .alphaCutoff, 0.5);
+      if (this .vectorValue (material .emissiveFactor, emissiveFactor))
+         materialNode ._emissiveColor = emissiveFactor;
 
-      const
-         materialNode   = this .materialObjectMaterial (material),
-         emissiveFactor = new Color3 (0, 0, 0);
-
-      if (!material .extensions .KHR_materials_unlit)
-      {
-         if (this .vectorValue (material .emissiveFactor, emissiveFactor))
-            materialNode ._emissiveColor = emissiveFactor;
-
-         materialNode ._emissiveTextureMapping = this .textureMapping (material .emissiveTexture);
-         materialNode ._emissiveTexture        = this .textureInfo    (material .emissiveTexture);
-      }
+      materialNode ._emissiveTextureMapping = this .textureMapping (material .emissiveTexture);
+      materialNode ._emissiveTexture        = this .textureInfo    (material .emissiveTexture);
 
       this .occlusionTextureInfo (material .occlusionTexture, materialNode);
       this .normalTextureInfo    (material .normalTexture,    materialNode);
@@ -686,6 +676,11 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       materialNode .setup ();
 
+      if (name)
+         scene .addNamedNode (scene .getUniqueName (name), appearanceNode);
+
+      appearanceNode ._alphaMode        = material .alphaMode || "OPAQUE";
+      appearanceNode ._alphaCutoff      = this .numberValue (material .alphaCutoff, 0.5);
       appearanceNode ._material         = materialNode;
       appearanceNode ._textureTransform = this .createMultiTextureTransform (materialNode);
 
@@ -701,146 +696,83 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .pbrMetallicRoughnessObject .bind (this, { }),
       ];
 
-      const unlit = material .extensions .KHR_materials_unlit;
-
       for (const material of materials)
       {
-         const materialNode = material (unlit);
+         const materialNode = material ();
 
          if (materialNode)
             return materialNode;
       }
    },
-   pbrMetallicRoughnessObject: function (pbrMetallicRoughness, unlit)
+   pbrMetallicRoughnessObject: function (pbrMetallicRoughness)
    {
       if (!(pbrMetallicRoughness instanceof Object))
          return null;
 
-      if (unlit)
+      const
+         scene        = this .getExecutionContext (),
+         materialNode = scene .createNode ("PhysicalMaterial", false);
+
+      const
+         baseColorFactor = new Color4 (0, 0, 0, 0),
+         baseColor       = new Color3 (0, 0, 0);
+
+      if (this .vectorValue (pbrMetallicRoughness .baseColorFactor, baseColorFactor))
       {
-         const
-            scene        = this .getExecutionContext (),
-            materialNode = scene .createNode ("PhysicalMaterial", false);
-
-         const
-            baseColorFactor = new Color4 (0, 0, 0, 0),
-            baseColor       = new Color3 (0, 0, 0);
-
-         materialNode ._baseColor = Color3 .Black;
-
-         if (this .vectorValue (pbrMetallicRoughness .baseColorFactor, baseColorFactor))
-         {
-            materialNode ._emissiveColor = baseColor .set (... baseColorFactor);
-            materialNode ._transparency  = 1 - baseColorFactor .a;
-         }
-         else
-         {
-            materialNode ._emissiveColor = Color3 .White;
-         }
-
-         materialNode ._emissiveTextureMapping = this .textureMapping (pbrMetallicRoughness .baseColorTexture);
-         materialNode ._emissiveTexture        = this .textureInfo    (pbrMetallicRoughness .baseColorTexture);
-
-         return materialNode;
+         materialNode ._baseColor    = baseColor .set (... baseColorFactor);
+         materialNode ._transparency = 1 - baseColorFactor .a;
       }
-      else
-      {
-         const
-            scene        = this .getExecutionContext (),
-            materialNode = scene .createNode ("PhysicalMaterial", false);
 
-         const
-            baseColorFactor = new Color4 (0, 0, 0, 0),
-            baseColor       = new Color3 (0, 0, 0);
+      materialNode ._metallic  = this .numberValue (pbrMetallicRoughness .metallicFactor,  1);
+      materialNode ._roughness = this .numberValue (pbrMetallicRoughness .roughnessFactor, 1);
 
-         if (this .vectorValue (pbrMetallicRoughness .baseColorFactor, baseColorFactor))
-         {
-            materialNode ._baseColor    = baseColor .set (... baseColorFactor);
-            materialNode ._transparency = 1 - baseColorFactor .a;
-         }
+      materialNode ._baseTextureMapping              = this .textureMapping (pbrMetallicRoughness .baseColorTexture);
+      materialNode ._baseTexture                     = this .textureInfo    (pbrMetallicRoughness .baseColorTexture);
+      materialNode ._metallicRoughnessTextureMapping = this .textureMapping (pbrMetallicRoughness .metallicRoughnessTexture);
+      materialNode ._metallicRoughnessTexture        = this .textureInfo    (pbrMetallicRoughness .metallicRoughnessTexture);
 
-         materialNode ._metallic  = this .numberValue (pbrMetallicRoughness .metallicFactor,  1);
-         materialNode ._roughness = this .numberValue (pbrMetallicRoughness .roughnessFactor, 1);
-
-         materialNode ._baseTextureMapping              = this .textureMapping (pbrMetallicRoughness .baseColorTexture);
-         materialNode ._baseTexture                     = this .textureInfo    (pbrMetallicRoughness .baseColorTexture);
-         materialNode ._metallicRoughnessTextureMapping = this .textureMapping (pbrMetallicRoughness .metallicRoughnessTexture);
-         materialNode ._metallicRoughnessTexture        = this .textureInfo    (pbrMetallicRoughness .metallicRoughnessTexture);
-
-         return materialNode;
-      }
+      return materialNode;
    },
-   pbrSpecularGlossinessObject: function (pbrSpecularGlossiness, unlit)
+   pbrSpecularGlossinessObject: function (pbrSpecularGlossiness)
    {
       if (!(pbrSpecularGlossiness instanceof Object))
          return null;
 
-      if (unlit)
+      const
+         scene        = this .getExecutionContext (),
+         materialNode = scene .createNode ("Material", false);
+
+      const
+         diffuseFactor  = new Color4 (0, 0, 0, 0),
+         diffuseColor   = new Color3 (0, 0, 0),
+         specularFactor = new Color3 (0, 0, 0);
+
+      if (this .vectorValue (pbrSpecularGlossiness .diffuseFactor, diffuseFactor))
       {
-         const
-            scene        = this .getExecutionContext (),
-            materialNode = scene .createNode ("UnlitMaterial", false);
-
-         const
-            diffuseFactor = new Color4 (0, 0, 0, 0),
-            diffuseColor  = new Color3 (0, 0, 0);
-
-         if (this .vectorValue (pbrSpecularGlossiness .diffuseFactor, diffuseFactor))
-         {
-            materialNode ._emissiveColor = diffuseColor .set (... diffuseFactor);
-            materialNode ._transparency  = 1 - diffuseFactor .a;
-         }
-
-         materialNode ._emissiveTextureMapping = this .textureMapping (pbrSpecularGlossiness .diffuseTexture);
-         materialNode ._emissiveTexture        = this .textureInfo    (pbrSpecularGlossiness .diffuseTexture);
-
-         return materialNode;
+         materialNode ._diffuseColor = diffuseColor .set (... diffuseFactor);
+         materialNode ._transparency = 1 - diffuseFactor .a;
       }
       else
       {
-         const
-            scene        = this .getExecutionContext (),
-            materialNode = scene .createNode ("Material", false);
-
-         const
-            diffuseFactor  = new Color4 (0, 0, 0, 0),
-            diffuseColor   = new Color3 (0, 0, 0),
-            specularFactor = new Color3 (0, 0, 0);
-
-         if (this .vectorValue (pbrSpecularGlossiness .diffuseFactor, diffuseFactor))
-         {
-            materialNode ._diffuseColor = diffuseColor .set (... diffuseFactor);
-            materialNode ._transparency = 1 - diffuseFactor .a;
-         }
-         else
-         {
-            materialNode ._diffuseColor = Color3 .White;
-         }
-
-         if (this .vectorValue (pbrSpecularGlossiness .specularFactor, specularFactor))
-            materialNode ._specularColor = specularFactor;
-         else
-            materialNode ._specularColor = Color3 .White;
-
-         materialNode ._shininess = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
-
-         materialNode ._diffuseTextureMapping   = this .textureMapping (pbrSpecularGlossiness .diffuseTexture);
-         materialNode ._diffuseTexture          = this .textureInfo    (pbrSpecularGlossiness .diffuseTexture);
-         materialNode ._specularTextureMapping  = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
-         materialNode ._specularTexture         = this .textureInfo    (pbrSpecularGlossiness .specularGlossinessTexture);
-         materialNode ._shininessTextureMapping = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
-         materialNode ._shininessTexture        = this .textureInfo    (pbrSpecularGlossiness .specularGlossinessTexture);
-
-         return materialNode;
+         materialNode ._diffuseColor = Color3 .White;
       }
-   },
-   // gamma: function (color)
-   // {
-   //    for (let i = 0; i < 3; ++ i)
-   //       color [i] = Math .pow (color [i], 1.0 / 2.2);
 
-   //    return color;
-   // },
+      if (this .vectorValue (pbrSpecularGlossiness .specularFactor, specularFactor))
+         materialNode ._specularColor = specularFactor;
+      else
+         materialNode ._specularColor = Color3 .White;
+
+      materialNode ._shininess = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
+
+      materialNode ._diffuseTextureMapping   = this .textureMapping (pbrSpecularGlossiness .diffuseTexture);
+      materialNode ._diffuseTexture          = this .textureInfo    (pbrSpecularGlossiness .diffuseTexture);
+      materialNode ._specularTextureMapping  = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
+      materialNode ._specularTexture         = this .textureInfo    (pbrSpecularGlossiness .specularGlossinessTexture);
+      materialNode ._shininessTextureMapping = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
+      materialNode ._shininessTexture        = this .textureInfo    (pbrSpecularGlossiness .specularGlossinessTexture);
+
+      return materialNode;
+   },
    textureMapping: function (texture)
    {
       if (!(texture instanceof Object))
@@ -885,9 +817,38 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          switch (key)
          {
+            case "KHR_materials_unlit":
+               this .khrMaterialsUnlitObject (materialNode);
+               break;
             case "KHR_materials_emissive_strength":
                this .khrMaterialsEmissiveStrengthObject (value, materialNode);
                break;
+         }
+      }
+   },
+   khrMaterialsUnlitObject: function (materialNode)
+   {
+      switch (materialNode .getTypeName ())
+      {
+         case "PhysicalMaterial":
+         {
+            materialNode ._emissiveColor          = materialNode ._baseColor;
+            materialNode ._emissiveTextureMapping = materialNode ._baseTextureMapping;
+            materialNode ._emissiveTexture        = materialNode ._baseTexture;
+            materialNode ._baseColor              = Color3 .Black;
+            materialNode ._baseTextureMapping     = "";
+            materialNode ._baseTexture            = null;
+            break;
+         }
+         case "Material":
+         {
+            materialNode ._emissiveColor          = materialNode ._diffuseColor;
+            materialNode ._emissiveTextureMapping = materialNode ._diffuseTextureMapping;
+            materialNode ._emissiveTexture        = materialNode ._diffuseTexture;
+            materialNode ._diffuseColor           = Color3 .Black;
+            materialNode ._diffuseTextureMapping  = "";
+            materialNode ._diffuseTexture         = null;
+            break;
          }
       }
    },
