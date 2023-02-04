@@ -679,7 +679,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (name)
          scene .addNamedNode (scene .getUniqueName (name), appearanceNode);
 
-      appearanceNode ._alphaMode        = material .alphaMode || "OPAQUE";
+      appearanceNode ._alphaMode        = this .stringValue (material .alphaMode, "OPAQUE");
       appearanceNode ._alphaCutoff      = this .numberValue (material .alphaCutoff, 0.5);
       appearanceNode ._material         = materialNode;
       appearanceNode ._textureTransform = this .createMultiTextureTransform (materialNode);
@@ -2145,6 +2145,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    numberValue: function (value, defaultValue)
    {
       if (typeof value !== "number")
+         return defaultValue;
+
+      return value;
+   },
+   stringValue: function (value, defaultValue)
+   {
+      if (typeof value !== "string")
          return defaultValue;
 
       return value;
