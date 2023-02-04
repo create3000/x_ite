@@ -64,6 +64,14 @@ How much glowing light is emitted from this object.
 
 - Bright emissiveColor values can wash out other colors and some textures.
 
+### SFFloat [in, out] **emissiveStrength** 1 <small>[0,∞) <span class="yellow">non standard</span></small>
+
+A multiplier for emissiveColor and emissiveTexture values.
+
+#### Hint
+
+- [glTF version 2 KHR materials emissive strength](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_emissive_strength){:target="_blank"}
+
 ### SFString [in, out] **emissiveTextureMapping** ""
 
 The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
