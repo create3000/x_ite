@@ -671,11 +671,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          materialNode   = this .materialObjectMaterial (material),
          emissiveFactor = new Color3 (0, 0, 0);
 
-      if (this .vectorValue (material .emissiveFactor, emissiveFactor))
-         materialNode ._emissiveColor = emissiveFactor;
+      if (!material .extensions .KHR_materials_unlit)
+      {
+         if (this .vectorValue (material .emissiveFactor, emissiveFactor))
+            materialNode ._emissiveColor = emissiveFactor;
 
-      materialNode ._emissiveTextureMapping = this .textureMapping (material .emissiveTexture);
-      materialNode ._emissiveTexture        = this .textureInfo    (material .emissiveTexture);
+         materialNode ._emissiveTextureMapping = this .textureMapping (material .emissiveTexture);
+         materialNode ._emissiveTexture        = this .textureInfo    (material .emissiveTexture);
+      }
 
       this .occlusionTextureInfo (material .occlusionTexture, materialNode);
       this .normalTextureInfo    (material .normalTexture,    materialNode);
@@ -717,16 +720,22 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          const
             scene        = this .getExecutionContext (),
-            materialNode = scene .createNode ("UnlitMaterial", false);
+            materialNode = scene .createNode ("PhysicalMaterial", false);
 
          const
             baseColorFactor = new Color4 (0, 0, 0, 0),
             baseColor       = new Color3 (0, 0, 0);
 
+         materialNode ._baseColor = Color3 .Black;
+
          if (this .vectorValue (pbrMetallicRoughness .baseColorFactor, baseColorFactor))
          {
-            materialNode ._emissiveColor = this .gamma (baseColor .set (... baseColorFactor));
+            materialNode ._emissiveColor = baseColor .set (... baseColorFactor);
             materialNode ._transparency  = 1 - baseColorFactor .a;
+         }
+         else
+         {
+            materialNode ._emissiveColor = Color3 .White;
          }
 
          materialNode ._emissiveTextureMapping = this .textureMapping (pbrMetallicRoughness .baseColorTexture);
@@ -825,13 +834,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return materialNode;
       }
    },
-   gamma: function (color)
-   {
-      for (let i = 0; i < 3; ++ i)
-         color [i] = Math .pow (color [i], 1.0 / 2.2);
+   // gamma: function (color)
+   // {
+   //    for (let i = 0; i < 3; ++ i)
+   //       color [i] = Math .pow (color [i], 1.0 / 2.2);
 
-      return color;
-   },
+   //    return color;
+   // },
    textureMapping: function (texture)
    {
       if (!(texture instanceof Object))
