@@ -470,11 +470,11 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                if (stride === components)
                {
-                  this .sparseObject (accessor .sparse, array, components);
+                  const value = this .sparseObject (accessor .sparse, array, components);
 
-                  Object .defineProperty (accessor, "array", { value: array });
+                  Object .defineProperty (accessor, "array", { value: value });
 
-                  return array;
+                  return value;
                }
                else
                {
@@ -488,11 +488,11 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                         dense [i] = array [j + c];
                   }
 
-                  this .sparseObject (accessor .sparse, dense, components);
+                  const value = this .sparseObject (accessor .sparse, dense, components);
 
-                  Object .defineProperty (accessor, "array", { value: dense });
+                  Object .defineProperty (accessor, "array", { value: value });
 
-                  return dense;
+                  return value;
                }
             },
             configurable: true,
@@ -510,13 +510,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       return function (sparse, array, components)
       {
          if (!(sparse instanceof Object))
-            return;
+            return array;
 
          if (!(sparse .indices instanceof Object))
-            return;
+            return array;
 
          if (!(sparse .values instanceof Object))
-            return;
+            return array;
 
          const
             IndicesTypedArray = TypedArrays .get (sparse .indices .componentType),
@@ -530,6 +530,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             valuesByteOffset = sparse .values .byteOffset,
             values           = new ValuesTypedArray (valuesBufferView .buffer, valuesByteOffset, sparse .count * components);
 
+         array = array .slice ();
+
          let v = 0;
 
          for (const i of indices)
@@ -537,6 +539,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             for (let c = 0; c < components; ++ c, ++ v)
                array [i * components + c] = values [v];
          }
+
+         return array;
       };
    })(),
    samplersArray: function (samplers)
