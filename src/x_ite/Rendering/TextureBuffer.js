@@ -60,10 +60,10 @@ function TextureBuffer (browser, width, height)
 
    // Create frame buffer.
 
-   this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
-   this .buffer     = gl .createFramebuffer ();
+   this .lastBuffer  = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+   this .frameBuffer = gl .createFramebuffer ();
 
-   gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
 
    // Create color texture.
 
@@ -196,7 +196,7 @@ TextureBuffer .prototype =
 
       this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
    },
    unbind: function ()
    {
@@ -208,7 +208,7 @@ TextureBuffer .prototype =
    {
       const gl = this .browser .getContext ();
 
-      gl .deleteFramebuffer (this .buffer);
+      gl .deleteFramebuffer (this .frameBuffer);
       gl .deleteTexture (this .colorTexture);
 
       if (gl .HAS_FEATURE_DEPTH_TEXTURE)

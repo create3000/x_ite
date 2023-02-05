@@ -166,6 +166,26 @@ const Context =
       gl .HAS_FEATURE_DEPTH_TEXTURE = gl .getVersion () >= 2 || !! gl .getExtension ("WEBGL_depth_texture");
       gl .HAS_FEATURE_FRAG_DEPTH    = gl .getVersion () >= 2 || !! gl .getExtension ("EXT_frag_depth");
 
+      if (gl .getVersion () === 1)
+      {
+         const
+            color_buffer_float = gl .getExtension ("WEBGL_color_buffer_float"),
+            draw_buffers       = gl .getExtension ("WEBGL_draw_buffers");
+
+         gl .RGBA32F = color_buffer_float .RGBA32F_EXT;
+
+         for (let i = 0; ; ++ i)
+         {
+            const COLOR_ATTACHMENT = draw_buffers [`COLOR_ATTACHMENT${i}_WEBGL`];
+
+            if (COLOR_ATTACHMENT === undefined)
+               break;
+
+            if (gl [`COLOR_ATTACHMENT${i}`] === undefined)
+               gl [`COLOR_ATTACHMENT${i}`] = COLOR_ATTACHMENT;
+         }
+      }
+
       // Load extensions.
 
       for (const extension of extensions)

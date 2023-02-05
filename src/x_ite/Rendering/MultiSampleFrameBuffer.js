@@ -60,9 +60,9 @@ function MultiSampleFrameBuffer (browser, width, height, samples)
    // Create frame buffer.
 
    this .lastBuffer  = gl .getParameter (gl .FRAMEBUFFER_BINDING);
-   this .framebuffer = gl .createFramebuffer ();
+   this .frameBuffer = gl .createFramebuffer ();
 
-   gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
 
    // Create color buffer.
 
@@ -82,7 +82,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples)
 
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 
-   // Always check that our framebuffer is ok.
+   // Always check that our frame buffer is ok.
 
    if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE)
       return;
@@ -111,7 +111,7 @@ MultiSampleFrameBuffer .prototype =
 
       this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
    },
    unbind: function ()
    {
@@ -126,7 +126,7 @@ MultiSampleFrameBuffer .prototype =
       gl .viewport (0, 0, this .width, this .height);
       gl .scissor  (0, 0, this .width, this .height);
 
-      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .framebuffer);
+      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
       gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
 
       gl .blitFramebuffer (0, 0, this .width, this .height,
@@ -137,7 +137,7 @@ MultiSampleFrameBuffer .prototype =
    {
       const gl = this .browser .getContext ();
 
-      gl .deleteFramebuffer (this .framebuffer);
+      gl .deleteFramebuffer (this .frameBuffer);
       gl .deleteRenderbuffer (this .colorBuffer);
       gl .deleteRenderbuffer (this .depthBuffer);
    },

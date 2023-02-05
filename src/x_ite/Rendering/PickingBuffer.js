@@ -60,36 +60,29 @@ function PickingBuffer (browser, width, height)
    // Create frame buffer.
 
    this .lastBuffer  = gl .getParameter (gl .FRAMEBUFFER_BINDING);
-   this .framebuffer = gl .createFramebuffer ();
-
-   gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
+   this .frameBuffer = gl .createFramebuffer ();
 
    // Create color buffers.
 
-   const
-      color_buffer_float = gl .getExtension ("WEBGL_color_buffer_float"),
-      draw_buffers       = gl .getExtension ("WEBGL_draw_buffers");
+   this .colorBuffers = [ ];
+   this .frameBuffers = [ ];
 
-   this .colorBuffer = gl .createRenderbuffer ();
+   for (let i = 0; i < 4; ++ i)
+   {
+      this .colorBuffers [i] = gl .createRenderbuffer ();
+      this .frameBuffers [i] = gl .createFramebuffer ();
 
-   gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorBuffer);
-   gl .renderbufferStorage (gl .RENDERBUFFER, color_buffer_float .RGBA32F_EXT, this .width, this .height);
-   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, draw_buffers .COLOR_ATTACHMENT0_WEBGL, gl .RENDERBUFFER, this .colorBuffer);
-
-   // Create color texture.
-
-   this .colorTexture = gl .createTexture ();
-
-   gl .bindTexture (gl .TEXTURE_2D, this .colorTexture);
-   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
-   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
-   gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .FLOAT, null);
-
-   gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .colorTexture, 0);
+      gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorBuffers [i]);
+      gl .renderbufferStorage (gl .RENDERBUFFER, gl .RGBA32F, this .width, this .height);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
+      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl [`COLOR_ATTACHMENT${i}`], gl .RENDERBUFFER, this .colorBuffers [i]);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [i]);
+      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl [`COLOR_ATTACHMENT${i}`], gl .RENDERBUFFER, this .colorBuffers [i]);
+   }
 
    // Create depth buffer.
+
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
 
    if (gl .HAS_FEATURE_DEPTH_TEXTURE)
    {
@@ -118,7 +111,7 @@ function PickingBuffer (browser, width, height)
 
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 
-   // Always check that our framebuffer is ok.
+   // Always check that our frame buffer is ok.
 
    if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE)
       return;
@@ -135,7 +128,7 @@ PickingBuffer .prototype =
 
       this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
       gl .scissor (x, y, 1, 1);
    },
    unbind: function ()
@@ -150,16 +143,24 @@ PickingBuffer .prototype =
          gl    = this .browser .getContext (),
          array = this .array;
 
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [0]);
       gl .readPixels (x, y, 1, 1, gl .RGBA, gl .FLOAT, array);
 
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
       return array;
    },
    dispose: function ()
    {
       const gl = this .browser .getContext ();
 
-      gl .deleteFramebuffer (this .framebuffer);
-      gl .deleteRenderbuffer (this .colorBuffer);
+      gl .deleteFramebuffer (this .frameBuffer);
+
+      for (const framebuffer of this .frameBuffers)
+         gl .deleteFramebuffer (framebuffer);
+
+      for (const colorBuffer of this .colorBuffers)
+         gl .deleteRenderbuffer (colorBuffer);
+
       gl .deleteRenderbuffer (this .depthBuffer);
       gl .deleteTexture (this .depthTexture);
    },
