@@ -448,13 +448,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          ["MAT4",   16],
       ]);
 
-      const DefaultBufferView =
-      {
-         "buffer": new ArrayBuffer (0),
-         "byteOffset": 0,
-         "byteLength": 0,
-      };
-
       return function (accessor)
       {
          if (!(accessor instanceof Object))
@@ -466,7 +459,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                const
                   TypedArray = TypedArrays .get (accessor .componentType),
-                  bufferView = this .bufferViews [accessor .bufferView] || DefaultBufferView,
+                  bufferView = this .bufferViews [accessor .bufferView],
                   byteOffset = accessor .byteOffset || 0,
                   byteStride = bufferView .byteStride || 0,
                   components = Components .get (accessor .type),
@@ -477,6 +470,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                if (stride === components)
                {
+                  this .sparseObject (accessor .sparse, array, components);
+
                   Object .defineProperty (accessor, "array", { value: array });
 
                   return array;
@@ -493,6 +488,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                         dense [i] = array [j + c];
                   }
 
+                  this .sparseObject (accessor .sparse, dense, components);
+
                   Object .defineProperty (accessor, "array", { value: dense });
 
                   return dense;
@@ -500,6 +497,46 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             },
             configurable: true,
          });
+      };
+   })(),
+   sparseObject: (function ()
+   {
+      const TypedArrays = new Map ([
+         [5121, Uint8Array],
+         [5123, Uint16Array],
+         [5125, Uint32Array],
+      ]);
+
+      return function (sparse, array, components)
+      {
+         if (!(sparse instanceof Object))
+            return;
+
+         if (!(sparse .indices instanceof Object))
+            return;
+
+         if (!(sparse .values instanceof Object))
+            return;
+
+         const
+            IndicesTypedArray = TypedArrays .get (sparse .indices .componentType),
+            indicesBufferView = this .bufferViews [sparse .indices .bufferView],
+            indicesByteOffset = sparse .indices .byteOffset,
+            indices           = new IndicesTypedArray (indicesBufferView .buffer, indicesByteOffset, sparse .count);
+
+         const
+            ValuesTypedArray = array .constructor,
+            valuesBufferView = this .bufferViews [sparse .values .bufferView],
+            valuesByteOffset = sparse .values .byteOffset,
+            values           = new ValuesTypedArray (valuesBufferView .buffer, valuesByteOffset, sparse .count * components);
+
+         let v = 0;
+
+         for (const i of indices)
+         {
+            for (let c = 0; c < components; ++ c, ++ v)
+               array [i * components + c] = values [v];
+         }
       };
    })(),
    samplersArray: function (samplers)
