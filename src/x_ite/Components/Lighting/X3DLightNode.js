@@ -195,10 +195,10 @@ X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
       if (this ._global .getValue ())
          return;
 
+      const lightContainer = renderObject .getLocalObjects () .pop ();
+
       if (renderObject .isIndependent ())
-         this .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
-      else
-         renderObject .getLocalObjects () .pop ();
+         this .getBrowser () .getLocalObjects () .push (lightContainer);
 
       renderObject .popLocalShadows ();
 

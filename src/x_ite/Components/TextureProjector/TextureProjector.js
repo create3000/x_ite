@@ -56,7 +56,7 @@ import Rotation4               from "../../../standard/Math/Numbers/Rotation4.js
 import Matrix4                 from "../../../standard/Math/Numbers/Matrix4.js";
 import ObjectCache             from "../../../standard/Utility/ObjectCache.js";
 
-var TextureProjectorCache = ObjectCache (TextureProjectorContainer);
+const TextureProjectorCache = ObjectCache (TextureProjectorContainer);
 
 function TextureProjectorContainer ()
 {
@@ -85,7 +85,7 @@ TextureProjectorContainer .prototype =
    },
    setGlobalVariables: function (renderObject)
    {
-      var
+      const
          textureProjectorNode  = this .textureProjectorNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
@@ -98,7 +98,7 @@ TextureProjectorContainer .prototype =
       invTextureSpaceMatrix .rotate (this .rotation);
       invTextureSpaceMatrix .inverse ();
 
-      var
+      const
          width            = textureProjectorNode .getTexture () .getWidth (),
          height           = textureProjectorNode .getTexture () .getHeight (),
          nearDistance     = textureProjectorNode .getNearDistance (),
@@ -186,7 +186,7 @@ TextureProjector .prototype = Object .assign (Object .create (X3DTextureProjecto
    },
    getFieldOfView: function ()
    {
-      var fov = this ._fieldOfView .getValue ();
+      const fov = this ._fieldOfView .getValue ();
 
       return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
    },

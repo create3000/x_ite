@@ -102,10 +102,10 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create (X3DChildNod
    getBiasMatrix: (function ()
    {
       // Transforms normalized coords from range (-1, 1) to (0, 1).
-      var biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
-                                    0.0, 0.5, 0.0, 0.0,
-                                    0.0, 0.0, 0.5, 0.0,
-                                    0.5, 0.5, 0.5, 1.0);
+      const biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
+                                      0.0, 0.5, 0.0, 0.0,
+                                      0.0, 0.0, 0.5, 0.0,
+                                      0.5, 0.5, 0.5, 1.0);
 
       return function ()
       {
@@ -114,7 +114,7 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create (X3DChildNod
    })(),
    straightenHorizon: (function ()
    {
-      var
+      const
          localXAxis = new Vector3 (0, 0, 0),
          localZAxis = new Vector3 (0, 0, 0),
          upVector   = new Vector3 (0, 0, 0),
@@ -126,7 +126,7 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create (X3DChildNod
          orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
          upVector .assign (this ._upVector .getValue ()) .normalize ();
 
-         var vector = localZAxis .cross (upVector);
+         const vector = localZAxis .cross (upVector);
 
          // If viewer looks along the up vector.
          if (Math .abs (localZAxis .dot (upVector)) >= 1)
@@ -175,7 +175,7 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create (X3DChildNod
    },
    push: function (renderObject)
    {
-      var textureProjectorContainer = this .getTextureProjectors () .pop ();
+      const textureProjectorContainer = this .getTextureProjectors () .pop ();
 
       textureProjectorContainer .set (this,
                                       renderObject .getModelViewMatrix () .get ());

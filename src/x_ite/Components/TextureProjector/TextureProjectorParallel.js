@@ -56,7 +56,7 @@ import Rotation4               from "../../../standard/Math/Numbers/Rotation4.js
 import Matrix4                 from "../../../standard/Math/Numbers/Matrix4.js";
 import ObjectCache             from "../../../standard/Utility/ObjectCache.js";
 
-var TextureProjectorParallelCache = ObjectCache (TextureProjectorParallelContainer);
+const TextureProjectorParallelCache = ObjectCache (TextureProjectorParallelContainer);
 
 function TextureProjectorParallelContainer ()
 {
@@ -85,7 +85,7 @@ TextureProjectorParallelContainer .prototype =
    },
    setGlobalVariables: function (renderObject)
    {
-      var
+      const
          textureProjectorNode  = this .textureProjectorNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
@@ -98,7 +98,7 @@ TextureProjectorParallelContainer .prototype =
       invTextureSpaceMatrix .rotate (this .rotation);
       invTextureSpaceMatrix .inverse ();
 
-      var
+      const
          width        = textureProjectorNode .getTexture () .getWidth (),
          height       = textureProjectorNode .getTexture () .getHeight (),
          aspect       = width / height,
@@ -113,7 +113,7 @@ TextureProjectorParallelContainer .prototype =
 
       if (aspect > sizeX / sizeY)
       {
-         var
+         const
             center  = (minimumX + maximumX) / 2,
             size1_2 = (sizeY * aspect) / 2;
 
@@ -121,7 +121,7 @@ TextureProjectorParallelContainer .prototype =
       }
       else
       {
-         var
+         const
             center  = (minimumY + maximumY) / 2,
             size1_2 = (sizeX / aspect) / 2;
 
@@ -211,7 +211,7 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTexture
    },
    set_fieldOfView___: function ()
    {
-      var length = this ._fieldOfView .length;
+      const length = this ._fieldOfView .length;
 
       this .minimumX = (length > 0 ? this ._fieldOfView [0] : -1);
       this .minimumY = (length > 1 ? this ._fieldOfView [1] : -1);
