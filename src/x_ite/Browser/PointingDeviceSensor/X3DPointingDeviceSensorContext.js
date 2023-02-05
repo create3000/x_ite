@@ -80,7 +80,7 @@ function X3DPointingDeviceSensorContext ()
    this [_pointer]        = new Vector2 (0, 0);
    this [_hitRay]         = new Line3 (Vector3 .Zero, Vector3 .Zero);
    this [_hits]           = [ ];
-   this [_enabledSensors] = [new Map ()];
+   this [_enabledSensors] = [[ ]];
    this [_selectedLayer]  = null;
    this [_overSensors]    = new Set ();
    this [_activeSensors]  = new Set ();
