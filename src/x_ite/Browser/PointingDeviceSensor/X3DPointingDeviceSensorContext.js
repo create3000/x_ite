@@ -54,7 +54,6 @@ import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
 import MergeSort      from "../../../standard/Math/Algorithms/MergeSort.js";
-import Algorithm      from "../../../standard/Math/Algorithm.js";
 
 const
    _pointingDevice  = Symbol (),
@@ -82,8 +81,8 @@ function X3DPointingDeviceSensorContext ()
    this [_hits]           = [ ];
    this [_enabledSensors] = [[ ]];
    this [_selectedLayer]  = null;
-   this [_overSensors]    = new Set ();
-   this [_activeSensors]  = new Set ();
+   this [_overSensors]    = [ ];
+   this [_activeSensors]  = [ ];
    this [_hitPointSorter] = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .intersection .point .z < rhs .intersection .point .z; });
    this [_layerSorter]    = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .layerNumber < rhs .layerNumber; });
    this [_pointerTime]    = 0;
@@ -171,7 +170,7 @@ X3DPointingDeviceSensorContext .prototype =
          pointer:         this [_pointer],
          hitRay:          this [_hitRay],
          intersection:    intersection,
-         sensors:         new Set (this [_enabledSensors] .at (-1)),
+         sensors:         this [_enabledSensors] .at (-1) .slice (),
          layer:           layer,
          layerNumber:     this [_layerNumber],
          shape:           shape,
@@ -210,7 +209,7 @@ X3DPointingDeviceSensorContext .prototype =
       for (const sensor of this [_activeSensors])
          sensor .set_active__ (false, null);
 
-      this [_activeSensors] = new Set ();
+      this [_activeSensors] = [ ];
 
       // Selection
 
@@ -244,7 +243,7 @@ X3DPointingDeviceSensorContext .prototype =
 
       this .pickingBuffer .bind (x, y);
       this .getWorld () .traverse (TraverseType .DISPLAY, null);
-      console .log (this .pickingBuffer .readPixel (x, y));
+      //console .log (this .pickingBuffer .readPixel (x, y));
       this .pickingBuffer .unbind ();
 
       // Clear hits.
@@ -276,7 +275,7 @@ X3DPointingDeviceSensorContext .prototype =
             modelViewMatrix: new Matrix4 (),
             hitRay:          this [_selectedLayer] ? this [_hitRay] : line,
             intersection:    null,
-            sensors:         new Set (),
+            sensors:         [ ],
             shape:           null,
             layer:           null,
             layerNumber:     0,
@@ -287,11 +286,11 @@ X3DPointingDeviceSensorContext .prototype =
 
       if (this [_hits] .length)
       {
-         var difference = Algorithm .set_difference (this [_overSensors], nearestHit .sensors, new Set ());
+         var difference = this [_overSensors] .filter (a => !nearestHit .sensors .find (b => a .node === b .node));
       }
       else
       {
-         var difference = new Set (this [_overSensors]);
+         var difference = this [_overSensors];
       }
 
       for (const sensor of difference)
@@ -308,7 +307,7 @@ X3DPointingDeviceSensorContext .prototype =
       }
       else
       {
-         this [_overSensors] = new Set ();
+         this [_overSensors] = [ ];
       }
 
       // Forward motion event to active drag sensor nodes
