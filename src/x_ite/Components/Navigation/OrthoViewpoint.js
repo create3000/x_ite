@@ -323,6 +323,8 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
    },
    viewAll: function (bbox)
    {
+      X3DViewpointNode .prototype .viewAll .call (this, bbox);
+
       const
          size   = bbox .size,
          scaleX = size .x / this .getSizeX (),
@@ -333,8 +335,6 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
       this ._fieldOfViewOffset [1] = this .getMinimumY () * scale - this .getMinimumY ();
       this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
       this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
-
-      X3DViewpointNode .prototype .viewAll .call (this, bbox);
    },
 });
 
