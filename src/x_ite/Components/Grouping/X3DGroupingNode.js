@@ -74,7 +74,7 @@ function X3DGroupingNode (executionContext)
    this .displayNodes              = [ ];
    this .visibleNodes              = [ ];
    this .boundedObjects            = [ ];
-   this .sensors                   = new Map ();
+   this .sensors                   = [ ];
 }
 
 X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -579,14 +579,14 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
                clipPlaneNodes            = this .clipPlaneNodes,
                sensors                   = this .sensors;
 
-            sensors .clear ();
+            sensors .length = 0;
 
             if (pointingDeviceSensorNodes .length)
             {
                for (const pointingDeviceSensorNode of pointingDeviceSensorNodes)
                   pointingDeviceSensorNode .push (renderObject, sensors);
 
-               if (sensors .size)
+               if (sensors .length)
                   this .getBrowser () .getSensors () .push (sensors);
             }
 
@@ -599,7 +599,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .pop (renderObject);
 
-            if (sensors .size)
+            if (sensors .length)
                this .getBrowser () .getSensors () .pop ();
 
             return;

@@ -167,13 +167,11 @@ X3DPointingDeviceSensorContext .prototype =
    },
    addHit: function (intersection, layer, shape, modelViewMatrix)
    {
-      const sensors = this [_enabledSensors] .at (-1);
-
       this [_hits] .push ({
          pointer:         this [_pointer],
-         hitRay:          this [_hitRay] .copy (),
+         hitRay:          this [_hitRay],
          intersection:    intersection,
-         sensors:         new Set (sensors .values ()),
+         sensors:         new Set (this [_enabledSensors] .at (-1)),
          layer:           layer,
          layerNumber:     this [_layerNumber],
          shape:           shape,
