@@ -89,6 +89,7 @@ tags: [glTF, sample, viewer]
 </div>
 
 <script>
+/* find ./docs/glTF/ -type f  -name "*.gltf" -o -name "*.glb" | sort */
 const models = [
    "Bonsai 1/Bonsai 1.gltf",
    "Bus Stop 1/Bus Stop 1.gltf",
@@ -101,6 +102,7 @@ const models = [
 
 models .server = "https://create3000.github.io/media/glTF/";
 
+/* find . -type f -name "*.gltf" | grep "/glTF/" | sort */
 const glTF = [
    "2CylinderEngine/glTF/2CylinderEngine.gltf",
    "ABeautifulGame/glTF/ABeautifulGame.gltf",
@@ -195,6 +197,7 @@ const glTF = [
 
 glTF .server = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/";
 
+/* find . -type f -name "*.glb" | grep "/glTF-Binary/" | sort */
 const glb = [
    "2CylinderEngine/glTF-Binary/2CylinderEngine.glb",
    "AlphaBlendModeTest/glTF-Binary/AlphaBlendModeTest.glb",
