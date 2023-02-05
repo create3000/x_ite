@@ -1284,9 +1284,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          case 1:
          {
-            if (this .viewpoints)
-               this .centerOfRotation (nodes [0], nodes [0] .getBBox (new Box3 ()));
-
             return nodes [0];
          }
          default:
@@ -1303,9 +1300,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             groupNode .setup ();
 
-            if (this .viewpoints)
-               this .centerOfRotation (groupNode, groupNode .getBBox (new Box3 ()));
-
             return groupNode;
          }
       }
@@ -1313,35 +1307,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    sceneNodesArray: function (nodes)
    {
       return this .nodeChildrenArray (nodes);
-   },
-   centerOfRotation: function (node, bbox, modelMatrix = new Matrix4 ())
-   {
-      switch (node .getTypeName ())
-      {
-         case "Transform":
-         {
-            const matrix = new Matrix4 ()
-
-            matrix .set (node ._translation .getValue (), node ._rotation .getValue (), node ._scale .getValue (), node ._scaleOrientation .getValue ());
-
-            modelMatrix .multLeft (matrix);
-
-            // Proceed with next case:
-         }
-         case "Group":
-         {
-            for (const child of node ._children)
-               this .centerOfRotation (child .getValue (), bbox .copy (), modelMatrix .copy ());
-
-            break;
-         }
-         case "Viewpoint":
-         case "OrthoViewpoint":
-         {
-            node ._centerOfRotation = bbox .copy () .multRight (modelMatrix .copy () .inverse ()) .center;
-            break;
-         }
-      }
    },
    animationsArray: function (animations)
    {
