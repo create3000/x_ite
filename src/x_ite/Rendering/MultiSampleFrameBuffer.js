@@ -80,14 +80,14 @@ function MultiSampleFrameBuffer (browser, width, height, samples)
    gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .DEPTH_COMPONENT24, this .width, this .height);
    gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT,  gl .RENDERBUFFER, this .depthBuffer);
 
+   const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
+
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 
    // Always check that our frame buffer is ok.
 
-   if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE)
-      return;
-
-   throw new Error ("Couldn't create frame buffer.");
+   if (!status)
+      throw new Error ("Couldn't create frame buffer.");
 }
 
 MultiSampleFrameBuffer .prototype =

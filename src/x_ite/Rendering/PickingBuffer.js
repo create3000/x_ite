@@ -109,19 +109,27 @@ function PickingBuffer (browser, width, height)
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
    }
 
+   const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
+
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 
    // Always check that our frame buffer is ok.
 
-   if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE)
-      return;
-
-   throw new Error ("Couldn't create frame buffer.");
+   if (!status)
+      throw new Error ("Couldn't create frame buffer.");
 }
 
 PickingBuffer .prototype =
 {
    constructor: PickingBuffer,
+   getWidth: function ()
+   {
+      return this .width;
+   },
+   getHeight: function ()
+   {
+      return this .height;
+   },
    bind: function (x, y)
    {
       const gl = this .browser .getContext ();
