@@ -184,6 +184,8 @@ const Context =
             if (gl [`COLOR_ATTACHMENT${i}`] === undefined)
                gl [`COLOR_ATTACHMENT${i}`] = COLOR_ATTACHMENT;
          }
+
+         gl .drawBuffers = draw_buffers .drawBuffersWEBGL .bind (draw_buffers);
       }
 
       // Load extensions.
