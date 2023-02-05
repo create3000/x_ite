@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import PointingDevice from "./PointingDevice.js";
+import PickingBuffer  from "../../Rendering/PickingBuffer.js";
 import TraverseType   from "../../Rendering/TraverseType.js";
 import Line3          from "../../../standard/Math/Geometry/Line3.js";
 import ViewVolume     from "../../../standard/Math/Geometry/ViewVolume.js";
@@ -239,6 +240,14 @@ X3DPointingDeviceSensorContext .prototype =
       this [_pickOnlySensors] = pickOnlySensors;
 
       this [_pointer] .set (x, y);
+
+      if (!this .pickingBuffer)
+         this .pickingBuffer = new PickingBuffer (this, this .getViewport () [2], (this .getViewport () [3]));
+
+      this .pickingBuffer .bind (x, y);
+      this .getWorld () .traverse (TraverseType .DISPLAY, null);
+      console .log (this .pickingBuffer .readPixel (x, y));
+      this .pickingBuffer .unbind ();
 
       // Clear hits.
 

@@ -57,22 +57,28 @@ function MultiSampleFrameBuffer (browser, width, height, samples)
    this .height  = height;
    this .samples = Math .min (samples, gl .getParameter (gl .MAX_SAMPLES));
 
+   // Create frame buffer.
+
    this .lastBuffer  = gl .getParameter (gl .FRAMEBUFFER_BINDING);
    this .framebuffer = gl .createFramebuffer ();
 
-   this .colorRenderbuffer = gl .createRenderbuffer ();
-
-   gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorRenderbuffer);
-   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA8, this .width, this .height);
-
-   this .depthRenderbuffer = gl .createRenderbuffer ();
-
-   gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthRenderbuffer);
-   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .DEPTH_COMPONENT24, this .width, this .height);
-
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
-   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .colorRenderbuffer);
-   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT,  gl .RENDERBUFFER, this .depthRenderbuffer);
+
+   // Create color buffer.
+
+   this .colorBuffer = gl .createRenderbuffer ();
+
+   gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorBuffer);
+   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA8, this .width, this .height);
+   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .colorBuffer);
+
+   // Create depth buffer.
+
+   this .depthBuffer = gl .createRenderbuffer ();
+
+   gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthBuffer);
+   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .DEPTH_COMPONENT24, this .width, this .height);
+   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT,  gl .RENDERBUFFER, this .depthBuffer);
 
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 
@@ -132,8 +138,8 @@ MultiSampleFrameBuffer .prototype =
       const gl = this .browser .getContext ();
 
       gl .deleteFramebuffer (this .framebuffer);
-      gl .deleteRenderbuffer (this .colorRenderbuffer);
-      gl .deleteRenderbuffer (this .depthRenderbuffer);
+      gl .deleteRenderbuffer (this .colorBuffer);
+      gl .deleteRenderbuffer (this .depthBuffer);
    },
 };
 

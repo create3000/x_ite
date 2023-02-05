@@ -45,6 +45,9 @@
  *
  ******************************************************************************/
 
+// OES_texture_float
+// WEBGL_color_buffer_float
+
 function PickingBuffer (browser, width, height)
 {
    const gl = browser .getContext ();
@@ -52,21 +55,38 @@ function PickingBuffer (browser, width, height)
    this .browser = browser;
    this .width   = width;
    this .height  = height;
-   this .array   = new Uint8Array (width * height * 4);
+   this .array   = new Float32Array (4);
 
    // Create frame buffer.
 
-   this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
-   this .buffer     = gl .createFramebuffer ();
+   this .lastBuffer  = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+   this .framebuffer = gl .createFramebuffer ();
 
-   gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
+
+   // Create color buffers.
+
+   const
+      color_buffer_float = gl .getExtension ("WEBGL_color_buffer_float"),
+      draw_buffers       = gl .getExtension ("WEBGL_draw_buffers");
+
+   this .colorBuffer = gl .createRenderbuffer ();
+
+   gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorBuffer);
+   gl .renderbufferStorage (gl .RENDERBUFFER, color_buffer_float .RGBA32F_EXT, this .width, this .height);
+   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, draw_buffers .COLOR_ATTACHMENT0_WEBGL, gl .RENDERBUFFER, this .colorBuffer);
 
    // Create color texture.
 
    this .colorTexture = gl .createTexture ();
 
    gl .bindTexture (gl .TEXTURE_2D, this .colorTexture);
-   gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+   gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .FLOAT, null);
+
    gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .colorTexture, 0);
 
    // Create depth buffer.
@@ -76,6 +96,11 @@ function PickingBuffer (browser, width, height)
       this .depthTexture = gl .createTexture ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .depthTexture);
+
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
 
       const internalFormat = gl .getVersion () >= 2 ? gl .DEPTH_COMPONENT24 : gl .DEPTH_COMPONENT;
 
@@ -91,7 +116,6 @@ function PickingBuffer (browser, width, height)
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
    }
 
-   gl .bindTexture (gl .TEXTURE_2D, null);
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 
    // Always check that our framebuffer is ok.
@@ -101,5 +125,44 @@ function PickingBuffer (browser, width, height)
 
    throw new Error ("Couldn't create frame buffer.");
 }
+
+PickingBuffer .prototype =
+{
+   constructor: PickingBuffer,
+   bind: function (x, y)
+   {
+      const gl = this .browser .getContext ();
+
+      this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
+      gl .scissor (x, y, 1, 1);
+   },
+   unbind: function ()
+   {
+      const gl = this .browser .getContext ();
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+   },
+   readPixel: function (x, y)
+   {
+      const
+         gl    = this .browser .getContext (),
+         array = this .array;
+
+      gl .readPixels (x, y, 1, 1, gl .RGBA, gl .FLOAT, array);
+
+      return array;
+   },
+   dispose: function ()
+   {
+      const gl = this .browser .getContext ();
+
+      gl .deleteFramebuffer (this .framebuffer);
+      gl .deleteRenderbuffer (this .colorBuffer);
+      gl .deleteRenderbuffer (this .depthBuffer);
+      gl .deleteTexture (this .depthTexture);
+   },
+};
 
 export default PickingBuffer;
