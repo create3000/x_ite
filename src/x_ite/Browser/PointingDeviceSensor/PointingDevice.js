@@ -191,7 +191,7 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
             const nearestHit = this .getBrowser () .getNearestHit ();
 
-            if (! nearestHit || nearestHit .sensors .size === 0)
+            if (! nearestHit || nearestHit .sensors .length === 0)
             {
                this .touchX       = event .pageX;
                this .touchY       = event .pageY;

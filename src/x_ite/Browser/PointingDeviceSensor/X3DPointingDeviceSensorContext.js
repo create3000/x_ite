@@ -200,7 +200,7 @@ X3DPointingDeviceSensorContext .prototype =
       for (const sensor of this [_activeSensors])
          sensor .set_active__ (true, nearestHit);
 
-      return !! nearestHit .sensors .size;
+      return !! nearestHit .sensors .length;
    },
    buttonReleaseEvent: function ()
    {
@@ -220,7 +220,7 @@ X3DPointingDeviceSensorContext .prototype =
       this .touch (x, y, true);
       this .motion ();
 
-      return !! (this [_hits] .length && this [_hits] .at (-1) .sensors .size);
+      return !! (this [_hits] .length && this [_hits] .at (-1) .sensors .length);
    },
    leaveNotifyEvent: function ()
    { },
@@ -243,7 +243,7 @@ X3DPointingDeviceSensorContext .prototype =
 
       this .pickingBuffer .bind (x, y);
       this .getWorld () .traverse (TraverseType .DISPLAY, null);
-      //console .log (this .pickingBuffer .readPixel (x, y));
+      console .log (... this .pickingBuffer .readPixel (x, y));
       this .pickingBuffer .unbind ();
 
       // Clear hits.

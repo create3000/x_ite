@@ -172,20 +172,17 @@ const Context =
             color_buffer_float = gl .getExtension ("WEBGL_color_buffer_float"),
             draw_buffers       = gl .getExtension ("WEBGL_draw_buffers");
 
-         gl .RGBA32F = color_buffer_float .RGBA32F_EXT;
+         gl .RGBA32F               = color_buffer_float .RGBA32F_EXT;
+         gl .MAX_COLOR_ATTACHMENTS = draw_buffers .MAX_COLOR_ATTACHMENTS_WEBGL;
+         gl .drawBuffers           = draw_buffers .drawBuffersWEBGL .bind (draw_buffers);
 
-         for (let i = 0; ; ++ i)
+         for (let i = 0, length = gl .getParameter(gl .MAX_COLOR_ATTACHMENTS); i < length; ++ i)
          {
             const COLOR_ATTACHMENT = draw_buffers [`COLOR_ATTACHMENT${i}_WEBGL`];
-
-            if (COLOR_ATTACHMENT === undefined)
-               break;
 
             if (gl [`COLOR_ATTACHMENT${i}`] === undefined)
                gl [`COLOR_ATTACHMENT${i}`] = COLOR_ATTACHMENT;
          }
-
-         gl .drawBuffers = draw_buffers .drawBuffersWEBGL .bind (draw_buffers);
       }
 
       // Load extensions.
