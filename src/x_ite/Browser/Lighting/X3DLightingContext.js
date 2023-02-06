@@ -87,7 +87,7 @@ X3DLightingContext .prototype =
          else
             this [_shadowBuffers] [shadowMapSize] = [ ];
 
-         return new TextureBuffer (this, shadowMapSize, shadowMapSize);
+         return new TextureBuffer (this, shadowMapSize, shadowMapSize, true);
       }
       catch (error)
       {
