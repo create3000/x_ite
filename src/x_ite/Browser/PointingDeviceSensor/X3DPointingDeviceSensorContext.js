@@ -183,25 +183,23 @@ X3DPointingDeviceSensorContext .prototype =
       if (!this .touch (x, y, true))
          return false;
 
-      this [_activeSensors] = this [_hit] .sensors;
-      this [_activeLayer]   = this [_hit] .layerNode;
+      const hit = this [_hit];
+
+      this [_activeSensors] = hit .sensors;
+      this [_activeLayer]   = hit .layerNode;
 
       for (const sensor of this [_activeSensors])
-         sensor .set_active__ (true, this [_hit]);
+         sensor .set_active__ (true, hit);
 
-      return !! this [_hit] .sensors .length;
+      return !! hit .sensors .length;
    },
    buttonReleaseEvent: function ()
    {
-      for (const sensor of this [_activeSensors])
-         sensor .set_active__ (false, null);
-
       this [_activeSensors] = Array .prototype;
       this [_activeLayer]   = null;
 
-      // Selection
-
-      return true;
+      for (const sensor of this [_activeSensors])
+         sensor .set_active__ (false, null);
    },
    motionNotifyEvent: function (x, y)
    {
@@ -271,7 +269,7 @@ X3DPointingDeviceSensorContext .prototype =
 
       // Set isOver to FALSE for appropriate nodes
 
-      if (this [_hit] .id)
+      if (hit .id)
       {
          var difference = this [_overSensors] .filter (a => !hit .sensors .find (b => a .node === b .node));
       }
@@ -285,7 +283,7 @@ X3DPointingDeviceSensorContext .prototype =
 
       // Set isOver to TRUE for appropriate nodes
 
-      if (this [_hit] .id)
+      if (hit .id)
       {
          this [_overSensors] = hit .sensors;
 
