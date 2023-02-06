@@ -176,10 +176,10 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNo
    getBiasMatrix: (function ()
    {
       // Transforms normalized coords from range (-1, 1) to (0, 1).
-      var biasMatrix = new (Matrix4_default()) (0.5, 0.0, 0.0, 0.0,
-                                    0.0, 0.5, 0.0, 0.0,
-                                    0.0, 0.0, 0.5, 0.0,
-                                    0.5, 0.5, 0.5, 1.0);
+      const biasMatrix = new (Matrix4_default()) (0.5, 0.0, 0.0, 0.0,
+                                      0.0, 0.5, 0.0, 0.0,
+                                      0.0, 0.0, 0.5, 0.0,
+                                      0.5, 0.5, 0.5, 1.0);
 
       return function ()
       {
@@ -188,7 +188,7 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNo
    })(),
    straightenHorizon: (function ()
    {
-      var
+      const
          localXAxis = new (Vector3_default()) (0, 0, 0),
          localZAxis = new (Vector3_default()) (0, 0, 0),
          upVector   = new (Vector3_default()) (0, 0, 0),
@@ -200,7 +200,7 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNo
          orientation .multVecRot (localZAxis .assign ((Vector3_default()).zAxis));
          upVector .assign (this ._upVector .getValue ()) .normalize ();
 
-         var vector = localZAxis .cross (upVector);
+         const vector = localZAxis .cross (upVector);
 
          // If viewer looks along the up vector.
          if (Math .abs (localZAxis .dot (upVector)) >= 1)
@@ -249,7 +249,7 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNo
    },
    push: function (renderObject)
    {
-      var textureProjectorContainer = this .getTextureProjectors () .pop ();
+      const textureProjectorContainer = this .getTextureProjectors () .pop ();
 
       textureProjectorContainer .set (this,
                                       renderObject .getModelViewMatrix () .get ());
@@ -348,7 +348,7 @@ var ObjectCache_default = /*#__PURE__*/__webpack_require__.n(ObjectCache_namespa
 
 
 
-var TextureProjectorCache = ObjectCache_default() (TextureProjectorContainer);
+const TextureProjectorCache = ObjectCache_default() (TextureProjectorContainer);
 
 function TextureProjectorContainer ()
 {
@@ -377,7 +377,7 @@ TextureProjectorContainer .prototype =
    },
    setGlobalVariables: function (renderObject)
    {
-      var
+      const
          textureProjectorNode  = this .textureProjectorNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
@@ -390,7 +390,7 @@ TextureProjectorContainer .prototype =
       invTextureSpaceMatrix .rotate (this .rotation);
       invTextureSpaceMatrix .inverse ();
 
-      var
+      const
          width            = textureProjectorNode .getTexture () .getWidth (),
          height           = textureProjectorNode .getTexture () .getHeight (),
          nearDistance     = textureProjectorNode .getNearDistance (),
@@ -478,7 +478,7 @@ TextureProjector .prototype = Object .assign (Object .create (TextureProjector_X
    },
    getFieldOfView: function ()
    {
-      var fov = this ._fieldOfView .getValue ();
+      const fov = this ._fieldOfView .getValue ();
 
       return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
    },
@@ -552,7 +552,7 @@ Namespace_default().set ("x_ite/Components/TextureProjector/TextureProjector", T
 
 
 
-var TextureProjectorParallelCache = ObjectCache_default() (TextureProjectorParallelContainer);
+const TextureProjectorParallelCache = ObjectCache_default() (TextureProjectorParallelContainer);
 
 function TextureProjectorParallelContainer ()
 {
@@ -581,7 +581,7 @@ TextureProjectorParallelContainer .prototype =
    },
    setGlobalVariables: function (renderObject)
    {
-      var
+      const
          textureProjectorNode  = this .textureProjectorNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
@@ -594,7 +594,7 @@ TextureProjectorParallelContainer .prototype =
       invTextureSpaceMatrix .rotate (this .rotation);
       invTextureSpaceMatrix .inverse ();
 
-      var
+      const
          width        = textureProjectorNode .getTexture () .getWidth (),
          height       = textureProjectorNode .getTexture () .getHeight (),
          aspect       = width / height,
@@ -609,7 +609,7 @@ TextureProjectorParallelContainer .prototype =
 
       if (aspect > sizeX / sizeY)
       {
-         var
+         const
             center  = (minimumX + maximumX) / 2,
             size1_2 = (sizeY * aspect) / 2;
 
@@ -617,7 +617,7 @@ TextureProjectorParallelContainer .prototype =
       }
       else
       {
-         var
+         const
             center  = (minimumY + maximumY) / 2,
             size1_2 = (sizeX / aspect) / 2;
 
@@ -707,7 +707,7 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (TexturePro
    },
    set_fieldOfView___: function ()
    {
-      var length = this ._fieldOfView .length;
+      const length = this ._fieldOfView .length;
 
       this .minimumX = (length > 0 ? this ._fieldOfView [0] : -1);
       this .minimumY = (length > 1 ? this ._fieldOfView [1] : -1);
