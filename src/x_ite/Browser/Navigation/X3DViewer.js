@@ -161,9 +161,9 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       if (! this .touch (x, y))
          return;
 
-      const hit = this .getBrowser () .getNearestHit ();
+      const hit = this .getBrowser () .getHit ();
 
-      this .getActiveViewpoint () .lookAtPoint (this .getActiveLayer (), hit .intersection .point, 2 - 1.618034, straightenHorizon);
+      this .getActiveViewpoint () .lookAtPoint (this .getActiveLayer (), hit .point, 2 - 1.618034, straightenHorizon);
    },
    lookAtBBox: (function ()
    {
@@ -174,7 +174,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          if (! this .touch (x, y))
             return;
 
-         const hit = this .getBrowser () .getNearestHit ();
+         const hit = this .getBrowser () .getHit ();
 
          hit .shape .getBBox (bbox) .multRight (hit .modelViewMatrix);
 
@@ -183,9 +183,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    })(),
    touch: function (x, y)
    {
-      this .getBrowser () .touch (x, y, false);
-
-      return this .getBrowser () .getHits () .length;
+      return this .getBrowser () .touch (x, y, false);
    },
    dispose: function () { },
 });

@@ -176,7 +176,7 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
 
          if (renderContext)
          {
-            const { renderObject, appearanceNode, objectsCount } = renderContext;
+            const { renderObject, shapeNode, appearanceNode, objectsCount } = renderContext;
 
             if (this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer ())
                options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
@@ -254,12 +254,12 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
                }
             }
 
-            switch (renderContext .shapeNode .getShapeKey ())
+            switch (shapeNode .getShapeKey ())
             {
-               case "1":
+               case 1:
                   options .push ("X3D_PARTICLE_SYSTEM");
                   break;
-               case "2":
+               case 2:
                   options .push ("X3D_PARTICLE_SYSTEM", "X3D_TEX_COORD_RAMP");
                   break;
             }

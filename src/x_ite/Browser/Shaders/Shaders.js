@@ -82,8 +82,10 @@ import Vertex2                from "../../../assets/shaders/webgl2/include/Verte
 
 /* WebGL 1 */
 import DefaultVertex1         from "../../../assets/shaders/webgl1/Default.vs.js";
+import PickVertex1            from "../../../assets/shaders/webgl1/Pick.vs.js";
 import DepthVertex1           from "../../../assets/shaders/webgl1/Depth.vs.js";
 import GouraudVertex1         from "../../../assets/shaders/webgl1/Gouraud.vs.js";
+import PickFragment1          from "../../../assets/shaders/webgl1/Pick.fs.js";
 import DepthFragment1         from "../../../assets/shaders/webgl1/Depth.fs.js";
 import GouraudFragment1       from "../../../assets/shaders/webgl1/Gouraud.fs.js";
 import PBRFragment1           from "../../../assets/shaders/webgl1/PBR.fs.js";
@@ -92,9 +94,11 @@ import UnlitFragment1         from "../../../assets/shaders/webgl1/Unlit.fs.js";
 
 /* WebGL 2 */
 import DefaultVertex2         from "../../../assets/shaders/webgl2/Default.vs.js";
+import PickVertex2            from "../../../assets/shaders/webgl2/Pick.vs.js";
 import DepthVertex2           from "../../../assets/shaders/webgl2/Depth.vs.js";
 import GouraudVertex2         from "../../../assets/shaders/webgl2/Gouraud.vs.js";
 import LineTransformVertex2   from "../../../assets/shaders/webgl2/LineTransform.vs.js";
+import PickFragment2          from "../../../assets/shaders/webgl2/Pick.fs.js";
 import DepthFragment2         from "../../../assets/shaders/webgl2/Depth.fs.js";
 import GouraudFragment2       from "../../../assets/shaders/webgl2/Gouraud.fs.js";
 import LineTransformFragment2 from "../../../assets/shaders/webgl2/LineTransform.fs.js";
@@ -143,11 +147,13 @@ const Shaders = {
    vertex: {
       1: {
          Default: DefaultVertex1,
+         Pick: PickVertex1,
          Depth: DepthVertex1,
          Gouraud: GouraudVertex1,
       },
       2: {
          Default: DefaultVertex2,
+         Pick: PickVertex2,
          Depth: DepthVertex2,
          Gouraud: GouraudVertex2,
          LineTransform: LineTransformVertex2,
@@ -155,6 +161,7 @@ const Shaders = {
    },
    fragment: {
       1: {
+         Pick: PickFragment1,
          Depth: DepthFragment1,
          Gouraud: GouraudFragment1,
          PBR: PBRFragment1,
@@ -162,6 +169,7 @@ const Shaders = {
          Unlit: UnlitFragment1,
       },
       2: {
+         Pick: PickFragment2,
          Depth: DepthFragment2,
          Gouraud: GouraudFragment2,
          LineTransform: LineTransformFragment2,

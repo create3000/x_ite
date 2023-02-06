@@ -48,47 +48,52 @@
 import PointingDevice from "./PointingDevice.js";
 import PickingBuffer  from "../../Rendering/PickingBuffer.js";
 import TraverseType   from "../../Rendering/TraverseType.js";
-import Line3          from "../../../standard/Math/Geometry/Line3.js";
-import ViewVolume     from "../../../standard/Math/Geometry/ViewVolume.js";
 import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
-import MergeSort      from "../../../standard/Math/Algorithms/MergeSort.js";
 
 const
    _pointingDevice  = Symbol (),
    _cursorType      = Symbol (),
    _pointer         = Symbol (),
-   _hitRay          = Symbol (),
-   _hits            = Symbol (),
+   _hit             = Symbol (),
    _enabledSensors  = Symbol (),
    _pickOnlySensors = Symbol (),
-   _selectedLayer   = Symbol (),
    _overSensors     = Symbol (),
    _activeSensors   = Symbol (),
-   _hitPointSorter  = Symbol (),
-   _layerNumber     = Symbol (),
-   _layerSorter     = Symbol (),
+   _activeLayer     = Symbol (),
    _pointerTime     = Symbol (),
    _pickingBuffer   = Symbol (),
-   _set_viewport    = Symbol ();
-
-const line = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   _pickShaders     = Symbol (),
+   _id              = Symbol (),
+   _pickingContexts = Symbol (),
+   _reshape         = Symbol ();
 
 function X3DPointingDeviceSensorContext ()
 {
-   this [_pointingDevice] = new PointingDevice (this);
-   this [_pointer]        = new Vector2 (0, 0);
-   this [_hitRay]         = new Line3 (Vector3 .Zero, Vector3 .Zero);
-   this [_hits]           = [ ];
-   this [_enabledSensors] = [[ ]];
-   this [_selectedLayer]  = null;
-   this [_overSensors]    = [ ];
-   this [_activeSensors]  = [ ];
-   this [_hitPointSorter] = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .intersection .point .z < rhs .intersection .point .z; });
-   this [_layerSorter]    = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .layerNumber < rhs .layerNumber; });
-   this [_pointerTime]    = 0;
-   this [_pickingBuffer]  = new PickingBuffer (this, 300, 150);
+   this [_pointingDevice]  = new PointingDevice (this);
+   this [_pointer]         = new Vector2 (0, 0);
+   this [_enabledSensors]  = [[ ]];
+   this [_overSensors]     = [ ];
+   this [_activeSensors]   = [ ];
+   this [_activeLayer]     = null;
+   this [_pointerTime]     = 0;
+   this [_pickingBuffer]   = new PickingBuffer (this, 300, 150);
+   this [_pickShaders]     = new Map ();
+   this [_pickingContexts] = [ ];
+
+   this [_hit] = {
+      id: 0,
+      pointer: this [_pointer],
+      hitRay: null,
+      sensors: [ ],
+      modelViewMatrix: new Matrix4 (),
+      point: new Vector3 (0, 0, 0),
+      normal: new Vector3 (0, 0, 0),
+      texCoord: new Vector2 (0, 0),
+      layerNode: null,
+      shapeNode: null,
+   };
 }
 
 X3DPointingDeviceSensorContext .prototype =
@@ -97,9 +102,13 @@ X3DPointingDeviceSensorContext .prototype =
    {
       this .setCursor ("DEFAULT");
 
-      this .getViewport () .addInterest (_set_viewport, this);
+      this .getViewport () .addInterest (_reshape, this);
 
       this [_pointingDevice] .setup ();
+   },
+   getPointerTime: function ()
+   {
+      return this [_pointerTime];
    },
    setCursor: function (value)
    {
@@ -145,22 +154,6 @@ X3DPointingDeviceSensorContext .prototype =
              this [_pointer] .y > rectangle .y &&
              this [_pointer] .y < rectangle .y + rectangle .w;
    },
-   setLayerNumber: function (value)
-   {
-      this [_layerNumber] = value;
-   },
-   getSelectedLayer: function ()
-   {
-      return this [_selectedLayer];
-   },
-   setHitRay: function (projectionMatrix, viewport)
-   {
-      ViewVolume .unProjectRay (this [_pointer] .x, this [_pointer] .y, Matrix4 .Identity, projectionMatrix, viewport, this [_hitRay]);
-   },
-   getHitRay: function ()
-   {
-      return this [_hitRay];
-   },
    getSensors: function ()
    {
       return this [_enabledSensors];
@@ -169,52 +162,42 @@ X3DPointingDeviceSensorContext .prototype =
    {
       return this [_pickOnlySensors];
    },
-   addHit: function (intersection, layer, shape, modelViewMatrix)
+   getActivePickLayer: function ()
    {
-      this [_hits] .push ({
-         pointer:         this [_pointer],
-         hitRay:          this [_hitRay],
-         intersection:    intersection,
-         sensors:         this [_enabledSensors] .at (-1) .slice (),
-         layer:           layer,
-         layerNumber:     this [_layerNumber],
-         shape:           shape,
-         modelViewMatrix: modelViewMatrix .copy (),
-      });
+      return this [_activeLayer];
    },
-   getHits: function ()
+   getHit: function ()
    {
-      return this [_hits];
+      return this [_hit];
    },
-   getNearestHit: function ()
+   addPickingShape: function (pickingContext)
    {
-      return this [_hits] .at (-1);
+      const id = ++ this [_id];
+
+      this [_pickingContexts] [id] = pickingContext;
+
+      return id;
    },
    buttonPressEvent: function (x, y)
    {
-      this .touch (x, y, true);
-
-      if (this [_hits] .length === 0)
+      if (!this .touch (x, y, true))
          return false;
 
-      const nearestHit = this .getNearestHit ();
-
-      this [_selectedLayer] = nearestHit .layer;
-      this [_activeSensors] = nearestHit .sensors;
+      this [_activeSensors] = this [_hit] .sensors;
+      this [_activeLayer]   = this [_hit] .layerNode;
 
       for (const sensor of this [_activeSensors])
-         sensor .set_active__ (true, nearestHit);
+         sensor .set_active__ (true, this [_hit]);
 
-      return !! nearestHit .sensors .length;
+      return !! this [_hit] .sensors .length;
    },
    buttonReleaseEvent: function ()
    {
-      this [_selectedLayer] = null;
-
       for (const sensor of this [_activeSensors])
          sensor .set_active__ (false, null);
 
       this [_activeSensors] = Array .prototype;
+      this [_activeLayer]   = null;
 
       // Selection
 
@@ -225,70 +208,79 @@ X3DPointingDeviceSensorContext .prototype =
       this .touch (x, y, true);
       this .motion ();
 
-      return !! (this [_hits] .length && this [_hits] .at (-1) .sensors .length);
+      return !! this [_hit] .sensors .length;
    },
    leaveNotifyEvent: function ()
    { },
    touch: function (x, y, pickOnlySensors)
    {
+      const t0 = Date .now ();
+
       if (this .getViewer () ._isActive .getValue ())
       {
          this [_pointerTime] = 0;
-         return;
+         return false;
       }
-
-      const t0 = Date .now ();
-
-      this [_pickOnlySensors] = pickOnlySensors;
-
-      this [_pointer] .set (x, y);
-
-      this [_pickingBuffer] .bind (x, y);
-      this .getWorld () .traverse (TraverseType .DISPLAY, null);
-      console .log (... this [_pickingBuffer] .readPixel (x, y));
-      this [_pickingBuffer] .unbind ();
-
-      // Clear hits.
-
-      this [_hits] .length = 0;
 
       // Pick.
 
+      const hit = this [_hit];
+
+      this [_pickOnlySensors] = pickOnlySensors;
+      this [_id]              = 0;
+
+      this [_pointer] .set (x, y);
+      this [_pickingBuffer] .bind (x, y);
+
       this .getWorld () .traverse (TraverseType .POINTER, null);
+
+      this [_pickingBuffer] .getHit (x, y, hit);
+      this [_pickingBuffer] .unbind ();
+
+      if (hit .id)
+      {
+         const pickingContext = this [_pickingContexts] [hit .id];
+
+         hit .hitRay = pickingContext .renderObject .getHitRay ();
+         hit .sensors = pickingContext .sensors;
+         hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
+         hit .layerNode = pickingContext .renderObject;
+         hit .shapeNode = pickingContext .shapeNode;
+      }
 
       // Picking end.
 
-      this [_hitPointSorter] .sort (0, this [_hits] .length);
-      this [_layerSorter]    .sort (0, this [_hits] .length);
-
       this .addBrowserEvent ();
       this [_pointerTime] = Date .now () - t0;
+
+      return !! hit .id;
    },
    motion: function ()
    {
-      if (this [_hits] .length)
+      if (this [_hit] .id)
       {
-         var nearestHit = this [_hits] .at (-1);
+         var hit = this [_hit];
       }
       else
       {
-         var nearestHit = {
-            pointer:         this [_pointer],
+         var hit = {
+            id: 0,
+            pointer: this [_pointer],
+            hitRay: this [_activeLayer] ? this [_activeLayer] .getHitRay () : null,
+            sensors: Array .prototype,
             modelViewMatrix: Matrix4 .Identity,
-            hitRay:          this [_selectedLayer] ? this [_hitRay] : line,
-            intersection:    null,
-            sensors:         Array .prototype,
-            shape:           null,
-            layer:           null,
-            layerNumber:     0,
+            point: Vector3 .Zero,
+            normal: Vector3 .Zero,
+            texCoord: Vector2 .Zero,
+            shapeNode: null,
          };
       }
 
       // Set isOver to FALSE for appropriate nodes
 
-      if (this [_hits] .length)
+      if (this [_hit] .id)
       {
-         var difference = this [_overSensors] .filter (a => !nearestHit .sensors .find (b => a .node === b .node));
+         var difference = this [_overSensors] .filter (a => !hit .sensors .find (b => a .node === b .node));
       }
       else
       {
@@ -296,16 +288,16 @@ X3DPointingDeviceSensorContext .prototype =
       }
 
       for (const sensor of difference)
-         sensor .set_over__ (false, nearestHit);
+         sensor .set_over__ (false, hit);
 
       // Set isOver to TRUE for appropriate nodes
 
-      if (this [_hits] .length)
+      if (this [_hit] .id)
       {
-         this [_overSensors] = nearestHit .sensors;
+         this [_overSensors] = hit .sensors;
 
          for (const sensor of this [_overSensors])
-            sensor .set_over__ (true, nearestHit);
+            sensor .set_over__ (true, hit);
       }
       else
       {
@@ -315,13 +307,37 @@ X3DPointingDeviceSensorContext .prototype =
       // Forward motion event to active drag sensor nodes
 
       for (const sensor of this [_activeSensors])
-         sensor .set_motion__ (nearestHit);
+         sensor .set_motion__ (hit);
    },
-   getPointerTime: function ()
+   getPickShader: function (numClipPlanes, particles)
    {
-      return this [_pointerTime];
+      let key = "";
+
+      key += numClipPlanes;
+      key += particles ? "1" : "0";
+
+      return this [_pickShaders] .get (key) || this .createPickShader (key, numClipPlanes, particles);
    },
-   [_set_viewport]: function ()
+   createPickShader: function (key, numClipPlanes, particles)
+   {
+      const options = [ ];
+
+      if (numClipPlanes)
+      {
+         options .push ("X3D_CLIP_PLANES");
+         options .push ("X3D_NUM_CLIP_PLANES " + numClipPlanes);
+      }
+
+      if (particles)
+         options .push ("X3D_PARTICLE_SYSTEM");
+
+      const shaderNode = this .createShader ("PickShader", "Pick", "Pick", options);
+
+      this [_pickShaders] .set (key, shaderNode);
+
+      return shaderNode;
+   },
+   [_reshape]: function ()
    {
       const viewport = this .getViewport ();
 

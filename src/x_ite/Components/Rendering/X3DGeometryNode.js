@@ -184,7 +184,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       this .normalBuffer          = gl .createBuffer ();
       this .vertexBuffer          = gl .createBuffer ();
       this .vertexArrayObject     = new VertexArray ();
-      this .shadowArrayObject     = new VertexArray ();
+      this .simpleArrayObject     = new VertexArray ();
 
       this .set_live__ ();
    },
@@ -349,9 +349,9 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
    updateVertexArrays: function ()
    {
       this .vertexArrayObject .update ();
-      this .shadowArrayObject .update ();
+      this .simpleArrayObject .update ();
 
-      this .updateParticlesShadow = true;
+      this .updateSimpleParticles = true;
       this .updateParticles       = true;
    },
    buildTexCoords: function ()
@@ -967,27 +967,31 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       {
          // Use default render functions.
 
-         delete this .depth;
+         delete this .displaySimple;
          delete this .display;
-         delete this .displayParticlesDepth;
+         delete this .displaySimpleParticles;
          delete this .displayParticles;
       }
       else
       {
          // Use no render function.
 
-         this .depth                 = Function .prototype;
-         this .display               = Function .prototype;
-         this .displayParticlesDepth = Function .prototype;
-         this .displayParticles      = Function .prototype;
+         this .displaySimple          = Function .prototype;
+         this .display                = Function .prototype;
+         this .displaySimpleParticles = Function .prototype;
+         this .displayParticles       = Function .prototype;
       }
    },
    traverse: function (type, renderObject)
    { },
-   depth: function (gl, depthContext, shaderNode)
+   displaySimple: function (gl, shaderNode)
    {
-      if (this .shadowArrayObject .enable (gl, shaderNode))
-         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+      if (this .simpleArrayObject .enable (gl, shaderNode))
+      {
+         shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+         shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+         shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+      }
 
       gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
    },
@@ -1093,19 +1097,21 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       if (blendModeNode)
          blendModeNode .disable (gl);
    },
-   displayParticlesDepth: function (gl, depthContext, shaderNode, particleSystem)
+   displaySimpleParticles: function (gl, shaderNode, particleSystem)
    {
       const outputParticles = particleSystem .outputParticles;
 
-      if (outputParticles .shadowArrayObject .update (this .updateParticlesShadow) .enable (gl, shaderNode))
+      if (outputParticles .simpleArrayObject .update (this .updateSimpleParticles) .enable (gl, shaderNode))
       {
          const particleStride = particleSystem .particleStride;
 
          shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
          shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
-         shaderNode .enableVertexAttribute         (gl, this .vertexBuffer, 0, 0);
+         shaderNode .enableTexCoordAttribute       (gl, this .texCoordBuffers, 0, 0);
+         shaderNode .enableNormalAttribute         (gl, this .normalBuffer,    0, 0);
+         shaderNode .enableVertexAttribute         (gl, this .vertexBuffer,    0, 0);
 
-         this .updateParticlesShadow = false;
+         this .updateSimpleParticles = false;
       }
 
       gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);

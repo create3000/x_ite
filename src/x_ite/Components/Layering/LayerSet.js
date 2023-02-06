@@ -185,23 +185,8 @@ LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
    },
    traverse: function (type, renderObject)
    {
-      const layerNodes = this .layerNodes;
-
-      if (type === TraverseType .POINTER)
-      {
-         for (let i = 0, length = layerNodes .length; i < length; ++ i)
-         {
-            this .getBrowser () .setLayerNumber (i);
-            layerNodes [i] .traverse (type, renderObject);
-         }
-      }
-      else
-      {
-         for (const layerNode of layerNodes)
-         {
-            layerNode .traverse (type, renderObject);
-         }
-      }
+      for (const layerNode of this .layerNodes)
+         layerNode .traverse (type, renderObject);
    },
 });
 

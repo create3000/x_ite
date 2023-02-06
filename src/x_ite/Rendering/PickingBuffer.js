@@ -67,7 +67,7 @@ function PickingBuffer (browser, width, height)
    this .colorBuffers = [ ];
    this .frameBuffers = [ ];
 
-   for (let i = 0; i < 4; ++ i)
+   for (let i = 0; i < 3; ++ i)
    {
       this .colorBuffers [i] = gl .createRenderbuffer ();
       this .frameBuffers [i] = gl .createFramebuffer ();
@@ -82,12 +82,11 @@ function PickingBuffer (browser, width, height)
 
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
 
-   // gl .drawBuffers ([
-   //    gl .COLOR_ATTACHMENT0, // gl_FragData [0]
-   //    gl .COLOR_ATTACHMENT1, // gl_FragData [1]
-   //    gl .COLOR_ATTACHMENT2, // gl_FragData [2]
-   //    gl .COLOR_ATTACHMENT3, // gl_FragData [3]
-   // ]);
+   gl .drawBuffers ([
+      gl .COLOR_ATTACHMENT0, // gl_FragData [0]
+      gl .COLOR_ATTACHMENT1, // gl_FragData [1]
+      gl .COLOR_ATTACHMENT2, // gl_FragData [2]
+   ]);
 
    // gl .clearColor (0, 0, 0, 0)
    // gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
@@ -148,6 +147,8 @@ PickingBuffer .prototype =
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
       gl .scissor (x, y, 1, 1);
+      gl .clearColor (0, 0, 0, 0);
+      gl .clear (gl .COLOR_BUFFER_BIT);
    },
    unbind: function ()
    {
@@ -155,7 +156,7 @@ PickingBuffer .prototype =
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
    },
-   readPixel: function (x, y)
+   getHit: function (x, y, hit)
    {
       const
          gl    = this .browser .getContext (),
@@ -164,7 +165,11 @@ PickingBuffer .prototype =
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [0]);
       gl .readPixels (x, y, 1, 1, gl .RGBA, gl .FLOAT, array);
 
+      hit .id = array [0];
+      hit .point .set (array [1], array [2], array [3]);
+
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
+
       return array;
    },
    dispose: function ()

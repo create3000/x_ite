@@ -51,6 +51,7 @@ import Algorithm     from "../../standard/Math/Algorithm.js";
 import MergeSort     from "../../standard/Math/Algorithms/MergeSort.js";
 import Camera        from "../../standard/Math/Geometry/Camera.js";
 import Box3          from "../../standard/Math/Geometry/Box3.js";
+import Line3         from "../../standard/Math/Geometry/Line3.js";
 import ViewVolume    from "../../standard/Math/Geometry/ViewVolume.js";
 import Vector3       from "../../standard/Math/Numbers/Vector3.js";
 import Vector4       from "../../standard/Math/Numbers/Vector4.js";
@@ -85,16 +86,19 @@ function X3DRenderObject (executionContext)
    this .textureProjectors        = [ ];
    this .generatedCubeMapTextures = [ ];
    this .collisions               = [ ];
-   this .numOpaqueShapes          = 0;
-   this .numTransparentShapes     = 0;
+   this .numPickingShapes         = 0;
    this .numCollisionShapes       = 0;
    this .numShadowShapes          = 0;
-   this .opaqueShapes             = [ ];
-   this .transparentShapes        = [ ];
-   this .transparencySorter       = new MergeSort (this .transparentShapes, compareDistance);
+   this .numOpaqueShapes          = 0;
+   this .numTransparentShapes     = 0;
+   this .hitRay                   = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   this .pickingShapes            = [ ];
    this .collisionShapes          = [ ];
    this .activeCollisions         = new Set ();
    this .shadowShapes             = [ ];
+   this .opaqueShapes             = [ ];
+   this .transparentShapes        = [ ];
+   this .transparencySorter       = new MergeSort (this .transparentShapes, compareDistance);
    this .speed                    = 0;
 
    try
@@ -283,6 +287,10 @@ X3DRenderObject .prototype =
    {
       return this .transparentShapes;
    },
+   getHitRay: function ()
+   {
+      return this .hitRay;
+   },
    constrainTranslation: function (translation, stepBack)
    {
       ///  Contrains @a translation to a possible value the avatar can move.  If the avatar reaches and intersects with an
@@ -406,6 +414,14 @@ X3DRenderObject .prototype =
    {
       switch (type)
       {
+         case TraverseType .POINTER:
+         {
+            this .numPickingShapes = 0;
+
+            callback .call (group, type, this);
+            this .touch (this .pickingShapes, this .numPickingShapes);
+            break;
+         }
          case TraverseType .COLLISION:
          {
             // Collect for collide and gravite
@@ -438,6 +454,53 @@ X3DRenderObject .prototype =
          }
       }
    },
+   setHitRay: function (projectionMatrix, viewport, pointer)
+   {
+      ViewVolume .unProjectRay (pointer .x, pointer .y, Matrix4 .Identity, projectionMatrix, viewport, this .hitRay);
+   },
+   addPickingShape: (function ()
+   {
+      const
+         bboxSize   = new Vector3 (0, 0, 0),
+         bboxCenter = new Vector3 (0, 0, 0);
+
+      return function (shapeNode, sensors)
+      {
+         const modelViewMatrix = this .getModelViewMatrix () .get ();
+
+         modelViewMatrix .multDirMatrix (bboxSize   .assign (shapeNode .getBBoxSize ()));
+         modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
+
+         const
+            radius     = bboxSize .magnitude () / 2,
+            viewVolume = this .viewVolumes .at (-1);
+
+         if (viewVolume .intersectsSphere (radius, bboxCenter))
+         {
+            const num = this .numPickingShapes ++;
+
+            if (num === this .pickingShapes .length)
+            {
+               this .pickingShapes .push ({ renderObject: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ], sensors: [ ] });
+            }
+
+            const pickingContext = this .pickingShapes [num];
+
+            pickingContext .modelViewMatrix .set (modelViewMatrix);
+            pickingContext .shapeNode = shapeNode;
+            pickingContext .scissor   = viewVolume .getScissor ();
+
+            // Clip planes & sensors
+
+            assign (pickingContext .clipPlanes, this .localObjects);
+            assign (pickingContext .sensors,    sensors);
+
+            return true;
+         }
+
+         return false;
+      };
+   })(),
    addCollisionShape: (function ()
    {
       const
@@ -594,6 +657,67 @@ X3DRenderObject .prototype =
          objectsCount: [0, 0, 0],
       };
    },
+   touch: (function ()
+   {
+      const projectionMatrixArray = new Float32Array (16);
+
+      return function (shapes, numShapes)
+      {
+         const
+            browser  = this .getBrowser (),
+            gl       = browser .getContext (),
+            viewport = this .getViewVolume () .getViewport ();
+
+         // Configure depth shaders.
+
+         projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+
+         // Configure viewport and background
+
+         gl .viewport (viewport [0],
+                       viewport [1],
+                       viewport [2],
+                       viewport [3]);
+
+         gl .scissor (viewport [0],
+                      viewport [1],
+                      viewport [2],
+                      viewport [3]);
+
+         gl .clear (gl .DEPTH_BUFFER_BIT);
+
+         // Render all objects
+
+         gl .depthMask (true);
+         gl .enable (gl .DEPTH_TEST);
+         gl .disable (gl .BLEND);
+         gl .disable (gl .CULL_FACE);
+
+         for (let s = 0; s < numShapes; ++ s)
+         {
+            const
+               renderContext = shapes [s],
+               { scissor, clipPlanes, modelViewMatrix, shapeNode } = renderContext,
+               shaderNode = browser .getPickShader (clipPlanes .length, shapeNode .getShapeKey () !== 0),
+               id = browser .addPickingShape (renderContext);
+
+            gl .scissor (scissor .x,
+                         scissor .y,
+                         scissor .z,
+                         scissor .w);
+            // Draw
+
+            shaderNode .enable (gl);
+            shaderNode .setClipPlanes (gl, clipPlanes);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
+            gl .uniform1f (shaderNode .x3d_Id, id);
+
+            shapeNode .displaySimple (gl, renderContext, shaderNode);
+         }
+      };
+   })(),
    collide: (function ()
    {
       const
@@ -797,7 +921,7 @@ X3DRenderObject .prototype =
                       viewport [2],
                       viewport [3]);
 
-         gl .clearColor (1, 1, 1, 1); // Must be '1, 1, 1, 1' for infinity.
+         gl .clearColor (1, 0, 0, 0); // '1' for infinity, '0 0 0' for normal (TODO).
          gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
 
          // Render all objects
@@ -810,17 +934,23 @@ X3DRenderObject .prototype =
          for (let s = 0; s < numShapes; ++ s)
          {
             const
-               depthContext = shapes [s],
-               scissor      = depthContext .scissor;
+               renderContext = shapes [s],
+               { scissor, clipPlanes, modelViewMatrix, shapeNode } = renderContext,
+               shaderNode = browser .getDepthShader (clipPlanes .length, shapeNode .getShapeKey () !== 0);
 
             gl .scissor (scissor .x,
                          scissor .y,
                          scissor .z,
                          scissor .w);
-
             // Draw
 
-            depthContext .shapeNode .depth (gl, depthContext, projectionMatrixArray);
+            shaderNode .enable (gl);
+            shaderNode .setClipPlanes (gl, clipPlanes);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
+
+            shapeNode .displaySimple (gl, renderContext, shaderNode);
          }
       };
    })(),

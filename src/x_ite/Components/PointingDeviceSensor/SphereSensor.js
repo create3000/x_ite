@@ -107,7 +107,7 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
    },
    getTrackPoint: function (hitRay, trackPoint, behind)
    {
-      var exit = new Vector3 (0, 0, 0);
+      const exit = new Vector3 (0, 0, 0);
 
       if (this .sphere .intersectsLine (hitRay, trackPoint, exit))
       {
@@ -128,8 +128,8 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
          this .modelViewMatrix    .assign (modelViewMatrix);
          this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-         var
-            hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ()),
+         const
+            hitPoint = this .invModelViewMatrix .multVecMatrix (hit .point .copy ()),
             center   = new Vector3 (0, 0, 0);
 
          this .zPlane = new Plane3 (center, this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ()); // Screen aligned Z-plane
@@ -151,23 +151,25 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
    },
    set_motion__: function (hit)
    {
-      var
+      const
          hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
          trackPoint = new Vector3 (0, 0, 0);
 
       if (this .getTrackPoint (hitRay, trackPoint, this .behind))
       {
-         var zAxis = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize (); // Camera direction
-         this .zPlane = new Plane3 (trackPoint, zAxis);                                             // Screen aligned Z-plane
+         const zAxis = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize (); // Camera direction
+
+         this .zPlane = new Plane3 (trackPoint, zAxis); // Screen aligned Z-plane
       }
       else
       {
          // Find trackPoint on the plane with sphere
 
-         var tangentPoint = new Vector3 (0, 0, 0);
+         const tangentPoint = new Vector3 (0, 0, 0);
+
          this .zPlane .intersectsLine (hitRay, tangentPoint);
 
-         hitRay = new Line3 (tangentPoint, Vector3 .subtract (this .sphere .center, tangentPoint) .normalize ());
+         hitRay .set (tangentPoint, Vector3 .subtract (this .sphere .center, tangentPoint) .normalize ());
 
          //console .log (hitRay .toString ());
 
@@ -175,21 +177,21 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
 
          // Find trackPoint behind sphere
 
-         var
+         const
             triNormal     = Triangle3 .normal (this .sphere .center, trackPoint, this .startPoint, new Vector3 (0, 0, 0)),
             dirFromCenter = Vector3 .subtract (trackPoint, this .sphere .center) .normalize (),
             normal        = Vector3 .cross (triNormal, dirFromCenter) .normalize ();
 
-         var point1 = Vector3 .subtract (trackPoint, normal .multiply (Vector3 .subtract (tangentPoint, trackPoint) .magnitude ()));
+         const point1 = Vector3 .subtract (trackPoint, normal .multiply (Vector3 .subtract (tangentPoint, trackPoint) .magnitude ()));
 
-         hitRay = new Line3 (point1, Vector3 .subtract (this .sphere .center, point1) .normalize ());
+         hitRay .set (point1, Vector3 .subtract (this .sphere .center, point1) .normalize ());
 
          this .getTrackPoint (hitRay, trackPoint, false);
       }
 
       this ._trackPoint_changed = trackPoint;
 
-      var
+      const
          toVector = Vector3 .subtract (trackPoint, this .sphere .center),
          rotation = new Rotation4 (this .fromVector, toVector);
 

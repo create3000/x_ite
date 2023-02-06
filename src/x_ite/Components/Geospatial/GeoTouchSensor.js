@@ -109,13 +109,11 @@ GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .
 
       if (this ._isOver .getValue ())
       {
-         var intersection = hit .intersection;
-
          invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-         this ._hitTexCoord_changed = intersection .texCoord;
-         this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
-         this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
+         this ._hitTexCoord_changed = hit .texCoord;
+         this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (hit .normal .copy ()) .normalize ();
+         this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (hit .point .copy ());
          this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
       }
    },

@@ -95,13 +95,11 @@ TouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .pro
 
       if (this ._isOver .getValue ())
       {
-         var intersection = hit .intersection;
-
          invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
          this ._hitTexCoord_changed = intersection .texCoord;
-         this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
-         this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
+         this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (hit .normal .copy ()) .normalize ();
+         this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (hit .point .copy ());
       }
    },
 });

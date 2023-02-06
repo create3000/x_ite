@@ -141,17 +141,17 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
          this .viewport           .assign (viewport);
          this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-         var
+         const
             hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-            hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
+            hitPoint = this .invModelViewMatrix .multVecMatrix (hit .point .copy ());
 
-         var axisRotation = this ._axisRotation .getValue ();
+         const axisRotation = this ._axisRotation .getValue ();
 
          if (this ._minPosition .x === this ._maxPosition .x)
          {
             this .planeSensor = false;
 
-            var direction = axisRotation .multVecRot (new Vector3 (0, Math .abs (this ._maxPosition .y - this ._minPosition .y), 0));
+            const direction = axisRotation .multVecRot (new Vector3 (0, Math .abs (this ._maxPosition .y - this ._minPosition .y), 0));
 
             this .line = new Line3 (hitPoint, direction .normalize ());
          }
@@ -159,7 +159,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
          {
             this .planeSensor = false;
 
-            var direction = axisRotation .multVecRot (new Vector3 (Math .abs (this ._maxPosition .x - this ._minPosition .x), 0, 0));
+            const direction = axisRotation .multVecRot (new Vector3 (Math .abs (this ._maxPosition .x - this ._minPosition .x), 0, 0));
 
             this .line = new Line3 (hitPoint, direction .normalize ());
          }
@@ -182,7 +182,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
          {
             if (this .getLineTrackPoint (hit, this .line, this .startPoint))
             {
-               var trackPoint = new Vector3 (0, 0, 0);
+               const trackPoint = new Vector3 (0, 0, 0);
 
                try
                {
@@ -218,7 +218,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
       {
          if (this .planeSensor)
          {
-            var
+            const
                hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
                endPoint = new Vector3 (0, 0, 0);
 
@@ -231,7 +231,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
          }
          else
          {
-            var
+            const
                endPoint   = new Vector3 (0, 0, 0),
                trackPoint = new Vector3 (0, 0, 0);
 
@@ -254,7 +254,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
       }
       catch (error)
       {
-         //console .error (error);
+         // console .error (error);
 
          this ._trackPoint_changed  .addEvent ();
          this ._translation_changed .addEvent ();
@@ -262,7 +262,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
    },
    track: function (endPoint, trackPoint)
    {
-      var
+      const
          axisRotation = this ._axisRotation .getValue (),
          translation  = Rotation4 .inverse (axisRotation) .multVecRot (endPoint .add (this .startOffset) .subtract (this .startPoint));
 

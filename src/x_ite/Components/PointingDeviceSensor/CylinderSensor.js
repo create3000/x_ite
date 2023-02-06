@@ -168,7 +168,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
 
          const
             hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-            hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
+            hitPoint = this .invModelViewMatrix .multVecMatrix (hit .point .copy ());
 
          const
             yAxis      = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),

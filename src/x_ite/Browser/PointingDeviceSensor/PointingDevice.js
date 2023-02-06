@@ -189,9 +189,9 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
             // Show context menu on long tab.
 
-            const nearestHit = this .getBrowser () .getNearestHit ();
+            const hit = this .getBrowser () .getHit ();
 
-            if (! nearestHit || nearestHit .sensors .length === 0)
+            if (hit .id === 0 || hit .sensors .length === 0)
             {
                this .touchX       = event .pageX;
                this .touchY       = event .pageY;
