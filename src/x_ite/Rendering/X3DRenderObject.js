@@ -75,6 +75,8 @@ function X3DRenderObject (executionContext)
    this .viewportArray            = new Int32Array (4);
    this .projectionMatrixArray    = new Float32Array (16);
    this .cameraSpaceMatrixArray   = new Float32Array (16);
+   this .hitRay                   = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   this .sensors                  = [[ ]];
    this .localObjectsCount        = [0, 0, 0];
    this .globalObjects            = [ ];
    this .localObjects             = [ ];
@@ -91,7 +93,6 @@ function X3DRenderObject (executionContext)
    this .numShadowShapes          = 0;
    this .numOpaqueShapes          = 0;
    this .numTransparentShapes     = 0;
-   this .hitRay                   = new Line3 (Vector3 .Zero, Vector3 .Zero);
    this .pickingShapes            = [ ];
    this .collisionShapes          = [ ];
    this .activeCollisions         = new Set ();
@@ -161,6 +162,14 @@ X3DRenderObject .prototype =
    getCameraSpaceMatrixArray: function ()
    {
       return this .cameraSpaceMatrixArray;
+   },
+   getHitRay: function ()
+   {
+      return this .hitRay;
+   },
+   getSensors: function ()
+   {
+      return this .sensors;
    },
    getGlobalObjects: function ()
    {
@@ -286,10 +295,6 @@ X3DRenderObject .prototype =
    getTransparentShapes: function ()
    {
       return this .transparentShapes;
-   },
-   getHitRay: function ()
-   {
-      return this .hitRay;
    },
    constrainTranslation: function (translation, stepBack)
    {
@@ -464,8 +469,11 @@ X3DRenderObject .prototype =
          bboxSize   = new Vector3 (0, 0, 0),
          bboxCenter = new Vector3 (0, 0, 0);
 
-      return function (shapeNode, sensors)
+      return function (shapeNode)
       {
+         if (this .getBrowser () .getPickOnlySensors () && this .sensors .length === 1)
+            return;
+
          const modelViewMatrix = this .getModelViewMatrix () .get ();
 
          modelViewMatrix .multDirMatrix (bboxSize   .assign (shapeNode .getBBoxSize ()));
@@ -493,7 +501,7 @@ X3DRenderObject .prototype =
             // Clip planes & sensors
 
             assign (pickingContext .clipPlanes, this .localObjects);
-            assign (pickingContext .sensors,    sensors);
+            assign (pickingContext .sensors,    this .sensors .at (-1));
 
             return true;
          }

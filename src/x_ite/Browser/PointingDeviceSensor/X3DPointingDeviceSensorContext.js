@@ -57,7 +57,6 @@ const
    _cursorType      = Symbol (),
    _pointer         = Symbol (),
    _hit             = Symbol (),
-   _enabledSensors  = Symbol (),
    _pickOnlySensors = Symbol (),
    _overSensors     = Symbol (),
    _activeSensors   = Symbol (),
@@ -73,7 +72,6 @@ function X3DPointingDeviceSensorContext ()
 {
    this [_pointingDevice]  = new PointingDevice (this);
    this [_pointer]         = new Vector2 (0, 0);
-   this [_enabledSensors]  = [[ ]];
    this [_overSensors]     = [ ];
    this [_activeSensors]   = [ ];
    this [_activeLayer]     = null;
@@ -153,10 +151,6 @@ X3DPointingDeviceSensorContext .prototype =
              this [_pointer] .x < rectangle .x + rectangle .z &&
              this [_pointer] .y > rectangle .y &&
              this [_pointer] .y < rectangle .y + rectangle .w;
-   },
-   getSensors: function ()
-   {
-      return this [_enabledSensors];
    },
    getPickOnlySensors: function ()
    {

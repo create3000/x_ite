@@ -851,7 +851,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       {
          case TraverseType .POINTER:
          {
-            renderObject .addPickingShape (this, this .getBrowser () .getSensors () .at (-1));
+            renderObject .addPickingShape (this);
             break;
          }
          case TraverseType .PICKING:

@@ -587,7 +587,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
                   pointingDeviceSensorNode .push (renderObject, sensors);
 
                if (sensors .length)
-                  this .getBrowser () .getSensors () .push (sensors);
+                  renderObject .getSensors () .push (sensors);
             }
 
             for (const clipPlaneNode of clipPlaneNodes)
@@ -600,7 +600,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
                clipPlaneNode .pop (renderObject);
 
             if (sensors .length)
-               this .getBrowser () .getSensors () .pop ();
+               renderObject .getSensors () .pop ();
 
             return;
          }
