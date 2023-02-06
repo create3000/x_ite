@@ -74,7 +74,11 @@ function TextureBuffer (browser, width, height, float = false)
    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
-   gl .texImage2D (gl .TEXTURE_2D, 0, float ? gl .RGBA32F : gl .RGBA, width, height, 0, gl .RGBA, float ? gl .FLOAT : gl .UNSIGNED_BYTE, null);
+
+   if (float)
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, width, height, 0, gl .RGBA, gl .FLOAT, null);
+   else
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
 
    gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .colorTexture, 0);
 
