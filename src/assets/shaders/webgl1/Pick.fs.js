@@ -1,4 +1,6 @@
 export default /* glsl */ `
+#extension GL_EXT_draw_buffers : enable
+
 precision highp float;
 precision highp int;
 
@@ -15,6 +17,8 @@ main ()
       clip ();
    #endif
 
-   gl_FragColor = vec4 (x3d_Id, vertex);
+   gl_FragData [0] = vec4 (x3d_Id, vertex);
+   gl_FragData [1] = vec4 (0.0);
+   gl_FragData [2] = vec4 (0.0);
 }
 `;
