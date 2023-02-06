@@ -53,7 +53,6 @@ import Fragment1              from "../../../assets/shaders/webgl1/include/Fragm
 import Hatch1                 from "../../../assets/shaders/webgl1/include/Hatch.glsl.js";
 import Material1              from "../../../assets/shaders/webgl1/include/Material.glsl.js";
 import Normal1                from "../../../assets/shaders/webgl1/include/Normal.glsl.js";
-import Pack1                  from "../../../assets/shaders/webgl1/include/Pack.glsl.js";
 import Perlin1                from "../../../assets/shaders/webgl1/include/Perlin.glsl.js";
 import Point1                 from "../../../assets/shaders/webgl1/include/Point.glsl.js";
 import PointSize1             from "../../../assets/shaders/webgl1/include/PointSize.glsl.js";
@@ -71,7 +70,6 @@ import Hatch2                 from "../../../assets/shaders/webgl2/include/Hatch
 import Line22                 from "../../../assets/shaders/webgl2/include/Line2.glsl.js";
 import Material2              from "../../../assets/shaders/webgl2/include/Material.glsl.js";
 import Normal2                from "../../../assets/shaders/webgl2/include/Normal.glsl.js";
-import Pack2                  from "../../../assets/shaders/webgl2/include/Pack.glsl.js";
 import Particle2              from "../../../assets/shaders/webgl2/include/Particle.glsl.js";
 import Perlin2                from "../../../assets/shaders/webgl2/include/Perlin.glsl.js";
 import Point2                 from "../../../assets/shaders/webgl2/include/Point.glsl.js";
@@ -114,7 +112,6 @@ const Shaders = {
          Hatch: Hatch1,
          Material: Material1,
          Normal: Normal1,
-         Pack: Pack1,
          Perlin: Perlin1,
          Point: Point1,
          PointSize: PointSize1,
@@ -132,7 +129,6 @@ const Shaders = {
          Line2: Line22,
          Material: Material2,
          Normal: Normal2,
-         Pack: Pack2,
          Particle: Particle2,
          Perlin: Perlin2,
          Point: Point2,

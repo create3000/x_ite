@@ -82,12 +82,15 @@ function PickingBuffer (browser, width, height)
 
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
 
-   gl .drawBuffers ([
-      gl .COLOR_ATTACHMENT0, // gl_FragData [0]
-      gl .COLOR_ATTACHMENT1, // gl_FragData [1]
-      gl .COLOR_ATTACHMENT2, // gl_FragData [2]
-      gl .COLOR_ATTACHMENT3, // gl_FragData [3]
-   ]);
+   // gl .drawBuffers ([
+   //    gl .COLOR_ATTACHMENT0, // gl_FragData [0]
+   //    gl .COLOR_ATTACHMENT1, // gl_FragData [1]
+   //    gl .COLOR_ATTACHMENT2, // gl_FragData [2]
+   //    gl .COLOR_ATTACHMENT3, // gl_FragData [3]
+   // ]);
+
+   // gl .clearColor (0, 0, 0, 0)
+   // gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
 
    // Create depth buffer.
 

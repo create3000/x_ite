@@ -1,8 +1,6 @@
 export default /* glsl */ `
 #if defined (X3D_FRAGMENT_SHADER) && defined (X3D_SHADOWS)
 
-#pragma X3D include "Pack.glsl"
-
 uniform sampler2D x3d_ShadowMap [X3D_NUM_LIGHTS];
 
 float
@@ -13,49 +11,49 @@ getShadowDepth (const in int index, const in vec2 shadowCoord)
       #if X3D_NUM_LIGHTS > 0
       case 0:
       {
-         return unpack (texture (x3d_ShadowMap [0], shadowCoord));
+         return texture (x3d_ShadowMap [0], shadowCoord) .r;
       }
       #endif
       #if X3D_NUM_LIGHTS > 1
       case 1:
       {
-         return unpack (texture (x3d_ShadowMap [1], shadowCoord));
+         return texture (x3d_ShadowMap [1], shadowCoord) .r;
       }
       #endif
       #if X3D_NUM_LIGHTS > 2
       case 2:
       {
-         return unpack (texture (x3d_ShadowMap [2], shadowCoord));
+         return texture (x3d_ShadowMap [2], shadowCoord) .r;
       }
       #endif
       #if X3D_NUM_LIGHTS > 3
       case 3:
       {
-         return unpack (texture (x3d_ShadowMap [3], shadowCoord));
+         return texture (x3d_ShadowMap [3], shadowCoord) .r;
       }
       #endif
       #if X3D_NUM_LIGHTS > 4
       case 4:
       {
-         return unpack (texture (x3d_ShadowMap [4], shadowCoord));
+         return texture (x3d_ShadowMap [4], shadowCoord) .r;
       }
       #endif
       #if X3D_NUM_LIGHTS > 5
       case 5:
       {
-         return unpack (texture (x3d_ShadowMap [5], shadowCoord));
+         return texture (x3d_ShadowMap [5], shadowCoord) .r;
       }
       #endif
       #if X3D_NUM_LIGHTS > 6
       case 6:
       {
-         return unpack (texture (x3d_ShadowMap [6], shadowCoord));
+         return texture (x3d_ShadowMap [6], shadowCoord) .r;
       }
       #endif
       #if X3D_NUM_LIGHTS > 7
       case 7:
       {
-         return unpack (texture (x3d_ShadowMap [7], shadowCoord));
+         return texture (x3d_ShadowMap [7], shadowCoord) .r;
       }
       #endif
       default:

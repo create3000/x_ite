@@ -8,7 +8,6 @@ in vec3 vertex;
 out vec4 x3d_FragColor;
 
 #pragma X3D include "include/ClipPlanes.glsl"
-#pragma X3D include "include/Pack.glsl"
 
 void
 main ()
@@ -17,6 +16,6 @@ main ()
       clip ();
    #endif
 
-   x3d_FragColor = pack (gl_FragCoord .z);
+   x3d_FragColor = vec4 (gl_FragCoord .z);
 }
 `;

@@ -5,7 +5,6 @@ precision highp int;
 varying vec3 vertex;
 
 #pragma X3D include "include/ClipPlanes.glsl"
-#pragma X3D include "include/Pack.glsl"
 
 void
 main ()
@@ -14,6 +13,6 @@ main ()
       clip ();
    #endif
 
-   gl_FragColor = pack (gl_FragCoord .z);
+   gl_FragColor = vec4 (gl_FragCoord .z);
 }
 `;

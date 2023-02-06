@@ -49,14 +49,14 @@ import ViewVolume from "../../standard/Math/Geometry/ViewVolume.js";
 import Vector3    from "../../standard/Math/Numbers/Vector3.js";
 import Matrix4    from "../../standard/Math/Numbers/Matrix4.js";
 
-function TextureBuffer (browser, width, height)
+function TextureBuffer (browser, width, height, float = false)
 {
    const gl = browser .getContext ();
 
    this .browser = browser;
    this .width   = width;
    this .height  = height;
-   this .array   = new Uint8Array (width * height * 4);
+   this .array   = float ? new Float32Array (width * height * 4) : new Uint8Array (width * height * 4);
 
    // Create frame buffer.
 
@@ -74,7 +74,7 @@ function TextureBuffer (browser, width, height)
    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
-   gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+   gl .texImage2D (gl .TEXTURE_2D, 0, float ? gl .RGBA32F : gl .RGBA, width, height, 0, gl .RGBA, float ? gl .FLOAT : gl .UNSIGNED_BYTE, null);
 
    gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .colorTexture, 0);
 
@@ -161,20 +161,18 @@ TextureBuffer .prototype =
             width  = this .width,
             height = this .height;
 
+         gl .readPixels (0, 0, width, height, gl .RGBA, gl .FLOAT, array);
+
          let
             winx = 0,
             winy = 0,
             winz = Number .POSITIVE_INFINITY;
 
-         invProjectionMatrix .assign (projectionMatrix) .inverse ();
-
-         gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
-
          for (let wy = 0, i = 0; wy < height; ++ wy)
          {
             for (let wx = 0; wx < width; ++ wx, i += 4)
             {
-               const wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
+               const wz = array [i];
 
                if (wz < winz)
                {
@@ -184,6 +182,8 @@ TextureBuffer .prototype =
                }
             }
          }
+
+         invProjectionMatrix .assign (projectionMatrix) .inverse ();
 
          ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, point);
 
