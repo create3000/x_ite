@@ -241,11 +241,21 @@ X3DPointingDeviceSensorContext .prototype =
       {
          const pickingContext = this [_pickingContexts] [hit .id];
 
-         hit .hitRay = pickingContext .renderObject .getHitRay ();
-         hit .sensors = pickingContext .sensors;
-         hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
+         hit .hitRay    = pickingContext .renderObject .getHitRay ();
+         hit .sensors   = pickingContext .sensors;
          hit .layerNode = pickingContext .renderObject;
          hit .shapeNode = pickingContext .shapeNode;
+
+         hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
+      }
+      else
+      {
+         hit .hitRay    = this [_activeLayer] ? this [_activeLayer] .getHitRay () : null;
+         hit .sensors   = Array .prototype;
+         hit .layerNode = this [_activeLayer];
+         hit .shapeNode = null;
+
+         hit .modelViewMatrix .assign (Matrix4 .Identity);
       }
 
       // Picking end.
@@ -257,24 +267,7 @@ X3DPointingDeviceSensorContext .prototype =
    },
    motion: function ()
    {
-      if (this [_hit] .id)
-      {
-         var hit = this [_hit];
-      }
-      else
-      {
-         var hit = {
-            id: 0,
-            pointer: this [_pointer],
-            hitRay: this [_activeLayer] ? this [_activeLayer] .getHitRay () : null,
-            sensors: Array .prototype,
-            modelViewMatrix: Matrix4 .Identity,
-            point: Vector3 .Zero,
-            normal: Vector3 .Zero,
-            texCoord: Vector2 .Zero,
-            shapeNode: null,
-         };
-      }
+      const hit = this [_hit];
 
       // Set isOver to FALSE for appropriate nodes
 
