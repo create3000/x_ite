@@ -209,7 +209,7 @@ X3DPointingDeviceSensorContext .prototype =
       for (const sensor of this [_activeSensors])
          sensor .set_active__ (false, null);
 
-      this [_activeSensors] = [ ];
+      this [_activeSensors] = Array .prototype;
 
       // Selection
 
@@ -272,10 +272,10 @@ X3DPointingDeviceSensorContext .prototype =
       {
          var nearestHit = {
             pointer:         this [_pointer],
-            modelViewMatrix: new Matrix4 (),
+            modelViewMatrix: Matrix4 .Identity,
             hitRay:          this [_selectedLayer] ? this [_hitRay] : line,
             intersection:    null,
-            sensors:         [ ],
+            sensors:         Array .prototype,
             shape:           null,
             layer:           null,
             layerNumber:     0,
@@ -307,7 +307,7 @@ X3DPointingDeviceSensorContext .prototype =
       }
       else
       {
-         this [_overSensors] = [ ];
+         this [_overSensors] = Array .prototype;
       }
 
       // Forward motion event to active drag sensor nodes
