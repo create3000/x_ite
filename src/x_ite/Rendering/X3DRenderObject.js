@@ -472,7 +472,7 @@ X3DRenderObject .prototype =
       return function (shapeNode)
       {
          if (this .getBrowser () .getPickOnlySensors () && this .sensors .length === 1)
-            return;
+            return false;
 
          const modelViewMatrix = this .getModelViewMatrix () .get ();
 
