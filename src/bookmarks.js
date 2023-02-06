@@ -139,7 +139,7 @@ const Bookmarks = (function ()
 
          const t0 = performance .now ();
 
-         await this .browser .loadURL (new X3D .MFString (url));
+         await this .browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
          const loadTime = (performance .now () - t0) / 1000;
 
