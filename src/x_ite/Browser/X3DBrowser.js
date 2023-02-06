@@ -91,7 +91,6 @@ function X3DBrowser (element)
    this [_browserCallbacks] = new Map ();
    this [_console]          = document .getElementsByClassName ("x_ite-console");
 
-   this .replaceWorld (this .createScene ()) .catch (Function .prototype);
    this .setup ();
 };
 
@@ -112,11 +111,15 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    initialize: function ()
    {
-      X3DBrowserContext .prototype .initialize .call (this);
+      const processEvent = X3DBrowserContext .prototype .initialize .call (this);
+
+      this .replaceWorld (this .createScene ()) .catch (Function .prototype);
 
       this [_DOMIntegration] = new DOMIntegration (this);
 
       legacy .call (this);
+
+      processEvent .call (this);
 
       // Print welcome message.
 
