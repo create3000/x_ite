@@ -53,8 +53,8 @@ function PickingBuffer (browser, width, height)
    const gl = browser .getContext ();
 
    this .browser = browser;
-   this .width   = width;
-   this .height  = height;
+   this .width   = Math .max (width, 1);
+   this .height  = Math .max (height, 1);
    this .array   = new Float32Array (4);
 
    // Create frame buffer.
@@ -107,7 +107,7 @@ function PickingBuffer (browser, width, height)
 
       const internalFormat = gl .getVersion () >= 2 ? gl .DEPTH_COMPONENT24 : gl .DEPTH_COMPONENT;
 
-      gl .texImage2D (gl .TEXTURE_2D, 0, internalFormat, width, height, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
+      gl .texImage2D (gl .TEXTURE_2D, 0, internalFormat, this .width, this .height, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
       gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .TEXTURE_2D, this .depthTexture, 0);
    }
    else
@@ -115,7 +115,7 @@ function PickingBuffer (browser, width, height)
       this .depthBuffer = gl .createRenderbuffer ();
 
       gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthBuffer);
-      gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, width, height);
+      gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, this .width, this .height);
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
    }
 

@@ -69,7 +69,9 @@ const
    _hitPointSorter  = Symbol (),
    _layerNumber     = Symbol (),
    _layerSorter     = Symbol (),
-   _pointerTime     = Symbol ();
+   _pointerTime     = Symbol (),
+   _pickingBuffer   = Symbol (),
+   _set_viewport    = Symbol ();
 
 const line = new Line3 (Vector3 .Zero, Vector3 .Zero);
 
@@ -86,6 +88,7 @@ function X3DPointingDeviceSensorContext ()
    this [_hitPointSorter] = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .intersection .point .z < rhs .intersection .point .z; });
    this [_layerSorter]    = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .layerNumber < rhs .layerNumber; });
    this [_pointerTime]    = 0;
+   this [_pickingBuffer]  = new PickingBuffer (this, 300, 150);
 }
 
 X3DPointingDeviceSensorContext .prototype =
@@ -93,6 +96,8 @@ X3DPointingDeviceSensorContext .prototype =
    initialize: function ()
    {
       this .setCursor ("DEFAULT");
+
+      this .getViewport () .addInterest (_set_viewport, this);
 
       this [_pointingDevice] .setup ();
    },
@@ -238,13 +243,10 @@ X3DPointingDeviceSensorContext .prototype =
 
       this [_pointer] .set (x, y);
 
-      if (!this .pickingBuffer)
-         this .pickingBuffer = new PickingBuffer (this, this .getViewport () [2], (this .getViewport () [3]));
-
-      this .pickingBuffer .bind (x, y);
+      this [_pickingBuffer] .bind (x, y);
       this .getWorld () .traverse (TraverseType .DISPLAY, null);
-      console .log (... this .pickingBuffer .readPixel (x, y));
-      this .pickingBuffer .unbind ();
+      console .log (... this [_pickingBuffer] .readPixel (x, y));
+      this [_pickingBuffer] .unbind ();
 
       // Clear hits.
 
@@ -318,6 +320,18 @@ X3DPointingDeviceSensorContext .prototype =
    getPointerTime: function ()
    {
       return this [_pointerTime];
+   },
+   [_set_viewport]: function ()
+   {
+      const viewport = this .getViewport ();
+
+      if (this [_pickingBuffer] .getWidth ()  === viewport [2] &&
+          this [_pickingBuffer] .getHeight () === viewport [3])
+      return;
+
+      this [_pickingBuffer] .dispose ();
+
+      this [_pickingBuffer] = new PickingBuffer (this, viewport [2], viewport [3]);
    },
 };
 

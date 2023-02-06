@@ -69,7 +69,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples)
    this .colorBuffer = gl .createRenderbuffer ();
 
    gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorBuffer);
-   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA8, this .width, this .height);
+   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA8, width, height);
    gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .colorBuffer);
 
    // Create depth buffer.
@@ -77,7 +77,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples)
    this .depthBuffer = gl .createRenderbuffer ();
 
    gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthBuffer);
-   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .DEPTH_COMPONENT24, this .width, this .height);
+   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .DEPTH_COMPONENT24, width, height);
    gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT,  gl .RENDERBUFFER, this .depthBuffer);
 
    const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
