@@ -179,7 +179,7 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
 
       // Process events from context creation. This will setup nodes like
       // geometry option nodes before any node is created.
-      this [_processEvents] ();
+      return this [_processEvents];
    },
    initialized: function ()
    {
