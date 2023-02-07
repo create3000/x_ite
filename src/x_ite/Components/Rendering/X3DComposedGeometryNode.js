@@ -259,7 +259,7 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
          }
 
          if (texCoordNode)
-            texCoordNode .addTexCoord (index, multiTexCoordArray);
+            texCoordNode .addPoint (index, multiTexCoordArray);
 
          if (normalNode)
          {

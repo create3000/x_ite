@@ -124,7 +124,18 @@ TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureC
          return vector .set (0, 0, 0, 1);
       }
    },
-   addTexCoordToChannel: function (index, array)
+   getPoints: function (array)
+   {
+      const
+         point  = this .point,
+         length = this .length;
+
+      for (let i = 0, p = 0; i < length; ++ i, p += 2)
+         array .push (point [p], point [p + 1], 0, 1);
+
+      return array;
+   },
+   addPointToChannel: function (index, array)
    {
       if (index >= 0 && index < this .length)
       {
@@ -147,17 +158,6 @@ TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureC
       {
          array .push (0, 0, 0, 1);
       }
-   },
-   getTexCoord: function (array)
-   {
-      const
-         point  = this .point,
-         length = this .length;
-
-      for (let i = 0, p = 0; i < length; ++ i, p += 2)
-         array .push (point [p], point [p + 1], 0, 1);
-
-      return array;
    },
 });
 

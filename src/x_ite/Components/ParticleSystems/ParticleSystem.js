@@ -629,7 +629,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
          texCoordRamp [i * 4] = texCoordKey [i];
 
       if (this .texCoordRampNode)
-         texCoordRamp .set (this .texCoordRampNode .getTexCoord ([ ]) .slice (0, numTexCoords * this .texCoordCount * 4), numTexCoords * 4);
+         texCoordRamp .set (this .texCoordRampNode .getPoints ([ ]) .slice (0, numTexCoords * this .texCoordCount * 4), numTexCoords * 4);
 
       if (textureSize)
       {

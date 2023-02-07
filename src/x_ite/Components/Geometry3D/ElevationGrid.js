@@ -397,7 +397,7 @@ ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prot
 
             if (texCoordNode)
             {
-               texCoordNode .addTexCoord (index, multiTexCoordArray);
+               texCoordNode .addPoint (index, multiTexCoordArray);
             }
             else
             {

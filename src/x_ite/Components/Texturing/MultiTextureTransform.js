@@ -143,10 +143,10 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
          }
       };
    })(),
-   multVecMatrix: function (texCoord)
+   transformPoint: function (texCoord)
    {
       if (this .textureTransformNodes .length)
-         return this .textureTransformNodes [0] .multVecMatrix (texCoord);
+         return this .textureTransformNodes [0] .transformPoint (texCoord);
 
       return texCoord;
    },

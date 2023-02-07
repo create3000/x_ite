@@ -204,7 +204,7 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
             }
 
             if (texCoordNode)
-               texCoordNode .addTexCoord (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
+               texCoordNode .addPoint (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
 
             if (normalNode)
             {

@@ -83,7 +83,7 @@ X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (X3DTe
    {
       gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [channel], false, this .matrixArray);
    },
-   multVecMatrix: function (texCoord)
+   transformPoint: function (texCoord)
    {
       return Matrix4 .prototype .multVecMatrix .call (this .matrixArray, texCoord);
    },

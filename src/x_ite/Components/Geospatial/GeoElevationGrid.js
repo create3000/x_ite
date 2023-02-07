@@ -383,7 +383,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
 
             if (texCoordNode)
             {
-               texCoordNode .addTexCoord (index, multiTexCoordArray);
+               texCoordNode .addPoint (index, multiTexCoordArray);
             }
             else
             {
