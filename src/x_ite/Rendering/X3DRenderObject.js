@@ -654,8 +654,8 @@ X3DRenderObject .prototype =
 
             // Clip planes and local lights
 
-            assign (renderContext .objectsCount, this .localObjectsCount);
             assign (renderContext .localObjects, this .localObjects);
+            assign (renderContext .objectsCount, this .localObjectsCount);
 
             return true;
          }
