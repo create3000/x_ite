@@ -185,8 +185,6 @@ PickingBuffer .prototype =
       // Finish
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
-
-      return array;
    },
    dispose: function ()
    {
