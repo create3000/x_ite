@@ -185,11 +185,11 @@ X3DPointingDeviceSensorContext .prototype =
    },
    buttonReleaseEvent: function ()
    {
-      this [_activeSensors] = Array .prototype;
-      this [_activeLayer]   = null;
-
       for (const sensor of this [_activeSensors])
          sensor .set_active__ (false, null);
+
+      this [_activeSensors] = Array .prototype;
+      this [_activeLayer]   = null;
    },
    motionNotifyEvent: function (x, y)
    {
