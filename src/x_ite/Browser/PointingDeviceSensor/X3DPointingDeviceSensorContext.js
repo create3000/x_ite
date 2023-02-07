@@ -160,7 +160,7 @@ X3DPointingDeviceSensorContext .prototype =
    {
       return this [_hit];
    },
-   addPickingShape: function (pickingContext)
+   addPointingShape: function (pickingContext)
    {
       const id = ++ this [_id];
 
@@ -239,12 +239,12 @@ X3DPointingDeviceSensorContext .prototype =
 
          hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
 
-         if (geometryNode .getNormals () .length)
+         if (geometryNode && geometryNode .getNormals () .length)
             hit .modelViewMatrix .submatrix .inverse () .transpose () .multVecMatrix (hit .normal) .normalize ();
          else
             hit .normal .assign (Vector3 .Zero);
 
-         if (geometryNode .getMultiTexCoords () .length)
+         if (geometryNode && geometryNode .getMultiTexCoords () .length)
             appearanceNode .getTextureTransform () .transformPoint (hit .texCoord);
          else
             hit .texCoord .assign (Vector4 .wAxis);
@@ -303,7 +303,7 @@ X3DPointingDeviceSensorContext .prototype =
       for (const sensor of this [_activeSensors])
          sensor .set_motion__ (hit);
    },
-   getPickShader: function (numClipPlanes, shapeNode)
+   getPointingShader: function (numClipPlanes, shapeNode)
    {
       const
          appearanceNode  = shapeNode .getAppearance (),

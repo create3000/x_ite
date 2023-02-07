@@ -88,12 +88,12 @@ function X3DRenderObject (executionContext)
    this .textureProjectors        = [ ];
    this .generatedCubeMapTextures = [ ];
    this .collisions               = [ ];
-   this .numPickingShapes         = 0;
+   this .numPointingShapes        = 0;
    this .numCollisionShapes       = 0;
    this .numShadowShapes          = 0;
    this .numOpaqueShapes          = 0;
    this .numTransparentShapes     = 0;
-   this .pickingShapes            = [ ];
+   this .pointingShapes           = [ ];
    this .collisionShapes          = [ ];
    this .activeCollisions         = new Set ();
    this .shadowShapes             = [ ];
@@ -247,6 +247,18 @@ X3DRenderObject .prototype =
    getCollisions: function ()
    {
       return this .collisions;
+   },
+   setNumPointingShapes: function (value)
+   {
+      this .numPointingShapes = value;
+   },
+   getNumPointingShapes: function ()
+   {
+      return this .numPointingShapes;
+   },
+   getPointingShapes: function ()
+   {
+      return this .pointingShapes;
    },
    setNumCollisionShapes: function (value)
    {
@@ -421,10 +433,10 @@ X3DRenderObject .prototype =
       {
          case TraverseType .POINTER:
          {
-            this .numPickingShapes = 0;
+            this .numPointingShapes = 0;
 
             callback .call (group, type, this);
-            this .pointing (this .pickingShapes, this .numPickingShapes);
+            this .pointing (this .pointingShapes, this .numPointingShapes);
             break;
          }
          case TraverseType .COLLISION:
@@ -463,7 +475,7 @@ X3DRenderObject .prototype =
    {
       ViewVolume .unProjectRay (pointer .x, pointer .y, Matrix4 .Identity, projectionMatrix, viewport, this .hitRay);
    },
-   addPickingShape: (function ()
+   addPointingShape: (function ()
    {
       const
          bboxSize   = new Vector3 (0, 0, 0),
@@ -482,23 +494,23 @@ X3DRenderObject .prototype =
 
          if (viewVolume .intersectsSphere (radius, bboxCenter))
          {
-            const num = this .numPickingShapes ++;
+            const num = this .numPointingShapes ++;
 
-            if (num === this .pickingShapes .length)
+            if (num === this .pointingShapes .length)
             {
-               this .pickingShapes .push ({ renderObject: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ], sensors: [ ] });
+               this .pointingShapes .push ({ renderObject: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ], sensors: [ ] });
             }
 
-            const pickingContext = this .pickingShapes [num];
+            const pointingContext = this .pointingShapes [num];
 
-            pickingContext .modelViewMatrix .set (modelViewMatrix);
-            pickingContext .shapeNode = shapeNode;
-            pickingContext .scissor   = viewVolume .getScissor ();
+            pointingContext .modelViewMatrix .set (modelViewMatrix);
+            pointingContext .shapeNode = shapeNode;
+            pointingContext .scissor   = viewVolume .getScissor ();
 
             // Clip planes & sensors
 
-            assign (pickingContext .clipPlanes, this .localObjects);
-            assign (pickingContext .sensors,    this .sensors .at (-1));
+            assign (pointingContext .clipPlanes, this .localObjects);
+            assign (pointingContext .sensors,    this .sensors .at (-1));
 
             return true;
          }
@@ -706,8 +718,8 @@ X3DRenderObject .prototype =
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
-               shaderNode          = browser .getPickShader (clipPlanes .length, shapeNode),
-               id                  = browser .addPickingShape (renderContext);
+               shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode),
+               id                  = browser .addPointingShape (renderContext);
 
             gl .scissor (scissor .x,
                          scissor .y,

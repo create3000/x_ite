@@ -127,7 +127,7 @@ Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
       {
          case TraverseType .POINTER:
          {
-            renderObject .addPickingShape (this);
+            renderObject .addPointingShape (this);
             break;
          }
          case TraverseType .PICKING:

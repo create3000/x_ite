@@ -132,6 +132,7 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
       this .group .getBBox (this .bbox);
       this .group .getBBox (this .shadowBBox, true);
 
+      this .pointingShapes    = null;
       this .collisionShapes   = null;
       this .shadowShapes      = null;
       this .opaqueShapes      = null;
@@ -152,6 +153,48 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
                return;
             }
             case TraverseType .POINTER:
+            {
+
+               if (! this .pointingShapes)
+               {
+                  //console .log ("Rebuilding StaticGroup pointingShapes");
+
+                  const
+                     viewVolumes        = renderObject .getViewVolumes (),
+                     viewport           = renderObject .getViewport (),
+                     projectionMatrix   = renderObject .getProjectionMatrix (),
+                     modelViewMatrix    = renderObject .getModelViewMatrix (),
+                     firstPointingShape = renderObject .getNumPointingShapes ();
+
+                  viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+
+                  modelViewMatrix .push ();
+                  modelViewMatrix .identity ();
+
+                  this .group .traverse (type, renderObject);
+
+                  modelViewMatrix .pop ();
+                  viewVolumes     .pop ();
+
+                  const lastPointingShape = renderObject .getNumPointingShapes ();
+
+                  this .pointingShapes = renderObject .getPointingShapes () .splice (firstPointingShape, lastPointingShape - firstPointingShape);
+
+                  renderObject .setNumPointingShapes (firstPointingShape);
+               }
+
+               const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+               for (const pointingShape of this .pointingShapes)
+               {
+                  modelViewMatrix .push ();
+                  modelViewMatrix .multLeft (pointingShape .modelViewMatrix);
+                  pointingShape .shapeNode .traverse (type, renderObject);
+                  modelViewMatrix .pop ();
+               }
+
+               return;
+            }
             case TraverseType .COLLISION:
             {
                if (! this .collisionShapes)
@@ -226,11 +269,11 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
 
                const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-               for (const depthShape of this .shadowShapes)
+               for (const shadowShape of this .shadowShapes)
                {
                   modelViewMatrix .push ();
-                  modelViewMatrix .multLeft (depthShape .modelViewMatrix);
-                  depthShape .shapeNode .traverse (type, renderObject);
+                  modelViewMatrix .multLeft (shadowShape .modelViewMatrix);
+                  shadowShape .shapeNode .traverse (type, renderObject);
                   modelViewMatrix .pop ();
                }
 
