@@ -671,7 +671,7 @@ X3DRenderObject .prototype =
          modelViewMatrix: new Float32Array (16),
          scissor: new Vector4 (0, 0, 0, 0),
          localObjects: [ ],
-         objectsCount: [0, 0, 0],
+         objectsCount: [0, 0, 0], // [clip planes, lights, texture projectors]
       };
    },
    pointing: (function ()
