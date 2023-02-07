@@ -143,6 +143,7 @@ PickingBuffer .prototype =
       this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
+      gl .viewport (0, 0, this .width, this .height);
       gl .scissor (x, y, 1, 1);
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
