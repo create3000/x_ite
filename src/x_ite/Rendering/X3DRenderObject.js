@@ -704,8 +704,8 @@ X3DRenderObject .prototype =
                renderContext       = shapes [s],
                { scissor, clipPlanes, modelViewMatrix, shapeNode } = renderContext,
                appearanceNode      = shapeNode .getAppearance (),
-               geometryNode        = shapeNode .getGeometry (),
-               stylePropertiesNode = appearanceNode .getStyleProperties (geometryNode .getGeometryType ()),
+               geometryContext     = shapeNode .getGeometryContext (),
+               stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
                shaderNode          = browser .getPickShader (clipPlanes .length, shapeNode),
                id                  = browser .addPickingShape (renderContext);
 

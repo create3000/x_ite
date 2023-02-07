@@ -101,6 +101,7 @@ Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
    {
       return 0;
    },
+   getGeometryContext: X3DShapeNode .prototype .getGeometry,
    set_geometry__: function ()
    {
       X3DShapeNode .prototype .set_geometry__ .call (this);

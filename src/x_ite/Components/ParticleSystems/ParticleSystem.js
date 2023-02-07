@@ -240,6 +240,16 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
    {
       return this .numTexCoords ? 2 : 1;
    },
+   getGeometryContext: function ()
+   {
+      switch (this .geometryType)
+      {
+         case GeometryTypes .GEOMETRY:
+            return this .getGeometry ();
+         default:
+            return this .geometryContext;
+      }
+   },
    set_bbox__: function ()
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
@@ -852,6 +862,10 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       switch (type)
       {
          case TraverseType .POINTER:
+         {
+            renderObject .addPickingShape (this);
+            break;
+         }
          case TraverseType .PICKING:
          case TraverseType .COLLISION:
          {
