@@ -58,6 +58,13 @@ import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js"
 
 // No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
 
+const
+   _pointingShapes    = Symbol (),
+   _collisionShapes   = Symbol (),
+   _shadowShapes      = Symbol (),
+   _opaqueShapes      = Symbol (),
+   _transparentShapes = Symbol ();
+
 function StaticGroup (executionContext)
 {
    X3DChildNode     .call (this, executionContext);
@@ -128,208 +135,87 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
       this .groupNode .getBBox (this .bbox);
       this .groupNode .getBBox (this .shadowBBox, true);
 
-      this .pointingShapes    = null;
-      this .collisionShapes   = null;
-      this .shadowShapes      = null;
-      this .opaqueShapes      = null;
-      this .transparentShapes = null;
+      this [_pointingShapes]    = null;
+      this [_collisionShapes]   = null;
+      this [_shadowShapes]      = null;
+      this [_opaqueShapes]      = null;
+      this [_transparentShapes] = null;
    },
-   traverse: (function ()
+   traverse: function (type, renderObject)
+   {
+      switch (type)
+      {
+         case TraverseType .CAMERA:
+         {
+            return;
+         }
+         case TraverseType .POINTER:
+         {
+            this .traverseObjects (_pointingShapes, "Pointing", type, renderObject);
+            return;
+         }
+         case TraverseType .COLLISION:
+         {
+            this .traverseObjects (_collisionShapes, "Collision", type, renderObject);
+            return;
+         }
+         case TraverseType .SHADOW:
+         {
+            this .traverseObjects (_shadowShapes, "Shadow", type, renderObject);
+            return;
+         }
+         case TraverseType .DISPLAY:
+         {
+            this .traverseObjects (_opaqueShapes,      "Opaque",      type, renderObject);
+            this .traverseObjects (_transparentShapes, "Transparent", type, renderObject);
+            return;
+         }
+      }
+   },
+   traverseObjects: (function ()
    {
       const viewVolume = new ViewVolume ();
 
       viewVolume .intersectsSphere = function () { return true; };
 
-      return function (type, renderObject)
+      return function (staticShapes, Static, type, renderObject)
       {
-         switch (type)
+         if (!this [staticShapes])
          {
-            case TraverseType .CAMERA:
-            {
-               return;
-            }
-            case TraverseType .POINTER:
-            {
+            //console .log (`Rebuilding StaticGroup ${type}.`);
 
-               if (! this .pointingShapes)
-               {
-                  //console .log ("Rebuilding StaticGroup pointingShapes");
+            const
+               viewVolumes      = renderObject .getViewVolumes (),
+               viewport         = renderObject .getViewport (),
+               projectionMatrix = renderObject .getProjectionMatrix (),
+               modelViewMatrix  = renderObject .getModelViewMatrix (),
+               firstShape       = renderObject [`getNum${Static}Shapes`] ();
 
-                  const
-                     viewVolumes        = renderObject .getViewVolumes (),
-                     viewport           = renderObject .getViewport (),
-                     projectionMatrix   = renderObject .getProjectionMatrix (),
-                     modelViewMatrix    = renderObject .getModelViewMatrix (),
-                     firstPointingShape = renderObject .getNumPointingShapes ();
+            viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
 
-                  viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+            modelViewMatrix .push ();
+            modelViewMatrix .identity ();
 
-                  modelViewMatrix .push ();
-                  modelViewMatrix .identity ();
+            this .groupNode .traverse (type, renderObject);
 
-                  this .groupNode .traverse (type, renderObject);
+            modelViewMatrix .pop ();
+            viewVolumes     .pop ();
 
-                  modelViewMatrix .pop ();
-                  viewVolumes     .pop ();
+            const lastShape = renderObject [`getNum${Static}Shapes`] ();
 
-                  const lastPointingShape = renderObject .getNumPointingShapes ();
+            this [staticShapes] = renderObject [`get${Static}Shapes`] () .splice (firstShape, lastShape - firstShape);
 
-                  this .pointingShapes = renderObject .getPointingShapes () .splice (firstPointingShape, lastPointingShape - firstPointingShape);
+            renderObject [`setNum${Static}Shapes`] (firstShape);
+         }
 
-                  renderObject .setNumPointingShapes (firstPointingShape);
-               }
+         const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-               const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-               for (const pointingShape of this .pointingShapes)
-               {
-                  modelViewMatrix .push ();
-                  modelViewMatrix .multLeft (pointingShape .modelViewMatrix);
-                  pointingShape .shapeNode .traverse (type, renderObject);
-                  modelViewMatrix .pop ();
-               }
-
-               return;
-            }
-            case TraverseType .COLLISION:
-            {
-               if (! this .collisionShapes)
-               {
-                  //console .log ("Rebuilding StaticGroup collisionShapes");
-
-                  const
-                     viewVolumes         = renderObject .getViewVolumes (),
-                     viewport            = renderObject .getViewport (),
-                     projectionMatrix    = renderObject .getProjectionMatrix (),
-                     modelViewMatrix     = renderObject .getModelViewMatrix (),
-                     firstCollisionShape = renderObject .getNumCollisionShapes ();
-
-                  viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
-
-                  modelViewMatrix .push ();
-                  modelViewMatrix .identity ();
-
-                  this .groupNode .traverse (type, renderObject);
-
-                  modelViewMatrix .pop ();
-                  viewVolumes     .pop ();
-
-                  const lastCollisionShape = renderObject .getNumCollisionShapes ();
-
-                  this .collisionShapes = renderObject .getCollisionShapes () .splice (firstCollisionShape, lastCollisionShape - firstCollisionShape);
-
-                  renderObject .setNumCollisionShapes (firstCollisionShape);
-               }
-
-               const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-               for (const collisionShape of this .collisionShapes)
-               {
-                  modelViewMatrix .push ();
-                  modelViewMatrix .multLeft (collisionShape .modelViewMatrix);
-                  collisionShape .shapeNode .traverse (type, renderObject);
-                  modelViewMatrix .pop ();
-               }
-
-               return;
-            }
-            case TraverseType .SHADOW:
-            {
-               if (! this .shadowShapes)
-               {
-                  //console .log ("Rebuilding StaticGroup shadowShapes");
-
-                  const
-                     viewVolumes      = renderObject .getViewVolumes (),
-                     viewport         = renderObject .getViewport (),
-                     projectionMatrix = renderObject .getProjectionMatrix (),
-                     modelViewMatrix  = renderObject .getModelViewMatrix (),
-                     firstShadowShape = renderObject .getNumShadowShapes ();
-
-                  viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
-
-                  modelViewMatrix .push ();
-                  modelViewMatrix .identity ();
-
-                  this .groupNode .traverse (type, renderObject);
-
-                  modelViewMatrix .pop ();
-                  viewVolumes     .pop ();
-
-                  const lastShadowShape = renderObject .getNumShadowShapes ();
-
-                  this .shadowShapes = renderObject .getShadowShapes () .splice (firstShadowShape, lastShadowShape - firstShadowShape);
-
-                  renderObject .setNumShadowShapes (firstShadowShape);
-               }
-
-               const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-               for (const shadowShape of this .shadowShapes)
-               {
-                  modelViewMatrix .push ();
-                  modelViewMatrix .multLeft (shadowShape .modelViewMatrix);
-                  shadowShape .shapeNode .traverse (type, renderObject);
-                  modelViewMatrix .pop ();
-               }
-
-               return;
-            }
-            case TraverseType .DISPLAY:
-            {
-               if (! this .opaqueShapes)
-               {
-                  //console .log ("Rebuilding StaticGroup opaqueShapes and transparentShapes");
-
-                  const
-                     viewVolumes           = renderObject .getViewVolumes (),
-                     viewport              = renderObject .getViewport (),
-                     projectionMatrix      = renderObject .getProjectionMatrix (),
-                     modelViewMatrix       = renderObject .getModelViewMatrix (),
-                     firstOpaqueShape      = renderObject .getNumOpaqueShapes (),
-                     firstTransparentShape = renderObject .getNumTransparentShapes ();
-
-                  viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
-
-                  modelViewMatrix .push ();
-                  modelViewMatrix .identity ();
-
-                  this .groupNode .traverse (type, renderObject);
-
-                  modelViewMatrix .pop ();
-                  viewVolumes     .pop ();
-
-                  const
-                     lastOpaqueShape      = renderObject .getNumOpaqueShapes (),
-                     lastTransparentShape = renderObject .getNumTransparentShapes ();
-
-                  this .opaqueShapes      = renderObject .getOpaqueShapes () .splice (firstOpaqueShape, lastOpaqueShape - firstOpaqueShape);
-                  this .transparentShapes = renderObject .getTransparentShapes () .splice (firstTransparentShape, lastTransparentShape - firstTransparentShape);
-
-                  renderObject .setNumOpaqueShapes (firstOpaqueShape);
-                  renderObject .setNumTransparentShapes (firstTransparentShape);
-               }
-
-               const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-               for (const opaqueShape of this .opaqueShapes)
-               {
-                  modelViewMatrix .push ();
-                  modelViewMatrix .multLeft (opaqueShape .modelViewMatrix);
-                  opaqueShape .shapeNode .traverse (type, renderObject);
-                  modelViewMatrix .pop ();
-               }
-
-               for (const transparentShape of this .transparentShapes)
-               {
-                  modelViewMatrix .push ();
-                  modelViewMatrix .multLeft (transparentShape .modelViewMatrix);
-                  transparentShape .shapeNode .traverse (type, renderObject);
-                  modelViewMatrix .pop ();
-               }
-
-               return;
-            }
+         for (const context of this [staticShapes])
+         {
+            modelViewMatrix .push ();
+            modelViewMatrix .multLeft (context .modelViewMatrix);
+            context .shapeNode .traverse (type, renderObject);
+            modelViewMatrix .pop ();
          }
       };
    })(),
