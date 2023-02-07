@@ -66,10 +66,8 @@ function X3DLineGeometryNode (executionContext)
       browser = this .getBrowser (),
       gl      = browser .getContext ();
 
-   this .transformVertexArrayObject = new VertexArray (gl);
-   this .thickVertexArrayObject     = new VertexArray (gl);
-   this .lineStippleBuffer          = gl .createBuffer ();
-   this .trianglesBuffer            = gl .createBuffer ();
+   this .lineStippleBuffer = gl .createBuffer ();
+   this .trianglesBuffer  = gl .createBuffer ();
 
    this .setGeometryType (1);
    this .setPrimitiveMode (gl .LINES);
@@ -79,13 +77,6 @@ function X3DLineGeometryNode (executionContext)
 X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: X3DLineGeometryNode,
-   updateVertexArrays: function ()
-   {
-      X3DGeometryNode .prototype .updateVertexArrays .call (this);
-
-      this .transformVertexArrayObject .update ();
-      this .thickVertexArrayObject     .update ();
-   },
    intersectsLine: function ()
    {
       return false;
@@ -162,6 +153,43 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
          gl .bufferData (gl .ARRAY_BUFFER, lineStippleArray, gl .DYNAMIC_DRAW);
       };
    })(),
+   displaySimple: function (gl, renderContext, shaderNode)
+   {
+      const linePropertiesNode = renderContext .shapeNode .getAppearance () .getStyleProperties (1);
+
+      if (linePropertiesNode)
+      {
+         if (linePropertiesNode .getTransformLines ())
+         {
+            // Setup vertex attributes.
+
+            if (this .vertexArrayObject .enable (shaderNode))
+            {
+               const
+                  stride       = 15 * Float32Array .BYTES_PER_ELEMENT,
+                  normalOffset = 8 * Float32Array .BYTES_PER_ELEMENT,
+                  vertexOffset = 11 * Float32Array .BYTES_PER_ELEMENT;
+
+               if (this .hasNormals)
+                  shaderNode .enableNormalAttribute (gl, this .trianglesBuffer, stride, normalOffset);
+
+               shaderNode .enableVertexAttribute (gl, this .trianglesBuffer, stride, vertexOffset);
+
+               gl .bindBuffer (gl .ARRAY_BUFFER, null);
+            }
+
+            gl .frontFace (gl .CCW);
+            gl .enable (gl .CULL_FACE);
+            gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount * 3);
+
+            return;
+         }
+      }
+
+      X3DGeometryNode .prototype .displaySimple .call (this, gl, renderContext, shaderNode);
+
+      gl .lineWidth (1);
+   },
    display: (function ()
    {
       const
@@ -208,7 +236,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
                // Setup vertex attributes.
 
-               if (this .transformVertexArrayObject .enable (shaderNode))
+               if (this .vertexArrayObject .enable (transformShaderNode))
                {
                   const
                      lineStippleStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
@@ -285,7 +313,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
                // Setup vertex attributes.
 
-               if (this .thickVertexArrayObject .enable (shaderNode))
+               if (this .vertexArrayObject .enable (shaderNode))
                {
                   const
                      stride            = 15 * Float32Array .BYTES_PER_ELEMENT,

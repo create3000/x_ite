@@ -184,7 +184,7 @@ Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
    },
    displaySimple: function (gl, renderContext, shaderNode)
    {
-      this .getGeometry () .displaySimple (gl, shaderNode);
+      this .getGeometry () .displaySimple (gl, renderContext, shaderNode);
    },
    display: function (gl, renderContext)
    {

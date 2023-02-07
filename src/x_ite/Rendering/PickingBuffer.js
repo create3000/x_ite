@@ -168,6 +168,8 @@ PickingBuffer .prototype =
       hit .id = array [3];
       hit .point .set (array [0], array [1], array [2]);
 
+      console .log (... array)
+
       // Normal
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [1]);

@@ -204,12 +204,8 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       this .inputParticles  = this .createBuffer ();
       this .outputParticles = this .createBuffer ();
 
-      this .inputParticles  .emitterArrayObject = new VertexArray (gl);
-      this .inputParticles  .vertexArrayObject  = new VertexArray (gl);
-      this .inputParticles  .simpleArrayObject  = new VertexArray (gl);
-      this .outputParticles .emitterArrayObject = new VertexArray (gl);
-      this .outputParticles .vertexArrayObject  = new VertexArray (gl);
-      this .outputParticles .simpleArrayObject  = new VertexArray (gl);
+      this .inputParticles  .vertexArrayObject = new VertexArray (gl);
+      this .outputParticles .vertexArrayObject = new VertexArray (gl);
 
       // Create forces stuff.
 
@@ -654,11 +650,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
    updateVertexArrays: function ()
    {
       this .inputParticles  .vertexArrayObject  .update ();
-      this .inputParticles  .simpleArrayObject  .update ();
-      this .inputParticles  .emitterArrayObject .update ();
       this .outputParticles .vertexArrayObject  .update ();
-      this .outputParticles .simpleArrayObject  .update ();
-      this .outputParticles .emitterArrayObject .update ();
    },
    createTexture: function ()
    {
@@ -919,7 +911,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
             {
                const outputParticles = this .outputParticles;
 
-               if (outputParticles .simpleArrayObject .enable (shaderNode))
+               if (outputParticles .vertexArrayObject .enable (shaderNode))
                {
                   const particleStride = this .particleStride;
 

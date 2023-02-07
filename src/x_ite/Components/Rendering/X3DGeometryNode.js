@@ -184,7 +184,6 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       this .normalBuffer          = gl .createBuffer ();
       this .vertexBuffer          = gl .createBuffer ();
       this .vertexArrayObject     = new VertexArray (gl);
-      this .simpleArrayObject     = new VertexArray (gl);
 
       this .set_live__ ();
    },
@@ -349,10 +348,8 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
    updateVertexArrays: function ()
    {
       this .vertexArrayObject .update ();
-      this .simpleArrayObject .update ();
 
-      this .updateSimpleParticles = true;
-      this .updateParticles       = true;
+      this .updateParticles = true;
    },
    buildTexCoords: function ()
    {
@@ -980,9 +977,9 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
    },
    traverse: function (type, renderObject)
    { },
-   displaySimple: function (gl, shaderNode)
+   displaySimple: function (gl, renderContext, shaderNode)
    {
-      if (this .simpleArrayObject .enable (shaderNode))
+      if (this .vertexArrayObject .enable (shaderNode))
       {
          if (this .multiTexCoords .length)
             shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
@@ -1101,7 +1098,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
    {
       const outputParticles = particleSystem .outputParticles;
 
-      if (outputParticles .simpleArrayObject .update (this .updateSimpleParticles) .enable (shaderNode))
+      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode))
       {
          const particleStride = particleSystem .particleStride;
 
