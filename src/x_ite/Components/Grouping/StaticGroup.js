@@ -65,13 +65,9 @@ function StaticGroup (executionContext)
 
    this .addType (X3DConstants .StaticGroup);
 
-   this .group             = new Group (this .getExecutionContext ());
-   this .collisionShapes   = null;
-   this .shadowShapes      = null;
-   this .opaqueShapes      = null;
-   this .transparentShapes = null;
-   this .bbox              = new Box3 ();
-   this .shadowBBox        = new Box3 ();
+   this .groupNode  = new Group (this .getExecutionContext ());
+   this .bbox       = new Box3 ();
+   this .shadowBBox = new Box3 ();
 }
 
 StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -103,23 +99,23 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this ._bboxSize   .addFieldInterest (this .group ._bboxSize);
-      this ._bboxCenter .addFieldInterest (this .group ._bboxCenter);
-      this ._children   .addFieldInterest (this .group ._children);
+      this ._bboxSize   .addFieldInterest (this .groupNode ._bboxSize);
+      this ._bboxCenter .addFieldInterest (this .groupNode ._bboxCenter);
+      this ._children   .addFieldInterest (this .groupNode ._children);
 
-      this .group ._bboxSize   = this ._bboxSize;
-      this .group ._bboxCenter = this ._bboxCenter;
-      this .group ._children   = this ._children;
-      this .group .setPrivate (true);
-      this .group .setup ();
+      this .groupNode ._bboxSize   = this ._bboxSize;
+      this .groupNode ._bboxCenter = this ._bboxCenter;
+      this .groupNode ._children   = this ._children;
+      this .groupNode .setPrivate (true);
+      this .groupNode .setup ();
 
       // Connect after Group setup.
-      this .group ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-      this .group ._isPickableObject .addFieldInterest (this ._isPickableObject);
-      this .group ._children         .addInterest ("set_children__", this);
+      this .groupNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+      this .groupNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
+      this .groupNode ._children         .addInterest ("set_children__", this);
 
-      this .setCameraObject   (this .group .getCameraObject ());
-      this .setPickableObject (this .group .getPickableObject ());
+      this .setCameraObject   (this .groupNode .getCameraObject ());
+      this .setPickableObject (this .groupNode .getPickableObject ());
 
       this .set_children__ ();
    },
@@ -129,8 +125,8 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
    },
    set_children__: function ()
    {
-      this .group .getBBox (this .bbox);
-      this .group .getBBox (this .shadowBBox, true);
+      this .groupNode .getBBox (this .bbox);
+      this .groupNode .getBBox (this .shadowBBox, true);
 
       this .pointingShapes    = null;
       this .collisionShapes   = null;
@@ -171,7 +167,7 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
                   modelViewMatrix .push ();
                   modelViewMatrix .identity ();
 
-                  this .group .traverse (type, renderObject);
+                  this .groupNode .traverse (type, renderObject);
 
                   modelViewMatrix .pop ();
                   viewVolumes     .pop ();
@@ -213,7 +209,7 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
                   modelViewMatrix .push ();
                   modelViewMatrix .identity ();
 
-                  this .group .traverse (type, renderObject);
+                  this .groupNode .traverse (type, renderObject);
 
                   modelViewMatrix .pop ();
                   viewVolumes     .pop ();
@@ -255,7 +251,7 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
                   modelViewMatrix .push ();
                   modelViewMatrix .identity ();
 
-                  this .group .traverse (type, renderObject);
+                  this .groupNode .traverse (type, renderObject);
 
                   modelViewMatrix .pop ();
                   viewVolumes     .pop ();
@@ -298,7 +294,7 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
                   modelViewMatrix .push ();
                   modelViewMatrix .identity ();
 
-                  this .group .traverse (type, renderObject);
+                  this .groupNode .traverse (type, renderObject);
 
                   modelViewMatrix .pop ();
                   viewVolumes     .pop ();
