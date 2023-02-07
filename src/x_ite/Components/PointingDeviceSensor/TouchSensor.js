@@ -50,8 +50,6 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DTouchSensorNode   from "./X3DTouchSensorNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
-import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 function TouchSensor (executionContext)
 {
@@ -88,27 +86,6 @@ TouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .pro
    {
       return "children";
    },
-   set_over__: (function ()
-   {
-      const
-         invModelViewMatrix = new Matrix4 (),
-         texCoord           = new Vector2 (0, 0);
-
-      return function (over, hit, modelViewMatrix, projectionMatrix, viewport)
-      {
-         X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
-
-         if (this ._isOver .getValue ())
-         {
-            texCoord .set (hit .texCoord .x, hit .texCoord .y) .divide (hit .texCoord .w);
-            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-
-            this ._hitTexCoord_changed = texCoord;
-            this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (hit .normal .copy ()) .normalize ();
-            this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (hit .point .copy ());
-         }
-      };
-   })(),
 });
 
 export default TouchSensor;
