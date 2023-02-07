@@ -483,11 +483,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          return clipPlane .isClipped (point);
       });
    },
-   intersectsLine: function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
-   {
-      return this .intersectsLineWithGeometry (hitRay, renderObject .getModelViewMatrix () .get (), renderObject .getLocalObjects (), intersections);
-   },
-   intersectsLineWithGeometry: (function ()
+   intersectsLine: (function ()
    {
       const
          modelViewMatrix = new Matrix4 (),

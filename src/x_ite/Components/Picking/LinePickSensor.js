@@ -232,7 +232,7 @@ LinePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .p
 
                            intersections .length = 0;
 
-                           if (geometryNode .intersectsLineWithGeometry (line, target .modelMatrix, clipPlanes, intersections))
+                           if (geometryNode .intersectsLine (line, target .modelMatrix, clipPlanes, intersections))
                            {
                               for (var i = 0, iLength = intersections .length; i < iLength; ++ i)
                               {

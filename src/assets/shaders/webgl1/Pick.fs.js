@@ -21,7 +21,7 @@ main ()
    #endif
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
-      if (getPointColor (vec4 (1.0)) .a == 0.0)
+      if (getPointColor (vec4 (1.0)) .a < 0.5)
          discard;
    #endif
 
