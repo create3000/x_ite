@@ -703,8 +703,11 @@ X3DRenderObject .prototype =
             const
                renderContext = shapes [s],
                { scissor, clipPlanes, modelViewMatrix, shapeNode } = renderContext,
-               shaderNode = browser .getPickShader (clipPlanes .length, shapeNode .getShapeKey () !== 0),
-               id = browser .addPickingShape (renderContext);
+               appearanceNode      = shapeNode .getAppearance (),
+               geometryNode        = shapeNode .getGeometry (),
+               stylePropertiesNode = appearanceNode .getStyleProperties (geometryNode .getGeometryType ()),
+               shaderNode          = browser .getPickShader (clipPlanes .length, shapeNode),
+               id                  = browser .addPickingShape (renderContext);
 
             gl .scissor (scissor .x,
                          scissor .y,
@@ -718,6 +721,9 @@ X3DRenderObject .prototype =
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
             gl .uniform1f (shaderNode .x3d_Id, id);
+
+            if (stylePropertiesNode)
+               stylePropertiesNode .setShaderUniforms (gl, shaderNode);
 
             shapeNode .displaySimple (gl, renderContext, shaderNode);
          }

@@ -303,18 +303,27 @@ X3DPointingDeviceSensorContext .prototype =
       for (const sensor of this [_activeSensors])
          sensor .set_motion__ (hit);
    },
-   getPickShader: function (numClipPlanes, particles)
+   getPickShader: function (numClipPlanes, shapeNode)
    {
+      const
+         appearanceNode = shapeNode .getAppearance (),
+         geometryNode   = shapeNode .getGeometry ();
+
       let key = "";
 
       key += numClipPlanes;
-      key += particles ? "1" : "0";
+      key += shapeNode .getShapeKey ();
+      key += appearanceNode .getStyleProperties (geometryNode .getGeometryType ()) ? 1 : 0;
+      key += geometryNode .getGeometryType ();
 
-      return this [_pickShaders] .get (key) || this .createPickShader (key, numClipPlanes, particles);
+      return this [_pickShaders] .get (key) || this .createPickShader (key, numClipPlanes, shapeNode);
    },
-   createPickShader: function (key, numClipPlanes, particles)
+   createPickShader: function (key, numClipPlanes, shapeNode)
    {
-      const options = [ ];
+      const
+         appearanceNode = shapeNode .getAppearance (),
+         geometryNode   = shapeNode .getGeometry (),
+         options        = [ ];
 
       if (numClipPlanes)
       {
@@ -322,8 +331,20 @@ X3DPointingDeviceSensorContext .prototype =
          options .push ("X3D_NUM_CLIP_PLANES " + numClipPlanes);
       }
 
-      if (particles)
+      if (shapeNode .getShapeKey () > 0)
          options .push ("X3D_PARTICLE_SYSTEM");
+
+      switch (geometryNode .getGeometryType ())
+      {
+         case 0:
+         {
+            options .push ("X3D_GEOMETRY_0D");
+            break;
+         }
+      }
+
+      if (appearanceNode .getStyleProperties (geometryNode .getGeometryType ()))
+         options .push ("X3D_STYLE_PROPERTIES");
 
       const shaderNode = this .createShader ("PickShader", "Pick", "Pick", options);
 
