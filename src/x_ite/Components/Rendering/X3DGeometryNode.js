@@ -183,8 +183,8 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       this .colorBuffer           = gl .createBuffer ();
       this .normalBuffer          = gl .createBuffer ();
       this .vertexBuffer          = gl .createBuffer ();
-      this .vertexArrayObject     = new VertexArray ();
-      this .simpleArrayObject     = new VertexArray ();
+      this .vertexArrayObject     = new VertexArray (gl);
+      this .simpleArrayObject     = new VertexArray (gl);
 
       this .set_live__ ();
    },
@@ -986,7 +986,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
    { },
    displaySimple: function (gl, shaderNode)
    {
-      if (this .simpleArrayObject .enable (gl, shaderNode))
+      if (this .simpleArrayObject .enable (shaderNode))
       {
          if (this .multiTexCoords .length)
             shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
@@ -1034,7 +1034,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       // Setup vertex attributes.
 
-      if (this .vertexArrayObject .enable (gl, shaderNode))
+      if (this .vertexArrayObject .enable (shaderNode))
       {
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -1105,7 +1105,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
    {
       const outputParticles = particleSystem .outputParticles;
 
-      if (outputParticles .simpleArrayObject .update (this .updateSimpleParticles) .enable (gl, shaderNode))
+      if (outputParticles .simpleArrayObject .update (this .updateSimpleParticles) .enable (shaderNode))
       {
          const particleStride = particleSystem .particleStride;
 
@@ -1159,7 +1159,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       const outputParticles = particleSystem .outputParticles;
 
-      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
+      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode))
       {
          const particleStride = particleSystem .particleStride;
 

@@ -91,7 +91,7 @@ function X3DFlyViewer (executionContext, navigationInfo)
    this .lineCount         = 2;
    this .lineArray         = new Float32Array (this .lineCount * 4) .fill (1);
    this .lineBuffer        = gl .createBuffer ();
-   this .lineArrayObject   = new VertexArray ();
+   this .lineArrayObject   = new VertexArray (gl);
    this .geometryContext   = new GeometryContext ({ geometryType: 1 });
 }
 
@@ -673,7 +673,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
          gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
 
-         if (this .lineArrayObject .enable (gl, shaderNode))
+         if (this .lineArrayObject .enable (shaderNode))
             shaderNode .enableVertexAttribute (gl, this .lineBuffer, 0, 0);
 
          // Draw a black and a white line.

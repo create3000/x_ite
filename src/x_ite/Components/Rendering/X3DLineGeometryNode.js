@@ -66,8 +66,8 @@ function X3DLineGeometryNode (executionContext)
       browser = this .getBrowser (),
       gl      = browser .getContext ();
 
-   this .transformVertexArrayObject = new VertexArray ();
-   this .thickVertexArrayObject     = new VertexArray ();
+   this .transformVertexArrayObject = new VertexArray (gl);
+   this .thickVertexArrayObject     = new VertexArray (gl);
    this .lineStippleBuffer          = gl .createBuffer ();
    this .trianglesBuffer            = gl .createBuffer ();
 
@@ -302,7 +302,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
                // Setup vertex attributes.
 
-               if (this .transformVertexArrayObject .enable (gl, shaderNode))
+               if (this .transformVertexArrayObject .enable (shaderNode))
                {
                   const
                      lineStippleStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
@@ -379,7 +379,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
                // Setup vertex attributes.
 
-               if (this .thickVertexArrayObject .enable (gl, shaderNode))
+               if (this .thickVertexArrayObject .enable (shaderNode))
                {
                   const
                      stride            = 15 * Float32Array .BYTES_PER_ELEMENT,
@@ -431,7 +431,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
          // Setup vertex attributes.
 
-         if (this .vertexArrayObject .enable (gl, shaderNode))
+         if (this .vertexArrayObject .enable (shaderNode))
          {
             for (let i = 0, length = attribNodes .length; i < length; ++ i)
                attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -481,7 +481,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
       const outputParticles = particleSystem .outputParticles;
 
-      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
+      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode))
       {
          const particleStride = particleSystem .particleStride;
 

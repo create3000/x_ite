@@ -230,7 +230,7 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .pro
 
       // Input attributes
 
-      if (inputParticles .emitterArrayObject .enable (gl, program))
+      if (inputParticles .emitterArrayObject .enable (program))
       {
          for (const [i, attribute] of program .inputs)
          {

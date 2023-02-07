@@ -45,54 +45,48 @@
  *
  ******************************************************************************/
 
-function VertexArray ()
+function VertexArray (gl)
 {
+   this .gl           = gl;
    this .vertexArrays = new Map ();
-   this .tainted      = true;
 }
 
 VertexArray .prototype =
 {
    update: function (value = true)
    {
-      this .tainted = this .tainted || value;
+      if (value)
+         this .delete ();
 
       return this;
    },
-   enable: function (gl, shaderNode)
+   enable: function (shaderNode)
    {
-      if (this .tainted)
-      {
-         this .delete (gl);
-
-         this .tainted = false;
-      }
-
       const vertexArray = this .vertexArrays .get (shaderNode);
 
       if (vertexArray)
       {
-         gl .bindVertexArray (vertexArray);
+         this .gl .bindVertexArray (vertexArray);
 
          return false;
       }
       else
       {
-         const vertexArray = gl .createVertexArray ();
+         const vertexArray = this .gl .createVertexArray ();
 
          this .vertexArrays .set (shaderNode, vertexArray)
 
-         gl .bindVertexArray (vertexArray);
+         this .gl .bindVertexArray (vertexArray);
 
          // console .log ("rebuild vao");
 
          return true; // Rebuild
       }
    },
-   delete: function (gl)
+   delete: function ()
    {
       for (const vertexArray of this .vertexArrays .values ())
-         gl .deleteVertexArray (vertexArray);
+         this .gl .deleteVertexArray (vertexArray);
 
       this .vertexArrays .clear ();
    },

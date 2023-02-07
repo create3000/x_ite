@@ -172,7 +172,9 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
    {
       X3DShapeNode .prototype .initialize .call (this);
 
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
 
       // Check version.
 
@@ -202,12 +204,12 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       this .inputParticles  = this .createBuffer ();
       this .outputParticles = this .createBuffer ();
 
-      this .inputParticles  .emitterArrayObject = new VertexArray ();
-      this .inputParticles  .vertexArrayObject  = new VertexArray ();
-      this .inputParticles  .simpleArrayObject  = new VertexArray ();
-      this .outputParticles .emitterArrayObject = new VertexArray ();
-      this .outputParticles .vertexArrayObject  = new VertexArray ();
-      this .outputParticles .simpleArrayObject  = new VertexArray ();
+      this .inputParticles  .emitterArrayObject = new VertexArray (gl);
+      this .inputParticles  .vertexArrayObject  = new VertexArray (gl);
+      this .inputParticles  .simpleArrayObject  = new VertexArray (gl);
+      this .outputParticles .emitterArrayObject = new VertexArray (gl);
+      this .outputParticles .vertexArrayObject  = new VertexArray (gl);
+      this .outputParticles .simpleArrayObject  = new VertexArray (gl);
 
       // Create forces stuff.
 
@@ -907,7 +909,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
             {
                const outputParticles = this .outputParticles;
 
-               if (outputParticles .simpleArrayObject .enable (gl, shaderNode))
+               if (outputParticles .simpleArrayObject .enable (shaderNode))
                {
                   const particleStride = this .particleStride;
 
@@ -990,7 +992,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
 
                const outputParticles = this .outputParticles;
 
-               if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
+               if (outputParticles .vertexArrayObject .enable (shaderNode))
                {
                   const particleStride = this .particleStride;
 
