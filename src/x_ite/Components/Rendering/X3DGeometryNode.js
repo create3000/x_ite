@@ -941,7 +941,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       this .set_shading__ (this .getBrowser () .getBrowserOptions () ._Shading);
 
-      this .hasNormals = !! this .normals .getValue () .length;
+      this .hasNormals = !! this .normals .length;
 
       if (this .hasNormals !== lastHasNormals)
          this .updateVertexArrays ();
