@@ -424,7 +424,7 @@ X3DRenderObject .prototype =
             this .numPickingShapes = 0;
 
             callback .call (group, type, this);
-            this .touch (this .pickingShapes, this .numPickingShapes);
+            this .pointing (this .pickingShapes, this .numPickingShapes);
             break;
          }
          case TraverseType .COLLISION:
@@ -662,7 +662,7 @@ X3DRenderObject .prototype =
          objectsCount: [0, 0, 0],
       };
    },
-   touch: (function ()
+   pointing: (function ()
    {
       const projectionMatrixArray = new Float32Array (16);
 
