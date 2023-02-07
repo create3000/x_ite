@@ -226,22 +226,26 @@ X3DPointingDeviceSensorContext .prototype =
 
       if (hit .id)
       {
-         const pickingContext = this [_pickingContexts] [hit .id];
+         const
+            pickingContext = this [_pickingContexts] [hit .id],
+            shapeNode      = pickingContext .shapeNode,
+            appearanceNode = shapeNode .getAppearance (),
+            geometryNode   = shapeNode .getGeometry ();
 
          hit .hitRay    = pickingContext .renderObject .getHitRay ();
          hit .sensors   = pickingContext .sensors;
          hit .layerNode = pickingContext .renderObject;
-         hit .shapeNode = pickingContext .shapeNode;
+         hit .shapeNode = shapeNode;
 
          hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
 
-         if (hit .shapeNode .getGeometry () .getNormals () .length)
+         if (geometryNode .getNormals () .length)
             hit .modelViewMatrix .submatrix .inverse () .transpose () .multVecMatrix (hit .normal) .normalize ();
          else
             hit .normal .assign (Vector3 .Zero)
 
-         if (hit .shapeNode .getGeometry () .getMultiTexCoords () .length)
-            hit .shapeNode .getAppearance () .getTextureTransform () .multVecMatrix (hit .texCoord);
+         if (geometryNode .getMultiTexCoords () .length)
+            appearanceNode .getTextureTransform () .multVecMatrix (hit .texCoord);
          else
             hit .texCoord .assign (Vector4 .wAxis);
       }
