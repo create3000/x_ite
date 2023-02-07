@@ -239,6 +239,8 @@ X3DPointingDeviceSensorContext .prototype =
 
          hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
 
+         // ParticleSystem may have no geometry node.
+
          if (geometryNode && geometryNode .getNormals () .length)
             hit .modelViewMatrix .submatrix .inverse () .transpose () .multVecMatrix (hit .normal) .normalize ();
          else
