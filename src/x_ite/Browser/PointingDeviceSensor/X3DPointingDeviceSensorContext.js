@@ -233,7 +233,7 @@ X3DPointingDeviceSensorContext .prototype =
             geometryNode   = shapeNode .getGeometry ();
 
          hit .hitRay    = pickingContext .renderObject .getHitRay ();
-         hit .sensors   = pickingContext .sensors;
+         hit .sensors   = pickingContext .sensors .slice ();
          hit .layerNode = pickingContext .renderObject;
          hit .shapeNode = shapeNode;
 
