@@ -178,10 +178,10 @@ const Context =
 
          for (let i = 0, length = gl .getParameter(gl .MAX_COLOR_ATTACHMENTS); i < length; ++ i)
          {
-            const COLOR_ATTACHMENT = draw_buffers [`COLOR_ATTACHMENT${i}_WEBGL`];
+            const COLOR_ATTACHMENTi = draw_buffers .COLOR_ATTACHMENT0_WEBGL + i;
 
             if (gl [`COLOR_ATTACHMENT${i}`] === undefined)
-               gl [`COLOR_ATTACHMENT${i}`] = COLOR_ATTACHMENT;
+               gl [`COLOR_ATTACHMENT${i}`] = COLOR_ATTACHMENTi;
          }
       }
 

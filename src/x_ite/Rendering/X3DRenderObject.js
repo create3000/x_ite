@@ -717,6 +717,7 @@ X3DRenderObject .prototype =
 
             shaderNode .enable (gl);
             shaderNode .setClipPlanes (gl, clipPlanes);
+            shaderNode .setNormalMatrix (gl, modelViewMatrix);
 
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);

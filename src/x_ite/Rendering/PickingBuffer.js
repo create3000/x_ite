@@ -75,9 +75,9 @@ function PickingBuffer (browser, width, height)
       gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorBuffers [i]);
       gl .renderbufferStorage (gl .RENDERBUFFER, gl .RGBA32F, this .width, this .height);
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
-      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl [`COLOR_ATTACHMENT${i}`], gl .RENDERBUFFER, this .colorBuffers [i]);
+      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0 + i, gl .RENDERBUFFER, this .colorBuffers [i]);
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [i]);
-      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl [`COLOR_ATTACHMENT${i}`], gl .RENDERBUFFER, this .colorBuffers [i]);
+      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .colorBuffers [i]);
    }
 
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
@@ -87,9 +87,6 @@ function PickingBuffer (browser, width, height)
       gl .COLOR_ATTACHMENT1, // gl_FragData [1]
       gl .COLOR_ATTACHMENT2, // gl_FragData [2]
    ]);
-
-   // gl .clearColor (0, 0, 0, 0)
-   // gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
 
    // Create depth buffer.
 
@@ -162,11 +159,24 @@ PickingBuffer .prototype =
          gl    = this .browser .getContext (),
          array = this .array;
 
+      // Id, point
+
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [0]);
       gl .readPixels (x, y, 1, 1, gl .RGBA, gl .FLOAT, array);
 
       hit .id = array [0];
       hit .point .set (array [1], array [2], array [3]);
+
+      // Normal
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [1]);
+      gl .readPixels (x, y, 1, 1, gl .RGBA, gl .FLOAT, array);
+
+      hit .normal .set (array [0], array [1], array [2]);
+
+      // TexCoord
+
+      // Finish
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
 
