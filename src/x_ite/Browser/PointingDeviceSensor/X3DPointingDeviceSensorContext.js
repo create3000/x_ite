@@ -242,7 +242,7 @@ X3DPointingDeviceSensorContext .prototype =
          if (geometryNode .getNormals () .length)
             hit .modelViewMatrix .submatrix .inverse () .transpose () .multVecMatrix (hit .normal) .normalize ();
          else
-            hit .normal .assign (Vector3 .Zero)
+            hit .normal .assign (Vector3 .Zero);
 
          if (geometryNode .getMultiTexCoords () .length)
             appearanceNode .getTextureTransform () .transformPoint (hit .texCoord);
