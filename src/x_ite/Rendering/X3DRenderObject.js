@@ -701,7 +701,7 @@ X3DRenderObject .prototype =
          for (let s = 0; s < numShapes; ++ s)
          {
             const
-               renderContext = shapes [s],
+               renderContext       = shapes [s],
                { scissor, clipPlanes, modelViewMatrix, shapeNode } = renderContext,
                appearanceNode      = shapeNode .getAppearance (),
                geometryNode        = shapeNode .getGeometry (),
