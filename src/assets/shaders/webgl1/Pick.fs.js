@@ -6,6 +6,7 @@ precision highp int;
 
 varying vec3 vertex;
 varying vec3 normal;
+varying vec4 texCoord;
 
 #pragma X3D include "include/ClipPlanes.glsl"
 
@@ -18,8 +19,8 @@ main ()
       clip ();
    #endif
 
-   gl_FragData [0] = vec4 (x3d_Id, vertex);
-   gl_FragData [1] = vec4 (normalize (normal), 0.0);
-   gl_FragData [2] = vec4 (0.0);
+   gl_FragData [0] = vec4 (vertex, x3d_Id);
+   gl_FragData [1] = vec4 (normal, 0.0);
+   gl_FragData [2] = texCoord;
 }
 `;

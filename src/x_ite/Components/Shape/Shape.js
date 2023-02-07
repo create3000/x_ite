@@ -157,59 +157,6 @@ Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 
       this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
    },
-   // pointer: (function ()
-   // {
-   //    const
-   //       modelViewMatrix    = new Matrix4 (),
-   //       invModelViewMatrix = new Matrix4 (),
-   //       hitRay             = new Line3 (new Vector3 (0, 0, 0), new Vector3 (0, 0, 0)),
-   //       intersections      = [ ],
-   //       intersectionSorter = new QuickSort (intersections, function (lhs, rhs)
-   //       {
-   //          return lhs .point .z > rhs .point .z;
-   //       }),
-   //       distanceCompare    = function (lhs, rhs) { return lhs .point .z > rhs; };
-
-   //    return function (renderObject)
-   //    {
-   //       const browser = this .getBrowser ();
-
-   //       if (browser .getPickOnlySensors () && browser .getSensors () .length === 1)
-   //          return;
-
-   //       const geometryNode = this .getGeometry ();
-
-   //       modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
-   //       invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-
-   //       hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
-
-   //       if (geometryNode .intersectsLine (hitRay, renderObject, invModelViewMatrix, this .getAppearance (), intersections))
-   //       {
-   //          // Finally we have intersections and must now find the closest hit in front of the camera.
-
-   //          // Transform hitPoints to absolute space.
-   //          for (const intersection of intersections)
-   //             modelViewMatrix .multVecMatrix (intersection .point);
-
-   //          intersectionSorter .sort (0, intersections .length);
-
-   //          // Find first point that is not greater than near plane;
-   //          const index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (), distanceCompare);
-
-   //          // Are there intersections before the camera?
-   //          if (index !== intersections .length)
-   //          {
-   //             // Transform hitNormal to absolute space.
-   //             invModelViewMatrix .multMatrixDir (intersections [index] .normal) .normalize ();
-
-   //             browser .addHit (intersections [index], renderObject .getLayer (), this, modelViewMatrix .multRight (renderObject .getCameraSpaceMatrix () .get ()));
-   //          }
-
-   //          intersections .length = 0;
-   //       }
-   //    };
-   // })(),
    picking: function (renderObject)
    {
       const modelMatrix = renderObject .getModelViewMatrix () .get ();

@@ -471,9 +471,6 @@ X3DRenderObject .prototype =
 
       return function (shapeNode)
       {
-         if (this .getBrowser () .getPickOnlySensors () && this .sensors .length === 1)
-            return false;
-
          const modelViewMatrix = this .getModelViewMatrix () .get ();
 
          modelViewMatrix .multDirMatrix (bboxSize   .assign (shapeNode .getBBoxSize ()));
@@ -717,7 +714,6 @@ X3DRenderObject .prototype =
 
             shaderNode .enable (gl);
             shaderNode .setClipPlanes (gl, clipPlanes);
-            shaderNode .setNormalMatrix (gl, modelViewMatrix);
 
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);

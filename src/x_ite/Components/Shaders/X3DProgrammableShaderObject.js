@@ -961,121 +961,119 @@ X3DProgrammableShaderObject .prototype =
       for (const clipPlane of clipPlanes)
          clipPlane .setShaderUniforms (gl, this);
    },
-   setUniforms: function (gl, geometryContext, renderContext, front = true)
-   {
-      const
-         renderObject        = renderContext .renderObject,
-         fogNode             = renderContext .fogNode,
-         appearanceNode      = renderContext .appearanceNode,
-         stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
-         materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
-         textureNode         = renderContext .textureNode || appearanceNode .getTexture (),
-         modelViewMatrix     = renderContext .modelViewMatrix;
-
-      // Set global uniforms.
-
-      if (this .renderTime !== renderObject .getRenderTime ())
-      {
-         this .renderTime = renderObject .getRenderTime ();
-
-         // Set viewport.
-
-         gl .uniform4iv (this .x3d_Viewport, renderObject .getViewportArray ());
-
-         // Set projection matrix.
-
-         gl .uniformMatrix4fv (this .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
-         gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, renderObject .getCameraSpaceMatrixArray ());
-
-         // Fog
-
-         this .fogNode = null;
-
-         // Set global lights and global texture projectors.
-
-         this .numLights                      = 0;
-         this .numProjectiveTextures          = 0;
-         this .lightNodes .length             = 0;
-         this .projectiveTextureNodes .length = 0;
-
-         const globalObjects = renderObject .getGlobalObjects ();
-
-         for (const globalObject of globalObjects)
-            globalObject .setShaderUniforms (gl, this, renderObject);
-
-         this .numGlobalLights             = this .numLights;
-         this .numGlobalProjectiveTextures = this .numProjectiveTextures;
-
-         // Logarithmic depth buffer support
-
-         const viewpoint = renderObject .getViewpoint ();
-
-         if (this .logarithmicDepthBuffer || viewpoint .getLogarithmicDepthBuffer ())
-         {
-            const navigationInfo = renderObject .getNavigationInfo ();
-
-            gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
-         }
-      }
-
-      // Model view matrix
-
-      gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
-
-      // Normal matrix
-
-      if (geometryContext .hasNormals)
-         this .setNormalMatrix (gl, modelViewMatrix);
-
-      // Fog
-
-      if (fogNode)
-         fogNode .setShaderUniforms (gl, this);
-
-      // Clip planes and local lights
-
-      this .numClipPlanes         = 0;
-      this .numLights             = this .numGlobalLights;
-      this .numProjectiveTextures = this .numGlobalProjectiveTextures;
-
-      for (const localObject of renderContext .localObjects)
-         localObject .setShaderUniforms (gl, this, renderObject);
-
-      // Alpha
-
-      gl .uniform1f (this .x3d_AlphaCutoff, appearanceNode .getAlphaCutoff ());
-
-      // Style Properties
-
-      if (stylePropertiesNode)
-         stylePropertiesNode .setShaderUniforms (gl, this);
-
-      // Material
-
-      materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .getTextureTransformMapping (), geometryContext .getTextureCoordinateMapping (), front);
-
-      // Texture
-
-      if (textureNode)
-         textureNode .setShaderUniforms (gl, this, renderObject);
-
-      appearanceNode  .getTextureTransform ()  .setShaderUniforms (gl, this);
-      geometryContext .getTextureCoordinate () .setShaderUniforms (gl, this);
-   },
-   setNormalMatrix: (function ()
+   setUniforms: (function ()
    {
       const normalMatrix = new Float32Array (9);
 
-      return function (gl, modelViewMatrix)
+      return function (gl, geometryContext, renderContext, front = true)
       {
-         normalMatrix [0] = modelViewMatrix [0]; normalMatrix [3] = modelViewMatrix [1]; normalMatrix [6] = modelViewMatrix [ 2];
-         normalMatrix [1] = modelViewMatrix [4]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [7] = modelViewMatrix [ 6];
-         normalMatrix [2] = modelViewMatrix [8]; normalMatrix [5] = modelViewMatrix [9]; normalMatrix [8] = modelViewMatrix [10];
+         const
+            renderObject        = renderContext .renderObject,
+            fogNode             = renderContext .fogNode,
+            appearanceNode      = renderContext .appearanceNode,
+            stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
+            materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
+            textureNode         = renderContext .textureNode || appearanceNode .getTexture (),
+            modelViewMatrix     = renderContext .modelViewMatrix;
 
-         Matrix3 .prototype .inverse .call (normalMatrix);
+         // Set global uniforms.
 
-         gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrix);
-      }
+         if (this .renderTime !== renderObject .getRenderTime ())
+         {
+            this .renderTime = renderObject .getRenderTime ();
+
+            // Set viewport.
+
+            gl .uniform4iv (this .x3d_Viewport, renderObject .getViewportArray ());
+
+            // Set projection matrix.
+
+            gl .uniformMatrix4fv (this .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
+            gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, renderObject .getCameraSpaceMatrixArray ());
+
+            // Fog
+
+            this .fogNode = null;
+
+            // Set global lights and global texture projectors.
+
+            this .numLights                      = 0;
+            this .numProjectiveTextures          = 0;
+            this .lightNodes .length             = 0;
+            this .projectiveTextureNodes .length = 0;
+
+            const globalObjects = renderObject .getGlobalObjects ();
+
+            for (const globalObject of globalObjects)
+               globalObject .setShaderUniforms (gl, this, renderObject);
+
+            this .numGlobalLights             = this .numLights;
+            this .numGlobalProjectiveTextures = this .numProjectiveTextures;
+
+            // Logarithmic depth buffer support
+
+            const viewpoint = renderObject .getViewpoint ();
+
+            if (this .logarithmicDepthBuffer || viewpoint .getLogarithmicDepthBuffer ())
+            {
+               const navigationInfo = renderObject .getNavigationInfo ();
+
+               gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
+            }
+         }
+
+         // Model view matrix
+
+         gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+
+         // Normal matrix
+
+         if (geometryContext .hasNormals)
+         {
+            normalMatrix [0] = modelViewMatrix [0]; normalMatrix [3] = modelViewMatrix [1]; normalMatrix [6] = modelViewMatrix [ 2];
+            normalMatrix [1] = modelViewMatrix [4]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [7] = modelViewMatrix [ 6];
+            normalMatrix [2] = modelViewMatrix [8]; normalMatrix [5] = modelViewMatrix [9]; normalMatrix [8] = modelViewMatrix [10];
+
+            Matrix3 .prototype .inverse .call (normalMatrix);
+
+            gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrix);
+         }
+
+         // Fog
+
+         if (fogNode)
+            fogNode .setShaderUniforms (gl, this);
+
+         // Clip planes and local lights
+
+         this .numClipPlanes         = 0;
+         this .numLights             = this .numGlobalLights;
+         this .numProjectiveTextures = this .numGlobalProjectiveTextures;
+
+         for (const localObject of renderContext .localObjects)
+            localObject .setShaderUniforms (gl, this, renderObject);
+
+         // Alpha
+
+         gl .uniform1f (this .x3d_AlphaCutoff, appearanceNode .getAlphaCutoff ());
+
+         // Style Properties
+
+         if (stylePropertiesNode)
+            stylePropertiesNode .setShaderUniforms (gl, this);
+
+         // Material
+
+         materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .getTextureTransformMapping (), geometryContext .getTextureCoordinateMapping (), front);
+
+         // Texture
+
+         if (textureNode)
+            textureNode .setShaderUniforms (gl, this, renderObject);
+
+         appearanceNode  .getTextureTransform ()  .setShaderUniforms (gl, this);
+         geometryContext .getTextureCoordinate () .setShaderUniforms (gl, this);
+      };
    })(),
    enable: function (gl)
    {

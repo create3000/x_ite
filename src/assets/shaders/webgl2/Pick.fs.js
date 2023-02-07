@@ -5,6 +5,7 @@ precision highp int;
 
 in vec3 vertex;
 in vec3 normal;
+in vec4 texCoord;
 
 layout(location = 0) out vec4 x3d_FragData0;
 layout(location = 1) out vec4 x3d_FragData1;
@@ -21,8 +22,8 @@ main ()
       clip ();
    #endif
 
-   x3d_FragData0 = vec4 (x3d_Id, vertex);
-   x3d_FragData1 = vec4 (normalize (normal), 0.0);
-   x3d_FragData2 = vec4 (0.0);
+   x3d_FragData0 = vec4 (vertex, x3d_Id);
+   x3d_FragData1 = vec4 (normal, 0.0);
+   x3d_FragData2 = texCoord;
 }
 `;

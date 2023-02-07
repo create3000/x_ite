@@ -164,8 +164,8 @@ PickingBuffer .prototype =
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [0]);
       gl .readPixels (x, y, 1, 1, gl .RGBA, gl .FLOAT, array);
 
-      hit .id = array [0];
-      hit .point .set (array [1], array [2], array [3]);
+      hit .id = array [3];
+      hit .point .set (array [0], array [1], array [2]);
 
       // Normal
 
@@ -175,6 +175,11 @@ PickingBuffer .prototype =
       hit .normal .set (array [0], array [1], array [2]);
 
       // TexCoord
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [2]);
+      gl .readPixels (x, y, 1, 1, gl .RGBA, gl .FLOAT, array);
+
+      hit .texCoord .set (array [0], array [1], array [2], array [3]);
 
       // Finish
 

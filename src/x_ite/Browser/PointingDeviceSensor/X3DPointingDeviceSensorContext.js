@@ -50,6 +50,7 @@ import PickingBuffer  from "../../Rendering/PickingBuffer.js";
 import TraverseType   from "../../Rendering/TraverseType.js";
 import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4        from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
 
 const
@@ -57,7 +58,6 @@ const
    _cursorType      = Symbol (),
    _pointer         = Symbol (),
    _hit             = Symbol (),
-   _pickOnlySensors = Symbol (),
    _overSensors     = Symbol (),
    _activeSensors   = Symbol (),
    _activeLayer     = Symbol (),
@@ -88,7 +88,7 @@ function X3DPointingDeviceSensorContext ()
       modelViewMatrix: new Matrix4 (),
       point: new Vector3 (0, 0, 0),
       normal: new Vector3 (0, 0, 0),
-      texCoord: new Vector2 (0, 0),
+      texCoord: new Vector4 (0, 0, 0, 0),
       layerNode: null,
       shapeNode: null,
    };
@@ -152,10 +152,6 @@ X3DPointingDeviceSensorContext .prototype =
              this [_pointer] .y > rectangle .y &&
              this [_pointer] .y < rectangle .y + rectangle .w;
    },
-   getPickOnlySensors: function ()
-   {
-      return this [_pickOnlySensors];
-   },
    getActivePickLayer: function ()
    {
       return this [_activeLayer];
@@ -174,7 +170,7 @@ X3DPointingDeviceSensorContext .prototype =
    },
    buttonPressEvent: function (x, y)
    {
-      if (!this .touch (x, y, true))
+      if (!this .touch (x, y))
          return false;
 
       const hit = this [_hit];
@@ -197,7 +193,7 @@ X3DPointingDeviceSensorContext .prototype =
    },
    motionNotifyEvent: function (x, y)
    {
-      this .touch (x, y, true);
+      this .touch (x, y);
       this .motion ();
 
       return !! this [_hit] .sensors .length;
@@ -218,8 +214,7 @@ X3DPointingDeviceSensorContext .prototype =
 
       const hit = this [_hit];
 
-      this [_pickOnlySensors] = pickOnlySensors;
-      this [_id]              = 0;
+      this [_id] = 0;
 
       this [_pointer] .set (x, y);
       this [_pickingBuffer] .bind (x, y);
@@ -239,6 +234,8 @@ X3DPointingDeviceSensorContext .prototype =
          hit .shapeNode = pickingContext .shapeNode;
 
          hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
+         hit .modelViewMatrix .submatrix .inverse () .transpose () .multVecMatrix (hit .normal) .normalize ();
+         hit .shapeNode .getAppearance () .getTextureTransform () .multVecMatrix (hit .texCoord);
       }
       else
       {

@@ -183,7 +183,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    })(),
    touch: function (x, y)
    {
-      return this .getBrowser () .touch (x, y, false);
+      return this .getBrowser () .touch (x, y);
    },
    dispose: function () { },
 });
