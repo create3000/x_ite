@@ -217,11 +217,11 @@ X3DPointingDeviceSensorContext .prototype =
       this [_id] = 0;
 
       this [_pointer] .set (x, y);
-      this [_pickingBuffer] .bind (x, y);
+      this [_pickingBuffer] .bind (Math .round (x), Math .round (y));
 
       this .getWorld () .traverse (TraverseType .POINTER, null);
 
-      this [_pickingBuffer] .getHit (x, y, hit);
+      this [_pickingBuffer] .getHit (Math .round (x), Math .round (y), hit);
       this [_pickingBuffer] .unbind ();
 
       if (hit .id)
