@@ -234,8 +234,16 @@ X3DPointingDeviceSensorContext .prototype =
          hit .shapeNode = pickingContext .shapeNode;
 
          hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
-         hit .modelViewMatrix .submatrix .inverse () .transpose () .multVecMatrix (hit .normal) .normalize ();
-         hit .shapeNode .getAppearance () .getTextureTransform () .multVecMatrix (hit .texCoord);
+
+         if (hit .shapeNode .getGeometry () .getNormals () .length)
+            hit .modelViewMatrix .submatrix .inverse () .transpose () .multVecMatrix (hit .normal) .normalize ();
+         else
+            hit .normal .assign (Vector3 .Zero)
+
+         if (hit .shapeNode .getGeometry () .getMultiTexCoords () .length)
+            hit .shapeNode .getAppearance () .getTextureTransform () .multVecMatrix (hit .texCoord);
+         else
+            hit .texCoord .assign (Vector4 .wAxis);
       }
       else
       {

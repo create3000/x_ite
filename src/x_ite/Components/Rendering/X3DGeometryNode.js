@@ -988,9 +988,13 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
    {
       if (this .simpleArrayObject .enable (gl, shaderNode))
       {
-         shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-         shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
-         shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+         if (this .multiTexCoords .length)
+            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
       }
 
       gl .drawArrays (this .primitiveMode, 0, this .vertexCount);

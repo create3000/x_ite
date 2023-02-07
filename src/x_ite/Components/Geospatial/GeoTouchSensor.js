@@ -51,12 +51,9 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DTouchSensorNode   from "../PointingDeviceSensor/X3DTouchSensorNode.js";
 import X3DGeospatialObject  from "./X3DGeospatialObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
-
-var
-   invModelViewMatrix = new Matrix4 (),
-   geoCoords          = new Vector3 (0, 0, 0);
 
 function GeoTouchSensor (executionContext)
 {
@@ -103,20 +100,29 @@ GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .
       X3DTouchSensorNode  .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
    },
-   set_over__: function (over, hit, modelViewMatrix, projectionMatrix, viewport)
+   set_over__: (function ()
    {
-      X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
+      const
+         invModelViewMatrix = new Matrix4 (),
+         geoCoords          = new Vector3 (0, 0, 0),
+         texCoord           = new Vector2 (0, 0);
 
-      if (this ._isOver .getValue ())
+      return function (over, hit, modelViewMatrix, projectionMatrix, viewport)
       {
-         invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+         X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
 
-         this ._hitTexCoord_changed = hit .texCoord;
-         this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (hit .normal .copy ()) .normalize ();
-         this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (hit .point .copy ());
-         this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
-      }
-   },
+         if (this ._isOver .getValue ())
+         {
+            texCoord .set (hit .texCoord .x, hit .texCoord .y) .divide (hit .texCoord .w);
+            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+
+            this ._hitTexCoord_changed = texCoord;
+            this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (hit .normal .copy ()) .normalize ();
+            this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (hit .point .copy ());
+            this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
+         }
+      };
+   })(),
    dispose: function ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);
