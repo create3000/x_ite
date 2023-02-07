@@ -47,9 +47,8 @@
 
 function VertexArray ()
 {
-   this .vertexArray = null;
-   this .shaderNode  = null;
-   this .tainted     = true;
+   this .vertexArrays = new Map ();
+   this .tainted      = true;
 }
 
 VertexArray .prototype =
@@ -62,34 +61,40 @@ VertexArray .prototype =
    },
    enable: function (gl, shaderNode)
    {
-      if (this .tainted || this .shaderNode !== shaderNode)
+      if (this .tainted)
       {
-         gl .deleteVertexArray (this .vertexArray);
+         this .delete (gl);
 
-         this .vertexArray = gl .createVertexArray ();
-         this .shaderNode  = shaderNode;
-         this .tainted     = false;
-
-         gl .bindVertexArray (this .vertexArray);
-
-         // console .log ("update vao");
-
-         return true;
+         this .tainted = false;
       }
-      else
+
+      const vertexArray = this .vertexArrays .get (shaderNode);
+
+      if (vertexArray)
       {
-         gl .bindVertexArray (this .vertexArray);
+         gl .bindVertexArray (vertexArray);
 
          return false;
       }
-   },
-   disable: function (gl)
-   {
-      gl .bindVertexArray (null);
+      else
+      {
+         const vertexArray = gl .createVertexArray ();
+
+         this .vertexArrays .set (shaderNode, vertexArray)
+
+         gl .bindVertexArray (vertexArray);
+
+         // console .log ("rebuild vao");
+
+         return true; // Rebuild
+      }
    },
    delete: function (gl)
    {
-      gl .deleteVertexArray (this .vertexArray);
+      for (const vertexArray of this .vertexArrays .values ())
+         gl .deleteVertexArray (vertexArray);
+
+      this .vertexArrays .clear ();
    },
 };
 
