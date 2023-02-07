@@ -182,7 +182,7 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
       {
          if (!this [staticShapes])
          {
-            //console .log (`Rebuilding StaticGroup ${type}.`);
+            //console .log (`Rebuilding StaticGroup ${Static}.`);
 
             const
                viewVolumes      = renderObject .getViewVolumes (),
