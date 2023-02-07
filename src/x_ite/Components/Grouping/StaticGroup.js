@@ -210,11 +210,11 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
 
          const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-         for (const context of this [staticShapes])
+         for (const { modelViewMatrix: modelMatrix, shapeNode } of this [staticShapes])
          {
             modelViewMatrix .push ();
-            modelViewMatrix .multLeft (context .modelViewMatrix);
-            context .shapeNode .traverse (type, renderObject);
+            modelViewMatrix .multLeft (modelMatrix);
+            shapeNode .traverse (type, renderObject);
             modelViewMatrix .pop ();
          }
       };
