@@ -200,7 +200,7 @@ X3DPointingDeviceSensorContext .prototype =
    },
    leaveNotifyEvent: function ()
    { },
-   touch: function (x, y, pickOnlySensors)
+   touch: function (x, y)
    {
       const t0 = Date .now ();
 
