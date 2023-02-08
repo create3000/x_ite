@@ -46,7 +46,7 @@
  ******************************************************************************/
 
 import PointingDevice from "./PointingDevice.js";
-import PickingBuffer  from "../../Rendering/PickingBuffer.js";
+import PointingBuffer from "../../Rendering/PointingBuffer.js";
 import TraverseType   from "../../Rendering/TraverseType.js";
 import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
@@ -54,31 +54,31 @@ import Vector4        from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
 
 const
-   _pointingDevice  = Symbol (),
-   _cursorType      = Symbol (),
-   _pointer         = Symbol (),
-   _hit             = Symbol (),
-   _overSensors     = Symbol (),
-   _activeSensors   = Symbol (),
-   _activeLayer     = Symbol (),
-   _pointerTime     = Symbol (),
-   _pickingBuffer   = Symbol (),
-   _pickShaders     = Symbol (),
-   _id              = Symbol (),
-   _pickingContexts = Symbol (),
-   _reshape         = Symbol ();
+   _pointingDevice   = Symbol (),
+   _cursorType       = Symbol (),
+   _pointer          = Symbol (),
+   _hit              = Symbol (),
+   _overSensors      = Symbol (),
+   _activeSensors    = Symbol (),
+   _activeLayer      = Symbol (),
+   _pointerTime      = Symbol (),
+   _pointingBuffer   = Symbol (),
+   _pointingShaders  = Symbol (),
+   _id               = Symbol (),
+   _pointingContexts = Symbol (),
+   _reshape          = Symbol ();
 
 function X3DPointingDeviceSensorContext ()
 {
-   this [_pointingDevice]  = new PointingDevice (this);
-   this [_pointer]         = new Vector2 (0, 0);
-   this [_overSensors]     = [ ];
-   this [_activeSensors]   = [ ];
-   this [_activeLayer]     = null;
-   this [_pointerTime]     = 0;
-   this [_pickingBuffer]   = new PickingBuffer (this, 300, 150);
-   this [_pickShaders]     = new Map ();
-   this [_pickingContexts] = [ ];
+   this [_pointingDevice]   = new PointingDevice (this);
+   this [_pointer]          = new Vector2 (0, 0);
+   this [_overSensors]      = [ ];
+   this [_activeSensors]    = [ ];
+   this [_activeLayer]      = null;
+   this [_pointerTime]      = 0;
+   this [_pointingBuffer]   = new PointingBuffer (this, 300, 150);
+   this [_pointingShaders]  = new Map ();
+   this [_pointingContexts] = [ ];
 
    this [_hit] = {
       id: 0,
@@ -164,7 +164,7 @@ X3DPointingDeviceSensorContext .prototype =
    {
       const id = ++ this [_id];
 
-      this [_pickingContexts] [id] = pickingContext;
+      this [_pointingContexts] [id] = pickingContext;
 
       return id;
    },
@@ -217,17 +217,17 @@ X3DPointingDeviceSensorContext .prototype =
       this [_id] = 0;
 
       this [_pointer] .set (x, y);
-      this [_pickingBuffer] .bind (Math .round (x), Math .round (y));
+      this [_pointingBuffer] .bind (Math .round (x), Math .round (y));
 
       this .getWorld () .traverse (TraverseType .POINTER, null);
 
-      this [_pickingBuffer] .getHit (Math .round (x), Math .round (y), hit);
-      this [_pickingBuffer] .unbind ();
+      this [_pointingBuffer] .getHit (Math .round (x), Math .round (y), hit);
+      this [_pointingBuffer] .unbind ();
 
       if (hit .id)
       {
          const
-            pickingContext = this [_pickingContexts] [hit .id],
+            pickingContext = this [_pointingContexts] [hit .id],
             shapeNode      = pickingContext .shapeNode,
             appearanceNode = shapeNode .getAppearance (),
             geometryNode   = shapeNode .getGeometry ();
@@ -318,7 +318,7 @@ X3DPointingDeviceSensorContext .prototype =
       key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
       key += geometryContext .geometryType;
 
-      return this [_pickShaders] .get (key) || this .createPickShader (key, numClipPlanes, shapeNode);
+      return this [_pointingShaders] .get (key) || this .createPickShader (key, numClipPlanes, shapeNode);
    },
    createPickShader: function (key, numClipPlanes, shapeNode)
    {
@@ -350,7 +350,7 @@ X3DPointingDeviceSensorContext .prototype =
 
       const shaderNode = this .createShader ("PointingShader", "Pointing", "Pointing", options);
 
-      this [_pickShaders] .set (key, shaderNode);
+      this [_pointingShaders] .set (key, shaderNode);
 
       return shaderNode;
    },
@@ -358,13 +358,13 @@ X3DPointingDeviceSensorContext .prototype =
    {
       const viewport = this .getViewport ();
 
-      if (this [_pickingBuffer] .getWidth ()  === viewport [2] &&
-          this [_pickingBuffer] .getHeight () === viewport [3])
+      if (this [_pointingBuffer] .getWidth ()  === viewport [2] &&
+          this [_pointingBuffer] .getHeight () === viewport [3])
       return;
 
-      this [_pickingBuffer] .dispose ();
+      this [_pointingBuffer] .dispose ();
 
-      this [_pickingBuffer] = new PickingBuffer (this, viewport [2], viewport [3]);
+      this [_pointingBuffer] = new PointingBuffer (this, viewport [2], viewport [3]);
    },
 };
 

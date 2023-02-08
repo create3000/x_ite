@@ -45,10 +45,7 @@
  *
  ******************************************************************************/
 
-// OES_texture_float
-// WEBGL_color_buffer_float
-
-function PickingBuffer (browser, width, height)
+function PointingBuffer (browser, width, height)
 {
    const gl = browser .getContext ();
 
@@ -125,9 +122,9 @@ function PickingBuffer (browser, width, height)
       throw new Error ("Couldn't create frame buffer.");
 }
 
-PickingBuffer .prototype =
+PointingBuffer .prototype =
 {
-   constructor: PickingBuffer,
+   constructor: PointingBuffer,
    getWidth: function ()
    {
       return this .width;
@@ -203,4 +200,4 @@ PickingBuffer .prototype =
    },
 };
 
-export default PickingBuffer;
+export default PointingBuffer;
