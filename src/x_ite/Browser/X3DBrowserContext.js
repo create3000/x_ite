@@ -83,7 +83,9 @@ const
    _displayTime     = Symbol (),
    _processEvents   = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
 
-const browserContexts = [ ];
+const
+   browsers        = new Set (),
+   browserContexts = [ ];
 
 function X3DBrowserContext (element)
 {
@@ -106,6 +108,8 @@ function X3DBrowserContext (element)
    X3DPickingContext              .call (this);
    X3DSoundContext                .call (this);
    X3DTimeContext                 .call (this);
+
+   browsers .add (this);
 
    for (const browserContext of browserContexts)
       browserContext .call (this);
@@ -312,6 +316,12 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
    {
       return this [_displayTime];
    },
+   dispose: function ()
+   {
+      browsers .delete (this);
+
+      X3DBaseNode .prototype .dispose .call (this);
+   },
 });
 
 for (const key of Reflect .ownKeys (X3DBrowserContext .prototype))
@@ -324,7 +334,7 @@ Object .assign (X3DBrowserContext,
       browserContexts .push (browserContext);
 
       const keys = Object .keys (browserContext .prototype)
-         .filter (k => ! k .match (/^(initialize|dispose)$/))
+         .filter (k => !k .match (/^(initialize|dispose)$/))
          .concat (Object .getOwnPropertySymbols (browserContext .prototype));
 
       for (const key of keys)
@@ -337,15 +347,8 @@ Object .assign (X3DBrowserContext,
          });
       }
 
-      $("x3d-canvas, X3DCanvas") .each (function (_, canvas)
+      for (const browser of browsers)
       {
-         const
-            X3D     = window [Symbol .for ("X_ITE.X3D")],
-            browser = X3D .getBrowser (canvas);
-
-         if (! browser)
-            return;
-
          browserContext .call (browser);
 
          if (typeof browserContext .prototype .initialize === "function")
@@ -354,7 +357,7 @@ Object .assign (X3DBrowserContext,
          // Process events from context creation. This will setup nodes like
          // geometry option nodes before any node is created.
          browser [_processEvents] ();
-      });
+      }
    },
 });
 
