@@ -1100,15 +1100,15 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode))
       {
-         const particleStride = particleSystem .particleStride;
+         const { particleStride, particleOffset, matrixOffset } = particleSystem;
 
-         shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
+         shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleOffset, 1);
+         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset,   1);
          shaderNode .enableTexCoordAttribute       (gl, this .texCoordBuffers, 0, 0);
          shaderNode .enableNormalAttribute         (gl, this .normalBuffer,    0, 0);
          shaderNode .enableVertexAttribute         (gl, this .vertexBuffer,    0, 0);
 
-         this .updateSimpleParticles = false;
+         this .updateParticles = false;
       }
 
       gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
@@ -1154,10 +1154,10 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode))
       {
-         const particleStride = particleSystem .particleStride;
+         const { particleStride, particleOffset, matrixOffset } = particleSystem;
 
-         shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
+         shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleOffset, 1);
+         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset,   1);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
