@@ -62,13 +62,12 @@ FogContainer .prototype =
    set: function (fogNode, modelViewMatrix)
    {
       this .fogNode = fogNode;
-      this .fogKey  = String (fogNode .getFogType ());
 
       this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
    },
-   getFogKey: function ()
+   getFogType: function ()
    {
-      return this .fogKey;
+      return this .fogNode .getFogType ();
    },
    setShaderUniforms: function (gl, shaderObject)
    {

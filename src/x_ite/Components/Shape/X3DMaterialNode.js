@@ -111,11 +111,11 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
       {
          const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, objectsCount } = renderContext;
 
-         key += this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer () ? "1" : "0";
-         key += shadows ? "1" : "0";
-         key += fogNode ? fogNode .getFogKey () : "0";
+         key += this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer () ? 1 : 0;
+         key += shadows ? 1 : 0;
+         key += fogNode ? fogNode .getFogType () : 0;
          key += shapeNode .getShapeKey ();
-         key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? "1" : "0";
+         key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
          key += ".";
          key += objectsCount [0]; // Clip planes
          key += ".";
@@ -123,17 +123,17 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          key += ".";
          key += objectsCount [2]; // Texture projectors
          key += ".";
-         key += textureNode ? "1" : appearanceNode .getTextureBits () .toString (4);
+         key += textureNode ? 1 : appearanceNode .getTextureBits () .toString (4);
          key += ".";
-         key += appearanceNode .getTextureTransformMapping () .size || "1";
-         key += geometryContext .textureCoordinateMapping .size || "1";
+         key += appearanceNode .getTextureTransformMapping () .size || 1;
+         key += geometryContext .textureCoordinateMapping .size || 1;
          key += this .getMaterialKey (shadows);
       }
       else
       {
          const { textureNode, objectsCount } = geometryContext;
 
-         key += this .logarithmicDepthBuffer ? "1" : "0";
+         key += this .logarithmicDepthBuffer ? 1 : 0;
          key += "0000.";
          key += objectsCount [0]; // Clip planes
          key += ".";
@@ -141,7 +141,7 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          key += ".";
          key += objectsCount [2]; // Texture projectors
          key += ".";
-         key += textureNode ? "1" : "0";
+         key += textureNode ? 1 : 0;
          key += ".11";
          key += this .getMaterialKey (false);
       }
@@ -179,12 +179,12 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          {
             options .push ("X3D_FOG");
 
-            switch (renderContext .fogNode .getFogKey ())
+            switch (renderContext .fogNode .getFogType ())
             {
-               case "1":
+               case 1:
                   options .push ("X3D_FOG_LINEAR");
                   break;
-               case "2":
+               case 2:
                   options .push ("X3D_FOG_EXPONENTIAL");
                   break;
             }
@@ -214,8 +214,8 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          if (+this .textureBits)
          {
             options .push ("X3D_MATERIAL_TEXTURES");
-            options .push ("X3D_NUM_TEXTURE_TRANSFORMS " + (appearanceNode .getTextureTransformMapping () .size || "1"));
-            options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .getTextureCoordinateMapping () .size || "1"));
+            options .push ("X3D_NUM_TEXTURE_TRANSFORMS " + (appearanceNode .getTextureTransformMapping () .size || 1));
+            options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .getTextureCoordinateMapping () .size || 1));
          }
          else
          {
