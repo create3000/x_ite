@@ -95,7 +95,7 @@ function X3DRenderObject (executionContext)
    this .numTransparentShapes     = 0;
    this .pointingShapes           = [ ];
    this .collisionShapes          = [ ];
-   this .activeCollisions         = new Set ();
+   this .activeCollisions         = [ ];
    this .shadowShapes             = [ ];
    this .opaqueShapes             = [ ];
    this .transparentShapes        = [ ];
@@ -755,7 +755,7 @@ X3DRenderObject .prototype =
          // Collision nodes are handled here.
 
          const
-            activeCollisions = new Set (), // current active Collision nodes
+            activeCollisions = [ ], // current active Collision nodes
             collisionRadius2 = 2.2 * this .getNavigationInfo () .getCollisionRadius (); // Make the radius a little bit larger.
 
          collisionSize .set (collisionRadius2, collisionRadius2, collisionRadius2);
@@ -774,17 +774,17 @@ X3DRenderObject .prototype =
                if (collisionContext .shapeNode .intersectsBox (collisionBox, collisionContext .clipPlanes, modelViewMatrix .assign (collisionContext .modelViewMatrix)))
                {
                   for (const collision of collisions)
-                     activeCollisions .add (collision);
+                     activeCollisions .push (collision);
                }
             }
          }
 
          // Set isActive to FALSE for affected nodes.
 
-         if (this .activeCollisions .size)
+         if (this .activeCollisions .length)
          {
-            const inActiveCollisions = activeCollisions .size
-                                       ? Algorithm .set_difference (this .activeCollisions, activeCollisions, new Set ())
+            const inActiveCollisions = activeCollisions .length
+                                       ? this .activeCollisions .filter (a => !activeCollisions .includes (a))
                                        : this .activeCollisions;
 
             for (const collision of inActiveCollisions)

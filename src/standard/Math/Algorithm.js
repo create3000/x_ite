@@ -224,17 +224,4 @@ export default class Algorithm
 
       return first;
    }
-
-   static set_difference (lhs, rhs, result)
-   {
-      for (const key of lhs)
-      {
-         if (rhs .has (key))
-            continue;
-
-         result .add (key);
-      }
-
-      return result;
-   }
 };
