@@ -107,7 +107,6 @@ function X3DGeometryNode (executionContext)
    this .flatNormals              = X3DGeometryNode .createArray ();
    this .vertices                 = X3DGeometryNode .createArray ();
    this .hasFogCoords             = false;
-   this .hasTexCoords             = false;
    this .hasNormals               = false;
    this .geometryKey              = "";
    this .vertexCount              = 0;
@@ -928,8 +927,6 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [i]);
          gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .DYNAMIC_DRAW);
       }
-
-      this .hasTexCoords = !! this .multiTexCoords .length;
 
       // Transfer normals or flat normals.
 

@@ -30,6 +30,11 @@ main ()
 
    x3d_FragData0 = vec4 (vertex, x3d_Id);
    x3d_FragData1 = vec4 (normal, 0.0);
-   x3d_FragData2 = texCoord;
+
+   #if defined (X3D_GEOMETRY_0D)
+      x3d_FragData2 = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
+   #else
+      x3d_FragData2 = texCoord;
+   #endif
 }
 `;

@@ -246,10 +246,7 @@ X3DPointingDeviceSensorContext .prototype =
          else
             hit .normal .assign (Vector3 .zAxis);
 
-         if (geometryContext .hasTexCoords)
-            appearanceNode .getTextureTransform () .transformPoint (hit .texCoord);
-         else
-            hit .texCoord .assign (Vector4 .wAxis);
+         appearanceNode .getTextureTransform () .transformPoint (hit .texCoord);
       }
       else
       {

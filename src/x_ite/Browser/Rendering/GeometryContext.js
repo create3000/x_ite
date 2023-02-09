@@ -54,7 +54,6 @@ function GeometryContext (options = { })
       geometryType: 3,
       hasFogCoords: false,
       colorMaterial: false,
-      hasTexCoords: false,
       hasNormals: false,
       textureNode: false,
       objectsCount: [0, 0, 0],
