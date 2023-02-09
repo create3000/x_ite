@@ -166,18 +166,27 @@ X3DRenderingContext .prototype =
    {
       return this [_frameBuffer];
    },
-   getDepthShader: function (numClipPlanes, particles)
+   getDepthShader: function (numClipPlanes, shapeNode)
    {
+      const
+         appearanceNode  = shapeNode .getAppearance (),
+         geometryContext = shapeNode .getGeometryContext ();
+
       let key = "";
 
       key += numClipPlanes;
-      key += particles ? "1" : "0";
+      key += shapeNode .getShapeKey ();
+      key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
+      key += geometryContext .geometryType;
 
-      return this [_depthShaders] .get (key) || this .createDepthShader (key, numClipPlanes, particles);
+      return this [_depthShaders] .get (key) || this .createDepthShader (key, numClipPlanes, shapeNode);
    },
-   createDepthShader: function (key, numClipPlanes, particles)
+   createDepthShader: function (key, numClipPlanes, shapeNode)
    {
-      const options = [ ];
+      const
+         appearanceNode  = shapeNode .getAppearance (),
+         geometryContext = shapeNode .getGeometryContext (),
+         options         = [ ];
 
       if (numClipPlanes)
       {
@@ -185,8 +194,13 @@ X3DRenderingContext .prototype =
          options .push ("X3D_NUM_CLIP_PLANES " + numClipPlanes);
       }
 
-      if (particles)
+      if (shapeNode .getShapeKey () > 0)
          options .push ("X3D_PARTICLE_SYSTEM");
+
+      options .push (`X3D_GEOMETRY_${geometryContext .geometryType}D`);
+
+      if (appearanceNode .getStyleProperties (geometryContext .geometryType))
+         options .push ("X3D_STYLE_PROPERTIES");
 
       const shaderNode = this .createShader ("DepthShader", "Depth", "Depth", options);
 
