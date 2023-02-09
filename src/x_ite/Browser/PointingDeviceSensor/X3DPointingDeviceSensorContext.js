@@ -333,14 +333,7 @@ X3DPointingDeviceSensorContext .prototype =
       if (shapeNode .getShapeKey () > 0)
          options .push ("X3D_PARTICLE_SYSTEM");
 
-      switch (geometryContext .geometryType)
-      {
-         case 0:
-         {
-            options .push ("X3D_GEOMETRY_0D");
-            break;
-         }
-      }
+      options .push (`X3D_GEOMETRY_${geometryContext .geometryType}D`);
 
       if (appearanceNode .getStyleProperties (geometryContext .geometryType))
          options .push ("X3D_STYLE_PROPERTIES");
