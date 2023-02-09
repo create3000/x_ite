@@ -227,10 +227,10 @@ X3DPointingDeviceSensorContext .prototype =
       if (hit .id)
       {
          const
-            pickingContext = this [_pointingContexts] [hit .id],
-            shapeNode      = pickingContext .shapeNode,
-            appearanceNode = shapeNode .getAppearance (),
-            geometryNode   = shapeNode .getGeometry ();
+            pickingContext  = this [_pointingContexts] [hit .id],
+            shapeNode       = pickingContext .shapeNode,
+            appearanceNode  = shapeNode .getAppearance (),
+            geometryContext = shapeNode .getGeometryContext ();
 
          hit .hitRay    = pickingContext .renderObject .getHitRay ();
          hit .sensors   = pickingContext .sensors .slice ();
@@ -239,14 +239,14 @@ X3DPointingDeviceSensorContext .prototype =
 
          hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
 
-         // ParticleSystem may have no geometry node.
+         // ParticleSystem only has a geometry context.
 
-         if (geometryNode && geometryNode .getNormals () .length)
+         if (geometryContext .hasNormals)
             hit .modelViewMatrix .submatrix .inverse () .transpose () .multVecMatrix (hit .normal) .normalize ();
          else
             hit .normal .assign (Vector3 .zAxis);
 
-         if (geometryNode && geometryNode .getMultiTexCoords () .length)
+         if (geometryContext .hasTexCoords)
             appearanceNode .getTextureTransform () .transformPoint (hit .texCoord);
          else
             hit .texCoord .assign (Vector4 .wAxis);

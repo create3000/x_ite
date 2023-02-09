@@ -366,6 +366,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
          case GeometryTypes .POINT:
          {
             this .geometryContext .geometryType = 0;
+            this .geometryContext .hasTexCoords = false;
             this .geometryContext .hasNormals   = false;
 
             this .texCoordCount = 0;
@@ -382,6 +383,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
          case GeometryTypes .LINE:
          {
             this .geometryContext .geometryType = 1;
+            this .geometryContext .hasTexCoords = true;
             this .geometryContext .hasNormals   = false;
 
             this .texCoordCount   = 2;
@@ -401,6 +403,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
          case GeometryTypes .SPRITE:
          {
             this .geometryContext .geometryType = 2;
+            this .geometryContext .hasTexCoords = true;
             this .geometryContext .hasNormals   = true;
 
             this .texCoordCount   = 4;

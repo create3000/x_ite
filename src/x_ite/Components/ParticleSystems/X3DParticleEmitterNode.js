@@ -319,18 +319,18 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .pro
 
       ${Object .values (this .uniforms) .join ("\n")}
 
-      in vec4 input0;
-      in vec4 input2;
-      in vec4 input6;
+      in vec4 input0; // (life, lifetime, elapsedTime, texCoordIndex0)
+      in vec4 input2; // (velocity, 0.0)
+      in vec4 input6; // position
 
-      out vec4 output0;
-      out vec4 output1;
-      out vec4 output2;
+      out vec4 output0; // (life, lifetime, elapsedTime, texCoordIndex0)
+      out vec4 output1; // (color)
+      out vec4 output2; // (velocity, 0.0)
 
-      out vec4 output3;
-      out vec4 output4;
-      out vec4 output5;
-      out vec4 output6;
+      out vec4 output3; // scale rotation matrix
+      out vec4 output4; // scale rotation matrix
+      out vec4 output5; // scale rotation matrix
+      out vec4 output6; // position
 
       // Constants
 
