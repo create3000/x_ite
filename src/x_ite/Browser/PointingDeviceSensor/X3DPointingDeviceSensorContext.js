@@ -315,9 +315,9 @@ X3DPointingDeviceSensorContext .prototype =
       key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
       key += geometryContext .geometryType;
 
-      return this [_pointingShaders] .get (key) || this .createPickShader (key, numClipPlanes, shapeNode);
+      return this [_pointingShaders] .get (key) || this .createPointingShader (key, numClipPlanes, shapeNode);
    },
-   createPickShader: function (key, numClipPlanes, shapeNode)
+   createPointingShader: function (key, numClipPlanes, shapeNode)
    {
       const
          appearanceNode  = shapeNode .getAppearance (),
