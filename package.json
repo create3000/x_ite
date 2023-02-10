@@ -15,14 +15,14 @@
 	},
 	"keywords": [
 		"3D",
-		"browser",
-		"electron",
-		"framework",
+		"Browser",
+		"Electron",
+		"Framework",
 		"GLB",
 		"glTF2",
 		"JavaScript",
 		"JSON",
-		"node",
+		"Node",
 		"STL",
 		"SVG",
 		"VRML",
@@ -30,7 +30,6 @@
 		"WebGL",
 		"wrl",
 		"X3D",
-		"xite",
 		"XML"
 	],
 	"contributors": [
