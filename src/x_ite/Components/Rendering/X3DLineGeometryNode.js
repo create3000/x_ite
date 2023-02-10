@@ -46,15 +46,9 @@
  ******************************************************************************/
 
 import X3DGeometryNode from "./X3DGeometryNode.js";
-import VertexArray     from "../../Rendering/VertexArray.js";
 import ViewVolume      from "../../../standard/Math/Geometry/ViewVolume.js";
-import Box3            from "../../../standard/Math/Geometry/Box3.js";
-import Line2           from "../../../standard/Math/Geometry/Line2.js";
-import Line3           from "../../../standard/Math/Geometry/Line3.js";
 import Vector2         from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4         from "../../../standard/Math/Numbers/Vector4.js";
-import Matrix2         from "../../../standard/Math/Numbers/Matrix2.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 
 function X3DLineGeometryNode (executionContext)
@@ -66,8 +60,9 @@ function X3DLineGeometryNode (executionContext)
       browser = this .getBrowser (),
       gl      = browser .getContext ();
 
+   this .lineStipples      = new Float32Array ();
    this .lineStippleBuffer = gl .createBuffer ();
-   this .trianglesBuffer  = gl .createBuffer ();
+   this .trianglesBuffer   = gl .createBuffer ();
 
    this .setGeometryType (1);
    this .setPrimitiveMode (gl .LINES);
@@ -89,25 +84,21 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
    {
       // Line stipple support.
 
-      const lineStipple = this .getTexCoords ();
+      if (this .lineStipples .length / 6 === this .getVertices () .length / 8)
+         return;
 
-      if (lineStipple .getValue () .length / 6 !== this .getVertices () .length / 8)
-      {
-         const
-            gl       = this .getBrowser () .getContext (),
-            numLines = this .getVertices () .length / 8;
+      const
+         gl       = this .getBrowser () .getContext (),
+         numLines = this .getVertices () .length / 8;
 
-         lineStipple .length = numLines * 6;
+      if (this .lineStipples .length !== numLines * 6)
+         this .lineStipples = new Float32Array (numLines * 6);
 
-         lineStipple .fill (0);
-         lineStipple .shrinkToFit ();
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, this .lineStipples, gl .DYNAMIC_DRAW);
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, lineStipple .getValue (), gl .DYNAMIC_DRAW);
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (15 * 6 * numLines), gl .DYNAMIC_DRAW);
-      }
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (15 * 6 * numLines), gl .DYNAMIC_DRAW);
    },
    updateLengthSoFar: (function ()
    {
@@ -123,7 +114,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
          const
             viewport         = renderContext .renderObject .getViewVolume () .getViewport (),
             projectionMatrix = renderContext .renderObject .getProjectionMatrix () .get (),
-            lineStippleArray = this .getTexCoords () .getValue (),
+            lineStipples     = this .lineStipples,
             vertices         = this .getVertices (),
             numVertices      = vertices .length;
 
@@ -139,18 +130,18 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
             ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
             ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
 
-            lineStippleArray [l]     = projectedPoint1 .x;
-            lineStippleArray [l + 1] = projectedPoint1 .y;
+            lineStipples [l]     = projectedPoint1 .x;
+            lineStipples [l + 1] = projectedPoint1 .y;
 
-            lineStippleArray [l + 3] = projectedPoint0 .x;
-            lineStippleArray [l + 4] = projectedPoint0 .y;
-            lineStippleArray [l + 5] = lengthSoFar;
+            lineStipples [l + 3] = projectedPoint0 .x;
+            lineStipples [l + 4] = projectedPoint0 .y;
+            lineStipples [l + 5] = lengthSoFar;
 
             lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .magnitude ();
          }
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, lineStippleArray, gl .DYNAMIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, lineStipples, gl .DYNAMIC_DRAW);
       };
    })(),
    displaySimple: function (gl, renderContext, shaderNode)
