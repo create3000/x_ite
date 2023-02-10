@@ -104,8 +104,8 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
    {
       const
          modelViewProjectionMatrix = new Matrix4 (),
-         point0                    = new Vector4 (0, 0, 0),
-         point1                    = new Vector4 (0, 0, 0),
+         point0                    = new Vector4 (0, 0, 0, 0),
+         point1                    = new Vector4 (0, 0, 0, 0),
          projectedPoint0           = new Vector2 (0, 0),
          projectedPoint1           = new Vector2 (0, 0);
 
@@ -115,7 +115,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
             viewport         = renderContext .renderObject .getViewVolume () .getViewport (),
             projectionMatrix = renderContext .renderObject .getProjectionMatrix () .get (),
             lineStipples     = this .lineStipples,
-            vertices         = this .getVertices (),
+            vertices         = this .getVertices () .getValue (),
             numVertices      = vertices .length;
 
          modelViewProjectionMatrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix);
