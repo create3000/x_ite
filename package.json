@@ -14,23 +14,24 @@
 		"url": "https://github.com/create3000/x_ite/issues"
 	},
 	"keywords": [
-		"X3D",
-		"VRML",
-		"WebGL",
-		"browser",
 		"3D",
-		"wrl",
-		"JavaScript",
-		"XML",
-		"JSON",
-		"xite",
-		"node",
+		"browser",
 		"electron",
-		"glTF2",
+		"framework",
 		"GLB",
-		"Wavefront-OBJ",
+		"glTF2",
+		"JavaScript",
+		"JSON",
+		"node",
 		"STL",
-		"SVG"
+		"SVG",
+		"VRML",
+		"Wavefront-OBJ",
+		"WebGL",
+		"wrl",
+		"X3D",
+		"xite",
+		"XML"
 	],
 	"contributors": [
 		{
