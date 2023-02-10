@@ -51,7 +51,8 @@ import Algorithm     from "../../standard/Math/Algorithm.js";
 
 const
    _target = Symbol (),
-   _proxy  = Symbol ();
+   _proxy  = Symbol (),
+   _find   = Symbol ();
 
 const handler =
 {
@@ -319,7 +320,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       target .addEvent ();
    },
-   find: function (first, last, value)
+   [_find]: function (first, last, value)
    {
       const
          target = this [_target],
@@ -352,7 +353,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       if (typeof value === "function")
       {
-         first = target .find (first, last, value);
+         first = target [_find] (first, last, value);
 
          if (first !== last)
          {
@@ -376,7 +377,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          return first;
       }
 
-      first = target .find (first, last, value);
+      first = target [_find] (first, last, value);
 
       if (first !== last)
       {
