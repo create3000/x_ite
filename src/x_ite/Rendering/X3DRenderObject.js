@@ -739,6 +739,7 @@ X3DRenderObject .prototype =
                stylePropertiesNode .setShaderUniforms (gl, shaderNode);
 
             shapeNode .displaySimple (gl, renderContext, shaderNode);
+            browser .resetTextureUnits ();
          }
       };
    })(),
@@ -982,6 +983,7 @@ X3DRenderObject .prototype =
                stylePropertiesNode .setShaderUniforms (gl, shaderNode);
 
             shapeNode .displaySimple (gl, renderContext, shaderNode);
+            browser .resetTextureUnits ();
          }
       };
    })(),
