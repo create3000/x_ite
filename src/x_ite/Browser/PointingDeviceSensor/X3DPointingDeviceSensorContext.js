@@ -217,14 +217,14 @@ X3DPointingDeviceSensorContext .prototype =
       this [_id] = 0;
 
       this [_pointer] .set (x, y);
-      this [_pointingBuffer] .bind (Math .round (x), Math .round (y));
+      this [_pointingBuffer] .bind (x, y);
 
       this .getWorld () .traverse (TraverseType .POINTER, null);
 
-      this [_pointingBuffer] .getHit (Math .round (x), Math .round (y), hit);
+      this [_pointingBuffer] .getHit (x, y, hit);
       this [_pointingBuffer] .unbind ();
 
-      if (hit .id)
+      if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [_id])
       {
          const
             pickingContext  = this [_pointingContexts] [hit .id],
@@ -250,6 +250,7 @@ X3DPointingDeviceSensorContext .prototype =
       }
       else
       {
+         hit .id        = 0;
          hit .hitRay    = this [_activeLayer] ? this [_activeLayer] .getHitRay () : null;
          hit .sensors   = Array .prototype;
          hit .layerNode = this [_activeLayer];

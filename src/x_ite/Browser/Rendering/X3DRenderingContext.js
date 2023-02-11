@@ -56,7 +56,7 @@ const
 
 function X3DRenderingContext ()
 {
-   this .addChildObjects ("viewport", new Fields .MFFloat (0, 0, 300, 150));
+   this .addChildObjects ("viewport", new Fields .SFVec4f (0, 0, 300, 150));
 
    this [_localObjects] = [ ]; // shader objects dumpster
    this [_depthShaders] = new Map ();
