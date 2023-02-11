@@ -46,15 +46,9 @@
  ******************************************************************************/
 
 import X3DGeometryNode from "./X3DGeometryNode.js";
-import VertexArray     from "../../Rendering/VertexArray.js";
 import ViewVolume      from "../../../standard/Math/Geometry/ViewVolume.js";
-import Box3            from "../../../standard/Math/Geometry/Box3.js";
-import Line2           from "../../../standard/Math/Geometry/Line2.js";
-import Line3           from "../../../standard/Math/Geometry/Line3.js";
 import Vector2         from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4         from "../../../standard/Math/Numbers/Vector4.js";
-import Matrix2         from "../../../standard/Math/Numbers/Matrix2.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 
 function X3DLineGeometryNode (executionContext)
@@ -66,10 +60,9 @@ function X3DLineGeometryNode (executionContext)
       browser = this .getBrowser (),
       gl      = browser .getContext ();
 
-   this .transformVertexArrayObject = new VertexArray ();
-   this .thickVertexArrayObject     = new VertexArray ();
-   this .lineStippleBuffer          = gl .createBuffer ();
-   this .trianglesBuffer            = gl .createBuffer ();
+   this .lineStipples      = new Float32Array ();
+   this .lineStippleBuffer = gl .createBuffer ();
+   this .trianglesBuffer   = gl .createBuffer ();
 
    this .setGeometryType (1);
    this .setPrimitiveMode (gl .LINES);
@@ -79,108 +72,7 @@ function X3DLineGeometryNode (executionContext)
 X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: X3DLineGeometryNode,
-   updateVertexArrays: function ()
-   {
-      X3DGeometryNode .prototype .updateVertexArrays .call (this);
-
-      this .transformVertexArrayObject .update ();
-      this .thickVertexArrayObject     .update ();
-   },
-   intersectsLine: (function ()
-   {
-      const
-         bbox                      = new Box3 (),
-         min                       = new Vector3 (0, 0, 0),
-         max                       = new Vector3 (0, 0, 0),
-         screenScale1_             = new Vector3 (0, 0, 0),
-         screenScale2_             = new Vector3 (0, 0, 0),
-         modelViewProjectionMatrix = new Matrix4 (),
-         point1                    = new Vector3 (0, 0, 0),
-         point2                    = new Vector3 (0, 0, 0),
-         projected1                = new Vector2 (0, 0),
-         projected2                = new Vector2 (0, 0),
-         projected                 = new Line2 (Vector2 .Zero, Vector2 .yAxis),
-         closest                   = new Vector2 (0, 0),
-         ray                       = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-         line                      = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-         point                     = new Vector3 (0, 0, 0),
-         rotation                  = new Matrix2 (),
-         clipPoint                 = new Vector3 (0, 0, 0);
-
-      return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
-      {
-         const
-            browser            = this .getBrowser (),
-            contentScale       = browser .getRenderingProperty ("ContentScale"),
-            modelViewMatrix    = renderObject .getModelViewMatrix () .get (),
-            viewport           = renderObject .getViewVolume () .getViewport (),
-            extents            = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),
-            linePropertiesNode = appearanceNode .getLineProperties (),
-            lineWidth1_2       = Math .max (1.5, linePropertiesNode && linePropertiesNode .getApplied () ? linePropertiesNode .getLinewidthScaleFactor () / 2 : contentScale),
-            screenScale1       = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
-            offsets1           = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (lineWidth1_2)),
-            screenScale2       = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
-            offsets2           = invModelViewMatrix .multDirMatrix (screenScale2 .multiply (lineWidth1_2));
-
-         if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
-         {
-            const
-               pointer          = this .getBrowser () .getPointer (),
-               projectionMatrix = renderObject .getProjectionMatrix () .get (),
-               clipPlanes       = renderObject .getLocalObjects (),
-               vertices         = this .getVertices (),
-               numVertices      = vertices .length;
-
-            modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
-
-            for (let i = 0; i < numVertices; i += 8)
-            {
-               point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
-               point2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-
-               ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projected1);
-               ViewVolume .projectPointMatrix (point2, modelViewProjectionMatrix, viewport, projected2);
-
-               projected .setPoints (projected1, projected2);
-
-               if (projected .getClosestPointToPoint (pointer, closest))
-               {
-                  const
-                     distance  = projected1 .distance (projected2),
-                     distance1 = projected1 .distance (closest),
-                     distance2 = projected2 .distance (closest);
-
-                  if (distance1 <= distance && distance2 <= distance)
-                  {
-                     if (closest .distance (pointer) <= lineWidth1_2)
-                     {
-                        if (clipPlanes .length)
-                        {
-                           if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (closest)), clipPlanes))
-                              continue;
-                        }
-
-                        const
-                           direction = projected .direction,
-                           texCoordY = rotation .set (direction .x, direction .y, -direction .y, direction .x) .inverse () .multVecMatrix (pointer .copy () .subtract (closest)),
-                           texCoord  = texCoordY .set (distance1 / distance, (texCoordY .y / lineWidth1_2 + 1) / 2),
-                           normal    = point2 .copy () .subtract (point1) .normalize ();
-
-                        ViewVolume .unProjectRay (closest .x, closest .y, modelViewMatrix, projectionMatrix, viewport, ray);
-
-                        line .setPoints (point1, point2) .getClosestPointToLine (ray, point);
-
-                        intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
-                     }
-                  }
-               }
-            }
-         }
-
-         return intersections .length;
-      };
-   })(),
-   intersectsLineWithGeometry: function ()
+   intersectsLine: function ()
    {
       return false;
    },
@@ -192,32 +84,28 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
    {
       // Line stipple support.
 
-      const lineStipple = this .getTexCoords ();
+      if (this .lineStipples .length / 6 === this .getVertices () .length / 8)
+         return;
 
-      if (lineStipple .getValue () .length / 6 !== this .getVertices () .length / 8)
-      {
-         const
-            gl       = this .getBrowser () .getContext (),
-            numLines = this .getVertices () .length / 8;
+      const
+         gl       = this .getBrowser () .getContext (),
+         numLines = this .getVertices () .length / 8;
 
-         lineStipple .length = numLines * 6;
+      if (this .lineStipples .length !== numLines * 6)
+         this .lineStipples = new Float32Array (numLines * 6);
 
-         lineStipple .fill (0);
-         lineStipple .shrinkToFit ();
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, this .lineStipples, gl .DYNAMIC_DRAW);
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, lineStipple .getValue (), gl .DYNAMIC_DRAW);
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (15 * 6 * numLines), gl .DYNAMIC_DRAW);
-      }
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (15 * 6 * numLines), gl .DYNAMIC_DRAW);
    },
    updateLengthSoFar: (function ()
    {
       const
          modelViewProjectionMatrix = new Matrix4 (),
-         point0                    = new Vector4 (0, 0, 0),
-         point1                    = new Vector4 (0, 0, 0),
+         point0                    = new Vector4 (0, 0, 0, 0),
+         point1                    = new Vector4 (0, 0, 0, 0),
          projectedPoint0           = new Vector2 (0, 0),
          projectedPoint1           = new Vector2 (0, 0);
 
@@ -226,8 +114,8 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
          const
             viewport         = renderContext .renderObject .getViewVolume () .getViewport (),
             projectionMatrix = renderContext .renderObject .getProjectionMatrix () .get (),
-            lineStippleArray = this .getTexCoords () .getValue (),
-            vertices         = this .getVertices (),
+            lineStipples     = this .lineStipples,
+            vertices         = this .getVertices () .getValue (),
             numVertices      = vertices .length;
 
          modelViewProjectionMatrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix);
@@ -242,20 +130,57 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
             ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
             ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
 
-            lineStippleArray [l]     = projectedPoint1 .x;
-            lineStippleArray [l + 1] = projectedPoint1 .y;
+            lineStipples [l]     = projectedPoint1 .x;
+            lineStipples [l + 1] = projectedPoint1 .y;
 
-            lineStippleArray [l + 3] = projectedPoint0 .x;
-            lineStippleArray [l + 4] = projectedPoint0 .y;
-            lineStippleArray [l + 5] = lengthSoFar;
+            lineStipples [l + 3] = projectedPoint0 .x;
+            lineStipples [l + 4] = projectedPoint0 .y;
+            lineStipples [l + 5] = lengthSoFar;
 
             lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .magnitude ();
          }
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, lineStippleArray, gl .DYNAMIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, lineStipples, gl .DYNAMIC_DRAW);
       };
    })(),
+   displaySimple: function (gl, renderContext, shaderNode)
+   {
+      const linePropertiesNode = renderContext .shapeNode .getAppearance () .getStyleProperties (1);
+
+      if (linePropertiesNode)
+      {
+         if (linePropertiesNode .getTransformLines ())
+         {
+            // Setup vertex attributes.
+
+            if (this .vertexArrayObject .enable (shaderNode))
+            {
+               const
+                  stride       = 15 * Float32Array .BYTES_PER_ELEMENT,
+                  normalOffset = 8 * Float32Array .BYTES_PER_ELEMENT,
+                  vertexOffset = 11 * Float32Array .BYTES_PER_ELEMENT;
+
+               if (this .hasNormals)
+                  shaderNode .enableNormalAttribute (gl, this .trianglesBuffer, stride, normalOffset);
+
+               shaderNode .enableVertexAttribute (gl, this .trianglesBuffer, stride, vertexOffset);
+
+               gl .bindBuffer (gl .ARRAY_BUFFER, null);
+            }
+
+            gl .frontFace (gl .CCW);
+            gl .enable (gl .CULL_FACE);
+            gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount * 3);
+
+            return;
+         }
+      }
+
+      X3DGeometryNode .prototype .displaySimple .call (this, gl, renderContext, shaderNode);
+
+      gl .lineWidth (1);
+   },
    display: (function ()
    {
       const
@@ -302,7 +227,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
                // Setup vertex attributes.
 
-               if (this .transformVertexArrayObject .enable (gl, shaderNode))
+               if (this .vertexArrayObject .enable (transformShaderNode))
                {
                   const
                      lineStippleStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
@@ -379,7 +304,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
                // Setup vertex attributes.
 
-               if (this .thickVertexArrayObject .enable (gl, shaderNode))
+               if (this .vertexArrayObject .enable (shaderNode))
                {
                   const
                      stride            = 15 * Float32Array .BYTES_PER_ELEMENT,
@@ -431,7 +356,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
          // Setup vertex attributes.
 
-         if (this .vertexArrayObject .enable (gl, shaderNode))
+         if (this .vertexArrayObject .enable (shaderNode))
          {
             for (let i = 0, length = attribNodes .length; i < length; ++ i)
                attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -481,7 +406,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
       const outputParticles = particleSystem .outputParticles;
 
-      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
+      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode))
       {
          const particleStride = particleSystem .particleStride;
 

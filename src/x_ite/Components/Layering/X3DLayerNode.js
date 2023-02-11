@@ -189,14 +189,12 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    },
    getUserViewpoints: function ()
    {
-      var userViewpoints = [ ];
+      const userViewpoints = [ ];
 
-      for (var i = 0; i < this .viewpoints .get () .length; ++ i)
+      for (const viewpointNode of this .viewpoints .get ())
       {
-         var viewpoint = this .viewpoints .get () [i];
-
-         if (viewpoint ._description .length)
-            userViewpoints .push (viewpoint);
+         if (viewpointNode ._description .length)
+            userViewpoints .push (viewpointNode);
       }
 
       return userViewpoints;
@@ -224,10 +222,10 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    lookAt: function (factor = 1, straighten = false)
    {
       const
-         viewpoint = this .getViewpoint (),
-         bbox      = this .getBBox (new Box3 ()) .multRight (Matrix4 .inverse (viewpoint .getModelMatrix ()));
+         viewpointNode = this .getViewpoint (),
+         bbox          = this .getBBox (new Box3 ()) .multRight (Matrix4 .inverse (viewpointNode .getModelMatrix ()));
 
-      viewpoint .lookAt (this, bbox .center, viewpoint .getLookAtDistance (bbox), factor, straighten);
+         viewpointNode .lookAt (this, bbox .center, viewpointNode .getLookAtDistance (bbox), factor, straighten);
    },
    set_viewport__: function ()
    {
@@ -262,11 +260,11 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    {
       renderObject = renderObject || this;
 
-      var viewpoint = this .getViewpoint ();
+      const viewpointNode = this .getViewpoint ();
 
-      this .getProjectionMatrix ()  .pushMatrix (viewpoint .getProjectionMatrix (this));
-      this .getCameraSpaceMatrix () .pushMatrix (viewpoint .getCameraSpaceMatrix ());
-      this .getViewMatrix ()        .pushMatrix (viewpoint .getViewMatrix ());
+      this .getProjectionMatrix ()  .pushMatrix (viewpointNode .getProjectionMatrix (this));
+      this .getCameraSpaceMatrix () .pushMatrix (viewpointNode .getCameraSpaceMatrix ());
+      this .getViewMatrix ()        .pushMatrix (viewpointNode .getViewMatrix ());
 
       switch (type)
       {
@@ -294,32 +292,30 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    },
    pointer: function (type, renderObject)
    {
-      if (this ._pickable .getValue ())
+      const
+         browser  = this .getBrowser (),
+         viewport = this .currentViewport .getRectangle ();
+
+      if (browser .getActivePickLayer ())
       {
-         var
-            browser  = this .getBrowser (),
-            viewport = this .currentViewport .getRectangle ();
-
-         if (browser .getSelectedLayer ())
-         {
-            if (browser .getSelectedLayer () !== this)
-               return;
-         }
-         else
-         {
-            if (! browser .isPointerInRectangle (viewport))
-               return;
-         }
-
-         browser .setHitRay (this .getProjectionMatrix () .get (), viewport);
-         this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
-
-         this .currentViewport .push (this);
-         this .groupNode .traverse (type, renderObject);
-         this .currentViewport .pop (this);
-
-         this .getModelViewMatrix () .pop ()
+         if (browser .getActivePickLayer () !== this)
+            return;
       }
+      else
+      {
+         if (!browser .isPointerInRectangle (viewport))
+            return;
+      }
+
+      this .setHitRay (this .getProjectionMatrix () .get (), viewport, browser .getPointer ());
+      this .getNavigationInfo () .enable (type, renderObject);
+      this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
+
+      this .currentViewport .push (this);
+      renderObject .render (type, this .groupNode .traverse, this .groupNode);
+      this .currentViewport .pop (this);
+
+      this .getModelViewMatrix () .pop ()
    },
    camera: function (type, renderObject)
    {
@@ -360,12 +356,12 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       return function (type, renderObject)
       {
-         var navigationInfo = this .getNavigationInfo ();
+         const navigationInfo = this .getNavigationInfo ();
 
          if (navigationInfo ._transitionActive .getValue ())
             return;
 
-         var
+         const
             collisionRadius = navigationInfo .getCollisionRadius (),
             avatarHeight    = navigationInfo .getAvatarHeight (),
             size            = Math .max (collisionRadius * 2, avatarHeight * 2);
@@ -391,7 +387,6 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
       if (this ._visible .getValue ())
       {
          this .getNavigationInfo () .enable (type, renderObject);
-
          this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
 
          this .currentViewport .push (this);

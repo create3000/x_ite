@@ -106,19 +106,6 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
       this .set_pointSizeMaxValue__ ();
       this .set_attenuation__ ();
    },
-   getPointSize: function (point)
-   {
-      const
-         attenuation  = this .attenuation,
-         dL           = point .magnitude ();
-
-      let pointSize = this .pointSizeScaleFactor;
-
-      pointSize /= attenuation [0] + attenuation [1] * dL + attenuation [2] * (dL * dL);
-      pointSize  = Algorithm .clamp (pointSize, this .pointSizeMinValue, this .pointSizeMaxValue);
-
-      return pointSize;
-   },
    set_contentScale__: function ()
    {
       this .set_pointSizeScaleFactor__ ();

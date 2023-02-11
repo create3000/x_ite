@@ -105,13 +105,13 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
       this .rightBuffer       = gl .createBuffer ();
       this .topBuffer         = gl .createBuffer ();
       this .bottomBuffer      = gl .createBuffer ();
-      this .sphereArrayObject = new VertexArray ();
-      this .frontArrayObject  = new VertexArray ();
-      this .backArrayObject   = new VertexArray ();
-      this .leftArrayObject   = new VertexArray ();
-      this .rightArrayObject  = new VertexArray ();
-      this .topArrayObject    = new VertexArray ();
-      this .bottomArrayObject = new VertexArray ();
+      this .sphereArrayObject = new VertexArray (gl);
+      this .frontArrayObject  = new VertexArray (gl);
+      this .backArrayObject   = new VertexArray (gl);
+      this .leftArrayObject   = new VertexArray (gl);
+      this .rightArrayObject  = new VertexArray (gl);
+      this .topArrayObject    = new VertexArray (gl);
+      this .bottomArrayObject = new VertexArray (gl);
 
       this ._groundAngle  .addInterest ("build", this);
       this ._groundColor  .addInterest ("build", this);
@@ -569,7 +569,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
 
       // Enable vertex attribute arrays.
 
-      if (this .sphereArrayObject .enable (gl, shaderNode))
+      if (this .sphereArrayObject .enable (shaderNode))
       {
          shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
          shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);

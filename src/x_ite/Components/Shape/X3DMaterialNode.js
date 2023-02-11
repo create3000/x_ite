@@ -111,11 +111,11 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
       {
          const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, objectsCount } = renderContext;
 
-         key += this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer () ? "1" : "0";
-         key += shadows ? "1" : "0";
-         key += fogNode ? fogNode .getFogKey () : "0";
+         key += this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer () ? 1 : 0;
+         key += shadows ? 1 : 0;
+         key += fogNode ? fogNode .getFogType () : 0;
          key += shapeNode .getShapeKey ();
-         key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? "1" : "0";
+         key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
          key += ".";
          key += objectsCount [0]; // Clip planes
          key += ".";
@@ -123,17 +123,17 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          key += ".";
          key += objectsCount [2]; // Texture projectors
          key += ".";
-         key += textureNode ? "1" : appearanceNode .getTextureBits () .toString (4);
+         key += textureNode ? 1 : appearanceNode .getTextureBits () .toString (4);
          key += ".";
-         key += appearanceNode .getTextureTransformMapping () .size || "1";
-         key += geometryContext .textureCoordinateMapping .size || "1";
+         key += appearanceNode .getTextureTransformMapping () .size || 1;
+         key += geometryContext .textureCoordinateMapping .size || 1;
          key += this .getMaterialKey (shadows);
       }
       else
       {
          const { textureNode, objectsCount } = geometryContext;
 
-         key += this .logarithmicDepthBuffer ? "1" : "0";
+         key += this .logarithmicDepthBuffer ? 1 : 0;
          key += "0000.";
          key += objectsCount [0]; // Clip planes
          key += ".";
@@ -141,157 +141,87 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          key += ".";
          key += objectsCount [2]; // Texture projectors
          key += ".";
-         key += textureNode ? "1" : "0";
+         key += textureNode ? 1 : 0;
          key += ".11";
          key += this .getMaterialKey (false);
       }
 
       return this .shaderNodes .get (key) || this .createShader (key, geometryContext, renderContext);
    },
-   getShaderOptions: (function ()
+   getShaderOptions: function (geometryContext, renderContext)
    {
-      const geometryTypes = [
-         "X3D_GEOMETRY_0D",
-         "X3D_GEOMETRY_1D",
-         "X3D_GEOMETRY_2D",
-         "X3D_GEOMETRY_3D",
-      ];
+      const
+         browser = this .getBrowser (),
+         options = [ ];
 
-      return function (geometryContext, renderContext)
+      options .push (`X3D_GEOMETRY_${geometryContext .geometryType}D`);
+
+      if (geometryContext .hasFogCoords)
+         options .push ("X3D_FOG_COORDS");
+
+      if (geometryContext .colorMaterial)
+         options .push ("X3D_COLOR_MATERIAL");
+
+      if (geometryContext .hasNormals)
+         options .push ("X3D_NORMALS");
+
+      if (renderContext)
       {
-         const
-            browser = this .getBrowser (),
-            options = [ ];
+         const { renderObject, shapeNode, appearanceNode, objectsCount } = renderContext;
 
-         options .push (geometryTypes [geometryContext .geometryType]);
+         if (this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer ())
+            options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 
-         if (geometryContext .hasFogCoords)
-            options .push ("X3D_FOG_COORDS");
+         if (renderContext .shadows)
+            options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
-         if (geometryContext .colorMaterial)
-            options .push ("X3D_COLOR_MATERIAL");
-
-         if (geometryContext .hasNormals)
-            options .push ("X3D_NORMALS");
-
-         if (renderContext)
+         if (renderContext .fogNode)
          {
-            const { renderObject, appearanceNode, objectsCount } = renderContext;
+            options .push ("X3D_FOG");
 
-            if (this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer ())
-               options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
-
-            if (renderContext .shadows)
-               options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
-
-            if (renderContext .fogNode)
+            switch (renderContext .fogNode .getFogType ())
             {
-               options .push ("X3D_FOG");
-
-               switch (renderContext .fogNode .getFogKey ())
-               {
-                  case "1":
-                     options .push ("X3D_FOG_LINEAR");
-                     break;
-                  case "2":
-                     options .push ("X3D_FOG_EXPONENTIAL");
-                     break;
-               }
-            }
-
-            if (objectsCount [0])
-            {
-               options .push ("X3D_CLIP_PLANES")
-               options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
-            }
-
-            if (objectsCount [1])
-            {
-               options .push ("X3D_LIGHTING")
-               options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
-            }
-
-            if (objectsCount [2])
-            {
-               options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
-               options .push ("X3D_NUM_TEXTURE_PROJECTORS " + Math .min (objectsCount [2], browser .getMaxTextures ()));
-            }
-
-            if (appearanceNode .getStyleProperties (geometryContext .geometryType))
-               options .push ("X3D_STYLE_PROPERTIES");
-
-            if (+this .textureBits)
-            {
-               options .push ("X3D_MATERIAL_TEXTURES");
-               options .push ("X3D_NUM_TEXTURE_TRANSFORMS " + (appearanceNode .getTextureTransformMapping () .size || "1"));
-               options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .getTextureCoordinateMapping () .size || "1"));
-            }
-            else
-            {
-               if (renderContext .textureNode)
-               {
-                  // ScreenText
-
-                  options .push ("X3D_TEXTURE",
-                                 "X3D_NUM_TEXTURES 1",
-                                 "X3D_NUM_TEXTURE_TRANSFORMS 1",
-                                 "X3D_NUM_TEXTURE_COORDINATES 1",
-                                 "X3D_TEXTURE0_2D");
-               }
-               else if (+appearanceNode .getTextureBits ())
-               {
-                  const textureNode = appearanceNode .getTexture ();
-
-                  options .push ("X3D_TEXTURE");
-                  options .push ("X3D_NUM_TEXTURES "            + textureNode .getCount ());
-                  options .push ("X3D_NUM_TEXTURE_TRANSFORMS "  + textureNode .getCount ());
-                  options .push ("X3D_NUM_TEXTURE_COORDINATES " + textureNode .getCount ());
-
-                  textureNode .getShaderOptions (options);
-
-                  if (textureNode .getType () .includes (X3DConstants .MultiTexture))
-                     options .push ("X3D_MULTI_TEXTURING");
-               }
-            }
-
-            switch (renderContext .shapeNode .getShapeKey ())
-            {
-               case "1":
-                  options .push ("X3D_PARTICLE_SYSTEM");
+               case 1:
+                  options .push ("X3D_FOG_LINEAR");
                   break;
-               case "2":
-                  options .push ("X3D_PARTICLE_SYSTEM", "X3D_TEX_COORD_RAMP");
+               case 2:
+                  options .push ("X3D_FOG_EXPONENTIAL");
                   break;
             }
          }
+
+         if (objectsCount [0])
+         {
+            options .push ("X3D_CLIP_PLANES")
+            options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
+         }
+
+         if (objectsCount [1])
+         {
+            options .push ("X3D_LIGHTING")
+            options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
+         }
+
+         if (objectsCount [2])
+         {
+            options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
+            options .push ("X3D_NUM_TEXTURE_PROJECTORS " + Math .min (objectsCount [2], browser .getMaxTextures ()));
+         }
+
+         if (appearanceNode .getStyleProperties (geometryContext .geometryType))
+            options .push ("X3D_STYLE_PROPERTIES");
+
+         if (+this .textureBits)
+         {
+            options .push ("X3D_MATERIAL_TEXTURES");
+            options .push ("X3D_NUM_TEXTURE_TRANSFORMS " + (appearanceNode .getTextureTransformMapping () .size || 1));
+            options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .getTextureCoordinateMapping () .size || 1));
+         }
          else
          {
-            const { textureNode, objectsCount } = geometryContext;
-
-            if (this .logarithmicDepthBuffer)
-               options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
-
-            if (objectsCount [0])
+            if (renderContext .textureNode)
             {
-               options .push ("X3D_CLIP_PLANES")
-               options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
-            }
-
-            if (objectsCount [1])
-            {
-               options .push ("X3D_LIGHTING")
-               options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
-            }
-
-            if (objectsCount [2])
-            {
-               options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
-               options .push ("X3D_NUM_TEXTURE_PROJECTORS " + Math .min (objectsCount [2], browser .getMaxTextures ()));
-            }
-
-            if (textureNode)
-            {
-               // X3DBackgroundNode textures
+               // ScreenText
 
                options .push ("X3D_TEXTURE",
                               "X3D_NUM_TEXTURES 1",
@@ -299,11 +229,71 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
                               "X3D_NUM_TEXTURE_COORDINATES 1",
                               "X3D_TEXTURE0_2D");
             }
+            else if (+appearanceNode .getTextureBits ())
+            {
+               const textureNode = appearanceNode .getTexture ();
+
+               options .push ("X3D_TEXTURE");
+               options .push ("X3D_NUM_TEXTURES "            + textureNode .getCount ());
+               options .push ("X3D_NUM_TEXTURE_TRANSFORMS "  + textureNode .getCount ());
+               options .push ("X3D_NUM_TEXTURE_COORDINATES " + textureNode .getCount ());
+
+               textureNode .getShaderOptions (options);
+
+               if (textureNode .getType () .includes (X3DConstants .MultiTexture))
+                  options .push ("X3D_MULTI_TEXTURING");
+            }
          }
 
-         return options;
-      };
-   })(),
+         switch (shapeNode .getShapeKey ())
+         {
+            case 1:
+               options .push ("X3D_PARTICLE_SYSTEM");
+               break;
+            case 2:
+               options .push ("X3D_PARTICLE_SYSTEM", "X3D_TEX_COORD_RAMP");
+               break;
+         }
+      }
+      else
+      {
+         const { textureNode, objectsCount } = geometryContext;
+
+         if (this .logarithmicDepthBuffer)
+            options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
+
+         if (objectsCount [0])
+         {
+            options .push ("X3D_CLIP_PLANES")
+            options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
+         }
+
+         if (objectsCount [1])
+         {
+            options .push ("X3D_LIGHTING")
+            options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
+         }
+
+         if (objectsCount [2])
+         {
+            options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
+            options .push ("X3D_NUM_TEXTURE_PROJECTORS " + Math .min (objectsCount [2], browser .getMaxTextures ()));
+         }
+
+         if (textureNode)
+         {
+            // X3DBackgroundNode textures
+
+            options .push ("X3D_TEXTURE",
+                           "X3D_NUM_TEXTURES 1",
+                           "X3D_NUM_TEXTURE_TRANSFORMS 1",
+                           "X3D_NUM_TEXTURE_COORDINATES 1",
+                           "X3D_TEXTURE0_2D");
+         }
+      }
+
+      return options;
+   },
 });
 
 export default X3DMaterialNode;

@@ -127,26 +127,24 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
 
       return vector .set (0, 0, 0, 1);
    },
+   getPoints: function (array)
+   {
+      for (const textureCoordinateNode of this .textureCoordinateNodes)
+         return textureCoordinateNode .getPoints (array);
+
+      return array;
+   },
    init: function (multiArray)
    {
       for (const textureCoordinateNode of this .textureCoordinateNodes)
          textureCoordinateNode .init (multiArray);
    },
-   addTexCoord: function (index, multiArray)
+   addPoint: function (index, multiArray)
    {
       const textureCoordinateNodes = this .textureCoordinateNodes;
 
       for (let i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-         textureCoordinateNodes [i] .addTexCoordToChannel (index, multiArray [i]);
-   },
-   addTexCoordToChannel: function (index, array)
-   { },
-   getTexCoord: function (array)
-   {
-      for (const textureCoordinateNode of this .textureCoordinateNodes)
-         return textureCoordinateNode .getTexCoord (array);
-
-      return array;
+         textureCoordinateNodes [i] .addPointToChannel (index, multiArray [i]);
    },
    getTextureCoordinateMapping: function (textureCoordinateMapping)
    {

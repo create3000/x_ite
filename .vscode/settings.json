@@ -6,7 +6,7 @@
       "**/_site": true,
       "**/.jekyll-cache": true,
       "**/.jekyll-metadata": true,
-      "**/.bundle": true,
+      "**/.bundle": true
    },
    "files.insertFinalNewline": true,
    "files.trimFinalNewlines": true,

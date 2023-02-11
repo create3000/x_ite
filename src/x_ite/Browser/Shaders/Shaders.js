@@ -53,7 +53,6 @@ import Fragment1              from "../../../assets/shaders/webgl1/include/Fragm
 import Hatch1                 from "../../../assets/shaders/webgl1/include/Hatch.glsl.js";
 import Material1              from "../../../assets/shaders/webgl1/include/Material.glsl.js";
 import Normal1                from "../../../assets/shaders/webgl1/include/Normal.glsl.js";
-import Pack1                  from "../../../assets/shaders/webgl1/include/Pack.glsl.js";
 import Perlin1                from "../../../assets/shaders/webgl1/include/Perlin.glsl.js";
 import Point1                 from "../../../assets/shaders/webgl1/include/Point.glsl.js";
 import PointSize1             from "../../../assets/shaders/webgl1/include/PointSize.glsl.js";
@@ -71,7 +70,6 @@ import Hatch2                 from "../../../assets/shaders/webgl2/include/Hatch
 import Line22                 from "../../../assets/shaders/webgl2/include/Line2.glsl.js";
 import Material2              from "../../../assets/shaders/webgl2/include/Material.glsl.js";
 import Normal2                from "../../../assets/shaders/webgl2/include/Normal.glsl.js";
-import Pack2                  from "../../../assets/shaders/webgl2/include/Pack.glsl.js";
 import Particle2              from "../../../assets/shaders/webgl2/include/Particle.glsl.js";
 import Perlin2                from "../../../assets/shaders/webgl2/include/Perlin.glsl.js";
 import Point2                 from "../../../assets/shaders/webgl2/include/Point.glsl.js";
@@ -84,8 +82,10 @@ import Vertex2                from "../../../assets/shaders/webgl2/include/Verte
 
 /* WebGL 1 */
 import DefaultVertex1         from "../../../assets/shaders/webgl1/Default.vs.js";
+import PointingVertex1        from "../../../assets/shaders/webgl1/Pointing.vs.js";
 import DepthVertex1           from "../../../assets/shaders/webgl1/Depth.vs.js";
 import GouraudVertex1         from "../../../assets/shaders/webgl1/Gouraud.vs.js";
+import PointingFragment1      from "../../../assets/shaders/webgl1/Pointing.fs.js";
 import DepthFragment1         from "../../../assets/shaders/webgl1/Depth.fs.js";
 import GouraudFragment1       from "../../../assets/shaders/webgl1/Gouraud.fs.js";
 import PBRFragment1           from "../../../assets/shaders/webgl1/PBR.fs.js";
@@ -94,9 +94,11 @@ import UnlitFragment1         from "../../../assets/shaders/webgl1/Unlit.fs.js";
 
 /* WebGL 2 */
 import DefaultVertex2         from "../../../assets/shaders/webgl2/Default.vs.js";
+import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing.vs.js";
 import DepthVertex2           from "../../../assets/shaders/webgl2/Depth.vs.js";
 import GouraudVertex2         from "../../../assets/shaders/webgl2/Gouraud.vs.js";
 import LineTransformVertex2   from "../../../assets/shaders/webgl2/LineTransform.vs.js";
+import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing.fs.js";
 import DepthFragment2         from "../../../assets/shaders/webgl2/Depth.fs.js";
 import GouraudFragment2       from "../../../assets/shaders/webgl2/Gouraud.fs.js";
 import LineTransformFragment2 from "../../../assets/shaders/webgl2/LineTransform.fs.js";
@@ -114,7 +116,6 @@ const Shaders = {
          Hatch: Hatch1,
          Material: Material1,
          Normal: Normal1,
-         Pack: Pack1,
          Perlin: Perlin1,
          Point: Point1,
          PointSize: PointSize1,
@@ -132,7 +133,6 @@ const Shaders = {
          Line2: Line22,
          Material: Material2,
          Normal: Normal2,
-         Pack: Pack2,
          Particle: Particle2,
          Perlin: Perlin2,
          Point: Point2,
@@ -147,11 +147,13 @@ const Shaders = {
    vertex: {
       1: {
          Default: DefaultVertex1,
+         Pointing: PointingVertex1,
          Depth: DepthVertex1,
          Gouraud: GouraudVertex1,
       },
       2: {
          Default: DefaultVertex2,
+         Pointing: PointingVertex2,
          Depth: DepthVertex2,
          Gouraud: GouraudVertex2,
          LineTransform: LineTransformVertex2,
@@ -159,6 +161,7 @@ const Shaders = {
    },
    fragment: {
       1: {
+         Pointing: PointingFragment1,
          Depth: DepthFragment1,
          Gouraud: GouraudFragment1,
          PBR: PBRFragment1,
@@ -166,6 +169,7 @@ const Shaders = {
          Unlit: UnlitFragment1,
       },
       2: {
+         Pointing: PointingFragment2,
          Depth: DepthFragment2,
          Gouraud: GouraudFragment2,
          LineTransform: LineTransformFragment2,

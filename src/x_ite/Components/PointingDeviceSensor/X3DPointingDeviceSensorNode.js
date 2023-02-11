@@ -101,10 +101,10 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSens
    {
       if (this ._enabled .getValue ())
       {
-         sensors .set (this, new PointingDeviceSensorContainer (this,
-                                                                renderObject .getModelViewMatrix  () .get (),
-                                                                renderObject .getProjectionMatrix () .get (),
-                                                                renderObject .getViewVolume () .getViewport ()));
+         sensors .push (new PointingDeviceSensorContainer (this,
+                                                           renderObject .getModelViewMatrix  () .get (),
+                                                           renderObject .getProjectionMatrix () .get (),
+                                                           renderObject .getViewVolume () .getViewport ()));
       }
    },
 });

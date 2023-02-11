@@ -152,6 +152,7 @@ X3DProgrammableShaderObject .prototype =
        * Uniforms.
        */
 
+      this .x3d_Id                      = gl .getUniformLocation (program, "x3d_Id");
       this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
 
       for (let i = 0; i < maxClipPlanes; ++ i)

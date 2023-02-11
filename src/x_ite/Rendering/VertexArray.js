@@ -45,51 +45,50 @@
  *
  ******************************************************************************/
 
-function VertexArray ()
+function VertexArray (gl)
 {
-   this .vertexArray = null;
-   this .shaderNode  = null;
-   this .tainted     = true;
+   this .gl           = gl;
+   this .vertexArrays = new Map ();
 }
 
 VertexArray .prototype =
 {
    update: function (value = true)
    {
-      this .tainted = this .tainted || value;
+      if (value)
+         this .delete ();
 
       return this;
    },
-   enable: function (gl, shaderNode)
+   enable: function (shaderNode)
    {
-      if (this .tainted || this .shaderNode !== shaderNode)
+      const vertexArray = this .vertexArrays .get (shaderNode);
+
+      if (vertexArray)
       {
-         gl .deleteVertexArray (this .vertexArray);
-
-         this .vertexArray = gl .createVertexArray ();
-         this .shaderNode  = shaderNode;
-         this .tainted     = false;
-
-         gl .bindVertexArray (this .vertexArray);
-
-         // console .log ("update vao");
-
-         return true;
-      }
-      else
-      {
-         gl .bindVertexArray (this .vertexArray);
+         this .gl .bindVertexArray (vertexArray);
 
          return false;
       }
+      else
+      {
+         const vertexArray = this .gl .createVertexArray ();
+
+         this .vertexArrays .set (shaderNode, vertexArray)
+
+         this .gl .bindVertexArray (vertexArray);
+
+         // console .log ("rebuild vao");
+
+         return true; // Rebuild
+      }
    },
-   disable: function (gl)
+   delete: function ()
    {
-      gl .bindVertexArray (null);
-   },
-   delete: function (gl)
-   {
-      gl .deleteVertexArray (this .vertexArray);
+      for (const vertexArray of this .vertexArrays .values ())
+         this .gl .deleteVertexArray (vertexArray);
+
+      this .vertexArrays .clear ();
    },
 };
 

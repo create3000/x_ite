@@ -61,19 +61,19 @@ function X3DSingleTextureCoordinateNode (executionContext)
 X3DSingleTextureCoordinateNode .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
 {
    constructor: X3DSingleTextureCoordinateNode,
+   getCount: function ()
+   {
+      return 1;
+   },
    init: function (multiArray)
    {
       this .texCoordArray .length = 0;
 
       multiArray .push (this .texCoordArray);
    },
-   getCount: function ()
+   addPoint: function (index, multiArray)
    {
-      return 1;
-   },
-   addTexCoord: function (index, multiArray)
-   {
-      this .addTexCoordToChannel (index, multiArray [0]);
+      this .addPointToChannel (index, multiArray [0]);
    },
    getTextureCoordinateMapping: function (textureCoordinateMapping, channel = 0)
    {

@@ -130,13 +130,13 @@ TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingl
    {
       return vector;
    },
-   addTexCoordToChannel: function (index, array)
-   {
-      array .push (0, 0, 0, 1);
-   },
-   getTexCoord: function (array)
+   getPoints: function (array)
    {
       return array;
+   },
+   addPointToChannel: function (index, array)
+   {
+      array .push (0, 0, 0, 1);
    },
    setShaderUniformsToChannel: function (gl, shaderObject, channel = 0)
    {

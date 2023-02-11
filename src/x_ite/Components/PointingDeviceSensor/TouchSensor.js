@@ -50,9 +50,6 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DTouchSensorNode   from "./X3DTouchSensorNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
-
-var invModelViewMatrix = new Matrix4 ();
 
 function TouchSensor (executionContext)
 {
@@ -88,21 +85,6 @@ TouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .pro
    getContainerField: function ()
    {
       return "children";
-   },
-   set_over__: function (over, hit, modelViewMatrix, projectionMatrix, viewport)
-   {
-      X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
-
-      if (this ._isOver .getValue ())
-      {
-         var intersection = hit .intersection;
-
-         invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-
-         this ._hitTexCoord_changed = intersection .texCoord;
-         this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
-         this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
-      }
    },
 });
 

@@ -172,7 +172,9 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
    {
       X3DShapeNode .prototype .initialize .call (this);
 
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
 
       // Check version.
 
@@ -202,12 +204,8 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       this .inputParticles  = this .createBuffer ();
       this .outputParticles = this .createBuffer ();
 
-      this .inputParticles  .emitterArrayObject = new VertexArray ();
-      this .inputParticles  .vertexArrayObject  = new VertexArray ();
-      this .inputParticles  .shadowArrayObject  = new VertexArray ();
-      this .outputParticles .emitterArrayObject = new VertexArray ();
-      this .outputParticles .vertexArrayObject  = new VertexArray ();
-      this .outputParticles .shadowArrayObject  = new VertexArray ();
+      this .inputParticles  .vertexArrayObject = new VertexArray (gl);
+      this .outputParticles .vertexArrayObject = new VertexArray (gl);
 
       // Create forces stuff.
 
@@ -236,7 +234,17 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
    },
    getShapeKey: function ()
    {
-      return this .numTexCoords ? "2" : "1";
+      return this .numTexCoords ? 2 : 1;
+   },
+   getGeometryContext: function ()
+   {
+      switch (this .geometryType)
+      {
+         case GeometryTypes .GEOMETRY:
+            return this .getGeometry ();
+         default:
+            return this .geometryContext;
+      }
    },
    set_bbox__: function ()
    {
@@ -627,7 +635,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
          texCoordRamp [i * 4] = texCoordKey [i];
 
       if (this .texCoordRampNode)
-         texCoordRamp .set (this .texCoordRampNode .getTexCoord ([ ]) .slice (0, numTexCoords * this .texCoordCount * 4), numTexCoords * 4);
+         texCoordRamp .set (this .texCoordRampNode .getPoints ([ ]) .slice (0, numTexCoords * this .texCoordCount * 4), numTexCoords * 4);
 
       if (textureSize)
       {
@@ -642,11 +650,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
    updateVertexArrays: function ()
    {
       this .inputParticles  .vertexArrayObject  .update ();
-      this .inputParticles  .shadowArrayObject  .update ();
-      this .inputParticles  .emitterArrayObject .update ();
       this .outputParticles .vertexArrayObject  .update ();
-      this .outputParticles .shadowArrayObject  .update ();
-      this .outputParticles .emitterArrayObject .update ();
    },
    createTexture: function ()
    {
@@ -850,6 +854,10 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       switch (type)
       {
          case TraverseType .POINTER:
+         {
+            renderObject .addPointingShape (this);
+            break;
+         }
          case TraverseType .PICKING:
          case TraverseType .COLLISION:
          {
@@ -877,21 +885,11 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
             this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
       }
    },
-   depth: function (gl, depthContext, projectionMatrix)
+   displaySimple: function (gl, renderContext, shaderNode)
    {
       if (this .numParticles)
       {
          // Display geometry.
-
-         const
-            clipPlanes = depthContext .clipPlanes,
-            shaderNode = this .getBrowser () .getDepthShader (clipPlanes .length, true);
-
-         shaderNode .enable (gl);
-         shaderNode .setClipPlanes (gl, clipPlanes);
-
-         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrix);
-         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, depthContext .modelViewMatrix);
 
          switch (this .geometryType)
          {
@@ -900,20 +898,20 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
                const geometryNode = this .getGeometry ();
 
                if (geometryNode)
-                  geometryNode .displayParticlesDepth (gl, depthContext, shaderNode, this);
+                  geometryNode .displaySimpleParticles (gl, shaderNode, this);
 
                break;
             }
             case GeometryTypes .SPRITE:
             {
-               this .updateSprite (gl, this .getScreenAlignedRotation (depthContext .modelViewMatrix));
+               this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
                // [fall trough]
             }
             default:
             {
                const outputParticles = this .outputParticles;
 
-               if (outputParticles .shadowArrayObject .enable (gl, shaderNode))
+               if (outputParticles .vertexArrayObject .enable (shaderNode))
                {
                   const particleStride = this .particleStride;
 
@@ -996,7 +994,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
 
                const outputParticles = this .outputParticles;
 
-               if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
+               if (outputParticles .vertexArrayObject .enable (shaderNode))
                {
                   const particleStride = this .particleStride;
 

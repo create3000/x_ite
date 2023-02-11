@@ -63,7 +63,7 @@ function Anchor (executionContext)
    this .addType (X3DConstants .Anchor);
 
    this .touchSensorNode = new TouchSensor (executionContext);
-   this .anchorSensors   = new Map ();
+   this .anchorSensors   = [ ];
 }
 
 Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -168,21 +168,19 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    {
       if (type === TraverseType .POINTER)
       {
-         const
-            sensorsStack = this .getBrowser () .getSensors (),
-            sensors      = this .anchorSensors;
+         const sensors = this .anchorSensors;
 
-         sensors .clear ();
+         sensors .length = 0;
 
          this .touchSensorNode .push (renderObject, sensors);
 
-         if (sensors .size)
+         if (sensors .length)
          {
-            sensorsStack .push (sensors);
+            renderObject .getSensors () .push (sensors);
 
             X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-            sensorsStack .pop ();
+            renderObject .getSensors () .pop ();
          }
          else
          {

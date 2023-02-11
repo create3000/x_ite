@@ -143,6 +143,13 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
          }
       };
    })(),
+   transformPoint: function (texCoord)
+   {
+      if (this .textureTransformNodes .length)
+         return this .textureTransformNodes [0] .transformPoint (texCoord);
+
+      return texCoord;
+   },
 });
 
 export default MultiTextureTransform;

@@ -82,7 +82,7 @@ VolumeMaterial .prototype = Object .assign (Object .create (UnlitMaterial .proto
 
       let key = "";
 
-      key += fogNode ? fogNode .getFogKey () : "0";
+      key += fogNode ? fogNode .getFogType () : 0;
       key += ".";
       key += objectsCount [0]; // Clip planes
       key += ".";

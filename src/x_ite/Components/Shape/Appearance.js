@@ -218,7 +218,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
    {
       this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this ._pointProperties);
 
-      if (! this .stylePropertiesNode [0])
+      if (!this .stylePropertiesNode [0])
       {
          const browser = this .getBrowser ();
 
@@ -273,7 +273,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
 
       this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this ._material);
 
-      if (! this .materialNode)
+      if (!this .materialNode)
          this .materialNode = this .getBrowser () .getDefaultMaterial ();
 
       if (this .materialNode)
@@ -281,7 +281,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
 
       // Depreciated TwoSidedMaterial handling.
 
-      if (this .materialNode .getTypeName () === "TwoSidedMaterial")
+      if (X3DCast (X3DConstants .TwoSidedMaterial, this .materialNode))
          this .set_backMaterial__ ();
    },
    set_backMaterial__: function ()
@@ -296,7 +296,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
 
       // Depreciated TwoSidedMaterial handling.
 
-      if (! this .backMaterialNode && this .materialNode .getTypeName () === "TwoSidedMaterial")
+      if (!this .backMaterialNode && X3DCast (X3DConstants .TwoSidedMaterial, this .materialNode))
          this .backMaterialNode = this .materialNode;
    },
    set_texture__: function ()
@@ -328,7 +328,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
 
       this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this ._textureTransform);
 
-      if (! this .textureTransformNode)
+      if (!this .textureTransformNode)
          this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
 
       this .textureTransformNode .addInterest ("updateTextureTransformMapping", this);

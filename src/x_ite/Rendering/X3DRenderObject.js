@@ -51,6 +51,7 @@ import Algorithm     from "../../standard/Math/Algorithm.js";
 import MergeSort     from "../../standard/Math/Algorithms/MergeSort.js";
 import Camera        from "../../standard/Math/Geometry/Camera.js";
 import Box3          from "../../standard/Math/Geometry/Box3.js";
+import Line3         from "../../standard/Math/Geometry/Line3.js";
 import ViewVolume    from "../../standard/Math/Geometry/ViewVolume.js";
 import Vector3       from "../../standard/Math/Numbers/Vector3.js";
 import Vector4       from "../../standard/Math/Numbers/Vector4.js";
@@ -74,6 +75,8 @@ function X3DRenderObject (executionContext)
    this .viewportArray            = new Int32Array (4);
    this .projectionMatrixArray    = new Float32Array (16);
    this .cameraSpaceMatrixArray   = new Float32Array (16);
+   this .hitRay                   = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   this .sensors                  = [[ ]];
    this .localObjectsCount        = [0, 0, 0];
    this .globalObjects            = [ ];
    this .localObjects             = [ ];
@@ -85,21 +88,23 @@ function X3DRenderObject (executionContext)
    this .textureProjectors        = [ ];
    this .generatedCubeMapTextures = [ ];
    this .collisions               = [ ];
-   this .numOpaqueShapes          = 0;
-   this .numTransparentShapes     = 0;
+   this .numPointingShapes        = 0;
    this .numCollisionShapes       = 0;
    this .numShadowShapes          = 0;
+   this .numOpaqueShapes          = 0;
+   this .numTransparentShapes     = 0;
+   this .pointingShapes           = [ ];
+   this .collisionShapes          = [ ];
+   this .activeCollisions         = [ ];
+   this .shadowShapes             = [ ];
    this .opaqueShapes             = [ ];
    this .transparentShapes        = [ ];
    this .transparencySorter       = new MergeSort (this .transparentShapes, compareDistance);
-   this .collisionShapes          = [ ];
-   this .activeCollisions         = new Set ();
-   this .shadowShapes             = [ ];
    this .speed                    = 0;
 
    try
    {
-      this .depthBuffer = new TextureBuffer (executionContext .getBrowser (), DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT);
+      this .depthBuffer = new TextureBuffer (executionContext .getBrowser (), DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT, true);
    }
    catch (error)
    {
@@ -157,6 +162,14 @@ X3DRenderObject .prototype =
    getCameraSpaceMatrixArray: function ()
    {
       return this .cameraSpaceMatrixArray;
+   },
+   getHitRay: function ()
+   {
+      return this .hitRay;
+   },
+   getSensors: function ()
+   {
+      return this .sensors;
    },
    getGlobalObjects: function ()
    {
@@ -234,6 +247,18 @@ X3DRenderObject .prototype =
    getCollisions: function ()
    {
       return this .collisions;
+   },
+   setNumPointingShapes: function (value)
+   {
+      this .numPointingShapes = value;
+   },
+   getNumPointingShapes: function ()
+   {
+      return this .numPointingShapes;
+   },
+   getPointingShapes: function ()
+   {
+      return this .pointingShapes;
    },
    setNumCollisionShapes: function (value)
    {
@@ -406,6 +431,14 @@ X3DRenderObject .prototype =
    {
       switch (type)
       {
+         case TraverseType .POINTER:
+         {
+            this .numPointingShapes = 0;
+
+            callback .call (group, type, this);
+            this .pointing (this .pointingShapes, this .numPointingShapes);
+            break;
+         }
          case TraverseType .COLLISION:
          {
             // Collect for collide and gravite
@@ -438,6 +471,53 @@ X3DRenderObject .prototype =
          }
       }
    },
+   setHitRay: function (projectionMatrix, viewport, pointer)
+   {
+      ViewVolume .unProjectRay (pointer .x, pointer .y, Matrix4 .Identity, projectionMatrix, viewport, this .hitRay);
+   },
+   addPointingShape: (function ()
+   {
+      const
+         bboxSize   = new Vector3 (0, 0, 0),
+         bboxCenter = new Vector3 (0, 0, 0);
+
+      return function (shapeNode)
+      {
+         const modelViewMatrix = this .getModelViewMatrix () .get ();
+
+         modelViewMatrix .multDirMatrix (bboxSize   .assign (shapeNode .getBBoxSize ()));
+         modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
+
+         const
+            radius     = bboxSize .magnitude () / 2,
+            viewVolume = this .viewVolumes .at (-1);
+
+         if (viewVolume .intersectsSphere (radius, bboxCenter))
+         {
+            const num = this .numPointingShapes ++;
+
+            if (num === this .pointingShapes .length)
+            {
+               this .pointingShapes .push ({ renderObject: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ], sensors: [ ] });
+            }
+
+            const pointingContext = this .pointingShapes [num];
+
+            pointingContext .modelViewMatrix .set (modelViewMatrix);
+            pointingContext .shapeNode = shapeNode;
+            pointingContext .scissor   = viewVolume .getScissor ();
+
+            // Clip planes & sensors
+
+            assign (pointingContext .clipPlanes, this .localObjects);
+            assign (pointingContext .sensors,    this .sensors .at (-1));
+
+            return true;
+         }
+
+         return false;
+      };
+   })(),
    addCollisionShape: (function ()
    {
       const
@@ -574,8 +654,8 @@ X3DRenderObject .prototype =
 
             // Clip planes and local lights
 
-            assign (renderContext .objectsCount, this .localObjectsCount);
             assign (renderContext .localObjects, this .localObjects);
+            assign (renderContext .objectsCount, this .localObjectsCount);
 
             return true;
          }
@@ -591,9 +671,78 @@ X3DRenderObject .prototype =
          modelViewMatrix: new Float32Array (16),
          scissor: new Vector4 (0, 0, 0, 0),
          localObjects: [ ],
-         objectsCount: [0, 0, 0],
+         objectsCount: [0, 0, 0], // [clip planes, lights, texture projectors]
       };
    },
+   pointing: (function ()
+   {
+      const projectionMatrixArray = new Float32Array (16);
+
+      return function (shapes, numShapes)
+      {
+         const
+            browser  = this .getBrowser (),
+            gl       = browser .getContext (),
+            viewport = this .getViewVolume () .getViewport ();
+
+         // Configure depth shaders.
+
+         projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+
+         // Configure viewport and background
+
+         gl .viewport (viewport [0],
+                       viewport [1],
+                       viewport [2],
+                       viewport [3]);
+
+         gl .scissor (viewport [0],
+                      viewport [1],
+                      viewport [2],
+                      viewport [3]);
+
+         gl .clear (gl .DEPTH_BUFFER_BIT);
+
+         // Render all objects
+
+         gl .depthMask (true);
+         gl .enable (gl .DEPTH_TEST);
+         gl .disable (gl .BLEND);
+         gl .disable (gl .CULL_FACE);
+
+         for (let s = 0; s < numShapes; ++ s)
+         {
+            const
+               renderContext       = shapes [s],
+               { scissor, clipPlanes, modelViewMatrix, shapeNode } = renderContext,
+               appearanceNode      = shapeNode .getAppearance (),
+               geometryContext     = shapeNode .getGeometryContext (),
+               stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
+               shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode),
+               id                  = browser .addPointingShape (renderContext);
+
+            gl .scissor (scissor .x,
+                         scissor .y,
+                         scissor .z,
+                         scissor .w);
+
+            // Draw
+
+            shaderNode .enable (gl);
+            shaderNode .setClipPlanes (gl, clipPlanes);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
+            gl .uniform1f (shaderNode .x3d_Id, id);
+
+            if (stylePropertiesNode)
+               stylePropertiesNode .setShaderUniforms (gl, shaderNode);
+
+            shapeNode .displaySimple (gl, renderContext, shaderNode);
+            browser .resetTextureUnits ();
+         }
+      };
+   })(),
    collide: (function ()
    {
       const
@@ -607,7 +756,7 @@ X3DRenderObject .prototype =
          // Collision nodes are handled here.
 
          const
-            activeCollisions = new Set (), // current active Collision nodes
+            activeCollisions = [ ], // current active Collision nodes
             collisionRadius2 = 2.2 * this .getNavigationInfo () .getCollisionRadius (); // Make the radius a little bit larger.
 
          collisionSize .set (collisionRadius2, collisionRadius2, collisionRadius2);
@@ -626,17 +775,17 @@ X3DRenderObject .prototype =
                if (collisionContext .shapeNode .intersectsBox (collisionBox, collisionContext .clipPlanes, modelViewMatrix .assign (collisionContext .modelViewMatrix)))
                {
                   for (const collision of collisions)
-                     activeCollisions .add (collision);
+                     activeCollisions .push (collision);
                }
             }
          }
 
          // Set isActive to FALSE for affected nodes.
 
-         if (this .activeCollisions .size)
+         if (this .activeCollisions .length)
          {
-            const inActiveCollisions = activeCollisions .size
-                                       ? Algorithm .set_difference (this .activeCollisions, activeCollisions, new Set ())
+            const inActiveCollisions = activeCollisions .length
+                                       ? this .activeCollisions .filter (a => !activeCollisions .includes (a))
                                        : this .activeCollisions;
 
             for (const collision of inActiveCollisions)
@@ -797,7 +946,7 @@ X3DRenderObject .prototype =
                       viewport [2],
                       viewport [3]);
 
-         gl .clearColor (1, 0, 0, 0); // Must be '1, 0, 0, 0'.
+         gl .clearColor (1, 0, 0, 0); // '1' for infinity, '0 0 0' for normal (TODO).
          gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
 
          // Render all objects
@@ -810,8 +959,12 @@ X3DRenderObject .prototype =
          for (let s = 0; s < numShapes; ++ s)
          {
             const
-               depthContext = shapes [s],
-               scissor      = depthContext .scissor;
+               renderContext       = shapes [s],
+               { scissor, clipPlanes, modelViewMatrix, shapeNode } = renderContext,
+               appearanceNode      = shapeNode .getAppearance (),
+               geometryContext     = shapeNode .getGeometryContext (),
+               stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
+               shaderNode          = browser .getDepthShader (clipPlanes .length, shapeNode);
 
             gl .scissor (scissor .x,
                          scissor .y,
@@ -820,7 +973,17 @@ X3DRenderObject .prototype =
 
             // Draw
 
-            depthContext .shapeNode .depth (gl, depthContext, projectionMatrixArray);
+            shaderNode .enable (gl);
+            shaderNode .setClipPlanes (gl, clipPlanes);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
+
+            if (stylePropertiesNode)
+               stylePropertiesNode .setShaderUniforms (gl, shaderNode);
+
+            shapeNode .displaySimple (gl, renderContext, shaderNode);
+            browser .resetTextureUnits ();
          }
       };
    })(),

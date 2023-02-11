@@ -183,8 +183,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       this .colorBuffer           = gl .createBuffer ();
       this .normalBuffer          = gl .createBuffer ();
       this .vertexBuffer          = gl .createBuffer ();
-      this .vertexArrayObject     = new VertexArray ();
-      this .shadowArrayObject     = new VertexArray ();
+      this .vertexArrayObject     = new VertexArray (gl);
 
       this .set_live__ ();
    },
@@ -349,10 +348,8 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
    updateVertexArrays: function ()
    {
       this .vertexArrayObject .update ();
-      this .shadowArrayObject .update ();
 
-      this .updateParticlesShadow = true;
-      this .updateParticles       = true;
+      this .updateParticles = true;
    },
    buildTexCoords: function ()
    {
@@ -483,11 +480,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          return clipPlane .isClipped (point);
       });
    },
-   intersectsLine: function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
-   {
-      return this .intersectsLineWithGeometry (hitRay, renderObject .getModelViewMatrix () .get (), renderObject .getLocalObjects (), intersections);
-   },
-   intersectsLineWithGeometry: (function ()
+   intersectsLine: (function ()
    {
       const
          modelViewMatrix = new Matrix4 (),
@@ -941,7 +934,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       this .set_shading__ (this .getBrowser () .getBrowserOptions () ._Shading);
 
-      this .hasNormals = !! this .normals .getValue () .length;
+      this .hasNormals = !! this .normals .length;
 
       if (this .hasNormals !== lastHasNormals)
          this .updateVertexArrays ();
@@ -967,27 +960,35 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       {
          // Use default render functions.
 
-         delete this .depth;
+         delete this .displaySimple;
          delete this .display;
-         delete this .displayParticlesDepth;
+         delete this .displaySimpleParticles;
          delete this .displayParticles;
       }
       else
       {
          // Use no render function.
 
-         this .depth                 = Function .prototype;
-         this .display               = Function .prototype;
-         this .displayParticlesDepth = Function .prototype;
-         this .displayParticles      = Function .prototype;
+         this .displaySimple          = Function .prototype;
+         this .display                = Function .prototype;
+         this .displaySimpleParticles = Function .prototype;
+         this .displayParticles       = Function .prototype;
       }
    },
    traverse: function (type, renderObject)
    { },
-   depth: function (gl, depthContext, shaderNode)
+   displaySimple: function (gl, renderContext, shaderNode)
    {
-      if (this .shadowArrayObject .enable (gl, shaderNode))
+      if (this .vertexArrayObject .enable (shaderNode))
+      {
+         if (this .multiTexCoords .length)
+            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+      }
 
       gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
    },
@@ -1026,7 +1027,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       // Setup vertex attributes.
 
-      if (this .vertexArrayObject .enable (gl, shaderNode))
+      if (this .vertexArrayObject .enable (shaderNode))
       {
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -1093,19 +1094,21 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       if (blendModeNode)
          blendModeNode .disable (gl);
    },
-   displayParticlesDepth: function (gl, depthContext, shaderNode, particleSystem)
+   displaySimpleParticles: function (gl, shaderNode, particleSystem)
    {
       const outputParticles = particleSystem .outputParticles;
 
-      if (outputParticles .shadowArrayObject .update (this .updateParticlesShadow) .enable (gl, shaderNode))
+      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode))
       {
-         const particleStride = particleSystem .particleStride;
+         const { particleStride, particleOffset, matrixOffset } = particleSystem;
 
-         shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
-         shaderNode .enableVertexAttribute         (gl, this .vertexBuffer, 0, 0);
+         shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleOffset, 1);
+         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset,   1);
+         shaderNode .enableTexCoordAttribute       (gl, this .texCoordBuffers, 0, 0);
+         shaderNode .enableNormalAttribute         (gl, this .normalBuffer,    0, 0);
+         shaderNode .enableVertexAttribute         (gl, this .vertexBuffer,    0, 0);
 
-         this .updateParticlesShadow = false;
+         this .updateParticles = false;
       }
 
       gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
@@ -1149,12 +1152,12 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       const outputParticles = particleSystem .outputParticles;
 
-      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
+      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode))
       {
-         const particleStride = particleSystem .particleStride;
+         const { particleStride, particleOffset, matrixOffset } = particleSystem;
 
-         shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
+         shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleOffset, 1);
+         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset,   1);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);

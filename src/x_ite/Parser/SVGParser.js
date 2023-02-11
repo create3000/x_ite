@@ -2364,7 +2364,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene          = this .getExecutionContext (),
          appearanceNode = scene .createNode ("Appearance"),
-         materialNode   = scene .createNode ("Material");
+         materialNode   = scene .createNode ("UnlitMaterial");
 
       appearanceNode .material    = materialNode;
       materialNode .emissiveColor = new Color3 (... this .style .strokeColor);

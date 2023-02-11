@@ -52,11 +52,6 @@ import X3DTouchSensorNode   from "../PointingDeviceSensor/X3DTouchSensorNode.js"
 import X3DGeospatialObject  from "./X3DGeospatialObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
-
-var
-   invModelViewMatrix = new Matrix4 (),
-   geoCoords          = new Vector3 (0, 0, 0);
 
 function GeoTouchSensor (executionContext)
 {
@@ -103,22 +98,18 @@ GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .
       X3DTouchSensorNode  .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
    },
-   set_over__: function (over, hit, modelViewMatrix, projectionMatrix, viewport)
+   set_over__: (function ()
    {
-      X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
+      const geoCoords = new Vector3 (0, 0, 0);
 
-      if (this ._isOver .getValue ())
+      return function (over, hit, modelViewMatrix, projectionMatrix, viewport)
       {
-         var intersection = hit .intersection;
+         X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
 
-         invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-
-         this ._hitTexCoord_changed = intersection .texCoord;
-         this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
-         this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
-         this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
-      }
-   },
+         if (this ._isOver .getValue ())
+            this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
+      };
+   })(),
    dispose: function ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);

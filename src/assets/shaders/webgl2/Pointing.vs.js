@@ -1,14 +1,21 @@
-export default /* glsl */ `
+export default /* glsl */ `#version 300 es
+
 precision highp float;
 precision highp int;
+precision highp sampler2D;
 
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
-attribute vec4 x3d_Vertex;
+in vec4 x3d_Vertex;
+in vec3 x3d_Normal;
+in vec4 x3d_TexCoord0;
 
-varying vec3 vertex;
+out vec3 vertex;
+out vec3 normal;
+out vec4 texCoord;
 
+#pragma X3D include "include/Particle.glsl"
 #pragma X3D include "include/PointSize.glsl"
 
 void
@@ -22,9 +29,11 @@ main ()
       #endif
    #endif
 
-   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
+   vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
 
-   vertex = position .xyz;
+   vertex   = position .xyz;
+   normal   = x3d_Normal;
+   texCoord = x3d_TexCoord0;
 
    gl_Position = x3d_ProjectionMatrix * position;
 }

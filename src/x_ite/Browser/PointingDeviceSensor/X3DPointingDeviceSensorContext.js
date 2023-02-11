@@ -46,46 +46,52 @@
  ******************************************************************************/
 
 import PointingDevice from "./PointingDevice.js";
+import PointingBuffer from "../../Rendering/PointingBuffer.js";
 import TraverseType   from "../../Rendering/TraverseType.js";
-import Line3          from "../../../standard/Math/Geometry/Line3.js";
-import ViewVolume     from "../../../standard/Math/Geometry/ViewVolume.js";
 import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4        from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
-import MergeSort      from "../../../standard/Math/Algorithms/MergeSort.js";
-import Algorithm      from "../../../standard/Math/Algorithm.js";
 
 const
-   _pointingDevice  = Symbol (),
-   _cursorType      = Symbol (),
-   _pointer         = Symbol (),
-   _hitRay          = Symbol (),
-   _hits            = Symbol (),
-   _enabledSensors  = Symbol (),
-   _pickOnlySensors = Symbol (),
-   _selectedLayer   = Symbol (),
-   _overSensors     = Symbol (),
-   _activeSensors   = Symbol (),
-   _hitPointSorter  = Symbol (),
-   _layerNumber     = Symbol (),
-   _layerSorter     = Symbol (),
-   _pointerTime     = Symbol ();
-
-const line = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   _pointingDevice   = Symbol (),
+   _cursorType       = Symbol (),
+   _pointer          = Symbol (),
+   _hit              = Symbol (),
+   _overSensors      = Symbol (),
+   _activeSensors    = Symbol (),
+   _activeLayer      = Symbol (),
+   _pointerTime      = Symbol (),
+   _pointingBuffer   = Symbol (),
+   _pointingShaders  = Symbol (),
+   _id               = Symbol (),
+   _pointingContexts = Symbol (),
+   _reshape          = Symbol ();
 
 function X3DPointingDeviceSensorContext ()
 {
-   this [_pointingDevice] = new PointingDevice (this);
-   this [_pointer]        = new Vector2 (0, 0);
-   this [_hitRay]         = new Line3 (Vector3 .Zero, Vector3 .Zero);
-   this [_hits]           = [ ];
-   this [_enabledSensors] = [new Map ()];
-   this [_selectedLayer]  = null;
-   this [_overSensors]    = new Set ();
-   this [_activeSensors]  = new Set ();
-   this [_hitPointSorter] = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .intersection .point .z < rhs .intersection .point .z; });
-   this [_layerSorter]    = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .layerNumber < rhs .layerNumber; });
-   this [_pointerTime]    = 0;
+   this [_pointingDevice]   = new PointingDevice (this);
+   this [_pointer]          = new Vector2 (0, 0);
+   this [_overSensors]      = [ ];
+   this [_activeSensors]    = [ ];
+   this [_activeLayer]      = null;
+   this [_pointerTime]      = 0;
+   this [_pointingBuffer]   = new PointingBuffer (this, 300, 150);
+   this [_pointingShaders]  = new Map ();
+   this [_pointingContexts] = [ ];
+
+   this [_hit] = {
+      id: 0,
+      pointer: this [_pointer],
+      hitRay: null,
+      sensors: [ ],
+      modelViewMatrix: new Matrix4 (),
+      point: new Vector3 (0, 0, 0),
+      normal: new Vector3 (0, 0, 0),
+      texCoord: new Vector4 (0, 0, 0, 0),
+      layerNode: null,
+      shapeNode: null,
+   };
 }
 
 X3DPointingDeviceSensorContext .prototype =
@@ -94,7 +100,13 @@ X3DPointingDeviceSensorContext .prototype =
    {
       this .setCursor ("DEFAULT");
 
+      this .getViewport () .addInterest (_reshape, this);
+
       this [_pointingDevice] .setup ();
+   },
+   getPointerTime: function ()
+   {
+      return this [_pointerTime];
    },
    setCursor: function (value)
    {
@@ -140,178 +152,210 @@ X3DPointingDeviceSensorContext .prototype =
              this [_pointer] .y > rectangle .y &&
              this [_pointer] .y < rectangle .y + rectangle .w;
    },
-   setLayerNumber: function (value)
+   getActivePickLayer: function ()
    {
-      this [_layerNumber] = value;
+      return this [_activeLayer];
    },
-   getSelectedLayer: function ()
+   getHit: function ()
    {
-      return this [_selectedLayer];
+      return this [_hit];
    },
-   setHitRay: function (projectionMatrix, viewport)
+   addPointingShape: function (pickingContext)
    {
-      ViewVolume .unProjectRay (this [_pointer] .x, this [_pointer] .y, Matrix4 .Identity, projectionMatrix, viewport, this [_hitRay]);
-   },
-   getHitRay: function ()
-   {
-      return this [_hitRay];
-   },
-   getSensors: function ()
-   {
-      return this [_enabledSensors];
-   },
-   getPickOnlySensors: function ()
-   {
-      return this [_pickOnlySensors];
-   },
-   addHit: function (intersection, layer, shape, modelViewMatrix)
-   {
-      const sensors = this [_enabledSensors] .at (-1);
+      const id = ++ this [_id];
 
-      this [_hits] .push ({
-         pointer:         this [_pointer],
-         hitRay:          this [_hitRay] .copy (),
-         intersection:    intersection,
-         sensors:         new Set (sensors .values ()),
-         layer:           layer,
-         layerNumber:     this [_layerNumber],
-         shape:           shape,
-         modelViewMatrix: modelViewMatrix .copy (),
-      });
-   },
-   getHits: function ()
-   {
-      return this [_hits];
-   },
-   getNearestHit: function ()
-   {
-      return this [_hits] .at (-1);
+      this [_pointingContexts] [id] = pickingContext;
+
+      return id;
    },
    buttonPressEvent: function (x, y)
    {
-      this .touch (x, y, true);
-
-      if (this [_hits] .length === 0)
+      if (!this .touch (x, y))
          return false;
 
-      const nearestHit = this .getNearestHit ();
+      const hit = this [_hit];
 
-      this [_selectedLayer] = nearestHit .layer;
-      this [_activeSensors] = nearestHit .sensors;
+      this [_activeSensors] = hit .sensors;
+      this [_activeLayer]   = hit .layerNode;
 
       for (const sensor of this [_activeSensors])
-         sensor .set_active__ (true, nearestHit);
+         sensor .set_active__ (true, hit);
 
-      return !! nearestHit .sensors .size;
+      return !! hit .sensors .length;
    },
    buttonReleaseEvent: function ()
    {
-      this [_selectedLayer] = null;
-
       for (const sensor of this [_activeSensors])
          sensor .set_active__ (false, null);
 
-      this [_activeSensors] = new Set ();
-
-      // Selection
-
-      return true;
+      this [_activeSensors] = Array .prototype;
+      this [_activeLayer]   = null;
    },
    motionNotifyEvent: function (x, y)
    {
-      this .touch (x, y, true);
+      this .touch (x, y);
       this .motion ();
 
-      return !! (this [_hits] .length && this [_hits] .at (-1) .sensors .size);
+      return !! this [_hit] .sensors .length;
    },
    leaveNotifyEvent: function ()
    { },
-   touch: function (x, y, pickOnlySensors)
+   touch: function (x, y)
    {
+      const t0 = Date .now ();
+
       if (this .getViewer () ._isActive .getValue ())
       {
          this [_pointerTime] = 0;
-         return;
+         return false;
       }
-
-      const t0 = Date .now ();
-
-      this [_pickOnlySensors] = false;
-
-      this [_pointer] .set (x, y);
-
-      // Clear hits.
-
-      this [_hits] .length = 0;
 
       // Pick.
 
+      const hit = this [_hit];
+
+      this [_pickOnlySensors] = pickOnlySensors;
+
+      this [_pointer] .set (x, y);
+      this [_pointingBuffer] .bind (x, y);
+
       this .getWorld () .traverse (TraverseType .POINTER, null);
+
+      this [_pointingBuffer] .getHit (x, y, hit);
+      this [_pointingBuffer] .unbind ();
+
+      if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [_id])
+      {
+         const
+            pickingContext  = this [_pointingContexts] [hit .id],
+            shapeNode       = pickingContext .shapeNode,
+            appearanceNode  = shapeNode .getAppearance (),
+            geometryContext = shapeNode .getGeometryContext ();
+
+         hit .hitRay    = pickingContext .renderObject .getHitRay ();
+         hit .sensors   = pickingContext .sensors .slice ();
+         hit .layerNode = pickingContext .renderObject;
+         hit .shapeNode = shapeNode;
+
+         hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
+
+         // ParticleSystem only has a geometry context.
+
+         if (geometryContext .hasNormals)
+            hit .modelViewMatrix .submatrix .inverse () .transpose () .multVecMatrix (hit .normal) .normalize ();
+         else
+            hit .normal .assign (Vector3 .zAxis);
+
+         appearanceNode .getTextureTransform () .transformPoint (hit .texCoord);
+      }
+      else
+      {
+         hit .id        = 0;
+         hit .hitRay    = this [_activeLayer] ? this [_activeLayer] .getHitRay () : null;
+         hit .sensors   = Array .prototype;
+         hit .layerNode = this [_activeLayer];
+         hit .shapeNode = null;
+
+         hit .modelViewMatrix .assign (Matrix4 .Identity);
+      }
 
       // Picking end.
 
-      this [_hitPointSorter] .sort (0, this [_hits] .length);
-      this [_layerSorter]    .sort (0, this [_hits] .length);
-
       this .addBrowserEvent ();
       this [_pointerTime] = Date .now () - t0;
+
+      return !! hit .id;
    },
    motion: function ()
    {
-      if (this [_hits] .length)
-      {
-         var nearestHit = this [_hits] .at (-1);
-      }
-      else
-      {
-         var nearestHit = {
-            pointer:         this [_pointer],
-            modelViewMatrix: new Matrix4 (),
-            hitRay:          this [_selectedLayer] ? this [_hitRay] : line,
-            intersection:    null,
-            sensors:         new Set (),
-            shape:           null,
-            layer:           null,
-            layerNumber:     0,
-         };
-      }
+      const hit = this [_hit];
 
       // Set isOver to FALSE for appropriate nodes
 
-      if (this [_hits] .length)
+      if (hit .id)
       {
-         var difference = Algorithm .set_difference (this [_overSensors], nearestHit .sensors, new Set ());
+         var difference = this [_overSensors] .filter (a => !hit .sensors .find (b => a .node === b .node));
       }
       else
       {
-         var difference = new Set (this [_overSensors]);
+         var difference = this [_overSensors];
       }
 
       for (const sensor of difference)
-         sensor .set_over__ (false, nearestHit);
+         sensor .set_over__ (false, hit);
 
       // Set isOver to TRUE for appropriate nodes
 
-      if (this [_hits] .length)
+      if (hit .id)
       {
-         this [_overSensors] = nearestHit .sensors;
+         this [_overSensors] = hit .sensors;
 
          for (const sensor of this [_overSensors])
-            sensor .set_over__ (true, nearestHit);
+            sensor .set_over__ (true, hit);
       }
       else
       {
-         this [_overSensors] = new Set ();
+         this [_overSensors] = Array .prototype;
       }
 
       // Forward motion event to active drag sensor nodes
 
       for (const sensor of this [_activeSensors])
-         sensor .set_motion__ (nearestHit);
+         sensor .set_motion__ (hit);
    },
-   getPointerTime: function ()
+   getPointingShader: function (numClipPlanes, shapeNode)
    {
-      return this [_pointerTime];
+      const
+         appearanceNode  = shapeNode .getAppearance (),
+         geometryContext = shapeNode .getGeometryContext ();
+
+      let key = "";
+
+      key += numClipPlanes;
+      key += shapeNode .getShapeKey ();
+      key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
+      key += geometryContext .geometryType;
+
+      return this [_pointingShaders] .get (key) || this .createPointingShader (key, numClipPlanes, shapeNode);
+   },
+   createPointingShader: function (key, numClipPlanes, shapeNode)
+   {
+      const
+         appearanceNode  = shapeNode .getAppearance (),
+         geometryContext = shapeNode .getGeometryContext (),
+         options         = [ ];
+
+      if (numClipPlanes)
+      {
+         options .push ("X3D_CLIP_PLANES");
+         options .push ("X3D_NUM_CLIP_PLANES " + numClipPlanes);
+      }
+
+      if (shapeNode .getShapeKey () > 0)
+         options .push ("X3D_PARTICLE_SYSTEM");
+
+      options .push (`X3D_GEOMETRY_${geometryContext .geometryType}D`);
+
+      if (appearanceNode .getStyleProperties (geometryContext .geometryType))
+         options .push ("X3D_STYLE_PROPERTIES");
+
+      const shaderNode = this .createShader ("PointingShader", "Pointing", "Pointing", options);
+
+      this [_pointingShaders] .set (key, shaderNode);
+
+      return shaderNode;
+   },
+   [_reshape]: function ()
+   {
+      const viewport = this .getViewport ();
+
+      if (this [_pointingBuffer] .getWidth ()  === viewport [2] &&
+          this [_pointingBuffer] .getHeight () === viewport [3])
+      return;
+
+      this [_pointingBuffer] .dispose ();
+
+      this [_pointingBuffer] = new PointingBuffer (this, viewport [2], viewport [3]);
    },
 };
 

@@ -161,31 +161,30 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       if (! this .touch (x, y))
          return;
 
-      const hit = this .getBrowser () .getNearestHit ();
+      const
+         viewpoint = this .getActiveViewpoint (),
+         hit       = this .getBrowser () .getHit ();
 
-      this .getActiveViewpoint () .lookAtPoint (this .getActiveLayer (), hit .intersection .point, 2 - 1.618034, straightenHorizon);
+      viewpoint .lookAtPoint (this .getActiveLayer (), hit .point, 2 - 1.618034, straightenHorizon);
    },
-   lookAtBBox: (function ()
+   lookAtBBox: function (x, y, straightenHorizon)
    {
-      const bbox = new Box3 ();
+      if (! this .touch (x, y))
+         return;
 
-      return function (x, y, straightenHorizon)
-      {
-         if (! this .touch (x, y))
-            return;
+      const
+         viewpoint = this .getActiveViewpoint (),
+         hit       = this .getBrowser () .getHit ();
 
-         const hit = this .getBrowser () .getNearestHit ();
+      const bbox = hit .shapeNode .getBBox (new Box3 ())
+         .multRight (hit .modelViewMatrix)
+         .multRight (viewpoint .getCameraSpaceMatrix ());
 
-         hit .shape .getBBox (bbox) .multRight (hit .modelViewMatrix);
-
-         this .getActiveViewpoint () .lookAtBBox (this .getActiveLayer (), bbox, 2 - 1.618034, straightenHorizon);
-      };
-   })(),
+      viewpoint .lookAtBBox (this .getActiveLayer (), bbox, 2 - 1.618034, straightenHorizon);
+   },
    touch: function (x, y)
    {
-      this .getBrowser () .touch (x, y, false);
-
-      return this .getBrowser () .getHits () .length;
+      return this .getBrowser () .touch (x, y);
    },
    dispose: function () { },
 });

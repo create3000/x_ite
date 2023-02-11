@@ -57,31 +57,37 @@ function MultiSampleFrameBuffer (browser, width, height, samples)
    this .height  = height;
    this .samples = Math .min (samples, gl .getParameter (gl .MAX_SAMPLES));
 
+   // Create frame buffer.
+
    this .lastBuffer  = gl .getParameter (gl .FRAMEBUFFER_BINDING);
-   this .framebuffer = gl .createFramebuffer ();
+   this .frameBuffer = gl .createFramebuffer ();
 
-   this .colorRenderbuffer = gl .createRenderbuffer ();
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
 
-   gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorRenderbuffer);
-   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA8, this .width, this .height);
+   // Create color buffer.
 
-   this .depthRenderbuffer = gl .createRenderbuffer ();
+   this .colorBuffer = gl .createRenderbuffer ();
 
-   gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthRenderbuffer);
-   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .DEPTH_COMPONENT24, this .width, this .height);
+   gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorBuffer);
+   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA8, width, height);
+   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .colorBuffer);
 
-   gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
-   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .colorRenderbuffer);
-   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT,  gl .RENDERBUFFER, this .depthRenderbuffer);
+   // Create depth buffer.
+
+   this .depthBuffer = gl .createRenderbuffer ();
+
+   gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthBuffer);
+   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .DEPTH_COMPONENT24, width, height);
+   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT,  gl .RENDERBUFFER, this .depthBuffer);
+
+   const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 
-   // Always check that our framebuffer is ok.
+   // Always check that our frame buffer is ok.
 
-   if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE)
-      return;
-
-   throw new Error ("Couldn't create frame buffer.");
+   if (!status)
+      throw new Error ("Couldn't create frame buffer.");
 }
 
 MultiSampleFrameBuffer .prototype =
@@ -105,7 +111,7 @@ MultiSampleFrameBuffer .prototype =
 
       this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
    },
    unbind: function ()
    {
@@ -120,7 +126,7 @@ MultiSampleFrameBuffer .prototype =
       gl .viewport (0, 0, this .width, this .height);
       gl .scissor  (0, 0, this .width, this .height);
 
-      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .framebuffer);
+      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
       gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
 
       gl .blitFramebuffer (0, 0, this .width, this .height,
@@ -131,9 +137,9 @@ MultiSampleFrameBuffer .prototype =
    {
       const gl = this .browser .getContext ();
 
-      gl .deleteFramebuffer (this .framebuffer);
-      gl .deleteRenderbuffer (this .colorRenderbuffer);
-      gl .deleteRenderbuffer (this .depthRenderbuffer);
+      gl .deleteFramebuffer (this .frameBuffer);
+      gl .deleteRenderbuffer (this .colorBuffer);
+      gl .deleteRenderbuffer (this .depthBuffer);
    },
 };
 
