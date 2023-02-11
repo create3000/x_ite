@@ -228,10 +228,12 @@ Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    },
    setBase: function (base)
    {
-      this .intersectsLine   = base .prototype .intersectsLine;
-      this .intersectsBox    = base .prototype .intersectsBox;
-      this .display          = base .prototype .display;
-      this .displayParticles = base .prototype .displayParticles;
+      this .intersectsLine         = base .prototype .intersectsLine;
+      this .intersectsBox          = base .prototype .intersectsBox;
+      this .displaySimple          = base .prototype .displaySimple;
+      this .display                = base .prototype .display;
+      this .displaySimpleParticles = base .prototype .displaySimpleParticles;
+      this .displayParticles       = base .prototype .displayParticles;
    },
    updateRenderFunctions: function ()
    { },
