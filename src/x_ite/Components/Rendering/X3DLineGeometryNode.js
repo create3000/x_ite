@@ -157,9 +157,12 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
             if (this .vertexArrayObject .enable (shaderNode))
             {
                const
-                  stride       = 15 * Float32Array .BYTES_PER_ELEMENT,
-                  normalOffset = 8 * Float32Array .BYTES_PER_ELEMENT,
-                  vertexOffset = 11 * Float32Array .BYTES_PER_ELEMENT;
+                  stride            = 15 * Float32Array .BYTES_PER_ELEMENT,
+                  lineStippleOffset = 0,
+                  normalOffset      = 8 * Float32Array .BYTES_PER_ELEMENT,
+                  vertexOffset      = 11 * Float32Array .BYTES_PER_ELEMENT;
+
+               shaderNode .enableLineStippleAttribute (gl, this .trianglesBuffer, stride, lineStippleOffset);
 
                if (this .hasNormals)
                   shaderNode .enableNormalAttribute (gl, this .trianglesBuffer, stride, normalOffset);
@@ -177,8 +180,17 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
          }
       }
 
-      X3DGeometryNode .prototype .displaySimple .call (this, gl, renderContext, shaderNode);
+      if (this .vertexArrayObject .enable (shaderNode))
+      {
+         shaderNode .enableLineStippleAttribute (gl, this .lineStippleBuffer, 0, 0);
 
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+      }
+
+      gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
       gl .lineWidth (1);
    },
    display: (function ()

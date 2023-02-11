@@ -11,9 +11,19 @@ in vec4 x3d_Vertex;
 in vec3 x3d_Normal;
 in vec4 x3d_TexCoord0;
 
+#if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
+   in vec3 x3d_LineStipple;
+#endif
+
 out vec3 vertex;
 out vec3 normal;
 out vec4 texCoord;
+
+#if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
+   flat out float lengthSoFar;
+   flat out vec2  startPoint;
+   out vec2       midPoint;
+#endif
 
 #pragma X3D include "include/Particle.glsl"
 #pragma X3D include "include/PointSize.glsl"
@@ -27,6 +37,12 @@ main ()
       #else
          gl_PointSize = 2.0;
       #endif
+   #endif
+
+   #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
+      lengthSoFar = x3d_LineStipple .z;
+      startPoint  = x3d_LineStipple .xy;
+      midPoint    = x3d_LineStipple .xy;
    #endif
 
    vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);

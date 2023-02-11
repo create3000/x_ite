@@ -13,6 +13,7 @@ layout(location = 2) out vec4 x3d_FragData2;
 
 #pragma X3D include "include/ClipPlanes.glsl"
 #pragma X3D include "include/Point.glsl"
+#pragma X3D include "Stipple.glsl"
 
 uniform float x3d_Id;
 
@@ -26,6 +27,10 @@ main ()
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
       if (getPointColor (vec4 (1.0)) .a < 0.5)
          discard;
+   #endif
+
+   #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
+      stipple ();
    #endif
 
    x3d_FragData0 = vec4 (vertex, x3d_Id);
