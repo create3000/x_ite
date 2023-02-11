@@ -236,7 +236,7 @@ X3DPointingDeviceSensorContext .prototype =
 
       const t0 = Date .now ();
 
-      this [_pickOnlySensors] = pickOnlySensors;
+      this [_pickOnlySensors] = false;
 
       this [_pointer] .set (x, y);
 
