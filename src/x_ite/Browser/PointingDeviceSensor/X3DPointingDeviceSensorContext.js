@@ -214,7 +214,7 @@ X3DPointingDeviceSensorContext .prototype =
 
       const hit = this [_hit];
 
-      this [_pickOnlySensors] = pickOnlySensors;
+      this [_id] = 0;
 
       this [_pointer] .set (x, y);
       this [_pointingBuffer] .bind (x, y);
