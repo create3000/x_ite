@@ -174,7 +174,7 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 
          this .touchSensorNode .push (renderObject, sensors);
 
-         if (sensors .size)
+         if (sensors .length)
          {
             renderObject .getSensors () .push (sensors);
 
