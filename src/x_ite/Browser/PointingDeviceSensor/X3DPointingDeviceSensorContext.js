@@ -339,6 +339,8 @@ X3DPointingDeviceSensorContext .prototype =
       if (appearanceNode .getStyleProperties (geometryContext .geometryType))
          options .push ("X3D_STYLE_PROPERTIES");
 
+      options .push ("X3D_TEXTURE", "X3D_NUM_TEXTURE_COORDINATES 1")
+
       const shaderNode = this .createShader ("PointingShader", "Pointing", "Pointing", options);
 
       this [_pointingShaders] .set (key, shaderNode);

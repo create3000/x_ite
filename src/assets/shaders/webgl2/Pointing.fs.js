@@ -7,6 +7,12 @@ in vec3 vertex;
 in vec3 normal;
 in vec4 texCoord;
 
+#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+   in vec4 texCoord0;
+#elif defined (X3D_GEOMETRY_1D)
+   vec4 texCoord0 = vec4 (0.0, 0.0, 0.0, 1.0);
+#endif
+
 layout(location = 0) out vec4 x3d_FragData0;
 layout(location = 1) out vec4 x3d_FragData1;
 layout(location = 2) out vec4 x3d_FragData2;
@@ -39,7 +45,7 @@ main ()
    #if defined (X3D_GEOMETRY_0D)
       x3d_FragData2 = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
    #else
-      x3d_FragData2 = texCoord;
+      x3d_FragData2 = texCoord0;
    #endif
 }
 `;

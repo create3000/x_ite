@@ -9,7 +9,10 @@ uniform mat4 x3d_ModelViewMatrix;
 
 in vec4 x3d_Vertex;
 in vec3 x3d_Normal;
-in vec4 x3d_TexCoord0;
+
+#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+   in vec4 x3d_TexCoord0;
+#endif
 
 #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
    in vec3 x3d_LineStipple;
@@ -17,7 +20,10 @@ in vec4 x3d_TexCoord0;
 
 out vec3 vertex;
 out vec3 normal;
-out vec4 texCoord;
+
+#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+   out vec4 texCoord0;
+#endif
 
 #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
    flat out float lengthSoFar;
@@ -47,9 +53,12 @@ main ()
 
    vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
 
-   vertex   = position .xyz;
-   normal   = x3d_Normal;
-   texCoord = x3d_TexCoord0;
+   vertex = position .xyz;
+   normal = x3d_Normal;
+
+   #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+      texCoord0 = x3d_TexCoord0;
+   #endif
 
    gl_Position = x3d_ProjectionMatrix * position;
 }
