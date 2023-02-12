@@ -66,7 +66,7 @@ X3DPointGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNod
    {
       return false;
    },
-   intersectsBox: function (box, clipPlanes, modelViewMatrix)
+   intersectsBox: function ()
    {
       return false;
    },
