@@ -168,16 +168,28 @@ X3DRenderingContext .prototype =
    },
    getDepthShader: function (numClipPlanes, shapeNode)
    {
-      const
-         appearanceNode  = shapeNode .getAppearance (),
-         geometryContext = shapeNode .getGeometryContext ();
+      const geometryContext = shapeNode .getGeometryContext ();
 
       let key = "";
 
       key += numClipPlanes;
       key += shapeNode .getShapeKey ();
-      key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
       key += geometryContext .geometryType;
+
+      if (geometryContext .geometryType >= 2)
+      {
+         key += "0.0.0";
+      }
+      else
+      {
+         const appearanceNode  = shapeNode .getAppearance ();
+
+         key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
+         key += ".";
+         key += appearanceNode .getTextureBits () .toString (4); // Textures for point and line.
+         key += ".";
+         key += appearanceNode .getMaterial () .getTextureBits () .toString (4); // Textures for point and line.
+      }
 
       return this [_depthShaders] .get (key) || this .createDepthShader (key, numClipPlanes, shapeNode);
    },
@@ -201,6 +213,9 @@ X3DRenderingContext .prototype =
 
       if (appearanceNode .getStyleProperties (geometryContext .geometryType))
          options .push ("X3D_STYLE_PROPERTIES");
+
+      if (+appearanceNode .getTextureBits () || +appearanceNode .getMaterial () .getTextureBits ())
+         options .push ("X3D_TEXTURE", "X3D_NUM_TEXTURE_COORDINATES 1")
 
       const shaderNode = this .createShader ("DepthShader", "Depth", "Depth", options);
 
