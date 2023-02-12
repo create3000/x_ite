@@ -50,6 +50,7 @@ import URLs   from "./URLs.js";
 import _      from "../../../locale/gettext.js";
 
 const
+   _loadingDisplay = Symbol (),
    _loadingTotal   = Symbol (),
    _loadingObjects = Symbol (),
    _loading        = Symbol (),
@@ -71,6 +72,7 @@ function X3DNetworkingContext ()
 {
    this .addChildObjects ("loadCount", new Fields .SFInt32 ());
 
+   this [_loadingDisplay] = 0;
    this [_loadingTotal]   = 0;
    this [_loadingObjects] = new Set ();
    this [_loading]        = false;
@@ -151,7 +153,7 @@ X3DNetworkingContext .prototype =
    },
    removeLoadingObject: function (object)
    {
-      if (! this [_loadingObjects] .has (object))
+      if (!this [_loadingObjects] .has (object))
          return;
 
       this [_loadingObjects] .delete (object);
@@ -162,15 +164,15 @@ X3DNetworkingContext .prototype =
    {
       this ._loadCount = value;
 
-      const displayValue = [... this [_loadingObjects]]
+      const loadingDisplay = [... this [_loadingObjects]]
          .filter (o => o .isPrivate)
-         .reduce ((v, o) => v + ! o .isPrivate (), 0);
+         .reduce ((v, o) => v + !o .isPrivate (), 0);
 
       if (value || this [_loading])
       {
-         var string = (displayValue == 1
+         var string = ((loadingDisplay || 1) === 1
             ? _ ("Loading %1 file")
-            : _ ("Loading %1 files")) .replace ("%1", displayValue || 1);
+            : _ ("Loading %1 files")) .replace ("%1", loadingDisplay || 1);
       }
       else
       {
@@ -178,17 +180,25 @@ X3DNetworkingContext .prototype =
          this .setCursor ("DEFAULT");
       }
 
-      if (! this [_loading])
-         this .getNotification () ._string = string;
+      if (this [_loading])
+      {
+         this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
+         this .getSplashScreen () .find (".x_ite-private-progressbar div")
+            .css ("width", (100 - 100 * value / this [_loadingTotal]) + "%");
+      }
+      else
+      {
+         if (loadingDisplay !== this [_loadingDisplay])
+            this .getNotification () ._string = string;
+      }
 
-      this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
-      this .getSplashScreen () .find (".x_ite-private-progressbar div")
-         .css ("width", (100 - 100 * value / this [_loadingTotal]) + "%");
+      this [_loadingDisplay] = loadingDisplay;
    },
    resetLoadCount: function ()
    {
-      this ._loadCount     = 0;
-      this [_loadingTotal] = 0;
+      this ._loadCount       = 0;
+      this [_loadingDisplay] = 0;
+      this [_loadingTotal]   = 0;
 
       this [_loadingObjects] .clear ();
 
