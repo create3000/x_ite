@@ -64,30 +64,15 @@ varying vec3 vertex;
    varying float depth;
 #endif
 
+#pragma X3D include "ClipPlanes.glsl"
 #pragma X3D include "Point.glsl"
 #pragma X3D include "Hatch.glsl"
 #pragma X3D include "Fog.glsl"
-#pragma X3D include "ClipPlanes.glsl"
 #pragma X3D include "Texture.glsl"
 
 vec4
 getMaterialColor ();
 
-vec4
-getFinalColor ()
-{
-   #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
-      #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-         setTexCoords ();
-
-         return getMaterialColor ();
-       #else
-         return getPointColor (getMaterialColor ());
-      #endif
-   #else
-      return getMaterialColor ();
-   #endif
-}
 void
 fragment_main ()
 {
@@ -95,7 +80,15 @@ fragment_main ()
       clip ();
    #endif
 
-   vec4 finalColor = getFinalColor ();
+   #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
+      setTexCoords ();
+   #endif
+
+   vec4 finalColor = getMaterialColor ();
+
+   #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
+      finalColor = getPointColor (finalColor);
+   #endif
 
    #if (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)) && defined (X3D_STYLE_PROPERTIES)
       finalColor = getHatchColor (finalColor);

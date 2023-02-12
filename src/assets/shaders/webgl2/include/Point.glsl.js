@@ -1,8 +1,5 @@
 export default /* glsl */ `
 #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
-
-in float pointSize;
-
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
 void
 setTexCoords ()
@@ -17,7 +14,14 @@ setTexCoords ()
       texCoord1 = texCoord;
    #endif
 }
-#endif
+
+#define getPointColor(color) (color)
+
+#else
+
+#define setTexCoords()
+
+in float pointSize;
 
 vec4
 getPointColor (in vec4 color)
@@ -30,6 +34,6 @@ getPointColor (in vec4 color)
 
    return color;
 }
-
+#endif
 #endif
 `;

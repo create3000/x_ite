@@ -314,6 +314,11 @@ X3DPointingDeviceSensorContext .prototype =
       key += numClipPlanes;
       key += shapeNode .getShapeKey ();
       key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
+      key += ".";
+      key += appearanceNode .getTextureBits () .toString (4);
+      key += ".";
+      key += appearanceNode .getMaterial () .getTextureBits () .toString (4);
+      key += ".";
       key += geometryContext .geometryType;
 
       return this [_pointingShaders] .get (key) || this .createPointingShader (key, numClipPlanes, shapeNode);
@@ -339,7 +344,8 @@ X3DPointingDeviceSensorContext .prototype =
       if (appearanceNode .getStyleProperties (geometryContext .geometryType))
          options .push ("X3D_STYLE_PROPERTIES");
 
-      options .push ("X3D_TEXTURE", "X3D_NUM_TEXTURE_COORDINATES 1")
+      if (+appearanceNode .getTextureBits () || +appearanceNode .getMaterial () .getTextureBits ())
+         options .push ("X3D_TEXTURE", "X3D_NUM_TEXTURE_COORDINATES 1")
 
       const shaderNode = this .createShader ("PointingShader", "Pointing", "Pointing", options);
 
