@@ -28,15 +28,12 @@ main ()
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
       if (getPointColor (vec4 (1.0)) .a < 0.5)
          discard;
+
+      setTexCoords ();
    #endif
 
    gl_FragData [0] = vec4 (vertex, x3d_Id);
    gl_FragData [1] = vec4 (normal, 0.0);
-
-   #if defined (X3D_GEOMETRY_0D)
-      gl_FragData [2] = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
-   #else
-      gl_FragData [2] = texCoord0;
-   #endif
+   gl_FragData [2] = texCoord0;
 }
 `;
