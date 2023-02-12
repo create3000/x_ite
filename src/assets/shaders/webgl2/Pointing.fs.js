@@ -9,7 +9,7 @@ in vec4 texCoord;
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
    in vec4 texCoord0;
-#elif defined (X3D_GEOMETRY_1D)
+#else
    vec4 texCoord0 = vec4 (0.0, 0.0, 0.0, 1.0);
 #endif
 

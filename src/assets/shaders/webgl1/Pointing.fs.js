@@ -6,7 +6,12 @@ precision highp int;
 
 varying vec3 vertex;
 varying vec3 normal;
-varying vec4 texCoord;
+
+#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+   varying vec4 texCoord0;
+#else
+   vec4 texCoord0 = vec4 (0.0, 0.0, 0.0, 1.0);
+#endif
 
 #pragma X3D include "include/ClipPlanes.glsl"
 #pragma X3D include "include/Point.glsl"
@@ -31,7 +36,7 @@ main ()
    #if defined (X3D_GEOMETRY_0D)
       gl_FragData [2] = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
    #else
-      gl_FragData [2] = texCoord;
+      gl_FragData [2] = texCoord0;
    #endif
 }
 `;
