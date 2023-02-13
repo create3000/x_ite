@@ -121,7 +121,9 @@ const Bookmarks = (function ()
       },
       loadURL: async function (url)
       {
-         const base = url .replace (/\.[^\.]+$/, "");
+         const
+            base  = url .replace (/(?:\.O)?\.[^\.]+$/, ""),
+            local = base .replace (/https:\/\/create3000.github.io\/(.*?)\//, "http://192.168.0.18/$1/docs/");
 
          $(".file") .text (url)
             .append ($("<a/>")
@@ -135,7 +137,11 @@ const Bookmarks = (function ()
             .append ($("<a/>")
             .attr ('href', base + ".x3dj")
             .on ("click", () => this .loadURL (base + ".x3dj") && false)
-            .text (".x3dj"));
+            .text (".x3dj"))
+            .append ($("<a/>")
+            .attr ('href', local + ".O.x3d")
+            .on ("click", () => this .loadURL (local + ".O.x3d") && false)
+            .text ("local"));
 
          const t0 = performance .now ();
 
