@@ -225,8 +225,8 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironm
 
             if (headlight)
             {
-               headlightContainer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
-               headlightContainer .getModelViewMatrix () .multLeft (viewpoint .getCameraSpaceMatrix ());
+               headlightContainer .modelViewMatrix .pushMatrix (invCameraSpaceMatrix);
+               headlightContainer .modelViewMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
             }
 
             // Render layer's children.
@@ -236,7 +236,7 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironm
             // Pop matrices.
 
             if (headlight)
-               headlightContainer .getModelViewMatrix () .pop ();
+               headlightContainer .modelViewMatrix .pop ();
 
             dependentRenderer .getModelViewMatrix ()   .pop ();
             dependentRenderer .getCameraSpaceMatrix () .pop ();
