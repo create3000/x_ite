@@ -190,15 +190,18 @@ const Context =
       for (const extension of extensions)
          gl .getExtension (extension);
 
-      // async
+      // Async functions
 
-      // Object .assign (gl,
-      // {
+      // Object .assign (gl, gl .getVersion () === 1
+      // ? {
+      //    readPixelsAsync: gl .readPixels,
+      // }
+      // : {
       //    clientWaitAsync: function (sync, flags, interval)
       //    {
       //       return new Promise ((resolve, reject) =>
       //       {
-      //          function test ()
+      //          const test = () =>
       //          {
       //             const result = this .clientWaitSync (sync, flags, 0);
 
@@ -220,7 +223,7 @@ const Context =
       //                   return;
       //                }
       //             }
-      //          }
+      //          };
 
       //          test ();
       //       });
@@ -239,13 +242,13 @@ const Context =
       //       this .getBufferSubData (target, srcByteOffset, dstBuffer, dstOffset, length);
       //       this .bindBuffer (target, null);
       //    },
-      //    readPixelsAsync: async function (x, y, w, h, format, type, dest, destOffset)
+      //    readPixelsAsync: async function (x, y, w, h, format, type, dest)
       //    {
       //       const buffer = this .createBuffer ();
 
       //       this .bindBuffer (this .PIXEL_PACK_BUFFER, buffer);
       //       this .bufferData (this .PIXEL_PACK_BUFFER, dest .byteLength, this .STREAM_READ);
-      //       this .readPixels (x, y, w, h, format, type, destOffset);
+      //       this .readPixels (x, y, w, h, format, type, 0);
       //       this .bindBuffer (this .PIXEL_PACK_BUFFER, null);
 
       //       await this .getBufferSubDataAsync (this .PIXEL_PACK_BUFFER, buffer, 0, dest);
