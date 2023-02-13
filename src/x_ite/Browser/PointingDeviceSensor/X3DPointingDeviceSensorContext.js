@@ -310,6 +310,7 @@ X3DPointingDeviceSensorContext .prototype =
       let key = "";
 
       key += numClipPlanes;
+      key += ".";
       key += shapeNode .getShapeKey ();
       key += geometryContext .geometryType;
 

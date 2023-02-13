@@ -426,6 +426,8 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
          vec4 textureColor = texture2D (x3d_Texture2D [0], texCoord .st);
       #elif defined (X3D_TEXTURE0_CUBE)
          vec4 textureColor = textureCube (x3d_TextureCube [0], texCoord .stp);
+      #else
+         vec4 textureColor = vec4 (0.0);
       #endif
 
       return diffuseColor * textureColor;

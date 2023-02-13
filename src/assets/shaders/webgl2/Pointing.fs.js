@@ -2,6 +2,7 @@ export default /* glsl */ `#version 300 es
 
 precision highp float;
 precision highp int;
+precision highp sampler2D;
 
 in vec3 vertex;
 in vec3 normal;

@@ -173,6 +173,7 @@ X3DRenderingContext .prototype =
       let key = "";
 
       key += numClipPlanes;
+      key += ".";
       key += shapeNode .getShapeKey ();
       key += geometryContext .geometryType;
 

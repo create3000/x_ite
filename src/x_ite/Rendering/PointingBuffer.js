@@ -159,6 +159,7 @@ PointingBuffer .prototype =
 
       // Id, point
 
+      // gl .readBuffer (gl .COLOR_ATTACHMENT0); // WebGL 2
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [0]);
       gl .readPixels (x, y, 1, 1, gl .RGBA, gl .FLOAT, array);
 
