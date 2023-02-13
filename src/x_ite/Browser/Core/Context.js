@@ -190,6 +190,70 @@ const Context =
       for (const extension of extensions)
          gl .getExtension (extension);
 
+      // async
+
+      // Object .assign (gl,
+      // {
+      //    clientWaitAsync: function (sync, flags, interval)
+      //    {
+      //       return new Promise ((resolve, reject) =>
+      //       {
+      //          function test ()
+      //          {
+      //             const result = this .clientWaitSync (sync, flags, 0);
+
+      //             switch (result)
+      //             {
+      //                case this .WAIT_FAILED:
+      //                {
+      //                   reject ();
+      //                   return;
+      //                }
+      //                case this .TIMEOUT_EXPIRED:
+      //                {
+      //                   setTimeout (test, interval);
+      //                   return;
+      //                }
+      //                default:
+      //                {
+      //                   resolve ();
+      //                   return;
+      //                }
+      //             }
+      //          }
+
+      //          test ();
+      //       });
+      //    },
+      //    getBufferSubDataAsync: async function (target, buffer, srcByteOffset, dstBuffer, /* optional */ dstOffset, /* optional */ length)
+      //    {
+      //       const sync = this .fenceSync (this .SYNC_GPU_COMMANDS_COMPLETE, 0);
+
+      //       this .flush ();
+
+      //       await this .clientWaitAsync (sync, 0, 10);
+
+      //       this .deleteSync (sync);
+
+      //       this .bindBuffer (target, buffer);
+      //       this .getBufferSubData (target, srcByteOffset, dstBuffer, dstOffset, length);
+      //       this .bindBuffer (target, null);
+      //    },
+      //    readPixelsAsync: async function (x, y, w, h, format, type, dest, destOffset)
+      //    {
+      //       const buffer = this .createBuffer ();
+
+      //       this .bindBuffer (this .PIXEL_PACK_BUFFER, buffer);
+      //       this .bufferData (this .PIXEL_PACK_BUFFER, dest .byteLength, this .STREAM_READ);
+      //       this .readPixels (x, y, w, h, format, type, destOffset);
+      //       this .bindBuffer (this .PIXEL_PACK_BUFFER, null);
+
+      //       await this .getBufferSubDataAsync (this .PIXEL_PACK_BUFFER, buffer, 0, dest);
+
+      //       this .deleteBuffer (buffer);
+      //    },
+      // });
+
       // Return context.
 
       return gl;
