@@ -99,6 +99,8 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       X3DTexture2DNode .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
 
+      this ._flipVertically .addInterest ("set_url__", this);
+
       this .image .on ("load",        this .setImage .bind (this));
       this .image .on ("abort error", this .setError .bind (this));
       this .image .prop ("crossOrigin", "Anonymous");
