@@ -45,13 +45,15 @@
  *
  ******************************************************************************/
 
+import Vector4 from "../../standard/Math/Numbers/Vector4.js";
+
 function PointingBuffer (browser, width, height)
 {
    const gl = browser .getContext ();
 
    this .browser = browser;
-   this .width   = Math .max (width, 1);
-   this .height  = Math .max (height, 1);
+   this .width   = width;
+   this .height  = height;
    this .array   = new Float32Array (4);
 
    // Create frame buffer.
@@ -70,7 +72,7 @@ function PointingBuffer (browser, width, height)
       this .frameBuffers [i] = gl .createFramebuffer ();
 
       gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorBuffers [i]);
-      gl .renderbufferStorage (gl .RENDERBUFFER, gl .RGBA32F, this .width, this .height);
+      gl .renderbufferStorage (gl .RENDERBUFFER, gl .RGBA32F, 1, 1);
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0 + i, gl .RENDERBUFFER, this .colorBuffers [i]);
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [i]);
@@ -100,7 +102,7 @@ function PointingBuffer (browser, width, height)
 
       const internalFormat = gl .getVersion () >= 2 ? gl .DEPTH_COMPONENT24 : gl .DEPTH_COMPONENT;
 
-      gl .texImage2D (gl .TEXTURE_2D, 0, internalFormat, this .width, this .height, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
+      gl .texImage2D (gl .TEXTURE_2D, 0, internalFormat, 1, 1, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
       gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .TEXTURE_2D, this .depthTexture, 0);
    }
    else
@@ -108,7 +110,7 @@ function PointingBuffer (browser, width, height)
       this .depthBuffer = gl .createRenderbuffer ();
 
       gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthBuffer);
-      gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, this .width, this .height);
+      gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, 1, 1);
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
    }
 
@@ -129,19 +131,25 @@ PointingBuffer .prototype =
    {
       return this .width;
    },
+   setWidth: function (width)
+   {
+      this .width = width;
+   },
    getHeight: function ()
    {
       return this .height;
    },
-   bind: function (x, y)
+   setHeight: function (height)
+   {
+      this .height = height;
+   },
+   bind: function ()
    {
       const gl = this .browser .getContext ();
 
       this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
-      gl .viewport (0, 0, this .width, this .height);
-      gl .scissor (x, y, 1, 1);
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
    },
@@ -151,7 +159,7 @@ PointingBuffer .prototype =
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
    },
-   getHit: function (x, y, hit)
+   getHit: function (hit)
    {
       const
          gl    = this .browser .getContext (),
@@ -161,7 +169,7 @@ PointingBuffer .prototype =
 
       // gl .readBuffer (gl .COLOR_ATTACHMENT0); // WebGL 2
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [0]);
-      gl .readPixels (x, y, 1, 1, gl .RGBA, gl .FLOAT, array);
+      gl .readPixels (0, 0, 1, 1, gl .RGBA, gl .FLOAT, array);
 
       hit .id = array [3];
       hit .point .set (array [0], array [1], array [2]);
@@ -169,14 +177,14 @@ PointingBuffer .prototype =
       // Normal
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [1]);
-      gl .readPixels (x, y, 1, 1, gl .RGBA, gl .FLOAT, array);
+      gl .readPixels (0, 0, 1, 1, gl .RGBA, gl .FLOAT, array);
 
       hit .normal .set (array [0], array [1], array [2]);
 
       // TexCoord
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffers [2]);
-      gl .readPixels (x, y, 1, 1, gl .RGBA, gl .FLOAT, array);
+      gl .readPixels (0, 0, 1, 1, gl .RGBA, gl .FLOAT, array);
 
       hit .texCoord .set (array [0], array [1], array [2], array [3]);
 

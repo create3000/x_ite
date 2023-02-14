@@ -217,11 +217,11 @@ X3DPointingDeviceSensorContext .prototype =
       this [_id] = 0;
 
       this [_pointer] .set (x, y);
-      this [_pointingBuffer] .bind (x, y);
+      this [_pointingBuffer] .bind ();
 
       this .getWorld () .traverse (TraverseType .POINTER, null);
 
-      this [_pointingBuffer] .getHit (x, y, hit);
+      this [_pointingBuffer] .getHit (hit);
       this [_pointingBuffer] .unbind ();
 
       if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [_id])
@@ -365,13 +365,8 @@ X3DPointingDeviceSensorContext .prototype =
    {
       const viewport = this .getViewport ();
 
-      if (this [_pointingBuffer] .getWidth ()  === viewport [2] &&
-          this [_pointingBuffer] .getHeight () === viewport [3])
-      return;
-
-      this [_pointingBuffer] .dispose ();
-
-      this [_pointingBuffer] = new PointingBuffer (this, viewport [2], viewport [3]);
+      this [_pointingBuffer] .setWidth (viewport [2]);
+      this [_pointingBuffer] .setHeight (viewport [3]);
    },
 };
 
