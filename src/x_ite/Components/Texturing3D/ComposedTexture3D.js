@@ -58,7 +58,8 @@ function ComposedTexture3D (executionContext)
 
    this .addType (X3DConstants .ComposedTexture3D);
 
-   this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+   this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
+                          "update",    new Fields .SFTime ());
 
    this .textureNodes = [ ];
 }
@@ -96,6 +97,7 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
       this .frameBuffer = gl .createFramebuffer ();
 
       this ._texture .addInterest ("set_texture__", this);
+      this ._update  .addInterest ("update",        this);
 
       this .set_texture__ ();
    },
@@ -108,7 +110,7 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
       const textureNodes = this .textureNodes;
 
       for (const textureNode of textureNodes)
-         textureNode .removeInterest ("update", this);
+         textureNode .removeInterest ("set_update__", this);
 
       textureNodes .length = 0;
 
@@ -121,17 +123,23 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
       }
 
       for (const textureNode of textureNodes)
-         textureNode .addInterest ("update", this);
+         textureNode .addInterest ("set_update__", this);
 
-      this .update ();
+      this .set_update__ ();
+   },
+   set_update__: function ()
+   {
+      this ._update .addEvent ();
+   },
+   isComplete: function ()
+   {
+      return this .textureNodes .every (textureNode => textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE || textureNode .getWidth ());
    },
    update: function ()
    {
-      const
-         textureNodes = this .textureNodes,
-         complete     = textureNodes .every (textureNode => textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE || textureNode .getWidth ());
+      const textureNodes = this .textureNodes
 
-      if (textureNodes .length === 0 || !complete)
+      if (textureNodes .length === 0 || !this .isComplete ())
       {
          this .clearTexture ();
 

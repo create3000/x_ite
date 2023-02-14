@@ -66,6 +66,8 @@ function ComposedCubeMapTexture (executionContext)
    this .addAlias ("bottom", this ._bottomTexture);
    this .addAlias ("top",    this ._topTexture);
 
+   this .addChildObjects ("update", new Fields .SFTime ());
+
    this .textureNodes  = [null, null, null, null, null, null];
    this .loadStateBits = new BitSet ();
 }
@@ -116,6 +118,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
       this ._rightTexture  .addInterest ("set_texture__", this, 3);
       this ._topTexture    .addInterest ("set_texture__", this, 5);
       this ._bottomTexture .addInterest ("set_texture__", this, 4);
+      this ._update        .addInterest ("update",        this);
 
       this .set_texture__ (this ._frontTexture,  0);
       this .set_texture__ (this ._backTexture,   1);
@@ -129,18 +132,12 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
       let textureNode = this .textureNodes [index];
 
       if (textureNode)
-      {
          textureNode .removeInterest ("set_loadState__", this);
-         textureNode ._loadState .removeInterest ("set_loadState__", this);
-      }
 
       textureNode = this .textureNodes [index] = X3DCast (X3DConstants .X3DTexture2DNode, node);
 
       if (textureNode)
-      {
          textureNode .addInterest ("set_loadState__", this, textureNode, index);
-         textureNode ._loadState .addInterest ("set_loadState__", this, textureNode, index);
-      }
 
       this .set_loadState__ (textureNode, index);
    },
@@ -151,7 +148,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
       else
          this .setLoadStateBit (index, textureNode, X3DConstants .NOT_STARTED);
 
-      this .updateTextures ();
+      this ._update .addEvent ();
    },
    setLoadStateBit: function (bit, textureNode, loadState)
    {
@@ -177,7 +174,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
 
       return true;
    },
-   updateTextures: function ()
+   update: function ()
    {
       if (this .isComplete ())
       {
