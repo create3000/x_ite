@@ -931,15 +931,8 @@ X3DRenderObject .prototype =
 
          // Configure viewport and background
 
-         gl .viewport (viewport [0],
-                       viewport [1],
-                       viewport [2],
-                       viewport [3]);
-
-         gl .scissor (viewport [0],
-                      viewport [1],
-                      viewport [2],
-                      viewport [3]);
+         gl .viewport (... viewport);
+         gl .scissor (... viewport);
 
          gl .clearColor (1, 0, 0, 0); // '1' for infinity, '0 0 0' for normal (TODO).
          gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
@@ -961,10 +954,7 @@ X3DRenderObject .prototype =
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
                shaderNode          = browser .getDepthShader (clipPlanes .length, shapeNode);
 
-            gl .scissor (scissor .x,
-                         scissor .y,
-                         scissor .z,
-                         scissor .w);
+            gl .scissor (... scissor);
 
             // Draw
 
@@ -1041,15 +1031,8 @@ X3DRenderObject .prototype =
 
       // Configure viewport and background
 
-      gl .viewport (viewport .x,
-                    viewport .y,
-                    viewport .z,
-                    viewport .w);
-
-      gl .scissor (viewport .x,
-                   viewport .y,
-                   viewport .z,
-                   viewport .w);
+      gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Draw background.
 
@@ -1069,14 +1052,9 @@ X3DRenderObject .prototype =
 
       for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
       {
-         const
-            renderContext = opaqueShapes [i],
-            scissor       = renderContext .scissor;
+         const renderContext = opaqueShapes [i];
 
-         gl .scissor (scissor .x,
-                      scissor .y,
-                      scissor .z,
-                      scissor .w);
+         gl .scissor (... renderContext .scissor);
 
          renderContext .shadows           = renderContext .shadows || shadows;
          renderContext .objectsCount [1] += numGlobalLights;
@@ -1097,14 +1075,9 @@ X3DRenderObject .prototype =
 
       for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
       {
-         const
-            renderContext = transparentShapes [i],
-            scissor       = renderContext .scissor;
+         const renderContext = transparentShapes [i];
 
-         gl .scissor (scissor .x,
-                      scissor .y,
-                      scissor .z,
-                      scissor .w);
+         gl .scissor (... renderContext .scissor);
 
          renderContext .shadows           = renderContext .shadows || shadows;
          renderContext .objectsCount [1] += numGlobalLights;

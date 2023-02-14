@@ -123,9 +123,6 @@ MultiSampleFrameBuffer .prototype =
    {
       const gl = this .browser .getContext ();
 
-      gl .viewport (0, 0, this .width, this .height);
-      gl .scissor  (0, 0, this .width, this .height);
-
       gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
       gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
 
