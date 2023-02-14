@@ -129,7 +129,7 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
    {
       const
          textureNodes = this .textureNodes,
-         complete     = textureNodes .every (textureNode => textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE);
+         complete     = textureNodes .every (textureNode => textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE || textureNode .getWidth ());
 
       if (textureNodes .length === 0 || !complete)
       {

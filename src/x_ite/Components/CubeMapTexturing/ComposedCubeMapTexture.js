@@ -148,15 +148,15 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
    set_loadState__: function (textureNode, index)
    {
       if (textureNode)
-         this .setLoadStateBit (index, textureNode .checkLoadState ());
+         this .setLoadStateBit (index, textureNode, textureNode .checkLoadState ());
       else
-         this .setLoadStateBit (index, X3DConstants .NOT_STARTED);
+         this .setLoadStateBit (index, textureNode, X3DConstants .NOT_STARTED);
 
       this .updateTextures ();
    },
-   setLoadStateBit: function (bit, loadState)
+   setLoadStateBit: function (bit, textureNode, loadState)
    {
-      this .loadStateBits .set (bit, loadState === X3DConstants .COMPLETE_STATE);
+      this .loadStateBits .set (bit, loadState === X3DConstants .COMPLETE_STATE || textureNode .getWidth ());
    },
    isComplete: function ()
    {

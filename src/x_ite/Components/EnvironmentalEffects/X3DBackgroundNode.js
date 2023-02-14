@@ -145,27 +145,27 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
    {
       this .updateTexture ("bottomTexture", value, 5);
    },
-   updateTexture: function (name, texture, index)
+   updateTexture: function (name, textureNode, index)
    {
       if (this [name])
          this [name] ._loadState .removeInterest ("setTextureBit", this);
 
-      this [name] = texture;
+      this [name] = textureNode;
 
-      if (texture)
+      if (textureNode)
       {
-         texture ._loadState .addInterest ("setTextureBit", this, index, texture);
+         textureNode ._loadState .addInterest ("setTextureBit", this, index, textureNode);
 
-         this .setTextureBit (index, texture, texture ._loadState);
+         this .setTextureBit (index, textureNode, textureNode ._loadState);
       }
       else
       {
          this .textureBits .set (index, false);
       }
    },
-   setTextureBit: function (bit, texture, loadState)
+   setTextureBit: function (bit, textureNode, loadState)
    {
-      this .textureBits .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE);
+      this .textureBits .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE || textureNode .getWidth ());
    },
    setHidden: function (value)
    {
@@ -618,11 +618,11 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
          this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer, this .bottomArrayObject);
       };
    })(),
-   drawRectangle: function (gl, browser, shaderNode, renderObject, texture, buffer, vertexArray)
+   drawRectangle: function (gl, browser, shaderNode, renderObject, textureNode, buffer, vertexArray)
    {
-      if (texture && (texture .checkLoadState () === X3DConstants .COMPLETE_STATE))
+      if (textureNode && (textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE || textureNode .getWidth ()))
       {
-         texture .setShaderUniforms (gl, shaderNode, renderObject);
+         textureNode .setShaderUniforms (gl, shaderNode, renderObject);
 
          if (vertexArray .enable (gl, shaderNode))
          {
@@ -632,7 +632,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
 
          // Draw.
 
-         if (texture ._transparent .getValue ())
+         if (textureNode ._transparent .getValue ())
             gl .enable (gl .BLEND);
          else
             gl .disable (gl .BLEND);
