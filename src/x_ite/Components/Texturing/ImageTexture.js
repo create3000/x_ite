@@ -107,6 +107,10 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       this .requestImmediateLoad ();
    },
+   getElement: function ()
+   {
+      return this .image [0];
+   },
    unLoadNow: function ()
    {
       this .clearTexture ();
