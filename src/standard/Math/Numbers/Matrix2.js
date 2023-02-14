@@ -243,8 +243,7 @@ Matrix2 .prototype =
    },
    toString: function ()
    {
-      return this [0] + " " + this [1] + " " +
-             this [2] + " " + this [3]
+      return Array .prototype .join .call (this, " ");
    },
 };
 

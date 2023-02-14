@@ -617,9 +617,7 @@ Matrix3 .prototype =
    },
    toString: function ()
    {
-      return this [0] + " " + this [1] + " " + this [2] + " " +
-             this [3] + " " + this [4] + " " + this [5] + " " +
-             this [6] + " " + this [7] + " " + this [8]
+      return Array .prototype .join .call (this, " ");
    },
 };
 
