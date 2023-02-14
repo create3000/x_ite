@@ -94,13 +94,12 @@ Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype
    },
    getRectangle: function ()
    {
-      const viewport = this .getBrowser () .getViewport ();
-
       const
-         left   = Math .floor (viewport [2] * this .getLeft ()),
-         right  = Math .floor (viewport [2] * this .getRight ()),
-         bottom = Math .floor (viewport [3] * this .getBottom ()),
-         top    = Math .floor (viewport [3] * this .getTop ());
+         viewport = this .getBrowser () .getViewport (),
+         left     = Math .floor (viewport [2] * this .getLeft ()),
+         right    = Math .floor (viewport [2] * this .getRight ()),
+         bottom   = Math .floor (viewport [3] * this .getBottom ()),
+         top      = Math .floor (viewport [3] * this .getTop ());
 
       this .rectangle .set (left,
                             bottom,
