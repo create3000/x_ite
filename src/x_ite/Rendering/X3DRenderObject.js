@@ -684,7 +684,7 @@ X3DRenderObject .prototype =
             browser  = this .getBrowser (),
             gl       = browser .getContext (),
             viewport = this .getViewVolume () .getViewport (),
-            pointer  = browser .getPointer ();
+            [x, y]   = browser .getPointer ();
 
          // Configure depth shaders.
 
@@ -692,8 +692,8 @@ X3DRenderObject .prototype =
 
          // Configure viewport and background
 
-         gl .viewport (viewport [0] - pointer .x,
-                       viewport [1] - pointer .y,
+         gl .viewport (viewport [0] - x,
+                       viewport [1] - y,
                        viewport [2],
                        viewport [3]);
 
@@ -718,8 +718,8 @@ X3DRenderObject .prototype =
                shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode),
                id                  = browser .addPointingShape (renderContext);
 
-            gl .scissor (scissor .x - pointer .x,
-                         scissor .y - pointer .y,
+            gl .scissor (scissor .x - x,
+                         scissor .y - y,
                          scissor .z,
                          scissor .w);
 
