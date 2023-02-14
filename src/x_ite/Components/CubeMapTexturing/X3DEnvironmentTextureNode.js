@@ -99,6 +99,8 @@ X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DSingle
 
          for (const target of this .getTargets ())
             gl .texImage2D (target, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+
+         this .setTransparent (false);
       };
    })(),
    updateTextureParameters: function ()

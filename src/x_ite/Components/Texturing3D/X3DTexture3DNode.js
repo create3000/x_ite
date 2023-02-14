@@ -108,14 +108,6 @@ X3DTexture3DNode .prototype = Object .assign (Object .create (X3DSingleTextureNo
    {
       return this .depth;
    },
-   getFlipY: function ()
-   {
-      return false;
-   },
-   getData: function ()
-   {
-      return this .data;
-   },
    clearTexture: function ()
    {
       const gl = this .getBrowser () .getContext ();

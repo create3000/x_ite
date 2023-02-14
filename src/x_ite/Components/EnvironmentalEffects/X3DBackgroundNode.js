@@ -165,7 +165,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
    },
    setTextureBit: function (bit, texture, loadState)
    {
-      this .textureBits .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE || (texture && texture .getData ()));
+      this .textureBits .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE);
    },
    setHidden: function (value)
    {
@@ -620,7 +620,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
    })(),
    drawRectangle: function (gl, browser, shaderNode, renderObject, texture, buffer, vertexArray)
    {
-      if (texture && (texture .checkLoadState () === X3DConstants .COMPLETE_STATE || texture .getData ()))
+      if (texture && (texture .checkLoadState () === X3DConstants .COMPLETE_STATE))
       {
          texture .setShaderUniforms (gl, shaderNode, renderObject);
 

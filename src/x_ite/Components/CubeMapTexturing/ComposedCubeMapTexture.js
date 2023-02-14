@@ -101,6 +101,10 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
    {
       X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
+      const gl = this .getBrowser () .getContext ();
+
+      this .frameBuffer = gl .createFramebuffer ();
+
       // Upload default data.
 
       this .clearTexture ();
@@ -144,15 +148,15 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
    set_loadState__: function (texture, index)
    {
       if (texture)
-         this .setLoadStateBit (index, texture .checkLoadState (), texture .getData ());
+         this .setLoadStateBit (index, texture .checkLoadState ());
       else
-         this .setLoadStateBit (index, X3DConstants .NOT_STARTED, null);
+         this .setLoadStateBit (index, X3DConstants .NOT_STARTED);
 
       this .updateTextures ();
    },
-   setLoadStateBit: function (bit, loadState, data)
+   setLoadStateBit: function (bit, loadState)
    {
-      this .loadStateBits .set (bit, loadState === X3DConstants .COMPLETE_STATE || data);
+      this .loadStateBits .set (bit, loadState === X3DConstants .COMPLETE_STATE);
    },
    isComplete: function ()
    {
@@ -176,62 +180,45 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
    },
    updateTextures: function ()
    {
-      const gl = this .getBrowser () .getContext ();
-
-      gl .bindTexture (this .getTarget (), this .getTexture ());
-
       if (this .isComplete ())
       {
-         const textures = this .textures;
+         const
+            gl         = this .getBrowser () .getContext (),
+            textures   = this .textures,
+            lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+
+         gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
+
+         let transparent = 0;
 
          for (let i = 0; i < 6; ++ i)
          {
             const
                texture = textures [i],
                width   = texture .getWidth (),
-               height  = texture .getHeight (),
-               data    = texture .getData ();
+               height  = texture .getHeight ();
 
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, !texture .getFlipY ());
+            transparent += textureNode .getTransparent ();
 
-            if (data instanceof Uint8Array)
-            {
-               gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
-            }
-            else
-            {
-               gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, data);
-            }
+            // Copy color texture.
+
+            gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture .getTexture (), 0);
+
+            gl .bindTexture (this .getTarget (), this .getTexture ());
+            gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+            gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, 0, 0, 0, width, height);
          }
 
-         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
 
+         this .setTransparent (!! transparent);
          this .updateTextureParameters ();
       }
       else
       {
          this .clearTexture ();
       }
-
-      this .set_transparent__ ();
-   },
-   set_transparent__: function ()
-   {
-      const transparent = false;
-
-      if (this .isComplete ())
-      {
-         for (const texture of this .textures)
-         {
-            if (texture ._transparent .getValue ())
-            {
-               transparent = true;
-               break;
-            }
-         }
-      }
-
-      this .setTransparent (transparent);
    },
 });
 

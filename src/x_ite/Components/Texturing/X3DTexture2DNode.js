@@ -61,8 +61,6 @@ function X3DTexture2DNode (executionContext)
    this .target = gl .TEXTURE_2D;
    this .width  = 0;
    this .height = 0;
-   this .flipY  = false;
-   this .data   = null;
 }
 
 X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
@@ -100,26 +98,14 @@ X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNo
    {
       return this .height;
    },
-   getFlipY: function ()
-   {
-      return this .flipY;
-   },
-   getData: function ()
-   {
-      return this .data;
-   },
    clearTexture: function ()
    {
       this .setTexture (1, 1, false, defaultData, false);
-
-      this .data = null;
    },
    setTexture: function (width, height, transparent, data, flipY)
    {
       this .width  = width;
       this .height = height;
-      this .flipY  = flipY;
-      this .data   = data;
 
       const gl = this .getBrowser () .getContext ();
 
@@ -134,8 +120,6 @@ X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNo
    },
    updateTexture: function (data, flipY)
    {
-      this .data = data;
-
       const gl = this .getBrowser () .getContext ();
 
       gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);

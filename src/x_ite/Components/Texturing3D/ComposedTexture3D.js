@@ -91,6 +91,10 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
    {
       X3DTexture3DNode .prototype .initialize .call (this);
 
+      const gl = this .getBrowser () .getContext ();
+
+      this .frameBuffer = gl .createFramebuffer ();
+
       this ._texture .addInterest ("set_texture__", this);
 
       this .set_texture__ ();
@@ -125,7 +129,7 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
    {
       const
          textureNodes = this .textureNodes,
-         complete     = textureNodes .every (function (textureNode) { return textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE; });
+         complete     = textureNodes .every (textureNode => textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE);
 
       if (textureNodes .length === 0 || !complete)
       {
@@ -136,27 +140,28 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
       else
       {
          const
-            gl           = this .getBrowser () .getContext (),
-            textureNode0 = textureNodes [0],
-            width        = textureNode0 .getWidth (),
-            height       = textureNode0 .getHeight (),
-            depth        = textureNodes .length,
-            size         = width * height * 4,
-            data         = new Uint8Array (size * depth);
+            gl         = this .getBrowser () .getContext (),
+            width      = textureNodes [0] .getWidth (),
+            height     = textureNodes [0] .getHeight (),
+            depth      = textureNodes .length,
+            lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+
+         gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
+         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
 
          let transparent = 0;
 
-         for (let i = 0, d = 0; i < depth; ++ i, d += size)
+         for (const [i, textureNode] of this .textureNodes .entries ())
          {
-            const
-               textureNode = this .textureNodes [i],
-               tData       = textureNode .getData ();
-
             if (textureNode .getWidth () === width && textureNode .getHeight () === height)
             {
                transparent += textureNode .getTransparent ();
 
-               data .set (tData, d);
+               gl .bindTexture (gl .TEXTURE_2D, textureNode .getTexture ());
+               gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, textureNode .getTexture (), 0);
+
+               gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+               gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, 0, 0, width, height)
             }
             else
             {
@@ -164,7 +169,10 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
             }
          }
 
-         this .setTexture (width, height, depth, !!transparent, gl .RGBA, data);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
+
+         this .setTransparent (!! transparent);
+
          this ._loadState = X3DConstants .COMPLETE_STATE;
       }
    },
