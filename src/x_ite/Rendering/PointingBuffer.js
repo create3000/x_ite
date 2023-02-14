@@ -45,15 +45,11 @@
  *
  ******************************************************************************/
 
-import Vector4 from "../../standard/Math/Numbers/Vector4.js";
-
-function PointingBuffer (browser, width, height)
+function PointingBuffer (browser)
 {
    const gl = browser .getContext ();
 
    this .browser = browser;
-   this .width   = width;
-   this .height  = height;
    this .array   = new Float32Array (4);
 
    // Create frame buffer.
@@ -127,22 +123,6 @@ function PointingBuffer (browser, width, height)
 PointingBuffer .prototype =
 {
    constructor: PointingBuffer,
-   getWidth: function ()
-   {
-      return this .width;
-   },
-   setWidth: function (width)
-   {
-      this .width = width;
-   },
-   getHeight: function ()
-   {
-      return this .height;
-   },
-   setHeight: function (height)
-   {
-      this .height = height;
-   },
    bind: function ()
    {
       const gl = this .browser .getContext ();

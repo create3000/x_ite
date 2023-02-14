@@ -45,22 +45,22 @@
  *
  ******************************************************************************/
 
-import Fields                 from "../../Fields.js";
 import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
+import Vector4                from "../../../standard/Math/Numbers/Vector4.js";
 
 const
-   _localObjects = Symbol (),
-   _depthShaders = Symbol (),
+   _viewport     = Symbol (),
+   _frameBuffer  = Symbol (),
    _resizer      = Symbol (),
-   _frameBuffer  = Symbol ();
+   _localObjects = Symbol (),
+   _depthShaders = Symbol ();
 
 function X3DRenderingContext ()
 {
-   this .addChildObjects ("viewport", new Fields .SFVec4f (0, 0, 300, 150));
-
+   this [_viewport]     = new Vector4 (0, 0, 300, 150);
+   this [_frameBuffer]  = new MultiSampleFrameBuffer (this, 300, 150, 4);
    this [_localObjects] = [ ]; // shader objects dumpster
    this [_depthShaders] = new Map ();
-   this [_frameBuffer]  = new MultiSampleFrameBuffer (this, 300, 150, 4);
 }
 
 X3DRenderingContext .prototype =
@@ -156,7 +156,7 @@ X3DRenderingContext .prototype =
    },
    getViewport: function ()
    {
-      return this ._viewport;
+      return this [_viewport];
    },
    getLocalObjects: function ()
    {
@@ -237,8 +237,8 @@ X3DRenderingContext .prototype =
       canvas .width  = width;
       canvas .height = height;
 
-      this ._viewport [2] = width;
-      this ._viewport [3] = height;
+      this [_viewport] [2] = width;
+      this [_viewport] [3] = height;
 
       if (width   !== this [_frameBuffer] .getWidth ()  ||
           height  !== this [_frameBuffer] .getHeight () ||

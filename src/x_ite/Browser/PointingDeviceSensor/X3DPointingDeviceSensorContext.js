@@ -65,8 +65,7 @@ const
    _pointingBuffer   = Symbol (),
    _pointingShaders  = Symbol (),
    _id               = Symbol (),
-   _pointingContexts = Symbol (),
-   _reshape          = Symbol ();
+   _pointingContexts = Symbol ();
 
 function X3DPointingDeviceSensorContext ()
 {
@@ -76,7 +75,7 @@ function X3DPointingDeviceSensorContext ()
    this [_activeSensors]    = [ ];
    this [_activeLayer]      = null;
    this [_pointerTime]      = 0;
-   this [_pointingBuffer]   = new PointingBuffer (this, 300, 150);
+   this [_pointingBuffer]   = new PointingBuffer (this);
    this [_pointingShaders]  = new Map ();
    this [_pointingContexts] = [ ];
 
@@ -99,8 +98,6 @@ X3DPointingDeviceSensorContext .prototype =
    initialize: function ()
    {
       this .setCursor ("DEFAULT");
-
-      this .getViewport () .addInterest (_reshape, this);
 
       this [_pointingDevice] .setup ();
    },
@@ -360,13 +357,6 @@ X3DPointingDeviceSensorContext .prototype =
       this [_pointingShaders] .set (key, shaderNode);
 
       return shaderNode;
-   },
-   [_reshape]: function ()
-   {
-      const viewport = this .getViewport ();
-
-      this [_pointingBuffer] .setWidth (viewport [2]);
-      this [_pointingBuffer] .setHeight (viewport [3]);
    },
 };
 
