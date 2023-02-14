@@ -56,7 +56,19 @@ function TextureBuffer (browser, width, height, float = false)
    this .browser = browser;
    this .width   = width;
    this .height  = height;
-   this .array   = float ? new Float32Array (width * height * 4) : new Uint8Array (width * height * 4);
+
+   Object .defineProperty (this, "array",
+   {
+      get: function ()
+      {
+         const value = float ? new Float32Array (width * height * 4) : new Uint8Array (width * height * 4);
+
+         Object .defineProperty (this, "array", { value: value });
+
+         return value;
+      },
+      configurable: true,
+   });
 
    // Create frame buffer.
 

@@ -197,7 +197,9 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironm
             headlight          = navigationInfo ._headlight .getValue (),
             nearValue          = navigationInfo .getNearValue (),
             farValue           = navigationInfo .getFarValue (viewpoint),
-            projectionMatrix   = Camera .perspective (Algorithm .radians (90.0), nearValue, farValue, 1, 1, this .projectionMatrix);
+            projectionMatrix   = Camera .perspective (Algorithm .radians (90.0), nearValue, farValue, 1, 1, this .projectionMatrix),
+            width              = this .frameBuffer .getWidth (),
+            height             = this .frameBuffer .getHeight ();
 
          this .setTransparent (background .getTransparent ());
 
@@ -244,13 +246,8 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironm
 
             // Transfer image.
 
-            const
-               data   = this .frameBuffer .readPixels (),
-               width  = this .frameBuffer .getWidth (),
-               height = this .frameBuffer .getHeight ();
-
             gl .bindTexture (this .getTarget (), this .getTexture ());
-            gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
+            gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, 0, 0, 0, width, height);
          }
 
          this .updateTextureParameters ();
