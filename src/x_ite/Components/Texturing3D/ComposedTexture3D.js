@@ -165,7 +165,7 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
                gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, textureNode .getTexture (), 0);
 
                gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-               gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, 0, 0, width, height)
+               gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, 0, 0, width, height);
             }
             else
             {
