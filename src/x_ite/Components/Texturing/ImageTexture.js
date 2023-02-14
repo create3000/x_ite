@@ -173,11 +173,13 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
             cx .clearRect (0, 0, width, height);
             cx .save ();
+
             if (!this ._flipVertically .getValue ())
             {
                cx .translate (0, height);
                cx .scale (1, -1);
             }
+            
             cx .drawImage (image, 0, 0);
             cx .restore ();
          }
@@ -193,11 +195,13 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
             cx .clearRect (0, 0, width, height);
             cx .save ();
+
             if (!this ._flipVertically .getValue ())
             {
                cx .translate (0, height);
                cx .scale (1, -1);
             }
+
             cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
             cx .restore ();
          }
@@ -217,7 +221,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
             }
          }
 
-         this .setTexture (width, height, transparent, new Uint8Array (data .buffer), false);
+         this .setTexture (width, height, transparent, data, false);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       catch (error)

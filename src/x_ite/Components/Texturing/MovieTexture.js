@@ -64,7 +64,6 @@ function MovieTexture (executionContext)
 
    this .addType (X3DConstants .MovieTexture);
 
-   this .canvas   = $("<canvas></canvas>");
    this .video    = $("<video></video>");
    this .urlStack = new Fields .MFString ();
 }
@@ -215,22 +214,13 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          const
             video  = this .video [0],
             width  = video .videoWidth,
-            height = video .videoHeight,
-            canvas = this .canvas [0],
-            cx     = canvas .getContext ("2d", { willReadFrequently: true });
+            height = video .videoHeight;
 
          if (! Algorithm .isPowerOfTwo (width) || ! Algorithm .isPowerOfTwo (height))
             throw new Error ("The movie texture is a non power-of-two texture.");
 
-         canvas .width  = width;
-         canvas .height = height;
-
-         cx .drawImage (video, 0, 0);
-
-         const data = cx .getImageData (0, 0, width, height) .data;
-
          this .setMedia (this .video [0]);
-         this .setTexture (width, height, false, new Uint8Array (data .buffer), true);
+         this .setTexture (width, height, false, video, !this ._flipVertically .getValue ());
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       catch (error)
