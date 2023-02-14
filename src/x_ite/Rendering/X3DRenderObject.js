@@ -59,9 +59,7 @@ import Rotation4     from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4       from "../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack   from "../../standard/Math/Utility/MatrixStack.js";
 
-const
-   DEPTH_BUFFER_WIDTH  = 16,
-   DEPTH_BUFFER_HEIGHT = DEPTH_BUFFER_WIDTH;
+const DEPTH_BUFFER_SIZE = 16;
 
 function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
 
@@ -104,7 +102,7 @@ function X3DRenderObject (executionContext)
 
    try
    {
-      this .depthBuffer = new TextureBuffer (executionContext .getBrowser (), DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT, true);
+      this .depthBuffer = new TextureBuffer (executionContext .getBrowser (), DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE, true);
    }
    catch (error)
    {
@@ -405,7 +403,7 @@ X3DRenderObject .prototype =
    getDepth: (function ()
    {
       const
-         depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT),
+         depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE),
          depthBufferViewVolume = new ViewVolume ();
 
       depthBufferViewVolume .set (Matrix4 .Identity, depthBufferViewport, depthBufferViewport);
@@ -419,7 +417,7 @@ X3DRenderObject .prototype =
 
          this .depth (this .collisionShapes, this .numCollisionShapes);
 
-         const depth = this .depthBuffer .getDepth (projectionMatrix, depthBufferViewport);
+         const depth = this .depthBuffer .readDepth (projectionMatrix, depthBufferViewport);
 
          this .viewVolumes .pop ();
          this .depthBuffer .unbind ();

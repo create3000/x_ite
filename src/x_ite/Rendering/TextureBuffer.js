@@ -151,7 +151,7 @@ TextureBuffer .prototype =
 
       return array;
    },
-   getDepth: (function ()
+   readDepth: (function ()
    {
       const
          invProjectionMatrix = new Matrix4 (),
@@ -168,9 +168,9 @@ TextureBuffer .prototype =
          gl .readPixels (0, 0, width, height, gl .RGBA, gl .FLOAT, array);
 
          let
-            winx = 0,
-            winy = 0,
-            winz = Number .POSITIVE_INFINITY;
+            winX = 0,
+            winY = 0,
+            winZ = Number .POSITIVE_INFINITY;
 
          for (let wy = 0, i = 0; wy < height; ++ wy)
          {
@@ -178,18 +178,18 @@ TextureBuffer .prototype =
             {
                const wz = array [i];
 
-               if (wz < winz)
+               if (wz < winZ)
                {
-                  winx = wx;
-                  winy = wy;
-                  winz = wz;
+                  winX = wx;
+                  winY = wy;
+                  winZ = wz;
                }
             }
          }
 
          invProjectionMatrix .assign (projectionMatrix) .inverse ();
 
-         ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, point);
+         ViewVolume .unProjectPointMatrix (winX, winY, winZ, invProjectionMatrix, viewport, point);
 
          return point .z;
       };
