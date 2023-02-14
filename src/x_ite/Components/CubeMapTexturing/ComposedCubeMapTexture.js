@@ -208,7 +208,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
 
-         this .setTransparent (textureNodes .some (textureNode => textureNode .getTransparent ()));
+         this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
          this .updateTextureParameters ();
       }
       else

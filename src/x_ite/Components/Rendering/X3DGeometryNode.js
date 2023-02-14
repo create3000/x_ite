@@ -200,7 +200,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       if (value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
-   getTransparent: function ()
+   isTransparent: function ()
    {
       return this ._transparent .getValue ();
    },

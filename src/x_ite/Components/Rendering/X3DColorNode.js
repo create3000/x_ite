@@ -68,7 +68,7 @@ X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNo
       if (value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
-   getTransparent: function ()
+   isTransparent: function ()
    {
       return this ._transparent .getValue ();
    },

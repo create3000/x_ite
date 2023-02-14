@@ -177,7 +177,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
    {
       return this .hidden;
    },
-   getTransparent: function ()
+   isTransparent: function ()
    {
       if (this .hidden)
          return true;

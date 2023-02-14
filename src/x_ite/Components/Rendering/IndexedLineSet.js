@@ -170,7 +170,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
    },
    set_transparent__: function ()
    {
-      this .setTransparent (this .colorNode .getTransparent ());
+      this .setTransparent (this .colorNode .isTransparent ());
    },
    set_normal__: function ()
    {

@@ -120,7 +120,7 @@ X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
    {
       this .transparent = value;
    },
-   getTransparent: function ()
+   isTransparent: function ()
    {
       return this .transparent;
    },
@@ -177,12 +177,12 @@ X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
    {
       if (this .apparanceNode .getAlphaMode () === AlphaMode .AUTO)
       {
-         this .transparent = this .apparanceNode .getTransparent () ||
-                             (this .geometryNode && this .geometryNode .getTransparent ());
+         this .transparent = this .apparanceNode .isTransparent () ||
+                             (this .geometryNode && this .geometryNode .isTransparent ());
       }
       else
       {
-         this .transparent = this .apparanceNode .getTransparent ();
+         this .transparent = this .apparanceNode .isTransparent ();
       }
    },
    dispose: function ()

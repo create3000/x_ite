@@ -68,7 +68,7 @@ X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototyp
       if (value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
-   getTransparent: function ()
+   isTransparent: function ()
    {
       return this ._transparent .getValue ();
    },

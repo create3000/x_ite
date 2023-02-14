@@ -269,16 +269,16 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
             }
             default:
             {
-               this .setTransparent (this .getAppearance () .getTransparent () ||
-                                     (this .colorRampNode && this .colorRampNode .getTransparent ()) ||
-                                     (this .geometryType === GeometryTypes .GEOMETRY && this .geometryNode && this .geometryNode .getTransparent ()));
+               this .setTransparent (this .getAppearance () .isTransparent () ||
+                                     (this .colorRampNode && this .colorRampNode .isTransparent ()) ||
+                                     (this .geometryType === GeometryTypes .GEOMETRY && this .geometryNode && this .geometryNode .isTransparent ()));
                break;
             }
          }
       }
       else
       {
-         this .setTransparent (this .getAppearance () .getTransparent ());
+         this .setTransparent (this .getAppearance () .isTransparent ());
       }
    },
    set_live__: function ()

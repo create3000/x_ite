@@ -623,7 +623,7 @@ X3DRenderObject .prototype =
 
          if (viewVolume .intersectsSphere (radius, bboxCenter))
          {
-            if (shapeNode .getTransparent ())
+            if (shapeNode .isTransparent ())
             {
                const num = this .numTransparentShapes ++;
 

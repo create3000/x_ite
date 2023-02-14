@@ -133,7 +133,7 @@ Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 
       this .textGeometry = this .fontStyleNode .getTextGeometry (this);
 
-      this .setTransparent (this .textGeometry .getTransparent ());
+      this .setTransparent (this .textGeometry .isTransparent ());
    },
    build: function ()
    {

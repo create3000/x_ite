@@ -167,7 +167,7 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
 
-         this .setTransparent (textureNodes .some (textureNode => textureNode .getTransparent ()));
+         this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
          this .updateTextureParameters ();
 
          this ._loadState = X3DConstants .COMPLETE_STATE;

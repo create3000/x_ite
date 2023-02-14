@@ -201,7 +201,7 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironm
             width              = this .frameBuffer .getWidth (),
             height             = this .frameBuffer .getHeight ();
 
-         this .setTransparent (background .getTransparent ());
+         this .setTransparent (background .isTransparent ());
 
          this .frameBuffer .bind ();
 
