@@ -777,16 +777,6 @@ Matrix4 .prototype =
 
       return this;
    },
-   getDepth: function (vector)
-   {
-      const
-         x = vector .x,
-         y = vector .y,
-         z = vector .z,
-         w = 1 / (x * this [3] + y * this [7] + z * this [11] + this [15]);
-
-      return (x * this [2] + y * this [6] + z * this [10] + this [14]) * w;
-   },
    toString: function ()
    {
       return this [ 0] + " " + this [ 1] + " " + this [ 2] + " " + this [ 3] + " " +
