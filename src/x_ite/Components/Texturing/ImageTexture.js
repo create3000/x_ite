@@ -179,7 +179,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
                cx .translate (0, height);
                cx .scale (1, -1);
             }
-            
+
             cx .drawImage (image, 0, 0);
             cx .restore ();
          }

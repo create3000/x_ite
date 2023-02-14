@@ -66,7 +66,7 @@ function ComposedCubeMapTexture (executionContext)
    this .addAlias ("bottom", this ._bottomTexture);
    this .addAlias ("top",    this ._topTexture);
 
-   this .textures      = [null, null, null, null, null, null];
+   this .textureNodes  = [null, null, null, null, null, null];
    this .symbols       = [Symbol (), Symbol (), Symbol (), Symbol (), Symbol (), Symbol ()];
    this .loadStateBits = new BitSet ();
 }
@@ -127,28 +127,28 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
    },
    set_texture__: function (node, index)
    {
-      let texture = this .textures [index];
+      let textureNode = this .textureNodes [index];
 
-      if (texture)
+      if (textureNode)
       {
-         texture .removeInterest ("set_loadState__", this);
-         texture ._loadState .removeFieldCallback (this .symbols [index]);
+         textureNode .removeInterest ("set_loadState__", this);
+         textureNode ._loadState .removeFieldCallback (this .symbols [index]);
       }
 
-      texture = this .textures [index] = X3DCast (X3DConstants .X3DTexture2DNode, node);
+      textureNode = this .textureNodes [index] = X3DCast (X3DConstants .X3DTexture2DNode, node);
 
-      if (texture)
+      if (textureNode)
       {
-         texture .addInterest ("set_loadState__", this, texture, index);
-         texture ._loadState .addFieldCallback (this .symbols [index], this .set_loadState__ .bind (this, texture, index));
+         textureNode .addInterest ("set_loadState__", this, textureNode, index);
+         textureNode ._loadState .addFieldCallback (this .symbols [index], this .set_loadState__ .bind (this, textureNode, index));
       }
 
-      this .set_loadState__ (texture, index);
+      this .set_loadState__ (textureNode, index);
    },
-   set_loadState__: function (texture, index)
+   set_loadState__: function (textureNode, index)
    {
-      if (texture)
-         this .setLoadStateBit (index, texture .checkLoadState ());
+      if (textureNode)
+         this .setLoadStateBit (index, textureNode .checkLoadState ());
       else
          this .setLoadStateBit (index, X3DConstants .NOT_STARTED);
 
@@ -164,15 +164,15 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
          return false;
 
       const
-         textures = this .textures,
-         size     = textures [0] .getWidth ();
+         textureNodes = this .textureNodes,
+         size         = textureNodes [0] .getWidth ();
 
-      for (const texture of textures)
+      for (const textureNode of textureNodes)
       {
-         if (texture .getWidth () !== size)
+         if (textureNode .getWidth () !== size)
             return false;
 
-         if (texture .getHeight () !== size)
+         if (textureNode .getHeight () !== size)
             return false;
       }
 
@@ -183,9 +183,9 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
       if (this .isComplete ())
       {
          const
-            gl         = this .getBrowser () .getContext (),
-            textures   = this .textures,
-            lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+            gl           = this .getBrowser () .getContext (),
+            textureNodes = this .textureNodes,
+            lastBuffer   = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
 
@@ -194,16 +194,16 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
          for (let i = 0; i < 6; ++ i)
          {
             const
-               texture = textures [i],
-               width   = texture .getWidth (),
-               height  = texture .getHeight ();
+               textureNode = textureNodes [i],
+               width       = textureNode .getWidth (),
+               height      = textureNode .getHeight ();
 
             transparent += textureNode .getTransparent ();
 
             // Copy color texture.
 
-            gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture .getTexture (), 0);
+            gl .bindTexture (gl .TEXTURE_2D, textureNode .getTexture ());
+            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, textureNode .getTexture (), 0);
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
             gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
