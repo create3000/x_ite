@@ -189,16 +189,12 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
 
-         let transparent = 0;
-
          for (let i = 0; i < 6; ++ i)
          {
             const
                textureNode = textureNodes [i],
                width       = textureNode .getWidth (),
                height      = textureNode .getHeight ();
-
-            transparent += textureNode .getTransparent ();
 
             // Copy color texture.
 
@@ -212,7 +208,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
 
-         this .setTransparent (!! transparent);
+         this .setTransparent (textureNodes .some (textureNode => textureNode .getTransparent ()));
          this .updateTextureParameters ();
       }
       else

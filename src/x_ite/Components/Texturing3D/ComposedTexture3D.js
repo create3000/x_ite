@@ -149,14 +149,10 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
          gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
          gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
 
-         let transparent = 0;
-
          for (const [i, textureNode] of this .textureNodes .entries ())
          {
             if (textureNode .getWidth () === width && textureNode .getHeight () === height)
             {
-               transparent += textureNode .getTransparent ();
-
                gl .bindTexture (gl .TEXTURE_2D, textureNode .getTexture ());
                gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, textureNode .getTexture (), 0);
 
@@ -171,7 +167,8 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
 
-         this .setTransparent (!! transparent);
+         this .setTransparent (textureNodes .some (textureNode => textureNode .getTransparent ()));
+         this .updateTextureParameters ();
 
          this ._loadState = X3DConstants .COMPLETE_STATE;
       }
