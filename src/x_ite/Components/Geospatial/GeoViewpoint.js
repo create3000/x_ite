@@ -220,7 +220,7 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
    })(),
    getMaxFarValue: function ()
    {
-      return 1e10;
+      return 1e9;
    },
    getUpVector: (function ()
    {
