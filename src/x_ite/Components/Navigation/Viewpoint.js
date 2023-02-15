@@ -108,21 +108,21 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
 
       return relative;
    },
-   setInterpolators: function (fromViewpointNode, toViewpointNode, relative)
+   setInterpolators: function (fromViewpointNode, relative)
    {
-      if (fromViewpointNode .constructor === toViewpointNode .constructor)
+      if (fromViewpointNode .constructor === this .constructor)
       {
-         const scale = relative .fieldOfView / toViewpointNode .getFieldOfView ();
+         const scale = relative .fieldOfView / this .getFieldOfView ();
 
-         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (scale, this ._fieldOfViewScale .getValue ());
 
          this ._fieldOfViewScale = scale;
       }
       else
       {
-         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (this ._fieldOfViewScale .getValue (), this ._fieldOfViewScale .getValue ());
 
-         this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
+         this ._fieldOfViewScale = this ._fieldOfViewScale .getValue ();
       }
    },
    getLogarithmicDepthBuffer: function ()

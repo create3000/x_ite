@@ -51,8 +51,7 @@ function BindableStack (executionContext, defaultNode)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .array          = [ defaultNode ];
-   this .transitionNode = defaultNode .create (executionContext);
+   this .array = [ defaultNode ];
 }
 
 BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -68,7 +67,7 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
    },
    top: function ()
    {
-      return this .transitionNode ._transitionActive .getValue () ? this .transitionNode : this .array .at (-1);
+      return this .array .at (-1);
    },
    pushOnTop: function (node)
    {
@@ -150,42 +149,9 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
          top ._bindTime = this .getBrowser () .getCurrentTime ();
       }
 
-      // Do transition, use transition node for multiple layers support.
+      // Do transition.
 
-      this .transitionNode .dispose ();
-
-      const transitionNode = this .transitionNode = top .create (this .getExecutionContext ());
-
-      transitionNode .setup ();
-      transitionNode .transitionStart (layerNode, fromNode, top);
-
-      if (transitionNode ._transitionActive .getValue ())
-      {
-         top ._position         .addFieldInterest (transitionNode ._position);
-         top ._orientation      .addFieldInterest (transitionNode ._orientation);
-         top ._centerOfRotation .addFieldInterest (transitionNode ._centerOfRotation);
-         top ._fieldOfView      .addFieldInterest (transitionNode ._fieldOfView);
-         top ._nearDistance     .addFieldInterest (transitionNode ._nearDistance);
-         top ._farDistance      .addFieldInterest (transitionNode ._farDistance);
-
-         transitionNode ._transitionActive .addInterest ("set_transitionActive__", this, top, transitionNode);
-      }
-
-      this .addNodeEvent ();
-   },
-   set_transitionActive__: function (top, transitionNode, transitionActive)
-   {
-      if (transitionActive .getValue ())
-         return;
-
-      top ._position         .removeFieldInterest (transitionNode ._position);
-      top ._orientation      .removeFieldInterest (transitionNode ._orientation);
-      top ._centerOfRotation .removeFieldInterest (transitionNode ._centerOfRotation);
-      top ._fieldOfView      .removeFieldInterest (transitionNode ._fieldOfView);
-      top ._nearDistance     .removeFieldInterest (transitionNode ._nearDistance);
-      top ._farDistance      .removeFieldInterest (transitionNode ._farDistance);
-
-      transitionNode ._transitionActive .removeInterest ("set_transitionActive__", this);
+      top .transitionStart (layerNode, fromNode);
 
       this .addNodeEvent ();
    },

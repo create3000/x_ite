@@ -260,29 +260,17 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       // VRML behavior support.
       return this .VRMLTransition;
    },
-   transitionStart: function (layerNode, fromViewpointNode, toViewpointNode)
+   transitionStart: function (layerNode, fromViewpointNode)
    {
-      this .to = toViewpointNode;
-
-      if (toViewpointNode ._jump .getValue ())
+      if (this ._jump .getValue ())
       {
-         const relative = toViewpointNode .getRelativeTransformation (fromViewpointNode);
+         const relative = this .getRelativeTransformation (fromViewpointNode);
 
-         if (! toViewpointNode ._retainUserOffsets .getValue ())
-            toViewpointNode .resetUserOffsets ();
-
-         // Copy from toViewpointNode all fields.
-
-         if (this !== toViewpointNode)
-         {
-            for (const field of toViewpointNode .getFields ())
-               this .getField (field .getName ()) .assign (field);
-
-            this .initialize ();
-         }
+         if (! this ._retainUserOffsets .getValue ())
+            this .resetUserOffsets ();
 
          if (this ._viewAll .getValue ())
-            toViewpointNode .viewAll (layerNode .getBBox (new Box3 ()));
+            this .viewAll (layerNode .getBBox (new Box3 ()));
 
          // Handle NavigationInfo.
 
@@ -296,20 +284,20 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
          if (this .getExecutionContext () .getSpecificationVersion () === "2.0")
          {
-            if (toViewpointNode .getVRMLTransition ())
+            if (this .getVRMLTransition ())
                transitionType = "LINEAR";
             else
                transitionType = "TELEPORT";
          }
 
-         toViewpointNode .setVRMLTransition (false);
+         this .setVRMLTransition (false);
 
          // End VRML behavior
 
          if (transitionTime <= 0)
             transitionType = "TELEPORT";
 
-         if (toViewpointNode .constructor !== fromViewpointNode .constructor)
+         if (this .constructor !== fromViewpointNode .constructor)
             transitionType = "TELEPORT";
 
          switch (transitionType)
@@ -340,32 +328,30 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
          this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
 
-         this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relative .position,         toViewpointNode ._positionOffset);
-         this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relative .orientation,      toViewpointNode ._orientationOffset);
-         this .scaleInterpolator            ._keyValue = new Fields .MFVec3f    (relative .scale,            toViewpointNode ._scaleOffset);
-         this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (relative .scaleOrientation, toViewpointNode ._scaleOrientationOffset);
+         this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relative .position,         this ._positionOffset);
+         this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relative .orientation,      this ._orientationOffset);
+         this .scaleInterpolator            ._keyValue = new Fields .MFVec3f    (relative .scale,            this ._scaleOffset);
+         this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (relative .scaleOrientation, this ._scaleOrientationOffset);
 
          this ._positionOffset         = relative .position;
          this ._orientationOffset      = relative .orientation;
          this ._scaleOffset            = relative .scale;
          this ._scaleOrientationOffset = relative .scaleOrientation;
-         this ._nearDistance           = toViewpointNode ._nearDistance;
-         this ._farDistance            = toViewpointNode ._farDistance;
 
-         this .setInterpolators (fromViewpointNode, toViewpointNode, relative);
+         this .setInterpolators (fromViewpointNode, relative);
 
          this ._transitionActive = true;
       }
       else
       {
-         const relative = toViewpointNode .getRelativeTransformation (fromViewpointNode);
+         const relative = this .getRelativeTransformation (fromViewpointNode);
 
-         toViewpointNode ._positionOffset         = relative .position;
-         toViewpointNode ._orientationOffset      = relative .orientation;
-         toViewpointNode ._scaleOffset            = relative .scale;
-         toViewpointNode ._scaleOrientationOffset = relative .scaleOrientation;
+         this ._positionOffset         = relative .position;
+         this ._orientationOffset      = relative .orientation;
+         this ._scaleOffset            = relative .scale;
+         this ._scaleOrientationOffset = relative .scaleOrientation;
 
-         this .setInterpolators (fromViewpointNode, toViewpointNode, relative);
+         this .setInterpolators (fromViewpointNode, relative);
       }
    },
    transitionStop: function ()
@@ -487,7 +473,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this ._fieldOfViewScale       = 1;
       this ._centerOfRotationOffset = Vector3 .subtract (point, this .getCenterOfRotation ());
 
-      this .setInterpolators (this, this, relative);
+      this .setInterpolators (this, relative);
    },
    straighten: function (layerNode, horizon)
    {
@@ -512,7 +498,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       this ._fieldOfViewScale = 1;
 
-      this .setInterpolators (this, this, relative);
+      this .setInterpolators (this, relative);
    },
    straightenHorizon: (function ()
    {
@@ -576,7 +562,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
                                     this ._scaleOffset .getValue (),
                                     this ._scaleOrientationOffset .getValue ());
 
-      this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
+      this .cameraSpaceMatrix .multRight (this .modelMatrix);
 
       this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
    }
