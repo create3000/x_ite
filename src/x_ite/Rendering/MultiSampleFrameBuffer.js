@@ -123,6 +123,10 @@ MultiSampleFrameBuffer .prototype =
    {
       const gl = this .browser .getContext ();
 
+      // Reset viewport before blit, otherwise only last layer size is used.
+      gl .viewport (0, 0, this .width, this .height);
+      gl .scissor  (0, 0, this .width, this .height);
+
       gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
       gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
 
