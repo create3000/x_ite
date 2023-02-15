@@ -75,7 +75,7 @@ class StopWatch
       this .elapsedTime = 0;
    }
 
-   averageCycleInterval ()
+   averageCycles ()
    {
       return this .elapsedTime ? this .cycles / this .elapsedTime : 0;
    }
