@@ -242,7 +242,7 @@ const Context =
       //       this .getBufferSubData (target, srcByteOffset, dstBuffer, dstOffset, length);
       //       this .bindBuffer (target, null);
       //    },
-      //    readPixelsAsync: async function (x, y, w, h, format, type, dest)
+      //    readPixelsAsync: async function (x, y, w, h, format, type, dest, dstOffset)
       //    {
       //       const buffer = this .createBuffer ();
 
@@ -251,7 +251,7 @@ const Context =
       //       this .readPixels (x, y, w, h, format, type, 0);
       //       this .bindBuffer (this .PIXEL_PACK_BUFFER, null);
 
-      //       await this .getBufferSubDataAsync (this .PIXEL_PACK_BUFFER, buffer, 0, dest);
+      //       await this .getBufferSubDataAsync (this .PIXEL_PACK_BUFFER, buffer, 0, dest, dstOffset);
 
       //       this .deleteBuffer (buffer);
       //    },
