@@ -90,8 +90,6 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 
    this .defaultBackground .setHidden (true);
    this .defaultFog        .setHidden (true);
-
-   this .collisionTime = 0;
 }
 
 X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -146,6 +144,10 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    getLayer: function ()
    {
       return this;
+   },
+   getBBox: function (bbox, shadows)
+   {
+      return this .groupNode .getBBox (bbox, shadows);
    },
    getGroup: function ()
    {
@@ -215,9 +217,9 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    {
       return this .viewpointStack;
    },
-   getBBox: function (bbox, shadows)
+   getCollisionTime: function ()
    {
-      return this .groupNode .getBBox (bbox, shadows);
+      return this .collisionTime;
    },
    lookAt: function (factor = 1, straighten = false)
    {
@@ -365,8 +367,6 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
             collisionRadius = navigationInfo .getCollisionRadius (),
             avatarHeight    = navigationInfo .getAvatarHeight (),
             size            = Math .max (collisionRadius * 2, avatarHeight * 2);
-
-         this .collisionTime = 0;
 
          Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
 

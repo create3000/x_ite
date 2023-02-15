@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import TraverseType from "../../Rendering/TraverseType.js";
+import StopWatch    from "../../../standard/Time/StopWatch.js";
 
 const
    _transformSensorNodes = Symbol (),
@@ -60,7 +61,7 @@ function X3DPickingContext ()
    this [_pickSensorNodes]      = [ new Set () ];
    this [_pickingHierarchy]     = [ ];
    this [_pickable]             = [ false ];
-   this [_pickingTime]          = 0;
+   this [_pickingTime]          = new StopWatch ();
 }
 
 X3DPickingContext .prototype =
@@ -108,7 +109,7 @@ X3DPickingContext .prototype =
    },
    picking: function ()
    {
-      const t0 = Date .now ();
+      this [_pickingTime] .start ();
 
       this .getWorld () .traverse (TraverseType .PICKING, null);
 
@@ -122,7 +123,7 @@ X3DPickingContext .prototype =
          pickSensorNode .process ();
       }
 
-      this [_pickingTime] = Date .now () - t0;
+      this [_pickingTime] .stop ();
    },
    getPickingTime: function ()
    {

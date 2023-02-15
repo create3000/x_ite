@@ -47,7 +47,6 @@
 
 import TextureBuffer from "./TextureBuffer.js";
 import TraverseType  from "./TraverseType.js";
-import Algorithm     from "../../standard/Math/Algorithm.js";
 import MergeSort     from "../../standard/Math/Algorithms/MergeSort.js";
 import Camera        from "../../standard/Math/Geometry/Camera.js";
 import Box3          from "../../standard/Math/Geometry/Box3.js";
@@ -58,6 +57,7 @@ import Vector4       from "../../standard/Math/Numbers/Vector4.js";
 import Rotation4     from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4       from "../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack   from "../../standard/Math/Utility/MatrixStack.js";
+import StopWatch     from "../../standard/Time/StopWatch.js";
 
 const DEPTH_BUFFER_SIZE = 16;
 
@@ -86,6 +86,7 @@ function X3DRenderObject (executionContext)
    this .textureProjectors        = [ ];
    this .generatedCubeMapTextures = [ ];
    this .collisions               = [ ];
+   this .collisionTime            = new StopWatch ();
    this .numPointingShapes        = 0;
    this .numCollisionShapes       = 0;
    this .numShadowShapes          = 0;
@@ -246,6 +247,10 @@ X3DRenderObject .prototype =
    {
       return this .collisions;
    },
+   getCollisionTime: function ()
+   {
+      return this .collisionTime;
+   },
    setNumPointingShapes: function (value)
    {
       this .numPointingShapes = value;
@@ -354,7 +359,7 @@ X3DRenderObject .prototype =
       {
          ///  Returns the distance to the closest object in @a direction.  The maximum determinable value is avatarHeight * 2.
 
-         const t0 = Date .now ();
+         this .collisionTime .start ();
 
          const
             viewpoint       = this .getViewpoint (),
@@ -396,7 +401,7 @@ X3DRenderObject .prototype =
 
          this .getProjectionMatrix () .pop ();
 
-         this .collisionTime += Date .now () - t0;
+         this .collisionTime .stop ();
          return -depth;
       };
    })(),

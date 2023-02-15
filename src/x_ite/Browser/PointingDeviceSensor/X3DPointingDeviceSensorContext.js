@@ -52,6 +52,7 @@ import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4        from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
+import StopWatch      from "../../../standard/Time/StopWatch.js";
 
 const
    _pointingDevice   = Symbol (),
@@ -74,7 +75,7 @@ function X3DPointingDeviceSensorContext ()
    this [_overSensors]      = [ ];
    this [_activeSensors]    = [ ];
    this [_activeLayer]      = null;
-   this [_pointerTime]      = 0;
+   this [_pointerTime]      = new StopWatch ();
    this [_pointingBuffer]   = new PointingBuffer (this);
    this [_pointingShaders]  = new Map ();
    this [_pointingContexts] = [ ];
@@ -199,11 +200,11 @@ X3DPointingDeviceSensorContext .prototype =
    { },
    touch: function (x, y)
    {
-      const t0 = Date .now ();
+      this [_pointerTime] .start ();
 
       if (this .getViewer () ._isActive .getValue ())
       {
-         this [_pointerTime] = 0;
+         this [_pointerTime] .reset ();
          return false;
       }
 
@@ -259,7 +260,7 @@ X3DPointingDeviceSensorContext .prototype =
       // Picking end.
 
       this .addBrowserEvent ();
-      this [_pointerTime] = Date .now () - t0;
+      this [_pointerTime] .stop ();
 
       return !! hit .id;
    },

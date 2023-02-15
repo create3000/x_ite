@@ -67,6 +67,7 @@ import X3DTimeContext                 from "./Time/X3DTimeContext.js";
 import X3DRoutingContext              from "../Routing/X3DRoutingContext.js";
 import X3DWorld                       from "../Execution/X3DWorld.js";
 import TraverseType                   from "../Rendering/TraverseType.js";
+import StopWatch                      from "../../standard/Time/StopWatch.js";
 
 const
    _world           = Symbol (),
@@ -76,7 +77,6 @@ const
    _renderCallback  = Symbol (),
    _previousTime    = Symbol (),
    _systemTime      = Symbol (),
-   _systemStartTime = Symbol (),
    _browserTime     = Symbol (),
    _cameraTime      = Symbol (),
    _collisionTime   = Symbol (),
@@ -124,12 +124,11 @@ function X3DBrowserContext (element)
    this [_changedTime]     = 0;
    this [_previousTime]    = 0;
    this [_renderCallback]  = this [_traverse] .bind (this);
-   this [_systemTime]      = 0;
-   this [_systemStartTime] = 0;
-   this [_browserTime]     = 0;
-   this [_cameraTime]      = 0;
-   this [_collisionTime]   = 0;
-   this [_displayTime]     = 0;
+   this [_systemTime]      = new StopWatch ();
+   this [_browserTime]     = new StopWatch ();
+   this [_cameraTime]      = new StopWatch ();
+   this [_collisionTime]   = new StopWatch ();
+   this [_displayTime]     = new StopWatch ();
 };
 
 X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -259,10 +258,11 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
 
       // Start rendering.
 
+      this [_systemTime] .stop ();
+      this [_browserTime] .start ();
+
       const gl = this .getContext ();
 
-      const t0 = Date .now ();
-      this [_systemTime] = t0 - this [_systemStartTime];
       this .advanceTime ();
 
       this ._prepareEvents .processInterests ();
@@ -271,30 +271,30 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       this ._timeEvents .processInterests ();
       this [_processEvents] ();
 
-      const t1 = Date .now ();
+      this [_cameraTime] .start ();
       this [_world] .traverse (TraverseType .CAMERA, null);
-      this [_cameraTime] = Date .now () - t1;
+      this [_cameraTime] .stop ();
 
-      const t2 = Date .now ();
+      this [_collisionTime] .start ();
       if (this .getCollisionCount ())
          this [_world] .traverse (TraverseType .COLLISION, null);
-      this [_collisionTime] = Date .now () - t2;
+      this [_collisionTime] .stop ();
 
       this ._sensorEvents .processInterests ();
       this [_processEvents] ();
 
-      const t3 = Date .now ();
+      this [_displayTime] .start ()
       this .getFrameBuffer () .bind ();
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
       this [_world] .traverse (TraverseType .DISPLAY, null);
       this .getFrameBuffer () .blit ();
-      this [_displayTime] = Date .now () - t3;
-
-      this [_browserTime]     = Date .now () - t0;
-      this [_systemStartTime] = Date .now ();
+      this [_displayTime] .stop ();
 
       this ._finished .processInterests ();
+
+      this [_browserTime] .stop ();
+      this [_systemTime] .start ();
    },
    getSystemTime: function ()
    {
