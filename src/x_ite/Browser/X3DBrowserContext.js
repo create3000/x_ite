@@ -256,14 +256,16 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       if (this [_limitFrameRate] (now))
          return;
 
-      // Start rendering.
+      // Start
 
       this [_systemTime] .stop ();
       this [_browserTime] .start ();
 
-      const gl = this .getContext ();
+      // time
 
       this .advanceTime ();
+
+      // Events
 
       this ._prepareEvents .processInterests ();
       this [_processEvents] ();
@@ -271,25 +273,44 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       this ._timeEvents .processInterests ();
       this [_processEvents] ();
 
+      // Camera
+
       this [_cameraTime] .start ();
       this [_world] .traverse (TraverseType .CAMERA, null);
       this [_cameraTime] .stop ();
 
+      // Collision
+
       this [_collisionTime] .start ();
+
       if (this .getCollisionCount ())
          this [_world] .traverse (TraverseType .COLLISION, null);
+
       this [_collisionTime] .stop ();
+
+      // Events
 
       this ._sensorEvents .processInterests ();
       this [_processEvents] ();
 
+      // Display
+
       this [_displayTime] .start ()
+
+      const gl = this .getContext ();
+
       this .getFrameBuffer () .bind ();
+
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
+
       this [_world] .traverse (TraverseType .DISPLAY, null);
+
       this .getFrameBuffer () .blit ();
+
       this [_displayTime] .stop ();
+
+      // Finish
 
       this ._finished .processInterests ();
 
