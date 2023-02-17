@@ -130,7 +130,7 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
       if (!this .isPointerInRectangle (x, y))
          return;
-         
+
       switch (event .button)
       {
          case 0:
@@ -226,7 +226,13 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
       return function (event)
       {
+         const [x, y] = this .getPointer (event);
+
+         if (!this .isPointerInRectangle (x, y))
+            return;
+
          // Stop event propagation.
+
          event .preventDefault ();
          event .stopImmediatePropagation ();
 
@@ -236,8 +242,8 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
          viewpoint .transitionStop ();
 
-         step        = this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
-         translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
+         this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
+         viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
 
          if (event .deltaY > 0)
             this .addMove (translation .negate (), Vector3 .Zero);

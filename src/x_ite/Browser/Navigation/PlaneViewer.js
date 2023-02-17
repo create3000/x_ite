@@ -100,7 +100,7 @@ PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
       if (!this .isPointerInRectangle (x, y))
          return;
-         
+
       switch (this .getButton (event .button))
       {
          case 1:
@@ -175,12 +175,15 @@ PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
    },
    mousewheel: function (event)
    {
+      const [x, y] = this .getPointer (event);
+
+      if (!this .isPointerInRectangle (x, y))
+         return;
+
       // Stop event propagation.
 
       event .preventDefault ();
       event .stopImmediatePropagation ();
-
-      const [x, y] = this .getPointer (event);
 
       // Change viewpoint position.
 
