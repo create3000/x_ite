@@ -160,55 +160,33 @@ Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
          this .traverse = Function .prototype;
       }
 
-      this .set_transformSensors__ ();
       this .set_visible__ ();
       this .set_bboxDisplay__ ();
    },
    set_cameraObject__: function ()
    {
-      if (this .childNode && this .childNode .getCameraObject ())
-      {
-         if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
-         {
-            this .setCameraObject (this .childNode ._visible .getValue ());
-         }
-         else
-         {
-            this .setCameraObject (true);
-         }
-      }
-      else
-      {
-         this .setCameraObject (false);
-      }
+      this .setCameraObject (!!(this .visibleNode && this .visibleNode .getCameraObject ()));
    },
    set_transformSensors__: function ()
    {
-      this .setPickableObject (Boolean (this .getTransformSensors () .size || this .childNode && this .childNode .getPickableObject ()));
+      this .setPickableObject (!!(this .getTransformSensors () .size || this .visibleNode && this .visibleNode .getPickableObject ()));
    },
    set_visible__: function ()
    {
       if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
-      {
          this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
-      }
       else
-      {
          this .visibleNode = this .childNode;
-      }
 
       this .set_cameraObject__ ();
+      this .set_transformSensors__ ();
    },
    set_bboxDisplay__: function ()
    {
       if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
-      {
          this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
-      }
       else
-      {
          this .boundedObject = null;
-      }
    },
    traverse: function (type, renderObject)
    {
@@ -235,9 +213,9 @@ Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
                   transformSensorNode .collect (modelMatrix);
             }
 
-            const childNode = this .childNode;
+            const visibleNode = this .visibleNode;
 
-            if (childNode)
+            if (visibleNode)
             {
                const
                   browser          = this .getBrowser (),
@@ -245,7 +223,7 @@ Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 
                pickingHierarchy .push (this);
 
-               childNode .traverse (type, renderObject);
+               visibleNode .traverse (type, renderObject);
 
                pickingHierarchy .pop ();
             }
@@ -254,10 +232,10 @@ Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
          }
          case TraverseType .COLLISION:
          {
-            const childNode = this .childNode;
+            const visibleNode = this .visibleNode;
 
-            if (childNode)
-               childNode .traverse (type, renderObject);
+            if (visibleNode)
+               visibleNode .traverse (type, renderObject);
 
             return;
          }

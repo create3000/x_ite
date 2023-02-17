@@ -32,6 +32,32 @@ The Shape node belongs to the **Shape** component and its default container fiel
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFBool [ ] **visible** TRUE
+
+Whether or not renderable content within this node is visually displayed.
+
+#### Hint
+
+- The visible field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be visible to be collidable and to be pickable.
+
+### SFBool [ ] **castShadow** TRUE
+
+*castShadow* defines whether this Shape casts shadows as produced by lighting nodes.
+
+#### Hint
+
+- If the visible field is FALSE, then the Shape does not cast any shadows.
+- If prior X3D3 content is loaded into an X3D4 model, then legacy Shape nodes have shadows set to true.
+
+### SFBool [ ] **bboxDisplay** FALSE
+
+Whether to display bounding box for associated geometry, aligned with world coordinates.
+
+#### Hint
+
+- The bounding box is displayed regardless of whether contained content is visible.
+
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.

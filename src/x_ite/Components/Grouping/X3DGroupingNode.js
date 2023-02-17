@@ -450,7 +450,6 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
          }
       }
 
-      this .set_pickableObjects__ ();
       this .set_displayNodes__ ();
       this .set_visibles__ ();
       this .set_bboxDisplays__ ();
@@ -496,7 +495,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
             pickableSensorNodes .push (sensorNode);
       }
 
-      for (const childNode of this .childNodes)
+      for (const childNode of this .visibleNodes)
       {
          if (childNode .getPickableObject ())
             pickableObjects .push (childNode);
@@ -528,20 +527,16 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
    },
    set_visibles__: function ()
    {
-      const
-         childNodes   = this .childNodes,
-         visibleNodes = this .visibleNodes;
+      const visibleNodes = this .visibleNodes;
 
       visibleNodes .length = 0;
 
-      for (const childNode of childNodes)
+      for (const childNode of this .childNodes)
       {
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
             if (childNode ._visible .getValue ())
-            {
                visibleNodes .push (childNode);
-            }
          }
          else
          {
@@ -550,6 +545,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
       }
 
       this .set_cameraObjects__ ();
+      this .set_pickableObjects__ ();
    },
    set_bboxDisplays__: function ()
    {
@@ -593,8 +589,8 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .push (renderObject);
 
-            for (const childNode of this .childNodes)
-               childNode .traverse (type, renderObject);
+            for (const visibleNode of this .visibleNodes)
+               visibleNode .traverse (type, renderObject);
 
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .pop (renderObject);
@@ -632,8 +628,8 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
 
             if (browser .getPickable () .at (-1))
             {
-               for (const childNode of this .childNodes)
-                  childNode .traverse (type, renderObject);
+               for (const visibleNode of this .visibleNodes)
+                  visibleNode .traverse (type, renderObject);
             }
             else
             {
@@ -651,8 +647,8 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .push (renderObject);
 
-            for (const childNode of this .childNodes)
-               childNode .traverse (type, renderObject);
+            for (const visibleNode of this .visibleNodes)
+               visibleNode .traverse (type, renderObject);
 
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .pop (renderObject);

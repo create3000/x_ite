@@ -222,38 +222,23 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
    },
    set_cameraObject__: function ()
    {
-      if (this .shapeNode && this .shapeNode .getCameraObject ())
-      {
-         this .setCameraObject (this .shapeNode ._visible .getValue ());
-      }
-      else
-      {
-         this .setCameraObject (false);
-      }
+      this .setCameraObject (!!(this .visibleNode && this .visibleNode .getCameraObject ()));
    },
    set_visible__: function ()
    {
       if (this .shapeNode)
-      {
          this .visibleNode = this .shapeNode ._visible .getValue () ? this .shapeNode : null;
-      }
       else
-      {
          this .visibleNode = this .shapeNode;
-      }
 
       this .set_cameraObject__ ();
    },
    set_bboxDisplay__: function ()
    {
       if (this .shapeNode)
-      {
          this .boundedObject = this .shapeNode ._bboxDisplay .getValue () ? this .shapeNode : null;
-      }
       else
-      {
          this .boundedObject = null;
-      }
    },
    set_geometry__: function ()
    {
@@ -462,7 +447,10 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
             modelViewMatrix .push ();
             modelViewMatrix .multLeft (this .getMatrix ());
 
-            this .shapeNode .traverse (type, renderObject);
+            const visibleNode = this .visibleNode;
+
+            if (visibleNode)
+               visibleNode .traverse (type, renderObject);
 
             modelViewMatrix .pop ();
             pickingHierarchy .pop ();
@@ -475,7 +463,10 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
             modelViewMatrix .push ();
             modelViewMatrix .multLeft (this .getMatrix ());
 
-            this .shapeNode .traverse (type, renderObject);
+            const visibleNode = this .visibleNode;
+
+            if (visibleNode)
+               visibleNode .traverse (type, renderObject);
 
             modelViewMatrix .pop ();
             return;
