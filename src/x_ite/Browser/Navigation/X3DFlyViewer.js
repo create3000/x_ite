@@ -142,6 +142,9 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
       const [x, y] = this .getPointer (event);
 
+      if (!this .isPointerInRectangle (x, y))
+         return;
+         
       switch (this .getButton (event .button))
       {
          case 0:

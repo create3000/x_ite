@@ -47,6 +47,7 @@
 
 import X3DBaseNode    from "../../Base/X3DBaseNode.js";
 import OrthoViewpoint from "../../Components/Navigation/OrthoViewpoint.js";
+import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3           from "../../../standard/Math/Geometry/Box3.js";
@@ -74,7 +75,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    },
    getViewport: function ()
    {
-      return this .getBrowser () .getActiveLayer () .getViewport ();
+      return this .getBrowser () .getActiveLayer () .getViewport () .getRectangle ();
    },
    getNavigationInfo: function ()
    {
@@ -112,6 +113,19 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       return [x, y];
    },
+   isPointerInRectangle: (function ()
+   {
+      const pointer = new Vector2 (0, 0);
+
+      return function (x, y)
+      {
+         const
+            browser   = this .getBrowser (),
+            rectangle = this .getViewport ();
+
+         return browser .isPointerInRectangle (rectangle, pointer .set (x, y));
+      };
+   })(),
    getPointOnCenterPlane: (function ()
    {
       const
@@ -124,7 +138,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          const
             navigationInfo   = this .getNavigationInfo (),
             viewpoint        = this .getActiveViewpoint (),
-            viewport         = this .getViewport () .getRectangle (),
+            viewport         = this .getViewport (),
             projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
 
          // Far plane point
@@ -149,7 +163,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    },
    trackballProjectToSphere: function (x, y, vector)
    {
-      const viewport = this .getViewport () .getRectangle ();
+      const viewport = this .getViewport ();
 
       x = (x - viewport [0]) / viewport [2] - 0.5;
       y = (y - viewport [1]) / viewport [3] - 0.5;

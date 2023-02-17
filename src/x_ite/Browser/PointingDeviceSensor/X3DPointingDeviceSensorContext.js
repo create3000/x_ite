@@ -143,12 +143,12 @@ X3DPointingDeviceSensorContext .prototype =
    {
       return this [_pointer];
    },
-   isPointerInRectangle: function (rectangle)
+   isPointerInRectangle: function (rectangle, pointer = this [_pointer])
    {
-      return this [_pointer] .x > rectangle .x &&
-             this [_pointer] .x < rectangle .x + rectangle .z &&
-             this [_pointer] .y > rectangle .y &&
-             this [_pointer] .y < rectangle .y + rectangle .w;
+      return pointer .x > rectangle .x &&
+             pointer .x < rectangle .x + rectangle .z &&
+             pointer .y > rectangle .y &&
+             pointer .y < rectangle .y + rectangle .w;
    },
    getActivePickLayer: function ()
    {
