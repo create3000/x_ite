@@ -404,48 +404,33 @@ CADFace .prototype = Object .assign (Object .create (CADGeometry_X3DProductStruc
          this .traverse = Function .prototype;
       }
 
-      this .set_transformSensors__ ();
       this .set_visible__ ();
       this .set_bboxDisplay__ ();
    },
    set_cameraObject__: function ()
    {
-      if (this .childNode && this .childNode .getCameraObject ())
-      {
-         this .setCameraObject (this .childNode ._visible .getValue ());
-      }
-      else
-      {
-         this .setCameraObject (false);
-      }
+      this .setCameraObject (!!(this .visibleNode && this .visibleNode .getCameraObject ()));
    },
    set_transformSensors__: function ()
    {
-      this .setPickableObject (Boolean (this .childNode && this .childNode .getPickableObject ()));
+      this .setPickableObject (!!(this .visibleNode && this .visibleNode .getPickableObject ()));
    },
    set_visible__: function ()
    {
       if (this .childNode)
-      {
          this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
-      }
       else
-      {
          this .visibleNode = null;
-      }
 
       this .set_cameraObject__ ();
+      this .set_transformSensors__ ();
    },
    set_bboxDisplay__: function ()
    {
       if (this .childNode)
-      {
          this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
-      }
       else
-      {
          this .boundedObject = null;
-      }
    },
    traverse: function (type, renderObject)
    {
@@ -470,14 +455,20 @@ CADFace .prototype = Object .assign (Object .create (CADGeometry_X3DProductStruc
 
             pickingHierarchy .push (this);
 
-            this .childNode .traverse (type, renderObject);
+            const visibleNode = this .visibleNode;
+
+            if (visibleNode)
+               visibleNode .traverse (type, renderObject);
 
             pickingHierarchy .pop ();
             return;
          }
          case (TraverseType_default()).COLLISION:
          {
-            this .childNode .traverse (type, renderObject);
+            const visibleNode = this .visibleNode;
+
+            if (visibleNode)
+               visibleNode .traverse (type, renderObject);
             return;
          }
          case (TraverseType_default()).DISPLAY:

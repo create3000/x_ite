@@ -2636,8 +2636,8 @@ GeoMetadata .prototype = Object .assign (Object .create ((X3DInfoNode_default())
    constructor: GeoMetadata,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",             new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "url",                  new (Fields_default()).MFString ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "load",                 new (Fields_default()).SFBool (true)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "url",                  new (Fields_default()).MFString ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefresh",          new (Fields_default()).SFTime ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "summary",              new (Fields_default()).MFString ()),
@@ -3468,7 +3468,7 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fieldOfView",       new (Fields_default()).SFFloat (0.7854)),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "nearDistance",      new (Fields_default()).SFFloat (-1)),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "farDistance",       new (Fields_default()).SFFloat (-1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "viewAll",           new (Fields_default()).SFBool (false)),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "viewAll",           new (Fields_default()).SFBool ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "jump",              new (Fields_default()).SFBool (true)),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "retainUserOffsets", new (Fields_default()).SFBool ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "navType",           new (Fields_default()).MFString ("EXAMINE", "ANY")),

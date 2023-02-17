@@ -956,38 +956,23 @@ CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X
    },
    set_cameraObject__: function ()
    {
-      if (this .collidableNode && this .collidableNode .getCameraObject ())
-      {
-         this .setCameraObject (this .collidableNode ._visible .getValue ());
-      }
-      else
-      {
-         this .setCameraObject (false);
-      }
+      this .setCameraObject (!!(this .visibleNode && this .visibleNode .getCameraObject ()));
    },
    set_visible__: function ()
    {
       if (this .collidableNode)
-      {
          this .visibleNode = this .collidableNode ._visible .getValue () ? this .collidableNode : null;
-      }
       else
-      {
          this .visibleNode = this .collidableNode;
-      }
 
       this .set_cameraObject__ ();
    },
    set_bboxDisplay__: function ()
    {
       if (this .collidableNode)
-      {
          this .boundedObject = this .collidableNode ._bboxDisplay .getValue () ? this .collidableNode : null;
-      }
       else
-      {
          this .boundedObject = null;
-      }
    },
    set_collidableGeometry__: function ()
    {
@@ -1031,7 +1016,10 @@ CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X
             modelViewMatrix .push ();
             modelViewMatrix .multLeft (this .getMatrix ());
 
-            this .collidableNode .traverse (type, renderObject);
+            const visibleNode = this .visibleNode;
+
+            if (visibleNode)
+               visibleNode .traverse (type, renderObject);
 
             modelViewMatrix .pop ();
             pickingHierarchy .pop ();
@@ -1044,7 +1032,10 @@ CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X
             modelViewMatrix .push ();
             modelViewMatrix .multLeft (this .getMatrix ());
 
-            this .collidableNode .traverse (type, renderObject);
+            const visibleNode = this .visibleNode;
+
+            if (visibleNode)
+               visibleNode .traverse (type, renderObject);
 
             modelViewMatrix .pop ();
             break;
@@ -1303,38 +1294,23 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
    },
    set_cameraObject__: function ()
    {
-      if (this .shapeNode && this .shapeNode .getCameraObject ())
-      {
-         this .setCameraObject (this .shapeNode ._visible .getValue ());
-      }
-      else
-      {
-         this .setCameraObject (false);
-      }
+      this .setCameraObject (!!(this .visibleNode && this .visibleNode .getCameraObject ()));
    },
    set_visible__: function ()
    {
       if (this .shapeNode)
-      {
          this .visibleNode = this .shapeNode ._visible .getValue () ? this .shapeNode : null;
-      }
       else
-      {
          this .visibleNode = this .shapeNode;
-      }
 
       this .set_cameraObject__ ();
    },
    set_bboxDisplay__: function ()
    {
       if (this .shapeNode)
-      {
          this .boundedObject = this .shapeNode ._bboxDisplay .getValue () ? this .shapeNode : null;
-      }
       else
-      {
          this .boundedObject = null;
-      }
    },
    set_geometry__: function ()
    {
@@ -1543,7 +1519,10 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
             modelViewMatrix .push ();
             modelViewMatrix .multLeft (this .getMatrix ());
 
-            this .shapeNode .traverse (type, renderObject);
+            const visibleNode = this .visibleNode;
+
+            if (visibleNode)
+               visibleNode .traverse (type, renderObject);
 
             modelViewMatrix .pop ();
             pickingHierarchy .pop ();
@@ -1556,7 +1535,10 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
             modelViewMatrix .push ();
             modelViewMatrix .multLeft (this .getMatrix ());
 
-            this .shapeNode .traverse (type, renderObject);
+            const visibleNode = this .visibleNode;
+
+            if (visibleNode)
+               visibleNode .traverse (type, renderObject);
 
             modelViewMatrix .pop ();
             return;

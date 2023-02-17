@@ -118,6 +118,9 @@ function DISEntityManager (executionContext)
    X3DChildNode_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).DISEntityManager);
+
+   if (executionContext .getSpecificationVersion () < 4)
+      this .addAlias ("mapping", this ._children);
 }
 
 DISEntityManager .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
@@ -127,7 +130,7 @@ DISEntityManager .prototype = Object .assign (Object .create ((X3DChildNode_defa
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "address",         new (Fields_default()).SFString ("localhost")),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "applicationID",   new (Fields_default()).SFInt32 (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mapping",         new (Fields_default()).MFNode ()),
+      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "children",        new (Fields_default()).MFNode ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "port",            new (Fields_default()).SFInt32 ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "siteID",          new (Fields_default()).SFInt32 ()),
       new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "addedEntities",   new (Fields_default()).MFNode ()),
