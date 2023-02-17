@@ -75,14 +75,6 @@ function XMLParser (scene)
    this .url               = new Fields .MFString ();
    this .protoNames        = new Map ();
    this .protoFields       = new WeakMap ();
-
-   try
-   {
-      this .setUnits (this .getScene () .getMetaData ("generator"));
-      this .parser .setUnits (this .getUnits ());
-   }
-   catch (error)
-   { }
 }
 
 XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -316,14 +308,6 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       for (var i = 0; i < childNodes .length; ++ i)
          this .headElementChild (childNodes [i]);
-
-      try
-      {
-         this .setUnits (this .getScene () .getMetaData ("generator"));
-         this .parser .setUnits (this .getUnits ());
-      }
-      catch (error)
-      { }
    },
    headElementChild: function (xmlElement)
    {

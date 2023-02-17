@@ -356,13 +356,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .unitStatements ();
       this .metaStatements ();
 
-      try
-      {
-         this .setUnits (this .getScene () .getMetaData ("generator"));
-      }
-      catch (error)
-      { }
-
       if (this .success)
       {
          this .loadComponents () .then (() =>

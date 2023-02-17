@@ -50,7 +50,6 @@ function X3DParser (scene)
    this .scene             = scene;
    this .executionContexts = [ scene ];
    this .prototypes        = [ ];
-   this .units             = true;
 }
 
 X3DParser .prototype = {
@@ -129,41 +128,16 @@ X3DParser .prototype = {
          ]);
       };
    })(),
-   setUnits: function (generator)
+   setUnits: function (units)
    {
-      if (typeof arguments [0] == "boolean")
-      {
-         this .units = arguments [0];
-         return;
-      }
-
-      const match = String (generator) .match (/Titania\s+V(\d+).*/);
-
-      if (match)
-      {
-         const major = parseInt (match [1]);
-
-         // Before version 4 units are wrongly implemented.
-         if (major < 4)
-         {
-            console .warn ("Wrong unit statement, ignoring.");
-            this .units = false;
-            return;
-         }
-      }
-
-      this .units = true;
-   },
-   getUnits: function ()
-   {
-      return this .units;
+      if (units)
+         delete this .fromUnit;
+      else
+         this .fromUnit = function (category, value) { return value; };
    },
    fromUnit: function (category, value)
    {
-      if (this .units)
-         return this .scene .fromUnit (category, value);
-
-      return value;
+      return this .scene .fromUnit (category, value);
    },
    convertColor: function (value)
    {
