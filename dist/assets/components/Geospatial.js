@@ -1672,7 +1672,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
    },
    set_transparent__: function ()
    {
-      this .setTransparent (this .colorNode .getTransparent ());
+      this .setTransparent (this .colorNode .isTransparent ());
    },
    set_texCoord__: function ()
    {
@@ -3597,7 +3597,7 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
    })(),
    getMaxFarValue: function ()
    {
-      return 1e10;
+      return 1e9;
    },
    getUpVector: (function ()
    {

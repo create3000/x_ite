@@ -3076,16 +3076,16 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
             }
             default:
             {
-               this .setTransparent (this .getAppearance () .getTransparent () ||
-                                     (this .colorRampNode && this .colorRampNode .getTransparent ()) ||
-                                     (this .geometryType === ParticleSystems_GeometryTypes.GEOMETRY && this .geometryNode && this .geometryNode .getTransparent ()));
+               this .setTransparent (this .getAppearance () .isTransparent () ||
+                                     (this .colorRampNode && this .colorRampNode .isTransparent ()) ||
+                                     (this .geometryType === ParticleSystems_GeometryTypes.GEOMETRY && this .geometryNode && this .geometryNode .isTransparent ()));
                break;
             }
          }
       }
       else
       {
-         this .setTransparent (this .getAppearance () .getTransparent ());
+         this .setTransparent (this .getAppearance () .isTransparent ());
       }
    },
    set_live__: function ()

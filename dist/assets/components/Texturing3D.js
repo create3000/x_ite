@@ -1,7 +1,7 @@
 /* X_ITE v8.6.0a */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 155:
+/***/ 369:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 73:
+/***/ 83:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 299:
+/***/ 339:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2022-12-05 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 749:
+/***/ 306:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 609:
+/***/ 120:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=undefined;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=undefined;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
@@ -7187,14 +7187,6 @@ X3DTexture3DNode .prototype = Object .assign (Object .create ((X3DSingleTextureN
    {
       return this .depth;
    },
-   getFlipY: function ()
-   {
-      return false;
-   },
-   getData: function ()
-   {
-      return this .data;
-   },
    clearTexture: function ()
    {
       const gl = this .getBrowser () .getContext ();
@@ -7313,7 +7305,8 @@ function ComposedTexture3D (executionContext)
 
    this .addType ((X3DConstants_default()).ComposedTexture3D);
 
-   this .addChildObjects ("loadState", new (Fields_default()).SFInt32 ((X3DConstants_default()).NOT_STARTED_STATE));
+   this .addChildObjects ("loadState", new (Fields_default()).SFInt32 ((X3DConstants_default()).NOT_STARTED_STATE),
+                          "update",    new (Fields_default()).SFTime ());
 
    this .textureNodes = [ ];
 }
@@ -7346,7 +7339,12 @@ ComposedTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTe
    {
       Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
 
+      const gl = this .getBrowser () .getContext ();
+
+      this .frameBuffer = gl .createFramebuffer ();
+
       this ._texture .addInterest ("set_texture__", this);
+      this ._update  .addInterest ("update",        this);
 
       this .set_texture__ ();
    },
@@ -7359,7 +7357,7 @@ ComposedTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTe
       const textureNodes = this .textureNodes;
 
       for (const textureNode of textureNodes)
-         textureNode .removeInterest ("update", this);
+         textureNode .removeInterest ("set_update__", this);
 
       textureNodes .length = 0;
 
@@ -7372,17 +7370,23 @@ ComposedTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTe
       }
 
       for (const textureNode of textureNodes)
-         textureNode .addInterest ("update", this);
+         textureNode .addInterest ("set_update__", this);
 
-      this .update ();
+      this .set_update__ ();
+   },
+   set_update__: function ()
+   {
+      this ._update .addEvent ();
+   },
+   isComplete: function ()
+   {
+      return this .textureNodes .every (textureNode => textureNode .checkLoadState () === (X3DConstants_default()).COMPLETE_STATE || textureNode .getWidth ());
    },
    update: function ()
    {
-      const
-         textureNodes = this .textureNodes,
-         complete     = textureNodes .every (function (textureNode) { return textureNode .checkLoadState () === (X3DConstants_default()).COMPLETE_STATE; });
+      const textureNodes = this .textureNodes
 
-      if (textureNodes .length === 0 || !complete)
+      if (textureNodes .length === 0 || !this .isComplete ())
       {
          this .clearTexture ();
 
@@ -7391,27 +7395,24 @@ ComposedTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTe
       else
       {
          const
-            gl           = this .getBrowser () .getContext (),
-            textureNode0 = textureNodes [0],
-            width        = textureNode0 .getWidth (),
-            height       = textureNode0 .getHeight (),
-            depth        = textureNodes .length,
-            size         = width * height * 4,
-            data         = new Uint8Array (size * depth);
+            gl         = this .getBrowser () .getContext (),
+            width      = textureNodes [0] .getWidth (),
+            height     = textureNodes [0] .getHeight (),
+            depth      = textureNodes .length,
+            lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
-         let transparent = 0;
+         gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
+         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
 
-         for (let i = 0, d = 0; i < depth; ++ i, d += size)
+         for (const [i, textureNode] of this .textureNodes .entries ())
          {
-            const
-               textureNode = this .textureNodes [i],
-               tData       = textureNode .getData ();
-
             if (textureNode .getWidth () === width && textureNode .getHeight () === height)
             {
-               transparent += textureNode .getTransparent ();
+               gl .bindTexture (gl .TEXTURE_2D, textureNode .getTexture ());
+               gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, textureNode .getTexture (), 0);
 
-               data .set (tData, d);
+               gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+               gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, 0, 0, width, height);
             }
             else
             {
@@ -7419,7 +7420,11 @@ ComposedTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTe
             }
          }
 
-         this .setTexture (width, height, depth, !!transparent, gl .RGBA, data);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
+
+         this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
+         this .updateTextureParameters ();
+
          this ._loadState = (X3DConstants_default()).COMPLETE_STATE;
       }
    },
@@ -7903,11 +7908,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().set ("x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(299);
-/* provided dependency */ var JpegImage = __webpack_require__(749);
-/* provided dependency */ var jpeg = __webpack_require__(609);
-/* provided dependency */ var CharLS = __webpack_require__(155);
-/* provided dependency */ var OpenJPEG = __webpack_require__(73);
+/* provided dependency */ var dicomParser = __webpack_require__(339);
+/* provided dependency */ var JpegImage = __webpack_require__(306);
+/* provided dependency */ var jpeg = __webpack_require__(120);
+/* provided dependency */ var CharLS = __webpack_require__(369);
+/* provided dependency */ var OpenJPEG = __webpack_require__(83);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

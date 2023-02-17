@@ -1347,7 +1347,7 @@ ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default
 {
    constructor: ScreenText,
    modelViewMatrix: new (Matrix4_default()) (),
-   getTransparent: function ()
+   isTransparent: function ()
    {
       return true;
    },
