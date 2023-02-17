@@ -167,7 +167,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
             activeLayer    = browser .getActiveLayer (),
             navigationTime = activeLayer && browser .getCollisionCount () ? activeLayer .getCollisionTime () .averageTime () : 0,
             collisionTime  = browser .getCollisionTime () .averageTime () + navigationTime,
-            routingTime    = browser .getBrowserTime () .averageTime () - (browser .getCameraTime () .averageTime () + browser .getCollisionTime () .averageTime () + browser .getDisplayTime () .averageTime ()),
+            routingTime    = Math .max (0, browser .getBrowserTime () .averageTime () - (browser .getCameraTime () .averageTime () + browser .getCollisionTime () .averageTime () + browser .getDisplayTime () .averageTime ())),
             prepareEvents  = browser .prepareEvents () .getInterests () .size - 1,
             sensors        = browser .sensorEvents () .getInterests () .size;
 
