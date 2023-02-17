@@ -80,7 +80,7 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
       new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .SFFloat (0.7854)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "nearDistance",      new Fields .SFFloat (-1)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "farDistance",       new Fields .SFFloat (-1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "viewAll",           new Fields .SFBool (false)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "viewAll",           new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "jump",              new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",           new Fields .SFBool ()),

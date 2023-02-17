@@ -42,6 +42,15 @@ Author-provided text tooltip that tells users the expected action of this node.
 
 - Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
 
+### SFBool [in, out] **load** TRUE
+
+*load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
+
+#### Hints
+
+- Allows author to design when ImageTextureAtlas loading occurs via user interaction, event chains or scripting.
+- Use a separate LoadSensor node to detect when loading is complete.
+
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
 Address of replacement world or #ViewpointDEFName, activated by clicking Anchor geometry.
@@ -65,6 +74,31 @@ If provided, parameter tells the X3D player where to to redirect the loaded url.
 #### Hints
 
 - Set parameter value as target=\_blank to load the target url into a new browser frame. Set parameter value as target=frame_name to load target url into another browser frame. MFString arrays can have multiple values, so separate each individual string by quote marks. "https://www.web3d.org" "https://www.web3d.org/about" "etc." Interchange profile hint: this field may be ignored, applying the default value regardless.
+
+### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
+
+*autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
+
+#### Hints
+
+- If preceding file loading fails or load field is false, no refresh is performed.
+- Repeated refresh attempts to reload currently loaded entry of url list. If that fails, the browser retries other entries in the url list.
+
+#### Warning
+
+- Automatically reloading content has security considerations and needs to be considered carefully.
+
+### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
+
+*autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
+
+#### Hint
+
+- Automatic refresh is different than query and response timeouts performed by a networking library while sequentially attempting to retrieve addressed content from a url list.
+
+#### Warning
+
+- Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFBool [ ] **visible** TRUE
 

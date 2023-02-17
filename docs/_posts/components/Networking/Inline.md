@@ -33,6 +33,14 @@ The Inline node belongs to the **Networking** component and its default containe
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFBool [in, out] **global** FALSE
+
+The global field controls potential external scoping effects of lights found within an Inline scene. Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+
+#### Hint
+
+- [X3D Architecture, 17.2.1.2 Scoping of lights](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#ScopingOfLights)
+
 ### SFBool [in, out] **load** TRUE
 
 *load*=true means load immediately, load=false means defer loading or else unload a previously loaded scene.

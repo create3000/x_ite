@@ -104,7 +104,7 @@ EnvironmentLight .prototype = Object .assign (Object .create (X3DLightNode .prot
    constructor: EnvironmentLight,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
       new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "global",              new Fields .SFBool (false)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "global",              new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "on",                  new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",            new Fields .SFRotation ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "color",               new Fields .SFColor (1, 1, 1)),

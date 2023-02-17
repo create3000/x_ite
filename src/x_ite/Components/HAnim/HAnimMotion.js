@@ -70,7 +70,7 @@ HAnimMotion .prototype = Object .assign (Object .create (X3DChildNode .prototype
       new X3DFieldDefinition (X3DConstants .inputOutput, "frameDuration",   new Fields .SFTime (0.1)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "frameIncrement",  new Fields .SFInt32 (1)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "frameIndex",      new Fields .SFInt32 (0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "loop",            new Fields .SFBool (false)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "loop",            new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "channels",        new Fields .SFString ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "channelsEnabled", new Fields .MFBool ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "joints",          new Fields .MFString ()),

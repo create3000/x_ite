@@ -40,6 +40,15 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
+### SFBool [in, out] **load** TRUE
+
+*load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
+
+#### Hints
+
+- Allows author to design when ImageTextureAtlas loading occurs via user interaction, event chains or scripting.
+- Use a separate LoadSensor node to detect when loading is complete.
+
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
 Location and filename of shader. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
@@ -55,6 +64,31 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 #### See Also
 
 - [X3D Scene Authoring Hints](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+
+### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
+
+*autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
+
+#### Hints
+
+- If preceding file loading fails or load field is false, no refresh is performed.
+- Repeated refresh attempts to reload currently loaded entry of url list. If that fails, the browser retries other entries in the url list.
+
+#### Warning
+
+- Automatically reloading content has security considerations and needs to be considered carefully.
+
+### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
+
+*autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
+
+#### Hint
+
+- Automatic refresh is different than query and response timeouts performed by a networking library while sequentially attempting to retrieve addressed content from a url list.
+
+#### Warning
+
+- Automatically reloading content has security considerations and needs to be considered carefully.
 
 ## Description
 
