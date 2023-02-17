@@ -40,9 +40,22 @@ Optional name for this particular CAD node.
 
 - Name is not included if this instance is a USE node.
 
-### MFBool [in, out] **visible** [ ]
+### SFBool [ ] **visible** TRUE
 
-Array of boolean values that specify whether each individual child CADAssembly is visible.
+Whether or not renderable content within this node is visually displayed.
+
+#### Hint
+
+- The visible field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be visible to be collidable and to be pickable.
+
+### SFBool [ ] **bboxDisplay** FALSE
+
+Whether to display bounding box for associated geometry, aligned with world coordinates.
+
+#### Hint
+
+- The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
 

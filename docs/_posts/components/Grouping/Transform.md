@@ -72,6 +72,23 @@ Translation offset from origin of local coordinate system, applied prior to rota
 
 - The order of operation is first apply the center offset, then scaleOrientation and scale, then rotation, then restore the center offset, then translation.
 
+### SFBool [ ] **visible** TRUE
+
+Whether or not renderable content within this node is visually displayed.
+
+#### Hint
+
+- The visible field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be visible to be collidable and to be pickable.
+
+### SFBool [ ] **bboxDisplay** FALSE
+
+Whether to display bounding box for associated geometry, aligned with world coordinates.
+
+#### Hint
+
+- The bounding box is displayed regardless of whether contained content is visible.
+
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
