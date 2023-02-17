@@ -33,29 +33,67 @@ The ComposedCubeMapTexture node belongs to the **CubeMapTexturing** component an
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of the url asset.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+
 ### SFNode [in, out] **front** NULL <small>[X3DTexture2DNode]</small>
 
-Input/Output field front.
+Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
+
+#### Warning
+
+- Each child image node must have a different containerField value.
+- Field originally named 'back' in X3Dv3. https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges
 
 ### SFNode [in, out] **back** NULL <small>[X3DTexture2DNode]</small>
 
-Input/Output field back.
+Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
+
+#### Warning
+
+- Each child image node must have a different containerField value.
+- Field originally named 'back' in X3Dv3. https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges
 
 ### SFNode [in, out] **left** NULL <small>[X3DTexture2DNode]</small>
 
-Input/Output field left.
+Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
+
+#### Warning
+
+- Each child image node must have a different containerField value.
+- Field originally named 'back' in X3Dv3. https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges
 
 ### SFNode [in, out] **right** NULL <small>[X3DTexture2DNode]</small>
 
-Input/Output field right.
+Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
+
+#### Warning
+
+- Each child image node must have a different containerField value.
+- Field originally named 'back' in X3Dv3. https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges
 
 ### SFNode [in, out] **top** NULL <small>[X3DTexture2DNode]</small>
 
-Input/Output field top.
+Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
+
+#### Warning
+
+- Each child image node must have a different containerField value.
+- Field originally named 'back' in X3Dv3. https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges
 
 ### SFNode [in, out] **bottom** NULL <small>[X3DTexture2DNode]</small>
 
-Input/Output field bottom.
+Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
+
+#### Warning
+
+- Each child image node must have a different containerField value.
+- Field originally named 'back' in X3Dv3. https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges
 
 ## Description
 

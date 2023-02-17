@@ -33,6 +33,14 @@ The Inline node belongs to the **Networking** component and its default containe
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of the url asset.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+
 ### SFBool [in, out] **global** FALSE
 
 The global field controls potential external scoping effects of lights found within an Inline scene. Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.

@@ -33,6 +33,14 @@ The GeneratedCubeMapTexture node belongs to the **CubeMapTexturing** component a
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of the url asset.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+
 ### SFString [in, out] **update** "NONE" <small>["NONE"|"NEXT_FRAME_ONLY"|"ALWAYS"]</small>
 
 *update* controls regeneration of the texture.

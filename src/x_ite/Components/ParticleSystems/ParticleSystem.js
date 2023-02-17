@@ -106,6 +106,12 @@ function ParticleSystem (executionContext)
 
    this ._particleSize .setUnit ("length");
 
+   if (executionContext .getSpecificationVersion () < 4)
+   {
+      this .addAlias ("colorRamp",    this ._color);
+      this .addAlias ("texCoordRamp", this ._texCoord);
+   }
+
    const browser = this .getBrowser ();
 
    this .maxParticles             = 0;
@@ -144,9 +150,9 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       new X3DFieldDefinition (X3DConstants .initializeOnly, "emitter",           new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "physics",           new Fields .MFNode ()),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "colorKey",          new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorRamp",         new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "color",             new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoordKey",       new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoordRamp",      new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoord",          new Fields .SFNode ()),
       new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",          new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",        new Fields .SFBool (true)),

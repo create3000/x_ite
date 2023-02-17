@@ -58,11 +58,12 @@ function LoadSensor (executionContext)
 
    this .addType (X3DConstants .LoadSensor);
 
+   if (executionContext .getSpecificationVersion () < 4)
+      this .addAlias ("watchList", this ._children);
+      
    this .urlObjects = [ ];
    this .aborted    = false;
    this .timeOutId  = undefined;
-
-   this .addAlias ("watchList", this ._children);
 }
 
 LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .prototype),

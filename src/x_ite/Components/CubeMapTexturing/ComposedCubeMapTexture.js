@@ -59,12 +59,15 @@ function ComposedCubeMapTexture (executionContext)
 
    this .addType (X3DConstants .ComposedCubeMapTexture);
 
-   this .addAlias ("front",  this ._frontTexture);
-   this .addAlias ("back",   this ._backTexture);
-   this .addAlias ("left",   this ._leftTexture);
-   this .addAlias ("right",  this ._rightTexture);
-   this .addAlias ("bottom", this ._bottomTexture);
-   this .addAlias ("top",    this ._topTexture);
+   if (executionContext .getSpecificationVersion () < 4)
+   {
+      this .addAlias ("front",  this ._frontTexture);
+      this .addAlias ("back",   this ._backTexture);
+      this .addAlias ("left",   this ._leftTexture);
+      this .addAlias ("right",  this ._rightTexture);
+      this .addAlias ("bottom", this ._bottomTexture);
+      this .addAlias ("top",    this ._topTexture);
+   }
 
    this .addChildObjects ("update", new Fields .SFTime ());
 

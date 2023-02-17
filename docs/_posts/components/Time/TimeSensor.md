@@ -34,6 +34,14 @@ The TimeSensor node belongs to the **Time** component and its default container 
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of the url asset.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+
 ### SFBool [in, out] **enabled** TRUE
 
 Enables/disables node operation.
