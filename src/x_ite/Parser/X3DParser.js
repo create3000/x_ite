@@ -137,9 +137,7 @@ X3DParser .prototype = {
          return;
       }
 
-      const
-         version = /Titania\s+V(\d+).*/,
-         match   = generator .match (version);
+      const match = String (generator) .match (/Titania\s+V(\d+).*/);
 
       if (match)
       {
@@ -148,6 +146,7 @@ X3DParser .prototype = {
          // Before version 4 units are wrongly implemented.
          if (major < 4)
          {
+            console .warn ("Wrong unit statement, ignoring.");
             this .units = false;
             return;
          }
