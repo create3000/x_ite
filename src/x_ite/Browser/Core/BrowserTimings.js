@@ -186,7 +186,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser")   + ":")) .append ($("<td></td>") .text (f2(browser .getSystemTime () .averageTime ())           .toLocaleString (language, fixed) + " " + _("ms")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D total")       + ":")) .append ($("<td></td>") .text (f2(browser .getBrowserTime () .averageTime ()) .toLocaleString (language, fixed) + " " + _("ms")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Event Processing")   + ":")) .append ($("<td></td>") .text (f2(routingTime)          .toLocaleString (language, fixed) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Pointer")   + ":")) .append ($("<td></td>") .text (f2(browser .getPointerTime () .averageTime ()) .toLocaleString (language, fixed) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Pointer")   + ":")) .append ($("<td></td>") .text (f2(browser .getPointingTime () .averageTime ()) .toLocaleString (language, fixed) + " " + _("ms")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Camera")    + ":")) .append ($("<td></td>") .text (f2(browser .getCameraTime () .averageTime ())  .toLocaleString (language, fixed) + " " + _("ms")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Picking")   + ":")) .append ($("<td></td>") .text (f2(browser .getPickingTime () .averageTime ()) .toLocaleString (language, fixed) + " " + _("ms")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Collision Detection") + ":")) .append ($("<td></td>") .text (f2(collisionTime)        .toLocaleString (language, fixed) + " " + _("ms")));
@@ -196,7 +196,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
          browser .getSystemTime ()    .reset ();
          browser .getBrowserTime ()   .reset ();
-         browser .getPointerTime ()   .reset ();
+         browser .getPointingTime ()   .reset ();
          browser .getCameraTime ()    .reset ();
          browser .getPickingTime ()   .reset ();
          browser .getCollisionTime () .reset ();

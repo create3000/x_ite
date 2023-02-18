@@ -298,9 +298,9 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
          browser  = this .getBrowser (),
          viewport = this .currentViewport .getRectangle ();
 
-      if (browser .getActivePickLayer ())
+      if (browser .getPointingLayer ())
       {
-         if (browser .getActivePickLayer () !== this)
+         if (browser .getPointingLayer () !== this)
             return;
       }
       else

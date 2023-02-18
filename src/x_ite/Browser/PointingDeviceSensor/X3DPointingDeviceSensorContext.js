@@ -61,8 +61,8 @@ const
    _hit              = Symbol (),
    _overSensors      = Symbol (),
    _activeSensors    = Symbol (),
-   _activeLayer      = Symbol (),
-   _pointerTime      = Symbol (),
+   _pointingLayer    = Symbol (),
+   _pointingTime     = Symbol (),
    _pointingBuffer   = Symbol (),
    _pointingShaders  = Symbol (),
    _id               = Symbol (),
@@ -74,8 +74,8 @@ function X3DPointingDeviceSensorContext ()
    this [_pointer]          = new Vector2 (0, 0);
    this [_overSensors]      = [ ];
    this [_activeSensors]    = [ ];
-   this [_activeLayer]      = null;
-   this [_pointerTime]      = new StopWatch ();
+   this [_pointingLayer]    = null;
+   this [_pointingTime]     = new StopWatch ();
    this [_pointingBuffer]   = new PointingBuffer (this);
    this [_pointingShaders]  = new Map ();
    this [_pointingContexts] = [ ];
@@ -98,13 +98,16 @@ X3DPointingDeviceSensorContext .prototype =
 {
    initialize: function ()
    {
+      // Preload shaders.
+      // this .initialized () .addInterest ("touch", this, 1, 1);
+
       this .setCursor ("DEFAULT");
 
       this [_pointingDevice] .setup ();
    },
-   getPointerTime: function ()
+   getPointingTime: function ()
    {
-      return this [_pointerTime];
+      return this [_pointingTime];
    },
    setCursor: function (value)
    {
@@ -117,7 +120,7 @@ X3DPointingDeviceSensorContext .prototype =
          case "HAND": // Hand with finger
             div .css ("cursor", "pointer");
             break;
-         case "MOVE": // Hand grabed something
+         case "MOVE": // Hand grabbed something
             div .css ("cursor", "move");
             break;
          case "CROSSHAIR":
@@ -145,14 +148,14 @@ X3DPointingDeviceSensorContext .prototype =
    },
    isPointerInRectangle: function (rectangle, pointer = this [_pointer])
    {
-      return pointer .x > rectangle .x &&
-             pointer .x < rectangle .x + rectangle .z &&
-             pointer .y > rectangle .y &&
-             pointer .y < rectangle .y + rectangle .w;
+      return pointer .x >= rectangle .x &&
+             pointer .x <= rectangle .x + rectangle .z &&
+             pointer .y >= rectangle .y &&
+             pointer .y <= rectangle .y + rectangle .w;
    },
-   getActivePickLayer: function ()
+   getPointingLayer: function ()
    {
-      return this [_activeLayer];
+      return this [_pointingLayer];
    },
    getHit: function ()
    {
@@ -174,7 +177,7 @@ X3DPointingDeviceSensorContext .prototype =
       const hit = this [_hit];
 
       this [_activeSensors] = hit .sensors;
-      this [_activeLayer]   = hit .layerNode;
+      this [_pointingLayer] = hit .layerNode;
 
       for (const sensor of this [_activeSensors])
          sensor .set_active__ (true, hit);
@@ -187,7 +190,7 @@ X3DPointingDeviceSensorContext .prototype =
          sensor .set_active__ (false, null);
 
       this [_activeSensors] = Array .prototype;
-      this [_activeLayer]   = null;
+      this [_pointingLayer] = null;
    },
    motionNotifyEvent: function (x, y)
    {
@@ -200,11 +203,11 @@ X3DPointingDeviceSensorContext .prototype =
    { },
    touch: function (x, y)
    {
-      this [_pointerTime] .start ();
+      this [_pointingTime] .start ();
 
       if (this .getViewer () ._isActive .getValue ())
       {
-         this [_pointerTime] .reset ();
+         this [_pointingTime] .reset ();
          return false;
       }
 
@@ -249,9 +252,9 @@ X3DPointingDeviceSensorContext .prototype =
       else
       {
          hit .id        = 0;
-         hit .hitRay    = this [_activeLayer] ? this [_activeLayer] .getHitRay () : null;
+         hit .hitRay    = this [_pointingLayer] ? this [_pointingLayer] .getHitRay () : null;
          hit .sensors   = Array .prototype;
-         hit .layerNode = this [_activeLayer];
+         hit .layerNode = this [_pointingLayer];
          hit .shapeNode = null;
 
          hit .modelViewMatrix .assign (Matrix4 .Identity);
@@ -260,7 +263,7 @@ X3DPointingDeviceSensorContext .prototype =
       // Picking end.
 
       this .addBrowserEvent ();
-      this [_pointerTime] .stop ();
+      this [_pointingTime] .stop ();
 
       return !! hit .id;
    },
