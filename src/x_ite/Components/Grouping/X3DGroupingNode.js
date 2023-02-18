@@ -462,7 +462,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
 
       for (const childNode of this .maybeCameraObjects)
       {
-         if (childNode .getCameraObject ())
+         if (childNode .isCameraObject ())
          {
             if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
             {
@@ -491,13 +491,13 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
 
       for (const sensorNode of this .maybePickableSensorNodes)
       {
-         if (sensorNode .getPickableObject ())
+         if (sensorNode .isPickableObject ())
             pickableSensorNodes .push (sensorNode);
       }
 
       for (const childNode of this .visibleNodes)
       {
-         if (childNode .getPickableObject ())
+         if (childNode .isPickableObject ())
             pickableObjects .push (childNode);
       }
 

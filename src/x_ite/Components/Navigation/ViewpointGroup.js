@@ -128,8 +128,8 @@ ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .protot
          this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
          this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-         this .setCameraObject   (this .proximitySensor .getCameraObject ());
-         this .setPickableObject (this .proximitySensor .getPickableObject ());
+         this .setCameraObject   (this .proximitySensor .isCameraObject ());
+         this .setPickableObject (this .proximitySensor .isPickableObject ());
 
          this .traverse = traverseWithProximitySensor;
       }

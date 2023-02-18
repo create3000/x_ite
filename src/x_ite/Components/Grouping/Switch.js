@@ -165,11 +165,11 @@ Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    },
    set_cameraObject__: function ()
    {
-      this .setCameraObject (!!(this .visibleNode && this .visibleNode .getCameraObject ()));
+      this .setCameraObject (!!(this .visibleNode && this .visibleNode .isCameraObject ()));
    },
    set_transformSensors__: function ()
    {
-      this .setPickableObject (!!(this .getTransformSensors () .size || this .visibleNode && this .visibleNode .getPickableObject ()));
+      this .setPickableObject (!!(this .getTransformSensors () .size || this .visibleNode && this .visibleNode .isPickableObject ()));
    },
    set_visible__: function ()
    {

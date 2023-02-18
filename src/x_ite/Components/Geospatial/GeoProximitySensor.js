@@ -68,8 +68,8 @@ function GeoProximitySensor (executionContext)
 
    this .proximitySensor = new ProximitySensor (executionContext);
 
-   this .setCameraObject   (this .proximitySensor .getCameraObject ());
-   this .setPickableObject (this .proximitySensor .getPickableObject ());
+   this .setCameraObject   (this .proximitySensor .isCameraObject ());
+   this .setPickableObject (this .proximitySensor .isPickableObject ());
 }
 
 GeoProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),

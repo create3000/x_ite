@@ -138,8 +138,8 @@ CollidableOffset .prototype = Object .assign (Object .create (X3DNBodyCollidable
          this .collidableNode ._visible     .addInterest ("set_visible__",     this);
          this .collidableNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
 
-         this .setCameraObject   (this .collidableNode .getCameraObject ());
-         this .setPickableObject (this .collidableNode .getPickableObject ());
+         this .setCameraObject   (this .collidableNode .isCameraObject ());
+         this .setPickableObject (this .collidableNode .isPickableObject ());
 
          delete this .traverse;
       }
@@ -157,7 +157,7 @@ CollidableOffset .prototype = Object .assign (Object .create (X3DNBodyCollidable
    },
    set_cameraObject__: function ()
    {
-      this .setCameraObject (!!(this .visibleNode && this .visibleNode .getCameraObject ()));
+      this .setCameraObject (!!(this .visibleNode && this .visibleNode .isCameraObject ()));
    },
    set_visible__: function ()
    {

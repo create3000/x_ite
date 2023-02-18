@@ -198,7 +198,7 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
       if (type !== TraverseType .PICKING)
          return;
 
-      if (this .getPickableObject ())
+      if (this .isPickableObject ())
          this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
    },
    collect: function (targetMatrix)

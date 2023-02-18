@@ -203,8 +203,8 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
 
          this .shapeNode ._geometry .addInterest ("set_geometry__", this);
 
-         this .setCameraObject   (this .shapeNode .getCameraObject ());
-         this .setPickableObject (this .shapeNode .getPickableObject ());
+         this .setCameraObject   (this .shapeNode .isCameraObject ());
+         this .setPickableObject (this .shapeNode .isPickableObject ());
 
          delete this .traverse;
       }
@@ -222,7 +222,7 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
    },
    set_cameraObject__: function ()
    {
-      this .setCameraObject (!!(this .visibleNode && this .visibleNode .getCameraObject ()));
+      this .setCameraObject (!!(this .visibleNode && this .visibleNode .isCameraObject ()));
    },
    set_visible__: function ()
    {

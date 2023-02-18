@@ -121,8 +121,8 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
       this .groupNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
       this .groupNode ._children         .addInterest ("set_children__", this);
 
-      this .setCameraObject   (this .groupNode .getCameraObject ());
-      this .setPickableObject (this .groupNode .getPickableObject ());
+      this .setCameraObject   (this .groupNode .isCameraObject ());
+      this .setPickableObject (this .groupNode .isPickableObject ());
 
       this .set_children__ ();
    },
