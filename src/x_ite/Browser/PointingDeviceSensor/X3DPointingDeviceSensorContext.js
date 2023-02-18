@@ -240,7 +240,7 @@ X3DPointingDeviceSensorContext .prototype =
 
          hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
 
-         // ParticleSystem only has a geometry context.
+         // A ParticleSystem has only a geometry context.
 
          if (geometryContext .hasNormals)
             hit .modelViewMatrix .submatrix .inverse () .transpose () .multVecMatrix (hit .normal) .normalize ();
