@@ -2249,17 +2249,17 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
    },
    set_childCameraObject__: function ()
    {
-      this .setCameraObject (this .child1Inline .getCameraObject () ||
-                             this .child2Inline .getCameraObject () ||
-                             this .child3Inline .getCameraObject () ||
-                             this .child4Inline .getCameraObject ());
+      this .setCameraObject (this .child1Inline .isCameraObject () ||
+                             this .child2Inline .isCameraObject () ||
+                             this .child3Inline .isCameraObject () ||
+                             this .child4Inline .isCameraObject ());
    },
    set_childPickableObject__: function ()
    {
-      this .setPickableObject (this .child1Inline .getPickableObject () ||
-                               this .child2Inline .getPickableObject () ||
-                               this .child3Inline .getPickableObject () ||
-                               this .child4Inline .getPickableObject ());
+      this .setPickableObject (this .child1Inline .isPickableObject () ||
+                               this .child2Inline .isPickableObject () ||
+                               this .child3Inline .isPickableObject () ||
+                               this .child4Inline .isPickableObject ());
    },
    getLevel: function (modelViewMatrix)
    {
@@ -2319,8 +2319,8 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
                         this .rootGroup ._isCameraObject   .addFieldInterest (this ._isCameraObject);
                         this .rootGroup ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-                        this .setCameraObject   (this .rootGroup .getCameraObject ());
-                        this .setPickableObject (this .rootGroup .getPickableObject ());
+                        this .setCameraObject   (this .rootGroup .isCameraObject ());
+                        this .setPickableObject (this .rootGroup .isPickableObject ());
 
                         this ._children      = this ._rootNode;
                         this .childrenLoaded = false;
@@ -2332,8 +2332,8 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
                            this .rootInline ._isCameraObject   .addFieldInterest (this ._isCameraObject);
                            this .rootInline ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-                           this .setCameraObject   (this .rootInline .getCameraObject ());
-                           this .setPickableObject (this .rootInline .getPickableObject ());
+                           this .setCameraObject   (this .rootInline .isCameraObject ());
+                           this .setPickableObject (this .rootInline .isPickableObject ());
 
                            this ._children      = this .rootInline .getInternalScene () .getRootNodes ();
                            this .childrenLoaded = false;
@@ -3017,8 +3017,8 @@ function GeoProximitySensor (executionContext)
 
    this .proximitySensor = new (ProximitySensor_default()) (executionContext);
 
-   this .setCameraObject   (this .proximitySensor .getCameraObject ());
-   this .setPickableObject (this .proximitySensor .getPickableObject ());
+   this .setCameraObject   (this .proximitySensor .isCameraObject ());
+   this .setPickableObject (this .proximitySensor .isPickableObject ());
 }
 
 GeoProximitySensor .prototype = Object .assign (Object .create ((X3DEnvironmentalSensorNode_default()).prototype),

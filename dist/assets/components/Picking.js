@@ -632,7 +632,7 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
       if (type !== (TraverseType_default()).PICKING)
          return;
 
-      if (this .getPickableObject ())
+      if (this .isPickableObject ())
          this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
    },
    collect: function (geometryNode, modelMatrix, pickingHierarchy)
@@ -1228,7 +1228,7 @@ PickableGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defa
    },
    set_pickable__: function ()
    {
-      this .setPickableObject (Boolean (this ._pickable .getValue () || this .getTransformSensors () .size));
+      this .setPickableObject (!!(this ._pickable .getValue () || this .getTransformSensors () .size));
    },
    traverse: (function ()
    {

@@ -365,8 +365,8 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
       this .skinNode       .setup ();
       this .transformNode  .setup ();
 
-      this .setCameraObject   (this .transformNode .getCameraObject ());
-      this .setPickableObject (this .transformNode .getPickableObject ());
+      this .setCameraObject   (this .transformNode .isCameraObject ());
+      this .setPickableObject (this .transformNode .isPickableObject ());
 
       // Skinning
 

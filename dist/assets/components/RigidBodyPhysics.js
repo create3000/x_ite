@@ -937,8 +937,8 @@ CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X
          this .collidableNode ._visible     .addInterest ("set_visible__",     this);
          this .collidableNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
 
-         this .setCameraObject   (this .collidableNode .getCameraObject ());
-         this .setPickableObject (this .collidableNode .getPickableObject ());
+         this .setCameraObject   (this .collidableNode .isCameraObject ());
+         this .setPickableObject (this .collidableNode .isPickableObject ());
 
          delete this .traverse;
       }
@@ -956,7 +956,7 @@ CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X
    },
    set_cameraObject__: function ()
    {
-      this .setCameraObject (!!(this .visibleNode && this .visibleNode .getCameraObject ()));
+      this .setCameraObject (!!(this .visibleNode && this .visibleNode .isCameraObject ()));
    },
    set_visible__: function ()
    {
@@ -1275,8 +1275,8 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
 
          this .shapeNode ._geometry .addInterest ("set_geometry__", this);
 
-         this .setCameraObject   (this .shapeNode .getCameraObject ());
-         this .setPickableObject (this .shapeNode .getPickableObject ());
+         this .setCameraObject   (this .shapeNode .isCameraObject ());
+         this .setPickableObject (this .shapeNode .isPickableObject ());
 
          delete this .traverse;
       }
@@ -1294,7 +1294,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
    },
    set_cameraObject__: function ()
    {
-      this .setCameraObject (!!(this .visibleNode && this .visibleNode .getCameraObject ()));
+      this .setCameraObject (!!(this .visibleNode && this .visibleNode .isCameraObject ()));
    },
    set_visible__: function ()
    {

@@ -775,6 +775,8 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapText
          for (const target of this .getTargets ())
             gl .texImage2D (target, 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
+         this .updateTextureParameters ();
+
          // Properties
 
          this .viewport    = new (Vector4_default()) (0, 0, size, size);
