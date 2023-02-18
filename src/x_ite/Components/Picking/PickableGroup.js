@@ -105,7 +105,7 @@ PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prot
    },
    set_pickable__: function ()
    {
-      this .setPickableObject (Boolean (this ._pickable .getValue () || this .getTransformSensors () .size));
+      this .setPickableObject (!!(this ._pickable .getValue () || this .getTransformSensors () .size));
    },
    traverse: (function ()
    {

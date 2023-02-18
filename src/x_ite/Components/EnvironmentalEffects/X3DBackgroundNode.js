@@ -121,6 +121,16 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
       this .build ();
       this .transferRectangle ();
    },
+   getHidden: function ()
+   {
+      return this .hidden;
+   },
+   setHidden: function (value)
+   {
+      this .hidden = value;
+
+      this .getBrowser () .addBrowserEvent ();
+   },
    set_frontTexture__: function (value)
    {
       this .updateTexture ("frontTexture", value, 0);
@@ -166,16 +176,6 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
    setTextureBit: function (bit, textureNode, loadState)
    {
       this .textureBits .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE || textureNode .getWidth ());
-   },
-   setHidden: function (value)
-   {
-      this .hidden = value;
-
-      this .getBrowser () .addBrowserEvent ();
-   },
-   getHidden: function ()
-   {
-      return this .hidden;
    },
    isTransparent: function ()
    {

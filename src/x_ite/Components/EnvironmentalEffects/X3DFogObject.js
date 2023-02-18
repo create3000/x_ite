@@ -108,17 +108,16 @@ X3DFogObject .prototype =
       this .set_color__ ();
       this .set_visibilityRange__ ();
    },
+   getHidden: function ()
+   {
+      return this .hidden;
+   },
    setHidden: function (value)
    {
       this .hidden = value;
 
       this .set_fogType__ ();
-
       this .getBrowser () .addBrowserEvent ();
-   },
-   getHidden: function ()
-   {
-      return this .hidden;
    },
    getFogType: function ()
    {

@@ -105,14 +105,19 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
+   getHidden: function ()
+   {
+      return this .hidden;
+   },
    setHidden: function (value)
    {
-      if (value !== this .hidden)
-      {
-         this .hidden = value;
+      if (value === this .hidden)
+         return;
 
-         this .set_children__ ();
-      }
+      this .hidden = value;
+
+      this .set_children__ ();
+      this .getBrowser () .addBrowserEvent ();
    },
    setAllowedTypes: function (/* type, ... */)
    {
@@ -462,23 +467,21 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
 
       for (const childNode of this .maybeCameraObjects)
       {
-         if (childNode .isCameraObject ())
+         if (!childNode .isCameraObject ())
+            continue;
+
+         if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
-            if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
-            {
-               if (childNode ._visible .getValue ())
-               {
-                  cameraObjects .push (childNode);
-               }
-            }
-            else
-            {
+            if (childNode ._visible .getValue ())
                cameraObjects .push (childNode);
-            }
+         }
+         else
+         {
+            cameraObjects .push (childNode);
          }
       }
 
-      this .setCameraObject (Boolean (cameraObjects .length));
+      this .setCameraObject (!!(cameraObjects .length));
    },
    set_pickableObjects__: function ()
    {
@@ -505,7 +508,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
    },
    set_transformSensors__: function ()
    {
-      this .setPickableObject (Boolean (this .getTransformSensors () .size || this .pickableSensorNodes .length || this .pickableObjects .length));
+      this .setPickableObject (!!(this .getTransformSensors () .size || this .pickableSensorNodes .length || this .pickableObjects .length));
    },
    set_displayNodes__: function ()
    {
