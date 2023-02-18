@@ -3008,9 +3008,9 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
       this ._emitter           .addInterest ("set_emitter__",           this);
       this ._physics           .addInterest ("set_physics__",           this);
       this ._colorKey          .addInterest ("set_color__",             this);
-      this ._color             .addInterest ("set_color__",             this);
+      this ._color             .addInterest ("set_colorRamp__",         this);
       this ._texCoordKey       .addInterest ("set_texCoord__",          this);
-      this ._texCoord          .addInterest ("set_texCoord__",          this);
+      this ._texCoord          .addInterest ("set_texCoordRamp__",      this);
 
       // Create particles stuff.
 
@@ -3042,8 +3042,8 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
       this .set_particleLifetime__ ();
       this .set_lifetimeVariation__ ();
       this .set_physics__ ();
-      this .set_color__ ();
-      this .set_texCoord__ ();
+      this .set_colorRamp__ ();
+      this .set_texCoordRamp__ ();
    },
    getShapeKey: function ()
    {
@@ -3371,7 +3371,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedArraySize, boundedArraySize, 0, gl .RGBA, gl .FLOAT, boundedArray);
       }
     },
-   set_color__: function ()
+   set_colorRamp__: function ()
    {
       if (this .colorRampNode)
          this .colorRampNode .removeInterest ("set_color__", this);
@@ -3417,7 +3417,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
    },
-   set_texCoord__: function ()
+   set_texCoordRamp__: function ()
    {
       if (this .texCoordRampNode)
          this .texCoordRampNode .removeInterest ("set_texCoord__", this);
