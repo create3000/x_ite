@@ -37,7 +37,7 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   --system-yellow: rgb(255, 204, 0);
   --system-blue: rgb(0, 122, 255);
   --system-green: rgb(52, 199, 89);
-  --playground-editor-background: rgba(0, 0, 0, 0.01);
+  --playground-editor-background: rgba(0, 0, 0, 0.03);
 }
 
 @media (prefers-color-scheme: dark) {

@@ -41,6 +41,13 @@ icon: fas fa-rocket
    white-space: pre;
 }
 
+.monaco-editor,
+.monaco-editor .margin,
+.monaco-editor-background,
+canvas.minimap-decorations-layer {
+   background-color: var(--playground-editor-background);
+}
+
 .console {
    padding: 0.5rem;
    height: 50%;
@@ -165,7 +172,7 @@ $(function ()
                text    = args .join ("") + "\n",
                element = $("<span></span>") .addClass (classes) .text (text);
 
-            if (text .includes ("No suitable"))
+            if (text .match (/No suitable|commons\.min\.js|jquery\.min\.js|editor\.main/))
                return;
 
             log .apply (this, args);
