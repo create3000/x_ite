@@ -48,7 +48,7 @@
 import Algorithm from "../Algorithm.js";
 import Vector2   from "../Numbers/Vector2.js";
 
-const lerp = Algorithm .lerp;
+const { lerp, interval } = Algorithm;
 
 class Bezier
 {
@@ -132,7 +132,7 @@ class Bezier
 
       // In accordance to: http://www.w3.org/TR/SVG/implnote.html#ArcOutOfRangeParameters
 
-      xAxisRotation = Algorithm .interval (xAxisRotation, 0, 2 * Math .PI);
+      xAxisRotation = interval (xAxisRotation, 0, 2 * Math .PI);
 
       const
          sinRotation = Math .sin (xAxisRotation),
