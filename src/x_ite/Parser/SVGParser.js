@@ -1346,9 +1346,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                  y  += ay;
                               }
 
-                              const curve = new Bezier (ax, ay, x1, y1, x, y);
-
-                              points .push (... curve .getPoints ("quadric", BEZIER_STEPS));
+                              points .push (... Bezier .quadric (ax, ay, x1, y1, x, y, BEZIER_STEPS));
 
                               ax = x;
                               ay = y;
@@ -1409,9 +1407,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                            }
                         }
 
-                        const curve = new Bezier (ax, ay, x1, y1, x, y);
-
-                        points .push (... curve .getPoints ("quadric", BEZIER_STEPS));
+                        points .push (... Bezier .quadric (ax, ay, x1, y1, x, y, BEZIER_STEPS));
 
                         ax = x;
                         ay = y;
@@ -1477,9 +1473,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                        y  += ay;
                                     }
 
-                                    const curve = new Bezier (ax, ay, x1, y1, x2, y2, x, y);
-
-                                    points .push (... curve .getPoints ("cubic", BEZIER_STEPS));
+                                    points .push (... Bezier .cubic (ax, ay, x1, y1, x2, y2, x, y, BEZIER_STEPS));
 
                                     ax = x;
                                     ay = y;
@@ -1556,9 +1550,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                  }
                               }
 
-                              const curve = new Bezier (ax, ay, x1, y1, x2, y2, x, y);
-
-                              points .push (... curve .getPoints ("cubic", BEZIER_STEPS));
+                              points .push (... Bezier .cubic (ax, ay, x1, y1, x2, y2, x, y, BEZIER_STEPS));
 
                               ax = x;
                               ay = y;
@@ -1598,7 +1590,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                         if (this .double ())
                         {
-                           let xAxisRotation = this .value;
+                           let xAxisRotation = Algorithm .radians (this .value);
 
                            this .comma ();
 
@@ -1630,9 +1622,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                           y += ay;
                                        }
 
-                                       const curve = new Bezier (ax, ay, rx, ry, Algorithm .radians (xAxisRotation), largeArcFlag, sweepFlag, x, y);
-
-                                       points .push (... curve .getPoints ("arc", CIRCLE_STEPS));
+                                       points .push (... Bezier .arc (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, CIRCLE_STEPS));
 
                                        ax = x;
                                        ay = y;
