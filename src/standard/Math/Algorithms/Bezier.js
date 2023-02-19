@@ -65,13 +65,7 @@ Bezier .prototype =
       {
          case "quadric":
          {
-            const
-               x0 = this .args [0],
-               y0 = this .args [1],
-               x1 = this .args [2],
-               y1 = this .args [3],
-               x2 = this .args [4],
-               y2 = this .args [5];
+            const [x0, y0, x1, y1, x2, y2] = this .args;
 
             for (let i = 0, d = steps - 1; i < steps; ++ i)
             {
@@ -82,15 +76,7 @@ Bezier .prototype =
          }
          case "cubic":
          {
-            const
-               x0 = this .args [0],
-               y0 = this .args [1],
-               x1 = this .args [2],
-               y1 = this .args [3],
-               x2 = this .args [4],
-               y2 = this .args [5],
-               x3 = this .args [6],
-               y3 = this .args [7];
+            const [x0, y0, x1, y1, x2, y2, x3, y3] = this .args;
 
             for (let i = 0, d = steps - 1; i < steps; ++ i)
             {
@@ -101,16 +87,7 @@ Bezier .prototype =
          }
          case "arc":
          {
-            let
-               ax            = this .args [0],
-               ay            = this .args [1],
-               rx            = this .args [2],
-               ry            = this .args [3],
-               xAxisRotation = this .args [4],
-               largeArcFlag  = this .args [5],
-               sweepFlag     = this .args [6],
-               x             = this .args [7],
-               y             = this .args [8];
+            let [ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y] = this .args;
 
             // https://ericeastwood.com/blog/25/curves-and-arcs-quadratic-cubic-elliptical-svg-implementations
             // See https://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes.
