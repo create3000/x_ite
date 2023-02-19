@@ -50,7 +50,7 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 #### Hint
 
-- Ccw false can reverse solid (backface culling) and normal-vector orientation.
+- *ccw* false can reverse solid (backface culling) and normal-vector orientation.
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
