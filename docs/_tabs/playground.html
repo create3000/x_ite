@@ -81,8 +81,8 @@ span.error {
 
 <pre style="display:none">
 Online X3D and VRML viewer.
-<script src="https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs/loader.js"></script>
-<script>
+<script defer src="https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs/loader.js"></script>
+<script defer>
 $(function ()
 {
    const box = `<X3D profile='Full' version='4.0'>
@@ -174,7 +174,7 @@ $(function ()
                text    = args .join ("") + "\n",
                element = $("<span></span>") .addClass (classes) .text (text);
 
-            if (text .match (/No suitable|commons\.min\.js|jquery\.min\.js|editor\.main/))
+            if (text .match (/No suitable/))
                return;
 
             log .apply (this, args);
