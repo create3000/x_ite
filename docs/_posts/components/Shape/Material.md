@@ -129,7 +129,7 @@ Lower shininess values provide soft specular glows, while higher values result i
 
 The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
 
-### SFNode [in, out] *shininessTexture** NULL <small>[X3DSingleTextureNode]</small>
+### SFNode [in, out] **shininessTexture** NULL <small>[X3DSingleTextureNode]</small>
 
 When applying shininess for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
