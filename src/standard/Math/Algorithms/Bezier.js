@@ -58,7 +58,16 @@ class Bezier
 
       for (let i = 0, d = steps - 1; i < steps; ++ i)
       {
-         points .push (quadric (x0, y0, x1, y1, x2, y2, i / d));
+         const
+            t   = i / d,
+            ax0 = lerp (x0, x1, t),
+            ay0 = lerp (y0, y1, t),
+            ax1 = lerp (x1, x2, t),
+            ay1 = lerp (y1, y2, t),
+            bx0 = lerp (ax0, ax1, t),
+            by0 = lerp (ay0, ay1, t);
+
+         points .push (new Vector2 (bx0, by0));
       }
 
       return points;
@@ -70,7 +79,22 @@ class Bezier
 
       for (let i = 0, d = steps - 1; i < steps; ++ i)
       {
-         points .push (cubic (x0, y0, x1, y1, x2, y2, x3, y3, i / d));
+         const
+            t   = i / d,
+            ax0 = lerp (x0, x1, t),
+            ay0 = lerp (y0, y1, t),
+            ax1 = lerp (x1, x2, t),
+            ay1 = lerp (y1, y2, t),
+            ax2 = lerp (x2, x3, t),
+            ay2 = lerp (y2, y3, t),
+            bx0 = lerp (ax0, ax1, t),
+            by0 = lerp (ay0, ay1, t),
+            bx1 = lerp (ax1, ax2, t),
+            by1 = lerp (ay1, ay2, t),
+            cx0 = lerp (bx0, bx1, t),
+            cy0 = lerp (by0, by1, t);
+
+         points .push (new Vector2 (cx0, cy0));
       }
 
       return points;
@@ -209,38 +233,6 @@ class Bezier
 
       return points;
    }
-}
-
-function quadric (x0, y0, x1, y1, x2, y2, t)
-{
-   const
-      ax0 = lerp (x0, x1, t),
-      ay0 = lerp (y0, y1, t),
-      ax1 = lerp (x1, x2, t),
-      ay1 = lerp (y1, y2, t),
-      bx0 = lerp (ax0, ax1, t),
-      by0 = lerp (ay0, ay1, t);
-
-   return new Vector2 (bx0, by0);
-}
-
-function cubic (x0, y0, x1, y1, x2, y2, x3, y3, t)
-{
-   const
-      ax0 = lerp (x0, x1, t),
-      ay0 = lerp (y0, y1, t),
-      ax1 = lerp (x1, x2, t),
-      ay1 = lerp (y1, y2, t),
-      ax2 = lerp (x2, x3, t),
-      ay2 = lerp (y2, y3, t),
-      bx0 = lerp (ax0, ax1, t),
-      by0 = lerp (ay0, ay1, t),
-      bx1 = lerp (ax1, ax2, t),
-      by1 = lerp (ay1, ay2, t),
-      cx0 = lerp (bx0, bx1, t),
-      cy0 = lerp (by0, by1, t);
-
-   return new Vector2 (cx0, cy0);
 }
 
 export default Bezier;
