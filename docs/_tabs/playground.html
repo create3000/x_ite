@@ -16,23 +16,22 @@ icon: fas fa-rocket
 /* Table */
 
 .viewer-row {
-  display: flex;
-  height: calc(100vh - 180px);
+   display: flex;
+   height: calc(100vh - 180px);
 }
 
 .viewer-column {
-  flex: 50%;
-  width: 50%;
-  height: 100%;
+   flex: 50%;
+   width: 50%;
+   height: 100%;
 }
 
 /* Editor */
 
 #editor, .console {
    outline: none;
-   border: none;
-   padding: 0.5rem;
    background: var(--playground-editor-background);
+   border: none;
    width: 100%;
    height: 100%;
    resize: none;
@@ -43,82 +42,15 @@ icon: fas fa-rocket
 }
 
 .console {
+   padding: 0.5rem;
    height: 50%;
 }
 
-.post x3d-canvas {
+.post x3d-canvas, x3d-canvas {
    display: block;
    width: 100%;
    height: 50%;
    aspect-ratio: unset;
-}
-
-.ace_gutter {
-   background: var(--playground-editor-gutter) !important;
-}
-
-.ace_gutter-active-line,
-.ace_active-line {
-   background: var(--playground-editor-active-line) !important;
-}
-
-.ace_selected-word,
-.ace_selection {
-   border: none !important;
-   background: var(--playground-editor-selected-word) !important;
-}
-
-/* XML */
-
-.ace_tag-open, .ace_tag-close, .ace_end-tag-open {
-   color: var(--playground-xml-tag) !important;
-}
-
-.ace_tag-name {
-   color: var(--playground-xml-tag-name) !important;
-}
-
-.ace_attribute-name {
-   color: var(--playground-xml-attribute-name) !important;
-}
-
-.ace_attribute-equals {
-   color: var(--playground-xml-attribute-equals) !important;
-}
-
-.ace_attribute-value {
-   color: var(--playground-xml-attribute-value) !important;
-}
-
-/* JSON */
-
-.ace_paren {
-   color: var(--playground-json-parenthesis) !important;
-}
-
-.ace_identifier {
-   color: var(--playground-json-identifier) !important;
-}
-
-.ace_variable {
-   color: var(--playground-json-variable) !important;
-}
-
-.ace_numeric,
-.ace_keyword.ace_operator {
-   color: var(--playground-json-numeric) !important;
-}
-
-.ace_string {
-   color: var(--playground-json-string) !important;
-}
-
-.ace_boolean {
-   color: var(--playground-json-boolean) !important;
-}
-
-.ace_punctuation.ace_operator {
-   color: var(--playground-json-punctuation) !important;
 }
 
 /* Console */
@@ -142,57 +74,10 @@ span.error {
 
 <pre style="display:none">
 Online X3D and VRML viewer.
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.13.1/ace.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs/loader.js"></script>
 <script>
 $(function ()
 {
-   ace .config .set ("basePath", "https://cdnjs.cloudflare.com/ajax/libs/ace/1.13.1/");
-
-   const editor = ace .edit ("editor");
-
-   editor .setTheme ("ace/theme/monokai");
-   editor .session .setOptions ({ tabSize: 2, useSoftTabs: true });
-
-   editor .getSession () .on ("change", async function ()
-   {
-      const
-         Browser = X3D .getBrowser (),
-         text    = editor .getSession () .getValue (),
-         url     = "data:," + text;
-
-      if (text .match (/<\w+/))
-      {
-         editor .session .setMode ("ace/mode/xml");
-         editor .getSession () .setUseWorker (true);
-      }
-      else if (text .match (/\w+\s*\{/))
-      {
-         editor .session .setMode ("ace/mode/javascript");
-         editor .getSession () .setUseWorker (false);
-      }
-      else if (text .match (/"\w+"\s*:\s*\{/))
-      {
-         editor .session .setMode ("ace/mode/json");
-         editor .getSession () .setUseWorker (true);
-      }
-
-      if (Browser .getActiveViewpoint ())
-      {
-         const
-            positionOffset    = Browser .getActiveViewpoint () ._positionOffset    .copy (),
-            orientationOffset = Browser .getActiveViewpoint () ._orientationOffset .copy ();
-
-         await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
-
-         Browser .getActiveViewpoint () ._positionOffset    = positionOffset;
-         Browser .getActiveViewpoint () ._orientationOffset = orientationOffset;
-      }
-      else
-      {
-         await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
-      }
-   });
-
    const box = `<X3D profile='Full' version='4.0'>
    <Scene>
       <Shape>
@@ -206,9 +91,64 @@ $(function ()
 </X3D>
 `;
 
-   editor .setValue (box .replace (/ {3}/g, "  "), -1);
-   editor .getSession () .setUndoManager (new ace .UndoManager ());
-});
+   require .config ({ paths: { "vs": "https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs" }});
+   require (["vs/editor/editor.main"], () =>
+   {
+      const darkMode = (window .matchMedia && window .matchMedia ("(prefers-color-scheme: dark)") .matches || $("html") .attr ("data-mode") === "dark") && $("html") .attr ("data-mode") !== "light";
+
+      const editor = monaco .editor .create (document .getElementById ("editor"),
+      {
+         language: "xml",
+         theme: darkMode ? "vs-dark" : "vs-light",
+         contextmenu: true,
+         automaticLayout: true,
+         wordWrap: "on",
+         wrappingIndent: "indent",
+      });
+
+      editor .getModel () .onDidChangeContent (async (event) =>
+      {
+         const
+            Browser = X3D .getBrowser (),
+            text    = editor .getValue (),
+            url     = "data:," + text;
+
+         if (text .match (/<\w+/))
+         {
+            monaco .editor .setModelLanguage (editor .getModel (), "xml");
+         }
+         else if (text .match (/"\w+"\s*:\s*\{/))
+         {
+            monaco .editor .setModelLanguage (editor .getModel (), "json");
+         }
+         else if (text .match (/\w+\s*\{/))
+         {
+            monaco .editor .setModelLanguage (editor .getModel (), "vrml");
+         }
+
+         if (Browser .getActiveViewpoint ())
+         {
+            const
+               positionOffset    = Browser .getActiveViewpoint () ._positionOffset    .copy (),
+               orientationOffset = Browser .getActiveViewpoint () ._orientationOffset .copy ();
+
+            await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+
+            if (Browser .getActiveViewpoint ())
+            {
+               Browser .getActiveViewpoint () ._positionOffset    = positionOffset;
+               Browser .getActiveViewpoint () ._orientationOffset = orientationOffset;
+            }
+         }
+         else
+         {
+            await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+         }
+      });
+
+      editor .setValue (box .replace (/ {3}/g, "  "));
+   });
+})
 </script>
 </pre>
 
@@ -217,14 +157,12 @@ $(function ()
 {
    function output (log, classes)
    {
-      return function ()
+      return function (... args)
       {
-         const args = arguments;
-
          $(function ()
          {
             const
-               text    = Array .prototype .slice .call (args) .join ("") + "\n",
+               text    = args .join ("") + "\n",
                element = $("<span></span>") .addClass (classes) .text (text);
 
             if (text .includes ("No suitable"))

@@ -23,6 +23,7 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   --system-yellow: rgb(255, 214, 10);
   --system-blue: rgb(10, 132, 255);
   --system-green: rgb(48, 209, 88);
+  --playground-editor-background: rgba(0, 0, 0, 0.2);
 }
 
 @mixin x_ite-light-scheme {
@@ -36,67 +37,26 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   --system-yellow: rgb(255, 204, 0);
   --system-blue: rgb(0, 122, 255);
   --system-green: rgb(52, 199, 89);
-}
-
-@mixin playground-dark-scheme {
-  --playground-editor-background: rgba(0, 0, 0, 0.2);
-  --playground-editor-gutter: rgba(255, 255, 255, 0.05);
-  --playground-editor-active-line: rgb(32, 45, 64);
-  --playground-editor-selected-word: rgb(39, 79, 121);
-  --playground-xml-tag: var(--text-color);
-  --playground-xml-tag-name: rgb(90, 156, 216);
-  --playground-xml-attribute-name: rgb(159, 220, 254);
-  --playground-xml-attribute-equals: rgb(212, 212, 212);
-  --playground-xml-attribute-value: rgb(205, 145, 119);
-  --playground-json-parenthesis: rgb(253, 214, 1);
-  --playground-json-identifier: rgb(159, 220, 254);
-  --playground-json-variable: rgb(159, 220, 254);
-  --playground-json-numeric: rgb(183, 206, 165);
-  --playground-json-string: rgb(205, 145, 119);
-  --playground-json-boolean: rgb(90, 156, 216);
-  --playground-json-punctuation: rgb(212, 212, 212);
-}
-
-@mixin playground-light-scheme {
   --playground-editor-background: rgba(0, 0, 0, 0.01);
-  --playground-editor-gutter: rgb(243, 243, 243);
-  --playground-editor-active-line: rgb(215, 229, 248);
-  --playground-editor-selected-word: rgb(174, 214, 255);
-  --playground-xml-tag: var(--text-color);
-  --playground-xml-tag-name: rgb(126, 0, 0);
-  --playground-xml-attribute-name: rgb(226, 2, 0);
-  --playground-xml-attribute-equals: rgb(0, 0, 0);
-  --playground-xml-attribute-value: rgb(16, 0, 255);
-  --playground-json-parenthesis: rgb(54, 147, 39);
-  --playground-json-identifier: rgb(18, 81, 166);
-  --playground-json-variable: rgb(18, 81, 166);
-  --playground-json-numeric: rgb(30, 134, 87);
-  --playground-json-string: rgb(160, 21, 21);
-  --playground-json-boolean: rgb(16, 0, 255);
-  --playground-json-punctuation: rgb(0, 0, 0);
 }
 
 @media (prefers-color-scheme: dark) {
   html:not([data-mode]), html[data-mode=dark] {
     @include x_ite-dark-scheme;
-    @include playground-dark-scheme;
   }
 
   html[data-mode=light] {
     @include x_ite-light-scheme;
-    @include playground-light-scheme;
   }
 }
 
 @media (prefers-color-scheme: light) {
   html[data-mode=dark] {
     @include x_ite-dark-scheme;
-    @include playground-dark-scheme;
   }
 
   html:not([data-mode]), html[data-mode=light] {
     @include x_ite-light-scheme;
-    @include playground-light-scheme;
   }
 }
 
