@@ -2175,16 +2175,16 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          index1 = Algorithm .clamp (Algorithm .upperBound (times, 0, times .length, time), 1, times .length - 1),
          index0 = index1 - 1,
          td     = times [index1] - times [index0],
-         t      = (time - times [index0]) / td,
-         t2     = Math .pow (t, 2),
-         t3     = Math .pow (t, 3),
+         t1     = (time - times [index0]) / td,
+         t2     = t1 * t1,
+         t3     = t2 * t1,
          v0     = values [index0 * 3 + 1] .copy (),
          b0     = values [index0 * 3 + 2] .copy (),
          v1     = values [index1 * 3 + 1] .copy (),
          a1     = values [index1 * 3 + 0] .copy ();
 
       v0 .multiply (2 * t3 - 3 * t2 + 1);
-      b0 .multiply (td * (t3 - 2 * t2 + t));
+      b0 .multiply (td * (t3 - 2 * t2 + t1));
       v1 .multiply (-2 * t3 + 3 * t2);
       a1 .multiply (td * (t3 - t2));
 
