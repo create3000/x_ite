@@ -78,8 +78,6 @@ const Bezier =
             points .push (p .multVecMatrix (new Vector3 (1, t, t * t)));
          }
 
-         console .log ("quadric")
-
          return points;
       };
    })(),
