@@ -61,23 +61,20 @@ const Bezier =
    quadric: (function ()
    {
       const
-         v = new Vector3 (0, 0, 0),
          c = new Matrix3 (1, 0, 0, -2, 2, 0, 1, -2, 1),
          p = new Matrix3 ();
 
-      return function (x0, y0, x1, y1, x2, y2, steps)
+      return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, steps)
       {
          const points = [ ];
 
-         p .set (x0, y0, 0, x1, y1, 0, x2, y2, 0);
+         p .set (x0, y0, z0, x1, y1, z1, x2, y2, z2);
 
          for (let i = 0, d = steps - 1; i < steps; ++ i)
          {
             const t = i / d;
 
-            p .multVecMatrix (c .multVecMatrix (v .set (1, t, t * t)));
-
-            points .push (new Vector2 (v .x, v .y));
+            points .push (p .multVecMatrix (c .multVecMatrix (new Vector3 (1, t, t * t))));
          }
 
          return points;
@@ -90,11 +87,11 @@ const Bezier =
          c = new Matrix4 (1, 0, 0, 0, -3, 3, 0, 0, 3, -6, 3, 0, -1, 3, -3, 1),
          p = new Matrix4 ();
 
-      return function (x0, y0, x1, y1, x2, y2, x3, y3, steps)
+      return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, x3, y3, z3, steps)
       {
          const points = [ ];
 
-         p .set (x0, y0, 0, 0, x1, y1, 0, 0, x2, y2, 0, 0, x3, y3, 0, 0);
+         p .set (x0, y0, z0, 0, x1, y1, z1, 0, x2, y2, z2, 0, x3, y3, z3, 0);
 
          for (let i = 0, d = steps - 1; i < steps; ++ i)
          {
@@ -102,7 +99,7 @@ const Bezier =
 
             p .multVecMatrix (c .multVecMatrix (v .set (1, t, t * t, t * t * t)));
 
-            points .push (new Vector2 (v .x, v .y));
+            points .push (new Vector3 (v .x, v .y, v .z));
          }
 
          return points;
@@ -118,7 +115,7 @@ const Bezier =
       // If the endpoints are identical, then this is equivalent to omitting the elliptical arc segment entirely.
       if (ax === x && ay === y)
       {
-         points .push (new Vector2 (x, y));
+         points .push (new Vector3 (x, y, 0));
          return;
       }
 
@@ -130,7 +127,7 @@ const Bezier =
       // If rx = 0 or ry = 0 then this arc is treated as a straight line segment joining the endpoints.
       if (rx === 0 || ry === 0)
       {
-         points .push (new Vector2 (ax, ay), new Vector2 (x, y));
+         points .push (new Vector3 (ax, ay, 0), new Vector3 (x, y, 0));
          return;
       }
 
@@ -181,14 +178,14 @@ const Bezier =
 
       // Step #3: Compute center
       const center = new Vector2 (cosRotation * transformedCenter .x - sinRotation * transformedCenter .y + ((ax + x) / 2),
-                                    sinRotation * transformedCenter .x + cosRotation * transformedCenter .y + ((ay + y) / 2));
+                                  sinRotation * transformedCenter .x + cosRotation * transformedCenter .y + ((ay + y) / 2));
 
       // Step #4: Compute start/sweep angles
       const startVector = new Vector2 ((transformedPoint .x - transformedCenter .x) / rx,
                                        (transformedPoint .y - transformedCenter .y) / ry);
 
       const endVector = new Vector2 ((-transformedPoint .x - transformedCenter .x) / rx,
-                                       (-transformedPoint .y - transformedCenter .y) / ry);
+                                     (-transformedPoint .y - transformedCenter .y) / ry);
 
       const get_angle  = (x) => { return x > 0 ? x : 2 * Math .PI + x; }; // transform angle to range [0, 2pi]
       const startAngle = get_angle (Math .atan2 (startVector .y, startVector .x));
@@ -220,7 +217,7 @@ const Bezier =
       const bezier_steps   = Math .max (4, Math .abs (sweepAngle) * steps / (2 * Math .PI));
       const bezier_steps_1 = bezier_steps - 1;
 
-      points .push (new Vector2 (ax, ay));
+      points .push (new Vector3 (ax, ay, 0));
 
       for (let i = 1; i < bezier_steps_1; ++ i)
       {
@@ -231,13 +228,12 @@ const Bezier =
          const x     = rx * Math .cos (angle);
          const y     = ry * Math .sin (angle);
 
-         const point = new Vector2 (cosRotation * x - sinRotation * y + center .x,
-                                    sinRotation * x + cosRotation * y + center .y);
-
-         points .push (point);
+         points .push (new Vector3 (cosRotation * x - sinRotation * y + center .x,
+                                    sinRotation * x + cosRotation * y + center .y,
+                                    0));
       }
 
-      points .push (new Vector2 (x, y));
+      points .push (new Vector3 (x, y, 0));
 
       return points;
    }

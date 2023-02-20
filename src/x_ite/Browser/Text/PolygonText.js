@@ -283,20 +283,12 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
             }
             case "Q": // Quadric
             {
-               const lut = Bezier .quadric (x, -y, command .x1, -command .y1, command .x, -command .y, steps);
-
-               for (const p of lut)
-                  points .push (new Vector3 (p .x, p .y, 0));
-
+               points .push (... Bezier .quadric (x, -y, 0, command .x1, -command .y1, 0, command .x, -command .y, 0, steps));
                break;
             }
             case "C": // Cubic
             {
-               const lut = Bezier .cubic (x, -y, command .x1, -command .y1, command .x2, -command .y2, command .x, -command .y, steps);
-
-               for (const p of lut)
-                  points .push (new Vector3 (p .x, p .y, 0));
-
+               points .push (... Bezier .cubic (x, -y, 0, command .x1, -command .y1, 0, command .x2, -command .y2, 0, command .x, -command .y, 0, steps));
                break;
             }
             default:

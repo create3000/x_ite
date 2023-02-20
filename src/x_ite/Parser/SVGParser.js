@@ -727,8 +727,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const coordinateNode = scene .createNode ("Coordinate");
 
-      for (const point of points)
-         coordinateNode .point .push (new Vector3 (point .x, point .y, 0));
+      coordinateNode .point .push (... points);
 
       if (this .style .fillType !== "NONE")
       {
@@ -800,10 +799,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const coordinateNode = scene .createNode ("Coordinate");
 
       for (const points of contours)
-      {
-         for (const point of points)
-            coordinateNode .point .push (new Vector3 (point .x, point .y, 0));
-      }
+         coordinateNode .point .push (... points);
 
       if (this .style .fillType !== "NONE")
       {
@@ -1124,7 +1120,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                {
                   const y = this .value;
 
-                  points .push (new Vector2 (x, y));
+                  points .push (new Vector3 (x, y, 0));
 
                   if (this .comma ())
                      continue;
@@ -1202,7 +1198,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                            y += ay;
                         }
 
-                        points .push (new Vector2 (x, y));
+                        points .push (new Vector3 (x, y, 0));
 
                         ax = x;
                         ay = y;
@@ -1240,7 +1236,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                            y += ay;
                         }
 
-                        points .push (new Vector2 (x, y));
+                        points .push (new Vector3 (x, y, 0));
 
                         ax = x;
                         ay = y;
@@ -1269,7 +1265,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                      if (relative)
                         x += ax;
 
-                     points .push (new Vector2 (x, ay));
+                     points .push (new Vector3 (x, ay, 0));
 
                      ax = x;
 
@@ -1296,7 +1292,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                      if (relative)
                         y += ay;
 
-                     points .push (new Vector2 (ax, y));
+                     points .push (new Vector3 (ax, y, 0));
 
                      ay = y;
 
@@ -1346,7 +1342,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                  y  += ay;
                               }
 
-                              points .push (... Bezier .quadric (ax, ay, x1, y1, x, y, BEZIER_STEPS));
+                              points .push (... Bezier .quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS));
 
                               ax = x;
                               ay = y;
@@ -1407,7 +1403,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                            }
                         }
 
-                        points .push (... Bezier .quadric (ax, ay, x1, y1, x, y, BEZIER_STEPS));
+                        points .push (... Bezier .quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS));
 
                         ax = x;
                         ay = y;
@@ -1473,7 +1469,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                        y  += ay;
                                     }
 
-                                    points .push (... Bezier .cubic (ax, ay, x1, y1, x2, y2, x, y, BEZIER_STEPS));
+                                    points .push (... Bezier .cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS));
 
                                     ax = x;
                                     ay = y;
@@ -1550,7 +1546,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                  }
                               }
 
-                              points .push (... Bezier .cubic (ax, ay, x1, y1, x2, y2, x, y, BEZIER_STEPS));
+                              points .push (... Bezier .cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS));
 
                               ax = x;
                               ay = y;
@@ -2420,11 +2416,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       function combineCallback (coords, data, weight)
       {
-         const
-            point = new Vector3 (... coords),
-            index = coordinateNode .point .length;
+         const index = coordinateNode .point .length;
 
-         coordinateNode .point .push (point);
+         coordinateNode .point .push (new Vector3 (... coords));
 
          return index;
       }
@@ -2442,8 +2436,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          tessy .gluTessBeginContour ();
 
-         for (const [i, p] of points .entries ())
-            tessy .gluTessVertex ([p .x, p .y, 0], points .index + i);
+         for (const [i, point] of points .entries ())
+            tessy .gluTessVertex (point, points .index + i);
 
          tessy .gluTessEndContour ();
       }
