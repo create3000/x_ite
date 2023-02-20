@@ -115,7 +115,7 @@ Matrix2 .prototype =
          }
          case 4:
          {
-            for (let i = 0; i < 9; ++ i)
+            for (let i = 0; i < 4; ++ i)
                this [i] = arguments [i];
 
             break;
