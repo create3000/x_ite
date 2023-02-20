@@ -1,4 +1,4 @@
-/* X_ITE v8.6.0 */(function webpackUniversalModuleDefinition(root, factory) {
+/* X_ITE v8.6.1 */(function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 590:
+/***/ 191:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(530);
+/* provided dependency */ var jQuery = __webpack_require__(804);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 194:
+/***/ 193:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(530);
+/* provided dependency */ var jQuery = __webpack_require__(804);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 168:
+/***/ 785:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(530)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(804)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 530:
+/***/ 804:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11812,7 +11812,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 78:
+/***/ 673:
 /***/ ((module) => {
 
 /**
@@ -16591,7 +16591,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 442:
+/***/ 298:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19836,7 +19836,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 749:
+/***/ 203:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -23855,7 +23855,7 @@ Color3 .prototype =
             default: this [_r] = v; this [_g] = p; this [_b] = q; break;
          }
       }
-      
+
       return this;
    },
    toString: function ()
@@ -23911,15 +23911,12 @@ Object .assign (Color3,
    },
    lerp: function (a, b, t, r)
    {
-      // Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.
+      // Linearly interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.
       // Source and destination color must be in HSV space. The resulting HSV color is stored in @a r.
 
       let
-         ha = a [0], hb = b [0];
-
-      const
-         sa = a [1], sb = b [1],
-         va = a [2], vb = b [2];
+         [ha, sa, va] = a,
+         [hb, sb, vb] = b;
 
       if (sa === 0)
          ha = hb;
@@ -25518,9 +25515,7 @@ Vector2 .prototype =
    },
    norm: function ()
    {
-      const
-         x = this .x,
-         y = this .y;
+      const { x, y } = this;
 
       return x * x +
              y * y;
@@ -25536,9 +25531,7 @@ Vector2 .prototype =
    },
    lerp: function (destination, t)
    {
-      const
-         x = this .x,
-         y = this .y;
+      const { x, y } = this;
 
       this .x = x + t * (destination .x - x);
       this .y = y + t * (destination .y - y);
@@ -25552,9 +25545,7 @@ Vector2 .prototype =
    },
    min: function (vector)
    {
-      let
-         x = this .x,
-         y = this .y;
+      let { x, y } = this;
 
       for (const vector of arguments)
       {
@@ -25568,9 +25559,7 @@ Vector2 .prototype =
    },
    max: function (vector)
    {
-      let
-         x = this .x,
-         y = this .y;
+      let { x, y } = this;
 
       for (const vector of arguments)
       {
@@ -25967,8 +25956,8 @@ Vector3 .prototype =
    cross: function (vector)
    {
       const
-         ax = this   .x, ay = this   .y, az = this   .z,
-         bx = vector .x, by = vector .y, bz = vector .z;
+         { x: ax, y: ay, z: az } = this,
+         { x: bx, y: by, z: bz } = vector;
 
       this .x = ay * bz - az * by;
       this .y = az * bx - ax * bz;
@@ -25997,10 +25986,7 @@ Vector3 .prototype =
    },
    norm: function ()
    {
-      let
-         x = this .x,
-         y = this .y,
-         z = this .z;
+      const { x, y, z } = this;
 
       return x * x +
              y * y +
@@ -26018,10 +26004,7 @@ Vector3 .prototype =
    },
    lerp: function (destination, t)
    {
-      const
-         x = this .x,
-         y = this .y,
-         z = this .z;
+      const { x, y, z } = this;
 
       this .x = x + t * (destination .x - x);
       this .y = y + t * (destination .y - y);
@@ -26046,10 +26029,7 @@ Vector3 .prototype =
    },
    min: function (vector)
    {
-      let
-         x = this .x,
-         y = this .y,
-         z = this .z;
+      let { x, y, z } = this;
 
       for (const vector of arguments)
       {
@@ -26065,10 +26045,7 @@ Vector3 .prototype =
    },
    max: function (vector)
    {
-      let
-         x = this .x,
-         y = this .y,
-         z = this .z;
+      let { x, y, z } = this;
 
       for (const vector of arguments)
       {
@@ -26255,10 +26232,8 @@ function Matrix2 ()
 {
    if (arguments .length)
    {
-      this [0] = arguments [0];
-      this [1] = arguments [1];
-      this [2] = arguments [2];
-      this [3] = arguments [3];
+      for (let i = 0; i < 4; ++ i)
+         this [i] = arguments [i];
    }
    else
    {
@@ -26281,18 +26256,17 @@ Matrix2 .prototype =
    copy: function ()
    {
       const copy = Object .create (Matrix2 .prototype);
-      copy [0] = this [0];
-      copy [1] = this [1];
-      copy [2] = this [2];
-      copy [3] = this [3];
+
+      for (let i = 0; i < 4; ++ i)
+         copy [i] = this [i];
+
       return copy;
    },
    assign: function (matrix)
    {
-      this [0] = matrix [0];
-      this [1] = matrix [1];
-      this [2] = matrix [2];
-      this [3] = matrix [3];
+      for (let i = 0; i < 4; ++ i)
+         this [i] = matrix [i];
+
       return this;
    },
    equals: function (matrix)
@@ -26321,10 +26295,9 @@ Matrix2 .prototype =
          }
          case 4:
          {
-            this [0] = arguments [0];
-            this [1] = arguments [1];
-            this [2] = arguments [2];
-            this [3] = arguments [3];
+            for (let i = 0; i < 4; ++ i)
+               this [i] = arguments [i];
+
             break;
          }
       }
@@ -26352,10 +26325,7 @@ Matrix2 .prototype =
    inverse: function ()
    {
       const
-         A = this [0],
-         B = this [1],
-         C = this [2],
-         D = this [3],
+         [A, B, C, D] = this [3],
          d = A * D - B * C;
 
       // if (d === 0) ... determinant is zero.
@@ -26370,10 +26340,8 @@ Matrix2 .prototype =
    multLeft: function (matrix)
    {
       const
-         a0 = this [0], a1 = this [1],
-         a2 = this [2], a3 = this [3],
-         b0 = matrix [0], b1 = matrix [1],
-         b2 = matrix [2], b3 = matrix [3];
+         [a0, a1, a2, a3] = this,
+         [b0, b1, b2, b3] = matrix;
 
       this [0] = a0 * b0 + a2 * b1;
       this [1] = a1 * b0 + a3 * b1;
@@ -26385,10 +26353,8 @@ Matrix2 .prototype =
    multRight: function (matrix)
    {
       const
-         a0 = this [0], a1 = this [1],
-         a2 = this [2], a3 = this [3],
-         b0 = matrix [0], b1 = matrix [1],
-         b2 = matrix [2], b3 = matrix [3];
+         [a0, a1, a2, a3] = this,
+         [b0, b1, b2, b3] = matrix;
 
       this [0] = b0 * a0 + b2 * a1;
       this [1] = b1 * a0 + b3 * a1;
@@ -26407,15 +26373,15 @@ Matrix2 .prototype =
 
          return (x * this [0] + this [1]) / w;
       }
+      else
+      {
+         const { x, y } = vector;
 
-      const
-         x = vector .x,
-         y = vector .y;
+         vector .x = x * this [0] + y * this [2];
+         vector .y = x * this [1] + y * this [3];
 
-      vector .x = x * this [0] + y * this [2];
-      vector .y = x * this [1] + y * this [3];
-
-      return vector;
+         return vector;
+      }
    },
    multMatrixVec: function (vector)
    {
@@ -26427,15 +26393,15 @@ Matrix2 .prototype =
 
          return (x * this [0] + this [1]) / w;
       }
+      else
+      {
+         const { x, y } = vector;
 
-      const
-         x = vector .x,
-         y = vector .y;
+         vector .x = x * this [0] + y * this [1];
+         vector .y = x * this [2] + y * this [3];
 
-      vector .x = x * this [0] + y * this [1];
-      vector .y = x * this [2] + y * this [3];
-
-      return vector;
+         return vector;
+      }
    },
    identity: function ()
    {
@@ -26757,15 +26723,8 @@ function Matrix3 ()
 {
    if (arguments .length)
    {
-      this [0] = arguments [0];
-      this [1] = arguments [1];
-      this [2] = arguments [2];
-      this [3] = arguments [3];
-      this [4] = arguments [4];
-      this [5] = arguments [5];
-      this [6] = arguments [6];
-      this [7] = arguments [7];
-      this [8] = arguments [8];
+      for (let i = 0; i < 9; ++ i)
+         this [i] = arguments [i];
    }
    else
    {
@@ -26788,28 +26747,17 @@ Matrix3 .prototype =
    copy: function ()
    {
       const copy = Object .create (Matrix3 .prototype);
-      copy [0] = this [0];
-      copy [1] = this [1];
-      copy [2] = this [2];
-      copy [3] = this [3];
-      copy [4] = this [4];
-      copy [5] = this [5];
-      copy [6] = this [6];
-      copy [7] = this [7];
-      copy [8] = this [8];
+
+      for (let i = 0; i < 9; ++ i)
+         copy [i] = this [i];
+
       return copy;
    },
    assign: function (matrix)
    {
-      this [0] = matrix [0];
-      this [1] = matrix [1];
-      this [2] = matrix [2];
-      this [3] = matrix [3];
-      this [4] = matrix [4];
-      this [5] = matrix [5];
-      this [6] = matrix [6];
-      this [7] = matrix [7];
-      this [8] = matrix [8];
+      for (let i = 0; i < 9; ++ i)
+         this [i] = matrix [i];
+
       return this;
    },
    equals: function (matrix)
@@ -26957,15 +26905,9 @@ Matrix3 .prototype =
             }
             case 9:
             {
-               this [0] = arguments [0];
-               this [1] = arguments [1];
-               this [2] = arguments [2];
-               this [3] = arguments [3];
-               this [4] = arguments [4];
-               this [5] = arguments [5];
-               this [6] = arguments [6];
-               this [7] = arguments [7];
-               this [8] = arguments [8];
+               for (let i = 0; i < 9; ++ i)
+                  this [i] = arguments [i];
+
                break;
             }
          }
@@ -27091,10 +27033,7 @@ Matrix3 .prototype =
    },
    determinant: function ()
    {
-      const
-         m0 = this [0], m1 = this [1], m2 = this [2],
-         m3 = this [3], m4 = this [4], m5 = this [5],
-         m6 = this [6], m7 = this [7], m8 = this [8];
+      const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this;
 
       return m0 * (m4 * m8 - m5 * m7) -
              m1 * (m3 * m8 - m5 * m6) +
@@ -27113,15 +27052,7 @@ Matrix3 .prototype =
    inverse: function ()
    {
       const
-         m0  = this [0],
-         m1  = this [1],
-         m2  = this [2],
-         m3  = this [3],
-         m4  = this [4],
-         m5  = this [5],
-         m6  = this [6],
-         m7  = this [7],
-         m8  = this [8],
+         { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this,
          t4  = m0 * m4,
          t6  = m0 * m7,
          t8  = m3 * m1,
@@ -27158,12 +27089,8 @@ Matrix3 .prototype =
    multLeft: function (matrix)
    {
       const
-         a0 = this [0], a1 = this [1], a2 = this [2],
-         a3 = this [3], a4 = this [4], a5 = this [5],
-         a6 = this [6], a7 = this [7], a8 = this [8],
-         b0 = matrix [0], b1 = matrix [1], b2 = matrix [2],
-         b3 = matrix [3], b4 = matrix [4], b5 = matrix [5],
-         b6 = matrix [6], b7 = matrix [7], b8 = matrix [8];
+         { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this,
+         { 0: b0, 1: b1, 2: b2, 3: b3, 4: b4, 5: b5, 6: b6, 7: b7, 8: b8 } = matrix;
 
       this [0] = a0 * b0 + a3 * b1 + a6 * b2;
       this [1] = a1 * b0 + a4 * b1 + a7 * b2;
@@ -27180,12 +27107,8 @@ Matrix3 .prototype =
    multRight: function (matrix)
    {
       const
-         a0 = this [0], a1 = this [1], a2 = this [2],
-         a3 = this [3], a4 = this [4], a5 = this [5],
-         a6 = this [6], a7 = this [7], a8 = this [8],
-         b0 = matrix [0], b1 = matrix [1], b2 = matrix [2],
-         b3 = matrix [3], b4 = matrix [4], b5 = matrix [5],
-         b6 = matrix [6], b7 = matrix [7], b8 = matrix [8];
+         { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this,
+         { 0: b0, 1: b1, 2: b2, 3: b3, 4: b4, 5: b5, 6: b6, 7: b7, 8: b8 } = matrix;
 
       this [0] = a0 * b0 + a1 * b3 + a2 * b6;
       this [1] = a0 * b1 + a1 * b4 + a2 * b7;
@@ -27204,8 +27127,7 @@ Matrix3 .prototype =
       if (vector .length === 2)
       {
          const
-            x = vector .x,
-            y = vector .y,
+            { x, y } = vector,
             w = x * this [2] + y * this [5] + this [8];
 
          vector .x = (x * this [0] + y * this [3] + this [6]) / w;
@@ -27213,25 +27135,23 @@ Matrix3 .prototype =
 
          return vector;
       }
+      else
+      {
+         const { x, y, z } = vector;
 
-      const
-         x = vector .x,
-         y = vector .y,
-         z = vector .z;
+         vector .x = x * this [0] + y * this [3] + z * this [6];
+         vector .y = x * this [1] + y * this [4] + z * this [7];
+         vector .z = x * this [2] + y * this [5] + z * this [8];
 
-      vector .x = x * this [0] + y * this [3] + z * this [6];
-      vector .y = x * this [1] + y * this [4] + z * this [7];
-      vector .z = x * this [2] + y * this [5] + z * this [8];
-
-      return vector;
+         return vector;
+      }
    },
    multMatrixVec: function (vector)
    {
       if (vector .length === 2)
       {
          const
-            x = vector .x,
-            y = vector .y,
+            { x, y } = vector,
             w = x * this [6] + y * this [7] + this [8];
 
          vector .x = (x * this [0] + y * this [1] + this [2]) / w;
@@ -27239,23 +27159,20 @@ Matrix3 .prototype =
 
          return vector;
       }
+      else
+      {
+         const { x, y, z } = vector;
 
-      const
-         x = vector .x,
-         y = vector .y,
-         z = vector .z;
+         vector .x = x * this [0] + y * this [1] + z * this [2];
+         vector .y = x * this [3] + y * this [4] + z * this [5];
+         vector .z = x * this [6] + y * this [7] + z * this [8];
 
-      vector .x = x * this [0] + y * this [1] + z * this [2];
-      vector .y = x * this [3] + y * this [4] + z * this [5];
-      vector .z = x * this [6] + y * this [7] + z * this [8];
-
-      return vector;
+         return vector;
+      }
    },
    multDirMatrix: function (vector)
    {
-      const
-         x = vector .x,
-         y = vector .y;
+      const { x, y } = vector;
 
       vector .x = x * this [0] + y * this [3];
       vector .y = x * this [1] + y * this [4];
@@ -27264,9 +27181,7 @@ Matrix3 .prototype =
    },
    multMatrixDir: function (vector)
    {
-      const
-         x = vector .x,
-         y = vector .y;
+      const { x, y } = vector;
 
       vector .x = x * this [0] + y * this [1];
       vector .y = x * this [3] + y * this [4];
@@ -27283,9 +27198,7 @@ Matrix3 .prototype =
    },
    translate: function (translation)
    {
-      const
-         x = translation .x,
-         y = translation .y;
+      const { x, y } = translation;
 
       this [6] += this [0] * x + this [3] * y;
       this [7] += this [1] * x + this [4] * y;
@@ -27298,9 +27211,7 @@ Matrix3 .prototype =
    },
    scale: function (scale)
    {
-      const
-         x = scale .x,
-         y = scale .y;
+      const { x, y } = scale;
 
       this [0] *= x;
       this [3] *= y;
@@ -27312,11 +27223,23 @@ Matrix3 .prototype =
    },
    skewX: function (angle)
    {
-      return this .multLeft (m .set (1, 0, 0, Math .tan (angle), 1, 0, 0, 0, 1));
+      const a = Math .tan (angle);
+
+      this [3] += this [0] * a;
+      this [4] += this [1] * a;
+      this [5] += this [2] * a;
+
+      return this;
    },
    skewY: function (angle)
    {
-      return this .multLeft (m .set (1, Math .tan (angle), 0, 0, 1, 0, 0, 0, 1));
+      const a = Math .tan (angle);
+
+      this [0] += this [3] * a;
+      this [1] += this [4] * a;
+      this [2] += this [5] * a;
+
+      return this;
    },
    toString: function ()
    {
@@ -27942,11 +27865,7 @@ Vector4 .prototype =
    },
    norm: function ()
    {
-      const
-         x = this .x,
-         y = this .y,
-         z = this .z,
-         w = this .w;
+      const { x, y, z, w } = this;
 
       return x * x +
              y * y +
@@ -27966,11 +27885,7 @@ Vector4 .prototype =
    },
    lerp: function (destination, t)
    {
-      const
-         x = this .x,
-         y = this .y,
-         z = this .z,
-         w = this .w;
+      const { x, y, z, w } = this;
 
       this .x = x + t * (destination .x - x);
       this .y = y + t * (destination .y - y);
@@ -27988,11 +27903,7 @@ Vector4 .prototype =
    },
    min: function (vector)
    {
-      let
-         x = this .x,
-         y = this .y,
-         z = this .z,
-         w = this .w;
+      let { x, y, z, w } = this;
 
       for (const vector of arguments)
       {
@@ -28010,11 +27921,7 @@ Vector4 .prototype =
    },
    max: function (vector)
    {
-      let
-         x = this .x,
-         y = this .y,
-         z = this .z,
-         w = this .w;
+      let { x, y, z, w } = this;
 
       for (const vector of arguments)
       {
@@ -28292,11 +28199,7 @@ Quaternion .prototype =
    },
    getMatrix: function (matrix)
    {
-      const
-         x = this .x,
-         y = this .y,
-         z = this .z,
-         w = this .w;
+      const { x, y, z, w } = this;
 
       const
          a = x * x,
@@ -28380,8 +28283,8 @@ Quaternion .prototype =
    multLeft: function (quat)
    {
       const
-         ax = this .x, ay = this .y, az = this .z, aw = this .w,
-         bx = quat .x, by = quat .y, bz = quat .z, bw = quat .w;
+         { x: ax, y: ay, z: az, w: aw } = this,
+         { x: bx, y: by, z: bz, w: bw } = quat;
 
       this .x = aw * bx + ax * bw + ay * bz - az * by;
       this .y = aw * by + ay * bw + az * bx - ax * bz;
@@ -28393,8 +28296,8 @@ Quaternion .prototype =
    multRight: function (quat)
    {
       const
-         ax = this .x, ay = this .y, az = this .z, aw = this .w,
-         bx = quat .x, by = quat .y, bz = quat .z, bw = quat .w;
+         { x: ax, y: ay, z: az, w: aw } = this,
+         { x: bx, y: by, z: bz, w: bw } = quat;
 
       this .x = bw * ax + bx * aw + by * az - bz * ay;
       this .y = bw * ay + by * aw + bz * ax - bx * az;
@@ -28414,8 +28317,8 @@ Quaternion .prototype =
    multVecQuat: function (vector)
    {
       const
-         qx = this .x, qy = this .y, qz = this .z, qw = this .w,
-         vx = vector .x, vy = vector .y, vz = vector .z,
+         { x: qx, y: qy, z: qz, w: qw } = this,
+         { x: vx, y: vy, z: vz } = vector,
          a  = qw * qw - qx * qx - qy * qy - qz * qz,
          b  = 2 * (vx * qx + vy * qy + vz * qz),
          c  = 2 * qw;
@@ -28429,8 +28332,8 @@ Quaternion .prototype =
    multQuatVec: function (vector)
    {
       const
-         qx = this .x, qy = this .y, qz = this .z, qw = this .w,
-         vx = vector .x, vy = vector .y, vz = vector .z,
+         { x: qx, y: qy, z: qz, w: qw } = this,
+         { x: vx, y: vy, z: vz } = vector,
          a  = qw * qw - qx * qx - qy * qy - qz * qz,
          b  = 2 * (vx * qx + vy * qy + vz * qz),
          c  = 2 * qw;
@@ -28443,16 +28346,14 @@ Quaternion .prototype =
    },
    normalize: function ()
    {
-      let length = Math .hypot (this .x, this .y, this .z, this .w);
+      const length = Math .hypot (this .x, this .y, this .z, this .w);
 
       if (length)
       {
-         length = 1 / length;
-
-         this .x *= length;
-         this .y *= length;
-         this .z *= length;
-         this .w *= length;
+         this .x /= length;
+         this .y /= length;
+         this .z /= length;
+         this .w /= length;
       }
 
       return this;
@@ -28466,10 +28367,12 @@ Quaternion .prototype =
    },
    norm: function ()
    {
-      return this .x * this .x +
-             this .y * this .y +
-             this .z * this .z +
-             this .w * this .w;
+      const { x, y, z, w } = this;
+
+      return x * x +
+             y * y +
+             z * z +
+             w * w;
    },
    magnitude: function ()
    {
@@ -29003,8 +28906,7 @@ Rotation4 .prototype =
    },
    getQuaternion: function (quaternion)
    {
-      quaternion .assign (this [_quaternion]);
-      return quaternion;
+      return quaternion .assign (this [_quaternion]);
    },
    setMatrix: function (matrix)
    {
@@ -29255,22 +29157,8 @@ function Matrix4_Matrix4 ()
 {
    if (arguments .length)
    {
-      this [ 0] = arguments [ 0];
-      this [ 1] = arguments [ 1];
-      this [ 2] = arguments [ 2];
-      this [ 3] = arguments [ 3];
-      this [ 4] = arguments [ 4];
-      this [ 5] = arguments [ 5];
-      this [ 6] = arguments [ 6];
-      this [ 7] = arguments [ 7];
-      this [ 8] = arguments [ 8];
-      this [ 9] = arguments [ 9];
-      this [10] = arguments [10];
-      this [11] = arguments [11];
-      this [12] = arguments [12];
-      this [13] = arguments [13];
-      this [14] = arguments [14];
-      this [15] = arguments [15];
+      for (let i = 0; i < 16; ++ i)
+         this [i] = arguments [i];
    }
    else
    {
@@ -29293,42 +29181,17 @@ Matrix4_Matrix4 .prototype =
    copy: function ()
    {
       const copy = Object .create (Matrix4_Matrix4 .prototype);
-      copy [ 0] = this [ 0];
-      copy [ 1] = this [ 1];
-      copy [ 2] = this [ 2];
-      copy [ 3] = this [ 3];
-      copy [ 4] = this [ 4];
-      copy [ 5] = this [ 5];
-      copy [ 6] = this [ 6];
-      copy [ 7] = this [ 7];
-      copy [ 8] = this [ 8];
-      copy [ 9] = this [ 9];
-      copy [10] = this [10];
-      copy [11] = this [11];
-      copy [12] = this [12];
-      copy [13] = this [13];
-      copy [14] = this [14];
-      copy [15] = this [15];
+
+      for (let i = 0; i < 16; ++ i)
+         copy [i] = this [i];
+
       return copy;
    },
    assign: function (matrix)
    {
-      this [ 0] = matrix [ 0];
-      this [ 1] = matrix [ 1];
-      this [ 2] = matrix [ 2];
-      this [ 3] = matrix [ 3];
-      this [ 4] = matrix [ 4];
-      this [ 5] = matrix [ 5];
-      this [ 6] = matrix [ 6];
-      this [ 7] = matrix [ 7];
-      this [ 8] = matrix [ 8];
-      this [ 9] = matrix [ 9];
-      this [10] = matrix [10];
-      this [11] = matrix [11];
-      this [12] = matrix [12];
-      this [13] = matrix [13];
-      this [14] = matrix [14];
-      this [15] = matrix [15];
+      for (let i = 0; i < 16; ++ i)
+         this [i] = matrix [i];
+
       return this;
    },
    equals: function (matrix)
@@ -29481,22 +29344,9 @@ Matrix4_Matrix4 .prototype =
             }
             case 16:
             {
-               this [ 0] = arguments [ 0];
-               this [ 1] = arguments [ 1];
-               this [ 2] = arguments [ 2];
-               this [ 3] = arguments [ 3];
-               this [ 4] = arguments [ 4];
-               this [ 5] = arguments [ 5];
-               this [ 6] = arguments [ 6];
-               this [ 7] = arguments [ 7];
-               this [ 8] = arguments [ 8];
-               this [ 9] = arguments [ 9];
-               this [10] = arguments [10];
-               this [11] = arguments [11];
-               this [12] = arguments [12];
-               this [13] = arguments [13];
-               this [14] = arguments [14];
-               this [15] = arguments [15];
+               for (let i = 0; i < 16; ++ i)
+                  this [i] = arguments [i];
+
                break;
             }
          }
@@ -29568,10 +29418,7 @@ Matrix4_Matrix4 .prototype =
    setQuaternion: function (quaternion)
    {
       const
-         x = quaternion .x,
-         y = quaternion .y,
-         z = quaternion .z,
-         w = quaternion .w,
+         { x, y, z, w } = quaternion,
          A = y * y,
          B = z * z,
          C = x * y,
@@ -29660,22 +29507,8 @@ Matrix4_Matrix4 .prototype =
    determinant: function ()
    {
       const
-         m00 = this [ 0],
-         m01 = this [ 1],
-         m02 = this [ 2],
-         m03 = this [ 3],
-         m04 = this [ 4],
-         m05 = this [ 5],
-         m06 = this [ 6],
-         m07 = this [ 7],
-         m08 = this [ 8],
-         m09 = this [ 9],
-         m10 = this [10],
-         m11 = this [11],
-         m12 = this [12],
-         m13 = this [13],
-         m14 = this [14],
-         m15 = this [15],
+         { 0: m00, 1: m01, 2: m02, 3: m03, 4: m04, 5: m05, 6: m06, 7: m07,
+           8: m08, 9: m09, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15 } = this,
          b = m10 * m15,
          c = m14 * m11,
          d = m06 * m15,
@@ -29711,22 +29544,8 @@ Matrix4_Matrix4 .prototype =
    inverse: function ()
    {
       const
-         m00 = this [ 0],
-         m01 = this [ 1],
-         m02 = this [ 2],
-         m03 = this [ 3],
-         m04 = this [ 4],
-         m05 = this [ 5],
-         m06 = this [ 6],
-         m07 = this [ 7],
-         m08 = this [ 8],
-         m09 = this [ 9],
-         m10 = this [10],
-         m11 = this [11],
-         m12 = this [12],
-         m13 = this [13],
-         m14 = this [14],
-         m15 = this [15],
+         { 0: m00, 1: m01, 2: m02, 3: m03, 4: m04, 5: m05, 6: m06, 7: m07,
+           8: m08, 9: m09, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15 } = this,
          b = m10 * m15,
          c = m14 * m11,
          d = m06 * m15,
@@ -29784,14 +29603,10 @@ Matrix4_Matrix4 .prototype =
    multLeft: function (matrix)
    {
       const
-         a00 = this [ 0], a01 = this [ 1], a02 = this [ 2], a03 = this [ 3],
-         a04 = this [ 4], a05 = this [ 5], a06 = this [ 6], a07 = this [ 7],
-         a08 = this [ 8], a09 = this [ 9], a10 = this [10], a11 = this [11],
-         a12 = this [12], a13 = this [13], a14 = this [14], a15 = this [15],
-         b00 = matrix [ 0], b01 = matrix [ 1], b02 = matrix [ 2], b03 = matrix [ 3],
-         b04 = matrix [ 4], b05 = matrix [ 5], b06 = matrix [ 6], b07 = matrix [ 7],
-         b08 = matrix [ 8], b09 = matrix [ 9], b10 = matrix [10], b11 = matrix [11],
-         b12 = matrix [12], b13 = matrix [13], b14 = matrix [14], b15 = matrix [15];
+         { 0: a00, 1: a01, 2: a02, 3: a03, 4: a04, 5: a05, 6: a06, 7: a07,
+           8: a08, 9: a09, 10: a10, 11: a11, 12: a12, 13: a13, 14: a14, 15: a15 } = this,
+         { 0: b00, 1: b01, 2: b02, 3: b03, 4: b04, 5: b05, 6: b06, 7: b07,
+           8: b08, 9: b09, 10: b10, 11: b11, 12: b12, 13: b13, 14: b14, 15: b15 } = matrix;
 
       this [ 0] = a00 * b00 + a04 * b01 + a08 * b02 + a12 * b03;
       this [ 1] = a01 * b00 + a05 * b01 + a09 * b02 + a13 * b03;
@@ -29815,14 +29630,10 @@ Matrix4_Matrix4 .prototype =
    multRight: function (matrix)
    {
       const
-         a00 = this [ 0], a01 = this [ 1], a02 = this [ 2], a03 = this [ 3],
-         a04 = this [ 4], a05 = this [ 5], a06 = this [ 6], a07 = this [ 7],
-         a08 = this [ 8], a09 = this [ 9], a10 = this [10], a11 = this [11],
-         a12 = this [12], a13 = this [13], a14 = this [14], a15 = this [15],
-         b00 = matrix [ 0], b01 = matrix [ 1], b02 = matrix [ 2], b03 = matrix [ 3],
-         b04 = matrix [ 4], b05 = matrix [ 5], b06 = matrix [ 6], b07 = matrix [ 7],
-         b08 = matrix [ 8], b09 = matrix [ 9], b10 = matrix [10], b11 = matrix [11],
-         b12 = matrix [12], b13 = matrix [13], b14 = matrix [14], b15 = matrix [15];
+         { 0: a00, 1: a01, 2: a02, 3: a03, 4: a04, 5: a05, 6: a06, 7: a07,
+           8: a08, 9: a09, 10: a10, 11: a11, 12: a12, 13: a13, 14: a14, 15: a15 } = this,
+         { 0: b00, 1: b01, 2: b02, 3: b03, 4: b04, 5: b05, 6: b06, 7: b07,
+           8: b08, 9: b09, 10: b10, 11: b11, 12: b12, 13: b13, 14: b14, 15: b15 } = matrix;
 
       this [ 0] = a00 * b00 + a01 * b04 + a02 * b08 + a03 * b12;
       this [ 1] = a00 * b01 + a01 * b05 + a02 * b09 + a03 * b13;
@@ -29848,9 +29659,7 @@ Matrix4_Matrix4 .prototype =
       if (vector .length === 3)
       {
          const
-            x = vector .x,
-            y = vector .y,
-            z = vector .z,
+            { x, y, z } = vector,
             w = 1 / (x * this [3] + y * this [7] + z * this [11] + this [15]);
 
          vector .x = (x * this [0] + y * this [4] + z * this [ 8] + this [12]) * w;
@@ -29859,28 +29668,24 @@ Matrix4_Matrix4 .prototype =
 
          return vector;
       }
+      else
+      {
+         const { x, y, z, w } = vector;
 
-      const
-         x = vector .x,
-         y = vector .y,
-         z = vector .z,
-         w = vector .w;
+         vector .x = x * this [0] + y * this [4] + z * this [ 8] + w * this [12];
+         vector .y = x * this [1] + y * this [5] + z * this [ 9] + w * this [13];
+         vector .z = x * this [2] + y * this [6] + z * this [10] + w * this [14];
+         vector .w = x * this [3] + y * this [7] + z * this [11] + w * this [15];
 
-      vector .x = x * this [0] + y * this [4] + z * this [ 8] + w * this [12];
-      vector .y = x * this [1] + y * this [5] + z * this [ 9] + w * this [13];
-      vector .z = x * this [2] + y * this [6] + z * this [10] + w * this [14];
-      vector .w = x * this [3] + y * this [7] + z * this [11] + w * this [15];
-
-      return vector;
+         return vector;
+      }
    },
    multMatrixVec: function (vector)
    {
       if (vector .length === 3)
       {
          const
-            x = vector .x,
-            y = vector .y,
-            z = vector .z,
+            { x, y, z } = vector,
             w = 1 / (x * this [12] + y * this [13] + z * this [14] + this [15]);
 
          vector .x = (x * this [0] + y * this [1] + z * this [ 2] + this [ 3]) * w;
@@ -29889,26 +29694,21 @@ Matrix4_Matrix4 .prototype =
 
          return vector;
       }
+      else
+      {
+         const { x, y, z, w } = vector;
 
-      const
-         x = vector .x,
-         y = vector .y,
-         z = vector .z,
-         w = vector .w;
+         vector .x = x * this [ 0] + y * this [ 1] + z * this [ 2] + w * this [ 3];
+         vector .y = x * this [ 4] + y * this [ 5] + z * this [ 6] + w * this [ 7];
+         vector .z = x * this [ 8] + y * this [ 9] + z * this [10] + w * this [11];
+         vector .w = x * this [12] + y * this [13] + z * this [14] + w * this [15];
 
-      vector .x = x * this [ 0] + y * this [ 1] + z * this [ 2] + w * this [ 3];
-      vector .y = x * this [ 4] + y * this [ 5] + z * this [ 6] + w * this [ 7];
-      vector .z = x * this [ 8] + y * this [ 9] + z * this [10] + w * this [11];
-      vector .w = x * this [12] + y * this [13] + z * this [14] + w * this [15];
-
-      return vector;
+         return vector;
+      }
    },
    multDirMatrix: function (vector)
    {
-      const
-         x = vector .x,
-         y = vector .y,
-         z = vector .z;
+      const { x, y, z } = vector;
 
       vector .x = x * this [0] + y * this [4] + z * this [ 8];
       vector .y = x * this [1] + y * this [5] + z * this [ 9];
@@ -29918,10 +29718,7 @@ Matrix4_Matrix4 .prototype =
    },
    multMatrixDir: function (vector)
    {
-      const
-         x = vector .x,
-         y = vector .y,
-         z = vector .z;
+      const { x, y, z } = vector;
 
       vector .x = x * this [0] + y * this [1] + z * this [ 2];
       vector .y = x * this [4] + y * this [5] + z * this [ 6];
@@ -29940,10 +29737,7 @@ Matrix4_Matrix4 .prototype =
    },
    translate: function (translation)
    {
-      const
-         x = translation .x,
-         y = translation .y,
-         z = translation .z;
+      const { x, y, z } = translation;
 
       this [12] += this [ 0] * x + this [ 4] * y + this [ 8] * z;
       this [13] += this [ 1] * x + this [ 5] * y + this [ 9] * z;
@@ -29957,10 +29751,7 @@ Matrix4_Matrix4 .prototype =
    },
    scale: function (scale)
    {
-      const
-         x = scale .x,
-         y = scale .y,
-         z = scale .z;
+      const { x, y, z } = scale;
 
       this [ 0] *= x;
       this [ 4] *= y;
@@ -35136,7 +34927,7 @@ x_ite_Namespace.set ("x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
  *
  ******************************************************************************/
 
-const VERSION_default_ = "8.6.0";
+const VERSION_default_ = "8.6.1";
 ;
 
 x_ite_Namespace.set ("x_ite/Browser/VERSION", VERSION_default_);
@@ -35517,40 +35308,35 @@ x_ite_Namespace.set ("x_ite/Browser/Core/Context", Context_default_);
 
 class StopWatch
 {
-   startTime = 0;
-   stopTime = 0;
+   #startTime = 0;
+   #stopTime = 0;
    cycles = 0;
    elapsedTime = 0;
 
    start ()
    {
-      this .startTime = Date .now ();
+      this .#startTime = Date .now ();
    }
 
    stop ()
    {
-      if (this .startTime <= this .stopTime)
+      if (this .#startTime <= this .#stopTime)
          return;
 
-      this .stopTime     = Date .now ();
+      this .#stopTime    = Date .now ();
       this .cycles      += 1;
-      this .elapsedTime += this .stopTime - this .startTime;
+      this .elapsedTime += this .#stopTime - this .#startTime;
    }
 
    reset ()
    {
-      this .startTime   = 0;
-      this .stopTime    = 0;
+      this .#startTime  = 0;
+      this .#stopTime   = 0;
       this .cycles      = 0;
       this .elapsedTime = 0;
    }
 
-   averageCycles ()
-   {
-      return this .elapsedTime ? this .cycles / this .elapsedTime : 0;
-   }
-
-   averageTime ()
+   get averageTime ()
    {
       return this .cycles ? this .elapsedTime / this .cycles : 0;
    }
@@ -36043,7 +35829,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(530);
+/* provided dependency */ var $ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36203,7 +35989,7 @@ BrowserTimings .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
 
       let r = 0;
 
-      rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Frame rate") + ":")) .append ($("<td></td>") .text (f2(this .fps .averageCycles () * 1000) .toLocaleString (language, fixed) + " " + locale_gettext("fps")));
+      rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Frame rate") + ":")) .append ($("<td></td>") .text (f2(1000 / this .fps .averageTime) .toLocaleString (language, fixed) + " " + locale_gettext("fps")));
       rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Speed")      + ":")) .append ($("<td></td>") .text (f2(this .getSpeed (browser .currentSpeed))         .toLocaleString (language, fixed) + " " + this .getSpeedUnit (browser .currentSpeed)));
 
       if (this .localStorage .type === "MORE")
@@ -36211,9 +35997,9 @@ BrowserTimings .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
          const
             layers         = browser .getWorld () .getLayerSet () .getLayers (),
             activeLayer    = browser .getActiveLayer (),
-            navigationTime = activeLayer && browser .getCollisionCount () ? activeLayer .getCollisionTime () .averageTime () : 0,
-            collisionTime  = browser .getCollisionTime () .averageTime () + navigationTime,
-            routingTime    = Math .max (0, browser .getBrowserTime () .averageTime () - (browser .getCameraTime () .averageTime () + browser .getCollisionTime () .averageTime () + browser .getDisplayTime () .averageTime ())),
+            navigationTime = activeLayer && browser .getCollisionCount () ? activeLayer .getCollisionTime () .averageTime : 0,
+            collisionTime  = browser .getCollisionTime () .averageTime + navigationTime,
+            routingTime    = Math .max (0, browser .getBrowserTime () .averageTime - (browser .getCameraTime () .averageTime + browser .getCollisionTime () .averageTime + browser .getDisplayTime () .averageTime)),
             prepareEvents  = browser .prepareEvents () .getInterests () .size - 1,
             sensors        = browser .sensorEvents () .getInterests () .size;
 
@@ -36229,14 +36015,14 @@ BrowserTimings .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
 
          rows [1] .addClass ("x_ite-private-more");
 
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Browser")   + ":")) .append ($("<td></td>") .text (f2(browser .getSystemTime () .averageTime ())           .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("X3D total")       + ":")) .append ($("<td></td>") .text (f2(browser .getBrowserTime () .averageTime ()) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Browser")   + ":")) .append ($("<td></td>") .text (f2(browser .getSystemTime () .averageTime)           .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("X3D total")       + ":")) .append ($("<td></td>") .text (f2(browser .getBrowserTime () .averageTime) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Event Processing")   + ":")) .append ($("<td></td>") .text (f2(routingTime)          .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Pointer")   + ":")) .append ($("<td></td>") .text (f2(browser .getPointingTime () .averageTime ()) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Camera")    + ":")) .append ($("<td></td>") .text (f2(browser .getCameraTime () .averageTime ())  .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Picking")   + ":")) .append ($("<td></td>") .text (f2(browser .getPickingTime () .averageTime ()) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Pointer")   + ":")) .append ($("<td></td>") .text (f2(browser .getPointingTime () .averageTime) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Camera")    + ":")) .append ($("<td></td>") .text (f2(browser .getCameraTime () .averageTime)  .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Picking")   + ":")) .append ($("<td></td>") .text (f2(browser .getPickingTime () .averageTime) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Collision Detection") + ":")) .append ($("<td></td>") .text (f2(collisionTime)        .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Rendering")   + ":")) .append ($("<td></td>") .text (f2(browser .getDisplayTime () .averageTime ()) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Rendering")   + ":")) .append ($("<td></td>") .text (f2(browser .getDisplayTime () .averageTime) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Number of Shapes")    + ":")) .append ($("<td></td>") .text (opaqueShapes + " + " + transparentShapes));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Number of Sensors")   + ":")) .append ($("<td></td>") .text (prepareEvents + sensors));
 
@@ -37001,7 +36787,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(530);
+/* provided dependency */ var Notification_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -37123,8 +36909,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(194);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(530);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(193);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42078,7 +41864,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 x_ite_Namespace.set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(530);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45254,7 +45040,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(530);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47140,7 +46926,7 @@ const X3DOptimizer_default_ = X3DOptimizer;
 x_ite_Namespace.set ("x_ite/Parser/X3DOptimizer", X3DOptimizer_default_);
 /* harmony default export */ const Parser_X3DOptimizer = (X3DOptimizer_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(78);
+/* provided dependency */ var libtess = __webpack_require__(673);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47243,9 +47029,17 @@ const Triangle3 = {
          triangles .push (index);
       }
 
+      // Required in case of a combine, otherwise an empty array is returned.
+
+      function combineCallback (coords, data, weight)
+      {
+         return data [0];
+      }
+
       const tessy = new libtess .GluTesselator ();
 
       tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
       tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
 
       return function (polygon, triangles)
@@ -47503,7 +47297,6 @@ Box3 .prototype =
    setExtents: function (min, max)
    {
       const
-         m  = this .matrix,
          sx = (max .x - min .x) / 2,
          sy = (max .y - min .y) / 2,
          sz = (max .z - min .z) / 2,
@@ -48043,7 +47836,7 @@ const Box3_default_ = Box3;
 x_ite_Namespace.set ("standard/Math/Geometry/Box3", Box3_default_);
 /* harmony default export */ const Geometry_Box3 = (Box3_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(530);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50221,16 +50014,16 @@ GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.protot
          index1 = Algorithm.clamp (Algorithm.upperBound (times, 0, times .length, time), 1, times .length - 1),
          index0 = index1 - 1,
          td     = times [index1] - times [index0],
-         t      = (time - times [index0]) / td,
-         t2     = Math .pow (t, 2),
-         t3     = Math .pow (t, 3),
+         t1     = (time - times [index0]) / td,
+         t2     = t1 * t1,
+         t3     = t2 * t1,
          v0     = values [index0 * 3 + 1] .copy (),
          b0     = values [index0 * 3 + 2] .copy (),
          v1     = values [index1 * 3 + 1] .copy (),
          a1     = values [index1 * 3 + 0] .copy ();
 
       v0 .multiply (2 * t3 - 3 * t2 + 1);
-      b0 .multiply (td * (t3 - 2 * t2 + t));
+      b0 .multiply (td * (t3 - 2 * t2 + t1));
       v1 .multiply (-2 * t3 + 3 * t2);
       a1 .multiply (td * (t3 - t2));
 
@@ -50270,7 +50063,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(530);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50423,7 +50216,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(530);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52151,7 +51944,6 @@ Box2 .prototype =
    setExtents: function (min, max)
    {
       const
-         m  = this .matrix,
          sx = (max .x - min .x) / 2,
          sy = (max .y - min .y) / 2,
          cx = (max .x + min .x) / 2,
@@ -52338,235 +52130,198 @@ x_ite_Namespace.set ("standard/Math/Geometry/Box2", Box2_default_);
 
 
 
-const lerp = Algorithm.lerp;
 
-function Bezier (/*x0, y0, x1, y1, x2, y2, x3, y3*/)
-{
-   this .args = arguments;
-}
 
-Bezier .prototype =
+
+
+const { interval } = Algorithm;
+
+// https://pomax.github.io/bezierinfo/
+
+const Bezier =
 {
-   getPoints: function (type, steps)
+   quadric: (function ()
+   {
+      const
+         c = new Numbers_Matrix3 (1, 0, 0, -2, 2, 0, 1, -2, 1),
+         p = new Numbers_Matrix3 ();
+
+      return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, steps)
+      {
+         const points = [ ];
+
+         p .set (x0, y0, z0, x1, y1, z1, x2, y2, z2)
+            .multLeft (c);
+
+         for (let i = 0, d = steps - 1; i < steps; ++ i)
+         {
+            const t = i / d;
+
+            points .push (p .multVecMatrix (new Numbers_Vector3 (1, t, t * t)));
+         }
+
+         return points;
+      };
+   })(),
+   cubic: (function ()
+   {
+      const
+         v = new Numbers_Vector4 (0, 0, 0, 0),
+         c = new Numbers_Matrix4 (1, 0, 0, 0, -3, 3, 0, 0, 3, -6, 3, 0, -1, 3, -3, 1),
+         p = new Numbers_Matrix4 ();
+
+      return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, x3, y3, z3, steps)
+      {
+         const points = [ ];
+
+         p .set (x0, y0, z0, 0, x1, y1, z1, 0, x2, y2, z2, 0, x3, y3, z3, 0)
+            .multLeft (c);
+
+         for (let i = 0, d = steps - 1; i < steps; ++ i)
+         {
+            const t = i / d;
+
+            p .multVecMatrix (v .set (1, t, t * t, t * t * t));
+
+            points .push (new Numbers_Vector3 (v .x, v .y, v .z));
+         }
+
+         return points;
+      };
+   })(),
+   arc: function (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, steps)
    {
       const points = [ ];
 
-      switch (type)
+      // https://ericeastwood.com/blog/25/curves-and-arcs-quadratic-cubic-elliptical-svg-implementations
+      // See https://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes.
+
+      // If the endpoints are identical, then this is equivalent to omitting the elliptical arc segment entirely.
+      if (ax === x && ay === y)
       {
-         case "quadric":
-         {
-            const
-               x0 = this .args [0],
-               y0 = this .args [1],
-               x1 = this .args [2],
-               y1 = this .args [3],
-               x2 = this .args [4],
-               y2 = this .args [5];
-
-            for (let i = 0, d = steps - 1; i < steps; ++ i)
-            {
-               points .push (quadric (x0, y0, x1, y1, x2, y2, i / d));
-            }
-
-            break;
-         }
-         case "cubic":
-         {
-            const
-               x0 = this .args [0],
-               y0 = this .args [1],
-               x1 = this .args [2],
-               y1 = this .args [3],
-               x2 = this .args [4],
-               y2 = this .args [5],
-               x3 = this .args [6],
-               y3 = this .args [7];
-
-            for (let i = 0, d = steps - 1; i < steps; ++ i)
-            {
-               points .push (cubic (x0, y0, x1, y1, x2, y2, x3, y3, i / d));
-            }
-
-            break;
-         }
-         case "arc":
-         {
-            let
-               ax            = this .args [0],
-               ay            = this .args [1],
-               rx            = this .args [2],
-               ry            = this .args [3],
-               xAxisRotation = this .args [4],
-               largeArcFlag  = this .args [5],
-               sweepFlag     = this .args [6],
-               x             = this .args [7],
-               y             = this .args [8];
-
-            // https://ericeastwood.com/blog/25/curves-and-arcs-quadratic-cubic-elliptical-svg-implementations
-            // See https://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes.
-
-            // If the endpoints are identical, then this is equivalent to omitting the elliptical arc segment entirely.
-            if (ax === x && ay === y)
-            {
-               points .push (new Numbers_Vector2 (x, y));
-               return;
-            }
-
-            // In accordance to: http://www.w3.org/TR/SVG/implnote.html#ArcOutOfRangeParameters
-
-            rx = Math .abs (rx);
-            ry = Math .abs (ry);
-
-            // If rx = 0 or ry = 0 then this arc is treated as a straight line segment joining the endpoints.
-            if (rx === 0 || ry === 0)
-            {
-               points .push (new Numbers_Vector2 (ax, ay), new Numbers_Vector2 (x, y));
-               return;
-            }
-
-            const
-               rx2 = rx * rx,
-               ry2 = ry * ry;
-
-            // In accordance to: http://www.w3.org/TR/SVG/implnote.html#ArcOutOfRangeParameters
-
-            xAxisRotation = Algorithm.interval (xAxisRotation, 0, 2 * Math .PI);
-
-            const
-               sinRotation = Math .sin (xAxisRotation),
-               cosRotation = Math .cos (xAxisRotation);
-
-            // Following "Conversion from endpoint to center parameterization"
-            // http://www.w3.org/TR/SVG/implnote.html#ArcConversionEndpointToCenter
-
-            // Step #1: Compute transformedPoint
-            const d = new Numbers_Vector2 (ax - x, ay - y) .divide (2);
-
-            const transformedPoint = new Numbers_Vector2 ( cosRotation * d .x + sinRotation * d .y,
-                                                  -sinRotation * d .x + cosRotation * d .y);
-
-            const transformedPoint2 = transformedPoint .copy () .multVec (transformedPoint);
-
-            // Ensure radii are large enough
-            const radiiCheck = transformedPoint2 .x / rx2 + transformedPoint2 .y / ry2;
-
-            if (radiiCheck > 1)
-            {
-               rx = Math .sqrt (radiiCheck) * rx;
-               ry = Math .sqrt (radiiCheck) * ry;
-            }
-
-            // Step #2: Compute transformedCenter
-            const cSquareNumerator = rx2 * ry2 - rx2 * transformedPoint2 .y - ry2 * transformedPoint2 .x;
-            const cSquareRootDenom =             rx2 * transformedPoint2 .y + ry2 * transformedPoint2 .x;
-            let   cRadicand        = cSquareNumerator / cSquareRootDenom;
-
-            // Make sure this never drops below zero because of precision
-            cRadicand = Math .max (0, cRadicand);
-
-            const cCoef = (largeArcFlag !== sweepFlag ? 1 : -1) * Math .sqrt (cRadicand);
-
-            const transformedCenter = new Numbers_Vector2 ( cCoef * rx * transformedPoint .y / ry,
-                                                   -cCoef * ry * transformedPoint .x / rx);
-
-            // Step #3: Compute center
-            const center = new Numbers_Vector2 (cosRotation * transformedCenter .x - sinRotation * transformedCenter .y + ((ax + x) / 2),
-                                        sinRotation * transformedCenter .x + cosRotation * transformedCenter .y + ((ay + y) / 2));
-
-            // Step #4: Compute start/sweep angles
-            const startVector = new Numbers_Vector2 ((transformedPoint .x - transformedCenter .x) / rx,
-                                             (transformedPoint .y - transformedCenter .y) / ry);
-
-            const endVector = new Numbers_Vector2 ((-transformedPoint .x - transformedCenter .x) / rx,
-                                           (-transformedPoint .y - transformedCenter .y) / ry);
-
-            const get_angle  = (x) => { return x > 0 ? x : 2 * Math .PI + x; }; // transform angle to range [0, 2pi]
-            const startAngle = get_angle (Math .atan2 (startVector .y, startVector .x));
-            const endAngle   = get_angle (Math .atan2 (endVector   .y, endVector   .x));
-
-            let sweepAngle = endAngle - startAngle;
-
-            if (largeArcFlag)
-            {
-               // sweepAngle must be positive
-               if (sweepAngle < 0)
-                  sweepAngle += 2 * Math .PI;
-            }
-            else
-            {
-               // sweepAngle must be negative
-               if (sweepAngle > 0)
-                  sweepAngle -= 2 * Math .PI;
-            }
-
-            if (sweepFlag && sweepAngle < 0)
-               sweepAngle += 2 *Math .PI;
-
-            else if (!sweepFlag && sweepAngle > 0)
-               sweepAngle -= 2 * Math .PI;
-
-            // Interpolate:
-
-            const bezier_steps   = Math .max (4, Math .abs (sweepAngle) * steps / (2 * Math .PI));
-            const bezier_steps_1 = bezier_steps - 1;
-
-            points .push (new Numbers_Vector2 (ax, ay));
-
-            for (let i = 1; i < bezier_steps_1; ++ i)
-            {
-               const t = i / bezier_steps_1;
-
-               // From http://www.w3.org/TR/SVG/implnote.html#ArcParameterizationAlternatives
-               const angle = startAngle + (sweepAngle * t);
-               const x     = rx * Math .cos (angle);
-               const y     = ry * Math .sin (angle);
-
-               const point = new Numbers_Vector2 (cosRotation * x - sinRotation * y + center .x,
-                                          sinRotation * x + cosRotation * y + center .y);
-
-               points .push (point);
-            }
-
-            points .push (new Numbers_Vector2 (x, y));
-            break;
-         }
+         points .push (new Numbers_Vector3 (x, y, 0));
+         return;
       }
+
+      // In accordance to: http://www.w3.org/TR/SVG/implnote.html#ArcOutOfRangeParameters
+
+      rx = Math .abs (rx);
+      ry = Math .abs (ry);
+
+      // If rx = 0 or ry = 0 then this arc is treated as a straight line segment joining the endpoints.
+      if (rx === 0 || ry === 0)
+      {
+         points .push (new Numbers_Vector3 (ax, ay, 0), new Numbers_Vector3 (x, y, 0));
+         return;
+      }
+
+      const
+         rx2 = rx * rx,
+         ry2 = ry * ry;
+
+      // In accordance to: http://www.w3.org/TR/SVG/implnote.html#ArcOutOfRangeParameters
+
+      xAxisRotation = interval (xAxisRotation, 0, 2 * Math .PI);
+
+      const
+         sinRotation = Math .sin (xAxisRotation),
+         cosRotation = Math .cos (xAxisRotation);
+
+      // Following "Conversion from endpoint to center parameterization"
+      // http://www.w3.org/TR/SVG/implnote.html#ArcConversionEndpointToCenter
+
+      // Step #1: Compute transformedPoint
+      const d = new Numbers_Vector2 (ax - x, ay - y) .divide (2);
+
+      const transformedPoint = new Numbers_Vector2 ( cosRotation * d .x + sinRotation * d .y,
+                                             -sinRotation * d .x + cosRotation * d .y);
+
+      const transformedPoint2 = transformedPoint .copy () .multVec (transformedPoint);
+
+      // Ensure radii are large enough
+      const radiiCheck = transformedPoint2 .x / rx2 + transformedPoint2 .y / ry2;
+
+      if (radiiCheck > 1)
+      {
+         rx = Math .sqrt (radiiCheck) * rx;
+         ry = Math .sqrt (radiiCheck) * ry;
+      }
+
+      // Step #2: Compute transformedCenter
+      const cSquareNumerator = rx2 * ry2 - rx2 * transformedPoint2 .y - ry2 * transformedPoint2 .x;
+      const cSquareRootDenom =             rx2 * transformedPoint2 .y + ry2 * transformedPoint2 .x;
+      let   cRadicand        = cSquareNumerator / cSquareRootDenom;
+
+      // Make sure this never drops below zero because of precision
+      cRadicand = Math .max (0, cRadicand);
+
+      const cCoef = (largeArcFlag !== sweepFlag ? 1 : -1) * Math .sqrt (cRadicand);
+
+      const transformedCenter = new Numbers_Vector2 ( cCoef * rx * transformedPoint .y / ry,
+                                             -cCoef * ry * transformedPoint .x / rx);
+
+      // Step #3: Compute center
+      const center = new Numbers_Vector2 (cosRotation * transformedCenter .x - sinRotation * transformedCenter .y + ((ax + x) / 2),
+                                  sinRotation * transformedCenter .x + cosRotation * transformedCenter .y + ((ay + y) / 2));
+
+      // Step #4: Compute start/sweep angles
+      const startVector = new Numbers_Vector2 ((transformedPoint .x - transformedCenter .x) / rx,
+                                       (transformedPoint .y - transformedCenter .y) / ry);
+
+      const endVector = new Numbers_Vector2 ((-transformedPoint .x - transformedCenter .x) / rx,
+                                     (-transformedPoint .y - transformedCenter .y) / ry);
+
+      const get_angle  = (x) => { return x > 0 ? x : 2 * Math .PI + x; }; // transform angle to range [0, 2pi]
+      const startAngle = get_angle (Math .atan2 (startVector .y, startVector .x));
+      const endAngle   = get_angle (Math .atan2 (endVector   .y, endVector   .x));
+
+      let sweepAngle = endAngle - startAngle;
+
+      if (largeArcFlag)
+      {
+         // sweepAngle must be positive
+         if (sweepAngle < 0)
+            sweepAngle += 2 * Math .PI;
+      }
+      else
+      {
+         // sweepAngle must be negative
+         if (sweepAngle > 0)
+            sweepAngle -= 2 * Math .PI;
+      }
+
+      if (sweepFlag && sweepAngle < 0)
+         sweepAngle += 2 *Math .PI;
+
+      else if (!sweepFlag && sweepAngle > 0)
+         sweepAngle -= 2 * Math .PI;
+
+      // Interpolate:
+
+      const bezier_steps   = Math .max (4, Math .abs (sweepAngle) * steps / (2 * Math .PI));
+      const bezier_steps_1 = bezier_steps - 1;
+
+      points .push (new Numbers_Vector3 (ax, ay, 0));
+
+      for (let i = 1; i < bezier_steps_1; ++ i)
+      {
+         const t = i / bezier_steps_1;
+
+         // From http://www.w3.org/TR/SVG/implnote.html#ArcParameterizationAlternatives
+         const angle = startAngle + (sweepAngle * t);
+         const x     = rx * Math .cos (angle);
+         const y     = ry * Math .sin (angle);
+
+         points .push (new Numbers_Vector3 (cosRotation * x - sinRotation * y + center .x,
+                                    sinRotation * x + cosRotation * y + center .y,
+                                    0));
+      }
+
+      points .push (new Numbers_Vector3 (x, y, 0));
 
       return points;
    }
 };
-
-function quadric (x0, y0, x1, y1, x2, y2, t)
-{
-   const
-      ax0 = lerp (x0, x1, t),
-      ay0 = lerp (y0, y1, t),
-      ax1 = lerp (x1, x2, t),
-      ay1 = lerp (y1, y2, t),
-      bx0 = lerp (ax0, ax1, t),
-      by0 = lerp (ay0, ay1, t);
-
-   return new Numbers_Vector2 (bx0, by0);
-}
-
-function cubic (x0, y0, x1, y1, x2, y2, x3, y3, t)
-{
-   const
-      ax0 = lerp (x0, x1, t),
-      ay0 = lerp (y0, y1, t),
-      ax1 = lerp (x1, x2, t),
-      ay1 = lerp (y1, y2, t),
-      ax2 = lerp (x2, x3, t),
-      ay2 = lerp (y2, y3, t),
-      bx0 = lerp (ax0, ax1, t),
-      by0 = lerp (ay0, ay1, t),
-      bx1 = lerp (ax1, ax2, t),
-      by1 = lerp (ay1, ay2, t),
-      cx0 = lerp (bx0, bx1, t),
-      cy0 = lerp (by0, by1, t);
-
-   return new Numbers_Vector2 (cx0, cy0);
-}
 
 const Bezier_default_ = Bezier;
 ;
@@ -52574,8 +52329,8 @@ const Bezier_default_ = Bezier;
 x_ite_Namespace.set ("standard/Math/Algorithms/Bezier", Bezier_default_);
 /* harmony default export */ const Algorithms_Bezier = (Bezier_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(530);
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(78);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(804);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(673);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53305,8 +53060,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       const coordinateNode = scene .createNode ("Coordinate");
 
-      for (const point of points)
-         coordinateNode .point .push (new Numbers_Vector3 (point .x, point .y, 0));
+      coordinateNode .point .push (... points);
 
       if (this .style .fillType !== "NONE")
       {
@@ -53378,10 +53132,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       const coordinateNode = scene .createNode ("Coordinate");
 
       for (const points of contours)
-      {
-         for (const point of points)
-            coordinateNode .point .push (new Numbers_Vector3 (point .x, point .y, 0));
-      }
+         coordinateNode .point .push (... points);
 
       if (this .style .fillType !== "NONE")
       {
@@ -53702,7 +53453,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                {
                   const y = this .value;
 
-                  points .push (new Numbers_Vector2 (x, y));
+                  points .push (new Numbers_Vector3 (x, y, 0));
 
                   if (this .comma ())
                      continue;
@@ -53780,7 +53531,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                            y += ay;
                         }
 
-                        points .push (new Numbers_Vector2 (x, y));
+                        points .push (new Numbers_Vector3 (x, y, 0));
 
                         ax = x;
                         ay = y;
@@ -53818,7 +53569,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                            y += ay;
                         }
 
-                        points .push (new Numbers_Vector2 (x, y));
+                        points .push (new Numbers_Vector3 (x, y, 0));
 
                         ax = x;
                         ay = y;
@@ -53847,7 +53598,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                      if (relative)
                         x += ax;
 
-                     points .push (new Numbers_Vector2 (x, ay));
+                     points .push (new Numbers_Vector3 (x, ay, 0));
 
                      ax = x;
 
@@ -53874,7 +53625,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                      if (relative)
                         y += ay;
 
-                     points .push (new Numbers_Vector2 (ax, y));
+                     points .push (new Numbers_Vector3 (ax, y, 0));
 
                      ay = y;
 
@@ -53924,9 +53675,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                                  y  += ay;
                               }
 
-                              const curve = new Algorithms_Bezier (ax, ay, x1, y1, x, y);
-
-                              points .push (... curve .getPoints ("quadric", BEZIER_STEPS));
+                              points .push (... Algorithms_Bezier.quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS));
 
                               ax = x;
                               ay = y;
@@ -53987,9 +53736,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                            }
                         }
 
-                        const curve = new Algorithms_Bezier (ax, ay, x1, y1, x, y);
-
-                        points .push (... curve .getPoints ("quadric", BEZIER_STEPS));
+                        points .push (... Algorithms_Bezier.quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS));
 
                         ax = x;
                         ay = y;
@@ -54055,9 +53802,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                                        y  += ay;
                                     }
 
-                                    const curve = new Algorithms_Bezier (ax, ay, x1, y1, x2, y2, x, y);
-
-                                    points .push (... curve .getPoints ("cubic", BEZIER_STEPS));
+                                    points .push (... Algorithms_Bezier.cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS));
 
                                     ax = x;
                                     ay = y;
@@ -54134,9 +53879,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                                  }
                               }
 
-                              const curve = new Algorithms_Bezier (ax, ay, x1, y1, x2, y2, x, y);
-
-                              points .push (... curve .getPoints ("cubic", BEZIER_STEPS));
+                              points .push (... Algorithms_Bezier.cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS));
 
                               ax = x;
                               ay = y;
@@ -54176,7 +53919,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
                         if (this .double ())
                         {
-                           let xAxisRotation = this .value;
+                           let xAxisRotation = Algorithm.radians (this .value);
 
                            this .comma ();
 
@@ -54208,9 +53951,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                                           y += ay;
                                        }
 
-                                       const curve = new Algorithms_Bezier (ax, ay, rx, ry, Algorithm.radians (xAxisRotation), largeArcFlag, sweepFlag, x, y);
-
-                                       points .push (... curve .getPoints ("arc", CIRCLE_STEPS));
+                                       points .push (... Algorithms_Bezier.arc (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, CIRCLE_STEPS));
 
                                        ax = x;
                                        ay = y;
@@ -55008,11 +54749,9 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       function combineCallback (coords, data, weight)
       {
-         const
-            point = new Numbers_Vector3 (... coords),
-            index = coordinateNode .point .length;
+         const index = coordinateNode .point .length;
 
-         coordinateNode .point .push (point);
+         coordinateNode .point .push (new Numbers_Vector3 (... coords));
 
          return index;
       }
@@ -55030,8 +54769,8 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       {
          tessy .gluTessBeginContour ();
 
-         for (const [i, p] of points .entries ())
-            tessy .gluTessVertex ([p .x, p .y, 0], points .index + i);
+         for (const [i, point] of points .entries ())
+            tessy .gluTessVertex (point, points .index + i);
 
          tessy .gluTessEndContour ();
       }
@@ -55057,7 +54796,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace.set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(530);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55356,9 +55095,7 @@ Plane3 .prototype =
    },
    intersectsLine: function (line, intersection)
    {
-      const
-         point     = line .point,
-         direction = line .direction;
+      const { point, direction } = line;
 
       // Check if the line is parallel to the plane.
       const theta = direction .dot (this .normal);
@@ -55518,17 +55255,7 @@ ViewVolume .prototype =
          this .viewport .assign (viewport);
          this .scissor  .assign (scissor);
 
-         const points = this .points;
-
-         const
-            p0 = points [0],
-            p1 = points [1],
-            p2 = points [2],
-            p3 = points [3],
-            p4 = points [4],
-            p5 = points [5],
-            p6 = points [6],
-            p7 = points [7];
+         const [p0, p1 ,p2, p3, p4, p5, p6, p7] = this .points;
 
          const
             x1 = scissor [0],
@@ -55586,17 +55313,17 @@ ViewVolume .prototype =
 
       if (edges .tainted)
       {
-         const points = this .points;
+         const [p0, p1 ,p2, p3, p4, p5, p6, p7] = this .points;
 
-         edges [0] .assign (points [0]) .subtract (points [1]);
-         edges [1] .assign (points [1]) .subtract (points [2]);
-         edges [2] .assign (points [2]) .subtract (points [3]);
-         edges [3] .assign (points [3]) .subtract (points [0]);
+         edges [0] .assign (p0) .subtract (p1);
+         edges [1] .assign (p1) .subtract (p2);
+         edges [2] .assign (p2) .subtract (p3);
+         edges [3] .assign (p3) .subtract (p0);
 
-         edges [4] .assign (points [0]) .subtract (points [4]);
-         edges [5] .assign (points [1]) .subtract (points [5]);
-         edges [6] .assign (points [2]) .subtract (points [6]);
-         edges [7] .assign (points [3]) .subtract (points [7]);
+         edges [4] .assign (p0) .subtract (p4);
+         edges [5] .assign (p1) .subtract (p5);
+         edges [6] .assign (p2) .subtract (p6);
+         edges [7] .assign (p3) .subtract (p7);
 
          // Edges 8 - 11 are equal to edges 0 - 3.
 
@@ -55607,24 +55334,24 @@ ViewVolume .prototype =
    },
    intersectsSphere: function (radius, center)
    {
-      const planes = this .planes;
+      const [p0, p1 ,p2, p3, p4, p5, p6, p7] = this .planes;
 
-      if (planes [0] .getDistanceToPoint (center) > radius)
+      if (p0 .getDistanceToPoint (center) > radius)
          return false;
 
-      if (planes [1] .getDistanceToPoint (center) > radius)
+      if (p1 .getDistanceToPoint (center) > radius)
          return false;
 
-      if (planes [2] .getDistanceToPoint (center) > radius)
+      if (p2 .getDistanceToPoint (center) > radius)
          return false;
 
-      if (planes [3] .getDistanceToPoint (center) > radius)
+      if (p3 .getDistanceToPoint (center) > radius)
          return false;
 
-      if (planes [4] .getDistanceToPoint (center) > radius)
+      if (p4 .getDistanceToPoint (center) > radius)
          return false;
 
-      if (planes [5] .getDistanceToPoint (center) > radius)
+      if (p5 .getDistanceToPoint (center) > radius)
          return false;
 
       return true;
@@ -56484,10 +56211,8 @@ Line3 .prototype =
       return function (line, point)
       {
          const
-            p1 = this .point,
-            p2 = line .point,
-            d1 = this .direction,
-            d2 = line .direction;
+            { point: p1, direction: d1 } = this,
+            { point: p2, direction: d2 } = line;
 
          let t = d1 .dot (d2);
 
@@ -60653,14 +60378,14 @@ Complex .prototype =
       this .imag *= value;
       return this;
    },
-   multComp: function ()
+   multComp: function (value)
    {
       const
-         real = this .real,
-         imag = this .imag;
+         { real: ar, imag: ai } = this,
+         { real: br, imag: bi } = value;
 
-      this .real = real * value .real - imag * value .imag;
-      this .imag = real * value .imag + imag * value .real;
+      this .real = ar * br - ai * bi;
+      this .imag = ar * bi + ai * br;
       return this;
    },
    //divide: function (value)
@@ -60670,10 +60395,9 @@ Complex .prototype =
    divComp: function (value)
    {
       const
-         ar = this .real, ai = this .imag,
-         br = value .real, bi = value .imag;
-
-      const d = br * br + bi * bi;
+         { real: ar, imag: ai } = this,
+         { real: br, imag: bi } = value,
+         d = br * br + bi * bi;
 
       this .real = (ar * br + ai * bi) / d;
       this .imag = (ai * br - ar * bi) / d;
@@ -62067,7 +61791,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(530);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66321,7 +66045,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace.set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(530);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -68666,7 +68390,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(530);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70622,7 +70346,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(530);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77114,8 +76838,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(168);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(530);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(785);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77979,8 +77703,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(168);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(530);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(785);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78930,8 +78654,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(168);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(530);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(785);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79240,8 +78964,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(168);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(530);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(785);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -80844,8 +80568,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(168);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(530);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(785);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81867,8 +81591,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(530);
-/* provided dependency */ var ResizeSensor = __webpack_require__(590);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(804);
+/* provided dependency */ var ResizeSensor = __webpack_require__(191);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90394,7 +90118,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace.set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(530);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101774,17 +101498,6 @@ x_ite_Namespace.set ("x_ite/Components/Interpolation/PositionInterpolator2D", Po
 
 
 
-const
-   T  = [ ],
-   Fp = [ ],
-   Fm = [ ],
-   S  = new Numbers_Vector4 (0, 0, 0, 0);
-
-const H = new Numbers_Matrix4 ( 2, -2,  1,  1,
-                       -3,  3, -2, -1,
-                        0,  0,  1,  0,
-                        1,  0,  0,  0);
-
 function CatmullRomSplineInterpolator ()
 {
    this .T0 = [ ];
@@ -101794,114 +101507,131 @@ function CatmullRomSplineInterpolator ()
 CatmullRomSplineInterpolator .prototype =
 {
    constructor: CatmullRomSplineInterpolator,
-   generate: function (closed, key, keyValue, keyVelocity, normalizeVelocity)
+   generate: (function ()
    {
       const
-         T0 = this .T0,
-         T1 = this .T1;
+         T  = [ ],
+         Fp = [ ],
+         Fm = [ ];
 
-      T0 .length = 0;
-      T1 .length = 0;
-
-      T  .length = 0;
-      Fp .length = 0;
-      Fm .length = 0;
-
-      if (key .length > 1)
+      return function (closed, key, keyValue, keyVelocity, normalizeVelocity)
       {
-         // T
+         const
+            T0 = this .T0,
+            T1 = this .T1;
 
-         if (keyVelocity .length === 0)
+         T0 .length = 0;
+         T1 .length = 0;
+
+         T  .length = 0;
+         Fp .length = 0;
+         Fm .length = 0;
+
+         if (key .length > 1)
          {
-            if (closed)
-               T .push (this .divide (this .subtract (keyValue [1], keyValue [keyValue .length - 2]), 2));
+            // T
 
-            else
-               T .push (this .create ());
-
-            for (let i = 1, length = keyValue .length - 1; i < length; ++ i)
-               T .push (this .divide (this .subtract (keyValue [i + 1], keyValue [i - 1]), 2));
-
-            T .push (this .copy (T [0]));
-         }
-         else
-         {
-            for (let i = 0, length = keyVelocity .length; i < length; ++ i)
-               T .push (this .copy (keyVelocity [i]));
-
-            if (normalizeVelocity)
+            if (keyVelocity .length === 0)
             {
-               let Dtot = 0;
+               if (closed)
+                  T .push (this .divide (this .subtract (keyValue [1], keyValue [keyValue .length - 2]), 2));
 
-               for (let i = 0, length = keyValue .length - 1; i < length; ++ i)
-                  Dtot += this .abs (this .subtract (keyValue [i], keyValue [i + 1]));
+               else
+                  T .push (this .create ());
 
-               for (let i = 0, length = T .length - 1; i < length; ++ i)
+               for (let i = 1, length = keyValue .length - 1; i < length; ++ i)
+                  T .push (this .divide (this .subtract (keyValue [i + 1], keyValue [i - 1]), 2));
+
+               T .push (this .copy (T [0]));
+            }
+            else
+            {
+               for (let i = 0, length = keyVelocity .length; i < length; ++ i)
+                  T .push (this .copy (keyVelocity [i]));
+
+               if (normalizeVelocity)
                {
-                  const Tia = this .abs (T [i]);
+                  let Dtot = 0;
 
-                  if (Tia)
-                     T [i] = this .multiply (T [i], Dtot / Tia);
+                  for (let i = 0, length = keyValue .length - 1; i < length; ++ i)
+                     Dtot += this .magnitude (this .subtract (keyValue [i], keyValue [i + 1]));
+
+                  for (let i = 0, length = T .length - 1; i < length; ++ i)
+                  {
+                     const Tia = this .magnitude (T [i]);
+
+                     if (Tia)
+                        T [i] = this .multiply (T [i], Dtot / Tia);
+                  }
                }
             }
-         }
 
-         // Fm, Fp
+            // Fm, Fp
 
-         if (closed)
-         {
-            const i_1 = key .length - 1;
-            const i_2 = key .length - 2;
+            if (closed)
+            {
+               const i_1 = key .length - 1;
+               const i_2 = key .length - 2;
 
-            const d = key [1] - key [0] + key [i_1] - key [i_2];
+               const d = key [1] - key [0] + key [i_1] - key [i_2];
 
-            Fm .push (2 * (key [1]   - key [0])   / d);
-            Fp .push (2 * (key [i_1] - key [i_2]) / d);
+               Fm .push (2 * (key [1]   - key [0])   / d);
+               Fp .push (2 * (key [i_1] - key [i_2]) / d);
+            }
+            else
+            {
+               Fm .push (1);
+               Fp .push (1);
+            }
 
+            for (let i = 1, length = key .length - 1; i < length; ++ i)
+            {
+               const d = key [i + 1] - key [i - 1];
+
+               Fm .push (2 * (key [i + 1] - key [i])     / d);
+               Fp .push (2 * (key [i]     - key [i - 1]) / d);
+            }
+
+            Fm .push (Fm [0]);
+            Fp .push (Fp [0]);
+
+            // T0, T1
+
+            for (let i = 0, length = T .length; i < length; ++ i)
+            {
+               T0 .push (this .multiply (T [i], Fp [i]));
+               T1 .push (this .multiply (T [i], Fm [i]));
+            }
          }
          else
          {
-            Fm .push (1);
-            Fp .push (1);
+            T0 .push (this .create ());
+            T1 .push (this .create ());
          }
-
-         for (let i = 1, length = key .length - 1; i < length; ++ i)
-         {
-            const d = key [i + 1] - key [i - 1];
-
-            Fm .push (2 * (key [i + 1] - key [i])     / d);
-            Fp .push (2 * (key [i]     - key [i - 1]) / d);
-         }
-
-         Fm .push (Fm [0]);
-         Fp .push (Fp [0]);
-
-         // T0, T1
-
-         for (let i = 0, length = T .length; i < length; ++ i)
-         {
-            T0 .push (this .multiply (T [i], Fp [i]));
-            T1 .push (this .multiply (T [i], Fm [i]));
-         }
-      }
-      else
-      {
-         T0 .push (this .create ());
-         T1 .push (this .create ());
-      }
-   },
-   interpolate: function (index0, index1, weight, keyValue)
+      };
+   })(),
+   interpolate: (function ()
    {
-      S .set (Math .pow (weight, 3), Math .pow (weight, 2), weight, 1);
+      const S = new Numbers_Vector4 (0, 0, 0, 0);
 
-      // Taking dot product from SH and C;
+      const H = new Numbers_Matrix4 ( 2, -2,  1,  1,
+                             -3,  3, -2, -1,
+                              0,  0,  1,  0,
+                              1,  0,  0,  0);
 
-      return this .dot (H .multVecMatrix (S),
-                        keyValue [index0],
-                        keyValue [index1],
-                        this .T0 [index0],
-                        this .T1 [index1]);
-   },
+      return function (index0, index1, weight, keyValue)
+      {
+         S .set (Math .pow (weight, 3), Math .pow (weight, 2), weight, 1);
+
+         // Taking dot product from SH and C;
+
+         return this .dot (H .multVecMatrix (S),
+                           keyValue [index0],
+                           keyValue [index1],
+                           this .T0 [index0],
+                           this .T1 [index1]);
+      };
+   })(),
 };
 
 const CatmullRomSplineInterpolator_default_ = CatmullRomSplineInterpolator;
@@ -101961,12 +101691,6 @@ x_ite_Namespace.set ("x_ite/Browser/Interpolation/CatmullRomSplineInterpolator",
 
 function CatmullRomSplineInterpolatorTemplate (Type)
 {
-   const
-      c0 = new Type (0, 0, 0, 0),
-      c1 = new Type (0, 0, 0, 0),
-      c2 = new Type (0, 0, 0, 0),
-      c3 = new Type (0, 0, 0, 0);
-
    function CatmullRomSplineInterpolatorInstance ()
    {
       this .T0 = [ ];
@@ -101996,19 +101720,28 @@ function CatmullRomSplineInterpolatorTemplate (Type)
       {
          return Type .divide (lhs, rhs);
       },
-      abs: function (value)
+      magnitude: function (value)
       {
          return value .magnitude ();
       },
-      dot: function (SH, C0, C1, C2, C3)
+      dot: (function ()
       {
-         c0 .assign (C0) .multiply (SH [0]);
-         c1 .assign (C1) .multiply (SH [1]);
-         c2 .assign (C2) .multiply (SH [2]);
-         c3 .assign (C3) .multiply (SH [3]);
+         const
+            c0 = new Type (0, 0, 0, 0),
+            c1 = new Type (0, 0, 0, 0),
+            c2 = new Type (0, 0, 0, 0),
+            c3 = new Type (0, 0, 0, 0);
 
-         return c0 .add (c1) .add (c2) .add (c3);
-      },
+         return function (SH, C0, C1, C2, C3)
+         {
+            c0 .assign (C0) .multiply (SH [0]);
+            c1 .assign (C1) .multiply (SH [1]);
+            c2 .assign (C2) .multiply (SH [2]);
+            c3 .assign (C3) .multiply (SH [3]);
+
+            return c0 .add (c1) .add (c2) .add (c3);
+         };
+      })(),
    });
 
    return CatmullRomSplineInterpolatorInstance;
@@ -102461,8 +102194,7 @@ x_ite_Namespace.set ("x_ite/Components/Interpolation/SplinePositionInterpolator2
 
 function CatmullRomSplineInterpolator1 ()
 {
-   this .T0 = [ ];
-   this .T1 = [ ];
+   Interpolation_CatmullRomSplineInterpolator.call (this);
 }
 
 CatmullRomSplineInterpolator1 .prototype = Object .assign (Object .create (Interpolation_CatmullRomSplineInterpolator.prototype),
@@ -102488,7 +102220,7 @@ CatmullRomSplineInterpolator1 .prototype = Object .assign (Object .create (Inter
    {
       return lhs / rhs;
    },
-   abs: function (value)
+   magnitude: function (value)
    {
       return Math .abs (value);
    },
@@ -102824,12 +102556,13 @@ SquadOrientationInterpolator .prototype = Object .assign (Object .create (Interp
 {
    constructor: SquadOrientationInterpolator,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "closed",        new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFRotation ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",          new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",      new x_ite_Fields.SFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "closed",            new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",               new x_ite_Fields.MFFloat ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",          new x_ite_Fields.MFRotation ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalizeVelocity", new x_ite_Fields.SFBool ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed",     new x_ite_Fields.SFRotation ()),
    ]),
    getTypeName: function ()
    {
@@ -102847,7 +102580,7 @@ SquadOrientationInterpolator .prototype = Object .assign (Object .create (Interp
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
 
-      this ._keyValue    .addInterest ("set_keyValue__", this);
+      this ._keyValue .addInterest ("set_keyValue__", this);
    },
    set_keyValue__: function ()
    {
@@ -106183,7 +105916,7 @@ Cylinder3 .prototype =
          pos = line .point,
          dir = line .direction;
 
-         const
+      const
          A = dir [0] * dir [0] + dir [2] * dir [2],
          B = 2 * (pos [0] * dir [0] + pos [2] * dir [2]),
          C = pos [0] * pos [0] + pos [2] * pos [2] - 1;
@@ -106640,10 +106373,8 @@ Line2 .prototype =
       return function (line, point)
       {
          const
-            p1 = this .point,
-            p2 = line .point,
-            d1 = this .direction,
-            d2 = line .direction;
+            { point: p1, direction: d1 } = this,
+            { point: p2, direction: d2 } = line;
 
          const theta = d1 .dot (d2); // angle between both lines
 
@@ -107041,18 +106772,14 @@ Sphere3 .prototype =
       // https://github.com/Alexpux/Coin3D/blob/master/src/base/SbSphere.cpp
 
       const
-         linepos = line .point,
-         linedir = line .direction;
+         { point, direction } = line,
+         { center, radius }   = this;
 
       const
-         scenter = this .center,
-         r       = this .radius;
-
-      const
-         b = 2 * (linepos .dot (linedir) - scenter .dot (linedir)),
-         c = (linepos .x * linepos .x + linepos .y * linepos .y + linepos .z * linepos .z) +
-             (scenter .x * scenter .x + scenter .y * scenter .y + scenter .z * scenter .z) -
-             2 * linepos .dot (scenter) - r * r;
+         b = 2 * (point .dot (direction) - center .dot (direction)),
+         c = (point .x * point .x + point .y * point .y + point .z * point .z) +
+             (center .x * center .x + center .y * center .y + center .z * center .z) -
+             2 * point .dot (center) - radius * radius;
 
       const core = b * b - 4 * c;
 
@@ -107069,8 +106796,8 @@ Sphere3 .prototype =
             t2 = tmp;
          }
 
-         enterPoint .assign (linedir) .multiply (t1) .add (linepos);
-         exitPoint  .assign (linedir) .multiply (t2) .add (linepos);
+         enterPoint .assign (direction) .multiply (t1) .add (point);
+         exitPoint  .assign (direction) .multiply (t2) .add (point);
 
          return true;
       }
@@ -112272,7 +111999,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(530);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115087,8 +114814,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(530);
-/* provided dependency */ var SuperGif = __webpack_require__(749);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(804);
+/* provided dependency */ var SuperGif = __webpack_require__(203);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116046,7 +115773,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(530);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116749,7 +116476,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(530);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(804);
 /*******************************************************************************
  * MIT License
  *
@@ -117986,7 +117713,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(530);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118924,7 +118651,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(530);
+/* provided dependency */ var Fallback_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119103,8 +118830,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(530);
-/* provided dependency */ var pako = __webpack_require__(442);
+/* provided dependency */ var jquery_$ = __webpack_require__(804);
+/* provided dependency */ var pako = __webpack_require__(298);
 jquery_$.decodeText = function (input)
 {
    if (typeof input === "string")
@@ -119131,14 +118858,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(78);
+/* provided dependency */ var libtess_libtess = __webpack_require__(673);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace.set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(530);
+/* provided dependency */ var X3D_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119394,7 +119121,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(530);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(804);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119654,7 +119381,7 @@ x_ite_Namespace.set ("shim", shim_default_);
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-8.6.0")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-8.6.1")] = x_ite_X3D;
 
 x_ite_X3DCanvas.define ();
 
