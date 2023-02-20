@@ -52,10 +52,8 @@ function Matrix2 ()
 {
    if (arguments .length)
    {
-      this [0] = arguments [0];
-      this [1] = arguments [1];
-      this [2] = arguments [2];
-      this [3] = arguments [3];
+      for (let i = 0; i < 4; ++ i)
+         this [i] = arguments [i];
    }
    else
    {
@@ -78,18 +76,17 @@ Matrix2 .prototype =
    copy: function ()
    {
       const copy = Object .create (Matrix2 .prototype);
-      copy [0] = this [0];
-      copy [1] = this [1];
-      copy [2] = this [2];
-      copy [3] = this [3];
+
+      for (let i = 0; i < 4; ++ i)
+         copy [i] = this [i];
+
       return copy;
    },
    assign: function (matrix)
    {
-      this [0] = matrix [0];
-      this [1] = matrix [1];
-      this [2] = matrix [2];
-      this [3] = matrix [3];
+      for (let i = 0; i < 4; ++ i)
+         this [i] = matrix [i];
+
       return this;
    },
    equals: function (matrix)
@@ -118,10 +115,9 @@ Matrix2 .prototype =
          }
          case 4:
          {
-            this [0] = arguments [0];
-            this [1] = arguments [1];
-            this [2] = arguments [2];
-            this [3] = arguments [3];
+            for (let i = 0; i < 9; ++ i)
+               this [i] = arguments [i];
+
             break;
          }
       }

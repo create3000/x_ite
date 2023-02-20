@@ -54,15 +54,8 @@ function Matrix3 ()
 {
    if (arguments .length)
    {
-      this [0] = arguments [0];
-      this [1] = arguments [1];
-      this [2] = arguments [2];
-      this [3] = arguments [3];
-      this [4] = arguments [4];
-      this [5] = arguments [5];
-      this [6] = arguments [6];
-      this [7] = arguments [7];
-      this [8] = arguments [8];
+      for (let i = 0; i < 9; ++ i)
+         this [i] = arguments [i];
    }
    else
    {
@@ -85,28 +78,17 @@ Matrix3 .prototype =
    copy: function ()
    {
       const copy = Object .create (Matrix3 .prototype);
-      copy [0] = this [0];
-      copy [1] = this [1];
-      copy [2] = this [2];
-      copy [3] = this [3];
-      copy [4] = this [4];
-      copy [5] = this [5];
-      copy [6] = this [6];
-      copy [7] = this [7];
-      copy [8] = this [8];
+
+      for (let i = 0; i < 9; ++ i)
+         copy [i] = this [i];
+
       return copy;
    },
    assign: function (matrix)
    {
-      this [0] = matrix [0];
-      this [1] = matrix [1];
-      this [2] = matrix [2];
-      this [3] = matrix [3];
-      this [4] = matrix [4];
-      this [5] = matrix [5];
-      this [6] = matrix [6];
-      this [7] = matrix [7];
-      this [8] = matrix [8];
+      for (let i = 0; i < 9; ++ i)
+         this [i] = matrix [i];
+
       return this;
    },
    equals: function (matrix)
@@ -254,15 +236,9 @@ Matrix3 .prototype =
             }
             case 9:
             {
-               this [0] = arguments [0];
-               this [1] = arguments [1];
-               this [2] = arguments [2];
-               this [3] = arguments [3];
-               this [4] = arguments [4];
-               this [5] = arguments [5];
-               this [6] = arguments [6];
-               this [7] = arguments [7];
-               this [8] = arguments [8];
+               for (let i = 0; i < 9; ++ i)
+                  this [i] = arguments [i];
+
                break;
             }
          }

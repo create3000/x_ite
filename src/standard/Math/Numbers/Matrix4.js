@@ -56,22 +56,8 @@ function Matrix4 ()
 {
    if (arguments .length)
    {
-      this [ 0] = arguments [ 0];
-      this [ 1] = arguments [ 1];
-      this [ 2] = arguments [ 2];
-      this [ 3] = arguments [ 3];
-      this [ 4] = arguments [ 4];
-      this [ 5] = arguments [ 5];
-      this [ 6] = arguments [ 6];
-      this [ 7] = arguments [ 7];
-      this [ 8] = arguments [ 8];
-      this [ 9] = arguments [ 9];
-      this [10] = arguments [10];
-      this [11] = arguments [11];
-      this [12] = arguments [12];
-      this [13] = arguments [13];
-      this [14] = arguments [14];
-      this [15] = arguments [15];
+      for (let i = 0; i < 16; ++ i)
+         this [i] = arguments [i];
    }
    else
    {
@@ -94,42 +80,17 @@ Matrix4 .prototype =
    copy: function ()
    {
       const copy = Object .create (Matrix4 .prototype);
-      copy [ 0] = this [ 0];
-      copy [ 1] = this [ 1];
-      copy [ 2] = this [ 2];
-      copy [ 3] = this [ 3];
-      copy [ 4] = this [ 4];
-      copy [ 5] = this [ 5];
-      copy [ 6] = this [ 6];
-      copy [ 7] = this [ 7];
-      copy [ 8] = this [ 8];
-      copy [ 9] = this [ 9];
-      copy [10] = this [10];
-      copy [11] = this [11];
-      copy [12] = this [12];
-      copy [13] = this [13];
-      copy [14] = this [14];
-      copy [15] = this [15];
+
+      for (let i = 0; i < 16; ++ i)
+         copy [i] = this [i];
+
       return copy;
    },
    assign: function (matrix)
    {
-      this [ 0] = matrix [ 0];
-      this [ 1] = matrix [ 1];
-      this [ 2] = matrix [ 2];
-      this [ 3] = matrix [ 3];
-      this [ 4] = matrix [ 4];
-      this [ 5] = matrix [ 5];
-      this [ 6] = matrix [ 6];
-      this [ 7] = matrix [ 7];
-      this [ 8] = matrix [ 8];
-      this [ 9] = matrix [ 9];
-      this [10] = matrix [10];
-      this [11] = matrix [11];
-      this [12] = matrix [12];
-      this [13] = matrix [13];
-      this [14] = matrix [14];
-      this [15] = matrix [15];
+      for (let i = 0; i < 16; ++ i)
+         this [i] = matrix [i];
+
       return this;
    },
    equals: function (matrix)
@@ -282,22 +243,9 @@ Matrix4 .prototype =
             }
             case 16:
             {
-               this [ 0] = arguments [ 0];
-               this [ 1] = arguments [ 1];
-               this [ 2] = arguments [ 2];
-               this [ 3] = arguments [ 3];
-               this [ 4] = arguments [ 4];
-               this [ 5] = arguments [ 5];
-               this [ 6] = arguments [ 6];
-               this [ 7] = arguments [ 7];
-               this [ 8] = arguments [ 8];
-               this [ 9] = arguments [ 9];
-               this [10] = arguments [10];
-               this [11] = arguments [11];
-               this [12] = arguments [12];
-               this [13] = arguments [13];
-               this [14] = arguments [14];
-               this [15] = arguments [15];
+               for (let i = 0; i < 16; ++ i)
+                  this [i] = arguments [i];
+
                break;
             }
          }
