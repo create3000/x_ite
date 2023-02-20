@@ -567,15 +567,17 @@ Matrix4 .prototype =
 
          return vector;
       }
+      else
+      {
+         const { x, y, z, w } = vector;
 
-      const { x, y, z, w } = vector;
+         vector .x = x * this [0] + y * this [4] + z * this [ 8] + w * this [12];
+         vector .y = x * this [1] + y * this [5] + z * this [ 9] + w * this [13];
+         vector .z = x * this [2] + y * this [6] + z * this [10] + w * this [14];
+         vector .w = x * this [3] + y * this [7] + z * this [11] + w * this [15];
 
-      vector .x = x * this [0] + y * this [4] + z * this [ 8] + w * this [12];
-      vector .y = x * this [1] + y * this [5] + z * this [ 9] + w * this [13];
-      vector .z = x * this [2] + y * this [6] + z * this [10] + w * this [14];
-      vector .w = x * this [3] + y * this [7] + z * this [11] + w * this [15];
-
-      return vector;
+         return vector;
+      }
    },
    multMatrixVec: function (vector)
    {
@@ -591,15 +593,17 @@ Matrix4 .prototype =
 
          return vector;
       }
+      else
+      {
+         const { x, y, z, w } = vector;
 
-      const { x, y, z, w } = vector;
+         vector .x = x * this [ 0] + y * this [ 1] + z * this [ 2] + w * this [ 3];
+         vector .y = x * this [ 4] + y * this [ 5] + z * this [ 6] + w * this [ 7];
+         vector .z = x * this [ 8] + y * this [ 9] + z * this [10] + w * this [11];
+         vector .w = x * this [12] + y * this [13] + z * this [14] + w * this [15];
 
-      vector .x = x * this [ 0] + y * this [ 1] + z * this [ 2] + w * this [ 3];
-      vector .y = x * this [ 4] + y * this [ 5] + z * this [ 6] + w * this [ 7];
-      vector .z = x * this [ 8] + y * this [ 9] + z * this [10] + w * this [11];
-      vector .w = x * this [12] + y * this [13] + z * this [14] + w * this [15];
-
-      return vector;
+         return vector;
+      }
    },
    multDirMatrix: function (vector)
    {

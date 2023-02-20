@@ -193,13 +193,15 @@ Matrix2 .prototype =
 
          return (x * this [0] + this [1]) / w;
       }
+      else
+      {
+         const { x, y } = vector;
 
-      const { x, y } = vector;
+         vector .x = x * this [0] + y * this [2];
+         vector .y = x * this [1] + y * this [3];
 
-      vector .x = x * this [0] + y * this [2];
-      vector .y = x * this [1] + y * this [3];
-
-      return vector;
+         return vector;
+      }
    },
    multMatrixVec: function (vector)
    {
@@ -211,13 +213,15 @@ Matrix2 .prototype =
 
          return (x * this [0] + this [1]) / w;
       }
+      else
+      {
+         const { x, y } = vector;
 
-      const { x, y } = vector;
+         vector .x = x * this [0] + y * this [1];
+         vector .y = x * this [2] + y * this [3];
 
-      vector .x = x * this [0] + y * this [1];
-      vector .y = x * this [2] + y * this [3];
-
-      return vector;
+         return vector;
+      }
    },
    identity: function ()
    {

@@ -466,14 +466,16 @@ Matrix3 .prototype =
 
          return vector;
       }
+      else
+      {
+         const { x, y, z } = vector;
 
-      const { x, y, z } = vector;
+         vector .x = x * this [0] + y * this [3] + z * this [6];
+         vector .y = x * this [1] + y * this [4] + z * this [7];
+         vector .z = x * this [2] + y * this [5] + z * this [8];
 
-      vector .x = x * this [0] + y * this [3] + z * this [6];
-      vector .y = x * this [1] + y * this [4] + z * this [7];
-      vector .z = x * this [2] + y * this [5] + z * this [8];
-
-      return vector;
+         return vector;
+      }
    },
    multMatrixVec: function (vector)
    {
@@ -488,14 +490,16 @@ Matrix3 .prototype =
 
          return vector;
       }
+      else
+      {
+         const { x, y, z } = vector;
 
-      const { x, y, z } = vector;
+         vector .x = x * this [0] + y * this [1] + z * this [2];
+         vector .y = x * this [3] + y * this [4] + z * this [5];
+         vector .z = x * this [6] + y * this [7] + z * this [8];
 
-      vector .x = x * this [0] + y * this [1] + z * this [2];
-      vector .y = x * this [3] + y * this [4] + z * this [5];
-      vector .z = x * this [6] + y * this [7] + z * this [8];
-
-      return vector;
+         return vector;
+      }
    },
    multDirMatrix: function (vector)
    {
