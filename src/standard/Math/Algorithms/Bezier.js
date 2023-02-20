@@ -47,60 +47,68 @@
 
 import Algorithm from "../Algorithm.js";
 import Vector2   from "../Numbers/Vector2.js";
+import Vector3   from "../Numbers/Vector3.js";
+import Vector4   from "../Numbers/Vector4.js";
+import Matrix3   from "../Numbers/Matrix3.js";
+import Matrix4   from "../Numbers/Matrix4.js";
 
-const { lerp, interval } = Algorithm;
+const { interval } = Algorithm;
 
-class Bezier
+// https://pomax.github.io/bezierinfo/
+
+const Bezier =
 {
-   static quadric (x0, y0, x1, y1, x2, y2, steps)
+   quadric: (function ()
    {
-      const points = [ ];
+      const
+         v = new Vector3 (0, 0, 0),
+         c = new Matrix3 (1, 0, 0, -2, 2, 0, 1, -2, 1),
+         p = new Matrix3 ();
 
-      for (let i = 0, d = steps - 1; i < steps; ++ i)
+      return function (x0, y0, x1, y1, x2, y2, steps)
       {
-         const
-            t   = i / d,
-            ax0 = lerp (x0, x1, t),
-            ay0 = lerp (y0, y1, t),
-            ax1 = lerp (x1, x2, t),
-            ay1 = lerp (y1, y2, t),
-            bx0 = lerp (ax0, ax1, t),
-            by0 = lerp (ay0, ay1, t);
+         const points = [ ];
 
-         points .push (new Vector2 (bx0, by0));
-      }
+         p .set (x0, y0, 0, x1, y1, 0, x2, y2, 0);
 
-      return points;
-   }
+         for (let i = 0, d = steps - 1; i < steps; ++ i)
+         {
+            const t = i / d;
 
-   static cubic (x0, y0, x1, y1, x2, y2, x3, y3, steps)
+            p .multVecMatrix (c .multVecMatrix (v .set (1, t, t * t)));
+
+            points .push (new Vector2 (v .x, v .y));
+         }
+
+         return points;
+      };
+   })(),
+   cubic: (function ()
    {
-      const points = [ ];
+      const
+         v = new Vector4 (0, 0, 0, 0),
+         c = new Matrix4 (1, 0, 0, 0, -3, 3, 0, 0, 3, -6, 3, 0, -1, 3, -3, 1),
+         p = new Matrix4 ();
 
-      for (let i = 0, d = steps - 1; i < steps; ++ i)
+      return function (x0, y0, x1, y1, x2, y2, x3, y3, steps)
       {
-         const
-            t   = i / d,
-            ax0 = lerp (x0, x1, t),
-            ay0 = lerp (y0, y1, t),
-            ax1 = lerp (x1, x2, t),
-            ay1 = lerp (y1, y2, t),
-            ax2 = lerp (x2, x3, t),
-            ay2 = lerp (y2, y3, t),
-            bx0 = lerp (ax0, ax1, t),
-            by0 = lerp (ay0, ay1, t),
-            bx1 = lerp (ax1, ax2, t),
-            by1 = lerp (ay1, ay2, t),
-            cx0 = lerp (bx0, bx1, t),
-            cy0 = lerp (by0, by1, t);
+         const points = [ ];
 
-         points .push (new Vector2 (cx0, cy0));
-      }
+         p .set (x0, y0, 0, 0, x1, y1, 0, 0, x2, y2, 0, 0, x3, y3, 0, 0);
 
-      return points;
-   }
+         for (let i = 0, d = steps - 1; i < steps; ++ i)
+         {
+            const t = i / d;
 
-   static arc (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, steps)
+            p .multVecMatrix (c .multVecMatrix (v .set (1, t, t * t, t * t * t)));
+
+            points .push (new Vector2 (v .x, v .y));
+         }
+
+         return points;
+      };
+   })(),
+   arc: function (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, steps)
    {
       const points = [ ];
 
@@ -233,6 +241,6 @@ class Bezier
 
       return points;
    }
-}
+};
 
 export default Bezier;
