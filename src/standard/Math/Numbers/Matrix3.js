@@ -364,7 +364,7 @@ Matrix3 .prototype =
    },
    determinant: function ()
    {
-      const [m0, m1, m2, m3, m4, m5, m6, m7, m8] = this;
+      const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this;
 
       return m0 * (m4 * m8 - m5 * m7) -
              m1 * (m3 * m8 - m5 * m6) +
@@ -383,7 +383,7 @@ Matrix3 .prototype =
    inverse: function ()
    {
       const
-         [m0, m1, m2, m3, m4, m5, m6, m7, m8] = this,
+         { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this,
          t4  = m0 * m4,
          t6  = m0 * m7,
          t8  = m3 * m1,
@@ -420,8 +420,8 @@ Matrix3 .prototype =
    multLeft: function (matrix)
    {
       const
-         [a0, a1, a2, a3, a4, a5, a6, a7, a8] = this,
-         [b0, b1, b2, b3, b4, b5, b6, b7, b8] = matrix;
+         { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this,
+         { 0: b0, 1: b1, 2: b2, 3: b3, 4: b4, 5: b5, 6: b6, 7: b7, 8: b8 } = matrix;
 
       this [0] = a0 * b0 + a3 * b1 + a6 * b2;
       this [1] = a1 * b0 + a4 * b1 + a7 * b2;
@@ -438,8 +438,8 @@ Matrix3 .prototype =
    multRight: function (matrix)
    {
       const
-         [a0, a1, a2, a3, a4, a5, a6, a7, a8] = this,
-         [b0, b1, b2, b3, b4, b5, b6, b7, b8] = matrix;
+         { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this,
+         { 0: b0, 1: b1, 2: b2, 3: b3, 4: b4, 5: b5, 6: b6, 7: b7, 8: b8 } = matrix;
 
       this [0] = a0 * b0 + a1 * b3 + a2 * b6;
       this [1] = a0 * b1 + a1 * b4 + a2 * b7;
