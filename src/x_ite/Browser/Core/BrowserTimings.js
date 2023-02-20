@@ -157,7 +157,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       let r = 0;
 
-      rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Frame rate") + ":")) .append ($("<td></td>") .text (f2(1000 / this .fps .average ()) .toLocaleString (language, fixed) + " " + _("fps")));
+      rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Frame rate") + ":")) .append ($("<td></td>") .text (f2(1000 / this .fps .averageTime) .toLocaleString (language, fixed) + " " + _("fps")));
       rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Speed")      + ":")) .append ($("<td></td>") .text (f2(this .getSpeed (browser .currentSpeed))         .toLocaleString (language, fixed) + " " + this .getSpeedUnit (browser .currentSpeed)));
 
       if (this .localStorage .type === "MORE")
@@ -165,9 +165,9 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          const
             layers         = browser .getWorld () .getLayerSet () .getLayers (),
             activeLayer    = browser .getActiveLayer (),
-            navigationTime = activeLayer && browser .getCollisionCount () ? activeLayer .getCollisionTime () .average () : 0,
-            collisionTime  = browser .getCollisionTime () .average () + navigationTime,
-            routingTime    = Math .max (0, browser .getBrowserTime () .average () - (browser .getCameraTime () .average () + browser .getCollisionTime () .average () + browser .getDisplayTime () .average ())),
+            navigationTime = activeLayer && browser .getCollisionCount () ? activeLayer .getCollisionTime () .averageTime : 0,
+            collisionTime  = browser .getCollisionTime () .averageTime + navigationTime,
+            routingTime    = Math .max (0, browser .getBrowserTime () .averageTime - (browser .getCameraTime () .averageTime + browser .getCollisionTime () .averageTime + browser .getDisplayTime () .averageTime)),
             prepareEvents  = browser .prepareEvents () .getInterests () .size - 1,
             sensors        = browser .sensorEvents () .getInterests () .size;
 
@@ -183,14 +183,14 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
          rows [1] .addClass ("x_ite-private-more");
 
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser")   + ":")) .append ($("<td></td>") .text (f2(browser .getSystemTime () .average ())           .toLocaleString (language, fixed) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D total")       + ":")) .append ($("<td></td>") .text (f2(browser .getBrowserTime () .average ()) .toLocaleString (language, fixed) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser")   + ":")) .append ($("<td></td>") .text (f2(browser .getSystemTime () .averageTime)           .toLocaleString (language, fixed) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D total")       + ":")) .append ($("<td></td>") .text (f2(browser .getBrowserTime () .averageTime) .toLocaleString (language, fixed) + " " + _("ms")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Event Processing")   + ":")) .append ($("<td></td>") .text (f2(routingTime)          .toLocaleString (language, fixed) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Pointer")   + ":")) .append ($("<td></td>") .text (f2(browser .getPointingTime () .average ()) .toLocaleString (language, fixed) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Camera")    + ":")) .append ($("<td></td>") .text (f2(browser .getCameraTime () .average ())  .toLocaleString (language, fixed) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Picking")   + ":")) .append ($("<td></td>") .text (f2(browser .getPickingTime () .average ()) .toLocaleString (language, fixed) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Pointer")   + ":")) .append ($("<td></td>") .text (f2(browser .getPointingTime () .averageTime) .toLocaleString (language, fixed) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Camera")    + ":")) .append ($("<td></td>") .text (f2(browser .getCameraTime () .averageTime)  .toLocaleString (language, fixed) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Picking")   + ":")) .append ($("<td></td>") .text (f2(browser .getPickingTime () .averageTime) .toLocaleString (language, fixed) + " " + _("ms")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Collision Detection") + ":")) .append ($("<td></td>") .text (f2(collisionTime)        .toLocaleString (language, fixed) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Rendering")   + ":")) .append ($("<td></td>") .text (f2(browser .getDisplayTime () .average ()) .toLocaleString (language, fixed) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Rendering")   + ":")) .append ($("<td></td>") .text (f2(browser .getDisplayTime () .averageTime) .toLocaleString (language, fixed) + " " + _("ms")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Number of Shapes")    + ":")) .append ($("<td></td>") .text (opaqueShapes + " + " + transparentShapes));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Number of Sensors")   + ":")) .append ($("<td></td>") .text (prepareEvents + sensors));
 
