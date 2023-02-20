@@ -256,47 +256,44 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
          x        = 0,
          y        = 0;
 
-      for (const command of path .commands)
+      for (const { type, x1, y1, x2, y2, x: cx, y: cy } of path .commands)
       {
-         switch (command .type)
+         switch (type)
          {
             case "M": // Start
             case "Z": // End
             {
-               // Filter consecutive identical points.
-               points = points .filter ((p, i, a) => !p .equals (a [(i + 1) % a .length]));
-
                if (points .length > 2)
                   contours .push (points);
 
                points = [ ];
 
-               if (command .type === "M")
-                  points .push (new Vector3 (command .x, -command .y, 0));
+               if (type === "M")
+                  points .push (new Vector3 (cx, -cy, 0));
 
                break;
             }
             case "L": // Linear
             {
-               points .push (new Vector3 (command .x, -command .y, 0));
+               points .push (new Vector3 (cx, -cy, 0));
                break;
             }
             case "Q": // Quadric
             {
-               Bezier .quadric (x, -y, 0, command .x1, -command .y1, 0, command .x, -command .y, 0, steps, points);
+               Bezier .quadric (x, -y, 0, x1, -y1, 0, cx, -cy, 0, steps, points);
                break;
             }
             case "C": // Cubic
             {
-               Bezier .cubic (x, -y, 0, command .x1, -command .y1, 0, command .x2, -command .y2, 0, command .x, -command .y, 0, steps, points);
+               Bezier .cubic (x, -y, 0, x1, -y1, 0, x2, -y2, 0, cx, -cy, 0, steps, points);
                break;
             }
             default:
                continue;
          }
 
-         x = command .x;
-         y = command .y;
+         x = cx;
+         y = cy;
       }
 
       return this .triangulatePolygon (contours, vertices);
