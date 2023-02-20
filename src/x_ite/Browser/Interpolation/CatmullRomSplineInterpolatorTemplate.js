@@ -49,12 +49,6 @@ import CatmullRomSplineInterpolator from "./CatmullRomSplineInterpolator.js";
 
 function CatmullRomSplineInterpolatorTemplate (Type)
 {
-   const
-      c0 = new Type (0, 0, 0, 0),
-      c1 = new Type (0, 0, 0, 0),
-      c2 = new Type (0, 0, 0, 0),
-      c3 = new Type (0, 0, 0, 0);
-
    function CatmullRomSplineInterpolatorInstance ()
    {
       this .T0 = [ ];
@@ -88,15 +82,24 @@ function CatmullRomSplineInterpolatorTemplate (Type)
       {
          return value .magnitude ();
       },
-      dot: function (SH, C0, C1, C2, C3)
+      dot: (function ()
       {
-         c0 .assign (C0) .multiply (SH [0]);
-         c1 .assign (C1) .multiply (SH [1]);
-         c2 .assign (C2) .multiply (SH [2]);
-         c3 .assign (C3) .multiply (SH [3]);
+         const
+            c0 = new Type (0, 0, 0, 0),
+            c1 = new Type (0, 0, 0, 0),
+            c2 = new Type (0, 0, 0, 0),
+            c3 = new Type (0, 0, 0, 0);
 
-         return c0 .add (c1) .add (c2) .add (c3);
-      },
+         return function (SH, C0, C1, C2, C3)
+         {
+            c0 .assign (C0) .multiply (SH [0]);
+            c1 .assign (C1) .multiply (SH [1]);
+            c2 .assign (C2) .multiply (SH [2]);
+            c3 .assign (C3) .multiply (SH [3]);
+
+            return c0 .add (c1) .add (c2) .add (c3);
+         };
+      })(),
    });
 
    return CatmullRomSplineInterpolatorInstance;
