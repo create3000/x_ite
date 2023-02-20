@@ -554,11 +554,23 @@ Matrix3 .prototype =
    },
    skewX: function (angle)
    {
-      return this .multLeft (m .set (1, 0, 0, Math .tan (angle), 1, 0, 0, 0, 1));
+      const a = Math .tan (angle);
+
+      this [3] += this [0] * a;
+      this [4] += this [1] * a;
+      this [5] += this [2] * a;
+
+      return this;
    },
    skewY: function (angle)
    {
-      return this .multLeft (m .set (1, Math .tan (angle), 0, 0, 1, 0, 0, 0, 1));
+      const a = Math .tan (angle);
+
+      this [0] += this [3] * a;
+      this [1] += this [4] * a;
+      this [2] += this [5] * a;
+
+      return this;
    },
    toString: function ()
    {
