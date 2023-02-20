@@ -322,9 +322,15 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
          triangles .push (point);
       }
 
+      function combineCallback (coords, data, weight)
+      {
+         return new Vector3 (... coords);
+      }
+
       const tessy = new libtess .GluTesselator ();
 
       tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
       tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
       tessy .gluTessNormal (0, 0, 1);
 

@@ -68,14 +68,17 @@ const Bezier =
       {
          const points = [ ];
 
-         p .set (x0, y0, z0, x1, y1, z1, x2, y2, z2);
+         p .set (x0, y0, z0, x1, y1, z1, x2, y2, z2)
+            .multLeft (c);
 
          for (let i = 0, d = steps - 1; i < steps; ++ i)
          {
             const t = i / d;
 
-            points .push (p .multVecMatrix (c .multVecMatrix (new Vector3 (1, t, t * t))));
+            points .push (p .multVecMatrix (new Vector3 (1, t, t * t)));
          }
+
+         console .log ("quadric")
 
          return points;
       };
@@ -91,13 +94,14 @@ const Bezier =
       {
          const points = [ ];
 
-         p .set (x0, y0, z0, 0, x1, y1, z1, 0, x2, y2, z2, 0, x3, y3, z3, 0);
+         p .set (x0, y0, z0, 0, x1, y1, z1, 0, x2, y2, z2, 0, x3, y3, z3, 0)
+            .multLeft (c);
 
          for (let i = 0, d = steps - 1; i < steps; ++ i)
          {
             const t = i / d;
 
-            p .multVecMatrix (c .multVecMatrix (v .set (1, t, t * t, t * t * t)));
+            p .multVecMatrix (v .set (1, t, t * t, t * t * t));
 
             points .push (new Vector3 (v .x, v .y, v .z));
          }
