@@ -100,9 +100,17 @@ const Triangle3 = {
          triangles .push (index);
       }
 
+      // Required in case of a combine, otherwise an empty array is returned.
+
+      function combineCallback (coords, data, weight)
+      {
+         return data [0];
+      }
+
       const tessy = new libtess .GluTesselator ();
 
       tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
       tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
 
       return function (polygon, triangles)
