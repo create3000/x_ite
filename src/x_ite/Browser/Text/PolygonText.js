@@ -283,12 +283,12 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
             }
             case "Q": // Quadric
             {
-               points .push (... Bezier .quadric (x, -y, 0, command .x1, -command .y1, 0, command .x, -command .y, 0, steps));
+               Bezier .quadric (x, -y, 0, command .x1, -command .y1, 0, command .x, -command .y, 0, steps, points);
                break;
             }
             case "C": // Cubic
             {
-               points .push (... Bezier .cubic (x, -y, 0, command .x1, -command .y1, 0, command .x2, -command .y2, 0, command .x, -command .y, 0, steps));
+               Bezier .cubic (x, -y, 0, command .x1, -command .y1, 0, command .x2, -command .y2, 0, command .x, -command .y, 0, steps, points);
                break;
             }
             default:

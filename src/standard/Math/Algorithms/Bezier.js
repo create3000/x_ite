@@ -64,10 +64,8 @@ const Bezier =
          c = new Matrix3 (1, 0, 0, -2, 2, 0, 1, -2, 1),
          p = new Matrix3 ();
 
-      return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, steps)
+      return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, steps, points)
       {
-         const points = [ ];
-
          p .set (x0, y0, z0, x1, y1, z1, x2, y2, z2)
             .multLeft (c);
 
@@ -77,8 +75,6 @@ const Bezier =
 
             points .push (p .multVecMatrix (new Vector3 (1, t, t * t)));
          }
-
-         return points;
       };
    })(),
    cubic: (function ()
@@ -88,10 +84,8 @@ const Bezier =
          c = new Matrix4 (1, 0, 0, 0, -3, 3, 0, 0, 3, -6, 3, 0, -1, 3, -3, 1),
          p = new Matrix4 ();
 
-      return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, x3, y3, z3, steps)
+      return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, x3, y3, z3, steps, points)
       {
-         const points = [ ];
-
          p .set (x0, y0, z0, 0, x1, y1, z1, 0, x2, y2, z2, 0, x3, y3, z3, 0)
             .multLeft (c);
 
@@ -103,14 +97,10 @@ const Bezier =
 
             points .push (new Vector3 (v .x, v .y, v .z));
          }
-
-         return points;
       };
    })(),
-   arc: function (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, steps)
+   arc: function (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, steps, points)
    {
-      const points = [ ];
-
       // https://ericeastwood.com/blog/25/curves-and-arcs-quadratic-cubic-elliptical-svg-implementations
       // See https://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes.
 
@@ -236,8 +226,6 @@ const Bezier =
       }
 
       points .push (new Vector3 (x, y, 0));
-
-      return points;
    }
 };
 

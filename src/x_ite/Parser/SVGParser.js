@@ -1342,7 +1342,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                  y  += ay;
                               }
 
-                              points .push (... Bezier .quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS));
+                              Bezier .quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS, points);
 
                               ax = x;
                               ay = y;
@@ -1403,7 +1403,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                            }
                         }
 
-                        points .push (... Bezier .quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS));
+                        Bezier .quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS, points);
 
                         ax = x;
                         ay = y;
@@ -1469,7 +1469,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                        y  += ay;
                                     }
 
-                                    points .push (... Bezier .cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS));
+                                    Bezier .cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS, points);
 
                                     ax = x;
                                     ay = y;
@@ -1546,7 +1546,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                  }
                               }
 
-                              points .push (... Bezier .cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS));
+                              Bezier .cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS, points);
 
                               ax = x;
                               ay = y;
@@ -1618,7 +1618,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                           y += ay;
                                        }
 
-                                       points .push (... Bezier .arc (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, CIRCLE_STEPS));
+                                       Bezier .arc (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, CIRCLE_STEPS, points);
 
                                        ax = x;
                                        ay = y;
