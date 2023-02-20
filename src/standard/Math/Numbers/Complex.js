@@ -120,14 +120,14 @@ Complex .prototype =
       this .imag *= value;
       return this;
    },
-   multComp: function ()
+   multComp: function (value)
    {
       const
-         real = this .real,
-         imag = this .imag;
+         { real: ar, imag: ai } = this,
+         { real: br, imag: bi } = value;
 
-      this .real = real * value .real - imag * value .imag;
-      this .imag = real * value .imag + imag * value .real;
+      this .real = ar * br - ai * bi;
+      this .imag = ar * bi + ai * br;
       return this;
    },
    //divide: function (value)
@@ -137,10 +137,9 @@ Complex .prototype =
    divComp: function (value)
    {
       const
-         ar = this .real, ai = this .imag,
-         br = value .real, bi = value .imag;
-
-      const d = br * br + bi * bi;
+         { real: ar, imag: ai } = this,
+         { real: br, imag: bi } = value,
+         d = br * br + bi * bi;
 
       this .real = (ar * br + ai * bi) / d;
       this .imag = (ai * br - ar * bi) / d;

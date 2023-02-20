@@ -388,10 +388,7 @@ Matrix3 .prototype =
    },
    determinant: function ()
    {
-      const
-         m0 = this [0], m1 = this [1], m2 = this [2],
-         m3 = this [3], m4 = this [4], m5 = this [5],
-         m6 = this [6], m7 = this [7], m8 = this [8];
+      const [m0, m1, m2, m3, m4, m5, m6, m7, m8] = this;
 
       return m0 * (m4 * m8 - m5 * m7) -
              m1 * (m3 * m8 - m5 * m6) +
@@ -410,15 +407,7 @@ Matrix3 .prototype =
    inverse: function ()
    {
       const
-         m0  = this [0],
-         m1  = this [1],
-         m2  = this [2],
-         m3  = this [3],
-         m4  = this [4],
-         m5  = this [5],
-         m6  = this [6],
-         m7  = this [7],
-         m8  = this [8],
+         [m0, m1, m2, m3, m4, m5, m6, m7, m8] = this,
          t4  = m0 * m4,
          t6  = m0 * m7,
          t8  = m3 * m1,
@@ -455,12 +444,8 @@ Matrix3 .prototype =
    multLeft: function (matrix)
    {
       const
-         a0 = this [0], a1 = this [1], a2 = this [2],
-         a3 = this [3], a4 = this [4], a5 = this [5],
-         a6 = this [6], a7 = this [7], a8 = this [8],
-         b0 = matrix [0], b1 = matrix [1], b2 = matrix [2],
-         b3 = matrix [3], b4 = matrix [4], b5 = matrix [5],
-         b6 = matrix [6], b7 = matrix [7], b8 = matrix [8];
+         [a0, a1, a2, a3, a4, a5, a6, a7, a8] = this,
+         [b0, b1, b2, b3, b4, b5, b6, b7, b8] = matrix;
 
       this [0] = a0 * b0 + a3 * b1 + a6 * b2;
       this [1] = a1 * b0 + a4 * b1 + a7 * b2;
@@ -477,12 +462,8 @@ Matrix3 .prototype =
    multRight: function (matrix)
    {
       const
-         a0 = this [0], a1 = this [1], a2 = this [2],
-         a3 = this [3], a4 = this [4], a5 = this [5],
-         a6 = this [6], a7 = this [7], a8 = this [8],
-         b0 = matrix [0], b1 = matrix [1], b2 = matrix [2],
-         b3 = matrix [3], b4 = matrix [4], b5 = matrix [5],
-         b6 = matrix [6], b7 = matrix [7], b8 = matrix [8];
+         [a0, a1, a2, a3, a4, a5, a6, a7, a8] = this,
+         [b0, b1, b2, b3, b4, b5, b6, b7, b8] = matrix;
 
       this [0] = a0 * b0 + a1 * b3 + a2 * b6;
       this [1] = a0 * b1 + a1 * b4 + a2 * b7;
@@ -501,8 +482,7 @@ Matrix3 .prototype =
       if (vector .length === 2)
       {
          const
-            x = vector .x,
-            y = vector .y,
+            { x, y } = vector,
             w = x * this [2] + y * this [5] + this [8];
 
          vector .x = (x * this [0] + y * this [3] + this [6]) / w;
@@ -511,10 +491,7 @@ Matrix3 .prototype =
          return vector;
       }
 
-      const
-         x = vector .x,
-         y = vector .y,
-         z = vector .z;
+      const { x, y, z } = vector;
 
       vector .x = x * this [0] + y * this [3] + z * this [6];
       vector .y = x * this [1] + y * this [4] + z * this [7];
@@ -527,8 +504,7 @@ Matrix3 .prototype =
       if (vector .length === 2)
       {
          const
-            x = vector .x,
-            y = vector .y,
+            { x, y } = vector,
             w = x * this [6] + y * this [7] + this [8];
 
          vector .x = (x * this [0] + y * this [1] + this [2]) / w;
@@ -537,10 +513,7 @@ Matrix3 .prototype =
          return vector;
       }
 
-      const
-         x = vector .x,
-         y = vector .y,
-         z = vector .z;
+      const { x, y, z } = vector;
 
       vector .x = x * this [0] + y * this [1] + z * this [2];
       vector .y = x * this [3] + y * this [4] + z * this [5];
@@ -550,9 +523,7 @@ Matrix3 .prototype =
    },
    multDirMatrix: function (vector)
    {
-      const
-         x = vector .x,
-         y = vector .y;
+      const { x, y } = vector;
 
       vector .x = x * this [0] + y * this [3];
       vector .y = x * this [1] + y * this [4];
@@ -561,9 +532,7 @@ Matrix3 .prototype =
    },
    multMatrixDir: function (vector)
    {
-      const
-         x = vector .x,
-         y = vector .y;
+      const { x, y } = vector;
 
       vector .x = x * this [0] + y * this [1];
       vector .y = x * this [3] + y * this [4];
@@ -580,9 +549,7 @@ Matrix3 .prototype =
    },
    translate: function (translation)
    {
-      const
-         x = translation .x,
-         y = translation .y;
+      const { x, y } = translation;
 
       this [6] += this [0] * x + this [3] * y;
       this [7] += this [1] * x + this [4] * y;
@@ -595,9 +562,7 @@ Matrix3 .prototype =
    },
    scale: function (scale)
    {
-      const
-         x = scale .x,
-         y = scale .y;
+      const { x, y } = scale;
 
       this [0] *= x;
       this [3] *= y;

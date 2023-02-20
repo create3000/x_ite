@@ -139,11 +139,7 @@ Quaternion .prototype =
    },
    getMatrix: function (matrix)
    {
-      const
-         x = this .x,
-         y = this .y,
-         z = this .z,
-         w = this .w;
+      const { x, y, z, w } = this;
 
       const
          a = x * x,
@@ -227,8 +223,8 @@ Quaternion .prototype =
    multLeft: function (quat)
    {
       const
-         ax = this .x, ay = this .y, az = this .z, aw = this .w,
-         bx = quat .x, by = quat .y, bz = quat .z, bw = quat .w;
+         { x: ax, y: ay, z: az, w: aw } = this,
+         { x: bx, y: by, z: bz, w: bw } = quat;
 
       this .x = aw * bx + ax * bw + ay * bz - az * by;
       this .y = aw * by + ay * bw + az * bx - ax * bz;
@@ -240,8 +236,8 @@ Quaternion .prototype =
    multRight: function (quat)
    {
       const
-         ax = this .x, ay = this .y, az = this .z, aw = this .w,
-         bx = quat .x, by = quat .y, bz = quat .z, bw = quat .w;
+         { x: ax, y: ay, z: az, w: aw } = this,
+         { x: bx, y: by, z: bz, w: bw } = quat;
 
       this .x = bw * ax + bx * aw + by * az - bz * ay;
       this .y = bw * ay + by * aw + bz * ax - bx * az;
@@ -261,8 +257,8 @@ Quaternion .prototype =
    multVecQuat: function (vector)
    {
       const
-         qx = this .x, qy = this .y, qz = this .z, qw = this .w,
-         vx = vector .x, vy = vector .y, vz = vector .z,
+         { x: qx, y: qy, z: qz, w: qw } = this,
+         { x: vx, y: vy, z: vz } = vector,
          a  = qw * qw - qx * qx - qy * qy - qz * qz,
          b  = 2 * (vx * qx + vy * qy + vz * qz),
          c  = 2 * qw;
@@ -276,8 +272,8 @@ Quaternion .prototype =
    multQuatVec: function (vector)
    {
       const
-         qx = this .x, qy = this .y, qz = this .z, qw = this .w,
-         vx = vector .x, vy = vector .y, vz = vector .z,
+         { x: qx, y: qy, z: qz, w: qw } = this,
+         { x: vx, y: vy, z: vz } = vector,
          a  = qw * qw - qx * qx - qy * qy - qz * qz,
          b  = 2 * (vx * qx + vy * qy + vz * qz),
          c  = 2 * qw;
@@ -290,16 +286,14 @@ Quaternion .prototype =
    },
    normalize: function ()
    {
-      let length = Math .hypot (this .x, this .y, this .z, this .w);
+      const length = Math .hypot (this .x, this .y, this .z, this .w);
 
       if (length)
       {
-         length = 1 / length;
-
-         this .x *= length;
-         this .y *= length;
-         this .z *= length;
-         this .w *= length;
+         this .x /= length;
+         this .y /= length;
+         this .z /= length;
+         this .w /= length;
       }
 
       return this;
@@ -313,10 +307,12 @@ Quaternion .prototype =
    },
    norm: function ()
    {
-      return this .x * this .x +
-             this .y * this .y +
-             this .z * this .z +
-             this .w * this .w;
+      const { x, y, z, w } = this;
+
+      return x * x +
+             y * y +
+             z * z +
+             w * w;
    },
    magnitude: function ()
    {

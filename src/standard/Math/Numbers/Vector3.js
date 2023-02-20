@@ -151,8 +151,8 @@ Vector3 .prototype =
    cross: function (vector)
    {
       const
-         ax = this   .x, ay = this   .y, az = this   .z,
-         bx = vector .x, by = vector .y, bz = vector .z;
+         { x: ax, y: ay, z: az } = this,
+         { x: bx, y: by, z: bz } = vector;
 
       this .x = ay * bz - az * by;
       this .y = az * bx - ax * bz;
@@ -181,10 +181,7 @@ Vector3 .prototype =
    },
    norm: function ()
    {
-      let
-         x = this .x,
-         y = this .y,
-         z = this .z;
+      const { x, y, z } = this;
 
       return x * x +
              y * y +
@@ -202,10 +199,7 @@ Vector3 .prototype =
    },
    lerp: function (destination, t)
    {
-      const
-         x = this .x,
-         y = this .y,
-         z = this .z;
+      const { x, y, z } = this;
 
       this .x = x + t * (destination .x - x);
       this .y = y + t * (destination .y - y);
@@ -230,10 +224,7 @@ Vector3 .prototype =
    },
    min: function (vector)
    {
-      let
-         x = this .x,
-         y = this .y,
-         z = this .z;
+      let { x, y, z } = this;
 
       for (const vector of arguments)
       {
@@ -249,10 +240,7 @@ Vector3 .prototype =
    },
    max: function (vector)
    {
-      let
-         x = this .x,
-         y = this .y,
-         z = this .z;
+      let { x, y, z } = this;
 
       for (const vector of arguments)
       {

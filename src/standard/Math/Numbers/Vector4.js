@@ -189,11 +189,7 @@ Vector4 .prototype =
    },
    norm: function ()
    {
-      const
-         x = this .x,
-         y = this .y,
-         z = this .z,
-         w = this .w;
+      const { x, y, z, w } = this;
 
       return x * x +
              y * y +
@@ -213,11 +209,7 @@ Vector4 .prototype =
    },
    lerp: function (destination, t)
    {
-      const
-         x = this .x,
-         y = this .y,
-         z = this .z,
-         w = this .w;
+      const { x, y, z, w } = this;
 
       this .x = x + t * (destination .x - x);
       this .y = y + t * (destination .y - y);
@@ -235,11 +227,7 @@ Vector4 .prototype =
    },
    min: function (vector)
    {
-      let
-         x = this .x,
-         y = this .y,
-         z = this .z,
-         w = this .w;
+      let { x, y, z, w } = this;
 
       for (const vector of arguments)
       {
@@ -257,11 +245,7 @@ Vector4 .prototype =
    },
    max: function (vector)
    {
-      let
-         x = this .x,
-         y = this .y,
-         z = this .z,
-         w = this .w;
+      let { x, y, z, w } = this;
 
       for (const vector of arguments)
       {

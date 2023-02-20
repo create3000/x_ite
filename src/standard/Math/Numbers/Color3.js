@@ -175,7 +175,7 @@ Color3 .prototype =
             default: this [_r] = v; this [_g] = p; this [_b] = q; break;
          }
       }
-      
+
       return this;
    },
    toString: function ()
@@ -231,15 +231,12 @@ Object .assign (Color3,
    },
    lerp: function (a, b, t, r)
    {
-      // Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.
+      // Linearly interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.
       // Source and destination color must be in HSV space. The resulting HSV color is stored in @a r.
 
       let
-         ha = a [0], hb = b [0];
-
-      const
-         sa = a [1], sb = b [1],
-         va = a [2], vb = b [2];
+         [ha, sa, va] = a,
+         [hb, sb, vb] = b;
 
       if (sa === 0)
          ha = hb;

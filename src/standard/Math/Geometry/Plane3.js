@@ -137,9 +137,7 @@ Plane3 .prototype =
    },
    intersectsLine: function (line, intersection)
    {
-      const
-         point     = line .point,
-         direction = line .direction;
+      const { point, direction } = line;
 
       // Check if the line is parallel to the plane.
       const theta = direction .dot (this .normal);

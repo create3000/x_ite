@@ -120,7 +120,7 @@ Cylinder3 .prototype =
          pos = line .point,
          dir = line .direction;
 
-         const
+      const
          A = dir [0] * dir [0] + dir [2] * dir [2],
          B = 2 * (pos [0] * dir [0] + pos [2] * dir [2]),
          C = pos [0] * pos [0] + pos [2] * pos [2] - 1;

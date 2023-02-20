@@ -119,10 +119,8 @@ Line2 .prototype =
       return function (line, point)
       {
          const
-            p1 = this .point,
-            p2 = line .point,
-            d1 = this .direction,
-            d2 = line .direction;
+            { point: p1, direction: d1 } = this,
+            { point: p2, direction: d2 } = line;
 
          const theta = d1 .dot (d2); // angle between both lines
 

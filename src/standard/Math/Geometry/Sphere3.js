@@ -66,18 +66,14 @@ Sphere3 .prototype =
       // https://github.com/Alexpux/Coin3D/blob/master/src/base/SbSphere.cpp
 
       const
-         linepos = line .point,
-         linedir = line .direction;
+         { point, direction } = line,
+         { center, radius }   = this;
 
       const
-         scenter = this .center,
-         r       = this .radius;
-
-      const
-         b = 2 * (linepos .dot (linedir) - scenter .dot (linedir)),
-         c = (linepos .x * linepos .x + linepos .y * linepos .y + linepos .z * linepos .z) +
-             (scenter .x * scenter .x + scenter .y * scenter .y + scenter .z * scenter .z) -
-             2 * linepos .dot (scenter) - r * r;
+         b = 2 * (point .dot (direction) - center .dot (direction)),
+         c = (point .x * point .x + point .y * point .y + point .z * point .z) +
+             (center .x * center .x + center .y * center .y + center .z * center .z) -
+             2 * point .dot (center) - radius * radius;
 
       const core = b * b - 4 * c;
 
@@ -94,8 +90,8 @@ Sphere3 .prototype =
             t2 = tmp;
          }
 
-         enterPoint .assign (linedir) .multiply (t1) .add (linepos);
-         exitPoint  .assign (linedir) .multiply (t2) .add (linepos);
+         enterPoint .assign (direction) .multiply (t1) .add (point);
+         exitPoint  .assign (direction) .multiply (t2) .add (point);
 
          return true;
       }

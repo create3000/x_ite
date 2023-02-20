@@ -102,7 +102,6 @@ Box2 .prototype =
    setExtents: function (min, max)
    {
       const
-         m  = this .matrix,
          sx = (max .x - min .x) / 2,
          sy = (max .y - min .y) / 2,
          cx = (max .x + min .x) / 2,

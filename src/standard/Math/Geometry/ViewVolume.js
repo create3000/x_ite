@@ -128,17 +128,7 @@ ViewVolume .prototype =
          this .viewport .assign (viewport);
          this .scissor  .assign (scissor);
 
-         const points = this .points;
-
-         const
-            p0 = points [0],
-            p1 = points [1],
-            p2 = points [2],
-            p3 = points [3],
-            p4 = points [4],
-            p5 = points [5],
-            p6 = points [6],
-            p7 = points [7];
+         const [p0, p1 ,p2, p3, p4, p5, p6, p7] = this .points;
 
          const
             x1 = scissor [0],
@@ -196,17 +186,17 @@ ViewVolume .prototype =
 
       if (edges .tainted)
       {
-         const points = this .points;
+         const [p0, p1 ,p2, p3, p4, p5, p6, p7] = this .points;
 
-         edges [0] .assign (points [0]) .subtract (points [1]);
-         edges [1] .assign (points [1]) .subtract (points [2]);
-         edges [2] .assign (points [2]) .subtract (points [3]);
-         edges [3] .assign (points [3]) .subtract (points [0]);
+         edges [0] .assign (p0) .subtract (p1);
+         edges [1] .assign (p1) .subtract (p2);
+         edges [2] .assign (p2) .subtract (p3);
+         edges [3] .assign (p3) .subtract (p0);
 
-         edges [4] .assign (points [0]) .subtract (points [4]);
-         edges [5] .assign (points [1]) .subtract (points [5]);
-         edges [6] .assign (points [2]) .subtract (points [6]);
-         edges [7] .assign (points [3]) .subtract (points [7]);
+         edges [4] .assign (p0) .subtract (p4);
+         edges [5] .assign (p1) .subtract (p5);
+         edges [6] .assign (p2) .subtract (p6);
+         edges [7] .assign (p3) .subtract (p7);
 
          // Edges 8 - 11 are equal to edges 0 - 3.
 
@@ -217,24 +207,24 @@ ViewVolume .prototype =
    },
    intersectsSphere: function (radius, center)
    {
-      const planes = this .planes;
+      const [p0, p1 ,p2, p3, p4, p5, p6, p7] = this .planes;
 
-      if (planes [0] .getDistanceToPoint (center) > radius)
+      if (p0 .getDistanceToPoint (center) > radius)
          return false;
 
-      if (planes [1] .getDistanceToPoint (center) > radius)
+      if (p1 .getDistanceToPoint (center) > radius)
          return false;
 
-      if (planes [2] .getDistanceToPoint (center) > radius)
+      if (p2 .getDistanceToPoint (center) > radius)
          return false;
 
-      if (planes [3] .getDistanceToPoint (center) > radius)
+      if (p3 .getDistanceToPoint (center) > radius)
          return false;
 
-      if (planes [4] .getDistanceToPoint (center) > radius)
+      if (p4 .getDistanceToPoint (center) > radius)
          return false;
 
-      if (planes [5] .getDistanceToPoint (center) > radius)
+      if (p5 .getDistanceToPoint (center) > radius)
          return false;
 
       return true;

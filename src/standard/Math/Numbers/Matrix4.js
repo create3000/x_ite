@@ -369,10 +369,7 @@ Matrix4 .prototype =
    setQuaternion: function (quaternion)
    {
       const
-         x = quaternion .x,
-         y = quaternion .y,
-         z = quaternion .z,
-         w = quaternion .w,
+         { x, y, z, w } = quaternion,
          A = y * y,
          B = z * z,
          C = x * y,
@@ -461,22 +458,7 @@ Matrix4 .prototype =
    determinant: function ()
    {
       const
-         m00 = this [ 0],
-         m01 = this [ 1],
-         m02 = this [ 2],
-         m03 = this [ 3],
-         m04 = this [ 4],
-         m05 = this [ 5],
-         m06 = this [ 6],
-         m07 = this [ 7],
-         m08 = this [ 8],
-         m09 = this [ 9],
-         m10 = this [10],
-         m11 = this [11],
-         m12 = this [12],
-         m13 = this [13],
-         m14 = this [14],
-         m15 = this [15],
+         [m00, m01, m02, m03, m04, m05, m06, m07, m08, m09, m10, m11, m12, m13, m14, m15] = this,
          b = m10 * m15,
          c = m14 * m11,
          d = m06 * m15,
@@ -512,22 +494,7 @@ Matrix4 .prototype =
    inverse: function ()
    {
       const
-         m00 = this [ 0],
-         m01 = this [ 1],
-         m02 = this [ 2],
-         m03 = this [ 3],
-         m04 = this [ 4],
-         m05 = this [ 5],
-         m06 = this [ 6],
-         m07 = this [ 7],
-         m08 = this [ 8],
-         m09 = this [ 9],
-         m10 = this [10],
-         m11 = this [11],
-         m12 = this [12],
-         m13 = this [13],
-         m14 = this [14],
-         m15 = this [15],
+         [m00, m01, m02, m03, m04, m05, m06, m07, m08, m09, m10, m11, m12, m13, m14, m15] = this,
          b = m10 * m15,
          c = m14 * m11,
          d = m06 * m15,
@@ -585,14 +552,8 @@ Matrix4 .prototype =
    multLeft: function (matrix)
    {
       const
-         a00 = this [ 0], a01 = this [ 1], a02 = this [ 2], a03 = this [ 3],
-         a04 = this [ 4], a05 = this [ 5], a06 = this [ 6], a07 = this [ 7],
-         a08 = this [ 8], a09 = this [ 9], a10 = this [10], a11 = this [11],
-         a12 = this [12], a13 = this [13], a14 = this [14], a15 = this [15],
-         b00 = matrix [ 0], b01 = matrix [ 1], b02 = matrix [ 2], b03 = matrix [ 3],
-         b04 = matrix [ 4], b05 = matrix [ 5], b06 = matrix [ 6], b07 = matrix [ 7],
-         b08 = matrix [ 8], b09 = matrix [ 9], b10 = matrix [10], b11 = matrix [11],
-         b12 = matrix [12], b13 = matrix [13], b14 = matrix [14], b15 = matrix [15];
+         [a00, a01, a02, a03, a04, a05, a06, a07, a08, a09, a10, a11, a12, a13, a14, a15] = this,
+         [b00, b01, b02, b03, b04, b05, b06, b07, b08, b09, b10, b11, b12, b13, b14, b15] = matrix;
 
       this [ 0] = a00 * b00 + a04 * b01 + a08 * b02 + a12 * b03;
       this [ 1] = a01 * b00 + a05 * b01 + a09 * b02 + a13 * b03;
@@ -616,14 +577,8 @@ Matrix4 .prototype =
    multRight: function (matrix)
    {
       const
-         a00 = this [ 0], a01 = this [ 1], a02 = this [ 2], a03 = this [ 3],
-         a04 = this [ 4], a05 = this [ 5], a06 = this [ 6], a07 = this [ 7],
-         a08 = this [ 8], a09 = this [ 9], a10 = this [10], a11 = this [11],
-         a12 = this [12], a13 = this [13], a14 = this [14], a15 = this [15],
-         b00 = matrix [ 0], b01 = matrix [ 1], b02 = matrix [ 2], b03 = matrix [ 3],
-         b04 = matrix [ 4], b05 = matrix [ 5], b06 = matrix [ 6], b07 = matrix [ 7],
-         b08 = matrix [ 8], b09 = matrix [ 9], b10 = matrix [10], b11 = matrix [11],
-         b12 = matrix [12], b13 = matrix [13], b14 = matrix [14], b15 = matrix [15];
+         [a00, a01, a02, a03, a04, a05, a06, a07, a08, a09, a10, a11, a12, a13, a14, a15] = this,
+         [b00, b01, b02, b03, b04, b05, b06, b07, b08, b09, b10, b11, b12, b13, b14, b15] = matrix;
 
       this [ 0] = a00 * b00 + a01 * b04 + a02 * b08 + a03 * b12;
       this [ 1] = a00 * b01 + a01 * b05 + a02 * b09 + a03 * b13;
@@ -649,9 +604,7 @@ Matrix4 .prototype =
       if (vector .length === 3)
       {
          const
-            x = vector .x,
-            y = vector .y,
-            z = vector .z,
+            { x, y, z } = vector,
             w = 1 / (x * this [3] + y * this [7] + z * this [11] + this [15]);
 
          vector .x = (x * this [0] + y * this [4] + z * this [ 8] + this [12]) * w;
@@ -661,11 +614,7 @@ Matrix4 .prototype =
          return vector;
       }
 
-      const
-         x = vector .x,
-         y = vector .y,
-         z = vector .z,
-         w = vector .w;
+      const { x, y, z, w } = vector;
 
       vector .x = x * this [0] + y * this [4] + z * this [ 8] + w * this [12];
       vector .y = x * this [1] + y * this [5] + z * this [ 9] + w * this [13];
@@ -679,9 +628,7 @@ Matrix4 .prototype =
       if (vector .length === 3)
       {
          const
-            x = vector .x,
-            y = vector .y,
-            z = vector .z,
+            { x, y, z } = vector,
             w = 1 / (x * this [12] + y * this [13] + z * this [14] + this [15]);
 
          vector .x = (x * this [0] + y * this [1] + z * this [ 2] + this [ 3]) * w;
@@ -691,11 +638,7 @@ Matrix4 .prototype =
          return vector;
       }
 
-      const
-         x = vector .x,
-         y = vector .y,
-         z = vector .z,
-         w = vector .w;
+      const { x, y, z, w } = vector;
 
       vector .x = x * this [ 0] + y * this [ 1] + z * this [ 2] + w * this [ 3];
       vector .y = x * this [ 4] + y * this [ 5] + z * this [ 6] + w * this [ 7];
@@ -706,10 +649,7 @@ Matrix4 .prototype =
    },
    multDirMatrix: function (vector)
    {
-      const
-         x = vector .x,
-         y = vector .y,
-         z = vector .z;
+      const { x, y, z } = vector;
 
       vector .x = x * this [0] + y * this [4] + z * this [ 8];
       vector .y = x * this [1] + y * this [5] + z * this [ 9];
@@ -719,10 +659,7 @@ Matrix4 .prototype =
    },
    multMatrixDir: function (vector)
    {
-      const
-         x = vector .x,
-         y = vector .y,
-         z = vector .z;
+      const { x, y, z } = vector;
 
       vector .x = x * this [0] + y * this [1] + z * this [ 2];
       vector .y = x * this [4] + y * this [5] + z * this [ 6];
@@ -741,10 +678,7 @@ Matrix4 .prototype =
    },
    translate: function (translation)
    {
-      const
-         x = translation .x,
-         y = translation .y,
-         z = translation .z;
+      const { x, y, z } = translation;
 
       this [12] += this [ 0] * x + this [ 4] * y + this [ 8] * z;
       this [13] += this [ 1] * x + this [ 5] * y + this [ 9] * z;
@@ -758,10 +692,7 @@ Matrix4 .prototype =
    },
    scale: function (scale)
    {
-      const
-         x = scale .x,
-         y = scale .y,
-         z = scale .z;
+      const { x, y, z } = scale;
 
       this [ 0] *= x;
       this [ 4] *= y;

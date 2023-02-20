@@ -151,9 +151,7 @@ Vector2 .prototype =
    },
    norm: function ()
    {
-      const
-         x = this .x,
-         y = this .y;
+      const { x, y } = this;
 
       return x * x +
              y * y;
@@ -169,9 +167,7 @@ Vector2 .prototype =
    },
    lerp: function (destination, t)
    {
-      const
-         x = this .x,
-         y = this .y;
+      const { x, y } = this;
 
       this .x = x + t * (destination .x - x);
       this .y = y + t * (destination .y - y);
@@ -185,9 +181,7 @@ Vector2 .prototype =
    },
    min: function (vector)
    {
-      let
-         x = this .x,
-         y = this .y;
+      let { x, y } = this;
 
       for (const vector of arguments)
       {
@@ -201,9 +195,7 @@ Vector2 .prototype =
    },
    max: function (vector)
    {
-      let
-         x = this .x,
-         y = this .y;
+      let { x, y } = this;
 
       for (const vector of arguments)
       {

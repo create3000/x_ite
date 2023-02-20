@@ -149,10 +149,7 @@ Matrix2 .prototype =
    inverse: function ()
    {
       const
-         A = this [0],
-         B = this [1],
-         C = this [2],
-         D = this [3],
+         [A, B, C, D] = this [3],
          d = A * D - B * C;
 
       // if (d === 0) ... determinant is zero.
@@ -167,10 +164,8 @@ Matrix2 .prototype =
    multLeft: function (matrix)
    {
       const
-         a0 = this [0], a1 = this [1],
-         a2 = this [2], a3 = this [3],
-         b0 = matrix [0], b1 = matrix [1],
-         b2 = matrix [2], b3 = matrix [3];
+         [a0, a1, a2, a3] = this,
+         [b0, b1, b2, b3] = matrix;
 
       this [0] = a0 * b0 + a2 * b1;
       this [1] = a1 * b0 + a3 * b1;
@@ -182,10 +177,8 @@ Matrix2 .prototype =
    multRight: function (matrix)
    {
       const
-         a0 = this [0], a1 = this [1],
-         a2 = this [2], a3 = this [3],
-         b0 = matrix [0], b1 = matrix [1],
-         b2 = matrix [2], b3 = matrix [3];
+         [a0, a1, a2, a3] = this,
+         [b0, b1, b2, b3] = matrix;
 
       this [0] = b0 * a0 + b2 * a1;
       this [1] = b1 * a0 + b3 * a1;
@@ -205,9 +198,7 @@ Matrix2 .prototype =
          return (x * this [0] + this [1]) / w;
       }
 
-      const
-         x = vector .x,
-         y = vector .y;
+      const { x, y } = vector;
 
       vector .x = x * this [0] + y * this [2];
       vector .y = x * this [1] + y * this [3];
@@ -225,9 +216,7 @@ Matrix2 .prototype =
          return (x * this [0] + this [1]) / w;
       }
 
-      const
-         x = vector .x,
-         y = vector .y;
+      const { x, y } = vector;
 
       vector .x = x * this [0] + y * this [1];
       vector .y = x * this [2] + y * this [3];
