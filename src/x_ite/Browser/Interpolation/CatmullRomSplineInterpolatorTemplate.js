@@ -78,7 +78,7 @@ function CatmullRomSplineInterpolatorTemplate (Type)
       {
          return Type .divide (lhs, rhs);
       },
-      abs: function (value)
+      magnitude: function (value)
       {
          return value .magnitude ();
       },

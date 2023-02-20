@@ -292,8 +292,7 @@ Rotation4 .prototype =
    },
    getQuaternion: function (quaternion)
    {
-      quaternion .assign (this [_quaternion]);
-      return quaternion;
+      return quaternion .assign (this [_quaternion]);
    },
    setMatrix: function (matrix)
    {

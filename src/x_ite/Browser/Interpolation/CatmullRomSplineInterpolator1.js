@@ -49,8 +49,7 @@ import CatmullRomSplineInterpolator from "./CatmullRomSplineInterpolator.js";
 
 function CatmullRomSplineInterpolator1 ()
 {
-   this .T0 = [ ];
-   this .T1 = [ ];
+   CatmullRomSplineInterpolator .call (this);
 }
 
 CatmullRomSplineInterpolator1 .prototype = Object .assign (Object .create (CatmullRomSplineInterpolator .prototype),
@@ -76,7 +75,7 @@ CatmullRomSplineInterpolator1 .prototype = Object .assign (Object .create (Catmu
    {
       return lhs / rhs;
    },
-   abs: function (value)
+   magnitude: function (value)
    {
       return Math .abs (value);
    },

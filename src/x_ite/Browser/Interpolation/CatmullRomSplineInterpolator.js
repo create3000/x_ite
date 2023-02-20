@@ -104,11 +104,11 @@ CatmullRomSplineInterpolator .prototype =
                   let Dtot = 0;
 
                   for (let i = 0, length = keyValue .length - 1; i < length; ++ i)
-                     Dtot += this .abs (this .subtract (keyValue [i], keyValue [i + 1]));
+                     Dtot += this .magnitude (this .subtract (keyValue [i], keyValue [i + 1]));
 
                   for (let i = 0, length = T .length - 1; i < length; ++ i)
                   {
-                     const Tia = this .abs (T [i]);
+                     const Tia = this .magnitude (T [i]);
 
                      if (Tia)
                         T [i] = this .multiply (T [i], Dtot / Tia);
@@ -127,7 +127,6 @@ CatmullRomSplineInterpolator .prototype =
 
                Fm .push (2 * (key [1]   - key [0])   / d);
                Fp .push (2 * (key [i_1] - key [i_2]) / d);
-
             }
             else
             {
