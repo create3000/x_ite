@@ -876,7 +876,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       gradient .x1        = this .lengthAttribute (xmlElement .getAttribute ("x1"), gradient .x1 || 0);
       gradient .y1        = this .lengthAttribute (xmlElement .getAttribute ("y1"), gradient .y1 || 0);
-      gradient .x2        = this .lengthAttribute (xmlElement .getAttribute ("x2"), gradient .x2 || 0);
+      gradient .x2        = this .lengthAttribute (xmlElement .getAttribute ("x2"), gradient .x2 || 1);
       gradient .y2        = this .lengthAttribute (xmlElement .getAttribute ("y2"), gradient .y2 || 0);
       gradient .units     = xmlElement .getAttribute ("gradientUnits") || "objectBoundingBox";
       gradient .transform = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
@@ -892,7 +892,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          g        = this .radialGradientElement (xmlElement, { stops: [ ] }),
-         gradient = this .context .createRadialGradient (g .fx, g .fy, 0, g .cx, g .cy, g .r);
+         gradient = this .context .createRadialGradient (g .fx, g .fy, g. fr, g .cx, g .cy, g .r);
 
       for (const [o, c, a] of g .stops)
          gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
@@ -910,13 +910,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Attributes
 
-      gradient .cx           = this .lengthAttribute (xmlElement .getAttribute ("cx"), gradient .cx || 0),
-      gradient .cy           = this .lengthAttribute (xmlElement .getAttribute ("cy"), gradient .cy || 0),
-      gradient .x2           = this .lengthAttribute (xmlElement .getAttribute ("x2"), gradient .x2 || 0),
-      gradient .y2           = this .lengthAttribute (xmlElement .getAttribute ("y2"), gradient .y2 || 0),
-      gradient .r            = this .lengthAttribute (xmlElement .getAttribute ("r"),  gradient .cx),
-      gradient .fx           = this .lengthAttribute (xmlElement .getAttribute ("fx"), gradient .cx),
-      gradient .fy           = this .lengthAttribute (xmlElement .getAttribute ("fy"), gradient .cy),
+      gradient .cx           = this .lengthAttribute (xmlElement .getAttribute ("cx"), gradient .cx || 0.5),
+      gradient .cy           = this .lengthAttribute (xmlElement .getAttribute ("cy"), gradient .cy || 0.5),
+      gradient .r            = this .lengthAttribute (xmlElement .getAttribute ("r"),  gradient .cx || 0.5),
+      gradient .fx           = this .lengthAttribute (xmlElement .getAttribute ("fx"), gradient .fx || gradient .cx),
+      gradient .fy           = this .lengthAttribute (xmlElement .getAttribute ("fy"), gradient .fy || gradient .cy),
+      gradient .fr           = this .lengthAttribute (xmlElement .getAttribute ("fr"), gradient .fr || 0),
       gradient .units        = xmlElement .getAttribute ("gradientUnits") || "objectBoundingBox";
       gradient .spreadMethod = xmlElement .getAttribute ("spreadMethod");
       gradient .transform    = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));

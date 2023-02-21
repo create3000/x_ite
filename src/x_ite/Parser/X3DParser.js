@@ -142,11 +142,12 @@ X3DParser .prototype = {
    convertColor: function (value)
    {
       const
-         div    = $("<div></div>") .hide () .css ("color", value) .appendTo ($("body")),
+         wrap   = $("<div></div>") .hide () .css ("color", "black") .appendTo ($("body")),
+         div    = $("<div></div>").css ("color", value) .appendTo (wrap),
          rgb    = window .getComputedStyle (div [0]) .color,
          values = rgb .replace (/^rgba?\(|\)$/g, "") .split (/[\s,]+/) .map (s => parseFloat (s));
 
-      div .remove ();
+      wrap .remove ();
 
       values [0] /= 255;
       values [1] /= 255;
