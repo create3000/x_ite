@@ -41,6 +41,12 @@ table.examples td {
   </tr>
 </table>
 
+Also have a look at the [X3D File Format Converter](x3d-file-converter).
+
+## X3D-Tidy
+
+[x3d-tidy](https://www.npmjs.com/package/x3d-tidy){:target="_blank"} is an command line X3D file format converter, compressor and beautifier and available on NPM.
+
 ## D3-X3D
 
 [D3-X3D](https://github.com/jamesleesaunders/d3-x3d#d3-x3d){:target="_blank"} is an external JavaScript library that combines the power of **D3.js** with X3D and can be found on GitHub.
