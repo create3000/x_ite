@@ -145,7 +145,7 @@ Matrix2 .prototype =
    inverse: function ()
    {
       const
-         [A, B, C, D] = this [3],
+         { 0: A, 1: B, 2: C, 3: D } = this [3],
          d = A * D - B * C;
 
       // if (d === 0) ... determinant is zero.
@@ -160,8 +160,8 @@ Matrix2 .prototype =
    multLeft: function (matrix)
    {
       const
-         [a0, a1, a2, a3] = this,
-         [b0, b1, b2, b3] = matrix;
+         { 0: a0, 1: a1, 2: a2, 3: a3 } = this,
+         { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
 
       this [0] = a0 * b0 + a2 * b1;
       this [1] = a1 * b0 + a3 * b1;
@@ -173,8 +173,8 @@ Matrix2 .prototype =
    multRight: function (matrix)
    {
       const
-         [a0, a1, a2, a3] = this,
-         [b0, b1, b2, b3] = matrix;
+         { 0: a0, 1: a1, 2: a2, 3: a3 } = this,
+         { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
 
       this [0] = b0 * a0 + b2 * a1;
       this [1] = b1 * a0 + b3 * a1;
