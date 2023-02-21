@@ -121,7 +121,9 @@ function X3DCoreContext (element)
    this [_notification]        = new Notification        (this .getPrivateScene ());
    this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
-   this [_pixelPerPoint] = 1; // default 72 dpi
+   const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body"));
+   this [_pixelPerPoint] = inches .height () / 720 || 1;
+   inches .remove ();
 
    this .addChildObjects ("controlKey", new Fields .SFBool (),
                           "shiftKey",   new Fields .SFBool (),
@@ -261,11 +263,7 @@ X3DCoreContext .prototype =
       return this [_pixelPerPoint] * this .getRenderingProperty ("ContentScale");
    },
    connectedCallback: function ()
-   {
-      const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo (this [_shadow]);
-      this [_pixelPerPoint] = inches .height () / 720 || 1;
-      inches .remove ();
-   },
+   { },
    attributeChangedCallback: function (name, oldValue, newValue)
    {
       switch (name)

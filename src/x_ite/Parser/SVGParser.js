@@ -1026,6 +1026,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    hrefAttribute: function (attribute)
    {
+      if (!attribute)
+         return;
+         
       const
          scene = this .getExecutionContext (),
          hash  = new URL (attribute, scene .getWorldURL ()) .hash .slice (1);

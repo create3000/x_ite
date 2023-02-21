@@ -25,6 +25,7 @@ x_ite: true
    display: none;
 }
 
+#drop-zone x3d-canvas,
 #drop-zone input[type=file] {
   display: none;
 }
@@ -101,18 +102,6 @@ $(() =>
       "JSON": ["model/x3d+json", ".x3dj", "toJSONString"],
    };
 
-   function blobToDataURL (blob)
-   {
-      return new Promise ((resolve, reject) =>
-      {
-         const fileReader = new FileReader ();
-
-         fileReader .onload = (event) => resolve (event .target .result);
-
-         fileReader .readAsDataURL (blob);
-      });
-   }
-
    async function convert (encoding, files)
    {
       const [mimeType, extension, toString] = formats [encoding];
@@ -121,13 +110,11 @@ $(() =>
       {
          try
          {
-            const Browser = X3D .createBrowser () .browser;
+            const
+               Browser = X3D .createBrowser () .browser,
+               url     = URL .createObjectURL (file);
 
             Browser .endUpdate ();
-
-            const url = await blobToDataURL (file);
-
-            console .log (url)
 
             await Browser .loadURL (new X3D .MFString (url));
 
