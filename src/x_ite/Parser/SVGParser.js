@@ -103,9 +103,9 @@ const
    PICA          = INCH / 6,  // One pica in meters.
    PIXEL         = INCH / 90, // One pixel in meters.
    EM            = 16,        // One em in pixels,
-   BEZIER_STEPS  = 10,
-   CIRCLE_STEPS  = 64,
-   GRADIENT_SIZE = 256; // In pixels.
+   BEZIER_STEPS  = 10,        // Subdivisions of a span.
+   CIRCLE_STEPS  = 64,        // Subdivisions of a circle, used for arc.
+   GRADIENT_SIZE = 256;       // In pixels.
 
 /*
  *  Parser
