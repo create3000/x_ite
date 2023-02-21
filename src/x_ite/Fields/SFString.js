@@ -48,10 +48,6 @@
 import X3DField     from "../Base/X3DField.js";
 import X3DConstants from "../Base/X3DConstants.js";
 
-const
-   unescape = /\\([\\"])/g,
-   escape   = /([\\"])/g;
-
 function SFString (value)
 {
    return X3DField .call (this, arguments .length ? "" + value : "");
@@ -61,11 +57,11 @@ Object .assign (SFString,
 {
    unescape: function (string)
    {
-      return string .replace (unescape, "$1");
+      return string .replace (/\\([\\"])/g, "$1");
    },
    escape: function (string)
    {
-      return string .replace (escape, "\\$1");
+      return string .replace (/([\\"])/g, "\\$1");
    },
 });
 

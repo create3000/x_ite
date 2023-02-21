@@ -499,68 +499,48 @@ Generator .prototype =
 
       return value;
    },
-   XMLEncode: function (string)
+   XMLEncode: (function ()
    {
-      return string
-         .replace (/&/g, "&amp;")
-         .replace (/\\/g, "\\\\")
-         .replace (/\t/g, "&#x9;")
-         .replace (/\n/g, "&#xA;")
-         .replace (/\r/g, "&#xD;")
-         .replace (/</g, "&lt;")
-         .replace (/>/g, "&gt;")
-         .replace (/'/g, "&apos;")
-         .replace (/"/g, "\\\"");
-   },
+      const map = {
+         "\\": "\\\\",
+         "\r": "&#xD;",
+         "\n": "&#xA;",
+         "\t": "&#x9;",
+         "\"": "\\\"",
+         "'": "&apos;",
+         "<": "&lt;",
+         ">": "&gt;",
+         "&": "&amp;",
+      };
+
+      const regex = /(\\|\r|\n|\t|"|'|<|>|&)/g;
+
+      return function (string)
+      {
+         return string .replace (regex, char => map [char]);
+      };
+   })(),
    escapeCDATA: function (string)
    {
       return string .replace (/\]\]\>/g, "\\]\\]\\>");
    },
-   JSONEncode: function (string)
+   JSONEncode: (function ()
    {
-      let result = '"';
+      const map = {
+         "\\": "\\\\",
+         "\r": "\\r",
+         "\n": "\\n",
+         "\t": "\\t",
+         "\"": "\\\"",
+      };
 
-      for (const character of string)
+      const regex = /(\\|\t|\n|\r|")/g;
+
+      return function (string)
       {
-         switch (character)
-         {
-            case '\r':
-            {
-               result += "\\r";
-               break;
-            }
-            case '\n':
-            {
-               result += "\\n";
-               break;
-            }
-            case '\t':
-            {
-               result += "\\t";
-               break;
-            }
-            case '"':
-            {
-               result += "\\\"";
-               break;
-            }
-            case '\\':
-            {
-               result += "\\\\";
-               break;
-            }
-            default:
-            {
-               result += character;
-               break;
-            }
-         }
-      }
-
-      result += '"';
-
-      return result;
-   },
+         return '"' + string .replace (regex, char => map [char]) + '"';
+      };
+   })(),
    JSONNumber: function (value)
    {
       switch (value)
