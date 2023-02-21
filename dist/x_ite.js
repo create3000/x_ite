@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 191:
+/***/ 823:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(804);
+/* provided dependency */ var jQuery = __webpack_require__(291);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 193:
+/***/ 335:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(804);
+/* provided dependency */ var jQuery = __webpack_require__(291);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 785:
+/***/ 997:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(804)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(291)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 804:
+/***/ 291:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11812,7 +11812,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 673:
+/***/ 590:
 /***/ ((module) => {
 
 /**
@@ -16591,7 +16591,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 298:
+/***/ 626:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19836,7 +19836,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 203:
+/***/ 577:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -21596,68 +21596,48 @@ Generator .prototype =
 
       return value;
    },
-   XMLEncode: function (string)
+   XMLEncode: (function ()
    {
-      return string
-         .replace (/&/g, "&amp;")
-         .replace (/\\/g, "\\\\")
-         .replace (/\t/g, "&#x9;")
-         .replace (/\n/g, "&#xA;")
-         .replace (/\r/g, "&#xD;")
-         .replace (/</g, "&lt;")
-         .replace (/>/g, "&gt;")
-         .replace (/'/g, "&apos;")
-         .replace (/"/g, "\\\"");
-   },
+      const map = {
+         "\\": "\\\\",
+         "\r": "&#xD;",
+         "\n": "&#xA;",
+         "\t": "&#x9;",
+         "\"": "\\\"",
+         "'": "&apos;",
+         "<": "&lt;",
+         ">": "&gt;",
+         "&": "&amp;",
+      };
+
+      const regex = /([\\\r\n\t"'<>&])/g;
+
+      return function (string)
+      {
+         return string .replace (regex, char => map [char]);
+      };
+   })(),
    escapeCDATA: function (string)
    {
       return string .replace (/\]\]\>/g, "\\]\\]\\>");
    },
-   JSONEncode: function (string)
+   JSONEncode: (function ()
    {
-      let result = '"';
+      const map = {
+         "\\": "\\\\",
+         "\r": "\\r",
+         "\n": "\\n",
+         "\t": "\\t",
+         "\"": "\\\"",
+      };
 
-      for (const character of string)
+      const regex = /([\\\t\n\r"])/g;
+
+      return function (string)
       {
-         switch (character)
-         {
-            case '\r':
-            {
-               result += "\\r";
-               break;
-            }
-            case '\n':
-            {
-               result += "\\n";
-               break;
-            }
-            case '\t':
-            {
-               result += "\\t";
-               break;
-            }
-            case '"':
-            {
-               result += "\\\"";
-               break;
-            }
-            case '\\':
-            {
-               result += "\\\\";
-               break;
-            }
-            default:
-            {
-               result += character;
-               break;
-            }
-         }
-      }
-
-      result += '"';
-
-      return result;
-   },
+         return string .replace (regex, char => map [char]);
+      };
+   })(),
    JSONNumber: function (value)
    {
       switch (value)
@@ -26325,7 +26305,7 @@ Matrix2 .prototype =
    inverse: function ()
    {
       const
-         [A, B, C, D] = this [3],
+         { 0: A, 1: B, 2: C, 3: D } = this [3],
          d = A * D - B * C;
 
       // if (d === 0) ... determinant is zero.
@@ -26340,8 +26320,8 @@ Matrix2 .prototype =
    multLeft: function (matrix)
    {
       const
-         [a0, a1, a2, a3] = this,
-         [b0, b1, b2, b3] = matrix;
+         { 0: a0, 1: a1, 2: a2, 3: a3 } = this,
+         { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
 
       this [0] = a0 * b0 + a2 * b1;
       this [1] = a1 * b0 + a3 * b1;
@@ -26353,8 +26333,8 @@ Matrix2 .prototype =
    multRight: function (matrix)
    {
       const
-         [a0, a1, a2, a3] = this,
-         [b0, b1, b2, b3] = matrix;
+         { 0: a0, 1: a1, 2: a2, 3: a3 } = this,
+         { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
 
       this [0] = b0 * a0 + b2 * a1;
       this [1] = b1 * a0 + b3 * a1;
@@ -30965,10 +30945,6 @@ x_ite_Namespace.set ("x_ite/Fields/SFRotation", SFRotation_default_);
 
 
 
-const
-   SFString_unescape = /\\([\\"])/g,
-   SFString_escape   = /([\\"])/g;
-
 function SFString (value)
 {
    return Base_X3DField.call (this, arguments .length ? "" + value : "");
@@ -30978,11 +30954,11 @@ Object .assign (SFString,
 {
    unescape: function (string)
    {
-      return string .replace (SFString_unescape, "$1");
+      return string .replace (/\\([\\"])/g, "$1");
    },
    escape: function (string)
    {
-      return string .replace (SFString_escape, "\\$1");
+      return string .replace (/([\\"])/g, "\\$1");
    },
 });
 
@@ -31032,7 +31008,9 @@ SFString .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    },
    toJSONStreamValue: function (generator)
    {
+      generator .string += '"';
       generator .string += generator .JSONEncode (this .getValue ());
+      generator .string += '"';
    },
 });
 
@@ -35829,7 +35807,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(804);
+/* provided dependency */ var $ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36787,7 +36765,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(804);
+/* provided dependency */ var Notification_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36909,8 +36887,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(193);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(804);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(335);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38660,7 +38638,9 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
             generator .string += '"';
             generator .string += ':';
             generator .string += generator .TidySpace ();
+            generator .string += '"';
             generator .string += generator .JSONEncode (name);
+            generator .string += '"';
             generator .string += generator .TidyBreak ();
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();
@@ -38703,7 +38683,9 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
          generator .string += '"';
          generator .string += ':';
          generator .string += generator .TidySpace ();
+         generator .string += '"';
          generator .string += generator .JSONEncode (name);
+         generator .string += '"';
          generator .string += ',';
          generator .string += generator .TidyBreak ();
       }
@@ -38864,7 +38846,9 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
             generator .string += '"';
             generator .string += ':';
             generator .string += generator .TidySpace ();
+            generator .string += '"';
             generator .string += generator .JSONEncode (field .getName ());
+            generator .string += '"';
 
             // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
             // for this field.
@@ -38987,7 +38971,9 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
          for (let i = 0, length = sourceTextLines .length; i < length; ++ i)
          {
             generator .string += generator .ListIndent ();
+            generator .string += '"';
             generator .string += generator .JSONEncode (sourceTextLines [i]);
+            generator .string += '"';
 
             if (i !== length - 1)
                generator .string += ',';
@@ -39043,7 +39029,9 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
                generator .string += '"';
                generator .string += ':';
                generator .string += generator .TidySpace ();
+               generator .string += '"';
                generator .string += generator .JSONEncode (field .getName ());
+               generator .string += '"';
                generator .string += ',';
                generator .string += generator .TidyBreak ();
 
@@ -39053,7 +39041,9 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
                generator .string += '"';
                generator .string += ':';
                generator .string += generator .TidySpace ();
+               generator .string += '"';
                generator .string += generator .JSONEncode (protoField .getName ());
+               generator .string += '"';
                generator .string += generator .TidyBreak ();
 
                generator .string += generator .DecIndent ();
@@ -39524,7 +39514,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
          generator .string += '"';
          generator .string += ':';
          generator .string += generator .TidySpace ();
+         generator .string += '"';
          generator .string += generator .JSONEncode (generator .Name (this .getInlineNode ()));
+         generator .string += '"';
          generator .string += ',';
          generator .string += generator .TidyBreak ();
 
@@ -39534,7 +39526,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
          generator .string += '"';
          generator .string += ':';
          generator .string += generator .TidySpace ();
+         generator .string += '"';
          generator .string += generator .JSONEncode (this .getExportedName ());
+         generator .string += '"';
 
          if (this .getImportedName () !== this .getExportedName ())
          {
@@ -39546,7 +39540,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
             generator .string += '"';
             generator .string += ':';
             generator .string += generator .TidySpace ();
+            generator .string += '"';
             generator .string += generator .JSONEncode (this .getImportedName ());
+            generator .string += '"';
             generator .string += generator .TidyBreak ();
          }
          else
@@ -39611,7 +39607,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (sourceNodeName);
+                  generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
 
@@ -39621,7 +39619,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (sourceField);
+                  generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
 
@@ -39631,7 +39631,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (destinationNodeName);
+                  generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
 
@@ -39641,7 +39643,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (destinationField);
+                  generator .string += '"';
                   generator .string += generator .TidyBreak ();
 
                   generator .string += generator .DecIndent ();
@@ -40600,7 +40604,9 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
             generator .string += '"';
             generator .string += ':';
             generator .string += generator .TidySpace ();
+            generator .string += '"';
             generator .string += generator .JSONEncode (this .getTypeName ());
+            generator .string += '"';
             generator .string += ',';
             generator .string += generator .TidyBreak ();
 
@@ -40610,7 +40616,9 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
             generator .string += '"';
             generator .string += ':';
             generator .string += generator .TidySpace ();
+            generator .string += '"';
             generator .string += generator .JSONEncode (name);
+            generator .string += '"';
             generator .string += generator .TidyBreak ();
 
             generator .string += generator .DecIndent ();
@@ -40654,7 +40662,9 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
          generator .string += '"';
          generator .string += ':';
          generator .string += generator .TidySpace ();
+         generator .string += '"';
          generator .string += generator .JSONEncode (name);
+         generator .string += '"';
          generator .string += ',';
          generator .string += generator .TidyBreak ();
       }
@@ -40668,7 +40678,9 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
+      generator .string += '"';
       generator .string += generator .JSONEncode (this .getTypeName ());
+      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -40741,7 +40753,9 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (field .getName ());
+                  generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
                   generator .string += generator .Indent ();
@@ -40779,7 +40793,9 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (field .getName ());
+                  generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
                   generator .string += generator .Indent ();
@@ -40809,7 +40825,9 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (field .getName ());
+                  generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
                   generator .string += generator .Indent ();
@@ -40882,7 +40900,9 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (field .getName ());
+                  generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
 
@@ -40892,7 +40912,9 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (protoField .getName ());
+                  generator .string += '"';
                   generator .string += generator .TidyBreak ();
 
                   generator .string += generator .DecIndent ();
@@ -41393,7 +41415,9 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (Prototype_X3DPr
       generator .string += "@name";
       generator .string += '"';
       generator .string += ':';
+      generator .string += '"';
       generator .string += generator .JSONEncode (this .getName ());
+      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -41463,7 +41487,9 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (Prototype_X3DPr
             generator .string += '"';
             generator .string += ':';
             generator .string += generator .TidySpace ();
+            generator .string += '"';
             generator .string += generator .JSONEncode (field .getName ());
+            generator .string += '"';
 
             if (field .isDefaultValue ())
             {
@@ -41864,7 +41890,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 x_ite_Namespace.set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(804);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45040,7 +45066,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(804);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46926,7 +46952,7 @@ const X3DOptimizer_default_ = X3DOptimizer;
 x_ite_Namespace.set ("x_ite/Parser/X3DOptimizer", X3DOptimizer_default_);
 /* harmony default export */ const Parser_X3DOptimizer = (X3DOptimizer_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(673);
+/* provided dependency */ var libtess = __webpack_require__(590);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47836,7 +47862,7 @@ const Box3_default_ = Box3;
 x_ite_Namespace.set ("standard/Math/Geometry/Box3", Box3_default_);
 /* harmony default export */ const Geometry_Box3 = (Box3_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(804);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50063,7 +50089,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(804);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50216,7 +50242,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(804);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52146,10 +52172,8 @@ const Bezier =
          c = new Numbers_Matrix3 (1, 0, 0, -2, 2, 0, 1, -2, 1),
          p = new Numbers_Matrix3 ();
 
-      return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, steps)
+      return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, steps, points)
       {
-         const points = [ ];
-
          p .set (x0, y0, z0, x1, y1, z1, x2, y2, z2)
             .multLeft (c);
 
@@ -52159,8 +52183,6 @@ const Bezier =
 
             points .push (p .multVecMatrix (new Numbers_Vector3 (1, t, t * t)));
          }
-
-         return points;
       };
    })(),
    cubic: (function ()
@@ -52170,10 +52192,8 @@ const Bezier =
          c = new Numbers_Matrix4 (1, 0, 0, 0, -3, 3, 0, 0, 3, -6, 3, 0, -1, 3, -3, 1),
          p = new Numbers_Matrix4 ();
 
-      return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, x3, y3, z3, steps)
+      return function (x0, y0, z0, x1, y1, z1, x2, y2, z2, x3, y3, z3, steps, points)
       {
-         const points = [ ];
-
          p .set (x0, y0, z0, 0, x1, y1, z1, 0, x2, y2, z2, 0, x3, y3, z3, 0)
             .multLeft (c);
 
@@ -52185,14 +52205,10 @@ const Bezier =
 
             points .push (new Numbers_Vector3 (v .x, v .y, v .z));
          }
-
-         return points;
       };
    })(),
-   arc: function (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, steps)
+   arc: function (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, steps, points)
    {
-      const points = [ ];
-
       // https://ericeastwood.com/blog/25/curves-and-arcs-quadratic-cubic-elliptical-svg-implementations
       // See https://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes.
 
@@ -52318,8 +52334,6 @@ const Bezier =
       }
 
       points .push (new Numbers_Vector3 (x, y, 0));
-
-      return points;
    }
 };
 
@@ -52329,8 +52343,8 @@ const Bezier_default_ = Bezier;
 x_ite_Namespace.set ("standard/Math/Algorithms/Bezier", Bezier_default_);
 /* harmony default export */ const Algorithms_Bezier = (Bezier_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(804);
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(673);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(291);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(590);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52436,9 +52450,9 @@ const
    PICA          = INCH / 6,  // One pica in meters.
    PIXEL         = INCH / 90, // One pixel in meters.
    EM            = 16,        // One em in pixels,
-   BEZIER_STEPS  = 10,
-   CIRCLE_STEPS  = 64,
-   GRADIENT_SIZE = 256; // In pixels.
+   BEZIER_STEPS  = 10,        // Subdivisions of a span.
+   CIRCLE_STEPS  = 64,        // Subdivisions of a circle, used for arc.
+   GRADIENT_SIZE = 256;       // In pixels.
 
 /*
  *  Parser
@@ -52457,7 +52471,7 @@ function SVGParser (scene)
 
    // Options
 
-   this .solid = false;
+   this .solid = false; // Are 2D primitives solid.
 
    // Globals
 
@@ -53502,8 +53516,6 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
             {
                // moveto
 
-               points = this .removeConsecutiveIdenticalPoints (points);
-
                if (points .length > 2)
                {
                   contours .push (Object .assign (points, { index: index, closed: false }));
@@ -53675,7 +53687,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                                  y  += ay;
                               }
 
-                              points .push (... Algorithms_Bezier.quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS));
+                              Algorithms_Bezier.quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS, points);
 
                               ax = x;
                               ay = y;
@@ -53736,7 +53748,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                            }
                         }
 
-                        points .push (... Algorithms_Bezier.quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS));
+                        Algorithms_Bezier.quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS, points);
 
                         ax = x;
                         ay = y;
@@ -53802,7 +53814,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                                        y  += ay;
                                     }
 
-                                    points .push (... Algorithms_Bezier.cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS));
+                                    Algorithms_Bezier.cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS, points);
 
                                     ax = x;
                                     ay = y;
@@ -53879,7 +53891,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                                  }
                               }
 
-                              points .push (... Algorithms_Bezier.cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS));
+                              Algorithms_Bezier.cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS, points);
 
                               ax = x;
                               ay = y;
@@ -53951,7 +53963,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                                           y += ay;
                                        }
 
-                                       points .push (... Algorithms_Bezier.arc (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, CIRCLE_STEPS));
+                                       Algorithms_Bezier.arc (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, CIRCLE_STEPS, points);
 
                                        ax = x;
                                        ay = y;
@@ -53976,8 +53988,6 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
             {
                // closepath
 
-               points = this .removeConsecutiveIdenticalPoints (points);
-
                if (points .length > 2)
                {
                   ax = points [0] .x;
@@ -53998,16 +54008,10 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          break;
       }
 
-      points = this .removeConsecutiveIdenticalPoints (points);
-
       if (points .length > 2)
 		   contours .push (Object .assign (points, { index: index, closed: false }));
 
       return !! contours .length;
-   },
-   removeConsecutiveIdenticalPoints: function (points)
-   {
-      return points .filter ((p, i, a) => !p .equals (a [(i + 1) % a .length]));
    },
    transformAttribute: function (attribute)
    {
@@ -54796,7 +54800,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace.set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(804);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -61791,7 +61795,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(804);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66045,7 +66049,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace.set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(804);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66330,7 +66334,7 @@ FileLoader .prototype = Object .assign (Object .create (Base_X3DObject.prototype
 
       const
          options     = { cache: this .node .getCache () ? "default" : "reload" },
-         response    = this .handleErrors (await fetch (decodeURI (this .URL .href), options)),
+         response    = this .handleErrors (await fetch (this .URL .href, options)),
          contentType = response .headers .get ("content-type") .replace (/;.*$/, "");
 
       if (this .foreign)
@@ -66687,7 +66691,9 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (Prototype
       generator .string += "@name";
       generator .string += '"';
       generator .string += ':';
+      generator .string += '"';
       generator .string += generator .JSONEncode (this .getName ());
+      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -66745,7 +66751,9 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (Prototype
             generator .string += '"';
             generator .string += ':';
             generator .string += generator .TidySpace ();
+            generator .string += '"';
             generator .string += generator .JSONEncode (field .getName ());
+            generator .string += '"';
             generator .string += generator .TidyBreak ();
 
             generator .string += generator .DecIndent ();
@@ -67108,7 +67116,9 @@ X3DRoute .prototype = Object .assign (Object .create (Base_X3DObject.prototype),
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
+      generator .string += '"';
       generator .string += generator .JSONEncode (sourceNodeName);
+      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -67118,7 +67128,9 @@ X3DRoute .prototype = Object .assign (Object .create (Base_X3DObject.prototype),
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
+      generator .string += '"';
       generator .string += generator .JSONEncode (this [_sourceField] .getName ());
+      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -67128,7 +67140,9 @@ X3DRoute .prototype = Object .assign (Object .create (Base_X3DObject.prototype),
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
+      generator .string += '"';
       generator .string += generator .JSONEncode (destinationNodeName);
+      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -67138,7 +67152,9 @@ X3DRoute .prototype = Object .assign (Object .create (Base_X3DObject.prototype),
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
+      generator .string += '"';
       generator .string += generator .JSONEncode (this [_destinationField] .getName ());
+      generator .string += '"';
       generator .string += generator .TidyBreak ();
 
       generator .string += generator .DecIndent ();
@@ -68390,7 +68406,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(804);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -68727,7 +68743,9 @@ UnitInfo .prototype = Object .assign (Object .create (Base_X3DObject.prototype),
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
+      generator .string += '"';
       generator .string += generator .JSONEncode (this .name);
+      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -68969,7 +68987,9 @@ X3DExportedNode .prototype = Object .assign (Object .create (Base_X3DObject.prot
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
+      generator .string += '"';
       generator .string += generator .JSONEncode (localName);
+      generator .string += '"';
 
       if (this [X3DExportedNode_exportedName] !== localName)
       {
@@ -68981,7 +69001,9 @@ X3DExportedNode .prototype = Object .assign (Object .create (Base_X3DObject.prot
          generator .string += '"';
          generator .string += ':';
          generator .string += generator .TidySpace ();
+         generator .string += '"';
          generator .string += generator .JSONEncode (this [X3DExportedNode_exportedName]);
+         generator .string += '"';
          generator .string += generator .TidyBreak ();
       }
       else
@@ -69864,7 +69886,9 @@ X3DScene .prototype = Object .assign (Object .create (Execution_X3DExecutionCont
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (key);
+                  generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
 
@@ -69874,7 +69898,9 @@ X3DScene .prototype = Object .assign (Object .create (Execution_X3DExecutionCont
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (value);
+                  generator .string += '"';
                   generator .string += generator .TidyBreak ();
 
                   generator .string += generator .DecIndent ();
@@ -70346,7 +70372,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(804);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -76838,8 +76864,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(785);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(804);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(997);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77703,8 +77729,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(785);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(804);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(997);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78654,8 +78680,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(785);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(804);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(997);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78964,8 +78990,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(785);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(804);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(997);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -80568,8 +80594,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(785);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(804);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(997);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81591,8 +81617,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(804);
-/* provided dependency */ var ResizeSensor = __webpack_require__(191);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(291);
+/* provided dependency */ var ResizeSensor = __webpack_require__(823);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90118,7 +90144,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace.set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(804);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111999,7 +112025,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(804);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114814,8 +114840,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(804);
-/* provided dependency */ var SuperGif = __webpack_require__(203);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(291);
+/* provided dependency */ var SuperGif = __webpack_require__(577);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115773,7 +115799,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(804);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116476,7 +116502,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(804);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(291);
 /*******************************************************************************
  * MIT License
  *
@@ -117713,7 +117739,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(804);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118651,7 +118677,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(804);
+/* provided dependency */ var Fallback_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118830,8 +118856,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(804);
-/* provided dependency */ var pako = __webpack_require__(298);
+/* provided dependency */ var jquery_$ = __webpack_require__(291);
+/* provided dependency */ var pako = __webpack_require__(626);
 jquery_$.decodeText = function (input)
 {
    if (typeof input === "string")
@@ -118858,14 +118884,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(673);
+/* provided dependency */ var libtess_libtess = __webpack_require__(590);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace.set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(804);
+/* provided dependency */ var X3D_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119121,7 +119147,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(804);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(291);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

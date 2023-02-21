@@ -1,7 +1,7 @@
 /* X_ITE v8.6.1 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 214:
+/***/ 391:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -15828,47 +15828,44 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
          x        = 0,
          y        = 0;
 
-      for (const command of path .commands)
+      for (const { type, x1, y1, x2, y2, x: cx, y: cy } of path .commands)
       {
-         switch (command .type)
+         switch (type)
          {
             case "M": // Start
             case "Z": // End
             {
-               // Filter consecutive identical points.
-               points = points .filter ((p, i, a) => !p .equals (a [(i + 1) % a .length]));
-
                if (points .length > 2)
                   contours .push (points);
 
                points = [ ];
 
-               if (command .type === "M")
-                  points .push (new (Vector3_default()) (command .x, -command .y, 0));
+               if (type === "M")
+                  points .push (new (Vector3_default()) (cx, -cy, 0));
 
                break;
             }
             case "L": // Linear
             {
-               points .push (new (Vector3_default()) (command .x, -command .y, 0));
+               points .push (new (Vector3_default()) (cx, -cy, 0));
                break;
             }
             case "Q": // Quadric
             {
-               points .push (... Bezier_default().quadric (x, -y, 0, command .x1, -command .y1, 0, command .x, -command .y, 0, steps));
+               Bezier_default().quadric (x, -y, 0, x1, -y1, 0, cx, -cy, 0, steps, points);
                break;
             }
             case "C": // Cubic
             {
-               points .push (... Bezier_default().cubic (x, -y, 0, command .x1, -command .y1, 0, command .x2, -command .y2, 0, command .x, -command .y, 0, steps));
+               Bezier_default().cubic (x, -y, 0, x1, -y1, 0, x2, -y2, 0, cx, -cy, 0, steps, points);
                break;
             }
             default:
                continue;
          }
 
-         x = command .x;
-         y = command .y;
+         x = cx;
+         y = cy;
       }
 
       return this .triangulatePolygon (contours, vertices);
@@ -16046,7 +16043,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(214);
+/* provided dependency */ var opentype = __webpack_require__(391);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
