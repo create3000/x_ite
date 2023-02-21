@@ -270,7 +270,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Create viewpoint.
 
       const
-         viewpoint = scene .createNode ("OrthoViewpoint",),
+         viewpoint = scene .createNode ("OrthoViewpoint"),
          x         =  (viewBox .x + width  / 2) * PIXEL,
          y         = -(viewBox .y + height / 2) * PIXEL;
 
