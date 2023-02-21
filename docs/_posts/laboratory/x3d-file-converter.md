@@ -37,7 +37,7 @@ x_ite: true
 #drop-zone select {
   color: unset;
   position: relative;
-  top: -8px;
+  top: -6px;
 }
 </style>
 
@@ -117,7 +117,7 @@ $(() =>
 
             await Browser .loadURL (new X3D .MFString (url));
 
-            link (mimeType, file .name + extension, Browser .currentScene [toString] ());
+            link (mimeType, file .name .replace (/\.[^.]+$/, "") + extension, Browser .currentScene [toString] ());
          }
          catch (error)
          {
@@ -152,7 +152,7 @@ $(() =>
 
 ## Upload and Convert
 
-<p>Convert X3D, VRML, glTF, GLB, OBJ, STL, and SVG to a X3D format of your choice.</p>
+Convert **X3D, VRML, glTF, GLB, OBJ, STL,** and **SVG** to a X3D format of your choice.
 
 <div id="drop-zone">
    <p id="open-files" class="center">
@@ -180,4 +180,4 @@ Your converted files will appear here.
 
 ## Command Line Tool
 
-If you are looking for a command line tool to convert files, have a look at [x3d-tidy](https://www.npmjs.com/package/x3d-tidy){:target="_blank"}. It is a Node program and can be run via `npx`.
+If you are looking for a command line tool to convert files, have a look at [x3d-tidy](https://www.npmjs.com/package/x3d-tidy){:target="_blank"}. It is a Node program and it can be run via `npx x3d-tidy`.

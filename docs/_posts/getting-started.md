@@ -645,7 +645,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 >**Tip:** All files can be compressed using GZip compression. This saves bandwidth and speeds up download time.
 {: .prompt-tip }
 
-For more information see [How to Configure Your Web Server](how-to-configure-your-web-server).
+If you have an own web-server see [How to Configure Your Web Server](how-to-configure-your-web-server). If you are looking for an online file format converter [see here](laboratory/x3d-file-converter).
 
 ### Fallback Content
 
