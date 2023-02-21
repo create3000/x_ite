@@ -1,12 +1,12 @@
 {
    "files.exclude": {
-      "**/*~": true,
-      "node_modules": true,
-      "package-lock.json": true,
-      "**/_site": true,
-      "**/.jekyll-cache": true,
-      "**/.jekyll-metadata": true,
-      "**/.bundle": true
+      "**/*~": false,
+      "node_modules": false,
+      "package-lock.json": false,
+      "**/_site": false,
+      "**/.jekyll-cache": false,
+      "**/.jekyll-metadata": false,
+      "**/.bundle": false
    },
    "files.insertFinalNewline": true,
    "files.trimFinalNewlines": true,

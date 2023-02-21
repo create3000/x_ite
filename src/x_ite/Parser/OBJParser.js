@@ -272,37 +272,44 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    mtllib: async function (path)
    {
-      const
-         scene = this .getExecutionContext (),
-         url   = new URL (path, scene .getWorldURL ());
-
-      const input  = await fetch (url)
-         .then (response => response .arrayBuffer ())
-         .then (arrayBuffer => $.decodeText ($.ungzip (arrayBuffer)))
-         .catch (Function .prototype);
-
-      const parser = new MaterialParser (scene, input);
-
-      parser .parse ();
-
-      for (const [name, material] of parser .materials)
+      try
       {
-         const nodeName = this .sanitizeName (name);
+         const
+            scene = this .getExecutionContext (),
+            url   = new URL (path, scene .getWorldURL ());
 
-         if (nodeName)
-            scene .addNamedNode (scene .getUniqueName (nodeName), material);
+         const input = await fetch (url)
+            .then (response => response .arrayBuffer ())
+            .then (arrayBuffer => $.decodeText ($.ungzip (arrayBuffer)))
+            .catch (Function .prototype);
 
-         this .materials .set (name, material);
+         const parser = new MaterialParser (scene, input);
+
+         parser .parse ();
+
+         for (const [name, material] of parser .materials)
+         {
+            const nodeName = this .sanitizeName (name);
+
+            if (nodeName)
+               scene .addNamedNode (scene .getUniqueName (nodeName), material);
+
+            this .materials .set (name, material);
+         }
+
+         for (const [name, texture] of parser .textures)
+         {
+            const nodeName = this .sanitizeName (name);
+
+            if (nodeName)
+               scene .addNamedNode (scene .getUniqueName (nodeName), texture);
+
+            this .textures .set (name, texture);
+         }
       }
-
-      for (const [name, texture] of parser .textures)
+      catch (error)
       {
-         const nodeName = this .sanitizeName (name);
-
-         if (nodeName)
-            scene .addNamedNode (scene .getUniqueName (nodeName), texture);
-
-         this .textures .set (name, texture);
+         console .warn (error);
       }
    },
    usemtl: function ()
