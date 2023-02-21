@@ -151,7 +151,9 @@ $(() =>
 });
 </script>
 
-<p>Convert X3D, VRML, glTF, GLB, OBJ, STL, and SVG to a X3D format.</p>
+## Upload and Convert
+
+<p>Convert X3D, VRML, glTF, GLB, OBJ, STL, and SVG to a X3D format of your choice.</p>
 
 <div id="drop-zone">
    <p id="open-files" class="center">
@@ -171,8 +173,12 @@ $(() =>
    </p>
 </div>
 
-## Converted Files
+### Converted Files
 
 Your converted files will appear here.
 
 <ul id="download-links"></ul>
+
+## Command Line Tool
+
+If you are looking for a command line tool to convert files, have a look at [x3d-tidy](https://www.npmjs.com/package/x3d-tidy){:target="_blank"}. It is a Node program and can be run via `npx`.
