@@ -260,9 +260,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Get attributes of svg element.
 
       const
-         viewBox = this .viewBoxAttribute (xmlElement .getAttribute ("viewBox"), new Vector4 (0, 0, 100, 100)),
-         width   = this .lengthAttribute (xmlElement .getAttribute ("width", viewBox [2])),
-         height  = this .lengthAttribute (xmlElement .getAttribute ("height", viewBox [3]));
+         defaultWidth   = this .lengthAttribute (xmlElement .getAttribute ("width", 100)),
+         defaultHeight  = this .lengthAttribute (xmlElement .getAttribute ("height", 100)),
+         defaultViewBox = new Vector4 (0, 0, defaultWidth, defaultHeight),
+         viewBox        = this .viewBoxAttribute (xmlElement .getAttribute ("viewBox"), defaultViewBox),
+         width          = this .lengthAttribute (xmlElement .getAttribute ("width", viewBox [2])),
+         height         = this .lengthAttribute (xmlElement .getAttribute ("height", viewBox [3]));
 
       // Create viewpoint.
 
@@ -855,7 +858,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       for (const [o, c, a] of g .stops)
          gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
 
-      return this .drawGradient (gradient, g .transform, bbox);
+      return this .drawGradient (gradient, g .transform, bbox, g .units);
    },
    linearGradientElement: function (xmlElement, gradient)
    {
@@ -875,7 +878,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       gradient .y1        = this .lengthAttribute (xmlElement .getAttribute ("y1"), gradient .y1 || 0);
       gradient .x2        = this .lengthAttribute (xmlElement .getAttribute ("x2"), gradient .x2 || 0);
       gradient .y2        = this .lengthAttribute (xmlElement .getAttribute ("y2"), gradient .y2 || 0);
-      gradient .units     = xmlElement .getAttribute ("gradientUnits");
+      gradient .units     = xmlElement .getAttribute ("gradientUnits") || "objectBoundingBox";
       gradient .transform = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
 
       // Stops
@@ -894,7 +897,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       for (const [o, c, a] of g .stops)
          gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
 
-      return this .drawGradient (gradient, g .transform, bbox);
+      return this .drawGradient (gradient, g .transform, bbox, g .units);
    },
    radialGradientElement: function (xmlElement, gradient)
    {
@@ -914,7 +917,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       gradient .r            = this .lengthAttribute (xmlElement .getAttribute ("r"),  gradient .cx),
       gradient .fx           = this .lengthAttribute (xmlElement .getAttribute ("fx"), gradient .cx),
       gradient .fy           = this .lengthAttribute (xmlElement .getAttribute ("fy"), gradient .cy),
-      gradient .units        = xmlElement .getAttribute ("gradientUnits");
+      gradient .units        = xmlElement .getAttribute ("gradientUnits") || "objectBoundingBox";
       gradient .spreadMethod = xmlElement .getAttribute ("spreadMethod");
       gradient .transform    = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
 
@@ -956,14 +959,19 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .styles .pop ();
    },
-   drawGradient: function (gradient, transform, bbox)
+   drawGradient: function (gradient, transform, bbox, units)
    {
       const m = new Matrix3 ();
 
       m .scale (new Vector2 (GRADIENT_SIZE / 2, GRADIENT_SIZE / 2));
       m .translate (Vector2 .One);
       m .scale (new Vector2 (1, -1));
-      m .multLeft (Matrix3 .inverse (bbox .matrix));
+
+      if (units === "userSpaceOnUse")
+         m .multLeft (Matrix3 .inverse (bbox .matrix));
+      else
+         m .multLeft (new Matrix3 (2, 0, 0, 0, 2, 0, -1, -1, 1));
+
       m .multLeft (transform);
 
       // Paint.
