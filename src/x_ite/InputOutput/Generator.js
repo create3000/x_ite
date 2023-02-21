@@ -513,7 +513,7 @@ Generator .prototype =
          "&": "&amp;",
       };
 
-      const regex = /(\\|\r|\n|\t|"|'|<|>|&)/g;
+      const regex = /([\\\r\n\t"'<>&])/g;
 
       return function (string)
       {
@@ -534,7 +534,7 @@ Generator .prototype =
          "\"": "\\\"",
       };
 
-      const regex = /(\\|\t|\n|\r|")/g;
+      const regex = /([\\\t\n\r"])/g;
 
       return function (string)
       {
