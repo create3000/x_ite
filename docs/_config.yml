@@ -180,7 +180,7 @@ compress_html:
   profile: false
   blanklines: false
   ignore:
-    envs: [x-development]
+    envs: [development]
 
 exclude:
   - "*.gem"
