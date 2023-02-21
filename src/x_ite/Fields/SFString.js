@@ -111,7 +111,9 @@ SFString .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    toJSONStreamValue: function (generator)
    {
+      generator .string += '"';
       generator .string += generator .JSONEncode (this .getValue ());
+      generator .string += '"';
    },
 });
 

@@ -804,7 +804,9 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             generator .string += '"';
             generator .string += ':';
             generator .string += generator .TidySpace ();
+            generator .string += '"';
             generator .string += generator .JSONEncode (name);
+            generator .string += '"';
             generator .string += generator .TidyBreak ();
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();
@@ -847,7 +849,9 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          generator .string += '"';
          generator .string += ':';
          generator .string += generator .TidySpace ();
+         generator .string += '"';
          generator .string += generator .JSONEncode (name);
+         generator .string += '"';
          generator .string += ',';
          generator .string += generator .TidyBreak ();
       }
@@ -1008,7 +1012,9 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             generator .string += '"';
             generator .string += ':';
             generator .string += generator .TidySpace ();
+            generator .string += '"';
             generator .string += generator .JSONEncode (field .getName ());
+            generator .string += '"';
 
             // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
             // for this field.
@@ -1131,7 +1137,9 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          for (let i = 0, length = sourceTextLines .length; i < length; ++ i)
          {
             generator .string += generator .ListIndent ();
+            generator .string += '"';
             generator .string += generator .JSONEncode (sourceTextLines [i]);
+            generator .string += '"';
 
             if (i !== length - 1)
                generator .string += ',';
@@ -1187,7 +1195,9 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                generator .string += '"';
                generator .string += ':';
                generator .string += generator .TidySpace ();
+               generator .string += '"';
                generator .string += generator .JSONEncode (field .getName ());
+               generator .string += '"';
                generator .string += ',';
                generator .string += generator .TidyBreak ();
 
@@ -1197,7 +1207,9 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                generator .string += '"';
                generator .string += ':';
                generator .string += generator .TidySpace ();
+               generator .string += '"';
                generator .string += generator .JSONEncode (protoField .getName ());
+               generator .string += '"';
                generator .string += generator .TidyBreak ();
 
                generator .string += generator .DecIndent ();

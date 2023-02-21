@@ -326,7 +326,9 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
       generator .string += "@name";
       generator .string += '"';
       generator .string += ':';
+      generator .string += '"';
       generator .string += generator .JSONEncode (this .getName ());
+      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -396,7 +398,9 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
             generator .string += '"';
             generator .string += ':';
             generator .string += generator .TidySpace ();
+            generator .string += '"';
             generator .string += generator .JSONEncode (field .getName ());
+            generator .string += '"';
 
             if (field .isDefaultValue ())
             {

@@ -198,7 +198,9 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
+      generator .string += '"';
       generator .string += generator .JSONEncode (sourceNodeName);
+      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -208,7 +210,9 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
+      generator .string += '"';
       generator .string += generator .JSONEncode (this [_sourceField] .getName ());
+      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -218,7 +222,9 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
+      generator .string += '"';
       generator .string += generator .JSONEncode (destinationNodeName);
+      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -228,7 +234,9 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
+      generator .string += '"';
       generator .string += generator .JSONEncode (this [_destinationField] .getName ());
+      generator .string += '"';
       generator .string += generator .TidyBreak ();
 
       generator .string += generator .DecIndent ();

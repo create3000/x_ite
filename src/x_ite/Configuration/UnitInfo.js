@@ -122,7 +122,9 @@ UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
+      generator .string += '"';
       generator .string += generator .JSONEncode (this .name);
+      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 

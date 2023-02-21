@@ -350,7 +350,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          generator .string += '"';
          generator .string += ':';
          generator .string += generator .TidySpace ();
+         generator .string += '"';
          generator .string += generator .JSONEncode (generator .Name (this .getInlineNode ()));
+         generator .string += '"';
          generator .string += ',';
          generator .string += generator .TidyBreak ();
 
@@ -360,7 +362,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          generator .string += '"';
          generator .string += ':';
          generator .string += generator .TidySpace ();
+         generator .string += '"';
          generator .string += generator .JSONEncode (this .getExportedName ());
+         generator .string += '"';
 
          if (this .getImportedName () !== this .getExportedName ())
          {
@@ -372,7 +376,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
             generator .string += '"';
             generator .string += ':';
             generator .string += generator .TidySpace ();
+            generator .string += '"';
             generator .string += generator .JSONEncode (this .getImportedName ());
+            generator .string += '"';
             generator .string += generator .TidyBreak ();
          }
          else
@@ -437,7 +443,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (sourceNodeName);
+                  generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
 
@@ -447,7 +455,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (sourceField);
+                  generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
 
@@ -457,7 +467,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (destinationNodeName);
+                  generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
 
@@ -467,7 +479,9 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (destinationField);
+                  generator .string += '"';
                   generator .string += generator .TidyBreak ();
 
                   generator .string += generator .DecIndent ();

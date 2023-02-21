@@ -133,7 +133,9 @@ X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototyp
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
+      generator .string += '"';
       generator .string += generator .JSONEncode (localName);
+      generator .string += '"';
 
       if (this [_exportedName] !== localName)
       {
@@ -145,7 +147,9 @@ X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototyp
          generator .string += '"';
          generator .string += ':';
          generator .string += generator .TidySpace ();
+         generator .string += '"';
          generator .string += generator .JSONEncode (this [_exportedName]);
+         generator .string += '"';
          generator .string += generator .TidyBreak ();
       }
       else

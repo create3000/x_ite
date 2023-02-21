@@ -762,7 +762,9 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (key);
+                  generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
 
@@ -772,7 +774,9 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
                   generator .string += '"';
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
+                  generator .string += '"';
                   generator .string += generator .JSONEncode (value);
+                  generator .string += '"';
                   generator .string += generator .TidyBreak ();
 
                   generator .string += generator .DecIndent ();

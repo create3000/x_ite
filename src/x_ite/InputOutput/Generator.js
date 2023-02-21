@@ -538,7 +538,7 @@ Generator .prototype =
 
       return function (string)
       {
-         return '"' + string .replace (regex, char => map [char]) + '"';
+         return string .replace (regex, char => map [char]);
       };
    })(),
    JSONNumber: function (value)
