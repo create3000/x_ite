@@ -912,7 +912,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       gradient .cx           = this .lengthAttribute (xmlElement .getAttribute ("cx"), gradient .cx || 0.5),
       gradient .cy           = this .lengthAttribute (xmlElement .getAttribute ("cy"), gradient .cy || 0.5),
-      gradient .r            = this .lengthAttribute (xmlElement .getAttribute ("r"),  gradient .cx || 0.5),
+      gradient .r            = this .lengthAttribute (xmlElement .getAttribute ("r"),  gradient .r  || 0.5),
       gradient .fx           = this .lengthAttribute (xmlElement .getAttribute ("fx"), gradient .fx || gradient .cx),
       gradient .fy           = this .lengthAttribute (xmlElement .getAttribute ("fy"), gradient .fy || gradient .cy),
       gradient .fr           = this .lengthAttribute (xmlElement .getAttribute ("fr"), gradient .fr || 0),
