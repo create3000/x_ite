@@ -152,7 +152,7 @@ $(() =>
 
 ## Upload and Convert
 
-Convert **X3D, VRML, glTF, GLB, OBJ, STL,** and **SVG** to a X3D format of your choice.
+Convert **X3D, VRML, glTF (GLB), OBJ, STL,** and **SVG** to a X3D format of your choice.
 
 <div id="drop-zone">
    <p id="open-files" class="center">

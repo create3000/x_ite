@@ -1028,7 +1028,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       if (!attribute)
          return;
-         
+
       const
          scene = this .getExecutionContext (),
          hash  = new URL (attribute, scene .getWorldURL ()) .hash .slice (1);
@@ -1535,14 +1535,14 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                  case 'S':
                                  case 's':
                                  {
-                                    x1 = ax + (ax - px);
-                                    y1 = ay + (ay - py);
+                                    var x1 = ax + (ax - px);
+                                    var y1 = ay + (ay - py);
                                     break;
                                  }
                                  default:
                                  {
-                                    x1 = ax;
-                                    y1 = ay;
+                                    var x1 = ax;
+                                    var y1 = ay;
                                     break;
                                  }
                               }
