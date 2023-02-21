@@ -858,7 +858,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       for (const [o, c, a] of g .stops)
          gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
 
-      return this .drawGradient (gradient, g .transform, bbox, g .units);
+      return this .drawGradient (gradient, g, bbox);
    },
    linearGradientElement: function (xmlElement, gradient)
    {
@@ -897,7 +897,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       for (const [o, c, a] of g .stops)
          gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
 
-      return this .drawGradient (gradient, g .transform, bbox, g .units);
+      return this .drawGradient (gradient, g, bbox);
    },
    radialGradientElement: function (xmlElement, gradient)
    {
@@ -958,7 +958,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .styles .pop ();
    },
-   drawGradient: function (gradient, transform, bbox, units)
+   drawGradient: function (gradient, g, bbox)
    {
       const m = new Matrix3 ();
 
@@ -966,12 +966,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       m .translate (Vector2 .One);
       m .scale (new Vector2 (1, -1));
 
-      if (units === "userSpaceOnUse")
+      if (g .units === "userSpaceOnUse")
          m .multLeft (Matrix3 .inverse (bbox .matrix));
       else
          m .multLeft (new Matrix3 (2, 0, 0, 0, 2, 0, -1, -1, 1));
 
-      m .multLeft (transform);
+      m .multLeft (g .transform);
 
       // Paint.
 
