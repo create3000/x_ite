@@ -2077,7 +2077,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (!value .match (/^(?:inherit|unset|default)$/))
       {
-         if (this .colorValue ())
+         if (this .colorValue (this .styles .at (-1) .fillColor))
          {
             this .style .fillType  = "COLOR";
             this .style .fillColor = this .value .copy ();
@@ -2136,7 +2136,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (!value .match (/^(?:inherit|unset|default)$/))
       {
-         if (this .colorValue ())
+         if (this .colorValue (this .styles .at (-1) .strokeColor))
          {
             this .style .strokeType  = "COLOR";
             this .style .strokeColor = this .value .copy ();
@@ -2202,7 +2202,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    stopColorStyle: function (value)
    {
-      if (this .colorValue ())
+      if (this .colorValue (this .styles .at (-1) .stopColor))
       {
          this .style .stopColor = this .value .copy ();
          return;
@@ -2288,12 +2288,14 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const color = new Color4 (0, 0, 0, 0);
 
-      return function ()
+      return function ({ r, g, b, a })
       {
          if (!Grammar .color .parse (this))
             return false;
 
-         this .value = color .set (... this .convertColor (this .result [1], "black"));
+         const defaultColor = `rgba(${r * 255},${g * 255},${b * 255},${a})`
+
+         this .value = color .set (... this .convertColor (this .result [1], defaultColor));
 
          return true;
       };
