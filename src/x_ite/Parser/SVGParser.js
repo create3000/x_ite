@@ -1765,16 +1765,20 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   {
                      if (this .double ())
                      {
-                        const ty = this .value;
-
-                        this .whitespaces ();
-
-                        if (Grammar .closeParenthesis .parse (this))
-                        {
-                           matrix .translate (new Vector2 (tx, ty));
-                           continue;
-                        }
+                        var ty = this .value;
                      }
+                  }
+                  else
+                  {
+                     var ty = 0;
+                  }
+
+                  this .whitespaces ();
+
+                  if (Grammar .closeParenthesis .parse (this))
+                  {
+                     matrix .translate (new Vector2 (tx, ty));
+                     continue;
                   }
                }
             }
