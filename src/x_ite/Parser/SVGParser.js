@@ -1840,16 +1840,20 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   {
                      if (this .double ())
                      {
-                        const sy = this .value;
-
-                        this .whitespaces ();
-
-                        if (Grammar .closeParenthesis .parse (this))
-                        {
-                           matrix .scale (new Vector2 (sx, sy));
-                           continue;
-                        }
+                        var sy = this .value;
                      }
+                  }
+                  else
+                  {
+                     var sy = sx;
+                  }
+
+                  this .whitespaces ();
+
+                  if (Grammar .closeParenthesis .parse (this))
+                  {
+                     matrix .scale (new Vector2 (sx, sy));
+                     continue;
                   }
                }
             }
