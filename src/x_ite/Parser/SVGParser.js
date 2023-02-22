@@ -103,10 +103,7 @@ const
    POINT         = INCH / 72, // One point in meters.
    PICA          = INCH / 6,  // One pica in meters.
    PIXEL         = INCH / 90, // One pixel in meters.
-   EM            = 16,        // One em in pixels,
-   BEZIER_STEPS  = 10,        // Subdivisions of a span.
-   CIRCLE_STEPS  = 64,        // Subdivisions of a circle, used for arc.
-   GRADIENT_SIZE = 256;       // In pixels.
+   EM            = 16;        // One em in pixels.
 
 /*
  *  Parser
@@ -134,9 +131,6 @@ function SVGParser (scene)
    this .canvas  = document .createElement ("canvas");
    this .context = this .canvas .getContext ("2d");
 
-   this .canvas .width  = GRADIENT_SIZE;
-   this .canvas .height = GRADIENT_SIZE;
-
    this .styles = [{
       display: "inline",
       fillType: "COLOR",
@@ -154,6 +148,42 @@ function SVGParser (scene)
       stopOpacity: 1,
       vectorEffect: "none",
    }];
+
+   // Constants
+
+   const browser = scene .getBrowser ()
+
+   switch (browser .getBrowserOption ("PrimitiveQuality"))
+   {
+      case "LOW":
+         this .BEZIER_STEPS = 6;  // Subdivisions of a span.
+         this .CIRCLE_STEPS = 20; // Subdivisions of a circle, used for arc.
+         break;
+      case "HIGH":
+         this .BEZIER_STEPS = 10; // Subdivisions of a span.
+         this .CIRCLE_STEPS = 64; // Subdivisions of a circle, used for arc.
+         break;
+      default:
+         this .BEZIER_STEPS = 8;  // Subdivisions of a span.
+         this .CIRCLE_STEPS = 32; // Subdivisions of a circle, used for arc.
+         break;
+   }
+
+   switch (browser .getBrowserOption ("TextureQuality"))
+   {
+      case "LOW":
+         this .GRADIENT_SIZE = 32; // In pixels.
+         break;
+      case "HIGH":
+         this .GRADIENT_SIZE = 128; // In pixels.
+         break;
+      default:
+         this .GRADIENT_SIZE = 64; // In pixels.
+         break;
+   }
+
+   this .canvas .width  = this .GRADIENT_SIZE;
+   this .canvas .height = this .GRADIENT_SIZE;
 }
 
 SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
@@ -594,7 +624,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const s = c * Math .PI / 2;
 
-            for (let i = 0, N = CIRCLE_STEPS / 4; i < N; ++ i)
+            for (let i = 0, N = this .CIRCLE_STEPS / 4; i < N; ++ i)
             {
                const p = Complex .Polar (1, s + Math .PI / 2 * i / (N - 1));
 
@@ -994,7 +1024,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const m = new Matrix3 ();
 
-      m .scale (new Vector2 (GRADIENT_SIZE / 2, GRADIENT_SIZE / 2));
+      m .scale (new Vector2 (this .GRADIENT_SIZE / 2, this .GRADIENT_SIZE / 2));
       m .translate (Vector2 .One);
       m .scale (new Vector2 (1, -1));
 
@@ -1011,8 +1041,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       cx .fillStyle = gradient;
       cx .save ();
-      cx .clearRect (0, 0, GRADIENT_SIZE, GRADIENT_SIZE);
-      cx .rect (0, 0, GRADIENT_SIZE, GRADIENT_SIZE);
+      cx .clearRect (0, 0, this .GRADIENT_SIZE, this .GRADIENT_SIZE);
+      cx .rect (0, 0, this .GRADIENT_SIZE, this .GRADIENT_SIZE);
       cx .transform (m [0], m [1], m [3], m [4], m [6], m [7]);
       cx .fill ();
       cx .restore ();
@@ -1382,7 +1412,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                  y  += ay;
                               }
 
-                              Bezier .quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS, points);
+                              Bezier .quadric (ax, ay, 0, x1, y1, 0, x, y, 0, this .BEZIER_STEPS, points);
 
                               ax = x;
                               ay = y;
@@ -1443,7 +1473,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                            }
                         }
 
-                        Bezier .quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS, points);
+                        Bezier .quadric (ax, ay, 0, x1, y1, 0, x, y, 0, this .BEZIER_STEPS, points);
 
                         ax = x;
                         ay = y;
@@ -1509,7 +1539,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                        y  += ay;
                                     }
 
-                                    Bezier .cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS, points);
+                                    Bezier .cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, this .BEZIER_STEPS, points);
 
                                     ax = x;
                                     ay = y;
@@ -1586,7 +1616,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                  }
                               }
 
-                              Bezier .cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS, points);
+                              Bezier .cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, this .BEZIER_STEPS, points);
 
                               ax = x;
                               ay = y;
@@ -1658,7 +1688,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                                           y += ay;
                                        }
 
-                                       Bezier .arc (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, CIRCLE_STEPS, points);
+                                       Bezier .arc (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, this .CIRCLE_STEPS, points);
 
                                        ax = x;
                                        ay = y;
