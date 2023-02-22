@@ -2293,7 +2293,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (!Grammar .color .parse (this))
             return false;
 
-         this .value = color .set (... this .convertColor (this .result [1]));
+         this .value = color .set (... this .convertColor (this .result [1], "black"));
 
          return true;
       };

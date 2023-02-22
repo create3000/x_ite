@@ -139,10 +139,10 @@ X3DParser .prototype = {
    {
       return this .scene .fromUnit (category, value);
    },
-   convertColor: function (value)
+   convertColor: function (value, defaultColor = "white")
    {
       const
-         wrap   = $("<div></div>") .hide () .css ("color", "black") .appendTo ($("body")),
+         wrap   = $("<div></div>") .hide () .css ("color", defaultColor) .appendTo ($("body")),
          div    = $("<div></div>").css ("color", value) .appendTo (wrap),
          rgb    = window .getComputedStyle (div [0]) .color,
          values = rgb .replace (/^rgba?\(|\)$/g, "") .split (/[\s,]+/) .map (s => parseFloat (s));
