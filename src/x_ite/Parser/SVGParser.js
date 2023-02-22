@@ -2131,7 +2131,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       if (this .double ())
       {
-         this .style .strokeWidth = this .value / (1000 * PIXEL);
+         this .style .strokeWidth = this .lengthAttribute (this .value);
          return;
       }
 
@@ -2360,15 +2360,41 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       materialNode .emissiveColor = new Color3 (... this .style .strokeColor);
       materialNode .transparency  = 1 - this .style .strokeOpacity * this .style .opacity;
 
-      if (this .style .strokeWidth !== 1)
+      const
+         modelMatrix = this .getModelMatrix (),
+         strokeWidth = modelMatrix .multDirMatrix (new Vector3 (this .style .strokeWidth, this .style .strokeWidth, 0)) .magnitude ();
+
+      // TODO: vector-effect: none | non-scaling-stroke | non-scaling-size | non-rotation | fixed-position.
+
+      if (Math .max (strokeWidth, 1) !== 1)
       {
          const lineProperties = scene .createNode ("LineProperties");
 
          appearanceNode .lineProperties       = lineProperties;
-         lineProperties .linewidthScaleFactor = this .style .strokeWidth;
+         lineProperties .linewidthScaleFactor = strokeWidth;
       }
 
       return appearanceNode;
+   },
+   getModelMatrix: function ()
+   {
+      const modelMatrix = new Matrix4 ();
+
+      for (let i = 1; i < this .groupNodes .length; ++ i)
+      {
+         const
+            node   = this .groupNodes [i],
+            matrix = new Matrix4 ();
+
+         matrix .set (node .translation .getValue (),
+                      node .rotation .getValue (),
+                      node .scale .getValue (),
+                      node .scaleOrientation .getValue ());
+
+         modelMatrix .multLeft (matrix);
+      }
+
+      return modelMatrix;
    },
    createTextureProperties: function ()
    {
