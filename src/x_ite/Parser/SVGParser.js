@@ -57,6 +57,7 @@ import Vector4      from "../../standard/Math/Numbers/Vector4.js";
 import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix3      from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
+import Complex      from "../../standard/Math/Numbers/Complex.js";
 import Box2         from "../../standard/Math/Geometry/Box2.js"
 import Bezier       from "../../standard/Math/Algorithms/Bezier.js";
 
@@ -516,55 +517,146 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          width  = this .lengthAttribute (xmlElement .getAttribute ("width"), 0),
          height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0);
 
-      const
-         scene         = this .getExecutionContext (),
-         size          = new Vector2 (width, height),
-         center        = new Vector2 (x + width / 2, y + height / 2),
-         bbox          = new Box2 (size, center),
-         transformNode = this .createTransform (xmlElement, center);
+      let
+         rx = Math .max (0, this .lengthAttribute (xmlElement .getAttribute ("rx"), 0)),
+         ry = Math .max (0, this .lengthAttribute (xmlElement .getAttribute ("ry"), 0));
 
-      this .groupNodes .push (transformNode);
-
-      // Create nodes.
-
-      if (this .style .fillType !== "none")
+      if (rx === 0 && ry === 0)
       {
          const
-            shapeNode     = scene .createNode ("Shape"),
-            rectangleNode = scene .createNode ("Rectangle2D");
+            scene         = this .getExecutionContext (),
+            size          = new Vector2 (width, height),
+            center        = new Vector2 (x + width / 2, y + height / 2),
+            bbox          = new Box2 (size, center),
+            transformNode = this .createTransform (xmlElement, center);
 
-         shapeNode .appearance = this .createFillAppearance (bbox);
-         shapeNode .geometry   = rectangleNode;
-         rectangleNode .solid  = this .solid;
-         rectangleNode .size   = size;
+         this .groupNodes .push (transformNode);
 
-         transformNode .children .push (shapeNode);
+         // Create nodes.
+
+         if (this .style .fillType !== "none")
+         {
+            const
+               shapeNode     = scene .createNode ("Shape"),
+               rectangleNode = scene .createNode ("Rectangle2D");
+
+            shapeNode .appearance = this .createFillAppearance (bbox);
+            shapeNode .geometry   = rectangleNode;
+            rectangleNode .solid  = this .solid;
+            rectangleNode .size   = size;
+
+            transformNode .children .push (shapeNode);
+         }
+
+         if (this .style .strokeType !== "none")
+         {
+            const
+               shapeNode     = scene .createNode ("Shape"),
+               polylineNode  = scene .createNode ("Polyline2D"),
+               width1_2      = width / 2,
+               height1_2     = height / 2;
+
+            shapeNode .appearance = this .createStrokeAppearance ();
+            shapeNode .geometry   = polylineNode;
+
+            polylineNode .lineSegments = [ width1_2,  height1_2,
+                                          -width1_2,  height1_2,
+                                          -width1_2, -height1_2,
+                                          width1_2, -height1_2,
+                                          width1_2,  height1_2];
+
+            transformNode .children .push (shapeNode);
+         }
+
+         this .groupNodes .pop ();
+         this .styles     .pop ();
+
+         this .groupNodes .at (-1) .children .push (transformNode);
       }
-
-      if (this .style .strokeType !== "none")
+      else
       {
+         // Create points.
+
+         if (rx && !ry) ry = rx;
+         if (ry && !rx) rx = ry;
+
+         rx = Math .min (rx, width / 2);
+         ry = Math .min (ry, height / 2);
+
          const
-            shapeNode     = scene .createNode ("Shape"),
-            polylineNode  = scene .createNode ("Polyline2D"),
-            width1_2      = width / 2,
-            height1_2     = height / 2;
+            xOffsets = [width  / 2 - rx, rx - width / 2, rx - width / 2, width / 2 - rx],
+            yOffsets = [height / 2 - ry, height / 2 - ry, ry - height / 2, ry - height / 2],
+            points   = Object .assign ([ ], { index: 0 });
 
-         shapeNode .appearance = this .createStrokeAppearance ();
-         shapeNode .geometry   = polylineNode;
+         for (let c = 0; c < 4; ++ c)
+         {
+            const s = c * Math .PI / 2;
 
-         polylineNode .lineSegments = [ width1_2,  height1_2,
-                                       -width1_2,  height1_2,
-                                       -width1_2, -height1_2,
-                                        width1_2, -height1_2,
-                                        width1_2,  height1_2];
+            for (let i = 0, N = CIRCLE_STEPS / 4; i < N; ++ i)
+            {
+               const p = Complex .Polar (1, s + Math .PI / 2 * i / (N - 1));
 
-         transformNode .children .push (shapeNode);
+               points .push (new Vector3 (xOffsets [c] + p .real * rx, yOffsets [c] + p .imag * ry, 0));
+            }
+         }
+
+         points .pop ();
+
+         // Create Coordinate node.
+
+         const
+            scene          = this .getExecutionContext (),
+            coordinateNode = scene .createNode ("Coordinate");
+
+         coordinateNode .point .push (... points);
+
+         // Create Transform node.
+
+         const
+            size          = new Vector2 (width, height),
+            center        = new Vector2 (x + width / 2, y + height / 2),
+            bbox          = new Box2 (size, Vector2 .Zero),
+            transformNode = this .createTransform (xmlElement, center);
+
+         this .groupNodes .push (transformNode);
+
+         // Create nodes.
+
+         if (this .style .fillType !== "none")
+         {
+            const
+               shapeNode    = scene .createNode ("Shape"),
+               geometryNode = scene .createNode ("IndexedTriangleSet");
+
+            shapeNode .appearance  = this .createFillAppearance (bbox);
+            shapeNode .geometry    = geometryNode;
+            geometryNode .solid    = this .solid;
+            geometryNode .index    = this .triangulatePolygon ([points], coordinateNode);
+            geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
+            geometryNode .coord    = coordinateNode;
+
+            transformNode .children .push (shapeNode);
+         }
+
+         if (this .style .strokeType !== "none")
+         {
+            const
+               shapeNode    = scene .createNode ("Shape"),
+               geometryNode = scene .createNode ("IndexedLineSet");
+
+            shapeNode .appearance    = this .createStrokeAppearance ();
+            shapeNode .geometry      = geometryNode;
+            geometryNode .coordIndex = [... points .keys (), 0, -1];
+            geometryNode .coord      = coordinateNode;
+
+            transformNode .children .push (shapeNode);
+         }
+
+         this .groupNodes .pop ();
+         this .styles     .pop ();
+
+         this .groupNodes .at (-1) .children .push (transformNode);
       }
-
-      this .groupNodes .pop ();
-      this .styles     .pop ();
-
-      this .groupNodes .at (-1) .children .push (transformNode);
    },
    circleElement: function (xmlElement)
    {
@@ -771,7 +863,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          shapeNode .appearance    = this .createStrokeAppearance ();
          shapeNode .geometry      = geometryNode;
-         geometryNode .coordIndex = [... points .keys (), ... (closed ? [points [0]] : [ ]), -1];
+         geometryNode .coordIndex = [... points .keys (), ... (closed ? [0] : [ ]), -1];
          geometryNode .coord      = coordinateNode;
 
          transformNode .children .push (shapeNode);
