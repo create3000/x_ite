@@ -2293,7 +2293,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (!Grammar .color .parse (this))
             return false;
 
-         const defaultColor = `rgba(${r * 255},${g * 255},${b * 255},${a})`
+         const defaultColor = `rgba(${r * 255},${g * 255},${b * 255},${a})`;
 
          this .value = color .set (... this .convertColor (this .result [1], defaultColor));
 
