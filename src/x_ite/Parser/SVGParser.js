@@ -2397,7 +2397,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          modelMatrix = this .getModelMatrix (),
          strokeWidth = modelMatrix .multDirMatrix (new Vector3 (this .style .strokeWidth, this .style .strokeWidth, 0));
 
-      return strokeWidth .magnitude ();
+      return (strokeWidth .x + strokeWidth .y) / 2;
    },
    createTextureProperties: function ()
    {
