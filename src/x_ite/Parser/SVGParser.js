@@ -261,12 +261,26 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Get attributes of svg element.
 
       const
-         defaultWidth   = this .lengthAttribute (xmlElement .getAttribute ("width", 100)),
-         defaultHeight  = this .lengthAttribute (xmlElement .getAttribute ("height", 100)),
+         defaultWidth   = this .lengthAttribute (xmlElement .getAttribute ("width"), 300),
+         defaultHeight  = this .lengthAttribute (xmlElement .getAttribute ("height"), 150),
          defaultViewBox = new Vector4 (0, 0, defaultWidth, defaultHeight),
          viewBox        = this .viewBoxAttribute (xmlElement .getAttribute ("viewBox"), defaultViewBox),
-         width          = this .lengthAttribute (xmlElement .getAttribute ("width", viewBox [2])),
-         height         = this .lengthAttribute (xmlElement .getAttribute ("height", viewBox [3]));
+         width          = this .lengthAttribute (xmlElement .getAttribute ("width"), viewBox [2]),
+         height         = this .lengthAttribute (xmlElement .getAttribute ("height"), viewBox [3]);
+
+      if (true) // default
+      {
+         // preserveAspectRatio="xMidYMid meet"
+
+         const
+            r  = width / height,
+            rv = viewBox [2] / viewBox [3];
+
+         if (rv > r)
+            viewBox [3] += viewBox [2] / r - viewBox [3];
+         else
+            viewBox [2] += viewBox [3] * r - viewBox [2];
+      }
 
       // Create viewpoint.
 
