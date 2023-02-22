@@ -870,9 +870,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          g        = this .linearGradientElement (xmlElement, { stops: [ ] }),
          gradient = this .context .createLinearGradient (g .x1, g .y1, g .x2, g .y2);
 
-      for (const [o, c, a] of g .stops)
-         gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
-
       return this .drawGradient (gradient, g, bbox);
    },
    linearGradientElement: function (xmlElement, gradient)
@@ -908,9 +905,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          g        = this .radialGradientElement (xmlElement, { stops: [ ] }),
          gradient = this .context .createRadialGradient (g .fx, g .fy, g. fr, g .cx, g .cy, g .r);
-
-      for (const [o, c, a] of g .stops)
-         gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
 
       return this .drawGradient (gradient, g, bbox);
    },
@@ -975,6 +969,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    drawGradient: function (gradient, g, bbox)
    {
+      // Add color stops.
+
+      for (const [o, c, a] of g .stops)
+         gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
+
+      // Create Matrix.
+
       const m = new Matrix3 ();
 
       m .scale (new Vector2 (GRADIENT_SIZE / 2, GRADIENT_SIZE / 2));
