@@ -20,7 +20,7 @@ timezone:
 # ↓ --------------------------
 
 title: X_ITE X3D Browser               # the main title
-version: 8.6.3                         # x_ite latest version
+version: 8.6.4                         # x_ite latest version
 size: 287                              # size in kb
 x3d_latest_version: 4.0                # x3d latest version
 
