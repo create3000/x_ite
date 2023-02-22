@@ -122,7 +122,7 @@ function SVGParser (scene)
 
    // Options
 
-   this .solid = false; // Are 2D primitives solid.
+   this .solid = false; // Are 2D primitives solid?
 
    // Globals
 
