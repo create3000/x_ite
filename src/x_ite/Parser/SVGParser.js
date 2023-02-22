@@ -584,8 +584,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          ry = Math .min (ry, height / 2);
 
          const
-            xOffsets = [width  / 2 - rx, rx - width / 2, rx - width / 2, width / 2 - rx],
-            yOffsets = [height / 2 - ry, height / 2 - ry, ry - height / 2, ry - height / 2],
+            xOffsets = [x + width - rx, x + rx , x + rx, x + width - rx],
+            yOffsets = [y + height - ry, y + height - ry, y + ry, y + ry],
             points   = Object .assign ([ ], { index: 0 });
 
          for (let c = 0; c < 4; ++ c)
@@ -602,25 +602,20 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          points .pop ();
 
-         // Create Coordinate node.
-
-         const
-            scene          = this .getExecutionContext (),
-            coordinateNode = scene .createNode ("Coordinate");
-
-         coordinateNode .point .push (... points);
-
          // Create Transform node.
 
          const
-            size          = new Vector2 (width, height),
-            center        = new Vector2 (x + width / 2, y + height / 2),
-            bbox          = new Box2 (size, Vector2 .Zero),
-            transformNode = this .createTransform (xmlElement, center);
+            scene         = this .getExecutionContext (),
+            transformNode = this .createTransform (xmlElement),
+            bbox          = new Box2 (Vector2 .min (... points), Vector2 .max (... points), true);
 
          this .groupNodes .push (transformNode);
 
          // Create nodes.
+
+         const coordinateNode = scene .createNode ("Coordinate");
+
+         coordinateNode .point .push (... points);
 
          if (this .style .fillType !== "none")
          {
