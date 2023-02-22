@@ -961,6 +961,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const offset = this .percentAttribute (xmlElement .getAttribute ("offset"), 0);
 
+      if (offset < 0 || offset > 1)
+         return;
+
       const { stopColor, stopOpacity } = this .style;
 
       gradient .stops .push ([offset, stopColor, stopOpacity]);
