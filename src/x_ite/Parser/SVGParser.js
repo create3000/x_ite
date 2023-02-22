@@ -157,15 +157,15 @@ function SVGParser (scene)
    {
       case "LOW":
          this .BEZIER_STEPS = 6;  // Subdivisions of a span.
-         this .CIRCLE_STEPS = 20; // Subdivisions of a circle, used for arc.
+         this .CIRCLE_STEPS = 20; // Subdivisions of a circle, used for arc and rounded rect.
          break;
       case "HIGH":
          this .BEZIER_STEPS = 10; // Subdivisions of a span.
-         this .CIRCLE_STEPS = 64; // Subdivisions of a circle, used for arc.
+         this .CIRCLE_STEPS = 64; // Subdivisions of a circle, used for arc and rounded rect.
          break;
       default:
          this .BEZIER_STEPS = 8;  // Subdivisions of a span.
-         this .CIRCLE_STEPS = 32; // Subdivisions of a circle, used for arc.
+         this .CIRCLE_STEPS = 32; // Subdivisions of a circle, used for arc and rounded rect.
          break;
    }
 
