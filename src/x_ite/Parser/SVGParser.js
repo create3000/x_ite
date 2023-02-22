@@ -2202,7 +2202,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    stopColorStyle: function (value)
    {
-      if (this .colorValue (this .style .stopColor))
+      if (this .colorValue (Color4 .Black))
       {
          this .style .stopColor = this .value .copy ();
          return;
