@@ -1940,45 +1940,24 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return matrix;
    },
-   styleAttributes: (function ()
+   styleAttributes: function (xmlElement)
    {
-      const Styles = [
-         "display",
-         "fill",
-         "fill-opacity",
-         "fill-rule",
-         "stroke",
-         "stroke-opacity",
-         "stroke-width",
-         "opacity",
-         "stop-color",
-         "stop-opacity",
-         "vector-effect",
-      ];
+      const style = Object .assign ({ }, this .styles [0]);
 
-      return function (xmlElement)
-      {
-         const style = Object .assign ({ }, this .styles [0]);
+      if (this .style .display === "none")
+         return false;
 
-         if (this .style .display === "none")
-            return false;
+      this .styles .push (style);
 
-         this .styles .push (style);
+      for (const attribute of xmlElement .attributes)
+         this .parseStyle (attribute .name, attribute .value)
 
-         for (const style of Styles)
-         {
-            const attribute = xmlElement .getAttribute (style);
+      // Style attribute has higher precedence.
 
-            this .parseStyle (style, attribute ?? "default");
-         }
+      this .styleAttribute (xmlElement .getAttribute ("style"));
 
-         // Style attribute has higher precedence.
-
-         this .styleAttribute (xmlElement .getAttribute ("style"));
-
-         return true;
-      };
-   })(),
+      return true;
+   },
    styleAttribute: function (attribute)
    {
       if (attribute === null)
