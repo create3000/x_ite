@@ -143,7 +143,7 @@ function SVGParser (scene)
       fillURL: "",
       fillOpacity: 1,
       fillRule: "nonzero",
-      strokeType: "NONE",
+      strokeType: "none",
       strokeColor: Color4 .Black,
       strokeURL: "",
       strokeOpacity: 1,
@@ -151,6 +151,7 @@ function SVGParser (scene)
       opacity: 1,
       stopColor: Color4 .Black,
       stopOpacity: 1,
+      vectorEffect: "none",
    }];
 }
 
@@ -512,7 +513,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Create nodes.
 
-      if (this .style .fillType !== "NONE")
+      if (this .style .fillType !== "none")
       {
          const
             shapeNode     = scene .createNode ("Shape"),
@@ -526,7 +527,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          transformNode .children .push (shapeNode);
       }
 
-      if (this .style .strokeType !== "NONE")
+      if (this .style .strokeType !== "none")
       {
          const
             shapeNode     = scene .createNode ("Shape"),
@@ -574,7 +575,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Create nodes.
 
-      if (this .style .fillType !== "NONE")
+      if (this .style .fillType !== "none")
       {
          const
             shapeNode = scene .createNode ("Shape"),
@@ -588,7 +589,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          transformNode .children .push (shapeNode);
       }
 
-      if (this .style .strokeType !== "NONE")
+      if (this .style .strokeType !== "none")
       {
          const
             shapeNode  = scene .createNode ("Shape"),
@@ -631,7 +632,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Create nodes.
 
-      if (this .style .fillType !== "NONE")
+      if (this .style .fillType !== "none")
       {
          const
             shapeNode = scene .createNode ("Shape"),
@@ -645,7 +646,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          transformNode .children .push (shapeNode);
       }
 
-      if (this .style .strokeType !== "NONE")
+      if (this .style .strokeType !== "none")
       {
          const
             shapeNode  = scene .createNode ("Shape"),
@@ -732,7 +733,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       coordinateNode .point .push (... points);
 
-      if (this .style .fillType !== "NONE")
+      if (this .style .fillType !== "none")
       {
          const
             shapeNode    = scene .createNode ("Shape"),
@@ -748,7 +749,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          transformNode .children .push (shapeNode);
       }
 
-      if (this .style .strokeType !== "NONE")
+      if (this .style .strokeType !== "none")
       {
          const
             shapeNode    = scene .createNode ("Shape"),
@@ -804,7 +805,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       for (const points of contours)
          coordinateNode .point .push (... points);
 
-      if (this .style .fillType !== "NONE")
+      if (this .style .fillType !== "none")
       {
          const
             shapeNode    = scene .createNode ("Shape"),
@@ -820,7 +821,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          transformNode .children .push (shapeNode);
       }
 
-      if (this .style .strokeType !== "NONE")
+      if (this .style .strokeType !== "none")
       {
          const
             shapeNode    = scene .createNode ("Shape"),
@@ -1917,6 +1918,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          "opacity",
          "stop-color",
          "stop-opacity",
+         "vector-effect",
       ];
 
       return function (xmlElement)
@@ -1995,6 +1997,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          case "stop-opacity":
             this .stopOpacityStyle (value);
             break;
+         case "vector-effect":
+            this .vectorEffectStyle (value);
+            break;
       }
    },
    displayStyle: function (value)
@@ -2024,13 +2029,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (value === "transparent")
       {
-         this .style .fillType = "NONE";
+         this .style .fillType = "none";
          return;
       }
 
       if (value === "none")
       {
-         this .style .fillType ="NONE";
+         this .style .fillType ="none";
          return;
       }
 
@@ -2083,13 +2088,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (value === "transparent")
       {
-         this .style .strokeType = "NONE";
+         this .style .strokeType = "none";
          return;
       }
 
       if (value === "none")
       {
-         this .style .strokeType ="NONE";
+         this .style .strokeType ="none";
          return;
       }
 
@@ -2180,6 +2185,18 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .style .stopOpacity = 0;
          return;
       }
+   },
+   vectorEffectStyle: function (value)
+   {
+      if (value !== "inherit")
+      {
+         this .style .vectorEffect = value;
+         return;
+      }
+
+      // inherit
+
+      this .style .vectorEffect = this .styles .at (-1) .vectorEffect;
    },
    parseValue: function (value)
    {
@@ -2295,7 +2312,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       switch (this .style .fillType)
       {
-         case "NONE":
+         case "none":
          {
             return null;
          }
@@ -2360,13 +2377,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       materialNode .emissiveColor = new Color3 (... this .style .strokeColor);
       materialNode .transparency  = 1 - this .style .strokeOpacity * this .style .opacity;
 
-      const
-         modelMatrix = this .getModelMatrix (),
-         strokeWidth = modelMatrix .multDirMatrix (new Vector3 (this .style .strokeWidth, this .style .strokeWidth, 0)) .magnitude ();
+      const strokeWidth = this .vectorEffect === "non-scaling-stroke"
+         ? this .style .strokeWidth
+         : this .getStokeWidth ();
 
-      // TODO: vector-effect: none | non-scaling-stroke | non-scaling-size | non-rotation | fixed-position.
-
-      if (Math .max (strokeWidth, 1) !== 1)
+      if (strokeWidth > 1)
       {
          const lineProperties = scene .createNode ("LineProperties");
 
@@ -2376,25 +2391,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return appearanceNode;
    },
-   getModelMatrix: function ()
+   getStokeWidth: function ()
    {
-      const modelMatrix = new Matrix4 ();
+      const
+         modelMatrix = this .getModelMatrix (),
+         strokeWidth = modelMatrix .multDirMatrix (new Vector3 (this .style .strokeWidth, this .style .strokeWidth, 0));
 
-      for (let i = 1; i < this .groupNodes .length; ++ i)
-      {
-         const
-            node   = this .groupNodes [i],
-            matrix = new Matrix4 ();
-
-         matrix .set (node .translation .getValue (),
-                      node .rotation .getValue (),
-                      node .scale .getValue (),
-                      node .scaleOrientation .getValue ());
-
-         modelMatrix .multLeft (matrix);
-      }
-
-      return modelMatrix;
+      return strokeWidth .magnitude ();
    },
    createTextureProperties: function ()
    {
@@ -2423,6 +2426,26 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          texCoordNode .point .push (invMatrix .multVecMatrix (new Vector2 (point .x, point .y)) .add (Vector2 .One) .divide (2));
 
       return texCoordNode;
+   },
+   getModelMatrix: function ()
+   {
+      const modelMatrix = new Matrix4 ();
+
+      for (let i = 1; i < this .groupNodes .length; ++ i)
+      {
+         const
+            node   = this .groupNodes [i],
+            matrix = new Matrix4 ();
+
+         matrix .set (node .translation .getValue (),
+                      node .rotation .getValue (),
+                      node .scale .getValue (),
+                      node .scaleOrientation .getValue ());
+
+         modelMatrix .multLeft (matrix);
+      }
+
+      return modelMatrix;
    },
    createTesselator: function ()
    {
