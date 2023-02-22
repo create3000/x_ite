@@ -604,6 +604,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          points .pop ();
 
+         // Create nodes.
+
          this .pathLikeElement (xmlElement, [... points .keys (), 0, -1], [points]);
       }
    },
@@ -763,19 +765,27 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    polylineElement: function (xmlElement)
    {
+      // Get points.
+
       const points = Object .assign ([ ], { index: 0 });
 
       if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
          return;
+
+      // Create nodes.
 
       this .pathLikeElement (xmlElement, [... points .keys (), -1], [points]);
    },
    polygonElement: function (xmlElement)
    {
+      // Get points.
+
       const points = Object .assign ([ ], { index: 0 });
 
       if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
          return;
+
+      // Create nodes.
 
       this .pathLikeElement (xmlElement, [... points .keys (), 0, -1], [points]);
    },
@@ -787,6 +797,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (!this .dAttribute (xmlElement .getAttribute ("d"), contours))
          return;
+
+      // Create contour indices.
 
       const indices = [ ];
 
@@ -800,6 +812,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          indices .push (-1);
       }
+
+      // Create nodes.
 
       this .pathLikeElement (xmlElement, indices, contours);
    },
