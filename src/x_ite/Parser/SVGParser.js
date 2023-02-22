@@ -588,7 +588,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          const
             xOffsets = [x + width - rx, x + rx , x + rx, x + width - rx],
             yOffsets = [y + height - ry, y + height - ry, y + ry, y + ry],
-            points   = Object .assign ([ ], { index: 0 });
+            points   = Object .assign ([ ], { index: 0, closed: true });
 
          for (let c = 0; c < 4; ++ c)
          {
@@ -606,7 +606,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          // Create nodes.
 
-         this .pathLikeElement (xmlElement, [... points .keys (), 0, -1], [points]);
+         this .pathLikeElement (xmlElement, [points]);
       }
    },
    circleElement: function (xmlElement)
@@ -774,20 +774,20 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Create nodes.
 
-      this .pathLikeElement (xmlElement, [... points .keys (), -1], [points]);
+      this .pathLikeElement (xmlElement, [points]);
    },
    polygonElement: function (xmlElement)
    {
       // Get points.
 
-      const points = Object .assign ([ ], { index: 0 });
+      const points = Object .assign ([ ], { index: 0, closed: true });
 
       if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
          return;
 
       // Create nodes.
 
-      this .pathLikeElement (xmlElement, [... points .keys (), 0, -1], [points]);
+      this .pathLikeElement (xmlElement, [points]);
    },
    pathElement: function (xmlElement)
    {
@@ -798,26 +798,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!this .dAttribute (xmlElement .getAttribute ("d"), contours))
          return;
 
-      // Create contour indices.
-
-      const indices = [ ];
-
-      for (const points of contours)
-      {
-         for (const i of points .keys ())
-            indices .push (points .index + i);
-
-         if (points .closed)
-            indices .push (points .index);
-
-         indices .push (-1);
-      }
-
       // Create nodes.
 
-      this .pathLikeElement (xmlElement, indices, contours);
+      this .pathLikeElement (xmlElement, contours);
    },
-   pathLikeElement: function (xmlElement, indices, contours)
+   pathLikeElement: function (xmlElement, contours)
    {
       // Determine style.
 
@@ -868,7 +853,21 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          shapeNode .appearance    = this .createStrokeAppearance ();
          shapeNode .geometry      = geometryNode;
          geometryNode .coord      = coordinateNode;
-         geometryNode .coordIndex = indices;
+
+         // Create contour indices.
+
+         const indices = geometryNode .coordIndex;
+
+         for (const points of contours)
+         {
+            for (const i of points .keys ())
+               indices .push (points .index + i);
+
+            if (points .closed)
+               indices .push (points .index);
+
+            indices .push (-1);
+         }
 
          transformNode .children .push (shapeNode);
       }
