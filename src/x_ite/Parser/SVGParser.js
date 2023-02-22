@@ -504,11 +504,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    rectElement: function (xmlElement)
    {
-      // Determine style.
-
-      if (!this .styleAttributes (xmlElement))
-         return;
-
       // Create Transform node.
 
       const
@@ -523,6 +518,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (rx === 0 && ry === 0)
       {
+         // Determine style.
+
+         if (!this .styleAttributes (xmlElement))
+            return;
+
+         // Create Transform node.
+
          const
             scene         = this .getExecutionContext (),
             size          = new Vector2 (width, height),
@@ -602,55 +604,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          points .pop ();
 
-         // Create Transform node.
-
-         const
-            scene         = this .getExecutionContext (),
-            transformNode = this .createTransform (xmlElement),
-            bbox          = new Box2 (Vector2 .min (... points), Vector2 .max (... points), true);
-
-         this .groupNodes .push (transformNode);
-
-         // Create nodes.
-
-         const coordinateNode = scene .createNode ("Coordinate");
-
-         coordinateNode .point .push (... points);
-
-         if (this .style .fillType !== "none")
-         {
-            const
-               shapeNode    = scene .createNode ("Shape"),
-               geometryNode = scene .createNode ("IndexedTriangleSet");
-
-            shapeNode .appearance  = this .createFillAppearance (bbox);
-            shapeNode .geometry    = geometryNode;
-            geometryNode .solid    = this .solid;
-            geometryNode .index    = this .triangulatePolygon ([points], coordinateNode);
-            geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
-            geometryNode .coord    = coordinateNode;
-
-            transformNode .children .push (shapeNode);
-         }
-
-         if (this .style .strokeType !== "none")
-         {
-            const
-               shapeNode    = scene .createNode ("Shape"),
-               geometryNode = scene .createNode ("IndexedLineSet");
-
-            shapeNode .appearance    = this .createStrokeAppearance ();
-            shapeNode .geometry      = geometryNode;
-            geometryNode .coordIndex = [... points .keys (), 0, -1];
-            geometryNode .coord      = coordinateNode;
-
-            transformNode .children .push (shapeNode);
-         }
-
-         this .groupNodes .pop ();
-         this .styles     .pop ();
-
-         this .groupNodes .at (-1) .children .push (transformNode);
+         this .pathLikeElement (xmlElement, [... points .keys (), 0, -1], [points]);
       }
    },
    circleElement: function (xmlElement)
@@ -807,71 +761,23 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .groupNodes .pop ();
       this .groupNodes .at (-1) .children .push (transformNode);
    },
-   polylineElement: function (xmlElement, closed = false)
+   polylineElement: function (xmlElement)
    {
       const points = Object .assign ([ ], { index: 0 });
 
       if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
          return;
 
-      // Determine style.
-
-      if (!this .styleAttributes (xmlElement))
-         return;
-
-      // Create Transform node.
-
-      const
-         scene         = this .getExecutionContext (),
-         transformNode = this .createTransform (xmlElement),
-         bbox          = new Box2 (Vector2 .min (... points), Vector2 .max (... points), true);
-
-      this .groupNodes .push (transformNode);
-
-      // Create nodes.
-
-      const coordinateNode = scene .createNode ("Coordinate");
-
-      coordinateNode .point .push (... points);
-
-      if (this .style .fillType !== "none")
-      {
-         const
-            shapeNode    = scene .createNode ("Shape"),
-            geometryNode = scene .createNode ("IndexedTriangleSet");
-
-         shapeNode .appearance  = this .createFillAppearance (bbox);
-         shapeNode .geometry    = geometryNode;
-         geometryNode .solid    = this .solid;
-         geometryNode .index    = this .triangulatePolygon ([points], coordinateNode);
-         geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
-         geometryNode .coord    = coordinateNode;
-
-         transformNode .children .push (shapeNode);
-      }
-
-      if (this .style .strokeType !== "none")
-      {
-         const
-            shapeNode    = scene .createNode ("Shape"),
-            geometryNode = scene .createNode ("IndexedLineSet");
-
-         shapeNode .appearance    = this .createStrokeAppearance ();
-         shapeNode .geometry      = geometryNode;
-         geometryNode .coordIndex = [... points .keys (), ... (closed ? [0] : [ ]), -1];
-         geometryNode .coord      = coordinateNode;
-
-         transformNode .children .push (shapeNode);
-      }
-
-      this .groupNodes .pop ();
-      this .styles     .pop ();
-
-      this .groupNodes .at (-1) .children .push (transformNode);
+      this .pathLikeElement (xmlElement, [... points .keys (), -1], [points]);
    },
    polygonElement: function (xmlElement)
    {
-      this .polylineElement (xmlElement, true);
+      const points = Object .assign ([ ], { index: 0 });
+
+      if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
+         return;
+
+      this .pathLikeElement (xmlElement, [... points .keys (), 0, -1], [points]);
    },
    pathElement: function (xmlElement)
    {
@@ -882,6 +788,23 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!this .dAttribute (xmlElement .getAttribute ("d"), contours))
          return;
 
+      const indices = [ ];
+
+      for (const points of contours)
+      {
+         for (const i of points .keys ())
+            indices .push (points .index + i);
+
+         if (points .closed)
+            indices .push (points .index);
+
+         indices .push (-1);
+      }
+
+      this .pathLikeElement (xmlElement, indices, contours);
+   },
+   pathLikeElement: function (xmlElement, indices, contours)
+   {
       // Determine style.
 
       if (!this .styleAttributes (xmlElement))
@@ -928,20 +851,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             shapeNode    = scene .createNode ("Shape"),
             geometryNode = scene .createNode ("IndexedLineSet");
 
-         shapeNode .appearance = this .createStrokeAppearance ();
-         shapeNode .geometry   = geometryNode;
-         geometryNode .coord   = coordinateNode;
-
-         for (const points of contours)
-         {
-            for (const i of points .keys ())
-               geometryNode .coordIndex .push (points .index + i);
-
-            if (points .closed)
-               geometryNode .coordIndex .push (points .index);
-
-            geometryNode .coordIndex .push (-1);
-         }
+         shapeNode .appearance    = this .createStrokeAppearance ();
+         shapeNode .geometry      = geometryNode;
+         geometryNode .coord      = coordinateNode;
+         geometryNode .coordIndex = indices;
 
          transformNode .children .push (shapeNode);
       }
