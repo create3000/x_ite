@@ -305,7 +305,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (true) // default
       {
-         // preserveAspectRatio="xMidYMid meet"
+         // preserveAspectRatio = "xMidYMid meet"
 
          const
             r  = width / height,
@@ -2164,7 +2164,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (value === "none")
       {
-         this .style .fillType ="none";
+         this .style .fillType = "none";
          return;
       }
 
@@ -2223,7 +2223,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (value === "none")
       {
-         this .style .strokeType ="none";
+         this .style .strokeType = "none";
          return;
       }
 
