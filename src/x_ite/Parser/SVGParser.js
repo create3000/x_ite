@@ -937,13 +937,15 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       gradient .units     = xmlElement .getAttribute ("gradientUnits") || "objectBoundingBox";
       gradient .transform = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
 
+      // Spread matrix
+
       const
          s = new Matrix3 (),
          c = new Vector2 (gradient .x1, gradient .y1);
 
-      s .translate (c)
-      s .multLeft (new Matrix3 (SPREAD, 0, 0, 0, SPREAD, 0, 0, 0, 1))
-      s .translate (c .negate ())
+      s .translate (c);
+      s .scale (new Vector2 (SPREAD, SPREAD));
+      s .translate (c .negate ());
 
       gradient .spreadMatrix = s;
 
@@ -983,13 +985,15 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       gradient .spreadMethod = xmlElement .getAttribute ("spreadMethod");
       gradient .transform    = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
 
+      // Spread matrix
+
       const
          s = new Matrix3 (),
          c = new Vector2 (gradient .fx, gradient .fy);
 
-      s .translate (c)
-      s .multLeft (new Matrix3 (SPREAD, 0, 0, 0, SPREAD, 0, 0, 0, 1))
-      s .translate (c .negate ())
+      s .translate (c);
+      s .scale (new Vector2 (SPREAD, SPREAD));
+      s .translate (c .negate ());
 
       gradient .spreadMatrix = s;
 
