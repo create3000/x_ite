@@ -1062,12 +1062,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       // Add color stops.
 
-      const spreadMatrix = new Matrix3 ();
-
       switch (g .spreadMethod)
       {
          default: // pad
          {
+            g .spreadMatrix .identity ();
+
             for (const [o, c, a] of g .stops)
                gradient .addColorStop (o, this .css (c, a));
 
@@ -1075,8 +1075,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          case "repeat":
          {
-            spreadMatrix .assign (g .spreadMatrix);
-
             for (let i = 0; i < SPREAD; ++ i)
             {
                const s = i / SPREAD;
@@ -1089,8 +1087,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          case "reflect":
          {
-            spreadMatrix .assign (g .spreadMatrix);
-
             for (let i = 0; i < SPREAD; ++ i)
             {
                const s = i / SPREAD;
@@ -1117,7 +1113,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          m .multLeft (new Matrix3 (2, 0, 0, 0, 2, 0, -1, -1, 1));
 
       m .multLeft (g .transform);
-      m .multLeft (spreadMatrix);
+      m .multLeft (g .spreadMatrix);
 
       // Paint.
 
