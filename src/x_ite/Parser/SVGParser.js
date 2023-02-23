@@ -128,6 +128,7 @@ function SVGParser (scene)
 
    // Globals
 
+   this .viewBox        = new Vector4 (0, 0, 100, 100);
    this .modelMatrix    = new MatrixStack (Matrix4);
    this .nodes          = new Map ();
    this .lineProperties = new Map ();
@@ -294,8 +295,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       scene .getRootNodes () .push (navigationInfo);
 
       // Get attributes of svg element.
-
-      this .viewBox = new Vector4 (0, 0, 300, 150);
 
       const
          defaultWidth   = this .lengthAttribute (xmlElement .getAttribute ("width"),  300, "width"),
