@@ -104,7 +104,7 @@ const
    PICA          = INCH / 6,  // One pica in meters.
    PIXEL         = INCH / 90, // One pixel in meters.
    EM            = 16,        // One em in pixels.
-   SPREAD        = 16;        // Spread factor.
+   SPREAD        = 16;        // Spread factor, Integer.
 
 /*
  *  Parser
