@@ -114,6 +114,8 @@ $(() =>
                url     = URL .createObjectURL (file);
 
             Browser .endUpdate ();
+            Browser .setBrowserOption ("PrimitiveQuality", "HIGH");
+            Browser .setBrowserOption ("TextureQuality",   "HIGH");
 
             await Browser .loadURL (new X3D .MFString (url));
 
