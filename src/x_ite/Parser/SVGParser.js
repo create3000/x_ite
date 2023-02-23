@@ -75,7 +75,7 @@ const Grammar = Expressions ({
    closeParenthesis: /\)/gy,
 
    // Units
-   length: /(em|ex|px|in|cm|mm|pt|pc)/gy,
+   length: /(em|ex|px|in|cm|mm|pt|pc|%)/gy,
    percent: /%/gy,
 
    // Values
@@ -1231,6 +1231,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   break;
                case "pc":
                   value *= PICA / PIXEL;
+                  break;
+               case "%":
+                  value *= Math .hypot (this .viewBox [2], this .viewBox [3]) / 100;
                   break;
             }
          }
