@@ -97,14 +97,14 @@ const Grammar = Expressions ({
  */
 
 const
-   MM            = 0.001,     // One mm in meters.
-   CM            = 0.01,      // One cm in meters.
-   INCH          = 0.0254,    // One inch in meters.
-   POINT         = INCH / 72, // One point in meters.
-   PICA          = INCH / 6,  // One pica in meters.
-   PIXEL         = INCH / 90, // One pixel in meters.
-   EM            = 16,        // One em in pixels.
-   SPREAD        = 16;        // Spread factor, Integer.
+   MM     = 0.001,     // One mm in meters.
+   CM     = 0.01,      // One cm in meters.
+   INCH   = 0.0254,    // One inch in meters.
+   POINT  = INCH / 72, // One point in meters.
+   PICA   = INCH / 6,  // One pica in meters.
+   PIXEL  = INCH / 90, // One pixel in meters.
+   EM     = 16,        // One em in pixels.
+   SPREAD = 16;        // Spread factor, Integer.
 
 /*
  *  Parser
@@ -173,13 +173,13 @@ function SVGParser (scene)
    switch (browser .getBrowserOption ("TextureQuality"))
    {
       case "LOW":
-         this .GRADIENT_SIZE = 64; // In pixels.
+         this .GRADIENT_SIZE = 128; // In pixels.
          break;
       case "HIGH":
-         this .GRADIENT_SIZE = 256; // In pixels.
+         this .GRADIENT_SIZE = 512; // In pixels.
          break;
       default:
-         this .GRADIENT_SIZE = 128; // In pixels.
+         this .GRADIENT_SIZE = 256; // In pixels.
          break;
    }
 
