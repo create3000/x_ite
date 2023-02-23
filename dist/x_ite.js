@@ -1,4 +1,4 @@
-/* X_ITE v8.6.4 */(function webpackUniversalModuleDefinition(root, factory) {
+/* X_ITE v8.6.5 */(function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 455:
+/***/ 151:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(318);
+/* provided dependency */ var jQuery = __webpack_require__(908);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 714:
+/***/ 80:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(318);
+/* provided dependency */ var jQuery = __webpack_require__(908);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 494:
+/***/ 172:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(318)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(908)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 318:
+/***/ 908:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11812,7 +11812,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 718:
+/***/ 323:
 /***/ ((module) => {
 
 /**
@@ -16591,7 +16591,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 914:
+/***/ 862:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19836,7 +19836,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 454:
+/***/ 732:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -29880,6 +29880,13 @@ Object .assign (Matrix4_Matrix4,
    },
    Matrix3: function (matrix)
    {
+      return new Matrix4_Matrix4 (matrix [0], matrix [1], 0, 0,
+                          matrix [3], matrix [4], 0, 0,
+                          0, 0, 1, 0,
+                          matrix [6], matrix [7], 0, 1);
+   },
+   SubMatrix: function (matrix)
+   {
       return new Matrix4_Matrix4 (matrix [0], matrix [1], matrix [2], 0,
                           matrix [3], matrix [4], matrix [5], 0,
                           matrix [6], matrix [7], matrix [8], 0,
@@ -34905,7 +34912,7 @@ x_ite_Namespace.set ("x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
  *
  ******************************************************************************/
 
-const VERSION_default_ = "8.6.4";
+const VERSION_default_ = "8.6.5";
 ;
 
 x_ite_Namespace.set ("x_ite/Browser/VERSION", VERSION_default_);
@@ -35807,7 +35814,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(318);
+/* provided dependency */ var $ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36765,7 +36772,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(318);
+/* provided dependency */ var Notification_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36887,8 +36894,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(714);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(318);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(80);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41890,7 +41897,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 x_ite_Namespace.set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(318);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42032,10 +42039,10 @@ X3DParser .prototype = {
    {
       return this .scene .fromUnit (category, value);
    },
-   convertColor: function (value)
+   convertColor: function (value, defaultColor = "white")
    {
       const
-         wrap   = X3DParser_$("<div></div>") .hide () .css ("color", "black") .appendTo (X3DParser_$("body")),
+         wrap   = X3DParser_$("<div></div>") .hide () .css ("color", defaultColor) .appendTo (X3DParser_$("body")),
          div    = X3DParser_$("<div></div>").css ("color", value) .appendTo (wrap),
          rgb    = window .getComputedStyle (div [0]) .color,
          values = rgb .replace (/^rgba?\(|\)$/g, "") .split (/[\s,]+/) .map (s => parseFloat (s));
@@ -45067,7 +45074,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(318);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46953,7 +46960,7 @@ const X3DOptimizer_default_ = X3DOptimizer;
 x_ite_Namespace.set ("x_ite/Parser/X3DOptimizer", X3DOptimizer_default_);
 /* harmony default export */ const Parser_X3DOptimizer = (X3DOptimizer_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(718);
+/* provided dependency */ var libtess = __webpack_require__(323);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47863,7 +47870,7 @@ const Box3_default_ = Box3;
 x_ite_Namespace.set ("standard/Math/Geometry/Box3", Box3_default_);
 /* harmony default export */ const Geometry_Box3 = (Box3_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(318);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50090,7 +50097,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(318);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50243,7 +50250,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(318);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52564,9 +52571,128 @@ const Bezier_default_ = Bezier;
 
 x_ite_Namespace.set ("standard/Math/Algorithms/Bezier", Bezier_default_);
 /* harmony default export */ const Algorithms_Bezier = (Bezier_default_);
+;// CONCATENATED MODULE: ./src/standard/Math/Utility/MatrixStack.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+function MatrixStack (Type)
+{
+   return Object .assign ([ new Type () ],
+   {
+      top: 0,
+      set: function (matrix)
+      {
+         this [this .top] .assign (matrix);
+      },
+      get: function ()
+      {
+         return this [this .top];
+      },
+      push: function ()
+      {
+         const top = ++ this .top;
+
+         if (top < this .length)
+            this [top] .assign (this [top - 1]);
+         else
+            this [top] = this [top - 1] .copy ();
+      },
+      pushMatrix: function (matrix)
+      {
+         const top = ++ this .top;
+
+         if (top < this .length)
+            this [top] .assign (matrix);
+         else
+            this [top] = matrix .copy ();
+      },
+      pop: function ()
+      {
+         -- this .top;
+      },
+      clear: function ()
+      {
+         this .top = 0;
+      },
+      size: function ()
+      {
+         return this .top + 1;
+      },
+      identity: function ()
+      {
+         this [this .top] .identity ();
+      },
+      multLeft: function (matrix)
+      {
+         this [this .top] .multLeft (matrix);
+      },
+      translate: function (vector)
+      {
+         this [this .top] .translate (vector);
+      },
+      rotate: function (rotation)
+      {
+         this [this .top] .rotate (rotation);
+      },
+      scale: function (vector)
+      {
+         this [this .top] .scale (vector);
+      },
+   });
+}
+
+const MatrixStack_default_ = MatrixStack;
+;
+
+x_ite_Namespace.set ("standard/Math/Utility/MatrixStack", MatrixStack_default_);
+/* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(318);
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(718);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(908);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(323);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52630,6 +52756,7 @@ x_ite_Namespace.set ("standard/Math/Algorithms/Bezier", Bezier_default_);
 
 
 
+
 /*
  *  Grammar
  */
@@ -52643,7 +52770,7 @@ const SVGParser_Grammar = Parser_Expressions ({
    closeParenthesis: /\)/gy,
 
    // Units
-   length: /(em|ex|px|in|cm|mm|pt|pc)/gy,
+   length: /(em|ex|px|in|cm|mm|pt|pc|%)/gy,
    percent: /%/gy,
 
    // Values
@@ -52666,16 +52793,14 @@ const SVGParser_Grammar = Parser_Expressions ({
  */
 
 const
-   MM            = 0.001,     // One mm in meters.
-   CM            = 0.01,      // One cm in meters.
-   INCH          = 0.0254,    // One inch in meters.
-   POINT         = INCH / 72, // One point in meters.
-   PICA          = INCH / 6,  // One pica in meters.
-   PIXEL         = INCH / 90, // One pixel in meters.
-   EM            = 16,        // One em in pixels,
-   BEZIER_STEPS  = 10,        // Subdivisions of a span.
-   CIRCLE_STEPS  = 64,        // Subdivisions of a circle, used for arc.
-   GRADIENT_SIZE = 256;       // In pixels.
+   MM     = 0.001,     // One mm in meters.
+   CM     = 0.01,      // One cm in meters.
+   INCH   = 0.0254,    // One inch in meters.
+   POINT  = INCH / 72, // One point in meters.
+   PICA   = INCH / 6,  // One pica in meters.
+   PIXEL  = INCH / 90, // One pixel in meters.
+   EM     = 16,        // One em in pixels.
+   SPREAD = 16;        // Spread factor, Integer.
 
 /*
  *  Parser
@@ -52694,17 +52819,17 @@ function SVGParser (scene)
 
    // Options
 
-   this .solid = false; // Are 2D primitives solid.
+   this .solid = false; // Are 2D primitives solid?
 
    // Globals
 
-   this .nodes   = new Map ();
-   this .tessy   = this .createTesselator ();
-   this .canvas  = document .createElement ("canvas");
-   this .context = this .canvas .getContext ("2d");
-
-   this .canvas .width  = GRADIENT_SIZE;
-   this .canvas .height = GRADIENT_SIZE;
+   this .viewBox        = new Numbers_Vector4 (0, 0, 100, 100);
+   this .modelMatrix    = new Utility_MatrixStack (Numbers_Matrix4);
+   this .nodes          = new Map ();
+   this .lineProperties = new Map ();
+   this .tessy          = this .createTesselator ();
+   this .canvas         = document .createElement ("canvas");
+   this .context        = this .canvas .getContext ("2d");
 
    this .styles = [{
       display: "inline",
@@ -52723,6 +52848,42 @@ function SVGParser (scene)
       stopOpacity: 1,
       vectorEffect: "none",
    }];
+
+   // Constants
+
+   const browser = scene .getBrowser ()
+
+   switch (browser .getBrowserOption ("PrimitiveQuality"))
+   {
+      case "LOW":
+         this .BEZIER_STEPS = 6;  // Subdivisions of a span.
+         this .CIRCLE_STEPS = 20; // Subdivisions of a circle, used for arc and rounded rect.
+         break;
+      case "HIGH":
+         this .BEZIER_STEPS = 10; // Subdivisions of a span.
+         this .CIRCLE_STEPS = 64; // Subdivisions of a circle, used for arc and rounded rect.
+         break;
+      default:
+         this .BEZIER_STEPS = 8;  // Subdivisions of a span.
+         this .CIRCLE_STEPS = 32; // Subdivisions of a circle, used for arc and rounded rect.
+         break;
+   }
+
+   switch (browser .getBrowserOption ("TextureQuality"))
+   {
+      case "LOW":
+         this .GRADIENT_SIZE = 128; // In pixels.
+         break;
+      case "HIGH":
+         this .GRADIENT_SIZE = 512; // In pixels.
+         break;
+      default:
+         this .GRADIENT_SIZE = 256; // In pixels.
+         break;
+   }
+
+   this .canvas .width  = this .GRADIENT_SIZE;
+   this .canvas .height = this .GRADIENT_SIZE;
 }
 
 SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototype),
@@ -52831,16 +52992,16 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       // Get attributes of svg element.
 
       const
-         defaultWidth   = this .lengthAttribute (xmlElement .getAttribute ("width"), 300),
-         defaultHeight  = this .lengthAttribute (xmlElement .getAttribute ("height"), 150),
-         defaultViewBox = new Numbers_Vector4 (0, 0, defaultWidth, defaultHeight),
+         defaultWidth   = this .lengthAttribute (xmlElement .getAttribute ("width"),  300, "width"),
+         defaultHeight  = this .lengthAttribute (xmlElement .getAttribute ("height"), 150, "height"),
+         defaultViewBox = this .viewBox .set (0, 0, defaultWidth, defaultHeight),
          viewBox        = this .viewBoxAttribute (xmlElement .getAttribute ("viewBox"), defaultViewBox),
-         width          = this .lengthAttribute (xmlElement .getAttribute ("width"), viewBox [2]),
-         height         = this .lengthAttribute (xmlElement .getAttribute ("height"), viewBox [3]);
+         width          = this .lengthAttribute (xmlElement .getAttribute ("width"),  viewBox [2], "width"),
+         height         = this .lengthAttribute (xmlElement .getAttribute ("height"), viewBox [3], "height");
 
       if (true) // default
       {
-         // preserveAspectRatio="xMidYMid meet"
+         // preserveAspectRatio = "xMidYMid meet"
 
          const
             r  = width / height,
@@ -52959,10 +53120,10 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       // Create Transform node.
 
       const
-         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0),
-         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0),
-         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0),
-         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0);
+         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0, "width"),
+         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0, "height"),
+         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0, "width"),
+         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0, "height");
 
       const transformNode = this .createTransform (xmlElement, new Numbers_Vector2 (x, y));
 
@@ -52970,8 +53131,9 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       this .element (usedElement);
 
-      this .styles     .pop ();
-      this .groupNodes .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       // Add node.
 
@@ -52994,8 +53156,9 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       this .elements (xmlElement);
 
-      this .styles     .pop ();
-      this .groupNodes .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       // Add node.
 
@@ -53024,8 +53187,9 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       this .elements (xmlElement);
 
-      this .styles     .pop ();
-      this .groupNodes .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       // Add node.
 
@@ -53066,32 +53230,35 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       this .elements (xmlElement);
 
-      this .groupNodes .pop ();
-      this .styles     .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
    rectElement: function (xmlElement)
    {
-      // Determine style.
-
-      if (!this .styleAttributes (xmlElement))
-         return;
-
       // Create Transform node.
 
       const
-         x      = this .lengthAttribute (xmlElement .getAttribute ("x"), 0),
-         y      = this .lengthAttribute (xmlElement .getAttribute ("y"), 0),
-         width  = this .lengthAttribute (xmlElement .getAttribute ("width"), 0),
-         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0);
+         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0, "width"),
+         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0, "height"),
+         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0, "width"),
+         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0, "height");
 
       let
-         rx = Math .max (0, this .lengthAttribute (xmlElement .getAttribute ("rx"), 0)),
-         ry = Math .max (0, this .lengthAttribute (xmlElement .getAttribute ("ry"), 0));
+         rx = Math .max (0, this .lengthAttribute (xmlElement .getAttribute ("rx"), 0, "width")),
+         ry = Math .max (0, this .lengthAttribute (xmlElement .getAttribute ("ry"), 0, "height"));
 
       if (rx === 0 && ry === 0)
       {
+         // Determine style.
+
+         if (!this .styleAttributes (xmlElement))
+            return;
+
+         // Create Transform node.
+
          const
             scene         = this .getExecutionContext (),
             size          = new Numbers_Vector2 (width, height),
@@ -53137,8 +53304,9 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
             transformNode .children .push (shapeNode);
          }
 
-         this .groupNodes .pop ();
-         this .styles     .pop ();
+         this .groupNodes  .pop ();
+         this .modelMatrix .pop ();
+         this .styles      .pop ();
 
          this .groupNodes .at (-1) .children .push (transformNode);
       }
@@ -53155,13 +53323,13 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          const
             xOffsets = [x + width - rx, x + rx , x + rx, x + width - rx],
             yOffsets = [y + height - ry, y + height - ry, y + ry, y + ry],
-            points   = Object .assign ([ ], { index: 0 });
+            points   = Object .assign ([ ], { index: 0, closed: true });
 
          for (let c = 0; c < 4; ++ c)
          {
             const s = c * Math .PI / 2;
 
-            for (let i = 0, N = CIRCLE_STEPS / 4; i < N; ++ i)
+            for (let i = 0, N = this .CIRCLE_STEPS / 4; i < N; ++ i)
             {
                const p = Numbers_Complex.Polar (1, s + Math .PI / 2 * i / (N - 1));
 
@@ -53171,55 +53339,9 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
          points .pop ();
 
-         // Create Transform node.
-
-         const
-            scene         = this .getExecutionContext (),
-            transformNode = this .createTransform (xmlElement),
-            bbox          = new Geometry_Box2 (Numbers_Vector2.min (... points), Numbers_Vector2.max (... points), true);
-
-         this .groupNodes .push (transformNode);
-
          // Create nodes.
 
-         const coordinateNode = scene .createNode ("Coordinate");
-
-         coordinateNode .point .push (... points);
-
-         if (this .style .fillType !== "none")
-         {
-            const
-               shapeNode    = scene .createNode ("Shape"),
-               geometryNode = scene .createNode ("IndexedTriangleSet");
-
-            shapeNode .appearance  = this .createFillAppearance (bbox);
-            shapeNode .geometry    = geometryNode;
-            geometryNode .solid    = this .solid;
-            geometryNode .index    = this .triangulatePolygon ([points], coordinateNode);
-            geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
-            geometryNode .coord    = coordinateNode;
-
-            transformNode .children .push (shapeNode);
-         }
-
-         if (this .style .strokeType !== "none")
-         {
-            const
-               shapeNode    = scene .createNode ("Shape"),
-               geometryNode = scene .createNode ("IndexedLineSet");
-
-            shapeNode .appearance    = this .createStrokeAppearance ();
-            shapeNode .geometry      = geometryNode;
-            geometryNode .coordIndex = [... points .keys (), 0, -1];
-            geometryNode .coord      = coordinateNode;
-
-            transformNode .children .push (shapeNode);
-         }
-
-         this .groupNodes .pop ();
-         this .styles     .pop ();
-
-         this .groupNodes .at (-1) .children .push (transformNode);
+         this .pathLikeElement (xmlElement, [points]);
       }
    },
    circleElement: function (xmlElement)
@@ -53232,8 +53354,8 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       // Create Transform node.
 
       const
-         cx = this .lengthAttribute (xmlElement .getAttribute ("cx"), 0),
-         cy = this .lengthAttribute (xmlElement .getAttribute ("cy"), 0),
+         cx = this .lengthAttribute (xmlElement .getAttribute ("cx"), 0, "width"),
+         cy = this .lengthAttribute (xmlElement .getAttribute ("cy"), 0, "height"),
          r  = this .lengthAttribute (xmlElement .getAttribute ("r"),  0);
 
       const
@@ -53272,8 +53394,9 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          transformNode .children .push (shapeNode);
       }
 
-      this .groupNodes .pop ();
-      this .styles     .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
@@ -53287,10 +53410,10 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       // Create Transform node.
 
       const
-         cx = this .lengthAttribute (xmlElement .getAttribute ("cx"), 0),
-         cy = this .lengthAttribute (xmlElement .getAttribute ("cy"), 0),
-         rx = this .lengthAttribute (xmlElement .getAttribute ("rx"), 0),
-         ry = this .lengthAttribute (xmlElement .getAttribute ("ry"), 0);
+         cx = this .lengthAttribute (xmlElement .getAttribute ("cx"), 0, "width"),
+         cy = this .lengthAttribute (xmlElement .getAttribute ("cy"), 0, "height"),
+         rx = this .lengthAttribute (xmlElement .getAttribute ("rx"), 0, "width"),
+         ry = this .lengthAttribute (xmlElement .getAttribute ("ry"), 0, "height");
 
       const
          scene         = this .getExecutionContext (),
@@ -53329,8 +53452,9 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          transformNode .children .push (shapeNode);
       }
 
-      this .groupNodes .pop ();
-      this .styles     .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
@@ -53340,13 +53464,18 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    imageElement: function (xmlElement)
    {
+      // Determine style.
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
       // Create Transform node.
 
       const
-         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0),
-         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0),
-         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0),
-         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0),
+         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0, "width"),
+         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0, "height"),
+         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0, "width"),
+         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0, "height"),
          href   = xmlElement .getAttribute ("xlink:href");
 
       const
@@ -53373,74 +53502,37 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       transformNode .children .push (shapeNode);
 
-      this .groupNodes .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
+
       this .groupNodes .at (-1) .children .push (transformNode);
    },
-   polylineElement: function (xmlElement, closed = false)
+   polylineElement: function (xmlElement)
    {
+      // Get points.
+
       const points = Object .assign ([ ], { index: 0 });
 
       if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
          return;
 
-      // Determine style.
-
-      if (!this .styleAttributes (xmlElement))
-         return;
-
-      // Create Transform node.
-
-      const
-         scene         = this .getExecutionContext (),
-         transformNode = this .createTransform (xmlElement),
-         bbox          = new Geometry_Box2 (Numbers_Vector2.min (... points), Numbers_Vector2.max (... points), true);
-
-      this .groupNodes .push (transformNode);
-
       // Create nodes.
 
-      const coordinateNode = scene .createNode ("Coordinate");
-
-      coordinateNode .point .push (... points);
-
-      if (this .style .fillType !== "none")
-      {
-         const
-            shapeNode    = scene .createNode ("Shape"),
-            geometryNode = scene .createNode ("IndexedTriangleSet");
-
-         shapeNode .appearance  = this .createFillAppearance (bbox);
-         shapeNode .geometry    = geometryNode;
-         geometryNode .solid    = this .solid;
-         geometryNode .index    = this .triangulatePolygon ([points], coordinateNode);
-         geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
-         geometryNode .coord    = coordinateNode;
-
-         transformNode .children .push (shapeNode);
-      }
-
-      if (this .style .strokeType !== "none")
-      {
-         const
-            shapeNode    = scene .createNode ("Shape"),
-            geometryNode = scene .createNode ("IndexedLineSet");
-
-         shapeNode .appearance    = this .createStrokeAppearance ();
-         shapeNode .geometry      = geometryNode;
-         geometryNode .coordIndex = [... points .keys (), ... (closed ? [0] : [ ]), -1];
-         geometryNode .coord      = coordinateNode;
-
-         transformNode .children .push (shapeNode);
-      }
-
-      this .groupNodes .pop ();
-      this .styles     .pop ();
-
-      this .groupNodes .at (-1) .children .push (transformNode);
+      this .pathLikeElement (xmlElement, [points]);
    },
    polygonElement: function (xmlElement)
    {
-      this .polylineElement (xmlElement, true);
+      // Get points.
+
+      const points = Object .assign ([ ], { index: 0, closed: true });
+
+      if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
+         return;
+
+      // Create nodes.
+
+      this .pathLikeElement (xmlElement, [points]);
    },
    pathElement: function (xmlElement)
    {
@@ -53451,6 +53543,12 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       if (!this .dAttribute (xmlElement .getAttribute ("d"), contours))
          return;
 
+      // Create nodes.
+
+      this .pathLikeElement (xmlElement, contours);
+   },
+   pathLikeElement: function (xmlElement, contours)
+   {
       // Determine style.
 
       if (!this .styleAttributes (xmlElement))
@@ -53497,38 +53595,43 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
             shapeNode    = scene .createNode ("Shape"),
             geometryNode = scene .createNode ("IndexedLineSet");
 
-         shapeNode .appearance = this .createStrokeAppearance ();
-         shapeNode .geometry   = geometryNode;
-         geometryNode .coord   = coordinateNode;
+         shapeNode .appearance    = this .createStrokeAppearance ();
+         shapeNode .geometry      = geometryNode;
+         geometryNode .coord      = coordinateNode;
+
+         // Create contour indices.
+
+         const indices = geometryNode .coordIndex;
 
          for (const points of contours)
          {
             for (const i of points .keys ())
-               geometryNode .coordIndex .push (points .index + i);
+               indices .push (points .index + i);
 
             if (points .closed)
-               geometryNode .coordIndex .push (points .index);
+               indices .push (points .index);
 
-            geometryNode .coordIndex .push (-1);
+            indices .push (-1);
          }
 
          transformNode .children .push (shapeNode);
       }
 
-      this .groupNodes .pop ();
-      this .styles     .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
-   linearGradientElementURL: function (xmlElement, bbox)
+   linearGradientElementUrl: function (xmlElement, bbox)
    {
       const
-         g        = this .linearGradientElement (xmlElement, { stops: [ ] }),
+         g        = this .linearGradientElement (xmlElement, bbox, { stops: [ ] }),
          gradient = this .context .createLinearGradient (g .x1, g .y1, g .x2, g .y2);
 
       return this .drawGradient (gradient, g, bbox);
    },
-   linearGradientElement: function (xmlElement, gradient)
+   linearGradientElement: function (xmlElement, bbox, gradient)
    {
       if (xmlElement .nodeName !== "linearGradient")
          return;
@@ -53538,16 +53641,28 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       const refElement = this .hrefAttribute (xmlElement .getAttribute ("xlink:href"));
 
       if (refElement)
-         this .gradientElement (refElement, gradient);
+         this .gradientElement (refElement, bbox, gradient);
 
       // Attributes
 
-      gradient .x1        = this .lengthAttribute (xmlElement .getAttribute ("x1"), gradient .x1 || 0);
-      gradient .y1        = this .lengthAttribute (xmlElement .getAttribute ("y1"), gradient .y1 || 0);
-      gradient .x2        = this .lengthAttribute (xmlElement .getAttribute ("x2"), gradient .x2 || 1);
-      gradient .y2        = this .lengthAttribute (xmlElement .getAttribute ("y2"), gradient .y2 || 0);
+      gradient .x1        = this .lengthAttribute (xmlElement .getAttribute ("x1"), gradient .x1 || 0, "width");
+      gradient .y1        = this .lengthAttribute (xmlElement .getAttribute ("y1"), gradient .y1 || 0, "height");
+      gradient .x2        = this .lengthAttribute (xmlElement .getAttribute ("x2"), gradient .x2 || 1, "width");
+      gradient .y2        = this .lengthAttribute (xmlElement .getAttribute ("y2"), gradient .y2 || 0, "height");
       gradient .units     = xmlElement .getAttribute ("gradientUnits") || "objectBoundingBox";
       gradient .transform = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
+
+      // Spread matrix
+
+      const
+         s = new Numbers_Matrix3 (),
+         c = new Numbers_Vector2 (gradient .x1, gradient .y1);
+
+      s .translate (c);
+      s .scale (new Numbers_Vector2 (SPREAD, SPREAD));
+      s .translate (c .negate ());
+
+      gradient .spreadMatrix = s;
 
       // Stops
 
@@ -53556,34 +53671,46 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       return gradient;
    },
-   radialGradientElementURL: function (xmlElement, bbox)
+   radialGradientElementUrl: function (xmlElement, bbox)
    {
       const
-         g        = this .radialGradientElement (xmlElement, { stops: [ ] }),
+         g        = this .radialGradientElement (xmlElement, bbox, { stops: [ ] }),
          gradient = this .context .createRadialGradient (g .fx, g .fy, g. fr, g .cx, g .cy, g .r);
 
       return this .drawGradient (gradient, g, bbox);
    },
-   radialGradientElement: function (xmlElement, gradient)
+   radialGradientElement: function (xmlElement, bbox, gradient)
    {
       // Attribute xlink:href
 
       const refElement = this .hrefAttribute (xmlElement .getAttribute ("xlink:href"));
 
       if (refElement)
-         this .gradientElement (refElement, gradient);
+         this .gradientElement (refElement, bbox, gradient);
 
       // Attributes
 
-      gradient .cx           = this .lengthAttribute (xmlElement .getAttribute ("cx"), gradient .cx || 0.5),
-      gradient .cy           = this .lengthAttribute (xmlElement .getAttribute ("cy"), gradient .cy || 0.5),
+      gradient .cx           = this .lengthAttribute (xmlElement .getAttribute ("cx"), gradient .cx || 0.5, "width"),
+      gradient .cy           = this .lengthAttribute (xmlElement .getAttribute ("cy"), gradient .cy || 0.5, "height"),
       gradient .r            = this .lengthAttribute (xmlElement .getAttribute ("r"),  gradient .r  || 0.5),
-      gradient .fx           = this .lengthAttribute (xmlElement .getAttribute ("fx"), gradient .fx || gradient .cx),
-      gradient .fy           = this .lengthAttribute (xmlElement .getAttribute ("fy"), gradient .fy || gradient .cy),
+      gradient .fx           = this .lengthAttribute (xmlElement .getAttribute ("fx"), gradient .fx || gradient .cx, "width"),
+      gradient .fy           = this .lengthAttribute (xmlElement .getAttribute ("fy"), gradient .fy || gradient .cy, "height"),
       gradient .fr           = this .lengthAttribute (xmlElement .getAttribute ("fr"), gradient .fr || 0),
       gradient .units        = xmlElement .getAttribute ("gradientUnits") || "objectBoundingBox";
       gradient .spreadMethod = xmlElement .getAttribute ("spreadMethod");
       gradient .transform    = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
+
+      // Spread matrix
+
+      const
+         s = new Numbers_Matrix3 (),
+         c = new Numbers_Vector2 (gradient .fx, gradient .fy);
+
+      s .translate (c);
+      s .scale (new Numbers_Vector2 (SPREAD, SPREAD));
+      s .translate (c .negate ());
+
+      gradient .spreadMatrix = s;
 
       // Stops
 
@@ -53592,7 +53719,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       return gradient;
    },
-   gradientElement: function (xmlElement, gradient)
+   gradientElement: function (xmlElement, bbox, gradient)
    {
       if (!xmlElement)
          return;
@@ -53600,9 +53727,9 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       switch (xmlElement .nodeName)
       {
          case "linearGradient":
-            return this .linearGradientElement (xmlElement, gradient);
+            return this .linearGradientElement (xmlElement, bbox, gradient);
          case "radialGradient":
-            return this .radialGradientElement (xmlElement, gradient);
+            return this .radialGradientElement (xmlElement, bbox, gradient);
       }
    },
    gradientChild: function (xmlElement, gradient)
@@ -53630,14 +53757,52 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    {
       // Add color stops.
 
-      for (const [o, c, a] of g .stops)
-         gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
+      const spreadMatrix = new Numbers_Matrix3 ();
+
+      switch (g .spreadMethod)
+      {
+         default: // pad
+         {
+            for (const [o, c, a] of g .stops)
+               gradient .addColorStop (o, this .css (c, a));
+
+            break;
+         }
+         case "repeat":
+         {
+            spreadMatrix .assign (g .spreadMatrix);
+
+            for (let i = 0; i < SPREAD; ++ i)
+            {
+               const s = i / SPREAD;
+
+               for (const [o, c, a] of g .stops)
+                  gradient .addColorStop (s + o / SPREAD, this .css (c, a));
+            }
+
+            break;
+         }
+         case "reflect":
+         {
+            spreadMatrix .assign (g .spreadMatrix);
+
+            for (let i = 0; i < SPREAD; ++ i)
+            {
+               const s = i / SPREAD;
+
+               for (const [o, c, a] of g .stops)
+                  gradient .addColorStop (s + (i % 2 ? 1 - o : o) / SPREAD, this .css (c, a));
+            }
+
+            break;
+         }
+      }
 
       // Create Matrix.
 
       const m = new Numbers_Matrix3 ();
 
-      m .scale (new Numbers_Vector2 (GRADIENT_SIZE / 2, GRADIENT_SIZE / 2));
+      m .scale (new Numbers_Vector2 (this .GRADIENT_SIZE / 2, this .GRADIENT_SIZE / 2));
       m .translate (Numbers_Vector2.One);
       m .scale (new Numbers_Vector2 (1, -1));
 
@@ -53647,6 +53812,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          m .multLeft (new Numbers_Matrix3 (2, 0, 0, 0, 2, 0, -1, -1, 1));
 
       m .multLeft (g .transform);
+      m .multLeft (spreadMatrix);
 
       // Paint.
 
@@ -53654,14 +53820,18 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       cx .fillStyle = gradient;
       cx .save ();
-      cx .clearRect (0, 0, GRADIENT_SIZE, GRADIENT_SIZE);
-      cx .rect (0, 0, GRADIENT_SIZE, GRADIENT_SIZE);
+      cx .clearRect (0, 0, this .GRADIENT_SIZE, this .GRADIENT_SIZE);
+      cx .rect (0, 0, this .GRADIENT_SIZE, this .GRADIENT_SIZE);
       cx .transform (m [0], m [1], m [3], m [4], m [6], m [7]);
       cx .fill ();
       cx .restore ();
 
       // Use PNG because image can have alpha channel.
       return this .canvas .toDataURL ("image/png");
+   },
+   patternUrl: function (xmlElement)
+   {
+      //console .debug ("pattern");
    },
    idAttribute: function (attribute, node)
    {
@@ -53717,7 +53887,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       return this .document .getElementById (hash);
    },
-   lengthAttribute: function (attribute, defaultValue)
+   lengthAttribute: function (attribute, defaultValue, percent)
    {
       // Returns length in pixel.
 
@@ -53760,6 +53930,23 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                case "pc":
                   value *= PICA / PIXEL;
                   break;
+               case "%":
+               {
+                  switch (percent)
+                  {
+                     case "width":
+                        value *= this .viewBox [2] / 100;
+                        break;
+                     case "height":
+                        value *= this .viewBox [3] / 100;
+                        break;
+                     default:
+                        value *= Math .hypot (this .viewBox [2], this .viewBox [3]) / 100;
+                        break;
+                     }
+
+                  break;
+               }
             }
          }
 
@@ -54025,7 +54212,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                                  y  += ay;
                               }
 
-                              Algorithms_Bezier.quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS, points);
+                              Algorithms_Bezier.quadric (ax, ay, 0, x1, y1, 0, x, y, 0, this .BEZIER_STEPS, points);
 
                               ax = x;
                               ay = y;
@@ -54086,7 +54273,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                            }
                         }
 
-                        Algorithms_Bezier.quadric (ax, ay, 0, x1, y1, 0, x, y, 0, BEZIER_STEPS, points);
+                        Algorithms_Bezier.quadric (ax, ay, 0, x1, y1, 0, x, y, 0, this .BEZIER_STEPS, points);
 
                         ax = x;
                         ay = y;
@@ -54152,7 +54339,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                                        y  += ay;
                                     }
 
-                                    Algorithms_Bezier.cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS, points);
+                                    Algorithms_Bezier.cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, this .BEZIER_STEPS, points);
 
                                     ax = x;
                                     ay = y;
@@ -54229,7 +54416,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                                  }
                               }
 
-                              Algorithms_Bezier.cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, BEZIER_STEPS, points);
+                              Algorithms_Bezier.cubic (ax, ay, 0, x1, y1, 0, x2, y2, 0, x, y, 0, this .BEZIER_STEPS, points);
 
                               ax = x;
                               ay = y;
@@ -54301,7 +54488,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                                           y += ay;
                                        }
 
-                                       Algorithms_Bezier.arc (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, CIRCLE_STEPS, points);
+                                       Algorithms_Bezier.arc (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, this .CIRCLE_STEPS, points);
 
                                        ax = x;
                                        ay = y;
@@ -54583,45 +54770,24 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       return matrix;
    },
-   styleAttributes: (function ()
+   styleAttributes: function (xmlElement)
    {
-      const Styles = [
-         "display",
-         "fill",
-         "fill-opacity",
-         "fill-rule",
-         "stroke",
-         "stroke-opacity",
-         "stroke-width",
-         "opacity",
-         "stop-color",
-         "stop-opacity",
-         "vector-effect",
-      ];
+      const style = Object .assign ({ }, this .styles [0]);
 
-      return function (xmlElement)
-      {
-         const style = Object .assign ({ }, this .styles [0]);
+      if (this .style .display === "none")
+         return false;
 
-         if (this .style .display === "none")
-            return false;
+      this .styles .push (style);
 
-         this .styles .push (style);
+      for (const attribute of xmlElement .attributes)
+         this .parseStyle (attribute .name, attribute .value)
 
-         for (const style of Styles)
-         {
-            const attribute = xmlElement .getAttribute (style);
+      // Style attribute has higher precedence.
 
-            this .parseStyle (style, attribute ?? "default");
-         }
+      this .styleAttribute (xmlElement .getAttribute ("style"));
 
-         // Style attribute has higher precedence.
-
-         this .styleAttribute (xmlElement .getAttribute ("style"));
-
-         return true;
-      };
-   })(),
+      return true;
+   },
    styleAttribute: function (attribute)
    {
       if (attribute === null)
@@ -54713,13 +54879,13 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       if (value === "none")
       {
-         this .style .fillType ="none";
+         this .style .fillType = "none";
          return;
       }
 
       if (!value .match (/^(?:inherit|unset|default)$/))
       {
-         if (this .colorValue ())
+         if (this .colorValue (this .styles .at (-1) .fillColor))
          {
             this .style .fillType  = "COLOR";
             this .style .fillColor = this .value .copy ();
@@ -54772,13 +54938,13 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       if (value === "none")
       {
-         this .style .strokeType ="none";
+         this .style .strokeType = "none";
          return;
       }
 
       if (!value .match (/^(?:inherit|unset|default)$/))
       {
-         if (this .colorValue ())
+         if (this .colorValue (this .styles .at (-1) .strokeColor))
          {
             this .style .strokeType  = "COLOR";
             this .style .strokeColor = this .value .copy ();
@@ -54814,7 +54980,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    {
       if (this .double ())
       {
-         this .style .strokeWidth = this .lengthAttribute (this .value);
+         this .style .strokeWidth = this .lengthAttribute (this .value, 1);
          return;
       }
 
@@ -54844,7 +55010,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    stopColorStyle: function (value)
    {
-      if (this .colorValue ())
+      if (this .colorValue (Numbers_Color4.Black))
       {
          this .style .stopColor = this .value .copy ();
          return;
@@ -54930,12 +55096,14 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    {
       const color = new Numbers_Color4 (0, 0, 0, 0);
 
-      return function ()
+      return function (c)
       {
          if (!SVGParser_Grammar .color .parse (this))
             return false;
 
-         this .value = color .set (... this .convertColor (this .result [1]));
+         const defaultColor = this .css (c);
+
+         this .value = color .set (... this .convertColor (this .result [1], defaultColor));
 
          return true;
       };
@@ -54944,13 +55112,20 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    {
       return SVGParser_Grammar .url .parse (this);
    },
+   css: function (c, a = c .a)
+   {
+      return `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`;
+   },
    createTransform: function (xmlElement, t = Numbers_Vector2.Zero, s = Numbers_Vector2.One)
    {
       // Determine matrix.
 
       const
-         scene  = this .getExecutionContext (),
-         m      = this .transformAttribute (xmlElement .getAttribute ("transform"));
+         scene = this .getExecutionContext (),
+         m     = this .transformAttribute (xmlElement .getAttribute ("transform"));
+
+      this .modelMatrix .push ();
+      this .modelMatrix .multLeft (Numbers_Matrix4.Matrix3 (m));
 
       m .translate (t);
       m .scale (s);
@@ -54959,7 +55134,7 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       const
          transformNode    = scene .createNode ("Transform"),
-         matrix           = new Numbers_Matrix4 (m [0], m [1], 0, 0, m [3], m [4], 0, 0, 0, 0, 1, 0, m [6], m [7], 0, 1),
+         matrix           = Numbers_Matrix4.Matrix3 (m),
          translation      = new Numbers_Vector3 (0, 0, 0),
          rotation         = new Numbers_Rotation4 (),
          scale            = new Numbers_Vector3 (1, 1, 1),
@@ -55038,10 +55213,13 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       switch (xmlElement .nodeName)
       {
          case "linearGradient":
-            return this .linearGradientElementURL (xmlElement, bbox);
+            return this .linearGradientElementUrl (xmlElement, bbox);
 
          case "radialGradient":
-            return this .radialGradientElementURL (xmlElement, bbox);
+            return this .radialGradientElementUrl (xmlElement, bbox);
+
+         case "pattern":
+            return this .patternUrl (xmlElement);
       }
    },
    createStrokeAppearance: function ()
@@ -55060,22 +55238,38 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          : this .getStokeWidth ();
 
       if (strokeWidth > 1)
-      {
-         const lineProperties = scene .createNode ("LineProperties");
-
-         appearanceNode .lineProperties       = lineProperties;
-         lineProperties .linewidthScaleFactor = strokeWidth;
-      }
+         appearanceNode .lineProperties = this .getLineProperties (strokeWidth);
 
       return appearanceNode;
    },
    getStokeWidth: function ()
    {
       const
-         modelMatrix = this .getModelMatrix (),
+         modelMatrix = this .modelMatrix .get (),
          strokeWidth = modelMatrix .multDirMatrix (new Numbers_Vector3 (this .style .strokeWidth, this .style .strokeWidth, 0));
 
       return (strokeWidth .x + strokeWidth .y) / 2;
+   },
+   getLineProperties: function (strokeWidth)
+   {
+      const lineProperties = this .lineProperties .get (strokeWidth);
+
+      if (lineProperties)
+      {
+         return lineProperties;
+      }
+      else
+      {
+         const
+            scene          = this .getExecutionContext (),
+            lineProperties = scene .createNode ("LineProperties");
+
+         lineProperties .linewidthScaleFactor = strokeWidth;
+
+         this .lineProperties .set (strokeWidth, lineProperties);
+
+         return lineProperties;
+      }
    },
    createTextureProperties: function ()
    {
@@ -55104,26 +55298,6 @@ SVGParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          texCoordNode .point .push (invMatrix .multVecMatrix (new Numbers_Vector2 (point .x, point .y)) .add (Numbers_Vector2.One) .divide (2));
 
       return texCoordNode;
-   },
-   getModelMatrix: function ()
-   {
-      const modelMatrix = new Numbers_Matrix4 ();
-
-      for (let i = 1; i < this .groupNodes .length; ++ i)
-      {
-         const
-            node   = this .groupNodes [i],
-            matrix = new Numbers_Matrix4 ();
-
-         matrix .set (node .translation .getValue (),
-                      node .rotation .getValue (),
-                      node .scale .getValue (),
-                      node .scaleOrientation .getValue ());
-
-         modelMatrix .multLeft (matrix);
-      }
-
-      return modelMatrix;
    },
    createTesselator: function ()
    {
@@ -55194,7 +55368,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace.set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(318);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -56736,125 +56910,6 @@ const Line3_default_ = Line3;
 
 x_ite_Namespace.set ("standard/Math/Geometry/Line3", Line3_default_);
 /* harmony default export */ const Geometry_Line3 = (Line3_default_);
-;// CONCATENATED MODULE: ./src/standard/Math/Utility/MatrixStack.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-function MatrixStack (Type)
-{
-   return Object .assign ([ new Type () ],
-   {
-      top: 0,
-      set: function (matrix)
-      {
-         this [this .top] .assign (matrix);
-      },
-      get: function ()
-      {
-         return this [this .top];
-      },
-      push: function ()
-      {
-         const top = ++ this .top;
-
-         if (top < this .length)
-            this [top] .assign (this [top - 1]);
-         else
-            this [top] = this [top - 1] .copy ();
-      },
-      pushMatrix: function (matrix)
-      {
-         const top = ++ this .top;
-
-         if (top < this .length)
-            this [top] .assign (matrix);
-         else
-            this [top] = matrix .copy ();
-      },
-      pop: function ()
-      {
-         -- this .top;
-      },
-      clear: function ()
-      {
-         this .top = 0;
-      },
-      size: function ()
-      {
-         return this .top + 1;
-      },
-      identity: function ()
-      {
-         this [this .top] .identity ();
-      },
-      multLeft: function (matrix)
-      {
-         this [this .top] .multLeft (matrix);
-      },
-      translate: function (vector)
-      {
-         this [this .top] .translate (vector);
-      },
-      rotate: function (rotation)
-      {
-         this [this .top] .rotate (rotation);
-      },
-      scale: function (vector)
-      {
-         this [this .top] .scale (vector);
-      },
-   });
-}
-
-const MatrixStack_default_ = MatrixStack;
-;
-
-x_ite_Namespace.set ("standard/Math/Utility/MatrixStack", MatrixStack_default_);
-/* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Rendering/X3DRenderObject.js
 /*******************************************************************************
  *
@@ -61975,7 +62030,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(318);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66229,7 +66284,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace.set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(318);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -68586,7 +68641,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(318);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70552,7 +70607,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(318);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77042,8 +77097,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(494);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(318);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(172);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77907,8 +77962,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(494);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(318);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(172);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78858,8 +78913,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(494);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(318);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(172);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79168,8 +79223,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(494);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(318);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(172);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -80772,8 +80827,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(494);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(318);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(172);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81795,8 +81850,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(318);
-/* provided dependency */ var ResizeSensor = __webpack_require__(455);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(908);
+/* provided dependency */ var ResizeSensor = __webpack_require__(151);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90322,7 +90377,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace.set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(318);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112203,7 +112258,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(318);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115018,8 +115073,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(318);
-/* provided dependency */ var SuperGif = __webpack_require__(454);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(908);
+/* provided dependency */ var SuperGif = __webpack_require__(732);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115977,7 +116032,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(318);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116680,7 +116735,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(318);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(908);
 /*******************************************************************************
  * MIT License
  *
@@ -117917,7 +117972,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(318);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118855,7 +118910,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(318);
+/* provided dependency */ var Fallback_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119034,8 +119089,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(318);
-/* provided dependency */ var pako = __webpack_require__(914);
+/* provided dependency */ var jquery_$ = __webpack_require__(908);
+/* provided dependency */ var pako = __webpack_require__(862);
 jquery_$.decodeText = function (input)
 {
    if (typeof input === "string")
@@ -119062,14 +119117,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(718);
+/* provided dependency */ var libtess_libtess = __webpack_require__(323);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace.set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(318);
+/* provided dependency */ var X3D_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119325,7 +119380,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvas.js
-/* provided dependency */ var X3DCanvas_$ = __webpack_require__(318);
+/* provided dependency */ var X3DCanvas_$ = __webpack_require__(908);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119585,7 +119640,7 @@ x_ite_Namespace.set ("shim", shim_default_);
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-8.6.4")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-8.6.5")] = x_ite_X3D;
 
 x_ite_X3DCanvas.define ();
 
