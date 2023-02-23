@@ -299,7 +299,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          defaultWidth   = this .lengthAttribute (xmlElement .getAttribute ("width"),  300, "width"),
          defaultHeight  = this .lengthAttribute (xmlElement .getAttribute ("height"), 150, "height"),
-         defaultViewBox = new Vector4 (0, 0, defaultWidth, defaultHeight),
+         defaultViewBox = this .viewBox .set (0, 0, defaultWidth, defaultHeight),
          viewBox        = this .viewBoxAttribute (xmlElement .getAttribute ("viewBox"), defaultViewBox),
          width          = this .lengthAttribute (xmlElement .getAttribute ("width"),  viewBox [2], "width"),
          height         = this .lengthAttribute (xmlElement .getAttribute ("height"), viewBox [3], "height");
@@ -317,8 +317,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          else
             viewBox [2] += viewBox [3] * r - viewBox [2];
       }
-
-      this .viewBox = viewBox;
 
       // Create viewpoint.
 
