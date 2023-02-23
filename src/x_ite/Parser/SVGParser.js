@@ -1070,7 +1070,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          default: // pad
          {
             for (const [o, c, a] of g .stops)
-               gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
+               gradient .addColorStop (o, this .css (c, a));
 
             break;
          }
@@ -1083,7 +1083,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                const s = i / SPREAD;
 
                for (const [o, c, a] of g .stops)
-                  gradient .addColorStop (s + o / SPREAD, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
+                  gradient .addColorStop (s + o / SPREAD, this .css (c, a));
             }
 
             break;
@@ -1097,7 +1097,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                const s = i / SPREAD;
 
                for (const [o, c, a] of g .stops)
-                  gradient .addColorStop (s + (i % 2 ? (1 - o) / SPREAD : o / SPREAD), `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
+                  gradient .addColorStop (s + (i % 2 ? 1 - o : o) / SPREAD, this .css (c, a));
             }
 
             break;
@@ -2381,12 +2381,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const color = new Color4 (0, 0, 0, 0);
 
-      return function ({ r, g, b, a })
+      return function (c)
       {
          if (!Grammar .color .parse (this))
             return false;
 
-         const defaultColor = `rgba(${r * 255},${g * 255},${b * 255},${a})`;
+         const defaultColor = this .css (c, c .a);
 
          this .value = color .set (... this .convertColor (this .result [1], defaultColor));
 
@@ -2396,6 +2396,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    urlValue: function ()
    {
       return Grammar .url .parse (this);
+   },
+   css: function (c, a)
+   {
+      return `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`;
    },
    createTransform: function (xmlElement, t = Vector2 .Zero, s = Vector2 .One)
    {
