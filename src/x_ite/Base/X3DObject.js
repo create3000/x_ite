@@ -83,13 +83,16 @@ X3DObject .prototype =
    },
    getInterestId: function (callbackName, object)
    {
+      if (typeof callbackName === "symbol")
+         return X3DObject .getId (object) + ".Symbol(" + SymbolId (callbackName) + ")";
+
       return X3DObject .getId (object) + "." + String (callbackName);
    },
    hasInterest: function (callbackName, object)
    {
       return this [_interests] .has (this .getInterestId (callbackName, object));
    },
-   addInterest: function (callbackName, object)
+   addInterest: function (callbackName, object, ... args)
    {
       if (this [_interests] === X3DObject .prototype [_interests])
       {
@@ -101,19 +104,7 @@ X3DObject .prototype =
          interestId = this .getInterestId (callbackName, object),
          callback   = object [callbackName];
 
-      if (arguments .length > 2)
-      {
-         const args = Array .prototype .slice .call (arguments, 2);
-
-         args .unshift (object);
-         args .push (this);
-
-         this [_interests] .set (interestId, Function .prototype .bind .apply (callback, args));
-      }
-      else
-      {
-         this [_interests] .set (interestId, callback .bind (object, this));
-      }
+      this [_interests] .set (interestId, callback .bind (object, ... args, this));
    },
    removeInterest: function (callbackName, object)
    {
@@ -185,9 +176,31 @@ X3DObject .prototype =
 for (const key of Reflect .ownKeys (X3DObject .prototype))
    Object .defineProperty (X3DObject .prototype, key, { enumerable: false });
 
-X3DObject .getId = (function ()
+Object .assign (X3DObject,
 {
-   const map = new WeakMap ();
+   getId: (function ()
+   {
+      const map = new WeakMap ();
+
+      let counter = 0;
+
+      return function (object)
+      {
+         const id = map .get (object);
+
+         if (id !== undefined)
+            return id;
+
+         map .set (object, ++ counter);
+
+         return counter;
+      };
+   })(),
+});
+
+const SymbolId = (function ()
+{
+   const map = new Map ();
 
    let counter = 0;
 
