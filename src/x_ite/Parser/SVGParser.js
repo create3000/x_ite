@@ -295,13 +295,15 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Get attributes of svg element.
 
+      this .viewBox = new Vector4 (0, 0, 300, 150);
+
       const
-         defaultWidth   = this .lengthAttribute (xmlElement .getAttribute ("width"), 300),
-         defaultHeight  = this .lengthAttribute (xmlElement .getAttribute ("height"), 150),
+         defaultWidth   = this .lengthAttribute (xmlElement .getAttribute ("width"),  300, "width"),
+         defaultHeight  = this .lengthAttribute (xmlElement .getAttribute ("height"), 150, "height"),
          defaultViewBox = new Vector4 (0, 0, defaultWidth, defaultHeight),
          viewBox        = this .viewBoxAttribute (xmlElement .getAttribute ("viewBox"), defaultViewBox),
-         width          = this .lengthAttribute (xmlElement .getAttribute ("width"), viewBox [2]),
-         height         = this .lengthAttribute (xmlElement .getAttribute ("height"), viewBox [3]);
+         width          = this .lengthAttribute (xmlElement .getAttribute ("width"),  viewBox [2], "width"),
+         height         = this .lengthAttribute (xmlElement .getAttribute ("height"), viewBox [3], "height");
 
       if (true) // default
       {
