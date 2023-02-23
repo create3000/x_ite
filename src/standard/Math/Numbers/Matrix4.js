@@ -799,6 +799,13 @@ Object .assign (Matrix4,
    },
    Matrix3: function (matrix)
    {
+      return new Matrix4 (matrix [0], matrix [1], 0, 0,
+                          matrix [3], matrix [4], 0, 0,
+                          0, 0, 1, 0,
+                          matrix [6], matrix [7], 0, 1);
+   },
+   SubMatrix: function (matrix)
+   {
       return new Matrix4 (matrix [0], matrix [1], matrix [2], 0,
                           matrix [3], matrix [4], matrix [5], 0,
                           matrix [6], matrix [7], matrix [8], 0,

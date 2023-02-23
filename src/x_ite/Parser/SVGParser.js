@@ -60,6 +60,7 @@ import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Complex      from "../../standard/Math/Numbers/Complex.js";
 import Box2         from "../../standard/Math/Geometry/Box2.js"
 import Bezier       from "../../standard/Math/Algorithms/Bezier.js";
+import MatrixStack  from "../../standard/Math/Utility/MatrixStack.js";
 
 /*
  *  Grammar
@@ -127,10 +128,12 @@ function SVGParser (scene)
 
    // Globals
 
-   this .nodes   = new Map ();
-   this .tessy   = this .createTesselator ();
-   this .canvas  = document .createElement ("canvas");
-   this .context = this .canvas .getContext ("2d");
+   this .modelMatrix    = new MatrixStack (Matrix4);
+   this .nodes          = new Map ();
+   this .lineProperties = new Map ();
+   this .tessy          = this .createTesselator ();
+   this .canvas         = document .createElement ("canvas");
+   this .context        = this .canvas .getContext ("2d");
 
    this .styles = [{
       display: "inline",
@@ -432,8 +435,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .element (usedElement);
 
-      this .styles     .pop ();
-      this .groupNodes .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       // Add node.
 
@@ -456,8 +460,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .elements (xmlElement);
 
-      this .styles     .pop ();
-      this .groupNodes .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       // Add node.
 
@@ -486,8 +491,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .elements (xmlElement);
 
-      this .styles     .pop ();
-      this .groupNodes .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       // Add node.
 
@@ -528,8 +534,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .elements (xmlElement);
 
-      this .groupNodes .pop ();
-      this .styles     .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
@@ -601,8 +608,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             transformNode .children .push (shapeNode);
          }
 
-         this .groupNodes .pop ();
-         this .styles     .pop ();
+         this .groupNodes  .pop ();
+         this .modelMatrix .pop ();
+         this .styles      .pop ();
 
          this .groupNodes .at (-1) .children .push (transformNode);
       }
@@ -690,8 +698,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          transformNode .children .push (shapeNode);
       }
 
-      this .groupNodes .pop ();
-      this .styles     .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
@@ -747,8 +756,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          transformNode .children .push (shapeNode);
       }
 
-      this .groupNodes .pop ();
-      this .styles     .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
@@ -758,6 +768,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    imageElement: function (xmlElement)
    {
+      // Determine style.
+
+      if (!this .styleAttributes (xmlElement))
+         return;
+
       // Create Transform node.
 
       const
@@ -791,7 +806,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       transformNode .children .push (shapeNode);
 
-      this .groupNodes .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
+
       this .groupNodes .at (-1) .children .push (transformNode);
    },
    polylineElement: function (xmlElement)
@@ -903,8 +921,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          transformNode .children .push (shapeNode);
       }
 
-      this .groupNodes .pop ();
-      this .styles     .pop ();
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
@@ -2381,8 +2400,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Determine matrix.
 
       const
-         scene  = this .getExecutionContext (),
-         m      = this .transformAttribute (xmlElement .getAttribute ("transform"));
+         scene = this .getExecutionContext (),
+         m     = this .transformAttribute (xmlElement .getAttribute ("transform"));
+
+      this .modelMatrix .push ();
+      this .modelMatrix .multLeft (Matrix4 .Matrix3 (m));
 
       m .translate (t);
       m .scale (s);
@@ -2391,7 +2413,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          transformNode    = scene .createNode ("Transform"),
-         matrix           = new Matrix4 (m [0], m [1], 0, 0, m [3], m [4], 0, 0, 0, 0, 1, 0, m [6], m [7], 0, 1),
+         matrix           = Matrix4 .Matrix3 (m),
          translation      = new Vector3 (0, 0, 0),
          rotation         = new Rotation4 (),
          scale            = new Vector3 (1, 1, 1),
@@ -2492,22 +2514,38 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          : this .getStokeWidth ();
 
       if (strokeWidth > 1)
-      {
-         const lineProperties = scene .createNode ("LineProperties");
-
-         appearanceNode .lineProperties       = lineProperties;
-         lineProperties .linewidthScaleFactor = strokeWidth;
-      }
+         appearanceNode .lineProperties = this .getLineProperties (strokeWidth);
 
       return appearanceNode;
    },
    getStokeWidth: function ()
    {
       const
-         modelMatrix = this .getModelMatrix (),
+         modelMatrix = this .modelMatrix .get (),
          strokeWidth = modelMatrix .multDirMatrix (new Vector3 (this .style .strokeWidth, this .style .strokeWidth, 0));
 
       return (strokeWidth .x + strokeWidth .y) / 2;
+   },
+   getLineProperties: function (strokeWidth)
+   {
+      const lineProperties = this .lineProperties .get (strokeWidth);
+
+      if (lineProperties)
+      {
+         return lineProperties;
+      }
+      else
+      {
+         const
+            scene          = this .getExecutionContext (),
+            lineProperties = scene .createNode ("LineProperties");
+
+         lineProperties .linewidthScaleFactor = strokeWidth;
+
+         this .lineProperties .set (strokeWidth, lineProperties);
+
+         return lineProperties;
+      }
    },
    createTextureProperties: function ()
    {
@@ -2536,26 +2574,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          texCoordNode .point .push (invMatrix .multVecMatrix (new Vector2 (point .x, point .y)) .add (Vector2 .One) .divide (2));
 
       return texCoordNode;
-   },
-   getModelMatrix: function ()
-   {
-      const modelMatrix = new Matrix4 ();
-
-      for (let i = 1; i < this .groupNodes .length; ++ i)
-      {
-         const
-            node   = this .groupNodes [i],
-            matrix = new Matrix4 ();
-
-         matrix .set (node .translation .getValue (),
-                      node .rotation .getValue (),
-                      node .scale .getValue (),
-                      node .scaleOrientation .getValue ());
-
-         modelMatrix .multLeft (matrix);
-      }
-
-      return modelMatrix;
    },
    createTesselator: function ()
    {
