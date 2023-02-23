@@ -103,7 +103,8 @@ const
    POINT         = INCH / 72, // One point in meters.
    PICA          = INCH / 6,  // One pica in meters.
    PIXEL         = INCH / 90, // One pixel in meters.
-   EM            = 16;        // One em in pixels.
+   EM            = 16,        // One em in pixels.
+   SPREAD        = 16;        // Spread factor.
 
 /*
  *  Parser
@@ -172,13 +173,13 @@ function SVGParser (scene)
    switch (browser .getBrowserOption ("TextureQuality"))
    {
       case "LOW":
-         this .GRADIENT_SIZE = 32; // In pixels.
+         this .GRADIENT_SIZE = 64; // In pixels.
          break;
       case "HIGH":
-         this .GRADIENT_SIZE = 128; // In pixels.
+         this .GRADIENT_SIZE = 256; // In pixels.
          break;
       default:
-         this .GRADIENT_SIZE = 64; // In pixels.
+         this .GRADIENT_SIZE = 128; // In pixels.
          break;
    }
 
@@ -910,12 +911,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    linearGradientElementURL: function (xmlElement, bbox)
    {
       const
-         g        = this .linearGradientElement (xmlElement, { stops: [ ] }),
+         g        = this .linearGradientElement (xmlElement, bbox, { stops: [ ] }),
          gradient = this .context .createLinearGradient (g .x1, g .y1, g .x2, g .y2);
 
       return this .drawGradient (gradient, g, bbox);
    },
-   linearGradientElement: function (xmlElement, gradient)
+   linearGradientElement: function (xmlElement, bbox, gradient)
    {
       if (xmlElement .nodeName !== "linearGradient")
          return;
@@ -925,7 +926,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const refElement = this .hrefAttribute (xmlElement .getAttribute ("xlink:href"));
 
       if (refElement)
-         this .gradientElement (refElement, gradient);
+         this .gradientElement (refElement, bbox, gradient);
 
       // Attributes
 
@@ -935,6 +936,16 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       gradient .y2        = this .lengthAttribute (xmlElement .getAttribute ("y2"), gradient .y2 || 0);
       gradient .units     = xmlElement .getAttribute ("gradientUnits") || "objectBoundingBox";
       gradient .transform = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
+
+      const
+         s = new Matrix3 (),
+         c = new Vector2 (gradient .x1, gradient .y1);
+
+      s .translate (c)
+      s .multLeft (new Matrix3 (SPREAD, 0, 0, 0, SPREAD, 0, 0, 0, 1))
+      s .translate (c .negate ())
+
+      gradient .spreadMatrix = s;
 
       // Stops
 
@@ -946,19 +957,19 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    radialGradientElementURL: function (xmlElement, bbox)
    {
       const
-         g        = this .radialGradientElement (xmlElement, { stops: [ ] }),
+         g        = this .radialGradientElement (xmlElement, bbox, { stops: [ ] }),
          gradient = this .context .createRadialGradient (g .fx, g .fy, g. fr, g .cx, g .cy, g .r);
 
       return this .drawGradient (gradient, g, bbox);
    },
-   radialGradientElement: function (xmlElement, gradient)
+   radialGradientElement: function (xmlElement, bbox, gradient)
    {
       // Attribute xlink:href
 
       const refElement = this .hrefAttribute (xmlElement .getAttribute ("xlink:href"));
 
       if (refElement)
-         this .gradientElement (refElement, gradient);
+         this .gradientElement (refElement, bbox, gradient);
 
       // Attributes
 
@@ -972,6 +983,16 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       gradient .spreadMethod = xmlElement .getAttribute ("spreadMethod");
       gradient .transform    = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
 
+      const
+         s = new Matrix3 (),
+         c = new Vector2 (gradient .fx, gradient .fy);
+
+      s .translate (c)
+      s .multLeft (new Matrix3 (SPREAD, 0, 0, 0, SPREAD, 0, 0, 0, 1))
+      s .translate (c .negate ())
+
+      gradient .spreadMatrix = s;
+
       // Stops
 
       for (const childNode of xmlElement .childNodes)
@@ -979,7 +1000,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return gradient;
    },
-   gradientElement: function (xmlElement, gradient)
+   gradientElement: function (xmlElement, bbox, gradient)
    {
       if (!xmlElement)
          return;
@@ -987,9 +1008,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       switch (xmlElement .nodeName)
       {
          case "linearGradient":
-            return this .linearGradientElement (xmlElement, gradient);
+            return this .linearGradientElement (xmlElement, bbox, gradient);
          case "radialGradient":
-            return this .radialGradientElement (xmlElement, gradient);
+            return this .radialGradientElement (xmlElement, bbox, gradient);
       }
    },
    gradientChild: function (xmlElement, gradient)
@@ -1017,8 +1038,46 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       // Add color stops.
 
-      for (const [o, c, a] of g .stops)
-         gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
+      const spreadMatrix = new Matrix3 ();
+
+      switch (g .spreadMethod)
+      {
+         default: // pad
+         {
+            for (const [o, c, a] of g .stops)
+               gradient .addColorStop (o, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
+
+            break;
+         }
+         case "repeat":
+         {
+            spreadMatrix .assign (g .spreadMatrix);
+
+            for (let i = 0; i < SPREAD; ++ i)
+            {
+               const s = i / SPREAD;
+
+               for (const [o, c, a] of g .stops)
+                  gradient .addColorStop (s + o / SPREAD, `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
+            }
+
+            break;
+         }
+         case "reflect":
+         {
+            spreadMatrix .assign (g .spreadMatrix);
+
+            for (let i = 0; i < SPREAD; ++ i)
+            {
+               const s = i / SPREAD;
+
+               for (const [o, c, a] of g .stops)
+                  gradient .addColorStop (s + (i % 2 ? (1 - o) / SPREAD : o / SPREAD), `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`);
+            }
+
+            break;
+         }
+      }
 
       // Create Matrix.
 
@@ -1034,6 +1093,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          m .multLeft (new Matrix3 (2, 0, 0, 0, 2, 0, -1, -1, 1));
 
       m .multLeft (g .transform);
+      m .multLeft (spreadMatrix);
 
       // Paint.
 
