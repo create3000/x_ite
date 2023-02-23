@@ -317,6 +317,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             viewBox [2] += viewBox [3] * r - viewBox [2];
       }
 
+      this .viewBox = viewBox;
+
       // Create viewpoint.
 
       const
