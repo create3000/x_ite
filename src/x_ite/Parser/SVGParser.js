@@ -426,10 +426,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Create Transform node.
 
       const
-         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0),
-         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0),
-         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0),
-         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0);
+         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0, "width"),
+         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0, "height"),
+         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0, "width"),
+         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0, "height");
 
       const transformNode = this .createTransform (xmlElement, new Vector2 (x, y));
 
@@ -547,14 +547,14 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Create Transform node.
 
       const
-         x      = this .lengthAttribute (xmlElement .getAttribute ("x"), 0),
-         y      = this .lengthAttribute (xmlElement .getAttribute ("y"), 0),
-         width  = this .lengthAttribute (xmlElement .getAttribute ("width"), 0),
-         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0);
+         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0, "width"),
+         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0, "height"),
+         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0, "width"),
+         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0, "height");
 
       let
-         rx = Math .max (0, this .lengthAttribute (xmlElement .getAttribute ("rx"), 0)),
-         ry = Math .max (0, this .lengthAttribute (xmlElement .getAttribute ("ry"), 0));
+         rx = Math .max (0, this .lengthAttribute (xmlElement .getAttribute ("rx"), 0, "width")),
+         ry = Math .max (0, this .lengthAttribute (xmlElement .getAttribute ("ry"), 0, "height"));
 
       if (rx === 0 && ry === 0)
       {
@@ -660,8 +660,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Create Transform node.
 
       const
-         cx = this .lengthAttribute (xmlElement .getAttribute ("cx"), 0),
-         cy = this .lengthAttribute (xmlElement .getAttribute ("cy"), 0),
+         cx = this .lengthAttribute (xmlElement .getAttribute ("cx"), 0, "width"),
+         cy = this .lengthAttribute (xmlElement .getAttribute ("cy"), 0, "height"),
          r  = this .lengthAttribute (xmlElement .getAttribute ("r"),  0);
 
       const
@@ -716,10 +716,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Create Transform node.
 
       const
-         cx = this .lengthAttribute (xmlElement .getAttribute ("cx"), 0),
-         cy = this .lengthAttribute (xmlElement .getAttribute ("cy"), 0),
-         rx = this .lengthAttribute (xmlElement .getAttribute ("rx"), 0),
-         ry = this .lengthAttribute (xmlElement .getAttribute ("ry"), 0);
+         cx = this .lengthAttribute (xmlElement .getAttribute ("cx"), 0, "width"),
+         cy = this .lengthAttribute (xmlElement .getAttribute ("cy"), 0, "height"),
+         rx = this .lengthAttribute (xmlElement .getAttribute ("rx"), 0, "width"),
+         ry = this .lengthAttribute (xmlElement .getAttribute ("ry"), 0, "height");
 
       const
          scene         = this .getExecutionContext (),
@@ -778,10 +778,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Create Transform node.
 
       const
-         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0),
-         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0),
-         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0),
-         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0),
+         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0, "width"),
+         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0, "height"),
+         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0, "width"),
+         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0, "height"),
          href   = xmlElement .getAttribute ("xlink:href");
 
       const
@@ -951,10 +951,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Attributes
 
-      gradient .x1        = this .lengthAttribute (xmlElement .getAttribute ("x1"), gradient .x1 || 0);
-      gradient .y1        = this .lengthAttribute (xmlElement .getAttribute ("y1"), gradient .y1 || 0);
-      gradient .x2        = this .lengthAttribute (xmlElement .getAttribute ("x2"), gradient .x2 || 1);
-      gradient .y2        = this .lengthAttribute (xmlElement .getAttribute ("y2"), gradient .y2 || 0);
+      gradient .x1        = this .lengthAttribute (xmlElement .getAttribute ("x1"), gradient .x1 || 0, "width");
+      gradient .y1        = this .lengthAttribute (xmlElement .getAttribute ("y1"), gradient .y1 || 0, "height");
+      gradient .x2        = this .lengthAttribute (xmlElement .getAttribute ("x2"), gradient .x2 || 1, "width");
+      gradient .y2        = this .lengthAttribute (xmlElement .getAttribute ("y2"), gradient .y2 || 0, "height");
       gradient .units     = xmlElement .getAttribute ("gradientUnits") || "objectBoundingBox";
       gradient .transform = this .transformAttribute (xmlElement .getAttribute ("gradientTransform"));
 
@@ -996,11 +996,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Attributes
 
-      gradient .cx           = this .lengthAttribute (xmlElement .getAttribute ("cx"), gradient .cx || 0.5),
-      gradient .cy           = this .lengthAttribute (xmlElement .getAttribute ("cy"), gradient .cy || 0.5),
+      gradient .cx           = this .lengthAttribute (xmlElement .getAttribute ("cx"), gradient .cx || 0.5, "width"),
+      gradient .cy           = this .lengthAttribute (xmlElement .getAttribute ("cy"), gradient .cy || 0.5, "height"),
       gradient .r            = this .lengthAttribute (xmlElement .getAttribute ("r"),  gradient .r  || 0.5),
-      gradient .fx           = this .lengthAttribute (xmlElement .getAttribute ("fx"), gradient .fx || gradient .cx),
-      gradient .fy           = this .lengthAttribute (xmlElement .getAttribute ("fy"), gradient .fy || gradient .cy),
+      gradient .fx           = this .lengthAttribute (xmlElement .getAttribute ("fx"), gradient .fx || gradient .cx, "width"),
+      gradient .fy           = this .lengthAttribute (xmlElement .getAttribute ("fy"), gradient .fy || gradient .cy, "height"),
       gradient .fr           = this .lengthAttribute (xmlElement .getAttribute ("fr"), gradient .fr || 0),
       gradient .units        = xmlElement .getAttribute ("gradientUnits") || "objectBoundingBox";
       gradient .spreadMethod = xmlElement .getAttribute ("spreadMethod");
@@ -1189,7 +1189,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .document .getElementById (hash);
    },
-   lengthAttribute: function (attribute, defaultValue)
+   lengthAttribute: function (attribute, defaultValue, percent)
    {
       // Returns length in pixel.
 
@@ -1233,8 +1233,22 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   value *= PICA / PIXEL;
                   break;
                case "%":
-                  value *= Math .hypot (this .viewBox [2], this .viewBox [3]) / 100;
+               {
+                  switch (percent)
+                  {
+                     case "width":
+                        value *= this .viewBox [2] / 100;
+                        break;
+                     case "height":
+                        value *= this .viewBox [3] / 100;
+                        break;
+                     default:
+                        value *= Math .hypot (this .viewBox [2], this .viewBox [3]) / 100;
+                        break;
+                     }
+
                   break;
+               }
             }
          }
 
@@ -2268,7 +2282,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       if (this .double ())
       {
-         this .style .strokeWidth = this .lengthAttribute (this .value);
+         this .style .strokeWidth = this .lengthAttribute (this .value, 1);
          return;
       }
 
