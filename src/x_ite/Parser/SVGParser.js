@@ -928,7 +928,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
-   linearGradientElementURL: function (xmlElement, bbox)
+   linearGradientElementUrl: function (xmlElement, bbox)
    {
       const
          g        = this .linearGradientElement (xmlElement, bbox, { stops: [ ] }),
@@ -976,7 +976,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return gradient;
    },
-   radialGradientElementURL: function (xmlElement, bbox)
+   radialGradientElementUrl: function (xmlElement, bbox)
    {
       const
          g        = this .radialGradientElement (xmlElement, bbox, { stops: [ ] }),
@@ -1133,6 +1133,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Use PNG because image can have alpha channel.
       return this .canvas .toDataURL ("image/png");
+   },
+   patternUrl: function (xmlElement)
+   {
+      //console .debug ("pattern");
    },
    idAttribute: function (attribute, node)
    {
@@ -2514,10 +2518,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       switch (xmlElement .nodeName)
       {
          case "linearGradient":
-            return this .linearGradientElementURL (xmlElement, bbox);
+            return this .linearGradientElementUrl (xmlElement, bbox);
 
          case "radialGradient":
-            return this .radialGradientElementURL (xmlElement, bbox);
+            return this .radialGradientElementUrl (xmlElement, bbox);
+
+         case "pattern":
+            return this .patternUrl (xmlElement);
       }
    },
    createStrokeAppearance: function ()
