@@ -2386,7 +2386,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (!Grammar .color .parse (this))
             return false;
 
-         const defaultColor = this .css (c, c .a);
+         const defaultColor = this .css (c);
 
          this .value = color .set (... this .convertColor (this .result [1], defaultColor));
 
@@ -2397,7 +2397,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       return Grammar .url .parse (this);
    },
-   css: function (c, a)
+   css: function (c, a = c .a)
    {
       return `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`;
    },
