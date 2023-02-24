@@ -436,9 +436,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .element (usedElement);
 
-      this .groupNodes  .pop ();
-      this .modelMatrix .pop ();
-      this .styles      .pop ();
+      this .popAll ();
 
       // Add node.
 
@@ -461,9 +459,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .elements (xmlElement);
 
-      this .groupNodes  .pop ();
-      this .modelMatrix .pop ();
-      this .styles      .pop ();
+      this .popAll ();
 
       // Add node.
 
@@ -492,9 +488,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .elements (xmlElement);
 
-      this .groupNodes  .pop ();
-      this .modelMatrix .pop ();
-      this .styles      .pop ();
+      this .popAll ();
 
       // Add node.
 
@@ -535,9 +529,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .elements (xmlElement);
 
-      this .groupNodes  .pop ();
-      this .modelMatrix .pop ();
-      this .styles      .pop ();
+      this .popAll ();
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
@@ -699,9 +691,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          transformNode .children .push (shapeNode);
       }
 
-      this .groupNodes  .pop ();
-      this .modelMatrix .pop ();
-      this .styles      .pop ();
+      this .popAll ();
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
@@ -757,9 +747,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          transformNode .children .push (shapeNode);
       }
 
-      this .groupNodes  .pop ();
-      this .modelMatrix .pop ();
-      this .styles      .pop ();
+      this .popAll ();
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
@@ -807,9 +795,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       transformNode .children .push (shapeNode);
 
-      this .groupNodes  .pop ();
-      this .modelMatrix .pop ();
-      this .styles      .pop ();
+      this .popAll ();
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
@@ -922,9 +908,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          transformNode .children .push (shapeNode);
       }
 
-      this .groupNodes  .pop ();
-      this .modelMatrix .pop ();
-      this .styles      .pop ();
+      this .popAll ();
 
       this .groupNodes .at (-1) .children .push (transformNode);
    },
@@ -2457,6 +2441,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .nodes .set (xmlElement, transformNode);
 
       return transformNode;
+   },
+   popAll: function ()
+   {
+      this .groupNodes  .pop ();
+      this .modelMatrix .pop ();
+      this .styles      .pop ();
    },
    createFillAppearance: function (bbox)
    {
