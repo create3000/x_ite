@@ -128,12 +128,14 @@ function SVGParser (scene)
 
    // Globals
 
-   this .viewBox        = new Vector4 (0, 0, 100, 100);
-   this .modelMatrix    = new MatrixStack (Matrix4);
-   this .lineProperties = new Map ();
-   this .tessy          = this .createTesselator ();
-   this .canvas         = document .createElement ("canvas");
-   this .context        = this .canvas .getContext ("2d");
+   this .viewBox          = new Vector4 (0, 0, 100, 100);
+   this .modelMatrix      = new MatrixStack (Matrix4);
+   this .fillGeometries   = new Map ();
+   this .strokeGeometries = new Map ();
+   this .lineProperties   = new Map ();
+   this .tessy            = this .createTesselator ();
+   this .canvas           = document .createElement ("canvas");
+   this .context          = this .canvas .getContext ("2d");
 
    this .styles = [{
       display: "inline",
@@ -542,34 +544,57 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const
                shapeNode     = scene .createNode ("Shape"),
-               rectangleNode = scene .createNode ("Rectangle2D");
-
-            shapeNode .appearance = this .createFillAppearance (bbox);
-            shapeNode .geometry   = rectangleNode;
-            rectangleNode .solid  = this .solid;
-            rectangleNode .size   = size;
+               rectangleNode = this .fillGeometries .get (xmlElement);
 
             transformNode .children .push (shapeNode);
+            shapeNode .appearance = this .createFillAppearance (bbox);
+
+            if (rectangleNode)
+            {
+               shapeNode .geometry = rectangleNode;
+            }
+            else
+            {
+               const rectangleNode = scene .createNode ("Rectangle2D");
+
+               this .fillGeometries .set (xmlElement, rectangleNode);
+
+               shapeNode .geometry  = rectangleNode;
+               rectangleNode .solid = this .solid;
+               rectangleNode .size  = size;
+            }
          }
 
          if (this .style .strokeType !== "none")
          {
             const
-               shapeNode     = scene .createNode ("Shape"),
-               polylineNode  = scene .createNode ("Polyline2D"),
-               width1_2      = width / 2,
-               height1_2     = height / 2;
-
-            shapeNode .appearance = this .createStrokeAppearance ();
-            shapeNode .geometry   = polylineNode;
-
-            polylineNode .lineSegments = [ width1_2,  height1_2,
-                                          -width1_2,  height1_2,
-                                          -width1_2, -height1_2,
-                                          width1_2, -height1_2,
-                                          width1_2,  height1_2];
+               shapeNode    = scene .createNode ("Shape"),
+               polylineNode = this .strokeGeometries .get (xmlElement);
 
             transformNode .children .push (shapeNode);
+            shapeNode .appearance = this .createStrokeAppearance ();
+
+            if (polylineNode)
+            {
+               shapeNode .geometry = polylineNode;
+            }
+            else
+            {
+               const
+                  polylineNode = scene .createNode ("Polyline2D"),
+                  width1_2     = width / 2,
+                  height1_2    = height / 2;
+
+               this .strokeGeometries .set (xmlElement, polylineNode);
+
+               shapeNode .geometry = polylineNode;
+
+               polylineNode .lineSegments = [ width1_2,  height1_2,
+                                             -width1_2,  height1_2,
+                                             -width1_2, -height1_2,
+                                              width1_2, -height1_2,
+                                              width1_2,  height1_2];
+            }
          }
 
          this .popAll ();
@@ -635,27 +660,49 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          const
             shapeNode = scene .createNode ("Shape"),
-            diskNode  = scene .createNode ("Disk2D");
-
-         shapeNode .appearance = this .createFillAppearance (bbox);
-         shapeNode .geometry   = diskNode;
-         diskNode .solid       = this .solid;
-         diskNode .outerRadius = r;
+            diskNode  = this .fillGeometries .get (xmlElement);
 
          transformNode .children .push (shapeNode);
+         shapeNode .appearance = this .createFillAppearance (bbox);
+
+         if (diskNode)
+         {
+            shapeNode .geometry = diskNode;
+         }
+         else
+         {
+            const diskNode = scene .createNode ("Disk2D");
+
+            this .fillGeometries .set (xmlElement, diskNode);
+
+            shapeNode .geometry   = diskNode;
+            diskNode .solid       = this .solid;
+            diskNode .outerRadius = r;
+         }
       }
 
       if (this .style .strokeType !== "none")
       {
          const
             shapeNode  = scene .createNode ("Shape"),
-            circleNode = scene .createNode ("Circle2D");
-
-         shapeNode .appearance = this .createStrokeAppearance ();
-         shapeNode .geometry   = circleNode;
-         circleNode .radius    = r;
+            circleNode = this .strokeGeometries .get (xmlElement);
 
          transformNode .children .push (shapeNode);
+         shapeNode .appearance = this .createStrokeAppearance ();
+
+         if (circleNode)
+         {
+            shapeNode .geometry = circleNode;
+         }
+         else
+         {
+            const circleNode = scene .createNode ("Circle2D");
+
+            this .strokeGeometries .set (xmlElement, circleNode);
+
+            shapeNode .geometry = circleNode;
+            circleNode .radius  = r;
+         }
       }
 
       this .popAll ();
@@ -689,27 +736,49 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          const
             shapeNode = scene .createNode ("Shape"),
-            diskNode  = scene .createNode ("Disk2D");
-
-         shapeNode .appearance = this .createFillAppearance (bbox);
-         shapeNode .geometry   = diskNode;
-         diskNode .solid       = this .solid;
-         diskNode .outerRadius = rMin;
+            diskNode  = this .fillGeometries .get (xmlElement);
 
          transformNode .children .push (shapeNode);
+         shapeNode .appearance = this .createFillAppearance (bbox);
+
+         if (diskNode)
+         {
+            shapeNode .geometry = diskNode;
+         }
+         else
+         {
+            const diskNode = scene .createNode ("Disk2D");
+
+            this .fillGeometries .set (xmlElement, diskNode);
+
+            shapeNode .geometry   = diskNode;
+            diskNode .solid       = this .solid;
+            diskNode .outerRadius = rMin;
+         }
       }
 
       if (this .style .strokeType !== "none")
       {
          const
             shapeNode  = scene .createNode ("Shape"),
-            circleNode = scene .createNode ("Circle2D");
-
-         shapeNode .appearance = this .createStrokeAppearance ();
-         shapeNode .geometry   = circleNode;
-         circleNode .radius    = rMin;
+            circleNode = this .strokeGeometries .get (xmlElement);
 
          transformNode .children .push (shapeNode);
+         shapeNode .appearance = this .createStrokeAppearance ();
+
+         if (circleNode)
+         {
+            shapeNode .geometry = circleNode;
+         }
+         else
+         {
+            const circleNode = scene .createNode ("Circle2D");
+
+            this .strokeGeometries .set (xmlElement, circleNode);
+
+            shapeNode .geometry = circleNode;
+            circleNode .radius  = rMin;
+         }
       }
 
       this .popAll ();
@@ -742,21 +811,32 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Create nodes.
 
-      const
-         shapeNode      = scene .createNode ("Shape"),
-         appearanceNode = scene .createNode ("Appearance"),
-         textureNode    = scene .createNode ("ImageTexture"),
-         rectangleNode  = scene .createNode ("Rectangle2D");
+      const shapeNode = this .fillGeometries .get (xmlElement);
 
-      shapeNode .appearance          = appearanceNode;
-      shapeNode .geometry            = rectangleNode;
-      appearanceNode .texture        = textureNode;
-      textureNode .url               = [href];
-      textureNode .textureProperties = this .texturePropertiesNode;
-      rectangleNode .solid           = this .solid;
-      rectangleNode .size            = new Vector2 (width, height);
+      if (shapeNode)
+      {
+         transformNode .children .push (shapeNode);
+      }
+      else
+      {
+         const
+            shapeNode      = scene .createNode ("Shape"),
+            appearanceNode = scene .createNode ("Appearance"),
+            textureNode    = scene .createNode ("ImageTexture"),
+            rectangleNode  = scene .createNode ("Rectangle2D");
 
-      transformNode .children .push (shapeNode);
+         this .fillGeometries .set (xmlElement, shapeNode);
+
+         shapeNode .appearance          = appearanceNode;
+         shapeNode .geometry            = rectangleNode;
+         appearanceNode .texture        = textureNode;
+         textureNode .url               = [href];
+         textureNode .textureProperties = this .texturePropertiesNode;
+         rectangleNode .solid           = this .solid;
+         rectangleNode .size            = new Vector2 (width, height);
+
+         transformNode .children .push (shapeNode);
+      }
 
       this .popAll ();
    },
@@ -829,44 +909,66 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          const
             shapeNode    = scene .createNode ("Shape"),
-            geometryNode = scene .createNode ("IndexedTriangleSet");
-
-         shapeNode .appearance  = this .createFillAppearance (bbox);
-         shapeNode .geometry    = geometryNode;
-         geometryNode .solid    = this .solid;
-         geometryNode .index    = this .triangulatePolygon (contours, coordinateNode);
-         geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
-         geometryNode .coord    = coordinateNode;
+            geometryNode = this .fillGeometries .get (xmlElement);
 
          transformNode .children .push (shapeNode);
+         shapeNode .appearance = this .createFillAppearance (bbox);
+
+         if (geometryNode)
+         {
+            shapeNode .geometry = geometryNode;
+         }
+         else
+         {
+            const geometryNode = scene .createNode ("IndexedTriangleSet");
+
+            this .fillGeometries .set (xmlElement, geometryNode);
+
+            shapeNode .geometry    = geometryNode;
+            geometryNode .solid    = this .solid;
+            geometryNode .index    = this .triangulatePolygon (contours, coordinateNode);
+            geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
+            geometryNode .coord    = coordinateNode;
+         }
       }
 
       if (this .style .strokeType !== "none")
       {
          const
             shapeNode    = scene .createNode ("Shape"),
-            geometryNode = scene .createNode ("IndexedLineSet");
-
-         shapeNode .appearance = this .createStrokeAppearance ();
-         shapeNode .geometry   = geometryNode;
-         geometryNode .coord   = coordinateNode;
-
-         // Create contour indices.
-
-         const indices = geometryNode .coordIndex;
-
-         for (const points of contours)
-         {
-            for (const i of points .keys ())
-               indices .push (points .index + i);
-
-            if (points .closed)
-               indices .push (points .index);
-
-            indices .push (-1);
-         }
+            geometryNode = this .strokeGeometries .get (xmlElement);
 
          transformNode .children .push (shapeNode);
+         shapeNode .appearance = this .createStrokeAppearance ();
+
+         if (geometryNode)
+         {
+            shapeNode .geometry = geometryNode;
+         }
+         else
+         {
+            const geometryNode = scene .createNode ("IndexedLineSet");
+
+            this .strokeGeometries .set (xmlElement, geometryNode);
+
+            shapeNode .geometry = geometryNode;
+            geometryNode .coord = coordinateNode;
+
+            // Create contour indices.
+
+            const indices = geometryNode .coordIndex;
+
+            for (const points of contours)
+            {
+               for (const i of points .keys ())
+                  indices .push (points .index + i);
+
+               if (points .closed)
+                  indices .push (points .index);
+
+               indices .push (-1);
+            }
+         }
       }
 
       this .popAll ();
