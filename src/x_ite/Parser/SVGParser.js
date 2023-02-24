@@ -479,8 +479,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Get attributes.
 
       const
-         href   = xmlElement .getAttribute ("xlink:href"),
-         title  = xmlElement .getAttribute ("xlink:title"),
+         href   = xmlElement .getAttribute ("href") || xmlElement .getAttribute ("xlink:href"),
+         title  = xmlElement .getAttribute ("title") || xmlElement .getAttribute ("xlink:title"),
          target = xmlElement .getAttribute ("target");
 
       // Create Transform node.
@@ -801,7 +801,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0, "height"),
          width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0, "width"),
          height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0, "height"),
-         href   = xmlElement .getAttribute ("xlink:href");
+         href   = xmlElement .getAttribute ("href") || xmlElement .getAttribute ("xlink:href");
 
       const
          scene         = this .getExecutionContext (),
