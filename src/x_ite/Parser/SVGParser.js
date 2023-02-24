@@ -2161,6 +2161,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    fillRuleStyle: function (value)
    {
+      if (value === "default")
+      {
+         this .style .fillRule = this .styles [0] .fillRule;
+         return;
+      }
+
       this .style .fillRule = value;
    },
    strokeStyle: function (value)
@@ -2241,6 +2247,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    opacityStyle: function (value)
    {
+      if (value === "default")
+      {
+         this .style .opacity = this .styles [0] .opacity;
+         return;
+      }
+
       if (value === "transparent")
       {
          this .style .opacity = 0;
@@ -2255,6 +2267,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    stopColorStyle: function (value)
    {
+      if (value === "default")
+      {
+         this .style .stopColor = this .styles [0] .stopColor;
+         return;
+      }
+
       if (this .colorValue (Color4 .Black))
       {
          this .style .stopColor = this .value .copy ();
@@ -2263,6 +2281,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    stopOpacityStyle: function (value)
    {
+      if (value === "default")
+      {
+         this .style .stopOpacity = this .styles [0] .stopOpacity;
+         return;
+      }
+
       if (value === "transparent")
       {
          this .style .stopOpacity = 0;
