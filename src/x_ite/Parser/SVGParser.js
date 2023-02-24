@@ -437,10 +437,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .element (usedElement);
 
       this .popAll ();
-
-      // Add node.
-
-      this .groupNodes .at (-1) .children .push (transformNode);
    },
    gElement: function (xmlElement)
    {
@@ -460,10 +456,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .elements (xmlElement);
 
       this .popAll ();
-
-      // Add node.
-
-      this .groupNodes .at (-1) .children .push (transformNode);
    },
    switchElement: function (xmlElement)
    {
@@ -489,10 +481,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .elements (xmlElement);
 
       this .popAll ();
-
-      // Add node.
-
-      this .groupNodes .at (-1) .children .push (transformNode);
    },
    aElement: function (xmlElement)
    {
@@ -530,8 +518,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .elements (xmlElement);
 
       this .popAll ();
-
-      this .groupNodes .at (-1) .children .push (transformNode);
    },
    rectElement: function (xmlElement)
    {
@@ -600,12 +586,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             transformNode .children .push (shapeNode);
          }
-
-         this .groupNodes  .pop ();
-         this .modelMatrix .pop ();
-         this .styles      .pop ();
-
-         this .groupNodes .at (-1) .children .push (transformNode);
       }
       else
       {
@@ -692,8 +672,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
 
       this .popAll ();
-
-      this .groupNodes .at (-1) .children .push (transformNode);
    },
    ellipseElement: function (xmlElement)
    {
@@ -748,8 +726,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
 
       this .popAll ();
-
-      this .groupNodes .at (-1) .children .push (transformNode);
    },
    textElement: function (xmlElement)
    {
@@ -796,8 +772,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       transformNode .children .push (shapeNode);
 
       this .popAll ();
-
-      this .groupNodes .at (-1) .children .push (transformNode);
    },
    polylineElement: function (xmlElement)
    {
@@ -909,8 +883,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
 
       this .popAll ();
-
-      this .groupNodes .at (-1) .children .push (transformNode);
    },
    linearGradientElementUrl: function (xmlElement, bbox)
    {
@@ -1053,7 +1025,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             g .spreadMatrix .identity ();
 
             for (const [o, c, a] of g .stops)
-               gradient .addColorStop (o, this .css (c, a));
+               gradient .addColorStop (o, this .cssColor (c, a));
 
             break;
          }
@@ -1064,7 +1036,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                const s = i / SPREAD;
 
                for (const [o, c, a] of g .stops)
-                  gradient .addColorStop (s + o / SPREAD, this .css (c, a));
+                  gradient .addColorStop (s + o / SPREAD, this .cssColor (c, a));
             }
 
             break;
@@ -1076,7 +1048,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                const s = i / SPREAD;
 
                for (const [o, c, a] of g .stops)
-                  gradient .addColorStop (s + (i % 2 ? 1 - o : o) / SPREAD, this .css (c, a));
+                  gradient .addColorStop (s + (i % 2 ? 1 - o : o) / SPREAD, this .cssColor (c, a));
             }
 
             break;
@@ -2386,7 +2358,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (!Grammar .color .parse (this))
             return false;
 
-         const defaultColor = this .css (c);
+         const defaultColor = this .cssColor (c);
 
          this .value = color .set (... this .convertColor (this .result [1], defaultColor));
 
@@ -2397,7 +2369,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       return Grammar .url .parse (this);
    },
-   css: function (c, a = c .a)
+   cssColor: function (c, a = c .a)
    {
       return `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`;
    },
@@ -2439,6 +2411,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Nodes
 
       this .nodes .set (xmlElement, transformNode);
+      this .groupNodes .at (-1) .children .push (transformNode);
 
       return transformNode;
    },
