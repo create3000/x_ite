@@ -36,13 +36,18 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Setting set_bind true makes this node active setting set_bind false makes this node inactive. Thus setting set_bind true/false will pop/push (enable/disable) this node.
 
-### MFString [in, out] **type** [ "EXAMINE", "ANY" ] <small>["EXAMINE","WALK","FLY","LOOKAT","EXPLORE","ANY","NONE"]</small>
+### MFString [in, out] **type** [ "EXAMINE", "ANY" ] <small>["EXAMINE","WALK","FLY","PLANE_create3000.github.io","LOOKAT","EXPLORE","ANY","NONE"]</small>
 
-Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLORE" "ANY" "NONE".
+Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "PLANE_create3000.github.io" "LOOKAT" "EXPLORE" "ANY" "NONE".
+
+The PLANE viewer is primarily designed to use with OrthoViewpoint and 2D scenes. You can zoom, which will change the viewport size (center of zoom is mouse pointer), and you can move the scene along the viewport plane.
 
 #### Hints
 
-- For inspection of simple objects, usability often improves with type="EXAMINE" "ANY". Types WALK and FLY force strict camera-to-object collision detection. See Collision node for further details on camera-to-object collision detection. MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." ] Interchange profile hint: this field may be ignored, applying the default value regardless.
+- For inspection of simple objects, usability often improves with type="EXAMINE" "ANY".
+- Types WALK and FLY force strict camera-to-object collision detection.
+- See Collision node for further details on camera-to-object collision detection.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." ]
 
 ### MFFloat [in, out] **avatarSize** [ 0.25, 1.6, 0.75 ] <small>[0,∞)</small>
 
