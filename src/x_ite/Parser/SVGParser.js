@@ -130,7 +130,6 @@ function SVGParser (scene)
 
    this .viewBox        = new Vector4 (0, 0, 100, 100);
    this .modelMatrix    = new MatrixStack (Matrix4);
-   this .nodes          = new Map ();
    this .lineProperties = new Map ();
    this .tessy          = this .createTesselator ();
    this .canvas         = document .createElement ("canvas");
@@ -366,9 +365,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    element: function (xmlElement)
    {
-      if (this .used (xmlElement))
-			return;
-
       switch (xmlElement .nodeName)
       {
          case "use":
@@ -397,22 +393,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return this .pathElement (xmlElement);
       }
    },
-   used: function (xmlElement)
-   {
-      const node = this .nodes .get (xmlElement);
-
-      if (!node)
-         return false;
-
-      this .groupNodes .at (-1) .children .push (node);
-
-      return true;
-   },
    useElement: function (xmlElement)
    {
       // Get href.
 
-      const usedElement = this .hrefAttribute (xmlElement .getAttribute ("xlink:href"));
+      const usedElement = this .hrefAttribute (xmlElement .getAttribute ("href") || xmlElement .getAttribute ("xlink:href"));
 
       if (!usedElement)
          return;
@@ -899,7 +884,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Attribute xlink:href
 
-      const refElement = this .hrefAttribute (xmlElement .getAttribute ("xlink:href"));
+      const refElement = this .hrefAttribute (xmlElement .getAttribute ("href") || xmlElement .getAttribute ("xlink:href"));
 
       if (refElement)
          this .gradientElement (refElement, bbox, gradient);
@@ -944,7 +929,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       // Attribute xlink:href
 
-      const refElement = this .hrefAttribute (xmlElement .getAttribute ("xlink:href"));
+      const refElement = this .hrefAttribute (xmlElement .getAttribute ("href") || xmlElement .getAttribute ("xlink:href"));
 
       if (refElement)
          this .gradientElement (refElement, bbox, gradient);
@@ -2029,7 +2014,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    styleAttributes: function (xmlElement)
    {
-      const style = Object .assign ({ }, this .styles [0]);
+      const style = Object .assign ({ }, this .styles .at (-1));
 
       if (this .style .display === "none")
          return false;
@@ -2064,6 +2049,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    parseStyle: function (style, value)
    {
+      if (value === "inherit" || value == "unset")
+         return;
+
       this .parseValue (value);
 
       switch (style)
@@ -2105,15 +2093,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    displayStyle: function (value)
    {
-      if (value === null)
-         return;
-
       if (value === "default")
-         return;
-
-      if (value === "inherit")
       {
-         this .style .display = styles .at (-1) .display;
+         this .style .display = "inline";
          return;
       }
 
@@ -2121,10 +2103,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    fillStyle: function (value)
    {
-      if (this .urlValue ())
+      if (value === "default")
       {
-         this .style .fillType = "URL";
-         this .style .fillURL  = this .result [1] .trim ();
+         this .style .fillType  = this .styles [0] .fillType;
+         this .style .fillColor = this .styles [0] .fillColor;
+         this .style .fillURL   = this .styles [0] .fillURL;
          return;
       }
 
@@ -2140,27 +2123,25 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
 
-      if (!value .match (/^(?:inherit|unset|default)$/))
+      if (this .urlValue ())
       {
-         if (this .colorValue (this .styles .at (-1) .fillColor))
-         {
-            this .style .fillType  = "COLOR";
-            this .style .fillColor = this .value .copy ();
-            return;
-         }
+         this .style .fillType = "URL";
+         this .style .fillURL  = this .result [1] .trim ();
+         return;
       }
 
-      // inherit
-
-      this .style .fillType  = this .styles .at (-1) .fillType;
-      this .style .fillColor = this .styles .at (-1) .fillColor;
-      this .style .fillURL   = this .styles .at (-1) .fillURL;
+      if (this .colorValue (this .styles .at (-1) .fillColor))
+      {
+         this .style .fillType  = "COLOR";
+         this .style .fillColor = this .value .copy ();
+         return;
+      }
    },
    fillOpacityStyle: function (value)
    {
-      if (this .double ())
+      if (value === "default")
       {
-         this .style .fillOpacity = Algorithm .clamp (this .value, 0, 1);
+         this .style .fillOpacity = this .styles [0] .fillOpacity;
          return;
       }
 
@@ -2170,9 +2151,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
 
-      // inherit
-
-      this .style .fillOpacity = this .styles .at (-1) .fillOpacity;
+      if (this .double ())
+      {
+         this .style .fillOpacity = Algorithm .clamp (this .value, 0, 1);
+         return;
+      }
    },
    fillRuleStyle: function (value)
    {
@@ -2180,10 +2163,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    strokeStyle: function (value)
    {
-      if (this .urlValue ())
+      if (value === "default")
       {
-         this .style .strokeType = "URL";
-         this .style .strokeURL  = this .result [1] .trim ();
+         this .style .strokeType  = this .styles [0] .strokeType;
+         this .style .strokeColor = this .styles [0] .strokeColor;
+         this .style .strokeURL   = this .styles [0] .strokeURL;
          return;
       }
 
@@ -2199,27 +2183,25 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
 
-      if (!value .match (/^(?:inherit|unset|default)$/))
+      if (this .urlValue ())
       {
-         if (this .colorValue (this .styles .at (-1) .strokeColor))
-         {
-            this .style .strokeType  = "COLOR";
-            this .style .strokeColor = this .value .copy ();
-            return;
-         }
+         this .style .strokeType = "URL";
+         this .style .strokeURL  = this .result [1] .trim ();
+         return;
       }
 
-      // inherit
-
-      this .style .strokeType  = this .styles .at (-1) .strokeType;
-      this .style .strokeColor = this .styles .at (-1) .strokeColor;
-      this .style .strokeURL   = this .styles .at (-1) .strokeURL;
+      if (this .colorValue (this .styles .at (-1) .strokeColor))
+      {
+         this .style .strokeType  = "COLOR";
+         this .style .strokeColor = this .value .copy ();
+         return;
+      }
    },
    strokeOpacityStyle: function (value)
    {
-      if (this .double ())
+      if (value === "default")
       {
-         this .style .strokeOpacity = Algorithm .clamp (this .value, 0, 1);
+         this .style .strokeOpacity = this .styles [0] .strokeOpacity;
          return;
       }
 
@@ -2229,15 +2211,17 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
 
-      // inherit
-
-      this .style .strokeOpacity = this .styles .at (-1) .strokeOpacity;
+      if (this .double ())
+      {
+         this .style .strokeOpacity = Algorithm .clamp (this .value, 0, 1);
+         return;
+      }
    },
    strokeWidthStyle: function (value)
    {
-      if (this .double ())
+      if (value === "default")
       {
-         this .style .strokeWidth = this .lengthAttribute (this .value, 1);
+         this .style .strokeWidth = this .styles [0] .strokeWidth;
          return;
       }
 
@@ -2247,21 +2231,23 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
 
-      // inherit
-
-      this .style .strokeWidth = this .styles .at (-1) .strokeWidth;
+      if (this .double ())
+      {
+         this .style .strokeWidth = this .lengthAttribute (this .value, 1);
+         return;
+      }
    },
    opacityStyle: function (value)
    {
-      if (this .double ())
-      {
-         this .style .opacity = Algorithm .clamp (this .value, 0, 1) * this .styles .at (-1) .opacity;
-         return;
-      }
-
       if (value === "transparent")
       {
          this .style .opacity = 0;
+         return;
+      }
+
+      if (this .double ())
+      {
+         this .style .opacity = Algorithm .clamp (this .value, 0, 1) * this .styles .at (-1) .opacity;
          return;
       }
    },
@@ -2275,29 +2261,27 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    stopOpacityStyle: function (value)
    {
-      if (this .double ())
-      {
-         this .style .stopOpacity = Algorithm .clamp (this .value, 0, 1);
-         return;
-      }
-
       if (value === "transparent")
       {
          this .style .stopOpacity = 0;
          return;
       }
+
+      if (this .double ())
+      {
+         this .style .stopOpacity = Algorithm .clamp (this .value, 0, 1);
+         return;
+      }
    },
    vectorEffectStyle: function (value)
    {
-      if (value !== "inherit")
+      if (value === "default")
       {
-         this .style .vectorEffect = value;
+         this .style .vectorEffect = this .styles [0] .vectorEffect;
          return;
       }
 
-      // inherit
-
-      this .style .vectorEffect = this .styles .at (-1) .vectorEffect;
+      this .style .vectorEffect = value;
    },
    parseValue: function (value)
    {
@@ -2408,9 +2392,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .idAttribute (xmlElement .getAttribute ("id"), transformNode);
 
-      // Nodes
+      // Add node to parent.
 
-      this .nodes .set (xmlElement, transformNode);
       this .groupNodes .at (-1) .children .push (transformNode);
 
       return transformNode;
