@@ -571,6 +571,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             transformNode .children .push (shapeNode);
          }
+
+         this .popAll ();
       }
       else
       {
