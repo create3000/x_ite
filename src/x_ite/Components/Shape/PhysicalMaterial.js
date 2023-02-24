@@ -170,8 +170,8 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
    },
    set_transparent__: function ()
    {
-      this .setTransparent (Boolean (this .getTransparency () ||
-                            (this .baseTextureNode && this .baseTextureNode .isTransparent ())));
+      this .setTransparent (!!(this .getTransparency () ||
+                              (this .baseTextureNode && this .baseTextureNode .isTransparent ())));
    },
    getTextureIndices: (function ()
    {
