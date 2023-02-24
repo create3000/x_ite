@@ -130,7 +130,6 @@ function SVGParser (scene)
 
    this .viewBox        = new Vector4 (0, 0, 100, 100);
    this .modelMatrix    = new MatrixStack (Matrix4);
-   this .zValue         = 0;
    this .nodes          = new Map ();
    this .lineProperties = new Map ();
    this .tessy          = this .createTesselator ();
@@ -2443,9 +2442,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scaleOrientation = new Rotation4 ();
 
       matrix .get (translation, rotation, scale, scaleOrientation);
-
-      // if (!xmlElement .nodeName .match (/^(?:use|g|switch|a)$/))
-      //    translation .z = (this .zValue ++) / 1000;
 
       transformNode .translation      = translation;
       transformNode .rotation         = rotation;
