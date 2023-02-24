@@ -2444,17 +2444,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       matrix .get (translation, rotation, scale, scaleOrientation);
 
-      // switch (xmlElement .nodeName)
-      // {
-      //    case "use":
-      //    case "g":
-      //    case "switch":
-      //    case "a":
-      //       break;
-      //    default:
-      //       translation .z = (this .zValue ++) / 1000;
-      //       break
-      // }
+      // if (!xmlElement .nodeName .match (/^(?:use|g|switch|a)$/))
+      //    translation .z = (this .zValue ++) / 1000;
 
       transformNode .translation      = translation;
       transformNode .rotation         = rotation;
