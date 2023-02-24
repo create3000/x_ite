@@ -847,9 +847,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             shapeNode    = scene .createNode ("Shape"),
             geometryNode = scene .createNode ("IndexedLineSet");
 
-         shapeNode .appearance    = this .createStrokeAppearance ();
-         shapeNode .geometry      = geometryNode;
-         geometryNode .coord      = coordinateNode;
+         shapeNode .appearance = this .createStrokeAppearance ();
+         shapeNode .geometry   = geometryNode;
+         geometryNode .coord   = coordinateNode;
 
          // Create contour indices.
 
