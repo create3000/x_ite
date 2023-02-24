@@ -789,43 +789,42 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    imageElement: function (xmlElement)
    {
-      // Determine style.
+      const transformNode = this .fillGeometries .get (xmlElement);
 
-      if (!this .styleAttributes (xmlElement))
-         return;
-
-      // Create Transform node.
-
-      const
-         x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0, "width"),
-         y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0, "height"),
-         width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0, "width"),
-         height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0, "height"),
-         href   = xmlElement .getAttribute ("href") || xmlElement .getAttribute ("xlink:href");
-
-      const
-         scene         = this .getExecutionContext (),
-         transformNode = this .createTransform (xmlElement, new Vector2 (x + width / 2, y + height / 2), new Vector2 (1, -1));
-
-      this .groupNodes .push (transformNode);
-
-      // Create nodes.
-
-      const shapeNode = this .fillGeometries .get (xmlElement);
-
-      if (shapeNode)
+      if (transformNode)
       {
-         transformNode .children .push (shapeNode);
+         this .groupNodes .at (-1) .children .push (transformNode);
       }
       else
       {
+         // Determine style.
+
+         if (!this .styleAttributes (xmlElement))
+            return;
+
+         // Create Transform node.
+
+         const
+            x      = this .lengthAttribute (xmlElement .getAttribute ("x"),      0, "width"),
+            y      = this .lengthAttribute (xmlElement .getAttribute ("y"),      0, "height"),
+            width  = this .lengthAttribute (xmlElement .getAttribute ("width"),  0, "width"),
+            height = this .lengthAttribute (xmlElement .getAttribute ("height"), 0, "height"),
+            href   = xmlElement .getAttribute ("href") || xmlElement .getAttribute ("xlink:href");
+
+         const
+            scene         = this .getExecutionContext (),
+            transformNode = this .createTransform (xmlElement, new Vector2 (x + width / 2, y + height / 2), new Vector2 (1, -1));
+
+         this .fillGeometries .set (xmlElement, transformNode);
+         this .groupNodes .push (transformNode);
+
+         // Create nodes.
+
          const
             shapeNode      = scene .createNode ("Shape"),
             appearanceNode = scene .createNode ("Appearance"),
             textureNode    = scene .createNode ("ImageTexture"),
             rectangleNode  = scene .createNode ("Rectangle2D");
-
-         this .fillGeometries .set (xmlElement, shapeNode);
 
          shapeNode .appearance          = appearanceNode;
          shapeNode .geometry            = rectangleNode;
@@ -836,9 +835,9 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          rectangleNode .size            = new Vector2 (width, height);
 
          transformNode .children .push (shapeNode);
-      }
 
-      this .popAll ();
+         this .popAll ();
+      }
    },
    polylineElement: function (xmlElement)
    {
