@@ -45,20 +45,13 @@
  *
  ******************************************************************************/
 
-const _stack = Symbol ();
-
-function Events ()
-{
-   this [_stack] = [ ];
-}
-
-Events .prototype =
+const Events = Object .assign ([ ],
 {
    create: function (field)
    {
-      if (this [_stack] .length)
+      if (this .length)
       {
-         const event = this [_stack] .pop ();
+         const event = this .pop ();
 
          event .field = field;
          event .clear ();
@@ -74,9 +67,9 @@ Events .prototype =
    },
    copy: function (event)
    {
-      if (this [_stack] .length)
+      if (this .length)
       {
-         const copy = this [_stack] .pop ();
+         const copy = this .pop ();
 
          copy .field = event .field;
          copy .clear ();
@@ -95,19 +88,13 @@ Events .prototype =
 
       return copy;
    },
-   push: function (event)
-   {
-      this [_stack] .push (event);
-   },
    clear: function ()
    {
-      this [_stack] .length = 0;
+      this .length = 0;
    },
-};
+});
 
-for (const key of Reflect .ownKeys (Events .prototype))
-   Object .defineProperty (Events .prototype, key, { enumerable: false });
+for (const key of Reflect .ownKeys (Events))
+   Object .defineProperty (Events, key, { enumerable: false });
 
-const events = new Events ();
-
-export default events;
+export default Events;
