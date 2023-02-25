@@ -887,7 +887,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Filter consecutive equal points.
 
-      const EPSILON = 1e-12; // Min point distance.
+      const EPSILON = 1e-9; // Min point distance.
 
       contours = contours .map (function (points)
       {
