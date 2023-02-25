@@ -612,7 +612,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          const
             xOffsets = [x + width - rx, x + rx , x + rx, x + width - rx],
             yOffsets = [y + height - ry, y + height - ry, y + ry, y + ry],
-            points   = Object .assign ([ ], { index: 0, closed: true });
+            points   = Object .assign ([ ], { closed: true });
 
          for (let c = 0; c < 4; ++ c)
          {
@@ -843,7 +843,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       // Get points.
 
-      const points = Object .assign ([ ], { index: 0 });
+      const points = [ ];
 
       if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
          return;
@@ -856,7 +856,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       // Get points.
 
-      const points = Object .assign ([ ], { index: 0, closed: true });
+      const points = Object .assign ([ ], { closed: true });
 
       if (!this .pointsAttribute (xmlElement .getAttribute ("points"), points))
          return;
@@ -884,6 +884,28 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (!this .styleAttributes (xmlElement))
          return;
+
+      // Filter consecutive equal points.
+
+      const EPSILON = 1e-12; // Min point distance.
+
+      contours = contours .map (function (points)
+      {
+         if (points .closed)
+         {
+            return Object .assign (points .filter ((p, i, a) => p .distance (a [(i + 1) % a .length]) > EPSILON),
+            {
+               closed: true,
+            });
+         }
+         else
+         {
+            return points .filter ((p, i, a) => !i || p .distance (a [i - 1]) > EPSILON);
+         }
+      })
+      .filter (points => points .length > 2);
+
+      contours .forEach ((points, i, a) => points .index = i ? a [i - 1] .index + a [i - 1] .length : 0);
 
       // Create Transform node.
 
@@ -1359,7 +1381,6 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       let
          points   = [ ],
-         index    = 0,
          previous = "",
          command  = "",
          relative = false,
@@ -1387,11 +1408,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                // moveto
 
                if (points .length > 2)
-               {
-                  contours .push (Object .assign (points, { index: index, closed: false }));
-
-                  index += points .length;
-               }
+                  contours .push (Object .assign (points, { closed: false }));
 
                points = [ ];
 
@@ -1863,9 +1880,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   ax = points [0] .x;
                   ay = points [0] .y;
 
-                  contours .push (Object .assign (points, { index: index, closed: true }));
-
-                  index += points .length;
+                  contours .push (Object .assign (points, { closed: true }));
                }
 
                points = [ ];
@@ -1879,7 +1894,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
 
       if (points .length > 2)
-		   contours .push (Object .assign (points, { index: index, closed: false }));
+		   contours .push (Object .assign (points, { closed: false }));
 
       return !! contours .length;
    },
