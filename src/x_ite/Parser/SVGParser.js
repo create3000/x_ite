@@ -950,7 +950,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             shapeNode .geometry    = geometryNode;
             geometryNode .solid    = this .solid;
             geometryNode .index    = this .triangulatePolygon (contours, coordinateNode);
-            geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox);
+            geometryNode .texCoord = this .createTextureCoordinate (coordinateNode, bbox, shapeNode .appearance);
             geometryNode .coord    = coordinateNode;
          }
       }
@@ -2678,8 +2678,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return texturePropertiesNode;
    },
-   createTextureCoordinate: function (coordinateNode, bbox)
+   createTextureCoordinate: function (coordinateNode, bbox, appearance)
    {
+      if (!appearance .texture)
+         return null;
+
       const
          scene        = this .getExecutionContext (),
          texCoordNode = scene .createNode ("TextureCoordinate"),
