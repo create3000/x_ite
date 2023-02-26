@@ -905,6 +905,8 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       })
       .filter (points => points .length > 2);
 
+      // Add index property to points.
+
       contours .forEach ((points, i, a) => points .index = i ? a [i - 1] .index + a [i - 1] .length : 0);
 
       // Create Transform node.

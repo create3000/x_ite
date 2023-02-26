@@ -168,6 +168,9 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
             width  = image .width,
             height = image .height;
 
+         // https://developer.mozilla.org/en-US/docs/Web/API/createImageBitmap
+         // createImageBitmap
+
          // Scale image if needed and flip vertically.
 
          if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
