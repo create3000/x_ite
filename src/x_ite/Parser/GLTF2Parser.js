@@ -47,15 +47,14 @@
 
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
+import Draco        from "../Browser/Networking/draco_decoder_gltf.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../standard/Math/Numbers/Vector3.js";
 import Quaternion   from "../../standard/Math/Numbers/Quaternion.js";
 import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
-import Matrix3      from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import Color4       from "../../standard/Math/Numbers/Color4.js";
-import Box3         from "../../standard/Math/Geometry/Box3.js";
 import Algorithm    from "../../standard/Math/Algorithm.js";
 import DEBUG        from "../DEBUG.js"
 
@@ -188,6 +187,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       await this .loadComponents ();
       await this .buffersArray (glTF .buffers);
+
+      this .draco = await Draco ();
 
       this .bufferViewsArray (glTF .bufferViews);
       this .accessorsArray   (glTF .accessors);
@@ -459,7 +460,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                const
                   TypedArray = TypedArrays .get (accessor .componentType),
-                  bufferView = this .bufferViews [accessor .bufferView],
+                  bufferView = this .bufferViews [accessor .bufferView || 0],
                   byteOffset = accessor .byteOffset || 0,
                   byteStride = bufferView .byteStride || 0,
                   components = Components .get (accessor .type),
@@ -1009,7 +1010,154 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       primitive .indices  = this .accessors [primitive .indices];
       primitive .material = this .materials [primitive .material];
 
+      this .primitiveExtensionsObject (primitive .extensions, primitive)
+
       shapeNodes .push (this .createShape (primitive));
+   },
+   primitiveExtensionsObject: function (extensions, primitive)
+   {
+      if (!(extensions instanceof Object))
+         return;
+
+      for (const [key, value] of Object .entries (extensions))
+      {
+         switch (key)
+         {
+            case "KHR_draco_mesh_compression":
+               return this .khrDracoMeshCompressionObject (value, primitive);
+         }
+      }
+   },
+   khrDracoMeshCompressionObject: function (draco, primitive)
+   {
+      if (!(draco instanceof Object))
+         return;
+
+      function indicesCallback (array)
+      {
+         Object .defineProperty (primitive .indices, "array", { value: array });
+      }
+
+      function attributeCallback (kind, array)
+      {
+         const
+            match    = kind .match (/^(\w+?)(?:_(\d))?$/),
+            key      = match [1],
+            index    = match [2];
+
+         if (attributes [key] instanceof Array)
+            Object .defineProperty (attributes [key] [index], "array", { value: array });
+
+         else
+            Object .defineProperty (attributes [key], "array", { value: array });
+      }
+
+      const
+         attributes = primitive .attributes,
+         data       = new Uint8Array (this .bufferViews [draco .bufferView] .buffer);
+
+      this .decodeMesh (this .draco, data, draco .attributes, indicesCallback, attributeCallback);
+   },
+   decodeMesh: function (decoderModule, dataView, attributes, indicesCallback, attributeCallback)
+   {
+      const
+         buffer  = new decoderModule .DecoderBuffer (),
+         decoder = new decoderModule .Decoder ();
+
+      buffer .Init (dataView, dataView .byteLength);
+
+      let geometry, status;
+
+      try
+      {
+         const type = decoder .GetEncodedGeometryType (buffer);
+
+         switch (type)
+         {
+            case decoderModule .TRIANGULAR_MESH:
+               geometry = new decoderModule .Mesh ();
+               status   = decoder .DecodeBufferToMesh (buffer, geometry);
+               break;
+            case decoderModule .POINT_CLOUD:
+               geometry = new decoderModule .PointCloud ();
+               status   = decoder .DecodeBufferToPointCloud (buffer, geometry);
+               break;
+            default:
+               throw new Error (`Invalid geometry type ${type}`);
+         }
+
+         if (!status .ok () || !geometry .ptr)
+            throw new Error (status .error_msg ());
+
+         if (type === decoderModule .TRIANGULAR_MESH)
+         {
+            const
+               numFaces   = geometry .num_faces (),
+               numIndices = numFaces * 3,
+               byteLength = numIndices * 4;
+
+            const ptr = decoderModule._malloc(byteLength);
+
+            try
+            {
+               const indices = new Uint32Array (numIndices);
+
+               decoder .GetTrianglesUInt32Array (geometry, byteLength, ptr);
+
+               indices .set (new Uint32Array (decoderModule .HEAPF32 .buffer, ptr, numIndices));
+
+               indicesCallback (indices);
+            }
+            finally
+            {
+               decoderModule ._free (ptr);
+            }
+         }
+
+         const processAttribute = (kind, attribute) =>
+         {
+            const
+               numComponents = attribute .num_components (),
+               numPoints     = geometry .num_points (),
+               numValues     = numPoints * numComponents,
+               byteLength    = numValues * Float32Array .BYTES_PER_ELEMENT;
+
+            const ptr = decoderModule._malloc(byteLength);
+
+            try
+            {
+               const array = new Float32Array (numValues);
+
+               decoder .GetAttributeDataArrayForAllPoints (geometry, attribute, decoderModule .DT_FLOAT32, byteLength, ptr);
+
+               array .set (new Float32Array (decoderModule .HEAPF32 .buffer, ptr, numValues));
+
+               attributeCallback (kind, array);
+
+            }
+            finally
+            {
+               decoderModule ._free (ptr);
+            }
+         };
+
+         for (const kind in attributes)
+         {
+            const
+               id        = attributes [kind],
+               attribute = decoder .GetAttributeByUniqueId (geometry, id);
+
+            processAttribute (kind, attribute);
+         }
+      }
+      finally
+      {
+         if (geometry)
+            decoderModule .destroy(geometry);
+
+         decoderModule .destroy (decoder);
+         decoderModule .destroy (buffer);
+      }
    },
    attributesObject: function (attributes)
    {
