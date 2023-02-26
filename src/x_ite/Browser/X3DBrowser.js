@@ -871,6 +871,13 @@ Object .defineProperty (X3DBrowser .prototype, "version",
    configurable: false
 });
 
+Object .defineProperty (X3DBrowser .prototype, "providerUrl",
+{
+   get: function () { return this .getProviderUrl (); },
+   enumerable: true,
+   configurable: false
+});
+
 Object .defineProperty (X3DBrowser .prototype, "currentFrameRate",
 {
    get: function () { return this .getCurrentFrameRate (); },

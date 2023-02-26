@@ -119,6 +119,9 @@ $(() =>
 
             await Browser .loadURL (new X3D .MFString (url));
 
+            Browser .currentScene .setMetaData ("converter", `${Browser .name} V${Browser .version}, ${Browser .providerUrl}`);
+            Browser .currentScene .setMetaData ("converted", new Date () .toUTCString ());
+
             link (mimeType, file .name .replace (/\.[^.]+$/, "") + extension, Browser .currentScene [toString] ());
          }
          catch (error)
