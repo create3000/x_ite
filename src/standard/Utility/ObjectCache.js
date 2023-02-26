@@ -47,27 +47,26 @@
 
 function ObjectCache (Type)
 {
-   const stack = [ ];
-
-   return {
-      size: 0,
+   return Object .assign ([ ],
+   {
+      top: 0,
       pop: function ()
       {
-         if (this .size !== 0)
-            return stack [-- this .size];
+         if (this .top !== 0)
+            return this [-- this .top];
 
          return new Type ();
       },
       push: function (object)
       {
-         stack [this .size ++] = object;
+         this [this .top ++] = object;
       },
       clear: function ()
       {
-         stack .length = 0;
-         this .size    = 0;
+         this .length = 0;
+         this .top    = 0;
       },
-   };
+   });
 }
 
 export default ObjectCache;
