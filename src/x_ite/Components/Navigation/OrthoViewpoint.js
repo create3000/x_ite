@@ -248,7 +248,7 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
    },
    getMaxFarValue: function ()
    {
-      return 1e5;
+      return 1e4;
    },
    getScreenScale: function (point, viewport, screenScale)
    {
