@@ -2680,7 +2680,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    createTextureCoordinate: function (coordinateNode, bbox, appearance)
    {
-      if (!appearance .texture)
+      if (!appearance || !appearance .texture)
          return null;
 
       const
