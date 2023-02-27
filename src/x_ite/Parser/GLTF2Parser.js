@@ -47,7 +47,6 @@
 
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
-import Namespace    from "../Namespace.js";
 import URLs         from "../Browser/Networking/URLs.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../standard/Math/Numbers/Vector3.js";
@@ -1099,9 +1098,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          attributes = primitive .attributes,
          dataView   = new Uint8Array (this .bufferViews [draco .bufferView] .buffer);
 
-      this .decodeMesh (this .draco, dataView, draco .attributes, indicesCallback, attributeCallback);
+      this .dracoDecodeMesh (this .draco, dataView, draco .attributes, indicesCallback, attributeCallback);
    },
-   decodeMesh: function (decoderModule, dataView, attributes, indicesCallback, attributeCallback)
+   dracoDecodeMesh: function (decoderModule, dataView, attributes, indicesCallback, attributeCallback)
    {
       const
          buffer  = new decoderModule .DecoderBuffer (),
@@ -1199,11 +1198,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    createDraco: async function ()
    {
-      const draco = Namespace .get ("lib/draco_decoder_gltf.js");
-
-      if (draco)
+      if (this .constructor .draco)
       {
-         return draco;
+         return this .constructor .draco;
       }
       else
       {
@@ -1212,9 +1209,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             text     = await response .text (),
             draco    = await new Function (text) () ();
 
-         Namespace .set ("lib/draco_decoder_gltf.js", draco);
-
-         return draco;
+         return this .constructor .draco = draco;
       }
    },
    camerasArray: function (cameras)
