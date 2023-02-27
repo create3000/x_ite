@@ -1124,7 +1124,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                status   = decoder .DecodeBufferToPointCloud (buffer, geometry);
                break;
             default:
-               throw new Error (`Invalid geometry type ${type}`);
+               throw new Error (`Invalid geometry type ${type}.`);
          }
 
          if (!status .ok () || !geometry .ptr)
