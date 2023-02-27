@@ -183,8 +183,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Parse root objects.
 
       this .assetObject        (glTF .asset);
-      this .extensionsRUObject (glTF .extensionsUsed, "extensionsUsed");
-      this .extensionsRUObject (glTF .extensionsRequired, "extensionsRequired");
+      this .extensionsRUObject (glTF .extensionsUsed, this .extensionsUsed);
+      this .extensionsRUObject (glTF .extensionsRequired, this .extensionsRequired);
       this .extensionsObject   (glTF .extensions);
 
       await this .loadComponents ();
@@ -256,7 +256,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       scene .getRootNodes () .push (worldInfoNode);
    },
-   extensionsRUObject: function (extensions, key)
+   extensionsRUObject: function (extensions, set)
    {
       if (!(extensions instanceof Array))
          return;
@@ -265,10 +265,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          browser = this .getBrowser (),
          scene   = this .getExecutionContext ();
 
-      this [key] = new Set (extensions);
-
       for (const extension of extensions)
       {
+         set .add (extension);
+
          switch (extension)
          {
             case "KHR_texture_transform":
@@ -1078,9 +1078,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          Object .defineProperty (primitive .indices, "array", { value: array });
       }
 
-      function attributeCallback (kind, array)
+      function attributeCallback (keyN, array)
       {
-         const match = kind .match (/^(\w+?)(?:_(\d+))?$/);
+         const match = keyN .match (/^(\w+?)(?:_(\d+))?$/);
 
          if (!match)
             return;
@@ -1155,9 +1155,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             }
          }
 
-         const processAttribute = (kind, attribute) =>
+         for (const [key, id] of Object .entries (attributes))
          {
             const
+               attribute     = decoder .GetAttributeByUniqueId (geometry, id),
                numComponents = attribute .num_components (),
                numPoints     = geometry .num_points (),
                numValues     = numPoints * numComponents,
@@ -1172,19 +1173,12 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                array .set (new Float32Array (draco .HEAPF32 .buffer, ptr, numValues));
 
-               attributeCallback (kind, array);
+               attributeCallback (key, array);
             }
             finally
             {
                draco ._free (ptr);
             }
-         };
-
-         for (const [kind, id] of Object .entries (attributes))
-         {
-            const attribute = decoder .GetAttributeByUniqueId (geometry, id);
-
-            processAttribute (kind, attribute);
          }
       }
       finally
