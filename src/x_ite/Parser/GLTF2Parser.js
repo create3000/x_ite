@@ -1196,7 +1196,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          decoderModule .destroy (buffer);
       }
    },
-   createDraco: function ()
+   createDraco: async function ()
    {
       const draco = Namespace .get ("lib/draco_decoder_gltf.js");
 
@@ -1206,14 +1206,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
       else
       {
-         return fetch (URLs .getLibUrl ("draco_decoder_gltf.js"))
-            .then (response => response .text ())
-            .then (text => new Function (text) () ())
-            .then (function (draco)
-            {
-               Namespace .set ("lib/draco_decoder_gltf.js", draco);
-               return draco;
-            });
+         const
+            response = await fetch (URLs .getLibUrl ("draco_decoder_gltf.js")),
+            text     = await response .text (),
+            draco    = await new Function (text) () ();
+
+         Namespace .set ("lib/draco_decoder_gltf.js", draco);
+
+         return draco;
       }
    },
    camerasArray: function (cameras)
