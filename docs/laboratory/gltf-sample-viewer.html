@@ -289,6 +289,48 @@ const draco = [
 
 draco .server = "https://github.khronos.org/glTF-Sample-Viewer-Release/assets/models/2.0/";
 
+/* find . -type f -name "*.gltf" | grep "/glTF-Embedded//" | sort */
+const embedded = [
+   "2CylinderEngine/glTF-Embedded/2CylinderEngine.gltf",
+   "AlphaBlendModeTest/glTF-Embedded/AlphaBlendModeTest.gltf",
+   "AnimatedTriangle/glTF-Embedded/AnimatedTriangle.gltf",
+   "Box/glTF-Embedded/Box.gltf",
+   "BoxAnimated/glTF-Embedded/BoxAnimated.gltf",
+   "BoxInterleaved/glTF-Embedded/BoxInterleaved.gltf",
+   "BoxTextured/glTF-Embedded/BoxTextured.gltf",
+   "BoxTexturedNonPowerOfTwo/glTF-Embedded/BoxTexturedNonPowerOfTwo.gltf",
+   "BoxVertexColors/glTF-Embedded/BoxVertexColors.gltf",
+   "BrainStem/glTF-Embedded/BrainStem.gltf",
+   "Buggy/glTF-Embedded/Buggy.gltf",
+   "Cameras/glTF-Embedded/Cameras.gltf",
+   "CesiumMan/glTF-Embedded/CesiumMan.gltf",
+   "CesiumMilkTruck/glTF-Embedded/CesiumMilkTruck.gltf",
+   "DamagedHelmet/glTF-Embedded/DamagedHelmet.gltf",
+   "Duck/glTF-Embedded/Duck.gltf",
+   "GearboxAssy/glTF-Embedded/GearboxAssy.gltf",
+   "MetalRoughSpheres/glTF-Embedded/MetalRoughSpheres.gltf",
+   "MultiUVTest/glTF-Embedded/MultiUVTest.gltf",
+   "MultipleScenes/glTF-Embedded/MultipleScenes.gltf",
+   "NormalTangentMirrorTest/glTF-Embedded/NormalTangentMirrorTest.gltf",
+   "NormalTangentTest/glTF-Embedded/NormalTangentTest.gltf",
+   "OrientationTest/glTF-Embedded/OrientationTest.gltf",
+   "ReciprocatingSaw/glTF-Embedded/ReciprocatingSaw.gltf",
+   "RiggedFigure/glTF-Embedded/RiggedFigure.gltf",
+   "RiggedSimple/glTF-Embedded/RiggedSimple.gltf",
+   "SimpleMeshes/glTF-Embedded/SimpleMeshes.gltf",
+   "SimpleMorph/glTF-Embedded/SimpleMorph.gltf",
+   "SimpleSkin/glTF-Embedded/SimpleSkin.gltf",
+   "SimpleSparseAccessor/glTF-Embedded/SimpleSparseAccessor.gltf",
+   "TextureCoordinateTest/glTF-Embedded/TextureCoordinateTest.gltf",
+   "TextureSettingsTest/glTF-Embedded/TextureSettingsTest.gltf",
+   "Triangle/glTF-Embedded/Triangle.gltf",
+   "TriangleWithoutIndices/glTF-Embedded/TriangleWithoutIndices.gltf",
+   "VC/glTF-Embedded/VC.gltf",
+   "VertexColorTest/glTF-Embedded/VertexColorTest.gltf",
+];
+
+embedded .server = "https://github.khronos.org/glTF-Sample-Viewer-Release/assets/models/2.0/";
+
 function createList (description, array)
 {
    const column = $(".viewer-column2");
@@ -334,8 +376,9 @@ async function loadURL (filename, server, event)
       Browser .viewAll ();
 }
 
-createList ("glTF Random Models",       models);
-createList ("glTF Sample Models",       glTF);
-createList ("glb Sample Models",        glb);
-createList ("glTF Draco Sample Models", draco);
+createList ("glTF Random Models",          models);
+createList ("glTF Sample Models",          glTF);
+createList ("glb Sample Models",           glb);
+createList ("glTF Draco Sample Models",    draco);
+createList ("glTF Embedded Sample Models", embedded);
 </script>
