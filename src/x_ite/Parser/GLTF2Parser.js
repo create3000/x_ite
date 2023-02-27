@@ -1172,7 +1172,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                array .set (new Float32Array (decoderModule .HEAPF32 .buffer, ptr, numValues));
 
                attributeCallback (kind, array);
-
             }
             finally
             {
