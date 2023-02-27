@@ -1095,9 +1095,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          attributes = primitive .attributes,
-         data       = new Uint8Array (this .bufferViews [draco .bufferView] .buffer);
+         dataView   = new Uint8Array (this .bufferViews [draco .bufferView] .buffer);
 
-      this .decodeMesh (this .draco, data, draco .attributes, indicesCallback, attributeCallback);
+      this .decodeMesh (this .draco, dataView, draco .attributes, indicesCallback, attributeCallback);
    },
    decodeMesh: function (decoderModule, dataView, attributes, indicesCallback, attributeCallback)
    {
