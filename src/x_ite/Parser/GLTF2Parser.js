@@ -1136,7 +1136,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                numFaces   = geometry .num_faces (),
                numIndices = numFaces * 3,
                byteLength = numIndices * 4,
-               ptr        = decoderModule._malloc(byteLength);
+               ptr        = decoderModule ._malloc (byteLength);
 
             try
             {
