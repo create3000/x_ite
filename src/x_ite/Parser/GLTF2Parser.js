@@ -1081,7 +1081,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       function attributeCallback (kind, array)
       {
-         const match = kind .match (/^(\w+?)(?:_(\d))?$/);
+         const match = kind .match (/^(\w+?)(?:_(\d+))?$/);
 
          if (!match)
             return;
