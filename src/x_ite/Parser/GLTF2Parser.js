@@ -1025,26 +1025,25 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(attributes instanceof Object))
          return;
 
-      attributes .TANGENT  = this .accessors [attributes .TANGENT];
-      attributes .NORMAL   = this .accessors [attributes .NORMAL];
-      attributes .POSITION = this .accessors [attributes .POSITION];
+      for (const key in attributes)
+         attributes [key] = this .accessors [attributes [key]];
 
       attributes .TEXCOORD = [ ];
       attributes .COLOR    = [ ];
       attributes .JOINTS   = [ ];
       attributes .WEIGHTS  = [ ];
 
-      for (let i = 0; Number .isInteger (attributes ["TEXCOORD_" + i]); ++ i)
-         attributes .TEXCOORD .push (this .accessors [attributes ["TEXCOORD_" + i]]);
+      for (let i = 0; attributes ["TEXCOORD_" + i]; ++ i)
+         attributes .TEXCOORD .push (attributes ["TEXCOORD_" + i]);
 
-      for (let i = 0; Number .isInteger (attributes ["COLOR_" + i]); ++ i)
-         attributes .COLOR .push (this .accessors [attributes ["COLOR_" + i]]);
+      for (let i = 0; attributes ["COLOR_" + i]; ++ i)
+         attributes .COLOR .push (attributes ["COLOR_" + i]);
 
-      for (let i = 0; Number .isInteger (attributes ["JOINTS_" + i]); ++ i)
-         attributes .JOINTS .push (this .accessors [attributes ["JOINTS_" + i]]);
+      for (let i = 0; attributes ["JOINTS_" + i]; ++ i)
+         attributes .JOINTS .push (attributes ["JOINTS_" + i]);
 
-      for (let i = 0; Number .isInteger (attributes ["WEIGHTS_" + i]); ++ i)
-         attributes .WEIGHTS .push (this .accessors [attributes ["WEIGHTS_" + i]]);
+      for (let i = 0; attributes ["WEIGHTS_" + i]; ++ i)
+         attributes .WEIGHTS .push (attributes ["WEIGHTS_" + i]);
    },
    targetsArray: function (targets)
    {
@@ -1078,19 +1077,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          Object .defineProperty (primitive .indices, "array", { value: array });
       }
 
-      function attributeCallback (keyN, array)
+      function attributeCallback (key, array)
       {
-         const match = keyN .match (/^(\w+?)(?:_(\d+))?$/);
-
-         if (!match)
-            return;
-
-         const [_, key, index] = match;
-
-         if (attributes [key] instanceof Array)
-            Object .defineProperty (attributes [key] [index], "array", { value: array });
-
-         else if (attributes [key] instanceof Object)
+         if (attributes [key] instanceof Object)
             Object .defineProperty (attributes [key], "array", { value: array });
       }
 
