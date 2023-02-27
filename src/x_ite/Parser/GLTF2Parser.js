@@ -1079,7 +1079,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       function attributeCallback (key, array)
       {
-         if (attributes [key] instanceof Object)
+         if (attributes [key])
             Object .defineProperty (attributes [key], "array", { value: array });
       }
 
