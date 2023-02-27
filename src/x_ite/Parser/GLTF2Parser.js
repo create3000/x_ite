@@ -47,7 +47,7 @@
 
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
-import Draco        from "../Browser/Networking/draco_decoder_gltf.js";
+import URLs         from "../Browser/Networking/URLs.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../standard/Math/Numbers/Vector3.js";
 import Quaternion   from "../../standard/Math/Numbers/Quaternion.js";
@@ -193,7 +193,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (this .extensionsRequired .has ("KHR_draco_mesh_compression") ||
           this .extensionsUsed .has ("KHR_draco_mesh_compression"))
       {
-         this .draco = await Draco ();
+         this .draco = await this .createDraco ();
       }
 
       this .bufferViewsArray (glTF .bufferViews);
@@ -1039,6 +1039,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(draco instanceof Object))
          return;
 
+      if (!this .draco)
+         return;
+
       function indicesCallback (array)
       {
          Object .defineProperty (primitive .indices, "array", { value: array });
@@ -1164,6 +1167,12 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          decoderModule .destroy (decoder);
          decoderModule .destroy (buffer);
       }
+   },
+   createDraco: function ()
+   {
+      return fetch (URLs .getLibUrl ("draco_decoder_gltf.js"))
+         .then (response => response .text ())
+         .then (text => new Function (text) () ());
    },
    attributesObject: function (attributes)
    {

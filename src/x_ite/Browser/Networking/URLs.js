@@ -86,6 +86,10 @@ const URLs = {
    {
       return new URL ("assets/hatching/" + index + ".png", this .getScriptUrl ()) .href;
    },
+   getLibUrl: function (file)
+   {
+      return new URL ("assets/lib/" + file, this .getScriptUrl ()) .href;
+   },
 };
 
 export default URLs;

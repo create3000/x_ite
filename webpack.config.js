@@ -148,6 +148,8 @@ export default __default__;`;
       resolve: {
          fallback: {
             process: false,
+            path: false,
+            fs: false,
          },
       },
       stats: "errors-warnings",
