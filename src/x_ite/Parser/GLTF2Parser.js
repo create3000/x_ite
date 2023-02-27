@@ -1081,15 +1081,17 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       function attributeCallback (kind, array)
       {
-         const
-            match    = kind .match (/^(\w+?)(?:_(\d))?$/),
-            key      = match [1],
-            index    = match [2];
+         const match = kind .match (/^(\w+?)(?:_(\d))?$/);
+
+         if (!match)
+            return;
+
+         const [_, key, index] = match;
 
          if (attributes [key] instanceof Array)
             Object .defineProperty (attributes [key] [index], "array", { value: array });
 
-         else
+         else if (attributes [key] instanceof Object)
             Object .defineProperty (attributes [key], "array", { value: array });
       }
 
