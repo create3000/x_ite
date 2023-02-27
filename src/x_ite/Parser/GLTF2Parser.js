@@ -47,6 +47,7 @@
 
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
+import Namespace    from "../Namespace.js";
 import URLs         from "../Browser/Networking/URLs.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../standard/Math/Numbers/Vector3.js";
@@ -1020,6 +1021,37 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       shapeNodes .push (this .createShape (primitive));
    },
+   attributesObject: function (attributes)
+   {
+      if (!(attributes instanceof Object))
+         return;
+
+      attributes .TANGENT  = this .accessors [attributes .TANGENT];
+      attributes .NORMAL   = this .accessors [attributes .NORMAL];
+      attributes .POSITION = this .accessors [attributes .POSITION];
+
+      attributes .TEXCOORD = [ ];
+      attributes .COLOR    = [ ];
+      attributes .JOINTS   = [ ];
+      attributes .WEIGHTS  = [ ];
+
+      for (let i = 0; Number .isInteger (attributes ["TEXCOORD_" + i]); ++ i)
+         attributes .TEXCOORD .push (this .accessors [attributes ["TEXCOORD_" + i]]);
+
+      for (let i = 0; Number .isInteger (attributes ["COLOR_" + i]); ++ i)
+         attributes .COLOR .push (this .accessors [attributes ["COLOR_" + i]]);
+
+      for (let i = 0; Number .isInteger (attributes ["JOINTS_" + i]); ++ i)
+         attributes .JOINTS .push (this .accessors [attributes ["JOINTS_" + i]]);
+
+      for (let i = 0; Number .isInteger (attributes ["WEIGHTS_" + i]); ++ i)
+         attributes .WEIGHTS .push (this .accessors [attributes ["WEIGHTS_" + i]]);
+   },
+   targetsArray: function (targets)
+   {
+      if (!(targets instanceof Array))
+         return;
+   },
    primitiveExtensionsObject: function (extensions, primitive)
    {
       if (!(extensions instanceof Object))
@@ -1103,9 +1135,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             const
                numFaces   = geometry .num_faces (),
                numIndices = numFaces * 3,
-               byteLength = numIndices * 4;
-
-            const ptr = decoderModule._malloc(byteLength);
+               byteLength = numIndices * 4,
+               ptr        = decoderModule._malloc(byteLength);
 
             try
             {
@@ -1129,9 +1160,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                numComponents = attribute .num_components (),
                numPoints     = geometry .num_points (),
                numValues     = numPoints * numComponents,
-               byteLength    = numValues * Float32Array .BYTES_PER_ELEMENT;
-
-            const ptr = decoderModule._malloc(byteLength);
+               byteLength    = numValues * Float32Array .BYTES_PER_ELEMENT,
+               ptr           = decoderModule ._malloc (byteLength);
 
             try
             {
@@ -1150,11 +1180,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             }
          };
 
-         for (const kind in attributes)
+         for (const [kind, id] of Object .entries (attributes))
          {
-            const
-               id        = attributes [kind],
-               attribute = decoder .GetAttributeByUniqueId (geometry, id);
+            const attribute = decoder .GetAttributeByUniqueId (geometry, id);
 
             processAttribute (kind, attribute);
          }
@@ -1170,40 +1198,23 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    createDraco: function ()
    {
-      return fetch (URLs .getLibUrl ("draco_decoder_gltf.js"))
-         .then (response => response .text ())
-         .then (text => new Function (text) () ());
-   },
-   attributesObject: function (attributes)
-   {
-      if (!(attributes instanceof Object))
-         return;
+      const draco = Namespace .get ("lib/draco_decoder_gltf.js");
 
-      attributes .TANGENT  = this .accessors [attributes .TANGENT];
-      attributes .NORMAL   = this .accessors [attributes .NORMAL];
-      attributes .POSITION = this .accessors [attributes .POSITION];
-
-      attributes .TEXCOORD = [ ];
-      attributes .COLOR    = [ ];
-      attributes .JOINTS   = [ ];
-      attributes .WEIGHTS  = [ ];
-
-      for (let i = 0; Number .isInteger (attributes ["TEXCOORD_" + i]); ++ i)
-         attributes .TEXCOORD .push (this .accessors [attributes ["TEXCOORD_" + i]]);
-
-      for (let i = 0; Number .isInteger (attributes ["COLOR_" + i]); ++ i)
-         attributes .COLOR .push (this .accessors [attributes ["COLOR_" + i]]);
-
-      for (let i = 0; Number .isInteger (attributes ["JOINTS_" + i]); ++ i)
-         attributes .JOINTS .push (this .accessors [attributes ["JOINTS_" + i]]);
-
-      for (let i = 0; Number .isInteger (attributes ["WEIGHTS_" + i]); ++ i)
-         attributes .WEIGHTS .push (this .accessors [attributes ["WEIGHTS_" + i]]);
-   },
-   targetsArray: function (targets)
-   {
-      if (!(targets instanceof Array))
-         return;
+      if (draco)
+      {
+         return draco;
+      }
+      else
+      {
+         return fetch (URLs .getLibUrl ("draco_decoder_gltf.js"))
+            .then (response => response .text ())
+            .then (text => new Function (text) () ())
+            .then (function (draco)
+            {
+               Namespace .set ("lib/draco_decoder_gltf.js", draco);
+               return draco;
+            });
+      }
    },
    camerasArray: function (cameras)
    {
