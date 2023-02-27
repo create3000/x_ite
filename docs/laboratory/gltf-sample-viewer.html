@@ -264,6 +264,31 @@ const glb = [
 
 glb .server = "https://github.khronos.org/glTF-Sample-Viewer-Release/assets/models/2.0/";
 
+/* find . -type f -name "*.gltf" | grep "/glTF-Draco/" | sort */
+const draco = [
+   "2CylinderEngine/glTF-Draco/2CylinderEngine.gltf",
+   "Avocado/glTF-Draco/Avocado.gltf",
+   "BarramundiFish/glTF-Draco/BarramundiFish.gltf",
+   "BoomBox/glTF-Draco/BoomBox.gltf",
+   "Box/glTF-Draco/Box.gltf",
+   "BrainStem/glTF-Draco/BrainStem.gltf",
+   "Buggy/glTF-Draco/Buggy.gltf",
+   "CesiumMan/glTF-Draco/CesiumMan.gltf",
+   "CesiumMilkTruck/glTF-Draco/CesiumMilkTruck.gltf",
+   "Corset/glTF-Draco/Corset.gltf",
+   "Duck/glTF-Draco/Duck.gltf",
+   "GearboxAssy/glTF-Draco/GearboxAssy.gltf",
+   "Lantern/glTF-Draco/Lantern.gltf",
+   "MorphPrimitivesTest/glTF-Draco/MorphPrimitivesTest.gltf",
+   "ReciprocatingSaw/glTF-Draco/ReciprocatingSaw.gltf",
+   "RiggedFigure/glTF-Draco/RiggedFigure.gltf",
+   "RiggedSimple/glTF-Draco/RiggedSimple.gltf",
+   "VC/glTF-Draco/VC.gltf",
+   "WaterBottle/glTF-Draco/WaterBottle.gltf",
+];
+
+draco .server = "https://github.khronos.org/glTF-Sample-Viewer-Release/assets/models/2.0/";
+
 function createList (description, array)
 {
    const column = $(".viewer-column2");
@@ -309,7 +334,8 @@ async function loadURL (filename, server, event)
       Browser .viewAll ();
 }
 
-createList ("glTF Random Models", models);
-createList ("glTF Sample Models", glTF);
-createList ("glb Sample Models",  glb);
+createList ("glTF Random Models",       models);
+createList ("glTF Sample Models",       glTF);
+createList ("glb Sample Models",        glb);
+createList ("glTF Draco Sample Models", draco);
 </script>
