@@ -1100,11 +1100,11 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .dracoDecodeMesh (this .draco, dataView, draco .attributes, indicesCallback, attributeCallback);
    },
-   dracoDecodeMesh: function (decoderModule, dataView, attributes, indicesCallback, attributeCallback)
+   dracoDecodeMesh: function (draco, dataView, attributes, indicesCallback, attributeCallback)
    {
       const
-         buffer  = new decoderModule .DecoderBuffer (),
-         decoder = new decoderModule .Decoder ();
+         buffer  = new draco .DecoderBuffer (),
+         decoder = new draco .Decoder ();
 
       buffer .Init (dataView, dataView .byteLength);
 
@@ -1116,12 +1116,12 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          switch (type)
          {
-            case decoderModule .TRIANGULAR_MESH:
-               geometry = new decoderModule .Mesh ();
+            case draco .TRIANGULAR_MESH:
+               geometry = new draco .Mesh ();
                status   = decoder .DecodeBufferToMesh (buffer, geometry);
                break;
-            case decoderModule .POINT_CLOUD:
-               geometry = new decoderModule .PointCloud ();
+            case draco .POINT_CLOUD:
+               geometry = new draco .PointCloud ();
                status   = decoder .DecodeBufferToPointCloud (buffer, geometry);
                break;
             default:
@@ -1131,13 +1131,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (!status .ok () || !geometry .ptr)
             throw new Error (status .error_msg ());
 
-         if (type === decoderModule .TRIANGULAR_MESH)
+         if (type === draco .TRIANGULAR_MESH)
          {
             const
                numFaces   = geometry .num_faces (),
                numIndices = numFaces * 3,
                byteLength = numIndices * 4,
-               ptr        = decoderModule ._malloc (byteLength);
+               ptr        = draco ._malloc (byteLength);
 
             try
             {
@@ -1145,13 +1145,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                decoder .GetTrianglesUInt32Array (geometry, byteLength, ptr);
 
-               indices .set (new Uint32Array (decoderModule .HEAPF32 .buffer, ptr, numIndices));
+               indices .set (new Uint32Array (draco .HEAPF32 .buffer, ptr, numIndices));
 
                indicesCallback (indices);
             }
             finally
             {
-               decoderModule ._free (ptr);
+               draco ._free (ptr);
             }
          }
 
@@ -1162,21 +1162,21 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                numPoints     = geometry .num_points (),
                numValues     = numPoints * numComponents,
                byteLength    = numValues * Float32Array .BYTES_PER_ELEMENT,
-               ptr           = decoderModule ._malloc (byteLength);
+               ptr           = draco ._malloc (byteLength);
 
             try
             {
                const array = new Float32Array (numValues);
 
-               decoder .GetAttributeDataArrayForAllPoints (geometry, attribute, decoderModule .DT_FLOAT32, byteLength, ptr);
+               decoder .GetAttributeDataArrayForAllPoints (geometry, attribute, draco .DT_FLOAT32, byteLength, ptr);
 
-               array .set (new Float32Array (decoderModule .HEAPF32 .buffer, ptr, numValues));
+               array .set (new Float32Array (draco .HEAPF32 .buffer, ptr, numValues));
 
                attributeCallback (kind, array);
             }
             finally
             {
-               decoderModule ._free (ptr);
+               draco ._free (ptr);
             }
          };
 
@@ -1190,10 +1190,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       finally
       {
          if (geometry)
-            decoderModule .destroy(geometry);
+            draco .destroy(geometry);
 
-         decoderModule .destroy (decoder);
-         decoderModule .destroy (buffer);
+         draco .destroy (decoder);
+         draco .destroy (buffer);
       }
    },
    createDraco: async function ()
