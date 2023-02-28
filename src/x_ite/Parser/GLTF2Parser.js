@@ -315,8 +315,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene = this .getExecutionContext (),
          name  = this .sanitizeName (light .name);
 
-      if (light .color instanceof Array)
-         lightNode ._color = new Color3 (... light .color);
+      const color = new Color3 (1, 1, 1);
+
+      if (this .vectorValue (light .color, color))
+         lightNode ._color = color;
 
       lightNode ._intensity = this .numberValue (light .intensity, 1);
 
