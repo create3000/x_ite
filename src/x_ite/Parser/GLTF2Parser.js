@@ -928,7 +928,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(KHR_materials_emissive_strength instanceof Object))
          return;
 
-      materialNode ._emissiveStrength = this .numberValue( KHR_materials_emissive_strength .emissiveStrength, 1);
+      materialNode ._emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
    },
    textureTransformObject: function (KHR_texture_transform, mapping)
    {
@@ -1173,7 +1173,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       finally
       {
          if (geometry)
-            draco .destroy(geometry);
+            draco .destroy (geometry);
 
          draco .destroy (decoder);
          draco .destroy (buffer);
