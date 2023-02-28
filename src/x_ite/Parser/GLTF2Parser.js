@@ -78,8 +78,7 @@ function GLTF2Parser (scene)
 
    // Globals
 
-   this .extensionsRequired    = new Set ();
-   this .extensionsUsed        = new Set ();
+   this .extensionsNeeded      = new Set ();
    this .lights                = [ ];
    this .usedLights            = 0;
    this .buffers               = [ ];
@@ -183,18 +182,15 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Parse root objects.
 
       this .assetObject        (glTF .asset);
-      this .extensionsRUObject (glTF .extensionsUsed, this .extensionsUsed);
-      this .extensionsRUObject (glTF .extensionsRequired, this .extensionsRequired);
+      this .extensionsRUObject (glTF .extensionsUsed, this .extensionsNeeded);
+      this .extensionsRUObject (glTF .extensionsRequired, this .extensionsNeeded);
       this .extensionsObject   (glTF .extensions);
 
       await this .loadComponents ();
       await this .buffersArray (glTF .buffers);
 
-      if (this .extensionsRequired .has ("KHR_draco_mesh_compression") ||
-          this .extensionsUsed .has ("KHR_draco_mesh_compression"))
-      {
+      if (this .extensionsNeeded .has ("KHR_draco_mesh_compression"))
          this .draco = await this .createDraco ();
-      }
 
       this .bufferViewsArray (glTF .bufferViews);
       this .accessorsArray   (glTF .accessors);
@@ -935,7 +931,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(KHR_texture_transform instanceof Object))
          return;
 
-      if (!this .extensionsUsed .has ("KHR_texture_transform"))
+      if (!this .extensionsNeeded .has ("KHR_texture_transform"))
          return;
 
       const
