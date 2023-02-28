@@ -258,10 +258,8 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
       if (viewpointNode ._viewAll .getValue ())
          viewpointNode .viewAll (this .getBBox (new Box3 ()));
    },
-   traverse: function (type, renderObject)
+   traverse: function (type, renderObject = this)
    {
-      renderObject = renderObject || this;
-
       const viewpointNode = this .getViewpoint ();
 
       this .getProjectionMatrix ()  .pushMatrix (viewpointNode .getProjectionMatrix (this));

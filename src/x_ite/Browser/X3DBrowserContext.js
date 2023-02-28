@@ -276,7 +276,7 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       // Camera
 
       this [_cameraTime] .start ();
-      this [_world] .traverse (TraverseType .CAMERA, null);
+      this [_world] .traverse (TraverseType .CAMERA);
       this [_cameraTime] .stop ();
 
       // Collision
@@ -284,7 +284,7 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       this [_collisionTime] .start ();
 
       if (this .getCollisionCount ())
-         this [_world] .traverse (TraverseType .COLLISION, null);
+         this [_world] .traverse (TraverseType .COLLISION);
 
       this [_collisionTime] .stop ();
 
@@ -304,7 +304,7 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
 
-      this [_world] .traverse (TraverseType .DISPLAY, null);
+      this [_world] .traverse (TraverseType .DISPLAY);
 
       this .getFrameBuffer () .blit ();
 

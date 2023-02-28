@@ -111,7 +111,7 @@ X3DPickingContext .prototype =
    {
       this [_pickingTime] .start ();
 
-      this .getWorld () .traverse (TraverseType .PICKING, null);
+      this .getWorld () .traverse (TraverseType .PICKING);
 
       for (const transformSensorNode of this [_transformSensorNodes])
       {

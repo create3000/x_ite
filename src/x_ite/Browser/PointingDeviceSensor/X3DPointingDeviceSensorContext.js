@@ -220,7 +220,7 @@ X3DPointingDeviceSensorContext .prototype =
       this [_pointer] .set (x, y);
       this [_pointingBuffer] .bind ();
 
-      this .getWorld () .traverse (TraverseType .POINTER, null);
+      this .getWorld () .traverse (TraverseType .POINTER);
 
       this [_pointingBuffer] .getHit (hit);
       this [_pointingBuffer] .unbind ();
