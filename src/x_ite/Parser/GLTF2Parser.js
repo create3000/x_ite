@@ -380,20 +380,21 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .buffers = await Promise .all (buffers .map ((buffer, i) => this .bufferObject (buffer, i)));
    },
-   bufferObject: function (buffer, i)
+   bufferObject: async function (buffer, i)
    {
       if (!(buffer instanceof Object))
          return;
 
       if (!buffer .uri)
-         return Promise .resolve (this .buffers [i]);
+         return this .buffers [i];
 
-      const url = new URL (buffer .uri, this .getExecutionContext () .getWorldURL ());
+      const
+         url         = new URL (buffer .uri, this .getExecutionContext () .getWorldURL ()),
+         response    = await fetch (url),
+         blob        = await response .blob (),
+         arrayBuffer = await blob .arrayBuffer ();
 
-      return fetch (url)
-         .then (response => response .blob ())
-         .then (blob => blob .arrayBuffer ())
-         .then (arrayBuffer => $.ungzip (arrayBuffer));
+      return $.ungzip (arrayBuffer);
    },
    bufferViewsArray: function (bufferViews)
    {
