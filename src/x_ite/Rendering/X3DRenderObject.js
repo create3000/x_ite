@@ -61,8 +61,6 @@ import StopWatch     from "../../standard/Time/StopWatch.js";
 
 const DEPTH_BUFFER_SIZE = 16;
 
-function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
-
 function X3DRenderObject (executionContext)
 {
    this .viewVolumes              = [ ];
@@ -98,7 +96,7 @@ function X3DRenderObject (executionContext)
    this .shadowShapes             = [ ];
    this .opaqueShapes             = [ ];
    this .transparentShapes        = [ ];
-   this .transparencySorter       = new MergeSort (this .transparentShapes, compareDistance);
+   this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
    this .speed                    = 0;
 
    try
@@ -636,6 +634,8 @@ X3DRenderObject .prototype =
                   this .transparentShapes .push (this .createRenderContext (true));
 
                var renderContext = this .transparentShapes [num];
+
+               renderContext .distance = bboxCenter .z;
             }
             else
             {
@@ -653,7 +653,6 @@ X3DRenderObject .prototype =
             renderContext .fogNode         = this .localFogs .at (-1);
             renderContext .shapeNode       = shapeNode;
             renderContext .appearanceNode  = shapeNode .getAppearance ();
-            renderContext .distance        = bboxCenter .z;
 
             // Clip planes and local lights
 
