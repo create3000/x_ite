@@ -78,7 +78,7 @@ function GLTF2Parser (scene)
 
    // Globals
 
-   this .extensionsNeeded      = new Set ();
+   this .extensions            = new Set ();
    this .lights                = [ ];
    this .usedLights            = 0;
    this .buffers               = [ ];
@@ -181,15 +181,15 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       // Parse root objects.
 
-      this .assetObject        (glTF .asset);
-      this .extensionsRUObject (glTF .extensionsUsed, this .extensionsNeeded);
-      this .extensionsRUObject (glTF .extensionsRequired, this .extensionsNeeded);
-      this .extensionsObject   (glTF .extensions);
+      this .assetObject      (glTF .asset);
+      this .extensionsArray  (glTF .extensionsUsed, this .extensions);
+      this .extensionsArray  (glTF .extensionsRequired, this .extensions);
+      this .extensionsObject (glTF .extensions);
 
       await this .loadComponents ();
       await this .buffersArray (glTF .buffers);
 
-      if (this .extensionsNeeded .has ("KHR_draco_mesh_compression"))
+      if (this .extensions .has ("KHR_draco_mesh_compression"))
          this .draco = await this .createDraco ();
 
       this .bufferViewsArray (glTF .bufferViews);
@@ -252,7 +252,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       scene .getRootNodes () .push (worldInfoNode);
    },
-   extensionsRUObject: function (extensions, set)
+   extensionsArray: function (extensions, set)
    {
       if (!(extensions instanceof Array))
          return;
@@ -931,7 +931,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(KHR_texture_transform instanceof Object))
          return;
 
-      if (!this .extensionsNeeded .has ("KHR_texture_transform"))
+      if (!this .extensions .has ("KHR_texture_transform"))
          return;
 
       const
