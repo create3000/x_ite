@@ -438,7 +438,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTextu
                case (X3DConstants_default()).MovieTexture:
                {
                   gl .bindTexture (this .getTarget (), this .getTexture ());
-                  gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, textureNode ._flipVertically .getValue ());
+                  gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
                   gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, textureNode .getElement ());
                   break;
                }
