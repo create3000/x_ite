@@ -69,11 +69,12 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterial
    {
       X3DMaterialNode .prototype .initialize .call (this);
 
-      this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
-      this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
-      this ._normalTexture   .addInterest ("set_normalTexture__",   this);
-      this ._transparency    .addInterest ("set_transparency__",    this);
-      this ._transparency    .addInterest ("set_transparent__",     this);
+      this ._emissiveColor    .addInterest ("set_emissiveColor__",   this);
+      this ._emissiveStrength .addInterest ("set_emissiveColor__",   this);
+      this ._emissiveTexture  .addInterest ("set_emissiveTexture__", this);
+      this ._normalTexture    .addInterest ("set_normalTexture__",   this);
+      this ._transparency     .addInterest ("set_transparency__",    this);
+      this ._transparency     .addInterest ("set_transparent__",     this);
 
       this .set_emissiveColor__ ();
       this .set_emissiveTexture__ ();
@@ -86,12 +87,13 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterial
       //this .emissiveColor .set (this ._emissiveColor .getValue ());
 
       const
-         emissiveColor  = this .emissiveColor,
-         emissiveColor_ = this ._emissiveColor .getValue ();
+         emissiveColor    = this .emissiveColor,
+         emissiveColor_   = this ._emissiveColor .getValue (),
+         emissiveStrength = this ._emissiveStrength .getValue ();
 
-      emissiveColor [0] = emissiveColor_ .r;
-      emissiveColor [1] = emissiveColor_ .g;
-      emissiveColor [2] = emissiveColor_ .b;
+      emissiveColor [0] = emissiveColor_ .r * emissiveStrength;
+      emissiveColor [1] = emissiveColor_ .g * emissiveStrength;
+      emissiveColor [2] = emissiveColor_ .b * emissiveStrength;
    },
    set_emissiveTexture__: function ()
    {
