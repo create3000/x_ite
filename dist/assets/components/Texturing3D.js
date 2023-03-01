@@ -1,7 +1,7 @@
 /* X_ITE v8.6.7 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 235:
+/***/ 988:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 587:
+/***/ 411:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 951:
+/***/ 127:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 431:
+/***/ 777:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 889:
+/***/ 335:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=undefined;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=undefined;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
@@ -6948,7 +6948,7 @@ if ((moduleType !== 'undefined') && module.exports) {
 
 /***/ }),
 
-/***/ 355:
+/***/ 896:
 /***/ ((module) => {
 
 "use strict";
@@ -7442,7 +7442,7 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
 const Expressions_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.7")] .require ("x_ite/Parser/Expressions");
 var Expressions_default = /*#__PURE__*/__webpack_require__.n(Expressions_namespaceObject);
 // EXTERNAL MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"lib/jquery\")"
-var jquery_ = __webpack_require__(355);
+var jquery_ = __webpack_require__(896);
 var jquery_default = /*#__PURE__*/__webpack_require__.n(jquery_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/NRRDParser.js
 /*******************************************************************************
@@ -7908,11 +7908,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().set ("x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(951);
-/* provided dependency */ var JpegImage = __webpack_require__(431);
-/* provided dependency */ var jpeg = __webpack_require__(889);
-/* provided dependency */ var CharLS = __webpack_require__(235);
-/* provided dependency */ var OpenJPEG = __webpack_require__(587);
+/* provided dependency */ var dicomParser = __webpack_require__(127);
+/* provided dependency */ var JpegImage = __webpack_require__(777);
+/* provided dependency */ var jpeg = __webpack_require__(335);
+/* provided dependency */ var CharLS = __webpack_require__(988);
+/* provided dependency */ var OpenJPEG = __webpack_require__(411);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9194,7 +9194,7 @@ Namespace_default().set ("x_ite/Components/Texturing3D/ImageTexture3D", ImageTex
 const DEBUG_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.7")] .require ("x_ite/DEBUG");
 var DEBUG_default = /*#__PURE__*/__webpack_require__.n(DEBUG_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ImageTextureAtlas.js
-/* provided dependency */ var $ = __webpack_require__(355);
+/* provided dependency */ var $ = __webpack_require__(896);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
