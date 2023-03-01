@@ -275,15 +275,12 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       try
       {
          const
-            scene = this .getExecutionContext (),
-            url   = new URL (path, scene .getWorldURL ());
-
-         const input = await fetch (url)
-            .then (response => response .arrayBuffer ())
-            .then (arrayBuffer => $.decodeText ($.ungzip (arrayBuffer)))
-            .catch (Function .prototype);
-
-         const parser = new MaterialParser (scene, input);
+            scene       = this .getExecutionContext (),
+            url         = new URL (path, scene .getWorldURL ()),
+            response    = await fetch (url),
+            arrayBuffer = await response .arrayBuffer (),
+            input       = $.decodeText ($.ungzip (arrayBuffer)),
+            parser      = new MaterialParser (scene, input);
 
          parser .parse ();
 
