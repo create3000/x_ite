@@ -1,8 +1,10 @@
 export default /* glsl */ `
 #if defined (X3D_PARTICLE_SYSTEM)
+#if defined (X3D_TEX_COORD_RAMP)
+
+uniform sampler2D x3d_TexCoordRamp;
 
 in vec4 x3d_Particle;
-in mat4 x3d_ParticleMatrix;
 
 vec4
 texelFetch (const in sampler2D sampler, const in int index, const in int lod)
@@ -13,10 +15,6 @@ texelFetch (const in sampler2D sampler, const in int index, const in int lod)
 
    return t;
 }
-
-#if defined (X3D_TEX_COORD_RAMP)
-
-uniform sampler2D x3d_TexCoordRamp;
 
 vec4
 getParticleTexCoord (const in vec4 texCoord)
@@ -31,6 +29,8 @@ getParticleTexCoord (const in vec4 texCoord)
    #define getParticleTexCoord(texCoord) (texCoord)
 #endif
 
+in mat4 x3d_ParticleMatrix;
+
 vec4
 getVertex (const in vec4 vertex)
 {
@@ -38,10 +38,8 @@ getVertex (const in vec4 vertex)
 }
 
 #else
-
-#define getVertex(vertex) (vertex)
-#define getParticleTexCoord(texCoord) (texCoord)
-
+   #define getVertex(vertex) (vertex)
+   #define getParticleTexCoord(texCoord) (texCoord)
 #endif
 
 #if defined (X3D_PHYSICAL_MATERIAL)
@@ -53,6 +51,6 @@ getTexCoord (const in vec4 texCoord)
    return vec4 (t .x, 1.0 - t .y, t .z, t .w);
 }
 #else
-#define getTexCoord(texCoord) getParticleTexCoord(texCoord)
+   #define getTexCoord(texCoord) getParticleTexCoord(texCoord)
 #endif
 `;
