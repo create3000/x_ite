@@ -72,6 +72,7 @@ varying vec3 vertex;
 
 // Main
 
+#pragma X3D include "Particle.glsl"
 #pragma X3D include "PointSize.glsl"
 
 void
@@ -100,11 +101,11 @@ vertex_main ()
    #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
       #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
          #if X3D_NUM_TEXTURE_COORDINATES > 0
-            texCoord0 = x3d_TexCoord0;
+            texCoord0 = getTexCoord (x3d_TexCoord0);
          #endif
 
          #if X3D_NUM_TEXTURE_COORDINATES > 1
-            texCoord1 = x3d_TexCoord1;
+            texCoord1 = getTexCoord (x3d_TexCoord1);
          #endif
       #endif
    #endif

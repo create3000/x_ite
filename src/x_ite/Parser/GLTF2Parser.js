@@ -696,8 +696,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (name)
          scene .addNamedNode (scene .getUniqueName (name), textureNode);
 
-      textureNode ._url            = [image .uri];
-      textureNode ._flipVertically = true;
+      textureNode ._url = [image .uri];
 
       const sampler = this .samplers [texture .sampler];
 

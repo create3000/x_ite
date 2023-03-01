@@ -53,6 +53,7 @@ import Fragment1              from "../../../assets/shaders/webgl1/include/Fragm
 import Hatch1                 from "../../../assets/shaders/webgl1/include/Hatch.glsl.js";
 import Material1              from "../../../assets/shaders/webgl1/include/Material.glsl.js";
 import Normal1                from "../../../assets/shaders/webgl1/include/Normal.glsl.js";
+import Particle1              from "../../../assets/shaders/webgl1/include/Particle.glsl.js";
 import Perlin1                from "../../../assets/shaders/webgl1/include/Perlin.glsl.js";
 import Point1                 from "../../../assets/shaders/webgl1/include/Point.glsl.js";
 import PointSize1             from "../../../assets/shaders/webgl1/include/PointSize.glsl.js";
@@ -116,6 +117,7 @@ const Shaders = {
          Hatch: Hatch1,
          Material: Material1,
          Normal: Normal1,
+         Particle: Particle1,
          Perlin: Perlin1,
          Point: Point1,
          PointSize: PointSize1,
