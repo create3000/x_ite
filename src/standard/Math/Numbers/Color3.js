@@ -47,7 +47,7 @@
 
 import Algorithm from "../Algorithm.js";
 
-const clamp = Algorithm .clamp;
+const { clamp, interval, degrees } = Algorithm;
 
 const
    _r = Symbol .for ("X_ITE.Color3.r"),
@@ -157,7 +157,7 @@ Color3 .prototype =
       }
       else
       {
-         const w = Algorithm .degrees (Algorithm .interval (h, 0, Math .PI * 2)) / 60;     // sector 0 to 5
+         const w = degrees (interval (h, 0, Math .PI * 2)) / 60;     // sector 0 to 5
 
          const i = Math .floor (w);
          const f = w - i;                      // factorial part of h

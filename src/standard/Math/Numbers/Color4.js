@@ -48,7 +48,7 @@
 import Color3    from "./Color3.js";
 import Algorithm from "../Algorithm.js";
 
-const clamp = Algorithm .clamp;
+const { clamp } = Algorithm;
 
 const
    _r = Symbol .for ("X_ITE.Color3.r"),
