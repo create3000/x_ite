@@ -926,7 +926,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(KHR_materials_emissive_strength instanceof Object))
          return;
 
-      materialNode ._emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
+      const emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
+
+      // Will not always get the desired result, because colors are clamped values,
+      // especially if there is an emissiveTexture.
+
+      materialNode ._emissiveColor .r *= emissiveStrength;
+      materialNode ._emissiveColor .g *= emissiveStrength;
+      materialNode ._emissiveColor .b *= emissiveStrength;
    },
    textureTransformObject: function (KHR_texture_transform, mapping)
    {
