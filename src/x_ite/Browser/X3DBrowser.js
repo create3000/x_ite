@@ -656,7 +656,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       if (!layerNode)
          return;
 
-      layerNode .lookAt ();
+      layerNode .viewAll ();
    },
    firstViewpoint: function (layerNode)
    {

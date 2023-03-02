@@ -221,7 +221,7 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    {
       return this .collisionTime;
    },
-   lookAt: function (factor = 1, straighten = false)
+   viewAll: function (factor = 1, straighten = false)
    {
       const
          viewpointNode = this .getViewpoint (),
