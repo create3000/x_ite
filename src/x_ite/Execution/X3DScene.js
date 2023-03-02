@@ -358,7 +358,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    {
       return this [_exportedNodes];
    },
-   getUniqueExportName: function (name = "")
+   getUniqueExportName: function (name)
    {
       return getUniqueName .call (this, _exportedNodes, name);
    },

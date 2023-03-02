@@ -281,7 +281,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       return this [_namedNodes];
    },
-   getUniqueName: function (name = "")
+   getUniqueName: function (name)
    {
       return getUniqueName .call (this, _namedNodes, name);
    },
@@ -464,7 +464,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       return this [_protos];
    },
-   getUniqueProtoName: function (name = "")
+   getUniqueProtoName: function (name)
    {
       return getUniqueName .call (this, _protos, name);
    },
@@ -528,7 +528,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       return this [_externprotos];
    },
-   getUniqueExternProtoName: function (name = "")
+   getUniqueExternProtoName: function (name)
    {
       return getUniqueName .call (this, _externprotos, name);
    },
