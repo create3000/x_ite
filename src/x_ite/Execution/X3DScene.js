@@ -48,6 +48,7 @@
 import SupportedNodes      from "../Configuration/SupportedNodes.js";
 import Fields              from "../Fields.js";
 import X3DExecutionContext from "./X3DExecutionContext.js";
+import { getUniqueName }   from "./X3DExecutionContext.js";
 import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
 import UnitInfo            from "../Configuration/UnitInfo.js";
 import UnitInfoArray       from "../Configuration/UnitInfoArray.js";
@@ -356,6 +357,10 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    getExportedNodes: function ()
    {
       return this [_exportedNodes];
+   },
+   getUniqueExportName: function (name = "")
+   {
+      return getUniqueName .call (this, _exportedNodes, name);
    },
    addRootNode: function (node)
    {

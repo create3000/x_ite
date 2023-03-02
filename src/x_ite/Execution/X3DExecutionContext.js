@@ -917,7 +917,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    },
 });
 
-const getUniqueName = (function ()
+export const getUniqueName = (function ()
 {
    const _TrailingNumbers = /_\d+$/;
 
