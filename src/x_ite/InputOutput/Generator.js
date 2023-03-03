@@ -72,7 +72,7 @@ function Generator ({ style = "TIDY", precision = 7, doublePrecision = 15 })
    this .units                 = true;
    this .unitCategories        = [ ];
 
-   this .names .set (null, new Map ());
+   this .names .set (null, new Set ());
 }
 
 Generator .prototype =
@@ -212,7 +212,7 @@ Generator .prototype =
       this .executionContextStack .push (executionContext);
 
       if (! this .names .has (executionContext))
-         this .names .set (executionContext, new Map ());
+         this .names .set (executionContext, new Set ());
 
       if (! this .importedNodesIndex .has (executionContext))
          this .importedNodesIndex .set (executionContext, new Set ());
@@ -345,7 +345,7 @@ Generator .prototype =
             name = getUniqueName (names, "", true);
          }
 
-         names .set (name, baseNode);
+         names .add (name);
          this .namesByNode .set (baseNode, name);
 
          return name;
