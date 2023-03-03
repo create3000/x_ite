@@ -963,62 +963,6 @@ export const getUniqueName = function (array, name = "")
    return newName;
 };
 
-// const getUniqueName = function (array, name = "")
-// {
-//    name = String (name) .replace (/_\d+$/, "");
-
-//    let
-//       newName = name,
-//       L       = 1,
-//       R       = 1;
-
-//    while (array .has (newName) || newName .length === 0)
-//    {
-//       L   = R;
-//       R <<= 1;
-
-//       newName  = name;
-//       newName += "_";
-//       newName += L;
-//    }
-
-//    L >>= 1;
-//    R >>= 1;
-
-//    if (L && R)
-//    {
-//       do
-//       {
-//          newName  = name;
-//          newName += "_";
-//          newName += L ++;
-//       }
-//       while (array .has (newName));
-//    }
-
-//    return newName;
-// };
-
-// export const getUniqueName = function (array, name = "")
-// {
-//    name = String (name) .replace (/_\d+$/, "");
-
-//    let
-//       newName = name,
-//       i       = 0;
-
-//    while (array .has (newName) || newName .length === 0)
-//    {
-//       ++ i;
-
-//       newName  = name;
-//       newName += "_";
-//       newName += i;
-//    }
-
-//    return newName;
-// };
-
 for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
    Object .defineProperty (X3DExecutionContext .prototype, key, { enumerable: false });
 
