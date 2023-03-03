@@ -323,13 +323,9 @@ Generator .prototype =
          {
             // The node has a name.
 
-            const hasNumber = name .match (/_\d+$/) !== null;
-
-            name = name .replace (/_\d+$/, "");
-
-            if (name .length)
+            if (name .replace (/_\d+$/, "") .length)
             {
-               name = getUniqueName (names, name, hasNumber);
+               name = getUniqueName (names, name, !! name .match (/_\d+$/));
             }
             else
             {
