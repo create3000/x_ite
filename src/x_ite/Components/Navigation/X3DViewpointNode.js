@@ -475,7 +475,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       this .setInterpolators (this, relative);
    },
-   straighten: function (layerNode, horizon)
+   straightenView: function (layerNode)
    {
       layerNode .getNavigationInfo () ._transitionStart = true;
 

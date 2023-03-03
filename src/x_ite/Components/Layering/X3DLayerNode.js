@@ -229,6 +229,10 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       viewpointNode .lookAt (this, bbox .center, viewpointNode .getLookAtDistance (bbox), factor, straighten);
    },
+   straightenView: function ()
+   {
+      this .getViewpoint () .straightenView (this);
+   },
    set_viewport__: function ()
    {
       this .currentViewport = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);

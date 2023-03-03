@@ -150,18 +150,9 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                      browser .setBrowserOption ("StraightenHorizon", straightenHorizon);
 
                      if (straightenHorizon)
-                     {
                         browser .getNotification () ._string = _("Straighten Horizon") + ": " + _("on");
-
-                        const activeViewpoint = browser .getActiveViewpoint ();
-
-                        if (activeViewpoint)
-                           activeViewpoint .straighten (browser .getActiveLayer (), true);
-                     }
                      else
-                     {
                         browser .getNotification () ._string = _("Straighten Horizon") + ": " + _("off");
-                     }
                   }
                   .bind (this),
                },
