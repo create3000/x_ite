@@ -107,6 +107,7 @@ const X_ITE_TESTS = [
    { path: "Interpolation/Cube.wrl" },
    { path: "Interpolation/EaseInEaseOut.wrl" },
    { path: "Interpolation/Interpolators.wrl" },
+   { path: "Interpolation/Jumps.x3dv" },
    { path: "Interpolation/LineTrail.wrl" },
    { path: "Interpolation/NormalInterpolator.x3d" },
    { path: "Interpolation/OrientationInterpolator.x3d" },
