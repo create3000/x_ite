@@ -48,6 +48,7 @@
 import SupportedNodes              from "../Configuration/SupportedNodes.js";
 import Fields                      from "../Fields.js";
 import X3DBaseNode                 from "../Base/X3DBaseNode.js";
+import { getUniqueName }           from "./NamedNodesHandling.js";
 import NamedNodesArray             from "./NamedNodesArray.js";
 import X3DImportedNode             from "./X3DImportedNode.js";
 import ImportedNodesArray          from "./ImportedNodesArray.js";
@@ -60,7 +61,6 @@ import X3DRoute                    from "../Routing/X3DRoute.js";
 import X3DCast                     from "../Base/X3DCast.js";
 import X3DConstants                from "../Base/X3DConstants.js";
 import SFNodeCache                 from "../Fields/SFNodeCache.js";
-import Algorithm                   from "../../standard/Math/Algorithm.js";
 
 SupportedNodes .addAbstractType ("X3DExecutionContext", X3DExecutionContext);
 
@@ -283,7 +283,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    },
    getUniqueName: function (name)
    {
-      return getUniqueName .call (this, this [_namedNodes], name);
+      return getUniqueName (this [_namedNodes], name);
    },
    addImportedNode: function (inlineNode, exportedName, importedName)
    {
@@ -466,7 +466,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    },
    getUniqueProtoName: function (name)
    {
-      return getUniqueName .call (this, this [_protos], name);
+      return getUniqueName (this [_protos], name);
    },
    getExternProtoDeclaration: function (name)
    {
@@ -530,7 +530,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    },
    getUniqueExternProtoName: function (name)
    {
-      return getUniqueName .call (this, this [_externprotos], name);
+      return getUniqueName (this [_externprotos], name);
    },
    addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
    {
@@ -916,52 +916,6 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       X3DBaseNode .prototype .dispose .call (this);
    },
 });
-
-export const getUniqueName = function (array, name = "")
-{
-   name = String (name) .replace (/_\d+$/, "");
-
-   let
-      newName = name,
-      lo      = 1,
-      hi      = 1;
-
-   while (array .has (newName) || newName .length === 0)
-   {
-      lo   = hi;
-      hi <<= 1;
-
-      newName  = name;
-      newName += "_";
-      newName += lo;
-   }
-
-   lo >>= 1;
-   hi >>= 1;
-
-   if (lo && hi)
-   {
-      while (lo < hi)
-      {
-         const m = Math .floor ((lo + hi) / 2);
-
-         newName  = name;
-         newName += "_";
-         newName += m;
-
-         if (array .has (newName))
-            lo = m + 1;
-         else
-            hi = m;
-      }
-
-      newName  = name;
-      newName += "_";
-      newName += lo;
-   }
-
-   return newName;
-};
 
 for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
    Object .defineProperty (X3DExecutionContext .prototype, key, { enumerable: false });

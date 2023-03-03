@@ -48,7 +48,7 @@
 import SupportedNodes      from "../Configuration/SupportedNodes.js";
 import Fields              from "../Fields.js";
 import X3DExecutionContext from "./X3DExecutionContext.js";
-import { getUniqueName }   from "./X3DExecutionContext.js";
+import { getUniqueName }   from "./NamedNodesHandling.js";
 import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
 import UnitInfo            from "../Configuration/UnitInfo.js";
 import UnitInfoArray       from "../Configuration/UnitInfoArray.js";
@@ -360,7 +360,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    },
    getUniqueExportName: function (name)
    {
-      return getUniqueName .call (this, this [_exportedNodes], name);
+      return getUniqueName (this [_exportedNodes], name);
    },
    addRootNode: function (node)
    {

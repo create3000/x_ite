@@ -45,7 +45,8 @@
  *
  ******************************************************************************/
 
-import X3DConstants from "../Base/X3DConstants.js";
+import X3DConstants      from "../Base/X3DConstants.js";
+import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
 function Generator ({ style = "TIDY", precision = 7, doublePrecision = 15 })
 {
@@ -67,7 +68,6 @@ function Generator ({ style = "TIDY", precision = 7, doublePrecision = 15 })
    this .importedNames         = new Map ();
    this .routeNodes            = new Set ();
    this .level                 = 0;
-   this .newName               = 0;
    this .containerFields       = [ ];
    this .units                 = true;
    this .unitCategories        = [ ];
@@ -236,9 +236,6 @@ Generator .prototype =
    },
    EnterScope: function ()
    {
-      if (this .level === 0)
-         this .newName = 0;
-
       ++ this .level;
    },
    LeaveScope: function ()
@@ -349,23 +346,14 @@ Generator .prototype =
          if (name .length === 0)
          {
             if (this .NeedsName (baseNode))
-               name = this .UniqueName ();
+               name = this .UniqueName (name, true);
 
             else
                return "";
          }
          else
          {
-            let
-               i       = 0,
-               newName = hasNumber ? name + "_" + (++ i) : name;
-
-            while (names .has (newName))
-            {
-               newName = name + "_" + (++ i);
-            }
-
-            name = newName;
+            name = this .UniqueName (name, hasNumber);
          }
 
          names .set (name, baseNode);
@@ -404,19 +392,9 @@ Generator .prototype =
          return false;
       }
    },
-   UniqueName: function ()
+   UniqueName: function (name, number)
    {
-      const names = this .names .get (this .ExecutionContext ());
-
-      for (; ;)
-      {
-         const name = "_" + (++ this .newName);
-
-         if (names .has (name))
-            continue;
-
-         return name;
-      }
+      return getUniqueName (this .names .get (this .ExecutionContext ()), name, number);
    },
    LocalName: function (baseNode)
    {
