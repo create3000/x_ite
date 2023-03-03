@@ -930,7 +930,7 @@ export const getUniqueName = function (array, name = "")
       ++ i;
 
       newName  = name;
-      newName += '_';
+      newName += "_";
       newName += i;
    }
 

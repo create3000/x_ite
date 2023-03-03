@@ -358,11 +358,11 @@ Generator .prototype =
          {
             let
                i       = 0,
-               newName = hasNumber ? name + '_' + (++ i) : name;
+               newName = hasNumber ? name + "_" + (++ i) : name;
 
             while (names .has (newName))
             {
-               newName = name + '_' + (++ i);
+               newName = name + "_" + (++ i);
             }
 
             name = newName;
@@ -410,7 +410,7 @@ Generator .prototype =
 
       for (; ;)
       {
-         const name = '_' + (++ this .newName);
+         const name = "_" + (++ this .newName);
 
          if (names .has (name))
             continue;
