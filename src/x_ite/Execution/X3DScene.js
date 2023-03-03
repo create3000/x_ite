@@ -360,7 +360,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    },
    getUniqueExportName: function (name)
    {
-      return getUniqueName .call (this, _exportedNodes, name);
+      return getUniqueName .call (this, this [_exportedNodes], name);
    },
    addRootNode: function (node)
    {

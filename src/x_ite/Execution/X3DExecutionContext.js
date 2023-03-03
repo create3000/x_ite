@@ -283,7 +283,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    },
    getUniqueName: function (name)
    {
-      return getUniqueName .call (this, _namedNodes, name);
+      return getUniqueName .call (this, this [_namedNodes], name);
    },
    addImportedNode: function (inlineNode, exportedName, importedName)
    {
@@ -466,7 +466,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    },
    getUniqueProtoName: function (name)
    {
-      return getUniqueName .call (this, _protos, name);
+      return getUniqueName .call (this, this [_protos], name);
    },
    getExternProtoDeclaration: function (name)
    {
@@ -530,7 +530,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    },
    getUniqueExternProtoName: function (name)
    {
-      return getUniqueName .call (this, _externprotos, name);
+      return getUniqueName .call (this, this [_externprotos], name);
    },
    addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
    {
@@ -923,19 +923,101 @@ export const getUniqueName = function (array, name = "")
 
    let
       newName = name,
-      i       = 0;
+      L       = 1,
+      R       = 1;
 
-   while (this [array] .has (newName) || newName .length === 0)
+   while (array .has (newName) || newName .length === 0)
    {
-      ++ i;
+      L   = R;
+      R <<= 1;
 
       newName  = name;
       newName += "_";
-      newName += i;
+      newName += L;
+   }
+
+   L >>= 1;
+   R >>= 1;
+
+   if (L && R)
+   {
+      while (L < R)
+      {
+         const m = Math .floor ((L + R) / 2);
+
+         newName  = name;
+         newName += "_";
+         newName += m;
+
+         if (array .has (newName))
+            L = m + 1;
+         else
+            R = m;
+      }
+
+      newName  = name;
+      newName += "_";
+      newName += L;
    }
 
    return newName;
 };
+
+// const getUniqueName = function (array, name = "")
+// {
+//    name = String (name) .replace (/_\d+$/, "");
+
+//    let
+//       newName = name,
+//       L       = 1,
+//       R       = 1;
+
+//    while (array .has (newName) || newName .length === 0)
+//    {
+//       L   = R;
+//       R <<= 1;
+
+//       newName  = name;
+//       newName += "_";
+//       newName += L;
+//    }
+
+//    L >>= 1;
+//    R >>= 1;
+
+//    if (L && R)
+//    {
+//       do
+//       {
+//          newName  = name;
+//          newName += "_";
+//          newName += L ++;
+//       }
+//       while (array .has (newName));
+//    }
+
+//    return newName;
+// };
+
+// export const getUniqueName = function (array, name = "")
+// {
+//    name = String (name) .replace (/_\d+$/, "");
+
+//    let
+//       newName = name,
+//       i       = 0;
+
+//    while (array .has (newName) || newName .length === 0)
+//    {
+//       ++ i;
+
+//       newName  = name;
+//       newName += "_";
+//       newName += i;
+//    }
+
+//    return newName;
+// };
 
 for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
    Object .defineProperty (X3DExecutionContext .prototype, key, { enumerable: false });
