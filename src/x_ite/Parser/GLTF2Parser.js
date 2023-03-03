@@ -1547,6 +1547,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       scene .addNamedNode (scene .getUniqueName (name || `Animation${this .animations}`), groupNode);
       scene .addNamedNode (scene .getUniqueName (`Timer${this .animations}`), timeSensorNode);
+      scene .addExportedNode (scene .getUniqueExportName (`Timer${this .animations}`), timeSensorNode);
 
       timeSensorNode ._description = animation .name || `Animation ${this .animations}`;
       groupNode ._children .push (timeSensorNode, ... channelNodes);
