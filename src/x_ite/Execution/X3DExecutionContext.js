@@ -923,41 +923,41 @@ export const getUniqueName = function (array, name = "")
 
    let
       newName = name,
-      L       = 1,
-      R       = 1;
+      lo      = 1,
+      hi      = 1;
 
    while (array .has (newName) || newName .length === 0)
    {
-      L   = R;
-      R <<= 1;
+      lo   = hi;
+      hi <<= 1;
 
       newName  = name;
       newName += "_";
-      newName += L;
+      newName += lo;
    }
 
-   L >>= 1;
-   R >>= 1;
+   lo >>= 1;
+   hi >>= 1;
 
-   if (L && R)
+   if (lo && hi)
    {
-      while (L < R)
+      while (lo < hi)
       {
-         const m = Math .floor ((L + R) / 2);
+         const m = Math .floor ((lo + hi) / 2);
 
          newName  = name;
          newName += "_";
          newName += m;
 
          if (array .has (newName))
-            L = m + 1;
+            lo = m + 1;
          else
-            R = m;
+            hi = m;
       }
 
       newName  = name;
       newName += "_";
-      newName += L;
+      newName += lo;
    }
 
    return newName;
