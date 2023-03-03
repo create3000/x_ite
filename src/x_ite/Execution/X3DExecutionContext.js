@@ -917,35 +917,25 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    },
 });
 
-export const getUniqueName = (function ()
+export const getUniqueName = function (array, name = "")
 {
-   const _TrailingNumbers = /_\d+$/;
+   name = String (name) .replace (/_\d+$/, "");
 
-   return function (array, name = "")
+   let
+      newName = name,
+      i       = 0;
+
+   while (this [array] .has (newName) || newName .length === 0)
    {
-      name = String (name) .replace (_TrailingNumbers, "");
+      ++ i;
 
-      let
-         newName = name,
-         i       = 64;
+      newName  = name;
+      newName += '_';
+      newName += i;
+   }
 
-      for (; i;)
-      {
-         if (! (this [array] .has (newName) || newName .length === 0))
-            break;
-
-         const
-            min = i,
-            max = i <<= 1;
-
-         newName  = name;
-         newName += '_';
-         newName += Math .round (Algorithm .random (min, max));
-      }
-
-      return newName;
-   };
-})();
+   return newName;
+};
 
 for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
    Object .defineProperty (X3DExecutionContext .prototype, key, { enumerable: false });

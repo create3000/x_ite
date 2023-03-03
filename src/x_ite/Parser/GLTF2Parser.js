@@ -325,7 +325,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       lightNode .setup ();
 
       if (name)
+      {
          scene .addNamedNode (scene .getUniqueName (name), lightNode);
+         scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
+      }
 
       return lightNode;
    },
@@ -596,7 +599,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   name                  = this .sanitizeName (sampler .name);
 
                if (name)
+               {
                   scene .addNamedNode (scene .getUniqueName (name), texturePropertiesNode);
+                  scene .addExportedNode (scene .getUniqueExportName (name), texturePropertiesNode);
+               }
 
                // minFilter
 
@@ -694,7 +700,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          name        = this .sanitizeName (texture .name || image .name);
 
       if (name)
+      {
          scene .addNamedNode (scene .getUniqueName (name), textureNode);
+         scene .addExportedNode (scene .getUniqueExportName (name), textureNode);
+      }
 
       textureNode ._url            = [image .uri];
       textureNode ._flipVertically = true;
@@ -747,7 +756,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       materialNode .setup ();
 
       if (name)
+      {
          scene .addNamedNode (scene .getUniqueName (name), appearanceNode);
+         scene .addExportedNode (scene .getUniqueExportName (name), appearanceNode);
+      }
 
       appearanceNode ._alphaMode        = this .stringValue (material .alphaMode, "OPAQUE");
       appearanceNode ._alphaCutoff      = this .numberValue (material .alphaCutoff, 0.5);
@@ -987,7 +999,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (name)
       {
          for (const shapeNode of shapeNodes)
+         {
             scene .addNamedNode (scene .getUniqueName (name), shapeNode);
+            scene .addExportedNode (scene .getUniqueExportName (name), shapeNode);
+         }
       }
 
       return mesh .shapeNodes = shapeNodes;
@@ -1221,7 +1236,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Name
 
       if (name)
+      {
          scene .addNamedNode (scene .getUniqueName (name), viewpointNode);
+         scene .addExportedNode (scene .getUniqueExportName (name), viewpointNode);
+      }
 
       if (camera .name)
          viewpointNode ._description = camera .name;
@@ -1317,7 +1335,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Name
 
       if (name)
+      {
          scene .addNamedNode (scene .getUniqueName (name), transformNode);
+         scene .addExportedNode (scene .getUniqueExportName (name), transformNode);
+      }
 
       // Set transformation matrix.
 
@@ -1449,6 +1470,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             const switchNode = scene .createNode ("Switch", false);
 
             scene .addNamedNode (scene .getUniqueName ("Scenes"), switchNode);
+            scene .addExportedNode (scene .getUniqueExportName ("Scenes"), switchNode);
 
             // Scenes.
 
@@ -1487,7 +1509,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                name      = this .sanitizeName (sceneObject .name);
 
             if (name)
+            {
                scene .addNamedNode (scene .getUniqueName (name), groupNode);
+               scene .addExportedNode (scene .getUniqueExportName (name), groupNode);
+            }
 
             groupNode ._children = nodes;
 
@@ -1518,7 +1543,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          groupNode = scene .createNode ("Group", false);
 
       scene .addNamedNode (scene .getUniqueName ("Animations"), groupNode);
-      scene .addExportedNode ("Animations", groupNode);
+      scene .addExportedNode (scene .getUniqueExportName ("Animations"), groupNode);
 
       groupNode ._children = animationNodes;
 
@@ -1547,6 +1572,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       scene .addNamedNode (scene .getUniqueName (name || `Animation${this .animations}`), groupNode);
       scene .addNamedNode (scene .getUniqueName (`Timer${this .animations}`), timeSensorNode);
+      scene .addExportedNode (scene .getUniqueExportName (name || `Animation${this .animations}`), groupNode);
       scene .addExportedNode (scene .getUniqueExportName (`Timer${this .animations}`), timeSensorNode);
 
       timeSensorNode ._description = animation .name || `Animation ${this .animations}`;

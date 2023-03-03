@@ -173,15 +173,10 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          return copy;
       }
    },
-   getDisplayName: (function ()
+   getDisplayName: function ()
    {
-      const _TrailingNumber = /_\d+$/;
-
-      return function ()
-      {
-         return this .getName () .replace (_TrailingNumber, "");
-      };
-   })(),
+      return this .getName () .replace (/_\d+$/, "");
+   },
    getNeedsName: function ()
    {
       if (this .getName () .length)

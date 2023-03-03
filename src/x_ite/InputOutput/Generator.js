@@ -306,79 +306,74 @@ Generator .prototype =
    {
       return this .nodes .has (baseNode);
    },
-   Name: (function ()
+   Name: function (baseNode)
    {
-      const _TrailingNumbers = /_\d+$/;
+      // Is the node already in index
 
-      return function (baseNode)
+      const name = this .namesByNode .get (baseNode);
+
+      if (name !== undefined)
       {
-         // Is the node already in index
+         return name;
+      }
+      else
+      {
+         const names = this .names .get (this .ExecutionContext ());
 
-         const name = this .namesByNode .get (baseNode);
+         // The node has no name
 
-         if (name !== undefined)
+         if (baseNode .getName () .length === 0)
          {
-            return name;
+            if (this .NeedsName (baseNode))
+            {
+               const name = this .UniqueName ();
+
+               names .set (name, baseNode);
+               this .namesByNode .set (baseNode, name);
+
+               return name;
+            }
+
+            // The node doesn't need a name
+
+            return baseNode .getName ();
+         }
+
+         // The node has a name
+
+         let   name      = baseNode .getName ();
+         const hasNumber = name .match (/_\d+$/) !== null;
+
+         name = name .replace (/_\d+$/, "");
+
+         if (name .length === 0)
+         {
+            if (this .NeedsName (baseNode))
+               name = this .UniqueName ();
+
+            else
+               return "";
          }
          else
          {
-            const names = this .names .get (this .ExecutionContext ());
+            let
+               i       = 0,
+               newName = hasNumber ? name + '_' + (++ i) : name;
 
-            // The node has no name
-
-            if (baseNode .getName () .length === 0)
+            while (names .has (newName))
             {
-               if (this .NeedsName (baseNode))
-               {
-                  const name = this .UniqueName ();
-
-                  names .set (name, baseNode);
-                  this .namesByNode .set (baseNode, name);
-
-                  return name;
-               }
-
-               // The node doesn't need a name
-
-               return baseNode .getName ();
+               newName = name + '_' + (++ i);
             }
 
-            // The node has a name
-
-            let   name      = baseNode .getName ();
-            const hasNumber = name .match (_TrailingNumbers) !== null;
-
-            name = name .replace (_TrailingNumbers, "");
-
-            if (name .length === 0)
-            {
-               if (this .NeedsName (baseNode))
-                  name = this .UniqueName ();
-
-               else
-                  return "";
-            }
-            else
-            {
-               let
-                  i       = 0,
-                  newName = hasNumber ? name + '_' + (++ i) : name;
-
-               while (names .has (newName))
-               {
-                  newName = name + '_' + (++ i);
-               }
-
-               name = newName;
-            }
-
-            names .set (name, baseNode);
-            this .namesByNode .set (baseNode, name);
-
-            return name;
+            name = newName;
          }
-      };
-   })(),
+
+         names .set (name, baseNode);
+         this .namesByNode .set (baseNode, name);
+
+         return name;
+      }
+   },
    NeedsName: function (baseNode)
    {
       if (baseNode .getCloneCount () > 1)
