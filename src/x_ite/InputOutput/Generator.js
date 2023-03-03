@@ -317,43 +317,36 @@ Generator .prototype =
       {
          const names = this .names .get (this .ExecutionContext ());
 
-         // The node has no name
+         let name = baseNode .getName ();
 
-         if (baseNode .getName () .length === 0)
+         if (name .length)
          {
-            if (this .NeedsName (baseNode))
+            // The node has a name.
+
+            const hasNumber = name .match (/_\d+$/) !== null;
+
+            name = name .replace (/_\d+$/, "");
+
+            if (name .length)
             {
-               const name = this .UniqueName ();
-
-               names .set (name, baseNode);
-               this .namesByNode .set (baseNode, name);
-
-               return name;
+               name = getUniqueName (names, name, hasNumber);
             }
-
-            // The node doesn't need a name
-
-            return baseNode .getName ();
-         }
-
-         // The node has a name
-
-         let   name      = baseNode .getName ();
-         const hasNumber = name .match (/_\d+$/) !== null;
-
-         name = name .replace (/_\d+$/, "");
-
-         if (name .length === 0)
-         {
-            if (this .NeedsName (baseNode))
-               name = this .UniqueName (name, true);
-
             else
-               return "";
+            {
+               if (!this .NeedsName (baseNode))
+                  return "";
+
+               name = getUniqueName (names, "", true);
+            }
          }
          else
          {
-            name = this .UniqueName (name, hasNumber);
+            // The node has no name.
+
+            if (!this .NeedsName (baseNode))
+               return "";
+
+            name = getUniqueName (names, "", true);
          }
 
          names .set (name, baseNode);
@@ -391,10 +384,6 @@ Generator .prototype =
 
          return false;
       }
-   },
-   UniqueName: function (name, number)
-   {
-      return getUniqueName (this .names .get (this .ExecutionContext ()), name, number);
    },
    LocalName: function (baseNode)
    {
