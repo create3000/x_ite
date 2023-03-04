@@ -208,7 +208,10 @@ STLAParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          coordinate .point         = this .point;
 
          if (name)
+         {
             scene .addNamedNode (scene .getUniqueName (name), shape);
+            scene .addExportedNode (scene .getUniqueExportName (name), shape);
+         }
 
          scene .getRootNodes () .push (shape);
 

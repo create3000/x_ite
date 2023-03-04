@@ -354,6 +354,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Add root Transform node.
 
       scene .addNamedNode (scene .getUniqueName ("ViewBox"), this .rootTransform);
+      scene .addExportedNode (scene .getUniqueExportName ("ViewBox"), this .rootTransform);
       scene .getRootNodes () .push (this .rootTransform);
 
       // Optimize scene graph.
@@ -1212,7 +1213,10 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          name  = this .sanitizeName (attribute);
 
       if (name)
+      {
 		   scene .addNamedNode (scene .getUniqueName (name), node);
+		   scene .addExportedNode (scene .getUniqueExportName (name), node);
+      }
    },
    viewBoxAttribute: function (attribute, defaultValue)
    {

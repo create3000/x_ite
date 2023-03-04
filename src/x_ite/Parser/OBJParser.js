@@ -284,24 +284,30 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          parser .parse ();
 
-         for (const [name, material] of parser .materials)
+         for (const [id, material] of parser .materials)
          {
-            const nodeName = this .sanitizeName (name);
+            const name = this .sanitizeName (id);
 
-            if (nodeName)
-               scene .addNamedNode (scene .getUniqueName (nodeName), material);
+            if (name)
+            {
+               scene .addNamedNode (scene .getUniqueName (name), material);
+               scene .addExportedNode (scene .getUniqueExportName (name), material);
+            }
 
-            this .materials .set (name, material);
+            this .materials .set (id, material);
          }
 
-         for (const [name, texture] of parser .textures)
+         for (const [id, texture] of parser .textures)
          {
-            const nodeName = this .sanitizeName (name);
+            const name = this .sanitizeName (id);
 
-            if (nodeName)
-               scene .addNamedNode (scene .getUniqueName (nodeName), texture);
+            if (name)
+            {
+               scene .addNamedNode (scene .getUniqueName (name), texture);
+               scene .addExportedNode (scene .getUniqueExportName (name), texture);
+            }
 
-            this .textures .set (name, texture);
+            this .textures .set (id, texture);
          }
       }
       catch (error)
@@ -319,10 +325,10 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          if (Grammar .untilEndOfLine .parse (this))
          {
-            const name = this .result [1];
+            const id = this .result [1];
 
-            this .material = this .materials .get (name) || this .defaultMaterial;
-            this .texture  = this .textures .get (name);
+            this .material = this .materials .get (id) || this .defaultMaterial;
+            this .texture  = this .textures .get (id);
 
             const smoothingGroup = this .smoothingGroups .get (this .group .getNodeName ());
 
@@ -346,8 +352,8 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (Grammar .untilEndOfLine .parse (this))
          {
             const
-               scene    = this .getExecutionContext (),
-               nodeName = this .sanitizeName (this .result [1]);
+               scene = this .getExecutionContext (),
+               name  = this .sanitizeName (this .result [1]);
 
             if (this .group .children .length)
             {
@@ -358,8 +364,11 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                scene .getRootNodes () .push (this .object);
             }
 
-            if (nodeName)
-               scene .addNamedNode (scene .getUniqueName (nodeName), this .object);
+            if (name)
+            {
+               scene .addNamedNode (scene .getUniqueName (name), this .object);
+               scene .addExportedNode (scene .getUniqueExportName (name), this .object);
+            }
          }
 
          return true;
@@ -378,10 +387,10 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (Grammar .untilEndOfLine .parse (this))
          {
             const
-               scene    = this .getExecutionContext (),
-               name     = this .result [1],
-               nodeName = this .sanitizeName (name),
-               group    = this .groups .get (name);
+               scene = this .getExecutionContext (),
+               id    = this .result [1],
+               name  = this .sanitizeName (id),
+               group = this .groups .get (id);
 
             if (group)
             {
@@ -397,10 +406,13 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                }
             }
 
-            this .groups .set (name, this .group);
+            this .groups .set (id, this .group);
 
-            if (nodeName)
-               scene .addNamedNode (scene .getUniqueName (nodeName), this .group);
+            if (name)
+            {
+               scene .addNamedNode (scene .getUniqueName (name), this .group);
+               scene .addExportedNode (scene .getUniqueExportName (name), this .group);
+            }
 
             this .smoothingGroup = 0;
          }
@@ -725,7 +737,7 @@ function MaterialParser (scene, input)
    this .materials        = new Map ();
    this .textures         = new Map ();
    this .color3           = new Color3 ();
-   this .name             = "";
+   this .id               = "";
 }
 
 MaterialParser .prototype =
@@ -818,15 +830,15 @@ MaterialParser .prototype =
       {
          this .whitespacesNoLineTerminator ();
 
-         this .name = "";
+         this .id = "";
 
          if (Grammar .untilEndOfLine .parse (this))
          {
-            this .name = this .result [1];
+            this .id = this .result [1];
 
             this .material = this .executionContext .createNode ("Material");
 
-            this .materials .set (this .name, this .material);
+            this .materials .set (this .id, this .material);
 
             return true;
          }
@@ -991,7 +1003,7 @@ MaterialParser .prototype =
          {
             const string = this .result [1];
 
-            if (string .length && this .name .length)
+            if (string .length && this .id .length)
             {
                const paths = string .trim () .split (/\s+/);
 
@@ -1004,7 +1016,7 @@ MaterialParser .prototype =
 
                   texture .url = [path];
 
-                  this .textures .set (this .name, texture);
+                  this .textures .set (this .id, texture);
                }
             }
 
