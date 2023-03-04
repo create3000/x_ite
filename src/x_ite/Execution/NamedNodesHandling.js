@@ -59,9 +59,7 @@ export const getUniqueName = function (array, name = "", number = false)
       lo   = hi;
       hi <<= 1;
 
-      newName  = name;
-      newName += "_";
-      newName += lo;
+      newName = `${name}_${lo}`;
    }
 
    lo >>>= 1;
@@ -73,19 +71,13 @@ export const getUniqueName = function (array, name = "", number = false)
       {
          const m = (lo + hi) >>> 1;
 
-         newName  = name;
-         newName += "_";
-         newName += m;
-
-         if (array .has (newName))
+         if (array .has (`${name}_${m}`))
             lo = m + 1;
          else
             hi = m;
       }
 
-      newName  = name;
-      newName += "_";
-      newName += lo;
+      newName = `${name}_${lo}`;
    }
 
    return newName;
