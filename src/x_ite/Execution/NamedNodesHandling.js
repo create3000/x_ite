@@ -50,7 +50,7 @@ export const getUniqueName = function (array, name = "", number = false)
    name = String (name) .replace (/_\d+$/, "");
 
    let
-      newName = number ? name + "_1" : name,
+      newName = number ? `${name}_1` : name,
       lo      = 1,
       hi      = 1;
 
