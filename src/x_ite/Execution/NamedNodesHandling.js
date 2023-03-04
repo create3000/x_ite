@@ -64,14 +64,14 @@ export const getUniqueName = function (array, name = "", number = false)
       newName += lo;
    }
 
-   lo >>= 1;
-   hi >>= 1;
+   lo >>>= 1;
+   hi >>>= 1;
 
    if (lo && hi)
    {
       while (lo < hi)
       {
-         const m = Math .floor ((lo + hi) / 2);
+         const m = (lo + hi) >>> 1;
 
          newName  = name;
          newName += "_";
