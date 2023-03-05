@@ -118,7 +118,6 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this .scaleOrientationInterpolator .setup ();
       this .fieldOfViewScaleInterpolator .setup ();
 
-      this .timeSensor ._isActive         .addFieldInterest (this ._transitionActive);
       this .timeSensor ._fraction_changed .addFieldInterest (this .easeInEaseOut ._set_fraction);
 
       this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .positionInterpolator         ._set_fraction);
@@ -186,10 +185,18 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
    },
    set_active__: function (navigationInfoNode, active)
    {
-      if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
-      {
-         navigationInfoNode ._transitionComplete = true;
-      }
+      if (active .getValue ())
+         return;
+
+      this .timeSensor ._isActive .removeInterest ("set_active__", this);
+
+      if (!this ._isBound .getValue ())
+         return;
+
+      if (this .timeSensor ._fraction_changed .getValue () !== 1)
+         return;
+
+      navigationInfoNode ._transitionComplete = true;
    },
    setInterpolators: function () { },
    getPosition: function ()
@@ -320,7 +327,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
             }
          }
 
-         layerNode .getNavigationInfo () ._transitionStart = true;
+         navigationInfoNode ._transitionStart = true;
 
          this .timeSensor ._cycleInterval = transitionTime;
          this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
@@ -339,11 +346,13 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          this ._scaleOrientationOffset = relative .scaleOrientation;
 
          this .setInterpolators (fromViewpointNode, relative);
-
-         this ._transitionActive = true;
       }
       else
       {
+         const navigationInfoNode = layerNode .getNavigationInfo ();
+
+         navigationInfoNode ._transitionComplete = true;
+
          const relative = this .getRelativeTransformation (fromViewpointNode);
 
          this ._positionOffset         = relative .position;
@@ -442,13 +451,9 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       const
          offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
-      layerNode .getNavigationInfo () ._transitionStart = true;
-
       this .timeSensor ._cycleInterval = layerNode .getNavigationInfo () ._transitionTime .getValue ();
       this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
       this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
       this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
@@ -477,13 +482,9 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
    },
    straightenView: function (layerNode)
    {
-      layerNode .getNavigationInfo () ._transitionStart = true;
-
       this .timeSensor ._cycleInterval = layerNode .getNavigationInfo () ._transitionTime .getValue ();
       this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
       this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
       this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
