@@ -212,7 +212,7 @@ Generator .prototype =
       this .executionContextStack .push (executionContext);
 
       if (! this .names .has (executionContext))
-         this .names .set (executionContext, new Set ());
+         this .names .set (executionContext, Object .assign (new Set (), { index: 0 }));
 
       if (! this .importedNodesIndex .has (executionContext))
          this .importedNodesIndex .set (executionContext, new Set ());
@@ -305,7 +305,7 @@ Generator .prototype =
    },
    Name: function (baseNode)
    {
-      // Is the node already in index
+      // Is the node already in index.
 
       const name = this .namesByNode .get (baseNode);
 
@@ -315,25 +315,16 @@ Generator .prototype =
       }
       else
       {
-         const names = this .names .get (this .ExecutionContext ());
+         const
+            name  = baseNode .getName (),
+            match = name .match (/^(.*?)(_\d+)?$/),
+            names = this .names .get (this .ExecutionContext ());
 
-         let name = baseNode .getName ();
-
-         if (name .length)
+         if (match [1])
          {
             // The node has a name.
 
-            if (name .replace (/_\d+$/, "") .length)
-            {
-               name = getUniqueName (names, name, !! name .match (/_\d+$/));
-            }
-            else
-            {
-               if (!this .NeedsName (baseNode))
-                  return "";
-
-               name = getUniqueName (names, "", true);
-            }
+            var newName = getUniqueName (names, name, !! match [2]);
          }
          else
          {
@@ -342,13 +333,15 @@ Generator .prototype =
             if (!this .NeedsName (baseNode))
                return "";
 
-            name = getUniqueName (names, "", true);
+            var newName = `_${++ names .index}`;
          }
 
-         names .add (name);
-         this .namesByNode .set (baseNode, name);
+         // Add to indices.
 
-         return name;
+         names .add (newName);
+         this .namesByNode .set (baseNode, newName);
+
+         return newName;
       }
    },
    NeedsName: function (baseNode)

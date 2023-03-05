@@ -132,7 +132,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
          else
             scene .setExecutionContext (this .executionContext);
 
-         scene .setWorldURL (decodeURI (new URL (worldURL, this .getReferer ()) .href));
+         scene .setWorldURL (new URL (worldURL, this .getReferer ()) .href);
 
          if (success)
             success = this .setScene .bind (this, scene, success, error);
