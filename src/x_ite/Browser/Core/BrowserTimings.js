@@ -157,7 +157,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       let r = 0;
 
       rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Frame rate") + ":")) .append ($("<td></td>") .text (f2(1000 / this .fps .averageTime) .toLocaleString (language, fixed) + " " + _("fps")));
-      rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Speed")      + ":")) .append ($("<td></td>") .text (f2(this .getSpeed (browser .currentSpeed))         .toLocaleString (language, fixed) + " " + this .getSpeedUnit (browser .currentSpeed)));
+      rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Speed") + ":")) .append ($("<td></td>") .text (f2(this .getSpeed (browser .currentSpeed)) .toLocaleString (language, fixed) + " " + this .getSpeedUnit (browser .currentSpeed)));
 
       if (this .localStorage .type === "MORE")
       {
