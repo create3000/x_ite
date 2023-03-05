@@ -789,7 +789,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
             .multRight (orientationOffsetBefore);
 
          if (straightenHorizon)
-            viewpoint .straightenHorizon (userOrientation, viewpoint .getUpVector (true));
+            viewpoint .straightenHorizon (userOrientation);
 
          const orientationOffsetAfter = orientationOffset
             .assign (viewpoint .getOrientation ())

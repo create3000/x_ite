@@ -279,6 +279,11 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          if (this ._viewAll .getValue ())
             this .viewAll (layerNode .getBBox (new Box3 ()));
 
+         if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+         {
+            this ._orientationOffset = this .straightenHorizon (this .getUserOrientation ()) .multLeft (this .getOrientation () .copy () .inverse ());
+         }
+
          // Handle NavigationInfo.
 
          const
@@ -376,6 +381,11 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this ._scaleOrientationOffset = Rotation4 .Identity;
       this ._centerOfRotationOffset = Vector3   .Zero;
       this ._fieldOfViewScale       = 1;
+
+      if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+      {
+         this ._orientationOffset = this .straightenHorizon (this .getUserOrientation ()) .multLeft (this .getOrientation () .copy () .inverse ());
+      }
 
       this .set_nearDistance__ ();
       this .set_farDistance__ ();
@@ -508,7 +518,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          localZAxis  = new Vector3 (0, 0, 0),
          rotation    = new Rotation4 (0, 0, 1, 0);
 
-      return function (orientation, upVector = this .getUpVector ())
+      return function (orientation, upVector = this .getUpVector (true))
       {
          orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
          orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
