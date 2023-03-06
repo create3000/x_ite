@@ -656,7 +656,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       if (!layerNode)
          return;
 
-      layerNode .viewAll ();
+      layerNode .viewAll (1, this .getBrowserOption ("StraightenHorizon"));
    },
    firstViewpoint: function (layerNode)
    {

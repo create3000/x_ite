@@ -547,6 +547,9 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          userPosition    = bbox .center .copy () .add (direction .multiply (distance)),
          userOrientation = this .getLookAtRotation (userPosition, bbox .center);
 
+      if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+         this .straightenHorizon (userOrientation);
+
       this ._positionOffset         = userPosition .subtract (this .getPosition ());
       this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
       this ._centerOfRotationOffset = bbox .center .copy () .subtract (this .getCenterOfRotation ());
