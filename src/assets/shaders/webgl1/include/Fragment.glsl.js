@@ -97,7 +97,7 @@ fragment_main ()
    #endif
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
-      setTexCoords ();
+      setPointTexCoords ();
    #endif
 
    vec4 finalColor = getMaterialColor ();

@@ -96,6 +96,8 @@ fragment_main ()
    #endif
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
+      setPointTexCoords ();
+   #elif defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
       setTexCoords ();
    #endif
 

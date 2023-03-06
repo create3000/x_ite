@@ -3,33 +3,22 @@ export default /* glsl */ `
 
 #pragma X3D include "Perlin.glsl"
 
-vec4
-getTexCoord (const in int i)
-{
-   #if X3D_NUM_TEXTURE_COORDINATES > 1
-      switch (i)
-      {
-         #if X3D_NUM_TEXTURE_COORDINATES > 0
-         case 0:
-            return texCoord0;
-         #endif
-         #if X3D_NUM_TEXTURE_COORDINATES > 1
-         case 1:
-            return texCoord1;
-         #endif
-         #if X3D_NUM_TEXTURE_COORDINATES > 2
-         case 2:
-            return texCoord2;
-         #endif
-         #if X3D_NUM_TEXTURE_COORDINATES > 3
-         case 3:
-            return texCoord3;
-         #endif
-      }
+vec4 texCoords [X3D_NUM_TEXTURE_COORDINATES];
 
-      return vec4 (0.0);
-   #else
-      return texCoord0;
+void
+setTexCoords ()
+{
+   #if X3D_NUM_TEXTURE_COORDINATES > 0
+   texCoords [0] = texCoord0;
+   #endif
+   #if X3D_NUM_TEXTURE_COORDINATES > 1
+   texCoords [1] = texCoord1;
+   #endif
+   #if X3D_NUM_TEXTURE_COORDINATES > 2
+   texCoords [2] = texCoord2;
+   #endif
+   #if X3D_NUM_TEXTURE_COORDINATES > 3
+   texCoords [3] = texCoord3;
    #endif
 }
 
@@ -44,7 +33,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
    {
       case x3d_None:
       {
-         return x3d_TextureMatrix [textureTransformMapping] * getTexCoord (textureCoordinateMapping);
+         return x3d_TextureMatrix [textureTransformMapping] * texCoords [textureCoordinateMapping];
       }
       case x3d_Sphere:
       {
@@ -113,7 +102,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
       }
       default:
       {
-         return x3d_TextureMatrix [textureTransformMapping] * getTexCoord (textureCoordinateMapping);
+         return x3d_TextureMatrix [textureTransformMapping] * texCoords [textureCoordinateMapping];
       }
    }
 }

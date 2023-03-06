@@ -94,6 +94,11 @@ X3D (function ()
       console .log (Browser .toJSONString ());
    }
 
+   function viewAll ()
+   {
+      Browser .viewAll ();
+   }
+
    const bookmarks = new Bookmarks (Browser, $(".examples-box"));
 
    bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
@@ -105,6 +110,7 @@ X3D (function ()
    $(".print-vrml") .on ("click", toVRMLString);
    $(".print-xml") .on ("click", toXMLString);
    $(".print-json") .on ("click", toJSONString);
+   $(".view-all") .on ("click", viewAll);
    $("#browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = Browser .getWorldURL ());
 
    $(".location-entry") .keydown (event =>
@@ -391,7 +397,7 @@ main.color-management .browser {
                <button class="location-go" type="button">Load URL</button>
             </div>
             <div class="buttons">
-               <a class="print-xml" href="#">XML</a><a class="print-vrml" href="#">VRML</a><a class="print-json" href="#">JSON</a><a href="dist/example.html">example page</a><a href="src/tests/d3-x3d/">d3-x3d</a><a href="src/tests/dom-integration/">dom-integration</a><a href="src/tests/legacy/">legacy</a>
+               <a href="#" class="view-all">▣</a><a class="print-xml" href="#">XML</a><a class="print-vrml" href="#">VRML</a><a class="print-json" href="#">JSON</a><a href="dist/example.html">example page</a><a href="src/tests/d3-x3d/">d3-x3d</a><a href="src/tests/dom-integration/">dom-integration</a><a href="src/tests/legacy/">legacy</a>
             </div>
             <div class="links min-links">
                <a href="src/x_ite.html">src/x_ite.html</a><a href="https://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a>
