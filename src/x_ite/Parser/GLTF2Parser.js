@@ -985,9 +985,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!this .extensions .has ("KHR_texture_transform"))
          return;
 
-      if (KHR_texture_transform .texCoord !== undefined)
-         texCoord = KHR_texture_transform .texCoord;
-
       const
          scene                = this .getExecutionContext (),
          textureTransformNode = scene .createNode ("TextureTransformMatrix3D", false),
@@ -1012,7 +1009,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       textureTransformNode .setup ();
 
       this .textureTransformNodes .set (mapping, textureTransformNode);
-      this .texCoords .set (mapping, texCoord);
+      this .texCoords .set (mapping, KHR_texture_transform .texCoord ?? texCoord);
 
       return mapping;
    },
