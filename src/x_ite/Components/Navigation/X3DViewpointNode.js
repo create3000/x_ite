@@ -432,7 +432,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          x .assign (up) .cross (z) .normalize ();
          y .assign (z) .cross (x) .normalize ();
 
-         m .set (x.x, x.y, x.z, y.x, y.y, y.z, z.x, z.y, z.z);
+         m .set (... x, ... y, ... z);
          r .setMatrix (m);
 
          return r;
