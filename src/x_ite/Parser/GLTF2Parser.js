@@ -1933,7 +1933,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
@@ -1950,7 +1950,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
@@ -1968,7 +1968,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
@@ -1985,7 +1985,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
@@ -2011,7 +2011,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
@@ -2028,7 +2028,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD);
+      geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
@@ -2080,8 +2080,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return color .colorNode = colorNode;
       };
    })(),
-   createMultiTextureCoordinate: function (texCoords)
+   createMultiTextureCoordinate: function (texCoords, material)
    {
+      const appearanceNode = this .materialObject (material);
+
+      if (!+appearanceNode ._material .getValue () .getTextureBits ())
+         return null;
+
       if (texCoords .textureCoordinateNode)
          return texCoords .textureCoordinateNode;
 
