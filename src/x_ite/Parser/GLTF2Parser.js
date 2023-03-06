@@ -732,7 +732,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (material .appearanceNode)
          return material .appearanceNode;
 
-      this .mappings = this .textureMappings ("", material);
+      const texCoordIndices = this .texCoordIndices ("", material);
+
+      this .texCoordIndex = [... texCoordIndices] .reduce (Math .max, -1);
 
       this .textureTransformNodes .clear ();
       this .texCoords .clear ();
@@ -757,7 +759,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       materialNode .setup ();
 
-      for (let i = 0, length = this .mappings + 1; i < length; ++ i)
+      for (const i of texCoordIndices)
       {
          const mapping = `TEXCOORD_${i}`;
 
@@ -789,15 +791,16 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return material .appearanceNode = appearanceNode;
    },
-   textureMappings: function (key, object)
+   texCoordIndices: function (key, object, mappings = new Set ())
    {
       if (!(object instanceof Object))
-         return -1;
+         return mappings;
 
-      let mappings = key .endsWith ("Texture") && !object?.extensions?.KHR_texture_transform ? object .texCoord || 0 : -1;
+      if (key .endsWith ("Texture") && !object?.extensions?.KHR_texture_transform)
+         mappings .add (object .texCoord || 0);
 
       for (const [key, value] of Object .entries (object))
-         mappings = Math .max (this .textureMappings (key, value), mappings);
+         this .texCoordIndices (key, value, mappings);
 
       return mappings;
    },
@@ -985,7 +988,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene                = this .getExecutionContext (),
          textureTransformNode = scene .createNode ("TextureTransformMatrix3D", false),
-         mapping              = `TEXCOORD_${this .mappings + this .textureTransformNodes .size + 1}`;
+         mapping              = `TEXCOORD_${this .texCoordIndex + this .textureTransformNodes .size + 1}`;
 
       const
          translation = new Vector2 (0, 0),
