@@ -743,7 +743,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene          = this .getExecutionContext (),
          appearanceNode = scene .createNode ("Appearance", false),
-         materialNode   = this .materialObjectMaterial (material),
+         materialNode   = this .createMaterial (material),
          name           = this .sanitizeName (material .name);
 
       const emissiveFactor = new Color3 (0, 0, 0);
@@ -804,7 +804,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return mappings;
    },
-   materialObjectMaterial: function (material)
+   createMaterial: function (material)
    {
       const materials = [
          this .pbrMetallicRoughnessObject .bind (this, material .pbrMetallicRoughness),
