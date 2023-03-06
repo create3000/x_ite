@@ -116,6 +116,10 @@ MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .protot
 
       this ._loadState = X3DConstants .COMPLETE_STATE;
    },
+   getTextureType: function ()
+   {
+      return 5;
+   },
    getCount: function ()
    {
       return Math .min (this .getBrowser () .getMaxTextures (), this .textureNodes .length);
