@@ -487,6 +487,8 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       this ._fieldOfViewScale       = 1;
       this ._centerOfRotationOffset = Vector3 .subtract (point, this .getCenterOfRotation ());
+      this .nearDistance            = Math .min (distance / 2, 0.125);
+      this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
 
       this .setInterpolators (this, relative);
    },
