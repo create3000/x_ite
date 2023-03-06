@@ -124,8 +124,15 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
          textureTransformNodes = this .textureTransformNodes,
          length                = Math .min (this .maxTextureTransforms, textureTransformNodes .length);
 
-      for (let i = 0; i < length; ++ i)
-         textureTransformNodes [i] .setShaderUniforms (gl, shaderObject, i);
+      if (length)
+      {
+         for (let i = 0; i < length; ++ i)
+            textureTransformNodes [i] .setShaderUniforms (gl, shaderObject, i);
+      }
+      else
+      {
+         this .getBrowser () .getDefaultTextureTransform () .setShaderUniforms (gl, shaderObject, 0);
+      }
    },
    transformPoint: function (texCoord)
    {
