@@ -177,7 +177,7 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
       }
       else
       {
-         gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [0], 0);
+         this .getBrowser () .getDefaultTextureCoordinate () .setShaderUniforms (gl, shaderObject, 0);
       }
    },
 });
