@@ -235,9 +235,7 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
                const textureNode = appearanceNode .getTexture ();
 
                options .push ("X3D_TEXTURE");
-               options .push ("X3D_NUM_TEXTURES "            + textureNode .getCount ());
-               options .push ("X3D_NUM_TEXTURE_TRANSFORMS "  + (appearanceNode .getTextureTransformMapping () .size || 1));
-               options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .textureCoordinateMapping .size || 1));
+               options .push ("X3D_NUM_TEXTURES " + textureNode .getCount ());
 
                textureNode .getShaderOptions (options);
 
