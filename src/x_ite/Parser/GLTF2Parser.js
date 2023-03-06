@@ -798,7 +798,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       for (const [key, value] of Object .entries (object))
          mappings = Math .max (this .textureMappings (key, value), mappings);
 
-      return mappings
+      return mappings;
    },
    materialObjectMaterial: function (material)
    {
