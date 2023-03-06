@@ -262,7 +262,10 @@ X3DProgrammableShaderObject .prototype =
 
       for (let i = 0; i < maxTextureTransforms; ++ i)
       {
-         this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
+         const uniform = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
+
+         if (uniform !== null)
+            this .x3d_TextureMatrix [i] = uniform;
       }
 
       for (let i = 0; i < maxTexCoords; ++ i)
