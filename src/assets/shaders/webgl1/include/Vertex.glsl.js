@@ -124,11 +124,11 @@ vertex_main ()
          #endif
 
          #if X3D_NUM_TEXTURE_COORDINATES > 2
-            texCoord1 = x3d_TexCoord2;
+            texCoord2 = x3d_TexCoord2;
          #endif
 
          #if X3D_NUM_TEXTURE_COORDINATES > 3
-            texCoord1 = x3d_TexCoord3;
+            texCoord3 = x3d_TexCoord3;
          #endif
       #endif
    #endif

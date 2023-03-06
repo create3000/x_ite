@@ -164,6 +164,16 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
       texCoord = getTexCoord (x3d_TextureCoordinateGenerator [1], textureTransformMapping, textureCoordinateMapping);
    #endif
 
+   #if X3D_NUM_TEXTURE_COORDINATES > 2
+   else if (textureCoordinateMapping == 2)
+      texCoord = getTexCoord (x3d_TextureCoordinateGenerator [2], textureTransformMapping, textureCoordinateMapping);
+   #endif
+
+   #if X3D_NUM_TEXTURE_COORDINATES > 3
+   else if (textureCoordinateMapping == 3)
+      texCoord = getTexCoord (x3d_TextureCoordinateGenerator [3], textureTransformMapping, textureCoordinateMapping);
+   #endif
+
    texCoord .stp /= texCoord .q;
 
    #if defined (X3D_GEOMETRY_2D)
