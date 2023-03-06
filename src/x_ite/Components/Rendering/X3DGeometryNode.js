@@ -830,16 +830,6 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          if (this .multiTexCoords .length === 0)
             this .buildTexCoords ();
 
-         if (this .multiTexCoords .length)
-         {
-            const maxTexCoords = this .textureCoordinateMapping .size;
-
-            for (let i = this .multiTexCoords .length; i < maxTexCoords; ++ i)
-               this .multiTexCoords [i] = this .multiTexCoords .at (-1);
-
-            this .multiTexCoords .length = Math .max (maxTexCoords, 1);
-         }
-
          // Transfer arrays and update.
 
          this .transfer ();
