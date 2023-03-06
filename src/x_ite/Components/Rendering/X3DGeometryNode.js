@@ -1009,8 +1009,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          attribBuffers = this .attribBuffers,
          primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
 
-      if (blendModeNode)
-         blendModeNode .enable (gl);
+      blendModeNode?.enable (gl);
 
       shaderNode .enable (gl);
       shaderNode .setUniforms (gl, this, renderContext, front);
@@ -1081,8 +1080,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          }
       }
 
-      if (blendModeNode)
-         blendModeNode .disable (gl);
+      blendModeNode?.disable (gl);
    },
    displaySimpleParticles: function (gl, shaderNode, particleSystem)
    {
@@ -1130,8 +1128,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          attribBuffers = this .attribBuffers,
          primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
 
-      if (blendModeNode)
-         blendModeNode .enable (gl);
+      blendModeNode?.enable (gl);
 
       // Setup shader.
 
@@ -1201,8 +1198,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
       }
 
-      if (blendModeNode)
-         blendModeNode .disable (gl);
+      blendModeNode?.disable (gl);
    },
 });
 

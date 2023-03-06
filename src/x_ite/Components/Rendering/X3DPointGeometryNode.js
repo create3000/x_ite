@@ -81,8 +81,7 @@ X3DPointGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNod
          attribNodes    = this .getAttrib (),
          attribBuffers  = this .getAttribBuffers ();
 
-      if (blendModeNode)
-         blendModeNode .enable (gl);
+      blendModeNode?.enable (gl);
 
       // Setup shader.
 
@@ -110,8 +109,7 @@ X3DPointGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNod
 
       gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
 
-      if (blendModeNode)
-         blendModeNode .disable (gl);
+      blendModeNode?.disable (gl);
    },
    displayParticles: function (gl, renderContext, particleSystem)
    {
@@ -122,8 +120,7 @@ X3DPointGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNod
          attribNodes    = this .getAttrib (),
          attribBuffers  = this .getAttribBuffers ();
 
-      if (blendModeNode)
-         blendModeNode .enable (gl);
+      blendModeNode?.enable (gl);
 
       // Setup shader.
 
@@ -162,8 +159,7 @@ X3DPointGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNod
 
       gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
-      if (blendModeNode)
-         blendModeNode .disable (gl);
+      blendModeNode?.disable (gl);
    },
 });
 
