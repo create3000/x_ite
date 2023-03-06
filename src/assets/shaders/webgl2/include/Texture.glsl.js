@@ -191,7 +191,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
       {
          // Get texture color.
 
-         vec3 texCoord     = getTexCoord (i, i);
+         vec3 texCoord     = getTexCoord (min (i, X3D_NUM_TEXTURE_TRANSFORMS - 1), min (i, X3D_NUM_TEXTURE_COORDINATES - 1));
          vec4 textureColor = getTexture (i, texCoord);
 
          // Multi texturing

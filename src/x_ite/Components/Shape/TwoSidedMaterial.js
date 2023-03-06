@@ -248,6 +248,7 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .p
    {
       this .setTransparent (Boolean (this ._transparency .getValue () || (this ._separateBackColor .getValue () && this ._backTransparency .getValue ())));
    },
+   getBaseTexture: Material .prototype .getBaseTexture,
    getMaterialKey: Material .prototype .getMaterialKey,
    createShader: Material .prototype .createShader,
    setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, front)

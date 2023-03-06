@@ -71,15 +71,9 @@ X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (X3DTe
    },
    getTextureTransformMapping: function (textureTransformMapping, channel = 0)
    {
-      if (this ._mapping .getValue ())
-         textureTransformMapping .set (this ._mapping .getValue (), channel);
+      textureTransformMapping .set (this ._mapping .getValue () || channel, channel);
    },
-   setShaderUniforms: function (gl, shaderObject)
-   {
-      for (let i = 0, length = shaderObject .x3d_TextureMatrix .length; i < length; ++ i)
-         this .setShaderUniformsToChannel (gl, shaderObject, i);
-   },
-   setShaderUniformsToChannel: function (gl, shaderObject, channel = 0)
+   setShaderUniforms: function (gl, shaderObject, channel = 0)
    {
       gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [channel], false, this .matrixArray);
    },

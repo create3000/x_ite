@@ -77,15 +77,9 @@ X3DSingleTextureCoordinateNode .prototype = Object .assign (Object .create (X3DT
    },
    getTextureCoordinateMapping: function (textureCoordinateMapping, channel = 0)
    {
-      if (this ._mapping .getValue ())
-         textureCoordinateMapping .set (this ._mapping .getValue (), channel);
+      textureCoordinateMapping .set (this ._mapping .getValue () || channel, channel);
    },
-   setShaderUniforms: function (gl, shaderObject)
-   {
-      for (let i = 0, length = this .maxTexCoords; i < length; ++ i)
-         this .setShaderUniformsToChannel (gl, shaderObject, i);
-   },
-   setShaderUniformsToChannel: function (gl, shaderObject, channel = 0)
+   setShaderUniforms: function (gl, shaderObject, channel = 0)
    {
       gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [channel], 0);
    },

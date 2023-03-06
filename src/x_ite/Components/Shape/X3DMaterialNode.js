@@ -88,6 +88,10 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
    {
       return this ._transparent .getValue ();
    },
+   getBaseTexture: function ()
+   {
+      return undefined;
+   },
    setTexture: function (index, textureNode)
    {
       const textureType = textureNode ? textureNode .getTextureType () - 1 : 0;
@@ -212,37 +216,37 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
             options .push ("X3D_STYLE_PROPERTIES");
 
          if (+this .textureBits)
-         {
             options .push ("X3D_MATERIAL_TEXTURES");
-            options .push ("X3D_NUM_TEXTURE_TRANSFORMS " + (appearanceNode .getTextureTransformMapping () .size || 1));
-            options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .getTextureCoordinateMapping () .size || 1));
+
+         if (renderContext .textureNode)
+         {
+            // ScreenText
+
+            options .push ("X3D_TEXTURE",
+                           "X3D_NUM_TEXTURES 1",
+                           "X3D_NUM_TEXTURE_TRANSFORMS 1",
+                           "X3D_NUM_TEXTURE_COORDINATES 1",
+                           "X3D_TEXTURE0_2D");
          }
          else
          {
-            if (renderContext .textureNode)
-            {
-               // ScreenText
-
-               options .push ("X3D_TEXTURE",
-                              "X3D_NUM_TEXTURES 1",
-                              "X3D_NUM_TEXTURE_TRANSFORMS 1",
-                              "X3D_NUM_TEXTURE_COORDINATES 1",
-                              "X3D_TEXTURE0_2D");
-            }
-            else if (+appearanceNode .getTextureBits ())
+            if (+appearanceNode .getTextureBits () && !this .getBaseTexture ())
             {
                const textureNode = appearanceNode .getTexture ();
 
                options .push ("X3D_TEXTURE");
                options .push ("X3D_NUM_TEXTURES "            + textureNode .getCount ());
-               options .push ("X3D_NUM_TEXTURE_TRANSFORMS "  + textureNode .getCount ());
-               options .push ("X3D_NUM_TEXTURE_COORDINATES " + textureNode .getCount ());
+               options .push ("X3D_NUM_TEXTURE_TRANSFORMS "  + (appearanceNode .getTextureTransformMapping () .size || 1));
+               options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .textureCoordinateMapping .size || 1));
 
                textureNode .getShaderOptions (options);
 
-               if (textureNode .getType () .includes (X3DConstants .MultiTexture))
+               if (textureNode .getCount () > 1)
                   options .push ("X3D_MULTI_TEXTURING");
             }
+
+            options .push ("X3D_NUM_TEXTURE_TRANSFORMS " + (appearanceNode .getTextureTransformMapping () .size || 1));
+            options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .textureCoordinateMapping .size || 1));
          }
 
          switch (shapeNode .getShapeKey ())

@@ -116,34 +116,15 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
       for (let i = 0; i < length; ++ i)
          textureTransformNodes [i] .getTextureTransformMapping (textureTransformMapping, i);
    },
-   setShaderUniforms: (function ()
+   setShaderUniforms: function (gl, shaderObject)
    {
-      const matrixArray = new Float32Array (Matrix4 .Identity);
+      const
+         textureTransformNodes = this .textureTransformNodes,
+         length                = Math .min (this .maxTextureTransforms, textureTransformNodes .length);
 
-      return function (gl, shaderObject)
-      {
-         const
-            textureTransformNodes = this .textureTransformNodes,
-            maxTextureTransforms  = shaderObject .x3d_TextureMatrix .length,
-            length                = Math .min (maxTextureTransforms, textureTransformNodes .length);
-
-         for (let i = 0; i < length; ++ i)
-            textureTransformNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
-
-         if (length)
-         {
-            const last = textureTransformNodes .at (-1);
-
-            for (let i = length, l = maxTextureTransforms; i < l; ++ i)
-               last .setShaderUniformsToChannel (gl, shaderObject, i);
-         }
-         else
-         {
-            for (let i = length, l = maxTextureTransforms; i < l; ++ i)
-               gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [i], false, matrixArray);
-         }
-      };
-   })(),
+      for (let i = 0; i < length; ++ i)
+         textureTransformNodes [i] .setShaderUniforms (gl, shaderObject, i);
+   },
    transformPoint: function (texCoord)
    {
       if (this .textureTransformNodes .length)

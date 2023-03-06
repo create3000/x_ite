@@ -138,7 +138,7 @@ TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingl
    {
       array .push (0, 0, 0, 1);
    },
-   setShaderUniformsToChannel: function (gl, shaderObject, channel = 0)
+   setShaderUniforms: function (gl, shaderObject, channel = 0)
    {
       gl .uniform1i  (shaderObject .x3d_TextureCoordinateGeneratorMode [channel],      this .mode);
       gl .uniform1fv (shaderObject .x3d_TextureCoordinateGeneratorParameter [channel], this .parameter);

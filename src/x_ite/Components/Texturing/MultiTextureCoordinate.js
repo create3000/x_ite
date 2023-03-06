@@ -162,20 +162,7 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
          length                 = Math .min (this .maxTexCoords, textureCoordinateNodes .length);
 
       for (let i = 0; i < length; ++ i)
-         textureCoordinateNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
-
-      if (length)
-      {
-         const last = textureCoordinateNodes .at (-1);
-
-         for (let i = length, l = this .maxTexCoords; i < l; ++ i)
-            last .setShaderUniformsToChannel (gl, shaderObject, i);
-      }
-      else
-      {
-         for (let i = length, l = this .maxTexCoords; i < l; ++ i)
-            gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
-      }
+         textureCoordinateNodes [i] .setShaderUniforms (gl, shaderObject, i);
    },
 });
 

@@ -115,6 +115,10 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterial
    {
       this .setTransparent (Boolean (this .transparency));
    },
+   getBaseTexture: function ()
+   {
+      return this .getEmissiveTexture ();
+   },
    getEmissiveTexture: function ()
    {
       return this .emissiveTextureNode;

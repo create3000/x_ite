@@ -214,6 +214,10 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
       this .setTransparent (!!(this .getTransparency () ||
                               (this .diffuseTextureNode && this .diffuseTextureNode .isTransparent ())));
    },
+   getBaseTexture: function ()
+   {
+      return this .diffuseTexture;
+   },
    getTextureIndices: (function ()
    {
       let i = 0;
