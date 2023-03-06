@@ -913,7 +913,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return null;
 
       if (texture .extensions instanceof Object)
-         texture .mapping = this .textureTransformObject (texture .extensions .KHR_texture_transform, texture .texCoord);
+         texture .mapping = this .textureTransformObject (texture .extensions .KHR_texture_transform, texture .texCoord || 0);
       else
          texture .mapping = `TEXCOORD_${texture .texCoord || 0}`;
 
