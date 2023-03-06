@@ -461,7 +461,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       const
          offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
-      this .timeSensor ._cycleInterval = layerNode .getNavigationInfo () ._transitionTime .getValue ();
+      this .timeSensor ._cycleInterval = 1;
       this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
       this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
@@ -492,7 +492,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
    },
    straightenView: function (layerNode)
    {
-      this .timeSensor ._cycleInterval = layerNode .getNavigationInfo () ._transitionTime .getValue ();
+      this .timeSensor ._cycleInterval = 1;
       this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
       this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
