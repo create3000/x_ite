@@ -732,9 +732,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (material .appearanceNode)
          return material .appearanceNode;
 
-      if (!(material .extensions instanceof Object))
-         material .extensions = { };
-
       this .mappings = this .textureMappings ("", material);
 
       this .textureTransformNodes .clear ();
@@ -808,7 +805,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const materials = [
          this .pbrMetallicRoughnessObject .bind (this, material .pbrMetallicRoughness),
-         this .pbrSpecularGlossinessObject .bind (this, material .extensions .KHR_materials_pbrSpecularGlossiness),
+         this .pbrSpecularGlossinessObject .bind (this, material .extensions?.KHR_materials_pbrSpecularGlossiness),
          this .pbrMetallicRoughnessObject .bind (this, { }),
       ];
 
