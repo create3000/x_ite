@@ -90,7 +90,7 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
    },
    getBaseTexture: function ()
    {
-      return undefined;
+      return null;
    },
    setTexture: function (index, textureNode)
    {
