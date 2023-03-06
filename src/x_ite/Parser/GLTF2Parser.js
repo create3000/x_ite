@@ -791,18 +791,18 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return material .appearanceNode = appearanceNode;
    },
-   texCoordIndices: function (key, object, mappings = new Set ())
+   texCoordIndices: function (key, object, indices = new Set ())
    {
       if (!(object instanceof Object))
-         return mappings;
+         return indices;
 
       if (key .endsWith ("Texture") && !object?.extensions?.KHR_texture_transform)
-         mappings .add (object .texCoord || 0);
+         indices .add (object .texCoord || 0);
 
       for (const [key, value] of Object .entries (object))
-         this .texCoordIndices (key, value, mappings);
+         this .texCoordIndices (key, value, indices);
 
-      return mappings;
+      return indices;
    },
    createMaterial: function (material)
    {
