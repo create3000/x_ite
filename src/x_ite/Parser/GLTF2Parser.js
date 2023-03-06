@@ -762,14 +762,18 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       for (let i = 0, length = this .mappings + 1; i < length; ++ i)
       {
-         const
-            textureTransformNode = scene .createNode ("TextureTransform", false),
-            mapping              = `TEXCOORD_${i}`;
+         const mapping = `TEXCOORD_${i}`;
 
-         textureTransformNode ._mapping = mapping;
-         textureTransformNode .setup ();
+         if (this .textureTransformNodes .size)
+         {
+            const textureTransformNode = scene .createNode ("TextureTransform", false);
 
-         this .textureTransformNodes .set (mapping, textureTransformNode);
+            textureTransformNode ._mapping = mapping;
+            textureTransformNode .setup ();
+
+            this .textureTransformNodes .set (mapping, textureTransformNode);
+         }
+
          this .texCoords .set (mapping, i);
       }
 
