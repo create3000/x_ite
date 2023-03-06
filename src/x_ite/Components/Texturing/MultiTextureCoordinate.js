@@ -139,14 +139,20 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
    },
    init: function (multiArray)
    {
-      for (const textureCoordinateNode of this .textureCoordinateNodes)
-         textureCoordinateNode .init (multiArray);
+      const
+         textureCoordinateNodes = this .textureCoordinateNodes,
+         length                 = Math .min (this .maxTexCoords, textureCoordinateNodes .length);
+
+      for (let i = 0; i < length; ++ i)
+         textureCoordinateNodes [i] .init (multiArray);
    },
    addPoint: function (index, multiArray)
    {
-      const textureCoordinateNodes = this .textureCoordinateNodes;
+      const
+         textureCoordinateNodes = this .textureCoordinateNodes,
+         length                 = Math .min (this .maxTexCoords, textureCoordinateNodes .length);
 
-      for (let i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
+      for (let i = 0; i < length; ++ i)
          textureCoordinateNodes [i] .addPointToChannel (index, multiArray [i]);
    },
    getTextureCoordinateMapping: function (textureCoordinateMapping)
