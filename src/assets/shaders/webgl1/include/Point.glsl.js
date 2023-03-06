@@ -27,7 +27,7 @@ setPointTexCoords ()
 
 #else
 
-#define setTexCoords()
+#define setPointTexCoords()
 
 varying float pointSize;
 
