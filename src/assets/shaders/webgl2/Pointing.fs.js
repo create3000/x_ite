@@ -35,7 +35,7 @@ main ()
       if (getPointColor (vec4 (1.0)) .a < 0.5)
          discard;
 
-      setTexCoords ();
+      setPointTexCoords ();
    #endif
 
    #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)

@@ -30,7 +30,7 @@ main ()
       if (getPointColor (vec4 (1.0)) .a < 0.5)
          discard;
 
-      setTexCoords ();
+      setPointTexCoords ();
    #endif
 
    gl_FragData [0] = vec4 (vertex, x3d_Id);
