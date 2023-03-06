@@ -53,10 +53,6 @@ function X3DTextureTransformNode (executionContext)
    X3DAppearanceChildNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DTextureTransformNode);
-
-   const browser = this .getBrowser ();
-
-   this .maxTextureTransforms = browser .getMaxTextureTransforms ();
 }
 
 X3DTextureTransformNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),

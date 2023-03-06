@@ -53,10 +53,6 @@ function X3DTextureCoordinateNode (executionContext)
    X3DGeometricPropertyNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DTextureCoordinateNode);
-
-   const browser = this .getBrowser ();
-
-   this .maxTexCoords = browser .getMaxTexCoords ();
 }
 
 X3DTextureCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),

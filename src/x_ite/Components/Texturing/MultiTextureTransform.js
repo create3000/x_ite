@@ -51,7 +51,6 @@ import FieldDefinitionArray    from "../../Base/FieldDefinitionArray.js";
 import X3DTextureTransformNode from "./X3DTextureTransformNode.js";
 import X3DConstants            from "../../Base/X3DConstants.js";
 import X3DCast                 from "../../Base/X3DCast.js";
-import Matrix4                 from "../../../standard/Math/Numbers/Matrix4.js";
 
 function MultiTextureTransform (executionContext)
 {
@@ -59,6 +58,9 @@ function MultiTextureTransform (executionContext)
 
    this .addType (X3DConstants .MultiTextureTransform);
 
+   const browser = this .getBrowser ();
+
+   this .maxTextureTransforms  = browser .getMaxTextureTransforms ();
    this .textureTransformNodes = [ ];
 }
 
