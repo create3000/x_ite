@@ -63,6 +63,9 @@ function MultiTexture (executionContext)
 
    this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
+   const browser = this .getBrowser ();
+
+   this .maxTextures  = browser .getMaxTextures ()
    this .color        = new Float32Array (4);
    this .modes        = [ ];
    this .alphaModes   = [ ];
@@ -116,13 +119,9 @@ MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .protot
 
       this ._loadState = X3DConstants .COMPLETE_STATE;
    },
-   getTextureType: function ()
-   {
-      return 5;
-   },
    getCount: function ()
    {
-      return Math .min (this .getBrowser () .getMaxTextures (), this .textureNodes .length);
+      return Math .min (this .maxTextures, this .textureNodes .length);
    },
    getMode: function (index)
    {
@@ -285,7 +284,7 @@ MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .protot
    updateTextureBits: function (textureBits)
    {
       const
-         maxTextures  = this .getBrowser () .getMaxTextures (),
+         maxTextures  = this .maxTextures,
          textureNodes = this .textureNodes,
          channels     = Math .min (maxTextures, textureNodes .length);
 
@@ -298,7 +297,7 @@ MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .protot
    {
       const
          textureNodes = this .textureNodes,
-         channels     = Math .min (this .getBrowser () .getMaxTextures (), textureNodes .length);
+         channels     = Math .min (this .maxTextures, textureNodes .length);
 
       for (let i = 0; i < channels; ++ i)
          textureNodes [i] .getShaderOptions (options, i);
@@ -312,7 +311,7 @@ MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .protot
    {
       const
          textureNodes = this .textureNodes,
-         channels     = Math .min (this .getBrowser () .getMaxTextures (), textureNodes .length);
+         channels     = Math .min (this .maxTextures, textureNodes .length);
 
       gl .uniform4fv (shaderObject .x3d_MultiTextureColor, this .color);
 

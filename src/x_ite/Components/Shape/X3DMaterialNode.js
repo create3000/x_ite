@@ -129,7 +129,6 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          key += ".";
          key += textureNode ? 1 : appearanceNode .getTextureBits () .toString (4);
          key += ".";
-         key += textureNode ? 2 : appearanceNode .getTexture ()?.getTextureType () || 0;
          key += appearanceNode .getTextureTransformMapping () .size || 1;
          key += geometryContext .textureCoordinateMapping .size || 1;
          key += this .getMaterialKey (shadows);
@@ -147,8 +146,6 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          key += objectsCount [2]; // Texture projectors
          key += ".";
          key += textureNode ? 1 : 0;
-         key += ".";
-         key += textureNode ? 2 : 0;
          key += ".11";
          key += this .getMaterialKey (false);
       }
