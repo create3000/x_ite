@@ -18,6 +18,14 @@ uniform float x3d_AlphaCutoff;
       #if X3D_NUM_TEXTURE_COORDINATES > 1
          in vec4 texCoord1;
       #endif
+
+      #if X3D_NUM_TEXTURE_COORDINATES > 2
+         in vec4 texCoord2;
+      #endif
+
+      #if X3D_NUM_TEXTURE_COORDINATES > 3
+         in vec4 texCoord3;
+      #endif
    #endif
 #else
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
@@ -27,6 +35,14 @@ uniform float x3d_AlphaCutoff;
 
       #if X3D_NUM_TEXTURE_COORDINATES > 1
          vec4 texCoord1 = vec4 (0.0, 0.0, 0.0, 1.0);
+      #endif
+
+      #if X3D_NUM_TEXTURE_COORDINATES > 2
+         vec4 texCoord2 = vec4 (0.0, 0.0, 0.0, 1.0);
+      #endif
+
+      #if X3D_NUM_TEXTURE_COORDINATES > 3
+         vec4 texCoord3 = vec4 (0.0, 0.0, 0.0, 1.0);
       #endif
    #endif
 #endif

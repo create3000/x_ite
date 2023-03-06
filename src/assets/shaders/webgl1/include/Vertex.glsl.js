@@ -23,6 +23,14 @@ uniform mat4 x3d_ModelViewMatrix;
       #if X3D_NUM_TEXTURE_COORDINATES > 1
          attribute vec4 x3d_TexCoord1;
       #endif
+
+      #if X3D_NUM_TEXTURE_COORDINATES > 2
+         attribute vec4 x3d_TexCoord2;
+      #endif
+
+      #if X3D_NUM_TEXTURE_COORDINATES > 3
+         attribute vec4 x3d_TexCoord3;
+      #endif
    #endif
 #endif
 
@@ -46,6 +54,14 @@ attribute vec4 x3d_Vertex;
 
       #if X3D_NUM_TEXTURE_COORDINATES > 1
          varying vec4 texCoord1;
+      #endif
+
+      #if X3D_NUM_TEXTURE_COORDINATES > 2
+         varying vec4 texCoord2;
+      #endif
+
+      #if X3D_NUM_TEXTURE_COORDINATES > 3
+         varying vec4 texCoord3;
       #endif
    #endif
 #endif
@@ -105,6 +121,14 @@ vertex_main ()
 
          #if X3D_NUM_TEXTURE_COORDINATES > 1
             texCoord1 = x3d_TexCoord1;
+         #endif
+
+         #if X3D_NUM_TEXTURE_COORDINATES > 2
+            texCoord1 = x3d_TexCoord2;
+         #endif
+
+         #if X3D_NUM_TEXTURE_COORDINATES > 3
+            texCoord1 = x3d_TexCoord3;
          #endif
       #endif
    #endif

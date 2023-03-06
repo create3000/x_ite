@@ -146,6 +146,14 @@ X3DTexturingContext .prototype =
    {
       return this [_maxTextures];
    },
+   getMaxTextureTransforms: function ()
+   {
+      return 4;
+   },
+   getMaxTexCoords: function ()
+   {
+      return 4;
+   },
    getMinTextureSize: function ()
    {
       return 16;

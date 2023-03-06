@@ -110,7 +110,7 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
    },
    getCount: function ()
    {
-      return Math .min (this .getBrowser () .getMaxTextures (), this .textureCoordinateNodes .length);
+      return Math .min (this .maxTexCoords, this .textureCoordinateNodes .length);
    },
    isEmpty: function ()
    {
@@ -150,7 +150,7 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
    {
       const
          textureCoordinateNodes = this .textureCoordinateNodes,
-         length                 = Math .min (this .getBrowser () .getMaxTextures (), textureCoordinateNodes .length);
+         length                 = Math .min (this .maxTexCoords, textureCoordinateNodes .length);
 
       for (let i = 0; i < length; ++ i)
          textureCoordinateNodes [i] .getTextureCoordinateMapping (textureCoordinateMapping, i);
@@ -159,7 +159,7 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
    {
       const
          textureCoordinateNodes = this .textureCoordinateNodes,
-         length                 = Math .min (shaderObject .x3d_MaxTextures, textureCoordinateNodes .length);
+         length                 = Math .min (this .maxTexCoords, textureCoordinateNodes .length);
 
       for (let i = 0; i < length; ++ i)
          textureCoordinateNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
@@ -168,12 +168,12 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
       {
          const last = textureCoordinateNodes .at (-1);
 
-         for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
+         for (let i = length, l = this .maxTexCoords; i < l; ++ i)
             last .setShaderUniformsToChannel (gl, shaderObject, i);
       }
       else
       {
-         for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
+         for (let i = length, l = this .maxTexCoords; i < l; ++ i)
             gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
       }
    },

@@ -21,6 +21,16 @@ getTextureMatrix (const in int i)
          textureMatrix = x3d_TextureMatrix [1];
       #endif
 
+      #if X3D_NUM_TEXTURE_TRANSFORMS > 2
+      else if (i == 2)
+         textureMatrix = x3d_TextureMatrix [2];
+      #endif
+
+      #if X3D_NUM_TEXTURE_TRANSFORMS > 3
+      else if (i == 3)
+         textureMatrix = x3d_TextureMatrix [3];
+      #endif
+
       return textureMatrix;
    #else
       return x3d_TextureMatrix [0];
@@ -41,6 +51,16 @@ getTexCoord (const in int i)
       #if X3D_NUM_TEXTURE_COORDINATES > 1
       else if (i == 1)
          texCoord = texCoord1;
+      #endif
+
+      #if X3D_NUM_TEXTURE_COORDINATES > 2
+      else if (i == 2)
+         texCoord = texCoord2;
+      #endif
+
+      #if X3D_NUM_TEXTURE_COORDINATES > 3
+      else if (i == 3)
+         texCoord = texCoord3;
       #endif
 
       return texCoord;

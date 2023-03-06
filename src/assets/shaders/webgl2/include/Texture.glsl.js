@@ -17,6 +17,14 @@ getTexCoord (const in int i)
          case 1:
             return texCoord1;
          #endif
+         #if X3D_NUM_TEXTURE_COORDINATES > 2
+         case 2:
+            return texCoord2;
+         #endif
+         #if X3D_NUM_TEXTURE_COORDINATES > 3
+         case 3:
+            return texCoord3;
+         #endif
       }
 
       return vec4 (0.0);

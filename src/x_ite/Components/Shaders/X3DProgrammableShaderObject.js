@@ -110,9 +110,6 @@ X3DProgrammableShaderObject .prototype =
 
       browser .getRenderingProperties () ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
 
-      // Use by multi texture nodes.
-      this .x3d_MaxTextures = browser .getMaxTextures ();
-
       this .set_logarithmicDepthBuffer__ ();
    },
    set_logarithmicDepthBuffer__: function ()
@@ -136,12 +133,14 @@ X3DProgrammableShaderObject .prototype =
       // Get uniforms and attributes.
 
       const
-         program       = this .getProgram (),
-         browser       = this .getBrowser (),
-         gl            = browser .getContext (),
-         maxClipPlanes = browser .getMaxClipPlanes (),
-         maxLights     = browser .getMaxLights (),
-         maxTextures   = browser .getMaxTextures ();
+         program              = this .getProgram (),
+         browser              = this .getBrowser (),
+         gl                   = browser .getContext (),
+         maxClipPlanes        = browser .getMaxClipPlanes (),
+         maxLights            = browser .getMaxLights (),
+         maxTextures          = browser .getMaxTextures (),
+         maxTextureTransforms = browser .getMaxTextureTransforms (),
+         maxTexCoords         = browser .getMaxTexCoords ();
 
       gl .useProgram (program);
 
@@ -242,17 +241,6 @@ X3DProgrammableShaderObject .prototype =
 
       for (let i = 0; i < maxTextures; ++ i)
       {
-         // Attributes
-
-         const x3d_TexCoord = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
-
-         if (x3d_TexCoord !== -1)
-            this .x3d_TexCoord .push ([i, x3d_TexCoord]);
-
-         // Uniforms
-
-         this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
-
          this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
          this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
 
@@ -270,6 +258,19 @@ X3DProgrammableShaderObject .prototype =
          this .x3d_ProjectiveTexture [i]         = gl .getUniformLocation (program, "x3d_ProjectiveTexture[" + i + "]");
          this .x3d_ProjectiveTextureMatrix [i]   = gl .getUniformLocation (program, "x3d_ProjectiveTextureMatrix[" + i + "]");
          this .x3d_ProjectiveTextureLocation [i] = gl .getUniformLocation (program, "x3d_ProjectiveTextureLocation[" + i + "]");
+      }
+
+      for (let i = 0; i < maxTextureTransforms; ++ i)
+      {
+         this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
+      }
+
+      for (let i = 0; i < maxTexCoords; ++ i)
+      {
+         const x3d_TexCoord = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
+
+         if (x3d_TexCoord !== -1)
+            this .x3d_TexCoord .push ([i, x3d_TexCoord]);
       }
 
       this .x3d_TexCoordRamp = gl .getUniformLocation (program, "x3d_TexCoordRamp");
@@ -355,7 +356,7 @@ X3DProgrammableShaderObject .prototype =
       for (const uniform of this .x3d_ProjectiveTexture)
          gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
 
-      gl .uniform1i  (this .x3d_TexCoordRamp, browser .getDefaultTexture2DUnit ());
+      gl .uniform1i (this .x3d_TexCoordRamp, browser .getDefaultTexture2DUnit ());
    },
    getUniformLocation: function (gl, program, name, depreciated)
    {

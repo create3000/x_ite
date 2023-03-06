@@ -178,7 +178,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       this .backFace              = new Map ([[gl .CCW, gl .CW], [gl .CW, gl .CCW]]);
       this .attribBuffers         = [ ];
       this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
-      this .texCoordBuffers       = Array .from ({length: browser .getMaxTextures ()}, () => gl .createBuffer ());
+      this .texCoordBuffers       = Array .from ({length: browser .getMaxTexCoords ()}, () => gl .createBuffer ());
       this .fogDepthBuffer        = gl .createBuffer ();
       this .colorBuffer           = gl .createBuffer ();
       this .normalBuffer          = gl .createBuffer ();
@@ -832,12 +832,12 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
          if (this .multiTexCoords .length)
          {
-            const maxTextures = this .getBrowser () .getMaxTextures ();
+            const maxTexCoords = this .getBrowser () .getMaxTexCoords ();
 
-            for (let i = this .multiTexCoords .length; i < maxTextures; ++ i)
+            for (let i = this .multiTexCoords .length; i < maxTexCoords; ++ i)
                this .multiTexCoords [i] = this .multiTexCoords .at (-1);
 
-            this .multiTexCoords .length = maxTextures;
+            this .multiTexCoords .length = maxTexCoords;
          }
 
          // Transfer arrays and update.

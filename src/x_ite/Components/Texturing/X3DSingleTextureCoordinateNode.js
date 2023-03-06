@@ -82,7 +82,7 @@ X3DSingleTextureCoordinateNode .prototype = Object .assign (Object .create (X3DT
    },
    setShaderUniforms: function (gl, shaderObject)
    {
-      for (let i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+      for (let i = 0, length = this .maxTexCoords; i < length; ++ i)
          this .setShaderUniformsToChannel (gl, shaderObject, i);
    },
    setShaderUniformsToChannel: function (gl, shaderObject, channel = 0)

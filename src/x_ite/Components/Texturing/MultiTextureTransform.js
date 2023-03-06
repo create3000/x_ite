@@ -105,13 +105,13 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
    },
    getCount: function ()
    {
-      return Math .min (this .getBrowser () .getMaxTextures (), this .textureTransformNodes .length);
+      return Math .min (this .maxTextureTransforms, this .textureTransformNodes .length);
    },
    getTextureTransformMapping: function (textureTransformMapping)
    {
       const
          textureTransformNodes = this .textureTransformNodes,
-         length                = Math .min (this .getBrowser () .getMaxTextures (), textureTransformNodes .length);
+         length                = Math .min (this .maxTextureTransforms, textureTransformNodes .length);
 
       for (let i = 0; i < length; ++ i)
          textureTransformNodes [i] .getTextureTransformMapping (textureTransformMapping, i);
@@ -124,7 +124,7 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
       {
          const
             textureTransformNodes = this .textureTransformNodes,
-            length                = Math .min (shaderObject .x3d_MaxTextures, textureTransformNodes .length);
+            length                = Math .min (this .maxTextureTransforms, textureTransformNodes .length);
 
          for (let i = 0; i < length; ++ i)
             textureTransformNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
@@ -133,12 +133,12 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
          {
             const last = textureTransformNodes .at (-1);
 
-            for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
+            for (let i = length, l = this .maxTextureTransforms; i < l; ++ i)
                last .setShaderUniformsToChannel (gl, shaderObject, i);
          }
          else
          {
-            for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
+            for (let i = length, l = this .maxTextureTransforms; i < l; ++ i)
                gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [i], false, matrixArray);
          }
       };

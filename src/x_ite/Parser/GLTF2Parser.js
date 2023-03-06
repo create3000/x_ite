@@ -85,6 +85,7 @@ function GLTF2Parser (scene)
    this .samplers              = [ ];
    this .materials             = [ ];
    this .textureTransformNodes = new Map ();
+   this .texCoords             = new Map ();
    this .cameras               = [ ];
    this .viewpoints            = 0;
    this .nodes                 = [ ];
@@ -318,6 +319,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (this .vectorValue (light .color, color))
          lightNode ._color = color;
 
+      lightNode ._global    = true;
       lightNode ._intensity = this .numberValue (light .intensity, 1);
 
       lightNode .setup ();
@@ -733,6 +735,11 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(material .extensions instanceof Object))
          material .extensions = { };
 
+      this .mappings = this .textureMappings ("", material);
+
+      this .textureTransformNodes .clear ();
+      this .texCoords .clear ();
+
       const
          scene          = this .getExecutionContext (),
          appearanceNode = scene .createNode ("Appearance", false),
@@ -744,14 +751,27 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (this .vectorValue (material .emissiveFactor, emissiveFactor))
          materialNode ._emissiveColor = emissiveFactor;
 
-      materialNode ._emissiveTextureMapping = this .textureMapping (material .emissiveTexture);
       materialNode ._emissiveTexture        = this .textureInfo    (material .emissiveTexture);
+      materialNode ._emissiveTextureMapping = this .textureMapping (material .emissiveTexture);
 
       this .occlusionTextureInfo (material .occlusionTexture, materialNode);
       this .normalTextureInfo    (material .normalTexture,    materialNode);
       this .materialExtensions   (material .extensions,       materialNode);
 
       materialNode .setup ();
+
+      for (let i = 0, length = this .mappings + 1; i < length; ++ i)
+      {
+         const
+            textureTransformNode = scene .createNode ("TextureTransform", false),
+            mapping              = `TEXCOORD_${i}`;
+
+         textureTransformNode ._mapping = mapping;
+         textureTransformNode .setup ();
+
+         this .textureTransformNodes .set (mapping, textureTransformNode);
+         this .texCoords .set (mapping, i);
+      }
 
       if (name)
       {
@@ -767,6 +787,18 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       appearanceNode .setup ();
 
       return material .appearanceNode = appearanceNode;
+   },
+   textureMappings: function (key, object)
+   {
+      if (!(object instanceof Object))
+         return -1;
+
+      let mappings = key .endsWith ("Texture") && !object?.extensions?.KHR_texture_transform ? object .texCoord || 0 : -1;
+
+      for (const [key, value] of Object .entries (object))
+         mappings = Math .max (this .textureMappings (key, value), mappings);
+
+      return mappings
    },
    materialObjectMaterial: function (material)
    {
@@ -806,10 +838,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       materialNode ._metallic  = this .numberValue (pbrMetallicRoughness .metallicFactor,  1);
       materialNode ._roughness = this .numberValue (pbrMetallicRoughness .roughnessFactor, 1);
 
-      materialNode ._baseTextureMapping              = this .textureMapping (pbrMetallicRoughness .baseColorTexture);
       materialNode ._baseTexture                     = this .textureInfo    (pbrMetallicRoughness .baseColorTexture);
-      materialNode ._metallicRoughnessTextureMapping = this .textureMapping (pbrMetallicRoughness .metallicRoughnessTexture);
+      materialNode ._baseTextureMapping              = this .textureMapping (pbrMetallicRoughness .baseColorTexture);
       materialNode ._metallicRoughnessTexture        = this .textureInfo    (pbrMetallicRoughness .metallicRoughnessTexture);
+      materialNode ._metallicRoughnessTextureMapping = this .textureMapping (pbrMetallicRoughness .metallicRoughnessTexture);
 
       return materialNode;
    },
@@ -844,21 +876,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       materialNode ._shininess = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
 
-      materialNode ._diffuseTextureMapping   = this .textureMapping (pbrSpecularGlossiness .diffuseTexture);
       materialNode ._diffuseTexture          = this .textureInfo    (pbrSpecularGlossiness .diffuseTexture);
-      materialNode ._specularTextureMapping  = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
+      materialNode ._diffuseTextureMapping   = this .textureMapping (pbrSpecularGlossiness .diffuseTexture);
       materialNode ._specularTexture         = this .textureInfo    (pbrSpecularGlossiness .specularGlossinessTexture);
-      materialNode ._shininessTextureMapping = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
+      materialNode ._specularTextureMapping  = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
       materialNode ._shininessTexture        = this .textureInfo    (pbrSpecularGlossiness .specularGlossinessTexture);
+      materialNode ._shininessTextureMapping = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
 
       return materialNode;
-   },
-   textureMapping: function (texture)
-   {
-      if (!(texture instanceof Object))
-         return "";
-
-      return "TEXCOORD_" + (texture .texCoord || 0);
    },
    occlusionTextureInfo: function (occlusionTexture, materialNode)
    {
@@ -866,8 +891,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return null;
 
       materialNode ._occlusionStrength       = this .numberValue (occlusionTexture .strength, 1);
-      materialNode ._occlusionTextureMapping = this .textureMapping (occlusionTexture);
       materialNode ._occlusionTexture        = this .textureInfo (occlusionTexture);
+      materialNode ._occlusionTextureMapping = this .textureMapping (occlusionTexture);
    },
    normalTextureInfo: function (normalTexture, materialNode)
    {
@@ -875,8 +900,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return null;
 
       materialNode ._normalScale          = this .numberValue (normalTexture .scale, 1);
-      materialNode ._normalTextureMapping = this .textureMapping (normalTexture);
       materialNode ._normalTexture        = this .textureInfo (normalTexture);
+      materialNode ._normalTextureMapping = this .textureMapping (normalTexture);
    },
    textureInfo: function (texture)
    {
@@ -884,9 +909,18 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return null;
 
       if (texture .extensions instanceof Object)
-         this .textureTransformObject (texture .extensions .KHR_texture_transform, this .textureMapping (texture));
+         texture .mapping = this .textureTransformObject (texture .extensions .KHR_texture_transform, texture .texCoord);
+      else
+         texture .mapping = `TEXCOORD_${texture .texCoord || 0}`;
 
       return this .textureObject (this .textures [texture .index]);
+   },
+   textureMapping: function (texture)
+   {
+      if (!(texture instanceof Object))
+         return "";
+
+      return texture .mapping;
    },
    materialExtensions: function (extensions, materialNode)
    {
@@ -939,7 +973,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       materialNode ._emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
    },
-   textureTransformObject: function (KHR_texture_transform, mapping)
+   textureTransformObject: function (KHR_texture_transform, texCoord)
    {
       if (!(KHR_texture_transform instanceof Object))
          return;
@@ -947,9 +981,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!this .extensions .has ("KHR_texture_transform"))
          return;
 
+      if (KHR_texture_transform .texCoord !== undefined)
+         texCoord = KHR_texture_transform .texCoord;
+
       const
          scene                = this .getExecutionContext (),
-         textureTransformNode = scene .createNode ("TextureTransformMatrix3D", false);
+         textureTransformNode = scene .createNode ("TextureTransformMatrix3D", false),
+         mapping              = `TEXCOORD_${this .mappings + this .textureTransformNodes .size + 1}`;
 
       const
          translation = new Vector2 (0, 0),
@@ -970,6 +1008,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       textureTransformNode .setup ();
 
       this .textureTransformNodes .set (mapping, textureTransformNode);
+      this .texCoords .set (mapping, texCoord);
+
+      return mapping;
    },
    meshesArray: function (meshes)
    {
@@ -1709,8 +1750,6 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const textureTransformNodes = [... this .textureTransformNodes .values ()]
          .sort ((a, b) => Algorithm .cmp (a ._mapping .getValue (), b ._mapping .getValue ()));
 
-      this .textureTransformNodes .clear ();
-
       switch (textureTransformNodes .length)
       {
          case 0:
@@ -2047,7 +2086,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (texCoords .textureCoordinateNode)
          return texCoords .textureCoordinateNode;
 
-      switch (texCoords .length)
+      switch (this .texCoords .size)
       {
          case 0:
          {
@@ -2055,12 +2094,13 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          case 1:
          {
-            return texCoords .textureCoordinateNode = this .createTextureCoordinate (texCoords [0], 0);
+            return texCoords .textureCoordinateNode = [... this .texCoords .entries ()]
+               .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping)) [0];
          }
          default:
          {
-            const textureCoordinateNodes = texCoords
-               .map ((texCoord, i) => this .createTextureCoordinate (texCoord, i))
+            const textureCoordinateNodes = [... this .texCoords .entries ()]
+               .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
                .filter (node => node)
                .sort ((a, b) => Algorithm .cmp (a ._mapping .getValue (), b ._mapping .getValue ()));
 
@@ -2087,19 +2127,19 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (texCoord .type !== "VEC2")
          return null;
 
-      if (texCoord .textureCoordinateNode)
-         return texCoord .textureCoordinateNode;
+      if (texCoord [mapping])
+         return texCoord [mapping];
 
       const
          scene                 = this .getExecutionContext (),
          textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
 
-      textureCoordinateNode ._mapping = "TEXCOORD_" + mapping;
+      textureCoordinateNode ._mapping = mapping;
       textureCoordinateNode ._point   = texCoord .array;
 
       textureCoordinateNode .setup ();
 
-      return texCoord .textureCoordinateNode = textureCoordinateNode;
+      return texCoord [mapping] = textureCoordinateNode;
    },
    createNormal: function (normal)
    {
