@@ -164,7 +164,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          // https://developer.mozilla.org/en-US/docs/Web/API/createImageBitmap
          // createImageBitmap
 
-         if (gl .getVersion () === 1 && !(Algorithm .isPowerOfTwo (image .width) && Algorithm .isPowerOfTwo (image .height)))
+         if (true || gl .getVersion () === 1 && !(Algorithm .isPowerOfTwo (image .width) && Algorithm .isPowerOfTwo (image .height)))
          {
             const
                canvas = document .createElement ("canvas"),
