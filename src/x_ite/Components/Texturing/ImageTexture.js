@@ -196,18 +196,9 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
          // Determine image alpha.
 
-         const data = cx .getImageData (0, 0, width, height) .data;
-
-         let transparent = false;
-
-         for (let i = 3, length = data .length; i < length; i += 4)
-         {
-            if (data [i] !== 255)
-            {
-               transparent = true;
-               break;
-            }
-         }
+         const
+            data        = cx .getImageData (0, 0, width, height, { premultipliedAlpha: false }) .data,
+            transparent = this .isImageTransparent (data);
 
          // Upload image to GPU.
 
@@ -219,6 +210,16 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
       }
+   },
+   isImageTransparent: function (data)
+   {
+      for (let i = 3, length = data .length; i < length; i += 4)
+      {
+         if (data [i] !== 255)
+            return true;
+      }
+
+      return false;
    },
    dispose: function ()
    {
