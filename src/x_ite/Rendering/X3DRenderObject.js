@@ -1051,6 +1051,7 @@ X3DRenderObject .prototype =
       gl .depthMask (true);
       gl .enable (gl .DEPTH_TEST);
       gl .disable (gl .BLEND);
+      gl .colorMask (true, true, true, false);
 
       const opaqueShapes = this .opaqueShapes;
 
@@ -1072,6 +1073,7 @@ X3DRenderObject .prototype =
 
       gl .depthMask (false);
       gl .enable (gl .BLEND);
+      gl .colorMask (true, true, true, true);
 
       const transparentShapes = this .transparentShapes;
 
