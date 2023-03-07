@@ -9,7 +9,7 @@ x_ite: true
 ---
 <x3d-canvas
   class="teaser"
-  src="/x_ite/assets/X3D/teaser.x3d"
+  src="/x_ite/assets/X3D/teaser/teaser.x3d"
   splashScreen="false"
   contextMenu="false"
   notifications="false">
