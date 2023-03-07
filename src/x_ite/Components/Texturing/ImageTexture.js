@@ -208,7 +208,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
                width       = image .width,
                height      = image .height;
 
-            // Flip Y and scale image to next power of two if needed.
+            // Flip Y if needed.
 
             if (!this ._flipVertically .getValue ())
                this .flipImage (data, width, height, 4);
