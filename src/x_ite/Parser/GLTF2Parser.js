@@ -84,8 +84,7 @@ function GLTF2Parser (scene)
    this .accessors             = [ ];
    this .samplers              = [ ];
    this .materials             = [ ];
-   this .textureTransformNodes = new Set ();
-   this .texCoordMappings      = new Map ();
+   this .textureTransformNodes = [ ];
    this .cameras               = [ ];
    this .viewpoints            = 0;
    this .nodes                 = [ ];
@@ -474,7 +473,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   components = Components .get (accessor .type),
                   count      = accessor .count || 0,
                   stride     = byteStride ? byteStride / TypedArray .BYTES_PER_ELEMENT : components,
-                  length     = stride * count - byteOffset / TypedArray .BYTES_PER_ELEMENT,
+                  length     = Math .min (stride * count, (bufferView .byteLength - byteOffset) / TypedArray .BYTES_PER_ELEMENT),
                   array      = new TypedArray (bufferView .buffer, byteOffset, length);
 
                if (stride === components)
@@ -736,8 +735,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .texCoordIndex = [... texCoordIndices] .reduce (Math .max, -1);
 
-      this .textureTransformNodes .clear ();
-      this .texCoordMappings      .clear ();
+      this .textureTransformNodes = [ ];
+      this .texCoordMappings      = new Map ();
+      material .texCoordMappings  = this .texCoordMappings;
 
       const
          scene          = this .getExecutionContext (),
@@ -763,14 +763,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          const mapping = `TEXCOORD_${i}`;
 
-         if (this .textureTransformNodes .size)
+         if (this .textureTransformNodes .length)
          {
             const textureTransformNode = scene .createNode ("TextureTransform", false);
 
             textureTransformNode ._mapping = mapping;
             textureTransformNode .setup ();
 
-            this .textureTransformNodes .add (textureTransformNode);
+            this .textureTransformNodes .push (textureTransformNode);
          }
 
          this .texCoordMappings .set (mapping, i);
@@ -988,7 +988,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene                = this .getExecutionContext (),
          textureTransformNode = scene .createNode ("TextureTransformMatrix3D", false),
-         mapping              = `TEXCOORD_${this .texCoordIndex + this .textureTransformNodes .size + 1}`;
+         mapping              = `TEXCOORD_${this .texCoordIndex + this .textureTransformNodes .length + 1}`;
 
       const
          translation = new Vector2 (0, 0),
@@ -1008,7 +1008,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       textureTransformNode .setup ();
 
-      this .textureTransformNodes .add (textureTransformNode);
+      this .textureTransformNodes .push (textureTransformNode);
       this .texCoordMappings .set (mapping, KHR_texture_transform .texCoord ?? texCoord);
 
       return mapping;
@@ -1748,7 +1748,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!+materialNode .getTextureBits ())
          return null;
 
-      const textureTransformNodes = [... this .textureTransformNodes]
+      const textureTransformNodes = this .textureTransformNodes
          .sort ((a, b) => Algorithm .cmp (a ._mapping .getValue (), b ._mapping .getValue ()));
 
       switch (textureTransformNodes .length)
@@ -2087,7 +2087,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (texCoords .textureCoordinateNode)
          return texCoords .textureCoordinateNode;
 
-      switch (this .texCoordMappings .size)
+      switch (material .texCoordMappings .size)
       {
          case 0:
          {
@@ -2095,12 +2095,12 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          case 1:
          {
-            return texCoords .textureCoordinateNode = [... this .texCoordMappings .entries ()]
+            return texCoords .textureCoordinateNode = [... material .texCoordMappings .entries ()]
                .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping)) [0];
          }
          default:
          {
-            const textureCoordinateNodes = [... this .texCoordMappings .entries ()]
+            const textureCoordinateNodes = [... material .texCoordMappings .entries ()]
                .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
                .filter (node => node)
                .sort ((a, b) => Algorithm .cmp (a ._mapping .getValue (), b ._mapping .getValue ()));
