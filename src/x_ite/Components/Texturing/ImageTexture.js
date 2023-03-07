@@ -162,7 +162,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
             gl     = this .getBrowser () .getContext (),
             image  = this .image [0],
             canvas = this .canvas [0],
-            cx     = canvas .getContext ("2d", { willReadFrequently: true });
+            cx     = canvas .getContext ("2d", { willReadFrequently: true, alpha: true });
 
          let
             width  = image .width,
@@ -171,49 +171,28 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          // https://developer.mozilla.org/en-US/docs/Web/API/createImageBitmap
          // createImageBitmap
 
-         // Scale image if needed and flip vertically.
-
-         if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
+         if (gl .getVersion () === 1 && !(Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
          {
-            // Flip Y
-
-            canvas .width  = width;
-            canvas .height = height;
-
-            cx .clearRect (0, 0, width, height);
-            cx .save ();
-
-            if (!this ._flipVertically .getValue ())
-            {
-               cx .translate (0, height);
-               cx .scale (1, -1);
-            }
-
-            cx .drawImage (image, 0, 0);
-            cx .restore ();
-         }
-         else
-         {
-            // Flip Y and scale image to next power of two.
-
             width  = Algorithm .nextPowerOfTwo (width);
             height = Algorithm .nextPowerOfTwo (height);
-
-            canvas .width  = width;
-            canvas .height = height;
-
-            cx .clearRect (0, 0, width, height);
-            cx .save ();
-
-            if (!this ._flipVertically .getValue ())
-            {
-               cx .translate (0, height);
-               cx .scale (1, -1);
-            }
-
-            cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
-            cx .restore ();
          }
+
+         // Flip Y and scale image to next power of two if needed.
+
+         canvas .width  = width;
+         canvas .height = height;
+
+         cx .clearRect (0, 0, width, height);
+         cx .save ();
+
+         if (!this ._flipVertically .getValue ())
+         {
+            cx .translate (0, height);
+            cx .scale (1, -1);
+         }
+
+         cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
+         cx .restore ();
 
          // Determine image alpha.
 
@@ -229,6 +208,8 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
                break;
             }
          }
+
+         // Upload image to GPU.
 
          this .setTexture (width, height, transparent, data, false);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
