@@ -125,7 +125,7 @@ const Bookmarks = (function ()
             base  = url .replace (/(?:\.O)?\.[^\.]+$/, ""),
             local = base .replace (/https:\/\/create3000.github.io\/(.*?)\//, "http://192.168.0.18/$1/docs/");
 
-         $(".file") .text (url)
+         $("#file") .text (url)
             .append ($("<a/>")
             .attr ('href', base + ".x3d")
             .on ("click", () => this .loadURL (base + ".x3d") && false)
