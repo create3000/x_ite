@@ -208,14 +208,9 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
                width       = image .width,
                height      = image .height;
 
-            // Flip Y if needed.
-
-            if (!this ._flipVertically .getValue ())
-               this .flipImage (data, width, height, 4);
-
             // Upload image to GPU.
 
-            this .setTexture (width, height, transparent, data, false);
+            this .setTexture (width, height, transparent, data, !this ._flipVertically .getValue ());
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
       }
