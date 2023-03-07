@@ -192,70 +192,70 @@ const Context =
 
       // Async functions
 
-      Object .assign (gl, gl .getVersion () === 1
-      ? {
-         readPixelsAsync: gl .readPixels,
-      }
-      : {
-         clientWaitAsync: function (sync, flags, timeout)
-         {
-            return new Promise ((resolve, reject) =>
-            {
-               const check = () =>
-               {
-                  const result = this .clientWaitSync (sync, flags, 0);
+      // Object .assign (gl, gl .getVersion () === 1
+      // ? {
+      //    readPixelsAsync: gl .readPixels,
+      // }
+      // : {
+      //    clientWaitAsync: function (sync, flags, timeout)
+      //    {
+      //       return new Promise ((resolve, reject) =>
+      //       {
+      //          const check = () =>
+      //          {
+      //             const result = this .clientWaitSync (sync, flags, 0);
 
-                  switch (result)
-                  {
-                     case this .WAIT_FAILED:
-                     {
-                        reject ();
-                        return;
-                     }
-                     case this .TIMEOUT_EXPIRED:
-                     {
-                        setTimeout (check, timeout);
-                        return;
-                     }
-                     default:
-                     {
-                        resolve ();
-                        return;
-                     }
-                  }
-               };
+      //             switch (result)
+      //             {
+      //                case this .WAIT_FAILED:
+      //                {
+      //                   reject ();
+      //                   return;
+      //                }
+      //                case this .TIMEOUT_EXPIRED:
+      //                {
+      //                   setTimeout (check, timeout);
+      //                   return;
+      //                }
+      //                default:
+      //                {
+      //                   resolve ();
+      //                   return;
+      //                }
+      //             }
+      //          };
 
-               check ();
-            });
-         },
-         getBufferSubDataAsync: async function (target, buffer, srcByteOffset, dstBuffer, /* optional */ dstOffset, /* optional */ length)
-         {
-            const sync = this .fenceSync (this .SYNC_GPU_COMMANDS_COMPLETE, 0);
+      //          check ();
+      //       });
+      //    },
+      //    getBufferSubDataAsync: async function (target, buffer, srcByteOffset, dstBuffer, /* optional */ dstOffset, /* optional */ length)
+      //    {
+      //       const sync = this .fenceSync (this .SYNC_GPU_COMMANDS_COMPLETE, 0);
 
-            this .flush ();
+      //       this .flush ();
 
-            await this .clientWaitAsync (sync, 0, 10);
+      //       await this .clientWaitAsync (sync, 0, 10);
 
-            this .deleteSync (sync);
+      //       this .deleteSync (sync);
 
-            this .bindBuffer (target, buffer);
-            this .getBufferSubData (target, srcByteOffset, dstBuffer, dstOffset, length);
-            this .bindBuffer (target, null);
-         },
-         readPixelsAsync: async function (x, y, w, h, format, type, dest, dstOffset)
-         {
-            const buffer = this .createBuffer ();
+      //       this .bindBuffer (target, buffer);
+      //       this .getBufferSubData (target, srcByteOffset, dstBuffer, dstOffset, length);
+      //       this .bindBuffer (target, null);
+      //    },
+      //    readPixelsAsync: async function (x, y, w, h, format, type, dest, dstOffset)
+      //    {
+      //       const buffer = this .createBuffer ();
 
-            this .bindBuffer (this .PIXEL_PACK_BUFFER, buffer);
-            this .bufferData (this .PIXEL_PACK_BUFFER, dest .byteLength, this .STREAM_READ);
-            this .readPixels (x, y, w, h, format, type, 0);
-            this .bindBuffer (this .PIXEL_PACK_BUFFER, null);
+      //       this .bindBuffer (this .PIXEL_PACK_BUFFER, buffer);
+      //       this .bufferData (this .PIXEL_PACK_BUFFER, dest .byteLength, this .STREAM_READ);
+      //       this .readPixels (x, y, w, h, format, type, 0);
+      //       this .bindBuffer (this .PIXEL_PACK_BUFFER, null);
 
-            await this .getBufferSubDataAsync (this .PIXEL_PACK_BUFFER, buffer, 0, dest, dstOffset);
+      //       await this .getBufferSubDataAsync (this .PIXEL_PACK_BUFFER, buffer, 0, dest, dstOffset);
 
-            this .deleteBuffer (buffer);
-         },
-      });
+      //       this .deleteBuffer (buffer);
+      //    },
+      // });
 
       // Return context.
 
