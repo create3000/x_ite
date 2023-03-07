@@ -193,10 +193,12 @@ const Context =
       // Async functions
 
       Object .assign (gl, gl .getVersion () === 1
-      ? {
+      ?
+      {
          readPixelsAsync: gl .readPixels,
       }
-      : {
+      :
+      {
          clientWaitAsync: function (sync, flags, timeout)
          {
             return new Promise ((resolve, reject) =>
