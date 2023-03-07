@@ -62,7 +62,6 @@ function ImageTexture (executionContext)
    this .addType (X3DConstants .ImageTexture);
 
    this .image    = $("<img></img>");
-   this .canvas   = $("<canvas></canvas>");
    this .urlStack = new Fields .MFString ();
 }
 
@@ -148,7 +147,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       this .loadNext ();
    },
-   setImage: function ()
+   setImage: async function ()
    {
       if (DEBUG)
       {
@@ -159,45 +158,21 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       try
       {
          const
-            gl     = this .getBrowser () .getContext (),
-            image  = this .image [0],
-            canvas = this .canvas [0],
-            cx     = canvas .getContext ("2d", { willReadFrequently: true });
-
-         let
-            width  = image .width,
-            height = image .height;
+            gl    = this .getBrowser () .getContext (),
+            image = this .image [0];
 
          // https://developer.mozilla.org/en-US/docs/Web/API/createImageBitmap
          // createImageBitmap
 
-         // Scale image if needed and flip vertically.
-
-         if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
+         if (gl .getVersion () === 1 && !(Algorithm .isPowerOfTwo (image .width) && Algorithm .isPowerOfTwo (image .height)))
          {
-            // Flip Y
+            const
+               canvas = document .createElement ("canvas"),
+               cx     = canvas .getContext ("2d", { willReadFrequently: true }),
+               width  = Algorithm .nextPowerOfTwo (image .width),
+               height = Algorithm .nextPowerOfTwo (image .height);
 
-            canvas .width  = width;
-            canvas .height = height;
-
-            cx .clearRect (0, 0, width, height);
-            cx .save ();
-
-            if (!this ._flipVertically .getValue ())
-            {
-               cx .translate (0, height);
-               cx .scale (1, -1);
-            }
-
-            cx .drawImage (image, 0, 0);
-            cx .restore ();
-         }
-         else
-         {
-            // Flip Y and scale image to next power of two.
-
-            width  = Algorithm .nextPowerOfTwo (width);
-            height = Algorithm .nextPowerOfTwo (height);
+            // Flip Y and scale image to next power of two if needed.
 
             canvas .width  = width;
             canvas .height = height;
@@ -213,31 +188,90 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
             cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
             cx .restore ();
+
+            // Determine image alpha.
+
+            const
+               data        = cx .getImageData (0, 0, width, height, { premultipliedAlpha: false }) .data,
+               transparent = this .isImageTransparent (data);
+
+            // Upload image to GPU.
+
+            this .setTexture (width, height, transparent, data, false);
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
-
-         // Determine image alpha.
-
-         const data = cx .getImageData (0, 0, width, height) .data;
-
-         let transparent = false;
-
-         for (let i = 3, length = data .length; i < length; i += 4)
+         else
          {
-            if (data [i] !== 255)
-            {
-               transparent = true;
-               break;
-            }
-         }
+            const
+               data        = await this .getImageData (image),
+               transparent = this .isImageTransparent (data),
+               width       = image .width,
+               height      = image .height;
 
-         this .setTexture (width, height, transparent, data, false);
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
+            // Flip Y if needed.
+
+            if (!this ._flipVertically .getValue ())
+               this .flipImage (data, width, height, 4);
+
+            // Upload image to GPU.
+
+            this .setTexture (width, height, transparent, data, false);
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
+         }
       }
       catch (error)
       {
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
       }
+   },
+   getImageData: async function (image)
+   {
+      const
+         gl          = this .getBrowser () .getContext (),
+         framebuffer = gl .createFramebuffer (),
+         texture     = gl .createTexture (),
+         data        = new Uint8Array (image .width * image .height * 4);
+
+      gl .bindFramebuffer (gl.FRAMEBUFFER, framebuffer);
+      gl .bindTexture (gl.TEXTURE_2D, texture);
+      gl .framebufferTexture2D (gl.FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+      await gl .readPixelsAsync (0, 0, image .width, image .height, gl.RGBA, gl.UNSIGNED_BYTE, data);
+      gl .deleteFramebuffer (framebuffer);
+      gl .deleteTexture (texture);
+
+      return data;
+   },
+   isImageTransparent: function (data)
+   {
+      for (let i = 3, length = data .length; i < length; i += 4)
+      {
+         if (data [i] !== 255)
+            return true;
+      }
+
+      return false;
+   },
+   flipImage (data, width, height, components)
+   {
+      const
+         height1_2   = height >> 1,
+         bytesPerRow = width * components,
+         tmp         = new Uint8Array (bytesPerRow);
+
+      for (let y = 0; y < height1_2; ++ y)
+      {
+         const
+            top    = y * bytesPerRow,
+            bottom = (height - y - 1) * bytesPerRow;
+
+         tmp .set (data .subarray (top, top + bytesPerRow));
+         data .copyWithin (top, bottom, bottom + bytesPerRow);
+         data .set (tmp, bottom);
+      }
+
+      return data;
    },
    dispose: function ()
    {
