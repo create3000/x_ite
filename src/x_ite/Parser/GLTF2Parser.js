@@ -737,7 +737,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .texCoordIndex = [... texCoordIndices] .reduce (Math .max, -1);
 
       this .textureTransformNodes .clear ();
-      this .texCoordMappings .clear ();
+      this .texCoordMappings      .clear ();
 
       const
          scene          = this .getExecutionContext (),

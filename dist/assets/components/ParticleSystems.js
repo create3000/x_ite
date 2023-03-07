@@ -3788,8 +3788,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
                const blendModeNode = appearanceNode .getBlendMode ();
 
-               if (blendModeNode)
-                  blendModeNode .enable (gl);
+               blendModeNode?.enable (gl);
 
                shaderNode .enable (gl);
                shaderNode .setUniforms (gl, this .geometryContext, renderContext);
@@ -3834,8 +3833,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
                gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
 
-               if (blendModeNode)
-                  blendModeNode .disable (gl);
+               blendModeNode?.disable (gl);
             }
 
             break;
