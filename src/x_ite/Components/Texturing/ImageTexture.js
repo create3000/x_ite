@@ -147,7 +147,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       this .loadNext ();
    },
-   setImage: function ()
+   setImage: async function ()
    {
       if (DEBUG)
       {
@@ -203,7 +203,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          else
          {
             const
-               data        = this .getImageData (image),
+               data        = await this .getImageData (image),
                transparent = this .isImageTransparent (data),
                width       = image .width,
                height      = image .height;
@@ -225,7 +225,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          this .setError ({ type: error .message });
       }
    },
-   getImageData: function (image)
+   getImageData: async function (image)
    {
       const
          gl          = this .getBrowser () .getContext (),
@@ -237,7 +237,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       gl .bindTexture (gl.TEXTURE_2D, texture);
       gl .framebufferTexture2D (gl.FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-      gl .readPixels (0, 0, image .width, image .height, gl.RGBA, gl.UNSIGNED_BYTE, data);
+      await gl .readPixelsAsync (0, 0, image .width, image .height, gl.RGBA, gl.UNSIGNED_BYTE, data);
       gl .deleteFramebuffer (framebuffer);
       gl .deleteTexture (texture);
 
