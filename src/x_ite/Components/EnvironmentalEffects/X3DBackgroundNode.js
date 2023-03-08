@@ -78,7 +78,7 @@ function X3DBackgroundNode (executionContext)
    this .clipPlanes            = [ ];
    this .colors                = [ ];
    this .sphere                = [ ];
-   this .textureNodes          = [ ];
+   this .textureNodes          = new Array (6);
    this .textureBits           = new BitSet ();
    this .sphereContext         = new GeometryContext ({ colorMaterial: true });
    this .sphereAlphaContext    = new GeometryContext ({ colorMaterial: true, alphaMode: AlphaMode .BLEND });
