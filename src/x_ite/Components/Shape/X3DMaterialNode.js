@@ -114,10 +114,10 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
 
       if (renderContext)
       {
-         const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, objectsCount } = renderContext;
+         const { renderObject, transparent, shadows, fogNode, shapeNode, appearanceNode, textureNode, objectsCount } = renderContext;
 
          key += this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer () ? 1 : 0;
-         key += appearanceNode .getAlphaMode (renderContext .transparent);
+         key += appearanceNode .getAlphaMode (transparent);
          key += this .getMaterialKey (shadows);
          key += shadows ? 1 : 0;
          key += fogNode ? fogNode .getFogType () : 0;
