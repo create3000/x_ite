@@ -99,7 +99,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
 
       this .colorBuffer         = gl .createBuffer ();
       this .sphereBuffer        = gl .createBuffer ();
-      this .texCoordBuffers     = new Array (browser .getMaxTextures ()) .fill (gl .createBuffer ());
+      this .texCoordBuffers     = [gl .createBuffer ()];
       this .textureBuffers      = Array .from ({length: 6}, () => gl .createBuffer ());
       this .sphereArrayObject   = new VertexArray (gl);
       this .textureArrayObjects = Array .from ({length: 6}, () => new VertexArray (gl));
