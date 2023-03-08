@@ -524,9 +524,9 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
    })(),
    drawSphere: function (renderObject)
    {
-      const transparency = this ._transparency .getValue ();
+      const transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
 
-      if (transparency >= 1)
+      if (transparency === 1)
          return;
 
       const
