@@ -341,10 +341,12 @@ function createList (description, array)
 
    for (const filename of array)
    {
-      const m = filename .match (/^([^\/]+)/);
+      const
+         match = filename .match (/^([^\/]+)/),
+         name  = match [1] .replace (/[A-Z]+/, " $1") .trim ();
 
       $("<a></a>")
-         .text (m [1])
+         .text (name)
          .attr ("href", array .server + filename)
          .appendTo ($("<li></li>") .appendTo (list))
          .on ("click", loadURL .bind (null, filename, array .server));
