@@ -104,10 +104,10 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
       this .sphereArrayObject   = new VertexArray (gl);
       this .textureArrayObjects = Array .from ({length: 6}, () => new VertexArray (gl));
 
-      this ._groundAngle  .addInterest ("build", this);
-      this ._groundColor  .addInterest ("build", this);
-      this ._skyAngle     .addInterest ("build", this);
-      this ._skyColor     .addInterest ("build", this);
+      this ._groundAngle .addInterest ("build", this);
+      this ._groundColor .addInterest ("build", this);
+      this ._skyAngle    .addInterest ("build", this);
+      this ._skyColor    .addInterest ("build", this);
 
       this .build ();
       this .transferRectangle ();
