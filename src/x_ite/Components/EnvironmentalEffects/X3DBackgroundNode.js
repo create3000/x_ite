@@ -594,11 +594,11 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
             if (!this .textureBits .get (i))
                continue;
 
-            this .drawRectangle (gl, browser, textureNode  ._transparent .getValue () ? alphaShaderNode : shaderNode, renderObject,textureNode, this .textureBuffers [i], this .textureArrayObjects [i], i);
+            this .drawRectangle (gl, browser, textureNode ._transparent .getValue () ? alphaShaderNode : shaderNode, renderObject,textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
          }
       };
    })(),
-   drawRectangle: function (gl, browser, shaderNode, renderObject, textureNode, buffer, vertexArray, i)
+   drawRectangle: function (gl, browser, shaderNode, renderObject, textureNode, buffer, vertexArray)
    {
       textureNode .setShaderUniforms (gl, shaderNode, renderObject);
 
