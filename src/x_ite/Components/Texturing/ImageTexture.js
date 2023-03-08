@@ -192,7 +192,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
             // Determine image alpha.
 
             const
-               data        = cx .getImageData (0, 0, width, height, { premultipliedAlpha: false }) .data,
+               data        = cx .getImageData (0, 0, width, height) .data,
                transparent = this .isImageTransparent (data);
 
             // Upload image to GPU.

@@ -153,6 +153,7 @@ X3DProgrammableShaderObject .prototype =
 
       this .x3d_Id                      = gl .getUniformLocation (program, "x3d_Id");
       this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
+      this .x3d_MinAlpha                = gl .getUniformLocation (program, "x3d_MinAlpha");
 
       for (let i = 0; i < maxClipPlanes; ++ i)
          this .x3d_ClipPlane [i] = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
@@ -1059,6 +1060,7 @@ X3DProgrammableShaderObject .prototype =
          // Alpha
 
          gl .uniform1f (this .x3d_AlphaCutoff, appearanceNode .getAlphaCutoff ());
+         gl .uniform1f (this .x3d_MinAlpha,    renderContext .minAlpha);
 
          // Style Properties
 

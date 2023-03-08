@@ -670,6 +670,7 @@ X3DRenderObject .prototype =
       return {
          renderObject: this,
          transparent: transparent,
+         minAlpha: transparent ? 0 : 1,
          modelViewMatrix: new Float32Array (16),
          scissor: new Vector4 (0, 0, 0, 0),
          localObjects: [ ],
@@ -1051,7 +1052,6 @@ X3DRenderObject .prototype =
       gl .depthMask (true);
       gl .enable (gl .DEPTH_TEST);
       gl .disable (gl .BLEND);
-      gl .colorMask (true, true, true, false);
 
       const opaqueShapes = this .opaqueShapes;
 
@@ -1073,7 +1073,6 @@ X3DRenderObject .prototype =
 
       gl .depthMask (false);
       gl .enable (gl .BLEND);
-      gl .colorMask (true, true, true, true);
 
       const transparentShapes = this .transparentShapes;
 

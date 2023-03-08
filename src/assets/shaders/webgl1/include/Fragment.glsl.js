@@ -8,6 +8,7 @@ export default /* glsl */ `
 #endif
 
 uniform float x3d_AlphaCutoff;
+uniform float x3d_MinAlpha;
 
 #if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
    varying float fogDepth;
@@ -117,7 +118,7 @@ fragment_main ()
    if (finalColor .a < x3d_AlphaCutoff)
       discard;
 
-   gl_FragColor = finalColor;
+   gl_FragColor = vec4 (finalColor .rgb, max (finalColor .a, x3d_MinAlpha));
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
       //https://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
