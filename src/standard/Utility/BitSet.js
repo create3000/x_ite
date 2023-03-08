@@ -53,6 +53,21 @@ function BitSet (value = 0)
 BitSet .prototype =
 {
    constructor: BitSet,
+   [Symbol .iterator]: function* ()
+   {
+      let
+         value = this .value,
+         i     = 0;
+
+      while (value)
+      {
+         if (value & 1)
+            yield i;
+
+         value >>>= 1;
+         i       += 1;
+      }
+   },
    get: function (index)
    {
       const mask = 1 << index;
@@ -72,6 +87,11 @@ BitSet .prototype =
    {
       this .value = 0;
    },
+   entries: function* ()
+   {
+      for (const i of this)
+         yield [i, i];
+   },
    valueOf: function ()
    {
       return this .value;
@@ -81,5 +101,8 @@ BitSet .prototype =
       return this .value .toString (radix);
    },
 };
+
+BitSet .prototype .keys   = BitSet .prototype [Symbol .iterator];
+BitSet .prototype .values = BitSet .prototype [Symbol .iterator];
 
 export default BitSet;
