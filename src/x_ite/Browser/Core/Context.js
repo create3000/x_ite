@@ -227,7 +227,7 @@ const Context =
                   }
                };
 
-               check ();
+               setTimeout (check, 0);
             });
          },
          getBufferSubDataAsync: async function (target, buffer, srcByteOffset, dstBuffer, /* optional */ dstOffset, /* optional */ length)
