@@ -134,11 +134,12 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
       this .set_blendMode__ ();
       this .set_transparent__ ();
    },
-   getAlphaMode: function (transparent)
+   getAlphaMode: function ()
    {
-      if (transparent === undefined)
-         return this .alphaMode;
-
+      return this .alphaMode;
+   },
+   getNormalizedAlphaMode: function (transparent)
+   {
       return this .alphaMode || (transparent ? AlphaMode .BLEND : AlphaMode .OPAQUE);
    },
    getAlphaCutoff: function ()
