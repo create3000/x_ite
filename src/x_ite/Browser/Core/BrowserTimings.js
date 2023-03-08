@@ -78,6 +78,8 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    {
       X3DBaseNode .prototype .initialize .call (this);
 
+      this .getBrowser () .getBrowserOptions () ._ContextMenu .addInterest ("set_enabled__", this);
+
       this .localStorage .addDefaultValues ({ type: "LESS" });
 
       this .element = $("<div></div>") .hide () .addClass ("x_ite-private-browser-timings") .appendTo (this .getBrowser () .getSurface ());
@@ -103,7 +105,11 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       this .enabled = enabled;
 
-      if (enabled)
+      this .set_enabled__ ();
+   },
+   set_enabled__: function ()
+   {
+      if (this .enabled && this .getBrowser () .getBrowserOption ("ContextMenu"))
       {
          this .element .stop (true, true) .fadeIn ();
          this .fps .reset ();
