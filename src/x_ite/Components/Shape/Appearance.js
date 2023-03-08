@@ -415,11 +415,11 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
       switch (this .alphaMode)
       {
          case AlphaMode .AUTO:
-            this .setTransparent (Boolean (this .stylePropertiesNode [3] && this .stylePropertiesNode [3] .isTransparent () ||
-                                  (this .materialNode && this .materialNode .isTransparent ()) ||
-                                  (this .backMaterialNode && this .backMaterialNode .isTransparent ()) ||
-                                  (this .textureNode && this .textureNode .isTransparent ()) ||
-                                  this .blendModeNode));
+            this .setTransparent (!!(this .stylePropertiesNode [3]?.isTransparent () ||
+                                     this .materialNode?.isTransparent () ||
+                                     this .backMaterialNode?.isTransparent () ||
+                                     this .textureNode?.isTransparent () ||
+                                     this .blendModeNode));
             break;
          case AlphaMode .OPAQUE:
             this .setTransparent (false);

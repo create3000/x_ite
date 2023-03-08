@@ -177,8 +177,7 @@ X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
    {
       if (this .apparanceNode .getAlphaMode () === AlphaMode .AUTO)
       {
-         this .transparent = this .apparanceNode .isTransparent () ||
-                             (this .geometryNode && this .geometryNode .isTransparent ());
+         this .transparent = !!(this .apparanceNode .isTransparent () || this .geometryNode?.isTransparent ());
       }
       else
       {

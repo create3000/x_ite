@@ -275,9 +275,10 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
             }
             default:
             {
-               this .setTransparent (this .getAppearance () .isTransparent () ||
-                                     (this .colorRampNode && this .colorRampNode .isTransparent ()) ||
-                                     (this .geometryType === GeometryTypes .GEOMETRY && this .geometryNode && this .geometryNode .isTransparent ()));
+               this .setTransparent (!!(this .getAppearance () .isTransparent () ||
+                                        this .colorRampNode?.isTransparent () ||
+                                        (this .geometryType === GeometryTypes .GEOMETRY &&
+                                         this .geometryNode?.isTransparent ())));
                break;
             }
          }

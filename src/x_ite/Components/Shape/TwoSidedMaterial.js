@@ -246,7 +246,7 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .p
    },
    set_transparent__: function ()
    {
-      this .setTransparent (Boolean (this ._transparency .getValue () || (this ._separateBackColor .getValue () && this ._backTransparency .getValue ())));
+      this .setTransparent (!!(this ._transparency .getValue () || (this ._separateBackColor .getValue () && this ._backTransparency .getValue ())));
    },
    getBaseTexture: Material .prototype .getBaseTexture,
    getMaterialKey: Material .prototype .getMaterialKey,

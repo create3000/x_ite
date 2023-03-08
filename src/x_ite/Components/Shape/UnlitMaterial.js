@@ -103,7 +103,7 @@ UnlitMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNo
    set_transparent__: function ()
    {
       this .setTransparent (!!(this .getTransparency () ||
-                              (this .getEmissiveTexture () && this .getEmissiveTexture () .isTransparent ())));
+                               this .getEmissiveTexture ()?.isTransparent ()));
    },
    getMaterialKey: function ()
    {
