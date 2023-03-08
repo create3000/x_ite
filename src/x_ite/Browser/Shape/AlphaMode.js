@@ -49,7 +49,7 @@ let i = 0;
 
 const AlphaMode =
 {
-   AUTO:   i ++,
+   AUTO:   i ++, // Must be zero!
    OPAQUE: i ++,
    MASK:   i ++,
    BLEND:  i ++,

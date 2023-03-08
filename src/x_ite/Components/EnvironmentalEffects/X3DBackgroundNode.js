@@ -49,8 +49,8 @@ import X3DBindableNode from "../Core/X3DBindableNode.js";
 import GeometryContext from "../../Browser/Rendering/GeometryContext.js";
 import VertexArray     from "../../Rendering/VertexArray.js";
 import TraverseType    from "../../Rendering/TraverseType.js";
+import AlphaMode       from "../../Browser/Shape/AlphaMode.js";
 import X3DConstants    from "../../Base/X3DConstants.js";
-import ViewVolume      from "../../../standard/Math/Geometry/ViewVolume.js";
 import Complex         from "../../../standard/Math/Numbers/Complex.js";
 import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4       from "../../../standard/Math/Numbers/Rotation4.js";
@@ -71,8 +71,6 @@ function X3DBackgroundNode (executionContext)
    this ._skyAngle    .setUnit ("angle");
    this ._groundAngle .setUnit ("angle");
 
-   const browser = this .getBrowser ();
-
    this .hidden                = false;
    this .projectionMatrixArray = new Float32Array (16);
    this .modelMatrix           = new Matrix4 ();
@@ -80,9 +78,12 @@ function X3DBackgroundNode (executionContext)
    this .clipPlanes            = [ ];
    this .colors                = [ ];
    this .sphere                = [ ];
+   this .textureNodes          = [ ];
    this .textureBits           = new BitSet ();
    this .sphereContext         = new GeometryContext ({ colorMaterial: true });
+   this .sphereAlphaContext    = new GeometryContext ({ colorMaterial: true, alphaMode: AlphaMode .BLEND });
    this .texturesContext       = new GeometryContext ({ textureNode: true });
+   this .texturesAlphaContext  = new GeometryContext ({ textureNode: true, alphaMode: AlphaMode .BLEND });
 }
 
 X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
@@ -96,22 +97,12 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      this .colorBuffer       = gl .createBuffer ();
-      this .sphereBuffer      = gl .createBuffer ();
-      this .texCoordBuffers   = new Array (browser .getMaxTextures ()) .fill (gl .createBuffer ());
-      this .frontBuffer       = gl .createBuffer ();
-      this .backBuffer        = gl .createBuffer ();
-      this .leftBuffer        = gl .createBuffer ();
-      this .rightBuffer       = gl .createBuffer ();
-      this .topBuffer         = gl .createBuffer ();
-      this .bottomBuffer      = gl .createBuffer ();
-      this .sphereArrayObject = new VertexArray (gl);
-      this .frontArrayObject  = new VertexArray (gl);
-      this .backArrayObject   = new VertexArray (gl);
-      this .leftArrayObject   = new VertexArray (gl);
-      this .rightArrayObject  = new VertexArray (gl);
-      this .topArrayObject    = new VertexArray (gl);
-      this .bottomArrayObject = new VertexArray (gl);
+      this .colorBuffer         = gl .createBuffer ();
+      this .sphereBuffer        = gl .createBuffer ();
+      this .texCoordBuffers     = new Array (browser .getMaxTextures ()) .fill (gl .createBuffer ());
+      this .textureBuffers      = Array .from ({length: 6}, () => gl .createBuffer ());
+      this .sphereArrayObject   = new VertexArray (gl);
+      this .textureArrayObjects = Array .from ({length: 6}, () => new VertexArray (gl));
 
       this ._groundAngle  .addInterest ("build", this);
       this ._groundColor  .addInterest ("build", this);
@@ -133,34 +124,33 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
    },
    set_frontTexture__: function (value)
    {
-      this .updateTexture ("frontTexture", value, 0);
+      this .updateTexture (0, value);
    },
    set_backTexture__: function (value)
    {
-      this .updateTexture ("backTexture", value, 1);
+      this .updateTexture (1, value);
    },
    set_leftTexture__: function (value)
    {
-      this .updateTexture ("leftTexture", value, 2);
+      this .updateTexture (2, value);
    },
    set_rightTexture__: function (value)
    {
-      this .updateTexture ("rightTexture", value, 3);
+      this .updateTexture (3, value);
    },
    set_topTexture__: function (value)
    {
-      this .updateTexture ("topTexture", value, 4);
+      this .updateTexture (4, value);
    },
    set_bottomTexture__: function (value)
    {
-      this .updateTexture ("bottomTexture", value, 5);
+      this .updateTexture (5, value);
    },
-   updateTexture: function (name, textureNode, index)
+   updateTexture: function (index, textureNode)
    {
-      if (this [name])
-         this [name] ._loadState .removeInterest ("setTextureBit", this);
+      this .textureNodes [index]?._loadState .removeInterest ("setTextureBit", this);
 
-      this [name] = textureNode;
+      this .textureNodes [index] = textureNode;
 
       if (textureNode)
       {
@@ -185,23 +175,11 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
       if (this ._transparency .getValue () === 0)
          return false;
 
-      if (! this .frontTexture  || this .frontTexture  ._transparent .getValue ())
+      for (const textureNode of this .textureNodes)
+      {
+         if (textureNode?._transparent .getValue ())
             return true;
-
-      if (! this .backTexture   || this .backTexture   ._transparent .getValue ())
-            return true;
-
-      if (! this .leftTexture   || this .leftTexture   ._transparent .getValue ())
-            return true;
-
-      if (! this .rightTexture  || this .rightTexture  ._transparent .getValue ())
-            return true;
-
-      if (! this .topTexture    || this .topTexture    ._transparent .getValue ())
-            return true;
-
-      if (! this .bottomTexture || this .bottomTexture ._transparent .getValue ())
-            return true;
+      }
 
       return false;
    },
@@ -376,67 +354,76 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
    {
       const s = SIZE;
 
-      const texCoords = [
+      const texCoords = new Float32Array ([
          1, 1, 0, 1,
          0, 1, 0, 1,
          0, 0, 0, 1,
          1, 1, 0, 1,
          0, 0, 0, 1,
          1, 0, 0, 1,
-      ];
+      ]);
 
-      const frontVertices = [
+      const frontVertices = new Float32Array ([
          s,  s, -s, 1,
         -s,  s, -s, 1,
         -s, -s, -s, 1,
          s,  s, -s, 1,
         -s, -s, -s, 1,
          s, -s, -s, 1,
-      ];
+      ]);
 
-      const backVertices = [
+      const backVertices = new Float32Array ([
          -s,  s,  s, 1,
           s,  s,  s, 1,
           s, -s,  s, 1,
          -s,  s,  s, 1,
           s, -s,  s, 1,
          -s, -s,  s, 1,
-      ];
+      ]);
 
-      const leftVertices = [
+      const leftVertices = new Float32Array ([
          -s,  s, -s, 1,
          -s,  s,  s, 1,
          -s, -s,  s, 1,
          -s,  s, -s, 1,
          -s, -s,  s, 1,
          -s, -s, -s, 1,
-      ];
+      ]);
 
-      const rightVertices = [
+      const rightVertices = new Float32Array ([
          s,  s,  s, 1,
          s,  s, -s, 1,
          s, -s, -s, 1,
          s,  s,  s, 1,
          s, -s, -s, 1,
          s, -s,  s, 1,
-      ];
+      ]);
 
-      const topVertices = [
+      const topVertices = new Float32Array ([
           s, s,  s, 1,
          -s, s,  s, 1,
          -s, s, -s, 1,
           s, s,  s, 1,
          -s, s, -s, 1,
           s, s, -s, 1,
-      ];
+      ]);
 
-      const bottomVertices = [
+      const bottomVertices = new Float32Array ([
           s, -s, -s, 1,
          -s, -s, -s, 1,
          -s, -s,  s, 1,
           s, -s, -s, 1,
          -s, -s,  s, 1,
           s, -s,  s, 1,
+      ]);
+
+      const vertices = [
+         frontVertices,
+         backVertices,
+         leftVertices,
+         rightVertices,
+         topVertices,
+         bottomVertices,
       ];
 
       return function ()
@@ -446,27 +433,15 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
          // Transfer texCoords.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (texCoords), gl .DYNAMIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, texCoords, gl .DYNAMIC_DRAW);
 
          // Transfer rectangle.
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .frontBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (frontVertices), gl .DYNAMIC_DRAW);
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .backBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (backVertices), gl .DYNAMIC_DRAW);
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .leftBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (leftVertices), gl .DYNAMIC_DRAW);
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .rightBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (rightVertices), gl .DYNAMIC_DRAW);
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .topBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (topVertices), gl .DYNAMIC_DRAW);
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .bottomBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (bottomVertices), gl .DYNAMIC_DRAW);
+         for (let i = 0; i < 6; ++ i)
+         {
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .textureBuffers [i]);
+            gl .bufferData (gl .ARRAY_BUFFER, vertices [i], gl .DYNAMIC_DRAW);
+         }
       };
    })(),
    traverse: function (type, renderObject)
@@ -554,7 +529,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
       const
          browser    = this .getBrowser (),
          gl         = browser .getContext (),
-         shaderNode = browser .getDefaultMaterial () .getShader (this .sphereContext);
+         shaderNode = browser .getDefaultMaterial () .getShader (transparency ? this .sphereAlphaContext : this .sphereContext);
 
       shaderNode .enable (gl);
       shaderNode .setClipPlanes (gl, this .clipPlanes);
@@ -591,9 +566,10 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
       return function (renderObject)
       {
          const
-            browser    = this .getBrowser (),
-            gl         = browser .getContext (),
-            shaderNode = browser .getDefaultMaterial () .getShader (this .texturesContext);
+            browser         = this .getBrowser (),
+            gl              = browser .getContext (),
+            shaderNode      = browser .getDefaultMaterial () .getShader (this .texturesContext),
+            alphaShaderNode = browser .getDefaultMaterial () .getShader (this .texturesAlphaContext);
 
          shaderNode .enable (gl);
          shaderNode .setClipPlanes (gl, this .clipPlanes);
@@ -610,37 +586,38 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
 
          // Draw all textures.
 
-         this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer,  this .frontArrayObject);
-         this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer,   this .backArrayObject);
-         this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer,   this .leftArrayObject);
-         this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer,  this .rightArrayObject);
-         this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer,    this .topArrayObject);
-         this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer, this .bottomArrayObject);
+         for (const [i, textureNode] of Object .entries (this .textureNodes))
+         {
+            if (!this .textureBits .get (i))
+               continue;
+
+            if (!textureNode)
+               continue;
+
+            this .drawRectangle (gl, browser, textureNode  ._transparent .getValue () ? alphaShaderNode : shaderNode, renderObject,textureNode, this .textureBuffers [i], this .textureArrayObjects [i], i);
+         }
       };
    })(),
-   drawRectangle: function (gl, browser, shaderNode, renderObject, textureNode, buffer, vertexArray)
+   drawRectangle: function (gl, browser, shaderNode, renderObject, textureNode, buffer, vertexArray, i)
    {
-      if (textureNode && (textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE || textureNode .getWidth ()))
+      textureNode .setShaderUniforms (gl, shaderNode, renderObject);
+
+      if (vertexArray .enable (gl, shaderNode))
       {
-         textureNode .setShaderUniforms (gl, shaderNode, renderObject);
-
-         if (vertexArray .enable (gl, shaderNode))
-         {
-            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-            shaderNode .enableVertexAttribute (gl, buffer, 0, 0);
-         }
-
-         // Draw.
-
-         if (textureNode ._transparent .getValue ())
-            gl .enable (gl .BLEND);
-         else
-            gl .disable (gl .BLEND);
-
-         gl .drawArrays (gl .TRIANGLES, 0, 6);
-
-         browser .resetTextureUnits ();
+         shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+         shaderNode .enableVertexAttribute (gl, buffer, 0, 0);
       }
+
+      // Draw.
+
+      if (textureNode ._transparent .getValue ())
+         gl .enable (gl .BLEND);
+      else
+         gl .disable (gl .BLEND);
+
+      gl .drawArrays (gl .TRIANGLES, 0, 6);
+
+      browser .resetTextureUnits ();
    },
 });
 

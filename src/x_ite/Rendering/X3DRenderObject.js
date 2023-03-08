@@ -670,7 +670,6 @@ X3DRenderObject .prototype =
       return {
          renderObject: this,
          transparent: transparent,
-         minAlpha: transparent ? 0 : 1,
          modelViewMatrix: new Float32Array (16),
          scissor: new Vector4 (0, 0, 0, 0),
          localObjects: [ ],

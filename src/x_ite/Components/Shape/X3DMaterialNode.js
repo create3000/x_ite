@@ -47,6 +47,7 @@
 
 import Fields                 from "../../Fields.js";
 import X3DAppearanceChildNode from "./X3DAppearanceChildNode.js";
+import AlphaMode              from "../../Browser/Shape/AlphaMode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 import BitSet                 from "../../../standard/Utility/BitSet.js";
 
@@ -116,10 +117,14 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, objectsCount } = renderContext;
 
          key += this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer () ? 1 : 0;
+         key += appearanceNode .getAlphaMode (renderContext .transparent);
+         key += this .getMaterialKey (shadows);
          key += shadows ? 1 : 0;
          key += fogNode ? fogNode .getFogType () : 0;
          key += shapeNode .getShapeKey ();
          key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
+         key += appearanceNode .getTextureTransformMapping () .size || 1;
+         key += geometryContext .textureCoordinateMapping .size || 1;
          key += ".";
          key += objectsCount [0]; // Clip planes
          key += ".";
@@ -128,17 +133,16 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          key += objectsCount [2]; // Texture projectors
          key += ".";
          key += textureNode ? 1 : appearanceNode .getTextureBits () .toString (4);
-         key += ".";
-         key += appearanceNode .getTextureTransformMapping () .size || 1;
-         key += geometryContext .textureCoordinateMapping .size || 1;
-         key += this .getMaterialKey (shadows);
       }
       else
       {
          const { textureNode, objectsCount } = geometryContext;
 
          key += this .logarithmicDepthBuffer ? 1 : 0;
-         key += "0000.";
+         key += geometryContext .alphaMode;
+         key += this .getMaterialKey (false);
+         key += "000011";
+         key += ".";
          key += objectsCount [0]; // Clip planes
          key += ".";
          key += objectsCount [1]; // Lights
@@ -146,8 +150,6 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          key += objectsCount [2]; // Texture projectors
          key += ".";
          key += textureNode ? 1 : 0;
-         key += ".11";
-         key += this .getMaterialKey (false);
       }
 
       return this .shaderNodes .get (key) || this .createShader (key, geometryContext, renderContext);
@@ -175,6 +177,19 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
 
          if (this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer ())
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
+
+         switch (appearanceNode .getAlphaMode (renderContext .transparent))
+         {
+            case AlphaMode .OPAQUE:
+               options .push ("X3D_ALPHA_MODE_OPAQUE");
+               break;
+            case AlphaMode .MASK:
+               options .push ("X3D_ALPHA_MODE_MASK");
+               break;
+            case AlphaMode .BLEND:
+               options .push ("X3D_ALPHA_MODE_BLEND");
+               break;
+         }
 
          if (renderContext .shadows)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
