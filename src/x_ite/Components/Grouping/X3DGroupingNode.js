@@ -105,7 +105,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   getHidden: function ()
+   isHidden: function ()
    {
       return this .hidden;
    },

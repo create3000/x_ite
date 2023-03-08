@@ -112,7 +112,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
       this .build ();
       this .transferRectangle ();
    },
-   getHidden: function ()
+   isHidden: function ()
    {
       return this .hidden;
    },
@@ -121,6 +121,25 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
       this .hidden = value;
 
       this .getBrowser () .addBrowserEvent ();
+   },
+   isTransparent: function ()
+   {
+      if (this .hidden)
+         return true;
+
+      if (this ._transparency .getValue () === 0)
+         return false;
+
+      for (const [i, textureNode] of Object .entries (this .textureNodes))
+      {
+         if (!this .textureBits .get (i))
+            return true;
+
+         if (textureNode?._transparent .getValue ())
+            return true;
+      }
+
+      return false;
    },
    set_frontTexture__: function (value)
    {
@@ -166,22 +185,6 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
    setTextureBit: function (bit, textureNode, loadState)
    {
       this .textureBits .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE || textureNode .getWidth ());
-   },
-   isTransparent: function ()
-   {
-      if (this .hidden)
-         return true;
-
-      if (this ._transparency .getValue () === 0)
-         return false;
-
-      for (const textureNode of this .textureNodes)
-      {
-         if (textureNode?._transparent .getValue ())
-            return true;
-      }
-
-      return false;
    },
    getColor: function (theta, color, angle)
    {
@@ -589,9 +592,6 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
          for (const [i, textureNode] of Object .entries (this .textureNodes))
          {
             if (!this .textureBits .get (i))
-               continue;
-
-            if (!textureNode)
                continue;
 
             this .drawRectangle (gl, browser, textureNode  ._transparent .getValue () ? alphaShaderNode : shaderNode, renderObject,textureNode, this .textureBuffers [i], this .textureArrayObjects [i], i);

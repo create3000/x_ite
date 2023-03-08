@@ -108,7 +108,7 @@ X3DFogObject .prototype =
       this .set_color__ ();
       this .set_visibilityRange__ ();
    },
-   getHidden: function ()
+   isHidden: function ()
    {
       return this .hidden;
    },
