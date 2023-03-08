@@ -343,7 +343,7 @@ function createList (description, array)
    {
       const
          match = filename .match (/^([^\/]+)/),
-         name  = match [1] .replace (/[A-Z]+/, " $1") .replace (/\s+/, " ") .trim ();
+         name  = match [1] .replace (/[A-Z]+/g, " $1") .replace (/\s+/g, " ") .trim ();
 
       $("<a></a>")
          .text (name)
