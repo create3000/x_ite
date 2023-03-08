@@ -218,10 +218,10 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
                              -s, -s,  s, 1,  s, -s,  s, 1, -s, -s, -s, 1, // Bottom
                              -s, -s, -s, 1,  s, -s,  s, 1,  s, -s, -s, 1);
 
-         const c = this ._skyColor [0];
+         const color = this ._skyColor [0];
 
          for (let i = 0, vertices = this .sphere .vertices; i < vertices; ++ i)
-            this .colors .push (c .r, c .g, c .b, 1);
+            this .colors .push (... color, 1);
       }
       else
       {
@@ -318,13 +318,13 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
 
                // Triangle 1 and 2
 
-               this .colors .push (c1 .r, c1 .g, c1 .b, 1,
-                                   c2 .r, c2 .g, c2 .b, 1,
-                                   c2 .r, c2 .g, c2 .b, 1,
+               this .colors .push (... c1, 1,
+                                   ... c2, 1,
+                                   ... c2, 1,
                                    // Triangle 2
-                                   c1 .r, c1 .g, c1 .b, 1,
-                                   c1 .r, c1 .g, c1 .b, 1,
-                                   c2 .r, c2 .g, c2 .b, 1);
+                                   ... c1, 1,
+                                   ... c1, 1,
+                                   ... c2, 1);
 
                this .sphere .push (y1 .imag, z1 .real, y1 .real, 1,
                                    y3 .imag, z2 .real, y3 .real, 1,
@@ -461,21 +461,21 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
          case TraverseType .DISPLAY:
          {
             const
-               sourceObjects = renderObject .getLocalObjects (),
-               destObjects   = this .clipPlanes;
+               localObjects = renderObject .getLocalObjects (),
+               clipPlanes   = this .clipPlanes;
 
-            let d = 0;
+            let c = 0;
 
-            for (let s = 0, length = sourceObjects .length; s < length; ++ s)
+            for (let l = 0, length = localObjects .length; l < length; ++ l)
             {
-               if (sourceObjects [s] .isClipped)
-                  destObjects [d ++] = sourceObjects [s];
+               if (localObjects [l] .isClipped)
+                  clipPlanes [c ++] = localObjects [l];
             }
 
-            destObjects .length = d;
+            clipPlanes .length = c;
 
-            this .sphereContext   .objectsCount [0] = destObjects .length;
-            this .texturesContext .objectsCount [0] = destObjects .length;
+            this .sphereContext   .objectsCount [0] = clipPlanes .length;
+            this .texturesContext .objectsCount [0] = clipPlanes .length;
             return;
          }
       }
