@@ -57,15 +57,15 @@ BitSet .prototype =
    {
       let
          value = this .value,
-         i     = 0;
+         index = 0;
 
       while (value)
       {
          if (value & 1)
-            yield i;
+            yield index;
 
          value >>>= 1;
-         i       += 1;
+         index   += 1;
       }
    },
    get: function (index)
