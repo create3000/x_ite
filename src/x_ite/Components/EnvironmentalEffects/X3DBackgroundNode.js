@@ -130,12 +130,12 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
       if (this ._transparency .getValue () <= 0)
          return false;
 
-      for (const [i, textureNode] of Object .entries (this .textureNodes))
+      for (let i = 0; i < 6; ++ i)
       {
          if (!this .textureBits .get (i))
             return true;
 
-         if (textureNode?._transparent .getValue ())
+         if (this .textureNodes [i]?._transparent .getValue ())
             return true;
       }
 
@@ -589,12 +589,14 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
 
          // Draw all textures.
 
-         for (const [i, textureNode] of Object .entries (this .textureNodes))
+         for (let i = 0; i < 6; ++ i)
          {
             if (!this .textureBits .get (i))
                continue;
 
-            this .drawRectangle (gl, browser, textureNode ._transparent .getValue () ? alphaShaderNode : shaderNode, renderObject,textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
+            const textureNode = this .textureNodes [i];
+
+            this .drawRectangle (gl, browser, textureNode ._transparent .getValue () ? alphaShaderNode : shaderNode, renderObject, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
          }
       };
    })(),
