@@ -45,6 +45,8 @@
  *
  ******************************************************************************/
 
+import Algorithm from "../Math/Algorithm.js";
+
 function BitSet (value = 0)
 {
    this .value = value;
@@ -104,5 +106,13 @@ BitSet .prototype =
 
 BitSet .prototype .keys   = BitSet .prototype [Symbol .iterator];
 BitSet .prototype .values = BitSet .prototype [Symbol .iterator];
+
+Object .defineProperty (BitSet .prototype, "size",
+{
+   get: function ()
+   {
+      return Algorithm .bitCount (this .value);
+   },
+});
 
 export default BitSet;
