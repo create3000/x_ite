@@ -135,7 +135,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
 
       for (const i of this .textureBits)
       {
-         if (this .textureNodes [i]?._transparent .getValue ())
+         if (this .textureNodes [i] ._transparent .getValue ())
             return true;
       }
 
