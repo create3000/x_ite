@@ -137,43 +137,35 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prot
    },
    set_fogCoord__: function ()
    {
-      if (this .fogCoordNode)
-         this .fogCoordNode .removeInterest ("requestRebuild", this);
+      this .fogCoordNode?.removeInterest ("requestRebuild", this);
 
       this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
 
-      if (this .fogCoordNode)
-         this .fogCoordNode .addInterest ("requestRebuild", this);
+      this .fogCoordNode?.addInterest ("requestRebuild", this);
    },
    set_color__: function ()
    {
-      if (this .colorNode)
-         this .colorNode .removeInterest ("requestRebuild", this);
+      this .colorNode?.removeInterest ("requestRebuild", this);
 
       this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
-      if (this .colorNode)
-         this .colorNode .addInterest ("requestRebuild", this);
+      this .colorNode?.addInterest ("requestRebuild", this);
    },
    set_normal__: function ()
    {
-      if (this .normalNode)
-         this .normalNode .removeInterest ("requestRebuild", this);
+      this .normalNode?.removeInterest ("requestRebuild", this);
 
       this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
 
-      if (this .normalNode)
-         this .normalNode .addInterest ("requestRebuild", this);
+      this .normalNode?.addInterest ("requestRebuild", this);
    },
    set_coord__: function ()
    {
-      if (this .coordNode)
-         this .coordNode .removeInterest ("requestRebuild", this);
+      this .coordNode?.removeInterest ("requestRebuild", this);
 
       this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
 
-      if (this .coordNode)
-         this .coordNode .addInterest ("requestRebuild", this);
+      this .coordNode?.addInterest ("requestRebuild", this);
    },
    build: function ()
    {
@@ -200,14 +192,9 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prot
             attribNodes [a] .addValue (i, attribArrays [a]);
       }
 
-      if (fogCoordNode)
-         fogCoordNode .addDepths (fogDepthArray, numPoints);
-
-      if (colorNode)
-         colorNode .addColors (colorArray, numPoints);
-
-      if (normalNode)
-         normalNode .addNormals (normalArray, numPoints);
+      fogCoordNode?.addDepths  (fogDepthArray, numPoints);
+      colorNode   ?.addColors  (colorArray,    numPoints);
+      normalNode  ?.addNormals (normalArray,   numPoints);
 
       coordNode .addPoints (vertexArray, numPoints);
    },

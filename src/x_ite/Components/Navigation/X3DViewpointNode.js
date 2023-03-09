@@ -279,11 +279,6 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          if (this ._viewAll .getValue ())
             this .viewAll (layerNode .getBBox (new Box3 ()));
 
-         if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
-         {
-            this ._orientationOffset = this .straightenHorizon (this .getUserOrientation ()) .multLeft (this .getOrientation () .copy () .inverse ());
-         }
-
          // Handle NavigationInfo.
 
          const
@@ -381,11 +376,6 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this ._scaleOrientationOffset = Rotation4 .Identity;
       this ._centerOfRotationOffset = Vector3   .Zero;
       this ._fieldOfViewScale       = 1;
-
-      if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
-      {
-         this ._orientationOffset = this .straightenHorizon (this .getUserOrientation ()) .multLeft (this .getOrientation () .copy () .inverse ());
-      }
 
       this .set_nearDistance__ ();
       this .set_farDistance__ ();

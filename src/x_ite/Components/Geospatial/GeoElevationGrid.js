@@ -122,49 +122,31 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
    },
    set_color__: function ()
    {
-      if (this .colorNode)
-      {
-         this .colorNode .removeInterest ("requestRebuild", this);
-         this .colorNode ._transparent .removeInterest ("set_transparent__", this);
-      }
+      this .colorNode?.removeInterest ("requestRebuild", this);
 
       this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
-      if (this .colorNode)
-      {
-         this .colorNode .addInterest ("requestRebuild", this);
-         this .colorNode ._transparent .addInterest ("set_transparent__", this);
+      this .colorNode?.addInterest ("requestRebuild", this);
 
-         this .set_transparent__ ();
-      }
-      else
-         this .setTransparent (false);
-   },
-   set_transparent__: function ()
-   {
-      this .setTransparent (this .colorNode .isTransparent ());
+      this .setTransparent (this .colorNode?.isTransparent () ?? false);
    },
    set_texCoord__: function ()
    {
-      if (this .texCoordNode)
-         this .texCoordNode .removeInterest ("requestRebuild", this);
+      this .texCoordNode?.removeInterest ("requestRebuild", this);
 
       this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
 
-      if (this .texCoordNode)
-         this .texCoordNode .addInterest ("requestRebuild", this);
+      this .texCoordNode?.addInterest ("requestRebuild", this);
 
       this .setTextureCoordinate (this .texCoordNode);
    },
    set_normal__: function ()
    {
-      if (this .normalNode)
-         this .normalNode .removeInterest ("requestRebuild", this);
+      this .normalNode?.removeInterest ("requestRebuild", this);
 
       this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
 
-      if (this .normalNode)
-         this .normalNode .addInterest ("requestRebuild", this);
+      this .normalNode?.addInterest ("requestRebuild", this);
    },
    getColor: function ()
    {

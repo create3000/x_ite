@@ -89,20 +89,14 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DPara
    },
    set_texCoord__: function ()
    {
-      if (this .texCoordNode)
-         this .texCoordNode .removeInterest ("requestRebuild", this);
-
-      if (this .nurbsTexCoordNode)
-         this .nurbsTexCoordNode .removeInterest ("requestRebuild", this);
+      this .texCoordNode     ?.removeInterest ("requestRebuild", this);
+      this .nurbsTexCoordNode?.removeInterest ("requestRebuild", this);
 
       this .texCoordNode      = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
       this .nurbsTexCoordNode = X3DCast (X3DConstants .NurbsTextureCoordinate,   this ._texCoord);
 
-      if (this .texCoordNode)
-         this .texCoordNode .addInterest ("requestRebuild", this);
-
-      if (this .nurbsTexCoordNode)
-         this .nurbsTexCoordNode .addInterest ("requestRebuild", this);
+      this .texCoordNode     ?.addInterest ("requestRebuild", this);
+      this .nurbsTexCoordNode?.addInterest ("requestRebuild", this);
    },
    set_controlPoint__: function ()
    {

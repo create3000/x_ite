@@ -140,57 +140,37 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
    },
    set_fogCoord__: function ()
    {
-      if (this .fogCoordNode)
-         this .fogCoordNode .removeInterest ("requestRebuild", this);
+      this .fogCoordNode?.removeInterest ("requestRebuild", this);
 
       this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
 
-      if (this .fogCoordNode)
-         this .fogCoordNode .addInterest ("requestRebuild", this);
+      this .fogCoordNode?.addInterest ("requestRebuild", this);
    },
    set_color__: function ()
    {
-      if (this .colorNode)
-      {
-         this .colorNode .removeInterest ("requestRebuild", this);
-         this .colorNode ._transparent .removeInterest ("set_transparent__", this);
-      }
+      this .colorNode?.removeInterest ("requestRebuild", this);
 
       this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
-      if (this .colorNode)
-      {
-         this .colorNode .addInterest ("requestRebuild", this);
-         this .colorNode ._transparent .addInterest ("set_transparent__", this);
+      this .colorNode?.addInterest ("requestRebuild", this);
 
-         this .set_transparent__ ();
-      }
-      else
-         this .setTransparent (false);
-   },
-   set_transparent__: function ()
-   {
-      this .setTransparent (this .colorNode .isTransparent ());
+      this .setTransparent (this .colorNode?.isTransparent () ?? false);
    },
    set_normal__: function ()
    {
-      if (this .normalNode)
-         this .normalNode .removeInterest ("requestRebuild", this);
+      this .normalNode?.removeInterest ("requestRebuild", this);
 
       this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
 
-      if (this .normalNode)
-         this .normalNode .addInterest ("requestRebuild", this);
+      this .normalNode?.addInterest ("requestRebuild", this);
    },
    set_coord__: function ()
    {
-      if (this .coordNode)
-         this .coordNode .removeInterest ("requestRebuild", this);
+      this .coordNode?.removeInterest ("requestRebuild", this);
 
       this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
 
-      if (this .coordNode)
-         this .coordNode .addInterest ("requestRebuild", this);
+      this .coordNode?.addInterest ("requestRebuild", this);
    },
    getColorPerVertexIndex: function (index)
    {
@@ -284,8 +264,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
                   for (let a = 0; a < numAttribNodes; ++ a)
                      attribNodes [a] .addValue (index, attribArrays [a]);
 
-                  if (fogCoordNode)
-                     fogCoordNode .addDepth (index, fogDepthArray);
+                  fogCoordNode?.addDepth (index, fogDepthArray);
 
                   if (colorNode)
                   {
@@ -295,8 +274,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
                         colorNode .addColor (this .getColorIndex (face), colorArray);
                   }
 
-                  if (normalNode)
-                     normalNode .addVector (index, normalArray);
+                  normalNode?.addVector (index, normalArray);
 
                   coordNode .addPoint (index, vertexArray);
                }
