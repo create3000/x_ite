@@ -331,7 +331,7 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
                            min = Math .min (min, value);
                            max = Math .max (max, value);
 
-                           Ammo .HEAPF32 [heightField + i4 >> 2] = elevationGrid ._height [i];
+                           Ammo .HEAPF32 [heightField + i4 >>> 2] = elevationGrid ._height [i];
 
                            i4 += 4;
                         }

@@ -154,7 +154,7 @@ export default class Algorithm
       if (this .isPowerOfTwo (n))
          return n;
 
-      return 1 << 32 - Math .clz32 (n);
+      return 1 << (32 - Math .clz32 (n));
    }
 
    static bitCount (n)

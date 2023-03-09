@@ -256,7 +256,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    flipImage (data, width, height, components)
    {
       const
-         height1_2   = height >> 1,
+         height1_2   = height >>> 1,
          bytesPerRow = width * components,
          tmp         = new Uint8Array (bytesPerRow);
 
