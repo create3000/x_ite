@@ -90,6 +90,12 @@ sub docs
 	close CONFIG;
 }
 
+if (`git branch --show-current` ne "main\n")
+{
+	say "Wrong branch, cannot release version!";
+	exit;
+}
+
 say "Waiting for confirmation ...";
 
 my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION now?", "--ok-label=Yes", "--cancel-label=No";
