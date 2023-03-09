@@ -57,9 +57,9 @@ function Image (width, height, comp, array)
 {
    const MFInt32 = ArrayFields .MFInt32;
 
-   this .width  = ~~width;
-   this .height = ~~height;
-   this .comp   = ~~comp;
+   this .width  = width|0;
+   this .height = height|0;
+   this .comp   = comp|0;
    this .array  = new MFInt32 ();
    this .array .setValue (array);
    this .array .length = this .width * this .height;
@@ -88,14 +88,14 @@ Image .prototype =
    },
    set: function (width, height, comp, array)
    {
-      this .width  = ~~width;
-      this .height = ~~height;
-      this .comp   = ~~comp;
+      this .width  = width|0;
+      this .height = height|0;
+      this .comp   = comp|0;
       this .array .assign (array);
    },
    setWidth: function (value)
    {
-      this .width = ~~value;
+      this .width = value|0;
       this .array .length = this .width  * this .height;
    },
    getWidth: function ()
@@ -104,7 +104,7 @@ Image .prototype =
    },
    setHeight: function (value)
    {
-      this .height = ~~value;
+      this .height = value|0;
       this .array .length = this .width  * this .height;
    },
    getHeight: function ()
@@ -113,7 +113,7 @@ Image .prototype =
    },
    setComp: function (value)
    {
-      this .comp = ~~value;
+      this .comp = value|0;
    },
    getComp: function ()
    {

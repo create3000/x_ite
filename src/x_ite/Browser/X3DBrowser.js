@@ -186,8 +186,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    getComponent: function (name, level)
    {
-      name  = String (name);
-      level = ~~level;
+      name   = String (name);
+      level |= 0;
 
       const component = SupportedComponents .get (name);
 

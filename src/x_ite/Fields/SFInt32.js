@@ -50,7 +50,7 @@ import X3DConstants from "../Base/X3DConstants.js";
 
 function SFInt32 (value)
 {
-   return X3DField .call (this, ~~value);
+   return X3DField .call (this, value|0);
 }
 
 SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -74,7 +74,7 @@ SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    set: function (value)
    {
-      X3DField .prototype .set .call (this, ~~value);
+      X3DField .prototype .set .call (this, value|0);
    },
    valueOf: X3DField .prototype .getValue,
    toStream: function (generator)
