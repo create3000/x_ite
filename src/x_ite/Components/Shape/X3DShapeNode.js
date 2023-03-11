@@ -135,7 +135,9 @@ X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
             this .bbox .set ();
       }
       else
+      {
          this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      }
 
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
@@ -153,7 +155,9 @@ X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
          this .appearanceNode ._transparent .addInterest ("set_transparent__", this);
       }
       else
+      {
          this .appearanceNode = this .getBrowser () .getDefaultAppearance ();
+      }
    },
    set_geometry__: function ()
    {
