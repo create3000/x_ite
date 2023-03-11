@@ -361,6 +361,14 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
       if (value)
          value .removeCloneCount (count);
    },
+   getNodeUserData: function (key)
+   {
+      return this [_target] .getValue () .getUserData (key);
+   },
+   setNodeUserData: function (key, value)
+   {
+      this [_target] .getValue () .setUserData (key, value);
+   },
    valueOf: function ()
    {
       const
