@@ -106,7 +106,6 @@ X3DBoundedObject .prototype =
          const modelViewMatrix = renderObject .getModelViewMatrix ();
 
          this .getBBox (bbox);
-
          matrix .set (bbox .center, null, bbox .size);
 
          modelViewMatrix .push ();
