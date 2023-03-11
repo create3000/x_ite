@@ -442,7 +442,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
    {
       bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
 
-      const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+      const minDistance = Math .max (layerNode .getNavigationInfo () .getNearValue () * 2, this .getLookAtDistance (bbox));
 
       this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
    },
