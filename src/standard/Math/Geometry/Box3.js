@@ -157,11 +157,8 @@ Box3 .prototype =
             p2 = r1 .subtract (x),
             p3 = r2 .subtract (x);
 
-         min .assign (p1);
-         max .assign (p1);
-
-         min .min (p2, p3, p4);
-         max .max (p2, p3, p4);
+         min .assign (p1) .min (p2, p3, p4);
+         max .assign (p1) .max (p2, p3, p4);
 
          p1 .negate ();
          p2 .negate ();
