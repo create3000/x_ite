@@ -119,6 +119,7 @@ function X3DBrowserContext (element)
                           "prepareEvents", new SFTime (),
                           "timeEvents",    new SFTime (),
                           "sensorEvents",  new SFTime (),
+                          "displayEvents", new SFTime (),
                           "finished",      new SFTime ());
 
    this [_changedTime]     = 0;
@@ -203,6 +204,10 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
    sensorEvents: function ()
    {
       return this ._sensorEvents;
+   },
+   displayEvents: function ()
+   {
+      return this ._displayEvents;
    },
    finished: function ()
    {
@@ -296,6 +301,9 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       // Display
 
       this [_displayTime] .start ()
+
+      this ._displayEvents .processInterests ();
+      this [_processEvents] ();
 
       const gl = this .getContext ();
 

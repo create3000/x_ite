@@ -369,7 +369,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          fileLoader   = new FileLoader (this .getWorld ()),
          scene        = fileLoader .createX3DFromString (currentScene .getWorldURL (), x3dSyntax);
 
-      if (!external)
+      if (external)
+      {
+         scene .setLive (true);
+      }
+      else
       {
          currentScene .isLive () .addInterest ("setLive", scene);
          scene .setExecutionContext (currentScene);
@@ -412,7 +416,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          {
             // Handle isLive for script scenes here:
 
-            if (!external)
+            if (external)
+            {
+               scene .setLive (true);
+            }
+            else
             {
                currentScene .isLive () .addInterest ("setLive", scene);
                scene .setExecutionContext (currentScene);
@@ -449,7 +457,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
             if (scene)
             {
-               if (!external)
+               if (external)
+               {
+                  scene .setLive (true);
+               }
+               else
                {
                   currentScene .isLive () .addInterest ("setLive", scene);
                   scene .setExecutionContext (currentScene);
@@ -597,7 +609,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          scene        = this .createScene (),
          external     = this .isExternal ();
 
-      if (!external)
+      if (external)
+      {
+         scene .setLive (true);
+      }
+      else
       {
          currentScene .isLive () .addInterest ("setLive", scene);
          scene .setExecutionContext (currentScene);
@@ -617,7 +633,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          scene        = this .createScene (),
          external     = this .isExternal ();
 
-      if (!external)
+      if (external)
+      {
+         scene .setLive (true);
+      }
+      else
       {
          currentScene .isLive () .addInterest ("setLive", scene);
          scene .setExecutionContext (currentScene);
