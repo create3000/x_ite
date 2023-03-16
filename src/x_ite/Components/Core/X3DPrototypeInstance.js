@@ -533,7 +533,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
                   {
                      if (field .getValue () !== null)
                      {
-                        generator .PushContainerField (field);
+                        generator .PushContainerField (null);
 
                         generator .string += generator .Indent ();
                         generator .string += "<fieldValue";

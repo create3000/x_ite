@@ -651,7 +651,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                         case X3DConstants .SFNode:
                         case X3DConstants .MFNode:
                         {
-                           generator .PushContainerField (field);
+                           generator .PushContainerField (null);
 
                            generator .string += ">";
                            generator .string += generator .TidyBreak ();
