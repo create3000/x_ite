@@ -127,6 +127,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       this ._ContentScale           .addInterest ("set_contentScale__",           this);
       this ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
       this ._Multisampling          .addInterest ("set_multisampling__",          this);
+      this ._Timings                .addInterest ("set_timings__",                this);
 
       this .configure ();
    },
@@ -144,10 +145,10 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       ]);
 
       const restorable = [
-         "Rubberband",
          "PrimitiveQuality",
-         "TextureQuality",
+         "Rubberband",
          "StraightenHorizon",
+         "TextureQuality",
          "Timings",
       ];
 
@@ -162,7 +163,9 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
             if (attributes .has (name))
             {
                const attribute = name [0] .toLowerCase () + name .slice (1);
+
                browser .attributeChangedCallback (attribute, null, browser .getElement () .attr (name));
+
                continue;
             }
 
@@ -314,6 +317,10 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       browser .getRenderingProperties () ._Antialiased   = browser .getAntialiased ();
 
       browser .reshape ();
+   },
+   set_timings__: function (timings)
+   {
+      this .localStorage .Timings = timings .getValue ();
    },
 });
 
