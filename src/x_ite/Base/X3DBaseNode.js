@@ -149,6 +149,14 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       return this;
    },
+   beginUpdate: function ()
+   {
+      this .setLive (true);
+   },
+   endUpdate: function ()
+   {
+      this .setLive (false);
+   },
    isLive: (function ()
    {
       function isLive ()
