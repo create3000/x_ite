@@ -106,6 +106,8 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
+      this .getBrowser () .getBrowserOptions () ._OptimizeStaticGroup .addInterest ("set_optimize__", this);
+
       this ._bboxSize   .addFieldInterest (this .groupNode ._bboxSize);
       this ._bboxCenter .addFieldInterest (this .groupNode ._bboxCenter);
       this ._children   .addFieldInterest (this .groupNode ._children);
@@ -124,11 +126,23 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
       this .setCameraObject   (this .groupNode .isCameraObject ());
       this .setPickableObject (this .groupNode .isPickableObject ());
 
+      this .set_optimize__ ();
       this .set_children__ ();
    },
    getBBox: function (bbox, shadows)
    {
       return bbox .assign (shadows ? this .shadowBBox : this .bbox);
+   },
+   set_optimize__: function ()
+   {
+      if (this .getBrowser () .getBrowserOption ("OptimizeStaticGroup"))
+      {
+         delete this .traverse;
+      }
+      else
+      {
+         this .traverse = traverse;
+      }
    },
    set_children__: function ()
    {
@@ -225,5 +239,10 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
       X3DChildNode     .prototype .dispose .call (this);
    },
 });
+
+function traverse (type, renderObject)
+{
+   this .groupNode .traverse (type, renderObject);
+}
 
 export default StaticGroup;
