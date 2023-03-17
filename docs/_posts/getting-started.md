@@ -724,11 +724,15 @@ A Boolean value (`true` or `false`) to indicate whether the splash screen should
 
 ### src
 
-A String value with the URL that should be loaded on page load. If no *src* attribute is specified or the *src* attribute is empty an empty scene is displayed.
+A String value containing the URL to load on page load. If no *src* attribute is specified or the *src* attribute is empty, an empty scene will be displayed.
+
+### timings
+
+A Boolean value (`true` or `false`) to indicate whether the Timings Panel should be displayed. The default value for the *timings* attribute is restored from the previous session.
 
 ### url
 
-A MFString value with urls that should be loaded on page load. If no *url* attribute is specified or the attribute is empty an empty scene is displayed. If both src and *url* attribute are specified the *src* attribute takes precedence.
+A MFString value of URLs to load on page load. If no *url* attribute is specified or the attribute is empty, an empty scene will be displayed. If both src and *url* attributes are specified, the *src* attribute takes precedence.
 
 ### Example
 

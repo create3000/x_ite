@@ -272,10 +272,10 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
 
       // Events
 
-      this ._prepareEvents = this .getCurrentTime ();
+      this .addTaintedField (this ._prepareEvents);
       this [_processEvents] ();
 
-      this ._timeEvents = this .getCurrentTime ();
+      this .addTaintedField (this ._timeEvents);
       this [_processEvents] ();
 
       // Camera
@@ -295,14 +295,14 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
 
       // Events
 
-      this ._sensorEvents = this .getCurrentTime ();
+      this .addTaintedField (this ._sensorEvents);
       this [_processEvents] ();
 
       // Display
 
       this [_displayTime] .start ()
 
-      this ._displayEvents = this .getCurrentTime ();
+      this .addTaintedField (this ._displayEvents);
       this [_processEvents] ();
 
       const gl = this .getContext ();
@@ -320,7 +320,7 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
 
       // Finish
 
-      this ._finishedEvents = this .getCurrentTime ();
+      this .addTaintedField (this ._finishedEvents);
       this [_processEvents] ();
 
       this [_browserTime] .stop ();

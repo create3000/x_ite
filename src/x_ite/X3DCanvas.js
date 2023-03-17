@@ -99,6 +99,7 @@ class X3DCanvas extends HTMLElement
          "splashScreen",
          "splashscreen",
          "src",
+         "timings",
          "url",
       ];
    }

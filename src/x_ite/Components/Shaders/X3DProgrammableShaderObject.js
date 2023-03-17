@@ -306,13 +306,13 @@ X3DProgrammableShaderObject .prototype =
 
          if (attribute < 0)
          {
-            this [`enable${name}Attribute`]            = Function .prototype;
-            this [`${lcfirst (name)}AttributeDivisor`] = Function .prototype;
+            this [`enable${name}Attribute`]                       = Function .prototype;
+            this [`${$.toLowerCaseFirst (name)}AttributeDivisor`] = Function .prototype;
          }
          else
          {
             delete this [`enable${name}Attribute`];
-            delete this [`${lcfirst (name)}AttributeDivisor`];
+            delete this [`${$.toLowerCaseFirst (name)}AttributeDivisor`];
          }
       }
 
@@ -1321,10 +1321,5 @@ X3DProgrammableShaderObject .prototype =
    },
    dispose: function () { },
 };
-
-function lcfirst (string)
-{
-   return string [0] .toLowerCase () + string .slice (1);
-}
 
 export default X3DProgrammableShaderObject;

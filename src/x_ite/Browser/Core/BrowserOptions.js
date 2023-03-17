@@ -144,13 +144,13 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          "SplashScreen",
       ]);
 
-      const restorable = [
+      const restorable = new Set ([
          "PrimitiveQuality",
          "Rubberband",
          "StraightenHorizon",
          "TextureQuality",
          "Timings",
-      ];
+      ]);
 
       return function ()
       {
@@ -162,15 +162,26 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          {
             if (attributes .has (name))
             {
-               const attribute = name [0] .toLowerCase () + name .slice (1);
+               const
+                  attribute = $.toLowerCaseFirst (name),
+                  value     = browser .getElement () .attr (attribute);
 
-               browser .attributeChangedCallback (attribute, null, browser .getElement () .attr (name));
+               browser .attributeChangedCallback (attribute, null, value);
 
                continue;
             }
 
-            if (localStorage [name] !== undefined)
+            if (restorable .has (name))
+            {
+               const
+                  value = localStorage [name],
+                  field = this .getField (name);
+
+               if (value !== field .getValue ())
+                  field .setValue (value);
+
                continue;
+            }
 
             const field = this .getField (name);
 
@@ -178,16 +189,6 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
                continue;
 
             field .assign (value);
-         }
-
-         for (const name of restorable)
-         {
-            const
-               value = localStorage [name],
-               field = this .getField (name);
-
-            if (value !== field .getValue ())
-               field .setValue (value);
          }
       };
    })(),
