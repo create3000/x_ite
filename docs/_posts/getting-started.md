@@ -729,7 +729,7 @@ A String value containing the URL to load on page load. If no *src* attribute is
 
 ### timings
 
-A Boolean value (`true` or `false`) to indicate whether the Timings Panel should be displayed. The default value for the *timings* attribute is restored from the previous session.
+A Boolean value (`true` or `false`) to indicate whether the Timings Panel should be displayed. The default value for the *timings* attribute is restored from the previous session, otherwise it is `false`.
 
 ### url
 
