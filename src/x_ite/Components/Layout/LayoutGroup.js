@@ -52,6 +52,7 @@ import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 function LayoutGroup (executionContext)
@@ -62,6 +63,7 @@ function LayoutGroup (executionContext)
 
    this .viewportNode    = null;
    this .layoutNode      = null;
+   this .matrix          = new Matrix4 ();
    this .modelViewMatrix = new Matrix4 ();
    this .screenMatrix    = new Matrix4 ();
 }
@@ -118,11 +120,13 @@ LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .protot
    getMatrix: function ()
    {
       if (this .layoutNode)
-         this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
-      else
-         this .matrix .identity ();
+         return this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
 
-      return this .matrix;
+      return this .matrix .identity ();
+   },
+   getLayout: function ()
+   {
+      return this .layoutNode;
    },
    traverse: function (type, renderObject)
    {
@@ -139,7 +143,7 @@ LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .protot
 
             if (this .layoutNode)
             {
-               var modelViewMatrix = renderObject .getModelViewMatrix ();
+               const modelViewMatrix = renderObject .getModelViewMatrix ();
 
                this .modelViewMatrix .assign (modelViewMatrix .get ());
                this .screenMatrix .assign (this .layoutNode .transform (type, renderObject));
