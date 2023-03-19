@@ -115,10 +115,7 @@ LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
       {
          const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
 
-         if (boundedObject)
-            return boundedObject .getBBox (bbox, shadows);
-
-         return bbox .set ();
+         return boundedObject?.getBBox (bbox, shadows) ?? bbox .set ();
       }
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
@@ -174,11 +171,11 @@ LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    },
    set_cameraObject__: function ()
    {
-      this .setCameraObject (!!(this .visibleNode && this .visibleNode .isCameraObject ()));
+      this .setCameraObject (!!this .visibleNode?.isCameraObject ());
    },
    set_transformSensors__: function ()
    {
-      this .setPickableObject (!!(this .getTransformSensors () .size || this .visibleNode && this .visibleNode .isPickableObject ()));
+      this .setPickableObject (!!(this .getTransformSensors () .size || this .visibleNode?.isPickableObject ()));
    },
    set_visible__: function ()
    {
@@ -250,11 +247,7 @@ LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
             case TraverseType .CAMERA:
             case TraverseType .SHADOW:
             {
-               const visibleNode = this .visibleNode;
-
-               if (visibleNode)
-                  visibleNode .traverse (type, renderObject);
-
+               this .visibleNode?.traverse (type, renderObject);
                return;
             }
             case TraverseType .PICKING:
@@ -286,11 +279,7 @@ LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
             }
             case TraverseType .COLLISION:
             {
-               const visibleNode = this .visibleNode;
-
-               if (visibleNode)
-                  visibleNode .traverse (type, renderObject);
-
+               this .visibleNode?.traverse (type, renderObject);
                return;
             }
             case TraverseType .DISPLAY:
@@ -318,16 +307,9 @@ LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
                   }
                }
 
-               const visibleNode = this .visibleNode;
+               this .visibleNode?.traverse (type, renderObject);
 
-               if (visibleNode)
-                  visibleNode .traverse (type, renderObject);
-
-               const boundedObject = this .boundedObject;
-
-               if (boundedObject)
-                  boundedObject .displayBBox (type, renderObject);
-
+               this .boundedObject?.displayBBox (type, renderObject);
                return;
             }
          }
