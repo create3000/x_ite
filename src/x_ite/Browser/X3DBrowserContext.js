@@ -391,4 +391,12 @@ Object .assign (X3DBrowserContext,
    },
 });
 
+Object .defineProperty (X3DBrowserContext .prototype, "canvas",
+{
+   get: function ()
+   {
+      return this .getCanvas () [0];
+   },
+})
+
 export default X3DBrowserContext;
