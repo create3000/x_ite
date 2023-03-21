@@ -906,7 +906,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 
 ![Dynamic Shadows](https://create3000.github.io/media/images/dynamic-shadows.png)
 
-<small class="small">Dynamic shadows in X_ITE</small>
+<small>Dynamic shadows in X_ITE</small>
 
 ## X_ITE v4.1.7 Released
 

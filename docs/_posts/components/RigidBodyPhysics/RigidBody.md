@@ -114,7 +114,7 @@ Enables/disables node operation.
 
 *centerOfMass* defines local center of mass for physics calculations.
 
-### SFNode [in, out] **massDensityModel** NULL <small class="small"><span class="red">not supported</span></small>
+### SFNode [in, out] **massDensityModel** NULL <small><span class="red">not supported</span></small>
 
 Input/Output field massDensityModel.
 

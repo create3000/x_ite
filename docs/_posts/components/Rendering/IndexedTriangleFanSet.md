@@ -32,7 +32,7 @@ The IndexedTriangleFanSet node belongs to the **Rendering** component and its de
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### MFInt32 [in] **set_index** <small class="small">[0,∞) or -1</small>
+### MFInt32 [in] **set_index** <small>[0,∞) or -1</small>
 
 *index* list specifies triangles by connecting Coordinate vertices, each individual fan separated by -1 sentinel value.
 

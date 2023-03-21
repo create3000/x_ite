@@ -363,7 +363,7 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 
 Removes a browser callback function associated with *key*.
 
-#### void **viewAll** (*[SFNode layerNode]*)
+#### void **viewAll** (*[SFNode layerNode]*) <small><span class="yellow">non standard</span></small>
 
 Modifies the current view to show the entire visible scene. If *layerNode* is omitted, the active layer is used.
 
@@ -395,15 +395,15 @@ Prints *object* to the browser's console without a newline character. Successive
 
 Prints *object* to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's `toString ()` function.
 
-#### MediaStream **captureStream** (*[Number frameRate]*)
+#### MediaStream **captureStream** (*[Number frameRate]*) <small><span class="yellow">non standard</span></small>
 
 See [HTMLCanvasElement.captureStream()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/captureStream){:target="_blank"}.
 
-#### Blob **toBlob** (*Function callback, [String type, Number quality]*)
+#### Blob **toBlob** (*Function callback, [String type, Number quality]*) <small><span class="yellow">non standard</span></small>
 
 See [HTMLCanvasElement.toBlob()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob){:target="_blank"}.
 
-#### String **toDataURL** (*[String type, Number encoderOptions]*)
+#### String **toDataURL** (*[String type, Number encoderOptions]*) <small><span class="yellow">non standard</span></small>
 
 See [HTMLCanvasElement.toDataURL()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL){:target="_blank"}.
 

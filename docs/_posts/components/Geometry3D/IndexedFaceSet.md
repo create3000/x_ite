@@ -61,7 +61,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 - If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 - If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
-### MFInt32 [in] **set_coordIndex** <small class="small">[0,∞) or -1</small>
+### MFInt32 [in] **set_coordIndex** <small>[0,∞) or -1</small>
 
 **colorIndex** values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
 

@@ -32,7 +32,7 @@ The BlendMode node belongs to the **X_ITE** component and its default container 
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFColorRGBA [in, out] **blendColor** 0 0 0 0 <small class="small">[0,1]</small><small></small>
+### SFColorRGBA [in, out] **blendColor** 0 0 0 0 <small>[0,1]</small><small></small>
 
 The *blendColor* may be used to calculate the source and destination blending factors.
 

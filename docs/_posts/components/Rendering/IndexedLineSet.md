@@ -41,7 +41,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual
 
-### MFInt32 [in] **set_coordIndex** <small class="small">[0,∞) or -1</small>
+### MFInt32 [in] **set_coordIndex** <small>[0,∞) or -1</small>
 
 **colorIndex** values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
 
