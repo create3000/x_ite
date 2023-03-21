@@ -810,6 +810,18 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          console .error (error);
       }
    },
+   captureStream: function (... args)
+   {
+      return this .getCanvas () [0] .captureStream (... args);
+   },
+   toBlob: function (... args)
+   {
+      return this .getCanvas () [0] .toBlob (... args);
+   },
+   toDataURL: function (... args)
+   {
+      return this .getCanvas () [0] .toDataURL (... args);
+   },
    beginUpdate: function ()
    {
       this .setLive (true);
