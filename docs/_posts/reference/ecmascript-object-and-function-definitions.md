@@ -9,7 +9,7 @@ tags: [Ecmascript, Object, Function, Definitions]
 
 There are a fixed set of objects in ECMAScript, each of which have a fixed set of properties (i.e. values) and methods (i.e. functions). For all object types except Math, there are functions to create an instance of the object. The supported set of objects are:
 
-* [X3DCanvasElement](#X3DCanvasElement)
+* [X3DCanvasElement](#x3dcanvaselement)
 * [Browser Services](browser-services)
 * [Scene Services](scene-services)
 * [Field Services and Objects](field-services-and-objects)
@@ -23,7 +23,7 @@ The X3DCanvasElement, \<x3d-canvas\>, is the main element that displays the X3D 
 
 ### Instance Creation Method\(s\)
 
-An \<x3d-canvas\> can be created with the `document.createElement' function to get a reference to an X3DCanvasElement.
+An \<x3d-canvas\> can be created with the `document.createElement` function to get a reference to an X3DCanvasElement.
 
 ```js
 const canvas = document .createElement ("x3d-canvas")
@@ -37,14 +37,14 @@ A reference to the X3DBrowser object that is associated with this element.
 
 ### Methods
 
-#### MediaStream **captureStream** (*[Number frameRate]*) <small><span class="yellow">non standard</span></small>
+#### MediaStream **captureStream** (*[Number frameRate]*)
 
 See [HTMLCanvasElement.captureStream()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/captureStream){:target="_blank"}.
 
-#### Blob **toBlob** (*Function callback, [String type, Number quality]*) <small><span class="yellow">non standard</span></small>
+#### Blob **toBlob** (*Function callback, [String type, Number quality]*)
 
 See [HTMLCanvasElement.toBlob()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob){:target="_blank"}.
 
-#### String **toDataURL** (*[String type, Number encoderOptions]*) <small><span class="yellow">non standard</span></small>
+#### String **toDataURL** (*[String type, Number encoderOptions]*)
 
 See [HTMLCanvasElement.toDataURL()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL){:target="_blank"}.
