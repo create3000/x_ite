@@ -91,6 +91,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Notifications",          new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Multisampling",          new Fields .SFInt32 (4)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "OptimizeStaticGroup",    new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                new Fields .SFBool ()),
    ]),
@@ -133,7 +134,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    },
    configure: (function ()
    {
-      const globals = new Set ([
+      const attributes = new Set ([
          "Antialiased",
          "Cache",
          "ContentScale",
@@ -144,6 +145,14 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          "SplashScreen",
       ]);
 
+      const restorable = new Set ([
+         "PrimitiveQuality",
+         "Rubberband",
+         "StraightenHorizon",
+         "TextureQuality",
+         "Timings",
+      ]);
+
       return function ()
       {
          const
@@ -152,15 +161,28 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
          for (const { name, value } of this .getFieldDefinitions ())
          {
-            if (globals .has (name))
+            if (attributes .has (name))
             {
-               const attribute = name [0] .toLowerCase () + name .slice (1);
-               browser .attributeChangedCallback (attribute, null, browser .getElement () .attr (name));
+               const
+                  attribute = $.toLowerCaseFirst (name),
+                  value     = browser .getElement () .attr (attribute);
+
+               browser .attributeChangedCallback (attribute, null, value);
+
                continue;
             }
 
-            if (localStorage [name] !== undefined)
+            if (restorable .has (name))
+            {
+               const
+                  value = localStorage [name],
+                  field = this .getField (name);
+
+               if (value !== field .getValue ())
+                  field .setValue (value);
+
                continue;
+            }
 
             const field = this .getField (name);
 
@@ -169,28 +191,6 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
             field .assign (value);
          }
-
-         const
-            rubberband        = localStorage .Rubberband,
-            primitiveQuality  = localStorage .PrimitiveQuality,
-            textureQuality    = localStorage .TextureQuality,
-            straightenHorizon = localStorage .StraightenHorizon,
-            timings           = localStorage .Timings;
-
-         if (rubberband !== this ._Rubberband .getValue ())
-            this ._Rubberband = rubberband;
-
-         if (primitiveQuality !== this ._PrimitiveQuality .getValue ())
-            this ._PrimitiveQuality = primitiveQuality;
-
-         if (textureQuality !== this ._TextureQuality .getValue ())
-            this ._TextureQuality = textureQuality;
-
-         if (straightenHorizon !== this ._StraightenHorizon .getValue ())
-            this ._StraightenHorizon = straightenHorizon;
-
-         if (timings !== this ._Timings .getValue ())
-            this ._Timings = timings;
       };
    })(),
    getPrimitiveQuality: function ()
@@ -323,8 +323,6 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    set_timings__: function (timings)
    {
       this .localStorage .Timings = timings .getValue ();
-
-      this .getBrowser () .getBrowserTimings () .setEnabled (timings .getValue ());
    },
 });
 

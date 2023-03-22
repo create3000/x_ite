@@ -813,14 +813,14 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    beginUpdate: function ()
    {
       this .setLive (true);
-      this .getExecutionContext () .setLive (true);
+      this .getExecutionContext () .beginUpdate ();
       this .advanceTime ();
       this .addBrowserEvent ();
    },
    endUpdate: function ()
    {
       this .setLive (false);
-      this .getExecutionContext () .setLive (false);
+      this .getExecutionContext () .endUpdate ();
    },
    print: function ()
    {

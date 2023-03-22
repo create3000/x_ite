@@ -114,12 +114,13 @@ function X3DBrowserContext (element)
    for (const browserContext of browserContexts)
       browserContext .call (this);
 
-   this .addChildObjects ("initialized",   new SFTime (),
-                          "shutdown",      new SFTime (),
-                          "prepareEvents", new SFTime (),
-                          "timeEvents",    new SFTime (),
-                          "sensorEvents",  new SFTime (),
-                          "finished",      new SFTime ());
+   this .addChildObjects ("initialized",    new SFTime (),
+                          "shutdown",       new SFTime (),
+                          "prepareEvents",  new SFTime (),
+                          "timeEvents",     new SFTime (),
+                          "sensorEvents",   new SFTime (),
+                          "displayEvents",  new SFTime (),
+                          "finishedEvents", new SFTime ());
 
    this [_changedTime]     = 0;
    this [_previousTime]    = 0;
@@ -204,9 +205,13 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
    {
       return this ._sensorEvents;
    },
-   finished: function ()
+   displayEvents: function ()
    {
-      return this ._finished;
+      return this ._displayEvents;
+   },
+   finishedEvents: function ()
+   {
+      return this ._finishedEvents;
    },
    getBrowser: function ()
    {
@@ -267,10 +272,10 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
 
       // Events
 
-      this ._prepareEvents .processInterests ();
+      this .addTaintedField (this ._prepareEvents);
       this [_processEvents] ();
 
-      this ._timeEvents .processInterests ();
+      this .addTaintedField (this ._timeEvents);
       this [_processEvents] ();
 
       // Camera
@@ -290,12 +295,15 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
 
       // Events
 
-      this ._sensorEvents .processInterests ();
+      this .addTaintedField (this ._sensorEvents);
       this [_processEvents] ();
 
       // Display
 
       this [_displayTime] .start ()
+
+      this .addTaintedField (this ._displayEvents);
+      this [_processEvents] ();
 
       const gl = this .getContext ();
 
@@ -312,7 +320,8 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
 
       // Finish
 
-      this ._finished .processInterests ();
+      this .addTaintedField (this ._finishedEvents);
+      this [_processEvents] ();
 
       this [_browserTime] .stop ();
       this [_systemTime] .start ();

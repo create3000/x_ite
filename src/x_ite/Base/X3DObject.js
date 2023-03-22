@@ -51,7 +51,8 @@ import MapUtilities from "../../standard/Utility/MapUtilities.js";
 const
    _name      = Symbol (),
    _interests = Symbol (),
-   _values    = Symbol ();
+   _values    = Symbol (),
+   _userData  = Symbol ();
 
 function X3DObject () { }
 
@@ -61,6 +62,7 @@ X3DObject .prototype =
    [_name]: "",
    [_interests]: new Map (),
    [_values]: [ ],
+   [_userData]: new Map (),
    getId: function ()
    {
       return X3DObject .getId (this);
@@ -121,6 +123,17 @@ X3DObject .prototype =
          for (const interest of MapUtilities .values (this [_values], this [_interests]))
             interest ();
       }
+   },
+   getUserData: function (key)
+   {
+      return this [_userData] .get (key);
+   },
+   setUserData: function (key, value)
+   {
+      if (this [_userData] === X3DObject .prototype [_userData])
+         this [_userData] = new Map ();
+
+      this [_userData] .set (key, value);
    },
    toString: function (options = Object .prototype)
    {

@@ -55,7 +55,8 @@ const
    _loadingObjects = Symbol (),
    _loading        = Symbol (),
    _location       = Symbol (),
-   _defaultScene   = Symbol ();
+   _defaultScene   = Symbol (),
+   _set_loadCount  = Symbol ();
 
 function getBaseURI (element)
 {
@@ -82,7 +83,9 @@ function X3DNetworkingContext ()
 X3DNetworkingContext .prototype =
 {
    initialize: function ()
-   { },
+   {
+      this ._loadCount .addInterest (_set_loadCount, this);
+   },
    getProviderUrl: function ()
    {
       return URLs .getProviderUrl ();
@@ -163,12 +166,25 @@ X3DNetworkingContext .prototype =
    setLoadCount: function (value)
    {
       this ._loadCount = value;
+   },
+   resetLoadCount: function ()
+   {
+      this ._loadCount       = 0;
+      this [_loadingDisplay] = 0;
+      this [_loadingTotal]   = 0;
 
+      this [_loadingObjects] .clear ();
+
+      for (const object of this .getPrivateScene () .getLoadingObjects ())
+         this .addLoadingObject (object);
+   },
+   [_set_loadCount]: function ()
+   {
       const loadingDisplay = [... this [_loadingObjects]]
          .filter (o => o .isPrivate)
          .reduce ((v, o) => v + !o .isPrivate (), 0);
 
-      if (value || this [_loading])
+      if (this ._loadCount .getValue () || this [_loading])
       {
          var string = ((loadingDisplay || 1) === 1
             ? _ ("Loading %1 file")
@@ -184,7 +200,7 @@ X3DNetworkingContext .prototype =
       {
          this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
          this .getSplashScreen () .find (".x_ite-private-progressbar div")
-            .css ("width", (100 - 100 * value / this [_loadingTotal]) + "%");
+            .css ("width", (100 - 100 * this ._loadCount .getValue () / this [_loadingTotal]) + "%");
       }
       else
       {
@@ -193,17 +209,6 @@ X3DNetworkingContext .prototype =
       }
 
       this [_loadingDisplay] = loadingDisplay;
-   },
-   resetLoadCount: function ()
-   {
-      this ._loadCount       = 0;
-      this [_loadingDisplay] = 0;
-      this [_loadingTotal]   = 0;
-
-      this [_loadingObjects] .clear ();
-
-      for (const object of this .getPrivateScene () .getLoadingObjects ())
-         this .addLoadingObject (object);
    },
 };
 

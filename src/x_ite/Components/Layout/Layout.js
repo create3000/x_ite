@@ -56,8 +56,9 @@ import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
-var
-   i        = 0,
+let i = 0;
+
+const
    LEFT     = i++,
    CENTER   = i++,
    RIGHT    = i++,
@@ -441,11 +442,11 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
    },
    transform: function (type, renderObject)
    {
-      var parent = this .parent = renderObject .getParentLayout ();
+      const parent = this .parent = renderObject .getParentLayout ();
 
       // Calculate rectangleSize
 
-      var
+      const
          browser             = this .getBrowser (),
          contentScale        = browser .getRenderingProperty ("ContentScale"),
          matrix              = this .matrix,
@@ -488,7 +489,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
 
       // Calculate translation
 
-      var translation = this .translation .set (0, 0, 0);
+      const translation = this .translation .set (0, 0, 0);
 
       switch (this .getAlignX ())
       {
@@ -524,7 +525,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
 
       // Calculate offset
 
-      var offset = this .offset .set (0, 0, 0);
+      const offset = this .offset .set (0, 0, 0);
 
       switch (this .getOffsetUnitX ())
       {
@@ -548,13 +549,14 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
 
       // Calculate scale
 
-      var
+      const
          scale              = this .scale .set (1, 1, 1),
          currentTranslation = this .currentTranslation,
          currentRotation    = this .currentRotation,
          currentScale       = this .currentScale;
 
-      var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
+      const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
+
       modelViewMatrix .get (currentTranslation, currentRotation, currentScale);
 
       switch (this .getScaleModeX ())
@@ -612,10 +614,10 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
 
       // Transform
 
-      rectangleCenter .assign (translation) .add (offset);
+      rectangleCenter .assign (translation .add (offset));
 
       matrix .set (currentTranslation, currentRotation);
-      matrix .translate (translation .add (offset));
+      matrix .translate (translation);
       matrix .scale (scale);
 
       return matrix;

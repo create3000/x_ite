@@ -184,7 +184,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
                this .addFly ();
 
                if (this .getBrowser () .getBrowserOption ("Rubberband"))
-                  this .getBrowser () .finished () .addInterest ("display", this, MOVE);
+                  this .getBrowser () .finishedEvents () .addInterest ("display", this, MOVE);
             }
 
             this ._isActive = true;
@@ -215,7 +215,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
             this .addPan ();
 
             if (this .getBrowser () .getBrowserOption ("Rubberband"))
-               this .getBrowser () .finished () .addInterest ("display", this, PAN);
+               this .getBrowser () .finishedEvents () .addInterest ("display", this, PAN);
 
             this ._isActive = true;
             break;
@@ -704,7 +704,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
       browser .prepareEvents () .removeInterest ("fly", this);
       browser .prepareEvents () .removeInterest ("pan", this);
-      browser .finished ()      .removeInterest ("display", this);
+      browser .finishedEvents ()      .removeInterest ("display", this);
 
       this .orientationChaser ._value_changed .removeInterest ("set_orientationOffset__", this);
 

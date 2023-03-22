@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import X3DGeometryNode from "./X3DGeometryNode.js";
+import VertexArray     from "../../Rendering/VertexArray.js";
 import ViewVolume      from "../../../standard/Math/Geometry/ViewVolume.js";
 import Vector2         from "../../../standard/Math/Numbers/Vector2.js";
 import Vector4         from "../../../standard/Math/Numbers/Vector4.js";
@@ -60,9 +61,10 @@ function X3DLineGeometryNode (executionContext)
       browser = this .getBrowser (),
       gl      = browser .getContext ();
 
-   this .lineStipples      = new Float32Array ();
-   this .lineStippleBuffer = gl .createBuffer ();
-   this .trianglesBuffer   = gl .createBuffer ();
+   this .lineStipples           = new Float32Array ();
+   this .lineStippleBuffer      = gl .createBuffer ();
+   this .trianglesBuffer        = gl .createBuffer ();
+   this .thickVertexArrayObject = new VertexArray (gl);
 
    this .setGeometryType (1);
    this .setPrimitiveMode (gl .LINES);
@@ -80,6 +82,12 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
    {
       return false;
    },
+   updateVertexArrays: function ()
+   {
+      X3DGeometryNode .prototype .updateVertexArrays .call (this);
+
+      this .thickVertexArrayObject .update ();
+   },
    buildTexCoords: function ()
    {
       // Line stipple support.
@@ -91,8 +99,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
          gl       = this .getBrowser () .getContext (),
          numLines = this .getVertices () .length / 8;
 
-      if (this .lineStipples .length !== numLines * 6)
-         this .lineStipples = new Float32Array (numLines * 6);
+      this .lineStipples = new Float32Array (numLines * 6);
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
       gl .bufferData (gl .ARRAY_BUFFER, this .lineStipples, gl .DYNAMIC_DRAW);
@@ -154,7 +161,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
          {
             // Setup vertex attributes.
 
-            if (this .vertexArrayObject .enable (shaderNode))
+            if (this .thickVertexArrayObject .enable (shaderNode))
             {
                const
                   stride            = 15 * Float32Array .BYTES_PER_ELEMENT,
@@ -239,7 +246,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
                // Setup vertex attributes.
 
-               if (this .vertexArrayObject .enable (transformShaderNode))
+               if (this .thickVertexArrayObject .enable (transformShaderNode))
                {
                   const
                      lineStippleStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
@@ -315,7 +322,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
                // Setup vertex attributes.
 
-               if (this .vertexArrayObject .enable (shaderNode))
+               if (this .thickVertexArrayObject .enable (shaderNode))
                {
                   const
                      stride            = 15 * Float32Array .BYTES_PER_ELEMENT,

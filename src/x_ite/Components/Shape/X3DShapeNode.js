@@ -74,15 +74,15 @@ X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this ._bboxSize   .addInterest ("set_bbox__",      this);
-      this ._bboxCenter .addInterest ("set_bbox__",      this);
-      this ._appearance .addInterest ("set_apparance__", this);
-      this ._geometry   .addInterest ("set_geometry__",  this);
+      this ._bboxSize   .addInterest ("set_bbox__",       this);
+      this ._bboxCenter .addInterest ("set_bbox__",       this);
+      this ._appearance .addInterest ("set_appearance__", this);
+      this ._geometry   .addInterest ("set_geometry__",   this);
 
       this ._appearance .addInterest ("set_transparent__", this);
       this ._geometry   .addInterest ("set_transparent__", this);
 
-      this .set_apparance__ ();
+      this .set_appearance__ ();
       this .set_geometry__ ();
       this .set_transparent__ ();
    },
@@ -110,7 +110,7 @@ X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
    },
    getAppearance: function ()
    {
-      return this .apparanceNode;
+      return this .appearanceNode;
    },
    getGeometry: function ()
    {
@@ -135,25 +135,29 @@ X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
             this .bbox .set ();
       }
       else
+      {
          this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      }
 
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
    },
-   set_apparance__: function ()
+   set_appearance__: function ()
    {
-      if (this .apparanceNode)
-         this .apparanceNode ._transparent .removeInterest ("set_transparent__", this);
+      if (this .appearanceNode)
+         this .appearanceNode ._transparent .removeInterest ("set_transparent__", this);
 
-      this .apparanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this ._appearance);
+      this .appearanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this ._appearance);
 
-      if (this .apparanceNode)
+      if (this .appearanceNode)
       {
-         this .apparanceNode ._alphaMode   .addInterest ("set_transparent__", this);
-         this .apparanceNode ._transparent .addInterest ("set_transparent__", this);
+         this .appearanceNode ._alphaMode   .addInterest ("set_transparent__", this);
+         this .appearanceNode ._transparent .addInterest ("set_transparent__", this);
       }
       else
-         this .apparanceNode = this .getBrowser () .getDefaultAppearance ();
+      {
+         this .appearanceNode = this .getBrowser () .getDefaultAppearance ();
+      }
    },
    set_geometry__: function ()
    {
@@ -175,13 +179,13 @@ X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
    },
    set_transparent__: function ()
    {
-      if (this .apparanceNode .getAlphaMode () === AlphaMode .AUTO)
+      if (this .appearanceNode .getAlphaMode () === AlphaMode .AUTO)
       {
-         this .transparent = !!(this .apparanceNode .isTransparent () || this .geometryNode?.isTransparent ());
+         this .transparent = !!(this .appearanceNode .isTransparent () || this .geometryNode?.isTransparent ());
       }
       else
       {
-         this .transparent = this .apparanceNode .isTransparent ();
+         this .transparent = this .appearanceNode .isTransparent ();
       }
    },
    dispose: function ()

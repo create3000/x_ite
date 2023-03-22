@@ -325,6 +325,11 @@ X3DCoreContext .prototype =
             this .loadURL (new Fields .MFString (newValue), new Fields .MFString ());
             break;
          }
+         case "timings":
+         {
+            this .setBrowserOption ("Timings", this .parseBooleanAttribute (newValue, false));
+            break;
+         }
          case "url":
          {
             this .loadURL (this .parseUrlAttribute (newValue), new Fields .MFString ());

@@ -107,14 +107,7 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
    getBBox: function (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-      {
-         const boundedObject = this .visibleNode;
-
-         if (boundedObject)
-            return boundedObject .getBBox (bbox, shadows);
-
-         return bbox .set ();
-      }
+         return this .visibleNode?.getBBox (bbox, shadows) .multRight (this .getMatrix ()) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -222,7 +215,7 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
    },
    set_cameraObject__: function ()
    {
-      this .setCameraObject (!!(this .visibleNode && this .visibleNode .isCameraObject ()));
+      this .setCameraObject (!!this .visibleNode?.isCameraObject ());
    },
    set_visible__: function ()
    {
@@ -428,10 +421,7 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
             modelViewMatrix .push ();
             modelViewMatrix .multLeft (this .getMatrix ());
 
-            const visibleNode = this .visibleNode;
-
-            if (visibleNode)
-               visibleNode .traverse (type, renderObject);
+            this .visibleNode?.traverse (type, renderObject);
 
             modelViewMatrix .pop ();
             return;
@@ -447,10 +437,7 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
             modelViewMatrix .push ();
             modelViewMatrix .multLeft (this .getMatrix ());
 
-            const visibleNode = this .visibleNode;
-
-            if (visibleNode)
-               visibleNode .traverse (type, renderObject);
+            this .visibleNode?.traverse (type, renderObject);
 
             modelViewMatrix .pop ();
             pickingHierarchy .pop ();
@@ -463,10 +450,7 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
             modelViewMatrix .push ();
             modelViewMatrix .multLeft (this .getMatrix ());
 
-            const visibleNode = this .visibleNode;
-
-            if (visibleNode)
-               visibleNode .traverse (type, renderObject);
+            this .visibleNode?.traverse (type, renderObject);
 
             modelViewMatrix .pop ();
             return;
@@ -478,15 +462,9 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
             modelViewMatrix .push ();
             modelViewMatrix .multLeft (this .getMatrix ());
 
-            const visibleNode = this .visibleNode;
+            this .visibleNode?.traverse (type, renderObject);
 
-            if (visibleNode)
-               visibleNode .traverse (type, renderObject);
-
-            const boundedObject = this .boundedObject;
-
-            if (boundedObject)
-               boundedObject .displayBBox (type, renderObject);
+            this .boundedObject?.displayBBox (type, renderObject);
 
             modelViewMatrix .pop ();
             return;

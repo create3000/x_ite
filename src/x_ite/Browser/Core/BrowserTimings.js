@@ -54,7 +54,6 @@ function BrowserTimings (executionContext)
    X3DBaseNode .call (this, executionContext);
 
    this .localStorage  = this .getBrowser () .getLocalStorage () .addNameSpace ("BrowserTimings.");
-   this .enabled       = false;
    this .fps           = new StopWatch ();
    this .localeOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
 }
@@ -78,7 +77,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    {
       X3DBaseNode .prototype .initialize .call (this);
 
-      this .getBrowser () .getBrowserOptions () ._ContextMenu .addInterest ("set_enabled__", this);
+      this .getBrowser () .getBrowserOptions () ._Timings .addInterest ("set_enabled__", this);
 
       this .localStorage .addDefaultValues ({ type: "LESS" });
 
@@ -94,22 +93,9 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       this .set_button__ ();
    },
-   getEnabled: function ()
-   {
-      return this .enabled;
-   },
-   setEnabled: function (enabled)
-   {
-      if (this .enabled === enabled)
-         return;
-
-      this .enabled = enabled;
-
-      this .set_enabled__ ();
-   },
    set_enabled__: function ()
    {
-      if (this .enabled && this .getBrowser () .getBrowserOption ("ContextMenu"))
+      if (this .getBrowser () .getBrowserOption ("Timings"))
       {
          this .element .stop (true, true) .fadeIn ();
          this .fps .reset ();
