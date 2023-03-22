@@ -48,11 +48,11 @@
 import X3DBrowser from "./Browser/X3DBrowser.js";
 import URLs       from "./Browser/Networking/URLs.js";
 
-class X3DCanvas extends HTMLElement
+class X3DCanvasElement extends HTMLElement
 {
    static define ()
    {
-      customElements .define ("x3d-canvas", X3DCanvas);
+      customElements .define ("x3d-canvas", X3DCanvasElement);
    }
 
    constructor ()
@@ -76,7 +76,10 @@ class X3DCanvas extends HTMLElement
 
       shadow .appendChild (link);
 
-      this .browser = new X3DBrowser (this);
+      Object .defineProperty (this, "browser",
+      {
+         value: new X3DBrowser (this),
+      })
    }
 
    connectedCallback ()
@@ -107,9 +110,24 @@ class X3DCanvas extends HTMLElement
    {
       this .browser .attributeChangedCallback (name, oldValue, newValue);
    }
+
+   captureStream (... args)
+   {
+      return this .browser .getCanvas () [0] .captureStream (... args);
+   }
+
+   toBlob (... args)
+   {
+      return this .browser .getCanvas () [0] .toBlob (... args);
+   }
+
+   toDataURL (... args)
+   {
+      return this .browser .getCanvas () [0] .toDataURL (... args);
+   }
 }
 
 // IE fix.
 document .createElement ("X3DCanvas");
 
-export default X3DCanvas;
+export default X3DCanvasElement;

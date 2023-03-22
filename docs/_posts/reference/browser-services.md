@@ -395,6 +395,7 @@ Prints *object* to the browser's console without a newline character. Successive
 
 Prints *object* to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's `toString ()` function.
 
+<!--
 #### MediaStream **captureStream** (*[Number frameRate]*) <small><span class="yellow">non standard</span></small>
 
 See [HTMLCanvasElement.captureStream()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/captureStream){:target="_blank"}.
@@ -406,6 +407,7 @@ See [HTMLCanvasElement.toBlob()](https://developer.mozilla.org/en-US/docs/Web/AP
 #### String **toDataURL** (*[String type, Number encoderOptions]*) <small><span class="yellow">non standard</span></small>
 
 See [HTMLCanvasElement.toDataURL()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL){:target="_blank"}.
+-->
 
 ### VRML Methods
 

@@ -45,15 +45,15 @@
  *
  ******************************************************************************/
 
-import X3D        from "./x_ite/X3D.js";
-import X3DCanvas  from "./x_ite/X3DCanvas.js";
-import shim       from "./shim.js";
+import X3D              from "./x_ite/X3D.js";
+import X3DCanvasElement from "./x_ite/X3DCanvasElement.js";
+import shim             from "./shim.js";
 
 // Assign X3D to global namespace.
 
 window [Symbol .for ("X_ITE.X3D")] = X3D;
 
-X3DCanvas .define ();
+X3DCanvasElement .define ();
 
 X3D ();
 
