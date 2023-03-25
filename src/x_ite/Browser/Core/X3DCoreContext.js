@@ -357,9 +357,7 @@ X3DCoreContext .prototype =
    },
    callBrowserEventHandler: function (events)
    {
-      const element = window .jQuery
-         ? window .jQuery (this .getElement () .get (0))
-         : this .getElement ();
+      const element = this .getElement ();
 
       for (const event of events .split (" "))
          element .trigger (event);
