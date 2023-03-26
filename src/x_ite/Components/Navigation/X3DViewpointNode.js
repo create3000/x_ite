@@ -451,9 +451,13 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       const
          offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
+      layerNode .getNavigationInfo () ._transitionStart = true;
+
       this .timeSensor ._cycleInterval = 1;
       this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
       this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
       this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
@@ -484,9 +488,13 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
    },
    straightenView: function (layerNode)
    {
+      layerNode .getNavigationInfo () ._transitionStart = true;
+
       this .timeSensor ._cycleInterval = 1;
       this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
       this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
       this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
