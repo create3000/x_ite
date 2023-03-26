@@ -94,10 +94,6 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
-### SFBool [ ] **flipVertically** FALSE
-
-Whether to flip the image vertically. This parameter is in particular useful when using a model with [PhysicalMaterial](../Shape/PhysicalMaterial).
-
 ### SFBool [ ] **repeatS** TRUE
 
 Whether to horizontally repeat texture along S axis.

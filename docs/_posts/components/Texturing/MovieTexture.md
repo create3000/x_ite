@@ -178,10 +178,6 @@ Current elapsed time since MovieTexture activated/running, cumulative in seconds
 
 Length of time in seconds for one cycle of movie.
 
-### SFBool [ ] **flipVertically** FALSE
-
-Whether to flip the image vertically. This parameter is in particular useful when using a model with [PhysicalMaterial](../Shape/PhysicalMaterial).
-
 ### SFBool [ ] **repeatS** TRUE
 
 Whether to horizontally repeat texture along S axis.
