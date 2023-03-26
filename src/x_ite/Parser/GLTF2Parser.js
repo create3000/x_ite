@@ -704,8 +704,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scene .addExportedNode (scene .getUniqueExportName (name), textureNode);
       }
 
-      textureNode ._url            = [image .uri];
-      textureNode ._flipVertically = true;
+      textureNode ._url = [image .uri];
 
       const sampler = this .samplers [texture .sampler];
 
@@ -994,6 +993,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          translation = new Vector2 (0, 0),
          scale       = new Vector2 (1, 1),
          matrix      = new Matrix4 ();
+
+      matrix .scale (new Vector3 (1, -1, 1));
+      matrix .translate (new Vector3 (0, 1, 0));
 
       if (this .vectorValue (KHR_texture_transform .offset, translation))
          matrix .translate (new Vector3 (... translation, 0));
@@ -1755,7 +1757,19 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          case 0:
          {
-            return null;
+            if (this .textureTransformNode)
+               return this .textureTransformNode;
+
+            const
+               scene                = this .getExecutionContext (),
+               textureTransformNode = scene .createNode ("TextureTransform", false);
+
+            textureTransformNode ._translation .y = 1;
+            textureTransformNode ._scale .y       = -1;
+
+            textureTransformNode .setup ();
+
+            return this .textureTransformNode = textureTransformNode;
          }
          case 1:
          {

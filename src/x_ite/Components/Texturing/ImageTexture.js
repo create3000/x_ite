@@ -76,7 +76,6 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
       new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "flipVertically",       new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
@@ -97,8 +96,6 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    {
       X3DTexture2DNode .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
-
-      this ._flipVertically .addInterest ("set_url__", this);
 
       this .image .on ("load",        this .setImage .bind (this));
       this .image .on ("abort error", this .setError .bind (this));
@@ -180,11 +177,9 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
             cx .clearRect (0, 0, width, height);
             cx .save ();
 
-            if (!this ._flipVertically .getValue ())
-            {
-               cx .translate (0, height);
-               cx .scale (1, -1);
-            }
+            // Flip vertically.
+            cx .translate (0, height);
+            cx .scale (1, -1);
 
             cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
             cx .restore ();
@@ -208,10 +203,9 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
                width       = image .width,
                height      = image .height;
 
-            // Flip Y if needed.
+            // Flip vertically.
 
-            if (!this ._flipVertically .getValue ())
-               this .flipImage (data, width, height, 4);
+            this .flipImage (data, width, height, 4);
 
             // Upload image to GPU.
 

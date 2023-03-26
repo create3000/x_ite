@@ -93,7 +93,6 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",             new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .outputOnly,     "elapsedTime",          new Fields .SFTime ()),
       new X3DFieldDefinition (X3DConstants .outputOnly,     "duration_changed",     new Fields .SFTime (-1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "flipVertically",       new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
@@ -220,7 +219,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
             throw new Error ("The movie texture is a non power-of-two texture.");
 
          this .setMedia (this .video [0]);
-         this .setTexture (width, height, false, video, !this ._flipVertically .getValue ());
+         this .setTexture (width, height, false, video, true);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       catch (error)
@@ -240,7 +239,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          gif .pause ();
 
          this .setMedia (gif);
-         this .setTexture (gif .get_canvas () .width, gif .get_canvas () .height, false, gif .get_frames () [0] .data, !this ._flipVertically .getValue ());
+         this .setTexture (gif .get_canvas () .width, gif .get_canvas () .height, false, gif .get_frames () [0] .data, true);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       catch (error)
@@ -257,9 +256,9 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          return;
 
       if (this .gif)
-         this .updateTexture (this .gif .currentFrame .data, !this ._flipVertically .getValue ());
+         this .updateTexture (this .gif .currentFrame .data, true);
       else
-         this .updateTexture (this .video [0], !this ._flipVertically .getValue ());
+         this .updateTexture (this .video [0], true);
    },
    traverse: X3DTexture2DNode .prototype .traverse,
    dispose: function ()
