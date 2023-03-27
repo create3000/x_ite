@@ -259,16 +259,10 @@ function SpotLight (executionContext)
 
    this .addType (X3DConstants .SpotLight);
 
-   switch (executionContext .getSpecificationVersion ())
+   if (executionContext .getSpecificationVersion () <= 3.2)
    {
-      case "2.0":
-      case "3.0":
-      case "3.1":
-      case "3.2":
-      {
-         this ._beamWidth   = 1.5708;
-         this ._cutOffAngle = 0.785398;
-      }
+      this ._beamWidth   = 1.5708;
+      this ._cutOffAngle = 0.785398;
    }
 
    this ._location    .setUnit ("length");
