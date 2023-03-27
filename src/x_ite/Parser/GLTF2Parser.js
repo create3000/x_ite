@@ -767,7 +767,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             const textureTransformNode = scene .createNode ("TextureTransform", false);
 
             textureTransformNode ._mapping        = mapping;
-            textureTransformNode ._translation .y = 1;
+            textureTransformNode ._translation .y = -1;
             textureTransformNode ._scale .y       = -1;
 
             textureTransformNode .setup ();
@@ -1767,7 +1767,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
                scene                = this .getExecutionContext (),
                textureTransformNode = scene .createNode ("TextureTransform", false);
 
-            textureTransformNode ._translation .y = 1;
+            textureTransformNode ._translation .y = -1;
             textureTransformNode ._scale .y       = -1;
 
             textureTransformNode .setup ();
