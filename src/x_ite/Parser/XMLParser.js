@@ -786,7 +786,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             node = this .getExecutionContext () .createProto (this .nodeNameToCamelCase (xmlElement .nodeName), false);
 
          if (! node)
-            throw new Error ("Unknown node type '" + xmlElement .nodeName + "', you probably have insufficient component/profile statements.");
+            throw new Error ("Unknown node type '" + xmlElement .nodeName + "', you probably have insufficient component/profile statements and/or an inappropriate specification version.");
 
          ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
          $.data (xmlElement, "node", node);
