@@ -1,4 +1,4 @@
-/* X_ITE v8.6.12 */(function webpackUniversalModuleDefinition(root, factory) {
+/* X_ITE v8.6.13 */(function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 310:
+/***/ 655:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(29);
+/* provided dependency */ var jQuery = __webpack_require__(228);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 704:
+/***/ 784:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(29);
+/* provided dependency */ var jQuery = __webpack_require__(228);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 556:
+/***/ 742:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(29)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(228)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,11 +811,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 29:
+/***/ 228:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
- * jQuery JavaScript Library v3.6.3
+ * jQuery JavaScript Library v3.6.4
  * https://jquery.com/
  *
  * Includes Sizzle.js
@@ -825,7 +825,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2022-12-20T21:28Z
+ * Date: 2023-03-08T15:28Z
  */
 ( function( global, factory ) {
 
@@ -967,7 +967,7 @@ function toType( obj ) {
 
 
 var
-	version = "3.6.3",
+	version = "3.6.4",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -1338,14 +1338,14 @@ function isArrayLike( obj ) {
 }
 var Sizzle =
 /*!
- * Sizzle CSS Selector Engine v2.3.9
+ * Sizzle CSS Selector Engine v2.3.10
  * https://sizzlejs.com/
  *
  * Copyright JS Foundation and other contributors
  * Released under the MIT license
  * https://js.foundation/
  *
- * Date: 2022-12-19
+ * Date: 2023-02-14
  */
 ( function( window ) {
 var i,
@@ -1449,7 +1449,7 @@ var i,
 		whitespace + "+$", "g" ),
 
 	rcomma = new RegExp( "^" + whitespace + "*," + whitespace + "*" ),
-	rcombinators = new RegExp( "^" + whitespace + "*([>+~]|" + whitespace + ")" + whitespace +
+	rleadingCombinator = new RegExp( "^" + whitespace + "*([>+~]|" + whitespace + ")" + whitespace +
 		"*" ),
 	rdescend = new RegExp( whitespace + "|>" ),
 
@@ -1666,7 +1666,7 @@ function Sizzle( selector, context, results, seed ) {
 				// as such selectors are not recognized by querySelectorAll.
 				// Thanks to Andrew Dupont for this technique.
 				if ( nodeType === 1 &&
-					( rdescend.test( selector ) || rcombinators.test( selector ) ) ) {
+					( rdescend.test( selector ) || rleadingCombinator.test( selector ) ) ) {
 
 					// Expand context for sibling selectors
 					newContext = rsibling.test( selector ) && testContext( context.parentNode ) ||
@@ -1695,27 +1695,6 @@ function Sizzle( selector, context, results, seed ) {
 				}
 
 				try {
-
-					// `qSA` may not throw for unrecognized parts using forgiving parsing:
-					// https://drafts.csswg.org/selectors/#forgiving-selector
-					// like the `:has()` pseudo-class:
-					// https://drafts.csswg.org/selectors/#relational
-					// `CSS.supports` is still expected to return `false` then:
-					// https://drafts.csswg.org/css-conditional-4/#typedef-supports-selector-fn
-					// https://drafts.csswg.org/css-conditional-4/#dfn-support-selector
-					if ( support.cssSupportsSelector &&
-
-						// eslint-disable-next-line no-undef
-						!CSS.supports( "selector(:is(" + newSelector + "))" ) ) {
-
-						// Support: IE 11+
-						// Throw to get to the same code path as an error directly in qSA.
-						// Note: once we only support browser supporting
-						// `CSS.supports('selector(...)')`, we can most likely drop
-						// the `try-catch`. IE doesn't implement the API.
-						throw new Error();
-					}
-
 					push.apply( results,
 						newContext.querySelectorAll( newSelector )
 					);
@@ -2011,29 +1990,22 @@ setDocument = Sizzle.setDocument = function( node ) {
 			!el.querySelectorAll( ":scope fieldset div" ).length;
 	} );
 
-	// Support: Chrome 105+, Firefox 104+, Safari 15.4+
-	// Make sure forgiving mode is not used in `CSS.supports( "selector(...)" )`.
-	//
-	// `:is()` uses a forgiving selector list as an argument and is widely
-	// implemented, so it's a good one to test against.
-	support.cssSupportsSelector = assert( function() {
-		/* eslint-disable no-undef */
-
-		return CSS.supports( "selector(*)" ) &&
-
-			// Support: Firefox 78-81 only
-			// In old Firefox, `:is()` didn't use forgiving parsing. In that case,
-			// fail this test as there's no selector to test against that.
-			// `CSS.supports` uses unforgiving parsing
-			document.querySelectorAll( ":is(:jqfake)" ) &&
-
-			// `*` is needed as Safari & newer Chrome implemented something in between
-			// for `:has()` - it throws in `qSA` if it only contains an unsupported
-			// argument but multiple ones, one of which is supported, are fine.
-			// We want to play safe in case `:is()` gets the same treatment.
-			!CSS.supports( "selector(:is(*,:jqfake))" );
-
-		/* eslint-enable */
+	// Support: Chrome 105 - 110+, Safari 15.4 - 16.3+
+	// Make sure the the `:has()` argument is parsed unforgivingly.
+	// We include `*` in the test to detect buggy implementations that are
+	// _selectively_ forgiving (specifically when the list includes at least
+	// one valid selector).
+	// Note that we treat complete lack of support for `:has()` as if it were
+	// spec-compliant support, which is fine because use of `:has()` in such
+	// environments will fail in the qSA path and fall back to jQuery traversal
+	// anyway.
+	support.cssHas = assert( function() {
+		try {
+			document.querySelector( ":has(*,:jqfake)" );
+			return false;
+		} catch ( e ) {
+			return true;
+		}
 	} );
 
 	/* Attributes
@@ -2302,14 +2274,14 @@ setDocument = Sizzle.setDocument = function( node ) {
 		} );
 	}
 
-	if ( !support.cssSupportsSelector ) {
+	if ( !support.cssHas ) {
 
-		// Support: Chrome 105+, Safari 15.4+
-		// `:has()` uses a forgiving selector list as an argument so our regular
-		// `try-catch` mechanism fails to catch `:has()` with arguments not supported
-		// natively like `:has(:contains("Foo"))`. Where supported & spec-compliant,
-		// we now use `CSS.supports("selector(:is(SELECTOR_TO_BE_TESTED))")`, but
-		// outside that we mark `:has` as buggy.
+		// Support: Chrome 105 - 110+, Safari 15.4 - 16.3+
+		// Our regular `try-catch` mechanism fails to detect natively-unsupported
+		// pseudo-classes inside `:has()` (such as `:has(:contains("Foo"))`)
+		// in browsers that parse the `:has()` argument as a forgiving selector list.
+		// https://drafts.csswg.org/selectors/#relational now requires the argument
+		// to be parsed unforgivingly, but browsers have not yet fully adjusted.
 		rbuggyQSA.push( ":has" );
 	}
 
@@ -3222,7 +3194,7 @@ tokenize = Sizzle.tokenize = function( selector, parseOnly ) {
 		matched = false;
 
 		// Combinators
-		if ( ( match = rcombinators.exec( soFar ) ) ) {
+		if ( ( match = rleadingCombinator.exec( soFar ) ) ) {
 			matched = match.shift();
 			tokens.push( {
 				value: matched,
@@ -11812,7 +11784,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 496:
+/***/ 201:
 /***/ ((module) => {
 
 /**
@@ -16591,7 +16563,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 973:
+/***/ 688:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19836,7 +19808,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 414:
+/***/ 213:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -34985,7 +34957,7 @@ x_ite_Namespace.set ("x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
  *
  ******************************************************************************/
 
-const VERSION_default_ = "8.6.12";
+const VERSION_default_ = "8.6.13";
 ;
 
 x_ite_Namespace.set ("x_ite/Browser/VERSION", VERSION_default_);
@@ -35889,7 +35861,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(29);
+/* provided dependency */ var $ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36307,7 +36279,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace.set ("x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(29);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36842,7 +36814,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(29);
+/* provided dependency */ var Notification_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36964,8 +36936,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(704);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(29);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(784);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41953,7 +41925,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 x_ite_Namespace.set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(29);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43463,14 +43435,14 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          var
             nodeTypeId = this .result [1],
-            baseNode   = this .getExecutionContext () .createProto (nodeTypeId, false);
+            baseNode   = this .getExecutionContext () .createNode (nodeTypeId, false);
 
          if (! baseNode)
          {
-            baseNode = this .getExecutionContext () .createNode (nodeTypeId, false);
+            baseNode = this .getExecutionContext () .createProto (nodeTypeId, false);
 
             if (! baseNode)
-               throw new Error ("Unknown node type or proto '" + nodeTypeId + "', you probably have insufficient component/profile statements.");
+               throw new Error ("Unknown node type or proto '" + nodeTypeId + "', you probably have insufficient component/profile statements, and/or an inappropriate specification version.");
          }
 
          if (nodeNameId .length)
@@ -45130,7 +45102,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(29);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45913,13 +45885,13 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          if (this .useAttribute (xmlElement))
             return;
 
-         var node = this .getExecutionContext () .createProto (this .protoNameToCamelCase (xmlElement .nodeName), false);
+         var node = this .getExecutionContext () .createNode (this .protoNameToCamelCase (xmlElement .nodeName), false);
 
          if (! node)
-            node = this .getExecutionContext () .createNode (this .nodeNameToCamelCase (xmlElement .nodeName), false);
+            node = this .getExecutionContext () .createProto (this .nodeNameToCamelCase (xmlElement .nodeName), false);
 
          if (! node)
-            throw new Error ("Unknown node type '" + xmlElement .nodeName + "', you probably have insufficient component/profile statements.");
+            throw new Error ("Unknown node type '" + xmlElement .nodeName + "', you probably have insufficient component/profile statements and/or an inappropriate specification version.");
 
          ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
          XMLParser_$.data (xmlElement, "node", node);
@@ -47173,7 +47145,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(29);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47880,8 +47852,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.protot
          scene .addExportedNode (scene .getUniqueExportName (name), textureNode);
       }
 
-      textureNode ._url            = [image .uri];
-      textureNode ._flipVertically = true;
+      textureNode ._url = [image .uri];
 
       const sampler = this .samplers [texture .sampler];
 
@@ -48170,6 +48141,9 @@ GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.protot
          translation = new Numbers_Vector2 (0, 0),
          scale       = new Numbers_Vector2 (1, 1),
          matrix      = new Numbers_Matrix4 ();
+
+      matrix .scale (new Numbers_Vector3 (1, -1, 1));
+      matrix .translate (new Numbers_Vector3 (0, 1, 0));
 
       if (this .vectorValue (KHR_texture_transform .offset, translation))
          matrix .translate (new Numbers_Vector3 (... translation, 0));
@@ -48931,7 +48905,19 @@ GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.protot
       {
          case 0:
          {
-            return null;
+            if (this .textureTransformNode)
+               return this .textureTransformNode;
+
+            const
+               scene                = this .getExecutionContext (),
+               textureTransformNode = scene .createNode ("TextureTransform", false);
+
+            textureTransformNode ._translation .y = 1;
+            textureTransformNode ._scale .y       = -1;
+
+            textureTransformNode .setup ();
+
+            return this .textureTransformNode = textureTransformNode;
          }
          case 1:
          {
@@ -49618,7 +49604,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(29);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49771,7 +49757,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(29);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52224,8 +52210,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace.set ("standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(29);
-/* provided dependency */ var libtess = __webpack_require__(496);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(228);
+/* provided dependency */ var libtess = __webpack_require__(201);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54994,7 +54980,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace.set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(29);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55323,7 +55309,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(496);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(201);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59232,6 +59218,10 @@ NavigationInfo .prototype = Object .assign (Object .create (Core_X3DBindableNode
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       Core_X3DBindableNode.prototype.initialize.call (this);
@@ -59796,6 +59786,10 @@ Fog .prototype = Object .assign (Object .create (Core_X3DBindableNode.prototype)
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -62622,7 +62616,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(29);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -62701,7 +62695,6 @@ ImageTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "flipVertically",       new x_ite_Fields.SFBool ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatS",              new x_ite_Fields.SFBool (true)),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatT",              new x_ite_Fields.SFBool (true)),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "textureProperties",    new x_ite_Fields.SFNode ()),
@@ -62718,12 +62711,14 @@ ImageTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
    {
       return "texture";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       Texturing_X3DTexture2DNode.prototype.initialize.call (this);
       Networking_X3DUrlObject.prototype.initialize.call (this);
-
-      this ._flipVertically .addInterest ("set_url__", this);
 
       this .image .on ("load",        this .setImage .bind (this));
       this .image .on ("abort error", this .setError .bind (this));
@@ -62805,11 +62800,9 @@ ImageTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
             cx .clearRect (0, 0, width, height);
             cx .save ();
 
-            if (!this ._flipVertically .getValue ())
-            {
-               cx .translate (0, height);
-               cx .scale (1, -1);
-            }
+            // Flip vertically.
+            cx .translate (0, height);
+            cx .scale (1, -1);
 
             cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
             cx .restore ();
@@ -62833,10 +62826,9 @@ ImageTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
                width       = image .width,
                height      = image .height;
 
-            // Flip Y if needed.
+            // Flip vertically.
 
-            if (!this ._flipVertically .getValue ())
-               this .flipImage (data, width, height, 4);
+            this .flipImage (data, width, height, 4);
 
             // Upload image to GPU.
 
@@ -63003,6 +62995,10 @@ Background .prototype = Object .assign (Object .create (EnvironmentalEffects_X3D
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -63996,6 +63992,10 @@ TimeSensor .prototype = Object .assign (Object .create (Core_X3DSensorNode.proto
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       Core_X3DSensorNode.prototype.initialize.call (this);
@@ -64314,6 +64314,10 @@ EaseInEaseOut .prototype = Object .assign (Object .create (Interpolation_X3DInte
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -64454,6 +64458,10 @@ PositionInterpolator .prototype = Object .assign (Object .create (Interpolation_
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -64571,6 +64579,10 @@ OrientationInterpolator .prototype = Object .assign (Object .create (Interpolati
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -64692,6 +64704,10 @@ ScalarInterpolator .prototype = Object .assign (Object .create (Interpolation_X3
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -65173,9 +65189,13 @@ X3DViewpointNode .prototype = Object .assign (Object .create (Core_X3DBindableNo
       const
          offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Numbers_Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
+      layerNode .getNavigationInfo () ._transitionStart = true;
+
       this .timeSensor ._cycleInterval = 1;
       this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
       this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
       this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields.MFVec2f (new x_ite_Fields.SFVec2f (0, 1), new x_ite_Fields.SFVec2f (1, 0));
 
@@ -65206,9 +65226,13 @@ X3DViewpointNode .prototype = Object .assign (Object .create (Core_X3DBindableNo
    },
    straightenView: function (layerNode)
    {
+      layerNode .getNavigationInfo () ._transitionStart = true;
+
       this .timeSensor ._cycleInterval = 1;
       this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
       this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
       this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields.MFVec2f (new x_ite_Fields.SFVec2f (0, 1), new x_ite_Fields.SFVec2f (1, 0));
 
@@ -65399,6 +65423,10 @@ Viewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpointNo
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    getRelativeTransformation: function (fromViewpointNode)
    {
@@ -66439,6 +66467,10 @@ Group .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.prot
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
 });
 
 const Group_default_ = Group;
@@ -66536,6 +66568,10 @@ Layer .prototype = Object .assign (Object .create (Layering_X3DLayerNode.prototy
    getContainerField: function ()
    {
       return "layers";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    initialize: function ()
    {
@@ -66644,6 +66680,10 @@ LayerSet .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    initialize: function ()
    {
@@ -66917,7 +66957,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace.set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(29);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -68266,6 +68306,14 @@ X3DExecutionContext .prototype = Object .assign (Object .create (Base_X3DBaseNod
          if (! Type)
             return null;
 
+         const specificationRange = Type .prototype .getSpecificationRange ();
+
+         if (this .getSpecificationVersion () < specificationRange [0])
+            return null;
+
+         if (this .getSpecificationVersion () > specificationRange [1])
+            return null;
+
          return new Type (this);
       }
       else
@@ -68274,6 +68322,14 @@ X3DExecutionContext .prototype = Object .assign (Object .create (Base_X3DBaseNod
 
          if (! Type)
             throw new Error ("Unknown node type '" + typeName + "'.");
+
+         const specificationRange = Type .prototype .getSpecificationRange ();
+
+         if (this .getSpecificationVersion () < specificationRange [0])
+            throw new Error ("Node type '" + typeName + "' does not match specification version.");
+
+         if (this .getSpecificationVersion () > specificationRange [1])
+            throw new Error ("Node type '" + typeName + "' does not match specification version.");
 
          const baseNode = new Type (this);
 
@@ -69091,7 +69147,7 @@ const X3DExecutionContext_default_ = X3DExecutionContext;
 x_ite_Namespace.set ("x_ite/Execution/X3DExecutionContext", X3DExecutionContext_default_);
 /* harmony default export */ const Execution_X3DExecutionContext = (X3DExecutionContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(29);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -71062,7 +71118,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(29);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -71422,9 +71478,7 @@ X3DCoreContext .prototype =
    },
    callBrowserEventHandler: function (events)
    {
-      const element = window .jQuery
-         ? window .jQuery (this .getElement () .get (0))
-         : this .getElement ();
+      const element = this .getElement ();
 
       for (const event of events .split (" "))
          element .trigger (event);
@@ -71815,6 +71869,10 @@ TextureProperties .prototype = Object .assign (Object .create (Core_X3DNode.prot
    getContainerField: function ()
    {
       return "textureProperties";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    getBorderWidth: function ()
    {
@@ -72473,6 +72531,10 @@ IndexedFaceSet .prototype = Object .assign (Object .create (Rendering_X3DCompose
    getContainerField: function ()
    {
       return "geometry";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -73183,6 +73245,10 @@ Coordinate .prototype = Object .assign (Object .create (Rendering_X3DCoordinateN
    {
       return "coord";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
 });
 
 const Coordinate_default_ = Coordinate;
@@ -73432,6 +73498,10 @@ TextureCoordinate .prototype = Object .assign (Object .create (Texturing_X3DSing
    getContainerField: function ()
    {
       return "texCoord";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -74532,6 +74602,10 @@ Shape .prototype = Object .assign (Object .create (Shape_X3DShapeNode.prototype)
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       Shape_X3DShapeNode.prototype.initialize.call (this);
@@ -75197,6 +75271,10 @@ IndexedLineSet .prototype = Object .assign (Object .create (Rendering_X3DLineGeo
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       Rendering_X3DLineGeometryNode.prototype.initialize.call (this);
@@ -75396,241 +75474,6 @@ const IndexedLineSet_default_ = IndexedLineSet;
 
 x_ite_Namespace.set ("x_ite/Components/Rendering/IndexedLineSet", IndexedLineSet_default_);
 /* harmony default export */ const Rendering_IndexedLineSet = (IndexedLineSet_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DColorNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-function X3DColorNode (executionContext)
-{
-   Rendering_X3DGeometricPropertyNode.call (this, executionContext);
-
-   this .addType (Base_X3DConstants.X3DColorNode);
-
-   this .addChildObjects ("transparent", new x_ite_Fields.SFBool ());
-
-   this ._transparent .setAccessType (Base_X3DConstants.outputOnly);
-}
-
-X3DColorNode .prototype = Object .assign (Object .create (Rendering_X3DGeometricPropertyNode.prototype),
-{
-   constructor: X3DColorNode,
-   setTransparent: function (value)
-   {
-      if (value !== this ._transparent .getValue ())
-         this ._transparent = value;
-   },
-   isTransparent: function ()
-   {
-      return this ._transparent .getValue ();
-   },
-});
-
-const X3DColorNode_default_ = X3DColorNode;
-;
-
-x_ite_Namespace.set ("x_ite/Components/Rendering/X3DColorNode", X3DColorNode_default_);
-/* harmony default export */ const Rendering_X3DColorNode = (X3DColorNode_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Color.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-function Color (executionContext)
-{
-   Rendering_X3DColorNode.call (this, executionContext);
-
-   this .addType (Base_X3DConstants.Color);
-}
-
-Color .prototype = Object .assign (Object .create (Rendering_X3DColorNode.prototype),
-{
-   constructor: Color,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",    new x_ite_Fields.MFColor ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Color";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "color";
-   },
-   initialize: function ()
-   {
-      Rendering_X3DColorNode.prototype.initialize.call (this);
-
-      this ._color .addInterest ("set_color__", this);
-
-      this .set_color__ ();
-   },
-   set_color__: function ()
-   {
-      this .color  = this ._color .getValue ();
-      this .length = this ._color .length;
-   },
-   addColor: function (index, array)
-   {
-      if (index >= 0 && index < this .length)
-      {
-         const color = this .color;
-
-         index *= 3;
-
-         array .push (color [index], color [index + 1], color [index + 2], 1);
-      }
-      else if (this .length)
-      {
-         const color = this .color;
-
-         index = (this .length - 1) * 3;
-
-         array .push (color [index], color [index + 1], color [index + 2], 1);
-      }
-      else
-      {
-         array .push (1, 1, 1, 1);
-      }
-   },
-   addColors: function (array, min)
-   {
-      if (this .length)
-      {
-         const color = this .color;
-
-         for (var index = 0, length = Math .min (min, this .length) * 3; index < length; index += 3)
-            array .push (color [index], color [index + 1], color [index + 2], 1);
-
-         if (this .length < min)
-         {
-            var index = (this .length - 1) * 3;
-
-            const
-               r = color [index],
-               g = color [index + 1],
-               b = color [index + 2];
-
-            for (var index = length, length = min * 3; index < length; index += 3)
-               array .push (r, g, b, 1);
-         }
-      }
-      else
-      {
-         for (let index = 0; index < min; ++ index)
-            array .push (1, 1, 1, 1);
-      }
-
-      return array;
-   },
-});
-
-const Color_default_ = Color;
-;
-
-x_ite_Namespace.set ("x_ite/Components/Rendering/Color", Color_default_);
-/* harmony default export */ const Rendering_Color = (Color_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Grouping/X3DGroupingContext.js
 /*******************************************************************************
  *
@@ -75683,9 +75526,7 @@ x_ite_Namespace.set ("x_ite/Components/Rendering/Color", Color_default_);
 
 
 
-
-
-const _bboxNode = Symbol ();
+const _bboxShape = Symbol ();
 
 function X3DGroupingContext () { }
 
@@ -75695,30 +75536,26 @@ X3DGroupingContext .prototype =
    getBBoxNode: function ()
    {
       const
-         bboxNode       = new Shape_Shape (this .getPrivateScene ()),
+         bboxShape      = new Shape_Shape (this .getPrivateScene ()),
          bboxGeometry   = new Rendering_IndexedLineSet (this .getPrivateScene ()),
-         bboxColor      = new Rendering_Color (this .getPrivateScene ()),
          bboxCoordinate = new Rendering_Coordinate (this .getPrivateScene ());
 
-      bboxNode ._geometry       = bboxGeometry;
-      bboxGeometry ._coordIndex = new x_ite_Fields.MFFloat (0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1);
-      bboxGeometry ._color      = bboxColor;
+      bboxShape ._geometry      = bboxGeometry;
+      bboxGeometry ._coordIndex = [0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1];
       bboxGeometry ._coord      = bboxCoordinate;
-      bboxColor ._color         = new x_ite_Fields.MFColor (new x_ite_Fields.SFColor (1, 1, 1));
-      bboxCoordinate ._point    = new x_ite_Fields.MFVec3f (new x_ite_Fields.SFVec3f (0.5, 0.5, 0.5), new x_ite_Fields.SFVec3f (-0.5, 0.5, 0.5), new x_ite_Fields.SFVec3f (-0.5, -0.5, 0.5), new x_ite_Fields.SFVec3f (0.5, -0.5, 0.5), new x_ite_Fields.SFVec3f (0.5, 0.5, -0.5), new x_ite_Fields.SFVec3f (-0.5, 0.5, -0.5), new x_ite_Fields.SFVec3f (-0.5, -0.5, -0.5), new x_ite_Fields.SFVec3f (0.5, -0.5, -0.5));
+      bboxCoordinate ._point    = [0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5];
 
       bboxCoordinate .setup ();
-      bboxColor      .setup ();
       bboxGeometry   .setup ();
-      bboxNode       .setup ();
+      bboxShape      .setup ();
 
-      this [_bboxNode] = bboxNode;
+      this [_bboxShape] = bboxShape;
 
-      this .getBBoxNode = function () { return this [_bboxNode]; };
+      this .getBBoxNode = function () { return this [_bboxShape]; };
 
       Object .defineProperty (this, "getBBoxNode", { enumerable: false });
 
-      return bboxNode;
+      return bboxShape;
    }
 };
 
@@ -75889,6 +75726,10 @@ Viewport .prototype = Object .assign (Object .create (Layering_X3DViewportNode.p
    getContainerField: function ()
    {
       return "viewport";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    getRectangle: function ()
    {
@@ -76260,6 +76101,10 @@ OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpo
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -77188,6 +77033,10 @@ PositionChaser .prototype = Object .assign (Object .create (Followers_X3DChaserN
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    getVector: function ()
    {
       return new Numbers_Vector3 (0, 0, 0);
@@ -77296,6 +77145,10 @@ OrientationChaser .prototype = Object .assign (Object .create (Followers_X3DChas
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    getVector: function ()
    {
       return new Numbers_Rotation4 (0, 0, 1, 0);
@@ -77324,8 +77177,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(556);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(29);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(742);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78189,8 +78042,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(556);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(29);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(742);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79140,8 +78993,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(556);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(29);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(742);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79450,8 +79303,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(556);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(29);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(742);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -80446,6 +80299,10 @@ DirectionalLight .prototype = Object .assign (Object .create (Lighting_X3DLightN
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    getLights: function ()
    {
       return DirectionalLights;
@@ -81059,8 +80916,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(556);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(29);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(742);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -82082,8 +81939,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(29);
-/* provided dependency */ var ResizeSensor = __webpack_require__(310);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(228);
+/* provided dependency */ var ResizeSensor = __webpack_require__(655);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -87968,7 +87825,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace.set ("x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(29);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89460,6 +89317,10 @@ LoadSensor .prototype = Object .assign (Object .create (Networking_X3DNetworkSen
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       Networking_X3DNetworkSensorNode.prototype.initialize.call (this);
@@ -89704,6 +89565,10 @@ ComposedShader .prototype = Object .assign (Object .create (Shaders_X3DShaderNod
    getContainerField: function ()
    {
       return "shaders";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -90746,7 +90611,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace.set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(29);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90852,6 +90717,10 @@ ShaderPart .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
    getContainerField: function ()
    {
       return "parts";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -91353,6 +91222,10 @@ Appearance .prototype = Object .assign (Object .create (Shape_X3DAppearanceNode.
    {
       return "appearance";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       Shape_X3DAppearanceNode.prototype.initialize.call (this);
@@ -91789,6 +91662,10 @@ PointProperties .prototype = Object .assign (Object .create (Shape_X3DAppearance
    {
       return "pointProperties";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
    initialize: function ()
    {
       Shape_X3DAppearanceChildNode.prototype.initialize.call (this);
@@ -91938,6 +91815,10 @@ LineProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
    getContainerField: function ()
    {
       return "lineProperties";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -92643,6 +92524,10 @@ UnlitMaterial .prototype = Object .assign (Object .create (Shape_X3DOneSidedMate
    {
       return "material";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
    initialize: function ()
    {
       Shape_X3DOneSidedMaterialNode.prototype.initialize.call (this);
@@ -93220,6 +93105,10 @@ TextureTransform .prototype = Object .assign (Object .create (Texturing_X3DSingl
    getContainerField: function ()
    {
       return "textureTransform";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -94417,6 +94306,10 @@ MetadataBoolean .prototype = Object .assign (Object .create (Core_X3DNode.protot
    {
       return "metadata";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.3", "Infinity"];
+   },
    initialize: function ()
    {
       Core_X3DNode.prototype.initialize.call ();
@@ -94518,6 +94411,10 @@ MetadataDouble .prototype = Object .assign (Object .create (Core_X3DNode.prototy
    getContainerField: function ()
    {
       return "metadata";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -94621,6 +94518,10 @@ MetadataFloat .prototype = Object .assign (Object .create (Core_X3DNode.prototyp
    {
       return "metadata";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       Core_X3DNode.prototype.initialize.call ();
@@ -94722,6 +94623,10 @@ MetadataInteger .prototype = Object .assign (Object .create (Core_X3DNode.protot
    getContainerField: function ()
    {
       return "metadata";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -94825,6 +94730,10 @@ MetadataSet .prototype = Object .assign (Object .create (Core_X3DNode.prototype)
    {
       return "metadata";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       Core_X3DNode.prototype.initialize.call ();
@@ -94926,6 +94835,10 @@ MetadataString .prototype = Object .assign (Object .create (Core_X3DNode.prototy
    getContainerField: function ()
    {
       return "metadata";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -95092,6 +95005,10 @@ WorldInfo .prototype = Object .assign (Object .create (Core_X3DInfoNode.prototyp
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -95291,6 +95208,10 @@ FogCoordinate .prototype = Object .assign (Object .create (Rendering_X3DGeometri
    {
       return "fogCoord";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       Rendering_X3DGeometricPropertyNode.prototype.initialize.call (this);
@@ -95438,6 +95359,10 @@ LocalFog .prototype = Object .assign (Object .create (Core_X3DChildNode.prototyp
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       Core_X3DChildNode.prototype.initialize.call (this);
@@ -95564,6 +95489,10 @@ TextureBackground .prototype = Object .assign (Object .create (EnvironmentalEffe
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -95937,6 +95866,10 @@ ProximitySensor .prototype = Object .assign (Object .create (EnvironmentalSensor
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       EnvironmentalSensor_X3DEnvironmentalSensorNode.prototype.initialize.call (this);
@@ -96206,6 +96139,10 @@ TransformSensor .prototype = Object .assign (Object .create (EnvironmentalSensor
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    initialize: function ()
    {
@@ -96501,6 +96438,10 @@ VisibilitySensor .prototype = Object .assign (Object .create (EnvironmentalSenso
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       EnvironmentalSensor_X3DEnvironmentalSensorNode.prototype.initialize.call (this);
@@ -96746,6 +96687,10 @@ ColorChaser .prototype = Object .assign (Object .create (Followers_X3DChaserNode
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.3", "Infinity"];
    },
    getVector: function ()
    {
@@ -97053,6 +96998,10 @@ ColorDamper .prototype = Object .assign (Object .create (Followers_X3DDamperNode
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    getVector: function ()
    {
@@ -97449,6 +97398,10 @@ CoordinateChaser .prototype = Object .assign (Object .create (Followers_X3DChase
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.3", "Infinity"];
+   },
    getVector: function ()
    {
       return new Numbers_Vector3 (0, 0, 0);
@@ -97553,6 +97506,10 @@ CoordinateDamper .prototype = Object .assign (Object .create (Followers_X3DDampe
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    getVector: function ()
    {
@@ -97664,6 +97621,10 @@ OrientationDamper .prototype = Object .assign (Object .create (Followers_X3DDamp
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    getVector: function ()
    {
       return new Numbers_Rotation4 (0, 0, 1, 0);
@@ -97772,6 +97733,10 @@ PositionChaser2D .prototype = Object .assign (Object .create (Followers_X3DChase
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    getVector: function ()
    {
       return new Numbers_Vector2 (0, 0);
@@ -97871,6 +97836,10 @@ PositionDamper .prototype = Object .assign (Object .create (Followers_X3DDamperN
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    getVector: function ()
    {
@@ -97972,6 +97941,10 @@ PositionDamper2D .prototype = Object .assign (Object .create (Followers_X3DDampe
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    getVector: function ()
    {
       return new Numbers_Vector2 (0, 0);
@@ -98069,6 +98042,10 @@ ScalarChaser .prototype = Object .assign (Object .create (Followers_X3DChaserNod
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    getVector: function ()
    {
@@ -98198,6 +98175,10 @@ ScalarDamper .prototype = Object .assign (Object .create (Followers_X3DDamperNod
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.3", "Infinity"];
+   },
    getVector: function ()
    {
       return 0;
@@ -98317,6 +98298,10 @@ TexCoordChaser2D .prototype = Object .assign (Object .create (Followers_X3DChase
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.3", "Infinity"];
+   },
    getVector: function ()
    {
       return new Numbers_Vector2 (0, 0);
@@ -98421,6 +98406,10 @@ TexCoordDamper2D .prototype = Object .assign (Object .create (Followers_X3DDampe
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    getVector: function ()
    {
@@ -98620,6 +98609,10 @@ Box .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.proto
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    build: (function ()
    {
       const defaultSize = new Numbers_Vector3 (2, 2, 2);
@@ -98768,6 +98761,10 @@ Cone .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.prot
    getContainerField: function ()
    {
       return "geometry";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    set_live__: function ()
    {
@@ -99007,6 +99004,10 @@ Cylinder .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.
    getContainerField: function ()
    {
       return "geometry";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    set_live__: function ()
    {
@@ -99325,6 +99326,10 @@ ElevationGrid .prototype = Object .assign (Object .create (Rendering_X3DGeometry
    getContainerField: function ()
    {
       return "geometry";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -99740,6 +99745,10 @@ Extrusion .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode
    getContainerField: function ()
    {
       return "geometry";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -100432,6 +100441,10 @@ Sphere .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.pr
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    set_live__: function ()
    {
       Rendering_X3DGeometryNode.prototype.set_live__.call (this);
@@ -100671,6 +100684,10 @@ StaticGroup .prototype = Object .assign (Object .create (Core_X3DChildNode.proto
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -100916,6 +100933,10 @@ Switch .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.pro
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -101373,6 +101394,10 @@ Transform .prototype = Object .assign (Object .create (Grouping_X3DTransformNode
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
 });
 
 const Transform_default_ = Transform;
@@ -101551,6 +101576,10 @@ ColorInterpolator .prototype = Object .assign (Object .create (Interpolation_X3D
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -101670,6 +101699,10 @@ CoordinateInterpolator .prototype = Object .assign (Object .create (Interpolatio
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    set_keyValue__: function () { },
    interpolate: function (index0, index1, weight)
@@ -101793,6 +101826,10 @@ CoordinateInterpolator2D .prototype = Object .assign (Object .create (Interpolat
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    set_keyValue__: function () { },
    interpolate: function (index0, index1, weight)
    {
@@ -101912,6 +101949,10 @@ NormalInterpolator .prototype = Object .assign (Object .create (Interpolation_X3
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -102059,6 +102100,10 @@ PositionInterpolator2D .prototype = Object .assign (Object .create (Interpolatio
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -102543,6 +102588,10 @@ SplinePositionInterpolator .prototype = Object .assign (Object .create (Interpol
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -102737,6 +102786,10 @@ SplinePositionInterpolator2D .prototype = Object .assign (Object .create (Interp
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    initialize: function ()
    {
@@ -102967,6 +103020,10 @@ SplineScalarInterpolator .prototype = Object .assign (Object .create (Interpolat
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    initialize: function ()
    {
@@ -103218,6 +103275,10 @@ SquadOrientationInterpolator .prototype = Object .assign (Object .create (Interp
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    initialize: function ()
    {
@@ -103569,6 +103630,10 @@ EnvironmentLight .prototype = Object .assign (Object .create (Lighting_X3DLightN
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
    getLights: function ()
    {
       return EnvironmentLights;
@@ -103887,6 +103952,10 @@ PointLight .prototype = Object .assign (Object .create (Lighting_X3DLightNode.pr
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    getAttenuation: function ()
    {
       return this ._attenuation .getValue ();
@@ -104172,16 +104241,10 @@ function SpotLight (executionContext)
 
    this .addType (Base_X3DConstants.SpotLight);
 
-   switch (executionContext .getSpecificationVersion ())
+   if (executionContext .getSpecificationVersion () <= 3.2)
    {
-      case "2.0":
-      case "3.0":
-      case "3.1":
-      case "3.2":
-      {
-         this ._beamWidth   = 1.5708;
-         this ._cutOffAngle = 0.785398;
-      }
+      this ._beamWidth   = 1.5708;
+      this ._cutOffAngle = 0.785398;
    }
 
    this ._location    .setUnit ("length");
@@ -104224,6 +104287,10 @@ SpotLight .prototype = Object .assign (Object .create (Lighting_X3DLightNode.pro
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    getAttenuation: function ()
    {
@@ -104437,6 +104504,10 @@ Billboard .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    getBBox: function (bbox, shadows)
    {
       return Grouping_X3DGroupingNode.prototype.getBBox.call (this, bbox, shadows) .multRight (this .matrix);
@@ -104620,6 +104691,10 @@ Collision .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       Grouping_X3DGroupingNode.prototype.initialize.call (this);
@@ -104801,6 +104876,10 @@ LOD .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.protot
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -105115,6 +105194,10 @@ ViewpointGroup .prototype = Object .assign (Object .create (Core_X3DChildNode.pr
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    initialize: function ()
    {
@@ -105747,6 +105830,10 @@ TouchSensor .prototype = Object .assign (Object .create (PointingDeviceSensor_X3
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
 });
 
 const TouchSensor_default_ = TouchSensor;
@@ -105854,6 +105941,10 @@ Anchor .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.pro
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -106066,6 +106157,10 @@ Inline .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype)
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -106686,6 +106781,10 @@ CylinderSensor .prototype = Object .assign (Object .create (PointingDeviceSensor
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       PointingDeviceSensor_X3DDragSensorNode.prototype.initialize.call (this);
@@ -107143,6 +107242,10 @@ PlaneSensor .prototype = Object .assign (Object .create (PointingDeviceSensor_X3
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -107619,6 +107722,10 @@ SphereSensor .prototype = Object .assign (Object .create (PointingDeviceSensor_X
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       PointingDeviceSensor_X3DDragSensorNode.prototype.initialize.call (this);
@@ -107945,6 +108052,10 @@ ClipPlane .prototype = Object .assign (Object .create (Core_X3DChildNode.prototy
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       Core_X3DChildNode.prototype.initialize.call (this);
@@ -107989,6 +108100,245 @@ const ClipPlane_default_ = ClipPlane;
 
 x_ite_Namespace.set ("x_ite/Components/Rendering/ClipPlane", ClipPlane_default_);
 /* harmony default export */ const Rendering_ClipPlane = (ClipPlane_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DColorNode.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+function X3DColorNode (executionContext)
+{
+   Rendering_X3DGeometricPropertyNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.X3DColorNode);
+
+   this .addChildObjects ("transparent", new x_ite_Fields.SFBool ());
+
+   this ._transparent .setAccessType (Base_X3DConstants.outputOnly);
+}
+
+X3DColorNode .prototype = Object .assign (Object .create (Rendering_X3DGeometricPropertyNode.prototype),
+{
+   constructor: X3DColorNode,
+   setTransparent: function (value)
+   {
+      if (value !== this ._transparent .getValue ())
+         this ._transparent = value;
+   },
+   isTransparent: function ()
+   {
+      return this ._transparent .getValue ();
+   },
+});
+
+const X3DColorNode_default_ = X3DColorNode;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Rendering/X3DColorNode", X3DColorNode_default_);
+/* harmony default export */ const Rendering_X3DColorNode = (X3DColorNode_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Color.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function Color (executionContext)
+{
+   Rendering_X3DColorNode.call (this, executionContext);
+
+   this .addType (Base_X3DConstants.Color);
+}
+
+Color .prototype = Object .assign (Object .create (Rendering_X3DColorNode.prototype),
+{
+   constructor: Color,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",    new x_ite_Fields.MFColor ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "Color";
+   },
+   getComponentName: function ()
+   {
+      return "Rendering";
+   },
+   getContainerField: function ()
+   {
+      return "color";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
+   initialize: function ()
+   {
+      Rendering_X3DColorNode.prototype.initialize.call (this);
+
+      this ._color .addInterest ("set_color__", this);
+
+      this .set_color__ ();
+   },
+   set_color__: function ()
+   {
+      this .color  = this ._color .getValue ();
+      this .length = this ._color .length;
+   },
+   addColor: function (index, array)
+   {
+      if (index >= 0 && index < this .length)
+      {
+         const color = this .color;
+
+         index *= 3;
+
+         array .push (color [index], color [index + 1], color [index + 2], 1);
+      }
+      else if (this .length)
+      {
+         const color = this .color;
+
+         index = (this .length - 1) * 3;
+
+         array .push (color [index], color [index + 1], color [index + 2], 1);
+      }
+      else
+      {
+         array .push (1, 1, 1, 1);
+      }
+   },
+   addColors: function (array, min)
+   {
+      if (this .length)
+      {
+         const color = this .color;
+
+         for (var index = 0, length = Math .min (min, this .length) * 3; index < length; index += 3)
+            array .push (color [index], color [index + 1], color [index + 2], 1);
+
+         if (this .length < min)
+         {
+            var index = (this .length - 1) * 3;
+
+            const
+               r = color [index],
+               g = color [index + 1],
+               b = color [index + 2];
+
+            for (var index = length, length = min * 3; index < length; index += 3)
+               array .push (r, g, b, 1);
+         }
+      }
+      else
+      {
+         for (let index = 0; index < min; ++ index)
+            array .push (1, 1, 1, 1);
+      }
+
+      return array;
+   },
+});
+
+const Color_default_ = Color;
+;
+
+x_ite_Namespace.set ("x_ite/Components/Rendering/Color", Color_default_);
+/* harmony default export */ const Rendering_Color = (Color_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/ColorRGBA.js
 /*******************************************************************************
  *
@@ -108070,6 +108420,10 @@ ColorRGBA .prototype = Object .assign (Object .create (Rendering_X3DColorNode.pr
    getContainerField: function ()
    {
       return "color";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -108238,6 +108592,10 @@ IndexedTriangleFanSet .prototype = Object .assign (Object .create (Rendering_X3D
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       Rendering_X3DComposedGeometryNode.prototype.initialize.call (this);
@@ -108391,6 +108749,10 @@ IndexedTriangleSet .prototype = Object .assign (Object .create (Rendering_X3DCom
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    getPolygonIndex: function (i)
    {
       return this ._index [i];
@@ -108504,6 +108866,10 @@ IndexedTriangleStripSet .prototype = Object .assign (Object .create (Rendering_X
    getContainerField: function ()
    {
       return "geometry";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -108665,6 +109031,10 @@ LineSet .prototype = Object .assign (Object .create (Rendering_X3DLineGeometryNo
    getContainerField: function ()
    {
       return "geometry";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -108950,6 +109320,10 @@ Normal .prototype = Object .assign (Object .create (Rendering_X3DNormalNode.prot
    getContainerField: function ()
    {
       return "normal";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -109314,6 +109688,10 @@ PointSet .prototype = Object .assign (Object .create (Rendering_X3DPointGeometry
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       Rendering_X3DPointGeometryNode.prototype.initialize.call (this);
@@ -109524,6 +109902,10 @@ TriangleFanSet .prototype = Object .assign (Object .create (Rendering_X3DCompose
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       Rendering_X3DComposedGeometryNode.prototype.initialize.call (this);
@@ -109658,6 +110040,10 @@ TriangleSet .prototype = Object .assign (Object .create (Rendering_X3DComposedGe
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    build: function ()
    {
       if (! this .getCoord ())
@@ -109767,6 +110153,10 @@ TriangleStripSet .prototype = Object .assign (Object .create (Rendering_X3DCompo
    getContainerField: function ()
    {
       return "geometry";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -110092,6 +110482,10 @@ FloatVertexAttribute .prototype = Object .assign (Object .create (Shaders_X3DVer
    {
       return "attrib";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       Shaders_X3DVertexAttributeNode.prototype.initialize.call (this);
@@ -110232,6 +110626,10 @@ Matrix3VertexAttribute .prototype = Object .assign (Object .create (Shaders_X3DV
    {
       return "attrib";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       Shaders_X3DVertexAttributeNode.prototype.initialize.call (this);
@@ -110362,6 +110760,10 @@ Matrix4VertexAttribute .prototype = Object .assign (Object .create (Shaders_X3DV
    getContainerField: function ()
    {
       return "attrib";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -110507,6 +110909,10 @@ PackagedShader .prototype = Object .assign (Object .create (Shaders_X3DShaderNod
    {
       return "shaders";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    getSourceText: function ()
    {
       return this ._url;
@@ -110618,6 +111024,10 @@ ProgramShader .prototype = Object .assign (Object .create (Shaders_X3DShaderNode
    {
       return "shaders";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
 });
 
 const ProgramShader_default_ = ProgramShader;
@@ -110715,6 +111125,10 @@ ShaderProgram .prototype = Object .assign (Object .create (Core_X3DNode.prototyp
    getContainerField: function ()
    {
       return "programs";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    getSourceText: function ()
    {
@@ -110919,6 +111333,10 @@ AcousticProperties .prototype = Object .assign (Object .create (Shape_X3DAppeara
    {
       return "AcousticProperties";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 const AcousticProperties_default_ = AcousticProperties;
@@ -111014,6 +111432,10 @@ FillProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
    getContainerField: function ()
    {
       return "fillProperties";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -111205,6 +111627,10 @@ Material .prototype = Object .assign (Object .create (Shape_X3DOneSidedMaterialN
    getContainerField: function ()
    {
       return "material";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -111599,6 +112025,10 @@ PhysicalMaterial .prototype = Object .assign (Object .create (Shape_X3DOneSidedM
    {
       return "material";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
    initialize: function ()
    {
       Shape_X3DOneSidedMaterialNode.prototype.initialize.call (this);
@@ -111900,6 +112330,10 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (Shape_X3DMaterialN
    getContainerField: function ()
    {
       return "material";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
    },
    initialize: function ()
    {
@@ -112362,6 +112796,10 @@ Analyser .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNo
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 const Analyser_default_ = Analyser;
@@ -112589,7 +113027,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(29);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112693,6 +113131,10 @@ AudioClip .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.
    getContainerField: function ()
    {
       return "source";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -113019,6 +113461,10 @@ AudioDestination .prototype = Object .assign (Object .create (Sound_X3DSoundDest
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 const AudioDestination_default_ = AudioDestination;
@@ -113127,6 +113573,10 @@ BiquadFilter .prototype = Object .assign (Object .create (Sound_X3DSoundProcessi
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
    },
 });
 
@@ -113249,6 +113699,10 @@ BufferAudioSource .prototype = Object .assign (Object .create (Sound_X3DSoundSou
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -113424,6 +113878,10 @@ ChannelMerger .prototype = Object .assign (Object .create (Sound_X3DSoundChannel
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 const ChannelMerger_default_ = ChannelMerger;
@@ -113521,6 +113979,10 @@ ChannelSelector .prototype = Object .assign (Object .create (Sound_X3DSoundChann
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 const ChannelSelector_default_ = ChannelSelector;
@@ -113617,6 +114079,10 @@ ChannelSplitter .prototype = Object .assign (Object .create (Sound_X3DSoundChann
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
    },
 });
 
@@ -113725,6 +114191,10 @@ Convolver .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingN
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 const Convolver_default_ = Convolver;
@@ -113831,6 +114301,10 @@ Delay .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
    },
 });
 
@@ -113943,6 +114417,10 @@ DynamicsCompressor .prototype = Object .assign (Object .create (Sound_X3DSoundPr
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 const DynamicsCompressor_default_ = DynamicsCompressor;
@@ -114047,6 +114525,10 @@ Gain .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.p
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
    },
 });
 
@@ -114155,6 +114637,10 @@ ListenerPointSource .prototype = Object .assign (Object .create (Sound_X3DSoundS
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 const ListenerPointSource_default_ = ListenerPointSource;
@@ -114255,6 +114741,10 @@ MicrophoneSource .prototype = Object .assign (Object .create (Sound_X3DSoundSour
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
    },
 });
 
@@ -114359,6 +114849,10 @@ OscillatorSource .prototype = Object .assign (Object .create (Sound_X3DSoundSour
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 const OscillatorSource_default_ = OscillatorSource;
@@ -114449,6 +114943,10 @@ PeriodicWave .prototype = Object .assign (Object .create (Sound_X3DSoundNode.pro
    getContainerField: function ()
    {
       return "periodicWave";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
    },
 });
 
@@ -114566,6 +115064,10 @@ Sound .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype)
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -114850,6 +115352,10 @@ SpatialSound .prototype = Object .assign (Object .create (Sound_X3DSoundNode.pro
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 const SpatialSound_default_ = SpatialSound;
@@ -114948,6 +115454,10 @@ StreamAudioDestination .prototype = Object .assign (Object .create (Sound_X3DSou
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
    },
 });
 
@@ -115049,6 +115559,10 @@ StreamAudioSource .prototype = Object .assign (Object .create (Sound_X3DSoundSou
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
    },
 });
 
@@ -115156,6 +115670,10 @@ WaveShaper .prototype = Object .assign (Object .create (Sound_X3DSoundProcessing
    getContainerField: function ()
    {
       return "children";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
    },
 });
 
@@ -115404,8 +115922,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(29);
-/* provided dependency */ var SuperGif = __webpack_require__(414);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(228);
+/* provided dependency */ var SuperGif = __webpack_require__(213);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115501,7 +116019,6 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
       new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",             new x_ite_Fields.SFBool ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "elapsedTime",          new x_ite_Fields.SFTime ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "duration_changed",     new x_ite_Fields.SFTime (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "flipVertically",       new x_ite_Fields.SFBool ()),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatS",              new x_ite_Fields.SFBool (true)),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatT",              new x_ite_Fields.SFBool (true)),
       new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "textureProperties",    new x_ite_Fields.SFNode ()),
@@ -115517,6 +116034,10 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
    getContainerField: function ()
    {
       return "texture";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -115628,7 +116149,7 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
             throw new Error ("The movie texture is a non power-of-two texture.");
 
          this .setMedia (this .video [0]);
-         this .setTexture (width, height, false, video, !this ._flipVertically .getValue ());
+         this .setTexture (width, height, false, video, true);
          this .setLoadState (Base_X3DConstants.COMPLETE_STATE);
       }
       catch (error)
@@ -115648,7 +116169,7 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
          gif .pause ();
 
          this .setMedia (gif);
-         this .setTexture (gif .get_canvas () .width, gif .get_canvas () .height, false, gif .get_frames () [0] .data, !this ._flipVertically .getValue ());
+         this .setTexture (gif .get_canvas () .width, gif .get_canvas () .height, false, gif .get_frames () [0] .data, true);
          this .setLoadState (Base_X3DConstants.COMPLETE_STATE);
       }
       catch (error)
@@ -115665,9 +116186,9 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
          return;
 
       if (this .gif)
-         this .updateTexture (this .gif .currentFrame .data, !this ._flipVertically .getValue ());
+         this .updateTexture (this .gif .currentFrame .data, true);
       else
-         this .updateTexture (this .video [0], !this ._flipVertically .getValue ());
+         this .updateTexture (this .video [0], true);
    },
    traverse: Texturing_X3DTexture2DNode.prototype.traverse,
    dispose: function ()
@@ -115784,6 +116305,10 @@ MultiTexture .prototype = Object .assign (Object .create (Texturing_X3DTextureNo
    getContainerField: function ()
    {
       return "texture";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -116104,6 +116629,10 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (Texturing_X3
    {
       return "texCoord";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       Texturing_X3DTextureCoordinateNode.prototype.initialize.call (this);
@@ -116294,6 +116823,10 @@ MultiTextureTransform .prototype = Object .assign (Object .create (Texturing_X3D
    {
       return "textureTransform";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       Texturing_X3DTextureTransformNode.prototype.initialize.call (this);
@@ -116353,7 +116886,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(29);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116441,6 +116974,10 @@ PixelTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
    getContainerField: function ()
    {
       return "texture";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -116712,6 +117249,10 @@ TextureCoordinateGenerator .prototype = Object .assign (Object .create (Texturin
    getContainerField: function ()
    {
       return "texCoord";
+   },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
    },
    initialize: function ()
    {
@@ -117056,7 +117597,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(29);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(228);
 /*******************************************************************************
  * MIT License
  *
@@ -118293,7 +118834,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(29);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119238,7 +119779,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(29);
+/* provided dependency */ var Fallback_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119417,8 +119958,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(29);
-/* provided dependency */ var pako = __webpack_require__(973);
+/* provided dependency */ var jquery_$ = __webpack_require__(228);
+/* provided dependency */ var pako = __webpack_require__(688);
 jquery_$.decodeText = function (input)
 {
    if (typeof input === "string")
@@ -119450,14 +119991,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(496);
+/* provided dependency */ var libtess_libtess = __webpack_require__(201);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace.set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(29);
+/* provided dependency */ var X3D_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119713,7 +120254,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(29);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(228);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119992,7 +120533,7 @@ x_ite_Namespace.set ("shim", shim_default_);
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-8.6.12")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-8.6.13")] = x_ite_X3D;
 
 x_ite_X3DCanvasElement.define ();
 
