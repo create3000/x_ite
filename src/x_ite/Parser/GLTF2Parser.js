@@ -766,7 +766,10 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const textureTransformNode = scene .createNode ("TextureTransform", false);
 
-            textureTransformNode ._mapping = mapping;
+            textureTransformNode ._mapping        = mapping;
+            textureTransformNode ._translation .y = 1;
+            textureTransformNode ._scale .y       = -1;
+
             textureTransformNode .setup ();
 
             this .textureTransformNodes .push (textureTransformNode);
@@ -994,8 +997,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scale       = new Vector2 (1, 1),
          matrix      = new Matrix4 ();
 
-      matrix .scale (new Vector3 (1, -1, 1));
       matrix .translate (new Vector3 (0, 1, 0));
+      matrix .scale (new Vector3 (1, -1, 1));
 
       if (this .vectorValue (KHR_texture_transform .offset, translation))
          matrix .translate (new Vector3 (... translation, 0));
