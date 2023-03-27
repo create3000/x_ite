@@ -15,7 +15,7 @@ tags: [Group, Grouping]
 
 Group is a Grouping node that can contain most nodes.
 
-The Group node belongs to the **Grouping** component and its default container field is *children.* It is available since X3D version 3.0 or later.
+The Group node belongs to the **Grouping** component and its default container field is *children.* It is available since X3D version 2.0 or later.
 
 ## Hierarchy
 

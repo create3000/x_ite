@@ -15,7 +15,7 @@ tags: [SpotLight, Lighting]
 
 SpotLight is a light source that illuminates geometry within a conical beam. Light illuminates all geometry and is normally scoped to illuminate peers and children nodes within the scene graph hierarchy Lights have no visible shape themselves and shine through occluding geometry.
 
-The SpotLight node belongs to the **Lighting** component and its default container field is *children.* It is available since X3D version 3.0 or later.
+The SpotLight node belongs to the **Lighting** component and its default container field is *children.* It is available since X3D version 2.0 or later.
 
 ## Hierarchy
 

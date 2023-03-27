@@ -15,7 +15,7 @@ tags: [Cone, Geometry3D]
 
 Cone is a geometry node.
 
-The Cone node belongs to the **Geometry3D** component and its default container field is *geometry.* It is available since X3D version 3.0 or later.
+The Cone node belongs to the **Geometry3D** component and its default container field is *geometry.* It is available since X3D version 2.0 or later.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [PointLight, Lighting]
 
 PointLight is a single light source that illuminates outwards in all directions. Light illuminates all geometry and is normally scoped to illuminate peers and children nodes within the scene graph hierarchy Lights have no visible shape themselves and shine through occluding geometry.
 
-The PointLight node belongs to the **Lighting** component and its default container field is *children.* It is available since X3D version 3.0 or later.
+The PointLight node belongs to the **Lighting** component and its default container field is *children.* It is available since X3D version 2.0 or later.
 
 ## Hierarchy
 

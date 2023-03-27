@@ -15,7 +15,7 @@ tags: [Transform, Grouping]
 
 Transform is a Grouping node that can contain most nodes. Transform translates, orients and scales child geometry within the local world coordinate system.
 
-The Transform node belongs to the **Grouping** component and its default container field is *children.* It is available since X3D version 3.0 or later.
+The Transform node belongs to the **Grouping** component and its default container field is *children.* It is available since X3D version 2.0 or later.
 
 ## Hierarchy
 

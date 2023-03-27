@@ -15,7 +15,7 @@ tags: [TextureTransform, Texturing]
 
 TextureTransform shifts 2D texture coordinates for positioning, orienting and scaling image textures on geometry.
 
-The TextureTransform node belongs to the **Texturing** component and its default container field is *textureTransform.* It is available since X3D version 3.0 or later.
+The TextureTransform node belongs to the **Texturing** component and its default container field is *textureTransform.* It is available since X3D version 2.0 or later.
 
 ## Hierarchy
 

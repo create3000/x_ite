@@ -15,7 +15,7 @@ tags: [AudioClip, Sound]
 
 AudioClip provides audio data used by parent Sound nodes.
 
-The AudioClip node belongs to the **Sound** component and its default container field is *source.* It is available since X3D version 3.0 or later.
+The AudioClip node belongs to the **Sound** component and its default container field is *source.* It is available since X3D version 2.0 or later.
 
 ## Hierarchy
 

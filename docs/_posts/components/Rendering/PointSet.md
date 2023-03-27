@@ -15,7 +15,7 @@ tags: [PointSet, Rendering]
 
 PointSet is a node that contains a set of colored 3D points, represented by contained Color/ColorRGBA and Coordinate/CoordinateDouble nodes. Color values or a sibling Material emissiveColor is used to draw lines and points.
 
-The PointSet node belongs to the **Rendering** component and its default container field is *geometry.* It is available since X3D version 3.0 or later.
+The PointSet node belongs to the **Rendering** component and its default container field is *geometry.* It is available since X3D version 2.0 or later.
 
 ## Hierarchy
 

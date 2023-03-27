@@ -15,7 +15,7 @@ tags: [Appearance, Shape]
 
 Appearance specifies the visual properties of geometry by containing the Material, ImageTexture/MovieTexture/PixelTexture, FillProperties, LineProperties, and TextureTransform nodes.
 
-The Appearance node belongs to the **Shape** component and its default container field is *appearance.* It is available since X3D version 3.0 or later.
+The Appearance node belongs to the **Shape** component and its default container field is *appearance.* It is available since X3D version 2.0 or later.
 
 ## Hierarchy
 

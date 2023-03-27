@@ -15,7 +15,7 @@ tags: [TouchSensor, PointingDeviceSensor]
 
 TouchSensor tracks location and state of the pointing device, detecting when a user points at or selects (activates) geometry.
 
-The TouchSensor node belongs to the **PointingDeviceSensor** component and its default container field is *children.* It is available since X3D version 3.0 or later.
+The TouchSensor node belongs to the **PointingDeviceSensor** component and its default container field is *children.* It is available since X3D version 2.0 or later.
 
 ## Hierarchy
 
