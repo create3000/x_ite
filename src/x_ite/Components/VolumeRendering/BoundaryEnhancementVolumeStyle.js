@@ -80,6 +80,10 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DC
    {
       return "renderStyle";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.3", "Infinity"];
+   },
    addShaderFields: function (shaderNode)
    {
       if (! this ._enabled .getValue ())

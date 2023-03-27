@@ -112,6 +112,10 @@ BufferAudioSource .prototype = Object .assign (Object .create (X3DSoundSourceNod
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DSoundSourceNode .prototype .initialize .call (this);

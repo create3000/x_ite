@@ -169,6 +169,10 @@ EspduTransform .prototype = Object .assign (Object .create (X3DGroupingNode .pro
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DGroupingNode .prototype .initialize .call (this);

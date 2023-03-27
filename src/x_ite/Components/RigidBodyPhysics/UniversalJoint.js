@@ -96,6 +96,10 @@ UniversalJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .p
    {
       return "joints";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
 });
 
 export default UniversalJoint;

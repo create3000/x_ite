@@ -100,6 +100,10 @@ Contact .prototype = Object .assign (Object .create (X3DNode .prototype),
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
 });
 
 export default Contact;

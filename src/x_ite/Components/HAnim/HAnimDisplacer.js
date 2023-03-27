@@ -83,6 +83,10 @@ HAnimDisplacer .prototype = Object .assign (Object .create (X3DGeometricProperty
    {
       return "displacers";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
 });
 
 export default HAnimDisplacer;

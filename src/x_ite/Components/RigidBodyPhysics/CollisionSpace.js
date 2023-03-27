@@ -87,6 +87,10 @@ CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpa
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DNBodyCollisionSpaceNode .prototype .initialize .call (this);

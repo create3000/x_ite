@@ -87,6 +87,10 @@ ChannelSelector .prototype = Object .assign (Object .create (X3DSoundChannelNode
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 export default ChannelSelector;

@@ -79,6 +79,10 @@ IntegerTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prot
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DTriggerNode .prototype .initialize .call (this);

@@ -78,6 +78,10 @@ Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
    {
       return "normal";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DNormalNode .prototype .initialize .call (this);

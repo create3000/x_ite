@@ -94,6 +94,10 @@ OrientationChaser .prototype = Object .assign (Object .create (X3DChaserNode .pr
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    getVector: function ()
    {
       return new Rotation4 (0, 0, 1, 0);

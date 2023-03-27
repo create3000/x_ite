@@ -120,6 +120,10 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointN
    {
       return "joints";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DRigidJointNode .prototype .initialize .call (this);

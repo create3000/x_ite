@@ -101,6 +101,10 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);

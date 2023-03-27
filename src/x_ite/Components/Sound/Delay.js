@@ -97,6 +97,10 @@ Delay .prototype = Object .assign (Object .create (X3DSoundProcessingNode .proto
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 export default Delay;

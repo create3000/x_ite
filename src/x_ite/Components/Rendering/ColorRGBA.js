@@ -79,6 +79,10 @@ ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
    {
       return "color";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DColorNode .prototype .initialize .call (this);

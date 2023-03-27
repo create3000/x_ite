@@ -102,6 +102,10 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
    {
       return "source";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DSoundSourceNode .prototype .initialize .call (this);

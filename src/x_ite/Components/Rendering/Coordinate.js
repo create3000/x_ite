@@ -79,6 +79,10 @@ Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .proto
    {
       return "coord";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
 });
 
 export default Coordinate;

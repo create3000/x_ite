@@ -84,6 +84,10 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeom
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);

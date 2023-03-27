@@ -84,6 +84,10 @@ GeoCoordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .pr
    {
       return "coord";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DCoordinateNode   .prototype .initialize .call (this);

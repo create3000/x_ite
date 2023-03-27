@@ -98,6 +98,10 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
    {
       return "material";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DOneSidedMaterialNode .prototype .initialize .call (this);

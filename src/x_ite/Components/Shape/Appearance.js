@@ -96,6 +96,10 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
    {
       return "appearance";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DAppearanceNode .prototype .initialize .call (this);

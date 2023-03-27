@@ -93,6 +93,10 @@ NurbsSurfaceInterpolator .prototype = Object .assign (Object .create (X3DChildNo
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       this ._set_fraction .addInterest ("set_fraction__", this);

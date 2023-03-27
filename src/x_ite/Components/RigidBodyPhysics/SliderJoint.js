@@ -100,6 +100,10 @@ SliderJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prot
    {
       return "joints";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DRigidJointNode .prototype .initialize .call (this);

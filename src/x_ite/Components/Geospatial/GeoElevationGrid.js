@@ -107,6 +107,10 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DGeometryNode     .prototype .initialize .call (this);

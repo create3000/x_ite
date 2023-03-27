@@ -88,6 +88,10 @@ FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototy
    {
       return "fontStyle";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    getTextGeometry: function (text)
    {
       return new PolygonText (text, this);

@@ -79,6 +79,10 @@ BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhys
    {
       return "physics";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DParticlePhysicsModelNode .prototype .initialize .call (this);

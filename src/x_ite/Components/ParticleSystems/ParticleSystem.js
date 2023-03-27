@@ -174,6 +174,10 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DShapeNode .prototype .initialize .call (this);

@@ -84,6 +84,10 @@ CADLayer .prototype = Object .assign (Object .create (X3DGroupingNode .prototype
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.1", "Infinity"];
+   },
 });
 
 export default CADLayer;

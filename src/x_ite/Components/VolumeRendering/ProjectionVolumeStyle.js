@@ -79,6 +79,10 @@ ProjectionVolumeStyle .prototype = Object .assign (Object .create (X3DVolumeRend
    {
       return "renderStyle";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.3", "Infinity"];
+   },
    addShaderFields: function (shaderNode)
    {
       if (! this ._enabled .getValue ())

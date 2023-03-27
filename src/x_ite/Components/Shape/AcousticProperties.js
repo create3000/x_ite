@@ -82,6 +82,10 @@ AcousticProperties .prototype = Object .assign (Object .create (X3DAppearanceChi
    {
       return "AcousticProperties";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 export default AcousticProperties;

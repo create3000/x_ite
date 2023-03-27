@@ -90,6 +90,10 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
    {
       return "shaders";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DShaderNode               .prototype .initialize .call (this);

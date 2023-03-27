@@ -103,6 +103,10 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
    {
       return "texture";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DEnvironmentTextureNode .prototype .initialize .call (this);

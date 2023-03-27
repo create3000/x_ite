@@ -80,6 +80,10 @@ FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttri
    {
       return "attrib";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DVertexAttributeNode .prototype .initialize .call (this);

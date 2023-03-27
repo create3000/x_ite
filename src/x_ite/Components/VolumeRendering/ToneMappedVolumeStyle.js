@@ -81,6 +81,10 @@ ToneMappedVolumeStyle .prototype = Object .assign (Object .create (X3DComposable
    {
       return "renderStyle";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.3", "Infinity"];
+   },
    initialize: function ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);

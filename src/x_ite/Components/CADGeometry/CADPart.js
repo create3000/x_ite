@@ -92,6 +92,10 @@ CADPart .prototype = Object .assign (Object .create (X3DTransformNode .prototype
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.1", "Infinity"];
+   },
 });
 
 export default CADPart;

@@ -89,6 +89,10 @@ VisibilitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSe
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);

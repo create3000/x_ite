@@ -81,6 +81,10 @@ CoordinateInterpolator2D .prototype = Object .assign (Object .create (X3DInterpo
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    set_keyValue__: function () { },
    interpolate: function (index0, index1, weight)
    {

@@ -87,6 +87,10 @@ CADAssembly .prototype = Object .assign (Object .create (X3DGroupingNode .protot
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.1", "Infinity"];
+   },
 });
 
 export default CADAssembly;

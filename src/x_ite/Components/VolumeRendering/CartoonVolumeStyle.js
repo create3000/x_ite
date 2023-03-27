@@ -82,6 +82,10 @@ CartoonVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVol
    {
       return "renderStyle";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.3", "Infinity"];
+   },
    initialize: function ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);

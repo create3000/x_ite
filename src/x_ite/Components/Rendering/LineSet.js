@@ -88,6 +88,10 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DLineGeometryNode .prototype .initialize .call (this);

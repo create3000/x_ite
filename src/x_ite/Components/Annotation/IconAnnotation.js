@@ -85,6 +85,10 @@ IconAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .p
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DAnnotationNode .prototype .initialize .call (this);

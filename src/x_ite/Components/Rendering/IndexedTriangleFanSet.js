@@ -90,6 +90,10 @@ IndexedTriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGe
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);

@@ -93,6 +93,10 @@ GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DTouchSensorNode  .prototype .initialize .call (this);

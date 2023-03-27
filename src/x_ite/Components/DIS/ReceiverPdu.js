@@ -109,6 +109,10 @@ ReceiverPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototyp
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DSensorNode    .prototype .initialize .call (this);

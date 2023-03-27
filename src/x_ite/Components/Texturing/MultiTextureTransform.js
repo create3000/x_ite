@@ -83,6 +83,10 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
    {
       return "textureTransform";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DTextureTransformNode .prototype .initialize .call (this);

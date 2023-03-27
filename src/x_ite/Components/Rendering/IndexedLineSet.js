@@ -92,6 +92,10 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DLineGeometryNode .prototype .initialize .call (this);

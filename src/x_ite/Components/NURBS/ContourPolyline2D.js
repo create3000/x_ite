@@ -80,6 +80,10 @@ ContourPolyline2D .prototype = Object .assign (Object .create (X3DNurbsControlCu
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    tessellate: function (type)
    {
       switch (type)

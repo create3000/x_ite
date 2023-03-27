@@ -91,6 +91,10 @@ BallJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .protot
    {
       return "joints";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DRigidJointNode .prototype .initialize .call (this);

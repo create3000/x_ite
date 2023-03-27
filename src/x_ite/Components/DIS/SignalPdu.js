@@ -109,6 +109,10 @@ SignalPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototype)
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DSensorNode    .prototype .initialize .call (this);

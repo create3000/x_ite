@@ -92,6 +92,10 @@ HAnimSegment .prototype = Object .assign (Object .create (X3DGroupingNode .proto
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
 });
 
 export default HAnimSegment;

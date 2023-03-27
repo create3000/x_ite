@@ -80,6 +80,10 @@ AnnotationTarget .prototype = Object .assign (Object .create (X3DChildNode .prot
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DChildNode .prototype .initialize .call (this);

@@ -127,6 +127,10 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
    {
       return "layout";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DLayoutNode .prototype .initialize .call (this);

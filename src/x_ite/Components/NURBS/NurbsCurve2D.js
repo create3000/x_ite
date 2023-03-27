@@ -92,6 +92,10 @@ NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNo
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    getTessellation: function (numKnots)
    {
       return NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());

@@ -108,6 +108,10 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
    {
       return "material";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DOneSidedMaterialNode .prototype .initialize .call (this);

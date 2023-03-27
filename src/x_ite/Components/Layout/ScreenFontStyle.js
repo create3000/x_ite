@@ -86,6 +86,10 @@ ScreenFontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .p
    {
       return "fontStyle";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DFontStyleNode .prototype .initialize .call (this);

@@ -107,6 +107,10 @@ Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DSoundNode .prototype .initialize .call (this);

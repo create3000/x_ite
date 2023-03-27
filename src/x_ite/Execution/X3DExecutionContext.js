@@ -172,6 +172,14 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (! Type)
             return null;
 
+         const specificationRange = Type .prototype .getSpecificationRange ();
+
+         if (this .getSpecificationVersion () < specificationRange [0])
+            return null;
+
+         if (this .getSpecificationVersion () > specificationRange [1])
+            return null;
+
          return new Type (this);
       }
       else
@@ -180,6 +188,14 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
          if (! Type)
             throw new Error ("Unknown node type '" + typeName + "'.");
+
+         const specificationRange = Type .prototype .getSpecificationRange ();
+
+         if (this .getSpecificationVersion () < specificationRange [0])
+            throw new Error ("Node type '" + typeName + "' does not match specification version.");
+
+         if (this .getSpecificationVersion () > specificationRange [1])
+            throw new Error ("Node type '" + typeName + "' does not match specification version.");
 
          const baseNode = new Type (this);
 

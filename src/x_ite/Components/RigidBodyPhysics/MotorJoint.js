@@ -114,6 +114,10 @@ MotorJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .proto
    {
       return "joints";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
 });
 
 export default MotorJoint;

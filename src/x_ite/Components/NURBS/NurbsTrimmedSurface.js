@@ -96,6 +96,10 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurface
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);

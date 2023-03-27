@@ -87,6 +87,10 @@ BlendMode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .p
    {
       return "blendMode";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.3", "Infinity"];
+   },
    initialize: function ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);

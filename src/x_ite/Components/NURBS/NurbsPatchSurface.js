@@ -90,6 +90,10 @@ NurbsPatchSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGe
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
 });
 
 export default NurbsPatchSurface;

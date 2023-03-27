@@ -88,6 +88,10 @@ ShaderProgram .prototype = Object .assign (Object .create (X3DNode .prototype),
    {
       return "programs";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    getSourceText: function ()
    {
       return this ._url;

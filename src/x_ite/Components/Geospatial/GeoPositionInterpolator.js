@@ -92,6 +92,10 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create (X3DInterpol
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    setup: function ()
    {
       X3DGeospatialObject .prototype .initialize .call (this);

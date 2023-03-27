@@ -83,6 +83,10 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
    {
       return "texCoord";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DTextureCoordinateNode .prototype .initialize .call (this);

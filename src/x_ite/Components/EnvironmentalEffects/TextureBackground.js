@@ -91,6 +91,10 @@ TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DBackgroundNode .prototype .initialize .call (this);

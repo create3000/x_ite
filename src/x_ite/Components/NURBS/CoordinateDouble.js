@@ -77,6 +77,10 @@ CoordinateDouble .prototype = Object .assign (Object .create (X3DCoordinateNode 
    {
       return "coord";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
 });
 
 export default CoordinateDouble;

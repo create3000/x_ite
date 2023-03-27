@@ -86,6 +86,10 @@ TextureTransform3D .prototype = Object .assign (Object .create (X3DSingleTexture
    {
       return "textureTransform";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.1", "Infinity"];
+   },
    initialize: function ()
    {
       X3DSingleTextureTransformNode .prototype .initialize .call (this);

@@ -120,6 +120,10 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DChildNode        .prototype .initialize .call (this);

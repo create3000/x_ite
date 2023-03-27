@@ -92,6 +92,10 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    {
       return "texture";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DTexture2DNode .prototype .initialize .call (this);

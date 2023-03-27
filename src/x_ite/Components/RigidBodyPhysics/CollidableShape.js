@@ -95,6 +95,10 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DNBodyCollidableNode .prototype .initialize .call (this);

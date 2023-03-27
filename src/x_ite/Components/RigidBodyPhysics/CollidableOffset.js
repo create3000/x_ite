@@ -88,6 +88,10 @@ CollidableOffset .prototype = Object .assign (Object .create (X3DNBodyCollidable
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DNBodyCollidableNode .prototype .initialize .call (this);

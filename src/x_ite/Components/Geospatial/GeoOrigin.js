@@ -82,6 +82,10 @@ GeoOrigin .prototype = Object .assign (Object .create (X3DNode .prototype),
    {
       return "geoOrigin";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DNode .prototype .initialize .call (this);

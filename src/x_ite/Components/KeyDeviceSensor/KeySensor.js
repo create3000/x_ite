@@ -108,6 +108,10 @@ KeySensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .p
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    keydown: function (event)
    {
       event .preventDefault ();

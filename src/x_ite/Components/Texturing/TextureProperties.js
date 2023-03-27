@@ -95,6 +95,10 @@ TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototyp
    {
       return "textureProperties";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    getBorderWidth: function ()
    {
       // https://stackoverflow.com/questions/27760277/webgl-border-color-shader?lq=1

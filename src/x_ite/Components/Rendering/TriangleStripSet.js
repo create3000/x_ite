@@ -89,6 +89,10 @@ TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometr
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);

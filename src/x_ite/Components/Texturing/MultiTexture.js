@@ -99,6 +99,10 @@ MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .protot
    {
       return "texture";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DTextureNode .prototype .initialize .call (this);

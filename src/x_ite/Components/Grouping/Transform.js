@@ -88,6 +88,10 @@ Transform .prototype = Object .assign (Object .create (X3DTransformNode .prototy
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
 });
 
 export default Transform;

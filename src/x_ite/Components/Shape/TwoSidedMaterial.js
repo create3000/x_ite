@@ -101,6 +101,10 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .p
    {
       return "material";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DMaterialNode . prototype .initialize .call (this);

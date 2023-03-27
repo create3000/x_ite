@@ -88,6 +88,10 @@ IndexedTriangleSet .prototype = Object .assign (Object .create (X3DComposedGeome
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    getPolygonIndex: function (i)
    {
       return this ._index [i];

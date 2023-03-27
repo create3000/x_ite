@@ -99,6 +99,10 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    getRelativeTransformation: function (fromViewpointNode)
    {
       const relative = X3DViewpointNode .prototype .getRelativeTransformation .call (this, fromViewpointNode);

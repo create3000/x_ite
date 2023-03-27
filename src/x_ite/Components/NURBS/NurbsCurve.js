@@ -94,6 +94,10 @@ NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNod
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);

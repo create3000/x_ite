@@ -86,6 +86,10 @@ DISEntityManager .prototype = Object .assign (Object .create (X3DChildNode .prot
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
 });
 
 export default DISEntityManager;

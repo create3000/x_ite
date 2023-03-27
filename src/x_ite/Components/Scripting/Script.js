@@ -104,6 +104,10 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DScriptNode .prototype .initialize .call (this);

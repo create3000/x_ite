@@ -91,6 +91,10 @@ ColorChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototyp
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.3", "Infinity"];
+   },
    getVector: function ()
    {
       return new Vector3 (0, 0, 0);

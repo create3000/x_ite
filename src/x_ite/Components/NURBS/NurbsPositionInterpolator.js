@@ -95,6 +95,10 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildN
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DChildNode .prototype .initialize .call (this);

@@ -85,6 +85,10 @@ WindPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysics
    {
       return "physics";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    getRandomSpeed: function (emitterNode)
    {
       const

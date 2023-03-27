@@ -81,6 +81,10 @@ PositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolato
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);

@@ -91,6 +91,10 @@ MicrophoneSource .prototype = Object .assign (Object .create (X3DSoundSourceNode
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["4.0", "Infinity"];
+   },
 });
 
 export default MicrophoneSource;

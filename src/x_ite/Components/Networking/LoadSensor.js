@@ -91,6 +91,10 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DNetworkSensorNode .prototype .initialize .call (this);

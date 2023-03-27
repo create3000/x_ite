@@ -90,6 +90,10 @@ PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prot
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DGroupingNode   .prototype .initialize .call (this);

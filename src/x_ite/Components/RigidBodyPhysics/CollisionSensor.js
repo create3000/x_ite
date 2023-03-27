@@ -86,6 +86,10 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DSensorNode .prototype .initialize .call (this);

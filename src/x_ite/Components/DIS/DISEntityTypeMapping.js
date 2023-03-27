@@ -90,6 +90,10 @@ DISEntityTypeMapping .prototype = Object .assign (Object .create (X3DInfoNode .p
    {
       return "mapping";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DInfoNode  .prototype .initialize .call (this);

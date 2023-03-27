@@ -95,6 +95,10 @@ LinePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .p
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    initialize: function ()
    {
       X3DPickSensorNode .prototype .initialize .call (this);

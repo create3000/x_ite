@@ -81,6 +81,10 @@ EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DCompo
    {
       return "renderStyle";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.3", "Infinity"];
+   },
    initialize: function ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);

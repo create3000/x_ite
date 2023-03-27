@@ -96,6 +96,10 @@ OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .pr
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.2", "Infinity"];
+   },
    getVector: function ()
    {
       return new Rotation4 (0, 0, 1, 0);

@@ -79,6 +79,10 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
    {
       return "lineProperties";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);

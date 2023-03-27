@@ -101,6 +101,10 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
    {
       return "texture";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.1", "Infinity"];
+   },
    initialize: function ()
    {
       X3DEnvironmentTextureNode .prototype .initialize .call (this);

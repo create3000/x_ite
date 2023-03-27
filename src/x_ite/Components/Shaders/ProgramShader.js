@@ -81,6 +81,10 @@ ProgramShader .prototype = Object .assign (Object .create (X3DShaderNode .protot
    {
       return "shaders";
    },
+   getSpecificationRange: function ()
+   {
+      return ["3.0", "Infinity"];
+   },
 });
 
 export default ProgramShader;

@@ -99,6 +99,10 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
    {
       return "geometry";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    initialize: function ()
    {
       X3DGeometryNode .prototype .initialize .call (this);

@@ -90,6 +90,10 @@ Billboard .prototype = Object .assign (Object .create (X3DGroupingNode .prototyp
    {
       return "children";
    },
+   getSpecificationRange: function ()
+   {
+      return ["2.0", "Infinity"];
+   },
    getBBox: function (bbox, shadows)
    {
       return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .matrix);
