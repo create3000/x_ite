@@ -1001,8 +1001,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          scale       = new Vector2 (1, 1),
          matrix      = new Matrix4 ();
 
-      matrix .translate (new Vector3 (0, 1, 0));
       matrix .scale (new Vector3 (1, -1, 1));
+      matrix .translate (new Vector3 (0, -1, 0));
 
       if (this .vectorValue (KHR_texture_transform .offset, translation))
          matrix .translate (new Vector3 (... translation, 0));
