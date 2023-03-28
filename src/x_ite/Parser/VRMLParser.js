@@ -348,43 +348,75 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (match)
          this .lineNumber += match .length;
    },
-   x3dScene: function ()
+   x3dScene: (function ()
    {
-      this .headerStatement ();
-      this .profileStatement ();
-      this .componentStatements ();
-      this .unitStatements ();
-      this .metaStatements ();
+      const VRML =
+      [
+         "Core",
+         "EnvironmentalEffects",
+         "EnvironmentalSensor",
+         "Geometry3D",
+         "Grouping",
+         "Interpolation",
+         "Lighting",
+         "Navigation",
+         "Networking",
+         "PointingDeviceSensor",
+         "Rendering",
+         "Scripting",
+         "Shape",
+         "Sound",
+         "Text",
+         "Texturing",
+         "Time",
+      ];
 
-      if (this .success)
+      return function ()
       {
-         this .loadComponents () .then (() =>
+         this .headerStatement ();
+         this .profileStatement ();
+         this .componentStatements ();
+         this .unitStatements ();
+         this .metaStatements ();
+
+         if (this .getScene () .getSpecificationVersion () === "2.0")
          {
-            try
+            this .getScene () .setProfile (this .getBrowser () .getProfile ("Core"));
+
+            for (const componentName of VRML)
+               this .getScene () .addComponent (this .getBrowser () .getComponent (componentName));
+         }
+
+         if (this .success)
+         {
+            this .loadComponents () .then (() =>
             {
-               this .statements (this .getExecutionContext () .rootNodes);
+               try
+               {
+                  this .statements (this .getExecutionContext () .rootNodes);
 
-               if (this .lastIndex < this .input .length)
-                  throw new Error ("Unknown statement.");
+                  if (this .lastIndex < this .input .length)
+                     throw new Error ("Unknown statement.");
 
-               this .success (this .getScene ());
-            }
-            catch (error)
-            {
-               console .error (error);
-               this .error (new Error (this .getError (error)));
-            }
-         })
-         .catch (this .error .bind (this));
-      }
-      else
-      {
-         this .statements (this .getExecutionContext () .rootNodes);
+                  this .success (this .getScene ());
+               }
+               catch (error)
+               {
+                  console .error (error);
+                  this .error (new Error (this .getError (error)));
+               }
+            })
+            .catch (this .error .bind (this));
+         }
+         else
+         {
+            this .statements (this .getExecutionContext () .rootNodes);
 
-         if (this .lastIndex < this .input .length)
-            throw new Error ("Unknown statement.");
-      }
-   },
+            if (this .lastIndex < this .input .length)
+               throw new Error ("Unknown statement.");
+         }
+      };
+   })(),
    headerStatement: function ()
    {
       Grammar .Header .lastIndex = 0;

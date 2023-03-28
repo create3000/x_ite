@@ -69,9 +69,8 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    if (executionContext .getSpecificationVersion () < 4.0)
       this .addAlias ("isPickable", this ._pickable);
 
-   this .pickableGroupNode = executionContext .createNode ("PickableGroup", false);
-   this .groupNode         = groupNode;
-   this .currentViewport   = null;
+   this .groupNode       = groupNode;
+   this .currentViewport = null;
 
    this .defaultNavigationInfo = new NavigationInfo (executionContext);
    this .defaultViewpoint      = defaultViewpoint;
@@ -101,21 +100,6 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    {
       X3DNode         .prototype .initialize .call (this);
       X3DRenderObject .prototype .initialize .call (this);
-
-      // if (this .pickableGroupNode)
-      // {
-      //    this ._pickable   .addFieldInterest (this .pickableGroupNode ._pickable);
-      //    this ._objectType .addFieldInterest (this .pickableGroupNode ._objectType);
-
-      //    this .pickableGroupNode ._pickable   = this ._pickable;
-      //    this .pickableGroupNode ._objectType = this ._objectType;
-
-      //    this .pickableGroupNode .setup ();
-      // }
-      // else
-      // {
-      //    this .pickableGroupNode = this .groupNode;
-      // }
 
       this .defaultNavigationInfo .setup ();
       this .defaultViewpoint      .setup ();
@@ -152,6 +136,10 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    getGroup: function ()
    {
       return this .groupNode;
+   },
+   setGroup: function (groupNode)
+   {
+      this .groupNode = groupNode;
    },
    getViewport: function ()
    {

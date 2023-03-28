@@ -184,7 +184,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       return SupportedProfiles;
    },
-   getComponent: function (name, level)
+   getComponent: function (name, level = 0)
    {
       name   = String (name);
       level |= 0;
@@ -195,7 +195,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       {
          return new ComponentInfo ({
             name: name,
-            level: Algorithm .clamp (level, 1, component .level),
+            level: Algorithm .clamp (level || component .level, 1, component .level),
             title: component .title,
             providerUrl: component .providerUrl,
             external: $.data (component, "external"),

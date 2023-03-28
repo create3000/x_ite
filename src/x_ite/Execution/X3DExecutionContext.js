@@ -149,6 +149,10 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       return this .getExecutionContext () .getComponents ();
    },
+   hasComponent: function (componentName)
+   {
+      return this .getExecutionContext () .hasComponent (componentName);
+   },
    fromUnit: function (category, value)
    {
       return this .getExecutionContext () .fromUnit (category, value);
@@ -180,6 +184,9 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (this .getSpecificationVersion () > specificationRange [1])
             return null;
 
+         if (!this .hasComponent (Type .prototype .getComponentName ()))
+            console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
+
          return new Type (this);
       }
       else
@@ -187,15 +194,18 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          const Type = this .getBrowser () .getSupportedNode (typeName);
 
          if (! Type)
-            throw new Error ("Unknown node type '" + typeName + "'.");
+            throw new Error (`Unknown node type '${typeName}'.`);
 
          const specificationRange = Type .prototype .getSpecificationRange ();
 
          if (this .getSpecificationVersion () < specificationRange [0])
-            throw new Error ("Node type '" + typeName + "' does not match specification version.");
+            throw new Error (`Node type '${typeName}' does not match specification version.`);
 
          if (this .getSpecificationVersion () > specificationRange [1])
-            throw new Error ("Node type '" + typeName + "' does not match specification version.");
+            throw new Error (`Node type '${typeName}' does not match specification version.`);
+
+         if (!this .hasComponent (Type .prototype .getComponentName ()))
+            console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
          const baseNode = new Type (this);
 

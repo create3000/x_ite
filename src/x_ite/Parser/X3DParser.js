@@ -90,44 +90,17 @@ X3DParser .prototype = {
    {
       return Boolean (this .prototypes .length);
    },
-   loadComponents: (function ()
+   loadComponents: function ()
    {
-      const VRML =
-      [
-         "Core",
-         "EnvironmentalEffects",
-         "EnvironmentalSensor",
-         "Geometry3D",
-         "Grouping",
-         "Interpolation",
-         "Lighting",
-         "Navigation",
-         "Networking",
-         "PointingDeviceSensor",
-         "Rendering",
-         "Scripting",
-         "Shape",
-         "Sound",
-         "Text",
-         "Texturing",
-         "Time",
-      ];
+      const
+         browser = this .getBrowser (),
+         scene   = this .getScene ();
 
-      return function ()
-      {
-         const
-            browser = this .getBrowser (),
-            scene   = this .getScene ();
-
-         if (scene .getSpecificationVersion () === "2.0")
-            return browser .loadComponents (VRML);
-
-         return Promise .all ([
-            browser .loadComponents (scene .getProfile () || browser .getProfile ("Full")),
-            browser .loadComponents (scene .getComponents ()),
-         ]);
-      };
-   })(),
+      return Promise .all ([
+         browser .loadComponents (scene .getProfile () || browser .getProfile ("Full")),
+         browser .loadComponents (scene .getComponents ()),
+      ]);
+   },
    setUnits: function (units)
    {
       if (units)
