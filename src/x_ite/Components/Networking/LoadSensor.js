@@ -151,14 +151,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
    {
       const urlObjects = this .urlObjects;
 
-      if (!urlObjects .length)
-      {
-         if (this ._isActive .getValue ())
-            this ._isActive = false;
-
-         this ._progress = 0;
-      }
-      else
+      if (urlObjects .length)
       {
          let
             complete = 0,
@@ -199,6 +192,12 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
                this .set_timeOut__ ();
             }
          }
+      }
+      else
+      {
+         this ._isActive = false;
+         this ._isLoaded = false;
+         this ._progress = 0;
       }
    },
    abort: function ()
