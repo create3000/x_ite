@@ -106,7 +106,6 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
 
       this ._parts .addFieldInterest (this .loadSensor ._children);
 
-      this .loadSensor .xxx = this .getName ();
       this .loadSensor ._isLoaded .addInterest ("connectLoaded", this);
       this .loadSensor ._children = this ._parts;
       this .loadSensor .setPrivate (true);
