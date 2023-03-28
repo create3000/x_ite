@@ -104,10 +104,11 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
       // https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/shaders_glsl.html#relinkingprograms
       this ._activate .addInterest ("set_activate__", this);
 
-      this ._parts .addFieldInterest (this .loadSensor ._watchList);
+      this ._parts .addFieldInterest (this .loadSensor ._children);
 
+      this .loadSensor .xxx = this .getName ();
       this .loadSensor ._isLoaded .addInterest ("connectLoaded", this);
-      this .loadSensor ._watchList = this ._parts;
+      this .loadSensor ._children = this ._parts;
       this .loadSensor .setPrivate (true);
       this .loadSensor .setup ();
 
@@ -192,7 +193,7 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
          {
             const partNode = X3DCast (X3DConstants .ShaderPart, node);
 
-            if (partNode)
+            if (partNode?.getShader ())
                gl .attachShader (program, partNode .getShader ());
          }
 

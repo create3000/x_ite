@@ -60,7 +60,7 @@ function LoadSensor (executionContext)
 
    if (executionContext .getSpecificationVersion () < 4)
       this .addAlias ("watchList", this ._children);
-      
+
    this .urlObjects = [ ];
    this .aborted    = false;
    this .timeOutId  = undefined;
@@ -151,43 +151,53 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
    {
       const urlObjects = this .urlObjects;
 
-      let
-         complete = 0,
-         failed   = 0;
-
-      for (const urlObject of urlObjects)
+      if (!urlObjects .length)
       {
-         complete += urlObject .checkLoadState () == X3DConstants .COMPLETE_STATE;
-         failed   += urlObject .checkLoadState () == X3DConstants .FAILED_STATE;
-      }
+         if (this ._isActive .getValue ())
+            this ._isActive = false;
 
-      const
-         loaded   = complete == urlObjects .length,
-         progress = complete / urlObjects .length;
-
-      if (this .aborted || failed || loaded)
-      {
-         this .clearTimeout ();
-
-         this ._isActive = false;
-         this ._isLoaded = loaded;
-         this ._progress = progress;
-
-         if (loaded)
-            this ._loadTime = this .getBrowser () .getCurrentTime ();
+         this ._progress = 0;
       }
       else
       {
-         if (this ._isActive .getValue ())
+         let
+            complete = 0,
+            failed   = 0;
+
+         for (const urlObject of urlObjects)
          {
+            complete += urlObject .checkLoadState () == X3DConstants .COMPLETE_STATE;
+            failed   += urlObject .checkLoadState () == X3DConstants .FAILED_STATE;
+         }
+
+         const
+            loaded   = complete === urlObjects .length,
+            progress = complete / urlObjects .length;
+
+         if (this .aborted || failed || loaded)
+         {
+            this .clearTimeout ();
+
+            this ._isActive = false;
+            this ._isLoaded = loaded;
             this ._progress = progress;
+
+            if (loaded)
+               this ._loadTime = this .getBrowser () .getCurrentTime ();
          }
          else
          {
-            this ._isActive = true;
-            this ._progress = progress;
+            if (this ._isActive .getValue ())
+            {
+               this ._progress = progress;
+            }
+            else
+            {
+               this ._isActive = true;
+               this ._progress = progress;
 
-            this .set_timeOut__ ();
+               this .set_timeOut__ ();
+            }
          }
       }
    },
