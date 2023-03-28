@@ -312,6 +312,7 @@ const X_ITE_TESTS = [
    { path: "Shape/Connectors.x3d" },
    { path: "Shape/CopperGold.x3d" },
    { path: "Shape/FillProperties.x3d" },
+   { path: "Shape/flower-extreme/sphereflowers.x3d" },
    { path: "Shape/LineProperties.x3dv" },
    { path: "Shape/MaterialGeometries.x3d" },
    { path: "Shape/NormalTexture.x3d" },
