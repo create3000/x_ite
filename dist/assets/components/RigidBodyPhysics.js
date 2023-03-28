@@ -1,7 +1,7 @@
 /* X_ITE v8.6.13 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 355:
+/***/ 896:
 /***/ ((module) => {
 
 "use strict";
@@ -427,7 +427,7 @@ const AmmoClass_default_ = new ammo ();
 Namespace_default().set ("lib/ammojs/AmmoClass", AmmoClass_default_);
 /* harmony default export */ const AmmoClass = (AmmoClass_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/BallJoint.js
-/* provided dependency */ var $ = __webpack_require__(355);
+/* provided dependency */ var $ = __webpack_require__(896);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -2478,7 +2478,7 @@ Namespace_default().set ("x_ite/Components/RigidBodyPhysics/Contact", Contact_de
 const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.13")] .require ("standard/Math/Numbers/Rotation4");
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint.js
-/* provided dependency */ var DoubleAxisHingeJoint_$ = __webpack_require__(355);
+/* provided dependency */ var DoubleAxisHingeJoint_$ = __webpack_require__(896);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -3792,7 +3792,7 @@ const RigidBodyCollection_default_ = RigidBodyCollection;
 Namespace_default().set ("x_ite/Components/RigidBodyPhysics/RigidBodyCollection", RigidBodyCollection_default_);
 /* harmony default export */ const RigidBodyPhysics_RigidBodyCollection = (RigidBodyCollection_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint.js
-/* provided dependency */ var SingleAxisHingeJoint_$ = __webpack_require__(355);
+/* provided dependency */ var SingleAxisHingeJoint_$ = __webpack_require__(896);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -4040,7 +4040,7 @@ const SingleAxisHingeJoint_default_ = SingleAxisHingeJoint;
 Namespace_default().set ("x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint", SingleAxisHingeJoint_default_);
 /* harmony default export */ const RigidBodyPhysics_SingleAxisHingeJoint = (SingleAxisHingeJoint_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SliderJoint.js
-/* provided dependency */ var SliderJoint_$ = __webpack_require__(355);
+/* provided dependency */ var SliderJoint_$ = __webpack_require__(896);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
