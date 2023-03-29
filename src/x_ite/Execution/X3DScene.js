@@ -82,8 +82,7 @@ function X3DScene (executionContext)
                           "components_changed",    new Fields .SFTime (),
                           "units_changed",         new Fields .SFTime (),
                           "metadata_changed",      new Fields .SFTime (),
-                          "exportedNodes_changed", new Fields .SFTime (),
-                          "privateSensors",        new Fields .SFBool ())
+                          "exportedNodes_changed", new Fields .SFTime ())
 
    this [_specificationVersion] = LATEST_VERSION;
    this [_encoding]             = "SCRIPTED";
@@ -111,10 +110,6 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    getTypeName: function ()
    {
       return "X3DScene";
-   },
-   getPrivateSensors: function ()
-   {
-      return this ._privateSensors;
    },
    isMainScene: function ()
    {

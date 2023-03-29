@@ -64,7 +64,6 @@ const
    _initialized       = Symbol (),
    _live              = Symbol (),
    _set_live__        = Symbol ("X3DBaseNode.set_live__"),
-   _private           = Symbol (),
    _cloneCount        = Symbol ();
 
 function X3DBaseNode (executionContext)
@@ -82,21 +81,21 @@ function X3DBaseNode (executionContext)
    this [_userDefinedFields] = new FieldArray ();
    this [_live]              = true;
    this [_initialized]       = false;
-   this [_private]           = false;
    this [_cloneCount]        = 0;
 
    // Setup fields.
+
+   this .addChildObjects ("name_changed",       new Fields .SFTime (),
+                          "typeName_changed",   new Fields .SFTime (),
+                          "fields_changed",     new Fields .SFTime (),
+                          "cloneCount_changed", new Fields .SFTime (),
+                          "private",            new Fields .SFBool ())
 
    if (this .canUserDefinedFields ())
       this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
 
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addField (fieldDefinition);
-
-   this .addChildObjects ("name_changed",       new Fields .SFTime (),
-                          "typeName_changed",   new Fields .SFTime (),
-                          "fields_changed",     new Fields .SFTime (),
-                          "cloneCount_changed", new Fields .SFTime ())
 }
 
 X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
@@ -545,11 +544,11 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    isPrivate: function ()
    {
-      return this [_private];
+      return this ._private .getValue ();
    },
    setPrivate: function (value)
    {
-      this [_private] = value;
+      this ._private = value;
 
       if (value)
       {
@@ -561,6 +560,10 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
          for (const field of this [_fields])
             field .addCloneCount (1);
       }
+   },
+   getPrivate: function ()
+   {
+      return this ._private;
    },
    getCloneCount: function ()
    {
