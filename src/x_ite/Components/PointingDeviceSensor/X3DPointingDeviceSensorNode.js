@@ -67,42 +67,22 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSens
       this .getScene () .getPrivateSensors () .addInterest ("set_live__", this);
       this .getLive () .addInterest ("set_live__", this);
 
-      this ._enabled .addInterest ("set_live__",    this);
-      this ._enabled .addInterest ("set_enabled__", this);
+      this ._enabled .addInterest ("set_live__", this);
 
       this .set_live__ ();
    },
-   getMatrices: function ()
-   {
-      return this .matrices;
-   },
    set_live__: function ()
    {
-      const browser = this .getBrowser ();
+      if (((this .getLive () .getValue () && !this .getBrowser () .getBrowserOption ("PrivateSensors")) || this .getScene () .getPrivateSensors () .getValue ()) && this ._enabled .getValue ())
+      {
+         this .getBrowser () .addPointingDeviceSensor (this);
 
-      if (browser .getBrowserOption ("PrivateSensors"))
-      {
-         if (this .getScene () .getPrivateSensors () .getValue ())
-            browser .addPointingDeviceSensor (this);
-         else
-            browser .removePointingDeviceSensor (this);
-      }
-      else
-      {
-         if (this .getLive () .getValue () && this ._enabled .getValue ())
-            browser .addPointingDeviceSensor (this);
-         else
-            browser .removePointingDeviceSensor (this);
-      }
-   },
-   set_enabled__: function ()
-   {
-      if (this ._enabled .getValue ())
-      {
          delete this .push;
       }
       else
       {
+         this .getBrowser () .removePointingDeviceSensor (this);
+
          if (this ._isActive .getValue ())
             this ._isActive = false;
 
