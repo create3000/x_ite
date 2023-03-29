@@ -1260,30 +1260,30 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       if (this .getName ())
          executionContext .removeNamedNode (this .getName ())
 
-      // Remove imported node if any.
-
-      if (!executionContext .isMainScene ())
-      {
-         const parentContext = executionContext .getExecutionContext ();
-
-         for (const importedNode of parentContext .getImportedNodes ())
-         {
-            try
-            {
-               if (importedNode .getExportedNode () === this)
-                  parentContext .removeImportedNode (importedNode .getImportedName ());
-            }
-            catch (error)
-            {
-               //console .error (error);
-            }
-         }
-      }
-
-      // Remove exported node if any.
-
       if (executionContext .isScene ())
       {
+         // Remove imported node if any.
+
+         if (!executionContext .isMainScene ())
+         {
+            const parentContext = executionContext .getExecutionContext ();
+
+            for (const importedNode of parentContext .getImportedNodes ())
+            {
+               try
+               {
+                  if (importedNode .getExportedNode () === this)
+                     parentContext .removeImportedNode (importedNode .getImportedName ());
+               }
+               catch (error)
+               {
+                  //console .error (error);
+               }
+            }
+         }
+
+         // Remove exported node if any.
+
          for (const exportedNode of executionContext .getExportedNodes ())
          {
             if (exportedNode .getLocalNode () === this)

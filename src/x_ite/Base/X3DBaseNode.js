@@ -61,6 +61,7 @@ const
    _predefinedFields  = Symbol (),
    _aliases           = Symbol (),
    _userDefinedFields = Symbol (),
+   _childObjects      = Symbol (),
    _initialized       = Symbol (),
    _live              = Symbol (),
    _set_live__        = Symbol ("X3DBaseNode.set_live__"),
@@ -79,6 +80,7 @@ function X3DBaseNode (executionContext)
    this [_predefinedFields]  = new FieldArray ();
    this [_aliases]           = new Map ();
    this [_userDefinedFields] = new FieldArray ();
+   this [_childObjects]      = [ ];
    this [_live]              = true;
    this [_initialized]       = false;
    this [_cloneCount]        = 0;
@@ -216,12 +218,12 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       ///  Determines the live state of this node.
 
       if (this .getOuterNode?.())
-         return this .isLive () && this .getOuterNode () .getLive () .getValue ();
+         return this [_live] && this .getOuterNode () .getLive () .getValue ();
 
       else if (this !== this [_executionContext])
-         return this .isLive () && this [_executionContext] .getLive () .getValue ();
+         return this [_live] && this [_executionContext] .getLive () .getValue ();
 
-      return this .isLive ();
+      return this [_live];
    },
    [_set_live__]: function ()
    {
@@ -301,6 +303,8 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    addChildObject: function (name, field)
    {
+      this [_childObjects] .push (field);
+
       field .addParent (this);
       field .setName (name);
 
@@ -603,6 +607,9 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    dispose: function ()
    {
+      for (const field of this [_childObjects])
+         field .dispose ();
+
       for (const field of this .getFields ())
          field .dispose ();
 
