@@ -64,6 +64,7 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSens
       X3DSensorNode .prototype .initialize .call (this);
 
       this .getBrowser () .getBrowserOptions () ._PrivateSensors .addInterest ("set_live__", this);
+      this .getScene () .getPrivateSensors () .addInterest ("set_live__", this);
       this .getLive () .addInterest ("set_live__", this);
 
       this ._enabled .addInterest ("set_live__",    this);
@@ -81,7 +82,7 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSens
 
       if (browser .getBrowserOption ("PrivateSensors"))
       {
-         if (this .getScene () .isPrivate ())
+         if (this .getScene () .getPrivateSensors () .getValue ())
             browser .addPointingDeviceSensor (this);
          else
             browser .removePointingDeviceSensor (this);
