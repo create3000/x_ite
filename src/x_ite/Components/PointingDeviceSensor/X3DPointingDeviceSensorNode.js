@@ -63,22 +63,41 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSens
    {
       X3DSensorNode .prototype .initialize .call (this);
 
+      this .isLive () .addInterest ("set_live__", this);
+
+      this ._enabled .addInterest ("set_live__",    this);
       this ._enabled .addInterest ("set_enabled__", this);
+
+      this .set_live__ ();
    },
    getMatrices: function ()
    {
       return this .matrices;
    },
+   set_live__: function ()
+   {
+      if (this .isLive () .getValue () && this ._enabled .getValue ())
+         this .getBrowser () .addPointingDeviceSensor (this);
+
+      else
+         this .getBrowser () .removePointingDeviceSensor (this);
+   },
    set_enabled__: function ()
    {
       if (this ._enabled .getValue ())
-         return;
+      {
+         delete this .push;
+      }
+      else
+      {
+         if (this ._isActive .getValue ())
+            this ._isActive = false;
 
-      if (this ._isActive .getValue ())
-         this ._isActive = false;
+         if (this ._isOver .getValue ())
+            this ._isOver = false;
 
-      if (this ._isOver .getValue ())
-         this ._isOver = false;
+         this .push = Function .prototype;
+      }
    },
    set_over__: function (over, hit)
    {
@@ -99,13 +118,10 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSens
    { },
    push: function (renderObject, sensors)
    {
-      if (this ._enabled .getValue ())
-      {
-         sensors .push (new PointingDeviceSensorContainer (this,
-                                                           renderObject .getModelViewMatrix  () .get (),
-                                                           renderObject .getProjectionMatrix () .get (),
-                                                           renderObject .getViewVolume () .getViewport ()));
-      }
+      sensors .push (new PointingDeviceSensorContainer (this,
+                                                        renderObject .getModelViewMatrix  () .get (),
+                                                        renderObject .getProjectionMatrix () .get (),
+                                                        renderObject .getViewVolume () .getViewport ()));
    },
 });
 

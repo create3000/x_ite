@@ -55,30 +55,32 @@ import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
 import StopWatch      from "../../../standard/Time/StopWatch.js";
 
 const
-   _pointingDevice   = Symbol (),
-   _cursorType       = Symbol (),
-   _pointer          = Symbol (),
-   _hit              = Symbol (),
-   _overSensors      = Symbol (),
-   _activeSensors    = Symbol (),
-   _pointingLayer    = Symbol (),
-   _pointingTime     = Symbol (),
-   _pointingBuffer   = Symbol (),
-   _pointingShaders  = Symbol (),
-   _id               = Symbol (),
-   _pointingContexts = Symbol ();
+   _pointingDevice            = Symbol (),
+   _pointingDeviceSensorNodes = Symbol (),
+   _cursorType                = Symbol (),
+   _pointer                   = Symbol (),
+   _hit                       = Symbol (),
+   _overSensors               = Symbol (),
+   _activeSensors             = Symbol (),
+   _pointingLayer             = Symbol (),
+   _pointingTime              = Symbol (),
+   _pointingBuffer            = Symbol (),
+   _pointingShaders           = Symbol (),
+   _id                        = Symbol (),
+   _pointingContexts          = Symbol ();
 
 function X3DPointingDeviceSensorContext ()
 {
-   this [_pointingDevice]   = new PointingDevice (this);
-   this [_pointer]          = new Vector2 (0, 0);
-   this [_overSensors]      = [ ];
-   this [_activeSensors]    = [ ];
-   this [_pointingLayer]    = null;
-   this [_pointingTime]     = new StopWatch ();
-   this [_pointingBuffer]   = new PointingBuffer (this);
-   this [_pointingShaders]  = new Map ();
-   this [_pointingContexts] = [ ];
+   this [_pointingDevice]            = new PointingDevice (this);
+   this [_pointingDeviceSensorNodes] = new Set ();
+   this [_pointer]                   = new Vector2 (0, 0);
+   this [_overSensors]               = [ ];
+   this [_activeSensors]             = [ ];
+   this [_pointingLayer]             = null;
+   this [_pointingTime]              = new StopWatch ();
+   this [_pointingBuffer]            = new PointingBuffer (this);
+   this [_pointingShaders]           = new Map ();
+   this [_pointingContexts]          = [ ];
 
    this [_hit] = {
       id: 0,
@@ -108,6 +110,14 @@ X3DPointingDeviceSensorContext .prototype =
    getPointingTime: function ()
    {
       return this [_pointingTime];
+   },
+   addPointingDeviceSensor: function (node)
+   {
+      this [_pointingDeviceSensorNodes] .add (node);
+   },
+   removePointingDeviceSensor: function (node)
+   {
+      this [_pointingDeviceSensorNodes] .delete (node);
    },
    setCursor: function (value)
    {
@@ -171,6 +181,9 @@ X3DPointingDeviceSensorContext .prototype =
    },
    buttonPressEvent: function (x, y)
    {
+      if (!this [_pointingDeviceSensorNodes] .size)
+         return;
+
       if (!this .touch (x, y))
          return false;
 
@@ -186,6 +199,9 @@ X3DPointingDeviceSensorContext .prototype =
    },
    buttonReleaseEvent: function ()
    {
+      if (!this [_pointingDeviceSensorNodes] .size)
+         return;
+
       for (const sensor of this [_activeSensors])
          sensor .set_active__ (false, null);
 
@@ -194,6 +210,9 @@ X3DPointingDeviceSensorContext .prototype =
    },
    motionNotifyEvent: function (x, y)
    {
+      if (!this [_pointingDeviceSensorNodes] .size)
+         return;
+
       this .touch (x, y);
       this .motion ();
 
