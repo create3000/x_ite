@@ -123,6 +123,12 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSens
                                                         renderObject .getProjectionMatrix () .get (),
                                                         renderObject .getViewVolume () .getViewport ()));
    },
+   dispose: function ()
+   {
+      this .getBrowser () .removePointingDeviceSensor (this);
+
+      X3DSensorNode .prototype .dispose .call (this);
+   },
 });
 
 export default X3DPointingDeviceSensorNode;

@@ -165,6 +165,8 @@ Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototyp
    },
    dispose: function ()
    {
+      this .getBrowser () .removeCollision (this);
+      
       //X3DSensorNode   .prototype .dispose .call (this); // We can only call the base of a *Objects.
       X3DGroupingNode .prototype .dispose .call (this);
    },
