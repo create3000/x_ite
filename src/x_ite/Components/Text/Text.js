@@ -118,7 +118,7 @@ Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
        X3DGeometryNode .prototype .set_live__ .call (this);
 
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .removeInterest ("requestRebuild", this);

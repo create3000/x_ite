@@ -104,7 +104,7 @@ Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototyp
       X3DGroupingNode .prototype .initialize .call (this);
       //X3DSensorNode   .prototype .initialize .call (this); // We can only call the base of a *Objects.
 
-      this .isLive () .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_live__", this);
       this ._enabled  .addInterest ("set_live__", this);
       this ._proxy    .addInterest ("set_proxy__", this);
 
@@ -113,7 +113,7 @@ Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototyp
    },
    set_live__: function ()
    {
-      if (this .isLive () .getValue () && this ._enabled .getValue ())
+      if (this .getLive () .getValue () && this ._enabled .getValue ())
          this .getBrowser () .addCollision (this);
 
       else
@@ -166,7 +166,7 @@ Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototyp
    dispose: function ()
    {
       this .getBrowser () .removeCollision (this);
-      
+
       //X3DSensorNode   .prototype .dispose .call (this); // We can only call the base of a *Objects.
       X3DGroupingNode .prototype .dispose .call (this);
    },

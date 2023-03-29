@@ -75,7 +75,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
    constructor: X3DTimeDependentNode,
    initialize: function ()
    {
-      this .isLive ()   .addInterest ("set_live__", this);
+      this .getLive ()   .addInterest ("set_live__", this);
       this ._isEvenLive .addInterest ("set_live__", this);
 
       this ._initialized .addInterest ("set_loop__",       this);
@@ -101,7 +101,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
    {
       ///  Determines the live state of this node.
 
-      return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this ._isEvenLive .getValue ());
+      return this .isLive () && (this .getExecutionContext () .getLive () .getValue () || this ._isEvenLive .getValue ());
    },
    getElapsedTime: function ()
    {
@@ -115,7 +115,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
    },
    set_live__: function ()
    {
-      if (this .isLive () .getValue () || this ._isEvenLive .getValue ())
+      if (this .getLive () .getValue () || this ._isEvenLive .getValue ())
       {
          if (this .disabled)
          {
@@ -241,7 +241,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
 
          this .set_start ();
 
-         if (this .isLive () .getValue ())
+         if (this .getLive () .getValue ())
          {
             this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
          }
@@ -261,7 +261,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
          if (this .pauseTimeValue !== this .getBrowser () .getCurrentTime ())
             this .pauseTimeValue = this .getBrowser () .getCurrentTime ();
 
-         if (this .isLive () .getValue ())
+         if (this .getLive () .getValue ())
             this .real_pause ();
       }
    },
@@ -282,7 +282,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
          if (this .resumeTimeValue !== this .getBrowser () .getCurrentTime ())
             this .resumeTimeValue = this .getBrowser () .getCurrentTime ();
 
-         if (this .isLive () .getValue ())
+         if (this .getLive () .getValue ())
             this .real_resume ();
       }
    },

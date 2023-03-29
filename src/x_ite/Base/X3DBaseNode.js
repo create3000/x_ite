@@ -157,11 +157,11 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       this .setLive (false);
    },
-   isLive: (function ()
+   getLive: (function ()
    {
-      function isLive ()
+      function getLive ()
       {
-         return this ._isLive;
+         return this ._live;
       }
 
       return function ()
@@ -170,31 +170,31 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
          // Change function.
 
-         Object .defineProperty (this, "isLive",
+         Object .defineProperty (this, "getLive",
          {
-            value: isLive,
+            value: getLive,
             enumerable: false,
             configurable: true,
          });
 
          // Add isLive event.
 
-         this .addChildObjects ("isLive", new Fields .SFBool (this .getLiveState ()));
+         this .addChildObjects ("live", new Fields .SFBool (this .getLiveState ()));
 
          // Event processing is done manually and immediately, so:
-         this ._isLive .removeParent (this);
+         this ._live .removeParent (this);
 
          // Connect to execution context.
 
          if (this .getOuterNode && this .getOuterNode ())
-            this .getOuterNode () .isLive () .addInterest (_set_live__, this);
+            this .getOuterNode () .getLive () .addInterest (_set_live__, this);
 
          else if (this [_executionContext] !== this)
-            this [_executionContext] .isLive () .addInterest (_set_live__, this);
+            this [_executionContext] .getLive () .addInterest (_set_live__, this);
 
          // Return field
 
-         return this .isLive ();
+         return this ._live;
       };
    })(),
    setLive: function (value)
@@ -206,7 +206,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       this [_set_live__] ();
    },
-   getLive: function ()
+   isLive: function ()
    {
       ///  Returns the own live state of this node.
 
@@ -216,34 +216,34 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       ///  Determines the live state of this node.
 
-      if (this .getOuterNode && this .getOuterNode ())
-         return this .getLive () && this .getOuterNode () .isLive () .getValue ();
+      if (this .getOuterNode?.())
+         return this .isLive () && this .getOuterNode () .getLive () .getValue ();
 
       else if (this !== this [_executionContext])
-         return this .getLive () && this [_executionContext] .isLive () .getValue ();
+         return this .isLive () && this [_executionContext] .getLive () .getValue ();
 
-      return this .getLive ();
+      return this .isLive ();
    },
    [_set_live__]: function ()
    {
       const
-         live   = this .getLiveState (),
-         isLive = this .isLive ();
+         liveState = this .getLiveState (),
+         live      = this .getLive ();
 
-      if (live)
+      if (liveState)
       {
-         if (isLive .getValue ())
+         if (live .getValue ())
             return;
 
-         isLive .set (true);
-         isLive .processEvent ();
+         live .set (true);
+         live .processEvent ();
       }
       else
       {
-         if (isLive .getValue ())
+         if (live .getValue ())
          {
-            isLive .set (false);
-            isLive .processEvent ();
+            live .set (false);
+            live .processEvent ();
          }
       }
    },

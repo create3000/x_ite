@@ -127,7 +127,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      this .isLive () .addInterest ("set_enabled__", this);
+      this .getLive () .addInterest ("set_enabled__", this);
 
       this ._enabled                 .addInterest ("set_enabled__",                 this);
       this ._set_contacts            .addInterest ("set_contacts__",                this);
@@ -158,7 +158,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
    },
    set_enabled__: function ()
    {
-      if (this .isLive () .getValue () && this ._enabled .getValue ())
+      if (this .getLive () .getValue () && this ._enabled .getValue ())
          this .getBrowser () .sensorEvents () .addInterest ("update", this);
       else
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);

@@ -477,12 +477,12 @@ X3DCoreContext .prototype =
                {
                   event .preventDefault ();
 
-                  if (this .isLive () .getValue ())
+                  if (this .getLive () .getValue ())
                      this .endUpdate ();
                   else
                      this .beginUpdate ();
 
-                  this .getNotification () ._string = this .isLive () .getValue () ? "Begin Update" : "End Update";
+                  this .getNotification () ._string = this .getLive () .getValue () ? "Begin Update" : "End Update";
                }
             }
 

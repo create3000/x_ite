@@ -68,7 +68,7 @@ X3DFollowerNode .prototype = Object .assign (Object .create (X3DChildNode .proto
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      this .isLive () .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_live__", this);
    },
    getBuffer: function ()
    {
@@ -116,7 +116,7 @@ X3DFollowerNode .prototype = Object .assign (Object .create (X3DChildNode .proto
    },
    set_live__: function ()
    {
-      if ((this .isLive () .getValue () || this .isPrivate ()) && this ._isActive .getValue ())
+      if ((this .getLive () .getValue () || this .isPrivate ()) && this ._isActive .getValue ())
       {
          this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
          this .getBrowser () .addBrowserEvent ();

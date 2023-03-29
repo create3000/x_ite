@@ -148,7 +148,7 @@ TimeSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype
    {
       this .setRange (this ._range [0], this ._range [1], this ._range [2]);
 
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
       {
          this ._fraction_changed = this .fraction;
          this ._time             = this .getBrowser () .getCurrentTime ();

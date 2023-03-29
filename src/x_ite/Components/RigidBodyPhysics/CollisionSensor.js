@@ -94,7 +94,7 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
    {
       X3DSensorNode .prototype .initialize .call (this);
 
-      this .isLive () .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_live__", this);
 
       this ._collider .addInterest ("set_collider__", this);
 
@@ -102,7 +102,7 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
    },
    set_live__: function ()
    {
-      if (this .isLive () .getValue () && this ._enabled .getValue () && this .colliderNode)
+      if (this .getLive () .getValue () && this ._enabled .getValue () && this .colliderNode)
       {
          this .getBrowser () .sensorEvents () .addInterest ("update", this);
       }

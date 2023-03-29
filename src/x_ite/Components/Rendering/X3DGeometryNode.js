@@ -169,7 +169,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      this .isLive () .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_live__", this);
 
       this .addInterest ("requestRebuild", this);
       this ._rebuild .addInterest ("rebuild", this);
@@ -697,7 +697,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
    })(),
    set_live__: function ()
    {
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
          this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
       else
          this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);

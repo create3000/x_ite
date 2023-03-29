@@ -70,7 +70,7 @@ X3DUrlObject .prototype =
    constructor: X3DUrlObject,
    initialize: function ()
    {
-      this .isLive () .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_live__", this);
 
       this ._load                 .addInterest ("set_load__",        this);
       this ._url                  .addInterest ("set_url__",         this);
@@ -184,7 +184,7 @@ X3DUrlObject .prototype =
    },
    set_live__: function ()
    {
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
          this .set_autoRefresh__ ();
       else
          clearTimeout (this [_autoRefreshId]);

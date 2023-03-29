@@ -99,7 +99,7 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
       X3DShaderNode               .prototype .initialize .call (this);
       X3DProgrammableShaderObject .prototype .initialize .call (this);
 
-      this .isLive () .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_live__", this);
 
       // https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/shaders_glsl.html#relinkingprograms
       this ._activate .addInterest ("set_activate__", this);
@@ -123,7 +123,7 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
    },
    addUserDefinedField: function (accessType, name, field)
    {
-      const shaderFields = this .isInitialized () && this .isLive () .getValue () && this .isValid ();
+      const shaderFields = this .isInitialized () && this .getLive () .getValue () && this .isValid ();
 
       if (shaderFields)
          this .removeShaderFields ();
@@ -135,7 +135,7 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
    },
    removeUserDefinedField: function (name)
    {
-      const shaderFields = this .isInitialized () && this .isLive () .getValue () && this .isValid ();
+      const shaderFields = this .isInitialized () && this .getLive () .getValue () && this .isValid ();
 
       if (shaderFields)
          this .removeShaderFields ();
@@ -155,7 +155,7 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
    },
    set_live__: function ()
    {
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
       {
          if (this .isValid ())
             this .addShaderFields ();

@@ -96,7 +96,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
       if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
          return;
 
-      this [_scene] .setLive (this .isLive () .getValue ());
+      this [_scene] .setLive (this .getLive () .getValue ());
    },
    canUserDefinedFields: function ()
    {
@@ -150,7 +150,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
       if (!proto)
          throw new Error ("PROTO not found");
 
-      this [_scene] .setLive (this .isLive () .getValue ());
+      this [_scene] .setLive (this .getLive () .getValue ());
       this [_scene] .setPrivate (this .getScene () .isPrivate ());
       this [_scene] .setExecutionContext (this .getExecutionContext ());
 

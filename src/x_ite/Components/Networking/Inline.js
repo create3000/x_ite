@@ -133,9 +133,9 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
       X3DUrlObject .prototype .set_live__ .call (this);
 
       if (this .isPrivate ())
-         return
+         return;
 
-      this .scene .setLive (this .isLive () .getValue ());
+      this .scene .setLive (this .getLive () .getValue ());
    },
    unLoadNow: function ()
    {

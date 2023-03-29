@@ -313,7 +313,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             scene = this .createScene ();
 
             for (const rootNode of rootNodes)
-               scene .isLive () .addInterest (rootNode .getValue () .getExecutionContext () .isLive ());
+               scene .getLive () .addInterest ("setLive", rootNode .getValue () .getExecutionContext ());
 
             scene .setRootNodes (rootNodes);
          }
@@ -323,7 +323,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
          // Detach scene from parent.
 
-         scene .getExecutionContext () .isLive () .removeInterest ("setLive", scene);
+         scene .getExecutionContext () .getLive () .removeInterest ("setLive", scene);
          scene .setExecutionContext (scene);
 
          // Replace.
@@ -339,7 +339,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          this .setExecutionContext (scene);
          this .getWorld () .bindBindables ();
 
-         scene .setLive (this .isLive () .getValue ());
+         scene .setLive (this .getLive () .getValue ());
       });
    },
    checkLoadCount: function (resolve, loadCount)
@@ -371,9 +371,9 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       if (!external)
       {
-         currentScene .isLive () .addInterest ("setLive", scene);
+         currentScene .getLive () .addInterest ("setLive", scene);
          scene .setExecutionContext (currentScene);
-         scene .setLive (currentScene .getLive ());
+         scene .setLive (currentScene .isLive ());
       }
 
       return scene;
@@ -410,13 +410,13 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
          if (scene)
          {
-            // Handle isLive for script scenes here:
+            // Handle getLive for script scenes here:
 
             if (!external)
             {
-               currentScene .isLive () .addInterest ("setLive", scene);
+               currentScene .getLive () .addInterest ("setLive", scene);
                scene .setExecutionContext (currentScene);
-               scene .setLive (currentScene .getLive ());
+               scene .setLive (currentScene .isLive ());
             }
 
             // Wait until scene is completely loaded, scene ._loadCount must be 0.
@@ -451,9 +451,9 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             {
                if (!external)
                {
-                  currentScene .isLive () .addInterest ("setLive", scene);
+                  currentScene .getLive () .addInterest ("setLive", scene);
                   scene .setExecutionContext (currentScene);
-                  scene .setLive (currentScene .getLive ());
+                  scene .setLive (currentScene .isLive ());
                }
 
                resolve (scene);
@@ -599,9 +599,9 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       if (!external)
       {
-         currentScene .isLive () .addInterest ("setLive", scene);
+         currentScene .getLive () .addInterest ("setLive", scene);
          scene .setExecutionContext (currentScene);
-         scene .setLive (currentScene .getLive ());
+         scene .setLive (currentScene .isLive ());
       }
 
       const parser = new XMLParser (scene);
@@ -619,9 +619,9 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       if (!external)
       {
-         currentScene .isLive () .addInterest ("setLive", scene);
+         currentScene .getLive () .addInterest ("setLive", scene);
          scene .setExecutionContext (currentScene);
-         scene .setLive (currentScene .getLive ());
+         scene .setLive (currentScene .isLive ());
       }
 
       const parser = new JSONParser (scene);

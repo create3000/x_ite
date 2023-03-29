@@ -112,7 +112,7 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-      this .isLive () .addInterest ("set_enabled__", this);
+      this .getLive () .addInterest ("set_enabled__", this);
 
       this ._enabled      .addInterest ("set_enabled__",      this);
       this ._size         .addInterest ("set_enabled__",      this);
@@ -127,7 +127,7 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
    { },
    set_enabled__: function ()
    {
-      if (this .isLive () .getValue () && this .targetObjectNode && this ._enabled .getValue () && ! this ._size. getValue () .equals (Vector3 .Zero))
+      if (this .getLive () .getValue () && this .targetObjectNode && this ._enabled .getValue () && ! this ._size. getValue () .equals (Vector3 .Zero))
       {
          this .setPickableObject (true);
          this .getBrowser () .addTransformSensor (this);

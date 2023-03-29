@@ -95,7 +95,7 @@ Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
          this .getBrowser () .getConeOptions () .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getConeOptions () .removeInterest ("requestRebuild", this);

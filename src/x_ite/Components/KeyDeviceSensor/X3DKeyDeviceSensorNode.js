@@ -62,13 +62,13 @@ X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNod
    {
       X3DSensorNode .prototype .initialize .call (this);
 
-      this .isLive () .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_live__", this);
 
       this .set_live__ ();
    },
    set_live__: function ()
    {
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
       {
          this ._enabled .addInterest ("set_enabled__", this);
 

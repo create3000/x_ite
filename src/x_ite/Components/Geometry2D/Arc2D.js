@@ -93,7 +93,7 @@ Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototyp
    {
       X3DLineGeometryNode .prototype .set_live__ .call (this);
 
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
          this .getBrowser () .getArc2DOptions () .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);

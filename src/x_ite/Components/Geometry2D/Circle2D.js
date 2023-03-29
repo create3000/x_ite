@@ -87,7 +87,7 @@ Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .proto
    {
       X3DLineGeometryNode .prototype .set_live__ .call (this);
 
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
          this .getBrowser () .getCircle2DOptions () .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getCircle2DOptions () .removeInterest ("requestRebuild", this);

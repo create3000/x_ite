@@ -96,7 +96,7 @@ Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
          this .getBrowser () .getDisk2DOptions () .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);

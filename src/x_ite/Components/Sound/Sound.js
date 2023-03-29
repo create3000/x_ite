@@ -115,7 +115,7 @@ Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
    {
       X3DSoundNode .prototype .initialize .call (this);
 
-      this .isLive ()  .addInterest ("set_live__", this);
+      this .getLive ()  .addInterest ("set_live__", this);
       this ._traversed .addInterest ("set_live__", this);
 
       this ._source .addInterest ("set_source__", this);
@@ -144,7 +144,7 @@ Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
    },
    set_live__: function ()
    {
-      if (this .isLive () .getValue () && this ._traversed .getValue ())
+      if (this .getLive () .getValue () && this ._traversed .getValue ())
       {
          this .getBrowser () .sensorEvents () .addInterest ("update", this);
       }

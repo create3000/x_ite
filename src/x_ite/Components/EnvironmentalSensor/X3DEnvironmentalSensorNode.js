@@ -72,7 +72,7 @@ X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (X3DSenso
    {
       X3DSensorNode .prototype .initialize .call (this);
 
-      this .isLive () .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_live__", this);
 
       this ._enabled   .addInterest ("set_live__", this);
       this ._size      .addInterest ("set_live__", this);
@@ -82,7 +82,7 @@ X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (X3DSenso
    },
    set_live__: function ()
    {
-      if (this ._traversed .getValue () && this .isLive () .getValue () && this ._enabled .getValue () && ! (this .zeroTest && this ._size. getValue () .equals (Vector3 .Zero)))
+      if (this ._traversed .getValue () && this .getLive () .getValue () && this ._enabled .getValue () && ! (this .zeroTest && this ._size. getValue () .equals (Vector3 .Zero)))
       {
          this .getBrowser () .sensorEvents () .addInterest ("update", this);
       }
