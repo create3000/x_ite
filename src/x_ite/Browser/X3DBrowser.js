@@ -312,8 +312,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
             scene = this .createScene ();
 
-            for (const rootNode of rootNodes .filter (node => node))
-               scene .getLive () .addInterest ("setLive", rootNode .getValue () .getExecutionContext ());
+            for (const node of rootNodes .filter (node => node))
+               scene .getLive () .addInterest ("setLive", node .getValue () .getExecutionContext ());
 
             scene .setRootNodes (rootNodes);
          }

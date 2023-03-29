@@ -76,15 +76,22 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
       if (length === 1)
          return this .array [0]; // Return default viewpoint.
 
+      const enableInlineBindables = false;
+
       if (name)
       {
          // Return first viewpoint with @name.
 
          for (let i = 1; i < length; ++ i)
          {
-            const node = this .array [i];
+            const
+               node  = this .array [i],
+               scene = node .getScene ();
 
-            if (node .getName () === name)
+            if (!enableInlineBindables && !scene .isMainScene ())
+               continue;
+
+            if (node .getName () == name)
                return node;
          }
       }
@@ -93,7 +100,12 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
 
       for (let i = 1; i < length; ++ i)
       {
-         const node = this .array [i];
+         const
+            node  = this .array [i],
+            scene = node .getScene ();
+
+         if (!enableInlineBindables && !scene .isMainScene ())
+            continue;
 
          if (node ._isBound .getValue ())
             return node;
@@ -102,13 +114,22 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
       // Return first viewpoint in scene.
 
       for (let i = 1; i < length; ++ i)
-         return this .array [i];
+      {
+         const
+            node  = this .array [i],
+            scene = node .getScene ();
+
+         if (!enableInlineBindables && !scene .isMainScene ())
+            continue;
+
+         return node;
+      }
 
       return this .array [0]; // Return default viewpoint.
    },
    push: function (node)
    {
-      this .collected .push (node);
+      return this .collected .push (node);
    },
    update: function (layerNode, stack)
    {

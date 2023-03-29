@@ -156,6 +156,8 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
    },
    set_initLoadCount__: function (scene, success, error, field)
    {
+      // Wait for extern protos to be loaded.
+
       if (field .getValue ())
          return;
 
