@@ -181,7 +181,7 @@ X3DPointingDeviceSensorContext .prototype =
    },
    buttonPressEvent: function (x, y)
    {
-      if (!this [_pointingDeviceSensorNodes] .size)
+      if (!(this [_pointingDeviceSensorNodes] .size && this .getBrowserOption ("PointingDevice")))
          return false;
 
       if (!this .touch (x, y))
@@ -199,7 +199,7 @@ X3DPointingDeviceSensorContext .prototype =
    },
    buttonReleaseEvent: function ()
    {
-      if (!this [_pointingDeviceSensorNodes] .size)
+      if (!(this [_pointingDeviceSensorNodes] .size && this .getBrowserOption ("PointingDevice")))
          return;
 
       for (const sensor of this [_activeSensors])
@@ -210,7 +210,7 @@ X3DPointingDeviceSensorContext .prototype =
    },
    motionNotifyEvent: function (x, y)
    {
-      if (!this [_pointingDeviceSensorNodes] .size)
+      if (!(this [_pointingDeviceSensorNodes] .size && this .getBrowserOption ("PointingDevice")))
          return false;
 
       this .touch (x, y);
