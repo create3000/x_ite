@@ -308,14 +308,15 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          {
             // VRML version of replaceWorld has a MFNode value as argument.
 
-            const rootNodes = scene;
+            const rootNodes = scene .filter (node => node .getValue ());
 
-            scene = this .createScene ();
+            scene = rootNodes .length ? rootNodes [0] .getValue () .getExecutionContext () : this .createScene ();
 
             for (const rootNode of rootNodes)
-               scene .getLive () .addInterest ("setLive", rootNode .getValue () .getExecutionContext ());
-
-            scene .setRootNodes (rootNodes);
+            {
+               if (scene !== rootNode .getValue () .getExecutionContext ())
+                  scene .getLive () .addInterest ("setLive", rootNode .getValue () .getExecutionContext ());
+            }
          }
 
          if (!(scene instanceof X3DScene))
