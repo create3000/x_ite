@@ -182,7 +182,7 @@ X3DPointingDeviceSensorContext .prototype =
    buttonPressEvent: function (x, y)
    {
       if (!this [_pointingDeviceSensorNodes] .size)
-         return;
+         return false;
 
       if (!this .touch (x, y))
          return false;
@@ -211,7 +211,7 @@ X3DPointingDeviceSensorContext .prototype =
    motionNotifyEvent: function (x, y)
    {
       if (!this [_pointingDeviceSensorNodes] .size)
-         return;
+         return false;
 
       this .touch (x, y);
       this .motion ();
