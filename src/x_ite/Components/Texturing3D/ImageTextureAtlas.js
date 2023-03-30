@@ -144,7 +144,7 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
    setError: function (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn ("Error loading image:", decodeURI (this .URL .href), event .type);
+         console .warn (`Error loading image '${decodeURI (this .URL .href)}'`, event .type);
 
       this .loadNext ();
    },
@@ -153,7 +153,7 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
       if (DEBUG)
       {
          if (this .URL .protocol !== "data:")
-            console .info ("Done loading image:", decodeURI (this .URL .href));
+            console .info (`Done loading image '${decodeURI (this .URL .href)}'`);
       }
 
       try

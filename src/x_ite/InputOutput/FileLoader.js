@@ -185,7 +185,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       if (DEBUG)
       {
          if (this .URL .protocol !== "data:")
-            console .info ("Done loading scene " + decodeURI (this .URL .href));
+            console .info (`Done loading scene '${decodeURI (this .URL .href)}'`);
       }
    },
    createX3DFromURL: function (url, parameter, callback, bindViewpoint, foreign)
@@ -330,9 +330,9 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
    error: function (exception)
    {
       if (this .URL .protocol === "data:")
-         console .warn ("Couldn't load URL 'data':", exception .message);
+         console .warn (`Couldn't load data URL: ${exception .message}`);
       else
-         console .warn ("Couldn't load URL '" + decodeURI (this .URL .href) + "':", exception .message);
+         console .warn (`Couldn't load URL '${decodeURI (this .URL .href)}': ${exception .message}`);
 
       if (DEBUG)
          console .error (exception);

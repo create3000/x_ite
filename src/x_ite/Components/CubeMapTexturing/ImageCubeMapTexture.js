@@ -162,7 +162,7 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
    setError: function ()
    {
       if (this .URL .protocol !== "data:")
-         console .warn ("Error loading image:", decodeURI (this .URL .href));
+         console .warn (`Error loading image '${decodeURI (this .URL .href)}'`);
 
       this .loadNext ();
    },
@@ -171,7 +171,7 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
       if (DEBUG)
       {
           if (this .URL .protocol !== "data:")
-            console .info ("Done loading image cube map texture:", decodeURI (this .URL .href));
+            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'`);
       }
 
       try

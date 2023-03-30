@@ -175,7 +175,7 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
    setError: function (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn ("Error loading audio:", decodeURI (this .URL .href), event .type);
+         console .warn (`Error loading audio '${decodeURI (this .URL .href)}'`, event .type);
 
       this .loadNext ();
    },
@@ -184,7 +184,7 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
       if (DEBUG)
       {
          if (this .URL .protocol !== "data:")
-            console .info ("Done loading audio:", decodeURI (this .URL .href));
+            console .info (`Done loading audio '${decodeURI (this .URL .href)}'`);
       }
 
       this .audio .unbind ("canplaythrough");
