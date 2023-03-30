@@ -162,25 +162,26 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
          return;
 
       scene ._initLoadCount .removeInterest ("set_initLoadCount__", this);
-      this .browser .finishedEvents () .addInterest ("set_finished__", this, scene, success, error);
 
       delete scene .loader;
-   },
-   set_finished__: function (scene, success, error)
-   {
-      this .browser .finishedEvents () .removeInterest ("set_finished__", this);
 
-      try
+      // Wait for instances to be created.
+
+      setTimeout (function ()
       {
-         success (scene);
-      }
-      catch (exception)
-      {
-         if (error)
-            error (exception);
-         else
-            throw exception;
-      }
+         try
+         {
+            success (scene);
+         }
+         catch (exception)
+         {
+            if (error)
+               error (exception);
+            else
+               throw exception;
+         }
+      },
+      0);
 
       if (DEBUG)
       {
