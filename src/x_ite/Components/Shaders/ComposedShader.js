@@ -224,8 +224,6 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
    },
    dispose: function ()
    {
-      this .getBrowser () .getContext () .deleteProgram (this .program);
-
       X3DProgrammableShaderObject .prototype .dispose .call (this);
       X3DShaderNode               .prototype .dispose .call (this);
    },

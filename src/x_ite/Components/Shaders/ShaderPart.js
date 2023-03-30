@@ -219,8 +219,6 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
    },
    dispose: function ()
    {
-      this .getBrowser () .getContext () .deleteShader (this .shader);
-
       X3DUrlObject .prototype .dispose .call (this);
       X3DNode      .prototype .dispose .call (this);
    },
