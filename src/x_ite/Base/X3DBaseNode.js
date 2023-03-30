@@ -227,11 +227,12 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    [_set_live__]: function ()
    {
-      const
-         liveState = this .getLiveState (),
-         live      = this .getLive ();
+      const live = this ._live;
 
-      if (liveState)
+      if (live)
+         return;
+
+      if (this .getLiveState ())
       {
          if (live .getValue ())
             return;
