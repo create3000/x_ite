@@ -229,7 +229,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       const live = this ._live;
 
-      if (live)
+      if (!live)
          return;
 
       if (this .getLiveState ())
