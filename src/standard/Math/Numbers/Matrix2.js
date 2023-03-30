@@ -189,9 +189,9 @@ Matrix2 .prototype =
       {
          const
             x = vector,
-            w = x * this [2] + this [3];
+            w = x * this [1] + this [3];
 
-         return (x * this [0] + this [1]) / w;
+         return (x * this [0] + this [2]) / w;
       }
       else
       {
