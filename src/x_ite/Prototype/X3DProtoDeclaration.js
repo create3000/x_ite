@@ -64,8 +64,7 @@ function X3DProtoDeclaration (executionContext)
 
    this .addType (X3DConstants .X3DProtoDeclaration)
 
-   this [_body] = new X3DExecutionContext (executionContext);
-   this [_body] .setOuterNode (this);
+   this [_body] = new X3DExecutionContext (executionContext, this);
    this [_body] .setLive (false);
    this .setLive (false);
 }

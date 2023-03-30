@@ -72,7 +72,7 @@ const
    _routes         = Symbol (),
    _outerNode      = Symbol ();
 
-function X3DExecutionContext (executionContext)
+function X3DExecutionContext (executionContext, outerNode = null)
 {
    X3DBaseNode .call (this, executionContext);
 
@@ -90,6 +90,7 @@ function X3DExecutionContext (executionContext)
    this ._rootNodes .setAccessType (X3DConstants .initializeOnly);
    this ._rootNodes .addCloneCount (1);
 
+   this [_outerNode]      = outerNode;
    this [_namedNodes]     = new NamedNodesArray ();
    this [_importedNodes]  = new ImportedNodesArray ();
    this [_protos]         = new ProtoDeclarationArray ();
@@ -119,15 +120,10 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       return "X3DExecutionContext";
    },
-   [_outerNode]: null,
    getOuterNode: function ()
    {
       // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
       return this [_outerNode];
-   },
-   setOuterNode: function (value)
-   {
-      this [_outerNode] = value;
    },
    getSpecificationVersion: function ()
    {
