@@ -89,7 +89,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       // const proto = this [_protoNode];
 
-      // if (! proto .isExternProto)
+      // if (!proto .isExternProto)
       // {
       //    const rootNodes = proto .getBody () .getRootNodes ();
 
@@ -112,8 +112,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
    },
    construct: function ()
    {
-      if (this [_body])
-         this [_body] .dispose ();
+      this [_body]?.dispose ();
 
       const proto = this [_protoNode] .getProtoDeclaration ();
 
@@ -147,7 +146,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
                   continue;
 
                // Continue if field is eventIn or eventOut.
-               if (! field .isInitializable ())
+               if (!field .isInitializable ())
                   continue;
 
                // Is set during parse.
@@ -216,7 +215,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
       {
          const oldFieldName = oldProtoFields .get (protoField);
 
-         if (! oldFieldName)
+         if (!oldFieldName)
             continue;
 
          const
@@ -230,7 +229,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
          this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
          this .getFields ()           .update (newField .getName (), newField .getName (), oldField);
 
-         if (! this .isPrivate ())
+         if (!this .isPrivate ())
             oldField .addCloneCount (1);
 
          oldFields .delete (oldFieldName);
@@ -279,7 +278,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       const outerNode = this .getExecutionContext () .getOuterNode ();
 
-      if (outerNode && outerNode .getType () .includes (X3DConstants .X3DProtoDeclaration))
+      if (outerNode?.getType () .includes (X3DConstants .X3DProtoDeclaration))
          return;
 
       if (protoNode .isExternProto)
@@ -586,7 +585,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
             }
          }
 
-         if (references .length && ! sharedNode)
+         if (references .length && !sharedNode)
          {
             generator .string += generator .Indent ();
             generator .string += "<IS>";
@@ -919,7 +918,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
          // IS references
 
-         if (references .length && ! sharedNode)
+         if (references .length && !sharedNode)
          {
             generator .string += generator .Indent ();
             generator .string += '"';
