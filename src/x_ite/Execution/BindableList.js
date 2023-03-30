@@ -86,7 +86,7 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
          {
             const
                node  = this .array [i],
-               scene = node .getScene ();
+               scene = node .getExecutionContext () .getOuterNode ()?.getScene () ?? node .getScene ();
 
             if (!enableInlineBindables && !scene .isMainScene ())
                continue;
@@ -102,7 +102,7 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
       {
          const
             node  = this .array [i],
-            scene = node .getScene ();
+            scene = node .getExecutionContext () .getOuterNode ()?.getScene () ?? node .getScene ();
 
          if (!enableInlineBindables && !scene .isMainScene ())
             continue;
@@ -117,7 +117,7 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
       {
          const
             node  = this .array [i],
-            scene = node .getScene ();
+            scene = node .getExecutionContext () .getOuterNode ()?.getScene () ?? node .getScene ();
 
          if (!enableInlineBindables && !scene .isMainScene ())
             continue;

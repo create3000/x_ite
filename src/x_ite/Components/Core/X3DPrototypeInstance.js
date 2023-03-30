@@ -119,7 +119,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       if (! proto)
       {
-         this [_body] = new X3DExecutionContext (this .getExecutionContext ());
+         this [_body] = new X3DExecutionContext (proto .getExecutionContext ());
          this [_body] .setOuterNode (this);
          this [_body] .setup ();
 
