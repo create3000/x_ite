@@ -161,7 +161,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       return this .getExecutionContext () .getUnits ();
    },
-   createNode: function (typeName, setup = true)
+   createNode: function (typeName, setup = true, warn = true)
    {
       typeName = String (typeName);
 
@@ -180,8 +180,10 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (this .getSpecificationVersion () > specificationRange [1])
             return null;
 
-         if (!this .hasComponent (Type .prototype .getComponentName ()))
+         if (warn && !this .hasComponent (Type .prototype .getComponentName ()))
+         {
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
+         }
 
          return new Type (this);
       }

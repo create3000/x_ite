@@ -61,7 +61,7 @@ X3DVolumeRenderingContext .prototype =
 {
    getDefaultVoxels: function (executionContext)
    {
-      this [_defaultVoxelsNode] = executionContext .createNode ("PixelTexture3D", false);
+      this [_defaultVoxelsNode] = executionContext .createNode ("PixelTexture3D", false, false);
       this [_defaultVoxelsNode] ._image = [1, 1, 1, 1, 255];
       this [_defaultVoxelsNode] .repeatS = true;
       this [_defaultVoxelsNode] .repeatT = true;

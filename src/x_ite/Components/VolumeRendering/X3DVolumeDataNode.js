@@ -60,14 +60,14 @@ function X3DVolumeDataNode (executionContext)
 
    this .addType (X3DConstants .X3DVolumeDataNode);
 
-   this .proximitySensorNode      = executionContext .createNode ("ProximitySensor",     false);
-   this .transformNode            = executionContext .createNode ("Transform",           false);
-   this .shapeNode                = executionContext .createNode ("Shape",               false);
-   this .appearanceNode           = executionContext .createNode ("Appearance",          false);
-   this .textureTransformNode     = executionContext .createNode ("TextureTransform3D",  false);
-   this .geometryNode             = executionContext .createNode ("QuadSet",             false);
-   this .textureCoordinateNode    = executionContext .createNode ("TextureCoordinate3D", false);
-   this .coordinateNode           = executionContext .createNode ("Coordinate",          false);
+   this .proximitySensorNode      = executionContext .createNode ("ProximitySensor",     false, false);
+   this .transformNode            = executionContext .createNode ("Transform",           false, false);
+   this .shapeNode                = executionContext .createNode ("Shape",               false, false);
+   this .appearanceNode           = executionContext .createNode ("Appearance",          false, false);
+   this .textureTransformNode     = executionContext .createNode ("TextureTransform3D",  false, false);
+   this .geometryNode             = executionContext .createNode ("QuadSet",             false, false);
+   this .textureCoordinateNode    = executionContext .createNode ("TextureCoordinate3D", false, false);
+   this .coordinateNode           = executionContext .createNode ("Coordinate",          false, false);
    this .volumeMaterialNode       = new VolumeMaterial (executionContext, this);
    this .textureNormalMatrixArray = new Float32Array (9);
 
