@@ -886,7 +886,7 @@ Arc2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default(
    {
       X3DLineGeometryNode_default().prototype.set_live__.call (this);
 
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
          this .getBrowser () .getArc2DOptions () .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
@@ -1046,7 +1046,7 @@ ArcClose2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default
    {
       X3DGeometryNode_default().prototype.set_live__.call (this);
 
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
          this .getBrowser () .getArcClose2DOptions () .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getArcClose2DOptions () .removeInterest ("requestRebuild", this);
@@ -1257,7 +1257,7 @@ Circle2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_defau
    {
       X3DLineGeometryNode_default().prototype.set_live__.call (this);
 
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
          this .getBrowser () .getCircle2DOptions () .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getCircle2DOptions () .removeInterest ("requestRebuild", this);
@@ -1393,7 +1393,7 @@ Disk2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).
    {
       X3DGeometryNode_default().prototype.set_live__.call (this);
 
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
          this .getBrowser () .getDisk2DOptions () .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);

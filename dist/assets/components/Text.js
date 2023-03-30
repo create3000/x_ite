@@ -1,7 +1,7 @@
 /* X_ITE v8.6.13 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 931:
+/***/ 14:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -16047,7 +16047,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(931);
+/* provided dependency */ var opentype = __webpack_require__(14);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16296,7 +16296,7 @@ Text .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).pr
    {
        X3DGeometryNode_default().prototype.set_live__.call (this);
 
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .removeInterest ("requestRebuild", this);

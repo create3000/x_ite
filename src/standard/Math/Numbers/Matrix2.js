@@ -145,7 +145,7 @@ Matrix2 .prototype =
    inverse: function ()
    {
       const
-         { 0: A, 1: B, 2: C, 3: D } = this [3],
+         { 0: A, 1: B, 2: C, 3: D } = this,
          d = A * D - B * C;
 
       // if (d === 0) ... determinant is zero.

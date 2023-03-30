@@ -453,7 +453,7 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
    constructor: X3DPickSensorNode,
    initialize: function ()
    {
-      this .isLive () .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_live__", this);
 
       this ._enabled          .addInterest ("set_live__",             this);
       this ._objectType       .addInterest ("set_objectType__",       this);
@@ -633,7 +633,7 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
    },
    set_live__: function ()
    {
-      if (this .isLive () .getValue () && this ._enabled .getValue () && ! this .objectType .has ("NONE"))
+      if (this .getLive () .getValue () && this ._enabled .getValue () && ! this .objectType .has ("NONE"))
       {
          this .getBrowser () .addPickSensor (this);
          this .setPickableObject (true);

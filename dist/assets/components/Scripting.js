@@ -524,7 +524,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
       const
          browser          = this .getBrowser (),
          executionContext = this .getExecutionContext (),
-         live             = this .isLive ();
+         live             = this .getLive ();
 
       function SFNode (vrmlSyntax)
       {
@@ -532,7 +532,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
             scene     = browser .createX3DFromString (String (vrmlSyntax)),
             rootNodes = scene .getRootNodes ();
 
-         live .addFieldInterest (scene .isLive ());
+         live .addFieldInterest (scene .getLive ());
 
          scene .setLive (live .getValue ());
          scene .setPrivate (executionContext .isPrivate ());
@@ -692,7 +692,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
       if (!this .context)
          return;
 
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
       {
          if (!this .initialized)
          {

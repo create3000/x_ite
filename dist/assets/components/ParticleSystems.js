@@ -3130,7 +3130,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
       // Connect fields.
 
-      this .isLive () .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_live__", this);
 
       this ._enabled           .addInterest ("set_enabled__",           this);
       this ._createParticles   .addInterest ("set_createParticles__",   this);
@@ -3231,7 +3231,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
    },
    set_live__: function ()
    {
-      if (this .isLive () .getValue ())
+      if (this .getLive () .getValue ())
       {
          if (this ._isActive .getValue () && this ._maxParticles .getValue ())
          {
@@ -3261,7 +3261,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
       {
          if (! this ._isActive .getValue ())
          {
-            if (this .isLive () .getValue ())
+            if (this .getLive () .getValue ())
             {
                this .getBrowser () .sensorEvents () .addInterest ("animateParticles", this);
 
@@ -3281,7 +3281,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
       {
          if (this ._isActive .getValue ())
          {
-            if (this .isLive () .getValue ())
+            if (this .getLive () .getValue ())
                this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
 
             this ._isActive = false;
