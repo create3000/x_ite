@@ -181,9 +181,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
             return null;
 
          if (warn && !this .hasComponent (Type .prototype .getComponentName ()))
-         {
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
-         }
 
          return new Type (this);
       }
@@ -202,7 +200,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (this .getSpecificationVersion () > specificationRange [1])
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
-         if (!this .hasComponent (Type .prototype .getComponentName ()))
+         if (warn && !this .hasComponent (Type .prototype .getComponentName ()))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
          const baseNode = new Type (this);
