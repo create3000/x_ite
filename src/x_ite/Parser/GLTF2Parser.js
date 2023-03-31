@@ -798,7 +798,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!(object instanceof Object))
          return indices;
 
-      if (key .endsWith ("Texture") && !object?.extensions?.KHR_texture_transform)
+      if (key .endsWith ("Texture") && !object ?.extensions ?.KHR_texture_transform)
          indices .add (object .texCoord || 0);
 
       for (const [key, value] of Object .entries (object))
@@ -810,7 +810,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const materials = [
          this .pbrMetallicRoughnessObject .bind (this, material .pbrMetallicRoughness),
-         this .pbrSpecularGlossinessObject .bind (this, material .extensions?.KHR_materials_pbrSpecularGlossiness),
+         this .pbrSpecularGlossinessObject .bind (this, material .extensions ?.KHR_materials_pbrSpecularGlossiness),
          this .pbrMetallicRoughnessObject .bind (this, { }),
       ];
 

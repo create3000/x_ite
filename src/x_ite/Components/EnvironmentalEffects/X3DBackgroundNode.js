@@ -167,7 +167,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
    },
    updateTexture: function (index, textureNode)
    {
-      this .textureNodes [index]?._loadState .removeInterest ("setTextureBit", this);
+      this .textureNodes [index] ?._loadState .removeInterest ("setTextureBit", this);
 
       this .textureNodes [index] = textureNode;
 

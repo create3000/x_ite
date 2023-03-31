@@ -268,7 +268,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       this .localStorage .StraightenHorizon = straightenHorizon .getValue ();
 
       if (straightenHorizon .getValue ())
-         this .getBrowser () .getActiveLayer ()?.straightenView ();
+         this .getBrowser () .getActiveLayer () ?.straightenView ();
    },
    updateContentScale: function ()
    {

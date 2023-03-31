@@ -209,7 +209,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       ///  Determines the live state of this node.
 
-      if (this .getOuterNode?.())
+      if (this .getOuterNode ?.())
          return this [_live] && this .getOuterNode () .getLive () .getValue ();
 
       else if (this !== this [_executionContext])

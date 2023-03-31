@@ -313,7 +313,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
                // Render triangles.
 
-               blendModeNode?.enable (gl);
+               blendModeNode ?.enable (gl);
 
                // Setup shader.
 
@@ -355,7 +355,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
                gl .enable (gl .CULL_FACE);
                gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
 
-               blendModeNode?.disable (gl);
+               blendModeNode ?.disable (gl);
 
                return;
             }
@@ -363,7 +363,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
          const primitiveMode = browser .getPrimitiveMode (this .getPrimitiveMode ());
 
-         blendModeNode?.enable (gl);
+         blendModeNode ?.enable (gl);
 
          // Setup shader.
 
@@ -393,7 +393,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
          gl .drawArrays (primitiveMode, 0, this .vertexCount);
 
-         blendModeNode?.disable (gl);
+         blendModeNode ?.disable (gl);
 
          gl .lineWidth (1);
       };
@@ -409,7 +409,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
          attribBuffers  = this .getAttribBuffers (),
          primitiveMode  = browser .getPrimitiveMode (this .getPrimitiveMode ());
 
-      blendModeNode?.enable (gl);
+      blendModeNode ?.enable (gl);
 
       // Setup shader.
 
@@ -448,7 +448,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
 
       gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
-      blendModeNode?.disable (gl);
+      blendModeNode ?.disable (gl);
 
       gl .lineWidth (1);
    },

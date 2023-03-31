@@ -1045,7 +1045,7 @@ X3DProgrammableShaderObject .prototype =
 
          // Fog
 
-         fogNode?.setShaderUniforms (gl, this);
+         fogNode ?.setShaderUniforms (gl, this);
 
          // Clip planes and local lights
 
@@ -1062,7 +1062,7 @@ X3DProgrammableShaderObject .prototype =
 
          // Style Properties
 
-         stylePropertiesNode?.setShaderUniforms (gl, this);
+         stylePropertiesNode ?.setShaderUniforms (gl, this);
 
          // Material
 
@@ -1070,7 +1070,7 @@ X3DProgrammableShaderObject .prototype =
 
          // Texture
 
-         textureNode?.setShaderUniforms (gl, this, renderObject);
+         textureNode ?.setShaderUniforms (gl, this, renderObject);
 
          appearanceNode  .getTextureTransform ()  .setShaderUniforms (gl, this);
          geometryContext .getTextureCoordinate () .setShaderUniforms (gl, this);

@@ -192,7 +192,7 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
          {
             const partNode = X3DCast (X3DConstants .ShaderPart, node);
 
-            if (partNode?.getShader ())
+            if (partNode ?.getShader ())
                gl .attachShader (program, partNode .getShader ());
          }
 

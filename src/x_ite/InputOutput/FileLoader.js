@@ -291,7 +291,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       const
          options     = { cache: this .node .getCache () ? "default" : "reload" },
          response    = this .handleErrors (await fetch (this .URL .href, options)),
-         contentType = response .headers .get ("content-type")?.replace (/;.*$/, "");
+         contentType = response .headers .get ("content-type") ?.replace (/;.*$/, "");
 
       if (this .foreign)
       {

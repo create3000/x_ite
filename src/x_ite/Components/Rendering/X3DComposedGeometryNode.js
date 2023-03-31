@@ -134,47 +134,47 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
    },
    set_fogCoord__: function ()
    {
-      this .fogCoordNode?.removeInterest ("requestRebuild", this);
+      this .fogCoordNode ?.removeInterest ("requestRebuild", this);
 
       this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
 
-      this .fogCoordNode?.addInterest ("requestRebuild", this);
+      this .fogCoordNode ?.addInterest ("requestRebuild", this);
    },
    set_color__: function ()
    {
-      this .colorNode?.removeInterest ("requestRebuild", this);
+      this .colorNode ?.removeInterest ("requestRebuild", this);
 
       this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
-      this .colorNode?.addInterest ("requestRebuild", this);
+      this .colorNode ?.addInterest ("requestRebuild", this);
 
-      this .setTransparent (this .colorNode?.isTransparent () ?? false);
+      this .setTransparent (this .colorNode ?.isTransparent () ?? false);
    },
    set_texCoord__: function ()
    {
-      this .texCoordNode?.removeInterest ("requestRebuild", this);
+      this .texCoordNode ?.removeInterest ("requestRebuild", this);
 
       this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
 
-      this .texCoordNode?.addInterest ("requestRebuild", this);
+      this .texCoordNode ?.addInterest ("requestRebuild", this);
 
       this .setTextureCoordinate (this .texCoordNode);
    },
    set_normal__: function ()
    {
-      this .normalNode?.removeInterest ("requestRebuild", this);
+      this .normalNode ?.removeInterest ("requestRebuild", this);
 
       this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
 
-      this .normalNode?.addInterest ("requestRebuild", this);
+      this .normalNode ?.addInterest ("requestRebuild", this);
    },
    set_coord__: function ()
    {
-      this .coordNode?.removeInterest ("requestRebuild", this);
+      this .coordNode ?.removeInterest ("requestRebuild", this);
 
       this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
 
-      this .coordNode?.addInterest ("requestRebuild", this);
+      this .coordNode ?.addInterest ("requestRebuild", this);
    },
    getPolygonIndex: function (index)
    {
@@ -211,7 +211,7 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
          normalArray        = this .getNormals (),
          vertexArray        = this .getVertices ();
 
-      texCoordNode?.init (multiTexCoordArray);
+      texCoordNode ?.init (multiTexCoordArray);
 
       // Fill GeometryNode
 
@@ -224,7 +224,7 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
          for (let a = 0; a < numAttribNodes; ++ a)
             attribNodes [a] .addValue (index, attribArrays [a]);
 
-         fogCoordNode?.addDepth (index, fogDepthArray);
+         fogCoordNode ?.addDepth (index, fogDepthArray);
 
          if (colorNode)
          {
@@ -234,7 +234,7 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
                colorNode .addColor (face, colorArray);
          }
 
-         texCoordNode?.addPoint (index, multiTexCoordArray);
+         texCoordNode ?.addPoint (index, multiTexCoordArray);
 
          if (normalNode)
          {

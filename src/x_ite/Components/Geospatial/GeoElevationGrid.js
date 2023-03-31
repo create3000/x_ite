@@ -126,31 +126,31 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
    },
    set_color__: function ()
    {
-      this .colorNode?.removeInterest ("requestRebuild", this);
+      this .colorNode ?.removeInterest ("requestRebuild", this);
 
       this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
-      this .colorNode?.addInterest ("requestRebuild", this);
+      this .colorNode ?.addInterest ("requestRebuild", this);
 
-      this .setTransparent (this .colorNode?.isTransparent () ?? false);
+      this .setTransparent (this .colorNode ?.isTransparent () ?? false);
    },
    set_texCoord__: function ()
    {
-      this .texCoordNode?.removeInterest ("requestRebuild", this);
+      this .texCoordNode ?.removeInterest ("requestRebuild", this);
 
       this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
 
-      this .texCoordNode?.addInterest ("requestRebuild", this);
+      this .texCoordNode ?.addInterest ("requestRebuild", this);
 
       this .setTextureCoordinate (this .texCoordNode);
    },
    set_normal__: function ()
    {
-      this .normalNode?.removeInterest ("requestRebuild", this);
+      this .normalNode ?.removeInterest ("requestRebuild", this);
 
       this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
 
-      this .normalNode?.addInterest ("requestRebuild", this);
+      this .normalNode ?.addInterest ("requestRebuild", this);
    },
    getColor: function ()
    {

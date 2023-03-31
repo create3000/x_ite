@@ -180,7 +180,7 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
          normalArray        = this .getNormals (),
          vertexArray        = this .getVertices ();
 
-      texCoordNode?.init (multiTexCoordArray);
+      texCoordNode ?.init (multiTexCoordArray);
 
       for (const polygon of polygons)
       {
@@ -195,7 +195,7 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
             for (let a = 0; a < numAttribNodes; ++ a)
                attribNodes [a] .addValue (index, attribArrays [a]);
 
-            fogCoordNode?.addDepth (index, fogDepthArray);
+            fogCoordNode ?.addDepth (index, fogDepthArray);
 
             if (colorNode)
             {
@@ -205,7 +205,7 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
                   colorNode .addColor (this .getColorIndex (face), colorArray);
             }
 
-            texCoordNode?.addPoint (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
+            texCoordNode ?.addPoint (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
 
             if (normalNode)
             {

@@ -112,7 +112,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
    },
    construct: function ()
    {
-      this [_body]?.dispose ();
+      this [_body] ?.dispose ();
 
       const proto = this [_protoNode] .getProtoDeclaration ();
 
@@ -278,7 +278,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       const outerNode = this .getExecutionContext () .getOuterNode ();
 
-      if (outerNode?.getType () .includes (X3DConstants .X3DProtoDeclaration))
+      if (outerNode ?.getType () .includes (X3DConstants .X3DProtoDeclaration))
          return;
 
       if (protoNode .isExternProto)

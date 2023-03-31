@@ -106,7 +106,7 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
    getBBox: function (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-         return this .visibleNode?.getBBox (bbox, shadows) ?? bbox .set ();
+         return this .visibleNode ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -170,11 +170,11 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
    },
    set_cameraObject__: function ()
    {
-      this .setCameraObject (!!this .visibleNode?.isCameraObject ());
+      this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
    set_transformSensors__: function ()
    {
-      this .setPickableObject (!!this .visibleNode?.isPickableObject ());
+      this .setPickableObject (!!this .visibleNode ?.isPickableObject ());
    },
    set_visible__: function ()
    {
@@ -201,7 +201,7 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
          case TraverseType .CAMERA:
          case TraverseType .SHADOW:
          {
-            this .visibleNode?.traverse (type, renderObject);
+            this .visibleNode ?.traverse (type, renderObject);
             return;
          }
          case TraverseType .PICKING:
@@ -212,21 +212,21 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
 
             pickingHierarchy .push (this);
 
-            this .visibleNode?.traverse (type, renderObject);
+            this .visibleNode ?.traverse (type, renderObject);
 
             pickingHierarchy .pop ();
             return;
          }
          case TraverseType .COLLISION:
          {
-            this .visibleNode?.traverse (type, renderObject);
+            this .visibleNode ?.traverse (type, renderObject);
             return;
          }
          case TraverseType .DISPLAY:
          {
-            this .visibleNode?.traverse (type, renderObject);
+            this .visibleNode ?.traverse (type, renderObject);
 
-            this .boundedObject?.displayBBox (type, renderObject);
+            this .boundedObject ?.displayBBox (type, renderObject);
             return;
          }
       }
