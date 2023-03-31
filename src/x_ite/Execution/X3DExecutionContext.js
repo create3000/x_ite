@@ -161,7 +161,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       return this .getExecutionContext () .getUnits ();
    },
-   createNode: function (typeName, setup = true, warn = true)
+   createNode: function (typeName, { setup = true, warn = true } = { })
    {
       typeName = String (typeName);
 
@@ -210,7 +210,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          return SFNodeCache .get (baseNode);
       }
    },
-   createProto: function (name, setup = true)
+   createProto: function (name, { setup = true } = { })
    {
       name = String (name);
 
@@ -221,12 +221,12 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          const proto = executionContext .protos .get (name);
 
          if (proto)
-            return proto .createInstance (this, setup);
+            return proto .createInstance (this, { setup: setup });
 
          const externproto = executionContext .externprotos .get (name);
 
          if (externproto)
-            return externproto .createInstance (this, setup);
+            return externproto .createInstance (this, { setup: setup });
 
          if (executionContext .isScene ())
             break;

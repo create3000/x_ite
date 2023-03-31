@@ -264,7 +264,7 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
       if (contactNode)
          return contactNode;
 
-      contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", false);
+      contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", { setup: false });
 
       contactNode .setup ();
 

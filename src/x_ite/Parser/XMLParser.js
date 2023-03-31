@@ -706,7 +706,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          if (this .id (name))
          {
-            var node = this .getExecutionContext () .createProto (name, false);
+            var node = this .getExecutionContext () .createProto (name, { setup: false });
 
             if (! node)
                throw new Error ("Unknown proto or externproto type '" + name + "'.");
@@ -780,10 +780,10 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (this .useAttribute (xmlElement))
             return;
 
-         var node = this .getExecutionContext () .createNode (this .nodeNameToCamelCase (xmlElement .nodeName), false);
+         var node = this .getExecutionContext () .createNode (this .nodeNameToCamelCase (xmlElement .nodeName), { setup: false });
 
          if (!node)
-            node = this .getExecutionContext () .createProto (this .protoNameToCamelCase (xmlElement .nodeName), false);
+            node = this .getExecutionContext () .createProto (this .protoNameToCamelCase (xmlElement .nodeName), { setup: false });
 
          if (!node)
             throw new Error (`Unknown node type '${xmlElement .nodeName}', you probably have insufficient component/profile statements and/or an inappropriate specification version.`);
@@ -816,10 +816,10 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
          }
 
-         console .error ("XML Parser Error: " + error .message);
-
          if (DEBUG)
             console .error (error);
+         else
+            console .error ("XML Parser Error: " + error .message);
       }
    },
    scriptElement (element)
