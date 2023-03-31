@@ -150,13 +150,20 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       return this;
    },
-   beginUpdate: function ()
+   isLive: function ()
    {
-      this .setLive (true);
+      ///  Returns the own live state of this node.
+
+      return this [_live];
    },
-   endUpdate: function ()
+   setLive: function (value)
    {
-      this .setLive (false);
+      ///  Sets the own live state of this node.  Setting the live state to false
+      ///  temporarily disables this node completely.
+
+      this [_live] = value .valueOf ();
+
+      this [_set_live__] ();
    },
    getLive: (function ()
    {
@@ -193,26 +200,11 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
          else if (this [_executionContext] !== this)
             this [_executionContext] .getLive () .addInterest (_set_live__, this);
 
-         // Return field
+         // Return field.
 
          return this ._live;
       };
    })(),
-   setLive: function (value)
-   {
-      ///  Sets the own live state of this node.  Setting the live state to false
-      ///  temporarily disables this node completely.
-
-      this [_live] = value .valueOf ();
-
-      this [_set_live__] ();
-   },
-   isLive: function ()
-   {
-      ///  Returns the own live state of this node.
-
-      return this [_live];
-   },
    getLiveState: function ()
    {
       ///  Determines the live state of this node.
