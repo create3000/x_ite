@@ -48,13 +48,15 @@
 import SFNode   from "./SFNode.js";
 import X3DField from "../Base/X3DField.js";
 
+const
+   _target = Symbol .for ("X_ITE.SFNode.target"),
+   cache   = new WeakMap ();
+
 class SFNodeCache
 {
-   static #cache = new WeakMap ()
-
    static get (baseNode)
    {
-      const node = this .#cache .get (baseNode);
+      const node = cache .get (baseNode);
 
       if (node)
       {
@@ -64,26 +66,26 @@ class SFNodeCache
       {
          const node = new SFNode (baseNode);
 
-         node .dispose = dispose;
+         node .dispose = this .#dispose;
 
-         this .#cache .set (baseNode, node);
+         cache .set (baseNode, node);
 
          return node;
       }
    }
-}
 
-const _target = Symbol .for ("X_ITE.SFNode.target");
+   static #dispose ()
+   {
+      const
+         target = this [_target],
+         value  = target .getValue ();
 
-function dispose ()
-{
-   const
-      target = this [_target],
-      value  = target .getValue ();
+      cache .delete (value);
 
-   value ?.dispose ();
+      value ?.dispose ();
 
-   X3DField .prototype .dispose .call (target);
+      X3DField .prototype .dispose .call (target);
+   }
 }
 
 export default SFNodeCache;
