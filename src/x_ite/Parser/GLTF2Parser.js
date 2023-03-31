@@ -1739,7 +1739,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          scene          = this .getExecutionContext (),
-         appearanceNode = scene .createNode ("Appearance", { setup: false }),
+         appearanceNode = scene .createNode ("Appearance",       { setup: false }),
          materialNode   = scene .createNode ("PhysicalMaterial", { setup: false });
 
       appearanceNode ._alphaMode = "OPAQUE";
