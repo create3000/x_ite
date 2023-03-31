@@ -477,7 +477,7 @@ X3DCoreContext .prototype =
                {
                   event .preventDefault ();
 
-                  if (this .getLive () .getValue ())
+                  if (this .isLive ())
                      this .endUpdate ();
                   else
                      this .beginUpdate ();

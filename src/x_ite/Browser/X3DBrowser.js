@@ -339,7 +339,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          this .setExecutionContext (scene);
          this .getWorld () .bindBindables ();
 
-         scene .setLive (this .getLive () .getValue ());
+         scene .setLive (this .isLive ());
       });
    },
    checkLoadCount: function (resolve, loadCount)
@@ -813,14 +813,14 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    beginUpdate: function ()
    {
       this .setLive (true);
-      this .getExecutionContext () .beginUpdate ();
+      this .getExecutionContext () .setLive (true);
       this .advanceTime ();
       this .addBrowserEvent ();
    },
    endUpdate: function ()
    {
       this .setLive (false);
-      this .getExecutionContext () .endUpdate ();
+      this .getExecutionContext () .setLive (false);
    },
    print: function ()
    {
