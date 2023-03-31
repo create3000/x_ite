@@ -136,29 +136,37 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
    },
    addCloneCount: function (count)
    {
-      this [_cloneCount] += count;
+      const target = this .getTarget ();
 
-      for (const element of this .getValue ())
+      target [_cloneCount] += count;
+
+      for (const element of target .getValue ())
          element .addCloneCount (count);
    },
    removeCloneCount: function (count)
    {
-      this [_cloneCount] -= count;
+      const target = this .getTarget ();
 
-      for (const element of this .getValue ())
+      target [_cloneCount] -= count;
+
+      for (const element of target .getValue ())
          element .removeCloneCount (count);
    },
    addChildObject: function (value)
    {
-      X3DObjectArrayField .prototype .addChildObject .call (this, value);
+      const target = this .getTarget ();
 
-      value .addCloneCount (this [_cloneCount]);
+      X3DObjectArrayField .prototype .addChildObject .call (target, value);
+
+      value .addCloneCount (target [_cloneCount]);
    },
    removeChildObject: function (value)
    {
-      X3DObjectArrayField .prototype .removeChildObject .call (this, value);
+      const target = this .getTarget ();
 
-      value .removeCloneCount (this [_cloneCount]);
+      X3DObjectArrayField .prototype .removeChildObject .call (target, value);
+
+      value .removeCloneCount (target [_cloneCount]);
    },
    toStream: function (generator)
    {
@@ -210,11 +218,13 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
    },
    toVRMLString: function ()
    {
-      this .addCloneCount (1);
+      const target = this .getTarget ();
 
-      const string = X3DObjectArrayField .prototype .toVRMLString .call (this);
+      target .addCloneCount (1);
 
-      this .removeCloneCount (1);
+      const string = X3DObjectArrayField .prototype .toVRMLString .call (target);
+
+      target .removeCloneCount (1);
 
       return string;
    },
@@ -268,23 +278,27 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
    },
    toXMLString: function ()
    {
-      this .addCloneCount (1);
+      const target = this .getTarget ();
 
-      const string = X3DObjectArrayField .prototype .toXMLString .call (this);
+      target .addCloneCount (1);
 
-      this .removeCloneCount (1);
+      const string = X3DObjectArrayField .prototype .toXMLString .call (target);
+
+      target .removeCloneCount (1);
 
       return string;
    },
    toXMLStream: function (generator)
    {
-      const length = this .length;
+      const
+         target = this .getTarget (),
+         length = target .length;
 
       if (length)
       {
          generator .EnterScope ();
 
-         const array = this .getValue ();
+         const array = target .getValue ();
 
          for (let i = 0, n = length - 1; i < n; ++ i)
          {
@@ -343,11 +357,13 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
    },
    toJSONStream: function (generator)
    {
-      const length = this .length;
+      const
+         target = this .getTarget (),
+         length = target .length;
 
       if (length)
       {
-         const array = this .getValue ();
+         const array = target .getValue ();
 
          generator .EnterScope ();
 
@@ -391,9 +407,11 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
    },
    dispose: function ()
    {
-      this .resize (0);
+      const target = this .getTarget ();
 
-      X3DObjectArrayField .prototype .dispose .call (this);
+      target .resize (0);
+
+      X3DObjectArrayField .prototype .dispose .call (target);
    },
 });
 
@@ -434,11 +452,13 @@ MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .proto
    },
    toXMLStream: function (generator)
    {
-      const length = this .length;
+      const
+         target = this .getTarget (),
+         length = target .length;
 
       if (length)
       {
-         const value = this .getValue ();
+         const value = target .getValue ();
 
          for (let i = 0, n = length - 1; i < n; ++ i)
          {

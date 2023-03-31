@@ -51,7 +51,7 @@ import Generator    from "../InputOutput/Generator.js";
 import SFNodeCache  from "./SFNodeCache.js";
 
 const
-   _target     = Symbol (),
+   _target     = Symbol .for ("X_ITE.SFNode.target"),
    _proxy      = Symbol (),
    _cloneCount = Symbol ();
 
@@ -469,11 +469,9 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    dispose: function ()
    {
-      const
-         target = this [_target],
-         value  = target .getValue ();
+      const target = this [_target];
 
-      value ?.dispose ();
+      target .setValue (null);
 
       X3DField .prototype .dispose .call (target);
    },

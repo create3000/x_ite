@@ -45,7 +45,8 @@
  *
  ******************************************************************************/
 
-import SFNode from "./SFNode.js";
+import SFNode   from "./SFNode.js";
+import X3DField from "../Base/X3DField.js";
 
 class SFNodeCache
 {
@@ -63,11 +64,26 @@ class SFNodeCache
       {
          const node = new SFNode (baseNode);
 
+         node .dispose = dispose;
+
          this .#cache .set (baseNode, node);
 
          return node;
       }
    }
+}
+
+const _target = Symbol .for ("X_ITE.SFNode.target");
+
+function dispose ()
+{
+   const
+      target = this [_target],
+      value  = target .getValue ();
+
+   value ?.dispose ();
+
+   X3DField .prototype .dispose .call (target);
 }
 
 export default SFNodeCache;
