@@ -473,8 +473,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
          target = this [_target],
          value  = target .getValue ();
 
-      if (value)
-         value .dispose ();
+      value ?.dispose ();
 
       X3DField .prototype .dispose .call (target);
    },
