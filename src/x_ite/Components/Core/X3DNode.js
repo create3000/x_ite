@@ -48,6 +48,7 @@
 import Fields       from "../../Fields.js";
 import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import SFNodeCache  from "../../Fields/SFNodeCache.js";
 
 function X3DNode (executionContext)
 {
@@ -212,6 +213,10 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       return true;
    },
    traverse: function () { },
+   valueOf: function ()
+   {
+      return SFNodeCache .get (this);
+   },
    toStream: function (generator)
    {
       generator .string += this .getTypeName () + " { }";
