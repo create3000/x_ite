@@ -213,10 +213,6 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       return true;
    },
    traverse: function () { },
-   valueOf: function ()
-   {
-      return SFNodeCache .get (this);
-   },
    toStream: function (generator)
    {
       generator .string += this .getTypeName () + " { }";
