@@ -75,7 +75,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
    constructor: X3DTimeDependentNode,
    initialize: function ()
    {
-      this .getLive ()   .addInterest ("set_live__", this);
+      this .getLive ()  .addInterest ("set_live__", this);
       this ._isEvenLive .addInterest ("set_live__", this);
 
       this ._initialized .addInterest ("set_loop__",       this);

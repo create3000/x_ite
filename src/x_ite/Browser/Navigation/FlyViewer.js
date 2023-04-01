@@ -50,8 +50,6 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DFlyViewer         from "./X3DFlyViewer.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 
 function FlyViewer (executionContext, navigationInfo)
 {

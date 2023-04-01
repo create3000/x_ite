@@ -165,8 +165,7 @@ X3DNavigationContext .prototype =
    },
    set_activeNavigationInfo__: function ()
    {
-      if (this ._activeNavigationInfo .getValue ())
-         this ._activeNavigationInfo .getValue () ._viewer .removeFieldInterest (this ._viewer);
+      this ._activeNavigationInfo .getValue () ?._viewer .removeFieldInterest (this ._viewer);
 
       if (this ._activeLayer .getValue ())
       {
@@ -200,33 +199,32 @@ X3DNavigationContext .prototype =
 
       // Create viewer node.
 
-      if (this [_viewerNode])
-         this [_viewerNode] .dispose ();
+      this [_viewerNode] ?.dispose ();
 
       switch (viewer .getValue ())
       {
          case "EXAMINE":
-            this [_viewerNode] = new ExamineViewer (this, navigationInfo);
+            this [_viewerNode] = new ExamineViewer (this .getPrivateScene (), navigationInfo);
             break;
          case "WALK":
-            this [_viewerNode] = new WalkViewer (this, navigationInfo);
+            this [_viewerNode] = new WalkViewer (this .getPrivateScene (), navigationInfo);
             break;
          case "FLY":
-            this [_viewerNode] = new FlyViewer (this, navigationInfo);
+            this [_viewerNode] = new FlyViewer (this .getPrivateScene (), navigationInfo);
             break;
          case "PLANE":
          case "PLANE_create3000.github.io":
          case "PLANE_create3000.de":
-                  this [_viewerNode] = new PlaneViewer (this, navigationInfo);
+            this [_viewerNode] = new PlaneViewer (this .getPrivateScene (), navigationInfo);
             break;
          case "NONE":
-            this [_viewerNode] = new NoneViewer (this, navigationInfo);
+            this [_viewerNode] = new NoneViewer (this .getPrivateScene (), navigationInfo);
             break;
          case "LOOKAT":
-            this [_viewerNode] = new LookAtViewer (this, navigationInfo);
+            this [_viewerNode] = new LookAtViewer (this .getPrivateScene (), navigationInfo);
             break;
          default:
-            this [_viewerNode] = new ExamineViewer (this, navigationInfo);
+            this [_viewerNode] = new ExamineViewer (this .getPrivateScene (), navigationInfo);
             break;
       }
 

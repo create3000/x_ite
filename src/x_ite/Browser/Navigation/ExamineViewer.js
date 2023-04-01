@@ -56,7 +56,6 @@ import TimeSensor           from "../../Components/Time/TimeSensor.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
 
 typeof jquery_mousewheel; // import plugin
 
@@ -253,8 +252,6 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
             // Stop event propagation.
             event .preventDefault ();
             event .stopImmediatePropagation ();
-
-            const viewpoint = this .getActiveViewpoint ();
 
             this .getBrowser () .setCursor ("DEFAULT");
 
