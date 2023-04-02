@@ -83,7 +83,7 @@ function X3DNavigationContext ()
                           "viewer",               new Fields .SFString ("EXAMINE"));
 
    this [_activeCollisions] = new Set ();
-   this [_viewerNode]       = new NoneViewer (this);
+   this [_viewerNode]       = new NoneViewer (this .getPrivateScene ());
 }
 
 X3DNavigationContext .prototype =

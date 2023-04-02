@@ -57,7 +57,6 @@ import Scene               from "../../Execution/Scene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import _                   from "../../../locale/gettext.js";
-import DEBUG from "../../DEBUG.js";
 
 const WEBGL_LATEST_VERSION = 2;
 

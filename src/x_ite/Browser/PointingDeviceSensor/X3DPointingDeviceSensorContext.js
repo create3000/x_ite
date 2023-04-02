@@ -71,7 +71,7 @@ const
 
 function X3DPointingDeviceSensorContext ()
 {
-   this [_pointingDevice]            = new PointingDevice (this);
+   this [_pointingDevice]            = new PointingDevice (this .getPrivateScene ());
    this [_pointingDeviceSensorNodes] = new Set ();
    this [_pointer]                   = new Vector2 (0, 0);
    this [_overSensors]               = [ ];
