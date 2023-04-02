@@ -504,8 +504,8 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
             return pickShape;
 
          var
-            shapeNode           = this .getExecutionContext () .createNode ("Shape",           false),
-            collidableShapeNode = this .getExecutionContext () .createNode ("CollidableShape", false);
+            shapeNode           = this .getExecutionContext () .createNode ("Shape",           { setup: false, warn: false }),
+            collidableShapeNode = this .getExecutionContext () .createNode ("CollidableShape", { setup: false, warn: false });
 
          shapeNode .setPrivate (true);
          collidableShapeNode .setPrivate (true);

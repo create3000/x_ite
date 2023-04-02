@@ -3503,14 +3503,14 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
    },
    set_texCoord__: function ()
    {
-      this .texCoordNode     ?.removeInterest ("requestRebuild", this);
-      this .nurbsTexCoordNode?.removeInterest ("requestRebuild", this);
+      this .texCoordNode      ?.removeInterest ("requestRebuild", this);
+      this .nurbsTexCoordNode ?.removeInterest ("requestRebuild", this);
 
       this .texCoordNode      = X3DCast_default() ((X3DConstants_default()).X3DTextureCoordinateNode, this ._texCoord);
       this .nurbsTexCoordNode = X3DCast_default() ((X3DConstants_default()).NurbsTextureCoordinate,   this ._texCoord);
 
-      this .texCoordNode     ?.addInterest ("requestRebuild", this);
-      this .nurbsTexCoordNode?.addInterest ("requestRebuild", this);
+      this .texCoordNode      ?.addInterest ("requestRebuild", this);
+      this .nurbsTexCoordNode ?.addInterest ("requestRebuild", this);
    },
    set_controlPoint__: function ()
    {

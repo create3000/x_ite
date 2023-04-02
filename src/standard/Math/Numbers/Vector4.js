@@ -101,6 +101,7 @@ Vector4 .prototype =
       vector .x = this .x / this .w;
       vector .y = this .y / this .w;
       vector .z = this .z / this .w;
+      return vector;
    },
    negate: function ()
    {

@@ -503,7 +503,7 @@ X3DVolumeRenderingContext .prototype =
 {
    getDefaultVoxels: function (executionContext)
    {
-      this [_defaultVoxelsNode] = executionContext .createNode ("PixelTexture3D", false);
+      this [_defaultVoxelsNode] = executionContext .createNode ("PixelTexture3D", { setup: false, warn: false });
       this [_defaultVoxelsNode] ._image = [1, 1, 1, 1, 255];
       this [_defaultVoxelsNode] .repeatS = true;
       this [_defaultVoxelsNode] .repeatT = true;
@@ -2059,14 +2059,14 @@ function X3DVolumeDataNode (executionContext)
 
    this .addType ((X3DConstants_default()).X3DVolumeDataNode);
 
-   this .proximitySensorNode      = executionContext .createNode ("ProximitySensor",     false);
-   this .transformNode            = executionContext .createNode ("Transform",           false);
-   this .shapeNode                = executionContext .createNode ("Shape",               false);
-   this .appearanceNode           = executionContext .createNode ("Appearance",          false);
-   this .textureTransformNode     = executionContext .createNode ("TextureTransform3D",  false);
-   this .geometryNode             = executionContext .createNode ("QuadSet",             false);
-   this .textureCoordinateNode    = executionContext .createNode ("TextureCoordinate3D", false);
-   this .coordinateNode           = executionContext .createNode ("Coordinate",          false);
+   this .proximitySensorNode      = executionContext .createNode ("ProximitySensor",     { setup: false, warn: false });
+   this .transformNode            = executionContext .createNode ("Transform",           { setup: false, warn: false });
+   this .shapeNode                = executionContext .createNode ("Shape",               { setup: false, warn: false });
+   this .appearanceNode           = executionContext .createNode ("Appearance",          { setup: false, warn: false });
+   this .textureTransformNode     = executionContext .createNode ("TextureTransform3D",  { setup: false, warn: false });
+   this .geometryNode             = executionContext .createNode ("QuadSet",             { setup: false, warn: false });
+   this .textureCoordinateNode    = executionContext .createNode ("TextureCoordinate3D", { setup: false, warn: false });
+   this .coordinateNode           = executionContext .createNode ("Coordinate",          { setup: false, warn: false });
    this .volumeMaterialNode       = new VolumeRendering_VolumeMaterial (executionContext, this);
    this .textureNormalMatrixArray = new Float32Array (9);
 

@@ -3217,9 +3217,9 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
             default:
             {
                this .setTransparent (!!(this .getAppearance () .isTransparent () ||
-                                        this .colorRampNode?.isTransparent () ||
+                                        this .colorRampNode ?.isTransparent () ||
                                         (this .geometryType === ParticleSystems_GeometryTypes.GEOMETRY &&
-                                         this .geometryNode?.isTransparent ())));
+                                         this .geometryNode ?.isTransparent ())));
                break;
             }
          }
@@ -3923,7 +3923,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
                const blendModeNode = appearanceNode .getBlendMode ();
 
-               blendModeNode?.enable (gl);
+               blendModeNode ?.enable (gl);
 
                shaderNode .enable (gl);
                shaderNode .setUniforms (gl, this .geometryContext, renderContext);
@@ -3968,7 +3968,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
                gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
 
-               blendModeNode?.disable (gl);
+               blendModeNode ?.disable (gl);
             }
 
             break;
