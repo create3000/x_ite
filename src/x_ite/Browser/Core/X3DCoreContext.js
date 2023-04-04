@@ -645,7 +645,7 @@ X3DCoreContext .prototype =
    },
    dispose: function ()
    {
-      this [_context] .getExtension ("WEBGL_lose_context") .loseContext ();
+      this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ();
    },
 };
 
