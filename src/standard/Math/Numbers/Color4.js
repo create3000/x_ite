@@ -58,20 +58,10 @@ const
 
 function Color4 (r, g, b, a)
 {
-   if (arguments .length)
-   {
-      this [_r] = clamp (r, 0, 1);
-      this [_g] = clamp (g, 0, 1);
-      this [_b] = clamp (b, 0, 1);
-      this [_a] = clamp (a, 0, 1);
-   }
-   else
-   {
-      this [_r] = 0;
-      this [_g] = 0;
-      this [_b] = 0;
-      this [_a] = 0;
-   }
+   this [_r] = clamp (r, 0, 1);
+   this [_g] = clamp (g, 0, 1);
+   this [_b] = clamp (b, 0, 1);
+   this [_a] = clamp (a, 0, 1);
 }
 
 Color4 .prototype =

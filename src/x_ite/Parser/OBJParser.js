@@ -736,7 +736,7 @@ function MaterialParser (scene, input)
    this .material         = scene .createNode ("Material");
    this .materials        = new Map ();
    this .textures         = new Map ();
-   this .color3           = new Color3 ();
+   this .color3           = new Color3 (0, 0, 0);
    this .id               = "";
 }
 
