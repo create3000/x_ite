@@ -350,26 +350,25 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       for (const browserContext of browserContexts)
          browserContext .prototype .dispose .call (this);
 
-      X3DRoutingContext              .prototype .dispose .call (this);
-      X3DCoreContext                 .prototype .dispose .call (this);
-      X3DScriptingContext            .prototype .dispose .call (this);
-      X3DNetworkingContext           .prototype .dispose .call (this);
-      X3DTexturingContext            .prototype .dispose .call (this);
-      X3DShadersContext              .prototype .dispose .call (this);
-      X3DRenderingContext            .prototype .dispose .call (this);
-      X3DShapeContext                .prototype .dispose .call (this);
-      X3DGroupingContext             .prototype .dispose .call (this);
-      X3DGeometry3DContext           .prototype .dispose .call (this);
-      X3DPointingDeviceSensorContext .prototype .dispose .call (this);
-      X3DNavigationContext           .prototype .dispose .call (this);
-      X3DLayeringContext             .prototype .dispose .call (this);
-      X3DEnvironmentalEffectsContext .prototype .dispose .call (this);
-      X3DLightingContext             .prototype .dispose .call (this);
-      X3DPickingContext              .prototype .dispose .call (this);
-      X3DSoundContext                .prototype .dispose .call (this);
       X3DTimeContext                 .prototype .dispose .call (this);
-
-      X3DBaseNode .prototype .dispose .call (this);
+      X3DSoundContext                .prototype .dispose .call (this);
+      X3DPickingContext              .prototype .dispose .call (this);
+      X3DLightingContext             .prototype .dispose .call (this);
+      X3DEnvironmentalEffectsContext .prototype .dispose .call (this);
+      X3DLayeringContext             .prototype .dispose .call (this);
+      X3DNavigationContext           .prototype .dispose .call (this);
+      X3DPointingDeviceSensorContext .prototype .dispose .call (this);
+      X3DGeometry3DContext           .prototype .dispose .call (this);
+      X3DGroupingContext             .prototype .dispose .call (this);
+      X3DShapeContext                .prototype .dispose .call (this);
+      X3DRenderingContext            .prototype .dispose .call (this);
+      X3DShadersContext              .prototype .dispose .call (this);
+      X3DTexturingContext            .prototype .dispose .call (this);
+      X3DNetworkingContext           .prototype .dispose .call (this);
+      X3DScriptingContext            .prototype .dispose .call (this);
+      X3DCoreContext                 .prototype .dispose .call (this);
+      X3DRoutingContext              .prototype .dispose .call (this);
+      X3DBaseNode                    .prototype .dispose .call (this);
    },
 });
 
