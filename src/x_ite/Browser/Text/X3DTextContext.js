@@ -115,6 +115,8 @@ X3DTextContext .prototype =
 
       return cachedGlyph;
    },
+   dispose: function ()
+   { },
 };
 
 export default X3DTextContext;

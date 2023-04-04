@@ -58,6 +58,8 @@ function X3DLayoutContext ()
 
 X3DLayoutContext .prototype =
 {
+   initialize: function ()
+   { },
    getScreenTextureProperties: function ()
    {
       this [_screenTextureProperties] = new TextureProperties (this .getPrivateScene ());
@@ -126,6 +128,8 @@ X3DLayoutContext .prototype =
          matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
       };
    })(),
+   dispose: function ()
+   { },
 };
 
 export default X3DLayoutContext;

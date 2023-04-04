@@ -643,6 +643,10 @@ X3DCoreContext .prototype =
       document .execCommand ("copy");
       tmp .remove ();
    },
+   dispose: function ()
+   {
+      this [_context] .getExtension ("WEBGL_lose_context") .loseContext ();
+   },
 };
 
 export default X3DCoreContext;

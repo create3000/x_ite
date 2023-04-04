@@ -107,6 +107,8 @@ X3DTimeContext .prototype =
          }
       };
    })(),
+   dispose: function ()
+   { },
 };
 
 export default X3DTimeContext;

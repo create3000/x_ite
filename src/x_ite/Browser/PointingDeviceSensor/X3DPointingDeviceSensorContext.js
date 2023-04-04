@@ -381,6 +381,8 @@ X3DPointingDeviceSensorContext .prototype =
 
       return shaderNode;
    },
+   dispose: function ()
+   { },
 };
 
 export default X3DPointingDeviceSensorContext;

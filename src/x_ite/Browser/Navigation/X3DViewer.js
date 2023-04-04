@@ -200,7 +200,8 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       return this .getBrowser () .touch (x, y);
    },
-   dispose: function () { },
+   dispose: function ()
+   { },
 });
 
 function tbProjectToSphere (r, x, y)

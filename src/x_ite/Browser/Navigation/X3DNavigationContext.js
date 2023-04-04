@@ -230,6 +230,10 @@ X3DNavigationContext .prototype =
 
       this [_viewerNode] .setup ();
    },
+   dispose: function ()
+   {
+      this [_viewerNode] ?.dispose ();
+   },
 };
 
 export default X3DNavigationContext;

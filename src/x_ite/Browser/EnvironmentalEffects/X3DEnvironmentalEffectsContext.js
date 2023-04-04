@@ -72,6 +72,8 @@ X3DEnvironmentalEffectsContext .prototype =
 
       return this [_backgroundTextureProperties];
    },
+   dispose: function ()
+   { },
 };
 
 export default X3DEnvironmentalEffectsContext;

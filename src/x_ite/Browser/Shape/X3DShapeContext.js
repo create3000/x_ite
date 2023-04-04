@@ -206,6 +206,8 @@ X3DShapeContext .prototype =
 
       return this [_lineTransformFeedback];
    },
+   dispose: function ()
+   { },
 };
 
 export default X3DShapeContext;

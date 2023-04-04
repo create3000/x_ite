@@ -186,6 +186,8 @@ X3DShadersContext .prototype =
 
       return shaderNode;
    },
+   dispose: function ()
+   { },
 };
 
 export default X3DShadersContext;

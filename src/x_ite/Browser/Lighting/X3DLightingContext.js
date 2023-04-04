@@ -102,6 +102,8 @@ X3DLightingContext .prototype =
       if (buffer)
          this [_shadowBuffers] [buffer .getWidth ()] .push (buffer);
    },
+   dispose: function ()
+   { },
 };
 
 export default X3DLightingContext;

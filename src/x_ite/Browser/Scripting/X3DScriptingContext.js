@@ -63,7 +63,9 @@ X3DScriptingContext .prototype =
    getScriptStack: function ()
    {
       return this [_scripts];
-   }
+   },
+   dispose: function ()
+   { },
 };
 
 export default X3DScriptingContext;

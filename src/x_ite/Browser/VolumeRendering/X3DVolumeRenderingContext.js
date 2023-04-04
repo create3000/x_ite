@@ -59,6 +59,8 @@ function X3DVolumeRenderingContext () { }
 
 X3DVolumeRenderingContext .prototype =
 {
+   initialize: function ()
+   { },
    getDefaultVoxels: function (executionContext)
    {
       this [_defaultVoxelsNode] = executionContext .createNode ("PixelTexture3D", { setup: false, warn: false });
@@ -126,6 +128,8 @@ X3DVolumeRenderingContext .prototype =
 
       return this [_defaultTransferFunction];
    },
+   dispose: function ()
+   { },
 };
 
 export default X3DVolumeRenderingContext;

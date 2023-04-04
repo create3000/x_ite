@@ -129,6 +129,8 @@ X3DPickingContext .prototype =
    {
       return this [_pickingTime];
    },
+   dispose: function ()
+   { },
 };
 
 export default X3DPickingContext;

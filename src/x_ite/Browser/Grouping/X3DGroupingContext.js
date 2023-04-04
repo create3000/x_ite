@@ -79,7 +79,9 @@ X3DGroupingContext .prototype =
       Object .defineProperty (this, "getBBoxNode", { enumerable: false });
 
       return bboxShape;
-   }
+   },
+   dispose: function ()
+   { },
 };
 
 export default X3DGroupingContext;

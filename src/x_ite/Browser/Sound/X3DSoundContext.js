@@ -56,6 +56,8 @@ function X3DSoundContext ()
 X3DSoundContext .prototype =
 {
    initialize: function () { },
+   dispose: function ()
+   { },
 };
 
 export default X3DSoundContext;

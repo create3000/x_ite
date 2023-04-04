@@ -111,6 +111,7 @@ X3DRoutingContext .prototype =
       }
       while (this [_taintedFields] .length);
    },
+   dispose: function () { },
 };
 
 export default X3DRoutingContext;

@@ -210,6 +210,8 @@ X3DNetworkingContext .prototype =
 
       this [_loadingDisplay] = loadingDisplay;
    },
+   dispose: function ()
+   { },
 };
 
 export default X3DNetworkingContext;
