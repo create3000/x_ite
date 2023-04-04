@@ -100,9 +100,6 @@ X3DPointingDeviceSensorContext .prototype =
 {
    initialize: function ()
    {
-      // Preload shaders.
-      // this .initialized () .addInterest ("touch", this, 1, 1);
-
       this .setCursor ("DEFAULT");
 
       this [_pointingDevice] .setup ();
@@ -381,8 +378,6 @@ X3DPointingDeviceSensorContext .prototype =
 
       return shaderNode;
    },
-   dispose: function ()
-   { },
 };
 
 export default X3DPointingDeviceSensorContext;

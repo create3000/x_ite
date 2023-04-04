@@ -92,8 +92,6 @@ X3DKeyDeviceSensorContext .prototype =
       for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
          keyDeviceSensorNode .keyup (event);
    },
-   dispose: function ()
-   { },
 };
 
 export default X3DKeyDeviceSensorContext;

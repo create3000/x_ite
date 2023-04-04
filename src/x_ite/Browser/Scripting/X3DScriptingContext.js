@@ -54,8 +54,6 @@ function X3DScriptingContext ()
 
 X3DScriptingContext .prototype =
 {
-   initialize: function ()
-   { },
    isExternal: function ()
    {
       return this [_scripts] .length === 1;
@@ -64,8 +62,6 @@ X3DScriptingContext .prototype =
    {
       return this [_scripts];
    },
-   dispose: function ()
-   { },
 };
 
 export default X3DScriptingContext;

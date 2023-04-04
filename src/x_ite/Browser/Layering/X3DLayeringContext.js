@@ -65,8 +65,6 @@ X3DLayeringContext .prototype =
    {
       return this [_defaultViewport];
    },
-   dispose: function ()
-   { },
 };
 
 export default X3DLayeringContext;

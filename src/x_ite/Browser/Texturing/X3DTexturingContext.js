@@ -336,8 +336,6 @@ X3DTexturingContext .prototype =
          }
       }
    },
-   dispose: function ()
-   { },
 };
 
 export default X3DTexturingContext;

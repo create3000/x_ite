@@ -66,8 +66,6 @@ function X3DPickingContext ()
 
 X3DPickingContext .prototype =
 {
-   initialize: function ()
-   { },
    addTransformSensor: function (transformSensorNode)
    {
       this [_transformSensorNodes] .add (transformSensorNode);
@@ -129,8 +127,6 @@ X3DPickingContext .prototype =
    {
       return this [_pickingTime];
    },
-   dispose: function ()
-   { },
 };
 
 export default X3DPickingContext;

@@ -71,8 +71,6 @@ function X3DShapeContext ()
 
 X3DShapeContext .prototype =
 {
-   initialize: function ()
-   { },
    getDefaultAppearance: function ()
    {
       this [_defaultAppearance] = new Appearance (this .getPrivateScene ());
@@ -206,8 +204,6 @@ X3DShapeContext .prototype =
 
       return this [_lineTransformFeedback];
    },
-   dispose: function ()
-   { },
 };
 
 export default X3DShapeContext;

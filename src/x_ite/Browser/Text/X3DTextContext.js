@@ -60,8 +60,6 @@ function X3DTextContext ()
 
 X3DTextContext .prototype =
 {
-   initialize: function ()
-   { },
    getDefaultFontStyle: function ()
    {
       this [_defaultFontStyle] = new FontStyle (this .getPrivateScene ());
@@ -115,8 +113,6 @@ X3DTextContext .prototype =
 
       return cachedGlyph;
    },
-   dispose: function ()
-   { },
 };
 
 export default X3DTextContext;

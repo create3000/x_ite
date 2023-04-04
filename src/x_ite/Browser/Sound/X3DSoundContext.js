@@ -53,11 +53,6 @@ function X3DSoundContext ()
                           "mute",   new Fields .SFBool ());
 }
 
-X3DSoundContext .prototype =
-{
-   initialize: function () { },
-   dispose: function ()
-   { },
-};
+X3DSoundContext .prototype = { };
 
 export default X3DSoundContext;

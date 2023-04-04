@@ -259,8 +259,6 @@ X3DRenderingContext .prototype =
       else
          element .removeClass ("x_ite-fullscreen");
    },
-   dispose: function ()
-   { },
 };
 
 export default X3DRenderingContext;

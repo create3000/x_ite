@@ -53,7 +53,6 @@ function X3DEnvironmentalEffectsContext () { }
 
 X3DEnvironmentalEffectsContext .prototype =
 {
-   initialize: function () { },
    getBackgroundTextureProperties: function ()
    {
       this [_backgroundTextureProperties] = new TextureProperties (this .getPrivateScene ());
@@ -72,8 +71,6 @@ X3DEnvironmentalEffectsContext .prototype =
 
       return this [_backgroundTextureProperties];
    },
-   dispose: function ()
-   { },
 };
 
 export default X3DEnvironmentalEffectsContext;

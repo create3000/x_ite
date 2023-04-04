@@ -55,8 +55,6 @@ function X3DParticleSystemsContext () { }
 
 X3DParticleSystemsContext .prototype =
 {
-   initialize: function ()
-   { },
    getDefaultEmitter: function ()
    {
       this [_defaultEmitter] = new PointEmitter (this .getPrivateScene ());
@@ -69,8 +67,6 @@ X3DParticleSystemsContext .prototype =
 
       return this [_defaultEmitter];
    },
-   dispose: function ()
-   { },
 };
 
 export default X3DParticleSystemsContext;

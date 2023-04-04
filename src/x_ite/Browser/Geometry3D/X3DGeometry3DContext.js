@@ -110,8 +110,6 @@ X3DGeometry3DContext .prototype =
          }
       }
    },
-   dispose: function ()
-   { },
 };
 
 function getOptionNode (key, OptionNode)

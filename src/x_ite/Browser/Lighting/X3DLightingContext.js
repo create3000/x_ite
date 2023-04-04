@@ -67,8 +67,6 @@ function X3DLightingContext ()
 
 X3DLightingContext .prototype =
 {
-   initialize: function ()
-   { },
    getMaxLights: function ()
    {
       return this [_maxLights];
@@ -102,8 +100,6 @@ X3DLightingContext .prototype =
       if (buffer)
          this [_shadowBuffers] [buffer .getWidth ()] .push (buffer);
    },
-   dispose: function ()
-   { },
 };
 
 export default X3DLightingContext;

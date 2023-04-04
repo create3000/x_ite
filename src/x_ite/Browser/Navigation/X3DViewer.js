@@ -67,8 +67,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       return "X3DViewer";
    },
-   initialize: function ()
-   { },
+
    getActiveLayer: function ()
    {
       return this .getBrowser () .getActiveLayer ();
@@ -200,8 +199,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       return this .getBrowser () .touch (x, y);
    },
-   dispose: function ()
-   { },
+
 });
 
 function tbProjectToSphere (r, x, y)

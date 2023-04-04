@@ -55,7 +55,6 @@ function X3DGroupingContext () { }
 
 X3DGroupingContext .prototype =
 {
-   initialize: function () { },
    getBBoxNode: function ()
    {
       const
@@ -80,8 +79,6 @@ X3DGroupingContext .prototype =
 
       return bboxShape;
    },
-   dispose: function ()
-   { },
 };
 
 export default X3DGroupingContext;
