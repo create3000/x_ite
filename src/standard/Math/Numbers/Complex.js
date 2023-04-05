@@ -54,6 +54,7 @@ function Complex (real, imag)
 Complex .prototype =
 {
    constructor: Complex,
+   length: 2,
    [Symbol .iterator]: function* ()
    {
       yield this .real;
@@ -76,6 +77,12 @@ Complex .prototype =
    {
       return this .real === complex .real &&
              this .imag === complex .imag;
+   },
+   set: function (real, imag)
+   {
+      this .real = real;
+      this .imag = imag;
+      return this;
    },
    setPolar: function (magnitude, angle)
    {
@@ -130,10 +137,12 @@ Complex .prototype =
       this .imag = ar * bi + ai * br;
       return this;
    },
-   //divide: function (value)
-   //{
-   //	return this;
-   //},
+   divide: function (value)
+   {
+      this .real /= value;
+      this .imag /= value;
+      return this;
+   },
    divComp: function (value)
    {
       const
@@ -153,6 +162,34 @@ Complex .prototype =
       return String (this .real);
    },
 };
+
+Object .defineProperty (Complex .prototype, "0",
+{
+   get: function ()
+   {
+      return this .real;
+   },
+   set: function (value)
+   {
+      this .real = value;
+   },
+   enumerable: false,
+   configurable: false
+});
+
+Object .defineProperty (Complex .prototype, "1",
+{
+   get: function ()
+   {
+      return this .imag;
+   },
+   set: function (value)
+   {
+      this .imag = value;
+   },
+   enumerable: false,
+   configurable: false
+});
 
 Object .defineProperty (Complex .prototype, "magnitude",
 {
