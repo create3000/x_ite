@@ -2,8 +2,9 @@ all: dist
 	echo
 
 configure:
-	sudo npm install
+	npm install
 	cd docs && bundle install
+	cd tests && npm install
 
 compile:
 	npx webpack
