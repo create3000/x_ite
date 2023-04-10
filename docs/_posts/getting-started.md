@@ -589,7 +589,7 @@ You can always replace »latest« by the version number you prefer.
 
 #### For Production
 
-If you are in production and everything is working fine, then use a numbered version.
+If you are in production and everything is working well, then use a fixed version.
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@{{ site.version }}/dist/x_ite.min.js"></script>
