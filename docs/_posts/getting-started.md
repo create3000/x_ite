@@ -584,7 +584,7 @@ Open Source CDN, free, fast, and reliable.
 You can always replace »latest« by the version number you prefer.
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
 ```
 
 #### For Production
@@ -592,7 +592,7 @@ You can always replace »latest« by the version number you prefer.
 If you are in production and everything is working well, then use a fixed version.
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@{{ site.version }}/dist/x_ite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_ite.min.js"></script>
 ```
 
 ## Embedding X_ITE within a Web Page
