@@ -204,7 +204,7 @@ SpotLightContainer .prototype =
          }
       }
 
-      if (shaderObject .hasLight (i, this))
+      if (shaderObject .hasLight (i, this .lightNode))
          return;
 
       const

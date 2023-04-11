@@ -71,7 +71,7 @@ FogContainer .prototype =
    },
    setShaderUniforms: function (gl, shaderObject)
    {
-      if (shaderObject .hasFog (this))
+      if (shaderObject .hasFog (this .fogNode))
          return;
 
       const fogNode = this .fogNode;

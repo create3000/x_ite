@@ -122,7 +122,7 @@ TextureProjectorContainer .prototype =
    {
       const i = shaderObject .numProjectiveTextures ++;
 
-      if (shaderObject .hasTextureProjector (i, this))
+      if (shaderObject .hasTextureProjector (i, this .textureProjectorNode))
          return;
 
       const

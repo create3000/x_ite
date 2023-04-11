@@ -988,14 +988,6 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          appearanceNode = renderContext .appearanceNode,
          shaderNode     = appearanceNode .getShader (this, renderContext);
 
-      if (this .getExecutionContext () .getWorldURL () .match (/NYC/) && this .dbg !== shaderNode .getId ())
-      {
-         this .dbg = shaderNode .getId ();
-         console .log (shaderNode .getId ())
-         console .log (shaderNode ._parts [0] .getValue () .source)
-         console .log (shaderNode ._parts [1] .getValue () .source)
-      }
-
       if (this .solid || ! appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
       {
          this .displayGeometry (gl, renderContext, appearanceNode, shaderNode, true, true);
