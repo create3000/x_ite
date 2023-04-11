@@ -207,7 +207,12 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
                case X3DConstants .MovieTexture:
                {
                   gl .bindTexture (this .getTarget (), this .getTexture ());
-                  gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, textureNode .getElement ());
+
+                  if (gl .getVersion () >= 2)
+                     gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, textureNode .getElement ());
+                  else
+                     gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, textureNode .getElement ());
+                     
                   break;
                }
                default:
