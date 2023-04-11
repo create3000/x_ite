@@ -30,5 +30,7 @@ $("table.examples a") .on ("click", function ()
    canvas .attr ("src", $(this) .attr ("href"));
    zip    .attr ("href", $(this) .attr ("href") .replace (/\.x3d$/, ".zip"));
 
+   console .log (`Loading ${$(this) .attr ("title")} ...`)
+
    return false;
 });
