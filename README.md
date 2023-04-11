@@ -38,6 +38,7 @@ It can be used in [Electron](https://www.electronjs.org) apps in a preload scrip
 window .addEventListener ("DOMContentLoaded", () =>
 {
   const X3D = require ("x_ite")
+  ...
 })
 ```
 

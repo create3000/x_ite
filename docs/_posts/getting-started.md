@@ -554,6 +554,7 @@ It can be used in [Electron](https://www.electronjs.org){:target="_blank"} apps 
 window .addEventListener ("DOMContentLoaded", () =>
 {
   const X3D = require ("x_ite")
+  ...
 })
 ```
 
