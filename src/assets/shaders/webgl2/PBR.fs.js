@@ -337,7 +337,7 @@ getMaterialColor ()
          vec3 diffuseSpecContrib = light .intensity * (diffuseContrib + specContrib);
 
          #if defined (X3D_SHADOWS)
-            if (NdotL > 0.0 && light .shadowIntensity > 0.0)
+            if (NdotL > 0.001 && light .shadowIntensity > 0.0)
                diffuseSpecContrib = mix (diffuseSpecContrib, light .shadowColor, getShadowIntensity (i, light));
          #endif
 
