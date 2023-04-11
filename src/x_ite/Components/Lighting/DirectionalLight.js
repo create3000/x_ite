@@ -185,7 +185,7 @@ DirectionalLightContainer .prototype =
          }
       }
 
-      if (shaderObject .hasLight (i, this .lightNode))
+      if (shaderObject .hasLight (i, this))
          return;
 
       const
@@ -208,6 +208,10 @@ DirectionalLightContainer .prototype =
          gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
          gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
          gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
+      }
+      else
+      {
+         gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
       }
    },
    dispose: function ()
