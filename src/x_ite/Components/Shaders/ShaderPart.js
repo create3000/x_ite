@@ -183,6 +183,8 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
                source         = ShaderSource .getSource (gl, browser, shaderCompiler .process ($.decodeText (data)), options),
                shader         = gl .createShader (gl [type]);
 
+            this .source = source;
+
             gl .deleteShader (this .shader);
 
             this .shader = shader;
