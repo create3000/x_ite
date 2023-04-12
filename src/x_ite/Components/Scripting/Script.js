@@ -167,9 +167,6 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          {
             this .setLoadState (X3DConstants .COMPLETE_STATE);
 
-            if (this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration)
-               return;
-
             this .initialize__ ($.decodeText (data));
          }
       });
@@ -383,10 +380,17 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    },
    initialize__: function (text)
    {
+      if (this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration)
+         return;
+
       const browser = this .getBrowser ();
+
+      // Call shutdown.
 
       if (typeof this .context ?.shutdown === "function")
          this .shutdown__ ();
+
+      // Create context.
 
       this .context = this .getContext (text);
 
