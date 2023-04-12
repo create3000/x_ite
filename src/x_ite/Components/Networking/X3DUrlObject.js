@@ -127,9 +127,6 @@ X3DUrlObject .prototype =
    },
    requestImmediateLoad: function (cache = true)
    {
-      if (this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration)
-         return;
-
       const loadState = this .checkLoadState ();
 
       if (loadState === X3DConstants .COMPLETE_STATE || loadState === X3DConstants .IN_PROGRESS_STATE)
