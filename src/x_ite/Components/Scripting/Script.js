@@ -355,7 +355,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       // Call shutdown.
 
       if (typeof this .context ?.get ("shutdown") === "function")
-         this .shutdown__ (this .context .get ("shutdown"));
+         this .callback__ (this .context .get ("shutdown"), "shutdown");
 
       // Create context.
 
@@ -386,25 +386,25 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       $(window) .off (".Script" + this .getId ());
 
       if (typeof shutdown === "function")
-         $(window) .on ("unload.Script" + this .getId (), this .shutdown__ .bind (this, shutdown));
+         $(window) .on ("unload.Script" + this .getId (), this .callback__ .bind (this, shutdown, "shutdown"));
 
       // Connect prepareEvents.
 
       const prepareEvents = this .context .get ("prepareEvents");
 
-      browser .prepareEvents () .removeInterest ("prepareEvents__", this);
+      browser .prepareEvents () .removeInterest ("callback__", this);
 
       if (typeof prepareEvents === "function")
-         browser .prepareEvents () .addInterest ("prepareEvents__", this, prepareEvents);
+         browser .prepareEvents () .addInterest ("callback__", this, prepareEvents, "prepareEvents");
 
       // Connect eventsProcessed.
 
       const eventsProcessed = this .context .get ("eventsProcessed");
 
-      this .removeInterest ("eventsProcessed__", this);
+      this .removeInterest ("callback__", this);
 
       if (typeof eventsProcessed === "function")
-         this .addInterest ("eventsProcessed__", this, eventsProcessed);
+         this .addInterest ("callback__", this, eventsProcessed, "eventsProcessed");
 
       // Connect fields.
 
@@ -433,7 +433,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          }
       }
    },
-   prepareEvents__: function (callback)
+   callback__: function (callback, name)
    {
       const browser = this .getBrowser ();
 
@@ -445,7 +445,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       }
       catch (error)
       {
-         this .setError ("in function 'prepareEvents'", error);
+         this .setError (`in function '${name}'`, error);
       }
 
       browser .getScriptStack () .pop ();
@@ -468,40 +468,6 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       browser .getScriptStack () .pop ();
       field .setTainted (false);
-   },
-   eventsProcessed__: function (callback)
-   {
-      const browser = this .getBrowser ();
-
-      browser .getScriptStack () .push (this);
-
-      try
-      {
-         callback ();
-      }
-      catch (error)
-      {
-         this .setError ("in function 'eventsProcessed'", error);
-      }
-
-      browser .getScriptStack () .pop ();
-   },
-   shutdown__: function (callback)
-   {
-      const browser = this .getBrowser ();
-
-      browser .getScriptStack () .push (this);
-
-      try
-      {
-         callback ();
-      }
-      catch (error)
-      {
-         this .setError ("in function 'shutdown'", error);
-      }
-
-      browser .getScriptStack () .pop ();
    },
    setError: function (reason, error)
    {
