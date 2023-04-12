@@ -75,8 +75,6 @@ function Script (executionContext)
    X3DScriptNode .call (this, executionContext);
 
    this .addType (X3DConstants .Script);
-
-   this .pauseTime = 0;
 }
 
 Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
@@ -352,7 +350,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       for (const field of this .getUserDefinedFields ())
       {
-         if (field .getModificationTime () <= this .pauseTime)
+         if (field .getModificationTime () <= 0)
             continue;
 
          switch (field .getAccessType ())
