@@ -383,14 +383,14 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    },
    initialize__: function (text)
    {
+      const browser = this .getBrowser ();
+
       this .context = this .getContext (text);
 
       // Call initialize function.
 
       if (typeof this .context .initialize === "function")
       {
-         const browser = this .getBrowser ();
-
          browser .getScriptStack () .push (this);
 
          try
@@ -413,7 +413,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       // prepareEvents
 
       if (typeof this .context .prepareEvents === "function")
-         this .getBrowser () .prepareEvents () .addInterest ("prepareEvents__", this);
+         browser .prepareEvents () .addInterest ("prepareEvents__", this);
 
       // eventsProcessed
 
