@@ -346,36 +346,6 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       return Object .create (Object .prototype, global);
    },
-   processOutstandingEvents: function ()
-   {
-      for (const field of this .getUserDefinedFields ())
-      {
-         if (field .getModificationTime () <= 0)
-            continue;
-
-         switch (field .getAccessType ())
-         {
-            case X3DConstants .inputOnly:
-            {
-               const callback = this .context [field .getName ()];
-
-               if (typeof callback === "function")
-                  this .set_field__ (callback, field);
-
-               break;
-            }
-            case X3DConstants .inputOutput:
-            {
-               const callback = this .context ["set_" + field .getName ()];
-
-               if (typeof callback === "function")
-                  this .set_field__ (callback, field);
-
-               break;
-            }
-         }
-      }
-   },
    initialize__: function (text)
    {
       if (this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration)
@@ -410,22 +380,22 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          browser .getScriptStack () .pop ();
       }
 
-      // shutdown
+      // Connect shutdown.
 
       if (typeof this .context .shutdown === "function")
          $(window) .on ("unload", this .shutdown__ .bind (this));
 
-      // prepareEvents
+      // Connect prepareEvents.
 
       if (typeof this .context .prepareEvents === "function")
          browser .prepareEvents () .addInterest ("prepareEvents__", this);
 
-      // eventsProcessed
+      // Connect eventsProcessed.
 
       if (typeof this .context .eventsProcessed === "function")
          this .addInterest ("eventsProcessed__", this);
 
-      // fields
+      // Connect fields.
 
       for (const field of this .getUserDefinedFields ())
       {
@@ -451,8 +421,6 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
             }
          }
       }
-
-      this .processOutstandingEvents ();
    },
    prepareEvents__: function ()
    {
