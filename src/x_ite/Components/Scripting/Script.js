@@ -429,11 +429,9 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       const browser = this .getBrowser ();
 
-      if (this .context ?.prepareEvents)
-         browser .prepareEvents () .removeInterest ("prepareEvents__", this);
+      browser .prepareEvents () .removeInterest ("prepareEvents__", this);
 
-      if (this .context ?.eventsProcessed)
-         this .removeInterest ("eventsProcessed__", this);
+      this .removeInterest ("eventsProcessed__", this);
 
       for (const field of this .getUserDefinedFields ())
       {
