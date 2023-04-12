@@ -76,7 +76,7 @@
 		"webpack-shell-plugin-next": "^2.3.1"
 	},
 	"scripts": {
-		"test": "cd tests && npm test",
+		"test": "cd ../x_ite-tests && npm test",
 		"lint": "jshint **",
 		"build": "make",
 		"-prebuild:js": "npm run lint"
