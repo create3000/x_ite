@@ -110,9 +110,6 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       X3DScriptNode .prototype .initialize .call (this);
 
-      for (const field of this .getUserDefinedFields ())
-         field .setModificationTime (0);
-
       this .requestImmediateLoad ();
    },
    getExtendedEventHandling: function ()
@@ -125,6 +122,8 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    },
    addUserDefinedField: function (accessType, name, field)
    {
+      this .disconnect ();
+
       X3DScriptNode .prototype .addUserDefinedField .call (this, accessType, name, field);
 
       if (! this .isInitialized ())
@@ -135,6 +134,8 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    },
    removeUserDefinedField: function (name)
    {
+      this .disconnect ();
+
       X3DScriptNode .prototype .removeUserDefinedField .call (this, name);
 
       if (! this .isInitialized ())
@@ -419,6 +420,29 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
                break;
             }
+         }
+      }
+   },
+   disconnect: function ()
+   {
+      const browser = this .getBrowser ();
+
+      $(window) .off ("unload", this .shutdown__ .bind (this));
+
+      if (this .context .prepareEvents)
+         browser .prepareEvents () .removeInterest ("prepareEvents__", this);
+
+      if (this .context .eventsProcessed)
+         this .removeInterest ("eventsProcessed__", this);
+
+      for (const field of this .getUserDefinedFields ())
+      {
+         switch (field .getAccessType ())
+         {
+            case X3DConstants .inputOnly:
+            case X3DConstants .inputOutput:
+               field .removeInterest ("set_field__", this);
+               break;
          }
       }
    },
