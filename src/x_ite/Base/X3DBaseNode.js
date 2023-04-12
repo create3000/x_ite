@@ -245,22 +245,15 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       return new (this .constructor) (executionContext || this [_executionContext]);
    },
-   setup: (function ()
+   setup: function ()
    {
-      const attributes = { value: Function .prototype, enumerable: false };
+      for (const field of this [_fields])
+         field .setTainted (false);
 
-      return function ()
-      {
-         Object .defineProperty (this, "setup", attributes);
+      this .initialize ();
 
-         for (const field of this [_fields])
-            field .setTainted (false);
-
-         this .initialize ();
-
-         this [_initialized] = true;
-      };
-   })(),
+      this [_initialized] = true;
+   },
    initialize: function ()
    { },
    isInitialized: function ()
