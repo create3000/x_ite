@@ -161,7 +161,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       return this .getExecutionContext () .getUnits ();
    },
-   createNode: function (typeName, { setup = true, warn = true } = { })
+   createNode: function (typeName, setup)
    {
       typeName = String (typeName);
 
@@ -180,7 +180,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (this .getSpecificationVersion () > specificationRange [1])
             return null;
 
-         if (warn && !this .hasComponent (Type .prototype .getComponentName ()))
+         if (!this .hasComponent (Type .prototype .getComponentName ()))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
          return new Type (this);
@@ -200,7 +200,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (this .getSpecificationVersion () > specificationRange [1])
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
-         if (warn && !this .hasComponent (Type .prototype .getComponentName ()))
+         if (!this .hasComponent (Type .prototype .getComponentName ()))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
          const baseNode = new Type (this);
@@ -210,7 +210,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          return SFNodeCache .get (baseNode);
       }
    },
-   createProto: function (name, { setup = true } = { })
+   createProto: function (name, setup)
    {
       name = String (name);
 
@@ -221,12 +221,12 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          const proto = executionContext .protos .get (name);
 
          if (proto)
-            return proto .createInstance (this, { setup: setup });
+            return proto .createInstance (this, setup);
 
          const externproto = executionContext .externprotos .get (name);
 
          if (externproto)
-            return externproto .createInstance (this, { setup: setup });
+            return externproto .createInstance (this, setup);
 
          if (executionContext .isScene ())
             break;

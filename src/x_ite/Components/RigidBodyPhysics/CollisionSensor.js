@@ -259,12 +259,12 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
    })(),
    getContact: function (index)
    {
-      var contactNode = this .contactCache [index];
+      const contactNode = this .contactCache [index];
 
       if (contactNode)
          return contactNode;
 
-      contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", { setup: false });
+      contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", false);
 
       contactNode .setup ();
 

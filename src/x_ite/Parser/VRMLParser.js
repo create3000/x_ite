@@ -1265,11 +1265,11 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          var
             nodeTypeId = this .result [1],
-            baseNode   = this .getExecutionContext () .createNode (nodeTypeId, { setup: false });
+            baseNode   = this .getExecutionContext () .createNode (nodeTypeId, false);
 
          if (! baseNode)
          {
-            baseNode = this .getExecutionContext () .createProto (nodeTypeId, { setup: false });
+            baseNode = this .getExecutionContext () .createProto (nodeTypeId, false);
 
             if (! baseNode)
                throw new Error ("Unknown node type or proto '" + nodeTypeId + "', you probably have insufficient component/profile statements, and/or an inappropriate specification version.");

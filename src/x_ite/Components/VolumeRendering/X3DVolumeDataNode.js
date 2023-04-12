@@ -60,15 +60,17 @@ function X3DVolumeDataNode (executionContext)
 
    this .addType (X3DConstants .X3DVolumeDataNode);
 
-   this .proximitySensorNode      = executionContext .createNode ("ProximitySensor",     { setup: false, warn: false });
-   this .transformNode            = executionContext .createNode ("Transform",           { setup: false, warn: false });
-   this .shapeNode                = executionContext .createNode ("Shape",               { setup: false, warn: false });
-   this .appearanceNode           = executionContext .createNode ("Appearance",          { setup: false, warn: false });
-   this .textureTransformNode     = executionContext .createNode ("TextureTransform3D",  { setup: false, warn: false });
-   this .geometryNode             = executionContext .createNode ("QuadSet",             { setup: false, warn: false });
-   this .textureCoordinateNode    = executionContext .createNode ("TextureCoordinate3D", { setup: false, warn: false });
-   this .coordinateNode           = executionContext .createNode ("Coordinate",          { setup: false, warn: false });
-   this .volumeMaterialNode       = new VolumeMaterial (executionContext, this);
+   const browser = this .getBrowser ();
+
+   this .proximitySensorNode      = browser .getPrivateScene () .createNode ("ProximitySensor",     false);
+   this .transformNode            = browser .getPrivateScene () .createNode ("Transform",           false);
+   this .shapeNode                = browser .getPrivateScene () .createNode ("Shape",               false);
+   this .appearanceNode           = browser .getPrivateScene () .createNode ("Appearance",          false);
+   this .textureTransformNode     = browser .getPrivateScene () .createNode ("TextureTransform3D",  false);
+   this .geometryNode             = browser .getPrivateScene () .createNode ("QuadSet",             false);
+   this .textureCoordinateNode    = browser .getPrivateScene () .createNode ("TextureCoordinate3D", false);
+   this .coordinateNode           = browser .getPrivateScene () .createNode ("Coordinate",          false);
+   this .volumeMaterialNode       = new VolumeMaterial (browser .getPrivateScene (), this);
    this .textureNormalMatrixArray = new Float32Array (9);
 
    this .setCameraObject (true);

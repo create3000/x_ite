@@ -217,7 +217,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene         = this .getExecutionContext (),
          worldURL      = scene .getWorldURL (),
-         worldInfoNode = scene .createNode ("WorldInfo", { setup: false });
+         worldInfoNode = scene .createNode ("WorldInfo", false);
 
       for (const [key, value] of Object .entries (asset))
       {
@@ -347,7 +347,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene     = this .getExecutionContext (),
-         lightNode = scene .createNode ("DirectionalLight", { setup: false });
+         lightNode = scene .createNode ("DirectionalLight", false);
 
       return lightNode;
    },
@@ -355,7 +355,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene     = this .getExecutionContext (),
-         lightNode = scene .createNode ("SpotLight", { setup: false });
+         lightNode = scene .createNode ("SpotLight", false);
 
       lightNode ._radius      = this .numberValue (light .range, 0) || 1_000_000_000;
       lightNode ._cutOffAngle = this .numberValue (light .outerConeAngle, Math .PI / 4);
@@ -368,7 +368,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene     = this .getExecutionContext (),
-         lightNode = scene .createNode ("PointLight", { setup: false });
+         lightNode = scene .createNode ("PointLight", false);
 
       lightNode ._radius      = this .numberValue (light .range, 0) || 1_000_000_000;
       lightNode ._attenuation = new Vector3 (0, 0, 1);
@@ -594,7 +594,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                const
                   scene                 = this .getExecutionContext (),
-                  texturePropertiesNode = scene .createNode ("TextureProperties", { setup: false }),
+                  texturePropertiesNode = scene .createNode ("TextureProperties", false),
                   name                  = this .sanitizeName (sampler .name);
 
                if (name)
@@ -695,7 +695,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          scene       = this .getExecutionContext (),
-         textureNode = scene .createNode ("ImageTexture", { setup: false }),
+         textureNode = scene .createNode ("ImageTexture", false),
          name        = this .sanitizeName (texture .name || image .name);
 
       if (name)
@@ -740,7 +740,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          scene          = this .getExecutionContext (),
-         appearanceNode = scene .createNode ("Appearance", { setup: false }),
+         appearanceNode = scene .createNode ("Appearance", false),
          materialNode   = this .createMaterial (material),
          name           = this .sanitizeName (material .name);
 
@@ -764,7 +764,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          if (this .textureTransformNodes .length)
          {
-            const textureTransformNode = scene .createNode ("TextureTransform", { setup: false });
+            const textureTransformNode = scene .createNode ("TextureTransform", false);
 
             textureTransformNode ._mapping        = mapping;
             textureTransformNode ._translation .y = -1;
@@ -829,7 +829,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          scene        = this .getExecutionContext (),
-         materialNode = scene .createNode ("PhysicalMaterial", { setup: false });
+         materialNode = scene .createNode ("PhysicalMaterial", false);
 
       const
          baseColorFactor = new Color4 (0, 0, 0, 0),
@@ -858,7 +858,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          scene        = this .getExecutionContext (),
-         materialNode = scene .createNode ("Material", { setup: false });
+         materialNode = scene .createNode ("Material", false);
 
       const
          diffuseFactor  = new Color4 (0, 0, 0, 0),
@@ -993,7 +993,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          scene                = this .getExecutionContext (),
-         textureTransformNode = scene .createNode ("TextureTransformMatrix3D", { setup: false }),
+         textureTransformNode = scene .createNode ("TextureTransformMatrix3D", false),
          mapping              = `TEXCOORD_${this .texCoordIndex + this .textureTransformNodes .length + 1}`;
 
       const
@@ -1316,7 +1316,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene         = this .getExecutionContext (),
-         viewpointNode = scene .createNode ("OrthoViewpoint", { setup: false });
+         viewpointNode = scene .createNode ("OrthoViewpoint", false);
 
       if (typeof camera .xmag === "number")
       {
@@ -1344,7 +1344,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene         = this .getExecutionContext (),
-         viewpointNode = scene .createNode ("Viewpoint", { setup: false });
+         viewpointNode = scene .createNode ("Viewpoint", false);
 
       if (typeof camera .yfov === "number")
          viewpointNode ._fieldOfView = camera .yfov
@@ -1378,7 +1378,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          scene         = this .getExecutionContext (),
-         transformNode = scene .createNode ("Transform", { setup: false }),
+         transformNode = scene .createNode ("Transform", false),
          name          = this .sanitizeName (node .name);
 
       // Name
@@ -1516,7 +1516,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             if (this .usedLights)
                scene .getRootNodes () .push (this .createNavigationInfo ());
 
-            const switchNode = scene .createNode ("Switch", { setup: false });
+            const switchNode = scene .createNode ("Switch", false);
 
             scene .addNamedNode (scene .getUniqueName ("Scenes"), switchNode);
             scene .addExportedNode (scene .getUniqueExportName ("Scenes"), switchNode);
@@ -1554,7 +1554,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const
                scene     = this .getExecutionContext (),
-               groupNode = scene .createNode ("Group", { setup: false }),
+               groupNode = scene .createNode ("Group", false),
                name      = this .sanitizeName (sceneObject .name);
 
             if (name)
@@ -1589,7 +1589,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          scene     = this .getExecutionContext (),
-         groupNode = scene .createNode ("Group", { setup: false });
+         groupNode = scene .createNode ("Group", false);
 
       scene .addNamedNode (scene .getUniqueName ("Animations"), groupNode);
       scene .addExportedNode (scene .getUniqueExportName ("Animations"), groupNode);
@@ -1607,14 +1607,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          scene          = this .getExecutionContext (),
-         timeSensorNode = scene .createNode ("TimeSensor", { setup: false }),
+         timeSensorNode = scene .createNode ("TimeSensor", false),
          channelNodes   = this .animationChannelsArray (animation .channels, animation .samplers, timeSensorNode);
 
       if (!channelNodes .length)
          return null;
 
       const
-         groupNode = scene .createNode ("Group", { setup: false }),
+         groupNode = scene .createNode ("Group", false),
          name      = this .sanitizeName (animation .name);
 
       ++ this .animations;
@@ -1709,7 +1709,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene              = this .getExecutionContext (),
-         navigationInfoNode = scene .createNode ("NavigationInfo", { setup: false });
+         navigationInfoNode = scene .createNode ("NavigationInfo", false);
 
       navigationInfoNode ._headlight = false;
 
@@ -1721,7 +1721,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene          = this .getExecutionContext (),
-         shapeNode      = scene .createNode ("Shape", { setup: false }),
+         shapeNode      = scene .createNode ("Shape", false),
          appearanceNode = this .materialObject (primitive .material),
          geometryNode   = this .createGeometry (primitive);
 
@@ -1739,8 +1739,8 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          scene          = this .getExecutionContext (),
-         appearanceNode = scene .createNode ("Appearance",       { setup: false }),
-         materialNode   = scene .createNode ("PhysicalMaterial", { setup: false });
+         appearanceNode = scene .createNode ("Appearance",       false),
+         materialNode   = scene .createNode ("PhysicalMaterial", false);
 
       appearanceNode ._alphaMode = "OPAQUE";
       appearanceNode ._material  = materialNode;
@@ -1769,7 +1769,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             const
                scene                = this .getExecutionContext (),
-               textureTransformNode = scene .createNode ("TextureTransform", { setup: false });
+               textureTransformNode = scene .createNode ("TextureTransform", false);
 
             textureTransformNode ._translation .y = -1;
             textureTransformNode ._scale .y       = -1;
@@ -1786,7 +1786,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             const
                scene                = this .getExecutionContext (),
-               textureTransformNode = scene .createNode ("MultiTextureTransform", { setup: false });
+               textureTransformNode = scene .createNode ("MultiTextureTransform", false);
 
             textureTransformNode ._textureTransform = textureTransformNodes;
 
@@ -1847,7 +1847,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene        = this .getExecutionContext (),
-         geometryNode = scene .createNode ("PointSet", { setup: false });
+         geometryNode = scene .createNode ("PointSet", false);
 
       geometryNode ._color  = this .createColor (attributes .COLOR [0], material);
       geometryNode ._normal = this .createNormal (attributes .NORMAL);
@@ -1861,7 +1861,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene        = this .getExecutionContext (),
-         geometryNode = scene .createNode ("IndexedLineSet", { setup: false });
+         geometryNode = scene .createNode ("IndexedLineSet", false);
 
       geometryNode ._color  = this .createColor (attributes .COLOR [0], material);
       geometryNode ._normal = this .createNormal (attributes .NORMAL);
@@ -1932,7 +1932,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene        = this .getExecutionContext (),
-         geometryNode = scene .createNode ("LineSet", { setup: false });
+         geometryNode = scene .createNode ("LineSet", false);
 
       geometryNode ._color  = this .createColor (attributes .COLOR [0], material);
       geometryNode ._normal = this .createNormal (attributes .NORMAL);
@@ -1946,7 +1946,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene        = this .getExecutionContext (),
-         geometryNode = scene .createNode ("IndexedTriangleSet", { setup: false });
+         geometryNode = scene .createNode ("IndexedTriangleSet", false);
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._index           = indices .array;
@@ -1964,7 +1964,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene        = this .getExecutionContext (),
-         geometryNode = scene .createNode ("TriangleSet", { setup: false });
+         geometryNode = scene .createNode ("TriangleSet", false);
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
@@ -1981,7 +1981,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene        = this .getExecutionContext (),
-         geometryNode = scene .createNode ("IndexedTriangleStripSet", { setup: false });
+         geometryNode = scene .createNode ("IndexedTriangleStripSet", false);
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._index           = indices .array;
@@ -1999,7 +1999,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene        = this .getExecutionContext (),
-         geometryNode = scene .createNode ("TriangleStripSet", { setup: false });
+         geometryNode = scene .createNode ("TriangleStripSet", false);
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
@@ -2024,7 +2024,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene        = this .getExecutionContext (),
-         geometryNode = scene .createNode ("IndexedTriangleFanSet", { setup: false });
+         geometryNode = scene .createNode ("IndexedTriangleFanSet", false);
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._index           = indices .array;
@@ -2042,7 +2042,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       const
          scene        = this .getExecutionContext (),
-         geometryNode = scene .createNode ("TriangleFanSet", { setup: false });
+         geometryNode = scene .createNode ("TriangleFanSet", false);
 
       geometryNode ._solid           = material ? ! material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
@@ -2087,7 +2087,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             scene          = this .getExecutionContext (),
             appearanceNode = this .materialObject (material),
             opaque         = appearanceNode ._alphaMode .getValue () === "OPAQUE",
-            colorNode      = scene .createNode (opaque ? "Color" : typeName, { setup: false });
+            colorNode      = scene .createNode (opaque ? "Color" : typeName, false);
 
          colorNode ._color = opaque && typeName !== "Color"
             ? color .array .filter ((_, i) => (i + 1) % 4)
@@ -2131,7 +2131,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
             const
                scene                 = this .getExecutionContext (),
-               textureCoordinateNode = scene .createNode ("MultiTextureCoordinate", { setup: false });
+               textureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
 
             textureCoordinateNode ._texCoord = textureCoordinateNodes;
 
@@ -2154,7 +2154,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          scene                 = this .getExecutionContext (),
-         textureCoordinateNode = scene .createNode ("TextureCoordinate", { setup: false });
+         textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
 
       textureCoordinateNode ._mapping = mapping;
       textureCoordinateNode ._point   = texCoord .array;
@@ -2176,7 +2176,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          scene      = this .getExecutionContext (),
-         normalNode = scene .createNode ("Normal", { setup: false });
+         normalNode = scene .createNode ("Normal", false);
 
       normalNode ._vector = normal .array;
 
@@ -2197,7 +2197,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       const
          scene          = this .getExecutionContext (),
-         coordinateNode = scene .createNode ("Coordinate", { setup: false });
+         coordinateNode = scene .createNode ("Coordinate", false);
 
       coordinateNode ._point = position .array;
 
@@ -2250,7 +2250,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          case "STEP":
          {
-            const interpolatorNode = scene .createNode ("PositionInterpolator", { setup: false });
+            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
 
             // Key
 
@@ -2278,7 +2278,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode ("PositionInterpolator", { setup: false });
+            const interpolatorNode = scene .createNode ("PositionInterpolator", false);
 
             interpolatorNode ._key      = times .map (t => t / cycleInterval);
             interpolatorNode ._keyValue = keyValues;
@@ -2290,7 +2290,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          case "CUBICSPLINE":
          {
             const
-               interpolatorNode = scene .createNode ("PositionInterpolator", { setup: false }),
+               interpolatorNode = scene .createNode ("PositionInterpolator", false),
                vectors          = [ ];
 
             for (let i = 0, length = keyValues .length; i < length; i += 3)
@@ -2324,7 +2324,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          case "STEP":
          {
-            const interpolatorNode = scene .createNode ("OrientationInterpolator", { setup: false });
+            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
 
             // Key
 
@@ -2361,7 +2361,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode ("OrientationInterpolator", { setup: false });
+            const interpolatorNode = scene .createNode ("OrientationInterpolator", false);
 
             interpolatorNode ._key = times .map (t => t / cycleInterval);
 
@@ -2380,7 +2380,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          case "CUBICSPLINE":
          {
             const
-               interpolatorNode = scene .createNode ("OrientationInterpolator", { setup: false }),
+               interpolatorNode = scene .createNode ("OrientationInterpolator", false),
                quaternions      = [ ];
 
             for (let i = 0, length = keyValues .length; i < length; i += 4)

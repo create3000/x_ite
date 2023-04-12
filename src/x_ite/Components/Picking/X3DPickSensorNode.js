@@ -124,18 +124,19 @@ X3DPickSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .pr
    },
    getPickShape: (function ()
    {
-      var pickShapes = new WeakMap ();
+      const pickShapes = new WeakMap ();
 
       return function (geometryNode)
       {
-         var pickShape = pickShapes .get (geometryNode);
+         const pickShape = pickShapes .get (geometryNode);
 
          if (pickShape !== undefined)
             return pickShape;
 
-         var
-            shapeNode           = this .getExecutionContext () .createNode ("Shape",           { setup: false, warn: false }),
-            collidableShapeNode = this .getExecutionContext () .createNode ("CollidableShape", { setup: false, warn: false });
+         const
+            browser             = this .getBrowser (),
+            shapeNode           = browser .getPrivateScene () .createNode ("Shape",           false),
+            collidableShapeNode = browser .getPrivateScene () .createNode ("CollidableShape", false);
 
          shapeNode .setPrivate (true);
          collidableShapeNode .setPrivate (true);

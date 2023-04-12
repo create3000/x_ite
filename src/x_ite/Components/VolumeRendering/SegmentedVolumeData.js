@@ -160,7 +160,7 @@ SegmentedVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNo
       if (this .voxelsNode)
          this .getAppearance () ._texture = this ._voxels;
       else
-         this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
+         this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
    },
    createShader: function (options, vs, fs)
    {
