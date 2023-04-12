@@ -126,7 +126,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       X3DScriptNode .prototype .addUserDefinedField .call (this, accessType, name, field);
 
-      if (! this .isInitialized ())
+      if (!this .isInitialized ())
          return;
 
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
@@ -138,7 +138,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       X3DScriptNode .prototype .removeUserDefinedField .call (this, name);
 
-      if (! this .isInitialized ())
+      if (!this .isInitialized ())
          return;
 
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
@@ -326,7 +326,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          if (field .getAccessType () === X3DConstants .inputOnly)
             continue;
 
-         if (! (name in global))
+         if (!(name in global))
          {
             global [name] =
             {
@@ -427,6 +427,9 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    },
    disconnect: function ()
    {
+      if (!this .isInitialized ())
+         return;
+
       const browser = this .getBrowser ();
 
       browser .prepareEvents () .removeInterest ("prepareEvents__", this);
