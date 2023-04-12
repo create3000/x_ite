@@ -385,6 +385,9 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       const browser = this .getBrowser ();
 
+      if (typeof this .context ?.shutdown === "function")
+         this .shutdown__ ();
+
       this .context = this .getContext (text);
 
       // Call initialize function.
@@ -448,15 +451,6 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       }
 
       this .processOutstandingEvents ();
-   },
-   set_live__: function ()
-   {
-      X3DScriptNode .prototype .set_live__ .call (this);
-
-      if (this .getLive () .getValue ())
-         this .processOutstandingEvents ();
-      else
-         this .pauseTime = Date .now ();
    },
    prepareEvents__: function ()
    {
