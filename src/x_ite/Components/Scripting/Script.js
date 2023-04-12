@@ -197,10 +197,10 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
          const
             result  = evaluate (this .global, text),
-            context = { };
+            context = new Map ();
 
          for (let i = 0; i < callbacks .length; ++ i)
-            context [callbacks [i]] = result [i];
+            context .set (callbacks [i], result [i]);
 
          return context;
       }
@@ -208,7 +208,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       {
          this .setError ("while evaluating script source", error);
 
-         return { };
+         return new Map ();
       }
    },
    evaluate: function (text)
@@ -354,7 +354,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       // Call shutdown.
 
-      if (typeof this .context ?.shutdown === "function")
+      if (typeof this .context ?.get ("shutdown") === "function")
          this .shutdown__ ();
 
       // Create context.
@@ -363,13 +363,13 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       // Call initialize function.
 
-      if (typeof this .context .initialize === "function")
+      if (typeof this .context .get ("initialize") === "function")
       {
          browser .getScriptStack () .push (this);
 
          try
          {
-            this .context .initialize ();
+            this .context .get ("initialize") ();
          }
          catch (error)
          {
@@ -383,21 +383,21 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       $(window) .off (".Script" + this .getId ());
 
-      if (typeof this .context .shutdown === "function")
+      if (typeof this .context .get ("shutdown") === "function")
          $(window) .on ("unload.Script" + this .getId (), this .shutdown__ .bind (this));
 
       // Connect prepareEvents.
 
       browser .prepareEvents () .removeInterest ("prepareEvents__", this);
 
-      if (typeof this .context .prepareEvents === "function")
+      if (typeof this .context .get ("prepareEvents") === "function")
          browser .prepareEvents () .addInterest ("prepareEvents__", this);
 
       // Connect eventsProcessed.
 
       this .removeInterest ("eventsProcessed__", this);
 
-      if (typeof this .context .eventsProcessed === "function")
+      if (typeof this .context .get ("eventsProcessed") === "function")
          this .addInterest ("eventsProcessed__", this);
 
       // Connect fields.
@@ -408,7 +408,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          {
             case X3DConstants .inputOnly:
             {
-               const callback = this .context [field .getName ()];
+               const callback = this .context .get (field .getName ());
 
                if (typeof callback === "function")
                   field .addInterest ("set_field__", this, callback);
@@ -417,7 +417,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
             }
             case X3DConstants .inputOutput:
             {
-               const callback = this .context ["set_" + field .getName ()];
+               const callback = this .context .get ("set_" + field .getName ());
 
                if (typeof callback === "function")
                   field .addInterest ("set_field__", this, callback);
@@ -435,7 +435,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       try
       {
-         this .context .prepareEvents (browser .getCurrentTime ());
+         this .context .get ("prepareEvents") (browser .getCurrentTime ());
          browser .addBrowserEvent ();
       }
       catch (error)
@@ -472,7 +472,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       try
       {
-         this .context .eventsProcessed ();
+         this .context .get ("eventsProcessed") ();
       }
       catch (error)
       {
@@ -489,7 +489,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       try
       {
-         this .context .shutdown ();
+         this .context .get ("shutdown") ();
       }
       catch (error)
       {
