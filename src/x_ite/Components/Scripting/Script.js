@@ -155,7 +155,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    },
    loadNow: function ()
    {
-      this .initialized = false;
+      console .log (this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration)
 
       new FileLoader (this) .loadDocument (this ._url,
       function (data)
@@ -384,100 +384,69 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       this .context = this .getContext (text);
 
-      this .set_live__ ();
-   },
-   set_live__: function ()
-   {
-      X3DScriptNode .prototype .set_live__ .call (this);
+      // Call initialize function.
 
-      if (!this .context)
-         return;
-
-      if (this .getLive () .getValue ())
+      if (typeof this .context .initialize === "function")
       {
-         if (!this .initialized)
+         const browser = this .getBrowser ();
+
+         browser .getScriptStack () .push (this);
+
+         try
          {
-            this .initialized = true;
-
-            // Call initialize function.
-
-            if (typeof this .context .initialize === "function")
-            {
-               const browser = this .getBrowser ();
-
-               browser .getScriptStack () .push (this);
-
-               try
-               {
-                  this .context .initialize ();
-               }
-               catch (error)
-               {
-                  this .setError ("in function 'initialize'", error);
-               }
-
-               browser .getScriptStack () .pop ();
-            }
-
-            if (typeof this .context .shutdown === "function")
-               $(window) .on ("unload", this .shutdown__ .bind (this));
+            this .context .initialize ();
+         }
+         catch (error)
+         {
+            this .setError ("in function 'initialize'", error);
          }
 
-         if (typeof this .context .prepareEvents === "function")
-            this .getBrowser () .prepareEvents () .addInterest ("prepareEvents__", this);
-
-         if (typeof this .context .eventsProcessed === "function")
-            this .addInterest ("eventsProcessed__", this);
-
-         for (const field of this .getUserDefinedFields ())
-         {
-            switch (field .getAccessType ())
-            {
-               case X3DConstants .inputOnly:
-               {
-                  const callback = this .context [field .getName ()];
-
-                  if (typeof callback === "function")
-                     field .addInterest ("set_field__", this, callback);
-
-                  break;
-               }
-               case X3DConstants .inputOutput:
-               {
-                  const callback = this .context ["set_" + field .getName ()];
-
-                  if (typeof callback === "function")
-                     field .addInterest ("set_field__", this, callback);
-
-                  break;
-               }
-            }
-         }
-
-         this .processOutstandingEvents ();
+         browser .getScriptStack () .pop ();
       }
-      else
+
+      // shutdown
+
+      if (typeof this .context .shutdown === "function")
+         $(window) .on ("unload", this .shutdown__ .bind (this));
+
+      // prepareEvents
+
+      if (typeof this .context .prepareEvents === "function")
+         this .getBrowser () .prepareEvents () .addInterest ("prepareEvents__", this);
+
+      // eventsProcessed
+
+      if (typeof this .context .eventsProcessed === "function")
+         this .addInterest ("eventsProcessed__", this);
+
+      // fields
+
+      for (const field of this .getUserDefinedFields ())
       {
-         if (this .context .prepareEvents)
-            this .getBrowser () .prepareEvents () .removeInterest ("prepareEvents__", this);
-
-         if (this .context .eventsProcessed)
-            this .removeInterest ("eventsProcessed__", this);
-
-         for (const field of this .getUserDefinedFields ())
+         switch (field .getAccessType ())
          {
-            switch (field .getAccessType ())
+            case X3DConstants .inputOnly:
             {
-               case X3DConstants .inputOnly:
-               case X3DConstants .inputOutput:
-                  field .removeInterest ("set_field__", this);
-                  break;
+               const callback = this .context [field .getName ()];
+
+               if (typeof callback === "function")
+                  field .addInterest ("set_field__", this, callback);
+
+               break;
+            }
+            case X3DConstants .inputOutput:
+            {
+               const callback = this .context ["set_" + field .getName ()];
+
+               if (typeof callback === "function")
+                  field .addInterest ("set_field__", this, callback);
+
+               break;
             }
          }
-
-         if (this .initialized)
-            this .pauseTime = Date .now ();
       }
+
+      this .processOutstandingEvents ();
    },
    prepareEvents__: function ()
    {
