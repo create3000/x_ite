@@ -383,8 +383,10 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       // Connect shutdown.
 
+      $(window) .off (".Script" + this .getId ());
+
       if (typeof this .context .shutdown === "function")
-         $(window) .on ("unload", this .shutdown__ .bind (this));
+         $(window) .on ("unload.Script" + this .getId (), this .shutdown__ .bind (this));
 
       // Connect prepareEvents.
 
@@ -427,12 +429,10 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       const browser = this .getBrowser ();
 
-      $(window) .off ("unload", this .shutdown__ .bind (this));
-
-      if (this .context .prepareEvents)
+      if (this .context ?.prepareEvents)
          browser .prepareEvents () .removeInterest ("prepareEvents__", this);
 
-      if (this .context .eventsProcessed)
+      if (this .context ?.eventsProcessed)
          this .removeInterest ("eventsProcessed__", this);
 
       for (const field of this .getUserDefinedFields ())
