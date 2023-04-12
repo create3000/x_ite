@@ -196,7 +196,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
                {
                   //console .error (error);
 
-                  trackPoint = this .startPoint;
+                  trackPoint .assign (this .startPoint);
                }
 
                this .trackStart (trackPoint);
