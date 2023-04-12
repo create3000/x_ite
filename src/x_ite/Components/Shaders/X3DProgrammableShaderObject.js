@@ -45,10 +45,9 @@
  *
  ******************************************************************************/
 
-import X3DCast        from "../../Base/X3DCast.js";
-import X3DConstants   from "../../Base/X3DConstants.js";
-import OrthoViewpoint from "../Navigation/OrthoViewpoint.js";
-import Matrix3        from "../../../standard/Math/Numbers/Matrix3.js";
+import X3DCast      from "../../Base/X3DCast.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Matrix3      from "../../../standard/Math/Numbers/Matrix3.js";
 
 const _uniformLocation = Symbol .for ("X3DField.uniformLocation");
 
