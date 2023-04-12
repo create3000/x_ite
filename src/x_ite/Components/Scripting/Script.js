@@ -155,10 +155,8 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    },
    loadNow: function ()
    {
-      console .log (this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration)
-
       new FileLoader (this) .loadDocument (this ._url,
-      function (data)
+      (data) =>
       {
          if (data === null)
          {
@@ -168,10 +166,13 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          else
          {
             this .setLoadState (X3DConstants .COMPLETE_STATE);
+
+            if (this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration)
+               return;
+
             this .initialize__ ($.decodeText (data));
          }
-      }
-      .bind (this));
+      });
    },
    getContext: function (text)
    {
