@@ -347,9 +347,6 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    },
    initialize__: function (text)
    {
-      if (this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration)
-         return;
-
       const browser = this .getBrowser ();
 
       // Call shutdown.
