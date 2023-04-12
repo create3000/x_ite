@@ -354,8 +354,10 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       // Call shutdown.
 
-      if (typeof this .context ?.get ("shutdown") === "function")
-         this .callback__ (this .context .get ("shutdown"), "shutdown");
+      const lastShutdown = this .context ?.get ("shutdown");
+
+      if (typeof lastShutdown === "function")
+         this .callback__ (lastShutdown, "shutdown");
 
       // Create context.
 
@@ -363,21 +365,10 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       // Call initialize function.
 
-      if (typeof this .context .get ("initialize") === "function")
-      {
-         browser .getScriptStack () .push (this);
+      const initialize = this .context .get ("initialize");
 
-         try
-         {
-            this .context .get ("initialize") ();
-         }
-         catch (error)
-         {
-            this .setError ("in function 'initialize'", error);
-         }
-
-         browser .getScriptStack () .pop ();
-      }
+      if (typeof initialize === "function")
+         this .callback__ (initialize, "initialize");
 
       // Connect shutdown.
 
