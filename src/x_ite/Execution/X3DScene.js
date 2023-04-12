@@ -153,6 +153,10 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    {
       return this [_profile];
    },
+   hasComponent: function (name)
+   {
+      return (this [_profile] ?.components .has (name) ?? true) || this [_components] .has (name);
+   },
    addComponent: function (component)
    {
       this [_components] .add (component .name, component);
@@ -168,10 +172,6 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    getComponents: function ()
    {
       return this [_components];
-   },
-   hasComponent: function (componentName)
-   {
-      return (this [_profile] ?.components .has (componentName) ?? true) || this [_components] .has (componentName);
    },
    updateUnit: function (category, name, conversionFactor)
    {

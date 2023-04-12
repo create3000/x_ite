@@ -141,13 +141,13 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       return this .getExecutionContext () .getProfile ();
    },
+   hasComponent: function (name)
+   {
+      return this .getExecutionContext () .hasComponent (name);
+   },
    getComponents: function ()
    {
       return this .getExecutionContext () .getComponents ();
-   },
-   hasComponent: function (componentName)
-   {
-      return this .getExecutionContext () .hasComponent (componentName);
    },
    fromUnit: function (category, value)
    {
