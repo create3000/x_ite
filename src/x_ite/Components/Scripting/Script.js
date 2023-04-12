@@ -357,7 +357,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       const lastShutdown = this .context ?.get ("shutdown");
 
       if (typeof lastShutdown === "function")
-         this .callback__ (lastShutdown, "shutdown");
+         this .call__ (lastShutdown, "shutdown");
 
       // Create context.
 
@@ -368,7 +368,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       const initialize = this .context .get ("initialize");
 
       if (typeof initialize === "function")
-         this .callback__ (initialize, "initialize");
+         this .call__ (initialize, "initialize");
 
       // Connect shutdown.
 
@@ -377,25 +377,25 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       $(window) .off (".Script" + this .getId ());
 
       if (typeof shutdown === "function")
-         $(window) .on ("unload.Script" + this .getId (), this .callback__ .bind (this, shutdown, "shutdown"));
+         $(window) .on ("unload.Script" + this .getId (), this .call__ .bind (this, shutdown, "shutdown"));
 
       // Connect prepareEvents.
 
       const prepareEvents = this .context .get ("prepareEvents");
 
-      browser .prepareEvents () .removeInterest ("callback__", this);
+      browser .prepareEvents () .removeInterest ("call__", this);
 
       if (typeof prepareEvents === "function")
-         browser .prepareEvents () .addInterest ("callback__", this, prepareEvents, "prepareEvents");
+         browser .prepareEvents () .addInterest ("call__", this, prepareEvents, "prepareEvents");
 
       // Connect eventsProcessed.
 
       const eventsProcessed = this .context .get ("eventsProcessed");
 
-      this .removeInterest ("callback__", this);
+      this .removeInterest ("call__", this);
 
       if (typeof eventsProcessed === "function")
-         this .addInterest ("callback__", this, eventsProcessed, "eventsProcessed");
+         this .addInterest ("call__", this, eventsProcessed, "eventsProcessed");
 
       // Connect fields.
 
@@ -424,7 +424,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          }
       }
    },
-   callback__: function (callback, name)
+   call__: function (callback, name)
    {
       const browser = this .getBrowser ();
 
