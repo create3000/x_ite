@@ -146,11 +146,11 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       return this ._url;
    },
-   unLoadNow: function ()
+   unloadData: function ()
    {
       this .initialize__ ("");
    },
-   loadNow: function ()
+   loadData: function ()
    {
       new FileLoader (this) .loadDocument (this ._url,
       (data) =>

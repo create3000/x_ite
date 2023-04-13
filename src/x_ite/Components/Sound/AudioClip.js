@@ -129,11 +129,11 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
       X3DSoundSourceNode .prototype .set_live__ .call (this);
       X3DUrlObject       .prototype .set_live__ .call (this);
    },
-   unLoadNow: function ()
+   unloadData: function ()
    {
       this .setMedia (null);
    },
-   loadNow: function ()
+   loadData: function ()
    {
       this .setMedia (null);
       this .urlStack .setValue (this ._url);

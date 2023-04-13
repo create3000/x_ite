@@ -137,12 +137,12 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .scene .setLive (this .getLive () .getValue ());
    },
-   unLoadNow: function ()
+   unloadData: function ()
    {
       this .abortLoading ();
       this .setInternalScene (this .getBrowser () .getDefaultScene ());
    },
-   loadNow: function ()
+   loadData: function ()
    {
       this .abortLoading ();
       this .fileLoader = new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));

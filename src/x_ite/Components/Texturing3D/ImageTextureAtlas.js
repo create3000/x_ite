@@ -111,11 +111,11 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
 
       this .requestImmediateLoad ();
    },
-   unLoadNow: function ()
+   unloadData: function ()
    {
       this .clearTexture ();
    },
-   loadNow: function ()
+   loadData: function ()
    {
       this .urlStack .setValue (this ._url);
       this .loadNext ();

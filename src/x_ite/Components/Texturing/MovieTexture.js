@@ -137,11 +137,11 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       X3DSoundSourceNode .prototype .set_live__ .call (this);
       X3DUrlObject       .prototype .set_live__ .call (this);
    },
-   unLoadNow: function ()
+   unloadData: function ()
    {
       this .clearTexture ();
    },
-   loadNow: function ()
+   loadData: function ()
    {
       delete this .gif;
       this .setMedia (null);

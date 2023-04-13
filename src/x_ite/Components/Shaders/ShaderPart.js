@@ -158,11 +158,11 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
          return shaderTypes .get (this ._type .getValue ()) || "VERTEX_SHADER";
       };
    })(),
-   unLoadNow: function ()
+   unloadData: function ()
    {
       this .valid = false;
    },
-   loadNow: function ()
+   loadData: function ()
    {
       new FileLoader (this) .loadDocument (this ._url,
       function (data, url)

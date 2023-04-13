@@ -121,7 +121,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
    {
       return this [_proto];
    },
-   loadNow: function ()
+   loadData: function ()
    {
       // 7.73 — ExternProtoDeclaration function
 

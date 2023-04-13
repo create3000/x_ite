@@ -129,11 +129,11 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
 
       this .requestImmediateLoad ();
    },
-   unLoadNow: function ()
+   unloadData: function ()
    {
       this .clearTexture ();
    },
-   loadNow: function ()
+   loadData: function ()
    {
       this .urlStack .setValue (this ._url);
       this .loadNext ();

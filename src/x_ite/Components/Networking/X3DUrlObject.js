@@ -60,7 +60,7 @@ function X3DUrlObject (executionContext)
    this .addType (X3DConstants .X3DUrlObject);
 
    this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
-                          "loadNow",   new Fields .SFTime ());
+                          "loadData",  new Fields .SFTime ());
 
    this [_cache]                = true;
    this [_autoRefreshStartTime] = Date .now ();
@@ -75,7 +75,7 @@ X3DUrlObject .prototype =
 
       this ._load                 .addInterest ("set_load__",        this);
       this ._url                  .addInterest ("set_url__",         this);
-      this ._loadNow              .addInterest ("loadNow",           this);
+      this ._loadData             .addInterest ("loadData",          this);
       this ._autoRefresh          .addInterest ("set_autoRefresh__", this);
       this ._autoRefreshTimeLimit .addInterest ("set_autoRefresh__", this);
    },
@@ -143,11 +143,16 @@ X3DUrlObject .prototype =
 
       if (this .isInitialized ())
          // Buffer prevents double load of the scene if load and url field are set at the same time.
-         this ._loadNow = this .getBrowser () .getCurrentTime ();
+         this ._loadData = this .getBrowser () .getCurrentTime ();
       else
-         this .loadNow ();
+         this .loadData ();
    },
    loadNow: function ()
+   {
+      this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+      this .requestImmediateLoad ();
+   },
+   loadData: function ()
    { },
    requestUnload: function ()
    {
@@ -157,9 +162,13 @@ X3DUrlObject .prototype =
          return;
 
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-      this .unLoadNow ();
+      this .unloadData ();
    },
-   unLoadNow: function ()
+   unloadNow: function ()
+   {
+      this .requestUnload ();
+   },
+   unloadData: function ()
    { },
    setAutoRefreshTimer: function (autoRefreshInterval)
    {

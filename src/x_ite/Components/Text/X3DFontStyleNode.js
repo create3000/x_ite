@@ -186,7 +186,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
 
       return;
    },
-   loadNow: function ()
+   loadData: function ()
    {
       // Add default font to family array.
 

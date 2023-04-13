@@ -118,11 +118,11 @@ ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
             return gl .RGBA;
       }
    },
-   unLoadNow: function ()
+   unloadData: function ()
    {
       this .clearTexture ();
    },
-   loadNow: function ()
+   loadData: function ()
    {
       new FileLoader (this) .loadDocument (this ._url,
       function (data)

@@ -111,11 +111,11 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    {
       return this .image [0];
    },
-   unLoadNow: function ()
+   unloadData: function ()
    {
       this .clearTexture ();
    },
-   loadNow: function ()
+   loadData: function ()
    {
       this .urlStack .setValue (this ._url);
       this .loadNext ();
