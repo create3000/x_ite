@@ -126,7 +126,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       this .video .prop ("preload",     "auto");
       this .video .prop ("muted",       true);
 
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    getElement: function ()
    {

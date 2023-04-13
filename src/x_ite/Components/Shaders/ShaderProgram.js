@@ -98,8 +98,6 @@ ShaderProgram .prototype = Object .assign (Object .create (X3DNode .prototype),
    },
    requestImmediateLoad: function (cache = true)
    { },
-   requestUnload: function ()
-   { },
    initialize: function ()
    {
       X3DNode                     .prototype .initialize .call (this);

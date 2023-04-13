@@ -115,7 +115,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
       this .set_justify__ ();
       this .set_style__ ();
 
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    set_style__: function ()
    {
@@ -124,7 +124,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
 
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    set_justify__: function ()
    {

@@ -110,7 +110,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       X3DScriptNode .prototype .initialize .call (this);
 
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    getExtendedEventHandling: function ()
    {
@@ -128,7 +128,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          return;
 
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    removeUserDefinedField: function (name)
    {
@@ -140,7 +140,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          return;
 
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    getSourceText: function ()
    {

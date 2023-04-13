@@ -101,8 +101,6 @@ PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
    },
    requestImmediateLoad: function (cache = true)
    { },
-   requestUnload: function ()
-   { },
    initialize: function ()
    {
       X3DShaderNode               .prototype .initialize .call (this);

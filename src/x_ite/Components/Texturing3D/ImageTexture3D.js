@@ -100,7 +100,7 @@ ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
       X3DTexture3DNode .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
 
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    getInternalType: function (components)
    {

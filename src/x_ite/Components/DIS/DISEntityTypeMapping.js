@@ -99,14 +99,6 @@ DISEntityTypeMapping .prototype = Object .assign (Object .create (X3DInfoNode .p
       X3DInfoNode  .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
    },
-   requestImmediateLoad: function (cache = true)
-   { },
-   requestUnload: function ()
-   { },
-   set_load__: function ()
-   { },
-   set_url__: function ()
-   { },
    dispose: function ()
    {
       X3DUrlObject .prototype .dispose .call (this);

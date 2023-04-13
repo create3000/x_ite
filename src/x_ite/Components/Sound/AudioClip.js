@@ -118,7 +118,7 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
       this .audio .prop ("preload",     "auto");
       this .audio .prop ("muted",       true);
 
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    getElement: function ()
    {

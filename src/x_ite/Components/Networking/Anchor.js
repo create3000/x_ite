@@ -116,16 +116,12 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 
       // Modify set_active__ to get immediate response to user action (click event), otherwise links are not opened in this window.
 
-      const
-         anchor       = this,
-         set_active__ = this .touchSensorNode .set_active__;
-
-      this .touchSensorNode .set_active__ = function (active, hit)
+      this .touchSensorNode .set_active__ = (active, hit) =>
       {
-         set_active__ .call (this, active, hit);
+         TouchSensor .prototype .set_active__ .call (this .touchSensorNode, active, hit);
 
-         if (this ._isOver .getValue () && ! active)
-            anchor .requestImmediateLoad ();
+         if (this .touchSensorNode ._isOver .getValue () && !active)
+            this .requestImmediateLoad () .catch (Function .prototype);
       };
    },
    set_load__: function ()
@@ -137,34 +133,40 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
       this .setCache (cache);
       this .setLoadState (X3DConstants .IN_PROGRESS_STATE, false);
 
-      new FileLoader (this) .createX3DFromURL (this ._url, this ._parameter,
-      function (scene)
+      return new Promise ((resolve, reject) =>
       {
-         if (scene)
+         new FileLoader (this) .createX3DFromURL (this ._url, this ._parameter,
+         (scene) =>
          {
-            this .getBrowser () .replaceWorld (scene);
+            if (scene)
+            {
+               this .getBrowser () .replaceWorld (scene);
+               this .setLoadState (X3DConstants .COMPLETE_STATE, false);
+               resolve ();
+            }
+            else
+            {
+               this .setLoadState (X3DConstants .FAILED_STATE, false);
+               reject ();
+            }
+         },
+         (viewpointName) =>
+         {
+            this .getBrowser () .changeViewpoint (viewpointName);
             this .setLoadState (X3DConstants .COMPLETE_STATE, false);
-         }
-         else
-            this .setLoadState (X3DConstants .FAILED_STATE, false);
-      }
-      .bind (this),
-      function (viewpointName)
-      {
-         this .getBrowser () .changeViewpoint (viewpointName);
-         this .setLoadState (X3DConstants .COMPLETE_STATE, false);
-      }
-      .bind (this),
-      function (url, target)
-      {
-         if (target)
-            window .open (url, target);
-         else
-            location = url;
+            resolve ();
+         },
+         (url, target) =>
+         {
+            if (target)
+               window .open (url, target);
+            else
+               location = url;
 
-         this .setLoadState (X3DConstants .COMPLETE_STATE, false);
-      }
-      .bind (this));
+            this .setLoadState (X3DConstants .COMPLETE_STATE, false);
+            resolve ();
+         });
+      });
    },
    requestUnload ()
    { },

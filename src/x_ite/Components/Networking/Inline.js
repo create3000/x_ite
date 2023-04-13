@@ -119,7 +119,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
       this .groupNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
       this .groupNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    getBBox: function (bbox, shadows)
    {

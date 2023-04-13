@@ -118,13 +118,13 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this ._type .addInterest ("set_type__", this);
 
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    set_type__: function ()
    {
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    getSourceText: function ()
    {

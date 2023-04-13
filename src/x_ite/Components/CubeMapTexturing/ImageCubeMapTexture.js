@@ -127,7 +127,7 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
       this .image .on ("abort error", this .setError .bind (this));
       this .image .prop ("crossOrigin", "Anonymous");
 
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    unloadData: function ()
    {

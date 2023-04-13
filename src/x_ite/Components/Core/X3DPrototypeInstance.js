@@ -285,7 +285,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
          else
          {
             protoNode ._updateInstances .addInterest ("construct", this);
-            protoNode .requestImmediateLoad ();
+            protoNode .requestImmediateLoad () .catch (Function .prototype);
          }
       }
       else
