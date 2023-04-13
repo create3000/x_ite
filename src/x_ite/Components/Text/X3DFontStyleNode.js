@@ -112,8 +112,8 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
       this .font        = null;
       this .familyIndex = 0;
 
+      // Don't call set_style__.
       this .set_justify__ ();
-      this .set_style__ ();
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },

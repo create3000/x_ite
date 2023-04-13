@@ -125,12 +125,11 @@ Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    },
    set_fontStyle__: function ()
    {
-      if (this .fontStyleNode)
-         this .fontStyleNode .removeInterest ("requestRebuild", this);
+      this .fontStyleNode ?.removeInterest ("requestRebuild", this);
 
       this .fontStyleNode = X3DCast (X3DConstants .X3DFontStyleNode, this ._fontStyle);
 
-      if (! this .fontStyleNode)
+      if (!this .fontStyleNode)
          this .fontStyleNode = this .getBrowser () .getDefaultFontStyle ();
 
       this .fontStyleNode .addInterest ("requestRebuild", this);
