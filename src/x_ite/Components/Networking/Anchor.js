@@ -114,7 +114,8 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
       this .touchSensorNode ._enabled     = this ._load;
       this .touchSensorNode .setup ();
 
-      // Modify set_active__ to get immediate response to user action (click event), otherwise links are not opened in this window.
+      // Modify set_active__ to get immediate response to user action (click event),
+      // otherwise links are not opened in this window.
 
       this .touchSensorNode .set_active__ = (active, hit) =>
       {
