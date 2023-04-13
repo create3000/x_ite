@@ -161,7 +161,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       return this .getExecutionContext () .getUnits ();
    },
-   createNode: function (typeName, setup)
+   createNode: function (typeName, setup = true)
    {
       typeName = String (typeName);
 
@@ -210,7 +210,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          return SFNodeCache .get (baseNode);
       }
    },
-   createProto: function (name, setup)
+   createProto: function (name, setup = true)
    {
       name = String (name);
 
