@@ -231,7 +231,7 @@ X3DUrlObject .prototype =
    performAutoRefresh: function ()
    {
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-      this .requestImmediateLoad (false);
+      this .requestImmediateLoad (false) .catch (Function .prototype);
    },
    set_live__: function ()
    {
@@ -243,7 +243,7 @@ X3DUrlObject .prototype =
    set_load__: function ()
    {
       if (this ._load .getValue ())
-         this .requestImmediateLoad ();
+         this .requestImmediateLoad () .catch (Function .prototype);
       else
          this .requestUnload ();
    },
@@ -253,7 +253,7 @@ X3DUrlObject .prototype =
          return;
 
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    set_autoRefresh__: function ()
    {
