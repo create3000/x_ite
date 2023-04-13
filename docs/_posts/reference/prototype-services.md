@@ -87,9 +87,9 @@ The value is one of the *_STATE* properties defined in the X3DConstants object. 
 
 Creates a new default instance of the extern prototype.
 
-#### void **loadNow** ()
+#### Promise\<void\> **loadNow** ()
 
-Triggers the load of the extern prototype. If the extern prototype is already loaded or the load is already in progress, this request is silently ignored.
+Triggers the loading of the extern prototype. It returns a Promise that is resolved when the extern prototype is completely loaded and all instances are updated.
 
 #### String **toVRMLString** (\[options\])
 

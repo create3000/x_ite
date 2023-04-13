@@ -127,30 +127,71 @@ X3DUrlObject .prototype =
    },
    requestImmediateLoad: function (cache = true)
    {
-      const loadState = this .checkLoadState ();
+      return new Promise ((resolve, reject) =>
+      {
+         const loading = () =>
+         {
+            const _loading = Symbol ();
 
-      if (loadState === X3DConstants .COMPLETE_STATE || loadState === X3DConstants .IN_PROGRESS_STATE)
-         return;
+            this ._loadState .addFieldCallback (_loading, () =>
+            {
+               switch (this .checkLoadState ())
+               {
+                  case X3DConstants .COMPLETE_STATE:
+                     this ._loadState .removeFieldCallback (_loading);
+                     resolve ();
+                     break;
+                  case X3DConstants .FAILED_STATE:
+                     this ._loadState .removeFieldCallback (_loading);
+                     reject ();
+                     break;
+               }
+            })
+         };
 
-      if (!this ._load .getValue ())
-         return;
+         const loadState = this .checkLoadState ();
 
-      if (this ._url .length === 0)
-         return;
+         if (loadState === X3DConstants .COMPLETE_STATE)
+         {
+            resolve ();
+            return;
+         }
 
-      this .setCache (cache);
-      this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
+         if (loadState === X3DConstants .IN_PROGRESS_STATE)
+         {
+            loading ();
+            return;
+         }
 
-      if (this .isInitialized ())
-         // Buffer prevents double load of the scene if load and url field are set at the same time.
-         this ._loadData = this .getBrowser () .getCurrentTime ();
-      else
-         this .loadData ();
+         if (!this ._load .getValue ())
+         {
+            reject ();
+            return;
+         }
+
+         if (this ._url .length === 0)
+         {
+            resolve ();
+            return;
+         }
+
+         this .setCache (cache);
+         this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
+
+         if (this .isInitialized ())
+            // Buffer prevents double load of the scene if load and url field are set at the same time.
+            this ._loadData = this .getBrowser () .getCurrentTime ();
+         else
+            this .loadData ();
+
+         loading ();
+      });
    },
    loadNow: function ()
    {
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-      this .requestImmediateLoad ();
+
+      return this .requestImmediateLoad ();
    },
    loadData: function ()
    { },
