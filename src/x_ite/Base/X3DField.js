@@ -413,11 +413,18 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
    },
    dispose: function ()
    {
+      this [_references]          .clear ();
+      this [_referencesCallbacks] .clear ();
+      this [_fieldInterests]      .clear ();
+      this [_fieldCallbacks]      .clear ();
+
       for (const route of new Set (this [_inputRoutes]))
          route .dispose ();
 
       for (const route of new Set (this [_outputRoutes]))
          route .dispose ();
+
+      this [_routeCallbacks] .clear ();
 
       X3DChildObject .prototype .dispose .call (this);
    }

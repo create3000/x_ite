@@ -183,7 +183,11 @@ X3DObject .prototype =
    {
       generator .string = "[object " + this .getTypeName () + "]";
    },
-   dispose: function () { },
+   dispose: function ()
+   {
+      this [_interests] .clear ();
+      this [_userData]  .clear ();
+   },
 };
 
 for (const key of Reflect .ownKeys (X3DObject .prototype))
