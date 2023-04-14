@@ -188,7 +188,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       for (let i = 0; i < length; ++ i)
       {
-         if (! a [i] .equals (b [i]))
+         if (!a [i] .equals (b [i]))
             return false;
       }
 
@@ -361,7 +361,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
             {
                const current = values [i];
 
-               if (! value (current .valueOf ()))
+               if (!value (current .valueOf ()))
                {
                   const tmp = values [first];
 
@@ -385,7 +385,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          {
             const current = values [i];
 
-            if (! current .equals (value))
+            if (!current .equals (value))
             {
                const tmp = values [first];
 
@@ -413,25 +413,26 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return values .map (function (value) { return value .valueOf () });
    },
-   resize: function (size, value, silent)
+   resize: function (size, value, silently)
    {
       const
          target = this [_target],
-         array  = target .getValue ();
+         array  = target .getValue (),
+         length = array .length;
 
-      if (size < array .length)
+      if (size < length)
       {
-         for (let i = size, length = array .length; i < length; ++ i)
+         for (let i = size; i < length; ++ i)
             target .removeChildObject (array [i]);
 
          array .length = size;
 
-         if (! silent)
+         if (!silently)
             target .addEvent ();
       }
-      else if (size > array .length)
+      else if (size > length)
       {
-         for (let i = array .length; i < size; ++ i)
+         for (let i = length; i < size; ++ i)
          {
             const field = new (target .getSingleType ()) ();
 
@@ -442,7 +443,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
             array .push (field);
          }
 
-         if (! silent)
+         if (!silently)
             target .addEvent ();
       }
    },

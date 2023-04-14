@@ -603,7 +603,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       return values .slice ();
    },
-   resize: function (newLength, value, silent)
+   resize: function (newLength, value, silently)
    {
       const
          target     = this [_target],
@@ -619,7 +619,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          if (components > 1)
             target [_cache] .length = newLength;
 
-         if (!silent)
+         if (!silently)
             target .addEvent ();
       }
       else if (newLength > length)
@@ -644,7 +644,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
             }
          }
 
-         if (!silent)
+         if (!silently)
             target .addEvent ();
       }
 
