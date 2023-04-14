@@ -410,6 +410,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
       const target = this .getTarget ();
 
       target .resize (0, undefined, true);
+      target .processInterests ();
 
       X3DObjectArrayField .prototype .dispose .call (target);
    },

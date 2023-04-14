@@ -347,8 +347,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       target [_cloneCount] += count;
 
-      if (value)
-         value .addCloneCount (count);
+      value ?.addCloneCount (count);
    },
    removeCloneCount: function (count)
    {
@@ -358,8 +357,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       target [_cloneCount] -= count;
 
-      if (value)
-         value .removeCloneCount (count);
+      value ?.removeCloneCount (count);
    },
    getNodeUserData: function (key)
    {
@@ -472,6 +470,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
       const target = this [_target];
 
       target .set (null);
+      target .processInterests ();
 
       X3DField .prototype .dispose .call (target);
    },
