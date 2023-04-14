@@ -163,9 +163,9 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       this ._components_changed = this .getBrowser () .getCurrentTime ();
    },
-   removeComponent: function (component)
+   removeComponent: function (name)
    {
-      this [_components] .remove (component .name);
+      this [_components] .remove (name);
 
       this ._components_changed = this .getBrowser () .getCurrentTime ();
    },
