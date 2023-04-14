@@ -930,8 +930,6 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    },
    dispose: function ()
    {
-      this ._rootNodes .dispose ();
-
       for (const route of this [_routes])
          this .deleteRoute (route);
 

@@ -1018,27 +1018,6 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       this [_body] ?.dispose ();
 
-      // Clear values of references.
-
-      for (const field of this .getFields ())
-      {
-         for (const fieldInterest of field .getFieldInterests ())
-         {
-            if (!fieldInterest .getReferences () .has (field))
-               continue;
-
-            switch (fieldInterest .getType ())
-            {
-               case X3DConstants .SFNode:
-                  fieldInterest .setValue (null);
-                  break;
-               case X3DConstants .MFNode:
-                  fieldInterest .resize (0);
-                  break;
-            }
-         }
-      }
-
       X3DNode .prototype .dispose .call (this);
    },
 });
