@@ -347,14 +347,9 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    },
    initialize__: function (text)
    {
+      this .disconnect ();
+
       const browser = this .getBrowser ();
-
-      // Call shutdown.
-
-      const lastShutdown = this .context ?.get ("shutdown");
-
-      if (typeof lastShutdown === "function")
-         this .call__ (lastShutdown, "shutdown");
 
       // Create context.
 
@@ -371,8 +366,6 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       const shutdown = this .context .get ("shutdown");
 
-      $(window) .off (".Script" + this .getId ());
-
       if (typeof shutdown === "function")
          $(window) .on ("unload.Script" + this .getId (), this .call__ .bind (this, shutdown, "shutdown"));
 
@@ -380,16 +373,12 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       const prepareEvents = this .context .get ("prepareEvents");
 
-      browser .prepareEvents () .removeInterest ("call__", this);
-
       if (typeof prepareEvents === "function")
          browser .prepareEvents () .addInterest ("call__", this, prepareEvents, "prepareEvents");
 
       // Connect eventsProcessed.
 
       const eventsProcessed = this .context .get ("eventsProcessed");
-
-      this .removeInterest ("call__", this);
 
       if (typeof eventsProcessed === "function")
          this .addInterest ("call__", this, eventsProcessed, "eventsProcessed");
@@ -461,6 +450,38 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       console .error ("JavaScript Error in Script '" + this .getName () + "', " + reason + "\nworld url is '" + this .getExecutionContext () .getWorldURL () + "':");
       console .error (error);
+   },
+   disconnect: function ()
+   {
+      // Call shutdown.
+
+      const shutdown = this .context ?.get ("shutdown");
+
+      if (typeof shutdown === "function")
+         this .call__ (shutdown, "shutdown");
+
+      // Disconnect shutdown.
+
+      $(window) .off (".Script" + this .getId ());
+
+      // Disconnect prepareEvents.
+
+      this .getBrowser () .prepareEvents () .removeInterest ("call__", this);
+
+      // Disconnect eventsProcessed.
+
+      this .removeInterest ("call__", this);
+
+      // Disconnect fields.
+
+      for (const field of this .getUserDefinedFields ())
+         field .removeInterest ("set_field__", this);
+   },
+   dispose: function ()
+   {
+      this .disconnect ();
+
+      X3DScriptNode .prototype .dispose .call (this);
    },
 });
 
