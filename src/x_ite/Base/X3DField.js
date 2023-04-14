@@ -365,34 +365,31 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
          if (field !== this)
             this .set (field .getValue (), field .length);
 
-         // Process interests
+         // Process interests.
 
          this .processInterests ();
 
-         // Process routes
+         // Process routes.
 
          let first = true;
 
-         if (this [_fieldInterests] .size)
+         for (const fieldInterest of this [_fieldInterests])
          {
-            for (const fieldInterest of this [_fieldInterests] .values ())
+            if (first)
             {
-               if (first)
-               {
-                  first = false;
-                  fieldInterest .addEventObject (this, event);
-               }
-               else
-               {
-                  fieldInterest .addEventObject (this, Events .copy (event));
-               }
+               first = false;
+               fieldInterest .addEventObject (this, event);
+            }
+            else
+            {
+               fieldInterest .addEventObject (this, Events .copy (event));
             }
          }
 
          if (first)
             Events .push (event);
 
-         // Process field callbacks
+         // Process field callbacks.
 
          if (this [_fieldCallbacks] .size)
          {

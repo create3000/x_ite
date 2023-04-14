@@ -598,7 +598,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       for (const field of this [_childObjects])
          field .dispose ();
 
-      for (const field of this .getFields ())
+      for (const field of this [_fields])
          field .dispose ();
 
       X3DEventObject .prototype .dispose .call (this);
