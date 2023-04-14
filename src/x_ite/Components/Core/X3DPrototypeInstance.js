@@ -1015,8 +1015,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
       this [_protoNode] ._updateInstances .removeInterest ("construct", this);
       this [_protoNode] ._updateInstances .removeInterest ("update",    this);
 
-      if (this [_body])
-         this [_body] .dispose ();
+      this [_body] ?.dispose ();
 
       X3DNode .prototype .dispose .call (this);
    },
