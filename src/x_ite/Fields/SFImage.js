@@ -147,7 +147,6 @@ function SFImage (width, height, comp, array)
 
    this .getValue () .getArray () .addParent (this);
    this .addInterest ("set_size__", this);
-   return this;
 }
 
 SFImage .prototype = Object .assign (Object .create (X3DField .prototype),

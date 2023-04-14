@@ -68,8 +68,6 @@ function X3DField (value)
    X3DChildObject .call (this);
 
    this [_value] = value;
-
-   return this;
 }
 
 X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype),
@@ -405,10 +403,6 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
    })(),
    addCloneCount: Function .prototype,
    removeCloneCount: Function .prototype,
-   valueOf: function ()
-   {
-      return this;
-   },
    fromString: function (string, scene)
    {
       // Function will be overridden in VRMLParser.
