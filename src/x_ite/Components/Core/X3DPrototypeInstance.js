@@ -1012,6 +1012,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
    },
    dispose: function ()
    {
+      this [_protoNode] ._name_changed .removeFieldInterest (this ._typeName_changed);
       this [_protoNode] ._updateInstances .removeInterest ("construct", this);
       this [_protoNode] ._updateInstances .removeInterest ("update",    this);
 
