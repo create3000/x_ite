@@ -471,7 +471,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       const target = this [_target];
 
-      target .setValue (null);
+      target .set (null);
 
       X3DField .prototype .dispose .call (target);
    },
