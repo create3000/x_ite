@@ -385,7 +385,9 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
                   fieldInterest .addEventObject (this, event);
                }
                else
+               {
                   fieldInterest .addEventObject (this, Events .copy (event));
+               }
             }
          }
 
@@ -417,14 +419,13 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
       this [_referencesCallbacks] .clear ();
       this [_fieldInterests]      .clear ();
       this [_fieldCallbacks]      .clear ();
+      this [_routeCallbacks]      .clear ();
 
       for (const route of new Set (this [_inputRoutes]))
          route .dispose ();
 
       for (const route of new Set (this [_outputRoutes]))
          route .dispose ();
-
-      this [_routeCallbacks] .clear ();
 
       X3DChildObject .prototype .dispose .call (this);
    }
