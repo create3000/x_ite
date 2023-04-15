@@ -646,10 +646,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    viewAll: function (layerNode)
    {
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
-
-      if (!layerNode)
-         layerNode = this .getActiveLayer ();
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
       if (!layerNode)
          return;
@@ -658,13 +655,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    firstViewpoint: function (layerNode)
    {
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
-
-      if (!layerNode)
-         layerNode = this .getActiveLayer ();
-
-      if (!layerNode)
-         return;
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
       const viewpoints = layerNode .getUserViewpoints ();
 
@@ -673,10 +664,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    previousViewpoint: function (layerNode)
    {
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
-
-      if (!layerNode)
-         layerNode = this .getActiveLayer ();
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
       if (!layerNode)
          return;
@@ -705,10 +693,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    nextViewpoint: function (layerNode)
    {
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
-
-      if (!layerNode)
-         layerNode = this .getActiveLayer ();
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
       if (!layerNode)
          return;
@@ -737,10 +722,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    lastViewpoint: function (layerNode)
    {
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
-
-      if (!layerNode)
-         layerNode = this .getActiveLayer ();
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
       if (!layerNode)
          return;
@@ -758,10 +740,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          layerNode = this .getActiveLayer ();
       }
 
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode);
-
-      if (!layerNode)
-         layerNode = this .getActiveLayer ();
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
       if (!layerNode)
          return;
