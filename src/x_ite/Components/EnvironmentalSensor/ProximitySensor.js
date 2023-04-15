@@ -70,7 +70,7 @@ function ProximitySensor (executionContext)
 
    this .min           = new Vector3 (0, 0, 0);
    this .max           = new Vector3 (0, 0, 0);
-   this .viewpointNode = null;
+   this .layerNode     = null;
    this .modelMatrix   = new Matrix4 ();
    this .inside        = false;
 }
@@ -156,15 +156,17 @@ ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
       {
          if (this .inside && this .getTraversed ())
          {
-            if (this .viewpointNode)
+            if (this .layerNode)
             {
-               const modelMatrix = this .modelMatrix;
+               const
+                  viewpointNode = this .layerNode .getViewpoint (),
+                  modelMatrix   = this .modelMatrix;
 
-               centerOfRotationMatrix .assign (this .viewpointNode .getModelMatrix ());
-               centerOfRotationMatrix .translate (this .viewpointNode .getUserCenterOfRotation ());
+               centerOfRotationMatrix .assign (viewpointNode .getModelMatrix ());
+               centerOfRotationMatrix .translate (viewpointNode .getUserCenterOfRotation ());
                centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
 
-               modelMatrix .multRight (this .viewpointNode .getViewMatrix ());
+               modelMatrix .multRight (viewpointNode .getViewMatrix ());
                modelMatrix .get (null, orientation);
                modelMatrix .inverse ();
 
@@ -204,8 +206,8 @@ ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
             }
          }
 
-         this .inside        = false;
-         this .viewpointNode = null;
+         this .inside    = false;
+         this .layerNode = null;
 
          this .setTraversed (false);
       };
@@ -222,7 +224,7 @@ ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
          {
             case TraverseType .CAMERA:
             {
-               this .viewpointNode = renderObject .getViewpoint ();
+               this .layerNode = renderObject .getLayer ();
                this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
                return;
             }
