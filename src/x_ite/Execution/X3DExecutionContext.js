@@ -105,7 +105,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       X3DBaseNode .prototype .initialize .call (this);
 
-      if (! this .isScene ())
+      if (!this .isScene ())
          this ._sceneGraph_changed .addInterest ("set_sceneGraph", this)
    },
    set_sceneGraph: function ()
@@ -169,7 +169,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       {
          const Type = this .getBrowser () .getSupportedNode (typeName);
 
-         if (! Type)
+         if (!Type)
             return null;
 
          const specificationRange = Type .prototype .getSpecificationRange ();
@@ -189,7 +189,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       {
          const Type = this .getBrowser () .getSupportedNode (typeName);
 
-         if (! Type)
+         if (!Type)
             throw new Error (`Unknown node type '${typeName}'.`);
 
          const specificationRange = Type .prototype .getSpecificationRange ();
@@ -251,7 +251,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       name = String (name);
       node = X3DCast (X3DConstants .X3DNode, node, false);
 
-      if (! node)
+      if (!node)
          throw new Error ("Couldn't update named node: node must be of type X3DNode.");
 
       if (node .getExecutionContext () !== this)
@@ -279,7 +279,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       const node = this [_namedNodes] .get (name);
 
-      if (! node)
+      if (!node)
          return;
 
       node .setName ("");
@@ -326,7 +326,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       exportedName = String (exportedName);
       importedName = importedName === undefined ? exportedName : String (importedName);
 
-      if (! inlineNode)
+      if (!inlineNode)
          throw new Error ("Node must be of type Inline node.");
 
       if (inlineNode .getExecutionContext () !== this)
@@ -354,7 +354,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       const importedNode = this [_importedNodes] .get (importedName);
 
-      if (! importedNode)
+      if (!importedNode)
          return;
 
       importedNode .dispose ();
@@ -400,7 +400,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       node = X3DCast (X3DConstants .X3DNode, node, false);
 
-      if (! node)
+      if (!node)
          throw new Error ("Couldn't get local name: node must be of type X3DNode.");
 
       if (node .getExecutionContext () === this)
@@ -441,7 +441,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       name = String (name);
 
-      if (! (proto instanceof X3DProtoDeclaration))
+      if (!(proto instanceof X3DProtoDeclaration))
          throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
 
       if (this [_protos] .get (name))
@@ -461,7 +461,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       name = String (name);
 
-      if (! (proto instanceof X3DProtoDeclaration))
+      if (!(proto instanceof X3DProtoDeclaration))
          throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
 
       name = String (name);
@@ -505,7 +505,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       name = String (name);
 
-      if (! (externproto instanceof X3DExternProtoDeclaration))
+      if (!(externproto instanceof X3DExternProtoDeclaration))
          throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
 
       if (this [_externprotos] .get (name))
@@ -525,7 +525,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       name = String (name);
 
-      if (! (externproto instanceof X3DExternProtoDeclaration))
+      if (!(externproto instanceof X3DExternProtoDeclaration))
          throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
 
       name = String (name);
@@ -561,10 +561,10 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false);
       destinationField = String (destinationField);
 
-      if (! sourceNode)
+      if (!sourceNode)
          throw new Error ("Bad ROUTE specification: source node must be of type X3DNode.");
 
-      if (! destinationNode)
+      if (!destinationNode)
          throw new Error ("Bad ROUTE specification: destination node must be of type X3DNode.");
 
       // Imported nodes handling.
@@ -629,10 +629,10 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          sourceField      = sourceNode      .getField (sourceField),
          destinationField = destinationNode .getField (destinationField);
 
-         if (! sourceField .isOutput ())
+         if (!sourceField .isOutput ())
             throw new Error ("Field named '" + sourceField .getName () + "' in node named '" + sourceNode .getName () + "' of type " + sourceNode .getTypeName () + " is not an output field.");
 
-         if (! destinationField .isInput ())
+         if (!destinationField .isInput ())
             throw new Error ("Field named '" + destinationField .getName () + "' in node named '" + destinationNode .getName () + "' of type " + destinationNode .getTypeName () + " is not an input field.");
 
          if (sourceField .getType () !== destinationField .getType ())
@@ -665,7 +665,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       {
          route = this .getRoute .apply (this, arguments);
 
-         if (! route)
+         if (!route)
             return false;
       }
 
@@ -745,10 +745,10 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false);
       destinationField = String (destinationField)
 
-      if (! sourceNode)
+      if (!sourceNode)
          throw new Error ("Bad ROUTE specification: sourceNode must be of type X3DNode.");
 
-      if (! destinationNode)
+      if (!destinationNode)
          throw new Error ("Bad ROUTE specification: destinationNode must be of type X3DNode.");
 
       sourceField      = sourceNode      .getField (sourceField);
