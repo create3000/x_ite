@@ -319,24 +319,29 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
          this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
       }
    },
-   timeout: function (callback)
-   {
-      if (this ._enabled .getValue ())
-      {
-         this .getBrowser () .advanceTime ();
-
-         this [callback] ();
-      }
-   },
    addTimeout: function (name, callback, time)
    {
       this .removeTimeout (name);
-      this [name] = setTimeout (this .timeout .bind (this, callback), (time - this .getBrowser () .getCurrentTime ()) * 1000);
+
+      this [name] = setTimeout (this .processTimeout .bind (this, callback), (time - this .getBrowser () .getCurrentTime ()) * 1000);
    },
    removeTimeout: function (name)
    {
       clearTimeout (this [name]);
+
       this [name] = null;
+   },
+   processTimeout: function (callback)
+   {
+      if (!this ._enabled .getValue ())
+         return;
+
+      if (!(this .getLive () .getValue () || this ._isEvenLive .getValue ()))
+         return;
+
+      this .getBrowser () .advanceTime ();
+
+      this [callback] ();
    },
    set_loop: Function .prototype,
    set_start: Function .prototype,
