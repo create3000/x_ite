@@ -87,7 +87,6 @@ function X3DBrowser (element)
 
    X3DBrowserContext .call (this, element);
 
-   this [_reject]           = Function .prototype;
    this [_browserCallbacks] = new Map ();
    this [_console]          = document .getElementsByClassName ("x_ite-console");
 
@@ -285,11 +284,9 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       return new Promise ((resolve, reject) =>
       {
-         this [_reject] ("Replacing world aborted.");
+         this [_fileLoader] ?.abort ();
 
-         if (this [_fileLoader])
-            this [_fileLoader] .abort ();
-
+         this [_reject] ?.("Replacing world aborted.");
          this [_reject] = reject;
 
          // Remove world.
@@ -480,15 +477,14 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          this ._loadCount       .removeInterest ("checkLoadCount",    this);
          this .prepareEvents () .removeInterest ("updateInitialized", this);
 
-         if (this [_fileLoader])
-            this [_fileLoader] .abort ();
+         this [_fileLoader] ?.abort ();
 
          // Start loading.
 
-         this .setBrowserLoading (true);
-         this .addLoadingObject (this);
-
          const fileLoader = this [_fileLoader] = new FileLoader (this .getWorld ());
+
+         this .setBrowserLoading (true);
+         this .addLoadingObject (fileLoader);
 
          fileLoader .createX3DFromURL (url, parameter, (scene) =>
          {
@@ -503,8 +499,10 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
             if (scene)
             {
+               this .addLoadingObject (this); // Prevent resetLoadCount.
                this .replaceWorld (scene) .then (resolve) .catch (reject);
                this .removeLoadingObject (this);
+               this .removeLoadingObject (fileLoader);
             }
             else
             {
@@ -530,7 +528,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             }
 
             this .changeViewpoint (fragment);
-            this .removeLoadingObject (this);
+            this .removeLoadingObject (fileLoader);
             this .setBrowserLoading (false);
 
             resolve ();
@@ -548,7 +546,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             else
                location = url;
 
-            this .removeLoadingObject (this);
+            this .removeLoadingObject (fileLoader);
             this .setBrowserLoading (false);
 
             resolve ();

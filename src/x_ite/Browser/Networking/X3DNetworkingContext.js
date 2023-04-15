@@ -114,11 +114,10 @@ X3DNetworkingContext .prototype =
    {
       this [_loading] = value;
 
-      this .setLoadCount (0);
-
       if (value)
       {
-         this .resetLoadCount ();
+         if (!this [_loadingObjects] .has (this))
+            this .resetLoadCount ();
 
          this .getShadow () .find (".x_ite-private-world-info") .remove ();
 
