@@ -178,13 +178,13 @@ ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
 
                if (this ._isActive .getValue ())
                {
-                  if (! this ._position_changed .getValue () .equals (position))
+                  if (!this ._position_changed .getValue () .equals (position))
                      this ._position_changed = position;
 
-                  if (! this ._orientation_changed .getValue () .equals (orientation))
+                  if (!this ._orientation_changed .getValue () .equals (orientation))
                      this ._orientation_changed = orientation;
 
-                  if (! this ._centerOfRotation_changed .getValue () .equals (centerOfRotation))
+                  if (!this ._centerOfRotation_changed .getValue () .equals (centerOfRotation))
                      this ._centerOfRotation_changed = centerOfRotation;
                }
                else

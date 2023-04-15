@@ -112,7 +112,7 @@ VisibilitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSe
    {
       if (this .visible && this .getTraversed ())
       {
-         if (! this ._isActive .getValue ())
+         if (!this ._isActive .getValue ())
          {
             this ._isActive  = true;
             this ._enterTime = this .getBrowser () .getCurrentTime ();
