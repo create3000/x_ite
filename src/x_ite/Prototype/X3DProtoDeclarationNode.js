@@ -70,7 +70,7 @@ X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode
    {
       return true;
    },
-   createInstance: function (executionContext, setup = true)
+   createInstance: function (executionContext, setup = true /* non-public argument */)
    {
       if (setup === false)
       {
