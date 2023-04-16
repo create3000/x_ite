@@ -177,11 +177,15 @@ X3DNetworkingContext .prototype =
       for (const object of this .getPrivateScene () .getLoadingObjects ())
          this .addLoadingObject (object);
    },
-   [_set_loadCount]: function ()
+   getDisplayLoadCount: function ()
    {
-      const loadingDisplay = [... this [_loadingObjects]]
+      return [... this [_loadingObjects]]
          .filter (o => o .isPrivate)
          .reduce ((v, o) => v + !o .isPrivate (), 0);
+   },
+   [_set_loadCount]: function ()
+   {
+      const loadingDisplay = this .getDisplayLoadCount ();
 
       if (this ._loadCount .getValue () || this [_loading])
       {
