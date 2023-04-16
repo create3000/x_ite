@@ -108,7 +108,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
 
       if (proto)
       {
-         for (const field of this .getUserDefinedFields ())
+         for (const field of [... this .getUserDefinedFields ()])
             this .removeUserDefinedField (field .getName ())
 
          for (const field of proto .getUserDefinedFields ())
