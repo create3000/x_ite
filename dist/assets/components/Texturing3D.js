@@ -1,7 +1,7 @@
-/* X_ITE v8.6.17 */(() => { // webpackBootstrap
+/* X_ITE v8.6.18 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 997:
+/***/ 110:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 952:
+/***/ 582:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 270:
+/***/ 729:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -947,11 +947,11 @@ return /******/ (function(modules) { // webpackBootstrap
   !*** ./alloc.js ***!
   \******************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_32308__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_32308__) {
 
 "use strict";
-__nested_webpack_require_32308__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_32308__.d(__webpack_exports__, "default", function() { return alloc; });
+__nested_webpack_require_32308__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_32308__.d(__nested_webpack_exports__, "default", function() { return alloc; });
 /**
  * Creates a new byteArray of the same type (Uint8Array or Buffer) of the specified length.
  * @param byteArray the underlying byteArray (either Uint8Array or Buffer)
@@ -975,14 +975,14 @@ function alloc(byteArray, length) {
   !*** ./bigEndianByteArrayParser.js ***!
   \*************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_33352__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_33352__) {
 
 "use strict";
-__nested_webpack_require_33352__.r(__webpack_exports__);
+__nested_webpack_require_33352__.r(__nested_webpack_exports__);
 /**
  * Internal helper functions for parsing different types from a big-endian byte array
  */
-/* harmony default export */ __webpack_exports__["default"] = ({
+/* harmony default export */ __nested_webpack_exports__["default"] = ({
   /**
      *
      * Parses an unsigned int 16 from a big-endian byte array
@@ -1145,11 +1145,11 @@ __nested_webpack_require_33352__.r(__webpack_exports__);
   !*** ./byteArrayParser.js ***!
   \****************************/
 /*! exports provided: readFixedString */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_39316__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_39316__) {
 
 "use strict";
-__nested_webpack_require_39316__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_39316__.d(__webpack_exports__, "readFixedString", function() { return readFixedString; });
+__nested_webpack_require_39316__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_39316__.d(__nested_webpack_exports__, "readFixedString", function() { return readFixedString; });
 /**
  * Internal helper functions common to parsing byte arrays of any type
  */
@@ -1200,11 +1200,11 @@ function readFixedString(byteArray, position, length) {
   !*** ./byteStream.js ***!
   \***********************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_40882__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_40882__) {
 
 "use strict";
-__nested_webpack_require_40882__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_40882__.d(__webpack_exports__, "default", function() { return ByteStream; });
+__nested_webpack_require_40882__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_40882__.d(__nested_webpack_exports__, "default", function() { return ByteStream; });
 /* harmony import */ var _sharedCopy_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_40882__(/*! ./sharedCopy.js */ "./sharedCopy.js");
 /* harmony import */ var _byteArrayParser_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_40882__(/*! ./byteArrayParser.js */ "./byteArrayParser.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1367,11 +1367,11 @@ var ByteStream = /*#__PURE__*/function () {
   !*** ./dataSet.js ***!
   \********************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_47263__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_47263__) {
 
 "use strict";
-__nested_webpack_require_47263__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_47263__.d(__webpack_exports__, "default", function() { return DataSet; });
+__nested_webpack_require_47263__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_47263__.d(__nested_webpack_exports__, "default", function() { return DataSet; });
 /* harmony import */ var _byteArrayParser_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_47263__(/*! ./byteArrayParser.js */ "./byteArrayParser.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1703,11 +1703,11 @@ var DataSet = /*#__PURE__*/function () {
   !*** ./findAndSetUNElementLength.js ***!
   \**************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_59569__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_59569__) {
 
 "use strict";
-__nested_webpack_require_59569__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_59569__.d(__webpack_exports__, "default", function() { return findAndSetUNElementLength; });
+__nested_webpack_require_59569__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_59569__.d(__nested_webpack_exports__, "default", function() { return findAndSetUNElementLength; });
 /**
  * Internal helper functions for parsing DICOM elements
  */
@@ -1761,11 +1761,11 @@ function findAndSetUNElementLength(byteStream, element) {
   !*** ./findEndOfEncapsulatedPixelData.js ***!
   \*******************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_61726__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_61726__) {
 
 "use strict";
-__nested_webpack_require_61726__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_61726__.d(__webpack_exports__, "default", function() { return findEndOfEncapsulatedElement; });
+__nested_webpack_require_61726__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_61726__.d(__nested_webpack_exports__, "default", function() { return findEndOfEncapsulatedElement; });
 /* harmony import */ var _readTag_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_61726__(/*! ./readTag.js */ "./readTag.js");
 
 /**
@@ -1858,11 +1858,11 @@ function findEndOfEncapsulatedElement(byteStream, element, warnings) {
   !*** ./findItemDelimitationItem.js ***!
   \*************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_65069__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_65069__) {
 
 "use strict";
-__nested_webpack_require_65069__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_65069__.d(__webpack_exports__, "default", function() { return findItemDelimitationItemAndSetElementLength; });
+__nested_webpack_require_65069__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_65069__.d(__nested_webpack_exports__, "default", function() { return findItemDelimitationItemAndSetElementLength; });
 /**
  * Internal helper functions for parsing DICOM elements
  */
@@ -1915,97 +1915,97 @@ function findItemDelimitationItemAndSetElementLength(byteStream, element) {
   !*** ./index.js ***!
   \******************/
 /*! exports provided: isStringVr, isPrivateTag, parsePN, parseTM, parseDA, explicitElementToString, explicitDataSetToJS, createJPEGBasicOffsetTable, parseDicomDataSetExplicit, parseDicomDataSetImplicit, readFixedString, alloc, version, bigEndianByteArrayParser, ByteStream, sharedCopy, DataSet, findAndSetUNElementLength, findEndOfEncapsulatedElement, findItemDelimitationItemAndSetElementLength, littleEndianByteArrayParser, parseDicom, readDicomElementExplicit, readDicomElementImplicit, readEncapsulatedImageFrame, readEncapsulatedPixelData, readEncapsulatedPixelDataFromFragments, readPart10Header, readSequenceItemsExplicit, readSequenceItemsImplicit, readSequenceItem, readTag, default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_67824__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_67824__) {
 
 "use strict";
-__nested_webpack_require_67824__.r(__webpack_exports__);
+__nested_webpack_require_67824__.r(__nested_webpack_exports__);
 /* harmony import */ var _util_index_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_67824__(/*! ./util/index.js */ "./util/index.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "isStringVr", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["isStringVr"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "isStringVr", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["isStringVr"]; });
 
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "isPrivateTag", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["isPrivateTag"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "isPrivateTag", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["isPrivateTag"]; });
 
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "parsePN", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["parsePN"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "parsePN", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["parsePN"]; });
 
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "parseTM", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["parseTM"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "parseTM", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["parseTM"]; });
 
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "parseDA", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["parseDA"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "parseDA", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["parseDA"]; });
 
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "explicitElementToString", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["explicitElementToString"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "explicitElementToString", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["explicitElementToString"]; });
 
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "explicitDataSetToJS", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["explicitDataSetToJS"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "explicitDataSetToJS", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["explicitDataSetToJS"]; });
 
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "createJPEGBasicOffsetTable", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["createJPEGBasicOffsetTable"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "createJPEGBasicOffsetTable", function() { return _util_index_js__WEBPACK_IMPORTED_MODULE_0__["createJPEGBasicOffsetTable"]; });
 
 /* harmony import */ var _parseDicomDataSet_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_67824__(/*! ./parseDicomDataSet.js */ "./parseDicomDataSet.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "parseDicomDataSetExplicit", function() { return _parseDicomDataSet_js__WEBPACK_IMPORTED_MODULE_1__["parseDicomDataSetExplicit"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "parseDicomDataSetExplicit", function() { return _parseDicomDataSet_js__WEBPACK_IMPORTED_MODULE_1__["parseDicomDataSetExplicit"]; });
 
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "parseDicomDataSetImplicit", function() { return _parseDicomDataSet_js__WEBPACK_IMPORTED_MODULE_1__["parseDicomDataSetImplicit"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "parseDicomDataSetImplicit", function() { return _parseDicomDataSet_js__WEBPACK_IMPORTED_MODULE_1__["parseDicomDataSetImplicit"]; });
 
 /* harmony import */ var _byteArrayParser_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_67824__(/*! ./byteArrayParser.js */ "./byteArrayParser.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "readFixedString", function() { return _byteArrayParser_js__WEBPACK_IMPORTED_MODULE_2__["readFixedString"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "readFixedString", function() { return _byteArrayParser_js__WEBPACK_IMPORTED_MODULE_2__["readFixedString"]; });
 
 /* harmony import */ var _alloc_js__WEBPACK_IMPORTED_MODULE_3__ = __nested_webpack_require_67824__(/*! ./alloc.js */ "./alloc.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "alloc", function() { return _alloc_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "alloc", function() { return _alloc_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
 /* harmony import */ var _version_js__WEBPACK_IMPORTED_MODULE_4__ = __nested_webpack_require_67824__(/*! ./version.js */ "./version.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "version", function() { return _version_js__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "version", function() { return _version_js__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
 /* harmony import */ var _bigEndianByteArrayParser_js__WEBPACK_IMPORTED_MODULE_5__ = __nested_webpack_require_67824__(/*! ./bigEndianByteArrayParser.js */ "./bigEndianByteArrayParser.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "bigEndianByteArrayParser", function() { return _bigEndianByteArrayParser_js__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "bigEndianByteArrayParser", function() { return _bigEndianByteArrayParser_js__WEBPACK_IMPORTED_MODULE_5__["default"]; });
 
 /* harmony import */ var _byteStream_js__WEBPACK_IMPORTED_MODULE_6__ = __nested_webpack_require_67824__(/*! ./byteStream.js */ "./byteStream.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "ByteStream", function() { return _byteStream_js__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "ByteStream", function() { return _byteStream_js__WEBPACK_IMPORTED_MODULE_6__["default"]; });
 
 /* harmony import */ var _sharedCopy_js__WEBPACK_IMPORTED_MODULE_7__ = __nested_webpack_require_67824__(/*! ./sharedCopy.js */ "./sharedCopy.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "sharedCopy", function() { return _sharedCopy_js__WEBPACK_IMPORTED_MODULE_7__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "sharedCopy", function() { return _sharedCopy_js__WEBPACK_IMPORTED_MODULE_7__["default"]; });
 
 /* harmony import */ var _dataSet_js__WEBPACK_IMPORTED_MODULE_8__ = __nested_webpack_require_67824__(/*! ./dataSet.js */ "./dataSet.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "DataSet", function() { return _dataSet_js__WEBPACK_IMPORTED_MODULE_8__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "DataSet", function() { return _dataSet_js__WEBPACK_IMPORTED_MODULE_8__["default"]; });
 
 /* harmony import */ var _findAndSetUNElementLength_js__WEBPACK_IMPORTED_MODULE_9__ = __nested_webpack_require_67824__(/*! ./findAndSetUNElementLength.js */ "./findAndSetUNElementLength.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "findAndSetUNElementLength", function() { return _findAndSetUNElementLength_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "findAndSetUNElementLength", function() { return _findAndSetUNElementLength_js__WEBPACK_IMPORTED_MODULE_9__["default"]; });
 
 /* harmony import */ var _findEndOfEncapsulatedPixelData_js__WEBPACK_IMPORTED_MODULE_10__ = __nested_webpack_require_67824__(/*! ./findEndOfEncapsulatedPixelData.js */ "./findEndOfEncapsulatedPixelData.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "findEndOfEncapsulatedElement", function() { return _findEndOfEncapsulatedPixelData_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "findEndOfEncapsulatedElement", function() { return _findEndOfEncapsulatedPixelData_js__WEBPACK_IMPORTED_MODULE_10__["default"]; });
 
 /* harmony import */ var _findItemDelimitationItem_js__WEBPACK_IMPORTED_MODULE_11__ = __nested_webpack_require_67824__(/*! ./findItemDelimitationItem.js */ "./findItemDelimitationItem.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "findItemDelimitationItemAndSetElementLength", function() { return _findItemDelimitationItem_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "findItemDelimitationItemAndSetElementLength", function() { return _findItemDelimitationItem_js__WEBPACK_IMPORTED_MODULE_11__["default"]; });
 
 /* harmony import */ var _littleEndianByteArrayParser_js__WEBPACK_IMPORTED_MODULE_12__ = __nested_webpack_require_67824__(/*! ./littleEndianByteArrayParser.js */ "./littleEndianByteArrayParser.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "littleEndianByteArrayParser", function() { return _littleEndianByteArrayParser_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "littleEndianByteArrayParser", function() { return _littleEndianByteArrayParser_js__WEBPACK_IMPORTED_MODULE_12__["default"]; });
 
 /* harmony import */ var _parseDicom_js__WEBPACK_IMPORTED_MODULE_13__ = __nested_webpack_require_67824__(/*! ./parseDicom.js */ "./parseDicom.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "parseDicom", function() { return _parseDicom_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "parseDicom", function() { return _parseDicom_js__WEBPACK_IMPORTED_MODULE_13__["default"]; });
 
 /* harmony import */ var _readDicomElementExplicit_js__WEBPACK_IMPORTED_MODULE_14__ = __nested_webpack_require_67824__(/*! ./readDicomElementExplicit.js */ "./readDicomElementExplicit.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "readDicomElementExplicit", function() { return _readDicomElementExplicit_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "readDicomElementExplicit", function() { return _readDicomElementExplicit_js__WEBPACK_IMPORTED_MODULE_14__["default"]; });
 
 /* harmony import */ var _readDicomElementImplicit_js__WEBPACK_IMPORTED_MODULE_15__ = __nested_webpack_require_67824__(/*! ./readDicomElementImplicit.js */ "./readDicomElementImplicit.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "readDicomElementImplicit", function() { return _readDicomElementImplicit_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "readDicomElementImplicit", function() { return _readDicomElementImplicit_js__WEBPACK_IMPORTED_MODULE_15__["default"]; });
 
 /* harmony import */ var _readEncapsulatedImageFrame_js__WEBPACK_IMPORTED_MODULE_16__ = __nested_webpack_require_67824__(/*! ./readEncapsulatedImageFrame.js */ "./readEncapsulatedImageFrame.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "readEncapsulatedImageFrame", function() { return _readEncapsulatedImageFrame_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "readEncapsulatedImageFrame", function() { return _readEncapsulatedImageFrame_js__WEBPACK_IMPORTED_MODULE_16__["default"]; });
 
 /* harmony import */ var _readEncapsulatedPixelData_js__WEBPACK_IMPORTED_MODULE_17__ = __nested_webpack_require_67824__(/*! ./readEncapsulatedPixelData.js */ "./readEncapsulatedPixelData.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "readEncapsulatedPixelData", function() { return _readEncapsulatedPixelData_js__WEBPACK_IMPORTED_MODULE_17__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "readEncapsulatedPixelData", function() { return _readEncapsulatedPixelData_js__WEBPACK_IMPORTED_MODULE_17__["default"]; });
 
 /* harmony import */ var _readEncapsulatedPixelDataFromFragments_js__WEBPACK_IMPORTED_MODULE_18__ = __nested_webpack_require_67824__(/*! ./readEncapsulatedPixelDataFromFragments.js */ "./readEncapsulatedPixelDataFromFragments.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "readEncapsulatedPixelDataFromFragments", function() { return _readEncapsulatedPixelDataFromFragments_js__WEBPACK_IMPORTED_MODULE_18__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "readEncapsulatedPixelDataFromFragments", function() { return _readEncapsulatedPixelDataFromFragments_js__WEBPACK_IMPORTED_MODULE_18__["default"]; });
 
 /* harmony import */ var _readPart10Header_js__WEBPACK_IMPORTED_MODULE_19__ = __nested_webpack_require_67824__(/*! ./readPart10Header.js */ "./readPart10Header.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "readPart10Header", function() { return _readPart10Header_js__WEBPACK_IMPORTED_MODULE_19__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "readPart10Header", function() { return _readPart10Header_js__WEBPACK_IMPORTED_MODULE_19__["default"]; });
 
 /* harmony import */ var _readSequenceElementExplicit_js__WEBPACK_IMPORTED_MODULE_20__ = __nested_webpack_require_67824__(/*! ./readSequenceElementExplicit.js */ "./readSequenceElementExplicit.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "readSequenceItemsExplicit", function() { return _readSequenceElementExplicit_js__WEBPACK_IMPORTED_MODULE_20__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "readSequenceItemsExplicit", function() { return _readSequenceElementExplicit_js__WEBPACK_IMPORTED_MODULE_20__["default"]; });
 
 /* harmony import */ var _readSequenceElementImplicit_js__WEBPACK_IMPORTED_MODULE_21__ = __nested_webpack_require_67824__(/*! ./readSequenceElementImplicit.js */ "./readSequenceElementImplicit.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "readSequenceItemsImplicit", function() { return _readSequenceElementImplicit_js__WEBPACK_IMPORTED_MODULE_21__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "readSequenceItemsImplicit", function() { return _readSequenceElementImplicit_js__WEBPACK_IMPORTED_MODULE_21__["default"]; });
 
 /* harmony import */ var _readSequenceItem_js__WEBPACK_IMPORTED_MODULE_22__ = __nested_webpack_require_67824__(/*! ./readSequenceItem.js */ "./readSequenceItem.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "readSequenceItem", function() { return _readSequenceItem_js__WEBPACK_IMPORTED_MODULE_22__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "readSequenceItem", function() { return _readSequenceItem_js__WEBPACK_IMPORTED_MODULE_22__["default"]; });
 
 /* harmony import */ var _readTag_js__WEBPACK_IMPORTED_MODULE_23__ = __nested_webpack_require_67824__(/*! ./readTag.js */ "./readTag.js");
-/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__webpack_exports__, "readTag", function() { return _readTag_js__WEBPACK_IMPORTED_MODULE_23__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_67824__.d(__nested_webpack_exports__, "readTag", function() { return _readTag_js__WEBPACK_IMPORTED_MODULE_23__["default"]; });
 
 
 
@@ -2068,7 +2068,7 @@ var dicomParser = {
   LEE: _parseDicom_js__WEBPACK_IMPORTED_MODULE_13__["LEE"]
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (dicomParser);
+/* harmony default export */ __nested_webpack_exports__["default"] = (dicomParser);
 
 /***/ }),
 
@@ -2077,14 +2077,14 @@ var dicomParser = {
   !*** ./littleEndianByteArrayParser.js ***!
   \****************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_81116__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_81116__) {
 
 "use strict";
-__nested_webpack_require_81116__.r(__webpack_exports__);
+__nested_webpack_require_81116__.r(__nested_webpack_exports__);
 /**
  * Internal helper functions for parsing different types from a little-endian byte array
  */
-/* harmony default export */ __webpack_exports__["default"] = ({
+/* harmony default export */ __nested_webpack_exports__["default"] = ({
   /**
    *
    * Parses an unsigned int 16 from a little-endian byte array
@@ -2245,14 +2245,14 @@ __nested_webpack_require_81116__.r(__webpack_exports__);
   !*** ./parseDicom.js ***!
   \***********************/
 /*! exports provided: default, LEI, LEE, BEI */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_86987__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_86987__) {
 
 "use strict";
-__nested_webpack_require_86987__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_86987__.d(__webpack_exports__, "default", function() { return parseDicom; });
-/* harmony export (binding) */ __nested_webpack_require_86987__.d(__webpack_exports__, "LEI", function() { return LEI; });
-/* harmony export (binding) */ __nested_webpack_require_86987__.d(__webpack_exports__, "LEE", function() { return LEE; });
-/* harmony export (binding) */ __nested_webpack_require_86987__.d(__webpack_exports__, "BEI", function() { return BEI; });
+__nested_webpack_require_86987__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_86987__.d(__nested_webpack_exports__, "default", function() { return parseDicom; });
+/* harmony export (binding) */ __nested_webpack_require_86987__.d(__nested_webpack_exports__, "LEI", function() { return LEI; });
+/* harmony export (binding) */ __nested_webpack_require_86987__.d(__nested_webpack_exports__, "LEE", function() { return LEE; });
+/* harmony export (binding) */ __nested_webpack_require_86987__.d(__nested_webpack_exports__, "BEI", function() { return BEI; });
 /* harmony import */ var _alloc_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_86987__(/*! ./alloc.js */ "./alloc.js");
 /* harmony import */ var _bigEndianByteArrayParser_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_86987__(/*! ./bigEndianByteArrayParser.js */ "./bigEndianByteArrayParser.js");
 /* harmony import */ var _byteStream_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_86987__(/*! ./byteStream.js */ "./byteStream.js");
@@ -2423,12 +2423,12 @@ function parseDicom(byteArray) {
   !*** ./parseDicomDataSet.js ***!
   \******************************/
 /*! exports provided: parseDicomDataSetExplicit, parseDicomDataSetImplicit */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_96045__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_96045__) {
 
 "use strict";
-__nested_webpack_require_96045__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_96045__.d(__webpack_exports__, "parseDicomDataSetExplicit", function() { return parseDicomDataSetExplicit; });
-/* harmony export (binding) */ __nested_webpack_require_96045__.d(__webpack_exports__, "parseDicomDataSetImplicit", function() { return parseDicomDataSetImplicit; });
+__nested_webpack_require_96045__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_96045__.d(__nested_webpack_exports__, "parseDicomDataSetExplicit", function() { return parseDicomDataSetExplicit; });
+/* harmony export (binding) */ __nested_webpack_require_96045__.d(__nested_webpack_exports__, "parseDicomDataSetImplicit", function() { return parseDicomDataSetImplicit; });
 /* harmony import */ var _readDicomElementExplicit_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_96045__(/*! ./readDicomElementExplicit.js */ "./readDicomElementExplicit.js");
 /* harmony import */ var _readDicomElementImplicit_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_96045__(/*! ./readDicomElementImplicit.js */ "./readDicomElementImplicit.js");
 
@@ -2507,11 +2507,11 @@ function parseDicomDataSetImplicit(dataSet, byteStream, maxPosition) {
   !*** ./readDicomElementExplicit.js ***!
   \*************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_99453__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_99453__) {
 
 "use strict";
-__nested_webpack_require_99453__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_99453__.d(__webpack_exports__, "default", function() { return readDicomElementExplicit; });
+__nested_webpack_require_99453__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_99453__.d(__nested_webpack_exports__, "default", function() { return readDicomElementExplicit; });
 /* harmony import */ var _findEndOfEncapsulatedPixelData_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_99453__(/*! ./findEndOfEncapsulatedPixelData.js */ "./findEndOfEncapsulatedPixelData.js");
 /* harmony import */ var _findAndSetUNElementLength_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_99453__(/*! ./findAndSetUNElementLength.js */ "./findAndSetUNElementLength.js");
 /* harmony import */ var _readSequenceElementImplicit_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_99453__(/*! ./readSequenceElementImplicit.js */ "./readSequenceElementImplicit.js");
@@ -2596,11 +2596,11 @@ function readDicomElementExplicit(byteStream, warnings, untilTag) {
   !*** ./readDicomElementImplicit.js ***!
   \*************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_103017__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_103017__) {
 
 "use strict";
-__nested_webpack_require_103017__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_103017__.d(__webpack_exports__, "default", function() { return readDicomElementImplicit; });
+__nested_webpack_require_103017__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_103017__.d(__nested_webpack_exports__, "default", function() { return readDicomElementImplicit; });
 /* harmony import */ var _findItemDelimitationItem_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_103017__(/*! ./findItemDelimitationItem.js */ "./findItemDelimitationItem.js");
 /* harmony import */ var _readSequenceElementImplicit_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_103017__(/*! ./readSequenceElementImplicit.js */ "./readSequenceElementImplicit.js");
 /* harmony import */ var _readTag_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_103017__(/*! ./readTag.js */ "./readTag.js");
@@ -2684,11 +2684,11 @@ function readDicomElementImplicit(byteStream, untilTag, vrCallback) {
   !*** ./readEncapsulatedImageFrame.js ***!
   \***************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_106711__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_106711__) {
 
 "use strict";
-__nested_webpack_require_106711__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_106711__.d(__webpack_exports__, "default", function() { return readEncapsulatedImageFrame; });
+__nested_webpack_require_106711__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_106711__.d(__nested_webpack_exports__, "default", function() { return readEncapsulatedImageFrame; });
 /* harmony import */ var _readEncapsulatedPixelDataFromFragments_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_106711__(/*! ./readEncapsulatedPixelDataFromFragments.js */ "./readEncapsulatedPixelDataFromFragments.js");
 
 /**
@@ -2806,11 +2806,11 @@ function readEncapsulatedImageFrame(dataSet, pixelDataElement, frameIndex, basic
   !*** ./readEncapsulatedPixelData.js ***!
   \**************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_112180__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_112180__) {
 
 "use strict";
-__nested_webpack_require_112180__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_112180__.d(__webpack_exports__, "default", function() { return readEncapsulatedPixelData; });
+__nested_webpack_require_112180__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_112180__.d(__nested_webpack_exports__, "default", function() { return readEncapsulatedPixelData; });
 /* harmony import */ var _readEncapsulatedImageFrame_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_112180__(/*! ./readEncapsulatedImageFrame.js */ "./readEncapsulatedImageFrame.js");
 /* harmony import */ var _readEncapsulatedPixelDataFromFragments_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_112180__(/*! ./readEncapsulatedPixelDataFromFragments.js */ "./readEncapsulatedPixelDataFromFragments.js");
 
@@ -2895,11 +2895,11 @@ function readEncapsulatedPixelData(dataSet, pixelDataElement, frame) {
   !*** ./readEncapsulatedPixelDataFromFragments.js ***!
   \***************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_116397__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_116397__) {
 
 "use strict";
-__nested_webpack_require_116397__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_116397__.d(__webpack_exports__, "default", function() { return readEncapsulatedPixelDataFromFragments; });
+__nested_webpack_require_116397__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_116397__.d(__nested_webpack_exports__, "default", function() { return readEncapsulatedPixelDataFromFragments; });
 /* harmony import */ var _alloc_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_116397__(/*! ./alloc.js */ "./alloc.js");
 /* harmony import */ var _byteStream_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_116397__(/*! ./byteStream.js */ "./byteStream.js");
 /* harmony import */ var _readSequenceItem_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_116397__(/*! ./readSequenceItem.js */ "./readSequenceItem.js");
@@ -3036,11 +3036,11 @@ function readEncapsulatedPixelDataFromFragments(dataSet, pixelDataElement, start
   !*** ./readPart10Header.js ***!
   \*****************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_122937__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_122937__) {
 
 "use strict";
-__nested_webpack_require_122937__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_122937__.d(__webpack_exports__, "default", function() { return readPart10Header; });
+__nested_webpack_require_122937__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_122937__.d(__nested_webpack_exports__, "default", function() { return readPart10Header; });
 /* harmony import */ var _byteStream_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_122937__(/*! ./byteStream.js */ "./byteStream.js");
 /* harmony import */ var _dataSet_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_122937__(/*! ./dataSet.js */ "./dataSet.js");
 /* harmony import */ var _littleEndianByteArrayParser_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_122937__(/*! ./littleEndianByteArrayParser.js */ "./littleEndianByteArrayParser.js");
@@ -3152,11 +3152,11 @@ function readPart10Header(byteArray) {
   !*** ./readSequenceElementExplicit.js ***!
   \****************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_127711__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_127711__) {
 
 "use strict";
-__nested_webpack_require_127711__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_127711__.d(__webpack_exports__, "default", function() { return readSequenceItemsExplicit; });
+__nested_webpack_require_127711__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_127711__.d(__nested_webpack_exports__, "default", function() { return readSequenceItemsExplicit; });
 /* harmony import */ var _dataSet_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_127711__(/*! ./dataSet.js */ "./dataSet.js");
 /* harmony import */ var _readDicomElementExplicit_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_127711__(/*! ./readDicomElementExplicit.js */ "./readDicomElementExplicit.js");
 /* harmony import */ var _readSequenceItem_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_127711__(/*! ./readSequenceItem.js */ "./readSequenceItem.js");
@@ -3259,11 +3259,11 @@ function readSequenceItemsExplicit(byteStream, element, warnings) {
   !*** ./readSequenceElementImplicit.js ***!
   \****************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_132239__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_132239__) {
 
 "use strict";
-__nested_webpack_require_132239__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_132239__.d(__webpack_exports__, "default", function() { return readSequenceItemsImplicit; });
+__nested_webpack_require_132239__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_132239__.d(__nested_webpack_exports__, "default", function() { return readSequenceItemsImplicit; });
 /* harmony import */ var _dataSet_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_132239__(/*! ./dataSet.js */ "./dataSet.js");
 /* harmony import */ var _readDicomElementImplicit_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_132239__(/*! ./readDicomElementImplicit.js */ "./readDicomElementImplicit.js");
 /* harmony import */ var _readSequenceItem_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_132239__(/*! ./readSequenceItem.js */ "./readSequenceItem.js");
@@ -3375,11 +3375,11 @@ function readSequenceItemsImplicit(byteStream, element, vrCallback) {
   !*** ./readSequenceItem.js ***!
   \*****************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_137087__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_137087__) {
 
 "use strict";
-__nested_webpack_require_137087__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_137087__.d(__webpack_exports__, "default", function() { return readSequenceItem; });
+__nested_webpack_require_137087__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_137087__.d(__nested_webpack_exports__, "default", function() { return readSequenceItem; });
 /* harmony import */ var _readTag_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_137087__(/*! ./readTag.js */ "./readTag.js");
 
 /**
@@ -3420,11 +3420,11 @@ function readSequenceItem(byteStream) {
   !*** ./readTag.js ***!
   \********************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_138620__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_138620__) {
 
 "use strict";
-__nested_webpack_require_138620__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_138620__.d(__webpack_exports__, "default", function() { return readTag; });
+__nested_webpack_require_138620__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_138620__.d(__nested_webpack_exports__, "default", function() { return readTag; });
 /**
  * Internal helper functions for parsing DICOM elements
  */
@@ -3453,11 +3453,11 @@ function readTag(byteStream) {
   !*** ./sharedCopy.js ***!
   \***********************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_139744__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_139744__) {
 
 "use strict";
-__nested_webpack_require_139744__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_139744__.d(__webpack_exports__, "default", function() { return sharedCopy; });
+__nested_webpack_require_139744__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_139744__.d(__nested_webpack_exports__, "default", function() { return sharedCopy; });
 /**
  *
  * Internal helper function to create a shared copy of a byteArray
@@ -3489,11 +3489,11 @@ function sharedCopy(byteArray, byteOffset, length) {
   !*** ./util/createJPEGBasicOffsetTable.js ***!
   \********************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_141178__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_141178__) {
 
 "use strict";
-__nested_webpack_require_141178__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_141178__.d(__webpack_exports__, "default", function() { return createJPEGBasicOffsetTable; });
+__nested_webpack_require_141178__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_141178__.d(__nested_webpack_exports__, "default", function() { return createJPEGBasicOffsetTable; });
 // Each JPEG image has an end of image marker 0xFFD9
 function isEndOfImageMarker(dataSet, position) {
   return dataSet.byteArray[position] === 0xFF && dataSet.byteArray[position + 1] === 0xD9;
@@ -3589,11 +3589,11 @@ function createJPEGBasicOffsetTable(dataSet, pixelDataElement, fragments) {
   !*** ./util/dataSetToJS.js ***!
   \*****************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_145351__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_145351__) {
 
 "use strict";
-__nested_webpack_require_145351__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_145351__.d(__webpack_exports__, "default", function() { return explicitDataSetToJS; });
+__nested_webpack_require_145351__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_145351__.d(__nested_webpack_exports__, "default", function() { return explicitDataSetToJS; });
 /* harmony import */ var _elementToString_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_145351__(/*! ./elementToString.js */ "./util/elementToString.js");
 /* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_145351__(/*! ./util.js */ "./util/util.js");
 
@@ -3662,11 +3662,11 @@ function explicitDataSetToJS(dataSet, options) {
   !*** ./util/elementToString.js ***!
   \*********************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_147594__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_147594__) {
 
 "use strict";
-__nested_webpack_require_147594__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_147594__.d(__webpack_exports__, "default", function() { return explicitElementToString; });
+__nested_webpack_require_147594__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_147594__.d(__nested_webpack_exports__, "default", function() { return explicitElementToString; });
 /* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_147594__(/*! ./util.js */ "./util/util.js");
 
 /**
@@ -3742,31 +3742,31 @@ function explicitElementToString(dataSet, element) {
   !*** ./util/index.js ***!
   \***********************/
 /*! exports provided: isStringVr, isPrivateTag, parsePN, parseTM, parseDA, explicitElementToString, explicitDataSetToJS, createJPEGBasicOffsetTable */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_150102__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_150102__) {
 
 "use strict";
-__nested_webpack_require_150102__.r(__webpack_exports__);
+__nested_webpack_require_150102__.r(__nested_webpack_exports__);
 /* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_0__ = __nested_webpack_require_150102__(/*! ./util.js */ "./util/util.js");
-/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__webpack_exports__, "isStringVr", function() { return _util_js__WEBPACK_IMPORTED_MODULE_0__["isStringVr"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__nested_webpack_exports__, "isStringVr", function() { return _util_js__WEBPACK_IMPORTED_MODULE_0__["isStringVr"]; });
 
-/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__webpack_exports__, "isPrivateTag", function() { return _util_js__WEBPACK_IMPORTED_MODULE_0__["isPrivateTag"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__nested_webpack_exports__, "isPrivateTag", function() { return _util_js__WEBPACK_IMPORTED_MODULE_0__["isPrivateTag"]; });
 
-/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__webpack_exports__, "parsePN", function() { return _util_js__WEBPACK_IMPORTED_MODULE_0__["parsePN"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__nested_webpack_exports__, "parsePN", function() { return _util_js__WEBPACK_IMPORTED_MODULE_0__["parsePN"]; });
 
 /* harmony import */ var _parseTM_js__WEBPACK_IMPORTED_MODULE_1__ = __nested_webpack_require_150102__(/*! ./parseTM.js */ "./util/parseTM.js");
-/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__webpack_exports__, "parseTM", function() { return _parseTM_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__nested_webpack_exports__, "parseTM", function() { return _parseTM_js__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
 /* harmony import */ var _parseDA_js__WEBPACK_IMPORTED_MODULE_2__ = __nested_webpack_require_150102__(/*! ./parseDA.js */ "./util/parseDA.js");
-/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__webpack_exports__, "parseDA", function() { return _parseDA_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__nested_webpack_exports__, "parseDA", function() { return _parseDA_js__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
 /* harmony import */ var _elementToString_js__WEBPACK_IMPORTED_MODULE_3__ = __nested_webpack_require_150102__(/*! ./elementToString.js */ "./util/elementToString.js");
-/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__webpack_exports__, "explicitElementToString", function() { return _elementToString_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__nested_webpack_exports__, "explicitElementToString", function() { return _elementToString_js__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
 /* harmony import */ var _dataSetToJS_js__WEBPACK_IMPORTED_MODULE_4__ = __nested_webpack_require_150102__(/*! ./dataSetToJS.js */ "./util/dataSetToJS.js");
-/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__webpack_exports__, "explicitDataSetToJS", function() { return _dataSetToJS_js__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__nested_webpack_exports__, "explicitDataSetToJS", function() { return _dataSetToJS_js__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
 /* harmony import */ var _createJPEGBasicOffsetTable_js__WEBPACK_IMPORTED_MODULE_5__ = __nested_webpack_require_150102__(/*! ./createJPEGBasicOffsetTable.js */ "./util/createJPEGBasicOffsetTable.js");
-/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__webpack_exports__, "createJPEGBasicOffsetTable", function() { return _createJPEGBasicOffsetTable_js__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+/* harmony reexport (safe) */ __nested_webpack_require_150102__.d(__nested_webpack_exports__, "createJPEGBasicOffsetTable", function() { return _createJPEGBasicOffsetTable_js__WEBPACK_IMPORTED_MODULE_5__["default"]; });
 
 
 
@@ -3783,11 +3783,11 @@ __nested_webpack_require_150102__.r(__webpack_exports__);
   !*** ./util/parseDA.js ***!
   \*************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_152645__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_152645__) {
 
 "use strict";
-__nested_webpack_require_152645__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_152645__.d(__webpack_exports__, "default", function() { return parseDA; });
+__nested_webpack_require_152645__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_152645__.d(__nested_webpack_exports__, "default", function() { return parseDA; });
 // algorithm based on http://stackoverflow.com/questions/1433030/validate-number-of-days-in-a-given-month
 function daysInMonth(m, y) {
   // m is 0 indexed: 0-11
@@ -3855,11 +3855,11 @@ function parseDA(date, validate) {
   !*** ./util/parseTM.js ***!
   \*************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_154419__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_154419__) {
 
 "use strict";
-__nested_webpack_require_154419__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_154419__.d(__webpack_exports__, "default", function() { return parseTM; });
+__nested_webpack_require_154419__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_154419__.d(__nested_webpack_exports__, "default", function() { return parseTM; });
 /**
  * Parses a TM formatted string into a javascript object with properties for hours, minutes, seconds and fractionalSeconds
  * @param {string} time - a string in the TM VR format
@@ -3905,13 +3905,13 @@ function parseTM(time, validate) {
   !*** ./util/util.js ***!
   \**********************/
 /*! exports provided: isStringVr, isPrivateTag, parsePN */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_156365__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_156365__) {
 
 "use strict";
-__nested_webpack_require_156365__.r(__webpack_exports__);
-/* harmony export (binding) */ __nested_webpack_require_156365__.d(__webpack_exports__, "isStringVr", function() { return isStringVr; });
-/* harmony export (binding) */ __nested_webpack_require_156365__.d(__webpack_exports__, "isPrivateTag", function() { return isPrivateTag; });
-/* harmony export (binding) */ __nested_webpack_require_156365__.d(__webpack_exports__, "parsePN", function() { return parsePN; });
+__nested_webpack_require_156365__.r(__nested_webpack_exports__);
+/* harmony export (binding) */ __nested_webpack_require_156365__.d(__nested_webpack_exports__, "isStringVr", function() { return isStringVr; });
+/* harmony export (binding) */ __nested_webpack_require_156365__.d(__nested_webpack_exports__, "isPrivateTag", function() { return isPrivateTag; });
+/* harmony export (binding) */ __nested_webpack_require_156365__.d(__nested_webpack_exports__, "parsePN", function() { return parsePN; });
 var stringVrs = {
   AE: true,
   AS: true,
@@ -4003,11 +4003,11 @@ var parsePN = function parsePN(personName) {
   !*** ./version.js ***!
   \********************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __nested_webpack_require_158748__) {
+/***/ (function(module, __nested_webpack_exports__, __nested_webpack_require_158748__) {
 
 "use strict";
-__nested_webpack_require_158748__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ('1.8.12');
+__nested_webpack_require_158748__.r(__nested_webpack_exports__);
+/* harmony default export */ __nested_webpack_exports__["default"] = ('1.8.12');
 
 /***/ }),
 
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 829:
+/***/ 309:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 646:
+/***/ 278:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=undefined;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=undefined;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
@@ -6952,7 +6952,7 @@ if ((moduleType !== 'undefined') && module.exports) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("lib/jquery");
+module.exports = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("lib/jquery");
 
 /***/ }),
 
@@ -7056,25 +7056,25 @@ var __webpack_exports__ = {};
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Texturing/X3DSingleTextureNode\")"
-const X3DSingleTextureNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/Components/Texturing/X3DSingleTextureNode");
+const X3DSingleTextureNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/Components/Texturing/X3DSingleTextureNode");
 var X3DSingleTextureNode_default = /*#__PURE__*/__webpack_require__.n(X3DSingleTextureNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/X3DTexture3DNode.js
 /*******************************************************************************
@@ -7242,7 +7242,7 @@ const __default__ = X3DTexture3DNode;
 Namespace_default().set ("x_ite/Components/Texturing3D/X3DTexture3DNode", __default__);
 /* harmony default export */ const Texturing3D_X3DTexture3DNode = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/Base/X3DCast");
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ComposedTexture3D.js
 /*******************************************************************************
@@ -7440,10 +7440,10 @@ const ComposedTexture3D_default_ = ComposedTexture3D;
 Namespace_default().set ("x_ite/Components/Texturing3D/ComposedTexture3D", ComposedTexture3D_default_);
 /* harmony default export */ const Texturing3D_ComposedTexture3D = (ComposedTexture3D_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Networking/X3DUrlObject\")"
-const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/Components/Networking/X3DUrlObject");
+const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/Components/Networking/X3DUrlObject");
 var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Parser/Expressions\")"
-const Expressions_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/Parser/Expressions");
+const Expressions_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/Parser/Expressions");
 var Expressions_default = /*#__PURE__*/__webpack_require__.n(Expressions_namespaceObject);
 // EXTERNAL MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"lib/jquery\")"
 var jquery_ = __webpack_require__(355);
@@ -7912,11 +7912,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().set ("x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(270);
-/* provided dependency */ var JpegImage = __webpack_require__(829);
-/* provided dependency */ var jpeg = __webpack_require__(646);
-/* provided dependency */ var CharLS = __webpack_require__(997);
-/* provided dependency */ var OpenJPEG = __webpack_require__(952);
+/* provided dependency */ var dicomParser = __webpack_require__(729);
+/* provided dependency */ var JpegImage = __webpack_require__(309);
+/* provided dependency */ var jpeg = __webpack_require__(278);
+/* provided dependency */ var CharLS = __webpack_require__(110);
+/* provided dependency */ var OpenJPEG = __webpack_require__(582);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9019,7 +9019,7 @@ const DICOMParser_default_ = DicomParser;
 Namespace_default().set ("x_ite/Browser/Texturing3D/DICOMParser", DICOMParser_default_);
 /* harmony default export */ const DICOMParser = (DICOMParser_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/InputOutput/FileLoader\")"
-const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/InputOutput/FileLoader");
+const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/InputOutput/FileLoader");
 var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ImageTexture3D.js
 /*******************************************************************************
@@ -9124,7 +9124,7 @@ ImageTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTextu
       Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
       X3DUrlObject_default().prototype.initialize.call (this);
 
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
    getInternalType: function (components)
    {
@@ -9142,11 +9142,11 @@ ImageTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTextu
             return gl .RGBA;
       }
    },
-   unLoadNow: function ()
+   unloadData: function ()
    {
       this .clearTexture ();
    },
-   loadNow: function ()
+   loadData: function ()
    {
       new (FileLoader_default()) (this) .loadDocument (this ._url,
       function (data)
@@ -9199,7 +9199,7 @@ const ImageTexture3D_default_ = ImageTexture3D;
 Namespace_default().set ("x_ite/Components/Texturing3D/ImageTexture3D", ImageTexture3D_default_);
 /* harmony default export */ const Texturing3D_ImageTexture3D = (ImageTexture3D_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/DEBUG\")"
-const DEBUG_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/DEBUG");
+const DEBUG_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/DEBUG");
 var DEBUG_default = /*#__PURE__*/__webpack_require__.n(DEBUG_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ImageTextureAtlas.js
 /* provided dependency */ var $ = __webpack_require__(355);
@@ -9314,13 +9314,13 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (Texturing3D_X3DTe
       this .image .on ("abort error", this .setError .bind (this));
       this .image .prop ("crossOrigin", "Anonymous");
 
-      this .requestImmediateLoad ();
+      this .requestImmediateLoad () .catch (Function .prototype);
    },
-   unLoadNow: function ()
+   unloadData: function ()
    {
       this .clearTexture ();
    },
-   loadNow: function ()
+   loadData: function ()
    {
       this .urlStack .setValue (this ._url);
       this .loadNext ();
@@ -9657,10 +9657,10 @@ const PixelTexture3D_default_ = PixelTexture3D;
 Namespace_default().set ("x_ite/Components/Texturing3D/PixelTexture3D", PixelTexture3D_default_);
 /* harmony default export */ const Texturing3D_PixelTexture3D = (PixelTexture3D_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode\")"
-const X3DSingleTextureCoordinateNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/Components/Texturing/X3DSingleTextureCoordinateNode");
+const X3DSingleTextureCoordinateNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/Components/Texturing/X3DSingleTextureCoordinateNode");
 var X3DSingleTextureCoordinateNode_default = /*#__PURE__*/__webpack_require__.n(X3DSingleTextureCoordinateNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector4\")"
-const Vector4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("standard/Math/Numbers/Vector4");
+const Vector4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("standard/Math/Numbers/Vector4");
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/TextureCoordinate3D.js
 /*******************************************************************************
  *
@@ -10008,16 +10008,16 @@ const TextureCoordinate4D_default_ = TextureCoordinate4D;
 Namespace_default().set ("x_ite/Components/Texturing3D/TextureCoordinate4D", TextureCoordinate4D_default_);
 /* harmony default export */ const Texturing3D_TextureCoordinate4D = (TextureCoordinate4D_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Texturing/X3DSingleTextureTransformNode\")"
-const X3DSingleTextureTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("x_ite/Components/Texturing/X3DSingleTextureTransformNode");
+const X3DSingleTextureTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("x_ite/Components/Texturing/X3DSingleTextureTransformNode");
 var X3DSingleTextureTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DSingleTextureTransformNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("standard/Math/Numbers/Vector3");
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
-const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("standard/Math/Numbers/Rotation4");
+const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("standard/Math/Numbers/Rotation4");
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.17")] .require ("standard/Math/Numbers/Matrix4");
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.6.18")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/TextureTransform3D.js
 /*******************************************************************************
