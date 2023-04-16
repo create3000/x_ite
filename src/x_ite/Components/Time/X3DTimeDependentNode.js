@@ -63,10 +63,7 @@ function X3DTimeDependentNode (executionContext)
    this .start           = 0;
    this .pause           = 0;
    this .pauseInterval   = 0;
-   this .startTimeout    = null;
-   this .pauseTimeout    = null;
-   this .resumeTimeout   = null;
-   this .stopTimeout     = null;
+   this .timeouts        = new Map ();
    this .disabled        = false;
 }
 
@@ -165,13 +162,13 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
 
       if (this ._enabled .getValue ())
       {
-         this .removeTimeout ("startTimeout");
+         this .removeTimeout ("start");
 
          if (this .startTimeValue <= this .getBrowser () .getCurrentTime ())
             this .do_start ();
 
          else
-            this .addTimeout ("startTimeout", "do_start", this .startTimeValue);
+            this .addTimeout ("start", "do_start", this .startTimeValue);
       }
    },
    set_pauseTime__: function ()
@@ -180,7 +177,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
 
       if (this ._enabled .getValue ())
       {
-         this .removeTimeout ("pauseTimeout");
+         this .removeTimeout ("pause");
 
          if (this .pauseTimeValue <= this .resumeTimeValue)
             return;
@@ -189,7 +186,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
             this .do_pause ();
 
          else
-            this .addTimeout ("pauseTimeout", "do_pause", this .pauseTimeValue);
+            this .addTimeout ("pause", "do_pause", this .pauseTimeValue);
       }
    },
    set_resumeTime__: function ()
@@ -198,7 +195,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
 
       if (this ._enabled .getValue ())
       {
-         this .removeTimeout ("resumeTimeout");
+         this .removeTimeout ("resume");
 
          if (this .resumeTimeValue <= this .pauseTimeValue)
             return;
@@ -207,7 +204,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
             this .do_resume ();
 
          else
-            this .addTimeout ("resumeTimeout", "do_resume", this .resumeTimeValue);
+            this .addTimeout ("resume", "do_resume", this .resumeTimeValue);
       }
    },
    set_stopTime__: function ()
@@ -216,7 +213,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
 
       if (this ._enabled .getValue ())
       {
-         this .removeTimeout ("stopTimeout");
+         this .removeTimeout ("stop");
 
          if (this .stopTimeValue <= this .startTimeValue)
             return;
@@ -225,7 +222,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
             this .do_stop ();
 
          else
-            this .addTimeout ("stopTimeout", "do_stop", this .stopTimeValue);
+            this .addTimeout ("stop", "do_stop", this .stopTimeValue);
       }
    },
    do_start: function ()
@@ -323,13 +320,13 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
    {
       this .removeTimeout (name);
 
-      this [name] = setTimeout (this .processTimeout .bind (this, callback), (time - this .getBrowser () .getCurrentTime ()) * 1000);
+      this .timeouts .set (name, setTimeout (this .processTimeout .bind (this, callback), (time - this .getBrowser () .getCurrentTime ()) * 1000));
    },
    removeTimeout: function (name)
    {
-      clearTimeout (this [name]);
+      clearTimeout (this .timeouts .get (name));
 
-      this [name] = null;
+      this .timeouts .delete (name);
    },
    processTimeout: function (callback)
    {
@@ -349,7 +346,11 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
    set_resume: Function .prototype,
    set_stop: Function .prototype,
    set_time: Function .prototype,
-   dispose: Function .prototype,
+   dispose: function ()
+   {
+      for (const name of [... this .timeouts .keys ()])
+         this .removeTimeout (name);
+   },
 });
 
 export default X3DTimeDependentNode;
