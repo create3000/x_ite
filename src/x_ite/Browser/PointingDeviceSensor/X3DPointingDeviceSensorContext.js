@@ -137,7 +137,7 @@ X3DPointingDeviceSensorContext .prototype =
          {
             if (this .getDisplayLoadCount ())
                div .css ("cursor", "wait");
-            else if (this [_pointingDevice] && this [_pointingDevice] .isOver)
+            else if (this [_pointingDevice] ?.isOver)
                div .css ("cursor", "pointer");
             else
                div .css ("cursor", "default");
