@@ -306,10 +306,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       return this [_fieldDefinitions];
    },
-   getFieldsAreEnumerable: function ()
-   {
-      return false;
-   },
    addField: function (fieldDefinition)
    {
       const
@@ -329,7 +325,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       {
          get: function () { return field; },
          set: function (value) { field .setValue (value); },
-         enumerable: this .getFieldsAreEnumerable (),
+         enumerable: false,
          configurable: true, // false : non deletable
       });
 
@@ -512,10 +508,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    getFields: function ()
    {
       return this [_fields];
-   },
-   getSourceText: function ()
-   {
-      return null;
    },
    hasRoutes: function ()
    {

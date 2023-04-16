@@ -168,7 +168,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          }
       });
    },
-   getContext: function (text)
+   getContext: function (sourceText)
    {
       try
       {
@@ -187,16 +187,16 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
             }
          }
 
-         text += "\nreturn [" + callbacks .map (function (c)
+         sourceText += "\nreturn [" + callbacks .map (function (c)
          {
             return `typeof ${c} !== "undefined" ? ${c} : undefined`;
          })
          .join (",") + "];";
 
-         this .global = this .getGlobal ();
+         this .globalObject = this .getGlobalObject ();
 
          const
-            result  = evaluate (this .global, text),
+            result  = evaluate (this .globalObject, sourceText),
             context = new Map ();
 
          for (let i = 0; i < callbacks .length; ++ i)
@@ -211,11 +211,11 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          return new Map ();
       }
    },
-   evaluate: function (text)
+   evaluate: function (sourceText)
    {
-      return evaluate (this .global, `return (${text})`);
+      return evaluate (this .globalObject, `return (${sourceText})`);
    },
-   getGlobal: function ()
+   getGlobalObject: function ()
    {
       const
          browser          = this .getBrowser (),
@@ -244,7 +244,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       SFNode .prototype = Fields .SFNode .prototype;
 
-      const global =
+      const globalObject =
       {
          NULL:  { value: null },
          FALSE: { value: false },
@@ -324,9 +324,9 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          if (field .getAccessType () === X3DConstants .inputOnly)
             continue;
 
-         if (!(name in global))
+         if (!(name in globalObject))
          {
-            global [name] =
+            globalObject [name] =
             {
                get: field .valueOf .bind (field),
                set: field .setValue .bind (field),
@@ -335,7 +335,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
          if (field .getAccessType () === X3DConstants .inputOutput)
          {
-            global [name + "_changed"] =
+            globalObject [name + "_changed"] =
             {
                get: field .valueOf  .bind (field),
                set: field .setValue .bind (field),
@@ -343,9 +343,9 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          }
       }
 
-      return Object .create (Object .prototype, global);
+      return Object .create (Object .prototype, globalObject);
    },
-   initialize__: function (text)
+   initialize__: function (sourceText)
    {
       this .disconnect ();
 
@@ -353,7 +353,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       // Create context.
 
-      this .context = this .getContext (text);
+      this .context = this .getContext (sourceText);
 
       // Call initialize function.
 

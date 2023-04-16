@@ -208,9 +208,9 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       return false;
    },
-   getFieldsAreEnumerable: function ()
+   getSourceText: function ()
    {
-      return true;
+      return null;
    },
    traverse: function () { },
    toStream: function (generator)
