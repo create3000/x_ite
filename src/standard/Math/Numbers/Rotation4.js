@@ -48,6 +48,7 @@
 import Quaternion from "./Quaternion.js";
 import Vector3    from "./Vector3.js";
 import Vector4    from "./Vector4.js";
+import Matrix3    from "./Matrix3.js";
 import Algorithm  from "../Algorithm.js";
 
 const
@@ -280,7 +281,7 @@ Rotation4 .prototype =
    {
       this .set (vector .x, vector .y, vector .z, this [_angle]);
    },
-   getAxis: function (axis)
+   getAxis: function (axis = new Vector3 (0, 0, 0))
    {
       return axis .set (this [_x], this [_y], this [_z]);
    },
@@ -290,7 +291,7 @@ Rotation4 .prototype =
       this .update ();
       return this;
    },
-   getQuaternion: function (quaternion)
+   getQuaternion: function (quaternion = new Quaternion ())
    {
       return quaternion .assign (this [_quaternion]);
    },
@@ -300,7 +301,7 @@ Rotation4 .prototype =
       this .update ();
       return this;
    },
-   getMatrix: function (matrix)
+   getMatrix: function (matrix = new Matrix3 ())
    {
       return this [_quaternion] .getMatrix (matrix);
    },

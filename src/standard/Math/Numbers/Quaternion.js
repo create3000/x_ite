@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import Vector3   from "./Vector3.js";
+import Matrix3   from "./Matrix3.js";
 import Algorithm from "../Algorithm.js";
 
 function Quaternion (x, y, z, w)
@@ -137,7 +138,7 @@ Quaternion .prototype =
 
       return this;
    },
-   getMatrix: function (matrix)
+   getMatrix: function (matrix = new Matrix3 ())
    {
       const { x, y, z, w } = this;
 
@@ -168,11 +169,11 @@ Quaternion .prototype =
    },
    isReal: function ()
    {
-      return ! (this .x || this .y || this .z);
+      return !(this .x || this .y || this .z);
    },
    isImag: function ()
    {
-      return ! this .w;
+      return !this .w;
    },
    equals: function (quat)
    {

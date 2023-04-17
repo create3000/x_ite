@@ -126,7 +126,7 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    getAxis: function ()
    {
-      return new SFVec3f (this .getValue () .getAxis (new Vector3 (0, 0, 0)));
+      return new SFVec3f (this .getValue () .getAxis ());
    },
    setMatrix: function (matrix)
    {
@@ -135,7 +135,7 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    getMatrix: function ()
    {
-      return new SFMatrix3f (this .getValue () .getMatrix (new Matrix3 ()));
+      return new SFMatrix3f (this .getValue () .getMatrix ());
    },
    inverse: function ()
    {
