@@ -62,12 +62,12 @@ DynamicsCompressor .prototype = Object .assign (Object .create (X3DSoundProcessi
 {
    constructor: DynamicsCompressor,
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",              new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "description",           new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",               new Fields .SFBool (true)),
 
       new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "attack",                new Fields .SFFloat (0.003)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "attack",                new Fields .SFFloat (0.003)), // TODO: SFTime
       new X3DFieldDefinition (X3DConstants .inputOutput, "knee",                  new Fields .SFFloat (30)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "ratio",                 new Fields .SFFloat (12)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "reduction",             new Fields .SFFloat ()),
