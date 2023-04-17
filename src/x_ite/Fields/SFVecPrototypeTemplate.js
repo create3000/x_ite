@@ -181,9 +181,9 @@ function SFVecPrototypeTemplate (TypeName, Type, ValueType, double)
       toJSONStreamValue: function (generator)
       {
          const
-            value = this .getValue (),
-            last  = value .length - 1,
-            category  = generator .Unit (this .getUnit ());
+            value    = this .getValue (),
+            last     = value .length - 1,
+            category = generator .Unit (this .getUnit ());
 
          for (let i = 0; i < last; ++ i)
          {
