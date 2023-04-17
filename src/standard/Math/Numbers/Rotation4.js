@@ -291,7 +291,7 @@ Rotation4 .prototype =
       this .update ();
       return this;
    },
-   getQuaternion: function (quaternion = new Quaternion ())
+   getQuaternion: function (quaternion = new Quaternion (0, 0, 0, 1))
    {
       return quaternion .assign (this [_quaternion]);
    },
