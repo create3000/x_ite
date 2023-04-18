@@ -81,7 +81,7 @@ X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prot
    {
       const browser = this .getBrowser ();
 
-      if (browser .getMustEvaluate ())
+      if (browser .getMustEvaluate () && this .getFields () .has (field .getName ()))
       {
          // Immediately process event.
          browser .getScriptStack () .push (this);
