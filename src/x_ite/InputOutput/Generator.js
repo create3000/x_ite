@@ -320,8 +320,6 @@ Generator .prototype =
             match = name .match (/^(.*?)(_\d+)?$/),
             names = this .names .get (this .ExecutionContext ());
 
-         console .log (names)
-
          if (match [1])
          {
             // The node has a name.
@@ -336,8 +334,6 @@ Generator .prototype =
                return "";
 
             var newName = `_${++ names .index}`;
-
-            console .log (newName)
          }
 
          // Add to indices.

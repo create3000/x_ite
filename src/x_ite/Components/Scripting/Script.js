@@ -162,9 +162,21 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          }
          else
          {
-            this .setLoadState (X3DConstants .COMPLETE_STATE);
-
-            this .initialize__ ($.decodeText (data));
+            if (this ._mustEvaluate .getValue ())
+            {
+               setTimeout (() =>
+               {
+                  // Wait for routes to be parsed and connected.
+                  this .initialize__ ($.decodeText (data));
+                  this .setLoadState (X3DConstants .COMPLETE_STATE);
+               },
+               0);
+            }
+            else
+            {
+               this .initialize__ ($.decodeText (data));
+               this .setLoadState (X3DConstants .COMPLETE_STATE);
+            }
          }
       });
    },
