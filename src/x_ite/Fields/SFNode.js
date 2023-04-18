@@ -67,8 +67,12 @@ const handler =
             return value;
 
          const
-            field      = target .getValue () .getField (key),
+            node       = target .getValue (),
+            field      = node .getField (key),
             accessType = field .getAccessType ();
+
+         if (!node .getBrowser () .getDirectOutput ())
+            this .directOutputWarning (node);
 
          // Specification conform would be: accessType & X3DConstants .outputOnly.
          // But we allow read access to plain fields, too.
@@ -93,13 +97,17 @@ const handler =
       try
       {
          const
-            field      = target .getValue () .getField (key),
+            node       = target .getValue (),
+            field      = node .getField (key),
             accessType = field .getAccessType ();
 
          if (accessType !== X3DConstants .outputOnly)
             field .setValue (value);
 
-          return true;
+         if (!node .getBrowser () .getDirectOutput ())
+            this .directOutputWarning (node);
+
+         return true;
       }
       catch (error)
       {
@@ -150,6 +158,19 @@ const handler =
             };
          }
       }
+   },
+   directOutputWarning: function (node)
+   {
+      const
+         browser    = node .getBrowser (),
+         scriptNode = browser .getScriptStack () .at (-1);
+
+      if (scriptNode .directOutputWarning)
+         return;
+
+      scriptNode .directOutputWarning = true;
+
+      console .warn (`The 'directOutput' field of the Script named '${scriptNode .getName ()}' should be set to TRUE!`);
    },
 };
 

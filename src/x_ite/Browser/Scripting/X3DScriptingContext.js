@@ -62,6 +62,10 @@ X3DScriptingContext .prototype =
    {
       return this [_scripts];
    },
+   getDirectOutput: function ()
+   {
+      return this [_scripts] .at (-1) ._directOutput ?.getValue () ?? true;
+   },
    getMustEvaluate: function ()
    {
       return this [_scripts] .at (-1) ._mustEvaluate ?.getValue () ?? false;
