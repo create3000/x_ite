@@ -82,20 +82,13 @@ X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prot
       const browser = this .getBrowser ();
 
       if (browser .getMustEvaluate ())
-      {
-         // Immediately process event.
-
-         field .processEvent (event);
-      }
+         field .processEvent (event);             // Immediately process event.
       else
-      {
-         // Register for processEvent
+         browser .addTaintedField (field, event); // Register for processEvent.
 
-         browser .addTaintedField (field, event);
-         browser .addBrowserEvent ();
-      }
+      browser .addBrowserEvent ();
 
-      // Register for eventsProcessed
+      // Register for eventsProcessed.
 
       if (this .isTainted ())
          return;
