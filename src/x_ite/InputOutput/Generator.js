@@ -72,7 +72,7 @@ function Generator ({ style = "TIDY", precision = 7, doublePrecision = 15 })
    this .units                 = true;
    this .unitCategories        = [ ];
 
-   this .names .set (null, new Set ());
+   this .names .set (null, Object .assign (new Set (), { index: 0 }));
 }
 
 Generator .prototype =
@@ -320,6 +320,8 @@ Generator .prototype =
             match = name .match (/^(.*?)(_\d+)?$/),
             names = this .names .get (this .ExecutionContext ());
 
+         console .log (names)
+
          if (match [1])
          {
             // The node has a name.
@@ -334,6 +336,8 @@ Generator .prototype =
                return "";
 
             var newName = `_${++ names .index}`;
+
+            console .log (newName)
          }
 
          // Add to indices.
