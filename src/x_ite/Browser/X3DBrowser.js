@@ -482,7 +482,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
          // Start loading.
 
-         const fileLoader = this [_fileLoader] = new FileLoader (this .getWorld ());
+         const
+            previousFileLoader = this [_fileLoader],
+            fileLoader         = new FileLoader (this .getWorld ());
+
+         this [_fileLoader] = fileLoader;
 
          this .setBrowserLoading (true);
          this .addLoadingObject (fileLoader);
@@ -528,6 +532,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
                return;
             }
 
+            this [_fileLoader] = previousFileLoader;
+
             this .changeViewpoint (fragment);
             this .removeLoadingObject (fileLoader);
             this .setBrowserLoading (false);
@@ -541,6 +547,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
                reject (new Error ("Loading of file aborted."));
                return;
             }
+
+            this [_fileLoader] = previousFileLoader;
 
             if (target)
                window .open (url, target);
