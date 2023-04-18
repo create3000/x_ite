@@ -345,3 +345,13 @@ This sends a set_translation inputOnly field to the Transform node. An inputOnly
 ### Sending OutputOnly Fields
 
 Assigning to an outputOnly fields or inputOutput field sends that event at the completion of the currently executing function. This implies that assigning to the outputOnly field or inputOutput field multiple times during one execution of the function still only sends one event and that event is the last value assigned.
+
+## Script Special Field
+
+### directOutput
+
+You can alter your world through a Script in two ways: one involves using an outputOnly variable and routing the event to another node, while the other involves directly accessing other nodes' fields. The first method necessitates the routing of events sent by the Script to other nodes, whereas the latter only requires an attribution. The Script's *directOutput* field determines whether the latter approach is permitted. If *directOutput* is `FALSE`, you can only impact the rest of your world by sending events from the Script and routing them to the intended nodes.
+
+### mustEvaluate
+
+As drawing X3D worlds is a highly demanding task, it can be challenging for a browser to both draw and process events simultaneously. When dealing with numerous Scripts in your world, prioritizing drawing over event processing is preferable. Within the Script node, there exists a field that regulates event processing. You can either choose to process events immediately upon arrival or delay processing until the browser can do so without compromising drawing performance. The field *mustEvaluate* determines the execution model; setting it to `FALSE` allows the browser to process events at a convenient time, while setting it to TRUE prompts the browser to process events upon arrival. However, the TRUE setting should only be used in critical situations.
