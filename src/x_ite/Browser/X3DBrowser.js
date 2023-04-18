@@ -72,7 +72,6 @@ import _                   from "../../locale/gettext.js";
 const
    _DOMIntegration   = Symbol (),
    _reject           = Symbol (),
-   _fileLoader       = Symbol (),
    _browserCallbacks = Symbol (),
    _console          = Symbol ();
 
@@ -285,8 +284,6 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       return new Promise ((resolve, reject) =>
       {
-         this [_fileLoader] ?.abort ();
-
          this [_reject] ?.("Replacing world aborted.");
          this [_reject] = reject;
 
@@ -478,27 +475,15 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          this ._loadCount       .removeInterest ("checkLoadCount",    this);
          this .prepareEvents () .removeInterest ("updateInitialized", this);
 
-         this [_fileLoader] ?.abort ();
-
          // Start loading.
 
-         const
-            previousFileLoader = this [_fileLoader],
-            fileLoader         = new FileLoader (this .getWorld ());
-
-         this [_fileLoader] = fileLoader;
+         const fileLoader = new FileLoader (this .getWorld ());
 
          this .setBrowserLoading (true);
          this .addLoadingObject (fileLoader);
 
          fileLoader .createX3DFromURL (url, parameter, (scene) =>
          {
-            if (fileLoader !== this [_fileLoader])
-            {
-               reject (new Error ("Loading of X3D file aborted."));
-               return;
-            }
-
             if (!this .getBrowserOption ("SplashScreen"))
                this .getCanvas () .show ();
 
@@ -526,14 +511,6 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          },
          (fragment) =>
          {
-            if (fileLoader !== this [_fileLoader])
-            {
-               reject (new Error ("Change viewpoint aborted."));
-               return;
-            }
-
-            this [_fileLoader] = previousFileLoader;
-
             this .changeViewpoint (fragment);
             this .removeLoadingObject (fileLoader);
             this .setBrowserLoading (false);
@@ -542,14 +519,6 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          },
          (url, target) =>
          {
-            if (fileLoader !== this [_fileLoader])
-            {
-               reject (new Error ("Loading of file aborted."));
-               return;
-            }
-
-            this [_fileLoader] = previousFileLoader;
-
             if (target)
                window .open (url, target);
             else

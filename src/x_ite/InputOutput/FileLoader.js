@@ -55,7 +55,7 @@ const
    ECMAScript = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
    dataURL    = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,(.*)$/s;
 
-const foreignExtensions = new RegExp ("\.(?:html|xhtml)$");
+const foreignExtensions = new RegExp ("\.(?:html|htm|xhtml)$");
 
 const foreign = {
    "text/html":             true,
