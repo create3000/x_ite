@@ -64,7 +64,7 @@ const
    _childObjects      = Symbol (),
    _initialized       = Symbol (),
    _live              = Symbol (),
-   _set_live__        = Symbol ("X3DBaseNode.set_live__"),
+   _set_live__        = Symbol (),
    _cloneCount        = Symbol ();
 
 function X3DBaseNode (executionContext)

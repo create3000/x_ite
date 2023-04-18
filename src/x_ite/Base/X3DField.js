@@ -61,7 +61,7 @@ const
    _inputRoutes         = Symbol (),
    _outputRoutes        = Symbol (),
    _routeCallbacks      = Symbol (),
-   _uniformLocation     = Symbol .for ("X3DField.uniformLocation");
+   _uniformLocation     = Symbol .for ("X_ITE.X3DField.uniformLocation");
 
 function X3DField (value)
 {
@@ -76,7 +76,6 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
    [_value]: null,
    [_accessType]: X3DConstants .initializeOnly,
    [_unit]: null,
-   [_uniformLocation]: null,
    [_references]: new Set (),
    [_referencesCallbacks]: new Map (),
    [_fieldInterests]: new Set (),
@@ -84,6 +83,7 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
    [_inputRoutes]: new Set (),
    [_outputRoutes]: new Set (),
    [_routeCallbacks]: new Map (),
+   [_uniformLocation]: null,
    create: function ()
    {
       return new (this .constructor) ();

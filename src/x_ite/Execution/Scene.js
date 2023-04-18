@@ -49,7 +49,7 @@ import Fields   from "../Fields.js";
 import X3DScene from "./X3DScene.js";
 
 const
-   _browser        = Symbol .for ("X3DEventObject.browser"),
+   _browser        = Symbol .for ("X_ITE.X3DEventObject.browser"),
    _loadingObjects = Symbol ();
 
 function Scene (browser)

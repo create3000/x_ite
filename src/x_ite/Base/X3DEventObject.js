@@ -48,7 +48,7 @@
 import X3DChildObject from "./X3DChildObject.js";
 import Events         from "./Events.js";
 
-const _browser = Symbol .for ("X3DEventObject.browser");
+const _browser = Symbol .for ("X_ITE.X3DEventObject.browser");
 
 function X3DEventObject (browser)
 {
@@ -84,8 +84,9 @@ X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prot
       if (browser .getMustEvaluate ())
       {
          // Immediately process event.
-
+         browser .getScriptStack () .push (this);
          field .processEvent (event);
+         browser .getScriptStack () .pop ();
       }
       else
       {

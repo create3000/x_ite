@@ -49,7 +49,7 @@ import X3DCast      from "../../Base/X3DCast.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import Matrix3      from "../../../standard/Math/Numbers/Matrix3.js";
 
-const _uniformLocation = Symbol .for ("X3DField.uniformLocation");
+const _uniformLocation = Symbol .for ("X_ITE.X3DField.uniformLocation");
 
 function X3DProgrammableShaderObject (executionContext)
 {
