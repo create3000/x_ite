@@ -101,11 +101,11 @@ const handler =
             field      = node .getField (key),
             accessType = field .getAccessType ();
 
-         if (accessType !== X3DConstants .outputOnly)
-            field .setValue (value);
-
          if (!node .getBrowser () .getDirectOutput ())
             this .directOutputWarning (node);
+
+         if (accessType !== X3DConstants .outputOnly)
+            field .setValue (value);
 
          return true;
       }
