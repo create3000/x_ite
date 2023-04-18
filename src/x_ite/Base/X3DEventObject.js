@@ -91,7 +91,6 @@ X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prot
       else
       {
          // Register for processEvent
-
          browser .addTaintedField (field, event);
          browser .addBrowserEvent ();
       }
