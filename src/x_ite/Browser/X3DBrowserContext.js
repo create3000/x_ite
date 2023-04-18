@@ -365,8 +365,8 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       X3DShadersContext              .prototype .dispose ?.call (this);
       X3DTexturingContext            .prototype .dispose ?.call (this);
       X3DNetworkingContext           .prototype .dispose ?.call (this);
-      X3DScriptingContext            .prototype .dispose ?.call (this);
       X3DCoreContext                 .prototype .dispose ?.call (this);
+      X3DScriptingContext            .prototype .dispose ?.call (this);
       X3DRoutingContext              .prototype .dispose ?.call (this);
       X3DBaseNode                    .prototype .dispose ?.call (this);
    },
