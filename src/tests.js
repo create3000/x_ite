@@ -278,6 +278,7 @@ const X_ITE_TESTS = [
    { path: "Scripting/load-viewpoints.x3d" },
    { path: "Scripting/MURCIELAGO640.x3dj" },
    { path: "Scripting/mustEvaluate.x3dv" },
+   { path: "Scripting/mustEvaluate2.x3dv" },
    { path: "Scripting/Proto.x3d" },
    { path: "Scripting/Pyramid.x3d" },
    { path: "Scripting/rotation.x3dv" },
