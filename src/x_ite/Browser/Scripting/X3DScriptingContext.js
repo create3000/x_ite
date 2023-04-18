@@ -64,7 +64,7 @@ X3DScriptingContext .prototype =
    },
    getMustEvaluate: function ()
    {
-      return this [_scripts] ?.at (-1) ._mustEvaluate ?.getValue () ?? false;
+      return this [_scripts] .at (-1) ._mustEvaluate ?.getValue () ?? false;
    },
 };
 

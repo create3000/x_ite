@@ -91,8 +91,8 @@ function X3DBrowserContext (element)
 {
    X3DBaseNode                    .call (this, this);
    X3DRoutingContext              .call (this);
-   X3DCoreContext                 .call (this, element);
    X3DScriptingContext            .call (this);
+   X3DCoreContext                 .call (this, element);
    X3DNetworkingContext           .call (this);
    X3DTexturingContext            .call (this);
    X3DShadersContext              .call (this);
@@ -157,8 +157,8 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
    {
       X3DBaseNode                    .prototype .initialize ?.call (this);
       X3DRoutingContext              .prototype .initialize ?.call (this);
-      X3DCoreContext                 .prototype .initialize ?.call (this);
       X3DScriptingContext            .prototype .initialize ?.call (this);
+      X3DCoreContext                 .prototype .initialize ?.call (this);
       X3DNetworkingContext           .prototype .initialize ?.call (this);
       X3DTexturingContext            .prototype .initialize ?.call (this);
       X3DShadersContext              .prototype .initialize ?.call (this);
