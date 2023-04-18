@@ -54,13 +54,13 @@ function X3DParser (scene)
 
 X3DParser .prototype = {
    constructor: X3DParser,
-   getScene: function ()
-   {
-      return this .scene;
-   },
    getBrowser: function ()
    {
       return this .scene .getBrowser ();
+   },
+   getScene: function ()
+   {
+      return this .scene;
    },
    getExecutionContext: function ()
    {
