@@ -164,7 +164,8 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          {
             if (this ._mustEvaluate .getValue ())
             {
-               // Wait for routes to be parsed and connected.
+               // Wait for routes to be parsed and connected,
+               // and other nodes to be initialized, which may get accessed.
 
                Promise .resolve () .then (() =>
                {
