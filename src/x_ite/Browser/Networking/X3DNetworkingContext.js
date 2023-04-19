@@ -147,10 +147,6 @@ X3DNetworkingContext .prototype =
          }
       }
    },
-   getDisplayLoadCount: function ()
-   {
-      return [... this [_loadingObjects]] .reduce ((v, o) => v + !(o .isPrivate ?.() ?? true), 0);
-   },
    addLoadingObject: function (object)
    {
       if (this [_loadingObjects] .has (object))
@@ -172,6 +168,10 @@ X3DNetworkingContext .prototype =
 
       this .setLoadCount (this [_loadingObjects] .size);
       this .setCursor (this .getCursor ());
+   },
+   getDisplayLoadCount: function ()
+   {
+      return [... this [_loadingObjects]] .reduce ((v, o) => v + !(o .isPrivate ?.() ?? true), 0);
    },
    setLoadCount: function (value)
    {

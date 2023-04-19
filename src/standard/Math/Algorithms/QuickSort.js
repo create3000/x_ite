@@ -70,9 +70,7 @@ QuickSort .prototype =
          i = lo,
          j = hi;
 
-      const
-         array   = this .array,
-         compare = this .compare;
+      const { array, compare } = this;
 
       // Vergleichs­element x
       const x = array [(lo + hi) >>> 1];

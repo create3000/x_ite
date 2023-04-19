@@ -72,6 +72,7 @@ import _                   from "../../locale/gettext.js";
 const
    _DOMIntegration   = Symbol (),
    _reject           = Symbol (),
+   _fileLoaders      = Symbol (),
    _browserCallbacks = Symbol (),
    _console          = Symbol ();
 
@@ -86,6 +87,7 @@ function X3DBrowser (element)
 
    X3DBrowserContext .call (this, element);
 
+   this [_fileLoaders]       = [ ];
    this [_browserCallbacks] = new Map ();
    this [_console]          = document .getElementsByClassName ("x_ite-console");
 
@@ -284,6 +286,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       return new Promise ((resolve, reject) =>
       {
+         this [_fileLoaders] .forEach (f => f .abort ());
+
          this [_reject] ?.("Replacing world aborted.");
          this [_reject] = reject;
 
@@ -472,55 +476,72 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
          // Start loading.
 
-         const fileLoader = new FileLoader (this .getWorld ());
+         const
+            loading    = this .getBrowserLoading (),
+            fileLoader = new FileLoader (this .getWorld ());
+
+         this [_fileLoaders] .push (fileLoader);
 
          this .setBrowserLoading (true);
          this .addLoadingObject (fileLoader);
 
          fileLoader .createX3DFromURL (url, parameter, (scene) =>
          {
-            if (!this .getBrowserOption ("SplashScreen"))
-               this .getCanvas () .show ();
-
-            if (scene)
+            if (fileLoader !== this [_fileLoaders] .at (-1))
             {
-               this .addLoadingObject (this); // Prevent resetLoadCount.
-               this .replaceWorld (scene) .then (resolve) .catch (reject);
-               this .removeLoadingObject (this);
-               this .removeLoadingObject (fileLoader);
+               reject (new Error ("Loading of X3D file aborted."));
             }
             else
             {
-               this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
-               this .callBrowserEventHandler ("error");
+               if (!this .getBrowserOption ("SplashScreen"))
+                  this .getCanvas () .show ();
 
-               setTimeout (() =>
+               if (scene)
                {
-                  this .getSplashScreen ()
-                     .find (".x_ite-private-spinner-text")
-                     .text (_ ("Failed loading world."));
-               });
+                  this .addLoadingObject (this); // Prevent resetLoadCount.
+                  this .replaceWorld (scene) .then (resolve) .catch (reject);
+                  this .removeLoadingObject (this);
+                  this .removeLoadingObject (fileLoader);
+               }
+               else
+               {
+                  this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
+                  this .callBrowserEventHandler ("error");
 
-               reject (new Error ("Couldn't load X3D file."));
+                  setTimeout (() =>
+                  {
+                     this .getSplashScreen ()
+                        .find (".x_ite-private-spinner-text")
+                        .text (_ ("Failed loading world."));
+                  });
+
+                  reject (new Error ("Couldn't load X3D file."));
+               }
             }
+
+            this [_fileLoaders] = this [_fileLoaders] .filter (f => f !== fileLoader);
          },
          (fragment) =>
          {
+            this [_fileLoaders] = this [_fileLoaders] .filter (f => f !== fileLoader);
+
             this .changeViewpoint (fragment);
             this .removeLoadingObject (fileLoader);
-            this .setBrowserLoading (false);
+            this .setBrowserLoading (loading);
 
             resolve ();
          },
          (url, target) =>
          {
+            this [_fileLoaders] = this [_fileLoaders] .filter (f => f !== fileLoader);
+
             if (target)
                window .open (url, target);
             else
                location = url;
 
             this .removeLoadingObject (fileLoader);
-            this .setBrowserLoading (false);
+            this .setBrowserLoading (loading);
 
             resolve ();
          });

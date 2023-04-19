@@ -68,6 +68,8 @@ PartialSort .prototype =
    },
    partialsort: function (lo, hi)
    {
+      const { array, compare } = this;
+
       let gap = this .last, i, last;
 
       if (gap > 1)
@@ -77,7 +79,7 @@ PartialSort .prototype =
       {
          const j = i + gap;
 
-         if (this .compare (this .array [j], this .array [i]))
+         if (compare (array [j], array [i]))
          {
             const t = array [i];
             array [i] = array [j];
