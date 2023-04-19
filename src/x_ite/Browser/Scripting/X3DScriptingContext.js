@@ -45,10 +45,15 @@
  *
  ******************************************************************************/
 
+import Fields from "../../Fields.js";
+
 const _scripts = Symbol ();
 
 function X3DScriptingContext ()
 {
+   this .addChildObjects ("directOutput", new Fields .SFBool (true),
+                          "mustEvaluate", new Fields .SFBool ());
+
    this [_scripts] = [this];
 }
 
@@ -66,9 +71,17 @@ X3DScriptingContext .prototype =
    {
       return this [_scripts] .at (-1) ._directOutput ?.getValue () ?? true;
    },
+   setDirectOutput: function (value)
+   {
+      this ._directOutput = value;
+   },
    getMustEvaluate: function ()
    {
       return this [_scripts] .at (-1) ._mustEvaluate ?.getValue () ?? false;
+   },
+   setMustEvaluate: function (value)
+   {
+      this ._mustEvaluate = value;
    },
 };
 
