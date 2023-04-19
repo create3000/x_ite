@@ -120,6 +120,8 @@ X3DNetworkingContext .prototype =
 
       if (value)
       {
+         this [_loadingTime] = this .getCurrentTime ();
+
          if (!this [_loadingObjects] .has (this))
             this .resetLoadCount ();
 
@@ -127,8 +129,6 @@ X3DNetworkingContext .prototype =
 
          if (this .getBrowserOption ("SplashScreen"))
          {
-            this [_loadingTime] = this .getCurrentTime ();
-
             this .getContextMenu () .hide ();
             this .getCanvas () .hide ();
             this .getSplashScreen () .stop (true, true) .show ();
