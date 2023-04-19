@@ -146,18 +146,16 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                if (this .success)
                {
-                  this .loadComponents () .then (function ()
+                  this .loadComponents () .then (() =>
                   {
                      this .childrenElements (xmlElement);
                      this .success (this .getScene ());
-                  }
-                  .bind (this))
-                  .catch (function (error)
+                  })
+                  .catch ((error) =>
                   {
                      if (this .error)
                         this .error (error);
-                  }
-                  .bind (this));
+                  });
                }
                else
                {
@@ -177,18 +175,16 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             if (this .success)
             {
-               this .loadComponents () .then (function ()
+               this .loadComponents () .then (() =>
                {
                   this .sceneElement (xmlElement);
                   this .success (this .getScene ());
-               }
-               .bind (this))
-               .catch (function (error)
+               })
+               .catch ((error) =>
                {
                   if (this .error)
                      this .error (error);
-               }
-               .bind (this));
+               });
             }
             else
             {
@@ -201,18 +197,16 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             if (this .success)
             {
-               this .loadComponents () .then (function ()
+               this .loadComponents () .then (() =>
                {
                   this .childrenElements (xmlElement);
                   this .success (this .getScene ());
-               }
-               .bind (this))
-               .catch (function (error)
+               })
+               .catch ((error) =>
                {
                   if (this .error)
                      this .error (error);
-               }
-               .bind (this));
+               });
             }
             else
             {
