@@ -470,11 +470,6 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          if (!(parameter instanceof Fields .MFString))
             throw new Error ("Browser.loadURL: parameter must be of type MFString.");
 
-         // Cancel any loading.
-
-         this ._loadCount       .removeInterest ("checkLoadCount",    this);
-         this .prepareEvents () .removeInterest ("updateInitialized", this);
-
          // Start loading.
 
          const fileLoader = new FileLoader (this .getWorld ());
