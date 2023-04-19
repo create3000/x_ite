@@ -54,6 +54,7 @@ const
    _loadingTotal   = Symbol (),
    _loadingObjects = Symbol (),
    _loading        = Symbol (),
+   _loadingTime    = Symbol (),
    _location       = Symbol (),
    _defaultScene   = Symbol (),
    _set_loadCount  = Symbol ();
@@ -102,13 +103,16 @@ X3DNetworkingContext .prototype =
 
       this [_defaultScene] .setPrivate (true);
       this [_defaultScene] .setLive (true);
-      this [_defaultScene] .setup ();
 
       this .getDefaultScene = function () { return this [_defaultScene]; };
 
       Object .defineProperty (this, "getDefaultScene", { enumerable: false });
 
       return this [_defaultScene];
+   },
+   getBrowserLoading: function ()
+   {
+      return this [_loading];
    },
    setBrowserLoading: function (value)
    {
@@ -123,6 +127,8 @@ X3DNetworkingContext .prototype =
 
          if (this .getBrowserOption ("SplashScreen"))
          {
+            this [_loadingTime] = this .getCurrentTime ();
+
             this .getContextMenu () .hide ();
             this .getCanvas () .hide ();
             this .getSplashScreen () .stop (true, true) .show ();
@@ -133,13 +139,13 @@ X3DNetworkingContext .prototype =
          if (this .getBrowserOption ("SplashScreen"))
          {
             this .getCanvas () .show ();
-            this .getSplashScreen () .stop (true, true) .show () .fadeOut (2000);
+
+            if (this [_loadingTime] === this .getCurrentTime ())
+               this .getSplashScreen () .stop (true, true) .hide ();
+            else
+               this .getSplashScreen () .stop (true, true) .show () .fadeOut (2000);
          }
       }
-   },
-   getLoading: function ()
-   {
-      return this [_loading];
    },
    getDisplayLoadCount: function ()
    {
