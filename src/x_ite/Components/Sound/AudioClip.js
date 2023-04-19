@@ -165,12 +165,12 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
    },
    setTimeout: function (event)
    {
-      setTimeout (function ()
+      setTimeout (() =>
       {
          if (this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
             this .setError (event);
-      }
-      .bind (this), 3000);
+      },
+      3000);
    },
    setError: function (event)
    {

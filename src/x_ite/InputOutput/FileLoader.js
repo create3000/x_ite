@@ -167,7 +167,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       // Wait for instances to be created.
 
-      setTimeout (function ()
+      setTimeout (() =>
       {
          try
          {
@@ -180,8 +180,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
             else
                throw exception;
          }
-      },
-      0);
+      });
 
       if (DEBUG)
       {

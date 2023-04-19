@@ -449,7 +449,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
             {
                this .tapedTwice = true;
 
-               setTimeout (function () { this .tapedTwice = false; } .bind (this), 300);
+               setTimeout (() => this .tapedTwice = false, 300);
             }
 
             break;
