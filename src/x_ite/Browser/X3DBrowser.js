@@ -287,6 +287,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       return new Promise ((resolve, reject) =>
       {
          this [_fileLoaders] .forEach (f => f .abort ());
+         this [_fileLoaders] .length = 0;
 
          this [_reject] ?.("Replacing world aborted.");
          this [_reject] = reject;
