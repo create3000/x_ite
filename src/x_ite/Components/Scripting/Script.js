@@ -116,6 +116,10 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       return false;
    },
+   getMustEvaluate: function ()
+   {
+      return this ._mustEvaluate .getValue ();
+   },
    canUserDefinedFields: function ()
    {
       return true;
@@ -162,22 +166,8 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          }
          else
          {
-            if (this ._mustEvaluate .getValue ())
-            {
-               // Wait for routes to be parsed and connected,
-               // and other nodes to be initialized, which may get accessed.
-
-               Promise .resolve () .then (() =>
-               {
-                  this .initialize__ ($.decodeText (data));
-                  this .setLoadState (X3DConstants .COMPLETE_STATE);
-               });
-            }
-            else
-            {
-               this .initialize__ ($.decodeText (data));
-               this .setLoadState (X3DConstants .COMPLETE_STATE);
-            }
+            this .initialize__ ($.decodeText (data));
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
       });
    },
