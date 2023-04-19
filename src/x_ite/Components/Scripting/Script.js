@@ -156,8 +156,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    },
    loadData: function ()
    {
-      new FileLoader (this) .loadDocument (this ._url,
-      (data) =>
+      new FileLoader (this) .loadDocument (this ._url, (data) =>
       {
          if (data === null)
          {
