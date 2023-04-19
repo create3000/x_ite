@@ -116,10 +116,6 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       return false;
    },
-   getMustEvaluate: function ()
-   {
-      return this ._mustEvaluate .getValue ();
-   },
    canUserDefinedFields: function ()
    {
       return true;

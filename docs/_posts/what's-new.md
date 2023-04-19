@@ -5,15 +5,6 @@ nav: main
 categories: []
 tags: [New, Releases]
 ---
-## X_ITE v8.5.19 Released
-
-*Leipzig, 23th April 2023:* With this release, X_ITE implements Script node's *directOutput* and *mustEvaluate* field.
-
-### New Features
-
-- Warn if *directOutput* is not TRUE when accessing node fields.
-- Implemented *mustEvaluate* field.
-
 ## X_ITE v8.5.2 Released
 
 *Leipzig, 28th January 2023:* Now, X_ITE has support for SVG as well as STL support. When a scene is parsed you can, instead of a number use special constants like PI or PI3_4.

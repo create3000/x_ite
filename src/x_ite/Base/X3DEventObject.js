@@ -69,10 +69,6 @@ X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prot
       // Whether initializeOnly field are treated like inputOnly and inputOutput fields.
       return true;
    },
-   getMustEvaluate: function ()
-   {
-      return false;
-   },
    addEvent: function (field)
    {
       if (field .isTainted ())
@@ -86,24 +82,17 @@ X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prot
    {
       const browser = this .getBrowser ();
 
-      if (this .getMustEvaluate () && this .getUserDefinedFields () .has (field .getName ()))
-      {
-         // Immediately process event.
-         field .processEvent (event);
-      }
-      else
-      {
-         // Register for processEvent
-         browser .addTaintedField (field, event);
-         browser .addBrowserEvent ();
-      }
+      // Register for processEvent
+
+      browser .addTaintedField (field, event);
+      browser .addBrowserEvent ();
 
       // Register for eventsProcessed
 
       if (this .isTainted ())
          return;
 
-      if (field .isInput () || (this .getExtendedEventHandling () && !field .isOutput ()))
+      if (field .isInput () || (this .getExtendedEventHandling () && field .isInitializable ()))
       {
          this .addNodeEvent ();
       }
