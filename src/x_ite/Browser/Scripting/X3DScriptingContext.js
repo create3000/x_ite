@@ -45,14 +45,10 @@
  *
  ******************************************************************************/
 
-import Fields from "../../Fields.js";
-
 const _scripts = Symbol ();
 
 function X3DScriptingContext ()
 {
-   this .addChildObjects ("directOutput", new Fields .SFBool (true));
-
    this [_scripts] = [this];
 }
 
@@ -65,14 +61,6 @@ X3DScriptingContext .prototype =
    getScriptStack: function ()
    {
       return this [_scripts];
-   },
-   getDirectOutput: function ()
-   {
-      return this [_scripts] .at (-1) ._directOutput .getValue ();
-   },
-   setDirectOutput: function (value)
-   {
-      this ._directOutput = value;
    },
 };
 
