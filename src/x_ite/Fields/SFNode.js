@@ -170,7 +170,7 @@ const handler =
 
       scriptNode .directOutputWarning = true;
 
-      console .warn (`The 'directOutput' field of the Script named '${scriptNode .getName ()}' should be set to TRUE, if you access a nodes's fields directly!`);
+      console .warn (`The 'directOutput' field of the Script named '${scriptNode .getName ()}' should be set to TRUE, if you access a node's fields directly!`);
    },
 };
 
