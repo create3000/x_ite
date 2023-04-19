@@ -54,7 +54,6 @@ const
    _loadingTotal   = Symbol (),
    _loadingObjects = Symbol (),
    _loading        = Symbol (),
-   _loadingTime    = Symbol (),
    _location       = Symbol (),
    _defaultScene   = Symbol (),
    _set_loadCount  = Symbol ();
@@ -120,8 +119,6 @@ X3DNetworkingContext .prototype =
 
       if (value)
       {
-         this [_loadingTime] = this .getCurrentTime ();
-
          if (!this [_loadingObjects] .has (this))
             this .resetLoadCount ();
 
@@ -139,13 +136,13 @@ X3DNetworkingContext .prototype =
          if (this .getBrowserOption ("SplashScreen"))
          {
             this .getCanvas () .show ();
-
-            if (this [_loadingTime] === this .getCurrentTime ())
-               this .getSplashScreen () .stop (true, true) .hide ();
-            else
-               this .getSplashScreen () .stop (true, true) .show () .fadeOut (2000);
+            this .getSplashScreen () .stop (true, true) .show () .fadeOut (2000);
          }
       }
+   },
+   getLoadingObjects: function ()
+   {
+      return this [_loadingObjects];
    },
    addLoadingObject: function (object)
    {

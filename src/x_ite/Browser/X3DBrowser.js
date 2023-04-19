@@ -72,7 +72,7 @@ import _                   from "../../locale/gettext.js";
 const
    _DOMIntegration   = Symbol (),
    _reject           = Symbol (),
-   _fileLoaders      = Symbol (),
+   _fileLoader       = Symbol (),
    _browserCallbacks = Symbol (),
    _console          = Symbol ();
 
@@ -87,7 +87,6 @@ function X3DBrowser (element)
 
    X3DBrowserContext .call (this, element);
 
-   this [_fileLoaders]       = [ ];
    this [_browserCallbacks] = new Map ();
    this [_console]          = document .getElementsByClassName ("x_ite-console");
 
@@ -286,8 +285,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       return new Promise ((resolve, reject) =>
       {
-         this [_fileLoaders] .forEach (f => f .abort ());
-         this [_fileLoaders] .length = 0;
+         this [_fileLoader] ?.abort ();
 
          this [_reject] ?.("Replacing world aborted.");
          this [_reject] = reject;
@@ -477,18 +475,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
          // Start loading.
 
-         const
-            loading    = this .getBrowserLoading (),
-            fileLoader = new FileLoader (this .getWorld ());
-
-         this [_fileLoaders] .push (fileLoader);
-
-         this .setBrowserLoading (true);
-         this .addLoadingObject (fileLoader);
+         const fileLoader = new FileLoader (this .getWorld ());
 
          fileLoader .createX3DFromURL (url, parameter, (scene) =>
          {
-            if (fileLoader !== this [_fileLoaders] .at (-1))
+            if (this [_fileLoader] !== fileLoader)
             {
                reject (new Error ("Loading of X3D file aborted."));
             }
@@ -519,22 +510,19 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
                   reject (new Error ("Couldn't load X3D file."));
                }
             }
-
-            this [_fileLoaders] = this [_fileLoaders] .filter (f => f !== fileLoader);
          },
          (fragment) =>
          {
-            this [_fileLoaders] = this [_fileLoaders] .filter (f => f !== fileLoader);
+            fileLoader .ready = true;
 
             this .changeViewpoint (fragment);
             this .removeLoadingObject (fileLoader);
-            this .setBrowserLoading (loading);
 
             resolve ();
          },
          (url, target) =>
          {
-            this [_fileLoaders] = this [_fileLoaders] .filter (f => f !== fileLoader);
+            fileLoader .ready = true;
 
             if (target)
                window .open (url, target);
@@ -542,10 +530,17 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
                location = url;
 
             this .removeLoadingObject (fileLoader);
-            this .setBrowserLoading (loading);
 
             resolve ();
          });
+
+         if (!fileLoader .ready)
+         {
+            this [_fileLoader] ?.abort ();
+
+            this .setBrowserLoading (true);
+            this .addLoadingObject (this [_fileLoader] = fileLoader);
+         }
       });
    },
    addBrowserListener: function (callback, object)
