@@ -48,7 +48,7 @@
 import Matrix3 from "../Numbers/Matrix3.js";
 import Vector2 from "../Numbers/Vector2.js";
 
-function Box2 (size, center)
+function Box2 (/* size, center */)
 {
    this .matrix = new Matrix3 ();
 
