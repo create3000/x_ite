@@ -231,4 +231,4 @@ export default class Algorithm
 
       return first;
    }
-};
+}

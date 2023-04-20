@@ -58,6 +58,7 @@
 		"CharLS.js": "^2.0.1",
 		"css-element-queries": "^1.2.3",
 		"dicom-parser": "^1.8.21",
+		"eslint": "^8.38.0",
 		"jpeg-js": "^0.4.4",
 		"jpeg-lossless-decoder-js": "^2.0.4",
 		"jquery": "^3.6.4",
@@ -77,7 +78,7 @@
 	},
 	"scripts": {
 		"test": "cd ../x_ite-tests && npm test",
-		"lint": "jshint **",
+		"lint": "eslint src",
 		"build": "make",
 		"-prebuild:js": "npm run lint"
 	}
