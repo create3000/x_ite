@@ -829,7 +829,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 		{
          // Add elements and cdata.
 			if (childNode .nodeType === 1 || childNode .nodeType === 4)
-         	element .appendChild (childNode);
+            element .appendChild (childNode);
 		}
 	},
    routeElement: function (xmlElement)
