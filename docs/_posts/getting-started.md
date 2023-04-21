@@ -544,7 +544,7 @@ There is a ZIP archive available to locally install X_ITE on your server. Compre
 
 ### You can also get it on NPM
 
-```sh
+```console
 $ npm install x_ite
 ```
 
