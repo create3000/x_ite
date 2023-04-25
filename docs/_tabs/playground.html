@@ -99,7 +99,7 @@ $(function ()
 `;
 
    require .config ({ paths: { "vs": "https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs" }});
-   require (["vs/editor/editor.main"], () =>
+   require (["vs/editor/editor.main"], async () =>
    {
       const darkMode = (window .matchMedia && window .matchMedia ("(prefers-color-scheme: dark)") .matches || $("html") .attr ("data-mode") === "dark") && ($("html") .attr ("data-mode") !== "light");
 
@@ -155,7 +155,27 @@ $(function ()
          }
       });
 
-      editor .setValue (box .replace (/ {3}/g, "  "));
+      const url = new URL (document .location .href) .searchParams .get ("url");
+
+      if (url)
+      {
+         try
+         {
+            const
+               response = await fetch (url),
+               text     = response .ok ? await response .text () : "Response was not ok trying to fetch url: " + url;
+
+            editor .setValue (text);
+         }
+         catch (error)
+         {
+            editor .setValue (error .message);
+         }
+      }
+      else
+      {
+         editor .setValue (box .replace (/ {3}/g, "  "));
+      }
    });
 })
 </script>
