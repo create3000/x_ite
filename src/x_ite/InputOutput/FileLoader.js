@@ -90,17 +90,13 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       this .bindViewpoint = Function .prototype;
       this .foreign       = Function .prototype;
    },
-   isPrivate: function ()
-   {
-      return true;
-   },
-   getWorldURL: function ()
+   getURL: function ()
    {
       return this .URL;
    },
    getReferer: function ()
    {
-      if (this .node .getTypeName () === "X3DWorld")
+      if (this .node instanceof X3DWorld)
       {
          if (this .external)
             return this .browser .getLocation ();
