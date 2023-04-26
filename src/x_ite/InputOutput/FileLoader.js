@@ -72,11 +72,10 @@ function FileLoader (node, external)
    this .browser          = node .getBrowser ();
    this .external         = external === undefined ? this .browser .isExternal () : external;
    this .executionContext = this .external ? node .getExecutionContext () : this .browser .currentScene;
-   this .userAgent        = this .browser .getName () + "/" + this .browser .getVersion () + " (X3D Browser; +" + this .browser .getProviderUrl () + ")";
    this .target           = "";
    this .url              = [ ];
    this .URL              = new URL (this .getReferer (), this .getReferer ());
-   this .fileReader       = new FileReader ();
+   this .controller       = new AbortController ();
 }
 
 FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
@@ -84,6 +83,9 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
    constructor: FileLoader,
    abort: function ()
    {
+      this .controller .abort ();
+
+      this .url .length   = 0;
       this .callback      = Function .prototype;
       this .bindViewpoint = Function .prototype;
       this .foreign       = Function .prototype;
@@ -288,7 +290,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       // Load URL async
 
       const
-         options     = { cache: this .node .getCache () ? "default" : "reload" },
+         options     = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
          response    = this .handleErrors (await fetch (this .URL .href, options)),
          contentType = response .headers .get ("content-type") ?.replace (/;.*$/, "");
 
@@ -304,10 +306,10 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
    },
    handleErrors: function (response)
    {
-      if (!response .ok)
-         throw Error (response .statusText || response .status);
+      if (response .ok)
+         return response;
 
-      return response;
+      throw Error (response .statusText || response .status);
    },
    loadDocumentError: function (exception)
    {
