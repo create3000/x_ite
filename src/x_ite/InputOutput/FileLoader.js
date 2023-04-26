@@ -246,7 +246,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
             if (result [3] === "base64")
                data = atob (data);
             else
-               data = unescape (data);
+               data = decodeURIComponent (data);
 
             this .callback (data);
             return;
