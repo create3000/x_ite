@@ -542,24 +542,6 @@ There is a ZIP archive available to locally install X_ITE on your server. Compre
 
 [Download X_ITE ZIP archive](https://create3000.github.io/code/x_ite/latest/x_ite.zip)
 
-### You can also get it on NPM
-
-```console
-$ npm install x_ite
-```
-
-It can be used in [Electron](https://www.electronjs.org){:target="_blank"} apps in a preload script of the **renderer process** like this:
-
-```js
-window .addEventListener ("DOMContentLoaded", () =>
-{
-  const X3D = require ("x_ite")
-  ...
-})
-```
-
-Make sure that contextIsolation is set to **false** when creating a BrowserWindow instance.
-
 ### Using X_ITE with a CDN
 
 CDNs can offer a performance benefit by hosting X_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X_ITE from the same CDN, it won't have to be re-downloaded. To use the X_ITE CDN, just reference the CSS and JavaScript file in the script element directly from the GitHub CDN or jsDelivr CDN domain.
@@ -595,6 +577,24 @@ If you are in production and everything is working well, then use a fixed versio
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_ite.min.js"></script>
 ```
+
+### You can also get it from NPM
+
+```console
+$ npm install x_ite
+```
+
+It can be used in [Electron](https://www.electronjs.org){:target="_blank"} apps in a preload script of the **renderer process** in a way like this:
+
+```js
+window .addEventListener ("DOMContentLoaded", () =>
+{
+  const X3D = require ("x_ite")
+  ...
+})
+```
+
+Make sure that contextIsolation is set to **false** when creating a BrowserWindow instance.
 
 ## Embedding X_ITE within a Web Page
 
