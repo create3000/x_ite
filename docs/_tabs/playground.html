@@ -120,20 +120,7 @@ $(function ()
          const
             Browser = X3D .getBrowser (),
             text    = editor .getValue (),
-            url     = "data:," + text;
-
-         if (text .match (/<\w+/))
-         {
-            monaco .editor .setModelLanguage (editor .getModel (), "xml");
-         }
-         else if (text .match (/"\w+"\s*:\s*\{/))
-         {
-            monaco .editor .setModelLanguage (editor .getModel (), "json");
-         }
-         else if (text .match (/\w+\s*\{/))
-         {
-            monaco .editor .setModelLanguage (editor .getModel (), "vrml");
-         }
+            url     = "data:text/plain," + text;
 
          if (Browser .getActiveViewpoint ())
          {
@@ -153,6 +140,8 @@ $(function ()
          {
             await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
          }
+
+         monaco .editor .setModelLanguage (editor .getModel (), Browser .currentScene .encoding .toLowerCase ());
       });
 
       const url = new URL (document .location .href) .searchParams .get ("url");
