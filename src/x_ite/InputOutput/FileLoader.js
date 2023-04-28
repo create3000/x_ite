@@ -83,10 +83,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
    constructor: FileLoader,
    abort: function ()
    {
-      this .url .length   = 0;
-      this .callback      = Function .prototype;
-      this .bindViewpoint = Function .prototype;
-      this .foreign       = Function .prototype;
+      this .url .length = 0;
 
       this .controller .abort ();
    },
