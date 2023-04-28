@@ -83,12 +83,12 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
    constructor: FileLoader,
    abort: function ()
    {
-      this .controller .abort ();
-
       this .url .length   = 0;
       this .callback      = Function .prototype;
       this .bindViewpoint = Function .prototype;
       this .foreign       = Function .prototype;
+
+      this .controller .abort ();
    },
    getURL: function ()
    {
@@ -197,7 +197,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
    createX3DFromURLAsync: function (callback, data)
    {
       if (data === null)
-         callback (null, this .URL);
+         callback (null);
       else
          this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
    },
