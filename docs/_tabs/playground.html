@@ -101,7 +101,7 @@ $(function ()
    require .config ({ paths: { "vs": "https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs" }});
    require (["vs/editor/editor.main"], async () =>
    {
-      const darkMode = (window .matchMedia && window .matchMedia ("(prefers-color-scheme: dark)") .matches || $("html") .attr ("data-mode") === "dark") && ($("html") .attr ("data-mode") !== "light");
+      const darkMode = (window .matchMedia ?.("(prefers-color-scheme: dark)") .matches || $("html") .attr ("data-mode") === "dark") && ($("html") .attr ("data-mode") !== "light");
 
       const editor = monaco .editor .create (document .getElementById ("editor"),
       {
@@ -114,6 +114,19 @@ $(function ()
          wrappingIndent: "indent",
          minimap: { enabled: false },
       });
+
+      const url = new URL (document .location .href) .searchParams .get ("url");
+
+      if (url)
+      {
+         const Browser = X3D .getBrowser ();
+
+         await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+
+         monaco .editor .setModelLanguage (editor .getModel (), "xml");
+
+         editor .setValue (X3D .getBrowser () .currentScene .toXMLString ());
+      }
 
       editor .getModel () .onDidChangeContent (async (event) =>
       {
@@ -144,27 +157,8 @@ $(function ()
          monaco .editor .setModelLanguage (editor .getModel (), Browser .currentScene .encoding .toLowerCase ());
       });
 
-      const url = new URL (document .location .href) .searchParams .get ("url");
-
-      if (url)
-      {
-         try
-         {
-            const
-               response = await fetch (url),
-               text     = response .ok ? await response .text () : "Response was not ok trying to fetch url: " + url;
-
-            editor .setValue (text);
-         }
-         catch (error)
-         {
-            editor .setValue (error .message);
-         }
-      }
-      else
-      {
+      if (!url)
          editor .setValue (box .replace (/ {3}/g, "  "));
-      }
    });
 })
 </script>
