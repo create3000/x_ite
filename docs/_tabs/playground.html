@@ -133,7 +133,7 @@ $(function ()
          const
             Browser = X3D .getBrowser (),
             text    = editor .getValue (),
-            url     = "data:text/plain," + text;
+            url     = "data:," + encodeURIComponent (text);
 
          if (Browser .getActiveViewpoint ())
          {
