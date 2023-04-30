@@ -125,7 +125,7 @@ $(function ()
 
          monaco .editor .setModelLanguage (editor .getModel (), "xml");
 
-         editor .setValue (Browser .currentScene .toXMLString ());
+         editor .setValue (Browser .currentScene [`to${Browser .currentScene .encoding}}String`] ?.() ?? Browser .currentScene .toXMLString ());
       }
 
       editor .getModel () .onDidChangeContent (async (event) =>
