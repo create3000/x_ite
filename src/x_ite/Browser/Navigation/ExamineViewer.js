@@ -533,6 +533,9 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
                      event .deltaY     = delta;
                      event .zoomFactor = Math .abs (delta) / $(window) .width ();
 
+                     event .pageX = (touches [0] .pageX + touches [1] .pageX) / 2;
+                     event .pageY = (touches [0] .pageY + touches [1] .pageY) / 2;
+
                      this .mousewheel (event);
 
                      break;
