@@ -96,7 +96,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       if (this .node instanceof X3DWorld)
       {
          if (this .external)
-            return this .browser .getLocation ();
+            return this .browser .getBaseURL ();
       }
 
       return this .executionContext .getWorldURL ();

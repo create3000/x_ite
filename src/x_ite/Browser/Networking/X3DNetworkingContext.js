@@ -54,7 +54,7 @@ const
    _loadingTotal   = Symbol (),
    _loadingObjects = Symbol (),
    _loading        = Symbol (),
-   _location       = Symbol (),
+   _baseURL        = Symbol (),
    _defaultScene   = Symbol (),
    _set_loadCount  = Symbol ();
 
@@ -77,7 +77,7 @@ function X3DNetworkingContext ()
    this [_loadingTotal]   = 0;
    this [_loadingObjects] = new Set ();
    this [_loading]        = false;
-   this [_location]       = getBaseURI (this .getElement () [0]);
+   this [_baseURL]        = getBaseURI (this .getElement () [0]);
 }
 
 X3DNetworkingContext .prototype =
@@ -90,9 +90,13 @@ X3DNetworkingContext .prototype =
    {
       return URLs .getProviderUrl ();
    },
-   getLocation: function ()
+   getBaseURL: function ()
    {
-      return this [_location];
+      return this [_baseURL];
+   },
+   setBaseURL: function (value)
+   {
+      this [_baseURL] = String (value);
    },
    getDefaultScene: function ()
    {

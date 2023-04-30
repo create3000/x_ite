@@ -121,6 +121,8 @@ $(function ()
       {
          const Browser = X3D .getBrowser ();
 
+         Browser .setBaseURL (url);
+
          await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
          const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [Browser .currentScene .encoding] ?? "XML";
