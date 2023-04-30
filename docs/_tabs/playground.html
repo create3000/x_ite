@@ -123,9 +123,11 @@ $(function ()
 
          await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
-         monaco .editor .setModelLanguage (editor .getModel (), "xml");
+         const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [Browser .currentScene .encoding] ?? "XML";
 
-         editor .setValue (Browser .currentScene [`to${Browser .currentScene .encoding}}String`] ?.() ?? Browser .currentScene .toXMLString ());
+         monaco .editor .setModelLanguage (editor .getModel (), encoding .toLowerCase ());
+
+         editor .setValue (Browser .currentScene [`to${encoding}}String`] ());
       }
 
       editor .getModel () .onDidChangeContent (async (event) =>
