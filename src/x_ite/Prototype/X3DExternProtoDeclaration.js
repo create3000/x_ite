@@ -410,21 +410,22 @@ for (const key of Reflect .ownKeys (X3DExternProtoDeclaration .prototype))
 
 Object .defineProperty (X3DExternProtoDeclaration .prototype, "name",
 {
-   get: function () { return this .getName (); },
+   get: X3DExternProtoDeclaration .prototype .getName,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DExternProtoDeclaration .prototype, "fields",
 {
-   get: function () { return this .getFieldDefinitions (); },
+   get: X3DExternProtoDeclaration .prototype .getFieldDefinitions,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DExternProtoDeclaration .prototype, "isExternProto",
 {
-   get: function () { return true; },
+   value: true,
+   writable: false,
    enumerable: true,
    configurable: false
 });
@@ -438,7 +439,7 @@ Object .defineProperty (X3DExternProtoDeclaration .prototype, "urls",
 
 Object .defineProperty (X3DExternProtoDeclaration .prototype, "loadState",
 {
-   get: function () { return this .checkLoadState (); },
+   get: X3DExternProtoDeclaration .prototype .checkLoadState,
    enumerable: true,
    configurable: false
 });

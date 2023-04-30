@@ -942,71 +942,71 @@ for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
 
 Object .defineProperty (X3DExecutionContext .prototype, "specificationVersion",
 {
-   get: function () { return this .getSpecificationVersion (); },
+   get: X3DExecutionContext .prototype .getSpecificationVersion,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "encoding",
 {
-   get: function () { return this .getEncoding (); },
+   get: X3DExecutionContext .prototype .getEncoding,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "profile",
 {
-   get: function () { return this .getProfile (); },
+   get: X3DExecutionContext .prototype .getProfile,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "components",
 {
-   get: function () { return this .getComponents (); },
+   get: X3DExecutionContext .prototype .getComponents,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "worldURL",
 {
-   get: function () { return this .getWorldURL (); },
+   get: X3DExecutionContext .prototype .getWorldURL,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "units",
 {
-   get: function () { return this .getUnits (); },
+   get: X3DExecutionContext .prototype .getUnits,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "rootNodes",
 {
-   get: function () { return this .getRootNodes (); },
-   set: function (value) { this .setRootNodes (value); },
+   get: X3DExecutionContext .prototype .getRootNodes,
+   set: X3DExecutionContext .prototype .setRootNodes,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "protos",
 {
-   get: function () { return this .getProtoDeclarations (); },
+   get: X3DExecutionContext .prototype .getProtoDeclarations,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "externprotos",
 {
-   get: function () { return this .getExternProtoDeclarations (); },
+   get: X3DExecutionContext .prototype .getExternProtoDeclarations,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "routes",
 {
-   get: function () { return this .getRoutes (); },
+   get: X3DExecutionContext .prototype .getRoutes,
    enumerable: true,
    configurable: false
 });

@@ -544,21 +544,22 @@ for (const key of Reflect .ownKeys (X3DProtoDeclaration .prototype))
 
 Object .defineProperty (X3DProtoDeclaration .prototype, "name",
 {
-   get: function () { return this .getName (); },
+   get: X3DProtoDeclaration .prototype .getName,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DProtoDeclaration .prototype, "fields",
 {
-   get: function () { return this .getFieldDefinitions (); },
+   get: X3DProtoDeclaration .prototype .getFieldDefinitions,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DProtoDeclaration .prototype, "isExternProto",
 {
-   get: function () { return false; },
+   value: false,
+   writable: false,
    enumerable: true,
    configurable: false
 });
