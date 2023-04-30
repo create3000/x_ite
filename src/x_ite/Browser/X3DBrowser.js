@@ -826,49 +826,51 @@ for (const key of Reflect .ownKeys (X3DBrowser .prototype))
 
 Object .defineProperty (X3DBrowser .prototype, "name",
 {
-   get: function () { return this .getName (); },
+   get: X3DBrowser .prototype .getName,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "version",
 {
-   get: function () { return this .getVersion (); },
+   get: X3DBrowser .prototype .getVersion,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "providerUrl",
 {
-   get: function () { return this .getProviderUrl (); },
+   get: X3DBrowser .prototype .getProviderUrl,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "currentFrameRate",
 {
-   get: function () { return this .getCurrentFrameRate (); },
+   get: X3DBrowser .prototype .getCurrentFrameRate,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "currentSpeed",
 {
-   get: function () { return this .getCurrentSpeed (); },
+   get: X3DBrowser .prototype .getCurrentSpeed,
    enumerable: true,
    configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "description",
 {
-   get: function ()
-   {
-      return this .getDescription ();
-   },
-   set: function (value)
-   {
-      this .setDescription (value);
-   },
+   get: X3DBrowser .prototype .getDescription,
+   set: X3DBrowser .prototype .setDescription,
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DBrowser .prototype, "baseURL",
+{
+   get: X3DBrowser .prototype .getBaseURL,
+   set: X3DBrowser .prototype .setBaseURL,
    enumerable: true,
    configurable: false
 });
