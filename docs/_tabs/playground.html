@@ -127,7 +127,7 @@ $(function ()
 
          monaco .editor .setModelLanguage (editor .getModel (), encoding .toLowerCase ());
 
-         editor .setValue (Browser .currentScene [`to${encoding}}String`] ());
+         editor .setValue (Browser .currentScene [`to${encoding}String`] ());
       }
 
       editor .getModel () .onDidChangeContent (async (event) =>
