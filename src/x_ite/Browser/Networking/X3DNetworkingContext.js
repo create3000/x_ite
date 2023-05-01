@@ -60,7 +60,7 @@ const
 
 function getBaseURI (element)
 {
-   let baseURI = element .baseURI;
+   let baseURI = element .prop ("baseURI");
 
    // Fix for Edge.
    if (baseURI .startsWith ("about:"))
@@ -77,7 +77,7 @@ function X3DNetworkingContext ()
    this [_loadingTotal]   = 0;
    this [_loadingObjects] = new Set ();
    this [_loading]        = false;
-   this [_baseURL]        = getBaseURI (this .getElement () [0]);
+   this [_baseURL]        = getBaseURI (this .getElement ());
 }
 
 X3DNetworkingContext .prototype =
@@ -96,7 +96,7 @@ X3DNetworkingContext .prototype =
    },
    setBaseURL: function (value)
    {
-      this [_baseURL] = String (value);
+      this [_baseURL] = new URL (value, getBaseURI (this .getElement ())) .href;
    },
    getDefaultScene: function ()
    {
