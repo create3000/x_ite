@@ -121,7 +121,8 @@ $(function ()
       {
          const Browser = X3D .getBrowser ();
 
-         Browser .baseURL = url;
+         if (!url .startsWith ("data:"))
+            Browser .baseURL = url;
 
          await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
