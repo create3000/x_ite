@@ -96,7 +96,11 @@ X3DNetworkingContext .prototype =
    },
    setBaseURL: function (value)
    {
-      this [_baseURL] = new URL (value, getBaseURI (this .getElement ())) .href;
+      const
+         base = getBaseURI (this .getElement ()),
+         url  = new URL (value, base);
+
+      this [_baseURL] = url .protocol === "data:" ? base : url .href;
    },
    getDefaultScene: function ()
    {

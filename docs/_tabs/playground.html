@@ -121,8 +121,7 @@ $(function ()
       {
          const Browser = X3D .getBrowser ();
 
-         if (!url .startsWith ("data:"))
-            Browser .baseURL = url;
+         Browser .baseURL = url;
 
          await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
@@ -138,7 +137,7 @@ $(function ()
          const
             Browser = X3D .getBrowser (),
             text    = editor .getValue (),
-            url     = "data:," + encodeURIComponent (text);
+            url     = `data:,${encodeURIComponent (text)}`;
 
          if (Browser .getActiveViewpoint ())
          {
