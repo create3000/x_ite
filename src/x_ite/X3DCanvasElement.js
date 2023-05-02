@@ -91,6 +91,8 @@ class X3DCanvasElement extends HTMLElement
    {
       return [
          "antialiased",
+         "baseURL",
+         "baseurl",
          "cache",
          "contentScale",
          "contentscale",

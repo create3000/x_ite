@@ -681,6 +681,10 @@ A Boolean value (`true` or `false`) to indicate whether rendering should use har
 >**Tip:** Set CSS property »image-rendering« of \<x3d-canvas\> element to »pixelated«, if no filtering is desired in addition.
 {: .prompt-tip }
 
+### baseURL
+
+A String value containing the URL against which relative URLs are resolved. By default this is the address of the web page itself.
+
 ### cache
 
 A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the *cache* attribute is `true`. It works by appending "_={timestamp}" to the GET parameters of every request.

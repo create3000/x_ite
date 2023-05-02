@@ -148,40 +148,6 @@ X3D (function ()
             return
       }
    });
-
-   function sleep (duration)
-   {
-      return new Promise (function (resolve, reject)
-      {
-         setTimeout (resolve, duration);
-      });
-   }
-
-   $("#bug") .on ("click", async () =>
-   {
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/GeneratedCubeMapTexture.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/Lighting/DirectionalLight/DirectionalLight.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/Lighting/Shadows/Shadows.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/Navigation/NavigationInfo/NavigationInfo.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/RigidBodyPhysics/CollidableShape/CollidableShape.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBody/RigidBody.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBodyCollection/RigidBodyCollection.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/TextureProjector/TextureProjector/TextureProjector.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/Texturing/MultiTexture/MultiTexture.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/X3D/NYC/NYC.x3d"));
-      await sleep (1000);
-   });
 });
       </script>
       <style>
@@ -434,7 +400,7 @@ main.color-management #browser {
       <main>
          <div>
             <form action="javascript:alert('form submitted')">
-               <x3d-canvas id="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" onload="$('#file') .addClass ('loaded')" x-url='"tests/empty.x3dv"'>
+               <x3d-canvas id="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" onload="$('#file') .addClass ('loaded')" x-baseURL="tests/" x-src="lines.x3d">
                   <p class="fallback">
                      Sorry,<br/>
                      it wasn't me!<br/>

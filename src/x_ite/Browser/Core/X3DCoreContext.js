@@ -272,6 +272,12 @@ X3DCoreContext .prototype =
             this .setBrowserOption ("Antialiased", this .parseBooleanAttribute (newValue, true));
             break;
          }
+         case "baseURL":
+         case "baseurl":
+         {
+            this .baseURL = newValue;
+            break;
+         }
          case "cache":
          {
             this .setBrowserOption ("Cache", this .parseBooleanAttribute (newValue, true));
