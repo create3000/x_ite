@@ -57,10 +57,7 @@ version: dist zip
 
 .PHONY: docs
 docs:
-	cd docs && bundle exec jekyll serve --incremental
-
-docs-force:
-	cd docs && bundle exec jekyll serve
+	cd docs && bundle exec jekyll serve --incremental --host=192.168.0.18
 
 docs-update:
 	cd docs && bundle update

@@ -13,7 +13,8 @@ x_ite: true
   splashScreen="false"
   contextMenu="false"
   notifications="false"
-  timings="false">
+  timings="false"
+  contentScale="auto">
 </x3d-canvas>
 
 ## Overview
