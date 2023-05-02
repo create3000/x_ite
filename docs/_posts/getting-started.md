@@ -691,7 +691,7 @@ A Boolean value (`true` or `false`) to indicate whether files transferred over t
 
 ### contentScale
 
-A Float value that determines how much higher he physical resolution of the internal \<canvas\> element is. The default value for the *contentScale* attribute is `1.0`, which is sufficient for most cases. A higher value, will increase the resolution of the internal \<canvas\> element and can be uses to increase the antialiasing effect, thus making the rendered image sharper. If the value is set to `auto`, then contentScale will match »window.devicePixelRatio«, which is useful for HiDPI or Retina displays. A value between `0.0` and `1.0` will result in a pixelated image, see also [antialiased](#antialiased) attribute.
+A Float value that specifies how much higher the physical resolution of the internal \<canvas\> element is. The default value for the *contentScale* attribute is `1.0`, which is sufficient for most cases. A higher value increases the resolution of the internal \<canvas\> element and can be used to increase the anti-aliasing effect, making the rendered image sharper. If set to `auto`, contentScale will match »window.devicePixelRatio«, which is useful for HiDPI or Retina displays. A value between `0.0` and `1.0` will result in a pixelated image, see also the [antialiased](#antialiased) attribute.
 
 ### contextMenu
 
@@ -703,7 +703,7 @@ A Boolean value (`true` or `false`) to indicate whether additional debug message
 
 ### multisampling
 
-A Integer value that sets the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of antialiasing. Check [rendering property](reference/browser-services#rendering-properties) »MaxSamples«, which is browser dependent.
+An Integer value that specifies the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of anti-aliasing. Check the [rendering property](reference/browser-services#rendering-properties) »MaxSamples«, which is browser dependent.
 
 ### notifications
 
