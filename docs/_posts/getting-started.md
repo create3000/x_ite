@@ -739,7 +739,7 @@ A Boolean value (`true` or `false`) to indicate whether the Timings Panel should
 
 ### url
 
-A MFString value of URLs to load on page load. If no *url* attribute is specified or the attribute is empty, an empty scene will be displayed. If both src and *url* attributes are specified, the *src* attribute takes precedence.
+An MFString value of URLs to load on page load. If no *url* attribute is specified or the attribute is empty, an empty scene will be displayed. If both *src* and *url* attributes are specified, the last attribute specified takes precedence.
 
 ### Example
 
