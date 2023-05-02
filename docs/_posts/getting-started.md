@@ -683,7 +683,7 @@ A Boolean value (`true` or `false`) to indicate whether rendering should use har
 
 ### baseURL
 
-A String value containing the URL against which relative URLs are resolved. By default this is the address of the web page itself.
+A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself.
 
 ### cache
 
