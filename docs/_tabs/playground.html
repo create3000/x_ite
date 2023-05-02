@@ -181,7 +181,7 @@ $(function ()
                text    = args .join ("") + "\n",
                element = $("<span></span>") .addClass (classes) .text (text);
 
-            if (text .match (/No suitable/))
+            if (text .match (/No suitable|of an UNKNOWN touch/))
                return;
 
             log .apply (this, args);
