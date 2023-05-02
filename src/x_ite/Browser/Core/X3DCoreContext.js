@@ -275,7 +275,7 @@ X3DCoreContext .prototype =
          case "baseURL":
          case "baseurl":
          {
-            this .baseURL = newValue;
+            this .setBaseURL (newValue);
             break;
          }
          case "cache":
