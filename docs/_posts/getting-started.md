@@ -624,7 +624,7 @@ x3d-canvas {
 
 To get X_ITE working you need to include the JavaScript file »x_ite.min.js«. Once X_ITE has loaded successfully, a new HTML element \<x3d-canvas\> will be available on your page. You can style the \<x3d-canvas\> element with CSS just like any other HTML element, and you can place it anywhere in the DOM tree.
 
->**Tip:** To test a page locally on your desktop computer, setup a **localhost** server to load files via *src* attribute or Inline node, see [Setup a localhost Server](setup-a-localhost-server), or [directly combine HTML with X3D](dom-integration).
+>**Tip:** To test a page locally on your desktop computer, setup a **localhost** server to load files via *src* attribute or Inline node, see [setup a localhost server](setup-a-localhost-server), or [directly combine HTML with X3D](dom-integration).
 {: .prompt-tip }
 
 ### Supported File Formats
@@ -645,7 +645,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 >**Tip:** All files can be compressed using GZip compression. This saves bandwidth and speeds up download time.
 {: .prompt-tip }
 
-If you have an own web-server see [How to Configure Your Web Server](how-to-configure-your-web-server). If you are looking for an online X3D file format converter [see here](laboratory/x3d-file-converter).
+If you have an own web-server see [how to configure your web server](how-to-configure-your-web-server). If you are looking for an online X3D file format converter [see here](laboratory/x3d-file-converter).
 
 ### Fallback Content
 
