@@ -89,7 +89,6 @@ function SFVec2Template (TypeName, Type, double)
          this .addEvent ();
       },
       enumerable: true,
-      configurable: false
    };
 
    const y = {
@@ -103,7 +102,6 @@ function SFVec2Template (TypeName, Type, double)
          this .addEvent ();
       },
       enumerable: true,
-      configurable: false
    };
 
    Object .defineProperty (SFVec2 .prototype, "x", x);

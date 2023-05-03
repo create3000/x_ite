@@ -51,7 +51,6 @@ function UnitInfo (category, name, conversionFactor)
 {
    Object .defineProperty (this, "category", {
        value: category,
-       writable: false,
    });
 
    this .name             = name;
@@ -149,8 +148,6 @@ for (const key of Reflect .ownKeys (UnitInfo .prototype))
 Object .defineProperty (UnitInfo .prototype, "conversion_factor",
 {
    get: function () { return this .conversionFactor; },
-   enumerable: false,
-   configurable: false
 });
 
 export default UnitInfo;

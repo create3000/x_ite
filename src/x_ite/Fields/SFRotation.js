@@ -212,7 +212,6 @@ const x = {
       this .addEvent ();
    },
    enumerable: true,
-   configurable: false
 };
 
 const y = {
@@ -226,7 +225,6 @@ const y = {
       this .addEvent ();
    },
    enumerable: true,
-   configurable: false
 };
 
 const z = {
@@ -240,7 +238,6 @@ const z = {
       this .addEvent ();
    },
    enumerable: true,
-   configurable: false
 };
 
 const angle = {
@@ -254,7 +251,6 @@ const angle = {
       this .addEvent ();
    },
    enumerable: true,
-   configurable: false
 };
 
 Object .defineProperty (SFRotation .prototype, "x",     x);

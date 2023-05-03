@@ -177,7 +177,6 @@ Object .defineProperty (X3DExportedNode .prototype, "exportedName",
       return SFNodeCache .get (this [_exportedName]);
    },
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExportedNode .prototype, "localNode",
@@ -187,7 +186,6 @@ Object .defineProperty (X3DExportedNode .prototype, "localNode",
       return SFNodeCache .get (this [_localNode]);
    },
    enumerable: true,
-   configurable: false
 });
 
 export default X3DExportedNode;

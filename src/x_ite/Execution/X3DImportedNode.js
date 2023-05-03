@@ -520,7 +520,6 @@ Object .defineProperty (X3DImportedNode .prototype, "inlineNode",
       return SFNodeCache .get (this [_inlineNode]);
    },
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DImportedNode .prototype, "exportedName",
@@ -530,7 +529,6 @@ Object .defineProperty (X3DImportedNode .prototype, "exportedName",
       return this [_exportedName];
    },
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DImportedNode .prototype, "exportedNode",
@@ -540,7 +538,6 @@ Object .defineProperty (X3DImportedNode .prototype, "exportedNode",
       return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]);
    },
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DImportedNode .prototype, "importedName",
@@ -550,7 +547,6 @@ Object .defineProperty (X3DImportedNode .prototype, "importedName",
       return this [_importedName];
    },
    enumerable: true,
-   configurable: false
 });
 
 export default X3DImportedNode;

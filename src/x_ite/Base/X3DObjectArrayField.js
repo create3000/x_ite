@@ -620,8 +620,6 @@ Object .defineProperty (X3DObjectArrayField .prototype, "length",
 {
    get: function () { return this [_target] .getValue () .length; },
    set: function (value) { this [_target] .resize (value); },
-   enumerable: false,
-   configurable: false,
 });
 
 export default X3DObjectArrayField;

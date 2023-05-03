@@ -112,7 +112,6 @@ function SFMatrix4Template (TypeName, Type, SFVec3, double)
             this .addEvent ();
          },
          enumerable: true,
-         configurable: false,
       });
    }
 

@@ -546,22 +546,18 @@ Object .defineProperty (X3DProtoDeclaration .prototype, "name",
 {
    get: X3DProtoDeclaration .prototype .getName,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DProtoDeclaration .prototype, "fields",
 {
    get: X3DProtoDeclaration .prototype .getFieldDefinitions,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DProtoDeclaration .prototype, "isExternProto",
 {
    value: false,
-   writable: false,
    enumerable: true,
-   configurable: false
 });
 
 export default X3DProtoDeclaration;

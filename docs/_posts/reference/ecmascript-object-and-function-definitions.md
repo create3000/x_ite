@@ -3,7 +3,7 @@ title: ECMAScript Object and Function Definitions
 date: 2022-11-28
 nav: reference
 categories: [Reference]
-tags: [Ecmascript, Object, Function, Definitions]
+tags: [EcmaScript, Object, Function, Definitions]
 ---
 ## Overview
 

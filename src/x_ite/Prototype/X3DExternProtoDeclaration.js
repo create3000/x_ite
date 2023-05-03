@@ -412,36 +412,30 @@ Object .defineProperty (X3DExternProtoDeclaration .prototype, "name",
 {
    get: X3DExternProtoDeclaration .prototype .getName,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExternProtoDeclaration .prototype, "fields",
 {
    get: X3DExternProtoDeclaration .prototype .getFieldDefinitions,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExternProtoDeclaration .prototype, "isExternProto",
 {
    value: true,
-   writable: false,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExternProtoDeclaration .prototype, "urls",
 {
    get: function () { return this ._url; },
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExternProtoDeclaration .prototype, "loadState",
 {
    get: X3DExternProtoDeclaration .prototype .checkLoadState,
    enumerable: true,
-   configurable: false
 });
 
 export default X3DExternProtoDeclaration;

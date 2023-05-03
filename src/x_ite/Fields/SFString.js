@@ -127,7 +127,6 @@ Object .defineProperty (SFString .prototype, "length",
       return this .getValue () .length;
    },
    enumerable: true,
-   configurable: false
 });
 
 export default SFString;

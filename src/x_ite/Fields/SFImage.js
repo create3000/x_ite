@@ -299,7 +299,6 @@ const width = {
       this .addEvent ();
    },
    enumerable: true,
-   configurable: false
 };
 
 const height = {
@@ -313,7 +312,6 @@ const height = {
       this .addEvent ();
    },
    enumerable: true,
-   configurable: false
 };
 
 const comp = {
@@ -327,7 +325,6 @@ const comp = {
       this .addEvent ();
    },
    enumerable: true,
-   configurable: false
 };
 
 const array = {
@@ -341,7 +338,6 @@ const array = {
       this .addEvent ();
    },
    enumerable: true,
-   configurable: false
 };
 
 Object .defineProperty (SFImage .prototype, "width",  width);

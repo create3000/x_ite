@@ -944,42 +944,36 @@ Object .defineProperty (X3DExecutionContext .prototype, "specificationVersion",
 {
    get: X3DExecutionContext .prototype .getSpecificationVersion,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "encoding",
 {
    get: X3DExecutionContext .prototype .getEncoding,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "profile",
 {
    get: X3DExecutionContext .prototype .getProfile,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "components",
 {
    get: X3DExecutionContext .prototype .getComponents,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "worldURL",
 {
    get: X3DExecutionContext .prototype .getWorldURL,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "units",
 {
    get: X3DExecutionContext .prototype .getUnits,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "rootNodes",
@@ -987,28 +981,24 @@ Object .defineProperty (X3DExecutionContext .prototype, "rootNodes",
    get: X3DExecutionContext .prototype .getRootNodes,
    set: X3DExecutionContext .prototype .setRootNodes,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "protos",
 {
    get: X3DExecutionContext .prototype .getProtoDeclarations,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "externprotos",
 {
    get: X3DExecutionContext .prototype .getExternProtoDeclarations,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "routes",
 {
    get: X3DExecutionContext .prototype .getRoutes,
    enumerable: true,
-   configurable: false
 });
 
 export default X3DExecutionContext;

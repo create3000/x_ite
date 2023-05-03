@@ -1076,8 +1076,6 @@ Object .defineProperty (X3DTypedArrayField .prototype, "length",
 {
    get: function () { return this [_length]; },
    set: function (value) { this [_target] .resize (value); },
-   enumerable: false,
-   configurable: false,
 });
 
 // Getter/Setter functions to reference a value for a given index.

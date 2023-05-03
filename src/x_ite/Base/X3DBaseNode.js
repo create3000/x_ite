@@ -298,8 +298,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       {
          get: function () { return field; },
          set: function (value) { field .setValue (value); },
-         enumerable: false,
-         configurable: false,
       });
    },
    getFieldDefinitions: function ()
@@ -382,7 +380,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
          get: function () { return field; },
          set: function (value) { field .setValue (value); },
          enumerable: true,
-         configurable: false,
       });
 
       if (field .isInitializable ())

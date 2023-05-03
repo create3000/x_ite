@@ -156,7 +156,6 @@ X3DCoreContext .prototype =
             this .loadURL (new Fields .MFString (value), new Fields .MFString ());
          },
          enumerable: true,
-         configurable: false,
       });
 
       Object .defineProperty (this .getElement () .get (0), "url",
@@ -170,7 +169,6 @@ X3DCoreContext .prototype =
             this .loadURL (value, new Fields .MFString ());
          },
          enumerable: true,
-         configurable: false,
       });
 
       // Configure browser event handlers.

@@ -142,7 +142,6 @@ const r = {
       this .addEvent ();
    },
    enumerable: true,
-   configurable: false
 };
 
 const g = {
@@ -156,7 +155,6 @@ const g = {
       this .addEvent ();
    },
    enumerable: true,
-   configurable: false
 };
 
 const b = {
@@ -170,7 +168,6 @@ const b = {
       this .addEvent ();
    },
    enumerable: true,
-   configurable: false
 };
 
 const a = {
@@ -184,7 +181,6 @@ const a = {
       this .addEvent ();
    },
    enumerable: true,
-   configurable: false
 };
 
 Object .defineProperty (SFColorRGBA .prototype, "r", r);

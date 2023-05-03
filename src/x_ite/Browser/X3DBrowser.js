@@ -828,35 +828,30 @@ Object .defineProperty (X3DBrowser .prototype, "name",
 {
    get: X3DBrowser .prototype .getName,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "version",
 {
    get: X3DBrowser .prototype .getVersion,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "providerUrl",
 {
    get: X3DBrowser .prototype .getProviderUrl,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "currentFrameRate",
 {
    get: X3DBrowser .prototype .getCurrentFrameRate,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "currentSpeed",
 {
    get: X3DBrowser .prototype .getCurrentSpeed,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "description",
@@ -864,7 +859,6 @@ Object .defineProperty (X3DBrowser .prototype, "description",
    get: X3DBrowser .prototype .getDescription,
    set: X3DBrowser .prototype .setDescription,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "baseURL",
@@ -872,7 +866,6 @@ Object .defineProperty (X3DBrowser .prototype, "baseURL",
    get: X3DBrowser .prototype .getBaseURL,
    set: X3DBrowser .prototype .setBaseURL,
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "currentScene",
@@ -882,7 +875,6 @@ Object .defineProperty (X3DBrowser .prototype, "currentScene",
       return this .getScriptStack () .at (-1) .getExecutionContext ();
    },
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "supportedProfiles",
@@ -892,7 +884,6 @@ Object .defineProperty (X3DBrowser .prototype, "supportedProfiles",
       return SupportedProfiles;
    },
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DBrowser .prototype, "supportedComponents",
@@ -902,7 +893,6 @@ Object .defineProperty (X3DBrowser .prototype, "supportedComponents",
       return SupportedComponents;
    },
    enumerable: true,
-   configurable: false
 });
 
 export default X3DBrowser;

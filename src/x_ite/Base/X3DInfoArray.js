@@ -308,7 +308,6 @@ Object .defineProperty (X3DInfoArray .prototype, "length",
 {
    get: function () { return this [_array] .length; },
    enumerable: false,
-   configurable: false,
 });
 
 export default X3DInfoArray;

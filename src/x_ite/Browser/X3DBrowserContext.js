@@ -390,7 +390,6 @@ Object .assign (X3DBrowserContext,
          Object .defineProperty (X3DBrowserContext .prototype, key,
          {
             value: browserContext .prototype [key],
-            enumerable: false,
             writable: true,
          });
       }

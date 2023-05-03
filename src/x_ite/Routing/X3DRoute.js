@@ -267,7 +267,6 @@ Object .defineProperty (X3DRoute .prototype, "sourceNode",
       return SFNodeCache .get (this [_sourceNode]);
    },
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DRoute .prototype, "sourceField",
@@ -277,7 +276,6 @@ Object .defineProperty (X3DRoute .prototype, "sourceField",
       return this [_sourceField] .getName ();
    },
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DRoute .prototype, "destinationNode",
@@ -287,7 +285,6 @@ Object .defineProperty (X3DRoute .prototype, "destinationNode",
       return SFNodeCache .get (this [_destinationNode]);
    },
    enumerable: true,
-   configurable: false
 });
 
 Object .defineProperty (X3DRoute .prototype, "destinationField",
@@ -297,7 +294,6 @@ Object .defineProperty (X3DRoute .prototype, "destinationField",
       return this [_destinationField] .getName ();
    },
    enumerable: true,
-   configurable: false
 });
 
 export default X3DRoute;
