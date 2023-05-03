@@ -544,7 +544,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       let cdata = this .getSourceText ();
 
-      if (cdata && cdata .length === 0)
+      if (cdata ?.length === 0)
          cdata = null;
 
       generator .IncIndent ();
@@ -781,7 +781,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             for (const value of cdata)
             {
                generator .string += "<![CDATA[";
-               generator .string += generator .escapeCDATA (value);
+               generator .string += value;
                generator .string += "]]>";
                generator .string += generator .TidyBreak ();
             }

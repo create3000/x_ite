@@ -479,10 +479,6 @@ Generator .prototype =
          return string .replace (regex, char => map [char]);
       };
    })(),
-   escapeCDATA: function (string)
-   {
-      return string .replace (/\]\]\>/g, "\\]\\]\\>");
-   },
    JSONEncode: (function ()
    {
       const map = {
