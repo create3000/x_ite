@@ -141,21 +141,17 @@ $(function ()
 
          if (Browser .getActiveViewpoint ())
          {
-            const
+            var
                positionOffset    = Browser .getActiveViewpoint () ._positionOffset    .copy (),
                orientationOffset = Browser .getActiveViewpoint () ._orientationOffset .copy ();
-
-            await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
-
-            if (Browser .getActiveViewpoint ())
-            {
-               Browser .getActiveViewpoint () ._positionOffset    = positionOffset;
-               Browser .getActiveViewpoint () ._orientationOffset = orientationOffset;
-            }
          }
-         else
+
+         await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+
+         if (Browser .getActiveViewpoint ())
          {
-            await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+            Browser .getActiveViewpoint () ._positionOffset    = positionOffset;
+            Browser .getActiveViewpoint () ._orientationOffset = orientationOffset;
          }
 
          monaco .editor .setModelLanguage (editor .getModel (), Browser .currentScene .encoding .toLowerCase ());

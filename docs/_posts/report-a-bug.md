@@ -14,4 +14,4 @@ Here's an example of a helpful bug report:
 
 You can also use the Issue Tracker if you have a question or if you need help with something.
 
-[X_ITE Issue Tracker](https://github.com/create3000/x_ite/issues){:target="_blank"}
+Go ahead and visit the [X_ITE Issue Tracker](https://github.com/create3000/x_ite/issues){:target="_blank"} to post your concern.
