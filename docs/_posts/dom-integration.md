@@ -3,19 +3,21 @@ title: DOM Integration
 date: 2022-11-28
 nav: main
 categories: []
-tags: [DOM, Integration, XHTML]
+tags: [DOM, Integration, XHTML, HTML]
 ---
 ## Overview
 
-DOM integration allows you to integrate 3D content seamlessly into your web page, with just a JavaScript file included the scene can be written directly into the XHTML or HTML markup.
+DOM integration allows you to integrate 3D content seamlessly into your web page, with just a JavaScript file included, the scene can be written directly into the XHTML or HTML markup.
 
-Andreas Plesch wrote a nice plug-in for X3D DOM integration. This enables JavaScript authors to use X3D content as if it would be HTML. It links the X3D DOM nodes to the X3D scene graph and thereby allows for control of the X3D scene using regular DOM manipulation methods.
+Andreas Plesch has written a nice plugin for X3D DOM integration. It allows JavaScript authors to use X3D content as if it were HTML. It links the X3D DOM nodes to the X3D scene graph, allowing control of the X3D scene using regular DOM manipulation methods.
 
 **HTML DOM integration is now an integral part of X_ITE.**
 
 ## How to Use With X_ITE
 
-Create an HTML or XHTML page and save it, include the »x_ite.min.js«. Now, X3D content can directly be written within the \<x3d-canvas\> element and regular DOM manipulation methods can be used to manipulate the scene graph. This gives X3D authors the ability to combine HTML with X3D. The example below will show a simple Box node in the \<x3d-canvas\> element.
+Create an HTML or XHTML page, and save it and include the »x_ite.min.js«. Now, X3D content can be written directly into the \<x3d-canvas\> element, and regular DOM manipulation methods can be used to manipulate the scene graph, and you can combine HTML with X3D.
+
+The example below shows a simple Box node inside the \<x3d-canvas\> element.
 
 ```html
 <!DOCTYPE html>
@@ -82,7 +84,7 @@ window .addEventListener ("load", function ()
 </html>
 ```
 
->**Attention:** Make sure you use **closing tags** for all X3D elements. This is needed, because the web browser does not know the X3D elements, and therefor does not know if the tag is self-closing, unless you use XHTML.
+>**Attention:** Make sure you use **closing tags** for all X3D elements. This is necessary because the web browser does not know about X3D elements and therefore does not know if the tag is self-closing unless you are using XHTML.
 {: .prompt-danger }
 
 ### Example
@@ -91,7 +93,7 @@ window .addEventListener ("load", function ()
 
 ## Attributes
 
-If you change an attribute of an X3D element, then the internal state of the node will also change.
+When you change an attribute of an X3D element, the internal state of the node also changes.
 
 ```js
 const material = document .querySelector ("Material");
@@ -101,7 +103,7 @@ material .setAttribute ("diffuseColor", "1 0 0"); // Set diffuse color to red.
 
 ## Events
 
-You can add an event listener to any X3D element with the name of the output field you want to listen to. If the field has changed, an event will occur.
+You can add an event listener to any X3D element with the name of the output field you want to listen on. If the field has changed, an event will fire.
 
 Events sent from a node are of type CustomEvent and have the following properties:
 
@@ -118,7 +120,7 @@ CustomEvent: {
 
 ## Add and Remove Nodes
 
-The content of the X3D scene can be modified with DOM manipulation methods to change the scene. You can add and remove nodes to build your own scene.
+The contents of the X3D scene can be modified using DOM manipulation methods to change the scene. You can add and remove nodes to create your own scene.
 
 ```js
 function addBlueBox ()
@@ -183,7 +185,7 @@ function removeRoute ()
 
 ## Inline Nodes
 
-Even the content of Inline nodes can be accessed and modified. The internal scene of the Inline node is attached to the Inline element as child every time the Inline node is completely loaded. To check if an Inline node is loaded use a LoadSensor node.
+Even the contents of Inline nodes can be accessed and modified. The internal scene of the Inline node is attached to the Inline element as a child each time the Inline node is fully loaded. To check whether an Inline node is loaded, use a LoadSensor node.
 
 ```html
 <x3d-canvas>
@@ -201,7 +203,7 @@ Even the content of Inline nodes can be accessed and modified. The internal scen
 </x3d-canvas>
 ```
 
-Assuming there is a Transform node with DEF name »Deer« inside the loaded scene »Deer.x3d«, the Transform node can be accessed when the Inline node is loaded. You should listen to the LoadSensor node's *loadTime* or *isLoaded* field to get informed when this will happen.
+Assuming there is a Transform node with the DEF name »Deer« inside the loaded scene »Deer.x3d«, the Transform node can be accessed when the Inline node is loaded. You should listen to the LoadSensor node's *loadTime* or *isLoaded* field to be informed when this happens.
 
 ```js
 const transform = document .querySelector ("[DEF='DeerInline'] [DEF='Deer']");
@@ -209,7 +211,7 @@ const transform = document .querySelector ("[DEF='DeerInline'] [DEF='Deer']");
 
 ### Events of Inline Element
 
-Every Inline element sends a `load` or `error` event when the content of the Inline is loaded or failed loading.
+Each Inline element sends a `load` or `error` event when the content of the Inline is loaded or fails to load.
 
 ```js
 const inline = document .querySelector ("[DEF='DeerInline']");
@@ -219,7 +221,7 @@ inline .addEventListener ("load", () => console .log ("Deer loaded!"));
 
 ## Script Element
 
-If you use a HTML instead of a XHTML page then there is already a \<script\> element, as you know. To avoid collisions you must add a different type. A proper type is `model/x3d+xml`, which prevents the web browser from interpreting the content as JavaScript, and X_ITE can take over the content.
+If you are using an HTML page instead of an XHTML page, you will already have a \<script\> element. To avoid collisions, you need to add a different type. A proper type is `model/x3d+xml`, which prevents the web browser from interpreting the content as JavaScript, and allows X_ITE to take over the content.
 
 ```html
 <Script type='model/x3d+xml' DEF='ChangeColorScript'>

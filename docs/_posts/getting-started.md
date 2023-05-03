@@ -622,12 +622,9 @@ x3d-canvas {
 </html>
 ```
 
-To get X_ITE working you need to include the JavaScript file »x_ite.min.js«. Once x_ite has loaded successfully, a new HTML element \<x3d-canvas\> will be available on your page.
+To get X_ITE working you need to include the JavaScript file »x_ite.min.js«. Once x_ite has loaded successfully, a new HTML element \<x3d-canvas\> will be available on your page. You can style the \<x3d-canvas\> element with CSS just like any other HTML element, and you can place it anywhere in the DOM tree.
 
->**Attention:** If you test a page locally on your desktop computer, you must setup a **localhost** server if you want to load a file via *src* attribute or Inline node, see [Setup a localhost Server](setup-a-localhost-server). Or use [DOM Integration](dom-integration) methods to directly combine HTML with X3D.
-{: .prompt-danger }
-
->**Tip:** You can style the \<x3d-canvas\> element with CSS like any other HTML element, and you can place it anywhere in the DOM tree.
+>**Tip:** To test a page locally on your desktop computer, setup a **localhost** server to load files via *src* attribute or Inline node, see [Setup a localhost Server](setup-a-localhost-server), or [directly combine HTML with X3D](dom-integration).
 {: .prompt-tip }
 
 ### Supported File Formats
