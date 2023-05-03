@@ -130,39 +130,7 @@ X3D (function ()
       }
    });
 
-   function sleep (duration)
-   {
-      return new Promise (function (resolve, reject)
-      {
-         setTimeout (resolve, duration);
-      });
-   }
-
-   $("#bug") .on ("click", async () =>
-   {
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/GeneratedCubeMapTexture.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/Lighting/DirectionalLight/DirectionalLight.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/Lighting/Shadows/Shadows.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/Navigation/NavigationInfo/NavigationInfo.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/RigidBodyPhysics/CollidableShape/CollidableShape.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBody/RigidBody.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBodyCollection/RigidBodyCollection.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/TextureProjector/TextureProjector/TextureProjector.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/Texturing/MultiTexture/MultiTexture.x3d"));
-      await sleep (1000);
-      await Browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/examples/X3D/NYC/NYC.x3d"));
-      await sleep (1000);
-   });
+   $("#website") .attr ("href", location .origin + ":4000/x_ite/")
 });
       </script>
       <style>
@@ -415,7 +383,7 @@ main.color-management #browser {
       <main>
          <div>
             <form action="javascript:alert('form submitted')">
-               <x3d-canvas id="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" onload="$('#file') .addClass ('loaded')" x-url='"src/tests/empty.x3dv"'>
+               <x3d-canvas id="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" onload="$('#file') .addClass ('loaded')" x-baseURL="src/tests/" x-src="lines.x3d">
                   <p class="fallback">
                      Sorry,<br/>
                      it wasn't me!<br/>
@@ -431,10 +399,10 @@ main.color-management #browser {
                <button id="location-go" type="button">Load URL</button>
             </div>
             <div id="buttons">
-               <a href="#" id="view-all">▣</a><a id="print-xml" href="#">XML</a><a id="print-vrml" href="#">VRML</a><a id="print-json" href="#">JSON</a><a href="dist/example.html">example page</a><a href="src/tests/d3-x3d/">d3-x3d</a><a href="src/tests/dom-integration/">dom-integration</a><a href="src/tests/legacy/">legacy</a><a href="#" id="bug">▣</a>
+               <a href="#" id="view-all">▣</a><a id="print-xml" href="#">XML</a><a id="print-vrml" href="#">VRML</a><a id="print-json" href="#">JSON</a><a href="dist/example.html">example page</a><a href="src/tests/d3-x3d/">d3-x3d</a><a href="src/tests/dom-integration/">dom-integration</a><a href="src/tests/legacy/">legacy</a>
             </div>
             <div id="links" class="min-links">
-               <a href="src/x_ite.html">src/x_ite.html</a><a href="https://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a>
+               <a href="src/x_ite.html">src/x_ite.html</a><a href="https://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a><a id="website" target="_blank">website</a>
             </div>
             <div id="examples-box"></div>
          </div>
