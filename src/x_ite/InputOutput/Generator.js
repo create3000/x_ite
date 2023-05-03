@@ -48,17 +48,18 @@
 import X3DConstants      from "../Base/X3DConstants.js";
 import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
-function Generator ({ style = "TIDY", precision = 7, doublePrecision = 15, selfClosingTags = true })
+function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecision = 15, html = false, selfClosingTags = true })
 {
-   this .Style (style);
-
    this .string              = "";
-   this .indent              = "";
-   this .listIndent          = "";
+   this .indent              = indent;
+   this .listIndent          = indent;
    this .precision           = precision;
    this .doublePrecision     = doublePrecision;
+   this .html                = html;
    this .selfClosingTags     = selfClosingTags;
    this .removeTrailingZeros = /(?:\.|(\.[0-9]*?))0*(?=[eE]|$)/;
+
+   this .Style (style);
 
    this .executionContextStack = [ null ];
    this .importedNodesIndex    = new Map ();
@@ -85,6 +86,8 @@ Generator .prototype =
       {
          case "CLEAN":
          {
+            this .listIndent = "";
+
             this .comma          = " ";
             this .break          = " ";
             this .tidyBreak      = "";
@@ -98,6 +101,8 @@ Generator .prototype =
          }
          case "SMALL":
          {
+            this .listIndent = "";
+
             this .comma          = ",";
             this .break          = "\n";
             this .tidyBreak      = "\n";
@@ -111,6 +116,8 @@ Generator .prototype =
          }
          case "COMPACT":
          {
+            this .listIndent = "";
+
             this .comma          = ",";
             this .break          = "\n";
             this .tidyBreak      = "\n";
@@ -195,7 +202,7 @@ Generator .prototype =
    },
    DecIndent: function ()
    {
-      this .indent = this .indent .slice (0, this .indent .length - this .indentChar .length);
+      this .indent     = this .indent     .slice (0, this .indent     .length - this .indentChar     .length);
       this .listIndent = this .listIndent .slice (0, this .listIndent .length - this .listIndentChar .length);
 
       return "";

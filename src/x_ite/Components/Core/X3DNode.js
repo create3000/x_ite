@@ -460,6 +460,13 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             generator .string += generator .Indent ();
             generator .string += "<";
             generator .string += this .getTypeName ();
+
+            if (generator .html && this .getTypeName () === "Script")
+            {
+               generator .string += generator .Space ();
+               generator .string += "type='model/x3d+xml'";
+            }
+
             generator .string += generator .Space ();
             generator .string += "USE='";
             generator .string += generator .XMLEncode (name);
@@ -497,6 +504,12 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       generator .string += generator .Indent ();
       generator .string += "<";
       generator .string += this .getTypeName ();
+
+      if (generator .html && this .getTypeName () === "Script")
+      {
+         generator .string += generator .Space ();
+         generator .string += "type='model/x3d+xml'";
+      }
 
       if (name .length)
       {

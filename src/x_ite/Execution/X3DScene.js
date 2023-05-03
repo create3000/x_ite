@@ -490,15 +490,21 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    },
    toXMLStream: function (generator)
    {
-      generator .string += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-      generator .string += generator .TidyBreak ();
-      generator .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
-      generator .string += LATEST_VERSION;
-      generator .string += "//EN\" \"http://www.web3d.org/specifications/x3d-";
-      generator .string += LATEST_VERSION;
-      generator .string += ".dtd\">";
-      generator .string += generator .TidyBreak ();
+      if (!generator .html)
+      {
+         generator .string += generator .Indent ();
+         generator .string += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .Indent ();
+         generator .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
+         generator .string += LATEST_VERSION;
+         generator .string += "//EN\" \"http://www.web3d.org/specifications/x3d-";
+         generator .string += LATEST_VERSION;
+         generator .string += ".dtd\">";
+         generator .string += generator .TidyBreak ();
+      }
 
+      generator .string += generator .Indent ();
       generator .string += "<X3D";
       generator .string += generator .Space ();
       generator .string += "profile='";
@@ -612,6 +618,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       generator .DecIndent ();
 
+      generator .string += generator .Indent ();
       generator .string += "</X3D>";
       generator .string += generator .TidyBreak ();
    },
@@ -619,6 +626,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    {
       // X3D
 
+      generator .string += generator .Indent ();
       generator .string += '{';
       generator .string += generator .TidySpace ();
       generator .string += '"';
