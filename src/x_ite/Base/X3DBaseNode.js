@@ -189,7 +189,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
          // Connect to execution context.
 
-         if (this .getOuterNode && this .getOuterNode ())
+         if (this .getOuterNode ?.())
             this .getOuterNode () .getLive () .addInterest (_set_live__, this);
 
          else if (this [_executionContext] !== this)
