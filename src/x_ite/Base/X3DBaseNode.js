@@ -178,12 +178,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
          // Change function.
 
-         Object .defineProperty (this, "getLive",
-         {
-            value: getLive,
-            enumerable: false,
-            configurable: true,
-         });
+         Object .defineProperty (this, "getLive", { value: getLive });
 
          // Add isLive event.
 
@@ -323,8 +318,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       {
          get: function () { return field; },
          set: function (value) { field .setValue (value); },
-         enumerable: false,
-         configurable: true, // false : non deletable
       });
 
       if (!this .isPrivate ())

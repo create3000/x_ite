@@ -307,7 +307,6 @@ for (const key of Reflect .ownKeys (X3DInfoArray .prototype))
 Object .defineProperty (X3DInfoArray .prototype, "length",
 {
    get: function () { return this [_array] .length; },
-   enumerable: false,
 });
 
 export default X3DInfoArray;
