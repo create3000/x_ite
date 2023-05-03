@@ -165,7 +165,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
    },
    setError: function (error)
    {
-      console .error ("Error loading extern prototype:", error);
+      console .error (`Error loading extern prototype '${this .getName ()}':`, error);
 
       this [_scene] = this .getBrowser () .getPrivateScene ();
 
