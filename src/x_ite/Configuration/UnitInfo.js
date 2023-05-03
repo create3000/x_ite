@@ -90,7 +90,7 @@ UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
       generator .string += "conversionFactor='";
       generator .string += this .conversionFactor;
       generator .string += "'";
-      generator .string += "/>";
+      generator .string += generator .selfClosingTags ? "/>" : "></unit>";
    },
    toJSONStream: function (generator, _throw)
    {

@@ -556,7 +556,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
                generator .string += "content='";
                generator .string += generator .XMLEncode (value);
                generator .string += "'";
-               generator .string += "/>";
+               generator .string += generator .selfClosingTags ? "/>" : "></meta>";
                generator .string += generator .TidyBreak ();
             }
          }

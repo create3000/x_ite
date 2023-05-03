@@ -88,7 +88,7 @@ ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype)
       generator .string += "level='";
       generator .string += this .level;
       generator .string += "'";
-      generator .string += "/>";
+      generator .string += generator .selfClosingTags ? "/>" : "></component>";
    },
    toJSONStream: function (generator)
    {
