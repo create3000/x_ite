@@ -59,28 +59,32 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .html             = html;
    this .closingTags      = html || closingTags;
 
-   this .floatFormatter = new Intl .NumberFormat ("en", {
+   this .floatFormat = new Intl .NumberFormat ("en", {
       notation: "standard",
       maximumSignificantDigits: this .precision,
       useGrouping: false,
+      signDisplay: "negative",
    }) .format;
 
-   this .floatExponentialFormatter = new Intl .NumberFormat ("en", {
+   this .floatExponentialFormat = new Intl .NumberFormat ("en", {
       notation: "scientific",
       maximumSignificantDigits: this .precision,
       useGrouping: false,
+      signDisplay: "negative",
    }) .format;
 
-   this .doubleFormatter = new Intl .NumberFormat ("en", {
+   this .doubleFormat = new Intl .NumberFormat ("en", {
       notation: "standard",
       maximumSignificantDigits: this .doublePrecision,
       useGrouping: false,
+      signDisplay: "negative",
    }) .format;
 
-   this .doubleExponentialFormatter = new Intl .NumberFormat ("en", {
+   this .doubleExponentialFormat = new Intl .NumberFormat ("en", {
       notation: "scientific",
       maximumSignificantDigits: this .doublePrecision,
       useGrouping: false,
+      signDisplay: "negative",
    }) .format;
 
    this .Style (style);
@@ -238,9 +242,9 @@ Generator .prototype =
          const exponent = Math .log10 (Math .abs (value));
 
          if ((this .precision > exponent && exponent >= -4) || value === 0)
-            return this .floatFormatter (Math .fround (value));
+            return this .floatFormat (Math .fround (value));
 
-         return this .floatExponentialFormatter (Math .fround (value)) .toLowerCase ();
+         return this .floatExponentialFormat (Math .fround (value)) .toLowerCase ();
       }
       else
       {
@@ -254,9 +258,9 @@ Generator .prototype =
          const exponent = Math .log10 (Math .abs (value));
 
          if ((this .doublePrecision > exponent && exponent >= -4) || value === 0)
-            return this .doubleFormatter (value);
+            return this .doubleFormat (value);
 
-         return this .doubleExponentialFormatter (value) .toLowerCase ();
+         return this .doubleExponentialFormat (value) .toLowerCase ();
       }
       else
       {
