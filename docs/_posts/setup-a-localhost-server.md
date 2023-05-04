@@ -13,15 +13,15 @@ To work around this problem you must set up a localhost server, then you can acc
 
 ### Using a Browser Extension
 
-You can use this [browser extension for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/) to create a web server, and serve your files using HTTP. Very easy to use.
+You can use this [browser extension for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/){:target="_blank"} to create a web server, and serve your files using HTTP. Very easy to use.
 
 ## Using an Application
 
 There are several applications on the Internet which can make a localhost server. Here I would like to recommend you two of them:
 
-MacOS users can use [Personal Web Server](https://apps.apple.com/de/app/personal-web-server/id1486323797?mt=12), which can serves files through a web server, and is very easy to use.
+MacOS users can use [Personal Web Server](https://apps.apple.com/de/app/personal-web-server/id1486323797?mt=12){:target="_blank"}, which can serves files through a web server, and is very easy to use.
 
-Another application is [XAMPP](https://www.apachefriends.org/index.html), which runs on several operating systems and is very popular.
+Another application is [XAMPP](https://www.apachefriends.org/index.html){:target="_blank"}, which runs on several operating systems and is very popular.
 
 ## Using Python
 
