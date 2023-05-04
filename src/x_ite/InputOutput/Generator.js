@@ -233,21 +233,35 @@ Generator .prototype =
    },
    Precision: function  (value)
    {
-      const exponent = Math .log10 (Math .abs (value));
+      if (Number .isFinite (value))
+      {
+         const exponent = Math .log10 (Math .abs (value));
 
-      if ((this .precision > exponent && exponent >= -4) || value === 0)
-         return this .floatFormatter (Math .fround (value));
+         if ((this .precision > exponent && exponent >= -4) || value === 0)
+            return this .floatFormatter (Math .fround (value));
 
-      return this .floatExponentialFormatter (Math .fround (value)) .toLowerCase ();
+         return this .floatExponentialFormatter (Math .fround (value)) .toLowerCase ();
+      }
+      else
+      {
+         return String (value);
+      }
    },
    DoublePrecision: function  (value)
    {
-      const exponent = Math .log10 (Math .abs (value));
+      if (Number .isFinite (value))
+      {
+         const exponent = Math .log10 (Math .abs (value));
 
-      if ((this .doublePrecision > exponent && exponent >= -4) || value === 0)
-         return this .doubleFormatter (value);
+         if ((this .doublePrecision > exponent && exponent >= -4) || value === 0)
+            return this .doubleFormatter (value);
 
-      return this .doubleExponentialFormatter (value) .toLowerCase ();
+         return this .doubleExponentialFormatter (value) .toLowerCase ();
+      }
+      else
+      {
+         return String (value);
+      }
    },
    PushExecutionContext: function (executionContext)
    {
