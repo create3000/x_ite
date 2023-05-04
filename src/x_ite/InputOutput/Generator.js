@@ -47,40 +47,41 @@
 
 import X3DConstants      from "../Base/X3DConstants.js";
 import { getUniqueName } from "../Execution/NamedNodesHandling.js";
+import Algorithm         from "../../standard/Math/Algorithm.js";
 
 function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecision = 15, html = false, closingTags = false })
 {
-   this .string              = "";
-   this .indent              = indent;
-   this .listIndent          = indent;
-   this .precision           = precision;
-   this .doublePrecision     = doublePrecision;
-   this .html                = html;
-   this .closingTags         = html || closingTags;
+   this .string           = "";
+   this .indent           = indent;
+   this .listIndent       = indent;
+   this .precision        = Algorithm .clamp (precision, 1, 21);
+   this .doublePrecision  = Algorithm .clamp (doublePrecision, 1, 21);
+   this .html             = html;
+   this .closingTags      = html || closingTags;
 
    this .floatFormatter = new Intl .NumberFormat ("en", {
       notation: "standard",
-      maximumSignificantDigits: precision,
+      maximumSignificantDigits: this .precision,
       useGrouping: false,
-   });
+   }) .format;
 
    this .floatExponentialFormatter = new Intl .NumberFormat ("en", {
       notation: "scientific",
-      maximumSignificantDigits: precision,
+      maximumSignificantDigits: this .precision,
       useGrouping: false,
-   });
+   }) .format;
 
    this .doubleFormatter = new Intl .NumberFormat ("en", {
       notation: "standard",
-      maximumSignificantDigits: doublePrecision,
+      maximumSignificantDigits: this .doublePrecision,
       useGrouping: false,
-   });
+   }) .format;
 
    this .doubleExponentialFormatter = new Intl .NumberFormat ("en", {
       notation: "scientific",
-      maximumSignificantDigits: doublePrecision,
+      maximumSignificantDigits: this .doublePrecision,
       useGrouping: false,
-   });
+   }) .format;
 
    this .Style (style);
 
@@ -232,21 +233,21 @@ Generator .prototype =
    },
    Precision: function  (value)
    {
-      const exponent = Math .log10 (value);
+      const exponent = Math .log10 (Math .abs (value));
 
       if ((this .precision > exponent && exponent >= -4) || value === 0)
-         return this .floatFormatter .format (Math .fround (value));
+         return this .floatFormatter (Math .fround (value));
 
-      return this .floatExponentialFormatter .format (Math .fround (value)) .toLowerCase ();
+      return this .floatExponentialFormatter (Math .fround (value)) .toLowerCase ();
    },
    DoublePrecision: function  (value)
    {
-      const exponent = Math .log10 (value);
+      const exponent = Math .log10 (Math .abs (value));
 
       if ((this .doublePrecision > exponent && exponent >= -4) || value === 0)
-         return this .doubleFormatter .format (value);
+         return this .doubleFormatter (value);
 
-      return this .doubleExponentialFormatter .format (value) .toLowerCase ();
+      return this .doubleExponentialFormatter (value) .toLowerCase ();
    },
    PushExecutionContext: function (executionContext)
    {
