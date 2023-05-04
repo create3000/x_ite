@@ -134,7 +134,7 @@ UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
       generator .string += '"';
       generator .string += ':';
       generator .string += generator .TidySpace ();
-      generator .string += generator .DoublePrecision (this .conversionFactor);
+      generator .string += this .conversionFactor;
       generator .string += generator .TidyBreak ();
 
       generator .string += generator .DecIndent ();
