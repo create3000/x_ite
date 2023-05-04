@@ -161,9 +161,11 @@ Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFro
 An object with one or more of these properties:
 
 * **style:** String, output style, one of: **"TIDY"**, "COMPACT", "SMALL", "CLEAN"
+* **indent:** String, initial indent, default: ""
 * **precision:** Integer, float precision, default: 7
 * **doublePrecision:** Integer, double precision, default: 15
-* **selfClosingTags:** Boolean, XML self-closing tags, default: true
+* **html:** Boolean, HTML style, default: false
+* **closingTags:** Boolean, use closing tags, default: false
 
 #### String **toXMLString** (\[options\])
 
