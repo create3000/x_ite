@@ -63,28 +63,24 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
       notation: "standard",
       maximumSignificantDigits: this .precision,
       useGrouping: false,
-      signDisplay: "negative",
    }) .format;
 
    this .floatExponentialFormat = new Intl .NumberFormat ("en", {
       notation: "scientific",
       maximumSignificantDigits: this .precision,
       useGrouping: false,
-      signDisplay: "negative",
    }) .format;
 
    this .doubleFormat = new Intl .NumberFormat ("en", {
       notation: "standard",
       maximumSignificantDigits: this .doublePrecision,
       useGrouping: false,
-      signDisplay: "negative",
    }) .format;
 
    this .doubleExponentialFormat = new Intl .NumberFormat ("en", {
       notation: "scientific",
       maximumSignificantDigits: this .doublePrecision,
       useGrouping: false,
-      signDisplay: "negative",
    }) .format;
 
    this .Style (style);
