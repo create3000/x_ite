@@ -325,7 +325,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
                   generator .string += "'";
                }
 
-               generator .string += generator .selfClosingTags ? "/>" : "></NULL>";
+               generator .string += generator .closingTags ? "></NULL>" : "/>";
             }
          }
 

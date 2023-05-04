@@ -107,7 +107,7 @@ X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototyp
          generator .string += "'";
       }
 
-      generator .string += generator .selfClosingTags ? "/>" : "></EXPORT>";
+      generator .string += generator .closingTags ? "></EXPORT>" : "/>";
    },
    toJSONStream: function (generator)
    {

@@ -222,7 +222,7 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
 
             if (field .isDefaultValue ())
             {
-               generator .string += generator .selfClosingTags ? "/>" : "></field>";
+               generator .string += generator .closingTags ? "></field>" : "/>";
                generator .string += generator .TidyBreak ();
             }
             else
@@ -259,7 +259,7 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
                      field .toXMLStream (generator);
 
                      generator .string += "'";
-                     generator .string += generator .selfClosingTags ? "/>" : "></field>";
+                     generator .string += generator .closingTags ? "></field>" : "/>";
                      generator .string += generator .TidyBreak ();
                      break;
                   }

@@ -68,6 +68,7 @@ ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype)
    },
    toVRMLStream: function (generator)
    {
+      generator .string += generator .Indent ();
       generator .string += "COMPONENT";
       generator .string += generator .Space ();
       generator .string += this .name;
@@ -88,7 +89,7 @@ ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype)
       generator .string += "level='";
       generator .string += this .level;
       generator .string += "'";
-      generator .string += generator .selfClosingTags ? "/>" : "></component>";
+      generator .string += generator .closingTags ? "></component>" : "/>";
    },
    toJSONStream: function (generator)
    {

@@ -66,6 +66,7 @@ UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
    },
    toVRMLStream: function (generator)
    {
+      generator .string += generator .Indent ();
       generator .string += "UNIT";
       generator .string += generator .Space ();
       generator .string += this .category;
@@ -90,7 +91,7 @@ UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
       generator .string += "conversionFactor='";
       generator .string += this .conversionFactor;
       generator .string += "'";
-      generator .string += generator .selfClosingTags ? "/>" : "></unit>";
+      generator .string += generator .closingTags ? "></unit>" : "/>";
    },
    toJSONStream: function (generator, _throw)
    {

@@ -170,7 +170,7 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       generator .string += generator .XMLEncode (this [_destinationField] .getName ());
       generator .string += "'";
-      generator .string += generator .selfClosingTags ? "/>" : "></ROUTE>";
+      generator .string += generator .closingTags ? "></ROUTE>" : "/>";
    },
    toJSONStream: function (generator)
    {

@@ -405,7 +405,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
                }
             }
 
-            generator .string += generator .selfClosingTags ? "/>" : "></ProtoInstance>";
+            generator .string += generator .closingTags ? "></ProtoInstance>" : "/>";
 
             generator .LeaveScope ();
             return;
@@ -446,7 +446,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       if (fields .length === 0)
       {
-         generator .string += generator .selfClosingTags ? "/>" : "></ProtoInstance>";
+         generator .string += generator .closingTags ? "></ProtoInstance>" : "/>";
       }
       else
       {
@@ -494,7 +494,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
                      if (field .length === 0)
                      {
-                        generator .string += generator .selfClosingTags ? "/>" : "></fieldValue>";
+                        generator .string += generator .closingTags ? "></fieldValue>" : "/>";
                         generator .string += generator .TidyBreak ();
                      }
                      else
@@ -568,7 +568,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
                      field .toXMLStream (generator);
 
                      generator .string += "'";
-                     generator .string += generator .selfClosingTags ? "/>" : "></fieldValue>";
+                     generator .string += generator .closingTags ? "></fieldValue>" : "/>";
                      generator .string += generator .TidyBreak ();
                      break;
                   }
@@ -604,7 +604,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
                   generator .string += "protoField='";
                   generator .string += generator .XMLEncode (protoField .getName ());
                   generator .string += "'";
-                  generator .string += generator .selfClosingTags ? "/>" : "></connect>";
+                  generator .string += generator .closingTags ? "></connect>" : "/>";
                   generator .string += generator .TidyBreak ();
                }
             }

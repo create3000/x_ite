@@ -48,7 +48,7 @@
 import X3DConstants      from "../Base/X3DConstants.js";
 import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
-function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecision = 15, html = false, selfClosingTags = true })
+function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecision = 15, html = false, closingTags = false })
 {
    this .string              = "";
    this .indent              = indent;
@@ -56,7 +56,7 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .precision           = precision;
    this .doublePrecision     = doublePrecision;
    this .html                = html;
-   this .selfClosingTags     = selfClosingTags;
+   this .closingTags         = html || closingTags;
    this .removeTrailingZeros = /(?:\.|(\.[0-9]*?))0*(?=[eE]|$)/;
 
    this .Style (style);

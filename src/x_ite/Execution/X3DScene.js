@@ -399,6 +399,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    },
    toVRMLStream: function (generator)
    {
+      generator .string += generator .Indent ();
       generator .string += "#X3D V";
       generator .string += LATEST_VERSION;
       generator .string += generator .Space ();
@@ -430,24 +431,18 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
          generator .string += generator .TidyBreak ();
       }
 
-      // Units
+      const units = this .getUnits () .filter (unit => unit .conversionFactor !== 1);
+
+      if (units .length)
       {
-         let empty = true;
-
-         for (const unit of this .getUnits ())
+         for (const unit of units)
          {
-            if (unit .conversionFactor !== 1)
-            {
-               empty = false;
+            unit .toVRMLStream (generator);
 
-               unit .toVRMLStream (generator);
-
-               generator .string += generator .Break ();
-            }
+            generator .string += generator .Break ();
          }
 
-         if (!empty)
-            generator .string += generator .TidyBreak ();
+         generator .string += generator .TidyBreak ();
       }
 
       const metadata = this .getMetaDatas ();
@@ -458,6 +453,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
          {
             for (const value of values)
             {
+               generator .string += generator .Indent ();
                generator .string += "META";
                generator .string += generator .Space ();
                generator .string += new Fields .SFString (key) .toString ();
@@ -562,7 +558,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
                generator .string += "content='";
                generator .string += generator .XMLEncode (value);
                generator .string += "'";
-               generator .string += generator .selfClosingTags ? "/>" : "></meta>";
+               generator .string += generator .closingTags ? "></meta>" : "/>";
                generator .string += generator .TidyBreak ();
             }
          }
@@ -620,7 +616,6 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       generator .string += generator .Indent ();
       generator .string += "</X3D>";
-      generator .string += generator .TidyBreak ();
    },
    toJSONStream: function (generator)
    {
@@ -965,7 +960,6 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       generator .string += generator .DecIndent ();
       generator .string += generator .Indent ();
       generator .string += '}';
-      generator .string += generator .TidyBreak ();
    },
 });
 

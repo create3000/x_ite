@@ -267,7 +267,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
             generator .string += "'";
          }
 
-         generator .string += generator .selfClosingTags ? "/>" : "></IMPORT>";
+         generator .string += generator .closingTags ? "></IMPORT>" : "/>";
 
          try
          {
@@ -316,7 +316,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
                   generator .string += "toField='";
                   generator .string += generator .XMLEncode (destinationField);
                   generator .string += "'";
-                  generator .string += generator .selfClosingTags ? "/>" : "></ROUTE>";
+                  generator .string += generator .closingTags ? "></ROUTE>" : "/>";
                }
             }
          }

@@ -267,7 +267,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
          generator .string += "name='";
          generator .string += generator .XMLEncode (field .getName ());
          generator .string += "'";
-         generator .string += generator .selfClosingTags ? "/>" : "></field>";
+         generator .string += generator .closingTags ? "></field>" : "/>";
          generator .string += generator .TidyBreak ();
       }
 

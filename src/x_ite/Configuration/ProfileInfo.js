@@ -64,6 +64,7 @@ ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
    },
    toVRMLStream: function (generator)
    {
+      generator .string += generator .Indent ();
       generator .string += "PROFILE";
       generator .string += generator .Space ();
       generator .string += this .name;
