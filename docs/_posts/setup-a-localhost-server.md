@@ -11,9 +11,9 @@ X_ITE makes use of the XMLHttpRequest object to load files and there's no way ro
 
 To work around this problem you must set up a localhost server, then you can access your local files under the web address http://**localhost**/...
 
-### Using a Browser Extension
+## Using a Browser Extension
 
-You can use this [browser extension for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/){:target="_blank"} to create a web server, and serve your files using HTTP. Very easy to use.
+You can use this [browser extension for Chrome and Edge](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/){:target="_blank"} to create a web server and serve your local files via HTTP. Very easy to use.
 
 ## Using an Application
 
