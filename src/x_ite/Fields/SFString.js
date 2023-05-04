@@ -95,15 +95,19 @@ SFString .prototype = Object .assign (Object .create (X3DField .prototype),
    valueOf: X3DField .prototype .getValue,
    toStream: function (generator)
    {
-      generator .string += '"' + SFString .escape (this .getValue ()) + '"';
+      generator .string += '"';
+      generator .string += SFString .escape (this .getValue ());
+      generator .string += '"';
    },
    toVRMLStream: function (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream: function (generator, sourceText)
    {
-      generator .string += generator .XMLEncode (this .getValue ());
+      generator .string += sourceText
+         ? generator .XMLEncodeSourceText (this .getValue ())
+         : generator .XMLEncode (this .getValue ());
    },
    toJSONStream: function (generator)
    {

@@ -449,7 +449,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       if (metadata .size)
       {
-         for (const [key, values] of metadata .entries ())
+         for (const [key, values] of metadata)
          {
             for (const value of values)
             {
@@ -544,7 +544,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
             }
          }
 
-         for (const [key, values] of this .getMetaDatas () .entries ())
+         for (const [key, values] of this .getMetaDatas ())
          {
             for (const value of values)
             {
@@ -759,9 +759,9 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
             // Meta data
 
-            for (const [i, [key, values]] of [... this .getMetaDatas ()] .entries ())
+            for (const [i, [key, values]] of [... this .getMetaDatas ()])
             {
-               for (const [j, value] of values .entries ())
+               for (const [j, value] of values)
                {
                   generator .string += generator .Indent ();
                   generator .string += '{';

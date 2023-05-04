@@ -451,7 +451,7 @@ MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .proto
    {
       return X3DConstants .MFString;
    },
-   toXMLStream: function (generator)
+   toXMLStream: function (generator, sourceText)
    {
       const
          target = this .getTarget (),
@@ -464,14 +464,14 @@ MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .proto
          for (let i = 0, n = length - 1; i < n; ++ i)
          {
             generator .string += "\"";
-            value [i] .toXMLStream (generator);
+            value [i] .toXMLStream (generator, sourceText);
             generator .string += "\"";
             generator .string += generator .Comma ();
             generator .string += generator .TidySpace ();
          }
 
          generator .string += "\"";
-         value .at (-1) .toXMLStream (generator);
+         value .at (-1) .toXMLStream (generator, sourceText);
          generator .string += "\"";
       }
    },

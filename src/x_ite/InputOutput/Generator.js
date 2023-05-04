@@ -479,6 +479,24 @@ Generator .prototype =
          return string .replace (regex, char => map [char]);
       };
    })(),
+   XMLEncodeSourceText: (function ()
+   {
+      const map = {
+         "\\": "\\\\",
+         "\"": "\\\"",
+         "'": "&apos;",
+         "<": "&lt;",
+         ">": "&gt;",
+         "&": "&amp;",
+      };
+
+      const regex = /([\\"'<>&])/g;
+
+      return function (string)
+      {
+         return string .replace (regex, char => map [char]);
+      };
+   })(),
    JSONEncode: (function ()
    {
       const map = {

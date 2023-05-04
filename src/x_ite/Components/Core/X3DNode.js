@@ -544,7 +544,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       let cdata = this .getSourceText ();
 
-      if (cdata ?.length === 0)
+      if (cdata ?.length === 0 || (generator .html && this .getTypeName () !== "Script"))
          cdata = null;
 
       generator .IncIndent ();
@@ -594,7 +594,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                      generator .string += field .getName ();
                      generator .string += "='";
 
-                     field .toXMLStream (generator);
+                     field .toXMLStream (generator, field === this .getSourceText ());
 
                      generator .string += "'";
                      break;
