@@ -7,9 +7,9 @@ tags: [Setup, Localhost, Server, XHR]
 ---
 ## Overview
 
-X_ITE makes use of the XMLHttpRequest object to load files and there's no way round that. But that means files loading using the file:// scheme protocol are subject to the same origin policy and are handled as cross origin requests (CORS) and cross origin requests are only supported for protocol schemes: https, http and data. **That means X_ITE cannot have access to this files.**
+X_ITE uses the XMLHttpRequest object to load files and there's no way around it. However, this means that files loaded using the **file://** scheme protocol are subject to the same origin policy and are treated as cross-origin requests (CORS), and cross-origin requests are only supported for protocol schemes: https, http and data. **This means that X_ITE cannot access these files.**
 
-To work around this problem you must set up a localhost server, then you can access your local files under the web address http://**localhost**/...
+To work around this problem, you need to set up a localhost server, then you can access your local files at the web address http://**localhost**/...
 
 ## Using a Browser Extension
 
