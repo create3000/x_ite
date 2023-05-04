@@ -57,7 +57,30 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .doublePrecision     = doublePrecision;
    this .html                = html;
    this .closingTags         = html || closingTags;
-   this .removeTrailingZeros = /(?:\.|(\.[0-9]*?))0*(?=[eE]|$)/;
+
+   this .floatFormatter = new Intl .NumberFormat ("en", {
+      notation: "standard",
+      maximumSignificantDigits: precision,
+      useGrouping: false,
+   });
+
+   this .floatExponentialFormatter = new Intl .NumberFormat ("en", {
+      notation: "scientific",
+      maximumSignificantDigits: precision,
+      useGrouping: false,
+   });
+
+   this .doubleFormatter = new Intl .NumberFormat ("en", {
+      notation: "standard",
+      maximumSignificantDigits: doublePrecision,
+      useGrouping: false,
+   });
+
+   this .doubleExponentialFormatter = new Intl .NumberFormat ("en", {
+      notation: "scientific",
+      maximumSignificantDigits: doublePrecision,
+      useGrouping: false,
+   });
 
    this .Style (style);
 
@@ -207,13 +230,23 @@ Generator .prototype =
 
       return "";
    },
-   Precision: function (value)
+   Precision: function  (value)
    {
-      return Math .fround (value) .toPrecision (this .precision) .replace (this .removeTrailingZeros, "$1");
+      const exponent = Math .log10 (value);
+
+      if ((this .precision > exponent && exponent >= -4) || value === 0)
+         return this .floatFormatter .format (Math .fround (value));
+
+      return this .floatExponentialFormatter .format (Math .fround (value)) .toLowerCase ();
    },
-   DoublePrecision: function (value)
+   DoublePrecision: function  (value)
    {
-      return value .toPrecision (this .doublePrecision) .replace (this .removeTrailingZeros, "$1");
+      const exponent = Math .log10 (value);
+
+      if ((this .doublePrecision > exponent && exponent >= -4) || value === 0)
+         return this .doubleFormatter .format (value);
+
+      return this .doubleExponentialFormatter .format (value) .toLowerCase ();
    },
    PushExecutionContext: function (executionContext)
    {
