@@ -13,7 +13,7 @@ To work around this problem you must set up a localhost server, then you can acc
 
 ### Using a Browser Extension
 
-You can use this [Browser Extension](https://webextension.org/listing/access-control.html) to unlock the CORS restrictions imposed by your browser. This is useful if you are in development mode and is easy to use.
+You can use this [browser extension for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/) to create a web server, and serve your files using HTTP. Very easy to use.
 
 ## Using an Application
 
