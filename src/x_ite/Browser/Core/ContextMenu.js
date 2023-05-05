@@ -278,7 +278,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                className: "context-menu-icon x_ite-private-icon-shading",
                items: {
                   "point": {
-                     name: _("Point"),
+                     name: _("Points"),
                      type: "radio",
                      radio: "shading",
                      selected: browser .getBrowserOption ("Shading") === "POINT",
@@ -286,7 +286,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                         click: function ()
                         {
                            browser .setBrowserOption ("Shading", "POINT");
-                           browser .getNotification () ._string = _("Shading") + ": " + _("Point");
+                           browser .getNotification () ._string = _("Shading") + ": " + _("Points");
                         }
                         .bind (this),
                      },

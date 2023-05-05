@@ -153,6 +153,15 @@ msgstr "Auf Objekte zielen"
 msgid "None Viewer"
 msgstr "Kein Betrachter"
 
+msgid "Points"
+msgstr "Punkte"
+
+msgid "Flat"
+msgstr "Flach"
+
+msgid "Wireframe"
+msgstr "Drahtgittermodel"
+
 msgid "Loading %1 file"
 msgstr "Lade %1 Datei"
 

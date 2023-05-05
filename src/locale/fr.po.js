@@ -16,13 +16,13 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 msgid "Less Properties"
-msgstr "Moins de propriétés"
+msgstr "Moins de Propriétés"
 
 msgid "More Properties"
-msgstr "Plus de propriétés"
+msgstr "Plus de Propriétés"
 
 msgid "Frame rate"
-msgstr "Fréquence"
+msgstr "Fréquence d'Images"
 
 msgid "fps"
 msgstr "fps"
@@ -46,7 +46,7 @@ msgid "X3D total"
 msgstr "X3D total"
 
 msgid "Event Processing"
-msgstr "Traitement des événements"
+msgstr "Traitement des Événements"
 
 msgid "Pointer"
 msgstr "Pointeur"
@@ -55,34 +55,34 @@ msgid "Camera"
 msgstr "Caméra"
 
 msgid "Collision Detection"
-msgstr "Détection des collisions"
+msgstr "Détection des Collisions"
 
 msgid "Rendering"
 msgstr "Rendement"
 
 msgid "Number of Shapes"
-msgstr "Nombre de formes"
+msgstr "Nombre de Formes"
 
 msgid "Number of Sensors"
-msgstr "Nombre de senseurs"
+msgstr "Nombre de Senseurs"
 
 msgid "Browser Timings"
-msgstr "Calcul du temps"
+msgstr "Calcul du Temps"
 
 msgid "X_ITE Browser"
 msgstr "X_ITE Navigateur"
 
 msgid "Viewpoints"
-msgstr "Points de vue"
+msgstr "Points de Vue"
 
 msgid "Available Viewers"
 msgstr "Visionneurs disponibles"
 
 msgid "Straighten Horizon"
-msgstr "Redresser l'horizon"
+msgstr "Redresser l'Horizon"
 
 msgid "Primitive Quality"
-msgstr "Qualité des objets simples"
+msgstr "Qualité des Objets simples"
 
 msgid "High"
 msgstr "Haut"
@@ -103,10 +103,10 @@ msgid "low"
 msgstr "faible"
 
 msgid "Texture Quality"
-msgstr "Qualité des textures"
+msgstr "Qualité des Textures"
 
 msgid "Display Rubberband"
-msgstr "Présenter le bande élastique"
+msgstr "Présenter le Bande élastique"
 
 msgid "Rubberband"
 msgstr "Bande élastique"
@@ -118,19 +118,19 @@ msgid "off"
 msgstr "arrêt"
 
 msgid "Mute Browser"
-msgstr "Rendre navigateur muet"
+msgstr "Rendre Navigateur muet"
 
 msgid "Browser muted"
 msgstr "Navigateur muet"
 
 msgid "Browser unmuted"
-msgstr "Son de navigateur réactivé"
+msgstr "Son de Navigateur réactivé"
 
 msgid "Leave Fullscreen"
-msgstr "Laisser le plein écran"
+msgstr "Laisser le plein Écran"
 
 msgid "Fullscreen"
-msgstr "Plein écran"
+msgstr "Plein Écran"
 
 msgid "About X_ITE"
 msgstr "À propos de X_ITE"
@@ -145,29 +145,35 @@ msgid "Fly Viewer"
 msgstr "Voler"
 
 msgid "Plane Viewer"
-msgstr "Visionneur de la plaine"
+msgstr "Visionneur de la Plaine"
 
 msgid "Look At Viewer"
-msgstr "Regarder un objet de près"
+msgstr "Regarder un Objet de près"
 
 msgid "None Viewer"
-msgstr "Pas de visionneur"
+msgstr "Pas de Visionneur"
+
+msgid "Flat"
+msgstr "Plat"
+
+msgid "Wireframe"
+msgstr "Image filaire"
 
 msgid "Loading %1 file"
-msgstr "Télécharger %1 fichier"
+msgstr "Télécharger %1 Fichier"
 
 msgid "Loading %1 files"
-msgstr "Télécharger %1 fichiers"
+msgstr "Télécharger %1 Fichiers"
 
 msgid "Loading done"
 msgstr "Téléchargement fini"
 
 msgid "Failed loading world."
-msgstr "Le chargement des fichiers a échoué."
+msgstr "Le chargement des Fichiers a échoué."
 
 msgid "Show World Info"
 msgstr "Afficher World Info"
 
 msgid "Viewpoint is copied to clipboard."
-msgstr "Le point de vue est copié dans le presse-papiers."
+msgstr "Le point de Vue est copié dans le Presse-Papiers."
 `;
