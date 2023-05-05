@@ -218,7 +218,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
 const f2 = (function ()
 {
-   const format = new Intl .NumberFormat (navigator .language || navigator .userLanguage, {
+   const format = new Intl .NumberFormat (undefined, {
       notation: "standard",
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
