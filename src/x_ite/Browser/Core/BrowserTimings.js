@@ -216,10 +216,18 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    },
 });
 
-const f2 = new Intl .NumberFormat (navigator .language || navigator .userLanguage, {
-   notation: "standard",
-   minimumFractionDigits: 2,
-   maximumFractionDigits: 2,
-}) .format;
+const f2 = (function ()
+{
+   const format = new Intl .NumberFormat (navigator .language || navigator .userLanguage, {
+      notation: "standard",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+   }) .format;
+
+   return function (value)
+   {
+      return format (Number .isFinite (value) ? value : 0);
+   };
+})();
 
 export default BrowserTimings;
