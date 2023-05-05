@@ -82,7 +82,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       this .element = $("<div></div>") .hide () .addClass ("x_ite-private-browser-timings") .appendTo (this .getBrowser () .getSurface ());
       this .table   = $("<table></table>") .appendTo (this .element);
-      this .header  = $("<thead></thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>"))) .appendTo (this .table);
+      this .header  = $("<thead></thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>") .text (_("Browser Timings")))) .appendTo (this .table);
       this .body    = $("<tbody></tbody>") .appendTo (this .table);
       this .footer  = $("<tfoot></tfoot>") .append ($("<tr></tr>") .append ($("<td colspan='2'></td>"))) .appendTo (this .table);
       this .button  = $("<button></button>") .attr ("type", "button") .appendTo (this .footer .find ("td"));
@@ -196,7 +196,6 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       rows .length = r;
 
-      this .header .find ("th") .text (_("Browser Timings"));
       this .body .empty ();
       this .body .append (rows);
    },
