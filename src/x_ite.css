@@ -166,8 +166,12 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding-right: 10px;
 }
 
-.x_ite-private-browser-timings tr.x_ite-private-more td {
+.x_ite-private-browser-timings table.more tr.x_ite-private-more td {
   padding-bottom: 5px;
+}
+
+.x_ite-private-browser-timings table.less tr.x_ite-private-more ~ tr {
+  display: none;
 }
 
 .x_ite-private-browser-timings td {
