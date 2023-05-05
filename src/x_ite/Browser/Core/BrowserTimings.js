@@ -236,40 +236,40 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       this .frameRate .text (f2(1000 / this .fps .averageTime) + " " + _("fps"));
       this .speed .text (f2(this .getSpeed (browser .currentSpeed)) + " " + this .getSpeedUnit (browser .currentSpeed));
 
-      if (this .localStorage .type === "MORE" && browser .getWorld ())
-      {
-         const
-            layers            = browser .getWorld () .getLayerSet () .getLayers (),
-            activeLayer       = browser .getActiveLayer (),
-            navigationTime    = activeLayer && browser .getCollisionCount () ? activeLayer .getCollisionTime () .averageTime : 0,
-            collisionTime     = browser .getCollisionTime () .averageTime + navigationTime,
-            routingTime       = Math .max (0, browser .getBrowserTime () .averageTime - (browser .getCameraTime () .averageTime + browser .getCollisionTime () .averageTime + browser .getDisplayTime () .averageTime)),
-            prepareEvents     = browser .prepareEvents () .getInterests () .size - 1,
-            sensors           = browser .sensorEvents () .getInterests () .size,
-            opaqueShapes      = layers .reduce ((n, layer) => n + layer .getNumOpaqueShapes (), 0),
-            transparentShapes = layers .reduce ((n, layer) => n + layer .getNumTransparentShapes (), 0);
+      if (this .localStorage .type !== "MORE" || !browser .getWorld ())
+         return;
 
-         this .browserTime     .text (f2(browser .getSystemTime () .averageTime) + " " + _("ms"));
-         this .x3dTotal        .text (f2(browser .getBrowserTime () .averageTime) + " " + _("ms"));
-         this .eventProcessing .text (f2(routingTime) + " " + _("ms"));
-         this .pointerTime     .text (f2(browser .getPointingTime () .averageTime) + " " + _("ms"));
-         this .cameraTime      .text (f2(browser .getCameraTime () .averageTime) + " " + _("ms"));
-         this .pickingTime     .text (f2(browser .getPickingTime () .averageTime) + " " + _("ms"));
-         this .collisionTime   .text (f2(collisionTime) + " " + _("ms"));
-         this .renderTime      .text (f2(browser .getDisplayTime () .averageTime) + " " + _("ms"));
-         this .numShapes       .text (opaqueShapes + " + " + transparentShapes);
-         this .sensors         .text (prepareEvents + sensors);
+      const
+         layers            = browser .getWorld () .getLayerSet () .getLayers (),
+         activeLayer       = browser .getActiveLayer (),
+         navigationTime    = activeLayer && browser .getCollisionCount () ? activeLayer .getCollisionTime () .averageTime : 0,
+         collisionTime     = browser .getCollisionTime () .averageTime + navigationTime,
+         routingTime       = Math .max (0, browser .getBrowserTime () .averageTime - (browser .getCameraTime () .averageTime + browser .getCollisionTime () .averageTime + browser .getDisplayTime () .averageTime)),
+         prepareEvents     = browser .prepareEvents () .getInterests () .size - 1,
+         sensors           = browser .sensorEvents () .getInterests () .size,
+         opaqueShapes      = layers .reduce ((n, layer) => n + layer .getNumOpaqueShapes (), 0),
+         transparentShapes = layers .reduce ((n, layer) => n + layer .getNumTransparentShapes (), 0);
 
-         browser .getSystemTime ()    .reset ();
-         browser .getBrowserTime ()   .reset ();
-         browser .getPointingTime ()  .reset ();
-         browser .getCameraTime ()    .reset ();
-         browser .getPickingTime ()   .reset ();
-         browser .getCollisionTime () .reset ();
-         browser .getDisplayTime ()   .reset ();
+      this .browserTime     .text (f2(browser .getSystemTime () .averageTime) + " " + _("ms"));
+      this .x3dTotal        .text (f2(browser .getBrowserTime () .averageTime) + " " + _("ms"));
+      this .eventProcessing .text (f2(routingTime) + " " + _("ms"));
+      this .pointerTime     .text (f2(browser .getPointingTime () .averageTime) + " " + _("ms"));
+      this .cameraTime      .text (f2(browser .getCameraTime () .averageTime) + " " + _("ms"));
+      this .pickingTime     .text (f2(browser .getPickingTime () .averageTime) + " " + _("ms"));
+      this .collisionTime   .text (f2(collisionTime) + " " + _("ms"));
+      this .renderTime      .text (f2(browser .getDisplayTime () .averageTime) + " " + _("ms"));
+      this .numShapes       .text (opaqueShapes + " + " + transparentShapes);
+      this .sensors         .text (prepareEvents + sensors);
 
-         activeLayer ?.getCollisionTime () .reset ();
-      }
+      browser .getSystemTime ()    .reset ();
+      browser .getBrowserTime ()   .reset ();
+      browser .getPointingTime ()  .reset ();
+      browser .getCameraTime ()    .reset ();
+      browser .getPickingTime ()   .reset ();
+      browser .getCollisionTime () .reset ();
+      browser .getDisplayTime ()   .reset ();
+
+      activeLayer ?.getCollisionTime () .reset ();
    },
    getSpeed: function (speed)
    {
