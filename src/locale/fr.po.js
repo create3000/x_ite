@@ -45,8 +45,8 @@ msgstr ""
 msgid "X3D total"
 msgstr "X3D total"
 
-msgid "Traitement des événements"
-msgstr "Routes"
+msgid "Event Processing"
+msgstr "Traitement des événements"
 
 msgid "Pointer"
 msgstr "Pointeur"
@@ -127,7 +127,7 @@ msgid "Browser unmuted"
 msgstr "Son de navigateur réactivé"
 
 msgid "Leave Fullscreen"
-msgstr "Sortie en plein écran"
+msgstr "Laisser le plein écran"
 
 msgid "Fullscreen"
 msgstr "Plein écran"
