@@ -151,23 +151,15 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       if (this .localStorage .type === "MORE")
       {
          const
-            layers         = browser .getWorld () .getLayerSet () .getLayers (),
-            activeLayer    = browser .getActiveLayer (),
-            navigationTime = activeLayer && browser .getCollisionCount () ? activeLayer .getCollisionTime () .averageTime : 0,
-            collisionTime  = browser .getCollisionTime () .averageTime + navigationTime,
-            routingTime    = Math .max (0, browser .getBrowserTime () .averageTime - (browser .getCameraTime () .averageTime + browser .getCollisionTime () .averageTime + browser .getDisplayTime () .averageTime)),
-            prepareEvents  = browser .prepareEvents () .getInterests () .size - 1,
-            sensors        = browser .sensorEvents () .getInterests () .size;
-
-         let
-            opaqueShapes      = 0,
-            transparentShapes = 0;
-
-         for (const layer of layers)
-         {
-            opaqueShapes      += layer .numOpaqueShapes;
-            transparentShapes += layer .numTransparentShapes;
-         }
+            layers            = browser .getWorld () .getLayerSet () .getLayers (),
+            activeLayer       = browser .getActiveLayer (),
+            navigationTime    = activeLayer && browser .getCollisionCount () ? activeLayer .getCollisionTime () .averageTime : 0,
+            collisionTime     = browser .getCollisionTime () .averageTime + navigationTime,
+            routingTime       = Math .max (0, browser .getBrowserTime () .averageTime - (browser .getCameraTime () .averageTime + browser .getCollisionTime () .averageTime + browser .getDisplayTime () .averageTime)),
+            prepareEvents     = browser .prepareEvents () .getInterests () .size - 1,
+            sensors           = browser .sensorEvents () .getInterests () .size,
+            opaqueShapes      = layers .reduce ((n, layer) => n + layer .getNumOpaqueShapes (), 0),
+            transparentShapes = layers .reduce ((n, layer) => n + layer .getNumTransparentShapes (), 0);
 
          rows [1] .addClass ("x_ite-private-more");
 
@@ -190,8 +182,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          browser .getCollisionTime () .reset ();
          browser .getDisplayTime ()   .reset ();
 
-         if (activeLayer)
-            activeLayer .getCollisionTime () .reset ();
+         activeLayer ?.getCollisionTime () .reset ();
       }
 
       rows .length = r;
