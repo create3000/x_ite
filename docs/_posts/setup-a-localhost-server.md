@@ -7,7 +7,7 @@ tags: [Setup, Localhost, Server, XHR]
 ---
 ## Overview
 
-X_ITE uses the XMLHttpRequest object to load files and there's no way around it. However, this means that files loaded using the **file://** scheme protocol are subject to the same origin policy and are treated as cross-origin requests (CORS), and cross-origin requests are only supported for protocol schemes: https, http and data. **This means that X_ITE cannot access these files.**
+X_ITE uses the `fetch` function to load files and there's no way around it. However, this means that files loaded using the **file://** scheme protocol are subject to the same origin policy and are treated as cross-origin requests (CORS), and cross-origin requests are only supported for protocol schemes: https, http and data. **This means that X_ITE cannot access these files.**
 
 To work around this problem, you will need to set up a localhost server, then you will be able to access your local files at the web address http://**localhost**/...
 
@@ -17,9 +17,9 @@ You can use this [browser extension for Chrome and Edge](https://chrome.google.c
 
 ## Using an Application
 
-There are several applications on the Internet which can make a localhost server. Here I would like to recommend you two of them:
+There are several applications on the Internet that can create a localhost server. I would like to recommend two of them:
 
-MacOS users can use [Personal Web Server](https://apps.apple.com/de/app/personal-web-server/id1486323797?mt=12){:target="_blank"}, which can serves files through a web server, and is very easy to use.
+MacOS users can use [Personal Web Server](https://apps.apple.com/de/app/personal-web-server/id1486323797?mt=12){:target="_blank"}, which can serve files through a web server, and is very easy to use.
 
 Another application is [XAMPP](https://www.apachefriends.org/index.html){:target="_blank"}, which runs on several operating systems and is very popular.
 
