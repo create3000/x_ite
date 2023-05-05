@@ -55,7 +55,6 @@ function BrowserTimings (executionContext)
 
    this .localStorage  = this .getBrowser () .getLocalStorage () .addNameSpace ("BrowserTimings.");
    this .fps           = new StopWatch ();
-   this .localeOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
 }
 
 BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -141,15 +140,13 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    build: function ()
    {
       const
-         browser     = this .getBrowser (),
-         language    = navigator .language || navigator .userLanguage,
-         fixed       = this .localeOptions,
-         rows        = this .rows;
+         browser = this .getBrowser (),
+         rows    = this .rows;
 
       let r = 0;
 
-      rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Frame rate") + ":")) .append ($("<td></td>") .text (f2(1000 / this .fps .averageTime) .toLocaleString (language, fixed) + " " + _("fps")));
-      rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Speed") + ":")) .append ($("<td></td>") .text (f2(this .getSpeed (browser .currentSpeed)) .toLocaleString (language, fixed) + " " + this .getSpeedUnit (browser .currentSpeed)));
+      rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Frame rate") + ":")) .append ($("<td></td>") .text (f2(1000 / this .fps .averageTime) + " " + _("fps")));
+      rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Speed") + ":")) .append ($("<td></td>") .text (f2(this .getSpeed (browser .currentSpeed)) + " " + this .getSpeedUnit (browser .currentSpeed)));
 
       if (this .localStorage .type === "MORE")
       {
@@ -174,20 +171,20 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
          rows [1] .addClass ("x_ite-private-more");
 
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser") + ":")) .append ($("<td></td>") .text (f2(browser .getSystemTime () .averageTime)           .toLocaleString (language, fixed) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D total") + ":")) .append ($("<td></td>") .text (f2(browser .getBrowserTime () .averageTime) .toLocaleString (language, fixed) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Event Processing") + ":")) .append ($("<td></td>") .text (f2(routingTime) .toLocaleString (language, fixed) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Pointer") + ":")) .append ($("<td></td>") .text (f2(browser .getPointingTime () .averageTime) .toLocaleString (language, fixed) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Camera") + ":")) .append ($("<td></td>") .text (f2(browser .getCameraTime () .averageTime)  .toLocaleString (language, fixed) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Picking") + ":")) .append ($("<td></td>") .text (f2(browser .getPickingTime () .averageTime) .toLocaleString (language, fixed) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Collision Detection") + ":")) .append ($("<td></td>") .text (f2(collisionTime) .toLocaleString (language, fixed) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Rendering") + ":")) .append ($("<td></td>") .text (f2(browser .getDisplayTime () .averageTime) .toLocaleString (language, fixed) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser") + ":")) .append ($("<td></td>") .text (f2(browser .getSystemTime () .averageTime) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D total") + ":")) .append ($("<td></td>") .text (f2(browser .getBrowserTime () .averageTime) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Event Processing") + ":")) .append ($("<td></td>") .text (f2(routingTime) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Pointer") + ":")) .append ($("<td></td>") .text (f2(browser .getPointingTime () .averageTime) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Camera") + ":")) .append ($("<td></td>") .text (f2(browser .getCameraTime () .averageTime) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Picking") + ":")) .append ($("<td></td>") .text (f2(browser .getPickingTime () .averageTime) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Collision Detection") + ":")) .append ($("<td></td>") .text (f2(collisionTime) + " " + _("ms")));
+         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Rendering") + ":")) .append ($("<td></td>") .text (f2(browser .getDisplayTime () .averageTime) + " " + _("ms")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Number of Shapes")    + ":")) .append ($("<td></td>") .text (opaqueShapes + " + " + transparentShapes));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Number of Sensors")   + ":")) .append ($("<td></td>") .text (prepareEvents + sensors));
 
          browser .getSystemTime ()    .reset ();
          browser .getBrowserTime ()   .reset ();
-         browser .getPointingTime ()   .reset ();
+         browser .getPointingTime ()  .reset ();
          browser .getCameraTime ()    .reset ();
          browser .getPickingTime ()   .reset ();
          browser .getCollisionTime () .reset ();
@@ -219,6 +216,10 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    },
 });
 
-function f2 (n) { return isFinite (n) ? n .toFixed (2) : 0 .toFixed (2); }
+const f2 = new Intl .NumberFormat (navigator .language || navigator .userLanguage, {
+   notation: "standard",
+   minimumFractionDigits: 2,
+   maximumFractionDigits: 2,
+}) .format;
 
 export default BrowserTimings;
