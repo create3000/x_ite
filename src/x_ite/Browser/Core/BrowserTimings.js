@@ -163,16 +163,45 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
          rows [1] .addClass ("x_ite-private-more");
 
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser") + ":")) .append ($("<td></td>") .text (f2(browser .getSystemTime () .averageTime) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D total") + ":")) .append ($("<td></td>") .text (f2(browser .getBrowserTime () .averageTime) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Event Processing") + ":")) .append ($("<td></td>") .text (f2(routingTime) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Pointer") + ":")) .append ($("<td></td>") .text (f2(browser .getPointingTime () .averageTime) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Camera") + ":")) .append ($("<td></td>") .text (f2(browser .getCameraTime () .averageTime) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Picking") + ":")) .append ($("<td></td>") .text (f2(browser .getPickingTime () .averageTime) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Collision Detection") + ":")) .append ($("<td></td>") .text (f2(collisionTime) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Rendering") + ":")) .append ($("<td></td>") .text (f2(browser .getDisplayTime () .averageTime) + " " + _("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Number of Shapes")    + ":")) .append ($("<td></td>") .text (opaqueShapes + " + " + transparentShapes));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Number of Sensors")   + ":")) .append ($("<td></td>") .text (prepareEvents + sensors));
+         rows [r++] = $("<tr></tr>")
+            .append ($("<td></td>") .text (_("Browser") + ":"))
+            .append ($("<td></td>") .text (f2(browser .getSystemTime () .averageTime) + " " + _("ms")));
+
+         rows [r++] = $("<tr></tr>")
+            .append ($("<td></td>") .text (_("X3D total") + ":"))
+            .append ($("<td></td>") .text (f2(browser .getBrowserTime () .averageTime) + " " + _("ms")));
+
+         rows [r++] = $("<tr></tr>")
+            .append ($("<td></td>") .text (_("Event Processing") + ":"))
+            .append ($("<td></td>") .text (f2(routingTime) + " " + _("ms")));
+
+         rows [r++] = $("<tr></tr>")
+            .append ($("<td></td>") .text (_("Pointer") + ":"))
+            .append ($("<td></td>") .text (f2(browser .getPointingTime () .averageTime) + " " + _("ms")));
+
+         rows [r++] = $("<tr></tr>")
+            .append ($("<td></td>") .text (_("Camera") + ":"))
+            .append ($("<td></td>") .text (f2(browser .getCameraTime () .averageTime) + " " + _("ms")));
+
+         rows [r++] = $("<tr></tr>")
+            .append ($("<td></td>") .text (_("Picking") + ":"))
+            .append ($("<td></td>") .text (f2(browser .getPickingTime () .averageTime) + " " + _("ms")));
+
+         rows [r++] = $("<tr></tr>")
+            .append ($("<td></td>") .text (_("Collision Detection") + ":"))
+            .append ($("<td></td>") .text (f2(collisionTime) + " " + _("ms")));
+
+         rows [r++] = $("<tr></tr>")
+            .append ($("<td></td>") .text (_("Rendering") + ":"))
+            .append ($("<td></td>") .text (f2(browser .getDisplayTime () .averageTime) + " " + _("ms")));
+
+         rows [r++] = $("<tr></tr>")
+            .append ($("<td></td>") .text (_("Number of Shapes") + ":"))
+            .append ($("<td></td>") .text (opaqueShapes + " + " + transparentShapes));
+
+         rows [r++] = $("<tr></tr>")
+            .append ($("<td></td>") .text (_("Number of Sensors") + ":"))
+            .append ($("<td></td>") .text (prepareEvents + sensors));
 
          browser .getSystemTime ()    .reset ();
          browser .getBrowserTime ()   .reset ();
