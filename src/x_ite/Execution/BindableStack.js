@@ -123,9 +123,7 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
             const index = this .nodes .indexOf (bindNode);
 
             if (index > -1)
-            {
                this .nodes .splice (index, 1);
-            }
 
             this .nodes .push (bindNode);
          }
