@@ -51,7 +51,7 @@ function BindableStack (executionContext, defaultNode)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .array = [ defaultNode ];
+   this .nodes = [ defaultNode ];
 }
 
 BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -63,18 +63,18 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
    },
    get: function ()
    {
-      return this .array;
+      return this .nodes;
    },
    top: function ()
    {
-      return this .array .at (-1);
+      return this .nodes .at (-1);
    },
    pushOnTop: function (node)
    {
-      if (node !== this .array [0])
+      if (node !== this .nodes [0])
       {
-         this .array .at (-1) ._isBound = false;
-         this .array .push (node);
+         this .nodes .at (-1) ._isBound = false;
+         this .nodes .push (node);
       }
 
       // Don't do set_bind.
@@ -92,25 +92,25 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
 
       const
          fromNode  = this .top (),
-         boundNode = this .array .at (-1);
+         boundNode = this .nodes .at (-1);
 
       // Remove invisible nodes and unbind them if needed.
 
       for (const removedNode of removedNodes)
       {
-         const index = this .array .indexOf (removedNode);
+         const index = this .nodes .indexOf (removedNode);
 
          if (index > 0)
-            this .array .splice (index, 1);
+            this .nodes .splice (index, 1);
       }
 
       // Unbind nodes with set_bind false and pop top node.
 
-      if (boundNode !== this .array [0])
+      if (boundNode !== this .nodes [0])
       {
          if (changedNodes .some (node => ! node ._set_bind .getValue () && node === boundNode))
          {
-            this .array .pop ();
+            this .nodes .pop ();
          }
       }
 
@@ -120,20 +120,20 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
       {
          if (bindNode ._set_bind .getValue ())
          {
-            const index = this .array .indexOf (bindNode);
+            const index = this .nodes .indexOf (bindNode);
 
             if (index > -1)
             {
-               this .array .splice (index, 1);
+               this .nodes .splice (index, 1);
             }
 
-            this .array .push (bindNode);
+            this .nodes .push (bindNode);
          }
       }
 
       // Bind top node if not bound.
 
-      const top = this .array .at (-1);
+      const top = this .nodes .at (-1);
 
       if (top !== boundNode)
       {

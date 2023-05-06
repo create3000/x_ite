@@ -52,10 +52,11 @@ function BindableList (executionContext, defaultNode)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .collected    = [ defaultNode ];
-   this .array        = [ defaultNode ];
-   this .updateTime   = 0;
-   this .removedNodes = [ ];
+   this .updateTime     = 0;
+   this .nodes          = [ defaultNode ];
+   this .collectedNodes = [ defaultNode ];
+   this .changedNodes   = [ ];
+   this .removedNodes   = [ ];
 }
 
 BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -67,14 +68,14 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
    },
    get: function ()
    {
-      return this .array;
+      return this .nodes;
    },
    getBound: function (name)
    {
-      const length = this .array .length;
+      const length = this .nodes .length;
 
       if (length === 1)
-         return this .array [0]; // Return default viewpoint.
+         return this .nodes [0]; // Return default viewpoint.
 
       const enableInlineBindables = false;
 
@@ -85,7 +86,7 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
          for (let i = 1; i < length; ++ i)
          {
             const
-               node  = this .array [i],
+               node  = this .nodes [i],
                scene = node .getExecutionContext () .getOuterNode () ?.getScene () ?? node .getScene ();
 
             if (!enableInlineBindables && !scene .isMainScene ())
@@ -101,7 +102,7 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
       for (let i = 1; i < length; ++ i)
       {
          const
-            node  = this .array [i],
+            node  = this .nodes [i],
             scene = node .getExecutionContext () .getOuterNode () ?.getScene () ?? node .getScene ();
 
          if (!enableInlineBindables && !scene .isMainScene ())
@@ -116,7 +117,7 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
       for (let i = 1; i < length; ++ i)
       {
          const
-            node  = this .array [i],
+            node  = this .nodes [i],
             scene = node .getExecutionContext () .getOuterNode () ?.getScene () ?? node .getScene ();
 
          if (!enableInlineBindables && !scene .isMainScene ())
@@ -125,46 +126,52 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
          return node;
       }
 
-      return this .array [0]; // Return default viewpoint.
+      return this .nodes [0]; // Return default viewpoint.
    },
    push: function (node)
    {
-      return this .collected .push (node);
+      return this .collectedNodes .push (node);
    },
    update: function (layerNode, stack)
    {
       const
-         changedNodes = this .collected .filter (node => node ._set_bind .getModificationTime () > this .updateTime),
-         removedNodes = this .removedNodes;
+         collectedNodes = this .collectedNodes,
+         changedNodes   = this .changedNodes,
+         removedNodes   = this .removedNodes;
 
-      if (! equals (this .collected, this .array))
+      for (const node of collectedNodes)
       {
-         // Unbind nodes not in current list (collected);
-
-         for (const node of this .array)
-         {
-            if (this .collected .indexOf (node) === -1)
-            {
-               removedNodes .push (node);
-            }
-         }
-
-         // Swap arrays.
-
-         const tmp = this .array;
-
-         this .array     = this .collected;
-         this .collected = tmp;
+         if (node ._set_bind .getModificationTime () > this .updateTime)
+            changedNodes .push (node);
       }
 
-      // Clear collected array.
+      if (!equals (collectedNodes, this .nodes))
+      {
+         // Unbind nodes not in current list (collectedNodes);
 
-      this .collected .length = 1;
+         for (const node of this .nodes)
+         {
+            if (collectedNodes .indexOf (node) === -1)
+               removedNodes .push (node);
+         }
+
+         // Swap nodes.
+
+         const tmp = this .nodes;
+
+         this .nodes          = collectedNodes;
+         this .collectedNodes = tmp;
+      }
+
+      // Clear collected nodes.
+
+      this .collectedNodes .length = 1;
 
       // Update stack.
 
       stack .update (layerNode, removedNodes, changedNodes)
 
+      changedNodes .length = 0;
       removedNodes .length = 0;
 
       // Advance updateTime time.
@@ -176,7 +183,7 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
 for (const key of Reflect .ownKeys (BindableList .prototype))
    Object .defineProperty (BindableList .prototype, key, { enumerable: false });
 
-// Compares two arrays.
+// Compares two nodess.
 
 function equals (lhs, rhs)
 {
