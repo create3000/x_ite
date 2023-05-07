@@ -942,37 +942,37 @@ for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
 
 Object .defineProperty (X3DExecutionContext .prototype, "specificationVersion",
 {
-   get: X3DExecutionContext .prototype .getSpecificationVersion,
+   get: function () { return this .getSpecificationVersion () },
    enumerable: true,
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "encoding",
 {
-   get: X3DExecutionContext .prototype .getEncoding,
+   get: function () { return this .getEncoding () },
    enumerable: true,
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "profile",
 {
-   get: X3DExecutionContext .prototype .getProfile,
+   get: function () { return this .getProfile () },
    enumerable: true,
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "components",
 {
-   get: X3DExecutionContext .prototype .getComponents,
+   get: function () { return this .getComponents () },
    enumerable: true,
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "worldURL",
 {
-   get: X3DExecutionContext .prototype .getWorldURL,
+   get: function () { return this .getWorldURL () },
    enumerable: true,
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "units",
 {
-   get: X3DExecutionContext .prototype .getUnits,
+   get: function () { return this .getUnits () },
    enumerable: true,
 });
 
