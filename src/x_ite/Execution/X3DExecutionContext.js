@@ -942,44 +942,44 @@ for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
 
 Object .defineProperty (X3DExecutionContext .prototype, "specificationVersion",
 {
-   get: function () { return this .getSpecificationVersion () },
+   get: X3DExecutionContext .prototype .getSpecificationVersion,
    enumerable: true,
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "encoding",
 {
-   get: function () { return this .getEncoding () },
+   get: X3DExecutionContext .prototype .getEncoding,
    enumerable: true,
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "profile",
 {
-   get: function () { return this .getProfile () },
+   get: X3DExecutionContext .prototype .getProfile,
    enumerable: true,
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "components",
 {
-   get: function () { return this .getComponents () },
+   get: X3DExecutionContext .prototype .getComponents,
    enumerable: true,
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "worldURL",
 {
-   get: function () { return this .getWorldURL () },
+   get: X3DExecutionContext .prototype .getWorldURL,
    enumerable: true,
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "units",
 {
-   get: function () { return this .getUnits () },
+   get: X3DExecutionContext .prototype .getUnits,
    enumerable: true,
 });
 
 Object .defineProperty (X3DExecutionContext .prototype, "rootNodes",
 {
    get: X3DExecutionContext .prototype .getRootNodes,
-   set: function (value) { this .setRootNodes (value) },
+   set: X3DExecutionContext .prototype .setRootNodes,
    enumerable: true,
 });
 
