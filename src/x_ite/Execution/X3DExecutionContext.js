@@ -979,7 +979,7 @@ Object .defineProperty (X3DExecutionContext .prototype, "units",
 Object .defineProperty (X3DExecutionContext .prototype, "rootNodes",
 {
    get: X3DExecutionContext .prototype .getRootNodes,
-   set: X3DExecutionContext .prototype .setRootNodes,
+   set: function (value) { this .setRootNodes (value) },
    enumerable: true,
 });
 
