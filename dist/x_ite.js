@@ -1,4 +1,4 @@
-/* X_ITE v8.6.21 */(function webpackUniversalModuleDefinition(root, factory) {
+/* X_ITE v8.6.22 */(function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 753:
+/***/ 530:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(380);
+/* provided dependency */ var jQuery = __webpack_require__(574);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 649:
+/***/ 765:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(380);
+/* provided dependency */ var jQuery = __webpack_require__(574);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 211:
+/***/ 872:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(380)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(574)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 380:
+/***/ 574:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11784,7 +11784,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 923:
+/***/ 581:
 /***/ ((module) => {
 
 /**
@@ -16563,7 +16563,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 716:
+/***/ 712:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19808,7 +19808,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 57:
+/***/ 502:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -34998,7 +34998,7 @@ x_ite_Namespace.set ("x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
  *
  ******************************************************************************/
 
-const VERSION_default_ = "8.6.21";
+const VERSION_default_ = "8.6.22";
 ;
 
 x_ite_Namespace.set ("x_ite/Browser/VERSION", VERSION_default_);
@@ -35576,6 +35576,15 @@ msgstr "Auf Objekte zielen"
 msgid "None Viewer"
 msgstr "Kein Betrachter"
 
+msgid "Points"
+msgstr "Punkte"
+
+msgid "Flat"
+msgstr "Flach"
+
+msgid "Wireframe"
+msgstr "Drahtgittermodel"
+
 msgid "Loading %1 file"
 msgstr "Lade %1 Datei"
 
@@ -35617,13 +35626,13 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 msgid "Less Properties"
-msgstr "Moins de propriétés"
+msgstr "Moins de Propriétés"
 
 msgid "More Properties"
-msgstr "Plus de propriétés"
+msgstr "Plus de Propriétés"
 
 msgid "Frame rate"
-msgstr "Fréquence"
+msgstr "Fréquence d'Images"
 
 msgid "fps"
 msgstr "fps"
@@ -35646,8 +35655,8 @@ msgstr ""
 msgid "X3D total"
 msgstr "X3D total"
 
-msgid "Traitement des événements"
-msgstr "Routes"
+msgid "Event Processing"
+msgstr "Traitement des Événements"
 
 msgid "Pointer"
 msgstr "Pointeur"
@@ -35656,34 +35665,34 @@ msgid "Camera"
 msgstr "Caméra"
 
 msgid "Collision Detection"
-msgstr "Détection des collisions"
+msgstr "Détection des Collisions"
 
 msgid "Rendering"
 msgstr "Rendement"
 
 msgid "Number of Shapes"
-msgstr "Nombre de formes"
+msgstr "Nombre de Formes"
 
 msgid "Number of Sensors"
-msgstr "Nombre de senseurs"
+msgstr "Nombre de Senseurs"
 
 msgid "Browser Timings"
-msgstr "Calcul du temps"
+msgstr "Calcul du Temps"
 
 msgid "X_ITE Browser"
 msgstr "X_ITE Navigateur"
 
 msgid "Viewpoints"
-msgstr "Points de vue"
+msgstr "Points de Vue"
 
 msgid "Available Viewers"
 msgstr "Visionneurs disponibles"
 
 msgid "Straighten Horizon"
-msgstr "Redresser l'horizon"
+msgstr "Redresser l'Horizon"
 
 msgid "Primitive Quality"
-msgstr "Qualité des objets simples"
+msgstr "Qualité des Objets simples"
 
 msgid "High"
 msgstr "Haut"
@@ -35704,10 +35713,10 @@ msgid "low"
 msgstr "faible"
 
 msgid "Texture Quality"
-msgstr "Qualité des textures"
+msgstr "Qualité des Textures"
 
 msgid "Display Rubberband"
-msgstr "Présenter le bande élastique"
+msgstr "Présenter le Bande élastique"
 
 msgid "Rubberband"
 msgstr "Bande élastique"
@@ -35719,19 +35728,19 @@ msgid "off"
 msgstr "arrêt"
 
 msgid "Mute Browser"
-msgstr "Rendre navigateur muet"
+msgstr "Rendre Navigateur muet"
 
 msgid "Browser muted"
 msgstr "Navigateur muet"
 
 msgid "Browser unmuted"
-msgstr "Son de navigateur réactivé"
+msgstr "Son de Navigateur réactivé"
 
 msgid "Leave Fullscreen"
-msgstr "Sortie en plein écran"
+msgstr "Laisser le plein Écran"
 
 msgid "Fullscreen"
-msgstr "Plein écran"
+msgstr "Plein Écran"
 
 msgid "About X_ITE"
 msgstr "À propos de X_ITE"
@@ -35746,31 +35755,37 @@ msgid "Fly Viewer"
 msgstr "Voler"
 
 msgid "Plane Viewer"
-msgstr "Visionneur de la plaine"
+msgstr "Visionneur de la Plaine"
 
 msgid "Look At Viewer"
-msgstr "Regarder un objet de près"
+msgstr "Regarder un Objet de près"
 
 msgid "None Viewer"
-msgstr "Pas de visionneur"
+msgstr "Pas de Visionneur"
+
+msgid "Flat"
+msgstr "Plat"
+
+msgid "Wireframe"
+msgstr "Image filaire"
 
 msgid "Loading %1 file"
-msgstr "Télécharger %1 fichier"
+msgstr "Télécharger %1 Fichier"
 
 msgid "Loading %1 files"
-msgstr "Télécharger %1 fichiers"
+msgstr "Télécharger %1 Fichiers"
 
 msgid "Loading done"
 msgstr "Téléchargement fini"
 
 msgid "Failed loading world."
-msgstr "Le chargement des fichiers a échoué."
+msgstr "Le chargement des Fichiers a échoué."
 
 msgid "Show World Info"
 msgstr "Afficher World Info"
 
 msgid "Viewpoint is copied to clipboard."
-msgstr "Le point de vue est copié dans le presse-papiers."
+msgstr "Le point de Vue est copié dans le Presse-Papiers."
 `;
 ;
 
@@ -35902,7 +35917,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(380);
+/* provided dependency */ var $ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -35960,7 +35975,6 @@ function BrowserTimings (executionContext)
 
    this .localStorage  = this .getBrowser () .getLocalStorage () .addNameSpace ("BrowserTimings.");
    this .fps           = new Time_StopWatch ();
-   this .localeOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
 }
 
 BrowserTimings .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
@@ -35986,17 +36000,101 @@ BrowserTimings .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
 
       this .localStorage .addDefaultValues ({ type: "LESS" });
 
-      this .element = $("<div></div>") .hide () .addClass ("x_ite-private-browser-timings") .appendTo (this .getBrowser () .getSurface ());
-      this .table   = $("<table></table>") .appendTo (this .element);
-      this .header  = $("<thead></thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>"))) .appendTo (this .table);
-      this .body    = $("<tbody></tbody>") .appendTo (this .table);
-      this .footer  = $("<tfoot></tfoot>") .append ($("<tr></tr>") .append ($("<td colspan='2'></td>"))) .appendTo (this .table);
-      this .button  = $("<button></button>") .attr ("type", "button") .appendTo (this .footer .find ("td"));
-      this .rows    = [ ];
+      this .element = $("<div></div>")
+         .hide ()
+         .addClass ("x_ite-private-browser-timings")
+         .appendTo (this .getBrowser () .getSurface ());
+
+      this .table = $("<table></table>")
+         .appendTo (this .element);
+
+      this .header = $("<thead></thead>")
+         .append ($("<tr></tr>")
+         .append ($("<th colspan='2'></th>")
+         .text (locale_gettext("Browser Timings"))))
+         .appendTo (this .table);
+
+      this .body = $("<tbody></tbody>")
+         .appendTo (this .table);
+
+      this .footer = $("<tfoot></tfoot>")
+         .append ($("<tr></tr>")
+         .append ($("<td colspan='2'></td>")))
+         .appendTo (this .table);
+
+      this .button = $("<button></button>")
+         .attr ("type", "button")
+         .appendTo (this .footer .find ("td"));
+
+      this .frameRate       = $("<td></td>");
+      this .speed           = $("<td></td>");
+      this .frameRate       = $("<td></td>");
+      this .speed           = $("<td></td>");
+      this .browserTime     = $("<td></td>");
+      this .x3dTotal        = $("<td></td>");
+      this .eventProcessing = $("<td></td>");
+      this .pointerTime     = $("<td></td>");
+      this .cameraTime      = $("<td></td>");
+      this .pickingTime     = $("<td></td>");
+      this .collisionTime   = $("<td></td>");
+      this .renderTime      = $("<td></td>");
+      this .numShapes       = $("<td></td>");
+      this .sensors         = $("<td></td>");
+
+      this .body .append ($("<tr></tr>")
+         .append ($("<td></td>") .text (locale_gettext("Frame rate") + ":"))
+         .append (this .frameRate));
+
+      this .body .append ($("<tr></tr>")
+         .append ($("<td></td>") .text (locale_gettext("Speed") + ":"))
+         .append (this .speed)
+         .addClass ("x_ite-private-more"));
+
+      this .body .append ($("<tr></tr>")
+         .append ($("<td></td>") .text (locale_gettext("Browser") + ":"))
+         .append (this .browserTime));
+
+      this .body .append ($("<tr></tr>")
+         .append ($("<td></td>") .text (locale_gettext("X3D total") + ":"))
+         .append (this .x3dTotal));
+
+      this .body .append ($("<tr></tr>")
+         .append ($("<td></td>") .text (locale_gettext("Event Processing") + ":"))
+         .append (this .eventProcessing));
+
+      this .body .append ($("<tr></tr>")
+         .append ($("<td></td>") .text (locale_gettext("Pointer") + ":"))
+         .append (this .pointerTime));
+
+      this .body .append ($("<tr></tr>")
+         .append ($("<td></td>") .text (locale_gettext("Camera") + ":"))
+         .append (this .cameraTime));
+
+      this .body .append ($("<tr></tr>")
+         .append ($("<td></td>") .text (locale_gettext("Picking") + ":"))
+         .append (this .pickingTime));
+
+      this .body .append ($("<tr></tr>")
+         .append ($("<td></td>") .text (locale_gettext("Collision Detection") + ":"))
+         .append (this .collisionTime));
+
+      this .body .append ($("<tr></tr>")
+         .append ($("<td></td>") .text (locale_gettext("Rendering") + ":"))
+         .append (this .renderTime));
+
+      this .body .append ($("<tr></tr>")
+         .append ($("<td></td>") .text (locale_gettext("Number of Shapes") + ":"))
+         .append (this .numShapes));
+
+      this .body .append ($("<tr></tr>")
+         .append ($("<td></td>") .text (locale_gettext("Number of Sensors") + ":"))
+         .append (this .sensors));
 
       this .button .on ("click touchend", this .set_type__ .bind (this));
 
-      this .set_button__ ();
+      this .localStorage .type = this .localStorage .type === "MORE" ? "LESS" : "MORE";
+
+      this .set_type__ ();
    },
    set_enabled__: function ()
    {
@@ -36017,9 +36115,17 @@ BrowserTimings .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
    set_type__: function ()
    {
       if (this .localStorage .type === "MORE")
+      {
          this .localStorage .type = "LESS";
+         this .table .addClass ("less");
+         this .table .removeClass ("more");
+      }
       else
+      {
          this .localStorage .type = "MORE";
+         this .table .addClass ("more");
+         this .table .removeClass ("less");
+      }
 
       this .set_button__ ();
       this .build ();
@@ -36045,68 +36151,45 @@ BrowserTimings .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
    },
    build: function ()
    {
+      const browser = this .getBrowser ();
+
+      this .frameRate .text (f2(1000 / this .fps .averageTime) + " " + locale_gettext("fps"));
+      this .speed .text (f2(this .getSpeed (browser .currentSpeed)) + " " + this .getSpeedUnit (browser .currentSpeed));
+
+      if (this .localStorage .type !== "MORE" || !browser .getWorld ())
+         return;
+
       const
-         browser     = this .getBrowser (),
-         language    = navigator .language || navigator .userLanguage,
-         fixed       = this .localeOptions,
-         rows        = this .rows;
+         layers            = browser .getWorld () .getLayerSet () .getLayers (),
+         activeLayer       = browser .getActiveLayer (),
+         navigationTime    = activeLayer && browser .getCollisionCount () ? activeLayer .getCollisionTime () .averageTime : 0,
+         collisionTime     = browser .getCollisionTime () .averageTime + navigationTime,
+         routingTime       = Math .max (0, browser .getBrowserTime () .averageTime - (browser .getCameraTime () .averageTime + browser .getCollisionTime () .averageTime + browser .getDisplayTime () .averageTime)),
+         prepareEvents     = browser .prepareEvents () .getInterests () .size - 1,
+         sensors           = browser .sensorEvents () .getInterests () .size,
+         opaqueShapes      = layers .reduce ((n, layer) => n + layer .getNumOpaqueShapes (), 0),
+         transparentShapes = layers .reduce ((n, layer) => n + layer .getNumTransparentShapes (), 0);
 
-      let r = 0;
+      this .browserTime     .text (f2(browser .getSystemTime () .averageTime) + " " + locale_gettext("ms"));
+      this .x3dTotal        .text (f2(browser .getBrowserTime () .averageTime) + " " + locale_gettext("ms"));
+      this .eventProcessing .text (f2(routingTime) + " " + locale_gettext("ms"));
+      this .pointerTime     .text (f2(browser .getPointingTime () .averageTime) + " " + locale_gettext("ms"));
+      this .cameraTime      .text (f2(browser .getCameraTime () .averageTime) + " " + locale_gettext("ms"));
+      this .pickingTime     .text (f2(browser .getPickingTime () .averageTime) + " " + locale_gettext("ms"));
+      this .collisionTime   .text (f2(collisionTime) + " " + locale_gettext("ms"));
+      this .renderTime      .text (f2(browser .getDisplayTime () .averageTime) + " " + locale_gettext("ms"));
+      this .numShapes       .text (opaqueShapes + " + " + transparentShapes);
+      this .sensors         .text (prepareEvents + sensors);
 
-      rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Frame rate") + ":")) .append ($("<td></td>") .text (f2(1000 / this .fps .averageTime) .toLocaleString (language, fixed) + " " + locale_gettext("fps")));
-      rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Speed") + ":")) .append ($("<td></td>") .text (f2(this .getSpeed (browser .currentSpeed)) .toLocaleString (language, fixed) + " " + this .getSpeedUnit (browser .currentSpeed)));
+      browser .getSystemTime ()    .reset ();
+      browser .getBrowserTime ()   .reset ();
+      browser .getPointingTime ()  .reset ();
+      browser .getCameraTime ()    .reset ();
+      browser .getPickingTime ()   .reset ();
+      browser .getCollisionTime () .reset ();
+      browser .getDisplayTime ()   .reset ();
 
-      if (this .localStorage .type === "MORE")
-      {
-         const
-            layers         = browser .getWorld () .getLayerSet () .getLayers (),
-            activeLayer    = browser .getActiveLayer (),
-            navigationTime = activeLayer && browser .getCollisionCount () ? activeLayer .getCollisionTime () .averageTime : 0,
-            collisionTime  = browser .getCollisionTime () .averageTime + navigationTime,
-            routingTime    = Math .max (0, browser .getBrowserTime () .averageTime - (browser .getCameraTime () .averageTime + browser .getCollisionTime () .averageTime + browser .getDisplayTime () .averageTime)),
-            prepareEvents  = browser .prepareEvents () .getInterests () .size - 1,
-            sensors        = browser .sensorEvents () .getInterests () .size;
-
-         let
-            opaqueShapes      = 0,
-            transparentShapes = 0;
-
-         for (const layer of layers)
-         {
-            opaqueShapes      += layer .numOpaqueShapes;
-            transparentShapes += layer .numTransparentShapes;
-         }
-
-         rows [1] .addClass ("x_ite-private-more");
-
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Browser") + ":")) .append ($("<td></td>") .text (f2(browser .getSystemTime () .averageTime)           .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("X3D total") + ":")) .append ($("<td></td>") .text (f2(browser .getBrowserTime () .averageTime) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Event Processing") + ":")) .append ($("<td></td>") .text (f2(routingTime) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Pointer") + ":")) .append ($("<td></td>") .text (f2(browser .getPointingTime () .averageTime) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Camera") + ":")) .append ($("<td></td>") .text (f2(browser .getCameraTime () .averageTime)  .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Picking") + ":")) .append ($("<td></td>") .text (f2(browser .getPickingTime () .averageTime) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Collision Detection") + ":")) .append ($("<td></td>") .text (f2(collisionTime) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Rendering") + ":")) .append ($("<td></td>") .text (f2(browser .getDisplayTime () .averageTime) .toLocaleString (language, fixed) + " " + locale_gettext("ms")));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Number of Shapes")    + ":")) .append ($("<td></td>") .text (opaqueShapes + " + " + transparentShapes));
-         rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (locale_gettext("Number of Sensors")   + ":")) .append ($("<td></td>") .text (prepareEvents + sensors));
-
-         browser .getSystemTime ()    .reset ();
-         browser .getBrowserTime ()   .reset ();
-         browser .getPointingTime ()   .reset ();
-         browser .getCameraTime ()    .reset ();
-         browser .getPickingTime ()   .reset ();
-         browser .getCollisionTime () .reset ();
-         browser .getDisplayTime ()   .reset ();
-
-         if (activeLayer)
-            activeLayer .getCollisionTime () .reset ();
-      }
-
-      rows .length = r;
-
-      this .header .find ("th") .text (locale_gettext("Browser Timings"));
-      this .body .empty ();
-      this .body .append (rows);
+      activeLayer ?.getCollisionTime () .reset ();
    },
    getSpeed: function (speed)
    {
@@ -36124,7 +36207,19 @@ BrowserTimings .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
    },
 });
 
-function f2 (n) { return isFinite (n) ? n .toFixed (2) : 0 .toFixed (2); }
+const f2 = (function ()
+{
+   const format = new Intl .NumberFormat (navigator .language || navigator .userLanguage, {
+      notation: "standard",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+   }) .format;
+
+   return function (value)
+   {
+      return format (Number .isFinite (value) ? value : 0);
+   };
+})();
 
 const BrowserTimings_default_ = BrowserTimings;
 ;
@@ -36320,7 +36415,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace.set ("x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(380);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36856,7 +36951,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(380);
+/* provided dependency */ var Notification_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36978,8 +37073,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(649);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(380);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(765);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -37260,7 +37355,7 @@ ContextMenu .prototype = Object .assign (Object .create (Base_X3DBaseNode.protot
                className: "context-menu-icon x_ite-private-icon-shading",
                items: {
                   "point": {
-                     name: locale_gettext("Point"),
+                     name: locale_gettext("Points"),
                      type: "radio",
                      radio: "shading",
                      selected: browser .getBrowserOption ("Shading") === "POINT",
@@ -37268,7 +37363,7 @@ ContextMenu .prototype = Object .assign (Object .create (Base_X3DBaseNode.protot
                         click: function ()
                         {
                            browser .setBrowserOption ("Shading", "POINT");
-                           browser .getNotification () ._string = locale_gettext("Shading") + ": " + locale_gettext("Point");
+                           browser .getNotification () ._string = locale_gettext("Shading") + ": " + locale_gettext("Points");
                         }
                         .bind (this),
                      },
@@ -42034,7 +42129,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 x_ite_Namespace.set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(380);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45216,7 +45311,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(380);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47253,7 +47348,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(380);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49719,7 +49814,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(380);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49872,7 +49967,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(380);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52362,8 +52457,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace.set ("standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(380);
-/* provided dependency */ var libtess = __webpack_require__(923);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(574);
+/* provided dependency */ var libtess = __webpack_require__(581);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55132,7 +55227,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace.set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(380);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55461,7 +55556,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(923);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(581);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -58777,7 +58872,7 @@ function BindableStack (executionContext, defaultNode)
 {
    Base_X3DBaseNode.call (this, executionContext);
 
-   this .array = [ defaultNode ];
+   this .nodes = [ defaultNode ];
 }
 
 BindableStack .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
@@ -58789,18 +58884,18 @@ BindableStack .prototype = Object .assign (Object .create (Base_X3DBaseNode.prot
    },
    get: function ()
    {
-      return this .array;
+      return this .nodes;
    },
    top: function ()
    {
-      return this .array .at (-1);
+      return this .nodes .at (-1);
    },
    pushOnTop: function (node)
    {
-      if (node !== this .array [0])
+      if (node !== this .nodes [0])
       {
-         this .array .at (-1) ._isBound = false;
-         this .array .push (node);
+         this .nodes .at (-1) ._isBound = false;
+         this .nodes .push (node);
       }
 
       // Don't do set_bind.
@@ -58818,25 +58913,25 @@ BindableStack .prototype = Object .assign (Object .create (Base_X3DBaseNode.prot
 
       const
          fromNode  = this .top (),
-         boundNode = this .array .at (-1);
+         boundNode = this .nodes .at (-1);
 
       // Remove invisible nodes and unbind them if needed.
 
       for (const removedNode of removedNodes)
       {
-         const index = this .array .indexOf (removedNode);
+         const index = this .nodes .indexOf (removedNode);
 
          if (index > 0)
-            this .array .splice (index, 1);
+            this .nodes .splice (index, 1);
       }
 
       // Unbind nodes with set_bind false and pop top node.
 
-      if (boundNode !== this .array [0])
+      if (boundNode !== this .nodes [0])
       {
          if (changedNodes .some (node => ! node ._set_bind .getValue () && node === boundNode))
          {
-            this .array .pop ();
+            this .nodes .pop ();
          }
       }
 
@@ -58846,20 +58941,18 @@ BindableStack .prototype = Object .assign (Object .create (Base_X3DBaseNode.prot
       {
          if (bindNode ._set_bind .getValue ())
          {
-            const index = this .array .indexOf (bindNode);
+            const index = this .nodes .indexOf (bindNode);
 
             if (index > -1)
-            {
-               this .array .splice (index, 1);
-            }
+               this .nodes .splice (index, 1);
 
-            this .array .push (bindNode);
+            this .nodes .push (bindNode);
          }
       }
 
       // Bind top node if not bound.
 
-      const top = this .array .at (-1);
+      const top = this .nodes .at (-1);
 
       if (top !== boundNode)
       {
@@ -58946,10 +59039,11 @@ function BindableList (executionContext, defaultNode)
 {
    Base_X3DBaseNode.call (this, executionContext);
 
-   this .collected    = [ defaultNode ];
-   this .array        = [ defaultNode ];
-   this .updateTime   = 0;
-   this .removedNodes = [ ];
+   this .updateTime     = 0;
+   this .nodes          = [ defaultNode ];
+   this .collectedNodes = [ defaultNode ];
+   this .changedNodes   = [ ];
+   this .removedNodes   = [ ];
 }
 
 BindableList .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
@@ -58961,14 +59055,14 @@ BindableList .prototype = Object .assign (Object .create (Base_X3DBaseNode.proto
    },
    get: function ()
    {
-      return this .array;
+      return this .nodes;
    },
    getBound: function (name)
    {
-      const length = this .array .length;
+      const length = this .nodes .length;
 
       if (length === 1)
-         return this .array [0]; // Return default viewpoint.
+         return this .nodes [0]; // Return default viewpoint.
 
       const enableInlineBindables = false;
 
@@ -58979,7 +59073,7 @@ BindableList .prototype = Object .assign (Object .create (Base_X3DBaseNode.proto
          for (let i = 1; i < length; ++ i)
          {
             const
-               node  = this .array [i],
+               node  = this .nodes [i],
                scene = node .getExecutionContext () .getOuterNode () ?.getScene () ?? node .getScene ();
 
             if (!enableInlineBindables && !scene .isMainScene ())
@@ -58995,7 +59089,7 @@ BindableList .prototype = Object .assign (Object .create (Base_X3DBaseNode.proto
       for (let i = 1; i < length; ++ i)
       {
          const
-            node  = this .array [i],
+            node  = this .nodes [i],
             scene = node .getExecutionContext () .getOuterNode () ?.getScene () ?? node .getScene ();
 
          if (!enableInlineBindables && !scene .isMainScene ())
@@ -59010,7 +59104,7 @@ BindableList .prototype = Object .assign (Object .create (Base_X3DBaseNode.proto
       for (let i = 1; i < length; ++ i)
       {
          const
-            node  = this .array [i],
+            node  = this .nodes [i],
             scene = node .getExecutionContext () .getOuterNode () ?.getScene () ?? node .getScene ();
 
          if (!enableInlineBindables && !scene .isMainScene ())
@@ -59019,46 +59113,52 @@ BindableList .prototype = Object .assign (Object .create (Base_X3DBaseNode.proto
          return node;
       }
 
-      return this .array [0]; // Return default viewpoint.
+      return this .nodes [0]; // Return default viewpoint.
    },
    push: function (node)
    {
-      return this .collected .push (node);
+      return this .collectedNodes .push (node);
    },
    update: function (layerNode, stack)
    {
       const
-         changedNodes = this .collected .filter (node => node ._set_bind .getModificationTime () > this .updateTime),
-         removedNodes = this .removedNodes;
+         collectedNodes = this .collectedNodes,
+         changedNodes   = this .changedNodes,
+         removedNodes   = this .removedNodes;
 
-      if (! equals (this .collected, this .array))
+      for (const node of collectedNodes)
       {
-         // Unbind nodes not in current list (collected);
-
-         for (const node of this .array)
-         {
-            if (this .collected .indexOf (node) === -1)
-            {
-               removedNodes .push (node);
-            }
-         }
-
-         // Swap arrays.
-
-         const tmp = this .array;
-
-         this .array     = this .collected;
-         this .collected = tmp;
+         if (node ._set_bind .getModificationTime () > this .updateTime)
+            changedNodes .push (node);
       }
 
-      // Clear collected array.
+      if (!equals (collectedNodes, this .nodes))
+      {
+         // Unbind nodes not in current list (collectedNodes);
 
-      this .collected .length = 1;
+         for (const node of this .nodes)
+         {
+            if (collectedNodes .indexOf (node) === -1)
+               removedNodes .push (node);
+         }
+
+         // Swap nodes.
+
+         const tmp = this .nodes;
+
+         this .nodes          = collectedNodes;
+         this .collectedNodes = tmp;
+      }
+
+      // Clear collected nodes.
+
+      this .collectedNodes .length = 1;
 
       // Update stack.
 
       stack .update (layerNode, removedNodes, changedNodes)
 
+      changedNodes .length = 0;
       removedNodes .length = 0;
 
       // Advance updateTime time.
@@ -59070,7 +59170,7 @@ BindableList .prototype = Object .assign (Object .create (Base_X3DBaseNode.proto
 for (const key of Reflect .ownKeys (BindableList .prototype))
    Object .defineProperty (BindableList .prototype, key, { enumerable: false });
 
-// Compares two arrays.
+// Compares two nodess.
 
 function equals (lhs, rhs)
 {
@@ -62767,7 +62867,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(380);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67107,7 +67207,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace.set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(380);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -69256,7 +69356,7 @@ Object .defineProperty (X3DExecutionContext .prototype, "units",
 Object .defineProperty (X3DExecutionContext .prototype, "rootNodes",
 {
    get: X3DExecutionContext .prototype .getRootNodes,
-   set: X3DExecutionContext .prototype .setRootNodes,
+   set: function (value) { this .setRootNodes (value) },
    enumerable: true,
 });
 
@@ -69284,7 +69384,7 @@ const X3DExecutionContext_default_ = X3DExecutionContext;
 x_ite_Namespace.set ("x_ite/Execution/X3DExecutionContext", X3DExecutionContext_default_);
 /* harmony default export */ const Execution_X3DExecutionContext = (X3DExecutionContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-/* provided dependency */ var ComponentInfo_$ = __webpack_require__(380);
+/* provided dependency */ var ComponentInfo_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -71258,7 +71358,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(380);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77319,8 +77419,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(211);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(380);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(872);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78184,8 +78284,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(211);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(380);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(872);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79133,8 +79233,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(211);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(380);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(872);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79443,8 +79543,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(211);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(380);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(872);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81076,8 +81176,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(211);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(380);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(872);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -82115,8 +82215,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(380);
-/* provided dependency */ var ResizeSensor = __webpack_require__(753);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(574);
+/* provided dependency */ var ResizeSensor = __webpack_require__(530);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -88005,7 +88105,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace.set ("x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(380);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90782,7 +90882,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace.set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(380);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113220,7 +113320,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(380);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116115,8 +116215,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(380);
-/* provided dependency */ var SuperGif = __webpack_require__(57);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(574);
+/* provided dependency */ var SuperGif = __webpack_require__(502);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117079,7 +117179,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(380);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117790,7 +117890,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(380);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(574);
 /*******************************************************************************
  * MIT License
  *
@@ -119028,7 +119128,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(380);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119932,7 +120032,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(380);
+/* provided dependency */ var Fallback_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120111,8 +120211,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(380);
-/* provided dependency */ var pako = __webpack_require__(716);
+/* provided dependency */ var jquery_$ = __webpack_require__(574);
+/* provided dependency */ var pako = __webpack_require__(712);
 jquery_$.decodeText = function (input)
 {
    if (typeof input === "string")
@@ -120144,14 +120244,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(923);
+/* provided dependency */ var libtess_libtess = __webpack_require__(581);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace.set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(380);
+/* provided dependency */ var X3D_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120407,7 +120507,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(380);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(574);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120688,7 +120788,7 @@ x_ite_Namespace.set ("shim", shim_default_);
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-8.6.21")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-8.6.22")] = x_ite_X3D;
 
 x_ite_X3DCanvasElement.define ();
 
