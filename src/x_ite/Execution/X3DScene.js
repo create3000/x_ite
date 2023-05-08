@@ -756,9 +756,9 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
             // Meta data
 
-            for (const [i, [key, values]] of [... this .getMetaDatas ()])
+            for (const [i, [key, values]] of [... this .getMetaDatas ()] .entries ())
             {
-               for (const [j, value] of values)
+               for (const [j, value] of values .entries ())
                {
                   generator .string += generator .Indent ();
                   generator .string += '{';

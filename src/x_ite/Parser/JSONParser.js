@@ -234,7 +234,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          else
          {
-            if (key === "connect" || key === "fieldValue" || key === "field" || key === "meta" || key === "component")
+            if (key === "connect" || key === "fieldValue" || key === "field" || key === "meta" || key === "component" || key === "unit")
             {
                for (const childkey in object [key])
                {
