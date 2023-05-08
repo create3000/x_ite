@@ -49,10 +49,13 @@ import X3DObject from "./X3DObject.js";
 
 function X3DFieldDefinition (accessType, name, value)
 {
-   this .accessType  = accessType;
-   this .dataType    = value .getType ();
-   this .name        = name;
-   this .value       = value;
+   Object .defineProperties (this,
+   {
+      accessType: { value: accessType, enumerable: true },
+      dataType: { value: value .getType (), enumerable: true },
+      name: { value: name, enumerable: true },
+      value: { value: value },
+   });
 }
 
 X3DFieldDefinition .prototype = Object .assign (Object .create (X3DObject .prototype),
