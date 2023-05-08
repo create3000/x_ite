@@ -74,7 +74,8 @@ const
    _reject           = Symbol (),
    _fileLoader       = Symbol (),
    _browserCallbacks = Symbol (),
-   _console          = Symbol ();
+   _console          = Symbol (),
+   _processEvents    = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
 
 function X3DBrowser (element)
 {
@@ -110,7 +111,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    initialize: function ()
    {
-      const processEvent = X3DBrowserContext .prototype .initialize .call (this);
+      X3DBrowserContext .prototype .initialize .call (this);
 
       this .replaceWorld (this .createScene ()) .catch (Function .prototype);
 
@@ -118,7 +119,9 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       legacy .call (this);
 
-      processEvent .call (this);
+      // Process events from context creation. This will setup nodes like
+      // geometry option nodes before any node is created.
+      this [_processEvents] .call (this);
 
       // Print welcome message.
 

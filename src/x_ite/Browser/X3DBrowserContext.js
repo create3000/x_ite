@@ -177,10 +177,6 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
 
       for (const browserContext of browserContexts)
          browserContext .prototype .initialize ?.call (this);
-
-      // Process events from context creation. This will setup nodes like
-      // geometry option nodes before any node is created.
-      return this [_processEvents];
    },
    initialized: function ()
    {
