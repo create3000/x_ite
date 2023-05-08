@@ -177,13 +177,10 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    {
       // Private function.
 
-      const unit = this [_units] .get (category);
-
-      if (!unit)
+      if (!this [_units] .has (category))
          return;
 
-      unit .name             = String (name);
-      unit .conversionFactor = Number (conversionFactor);
+      this [_units] .update (category, category, new UnitInfo (category, String (name),  Number (conversionFactor)));
 
       this ._units_changed = this .getBrowser () .getCurrentTime ();
    },

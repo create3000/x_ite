@@ -49,12 +49,12 @@ import X3DObject from "../Base/X3DObject.js";
 
 function UnitInfo (category, name, conversionFactor)
 {
-   Object .defineProperty (this, "category", {
-       value: category,
+   Object .defineProperties (this,
+   {
+      category: { value: category, enumerable: true },
+      name: { value: name, enumerable: true },
+      conversionFactor: { value: conversionFactor, enumerable: true },
    });
-
-   this .name             = name;
-   this .conversionFactor = conversionFactor;
 }
 
 UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
