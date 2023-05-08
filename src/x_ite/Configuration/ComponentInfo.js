@@ -50,10 +50,13 @@ import URLs      from "../Browser/Networking/URLs.js";
 
 function ComponentInfo ({ name, level, title, providerUrl, external = false, dependencies = [ ] })
 {
-   this .name        = name;
-   this .level       = level;
-   this .title       = title;
-   this .providerUrl = providerUrl || URLs .getProviderUrl (external && name);
+   Object .defineProperties (this,
+   {
+      name: { value: name, enumerable: true },
+      level: { value: level, enumerable: true },
+      title: { value: title, enumerable: true },
+      providerUrl: { value: providerUrl || URLs .getProviderUrl (external && name), enumerable: true },
+   });
 
    $.data (this, "external",     external)
    $.data (this, "dependencies", dependencies)

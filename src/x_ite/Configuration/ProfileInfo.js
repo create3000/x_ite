@@ -49,10 +49,13 @@ import X3DObject from "../Base/X3DObject.js";
 
 function ProfileInfo (name, title, providerUrl, components)
 {
-   this .name        = name;
-   this .title       = title;
-   this .providerUrl = providerUrl;
-   this .components  = components;
+   Object .defineProperties (this,
+   {
+      name: { value: name, enumerable: true },
+      title: { value: title, enumerable: true },
+      providerUrl: { value: providerUrl, enumerable: true },
+      components: { value: components, enumerable: true },
+   });
 }
 
 ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
