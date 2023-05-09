@@ -362,8 +362,8 @@ X3DCoreContext .prototype =
    {
       const element = this .getElement ();
 
-      for (const event of events .split (" "))
-         element .trigger (event);
+      for (const name of events .split (" "))
+         element [0] .dispatchEvent (new CustomEvent (name));
    },
    getShiftKey: function ()
    {
