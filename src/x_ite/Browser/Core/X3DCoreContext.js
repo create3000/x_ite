@@ -128,6 +128,8 @@ function X3DCoreContext (element)
                           "shiftKey",   new Fields .SFBool (),
                           "altKey",     new Fields .SFBool (),
                           "altGrKey",   new Fields .SFBool ());
+
+   Object .defineProperty (element [0], "browser", { value: this })
 }
 
 X3DCoreContext .prototype =
@@ -310,6 +312,21 @@ X3DCoreContext .prototype =
             this .setBrowserOption ("Notifications", this .parseBooleanAttribute (newValue, true));
             break;
          }
+         case "onerror":
+         case "oninitialized":
+         case "onshutdown":
+         {
+            try
+            {
+               this .getElement () [0] [name] = new Function ("event", newValue);
+            }
+            catch (error)
+            {
+               console .error (error);
+            }
+
+            break;
+         }
          case "splashScreen":
          case "splashscreen":
          {
@@ -360,10 +377,17 @@ X3DCoreContext .prototype =
    },
    callBrowserEventHandler: function (events)
    {
-      const element = this .getElement ();
+      const element = this .getElement () [0];
 
       for (const name of events .split (" "))
-         element [0] .dispatchEvent (new CustomEvent (name));
+      {
+         const event = new CustomEvent (name);
+
+         element .dispatchEvent (event);
+
+         if (name !== "load")
+            element [`on${name}`] ?.(event);
+      }
    },
    getShiftKey: function ()
    {

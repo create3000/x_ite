@@ -76,10 +76,7 @@ class X3DCanvasElement extends HTMLElement
 
       shadow .appendChild (link);
 
-      Object .defineProperty (this, "browser",
-      {
-         value: new X3DBrowser (this),
-      })
+      new X3DBrowser (this)
    }
 
    connectedCallback ()
@@ -101,6 +98,9 @@ class X3DCanvasElement extends HTMLElement
          "debug",
          "multisampling",
          "notifications",
+         "onerror",
+         "oninitialized",
+         "onshutdown",
          "splashScreen",
          "splashscreen",
          "src",
