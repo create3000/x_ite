@@ -77,6 +77,47 @@ Preferred minimum viewing angle from this viewpoint in radians. Small field of v
 
 - FieldOfView may not be correct for different window sizes and aspect ratios. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
+### SFFloat [in, out] **nearDistance** -1 <small>(0,∞)</small>
+
+nearDistance defines minimum clipping plane distance necessary for object display.
+
+#### Hints
+
+- overrides bound NavigationInfo visibilityLimit value, if any.
+- default value -1 means no effect on currently defined view frustum boundaries.
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"}
+
+#### Warnings
+
+- nearDistance must be less than farDistance.
+
+### SFFloat [in, out] **farDistance** -1 <small>(0,∞)</small>
+
+farDistance defines maximum clipping plane distance allowed for object display.
+
+#### Hints
+
+- overrides bound NavigationInfo visibilityLimit value, if any.
+- default value -1 means no effect on currently defined view frustum boundaries.
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"}
+
+#### Warnings
+
+- nearDistance must be less than farDistance.
+
+### SFBool [in, out] **viewAll** FALSE</small>
+
+Viewpoint is automatically adjusted to view all visible geometry. Typically centerOfRotation is shifted to center of current bounding box and view is zoomed in or out until all visible objects are viewed.
+
+#### Hints
+
+- no collision detection or proximity sensing occurs when zooming.
+- when the value of the viewAll field is changed from TRUE to FALSE, no change in the current view occurs.
+
+#### Warning
+
+- if needed, near and far clipping planes shall be adjusted to allow viewing the entire scene.
+
 ### SFBool [in, out] **jump** TRUE
 
 Transition instantly by jumping, or smoothly adjust offsets in place when changing to this Viewpoint.
