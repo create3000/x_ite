@@ -43,7 +43,7 @@ The property value cannot be changed, but the properties of the ComponentInfoArr
 
 The property value cannot be changed, but the properties of the ProfileInfoArray can be.
 
-### **baseURL**
+#### **baseURL**
 
 A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. This will only have an effect on the external browser.
 
