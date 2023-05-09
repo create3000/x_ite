@@ -125,10 +125,14 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       // Print welcome message.
 
-      if (this .getInstanceId () > 1) return;
+      if (this .getInstanceId () > 1)
+         return;
 
-      $(() =>
+      setTimeout (() =>
       {
+         if (!this .getBrowserOption ("Debug"))
+            return;
+
          this .print ("Welcome to " + this .name + " X3D Browser v" + this .version + ":\n" +
                       "   Current Graphics Renderer\n" +
                       "      Name: " + this .getVendor () + " " + this .getRenderer () + "\n" +
