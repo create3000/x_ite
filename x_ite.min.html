@@ -383,7 +383,7 @@ main.color-management #browser {
       <main>
          <div>
             <form action="javascript:alert('form submitted')">
-               <x3d-canvas id="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" onload="$('#file') .addClass ('loaded')" x-baseURL="src/tests/" x-src="lines.x3d">
+               <x3d-canvas id="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" oninitialized="$('#file') .addClass ('loaded')" x-baseURL="src/tests/" x-src="lines.x3d">
                   <p class="fallback">
                      Sorry,<br/>
                      it wasn't me!<br/>

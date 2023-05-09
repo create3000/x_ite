@@ -385,8 +385,10 @@ X3DCoreContext .prototype =
 
          element .dispatchEvent (event);
 
-         if (name !== "load")
-            element [`on${name}`] ?.(event);
+         if (name === "load" || name === "error")
+            continue;
+
+         element [`on${name}`] ?.(event);
       }
    },
    getShiftKey: function ()
