@@ -128,8 +128,6 @@ function X3DCoreContext (element)
                           "shiftKey",   new Fields .SFBool (),
                           "altKey",     new Fields .SFBool (),
                           "altGrKey",   new Fields .SFBool ());
-
-   Object .defineProperty (element [0], "browser", { value: this })
 }
 
 X3DCoreContext .prototype =
@@ -145,34 +143,39 @@ X3DCoreContext .prototype =
       this [_notification]        .setup ();
       this [_contextMenu]         .setup ();
 
-      // Define src and url property.
+      // Define properties of X3DCanvasElement.
 
-      Object .defineProperty (this .getElement () .get (0), "src",
+      Object .defineProperties (this .getElement () .get (0),
       {
-         get: () =>
+         browser:
          {
-            return this .getExecutionContext () .getWorldURL ();
+            value: this,
+            enumerable: true,
          },
-         set: (value) =>
+         src:
          {
-            if (value)
+            get: () =>
+            {
+               return this .getExecutionContext () .getWorldURL ();
+            },
+            set: (value) =>
+            {
                this .loadURL (new Fields .MFString (value), new Fields .MFString ());
+            },
+            enumerable: true,
          },
-         enumerable: true,
-      });
-
-      Object .defineProperty (this .getElement () .get (0), "url",
-      {
-         get: () =>
+         url:
          {
-            return new Fields .MFString (this .getExecutionContext () .getWorldURL ());
-         },
-         set: (value) =>
-         {
-            if (value)
+            get: () =>
+            {
+               return new Fields .MFString (this .getExecutionContext () .getWorldURL ());
+            },
+            set: (value) =>
+            {
                this .loadURL (value, new Fields .MFString ());
+            },
+            enumerable: true,
          },
-         enumerable: true,
       });
 
       // Configure browser event handlers.
