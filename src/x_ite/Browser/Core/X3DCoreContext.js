@@ -381,22 +381,34 @@ X3DCoreContext .prototype =
 
       return url;
    },
-   callBrowserEventHandler: function (events)
+   callBrowserEventHandler: (function ()
    {
-      const element = this .getElement () [0];
+      const build_in = new Set (["error", "load"]);
 
-      for (const name of events .split (" "))
+      return function (events)
       {
-         const event = new CustomEvent (name);
+         const element = this .getElement () [0];
 
-         element .dispatchEvent (event);
+         for (const name of events .split (" "))
+         {
+            // Order is attribute, then dispatch.
 
-         if (name === "load" || name === "error")
-            continue;
+            const event = new CustomEvent (name);
 
-         element [`on${name}`] ?.(event);
-      }
-   },
+            try
+            {
+               if (!build_in .has (name))
+                  element [`on${name}`] ?.(event);
+            }
+            catch (error)
+            {
+               console .error (error);
+            }
+
+            element .dispatchEvent (event);
+         }
+      };
+   })(),
    getShiftKey: function ()
    {
       return this ._shiftKey .getValue ();
