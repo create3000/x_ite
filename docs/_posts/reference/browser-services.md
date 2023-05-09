@@ -33,7 +33,7 @@ The current frame rate in frames per second.
 
 #### **description**
 
-A user-defined string which can be read and written.
+A user-defined String which can be read and written.
 
 #### **supportedComponents**
 
@@ -42,6 +42,10 @@ The property value cannot be changed, but the properties of the ComponentInfoArr
 #### **supportedProfiles**
 
 The property value cannot be changed, but the properties of the ProfileInfoArray can be.
+
+### **baseURL**
+
+A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. This will only have an effect on the external browser.
 
 #### **currentScene**
 
@@ -53,7 +57,7 @@ The real type of this class is dependent on whether the user code is inside a pr
 
 Replace the current world with this new scene that has been loaded or constructed from somewhere. A Promise is returned that will be resolved when the scene is completely loaded.
 
-#### X3DScene **createX3DFromString** (*String x3dSyntax*)
+#### Promise\<X3DScene\> **createX3DFromString** (*String x3dSyntax*)
 
 The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 

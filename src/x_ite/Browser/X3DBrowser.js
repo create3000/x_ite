@@ -362,17 +362,36 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    createVrmlFromString: function (vrmlSyntax)
    {
-      return this .createX3DFromString (vrmlSyntax) .rootNodes;
+      vrmlSyntax = String (vrmlSyntax);
+
+      const
+         currentScene = this .currentScene,
+         external     = this .isExternal (),
+         fileLoader   = new FileLoader (this .getWorld ()),
+         scene        = fileLoader .createX3DFromString (currentScene .getWorldURL (), vrmlSyntax);
+
+      if (!external)
+      {
+         currentScene .getLive () .addInterest ("setLive", scene);
+         scene .setExecutionContext (currentScene);
+         scene .setLive (currentScene .isLive ());
+      }
+
+      return scene;
    },
-   createX3DFromString: function (x3dSyntax)
+   createX3DFromString: async function (x3dSyntax)
    {
       x3dSyntax = String (x3dSyntax);
 
       const
          currentScene = this .currentScene,
          external     = this .isExternal (),
-         fileLoader   = new FileLoader (this .getWorld ()),
-         scene        = fileLoader .createX3DFromString (currentScene .getWorldURL (), x3dSyntax);
+         fileLoader   = new FileLoader (this .getWorld ());
+
+      const scene = await new Promise ((resolve, reject) =>
+      {
+         fileLoader .createX3DFromString (currentScene .getWorldURL (), x3dSyntax, resolve, reject);
+      });
 
       if (!external)
       {
