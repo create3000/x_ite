@@ -155,7 +155,8 @@ X3DCoreContext .prototype =
          },
          set: (value) =>
          {
-            this .loadURL (new Fields .MFString (value), new Fields .MFString ());
+            if (value)
+               this .loadURL (new Fields .MFString (value), new Fields .MFString ());
          },
          enumerable: true,
       });
@@ -168,7 +169,8 @@ X3DCoreContext .prototype =
          },
          set: (value) =>
          {
-            this .loadURL (value, new Fields .MFString ());
+            if (value)
+               this .loadURL (value, new Fields .MFString ());
          },
          enumerable: true,
       });
@@ -342,7 +344,9 @@ X3DCoreContext .prototype =
          }
          case "src":
          {
-            this .loadURL (new Fields .MFString (newValue), new Fields .MFString ());
+            if (newValue)
+               this .loadURL (new Fields .MFString (newValue), new Fields .MFString ());
+
             break;
          }
          case "timings":
@@ -352,7 +356,9 @@ X3DCoreContext .prototype =
          }
          case "url":
          {
-            this .loadURL (this .parseUrlAttribute (newValue), new Fields .MFString ());
+            if (newValue)
+               this .loadURL (this .parseUrlAttribute (newValue), new Fields .MFString ());
+
             break;
          }
       }
