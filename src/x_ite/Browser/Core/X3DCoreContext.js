@@ -180,8 +180,9 @@ X3DCoreContext .prototype =
 
       // Configure browser event handlers.
 
-      this .getElement () .on ("keydown.X3DCoreContext", this [_keydown] .bind (this));
-      this .getElement () .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
+      this .getElement ()
+         .on ("keydown.X3DCoreContext", this [_keydown] .bind (this))
+         .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
    },
    getInstanceId: function ()
    {
