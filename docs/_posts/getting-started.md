@@ -559,6 +559,9 @@ If you are a developer or you always wanna be up to date:
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
 ```
 
+>**Info:** It is no longer necessary to include the CSS file.
+{: .prompt-info }
+
 ### jsDelivr CDN
 
 Open Source CDN, free, fast, and reliable.
