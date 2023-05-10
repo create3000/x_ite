@@ -391,7 +391,7 @@ Changes the bound viewpoint node to the last viewpoint in the list of user viewp
 
 #### void **changeViewpoint** (*[SFNode layerNode,] name String*)
 
-Changes the bound viewpoint node to the viewpoint named name. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
+Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
 
 #### void **print** (*Object object*)
 
