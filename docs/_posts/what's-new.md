@@ -13,7 +13,7 @@ Additionally there is now an [automatic testing suite](https://github.com/create
 
 ### Breaking Changes
 
-- Browser.createX3DFromString returns a Promise now.
+- `Browser.createX3DFromString` returns a Promise now.
 
 ## X_ITE v8.5.2 Released
 
