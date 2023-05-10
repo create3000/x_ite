@@ -5,6 +5,16 @@ nav: main
 categories: []
 tags: [New, Releases]
 ---
+## X_ITE v8.7.0 Released
+
+*Leipzig, 14th May 2023:* This release comes with a breaking change. `Browser.createX3DFromString` is now asynchronous and returns now a Promise. This ensures that all components will be loaded, and all necessary nodes can be provided.
+
+Additionally there is now an [automatic testing suite](https://github.com/create3000/x_ite-tests), which will be extended day by day.
+
+### Breaking Changes
+
+- Browser.createX3DFromString returns a Promise now.
+
 ## X_ITE v8.5.2 Released
 
 *Leipzig, 28th January 2023:* Now, X_ITE has support for SVG as well as STL support. When a scene is parsed you can, instead of a number use special constants like PI or PI3_4.
