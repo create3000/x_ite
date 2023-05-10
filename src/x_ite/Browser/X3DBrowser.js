@@ -378,7 +378,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          scene .setLive (currentScene .isLive ());
       }
 
-      return scene;
+      return scene .rootNodes;
    },
    createX3DFromString: async function (x3dSyntax)
    {
