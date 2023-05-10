@@ -21,7 +21,7 @@ X3D is:
 
 ## What do I need to use X3D?
 
-You can view X3D files using a X3D browser:
+You can view X3D files using an X3D browser:
 
 - A X3D standalone application
 - A X3D JavaScript plug-in like to an HTML browser

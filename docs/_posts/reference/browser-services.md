@@ -49,7 +49,7 @@ A String value containing the URL against which relative URLs are resolved. By d
 
 #### **currentScene**
 
-The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent a X3DExecutionContext otherwise it represent a X3DScene.
+The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene.
 
 ### Methods
 
@@ -75,11 +75,11 @@ Load the passed URL, using the passed parameter string to possibly redirect it t
 
 #### Promise\<X3DScene\> **importDocument** (*DOMObject|String dom*)
 
-Imports a X3D XML DOM document or fragment, converts it, and returns a Promise that resolves to a X3DScene object.
+Imports an X3D XML DOM document or fragment, converts it, and returns a Promise that resolves to an X3DScene object.
 
 #### Promise\<X3DScene\> **importJS** (*Object|String json*)
 
-Imports a X3D JSON document or fragment, converts it, and returns a Promise that resolves to a X3DScene object.
+Imports an X3D JSON document or fragment, converts it, and returns a Promise that resolves to an X3DScene object.
 
 #### String **getBrowserProperty** (*String name*)
 

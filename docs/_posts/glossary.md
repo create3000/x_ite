@@ -201,7 +201,7 @@ Adding a node as the child of another node of the same type. For example, Transf
 
 ### node
 
-The basic unit of a X3D file. A node contains data for the scene in the form of *fields.* Some nodes also contain *events* (outgoing, incoming, or both).
+The basic unit of an X3D file. A node contains data for the scene in the form of *fields.* Some nodes also contain *events* (outgoing, incoming, or both).
 
 ### normal vector
 
@@ -269,7 +269,7 @@ Connection from an outgoing event to an incoming event of the same type.
 
 ### scene
 
-The collection of 3D objects defined in a X3D file; also referred to as a *world,* especially if it is large and immersive.
+The collection of 3D objects defined in an X3D file; also referred to as a *world,* especially if it is large and immersive.
 
 ### script
 
@@ -289,7 +289,7 @@ Shading refers to the application of a reflection model over the surface of an o
 
 ### shape
 
-The combination of geometry an appearance properties that describe a 3D object in a X3D scene.
+The combination of geometry an appearance properties that describe a 3D object in an X3D scene.
 
 ### siblings
 

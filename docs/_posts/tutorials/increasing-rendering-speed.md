@@ -32,7 +32,7 @@ Effective use of textures can be a relative inexpensive way to add interest and 
 
 ### Use Lights Sparingly
 
-Lights are expensive in terms of performance. On most platforms, a X3D file should contain no more than two or three local lights per shape. Placing a directional light under a Transform node with the *global* field set to FALSE localizes the effect of the light.
+Lights are expensive in terms of performance. On most platforms, an X3D file should contain no more than two or three local lights per shape. Placing a directional light under a Transform node with the *global* field set to FALSE localizes the effect of the light.
 
 ### Use Fewer Nodes
 

@@ -970,7 +970,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 
 ## X_ITE v4.1.3 Released
 
-*Leipzig, 25th December 2017:* There is now the new BlendMode node in X_ITE available, which gives X3D authors the ability to specify the WebGL blend modes for a node. The node is a X3DAppearance child node and can be assigned the the new *blendMode* field of a Appearance node. Shader authors have now more control over particle systems, there are three new build in variables available in shaders: *x3d\_ParticleId, x3d\_ParticleLife, x3d\_ParticleElapsedTime, x3d\_ParticlePosition.* For more information have a look at <custom-shaders>.
+*Leipzig, 25th December 2017:* There is now the new BlendMode node in X_ITE available, which gives X3D authors the ability to specify the WebGL blend modes for a node. The node is an X3DAppearance child node and can be assigned the the new *blendMode* field of a Appearance node. Shader authors have now more control over particle systems, there are three new build in variables available in shaders: *x3d\_ParticleId, x3d\_ParticleLife, x3d\_ParticleElapsedTime, x3d\_ParticlePosition.* For more information have a look at <custom-shaders>.
 
 ## X_ITE v4.1.2 Released
 

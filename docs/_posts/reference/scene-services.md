@@ -92,7 +92,7 @@ Removes the imported node *importedName.*
 
 #### X3DRoute **addRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
 
-Add a route from the passed *sourceField* to the passed *destinationField.* The return value is a X3DRoute object.
+Add a route from the passed *sourceField* to the passed *destinationField.* The return value is an X3DRoute object.
 
 #### void **deleteRoute** (*X3DRoute route*)
 

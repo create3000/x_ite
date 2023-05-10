@@ -7,7 +7,7 @@ tags: [Building, Primitive, Shapes]
 ---
 ## Motivation
 
-Shapes are the building blocks of a X3D world. Primitive Shapes are standard building blocks:
+Shapes are the building blocks of an X3D world. Primitive Shapes are standard building blocks:
 
 - [Box](../components/geometry3d/box)
 - [Cone](../components/geometry3d/cone)

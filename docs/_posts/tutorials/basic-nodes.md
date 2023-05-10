@@ -253,7 +253,7 @@ DEF LookAtHouse Viewpoint {
 
 Beside the Viewpoint node there is also an [OrthoViewpoint](../components/navigation/orthoviewpoint) node to define an orthographic camera.
 
-If you define more than once viewpoint in a X3D file, the first viewpoint defined will be bound if the world is loaded. To bind one of the other viewpoints send a *set\_bind* event with the value TRUE to the viewpoint. You must use a [Script](../components/scripting/script) node for that or use a Anchor node with the name of the viewpoint in the *url* field preceded by '#'.
+If you define more than once viewpoint in an X3D file, the first viewpoint defined will be bound if the world is loaded. To bind one of the other viewpoints send a *set\_bind* event with the value TRUE to the viewpoint. You must use a [Script](../components/scripting/script) node for that or use a Anchor node with the name of the viewpoint in the *url* field preceded by '#'.
 
 ### XML Encoding
 

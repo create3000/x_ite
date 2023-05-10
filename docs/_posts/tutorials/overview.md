@@ -23,7 +23,7 @@ Simple, fast and efficient, our X3D tutorials give you all the tips and tricks t
 Shapes, Geometry, and Appearance
 
 - [Introducing X3D](introducing-x3d)
-- [Building a X3D World](building-a-x3d-world)
+- [Building an X3D World](building-a-x3d-world)
 - [Building Primitive Shapes ](building-primitive-shapes)
 - [Transforming Shapes](transforming-shapes)
 - [Controlling Appearance with Materials ](controlling-appearance-with-materials)
