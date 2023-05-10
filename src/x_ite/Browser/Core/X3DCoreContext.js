@@ -113,10 +113,10 @@ function X3DCoreContext (element)
    this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_instanceId] + ").");
    this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
-   this [_browserTimings]      = new BrowserTimings      (this .getPrivateScene ());
+   this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
    this [_browserOptions]      = new BrowserOptions      (this .getPrivateScene ());
    this [_browserProperties]   = new BrowserProperties   (this .getPrivateScene ());
-   this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
+   this [_browserTimings]      = new BrowserTimings      (this .getPrivateScene ());
    this [_notification]        = new Notification        (this .getPrivateScene ());
    this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
@@ -136,10 +136,10 @@ X3DCoreContext .prototype =
    {
       // Setup browser nodes.
 
-      this [_browserTimings]      .setup ();
+      this [_renderingProperties] .setup ();
       this [_browserOptions]      .setup ();
       this [_browserProperties]   .setup ();
-      this [_renderingProperties] .setup ();
+      this [_browserTimings]      .setup ();
       this [_notification]        .setup ();
       this [_contextMenu]         .setup ();
 

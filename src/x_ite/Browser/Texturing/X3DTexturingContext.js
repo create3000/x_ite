@@ -52,9 +52,6 @@ import TextureQuality    from "../Core/TextureQuality.js";
 
 const
    _maxTextures              = Symbol (),
-   _maxTextureSize           = Symbol (),
-   _maxCombinedTextureUnits  = Symbol (),
-   _textureMemory            = Symbol (),
    _combinedTextureUnits     = Symbol (),
    _texture2DUnits           = Symbol (),
    _texture3DUnits           = Symbol (),
@@ -89,13 +86,11 @@ X3DTexturingContext .prototype =
 
       gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
 
-      this [_maxTextureSize]          = gl .getParameter (gl .MAX_TEXTURE_SIZE);
-      this [_maxCombinedTextureUnits] = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
-      this [_textureMemory]           = NaN;
-
       // Get texture Units
 
-      this [_combinedTextureUnits] = [...Array (this [_maxCombinedTextureUnits]) .keys ()];
+      const maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+
+      this [_combinedTextureUnits] = [...Array (maxCombinedTextureUnits) .keys ()];
       this [_texture2DUnits]       = [this [_combinedTextureUnits] .pop ()];
       this [_texture3DUnits]       = [this [_combinedTextureUnits] .pop ()];
       this [_textureCubeUnits]     = [this [_combinedTextureUnits] .pop ()];
@@ -160,11 +155,15 @@ X3DTexturingContext .prototype =
    },
    getMaxTextureSize: function ()
    {
-      return this [_maxTextureSize];
+      const gl = this .getContext ();
+
+      return gl .getParameter (gl .MAX_TEXTURE_SIZE);
    },
    getMaxCombinedTextureUnits: function ()
    {
-      return this [_maxCombinedTextureUnits];
+      const gl = this .getContext ();
+
+      return gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS)
    },
    popTexture2DUnit: function ()
    {
@@ -253,7 +252,7 @@ X3DTexturingContext .prototype =
    },
    getTextureMemory: function ()
    {
-      return this [_textureMemory];
+      return NaN;
    },
    getDefaultTextureProperties: function ()
    {

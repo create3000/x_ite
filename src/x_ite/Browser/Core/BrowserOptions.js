@@ -131,6 +131,17 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       this ._Multisampling          .addInterest ("set_multisampling__",          this);
       this ._Timings                .addInterest ("set_timings__",                this);
 
+      this .set_rubberband__ (this ._Rubberband);
+      this .set_antialiased__ (this ._Antialiased);
+      this .set_primitiveQuality__ (this ._PrimitiveQuality);
+      this .set_textureQuality__ (this ._TextureQuality);
+      this .set_shading__ (this ._Shading);
+      this .set_straightenHorizon__ (this ._StraightenHorizon);
+      this .set_contentScale__ (this ._ContentScale);
+      this .set_logarithmicDepthBuffer__ (this ._LogarithmicDepthBuffer);
+      this .set_multisampling__ (this ._Multisampling);
+      this .set_timings__ (this ._Timings);
+
       this .configure ();
    },
    configure: (function ()
