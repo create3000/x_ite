@@ -355,7 +355,7 @@ Returns a rendering property with the corresponding *name*.
 
 #### void **addBrowserCallback** (*Any key, Function callback*)
 
-Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. The signature of the callback function is *function (browserEvent)*, where browserEvent can be any value listed below:
+Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. The signature of the callback function is `function (browserEvent)`, where browserEvent can be any value listed below:
 
 - X3DConstants .CONNECTION_ERROR
 - X3DConstants .BROWSER_EVENT
