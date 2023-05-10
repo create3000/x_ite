@@ -17,7 +17,7 @@ If you want combine DOM access with X3D access in your JavaScript functions then
 There is the X3D object which is always available, it expects one function handler that is called when the browsers (\<x3d-canvas\> elements) are ready, and a second function handler, that is called if an error occurred. These two arguments are optional. The return value of the X3D function is a Promise, which can be used instead of the arguments.
 
 ```js
-Promise X3D ([callback[, errorCallback]]);
+Promise<void> X3D ([callback[, errorCallback]]);
 ```
 
 The callback function is called when the browser is available. The callback function takes no arguments. The error callback is called if an error occurred, it has one argument *error.*

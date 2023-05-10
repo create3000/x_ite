@@ -9,7 +9,7 @@ tags: [New, Releases]
 
 *Leipzig, 14th May 2023:* This release comes with a breaking change: `Browser.createX3DFromString` is now asynchronous and returns now a Promise. This ensures that all components are loaded, and all necessary nodes can be provided.
 
-In addition, there is now an [automated test suite](https://github.com/create3000/x_ite-tests), which is being expanded on a daily basis.
+In addition, there is now an [automated test suite](https://github.com/create3000/x_ite-tests){:target="_blank"}, which is being expanded on a daily basis.
 
 ### Breaking Changes
 
