@@ -403,21 +403,39 @@ Prints *object* to the browser's console, inserting a newline character after th
 
 ### VRML Methods
 
+To be downward compatible with VRML, the following additional functions are available:
+
 #### String **getName** ()
+
+A browser-implementation specific string describing the browser.
 
 #### String **getVersion** ()
 
+A browser-implementation specific string describing the browser version.
+
 #### Number **getCurrentSpeed** ()
+
+The current speed of the avatar in m/s.
 
 #### Number **getCurrentFrameRate** ()
 
+The current frame rate in frames per second.
+
 #### String **getWorldURL** ()
+
+A string containing the URL of this execution context.
 
 #### void **replaceWorld** (*MFNode nodes*)
 
+Replace the current world with this new nodes that has been loaded or constructed from somewhere.
+
 #### MFNode **createVrmlFromString** (*String vrmlSyntax*)
 
+The string may be any valid VRML content.
+
 #### void **createVrmlFromURL** (*MFString url, SFNode node, String event*)
+
+Parse the passed URL into an VRML scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
 
 #### void **addRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
 
@@ -429,4 +447,8 @@ Remove the route between the passed *sourceField* and passed *destinationField*,
 
 #### void **loadURL** (*MFString url [, MFString parameter]*)
 
+Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return.
+
 #### void **setDescription** (*String description*)
+
+A user-defined String.
