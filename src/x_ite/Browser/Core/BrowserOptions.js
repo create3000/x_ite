@@ -80,7 +80,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       new X3DFieldDefinition (X3DConstants .inputOutput, "Antialiased",            new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "TextureQuality",         new Fields .SFString ("MEDIUM")),
       new X3DFieldDefinition (X3DConstants .inputOutput, "PrimitiveQuality",       new Fields .SFString ("MEDIUM")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "QualityWhenMoving",      new Fields .SFString ("MEDIUM")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "QualityWhenMoving",      new Fields .SFString ("SAME")),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                new Fields .SFString ("GOURAUD")),
       new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Cache",                  new Fields .SFBool (true)),
@@ -168,9 +168,11 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
                   attribute = $.toLowerCaseFirst (name),
                   value     = browser .getElement () .attr (attribute);
 
-               browser .attributeChangedCallback (attribute, null, value);
-
-               continue;
+               if (value !== undefined)
+               {
+                  browser .attributeChangedCallback (attribute, null, value);
+                  continue;
+               }
             }
 
             if (restorable .has (name))

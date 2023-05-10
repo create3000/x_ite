@@ -186,20 +186,20 @@ Returns a browser option with the corresponding name.
       <tr>
          <td>PrimitiveQuality</td>
          <td>Render quality (tesselation level) for Box, Cone, Cylinder, Sphere.</td>
-         <td>Low, Medium, High</td>
-         <td>Medium</td>
+         <td>LOW, MEDIUM, HIGH</td>
+         <td>MEDIUM</td>
       </tr>
       <tr>
          <td>QualityWhenMoving</td>
          <td>Render quality while camera is moving.</td>
-         <td>Low, Medium, High, Same (as while stationary)</td>
-         <td>Same</td>
+         <td>LOW, MEDIUM, HIGH, SAME (as while stationary)</td>
+         <td>SAME</td>
       </tr>
       <tr>
          <td>Shading</td>
          <td>Specify shading mode for all objects.</td>
-         <td>Point, Wireframe, Flat, Gouraud, Phong</td>
-         <td>Gouraud</td>
+         <td>POINT, WIREFRAME, FLAT, GOURAUD, PHONG</td>
+         <td>GOURAUD</td>
       </tr>
       <tr>
          <td>SplashScreen</td>
@@ -210,8 +210,8 @@ Returns a browser option with the corresponding name.
       <tr>
          <td>TextureQuality</td>
          <td>Quality of texture map display.</td>
-         <td>Low, Medium, High</td>
-         <td>Medium</td>
+         <td>LOW, MEDIUM, HIGH</td>
+         <td>MEDIUM</td>
       </tr>
       <tr>
          <td>Cache</td>
