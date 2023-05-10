@@ -7,13 +7,13 @@ tags: [New, Releases]
 ---
 ## X_ITE v8.7.0 Released
 
-*Leipzig, 14th May 2023:* This release comes with a breaking change. `Browser.createX3DFromString` is now asynchronous and returns now a Promise. This ensures that all components will be loaded, and all necessary nodes can be provided.
+*Leipzig, 14th May 2023:* This release comes with a breaking change. `Browser.createX3DFromString` is now asynchronous and returns now a Promise. This ensures that all components are loaded, and all necessary nodes can be provided.
 
-Additionally there is now an [automatic testing suite](https://github.com/create3000/x_ite-tests), which will be extended day by day.
+In addition, there is now an [automated test suite] (https://github.com/create3000/x_ite-tests), which is being expanded on a daily basis.
 
 ### Breaking Changes
 
-- `Browser.createX3DFromString` returns a Promise now.
+- `Browser.createX3DFromString` now returns a Promise.
 
 ## X_ITE v8.5.2 Released
 
