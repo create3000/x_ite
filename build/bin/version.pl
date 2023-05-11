@@ -23,6 +23,24 @@ exit 1 unless $VERSION;
 
 my $ALPHA = $VERSION =~ /a$/;
 
+sub docs
+{
+	my $VERSION = shift;
+
+	my $config        = `cat '$CWD/docs/_config.yml'`;
+	my $contentLength = `gzip -5 dist/x_ite.min.js --stdout | wc -c`;
+
+	$contentLength =~ s/^\s+|\s+$//g;
+	$contentLength = int ($contentLength / 1000);
+
+	$config =~ s|\bversion:\s*[\d\.]+|version: $VERSION|sgo;
+	$config =~ s|\bsize:\s*[\d\.]+|size: $contentLength|sgo;
+
+	open CONFIG, ">", "$CWD/docs/_config.yml";
+	print CONFIG $config;
+	close CONFIG;
+}
+
 sub commit
 {
 	return if $NO_GIT;
@@ -70,24 +88,7 @@ sub upload
 	system "git", "add", "-A";
 	system "git", "commit", "-am", "Published version $VERSION";
 	system "git", "push", "origin";
-}
-
-sub docs
-{
-	my $VERSION = shift;
-
-	my $config        = `cat '$CWD/docs/_config.yml'`;
-	my $contentLength = `gzip -5 dist/x_ite.min.js --stdout | wc -c`;
-
-	$contentLength =~ s/^\s+|\s+$//g;
-	$contentLength = int ($contentLength / 1000);
-
-	$config =~ s|\bversion:\s*[\d\.]+|version: $VERSION|sgo;
-	$config =~ s|\bsize:\s*[\d\.]+|size: $contentLength|sgo;
-
-	open CONFIG, ">", "$CWD/docs/_config.yml";
-	print CONFIG $config;
-	close CONFIG;
+	system "npm", "publish";
 }
 
 if (`git branch --show-current` ne "main\n")

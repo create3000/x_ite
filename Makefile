@@ -58,9 +58,6 @@ bump-version:
 version: bump-version dist zip
 	perl build/bin/version.pl
 
-publish:
-	perl build/bin/publish.pl
-
 .PHONY: docs
 docs:
 	cd docs && bundle exec jekyll serve --incremental --host=192.168.0.18
