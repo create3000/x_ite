@@ -88,7 +88,7 @@ X3DParser .prototype = {
    },
    isInsideProtoDefinition: function ()
    {
-      return Boolean (this .prototypes .length);
+      return !! this .prototypes .length;
    },
    loadComponents: function ()
    {

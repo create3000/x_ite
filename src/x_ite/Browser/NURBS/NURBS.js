@@ -320,7 +320,7 @@ const NURBS = {
          controlPoints     = result || [ ],
          controlPointArray = controlPoint .getValue (),
          dimension         = controlPoint .length,
-         haveWeights       = Boolean (weights),
+         haveWeights       = !! weights,
          Vector            = haveWeights ? Vector3 : Vector2;
 
       if (controlPoints .haveWeights !== haveWeights)
@@ -353,7 +353,7 @@ const NURBS = {
       const
          controlPoints = result || [ ],
          dimension     = controlPointNode .getSize (),
-         haveWeights   = Boolean (weights),
+         haveWeights   = !! weights,
          Vector        = haveWeights ? Vector4 : Vector3;
 
       if (controlPoints .haveWeights !== haveWeights)
@@ -384,7 +384,7 @@ const NURBS = {
    {
       const
          controlPoints = result || [ ],
-         haveWeights   = Boolean (weights),
+         haveWeights   = !! weights,
          Vector        = haveWeights ? Vector4 : Vector3;
 
       if (controlPoints .haveWeights !== haveWeights)

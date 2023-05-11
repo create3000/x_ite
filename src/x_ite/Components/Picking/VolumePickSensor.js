@@ -158,7 +158,7 @@ VolumePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode 
 
                   var
                      pickedGeometries = this .getPickedGeometries (),
-                     active           = Boolean (pickedGeometries .length);
+                     active           = !! pickedGeometries .length;
 
                   pickedGeometries .remove (0, pickedGeometries .length, null);
 
@@ -211,7 +211,7 @@ VolumePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode 
 
                   var
                      pickedGeometries = this .getPickedGeometries (),
-                     active           = Boolean (pickedGeometries .length);
+                     active           = !! pickedGeometries .length;
 
                   pickedGeometries .remove (0, pickedGeometries .length, null);
 

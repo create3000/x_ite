@@ -196,7 +196,7 @@ LinePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .p
 
                   var
                      pickedGeometries = this .getPickedGeometries (),
-                     active           = Boolean (pickedGeometries .length);
+                     active           = !! pickedGeometries .length;
 
                   pickedGeometries .remove (0, pickedGeometries .length, null);
 
@@ -272,7 +272,7 @@ LinePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .p
 
                   var
                      pickedGeometries = this .getPickedGeometries (),
-                     active           = Boolean (pickedGeometries .length);
+                     active           = !! pickedGeometries .length;
 
                   pickedGeometries .remove (0, pickedGeometries .length, null);
 

@@ -225,7 +225,7 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
          },
          this);
 
-         var active = Boolean (contactNodes .length);
+         var active = !! contactNodes .length;
 
          if (this ._isActive .getValue () !== active)
             this ._isActive = active;

@@ -185,7 +185,7 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildN
          debug: false,
       });
 
-      this .sampleOptions .haveWeights = Boolean (weights);
+      this .sampleOptions .haveWeights = !! weights;
 
       const
          mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),

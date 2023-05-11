@@ -211,7 +211,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DPara
       sampleOptions .closed [0]       = uClosed;
       sampleOptions .closed [1]       = vClosed;
       sampleOptions .domain           = undefined;
-      sampleOptions .haveWeights      = Boolean (weights);
+      sampleOptions .haveWeights      = !! weights;
       sampleOptions .trimmingContours = this .getTrimmingContours ();
 
       const

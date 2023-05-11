@@ -157,7 +157,7 @@ NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNo
       });
 
       this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
-      this .sampleOptions .haveWeights    = Boolean (weights);
+      this .sampleOptions .haveWeights    = !! weights;
 
       const
          mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),

@@ -113,7 +113,7 @@ const handler =
    {
       try
       {
-         return Boolean (target .getValue () .getField (key));
+         return !! target .getValue () .getField (key);
       }
       catch (error)
       {
