@@ -1,5 +1,7 @@
 export default /* glsl */ `
-uniform float x3d_AlphaCutoff;
+#if defined (X3D_ALPHA_MODE_MASK)
+   uniform float x3d_AlphaCutoff;
+#endif
 
 #if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
    in float fogDepth;

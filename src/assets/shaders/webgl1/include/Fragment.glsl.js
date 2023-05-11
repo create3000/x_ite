@@ -7,7 +7,9 @@ export default /* glsl */ `
    #extension GL_EXT_frag_depth : enable
 #endif
 
-uniform float x3d_AlphaCutoff;
+#if defined (X3D_ALPHA_MODE_MASK)
+   uniform float x3d_AlphaCutoff;
+#endif
 
 #if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
    varying float fogDepth;
