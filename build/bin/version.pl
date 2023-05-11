@@ -88,6 +88,8 @@ sub upload
 	system "git", "add", "-A";
 	system "git", "commit", "-am", "Published version $VERSION";
 	system "git", "push", "origin";
+
+	chdir $CWD;
 	system "npm", "publish";
 }
 
