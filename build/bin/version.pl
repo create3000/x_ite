@@ -139,6 +139,6 @@ if ($result == 0)
 	upload;
 
 	# x3d-tidy and Sunrize
-	
-	other;
+
+	other unless $ALPHA;
 }
