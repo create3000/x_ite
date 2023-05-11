@@ -80,11 +80,11 @@ varying vec3 vertex;
    varying float depth;
 #endif
 
+#pragma X3D include "Texture.glsl"
 #pragma X3D include "ClipPlanes.glsl"
 #pragma X3D include "Point.glsl"
 #pragma X3D include "Hatch.glsl"
 #pragma X3D include "Fog.glsl"
-#pragma X3D include "Texture.glsl"
 
 vec4
 getMaterialColor ();
