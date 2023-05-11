@@ -306,8 +306,8 @@ function ComposedCubeMapTexture (executionContext)
 
    this .addChildObjects ("update", new (Fields_default()).SFTime ());
 
-   this .textureNodes  = [null, null, null, null, null, null];
-   this .loadStateBits = new (BitSet_default()) ();
+   this .textureNodes = [null, null, null, null, null, null];
+   this .textureBits  = new (BitSet_default()) ();
 }
 
 ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
@@ -373,32 +373,27 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTextu
    {
       let textureNode = this .textureNodes [index];
 
-      if (textureNode)
-         textureNode .removeInterest ("set_loadState__", this);
+      textureNode ?.removeInterest ("set_loadState__", this);
 
       textureNode = this .textureNodes [index] = X3DCast_default() ((X3DConstants_default()).X3DTexture2DNode, node);
 
-      if (textureNode)
-         textureNode .addInterest ("set_loadState__", this, textureNode, index);
+      textureNode ?.addInterest ("set_loadState__", this, textureNode, index);
 
       this .set_loadState__ (textureNode, index);
    },
    set_loadState__: function (textureNode, index)
    {
-      if (textureNode)
-         this .setLoadStateBit (index, textureNode, textureNode .checkLoadState ());
-      else
-         this .setLoadStateBit (index, textureNode, (X3DConstants_default()).NOT_STARTED);
+      this .setTextureBit (index, textureNode, textureNode ?.checkLoadState () ?? (X3DConstants_default()).NOT_STARTED);
 
       this ._update .addEvent ();
    },
-   setLoadStateBit: function (bit, textureNode, loadState)
+   setTextureBit: function (bit, textureNode, loadState)
    {
-      this .loadStateBits .set (bit, loadState === (X3DConstants_default()).COMPLETE_STATE || textureNode .getWidth ());
+      this .textureBits .set (bit, loadState === (X3DConstants_default()).COMPLETE_STATE || textureNode ?.getWidth ());
    },
    isComplete: function ()
    {
-      if (+this .loadStateBits !== 0b111111)
+      if (+this .textureBits !== 0b111111)
          return false;
 
       const
@@ -447,7 +442,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTextu
                      gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, textureNode .getElement ());
                   else
                      gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, textureNode .getElement ());
-                     
+
                   break;
                }
                default:

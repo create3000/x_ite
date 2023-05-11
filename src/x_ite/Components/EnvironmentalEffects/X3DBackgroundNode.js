@@ -141,50 +141,23 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
 
       return false;
    },
-   set_frontTexture__: function (value)
+   set_texture__: function (textureNode, index)
    {
-      this .updateTexture (0, value);
-   },
-   set_backTexture__: function (value)
-   {
-      this .updateTexture (1, value);
-   },
-   set_leftTexture__: function (value)
-   {
-      this .updateTexture (2, value);
-   },
-   set_rightTexture__: function (value)
-   {
-      this .updateTexture (3, value);
-   },
-   set_topTexture__: function (value)
-   {
-      this .updateTexture (4, value);
-   },
-   set_bottomTexture__: function (value)
-   {
-      this .updateTexture (5, value);
-   },
-   updateTexture: function (index, textureNode)
-   {
-      this .textureNodes [index] ?._loadState .removeInterest ("setTextureBit", this);
+      this .textureNodes [index] ?._loadState .removeInterest ("set_loadState__", this);
 
       this .textureNodes [index] = textureNode;
 
-      if (textureNode)
-      {
-         textureNode ._loadState .addInterest ("setTextureBit", this, index, textureNode);
+      textureNode ?._loadState .addInterest ("set_loadState__", this, textureNode, index);
 
-         this .setTextureBit (index, textureNode, textureNode ._loadState);
-      }
-      else
-      {
-         this .textureBits .set (index, false);
-      }
+      this .set_loadState__ (textureNode, index);
+   },
+   set_loadState__: function (textureNode, index)
+   {
+      this .setTextureBit (index, textureNode, textureNode ?.checkLoadState () ?? X3DConstants .NOT_STARTED);
    },
    setTextureBit: function (bit, textureNode, loadState)
    {
-      this .textureBits .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE || textureNode .getWidth ());
+      this .textureBits .set (bit, loadState === X3DConstants .COMPLETE_STATE || textureNode ?.getWidth ());
    },
    getColor: function (theta, color, angle)
    {

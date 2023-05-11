@@ -893,7 +893,7 @@ const NURBS = {
          controlPoints     = result || [ ],
          controlPointArray = controlPoint .getValue (),
          dimension         = controlPoint .length,
-         haveWeights       = Boolean (weights),
+         haveWeights       = !! weights,
          Vector            = haveWeights ? (Vector3_default()) : (Vector2_default());
 
       if (controlPoints .haveWeights !== haveWeights)
@@ -926,7 +926,7 @@ const NURBS = {
       const
          controlPoints = result || [ ],
          dimension     = controlPointNode .getSize (),
-         haveWeights   = Boolean (weights),
+         haveWeights   = !! weights,
          Vector        = haveWeights ? (Vector4_default()) : (Vector3_default());
 
       if (controlPoints .haveWeights !== haveWeights)
@@ -957,7 +957,7 @@ const NURBS = {
    {
       const
          controlPoints = result || [ ],
-         haveWeights   = Boolean (weights),
+         haveWeights   = !! weights,
          Vector        = haveWeights ? (Vector4_default()) : (Vector3_default());
 
       if (controlPoints .haveWeights !== haveWeights)
@@ -2944,7 +2944,7 @@ NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeome
       });
 
       this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
-      this .sampleOptions .haveWeights    = Boolean (weights);
+      this .sampleOptions .haveWeights    = !! weights;
 
       const
          mesh        = nurbs_nurbs.sample (this .mesh, surface, this .sampleOptions),
@@ -3130,7 +3130,7 @@ NurbsCurve2D .prototype = Object .assign (Object .create (NURBS_X3DNurbsControlC
       });
 
       this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
-      this .sampleOptions .haveWeights    = Boolean (weights);
+      this .sampleOptions .haveWeights    = !! weights;
 
       const
          mesh   = nurbs_nurbs.sample (this .mesh, surface, this .sampleOptions),
@@ -3375,7 +3375,7 @@ NurbsOrientationInterpolator .prototype = Object .assign (Object .create ((X3DCh
          debug: false,
       });
 
-      this .sampleOptions .haveWeights = Boolean (weights);
+      this .sampleOptions .haveWeights = !! weights;
 
       const
          mesh         = nurbs_nurbs.sample (this .mesh, surface, this .sampleOptions),
@@ -3625,7 +3625,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
       sampleOptions .closed [0]       = uClosed;
       sampleOptions .closed [1]       = vClosed;
       sampleOptions .domain           = undefined;
-      sampleOptions .haveWeights      = Boolean (weights);
+      sampleOptions .haveWeights      = !! weights;
       sampleOptions .trimmingContours = this .getTrimmingContours ();
 
       const
@@ -4090,7 +4090,7 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create ((X3DChild
          debug: false,
       });
 
-      this .sampleOptions .haveWeights = Boolean (weights);
+      this .sampleOptions .haveWeights = !! weights;
 
       const
          mesh         = nurbs_nurbs.sample (this .mesh, surface, this .sampleOptions),

@@ -57,7 +57,8 @@ function ListenerPointSource (executionContext)
 
    this .addType (X3DConstants .ListenerPointSource);
 
-   this .addChildObjects ("speed", new Fields .SFFloat (1));
+   this .addChildObjects ("loop",  new Fields .SFBool (),
+                          "speed", new Fields .SFFloat (1));
 
    this ._position .setUnit ("length");
 }

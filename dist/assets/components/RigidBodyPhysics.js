@@ -2053,7 +2053,7 @@ CollisionSensor .prototype = Object .assign (Object .create ((X3DSensorNode_defa
          },
          this);
 
-         var active = Boolean (contactNodes .length);
+         var active = !! contactNodes .length;
 
          if (this ._isActive .getValue () !== active)
             this ._isActive = active;
@@ -2827,7 +2827,7 @@ function MotorJoint (executionContext)
 
    // Units
 
-   this ._axis1angle      .setunit ("angle");
+   this ._axis1Angle      .setUnit ("angle");
    this ._axis2Angle      .setUnit ("angle");
    this ._axis3Angle      .setUnit ("angle");
    this ._motor1Angle     .setUnit ("angle");

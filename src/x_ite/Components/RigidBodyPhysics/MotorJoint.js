@@ -59,7 +59,7 @@ function MotorJoint (executionContext)
 
    // Units
 
-   this ._axis1angle      .setunit ("angle");
+   this ._axis1Angle      .setUnit ("angle");
    this ._axis2Angle      .setUnit ("angle");
    this ._axis3Angle      .setUnit ("angle");
    this ._motor1Angle     .setUnit ("angle");

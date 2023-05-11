@@ -57,7 +57,8 @@ function MicrophoneSource (executionContext)
 
    this .addType (X3DConstants .MicrophoneSource);
 
-   this .addChildObjects ("speed", new Fields .SFFloat (1));
+   this .addChildObjects ("loop",  new Fields .SFBool (),
+                          "speed", new Fields .SFFloat (1));
 }
 
 MicrophoneSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),

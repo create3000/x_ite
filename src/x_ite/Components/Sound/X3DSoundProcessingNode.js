@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import Fields               from "../../Fields.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DTimeDependentNode from "../Time/X3DTimeDependentNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
@@ -55,6 +56,8 @@ function X3DSoundProcessingNode (executionContext)
    X3DTimeDependentNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DSoundProcessingNode);
+
+   this .addChildObjects ("loop", new Fields .SFBool ());
 }
 
 X3DSoundProcessingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),

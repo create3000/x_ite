@@ -136,12 +136,12 @@ Background .prototype = Object .assign (Object .create (X3DBackgroundNode .proto
       topTexture    .setup ();
       bottomTexture .setup ();
 
-      this .set_frontTexture__  (frontTexture);
-      this .set_backTexture__   (backTexture);
-      this .set_leftTexture__   (leftTexture);
-      this .set_rightTexture__  (rightTexture);
-      this .set_topTexture__    (topTexture);
-      this .set_bottomTexture__ (bottomTexture);
+      this .set_texture__ (frontTexture,  0);
+      this .set_texture__ (backTexture,   1);
+      this .set_texture__ (leftTexture,   2);
+      this .set_texture__ (rightTexture,  3);
+      this .set_texture__ (topTexture,    4);
+      this .set_texture__ (bottomTexture, 5);
    }
 });
 

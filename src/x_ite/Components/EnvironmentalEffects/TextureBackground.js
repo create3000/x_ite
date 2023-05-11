@@ -99,43 +99,23 @@ TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode
    {
       X3DBackgroundNode .prototype .initialize .call (this);
 
-      this ._frontTexture  .addInterest ("set_frontTexture__", this);
-      this ._backTexture   .addInterest ("set_backTexture__", this);
-      this ._leftTexture   .addInterest ("set_leftTexture__", this);
-      this ._rightTexture  .addInterest ("set_rightTexture__", this);
-      this ._topTexture    .addInterest ("set_topTexture__", this);
-      this ._bottomTexture .addInterest ("set_bottomTexture__", this);
+      this ._frontTexture  .addInterest ("set_texture__", this, 0);
+      this ._backTexture   .addInterest ("set_texture__", this, 1);
+      this ._leftTexture   .addInterest ("set_texture__", this, 2);
+      this ._rightTexture  .addInterest ("set_texture__", this, 3);
+      this ._topTexture    .addInterest ("set_texture__", this, 4);
+      this ._bottomTexture .addInterest ("set_texture__", this, 5);
 
-      this .set_frontTexture__  (this ._frontTexture);
-      this .set_backTexture__   (this ._backTexture);
-      this .set_leftTexture__   (this ._leftTexture);
-      this .set_rightTexture__  (this ._rightTexture);
-      this .set_topTexture__    (this ._topTexture);
-      this .set_bottomTexture__ (this ._bottomTexture);
+      this .set_texture__ (0, this ._frontTexture);
+      this .set_texture__ (1, this ._backTexture);
+      this .set_texture__ (2, this ._leftTexture);
+      this .set_texture__ (3, this ._rightTexture);
+      this .set_texture__ (4, this ._topTexture);
+      this .set_texture__ (5, this ._bottomTexture);
    },
-   set_frontTexture__: function ()
+   set_texture__: function (index, textureNode)
    {
-      X3DBackgroundNode .prototype .set_frontTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._frontTexture));
-   },
-   set_backTexture__: function ()
-   {
-      X3DBackgroundNode .prototype .set_backTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._backTexture));
-   },
-   set_leftTexture__: function ()
-   {
-      X3DBackgroundNode .prototype .set_leftTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._leftTexture));
-   },
-   set_rightTexture__: function ()
-   {
-      X3DBackgroundNode .prototype .set_rightTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._rightTexture));
-   },
-   set_topTexture__: function ()
-   {
-      X3DBackgroundNode .prototype .set_topTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._topTexture));
-   },
-   set_bottomTexture__: function ()
-   {
-      X3DBackgroundNode .prototype .set_bottomTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._bottomTexture));
+      X3DBackgroundNode .prototype .set_texture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, textureNode), index);
    },
 });
 

@@ -57,7 +57,8 @@ function OscillatorSource (executionContext)
 
    this .addType (X3DConstants .OscillatorSource);
 
-   this .addChildObjects ("speed", new Fields .SFFloat (1));
+   this .addChildObjects ("loop",  new Fields .SFBool (),
+                          "speed", new Fields .SFFloat (1));
 }
 
 OscillatorSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),

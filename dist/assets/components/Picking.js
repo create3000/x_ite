@@ -1009,7 +1009,7 @@ LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSenso
 
                   var
                      pickedGeometries = this .getPickedGeometries (),
-                     active           = Boolean (pickedGeometries .length);
+                     active           = !! pickedGeometries .length;
 
                   pickedGeometries .remove (0, pickedGeometries .length, null);
 
@@ -1085,7 +1085,7 @@ LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSenso
 
                   var
                      pickedGeometries = this .getPickedGeometries (),
-                     active           = Boolean (pickedGeometries .length);
+                     active           = !! pickedGeometries .length;
 
                   pickedGeometries .remove (0, pickedGeometries .length, null);
 
@@ -1881,7 +1881,7 @@ PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSens
 
                   var
                      pickedGeometries = this .getPickedGeometries (),
-                     active           = Boolean (pickedGeometries .length);
+                     active           = !! pickedGeometries .length;
 
                   pickedGeometries .remove (0, pickedGeometries .length, null);
 
@@ -1945,7 +1945,7 @@ PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSens
 
                   var
                      pickedGeometries = this .getPickedGeometries (),
-                     active           = Boolean (pickedGeometries .length);
+                     active           = !! pickedGeometries .length;
 
                   pickedGeometries .remove (0, pickedGeometries .length, null);
 
@@ -2171,7 +2171,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPick
 
                   var
                      pickedGeometries = this .getPickedGeometries (),
-                     active           = Boolean (pickedGeometries .length);
+                     active           = !! pickedGeometries .length;
 
                   pickedGeometries .remove (0, pickedGeometries .length, null);
 
@@ -2224,7 +2224,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPick
 
                   var
                      pickedGeometries = this .getPickedGeometries (),
-                     active           = Boolean (pickedGeometries .length);
+                     active           = !! pickedGeometries .length;
 
                   pickedGeometries .remove (0, pickedGeometries .length, null);
 
@@ -2410,7 +2410,7 @@ VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSen
 
                   var
                      pickedGeometries = this .getPickedGeometries (),
-                     active           = Boolean (pickedGeometries .length);
+                     active           = !! pickedGeometries .length;
 
                   pickedGeometries .remove (0, pickedGeometries .length, null);
 
@@ -2463,7 +2463,7 @@ VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSen
 
                   var
                      pickedGeometries = this .getPickedGeometries (),
-                     active           = Boolean (pickedGeometries .length);
+                     active           = !! pickedGeometries .length;
 
                   pickedGeometries .remove (0, pickedGeometries .length, null);
 
