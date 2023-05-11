@@ -123,15 +123,15 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
    },
    isInitializable: function ()
    {
-      return this [_accessType] & X3DConstants .initializeOnly;
+      return !! (this [_accessType] & X3DConstants .initializeOnly);
    },
    isInput: function ()
    {
-      return this [_accessType] & X3DConstants .inputOnly;
+      return !! (this [_accessType] & X3DConstants .inputOnly);
    },
    isOutput: function ()
    {
-      return this [_accessType] & X3DConstants .outputOnly;
+      return !! (this [_accessType] & X3DConstants .outputOnly);
    },
    isReadable: function ()
    {
@@ -139,7 +139,7 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
    },
    isWritable: function ()
    {
-      return this [_accessType] !== X3DConstants .initializeOnly;
+      return this [_accessType] !== X3DConstants .outputOnly;
    },
    setUnit: function (value)
    {
