@@ -26,6 +26,6 @@
             "type": "shell",
             "command": "git ls-files --others --exclude-standard",
             "problemMatcher": []
-        },
+        }
     ]
 }
