@@ -52,7 +52,10 @@ dist: compile copy-files html
 checkout-dist:
 	git checkout -- dist
 
-version: dist zip
+bump-version:
+	perl build/bin/bump.pl
+
+version: bump-version dist zip
 	perl build/bin/version.pl
 
 publish:
