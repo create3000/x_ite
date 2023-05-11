@@ -27,23 +27,5 @@
             "command": "git ls-files --others --exclude-standard",
             "problemMatcher": []
         },
-        {
-            "label": "Make Docs",
-            "type": "shell",
-            "command": "make docs",
-            "problemMatcher": []
-        },
-        {
-            "label": "Open Docs in Browser",
-            "type": "shell",
-            "command": "make open-docs-in-browser",
-            "problemMatcher": []
-        },
-        {
-            "label": "Make Tests",
-            "type": "shell",
-            "command": "make tests",
-            "problemMatcher": []
-        }
     ]
 }
