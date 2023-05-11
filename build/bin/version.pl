@@ -93,6 +93,18 @@ sub upload
 	system "npm", "publish";
 }
 
+sub other {
+	my $result = system "zenity", "--question", "--text=Do want to publish new versions for x3d-tidy and Sunrize?", "--ok-label=Yes", "--cancel-label=No";
+
+	return unless $result == 0;
+
+	chdir "$CWD/../x3d-tidy";
+	system "make", "publish";
+
+	chdir "$CWD/../sunrize";
+	system "make", "publish";
+}
+
 if (`git branch --show-current` ne "main\n")
 {
 	say "Wrong branch, cannot release version!";
@@ -125,4 +137,8 @@ if ($result == 0)
 	update ("latest") unless $ALPHA;
 
 	upload;
+
+	# x3d-tidy and Sunrize
+	
+	other;
 }
