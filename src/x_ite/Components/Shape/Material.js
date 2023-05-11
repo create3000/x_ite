@@ -315,8 +315,8 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
 
             this .ambientTextureNode .setShaderUniforms (gl, shaderObject, renderObject, ambientTexture);
 
-            gl .uniform1i (ambientTexture .textureTransformMapping,  textureTransformMapping  .get (ambientTextureMapping) || 0);
-            gl .uniform1i (ambientTexture .textureCoordinateMapping, textureCoordinateMapping .get (ambientTextureMapping) || 0);
+            gl .uniform1i (ambientTexture .textureTransformMapping,  textureTransformMapping  .get (ambientTextureMapping) ?? 0);
+            gl .uniform1i (ambientTexture .textureCoordinateMapping, textureCoordinateMapping .get (ambientTextureMapping) ?? 0);
          }
 
          // Diffuse parameters
@@ -329,8 +329,8 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
 
             this .diffuseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, diffuseTexture);
 
-            gl .uniform1i (diffuseTexture .textureTransformMapping,  textureTransformMapping  .get (diffuseTextureMapping) || 0);
-            gl .uniform1i (diffuseTexture .textureCoordinateMapping, textureCoordinateMapping .get (diffuseTextureMapping) || 0);
+            gl .uniform1i (diffuseTexture .textureTransformMapping,  textureTransformMapping  .get (diffuseTextureMapping) ?? 0);
+            gl .uniform1i (diffuseTexture .textureCoordinateMapping, textureCoordinateMapping .get (diffuseTextureMapping) ?? 0);
          }
 
          // Specular parameters
@@ -343,8 +343,8 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
 
             this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularTexture);
 
-            gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (specularTextureMapping) || 0);
-            gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularTextureMapping) || 0);
+            gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (specularTextureMapping) ?? 0);
+            gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularTextureMapping) ?? 0);
          }
 
          // Shininess parameters
@@ -357,8 +357,8 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
 
             this .shininessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, shininessTexture);
 
-            gl .uniform1i (shininessTexture .textureTransformMapping,  textureTransformMapping  .get (shininessTextureMapping) || 0);
-            gl .uniform1i (shininessTexture .textureCoordinateMapping, textureCoordinateMapping .get (shininessTextureMapping) || 0);
+            gl .uniform1i (shininessTexture .textureTransformMapping,  textureTransformMapping  .get (shininessTextureMapping) ?? 0);
+            gl .uniform1i (shininessTexture .textureCoordinateMapping, textureCoordinateMapping .get (shininessTextureMapping) ?? 0);
          }
 
          // Occlusion parameters
@@ -373,8 +373,8 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
 
             this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, occlusionTexture);
 
-            gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (occlusionTextureMapping) || 0);
-            gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (occlusionTextureMapping) || 0);
+            gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (occlusionTextureMapping) ?? 0);
+            gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (occlusionTextureMapping) ?? 0);
          }
       }
    },

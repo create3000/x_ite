@@ -257,8 +257,8 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
 
             this .baseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, baseTexture);
 
-            gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (baseTextureMapping) || 0);
-            gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (baseTextureMapping) || 0);
+            gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (baseTextureMapping) ?? 0);
+            gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (baseTextureMapping) ?? 0);
          }
 
          // Metallic roughness parameters
@@ -271,8 +271,8 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
 
             this .metallicRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, metallicRoughnessTexture);
 
-            gl .uniform1i (metallicRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (metallicRoughnessTextureMapping) || 0);
-            gl .uniform1i (metallicRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (metallicRoughnessTextureMapping) || 0);
+            gl .uniform1i (metallicRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (metallicRoughnessTextureMapping) ?? 0);
+            gl .uniform1i (metallicRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (metallicRoughnessTextureMapping) ?? 0);
          }
 
          // Occlusion parameters
@@ -287,8 +287,8 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
 
             this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, occlusionTexture);
 
-            gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (occlusionTextureMapping) || 0);
-            gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (occlusionTextureMapping) || 0);
+            gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (occlusionTextureMapping) ?? 0);
+            gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (occlusionTextureMapping) ?? 0);
          }
       }
    },

@@ -58,7 +58,7 @@ function legacy ()
       this .attributeChangedCallback ("url", undefined, element .attr ("url"));
 
    // Make element focusable.
-   element .attr ("tabindex", element .attr ("tabindex") || 0);
+   element .attr ("tabindex", element .attr ("tabindex") ?? 0);
 }
 
 export default legacy;

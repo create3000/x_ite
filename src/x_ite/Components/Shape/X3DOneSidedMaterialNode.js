@@ -175,8 +175,8 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterial
 
             this .emissiveTextureNode .setShaderUniforms (gl, shaderObject, renderObject, emissiveTexture);
 
-            gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (emissiveTextureMapping) || 0);
-            gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (emissiveTextureMapping) || 0);
+            gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (emissiveTextureMapping) ?? 0);
+            gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (emissiveTextureMapping) ?? 0);
          }
 
          // Normal parameters
@@ -191,8 +191,8 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterial
 
             this .normalTextureNode .setShaderUniforms (gl, shaderObject, renderObject, normalTexture);
 
-            gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (normalTextureMapping) || 0);
-            gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (normalTextureMapping) || 0);
+            gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (normalTextureMapping) ?? 0);
+            gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (normalTextureMapping) ?? 0);
          }
       }
    },
