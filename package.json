@@ -1,6 +1,6 @@
 {
 	"name": "x_ite",
-	"version": "8.6.24",
+	"version": "8.7.0",
 	"description": "X_ITE X3D Browser, view and manipulate X3D and VRML scenes in HTML.",
 	"homepage": "https://create3000.github.io/x_ite/",
 	"author": "Holger Seelig <holger.seelig@gmail.com>",
@@ -59,7 +59,7 @@
 		"css-element-queries": "^1.2.3",
 		"dicom-parser": "^1.8.21",
 		"jpeg-js": "^0.4.4",
-		"jpeg-lossless-decoder-js": "^2.0.4",
+		"jpeg-lossless-decoder-js": "^2.0.5",
 		"jquery": "^3.6.4",
 		"jquery-fullscreen-plugin": "^1.1.5",
 		"jquery-mousewheel": "^3.1.13",
