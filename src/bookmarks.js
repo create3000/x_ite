@@ -87,8 +87,9 @@ const Bookmarks = (function ()
                   if (! path .match (/\.(?:x3d|x3dz|x3dv|x3dvz|x3dj|x3djz|wrl|wrz)$/))
                      continue;
 
-                  const basename = path .match (/([^\/]+)\.\w+$/);
-                  const name     = basename [1] .replace (/([A-Z]+)/g, ' $1');
+                  const
+                     basename = path .match (/([^\/]+)\.\w+$/),
+                     name     = basename [1] .replace (/([A-Z]+)/g, ' $1');
 
                   var element = $('<span/>')
                      .addClass ('example-box')
