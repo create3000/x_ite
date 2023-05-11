@@ -16,6 +16,12 @@
             "problemMatcher": []
         },
         {
+            "label": "Publish to NPM",
+            "type": "shell",
+            "command": "make publish",
+            "problemMatcher": []
+        },
+        {
             "label": "Checkout Dist",
             "type": "shell",
             "command": "make checkout-dist",
