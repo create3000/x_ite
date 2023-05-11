@@ -152,7 +152,7 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          key += textureNode ? 1 : 0;
       }
 
-      return this .shaderNodes .get (key) || this .createShader (key, geometryContext, renderContext);
+      return this .shaderNodes .get (key) ?? this .createShader (key, geometryContext, renderContext);
    },
    getShaderOptions: function (geometryContext, renderContext)
    {
