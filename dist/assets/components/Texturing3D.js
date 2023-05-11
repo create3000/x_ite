@@ -4039,7 +4039,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /******/ });
 });
-//# 
+//#
 
 /***/ }),
 
@@ -4842,7 +4842,7 @@ var JpegImage = (function jpegImage() {
             readUint16() // skip data length
             readUint16() // Ignore this data since it represents the image height
             break;
-            
+
           case 0xFFDA: // SOS (Start of Scan)
             var scanLength = readUint16();
             var selectorsCount = data[offset++];
@@ -5179,8 +5179,8 @@ function decode(jpegData, userOpts = {}) {
     if (err instanceof RangeError) {
       throw new Error("Could not allocate enough memory for the image. " +
                       "Required: " + bytesNeeded);
-    } 
-    
+    }
+
     if (err instanceof ReferenceError) {
       if (err.message === "Buffer is not defined") {
         throw new Error("Buffer is not globally defined in this environment. " +
@@ -6426,7 +6426,7 @@ module.exports = window [Symbol .for ("X_ITE.X3D-8.7.0")] .require ("lib/jquery"
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -6440,14 +6440,14 @@ module.exports = window [Symbol .for ("X_ITE.X3D-8.7.0")] .require ("lib/jquery"
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -6460,7 +6460,7 @@ module.exports = window [Symbol .for ("X_ITE.X3D-8.7.0")] .require ("lib/jquery"
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -6472,12 +6472,12 @@ module.exports = window [Symbol .for ("X_ITE.X3D-8.7.0")] .require ("lib/jquery"
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
