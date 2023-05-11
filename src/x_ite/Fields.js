@@ -63,8 +63,7 @@ import SFVec3      from "./Fields/SFVec3.js";
 import SFVec4      from "./Fields/SFVec4.js";
 import ArrayFields from "./Fields/ArrayFields.js";
 
-const Fields = Object .assign (
-{
+const Fields = {
    SFBool:      SFBool,
    SFColor:     SFColor,
    SFColorRGBA: SFColorRGBA,
@@ -86,8 +85,10 @@ const Fields = Object .assign (
    SFVec3f:     SFVec3 .SFVec3f,
    SFVec4d:     SFVec4 .SFVec4d,
    SFVec4f:     SFVec4 .SFVec4f,
+
    VrmlMatrix:  SFMatrix4 .VrmlMatrix,
-},
-ArrayFields);
+
+   ... ArrayFields
+};
 
 export default Fields;
