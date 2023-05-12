@@ -318,7 +318,6 @@ X3DCoreContext .prototype =
             this .setBrowserOption ("Notifications", this .parseBooleanAttribute (newValue, true));
             break;
          }
-         case "onerror":
          case "oninitialized":
          case "onshutdown":
          {

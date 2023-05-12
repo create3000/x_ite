@@ -98,7 +98,6 @@ class X3DCanvasElement extends HTMLElement
          "debug",
          "multisampling",
          "notifications",
-         "onerror",
          "oninitialized",
          "onshutdown",
          "splashScreen",
