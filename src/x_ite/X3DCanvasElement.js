@@ -46,35 +46,12 @@
  ******************************************************************************/
 
 import X3DBrowser from "./Browser/X3DBrowser.js";
-import URLs       from "./Browser/Networking/URLs.js";
 
 class X3DCanvasElement extends HTMLElement
 {
-   static define ()
-   {
-      customElements .define ("x3d-canvas", X3DCanvasElement);
-   }
-
    constructor ()
    {
       super ();
-
-      const
-         shadow = this .attachShadow ({ mode: "open", delegatesFocus: true }),
-         link   = document .createElement ("link");
-
-      $(this) .data ("shadow", $(shadow));
-      $(this) .data ("loaded", new Promise (function (resolve, reject)
-      {
-         link .onload  = resolve;
-         link .onerror = reject;
-      }));
-
-      link .setAttribute ("rel", "stylesheet");
-      link .setAttribute ("type", "text/css");
-      link .setAttribute ("href", new URL ("x_ite.css", URLs .getScriptUrl ()) .href);
-
-      shadow .appendChild (link);
 
       new X3DBrowser (this)
    }

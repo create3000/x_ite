@@ -53,7 +53,7 @@ import shim             from "./shim.js";
 
 window [Symbol .for ("X_ITE.X3D")] = X3D;
 
-X3DCanvasElement .define ();
+customElements .define ("x3d-canvas", X3DCanvasElement);
 
 X3D ();
 

@@ -53,6 +53,7 @@ import BrowserProperties   from "./BrowserProperties.js";
 import RenderingProperties from "./RenderingProperties.js";
 import Notification        from "./Notification.js";
 import ContextMenu         from "./ContextMenu.js";
+import URLs                from "../Networking/URLs.js";
 import Scene               from "../../Execution/Scene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
@@ -88,14 +89,32 @@ function X3DCoreContext (element)
    // Get canvas & context.
 
    const
-      shadow       = element .data ("shadow"),
       browser      = $("<div></div>") .addClass ("x_ite-private-browser") .attr ("tabindex", 0),
       surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser),
       splashScreen = $("<div></div>") .hide () .addClass ("x_ite-private-splash-screen") .appendTo (browser),
       spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
       progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
 
-   element .data ("loaded") ?.then (() => browser .show ());
+   if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
+   {
+      const
+         shadow = $(element [0] .attachShadow ({ mode: "open", delegatesFocus: true })),
+         link   = $("<link/>");
+
+      link
+         .on ("load", () => browser .show ())
+         .attr ("rel", "stylesheet")
+         .attr ("type", "text/css")
+         .attr ("href", new URL ("x_ite.css", URLs .getScriptUrl ()) .href);
+
+      this [_shadow] = shadow
+         .append (link)
+         .append (browser .hide ());
+   }
+   else
+   {
+      this [_shadow] = element .prepend (browser);
+   }
 
    $("<div></div>") .addClass ("x_ite-private-x_ite") .html (this .getName () + "<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
    $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
@@ -103,7 +122,6 @@ function X3DCoreContext (element)
 
    this [_instanceId]   = ++ instanceId;
    this [_element]      = element;
-   this [_shadow]       = shadow ? shadow .append (browser .hide ()) : this [_element] .prepend (browser);
    this [_surface]      = surface;
    this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
    this [_context]      = Context .create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
