@@ -95,6 +95,8 @@ function X3DCoreContext (element)
       spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
       progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
 
+   element .data ("loaded") ?.then (() => browser .show ());
+
    $("<div></div>") .addClass ("x_ite-private-x_ite") .html (this .getName () + "<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
    $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
    $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress);
@@ -106,9 +108,6 @@ function X3DCoreContext (element)
    this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
    this [_context]      = Context .create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
    this [_splashScreen] = splashScreen;
-
-   if (shadow)
-      element .data ("loaded") .then (function () { browser .show (); });
 
    this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_instanceId] + ").");
    this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
