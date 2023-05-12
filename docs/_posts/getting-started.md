@@ -717,6 +717,8 @@ Type: script code. This event is sent to an \<x3d-canvas\> element when an error
 
 Type: script code. This event handler will be called on the \<x3d-canvas\> element when a scene has finished loading. This applies whether the scene is applied via the *src* attribute or when a scene is loaded or replaced by another world. If you change the scene, the event will fire again when the new scene loads. This event will not bubble up the element tree.
 
+The onload event handler will also be called at the very beginning when the initial empty scene is loaded.
+
 ### onshutdown
 
 Type: script code. This event handler will be called on the \<x3d-canvas\> element when a scene is unloaded or replaced by another world.
