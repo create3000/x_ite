@@ -49,7 +49,7 @@ import X3DField from "../Base/X3DField.js";
 
 function SFMatrixPrototypeTemplate (TypeName, Type, Matrix, SFVec, double)
 {
-   const _formatter = double ? "DoublePrecision" : "Precision";
+   const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
    return Object .assign (Object .create (X3DField .prototype),
    {

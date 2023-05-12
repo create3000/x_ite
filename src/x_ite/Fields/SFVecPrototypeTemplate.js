@@ -49,7 +49,7 @@ import X3DField  from "../Base/X3DField.js";
 
 function SFVecPrototypeTemplate (TypeName, Type, ValueType, double)
 {
-   const _formatter = double ? "DoublePrecision" : "Precision";
+   const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
    return Object .assign (Object .create (X3DField .prototype),
    {

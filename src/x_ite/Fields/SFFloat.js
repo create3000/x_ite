@@ -81,7 +81,7 @@ SFFloat .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       const category = generator .Unit (this .getUnit ());
 
-      generator .string += generator .Precision (generator .ToUnit (category, this .getValue ()));
+      generator .string += generator .FloatFormat (generator .ToUnit (category, this .getValue ()));
    },
    toVRMLStream: function (generator)
    {
@@ -99,7 +99,7 @@ SFFloat .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       const category = generator .Unit (this .getUnit ());
 
-      generator .string += generator .JSONNumber (generator .Precision (generator .ToUnit (category, this .getValue ())));
+      generator .string += generator .JSONNumber (generator .FloatFormat (generator .ToUnit (category, this .getValue ())));
    },
 });
 

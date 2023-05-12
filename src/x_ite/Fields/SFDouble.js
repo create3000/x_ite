@@ -81,7 +81,7 @@ SFDouble .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       const category = generator .Unit (this .getUnit ());
 
-      generator .string += generator .DoublePrecision (generator .ToUnit (category, this .getValue ()));
+      generator .string += generator .DoubleFormat (generator .ToUnit (category, this .getValue ()));
    },
    toVRMLStream: function (generator)
    {
@@ -99,7 +99,7 @@ SFDouble .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       const category = generator .Unit (this .getUnit ());
 
-      generator .string += generator .JSONNumber (generator .DoublePrecision (generator .ToUnit (category, this .getValue ())));
+      generator .string += generator .JSONNumber (generator .DoubleFormat (generator .ToUnit (category, this .getValue ())));
    },
 });
 

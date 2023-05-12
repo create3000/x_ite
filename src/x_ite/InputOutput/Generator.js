@@ -231,23 +231,23 @@ Generator .prototype =
 
       return "";
    },
-   Precision: function  (value)
+   FloatFormat: function  (value)
    {
       if (Number .isFinite (value))
       {
          const exponent = Math .log10 (Math .abs (value));
 
          if ((this .precision > exponent && exponent >= -4) || value === 0)
-            return this .floatFormat (Math .fround (value));
+            return this .floatFormat (value);
 
-         return this .floatExponentialFormat (Math .fround (value)) .toLowerCase ();
+         return this .floatExponentialFormat (value) .toLowerCase ();
       }
       else
       {
          return String (value);
       }
    },
-   DoublePrecision: function  (value)
+   DoubleFormat: function  (value)
    {
       if (Number .isFinite (value))
       {
@@ -267,13 +267,13 @@ Generator .prototype =
    {
       this .executionContextStack .push (executionContext);
 
-      if (! this .names .has (executionContext))
+      if (!this .names .has (executionContext))
          this .names .set (executionContext, Object .assign (new Set (), { index: 0 }));
 
-      if (! this .importedNodesIndex .has (executionContext))
+      if (!this .importedNodesIndex .has (executionContext))
          this .importedNodesIndex .set (executionContext, new Set ());
 
-      if (! this .exportedNodesIndex .has (executionContext))
+      if (!this .exportedNodesIndex .has (executionContext))
          this .exportedNodesIndex .set (executionContext, new Set ());
    },
    PopExecutionContext: function ()

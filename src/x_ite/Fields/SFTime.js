@@ -95,7 +95,7 @@ SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    toJSONStreamValue: function (generator)
    {
-      generator .string += generator .JSONNumber (generator .DoublePrecision (this .getValue ()));
+      generator .string += generator .JSONNumber (generator .DoubleFormat (this .getValue ()));
    },
 });
 
