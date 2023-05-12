@@ -47,6 +47,7 @@
 
 import X3DField                  from "../Base/X3DField.js";
 import X3DBaseNode               from "../Base/X3DBaseNode.js";
+import X3DNode                   from "../Components/Core/X3DNode.js";
 import X3DPrototypeInstance      from "../Components/Core/X3DPrototypeInstance.js";
 import Fields                    from "../Fields.js";
 import X3DParser                 from "./X3DParser.js";
@@ -667,7 +668,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             node  = this .getParent (),
             proto = this .getPrototype ();
 
-         if (! (node instanceof X3DBaseNode))
+         if (! (node instanceof X3DNode))
             return;
 
          var
@@ -929,7 +930,13 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    cdataNode: function (xmlElement)
    {
-      this .getParent () ?.getSourceText ?.() ?.push (xmlElement .data);
+      if (this .getParents () .length === 0)
+         return;
+
+      const node = this .getParent ();
+
+      if (node instanceof X3DNode)
+         node .getSourceText () ?.push (xmlElement .data);
    },
    useAttribute: function (xmlElement)
    {
