@@ -713,7 +713,7 @@ A Boolean value (`true` or `false`) to indicate whether the notification bubble 
 
 Type: script code. This event is sent to an \<x3d-canvas\> element when an error occurs loading a scene.
 
-### oninitialized, onload
+### oninitialized
 
 Type: script code. This event handler will be called on the \<x3d-canvas\> element when a scene has finished loading. This applies whether the scene is applied via the *src* attribute or when a scene is loaded or replaced by another world. If you change the scene, the event will fire again when the new scene loads. This event will not bubble up the element tree.
 
