@@ -564,7 +564,7 @@ function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, C
    return ArrayField;
 }
 
-function Value (value) { return value; }
+const Value = (value) => value;
 
 const ArrayFields =
 {
