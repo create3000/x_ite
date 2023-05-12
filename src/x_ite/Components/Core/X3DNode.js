@@ -799,8 +799,6 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    },
    toJSONStream: function (generator)
    {
-      try
-      {
       const sharedNode = generator .IsSharedNode (this);
 
       generator .EnterScope ();
@@ -899,9 +897,6 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       if (sourceText)
       {
          if (sourceText .length !== 1)
-            sourceText = null;
-
-         if (sourceText && ! sourceText [0] .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s))
             sourceText = null;
       }
 
@@ -1277,11 +1272,6 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       generator .string += '}';
 
       generator .LeaveScope ();
-      }
-      catch (error)
-      {
-         console .log (error)
-      }
    },
    dispose: function ()
    {

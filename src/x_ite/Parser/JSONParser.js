@@ -167,7 +167,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             console .error ("Trouble creating element for", key);
 
-            child = document .createElement(key);
+            child = document .createElement (key);
          }
       }
 
@@ -178,28 +178,9 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    createCDATA: function (document, element, str)
    {
-      /**
-       * a way to create a CDATA function or script in HTML, by using a DOM parser.
-       */
-
-      let y = str .trim ()
-         .replace (/\\"/g, "\\\"")
-         .replace (/&lt;/g, "<")
-         .replace (/&gt;/g, ">")
-         .replace (/&amp;/g, "&");
-
-      do
-      {
-         str = y;
-         y   = str .replace (/'([^'\r\n]*)\n([^']*)'/g, "'$1\\n$2'");
-      }
-      while (y !== str);
-
       const
-         domParser = new DOMParser(),
-         cdataStr  = "<script> <![CDATA[ " + y + " ]]> </script>", // has to be wrapped into an element
-         scriptDoc = domParser .parseFromString (cdataStr, "application/xml"),
-         cdata     = scriptDoc .children [0] .childNodes [1]; // space after script is childNode[0]
+         docu  = new DOMParser () .parseFromString ("<xml></xml>", "application/xml"),
+         cdata = docu .createCDATASection (str);
 
       element .appendChild (cdata);
    },
@@ -230,7 +211,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          else if (key === "#sourceCode" || key === "@sourceCode" || key === "#sourceText")
          {
-            this .createCDATA (document, element, object [key] .join ("\r\n") + "\r\n");
+            this .createCDATA (document, element, object [key] .join ("\n"));
          }
          else
          {
