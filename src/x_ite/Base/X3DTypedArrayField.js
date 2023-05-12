@@ -707,13 +707,13 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         const valueType = this .getValueType ();
+         const valueType = target .getValueType ();
 
          return Array .prototype .includes .call (this, valueType (searchElement), fromIndex);
       }
       else
       {
-         for (let i = fromIndex === undefined ? 0 : fromIndex; i < length; ++ i)
+         for (let i = Math .max (fromIndex ?? 0, 0); i < length; ++ i)
          {
             if (this [i] .equals (searchElement))
                return true;
@@ -731,13 +731,13 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         const valueType = this .getValueType ();
+         const valueType = target .getValueType ();
 
          return Array .prototype .indexOf .call (this, valueType (searchElement), fromIndex);
       }
       else
       {
-         for (let i = fromIndex === undefined ? 0 : fromIndex; i < length; ++ i)
+         for (let i = Math .max (fromIndex ?? 0, 0); i < length; ++ i)
          {
             if (this [i] .equals (searchElement))
                return i;
@@ -755,13 +755,13 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         const valueType = this .getValueType ();
+         const valueType = target .getValueType ();
 
-         return Array .prototype .lastIndexOf .call (this, valueType (searchElement), fromIndex);
+         return Array .prototype .lastIndexOf .call (this, valueType (searchElement), fromIndex ?? length);
       }
       else
       {
-         for (let i = fromIndex === undefined ? length - 1 : fromIndex; i >= 0; -- i)
+         for (let i = Math .min (fromIndex ?? length - 1, length - 1); i >= 0; -- i)
          {
             if (this [i] .equals (searchElement))
                return i;
