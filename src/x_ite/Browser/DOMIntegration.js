@@ -228,7 +228,7 @@ class DOMIntegration
 
 		const node = $.data (element, "node");
 
-		if (! node)
+		if (!node)
 			return;
 
 		node .dispose ();
@@ -249,7 +249,7 @@ class DOMIntegration
 	{
 		const node = $.data (element, "node");
 
-		if (! node)
+		if (!node)
 			return;
 
 		node ._loadState .addInterest ("appendInlineChildElement", this, element);
@@ -338,7 +338,7 @@ class DOMIntegration
 
 		const node = $.data (element, "node");
 
-		if (! node)
+		if (!node)
 			return;
 
 		for (const field of node .getFields ())
@@ -347,7 +347,7 @@ class DOMIntegration
 
 	bindFieldCallback (field, element)
 	{
-		if (! field .isOutput ())
+		if (!field .isOutput ())
 			return;
 
 		field .addInterest ("fieldCallback", this, element);
@@ -360,7 +360,7 @@ class DOMIntegration
 	{
 		const node = $.data (element, "node");
 
-		if (! node)
+		if (!node)
 			return;
 
 		const event = new CustomEvent (field .getName (),

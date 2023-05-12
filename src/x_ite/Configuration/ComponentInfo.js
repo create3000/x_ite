@@ -56,10 +56,9 @@ function ComponentInfo ({ name, level, title, providerUrl, external = false, dep
       level: { value: level, enumerable: true },
       title: { value: title, enumerable: true },
       providerUrl: { value: providerUrl || URLs .getProviderUrl (external && name), enumerable: true },
+      external: { value: external },
+      dependencies: { value: dependencies },
    });
-
-   $.data (this, "external",     external)
-   $.data (this, "dependencies", dependencies)
 }
 
 ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype),

@@ -163,7 +163,7 @@ Object .assign (X3D,
    })(),
    getBrowser: function (element)
    {
-      return $(element || "x3d-canvas, X3DCanvas") .data ("browser");
+      return $(element || "x3d-canvas, X3DCanvas") .prop ("browser");
    },
    createBrowser: function (url, parameter)
    {

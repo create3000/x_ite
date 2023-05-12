@@ -81,10 +81,8 @@ function X3DBrowser (element)
 {
    element = $(element);
 
-   if (element .data ("browser"))
+   if (element .prop ("browser"))
       throw new Error ("Couldn't create browser, element has already a browser.");
-
-   element .data ("browser", this);
 
    X3DBrowserContext .call (this, element);
 
@@ -205,8 +203,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             level: Algorithm .clamp (level || component .level, 1, component .level),
             title: component .title,
             providerUrl: component .providerUrl,
-            external: $.data (component, "external"),
-            dependencies: $.data (component, "dependencies"),
+            external: component .external,
+            dependencies: component .dependencies,
          });
       }
 
@@ -229,9 +227,9 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
          const component = browser .getSupportedComponents () .get (name);
 
-         await loadComponents (browser, $.data (component, "dependencies"), seen);
+         await loadComponents (browser, component .dependencies, seen);
 
-         if (!$.data (component, "external"))
+         if (!component .external)
             return;
 
          if (Features .NODE_ENV)
