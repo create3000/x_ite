@@ -113,7 +113,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       X3DBrowserContext .prototype .initialize .call (this);
 
-      this .replaceWorld (this .createScene ()) .catch (Function .prototype);
+      this .replaceWorld (Object .defineProperty (this .createScene (), "isInitialScene", { value: true }))
+         .catch (Function .prototype);
 
       this [_DOMIntegration] = new DOMIntegration (this);
 
@@ -354,11 +355,15 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          return;
 
       loadCount .removeInterest ("checkLoadCount", this);
+
       this .setBrowserLoading (false);
       this .initialized () .set (this .getCurrentTime ());
       this .initialized () .processInterests ();
       this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
-      this .callBrowserEventHandler ("initialized load");
+
+      if (!this .getExecutionContext () .isInitialScene)
+         this .callBrowserEventHandler ("initialized load");
+
       resolve ();
    },
    createVrmlFromString: function (vrmlSyntax)
