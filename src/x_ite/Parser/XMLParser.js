@@ -929,20 +929,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    cdataNode: function (xmlElement)
    {
-      if (this .getParents () .length === 0)
-         return;
-
-      var node = this .getParent ();
-
-      if (node instanceof X3DBaseNode)
-      {
-         var field = node .getSourceText ();
-
-         if (field)
-         {
-            field .push (xmlElement .data);
-         }
-      }
+      this .getParent () ?.getSourceText ?.() ?.push (xmlElement .data);
    },
    useAttribute: function (xmlElement)
    {
