@@ -135,6 +135,10 @@ X3DObject .prototype =
 
       this [_userData] .set (key, value);
    },
+   removeUserData: function (key)
+   {
+      this [_userData] .delete (key);
+   },
    toString: function (options = Object .prototype)
    {
       const generator = new Generator (options);
@@ -215,6 +219,7 @@ Object .assign (X3DObject,
    })(),
 });
 
+// In the future we can use getId, because WeakMap will accept Symbols as key.
 const SymbolId = (function ()
 {
    const map = new Map ();

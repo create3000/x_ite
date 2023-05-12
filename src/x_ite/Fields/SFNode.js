@@ -369,6 +369,10 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       this [_target] .getValue () .setUserData (key, value);
    },
+   removeNodeUserData: function (key)
+   {
+      this [_target] .getValue () .removeUserData (key);
+   },
    valueOf: function ()
    {
       const
