@@ -701,11 +701,11 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         return X3DArrayField .prototype .map .call (this, value => value)
+         return Array .prototype .map .call (this, value => value)
             .concat (... args);
       }
 
-      return X3DArrayField .prototype .map .call (this, value => value .copy ())
+      return Array .prototype .map .call (this, value => value .copy ())
          .concat (... args);
    },
    filter: function (callbackFn, thisArg)
@@ -715,9 +715,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          components = target .getComponents ();
 
       if (components === 1)
-         return X3DArrayField .prototype .filter .call (this, callbackFn, thisArg);
+         return Array .prototype .filter .call (this, callbackFn, thisArg);
 
-      return X3DArrayField .prototype .map .call (this, value => value .copy ())
+      return Array .prototype .map .call (this, value => value .copy ())
          .filter (callbackFn, thisArg);
    },
    flat: function (depth = 1)
@@ -729,10 +729,10 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          length     = target [_length];
 
       if (components === 1)
-         return X3DArrayField .prototype .map .call (this, value => value);
+         return Array .prototype .map .call (this, value => value);
 
       if (depth <= 0)
-         return X3DArrayField .prototype .map .call (this, value => value .copy ());
+         return Array .prototype .map .call (this, value => value .copy ());
 
       return Array .prototype .slice .call (array, 0, length * components);
    },
@@ -743,9 +743,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          components = target .getComponents ();
 
       if (components === 1)
-         return X3DArrayField .prototype .flatMap .call (this, callbackFn, thisArg);
+         return Array .prototype .flatMap .call (this, callbackFn, thisArg);
 
-      return X3DArrayField .prototype .map .call (this, value => value .copy ())
+      return Array .prototype .map .call (this, value => value .copy ())
          .flatMap (callbackFn, thisArg);
    },
    includes: function (searchElement, fromIndex)
@@ -821,9 +821,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          components = target .getComponents ();
 
       if (components === 1)
-         return X3DArrayField .prototype .map .call (this, callbackFn, thisArg);
+         return Array .prototype .map .call (this, callbackFn, thisArg);
 
-      return X3DArrayField .prototype .map .call (this, value => value .copy ())
+      return Array .prototype .map .call (this, value => value .copy ())
          .map (callbackFn, thisArg);
    },
    reverse: function ()
@@ -875,9 +875,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          components = target .getComponents ();
 
       if (components === 1)
-         return X3DArrayField .prototype .slice .call (this, start, end);
+         return Array .prototype .slice .call (this, start, end);
 
-      return X3DArrayField .prototype .slice .call (this, start, end)
+      return Array .prototype .slice .call (this, start, end)
          .map (value => value .copy ());
    },
    sort: function (compareFunction)
@@ -900,7 +900,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       }
       else
       {
-         const result = X3DArrayField .prototype .map .call (this, value => value .copy ())
+         const result = Array .prototype .map .call (this, value => value .copy ())
             .sort (compareFunction ?? ((a, b) =>
          {
             for (let c = 0; c < components; ++ c)

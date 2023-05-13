@@ -456,7 +456,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    },
    concat: function (... args)
    {
-      return X3DArrayField .prototype .map .call (this, value => value) .concat (... args);
+      return Array .prototype .map .call (this, value => value) .concat (... args);
    },
    reverse: function ()
    {
@@ -471,7 +471,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    {
       const target = this [_target];
 
-      X3DArrayField .prototype .sort .call (this, compareFunction);
+      Array .prototype .sort .call (this, compareFunction);
       target .addEvent ();
 
       return this;
