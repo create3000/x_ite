@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import X3DField      from "./X3DField.js";
 import X3DArrayField from "./X3DArrayField.js";
 import Algorithm     from "../../standard/Math/Algorithm.js";
 
@@ -743,8 +742,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          return X3DArrayField .prototype .flatMap .call (this, callbackFn, thisArg);
 
       return X3DArrayField .prototype .map .call (this, value => value .copy ())
-         .map (callbackFn, thisArg)
-         .flatMap (value => value instanceof X3DField && value [Symbol .iterator] ? [... value] : value);
+         .flatMap (callbackFn, thisArg);
    },
    includes: function (searchElement, fromIndex)
    {
