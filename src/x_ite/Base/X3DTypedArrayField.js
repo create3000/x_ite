@@ -49,12 +49,14 @@ import X3DArrayField from "./X3DArrayField.js";
 import Algorithm     from "../../standard/Math/Algorithm.js";
 
 const
-   _target = Symbol (),
-   _cache  = Symbol (),
-   _tmp    = Symbol (),
-   _length = Symbol (),
-   _insert = Symbol (),
-   _erase  = Symbol ();
+   _target       = Symbol (),
+   _cache        = Symbol (),
+   _tmp          = Symbol (),
+   _length       = Symbol (),
+   _spliceInsert = Symbol (),
+   _insert       = Symbol (),
+   _erase        = Symbol (),
+   _grow         = Symbol ();
 
 const handler =
 {
@@ -323,7 +325,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (array .length < otherArray .length)
       {
-         array = target .grow (otherArray .length);
+         array = target [_grow] (otherArray .length);
 
          array .set (otherArray);
 
@@ -365,7 +367,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          components      = target .getComponents (),
          length          = target [_length],
          argumentsLength = arguments .length,
-         array           = target .grow ((length + argumentsLength) * components);
+         array           = target [_grow] ((length + argumentsLength) * components);
 
       array .copyWithin (argumentsLength * components, 0, length * components);
 
@@ -439,7 +441,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          components      = target .getComponents (),
          length          = target [_length],
          argumentsLength = arguments .length,
-         array           = target .grow ((length + argumentsLength) * components);
+         array           = target [_grow] ((length + argumentsLength) * components);
 
       if (components === 1)
       {
@@ -519,20 +521,20 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       const result = target [_erase] (index, index + deleteCount);
 
       if (arguments .length > 2)
-         target .spliceInsert (index, Array .prototype .splice .call (arguments, 2));
+         target [_spliceInsert] (index, Array .prototype .splice .call (arguments, 2));
 
       target .addEvent ();
 
       return result;
    },
-   spliceInsert: function (index, other)
+   [_spliceInsert]: function (index, other)
    {
       const
          target      = this [_target],
          components  = target .getComponents (),
          length      = target [_length],
          otherLength = other .length,
-         array       = target .grow ((length + otherLength) * components);
+         array       = target [_grow] ((length + otherLength) * components);
 
       index *= components;
 
@@ -566,7 +568,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          otherArray = other .getValue (),
          components = target .getComponents (),
          difference = last - first,
-         array      = target .grow ((length + difference) * components);
+         array      = target [_grow] ((length + difference) * components);
 
       index *= components;
       first *= components;
@@ -591,7 +593,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          length      = target [_length],
          newLength   = length - difference,
          values      = target .create (),
-         valuesArray = values .grow (difference * components);
+         valuesArray = values [_grow] (difference * components);
 
       first *= components;
       last  *= components;
@@ -633,7 +635,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       }
       else if (newLength > length)
       {
-         array = target .grow (newLength * components);
+         array = target [_grow] (newLength * components);
 
          if (value !== undefined)
          {
@@ -661,7 +663,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       return array;
    },
-   grow: function (length)
+   [_grow]: function (length)
    {
       const
          target = this [_target],
