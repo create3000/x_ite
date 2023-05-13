@@ -222,16 +222,30 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       }
       else
       {
-         // Return copy of value.
+         // Return reference to index.
 
          for (let index = 0; index < length; ++ index)
          {
-            const tmp = target [_tmp];
+            const value = target [_cache] [index];
 
-            for (let c = 0; c < components; ++ c)
-               tmp [c] = array [index * components + c];
+            if (value)
+            {
+               yield value;
+            }
+            else
+            {
+               const
+                  value         = new valueType (),
+                  internalValue = value .getValue (),
+                  i             = index * components;
 
-            yield new valueType (... tmp);
+               value .addEvent = addEvent .bind (target, i, components, internalValue);
+               value .getValue = getValue .bind (target, i, components, internalValue);
+
+               target [_cache] [index] = value;
+
+               yield value;
+            }
          }
       }
    },
