@@ -700,9 +700,13 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          components = target .getComponents ();
 
       if (components === 1)
-         return X3DArrayField .prototype .map .call (this, value => value) .concat (... args);
+      {
+         return X3DArrayField .prototype .map .call (this, value => value)
+            .concat (... args);
+      }
 
-      return X3DArrayField .prototype .map .call (this, value => value .copy ()) .concat (... args);
+      return X3DArrayField .prototype .map .call (this, value => value .copy ())
+         .concat (... args);
    },
    filter: function (callbackFn, thisArg)
    {
@@ -713,7 +717,8 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       if (components === 1)
          return X3DArrayField .prototype .filter .call (this, callbackFn, thisArg);
 
-      return X3DArrayField .prototype .map .call (this, value => value .copy ()) .filter (callbackFn, thisArg);
+      return X3DArrayField .prototype .map .call (this, value => value .copy ())
+         .filter (callbackFn, thisArg);
    },
    flat: function (depth = 1)
    {
@@ -818,7 +823,8 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       if (components === 1)
          return X3DArrayField .prototype .map .call (this, callbackFn, thisArg);
 
-      return X3DArrayField .prototype .map .call (this, value => value .copy ()) .map (callbackFn, thisArg);
+      return X3DArrayField .prototype .map .call (this, value => value .copy ())
+         .map (callbackFn, thisArg);
    },
    reverse: function ()
    {
@@ -871,7 +877,8 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       if (components === 1)
          return X3DArrayField .prototype .slice .call (this, start, end);
 
-      return X3DArrayField .prototype .slice .call (this, start, end) .map (value => value .copy ());
+      return X3DArrayField .prototype .slice .call (this, start, end)
+         .map (value => value .copy ());
    },
    sort: function (compareFunction)
    {
