@@ -103,9 +103,7 @@ const handler =
                   value .addEvent = addEvent .bind (target, i, components, internalValue);
                   value .getValue = getValue .bind (target, i, components, internalValue);
 
-                  target [_cache] [index] = value;
-
-                  return value;
+                  return target [_cache] [index] = value;
                }
             }
          }
@@ -242,9 +240,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
                value .addEvent = addEvent .bind (target, i, components, internalValue);
                value .getValue = getValue .bind (target, i, components, internalValue);
 
-               target [_cache] [index] = value;
-
-               yield value;
+               yield target [_cache] [index] = value;
             }
          }
       }
