@@ -586,33 +586,28 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
    [_erase]: function (first, last)
    {
       const
-         target      = this [_target],
-         array       = target .getValue (),
-         components  = target .getComponents (),
-         difference  = last - first,
-         length      = target [_length],
-         newLength   = length - difference,
-         values      = target .create (),
-         valuesArray = values [_grow] (difference * components);
+         target     = this [_target],
+         array      = target .getValue (),
+         components = target .getComponents (),
+         difference = last - first,
+         length     = target [_length],
+         newLength  = length - difference,
+         values     = target .slice (first, last);
 
       first *= components;
       last  *= components;
-
-      for (let v = 0, f = first; f < last; ++ v, ++ f)
-         valuesArray [v] = array [f];
 
       array .copyWithin (first, last, length * components);
       array .fill (0, newLength * components, length * components);
 
       target [_length] = newLength;
-      values [_length] = difference;
 
       if (components > 1)
          target [_cache] .length = newLength;
 
       target .addEvent ();
 
-      return values .slice ();
+      return values;
    },
    resize: function (newLength, value, silently)
    {
