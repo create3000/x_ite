@@ -447,6 +447,14 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
             target .addEvent ();
       }
    },
+   addChildObject: function (value)
+   {
+      value .addParent (this [_proxy]);
+   },
+   removeChildObject: function (value)
+   {
+      value .removeParent (this [_proxy]);
+   },
    reverse: function ()
    {
       const target = this [_target];
@@ -456,22 +464,14 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return this;
    },
-   sort: function ()
+   sort: function (compareFunction)
    {
       const target = this [_target];
 
-      target .getValue () .sort ((a, b) => Algorithm .cmp (a .valueOf (), b .valueOf ()));
+      X3DArrayField .prototype .sort .call (this, compareFunction);
       target .addEvent ();
 
       return this;
-   },
-   addChildObject: function (value)
-   {
-      value .addParent (this [_proxy]);
-   },
-   removeChildObject: function (value)
-   {
-      value .removeParent (this [_proxy]);
    },
    toStream: function (generator)
    {

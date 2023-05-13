@@ -793,7 +793,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
             {
                const
                   i1 = i + c,
-                  i2 = length - (components - i - c - 1) - 1,
+                  i2 = length - i - 1 - (components - c - 1),
                   t  = array [i1];
 
                array [i1] = array [i2];
@@ -816,11 +816,17 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         target .set (array .subarray (0, length) .sort (compareFunction));
+         const valueType = target .getValueType ();
+
+         const cmp = compareFunction
+            ? (a, b) => compareFunction (valueType (a), valueType (b))
+            : Algorithm .cmp;
+
+         target .set (array .subarray (0, length) .sort (cmp));
       }
       else
       {
-         const result = this .map (value => value .copy ()) .sort (compareFunction !== undefined ? compareFunction : function (a, b)
+         const result = this .map (value => value .copy ()) .sort (compareFunction ?? ((a, b) =>
          {
             for (let c = 0; c < components; ++ c)
             {
@@ -832,7 +838,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
             }
 
             return 0;
-         });
+         }));
 
          for (let i = 0; i < length; ++ i)
          {
