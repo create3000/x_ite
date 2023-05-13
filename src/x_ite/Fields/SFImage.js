@@ -134,6 +134,8 @@ Image .prototype =
  *  SFImage
  */
 
+const _set_size = Symbol ();
+
 function SFImage (width, height, comp, array)
 {
    const MFInt32 = ArrayFields .MFInt32;
@@ -146,15 +148,22 @@ function SFImage (width, height, comp, array)
       X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
 
    this .getValue () .getArray () .addParent (this);
-   this .addInterest ("set_size__", this);
+   this .addInterest (_set_size, this);
 }
 
 SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
 {
    constructor: SFImage,
-   set_size__: function ()
+   [_set_size]: function ()
    {
       this .getValue () .getArray () .length = this .width * this .height;
+   },
+   [Symbol .iterator]: function* ()
+   {
+      yield this .width;
+      yield this .height;
+      yield this .comp;
+      yield this .array;
    },
    copy: function ()
    {
