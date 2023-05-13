@@ -52,7 +52,9 @@ const
    _target = Symbol (),
    _cache  = Symbol (),
    _tmp    = Symbol (),
-   _length = Symbol ();
+   _length = Symbol (),
+   _insert = Symbol (),
+   _erase  = Symbol ();
 
 const handler =
 {
@@ -514,7 +516,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       if (index + deleteCount > length)
          deleteCount = length - index;
 
-      const result = target .erase (index, index + deleteCount);
+      const result = target [_erase] (index, index + deleteCount);
 
       if (arguments .length > 2)
          target .spliceInsert (index, Array .prototype .splice .call (arguments, 2));
@@ -556,7 +558,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       target [_length] += otherLength;
    },
-   insert: function (index, other, first, last)
+   [_insert]: function (index, other, first, last)
    {
       const
          target     = this [_target],
@@ -579,7 +581,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       target .addEvent ();
    },
-   erase: function (first, last)
+   [_erase]: function (first, last)
    {
       const
          target      = this [_target],
