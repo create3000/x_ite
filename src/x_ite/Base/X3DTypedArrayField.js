@@ -705,6 +705,22 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       return X3DArrayField .prototype .map .call (this, value => value .copy ()) .concat (... args);
    },
+   flat: function (depth = 1)
+   {
+      const
+         target     = this [_target],
+         array      = target .getValue (),
+         components = target .getComponents (),
+         length     = target [_length];
+
+      if (components === 1)
+         return X3DArrayField .prototype .map .call (this, value => value);
+
+      if (depth <= 0)
+         return X3DArrayField .prototype .map .call (this, value => value .copy ());
+
+      return Array .prototype .slice .call (array, 0, length * components);
+   },
    includes: function (searchElement, fromIndex)
    {
       const
