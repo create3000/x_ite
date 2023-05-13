@@ -882,10 +882,6 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       return this;
    },
-   values: function ()
-   {
-      return this .slice ();
-   },
    toStream: function (generator)
    {
       const
