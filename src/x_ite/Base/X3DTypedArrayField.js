@@ -764,6 +764,17 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          return -1;
       }
    },
+   map: function (callbackFn, thisArg)
+   {
+      const
+         target     = this [_target],
+         components = target .getComponents ();
+
+      if (components === 1)
+         return X3DArrayField .prototype .map .call (this, callbackFn, thisArg);
+
+      return X3DArrayField .prototype .map .call (this, value => value .copy ()) .map (callbackFn, thisArg);
+   },
    reverse: function ()
    {
       const
