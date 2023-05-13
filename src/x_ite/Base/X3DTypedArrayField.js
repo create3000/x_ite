@@ -222,31 +222,17 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       }
       else
       {
-         // Return reference to index.
+         // Return copy of value.
 
          for (let index = 0; index < length; ++ index)
          {
-            const value = target [_cache] [index];
+            const tmp = target [_tmp];
 
-            if (value)
-            {
-               yield value;
-            }
-            else
-            {
-               const
-                  value         = new valueType (),
-                  internalValue = value .getValue (),
-                  i             = index * components;
+            for (let c = 0; c < components; ++ c)
+               tmp [c] = array [index * components + c];
 
-               value .addEvent = addEvent .bind (target, i, components, internalValue);
-               value .getValue = getValue .bind (target, i, components, internalValue);
-
-               target [_cache] [index] = value;
-
-               yield value;
-            }
-          }
+            yield new valueType (... tmp);
+         }
       }
    },
    getTarget: function ()
@@ -697,6 +683,17 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       X3DArrayField .prototype .set .call (target, newArray);
 
       return newArray;
+   },
+   concat: function ()
+   {
+      const
+         target     = this [_target],
+         components = target .getComponents ();
+
+      if (components === 1)
+         return X3DArrayField .prototype .concat .apply (this, arguments);
+
+      return X3DArrayField .prototype .concat .apply (this .slice (), arguments);
    },
    includes: function (searchElement, fromIndex)
    {
