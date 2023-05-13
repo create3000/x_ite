@@ -47,7 +47,6 @@
 
 import X3DField      from "./X3DField.js";
 import X3DArrayField from "./X3DArrayField.js";
-import Algorithm     from "../../standard/Math/Algorithm.js";
 
 const
    _target = Symbol (),
@@ -454,6 +453,10 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    removeChildObject: function (value)
    {
       value .removeParent (this [_proxy]);
+   },
+   concat: function (... args)
+   {
+      return X3DArrayField .prototype .map .call (this, value => value) .concat (... args);
    },
    reverse: function ()
    {

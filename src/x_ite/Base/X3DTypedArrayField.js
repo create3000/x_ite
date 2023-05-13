@@ -694,16 +694,16 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       return newArray;
    },
-   concat: function ()
+   concat: function (... args)
    {
       const
          target     = this [_target],
          components = target .getComponents ();
 
       if (components === 1)
-         return X3DArrayField .prototype .concat .apply (this, arguments);
+         return X3DArrayField .prototype .map .call (this, value => value) .concat (... args);
 
-      return X3DArrayField .prototype .concat .apply (this .slice (), arguments);
+      return X3DArrayField .prototype .map .call (this, value => value .copy ()) .concat (... args);
    },
    includes: function (searchElement, fromIndex)
    {
