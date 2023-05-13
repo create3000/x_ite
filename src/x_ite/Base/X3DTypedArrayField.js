@@ -855,19 +855,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       }
       else
       {
-         const result = this .map (value => value .copy ()) .sort (compareFunction ?? ((a, b) =>
-         {
-            for (let c = 0; c < components; ++ c)
-            {
-               if (a [c] < b [c])
-                  return -1;
-
-               if (b [c] < a [c])
-                  return 1;
-            }
-
-            return 0;
-         }));
+         const result = this .map (value => value .copy ()) .sort (compareFunction ?? Algorithm .lexicographicallyCompare);
 
          for (let i = 0; i < length; ++ i)
          {
