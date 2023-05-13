@@ -180,7 +180,7 @@ const handler =
    },
 };
 
-function X3DTypedArrayField (value)
+function X3DTypedArrayField (args)
 {
    X3DArrayField .call (this, new (this .getArrayType ()) (16));
 
@@ -192,10 +192,7 @@ function X3DTypedArrayField (value)
       this [_tmp]   = [ ]; // Array with components size.
    }
 
-   if (value [0] instanceof Array)
-      value = value [0];
-
-   X3DTypedArrayField .prototype .push .apply (this, value);
+   X3DTypedArrayField .prototype .push .call (this, ... args);
 
    return new Proxy (this, handler);
 }

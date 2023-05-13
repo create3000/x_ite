@@ -524,9 +524,9 @@ function MFImageTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Comp
 
 function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
 {
-   function ArrayField (value)
+   function ArrayField (... args)
    {
-      return X3DTypedArrayField .call (this, arguments);
+      return X3DTypedArrayField .call (this, args);
    }
 
    ArrayField .prototype = Object .assign (Object .create (X3DTypedArrayField .prototype),
