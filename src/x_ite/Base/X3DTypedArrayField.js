@@ -806,6 +806,17 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       return this;
    },
+   slice: function ()
+   {
+      const
+         target     = this [_target],
+         components = target .getComponents ();
+
+      if (components === 1)
+         return X3DArrayField .prototype .slice .call (this);
+      else
+         return this .map (value => value .copy ());
+   },
    sort: function (compareFunction)
    {
       const
