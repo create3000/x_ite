@@ -125,9 +125,9 @@ const handler =
 
 function X3DObjectArrayField (value)
 {
-   const proxy = new Proxy (this, handler);
-
    X3DArrayField .call (this, [ ]);
+
+   const proxy = new Proxy (this, handler);
 
    this [_target] = this;
    this [_proxy]  = proxy;
@@ -465,7 +465,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
       target .getValue () .reverse ();
       target .addEvent ();
 
-      return this;
+      return target [_proxy];
    },
    sort: function (compareFunction)
    {
@@ -474,7 +474,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
       Array .prototype .sort .call (this, compareFunction);
       target .addEvent ();
 
-      return this;
+      return target [_proxy];
    },
    toStream: function (generator)
    {

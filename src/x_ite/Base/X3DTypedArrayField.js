@@ -50,6 +50,7 @@ import Algorithm     from "../../standard/Math/Algorithm.js";
 
 const
    _target       = Symbol (),
+   _proxy        = Symbol (),
    _cache        = Symbol (),
    _tmp          = Symbol (),
    _length       = Symbol (),
@@ -184,7 +185,10 @@ function X3DTypedArrayField (args)
 {
    X3DArrayField .call (this, new (this .getArrayType ()) (16));
 
+   const proxy = new Proxy (this, handler);
+
    this [_target] = this;
+   this [_proxy]  = proxy;
 
    if (this .getComponents () > 1)
    {
@@ -194,7 +198,7 @@ function X3DTypedArrayField (args)
 
    X3DTypedArrayField .prototype .push .call (this, ... args);
 
-   return new Proxy (this, handler);
+   return proxy;
 }
 
 X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
@@ -268,19 +272,20 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
    },
    equals: function (other)
    {
-      if (this === other)
+      const
+         target      = this [_target],
+         otherTarget = other [_target],
+         length      = target [_length];
+
+      if (target === otherTarget)
          return true;
 
-      const
-         target = this [_target],
-         length = target [_length];
-
-      if (length !== other [_length])
+      if (length !== otherTarget [_length])
          return false;
 
       const
          a = target .getValue (),
-         b = other .getValue ();
+         b = otherTarget .getValue ();
 
       for (let i = 0, l = length * target .getComponents (); i < l; ++ i)
       {
@@ -589,7 +594,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          difference = last - first,
          length     = target [_length],
          newLength  = length - difference,
-         values     = target .slice (first, last);
+         values     = target [_proxy] .slice (first, last);
 
       first *= components;
       last  *= components;
@@ -698,11 +703,11 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         return Array .prototype .map .call (this, value => value)
+         return Array .prototype .map .call (target [_proxy], value => value)
             .concat (... args);
       }
 
-      return Array .prototype .map .call (this, value => value .copy ())
+      return Array .prototype .map .call (target [_proxy], value => value .copy ())
          .concat (... args);
    },
    filter: function (callbackFn, thisArg)
@@ -712,9 +717,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          components = target .getComponents ();
 
       if (components === 1)
-         return Array .prototype .filter .call (this, callbackFn, thisArg);
+         return Array .prototype .filter .call (target [_proxy], callbackFn, thisArg);
 
-      return Array .prototype .map .call (this, value => value .copy ())
+      return Array .prototype .map .call (target [_proxy], value => value .copy ())
          .filter (callbackFn, thisArg);
    },
    flat: function (depth = 1)
@@ -726,10 +731,10 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          length     = target [_length];
 
       if (components === 1)
-         return Array .prototype .map .call (this, value => value);
+         return Array .prototype .map .call (target [_proxy], value => value);
 
       if (depth <= 0)
-         return Array .prototype .map .call (this, value => value .copy ());
+         return Array .prototype .map .call (target [_proxy], value => value .copy ());
 
       return Array .prototype .slice .call (array, 0, length * components);
    },
@@ -740,9 +745,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          components = target .getComponents ();
 
       if (components === 1)
-         return Array .prototype .flatMap .call (this, callbackFn, thisArg);
+         return Array .prototype .flatMap .call (target [_proxy], callbackFn, thisArg);
 
-      return Array .prototype .map .call (this, value => value .copy ())
+      return Array .prototype .map .call (target [_proxy], value => value .copy ())
          .flatMap (callbackFn, thisArg);
    },
    includes: function (searchElement, fromIndex)
@@ -754,7 +759,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         return Array .prototype .includes .call (this, searchElement, fromIndex);
+         return Array .prototype .includes .call (target [_proxy], searchElement, fromIndex);
       }
       else
       {
@@ -776,7 +781,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         return Array .prototype .indexOf .call (this, searchElement, fromIndex);
+         return Array .prototype .indexOf .call (target [_proxy], searchElement, fromIndex);
       }
       else
       {
@@ -798,7 +803,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         return Array .prototype .lastIndexOf .call (this, searchElement, fromIndex ?? length);
+         return Array .prototype .lastIndexOf .call (target [_proxy], searchElement, fromIndex ?? length);
       }
       else
       {
@@ -818,9 +823,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          components = target .getComponents ();
 
       if (components === 1)
-         return Array .prototype .map .call (this, callbackFn, thisArg);
+         return Array .prototype .map .call (target [_proxy], callbackFn, thisArg);
 
-      return Array .prototype .map .call (this, value => value .copy ())
+      return Array .prototype .map .call (target [_proxy], value => value .copy ())
          .map (callbackFn, thisArg);
    },
    reverse: function ()
@@ -863,7 +868,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       target .addEvent ();
 
-      return this;
+      return target [_proxy];
    },
    slice: function (start, end)
    {
@@ -872,9 +877,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          components = target .getComponents ();
 
       if (components === 1)
-         return Array .prototype .slice .call (this, start, end);
+         return Array .prototype .slice .call (target [_proxy], start, end);
 
-      return Array .prototype .slice .call (this, start, end)
+      return Array .prototype .slice .call (target [_proxy], start, end)
          .map (value => value .copy ());
    },
    sort: function (compareFunction)
@@ -897,7 +902,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       }
       else
       {
-         const result = Array .prototype .map .call (this, value => value .copy ())
+         const result = Array .prototype .map .call (target [_proxy], value => value .copy ())
             .sort (compareFunction ?? ((a, b) =>
          {
             for (let c = 0; c < components; ++ c)
@@ -923,7 +928,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       target .addEvent ();
 
-      return this;
+      return target [_proxy];
    },
    toStream: function (generator)
    {
