@@ -49,15 +49,14 @@ import X3DArrayField from "./X3DArrayField.js";
 import Algorithm     from "../../standard/Math/Algorithm.js";
 
 const
-   _target       = Symbol (),
-   _proxy        = Symbol (),
-   _cache        = Symbol (),
-   _tmp          = Symbol (),
-   _length       = Symbol (),
-   _spliceInsert = Symbol (),
-   _insert       = Symbol (),
-   _erase        = Symbol (),
-   _grow         = Symbol ();
+   _target = Symbol (),
+   _proxy  = Symbol (),
+   _cache  = Symbol (),
+   _tmp    = Symbol (),
+   _length = Symbol (),
+   _insert = Symbol (),
+   _erase  = Symbol (),
+   _grow   = Symbol ();
 
 const handler =
 {
@@ -523,13 +522,13 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       const result = target [_erase] (index, index + deleteCount);
 
       if (arguments .length > 2)
-         target [_spliceInsert] (index, Array .prototype .splice .call (arguments, 2));
+         target [_insert] (index, Array .prototype .splice .call (arguments, 2));
 
       target .addEvent ();
 
       return result;
    },
-   [_spliceInsert]: function (index, other)
+   [_insert]: function (index, other)
    {
       const
          target      = this [_target],
@@ -561,29 +560,6 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       }
 
       target [_length] += otherLength;
-   },
-   [_insert]: function (index, other, first, last)
-   {
-      const
-         target     = this [_target],
-         length     = target [_length],
-         otherArray = other .getValue (),
-         components = target .getComponents (),
-         difference = last - first,
-         array      = target [_grow] ((length + difference) * components);
-
-      index *= components;
-      first *= components;
-      last  *= components;
-
-      array .copyWithin (index + difference * components, index, length * components);
-
-      for (; first < last; ++ index, ++ first)
-         array [index] = otherArray [first];
-
-      target [_length] += difference;
-
-      target .addEvent ();
    },
    [_erase]: function (first, last)
    {
