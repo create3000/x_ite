@@ -392,7 +392,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       target .addEvent ();
 
-      return array .length;
+      return target [_length];
    },
    shift: function ()
    {
