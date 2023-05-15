@@ -91,24 +91,8 @@ const handler =
             {
                // Return reference to index.
 
-               const value = target [_cache] [index];
-
-               if (value)
-               {
-                  return value;
-               }
-               else
-               {
-                  const
-                     value         = new valueType (),
-                     internalValue = value .getValue (),
-                     i             = index * components;
-
-                  value .addEvent = addEvent .bind (target, i, components, internalValue);
-                  value .getValue = getValue .bind (target, i, components, internalValue);
-
-                  return target [_cache] [index] = value;
-               }
+               return target [_cache] [index]
+                  ?? (target [_cache] [index] = createValue (target, index, components, valueType));
             }
          }
          else
@@ -226,26 +210,12 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       {
          // Return reference to index.
 
+         const cache = target [_cache];
+
          for (let index = 0; index < length; ++ index)
          {
-            const value = target [_cache] [index];
-
-            if (value)
-            {
-               yield value;
-            }
-            else
-            {
-               const
-                  value         = new valueType (),
-                  internalValue = value .getValue (),
-                  i             = index * components;
-
-               value .addEvent = addEvent .bind (target, i, components, internalValue);
-               value .getValue = getValue .bind (target, i, components, internalValue);
-
-               yield target [_cache] [index] = value;
-            }
+            yield cache [index]
+               ?? (cache [index] = createValue (target, index, components, valueType));
          }
       }
    },
@@ -1022,6 +992,19 @@ Object .defineProperty (X3DTypedArrayField .prototype, "length",
 });
 
 // Getter/Setter functions to reference a value for a given index.
+
+function createValue (target, index, components, valueType)
+{
+   const
+      value         = new valueType (),
+      internalValue = value .getValue (),
+      i             = index * components;
+
+   value .addEvent = addEvent .bind (target, i, components, internalValue);
+   value .getValue = getValue .bind (target, i, components, internalValue);
+
+   return value;
+}
 
 function getValue (index, components, value)
 {
