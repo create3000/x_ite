@@ -64,7 +64,7 @@ X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    fill: Array .prototype .fill,
    filter: function (callbackFn, thisArg)
    {
-      return new (this .getTarget () .constructor) (... Array .prototype .filter .call (this, callbackFn, thisArg));
+      return new (this .constructor) (... Array .prototype .filter .call (this, callbackFn, thisArg));
    },
    find: Array .prototype .find,
    findIndex: Array .prototype .findIndex,
@@ -80,14 +80,14 @@ X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    lastIndexOf: Array .prototype .lastIndexOf,
    map: function (callbackFn, thisArg)
    {
-      return new (this .getTarget () .constructor) (... Array .prototype .map .call (this, callbackFn, thisArg));
+      return new (this .constructor) (... Array .prototype .map .call (this, callbackFn, thisArg));
    },
    reduce: Array .prototype .reduce,
    reduceRight: Array .prototype .reduceRight,
    reverse: Array .prototype .reverse,
    slice: function (start, end)
    {
-      return new (this .getTarget () .constructor) (... Array .prototype .slice .call (this, start, end));
+      return new (this .constructor) (... Array .prototype .slice .call (this, start, end));
    },
    some: Array .prototype .some,
    sort: Array .prototype .sort,
