@@ -64,13 +64,13 @@ const foreign = {
 
 const defaultParameter = new Fields .MFString ();
 
-function FileLoader (node, external)
+function FileLoader (node)
 {
    X3DObject .call (this);
 
    this .node             = node;
    this .browser          = node .getBrowser ();
-   this .external         = external === undefined ? this .browser .isExternal () : external;
+   this .external         = this .browser .isExternal ();
    this .executionContext = this .external ? node .getExecutionContext () : this .browser .currentScene;
    this .target           = "";
    this .url              = [ ];
