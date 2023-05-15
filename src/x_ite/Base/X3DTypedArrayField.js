@@ -683,7 +683,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       return target [_proxy];
    },
-   sort: function (compareFunction)
+   sort: function (compareFn)
    {
       const
          target     = this [_target],
@@ -695,8 +695,8 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       {
          const valueType = target .getValueType ();
 
-         const cmp = compareFunction
-            ? (a, b) => compareFunction (valueType (a), valueType (b))
+         const cmp = compareFn
+            ? (a, b) => compareFn (valueType (a), valueType (b))
             : Algorithm .cmp;
 
          target .set (array .subarray (0, length) .sort (cmp));
@@ -704,7 +704,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       else
       {
          const result = Array .prototype .map .call (target [_proxy], value => value .copy ())
-            .sort (compareFunction ?? ((a, b) =>
+            .sort (compareFn ?? ((a, b) =>
          {
             for (let c = 0; c < components; ++ c)
             {

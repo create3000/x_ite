@@ -463,11 +463,11 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return target [_proxy];
    },
-   sort: function (compareFunction)
+   sort: function (compareFn)
    {
       const target = this [_target];
 
-      Array .prototype .sort .call (this, compareFunction);
+      Array .prototype .sort .call (this, compareFn);
       target .addEvent ();
 
       return target [_proxy];
