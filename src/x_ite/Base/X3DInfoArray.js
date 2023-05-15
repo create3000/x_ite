@@ -110,9 +110,8 @@ const handler =
 
 function X3DInfoArray (values)
 {
-   this [_array]           = [ ];
-   this [_index]           = new Map ();
-   this [Symbol .iterator] = this [_array] [Symbol .iterator];
+   this [_array] = [ ];
+   this [_index] = new Map ();
 
    if (values)
    {
@@ -125,6 +124,10 @@ function X3DInfoArray (values)
 
 X3DInfoArray .prototype = {
    constructor: X3DInfoArray,
+   [Symbol .iterator]: function* ()
+   {
+      yield* this [_array];
+   },
    equals: function (array)
    {
       const
@@ -200,27 +203,23 @@ X3DInfoArray .prototype = {
          this [_array] .splice (index, 1);
    },
    at: Array .prototype .at,
-   concat: Array .prototype .concat,
    entries: Array .prototype .entries,
    every: Array .prototype .every,
-   fill: Array .prototype .fill,
-   filter: Array .prototype .filter,
+   filter: Array .prototype .filter, /// TODO:
    find: Array .prototype .find,
    findIndex: Array .prototype .findIndex,
    findLast: Array .prototype .findLast,
    findLastIndex: Array .prototype .findLastIndex,
-   flat: Array .prototype .flat,
-   flatMap: Array .prototype .flatMap,
    forEach: Array .prototype .forEach,
    includes: Array .prototype .includes,
    indexOf: Array .prototype .indexOf,
    join: Array .prototype .join,
    keys: Array .prototype .keys,
    lastIndexOf: Array .prototype .lastIndexOf,
-   map: Array .prototype .map,
+   map: Array .prototype .map, /// TODO:
    reduce: Array .prototype .reduce,
    reduceRight: Array .prototype .reduceRight,
-   slice: Array .prototype .slice,
+   slice: Array .prototype .slice, /// TODO:
    some: Array .prototype .some,
    values: Array .prototype .values,
    toString: function (options = Object .prototype)
