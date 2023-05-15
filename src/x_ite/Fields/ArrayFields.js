@@ -83,9 +83,9 @@ const
 
 const _cloneCount = Symbol ();
 
-function MFNode (value)
+function MFNode (... args)
 {
-   return X3DObjectArrayField .call (this, arguments);
+   return X3DObjectArrayField .call (this, args);
 }
 
 MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
@@ -419,9 +419,9 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 for (const key of Reflect .ownKeys (MFNode .prototype))
    Object .defineProperty (MFNode .prototype, key, { enumerable: false });
 
-function MFString (value)
+function MFString (... args)
 {
-   return X3DObjectArrayField .call (this, arguments);
+   return X3DObjectArrayField .call (this, args);
 }
 
 MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
@@ -480,11 +480,15 @@ MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .proto
 for (const key of Reflect .ownKeys (MFString .prototype))
    Object .defineProperty (MFString .prototype, key, { enumerable: false });
 
+/**
+ * MFImage
+ */
+
 function MFImageTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
 {
-   function ArrayField (value)
+   function ArrayField (... args)
    {
-      return X3DObjectArrayField .call (this, arguments);
+      return X3DObjectArrayField .call (this, args);
    }
 
    ArrayField .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
