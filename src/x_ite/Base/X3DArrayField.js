@@ -91,7 +91,31 @@ X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    some: Array .prototype .some,
    sort: Array .prototype .sort,
+   toReversed: function ()
+   {
+      return this .copy () .reverse ();
+   },
+   toSorted: function (compareFn)
+   {
+      return this .copy () .sort (compareFn);
+   },
+   toSpliced: function (start, deleteCount, ... insertValues)
+   {
+      const copy = this .copy ();
+
+      copy .splice (start, deleteCount, ... insertValues);
+
+      return copy;
+   },
    values: Array .prototype .values,
+   with: function (index, value)
+   {
+      const copy = this .copy ();
+
+      copy [index] = value;
+
+      return copy;
+   },
 });
 
 for (const key of Reflect .ownKeys (X3DArrayField .prototype))
