@@ -507,7 +507,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          return value;
       }
    },
-   splice: function (index, deleteCount)
+   splice: function (index, deleteCount, ... insertValues)
    {
       const
          target = this [_target],
@@ -521,8 +521,8 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       const result = target [_erase] (index, index + deleteCount);
 
-      if (arguments .length > 2)
-         target [_insert] (index, Array .prototype .splice .call (arguments, 2));
+      if (insertValues .length)
+         target [_insert] (index, insertValues);
 
       target .addEvent ();
 
@@ -671,60 +671,11 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       return newArray;
    },
-   concat: function (... args)
+   filter: function (... args)
    {
-      const
-         target     = this [_target],
-         components = target .getComponents ();
+      const target = this [_target];
 
-      if (components === 1)
-      {
-         return Array .prototype .map .call (target [_proxy], value => value)
-            .concat (... args);
-      }
-
-      return Array .prototype .map .call (target [_proxy], value => value .copy ())
-         .concat (... args);
-   },
-   filter: function (callbackFn, thisArg)
-   {
-      const
-         target     = this [_target],
-         components = target .getComponents ();
-
-      if (components === 1)
-         return Array .prototype .filter .call (target [_proxy], callbackFn, thisArg);
-
-      return Array .prototype .map .call (target [_proxy], value => value .copy ())
-         .filter (callbackFn, thisArg);
-   },
-   flat: function (depth = 1)
-   {
-      const
-         target     = this [_target],
-         array      = target .getValue (),
-         components = target .getComponents (),
-         length     = target [_length];
-
-      if (components === 1)
-         return Array .prototype .map .call (target [_proxy], value => value);
-
-      if (depth <= 0)
-         return Array .prototype .map .call (target [_proxy], value => value .copy ());
-
-      return Array .prototype .slice .call (array, 0, length * components);
-   },
-   flatMap: function (callbackFn, thisArg)
-   {
-      const
-         target     = this [_target],
-         components = target .getComponents ();
-
-      if (components === 1)
-         return Array .prototype .flatMap .call (target [_proxy], callbackFn, thisArg);
-
-      return Array .prototype .map .call (target [_proxy], value => value .copy ())
-         .flatMap (callbackFn, thisArg);
+      return new (target .constructor) (... Array .prototype .filter .apply (target [_proxy], args));
    },
    includes: function (searchElement, fromIndex)
    {
@@ -735,7 +686,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         return Array .prototype .includes .call (target [_proxy], searchElement, fromIndex);
+         return Array .prototype .includes .apply (target [_proxy], arguments);
       }
       else
       {
@@ -757,7 +708,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         return Array .prototype .indexOf .call (target [_proxy], searchElement, fromIndex);
+         return Array .prototype .indexOf .apply (target [_proxy], arguments);
       }
       else
       {
@@ -779,7 +730,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       if (components === 1)
       {
-         return Array .prototype .lastIndexOf .call (target [_proxy], searchElement, fromIndex ?? length);
+         return Array .prototype .lastIndexOf .apply (target [_proxy], arguments);
       }
       else
       {
@@ -792,17 +743,11 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          return -1;
       }
    },
-   map: function (callbackFn, thisArg)
+   map: function (... args)
    {
-      const
-         target     = this [_target],
-         components = target .getComponents ();
+      const target = this [_target];
 
-      if (components === 1)
-         return Array .prototype .map .call (target [_proxy], callbackFn, thisArg);
-
-      return Array .prototype .map .call (target [_proxy], value => value .copy ())
-         .map (callbackFn, thisArg);
+      return new (target .constructor) (... Array .prototype .map .apply (target [_proxy], args));
    },
    reverse: function ()
    {
@@ -846,17 +791,11 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       return target [_proxy];
    },
-   slice: function (start, end)
+   slice: function (... args)
    {
-      const
-         target     = this [_target],
-         components = target .getComponents ();
+      const target = this [_target];
 
-      if (components === 1)
-         return Array .prototype .slice .call (target [_proxy], start, end);
-
-      return Array .prototype .slice .call (target [_proxy], start, end)
-         .map (value => value .copy ());
+      return new (target .constructor) (... Array .prototype .slice .apply (target [_proxy], args));
    },
    sort: function (compareFunction)
    {

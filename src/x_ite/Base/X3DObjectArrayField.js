@@ -281,7 +281,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          return field .valueOf ();
       }
    },
-   splice: function (index, deleteCount)
+   splice: function (index, deleteCount, ... insertValues)
    {
       const
          target = this [_target],
@@ -295,8 +295,8 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       const result = target .erase (index, index + deleteCount);
 
-      if (arguments .length > 2)
-         target .insert (index, arguments, 2, arguments .length);
+      if (insertValues .length)
+         target .insert (index, insertValues, 0, insertValues .length);
 
       return result;
    },
@@ -304,7 +304,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    {
       const
          target = this [_target],
-         args   = [index, 0];
+         args   = [ ];
 
       for (let i = first; i < last; ++ i)
       {
@@ -315,7 +315,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          args .push (field);
       }
 
-      Array .prototype .splice .apply (target .getValue (), args);
+      Array .prototype .splice .call (target .getValue (), index, 0, ... args);
 
       target .addEvent ();
    },
@@ -410,7 +410,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       target .addEvent ();
 
-      return values .map (function (value) { return value .valueOf () });
+      return new (target .constructor) (values);
    },
    resize: function (size, value, silently)
    {
@@ -454,9 +454,23 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    {
       value .removeParent (this [_proxy]);
    },
-   concat: function (... args)
+   filter: function (... args)
    {
-      return Array .prototype .map .call (this, value => value) .concat (... args);
+      const target = this [_target];
+
+      return new (target .constructor) (... Array .prototype .filter .apply (target [_proxy], args));
+   },
+   map: function (... args)
+   {
+      const target = this [_target];
+
+      return new (target .constructor) (... Array .prototype .map .apply (target [_proxy], args));
+   },
+   slice: function (... args)
+   {
+      const target = this [_target];
+
+      return new (target .constructor) (... Array .prototype .slice .apply (target [_proxy], args));
    },
    reverse: function ()
    {
