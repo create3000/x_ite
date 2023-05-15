@@ -9,6 +9,8 @@ my $version = `npm pkg get version | sed 's/"//g'`;
 chomp $version;
 #say "package.json version $version";
 
+exit if $version =~ /a$/;
+
 my $online = `npm view x_ite version`;
 chomp $online;
 #say "NPM version $online";
