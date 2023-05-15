@@ -454,18 +454,6 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    {
       value .removeParent (this [_proxy]);
    },
-   filter: function (... args)
-   {
-      const target = this [_target];
-
-      return new (target .constructor) (... Array .prototype .filter .apply (target [_proxy], args));
-   },
-   map: function (... args)
-   {
-      const target = this [_target];
-
-      return new (target .constructor) (... Array .prototype .map .apply (target [_proxy], args));
-   },
    reverse: function ()
    {
       const target = this [_target];
@@ -474,12 +462,6 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
       target .addEvent ();
 
       return target [_proxy];
-   },
-   slice: function (... args)
-   {
-      const target = this [_target];
-
-      return new (target .constructor) (... Array .prototype .slice .apply (target [_proxy], args));
    },
    sort: function (compareFunction)
    {
