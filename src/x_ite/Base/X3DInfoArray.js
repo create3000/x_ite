@@ -216,6 +216,7 @@ X3DInfoArray .prototype = {
    // copyWithin: Array.prototype.copyWithin,
    entries: Array .prototype .entries,
    every: Array .prototype .every,
+   // fill: Array .prototype .fill,
    filter: function (callbackFn, thisArg)
    {
       return new (this .constructor) (Array .prototype .filter .call (this, callbackFn, thisArg));
