@@ -197,6 +197,11 @@ X3DObject .prototype =
 for (const key of Reflect .ownKeys (X3DObject .prototype))
    Object .defineProperty (X3DObject .prototype, key, { enumerable: false });
 
+Object .defineProperty (X3DObject .prototype, Symbol .toStringTag,
+{
+   get: function () { return this .getTypeName (); },
+});
+
 Object .assign (X3DObject,
 {
    getId: (function ()

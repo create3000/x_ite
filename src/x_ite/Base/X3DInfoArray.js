@@ -356,4 +356,9 @@ Object .defineProperty (X3DInfoArray .prototype, "length",
    get: function () { return this [_array] .length; },
 });
 
+Object .defineProperty (X3DInfoArray .prototype, Symbol .toStringTag,
+{
+   get: function () { return this .getTypeName (); },
+});
+
 export default X3DInfoArray;
