@@ -295,7 +295,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       const values = this [_metadata] .get (name);
 
       if (values)
-         return values .slice ();
+         return Array .from (values);
 
       return undefined;
    },

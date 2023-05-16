@@ -216,9 +216,9 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    loadComponents: (function ()
    {
-      function loadComponents (browser, components, seen)
+      function loadComponents (browser, componentNames, seen)
       {
-         return Promise .all (components .map (name => loadComponent (browser, name, seen)))
+         return Promise .all (componentNames .map (name => loadComponent (browser, name, seen)))
       }
 
       async function loadComponent (browser, name, seen)
@@ -244,7 +244,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             return this .loadComponents (argument .components);
 
          if (argument instanceof ComponentInfoArray)
-            return this .loadComponents (argument .map (({name}) => name));
+            return this .loadComponents ([... argument] .map (({name}) => name));
 
          if (argument instanceof ComponentInfo)
             return this .loadComponents ([argument .name]);

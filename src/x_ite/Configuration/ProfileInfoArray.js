@@ -45,13 +45,13 @@
  *
  ******************************************************************************/
 
+import X3DInfoArray       from "../Base/X3DInfoArray.js";
 import ComponentInfoArray from "./ComponentInfoArray.js";
 import ProfileInfo        from "./ProfileInfo.js";
-import X3DInfoArray       from "../Base/X3DInfoArray.js";
 
 function ProfileInfoArray (values)
 {
-   return X3DInfoArray .call (this, values);
+   return X3DInfoArray .call (this, values, X3DInfoArray);
 }
 
 ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

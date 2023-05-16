@@ -45,12 +45,12 @@
  *
  ******************************************************************************/
 
-import ComponentInfo from "./ComponentInfo.js";
 import X3DInfoArray  from "../Base/X3DInfoArray.js";
+import ComponentInfo from "./ComponentInfo.js";
 
 function ComponentInfoArray (values)
 {
-   return X3DInfoArray .call (this, values);
+   return X3DInfoArray .call (this, values, ComponentInfo);
 }
 
 ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

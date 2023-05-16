@@ -46,10 +46,24 @@
  ******************************************************************************/
 
 import X3DInfoArray from "../Base/X3DInfoArray.js";
+import UnitInfo     from "./UnitInfo.js"
 
 function UnitInfoArray (values)
 {
-   return X3DInfoArray .call (this, values);
+   const proxy = X3DInfoArray .call (this);
+
+   if (values)
+   {
+      for (const value of values)
+      {
+         if (!(value instanceof UnitInfo))
+            throw new TypeError (`Wrong type in construction of ${this .getTypeName ()}.`);
+
+         this .add (value .category, value);
+      }
+   }
+
+   return proxy;
 }
 
 UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

@@ -284,7 +284,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
          value  = target .getValue ();
 
       if (value)
-         return value .getType () .slice ();
+         return Array .from (value .getType ());
 
       throw new Error ("SFNode.getNodeType: node is null.");
    },

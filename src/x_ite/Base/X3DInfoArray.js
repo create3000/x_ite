@@ -108,7 +108,7 @@ const handler =
    },
 };
 
-function X3DInfoArray (values)
+function X3DInfoArray (values, ValueType)
 {
    this [_array] = [ ];
    this [_index] = new Map ();
@@ -116,7 +116,12 @@ function X3DInfoArray (values)
    if (values)
    {
       for (const value of values)
+      {
+         if (!(value instanceof ValueType))
+            throw new TypeError (`Wrong type in construction of ${this .getTypeName ()}.`);
+
          this .add (value .name, value);
+      }
    }
 
    return new Proxy (this, handler);
@@ -128,11 +133,15 @@ X3DInfoArray .prototype = {
    {
       yield* this [_array];
    },
+   copy: function ()
+   {
+      return new (this .constructor) (this [_array]);
+   },
    equals: function (array)
    {
       const
          a      = this [_array],
-         b      = array [_array] || array,
+         b      = array [_array],
          length = a .length;
 
       if (a === b)
@@ -203,25 +212,64 @@ X3DInfoArray .prototype = {
          this [_array] .splice (index, 1);
    },
    at: Array .prototype .at,
+   // concat: Array .prototype .concat,
+   // copyWithin: Array.prototype.copyWithin,
    entries: Array .prototype .entries,
    every: Array .prototype .every,
-   filter: Array .prototype .filter, /// TODO:
+   filter: function (callbackFn, thisArg)
+   {
+      return new (this .constructor) (Array .prototype .filter .call (this, callbackFn, thisArg));
+   },
    find: Array .prototype .find,
    findIndex: Array .prototype .findIndex,
    findLast: Array .prototype .findLast,
    findLastIndex: Array .prototype .findLastIndex,
+   // flat: Array .prototype .flat,
+   // flatMap: Array .prototype .flatMap,
    forEach: Array .prototype .forEach,
    includes: Array .prototype .includes,
    indexOf: Array .prototype .indexOf,
    join: Array .prototype .join,
    keys: Array .prototype .keys,
    lastIndexOf: Array .prototype .lastIndexOf,
-   map: Array .prototype .map, /// TODO:
+   map: function (callbackFn, thisArg)
+   {
+      return new (this .constructor) (Array .prototype .map .call (this, callbackFn, thisArg));
+   },
    reduce: Array .prototype .reduce,
    reduceRight: Array .prototype .reduceRight,
-   slice: Array .prototype .slice, /// TODO:
+   // reverse: Array .prototype .reverse,
+   slice: function (start, end)
+   {
+      return new (this .constructor) (Array .prototype .slice .call (this, start, end));
+   },
    some: Array .prototype .some,
+   // sort: Array .prototype .sort,
+   toReversed: function ()
+   {
+      return new (this .constructor) ([... this] .reverse ());
+   },
+   toSorted: function (compareFn)
+   {
+      return new (this .constructor) ([... this] .sort (compareFn));
+   },
+   toSpliced: function (start, deleteCount, ... insertValues)
+   {
+      const array = [... this];
+
+      array .splice (start, deleteCount, ... insertValues)
+
+      return new (this .constructor) (array);
+   },
    values: Array .prototype .values,
+   with: function (index, value)
+   {
+      const array = [... this];
+
+      array [index] = value;
+
+      return new (this .constructor) (array);
+   },
    toString: function (options = Object .prototype)
    {
       const generator = new Generator (options);

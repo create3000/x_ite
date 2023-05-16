@@ -46,10 +46,24 @@
  ******************************************************************************/
 
 import X3DInfoArray from "../Base/X3DInfoArray.js";
+import X3DBaseNode  from "../Base/X3DBaseNode.js"
 
-function NamedNodesArray (array)
+function NamedNodesArray (values)
 {
-   return X3DInfoArray .call (this, array);
+   const proxy = X3DInfoArray .call (this);
+
+   if (values)
+   {
+      for (const value of values)
+      {
+         if (!(value instanceof X3DBaseNode))
+            throw new TypeError (`Wrong type in construction of ${this .getTypeName ()}.`);
+
+         this .add (value .getName (), value);
+      }
+   }
+
+   return proxy;
 }
 
 NamedNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

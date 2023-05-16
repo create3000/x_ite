@@ -45,11 +45,12 @@
  *
  ******************************************************************************/
 
-import X3DInfoArray from "../Base/X3DInfoArray.js";
+import X3DInfoArray              from "../Base/X3DInfoArray.js";
+import X3DExternProtoDeclaration from "./X3DExternProtoDeclaration.js"
 
 function ExternProtoDeclarationArray (values)
 {
-   return X3DInfoArray .call (this, values);
+   return X3DInfoArray .call (this, values, X3DExternProtoDeclaration);
 }
 
 ExternProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
