@@ -177,6 +177,8 @@ X3DInfoArray .prototype = {
    },
    update: function (oldKey, newKey, value)
    {
+      // TODO: update alias.
+
       const oldValue = this [_index] .get (oldKey);
 
       if (oldKey !== newKey)
@@ -199,6 +201,8 @@ X3DInfoArray .prototype = {
    },
    remove: function (key)
    {
+      // TODO: remove alias.
+
       const value = this [_index] .get (key);
 
       if (value === undefined)
