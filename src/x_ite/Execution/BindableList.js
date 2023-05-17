@@ -151,7 +151,7 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
 
          for (const node of this .nodes)
          {
-            if (collectedNodes .indexOf (node) === -1)
+            if (!collectedNodes .includes (node))
                removedNodes .push (node);
          }
 
