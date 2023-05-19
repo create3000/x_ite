@@ -460,7 +460,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .parser .sfstringValues (this .url);
 
          if (!this .url .length)
-            console .warn ("XML Parser Error: Bad ExternProtoDeclare statement. Expected url attribute.");
+            console .warn ("XML Parser Error: Bad ExternProtoDeclare statement. Expected url attribute with value.");
 
          const externproto = new X3DExternProtoDeclaration (this .getExecutionContext (), this .url);
 
