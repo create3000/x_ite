@@ -450,19 +450,19 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    externProtoDeclareElement: function (xmlElement)
    {
-      var name = xmlElement .getAttribute ("name");
+      const name = xmlElement .getAttribute ("name");
 
       if (this .id (name))
       {
          const url = xmlElement .getAttribute ("url");
 
-         if (url === null)
-            console .warn ("XML Parser Error: Bad ExternProtoDeclare statement. Expected url attribute.");
-
          this .parser .setInput (url ?? "");
          this .parser .sfstringValues (this .url);
 
-         var externproto = new X3DExternProtoDeclaration (this .getExecutionContext (), this .url);
+         if (!this .url .length)
+            console .warn ("XML Parser Error: Bad ExternProtoDeclare statement. Expected url attribute.");
+
+         const externproto = new X3DExternProtoDeclaration (this .getExecutionContext (), this .url);
 
          this .pushParent (externproto);
          this .protoInterfaceElement (xmlElement);
