@@ -606,7 +606,7 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
 
       var instance = geometryNode .getExecutionContext ();
 
-      if (instance .getType () .indexOf ((X3DConstants_default()).X3DPrototypeInstance) !== -1 && instance .getExecutionContext () === executionContext)
+      if (instance .getType () .includes ((X3DConstants_default()).X3DPrototypeInstance) && instance .getExecutionContext () === executionContext)
          return instance;
 
       var pickingHierarchy = target .pickingHierarchy;
@@ -620,7 +620,7 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
 
          var instance = node .getExecutionContext ();
 
-         if (instance .getType () .indexOf ((X3DConstants_default()).X3DPrototypeInstance) !== -1 && instance .getExecutionContext () === executionContext)
+         if (instance .getType () .includes ((X3DConstants_default()).X3DPrototypeInstance) && instance .getExecutionContext () === executionContext)
             return instance;
       }
 

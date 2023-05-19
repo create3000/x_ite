@@ -331,10 +331,10 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             componentSupportLevel = parseInt (xmlElement .getAttribute ("level"));
 
          if (componentNameIdCharacters === null)
-            return console .warn ("XML Parser Error: Bad component statement: Expected name attribute.");
+            return console .warn ("XML Parser Error: Bad component statement. Expected name attribute.");
 
          if (componentSupportLevel === null)
-            return console .warn ("XML Parser Error: Bad component statement: Expected level attribute.");
+            return console .warn ("XML Parser Error: Bad component statement. Expected level attribute.");
 
          var component = this .getBrowser () .getComponent (componentNameIdCharacters, componentSupportLevel);
 
@@ -353,13 +353,13 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          conversionFactor = xmlElement .getAttribute ("conversionFactor"); //works for html5 as well
 
       if (category === null)
-         return console .warn ("XML Parser Error: Bad unit statement: Expected category attribute.");
+         return console .warn ("XML Parser Error: Bad unit statement. Expected category attribute.");
 
       if (name === null)
-         return console .warn ("XML Parser Error: Bad unit statement: Expected name attribute.");
+         return console .warn ("XML Parser Error: Bad unit statement. Expected name attribute.");
 
       if (conversionFactor === null)
-         return console .warn ("XML Parser Error: Bad unit statement: Expected conversionFactor attribute.");
+         return console .warn ("XML Parser Error: Bad unit statement. Expected conversionFactor attribute.");
 
       this .getScene () .updateUnit (category, name, parseFloat (conversionFactor));
    },
@@ -370,10 +370,10 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          metavalue = xmlElement .getAttribute ("content");
 
       if (metakey === null)
-         return console .warn ("XML Parser Error: Bad meta statement: Expected name attribute.");
+         return console .warn ("XML Parser Error: Bad meta statement. Expected name attribute.");
 
       if (metavalue === null)
-         return console .warn ("XML Parser Error: Bad meta statement: Expected content attribute.");
+         return console .warn ("XML Parser Error: Bad meta statement. Expected content attribute.");
 
       this .getScene () .addMetaData (metakey, metavalue);
    },
@@ -454,13 +454,13 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (this .id (name))
       {
-         var url = xmlElement .getAttribute ("url");
+         const url = xmlElement .getAttribute ("url");
 
          if (url === null)
-            return console .warn ("XML Parser Error: Bad ExternProtoDeclare statement: Expected url attribute.");
+            console .warn ("XML Parser Error: Bad ExternProtoDeclare statement. Expected url attribute.");
 
-         this .parser .setInput (url);
-         VRMLParser .prototype .sfstringValues .call (this .parser, this .url);
+         this .parser .setInput (url ?? "");
+         this .parser .sfstringValues (this .url);
 
          var externproto = new X3DExternProtoDeclaration (this .getExecutionContext (), this .url);
 
@@ -654,10 +654,10 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          protoFieldName = xmlElement .getAttribute ("protoField");
 
       if (nodeFieldName === null)
-         return console .warn ("XML Parser Error: Bad connect statement: Expected nodeField attribute.");
+         return console .warn ("XML Parser Error: Bad connect statement. Expected nodeField attribute.");
 
       if (protoFieldName === null)
-         return console .warn ("XML Parser Error: Bad connect statement: Expected protoField attribute.");
+         return console .warn ("XML Parser Error: Bad connect statement. Expected protoField attribute.");
 
       try
       {
@@ -687,7 +687,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
       catch (error)
       {
-         console .warn ("XML Parser Error: Couldn't create IS reference: " + error .message);
+         console .warn ("XML Parser Error: Couldn't create IS reference. " + error .message);
       }
    },
    protoInstanceElement: function (xmlElement)
@@ -765,7 +765,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
       catch (error)
       {
-         console .warn ("XML Parser Error: Couldn't assign field value: " + error .message);
+         console .warn ("XML Parser Error: Couldn't assign field value. " + error .message);
       }
    },
    nodeElement: function (xmlElement)
