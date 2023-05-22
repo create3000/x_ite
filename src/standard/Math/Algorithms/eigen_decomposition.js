@@ -55,23 +55,23 @@ function eigen_decomposition (matrix, result)
 {
    const
       ORDER   = matrix .order,
+      SIZE    = matrix .length,
       values  = result .values,
       vectors = result .vectors;
 
    let
-      sm,                // smallest entry
-      theta,             // angle for Jacobi rotation
-      c, s, t,           // cosine, sine, tangent of theta
-      tau,               // sine / (1 + cos)
-      h, g,              // two scrap values
-      thresh,            // threshold below which no rotation done
-      p, q, i, j,
-      SIZE = matrix .length;
+      sm,         // smallest entry
+      theta,      // angle for Jacobi rotation
+      c, s, t,    // cosine, sine, tangent of theta
+      tau,        // sine / (1 + cos)
+      h, g,       // two scrap values
+      thresh,     // threshold below which no rotation done
+      p, q, i, j; // indices
 
    // initializations
    for (i = 0; i < ORDER; ++ i)
    {
-      a [i] = a [i] || new Array (ORDER);
+      a [i] = a [i] ?? [ ];
       b [i] = values [i] = matrix .get1 (i, i);
       z [i] = 0;
 
