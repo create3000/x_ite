@@ -49,14 +49,14 @@ import X3DField     from "../Base/X3DField.js";
 import ArrayFields  from "./ArrayFields.js";
 import X3DConstants from "../Base/X3DConstants.js";
 
+const MFInt32 = ArrayFields .MFInt32;
+
 /*
  *  Image
  */
 
 function Image (width, height, comp, array)
 {
-   const MFInt32 = ArrayFields .MFInt32;
-
    this .width  = width|0;
    this .height = height|0;
    this .comp   = comp|0;
@@ -138,14 +138,23 @@ const _set_size = Symbol ();
 
 function SFImage (width, height, comp, array)
 {
-   const MFInt32 = ArrayFields .MFInt32;
-
-   if (arguments [0] instanceof Image)
-      X3DField .call (this, arguments [0]);
-   else if (arguments .length === 4)
-      X3DField .call (this, new Image (width, height, comp, array));
-   else
-      X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
+   switch (arguments .length)
+   {
+      case 0:
+         X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
+         break;
+      case 1:
+         X3DField .call (this, arguments [0]);
+         break;
+      case 3:
+         X3DField .call (this, new Image (width, height, comp, new MFInt32 ()));
+         break;
+      case 4:
+         X3DField .call (this, new Image (width, height, comp, array));
+         break;
+      default:
+         throw new Error ("Invalid arguments.");
+   }
 
    this .getValue () .getArray () .addParent (this);
    this .addInterest (_set_size, this);
