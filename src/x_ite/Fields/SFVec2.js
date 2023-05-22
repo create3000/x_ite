@@ -88,7 +88,6 @@ function SFVec2Template (TypeName, Type, double)
          this .getValue () .x = +value;
          this .addEvent ();
       },
-      enumerable: true,
    };
 
    const y = {
@@ -101,17 +100,15 @@ function SFVec2Template (TypeName, Type, double)
          this .getValue () .y = +value;
          this .addEvent ();
       },
-      enumerable: true,
    };
 
-   Object .defineProperty (SFVec2 .prototype, "x", x);
-   Object .defineProperty (SFVec2 .prototype, "y", y);
-
-   x .enumerable = false;
-   y .enumerable = false;
-
-   Object .defineProperty (SFVec2 .prototype, "0", x);
-   Object .defineProperty (SFVec2 .prototype, "1", y);
+   Object .defineProperties (SFVec2 .prototype,
+   {
+      0: x,
+      1: y,
+      x: Object .assign ({ enumerable: true }, x),
+      y: Object .assign ({ enumerable: true }, y),
+   });
 
    return SFVec2;
 }

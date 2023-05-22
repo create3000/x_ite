@@ -542,22 +542,23 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
 for (const key of Reflect .ownKeys (X3DProtoDeclaration .prototype))
    Object .defineProperty (X3DProtoDeclaration .prototype, key, { enumerable: false });
 
-Object .defineProperty (X3DProtoDeclaration .prototype, "name",
+Object .defineProperties (X3DProtoDeclaration .prototype,
 {
-   get: X3DProtoDeclaration .prototype .getName,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DProtoDeclaration .prototype, "fields",
-{
-   get: X3DProtoDeclaration .prototype .getFieldDefinitions,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DProtoDeclaration .prototype, "isExternProto",
-{
-   value: false,
-   enumerable: true,
+   name:
+   {
+      get: X3DProtoDeclaration .prototype .getName,
+      enumerable: true,
+   },
+   fields:
+   {
+      get: X3DProtoDeclaration .prototype .getFieldDefinitions,
+      enumerable: true,
+   },
+   isExternProto:
+   {
+      value: false,
+      enumerable: true,
+   },
 });
 
 export default X3DProtoDeclaration;

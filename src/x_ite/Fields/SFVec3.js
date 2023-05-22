@@ -92,7 +92,6 @@ function SFVec3Template (TypeName, Type, double)
          this .getValue () .x = +value;
          this .addEvent ();
       },
-      enumerable: true,
    };
 
    const y = {
@@ -105,7 +104,6 @@ function SFVec3Template (TypeName, Type, double)
          this .getValue () .y = +value;
          this .addEvent ();
       },
-      enumerable: true,
    };
 
    const z = {
@@ -118,20 +116,17 @@ function SFVec3Template (TypeName, Type, double)
          this .getValue () .z = +value;
          this .addEvent ();
       },
-      enumerable: true,
    };
 
-   Object .defineProperty (SFVec3 .prototype, "x", x);
-   Object .defineProperty (SFVec3 .prototype, "y", y);
-   Object .defineProperty (SFVec3 .prototype, "z", z);
-
-   x .enumerable = false;
-   y .enumerable = false;
-   z .enumerable = false;
-
-   Object .defineProperty (SFVec3 .prototype, "0", x);
-   Object .defineProperty (SFVec3 .prototype, "1", y);
-   Object .defineProperty (SFVec3 .prototype, "2", z);
+   Object .defineProperties (SFVec3 .prototype,
+   {
+      0: x,
+      1: y,
+      2: z,
+      x: Object .assign ({ enumerable: true }, x),
+      y: Object .assign ({ enumerable: true }, y),
+      z: Object .assign ({ enumerable: true }, z),
+   });
 
    return SFVec3;
 }

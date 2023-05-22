@@ -408,34 +408,33 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
 for (const key of Reflect .ownKeys (X3DExternProtoDeclaration .prototype))
    Object .defineProperty (X3DExternProtoDeclaration .prototype, key, { enumerable: false });
 
-Object .defineProperty (X3DExternProtoDeclaration .prototype, "name",
+Object .defineProperties (X3DExternProtoDeclaration .prototype,
 {
-   get: X3DExternProtoDeclaration .prototype .getName,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExternProtoDeclaration .prototype, "fields",
-{
-   get: X3DExternProtoDeclaration .prototype .getFieldDefinitions,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExternProtoDeclaration .prototype, "isExternProto",
-{
-   value: true,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExternProtoDeclaration .prototype, "urls",
-{
-   get: function () { return this ._url; },
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExternProtoDeclaration .prototype, "loadState",
-{
-   get: X3DExternProtoDeclaration .prototype .checkLoadState,
-   enumerable: true,
+   name:
+   {
+      get: X3DExternProtoDeclaration .prototype .getName,
+      enumerable: true,
+   },
+   fields:
+   {
+      get: X3DExternProtoDeclaration .prototype .getFieldDefinitions,
+      enumerable: true,
+   },
+   isExternProto:
+   {
+      value: true,
+      enumerable: true,
+   },
+   urls:
+   {
+      get: function () { return this ._url; },
+      enumerable: true,
+   },
+   loadState:
+   {
+      get: X3DExternProtoDeclaration .prototype .checkLoadState,
+      enumerable: true,
+   },
 });
 
 export default X3DExternProtoDeclaration;

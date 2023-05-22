@@ -513,40 +513,40 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 for (const key of Reflect .ownKeys (X3DImportedNode .prototype))
    Object .defineProperty (X3DImportedNode .prototype, key, { enumerable: false });
 
-Object .defineProperty (X3DImportedNode .prototype, "inlineNode",
+Object .defineProperties (X3DImportedNode .prototype,
 {
-   get: function ()
+   inlineNode:
    {
-      return SFNodeCache .get (this [_inlineNode]);
+      get: function ()
+      {
+         return SFNodeCache .get (this [_inlineNode]);
+      },
+      enumerable: true,
    },
-   enumerable: true,
-});
-
-Object .defineProperty (X3DImportedNode .prototype, "exportedName",
-{
-   get: function ()
+   exportedName:
    {
-      return this [_exportedName];
+      get: function ()
+      {
+         return this [_exportedName];
+      },
+      enumerable: true,
    },
-   enumerable: true,
-});
-
-Object .defineProperty (X3DImportedNode .prototype, "exportedNode",
-{
-   get: function ()
+   exportedNode:
    {
-      return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]);
+      get: function ()
+      {
+         return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]);
+      },
+      enumerable: true,
    },
-   enumerable: true,
-});
-
-Object .defineProperty (X3DImportedNode .prototype, "importedName",
-{
-   get: function ()
+   importedName:
    {
-      return this [_importedName];
+      get: function ()
+      {
+         return this [_importedName];
+      },
+      enumerable: true,
    },
-   enumerable: true,
 });
 
 export default X3DImportedNode;

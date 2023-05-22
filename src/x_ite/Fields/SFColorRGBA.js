@@ -141,7 +141,6 @@ const r = {
       this .getValue () .r = +value;
       this .addEvent ();
    },
-   enumerable: true,
 };
 
 const g = {
@@ -154,7 +153,6 @@ const g = {
       this .getValue () .g = +value;
       this .addEvent ();
    },
-   enumerable: true,
 };
 
 const b = {
@@ -167,7 +165,6 @@ const b = {
       this .getValue () .b = +value;
       this .addEvent ();
    },
-   enumerable: true,
 };
 
 const a = {
@@ -180,22 +177,18 @@ const a = {
       this .getValue () .a = +value;
       this .addEvent ();
    },
-   enumerable: true,
 };
 
-Object .defineProperty (SFColorRGBA .prototype, "r", r);
-Object .defineProperty (SFColorRGBA .prototype, "g", g);
-Object .defineProperty (SFColorRGBA .prototype, "b", b);
-Object .defineProperty (SFColorRGBA .prototype, "a", a);
-
-r .enumerable = false;
-g .enumerable = false;
-b .enumerable = false;
-a .enumerable = false;
-
-Object .defineProperty (SFColorRGBA .prototype, "0", r);
-Object .defineProperty (SFColorRGBA .prototype, "1", g);
-Object .defineProperty (SFColorRGBA .prototype, "2", b);
-Object .defineProperty (SFColorRGBA .prototype, "3", a);
+Object .defineProperties (SFColorRGBA .prototype,
+{
+   0: r,
+   1: g,
+   2: b,
+   3: a,
+   r: Object .assign ({ enumerable: true }, r),
+   g: Object .assign ({ enumerable: true }, g),
+   b: Object .assign ({ enumerable: true }, b),
+   a: Object .assign ({ enumerable: true }, a),
+});
 
 export default SFColorRGBA;

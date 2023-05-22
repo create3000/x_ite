@@ -88,7 +88,6 @@ function SFVec4Template (TypeName, Type, double)
          this .getValue () .x = +value;
          this .addEvent ();
       },
-      enumerable: true,
    };
 
    const y = {
@@ -101,7 +100,6 @@ function SFVec4Template (TypeName, Type, double)
          this .getValue () .y = +value;
          this .addEvent ();
       },
-      enumerable: true,
    };
 
    const z = {
@@ -114,7 +112,6 @@ function SFVec4Template (TypeName, Type, double)
          this .getValue () .z = +value;
          this .addEvent ();
       },
-      enumerable: true,
    };
 
    const w = {
@@ -127,23 +124,19 @@ function SFVec4Template (TypeName, Type, double)
          this .getValue () .w = +value;
          this .addEvent ();
       },
-      enumerable: true,
    };
 
-   Object .defineProperty (SFVec4 .prototype, "x", x);
-   Object .defineProperty (SFVec4 .prototype, "y", y);
-   Object .defineProperty (SFVec4 .prototype, "z", z);
-   Object .defineProperty (SFVec4 .prototype, "w", w);
-
-   x .enumerable = false;
-   y .enumerable = false;
-   z .enumerable = false;
-   w .enumerable = false;
-
-   Object .defineProperty (SFVec4 .prototype, "0", x);
-   Object .defineProperty (SFVec4 .prototype, "1", y);
-   Object .defineProperty (SFVec4 .prototype, "2", z);
-   Object .defineProperty (SFVec4 .prototype, "3", w);
+   Object .defineProperties (SFVec4 .prototype,
+   {
+      0: x,
+      1: y,
+      2: z,
+      3: w,
+      x: Object .assign ({ enumerable: true }, x),
+      y: Object .assign ({ enumerable: true }, y),
+      z: Object .assign ({ enumerable: true }, z),
+      w: Object .assign ({ enumerable: true }, w),
+   });
 
    return SFVec4;
 }

@@ -211,7 +211,6 @@ const x = {
       this .getValue () .x = +value;
       this .addEvent ();
    },
-   enumerable: true,
 };
 
 const y = {
@@ -224,7 +223,6 @@ const y = {
       this .getValue () .y = +value;
       this .addEvent ();
    },
-   enumerable: true,
 };
 
 const z = {
@@ -237,7 +235,6 @@ const z = {
       this .getValue () .z = +value;
       this .addEvent ();
    },
-   enumerable: true,
 };
 
 const angle = {
@@ -250,22 +247,18 @@ const angle = {
       this .getValue () .angle = +value;
       this .addEvent ();
    },
-   enumerable: true,
 };
 
-Object .defineProperty (SFRotation .prototype, "x",     x);
-Object .defineProperty (SFRotation .prototype, "y",     y);
-Object .defineProperty (SFRotation .prototype, "z",     z);
-Object .defineProperty (SFRotation .prototype, "angle", angle);
-
-x     .enumerable = false;
-y     .enumerable = false;
-z     .enumerable = false;
-angle .enumerable = false;
-
-Object .defineProperty (SFRotation .prototype, "0", x);
-Object .defineProperty (SFRotation .prototype, "1", y);
-Object .defineProperty (SFRotation .prototype, "2", z);
-Object .defineProperty (SFRotation .prototype, "3", angle);
+Object .defineProperties (SFRotation .prototype,
+{
+   0: x,
+   1: y,
+   2: z,
+   3: angle,
+   x: Object .assign ({ enumerable: true }, x),
+   y: Object .assign ({ enumerable: true }, y),
+   z: Object .assign ({ enumerable: true }, z),
+   angle: Object .assign ({ enumerable: true }, angle),
+});
 
 export default SFRotation;

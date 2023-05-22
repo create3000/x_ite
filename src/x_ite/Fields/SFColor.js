@@ -188,7 +188,6 @@ const r = {
       this .getValue () .r = +value;
       this .addEvent ();
    },
-   enumerable: true,
 };
 
 const g = {
@@ -201,7 +200,6 @@ const g = {
       this .getValue () .g = +value;
       this .addEvent ();
    },
-   enumerable: true,
 };
 
 const b = {
@@ -214,19 +212,16 @@ const b = {
       this .getValue () .b = +value;
       this .addEvent ();
    },
-   enumerable: true,
 };
 
-Object .defineProperty (SFColor .prototype, "r", r);
-Object .defineProperty (SFColor .prototype, "g", g);
-Object .defineProperty (SFColor .prototype, "b", b);
-
-r .enumerable = false;
-g .enumerable = false;
-b .enumerable = false;
-
-Object .defineProperty (SFColor .prototype, "0", r);
-Object .defineProperty (SFColor .prototype, "1", g);
-Object .defineProperty (SFColor .prototype, "2", b);
+Object .defineProperties (SFColor .prototype,
+{
+   0: r,
+   1: g,
+   2: b,
+   r: Object .assign ({ enumerable: true }, r),
+   g: Object .assign ({ enumerable: true }, g),
+   b: Object .assign ({ enumerable: true }, b),
+});
 
 export default SFColor;

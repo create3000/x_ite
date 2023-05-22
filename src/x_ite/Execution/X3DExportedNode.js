@@ -170,22 +170,24 @@ X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototyp
 for (const key of Reflect .ownKeys (X3DExportedNode .prototype))
    Object .defineProperty (X3DExportedNode .prototype, key, { enumerable: false });
 
-Object .defineProperty (X3DExportedNode .prototype, "exportedName",
+Object .defineProperties (X3DExportedNode .prototype,
 {
-   get: function ()
+   exportedName:
    {
-      return SFNodeCache .get (this [_exportedName]);
+      get: function ()
+      {
+         return SFNodeCache .get (this [_exportedName]);
+      },
+      enumerable: true,
    },
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExportedNode .prototype, "localNode",
-{
-   get: function ()
+   localNode:
    {
-      return SFNodeCache .get (this [_localNode]);
+      get: function ()
+      {
+         return SFNodeCache .get (this [_localNode]);
+      },
+      enumerable: true,
    },
-   enumerable: true,
 });
 
 export default X3DExportedNode;

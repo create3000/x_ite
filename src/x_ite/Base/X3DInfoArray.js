@@ -356,14 +356,16 @@ X3DInfoArray .prototype = {
 for (const key of Reflect .ownKeys (X3DInfoArray .prototype))
    Object .defineProperty (X3DInfoArray .prototype, key, { enumerable: false });
 
-Object .defineProperty (X3DInfoArray .prototype, "length",
+Object .defineProperties (X3DInfoArray .prototype,
 {
-   get: function () { return this [_array] .length; },
-});
-
-Object .defineProperty (X3DInfoArray .prototype, Symbol .toStringTag,
-{
-   get: function () { return this .getTypeName (); },
+   length:
+   {
+      get: function () { return this [_array] .length; },
+   },
+   [Symbol .toStringTag]:
+   {
+      get: function () { return this .getTypeName (); },
+   },
 });
 
 export default X3DInfoArray;

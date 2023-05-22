@@ -849,75 +849,69 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 for (const key of Reflect .ownKeys (X3DBrowser .prototype))
    Object .defineProperty (X3DBrowser .prototype, key, { enumerable: false });
 
-Object .defineProperty (X3DBrowser .prototype, "name",
+Object .defineProperties (X3DBrowser .prototype,
 {
-   get: X3DBrowser .prototype .getName,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DBrowser .prototype, "version",
-{
-   get: X3DBrowser .prototype .getVersion,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DBrowser .prototype, "providerUrl",
-{
-   get: X3DBrowser .prototype .getProviderUrl,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DBrowser .prototype, "currentFrameRate",
-{
-   get: X3DBrowser .prototype .getCurrentFrameRate,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DBrowser .prototype, "currentSpeed",
-{
-   get: X3DBrowser .prototype .getCurrentSpeed,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DBrowser .prototype, "description",
-{
-   get: X3DBrowser .prototype .getDescription,
-   set: X3DBrowser .prototype .setDescription,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DBrowser .prototype, "baseURL",
-{
-   get: X3DBrowser .prototype .getBaseURL,
-   set: X3DBrowser .prototype .setBaseURL,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DBrowser .prototype, "currentScene",
-{
-   get: function ()
+   name:
    {
-      return this .getScriptStack () .at (-1) .getExecutionContext ();
+      get: X3DBrowser .prototype .getName,
+      enumerable: true,
    },
-   enumerable: true,
-});
-
-Object .defineProperty (X3DBrowser .prototype, "supportedProfiles",
-{
-   get: function ()
+   version:
    {
-      return SupportedProfiles;
+      get: X3DBrowser .prototype .getVersion,
+      enumerable: true,
    },
-   enumerable: true,
-});
-
-Object .defineProperty (X3DBrowser .prototype, "supportedComponents",
-{
-   get: function ()
+   providerUrl:
    {
-      return SupportedComponents;
+      get: X3DBrowser .prototype .getProviderUrl,
+      enumerable: true,
    },
-   enumerable: true,
+   currentFrameRate:
+   {
+      get: X3DBrowser .prototype .getCurrentFrameRate,
+      enumerable: true,
+   },
+   currentSpeed:
+   {
+      get: X3DBrowser .prototype .getCurrentSpeed,
+      enumerable: true,
+   },
+   description:
+   {
+      get: X3DBrowser .prototype .getDescription,
+      set: X3DBrowser .prototype .setDescription,
+      enumerable: true,
+   },
+   baseURL:
+   {
+      get: X3DBrowser .prototype .getBaseURL,
+      set: X3DBrowser .prototype .setBaseURL,
+      enumerable: true,
+   },
+   currentScene:
+   {
+      get: function ()
+      {
+         return this .getScriptStack () .at (-1) .getExecutionContext ();
+      },
+      enumerable: true,
+   },
+   supportedProfiles:
+   {
+      get: function ()
+      {
+         return SupportedProfiles;
+      },
+      enumerable: true,
+   },
+   supportedComponents:
+   {
+      get: function ()
+      {
+         return SupportedComponents;
+      },
+      enumerable: true,
+   },
 });
 
 export default X3DBrowser;

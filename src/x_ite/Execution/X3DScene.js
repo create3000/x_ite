@@ -963,47 +963,44 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 for (const key of Reflect .ownKeys (X3DScene .prototype))
    Object .defineProperty (X3DScene .prototype, key, { enumerable: false });
 
-Object .defineProperty (X3DScene .prototype, "specificationVersion",
+Object .defineProperties (X3DScene .prototype,
 {
-   get: X3DScene .prototype .getSpecificationVersion,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DScene .prototype, "encoding",
-{
-   get: X3DScene .prototype .getEncoding,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DScene .prototype, "profile",
-{
-   get: X3DScene .prototype .getProfile,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DScene .prototype, "components",
-{
-   get: X3DScene .prototype .getComponents,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DScene .prototype, "worldURL",
-{
-   get: X3DScene .prototype .getWorldURL,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DScene .prototype, "units",
-{
-   get: X3DScene .prototype .getUnits,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DScene .prototype, "rootNodes",
-{
-   get: X3DScene .prototype .getRootNodes,
-   set: X3DScene .prototype .setRootNodes,
-   enumerable: true,
+   specificationVersion:
+   {
+      get: X3DScene .prototype .getSpecificationVersion,
+      enumerable: true,
+   },
+   encoding:
+   {
+      get: X3DScene .prototype .getEncoding,
+      enumerable: true,
+   },
+   profile:
+   {
+      get: X3DScene .prototype .getProfile,
+      enumerable: true,
+   },
+   components:
+   {
+      get: X3DScene .prototype .getComponents,
+      enumerable: true,
+   },
+   worldURL:
+   {
+      get: X3DScene .prototype .getWorldURL,
+      enumerable: true,
+   },
+   units:
+   {
+      get: X3DScene .prototype .getUnits,
+      enumerable: true,
+   },
+   rootNodes:
+   {
+      get: X3DScene .prototype .getRootNodes,
+      set: X3DScene .prototype .setRootNodes,
+      enumerable: true,
+   },
 });
 
 export default X3DScene;

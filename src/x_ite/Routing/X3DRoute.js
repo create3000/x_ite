@@ -260,40 +260,40 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
 for (const key of Reflect .ownKeys (X3DRoute .prototype))
    Object .defineProperty (X3DRoute .prototype, key, { enumerable: false });
 
-Object .defineProperty (X3DRoute .prototype, "sourceNode",
+Object .defineProperties (X3DRoute .prototype,
 {
-   get: function ()
+   sourceNode:
    {
-      return SFNodeCache .get (this [_sourceNode]);
+      get: function ()
+      {
+         return SFNodeCache .get (this [_sourceNode]);
+      },
+      enumerable: true,
    },
-   enumerable: true,
-});
-
-Object .defineProperty (X3DRoute .prototype, "sourceField",
-{
-   get: function ()
+   sourceField:
    {
-      return this [_sourceField] .getName ();
+      get: function ()
+      {
+         return this [_sourceField] .getName ();
+      },
+      enumerable: true,
    },
-   enumerable: true,
-});
-
-Object .defineProperty (X3DRoute .prototype, "destinationNode",
-{
-   get: function ()
+   destinationNode:
    {
-      return SFNodeCache .get (this [_destinationNode]);
+      get: function ()
+      {
+         return SFNodeCache .get (this [_destinationNode]);
+      },
+      enumerable: true,
    },
-   enumerable: true,
-});
-
-Object .defineProperty (X3DRoute .prototype, "destinationField",
-{
-   get: function ()
+   destinationField:
    {
-      return this [_destinationField] .getName ();
+      get: function ()
+      {
+         return this [_destinationField] .getName ();
+      },
+      enumerable: true,
    },
-   enumerable: true,
 });
 
 export default X3DRoute;

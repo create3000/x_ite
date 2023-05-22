@@ -307,7 +307,6 @@ const width = {
       this .getValue () .setWidth (value);
       this .addEvent ();
    },
-   enumerable: true,
 };
 
 const height = {
@@ -320,7 +319,6 @@ const height = {
       this .getValue () .setHeight (value);
       this .addEvent ();
    },
-   enumerable: true,
 };
 
 const comp = {
@@ -333,7 +331,6 @@ const comp = {
       this .getValue () .setComp (value);
       this .addEvent ();
    },
-   enumerable: true,
 };
 
 const array = {
@@ -346,18 +343,16 @@ const array = {
       this .getValue () .setArray (value);
       this .addEvent ();
    },
-   enumerable: true,
 };
 
-Object .defineProperty (SFImage .prototype, "width",  width);
-Object .defineProperty (SFImage .prototype, "height", height);
-Object .defineProperty (SFImage .prototype, "comp",   comp);
-Object .defineProperty (SFImage .prototype, "array",  array);
-
-width  .enumerable = false;
-height .enumerable = false;
-
-Object .defineProperty (SFImage .prototype, "x", width);
-Object .defineProperty (SFImage .prototype, "y", height);
+Object .defineProperties (SFImage .prototype,
+{
+   x: width,
+   y: height,
+   width:  Object .assign ({ enumerable: true }, width),
+   height: Object .assign ({ enumerable: true }, height),
+   comp:   Object .assign ({ enumerable: true }, comp),
+   array:  Object .assign ({ enumerable: true }, array),
+});
 
 export default SFImage;

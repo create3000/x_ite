@@ -940,65 +940,59 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
    Object .defineProperty (X3DExecutionContext .prototype, key, { enumerable: false });
 
-Object .defineProperty (X3DExecutionContext .prototype, "specificationVersion",
+Object .defineProperties (X3DExecutionContext .prototype,
 {
-   get: X3DExecutionContext .prototype .getSpecificationVersion,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExecutionContext .prototype, "encoding",
-{
-   get: X3DExecutionContext .prototype .getEncoding,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExecutionContext .prototype, "profile",
-{
-   get: X3DExecutionContext .prototype .getProfile,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExecutionContext .prototype, "components",
-{
-   get: X3DExecutionContext .prototype .getComponents,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExecutionContext .prototype, "worldURL",
-{
-   get: X3DExecutionContext .prototype .getWorldURL,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExecutionContext .prototype, "units",
-{
-   get: X3DExecutionContext .prototype .getUnits,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExecutionContext .prototype, "rootNodes",
-{
-   get: X3DExecutionContext .prototype .getRootNodes,
-   set: X3DExecutionContext .prototype .setRootNodes,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExecutionContext .prototype, "protos",
-{
-   get: X3DExecutionContext .prototype .getProtoDeclarations,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExecutionContext .prototype, "externprotos",
-{
-   get: X3DExecutionContext .prototype .getExternProtoDeclarations,
-   enumerable: true,
-});
-
-Object .defineProperty (X3DExecutionContext .prototype, "routes",
-{
-   get: X3DExecutionContext .prototype .getRoutes,
-   enumerable: true,
+   specificationVersion:
+   {
+      get: X3DExecutionContext .prototype .getSpecificationVersion,
+      enumerable: true,
+   },
+   encoding:
+   {
+      get: X3DExecutionContext .prototype .getEncoding,
+      enumerable: true,
+   },
+   profile:
+   {
+      get: X3DExecutionContext .prototype .getProfile,
+      enumerable: true,
+   },
+   components:
+   {
+      get: X3DExecutionContext .prototype .getComponents,
+      enumerable: true,
+   },
+   worldURL:
+   {
+      get: X3DExecutionContext .prototype .getWorldURL,
+      enumerable: true,
+   },
+   units:
+   {
+      get: X3DExecutionContext .prototype .getUnits,
+      enumerable: true,
+   },
+   rootNodes:
+   {
+      get: X3DExecutionContext .prototype .getRootNodes,
+      set: X3DExecutionContext .prototype .setRootNodes,
+      enumerable: true,
+   },
+   protos:
+   {
+      get: X3DExecutionContext .prototype .getProtoDeclarations,
+      enumerable: true,
+   },
+   externprotos:
+   {
+      get: X3DExecutionContext .prototype .getExternProtoDeclarations,
+      enumerable: true,
+   },
+   routes:
+   {
+      get: X3DExecutionContext .prototype .getRoutes,
+      enumerable: true,
+   },
 });
 
 export default X3DExecutionContext;
