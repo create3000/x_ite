@@ -72,9 +72,7 @@ Matrix4 .prototype =
    length: 16,
    [Symbol .iterator]: function* ()
    {
-      const length = this .length;
-
-      for (let i = 0; i < length; ++ i)
+      for (let i = 0; i < 16; ++ i)
          yield this [i];
    },
    copy: function ()

@@ -70,9 +70,7 @@ Matrix3 .prototype =
    length: 9,
    [Symbol .iterator]: function* ()
    {
-      const length = this .length;
-
-      for (let i = 0; i < length; ++ i)
+      for (let i = 0; i < 9; ++ i)
          yield this [i];
    },
    copy: function ()
