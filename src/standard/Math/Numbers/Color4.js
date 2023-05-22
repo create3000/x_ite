@@ -134,47 +134,34 @@ Color4 .prototype =
 const r = {
    get: function () { return this [_r]; },
    set: function (value) { this [_r] = clamp (value, 0, 1); },
-   enumerable: true,
 };
 
 const g = {
    get: function () { return this [_g]; },
    set: function (value) { this [_g] = clamp (value, 0, 1); },
-   enumerable: true,
 };
 
 const b = {
    get: function () { return this [_b]; },
    set: function (value) { this [_b] = clamp (value, 0, 1); },
-   enumerable: true,
 };
 
 const a = {
    get: function () { return this [_a]; },
    set: function (value) { this [_a] = clamp (value, 0, 1); },
-   enumerable: true,
 };
 
 Object .defineProperties (Color4 .prototype,
 {
    length: { value: 4 },
-   r: r,
-   g: g,
-   b: b,
-   a: a,
-});
-
-r .enumerable = false;
-g .enumerable = false;
-b .enumerable = false;
-a .enumerable = false;
-
-Object .defineProperties (Color4 .prototype,
-{
    0: r,
    1: g,
    2: b,
    3: a,
+   r: Object .assign ({ enumerable: true }, r),
+   g: Object .assign ({ enumerable: true }, g),
+   b: Object .assign ({ enumerable: true }, b),
+   a: Object .assign ({ enumerable: true }, a),
 });
 
 Object .assign (Color4,
