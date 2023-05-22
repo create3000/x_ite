@@ -48,6 +48,7 @@
 import X3DField     from "../Base/X3DField.js";
 import ArrayFields  from "./ArrayFields.js";
 import X3DConstants from "../Base/X3DConstants.js";
+import Algorithm    from "../../standard/Math/Algorithm.js";
 
 const MFInt32 = ArrayFields .MFInt32;
 
@@ -57,9 +58,9 @@ const MFInt32 = ArrayFields .MFInt32;
 
 function Image (width, height, comp, array)
 {
-   this .width  = width|0;
-   this .height = height|0;
-   this .comp   = comp|0;
+   this .width  = Math .max (width|0, 0);
+   this .height = Math .max (height|0, 0);
+   this .comp   = Algorithm .clamp (comp|0, 0, 4);
    this .array  = new MFInt32 ();
    this .array .setValue (array);
    this .array .length = this .width * this .height;
@@ -95,8 +96,8 @@ Image .prototype =
    },
    setWidth: function (value)
    {
-      this .width = value|0;
-      this .array .length = this .width  * this .height;
+      this .width = Math .max (value|0, 0);
+      this .array .length = this .width * this .height;
    },
    getWidth: function ()
    {
@@ -104,8 +105,8 @@ Image .prototype =
    },
    setHeight: function (value)
    {
-      this .height = value|0;
-      this .array .length = this .width  * this .height;
+      this .height = Math .max (value|0, 0);
+      this .array .length = this .width * this .height;
    },
    getHeight: function ()
    {
@@ -113,7 +114,7 @@ Image .prototype =
    },
    setComp: function (value)
    {
-      this .comp = value|0;
+      this .comp = Algorithm .clamp (value|0, 0, 4);
    },
    getComp: function ()
    {
@@ -122,7 +123,7 @@ Image .prototype =
    setArray: function (value)
    {
       this .array .setValue (value);
-      this .array .length = this .width  * this .height;
+      this .array .length = this .width * this .height;
    },
    getArray: function ()
    {
