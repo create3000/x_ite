@@ -155,10 +155,23 @@ Complex .prototype =
    },
    toString: function ()
    {
-      if (this .imag)
-         return this .real + " " + this .imag + "i";
+      let string = "";
 
-      return String (this .real);
+      string += this .real;
+
+      if (this .imag < 0)
+      {
+         string += this .imag;
+         string += "i";
+      }
+      else if (this .imag > 0)
+      {
+         string += "+";
+         string += this .imag;
+         string += "i";
+      }
+
+      return string;
    },
 };
 
