@@ -178,7 +178,7 @@ Complex .prototype =
 Object .defineProperties (Complex .prototype,
 {
    length: { value: 2 },
-   "0":
+   0:
    {
       get: function ()
       {
@@ -189,7 +189,7 @@ Object .defineProperties (Complex .prototype,
          this .real = value;
       },
    },
-   "1":
+   1:
    {
       get: function ()
       {

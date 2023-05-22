@@ -435,10 +435,10 @@ angle .enumerable = false;
 
 Object .defineProperties (Rotation4 .prototype,
 {
-   "0": x,
-   "1": y,
-   "2": z,
-   "3": angle,
+   0: x,
+   1: y,
+   2: z,
+   3: angle,
 });
 
 Object .assign (Rotation4,

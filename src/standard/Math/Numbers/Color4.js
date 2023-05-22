@@ -171,10 +171,10 @@ a .enumerable = false;
 
 Object .defineProperties (Color4 .prototype,
 {
-   "0": r,
-   "1": g,
-   "2": b,
-   "3": a,
+   0: r,
+   1: g,
+   2: b,
+   3: a,
 });
 
 Object .assign (Color4,

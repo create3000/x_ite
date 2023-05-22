@@ -273,22 +273,22 @@ Vector4 .prototype =
 Object .defineProperties (Vector4 .prototype,
 {
    length: { value: 4 },
-   "0":
+   0:
    {
       get: function () { return this .x; },
       set: function (value) { this .x = value; },
    },
-   "1":
+   1:
    {
       get: function () { return this .y; },
       set: function (value) { this .y = value; },
    },
-   "2":
+   2:
    {
       get: function () { return this .z; },
       set: function (value) { this .z = value; },
    },
-   "3":
+   3:
    {
       get: function () { return this .w; },
       set: function (value) { this .w = value; },

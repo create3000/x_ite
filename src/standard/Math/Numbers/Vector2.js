@@ -216,12 +216,12 @@ Vector2 .prototype =
 Object .defineProperties (Vector2 .prototype,
 {
    length: { value: 2 },
-   "0":
+   0:
    {
       get: function () { return this .x; },
       set: function (value) { this .x = value; },
    },
-   "1":
+   1:
    {
       get: function () { return this .y; },
       set: function (value) { this .y = value; },

@@ -208,9 +208,9 @@ b .enumerable = false;
 
 Object .defineProperties (Color3 .prototype,
 {
-   "0": r,
-   "1": g,
-   "2": b,
+   0: r,
+   1: g,
+   2: b,
 });
 
 Object .assign (Color3,
