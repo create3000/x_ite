@@ -56,7 +56,6 @@ function Vector4 (x, y, z, w)
 Vector4 .prototype =
 {
    constructor: Vector4,
-   length: 4,
    [Symbol .iterator]: function* ()
    {
       yield this .x;
@@ -271,36 +270,29 @@ Vector4 .prototype =
    },
 };
 
-Object .defineProperty (Vector4 .prototype, "0",
+Object .defineProperties (Vector4 .prototype,
 {
-   get: function () { return this .x; },
-   set: function (value) { this .x = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Vector4 .prototype, "1",
-{
-   get: function () { return this .y; },
-   set: function (value) { this .y = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Vector4 .prototype, "2",
-{
-   get: function () { return this .z; },
-   set: function (value) { this .z = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Vector4 .prototype, "3",
-{
-   get: function () { return this .w; },
-   set: function (value) { this .w = value; },
-   enumerable: false,
-   configurable: false
+   length: { value: 4 },
+   "0":
+   {
+      get: function () { return this .x; },
+      set: function (value) { this .x = value; },
+   },
+   "1":
+   {
+      get: function () { return this .y; },
+      set: function (value) { this .y = value; },
+   },
+   "2":
+   {
+      get: function () { return this .z; },
+      set: function (value) { this .z = value; },
+   },
+   "3":
+   {
+      get: function () { return this .w; },
+      set: function (value) { this .w = value; },
+   },
 });
 
 Object .assign (Vector4,

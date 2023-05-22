@@ -54,7 +54,6 @@ function Complex (real, imag)
 Complex .prototype =
 {
    constructor: Complex,
-   length: 2,
    [Symbol .iterator]: function* ()
    {
       yield this .real;
@@ -163,68 +162,61 @@ Complex .prototype =
    },
 };
 
-Object .defineProperty (Complex .prototype, "0",
+Object .defineProperties (Complex .prototype,
 {
-   get: function ()
+   length: { value: 2 },
+   "0":
    {
-      return this .real;
-   },
-   set: function (value)
-   {
-      this .real = value;
-   },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Complex .prototype, "1",
-{
-   get: function ()
-   {
-      return this .imag;
-   },
-   set: function (value)
-   {
-      this .imag = value;
-   },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Complex .prototype, "magnitude",
-{
-   get: function ()
-   {
-      if (this .real)
+      get: function ()
       {
-         if (this .imag)
-            return Math .hypot (this .real, this .imag);
-
-         return Math .abs (this .real);
-      }
-
-      return Math .abs (this .imag);
+         return this .real;
+      },
+      set: function (value)
+      {
+         this .real = value;
+      },
    },
-   set: function (magnitude)
+   "1":
    {
-      this .setPolar (magnitude, this .angle);
+      get: function ()
+      {
+         return this .imag;
+      },
+      set: function (value)
+      {
+         this .imag = value;
+      },
    },
-   enumerable: false,
-   configurable: false
-});
+   magnitude:
+   {
+      get: function ()
+      {
+         if (this .real)
+         {
+            if (this .imag)
+               return Math .hypot (this .real, this .imag);
 
-Object .defineProperty (Complex .prototype, "angle",
-{
-   get: function ()
-   {
-      return Math .atan2 (this .imag, this .real);
+            return Math .abs (this .real);
+         }
+
+         return Math .abs (this .imag);
+      },
+      set: function (magnitude)
+      {
+         this .setPolar (magnitude, this .angle);
+      },
    },
-   set: function (angle)
+   angle:
    {
-      this .setPolar (this .magnitude, angle);
+      get: function ()
+      {
+         return Math .atan2 (this .imag, this .real);
+      },
+      set: function (angle)
+      {
+         this .setPolar (this .magnitude, angle);
+      },
    },
-   enumerable: false,
-   configurable: false
 });
 
 Object .assign (Complex,

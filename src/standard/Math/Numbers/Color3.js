@@ -64,7 +64,6 @@ function Color3 (r, g, b)
 Color3 .prototype =
 {
    constructor: Color3,
-   length: 3,
    [Symbol .iterator]: function* ()
    {
       yield this [_r];
@@ -181,34 +180,38 @@ const r = {
    get: function () { return this [_r]; },
    set: function (value) { this [_r] = clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
 const g = {
    get: function () { return this [_g]; },
    set: function (value) { this [_g] = clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
 const b = {
    get: function () { return this [_b]; },
    set: function (value) { this [_b] = clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
-Object .defineProperty (Color3 .prototype, "r", r);
-Object .defineProperty (Color3 .prototype, "g", g);
-Object .defineProperty (Color3 .prototype, "b", b);
+Object .defineProperties (Color3 .prototype,
+{
+   length: { value: 3 },
+   r: r,
+   g: g,
+   b: b,
+});
 
 r .enumerable = false;
 g .enumerable = false;
 b .enumerable = false;
 
-Object .defineProperty (Color3 .prototype, "0", r);
-Object .defineProperty (Color3 .prototype, "1", g);
-Object .defineProperty (Color3 .prototype, "2", b);
+Object .defineProperties (Color3 .prototype,
+{
+   "0": r,
+   "1": g,
+   "2": b,
+});
 
 Object .assign (Color3,
 {

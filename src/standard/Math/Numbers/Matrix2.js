@@ -45,8 +45,7 @@
  *
  ******************************************************************************/
 
-import Vector2   from "./Vector2.js";
-import Algorithm from "../Algorithm.js";
+import Vector2 from "./Vector2.js";
 
 function Matrix2 ()
 {
@@ -64,8 +63,6 @@ function Matrix2 ()
 Matrix2 .prototype =
 {
    constructor: Matrix2,
-   order: 2,
-   length: 4,
    [Symbol .iterator]: function* ()
    {
       for (let i = 0; i < 4; ++ i)
@@ -234,49 +231,40 @@ Matrix2 .prototype =
    },
 };
 
-Object .defineProperty (Matrix2 .prototype, "x",
+Object .defineProperties (Matrix2 .prototype,
 {
-   get: (function ()
+   order: { value: 2 },
+   length: { value: 4 },
+   x:
    {
-      const vector = new Vector2 (0, 0);
+      get: (function ()
+      {
+         const vector = new Vector2 (0, 0);
 
-      return function () { return vector .set (this [0], this [1]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix2 .prototype, "y",
-{
-   get: (function ()
+         return function () { return vector .set (this [0], this [1]); };
+      })(),
+   },
+   y:
    {
-      const vector = new Vector2 (0, 0);
+      get: (function ()
+      {
+         const vector = new Vector2 (0, 0);
 
-      return function () { return vector .set (this [2], this [3]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix2 .prototype, "xAxis",
-{
-   get: function () { return this [0]; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix2 .prototype, "origin",
-{
-   get: function () { return this [2]; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix2 .prototype, "submatrix",
-{
-   get: function () { return this [0]; },
-   enumerable: false,
-   configurable: false
+         return function () { return vector .set (this [2], this [3]); };
+      })(),
+   },
+   xAxis:
+   {
+      get: function () { return this [0]; },
+   },
+   origin:
+   {
+      get: function () { return this [2]; },
+   },
+   submatrix:
+   {
+      get: function () { return this [0]; },
+   },
 });
 
 Object .assign (Matrix2,

@@ -203,33 +203,33 @@ Box2 .prototype =
    },
 };
 
-Object .defineProperty (Box2 .prototype, "size",
+Object .defineProperties (Box2 .prototype,
 {
-   get: (function ()
+   size:
    {
-      const
-         min = new Vector2 (0, 0),
-         max = new Vector2 (0, 0);
-
-      return function ()
+      get: (function ()
       {
-         this .getAbsoluteExtents (min, max);
+         const
+            min = new Vector2 (0, 0),
+            max = new Vector2 (0, 0);
 
-         return max .subtract (min);
-      };
-   })(),
-   enumerable: true,
-   configurable: false
-});
+         return function ()
+         {
+            this .getAbsoluteExtents (min, max);
 
-Object .defineProperty (Box2 .prototype, "center",
-{
-   get: function ()
-   {
-      return this .matrix .origin;
+            return max .subtract (min);
+         };
+      })(),
+      enumerable: true,
    },
-   enumerable: true,
-   configurable: false
+   center:
+   {
+      get: function ()
+      {
+         return this .matrix .origin;
+      },
+      enumerable: true,
+   },
 });
 
 export default Box2;

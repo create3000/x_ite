@@ -60,7 +60,6 @@ function Quaternion (x, y, z, w)
 Quaternion .prototype =
 {
    constructor: Quaternion,
-   length: 4,
    [Symbol .iterator]: function* ()
    {
       yield this .x;
@@ -402,60 +401,47 @@ Quaternion .prototype =
    },
 };
 
-Object .defineProperty (Quaternion .prototype, "0",
+Object .defineProperties (Quaternion .prototype,
 {
-   get: function () { return this .x; },
-   set: function (value) { this .x = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Quaternion .prototype, "1",
-{
-   get: function () { return this .y; },
-   set: function (value) { this .y = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Quaternion .prototype, "2",
-{
-   get: function () { return this .z; },
-   set: function (value) { this .z = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Quaternion .prototype, "3",
-{
-   get: function () { return this .w; },
-   set: function (value) { this .w = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Quaternion .prototype, "real",
-{
-   get: function () { return this .w; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Quaternion .prototype, "imag",
-{
-   get: (function ()
+   length: { value: 4 },
+   "0":
    {
-      const result = new Vector3 (0, 0, 0);
-
-      return function ()
+      get: function () { return this .x; },
+      set: function (value) { this .x = value; },
+   },
+   "1":
+   {
+      get: function () { return this .y; },
+      set: function (value) { this .y = value; },
+   },
+   "2":
+   {
+      get: function () { return this .z; },
+      set: function (value) { this .z = value; },
+   },
+   "3":
+   {
+      get: function () { return this .w; },
+      set: function (value) { this .w = value; },
+   },
+   real:
+   {
+      get: function () { return this .w; },
+   },
+   imag:
+   {
+      get: (function ()
       {
-         return result .set (this .x,
-                             this .y,
-                             this .z);
-      };
-   })(),
-   enumerable: false,
-   configurable: false
+         const result = new Vector3 (0, 0, 0);
+
+         return function ()
+         {
+            return result .set (this .x,
+                                this .y,
+                                this .z);
+         };
+      })(),
+   },
 });
 
 Object .assign (Quaternion,

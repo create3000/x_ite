@@ -54,7 +54,6 @@ function Vector2 (x, y)
 Vector2 .prototype =
 {
    constructor: Vector2,
-   length: 2,
    [Symbol .iterator]: function* ()
    {
       yield this .x;
@@ -214,20 +213,19 @@ Vector2 .prototype =
    }
 };
 
-Object .defineProperty (Vector2 .prototype, "0",
+Object .defineProperties (Vector2 .prototype,
 {
-   get: function () { return this .x; },
-   set: function (value) { this .x = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Vector2 .prototype, "1",
-{
-   get: function () { return this .y; },
-   set: function (value) { this .y = value; },
-   enumerable: false,
-   configurable: false
+   length: { value: 2 },
+   "0":
+   {
+      get: function () { return this .x; },
+      set: function (value) { this .x = value; },
+   },
+   "1":
+   {
+      get: function () { return this .y; },
+      set: function (value) { this .y = value; },
+   },
 });
 
 Object .assign (Vector2,

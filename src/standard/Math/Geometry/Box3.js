@@ -611,33 +611,33 @@ Box3 .prototype =
    },
 };
 
-Object .defineProperty (Box3 .prototype, "size",
+Object .defineProperties (Box3 .prototype,
 {
-   get: (function ()
+   size:
    {
-      const
-         min = new Vector3 (0, 0, 0),
-         max = new Vector3 (0, 0, 0);
-
-      return function ()
+      get: (function ()
       {
-         this .getAbsoluteExtents (min, max);
+         const
+            min = new Vector3 (0, 0, 0),
+            max = new Vector3 (0, 0, 0);
 
-         return max .subtract (min);
-      };
-   })(),
-   enumerable: true,
-   configurable: false
-});
+         return function ()
+         {
+            this .getAbsoluteExtents (min, max);
 
-Object .defineProperty (Box3 .prototype, "center",
-{
-   get: function ()
-   {
-      return this .matrix .origin;
+            return max .subtract (min);
+         };
+      })(),
+      enumerable: true,
    },
-   enumerable: true,
-   configurable: false
+   center:
+   {
+      get: function ()
+      {
+         return this .matrix .origin;
+      },
+      enumerable: true,
+   },
 });
 
 export default Box3;

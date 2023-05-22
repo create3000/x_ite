@@ -108,7 +108,6 @@ function Rotation4 (x, y, z, angle)
 Rotation4 .prototype =
 {
    constructor: Rotation4,
-   length: 4,
    [Symbol .iterator]: function* ()
    {
       yield this [_x];
@@ -379,7 +378,6 @@ const x = {
       this .set (x, this [_y], this [_z], this [_angle]);
    },
    enumerable: true,
-   configurable: false
 };
 
 const y = {
@@ -393,7 +391,6 @@ const y = {
       this .set (this [_x], y, this [_z], this [_angle]);
    },
    enumerable: true,
-   configurable: false
 };
 
 const z = {
@@ -407,7 +404,6 @@ const z = {
       this .set (this [_x], this [_y], z, this [_angle]);
    },
    enumerable: true,
-   configurable: false
 };
 
 const angle = {
@@ -421,23 +417,29 @@ const angle = {
       this .set (this [_x], this [_y], this [_z], angle);
    },
    enumerable: true,
-   configurable: false
 };
 
-Object .defineProperty (Rotation4 .prototype, "x",     x);
-Object .defineProperty (Rotation4 .prototype, "y",     y);
-Object .defineProperty (Rotation4 .prototype, "z",     z);
-Object .defineProperty (Rotation4 .prototype, "angle", angle);
+Object .defineProperties (Rotation4 .prototype,
+{
+   length: { value: 4 },
+   x: x,
+   y: y,
+   z: z,
+   angle: angle,
+});
 
 x     .enumerable = false;
 y     .enumerable = false;
 z     .enumerable = false;
 angle .enumerable = false;
 
-Object .defineProperty (Rotation4 .prototype, "0", x);
-Object .defineProperty (Rotation4 .prototype, "1", y);
-Object .defineProperty (Rotation4 .prototype, "2", z);
-Object .defineProperty (Rotation4 .prototype, "3", angle);
+Object .defineProperties (Rotation4 .prototype,
+{
+   "0": x,
+   "1": y,
+   "2": z,
+   "3": angle,
+});
 
 Object .assign (Rotation4,
 {

@@ -57,7 +57,6 @@ function Vector3 (x, y, z)
 Vector3 .prototype =
 {
    constructor: Vector3,
-   length: 3,
    [Symbol .iterator]: function* ()
    {
       yield this .x;
@@ -262,28 +261,24 @@ Vector3 .prototype =
    }
 };
 
-Object .defineProperty (Vector3 .prototype, "0",
+Object .defineProperties (Vector3 .prototype,
 {
-   get: function () { return this .x; },
-   set: function (value) { this .x = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Vector3 .prototype, "1",
-{
-   get: function () { return this .y; },
-   set: function (value) { this .y = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Vector3 .prototype, "2",
-{
-   get: function () { return this .z; },
-   set: function (value) { this .z = value; },
-   enumerable: false,
-   configurable: false
+   length: { value: 3 },
+   "0":
+   {
+      get: function () { return this .x; },
+      set: function (value) { this .x = value; },
+   },
+   "1":
+   {
+      get: function () { return this .y; },
+      set: function (value) { this .y = value; },
+   },
+   "2":
+   {
+      get: function () { return this .z; },
+      set: function (value) { this .z = value; },
+   },
 });
 
 Object .assign (Vector3,

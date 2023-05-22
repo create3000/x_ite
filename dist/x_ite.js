@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 66:
+/***/ 860:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(917);
+/* provided dependency */ var jQuery = __webpack_require__(808);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 936:
+/***/ 369:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(917);
+/* provided dependency */ var jQuery = __webpack_require__(808);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 132:
+/***/ 97:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(917)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(808)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 917:
+/***/ 808:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11523,7 +11523,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 836:
+/***/ 948:
 /***/ ((module) => {
 
 /**
@@ -16302,7 +16302,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 480:
+/***/ 385:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19547,7 +19547,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 168:
+/***/ 121:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -23654,7 +23654,6 @@ function Color3 (r, g, b)
 Color3 .prototype =
 {
    constructor: Color3,
-   length: 3,
    [Symbol .iterator]: function* ()
    {
       yield this [_r];
@@ -23771,34 +23770,38 @@ const r = {
    get: function () { return this [_r]; },
    set: function (value) { this [_r] = clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
 const g = {
    get: function () { return this [_g]; },
    set: function (value) { this [_g] = clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
 const b = {
    get: function () { return this [_b]; },
    set: function (value) { this [_b] = clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
-Object .defineProperty (Color3 .prototype, "r", r);
-Object .defineProperty (Color3 .prototype, "g", g);
-Object .defineProperty (Color3 .prototype, "b", b);
+Object .defineProperties (Color3 .prototype,
+{
+   length: { value: 3 },
+   r: r,
+   g: g,
+   b: b,
+});
 
 r .enumerable = false;
 g .enumerable = false;
 b .enumerable = false;
 
-Object .defineProperty (Color3 .prototype, "0", r);
-Object .defineProperty (Color3 .prototype, "1", g);
-Object .defineProperty (Color3 .prototype, "2", b);
+Object .defineProperties (Color3 .prototype,
+{
+   "0": r,
+   "1": g,
+   "2": b,
+});
 
 Object .assign (Color3,
 {
@@ -24166,7 +24169,6 @@ function Color4 (r, g, b, a)
 Color4 .prototype =
 {
    constructor: Color4,
-   length: 4,
    [Symbol .iterator]: function* ()
    {
       yield this [Color4_r];
@@ -24235,44 +24237,47 @@ const Numbers_Color4_r = {
    get: function () { return this [Color4_r]; },
    set: function (value) { this [Color4_r] = Color4_clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
 const Numbers_Color4_g = {
    get: function () { return this [Color4_g]; },
    set: function (value) { this [Color4_g] = Color4_clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
 const Numbers_Color4_b = {
    get: function () { return this [Color4_b]; },
    set: function (value) { this [Color4_b] = Color4_clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
 const a = {
    get: function () { return this [_a]; },
    set: function (value) { this [_a] = Color4_clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
-Object .defineProperty (Color4 .prototype, "r", Numbers_Color4_r);
-Object .defineProperty (Color4 .prototype, "g", Numbers_Color4_g);
-Object .defineProperty (Color4 .prototype, "b", Numbers_Color4_b);
-Object .defineProperty (Color4 .prototype, "a", a);
+Object .defineProperties (Color4 .prototype,
+{
+   length: { value: 4 },
+   r: Numbers_Color4_r,
+   g: Numbers_Color4_g,
+   b: Numbers_Color4_b,
+   a: a,
+});
 
 Numbers_Color4_r .enumerable = false;
 Numbers_Color4_g .enumerable = false;
 Numbers_Color4_b .enumerable = false;
 a .enumerable = false;
 
-Object .defineProperty (Color4 .prototype, "0", Numbers_Color4_r);
-Object .defineProperty (Color4 .prototype, "1", Numbers_Color4_g);
-Object .defineProperty (Color4 .prototype, "2", Numbers_Color4_b);
-Object .defineProperty (Color4 .prototype, "3", a);
+Object .defineProperties (Color4 .prototype,
+{
+   "0": Numbers_Color4_r,
+   "1": Numbers_Color4_g,
+   "2": Numbers_Color4_b,
+   "3": a,
+});
 
 Object .assign (Color4,
 {
@@ -25302,7 +25307,6 @@ function Vector2 (x, y)
 Vector2 .prototype =
 {
    constructor: Vector2,
-   length: 2,
    [Symbol .iterator]: function* ()
    {
       yield this .x;
@@ -25462,20 +25466,19 @@ Vector2 .prototype =
    }
 };
 
-Object .defineProperty (Vector2 .prototype, "0",
+Object .defineProperties (Vector2 .prototype,
 {
-   get: function () { return this .x; },
-   set: function (value) { this .x = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Vector2 .prototype, "1",
-{
-   get: function () { return this .y; },
-   set: function (value) { this .y = value; },
-   enumerable: false,
-   configurable: false
+   length: { value: 2 },
+   "0":
+   {
+      get: function () { return this .x; },
+      set: function (value) { this .x = value; },
+   },
+   "1":
+   {
+      get: function () { return this .y; },
+      set: function (value) { this .y = value; },
+   },
 });
 
 Object .assign (Vector2,
@@ -25744,7 +25747,6 @@ function Vector3 (x, y, z)
 Vector3 .prototype =
 {
    constructor: Vector3,
-   length: 3,
    [Symbol .iterator]: function* ()
    {
       yield this .x;
@@ -25949,28 +25951,24 @@ Vector3 .prototype =
    }
 };
 
-Object .defineProperty (Vector3 .prototype, "0",
+Object .defineProperties (Vector3 .prototype,
 {
-   get: function () { return this .x; },
-   set: function (value) { this .x = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Vector3 .prototype, "1",
-{
-   get: function () { return this .y; },
-   set: function (value) { this .y = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Vector3 .prototype, "2",
-{
-   get: function () { return this .z; },
-   set: function (value) { this .z = value; },
-   enumerable: false,
-   configurable: false
+   length: { value: 3 },
+   "0":
+   {
+      get: function () { return this .x; },
+      set: function (value) { this .x = value; },
+   },
+   "1":
+   {
+      get: function () { return this .y; },
+      set: function (value) { this .y = value; },
+   },
+   "2":
+   {
+      get: function () { return this .z; },
+      set: function (value) { this .z = value; },
+   },
 });
 
 Object .assign (Vector3,
@@ -26109,7 +26107,6 @@ x_ite_Namespace.set ("standard/Math/Numbers/Vector3", Vector3_default_);
 
 
 
-
 function Matrix2 ()
 {
    if (arguments .length)
@@ -26126,13 +26123,9 @@ function Matrix2 ()
 Matrix2 .prototype =
 {
    constructor: Matrix2,
-   order: 2,
-   length: 4,
    [Symbol .iterator]: function* ()
    {
-      const length = this .length;
-
-      for (let i = 0; i < length; ++ i)
+      for (let i = 0; i < 4; ++ i)
          yield this [i];
    },
    copy: function ()
@@ -26298,49 +26291,40 @@ Matrix2 .prototype =
    },
 };
 
-Object .defineProperty (Matrix2 .prototype, "x",
+Object .defineProperties (Matrix2 .prototype,
 {
-   get: (function ()
+   order: { value: 2 },
+   length: { value: 4 },
+   x:
    {
-      const vector = new Numbers_Vector2 (0, 0);
+      get: (function ()
+      {
+         const vector = new Numbers_Vector2 (0, 0);
 
-      return function () { return vector .set (this [0], this [1]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix2 .prototype, "y",
-{
-   get: (function ()
+         return function () { return vector .set (this [0], this [1]); };
+      })(),
+   },
+   y:
    {
-      const vector = new Numbers_Vector2 (0, 0);
+      get: (function ()
+      {
+         const vector = new Numbers_Vector2 (0, 0);
 
-      return function () { return vector .set (this [2], this [3]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix2 .prototype, "xAxis",
-{
-   get: function () { return this [0]; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix2 .prototype, "origin",
-{
-   get: function () { return this [2]; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix2 .prototype, "submatrix",
-{
-   get: function () { return this [0]; },
-   enumerable: false,
-   configurable: false
+         return function () { return vector .set (this [2], this [3]); };
+      })(),
+   },
+   xAxis:
+   {
+      get: function () { return this [0]; },
+   },
+   origin:
+   {
+      get: function () { return this [2]; },
+   },
+   submatrix:
+   {
+      get: function () { return this [0]; },
+   },
 });
 
 Object .assign (Matrix2,
@@ -26411,23 +26395,23 @@ function eigen_decomposition (matrix, result)
 {
    const
       ORDER   = matrix .order,
+      SIZE    = matrix .length,
       values  = result .values,
       vectors = result .vectors;
 
    let
-      sm,                // smallest entry
-      theta,             // angle for Jacobi rotation
-      c, s, t,           // cosine, sine, tangent of theta
-      tau,               // sine / (1 + cos)
-      h, g,              // two scrap values
-      thresh,            // threshold below which no rotation done
-      p, q, i, j,
-      SIZE = matrix .length;
+      sm,         // smallest entry
+      theta,      // angle for Jacobi rotation
+      c, s, t,    // cosine, sine, tangent of theta
+      tau,        // sine / (1 + cos)
+      h, g,       // two scrap values
+      thresh,     // threshold below which no rotation done
+      p, q, i, j; // indices
 
    // initializations
    for (i = 0; i < ORDER; ++ i)
    {
-      eigen_decomposition_a [i] = eigen_decomposition_a [i] || new Array (ORDER);
+      eigen_decomposition_a [i] = eigen_decomposition_a [i] ?? [ ];
       eigen_decomposition_b [i] = values [i] = matrix .get1 (i, i);
       z [i] = 0;
 
@@ -26617,13 +26601,9 @@ function Matrix3 ()
 Matrix3 .prototype =
 {
    constructor: Matrix3,
-   order: 3,
-   length: 9,
    [Symbol .iterator]: function* ()
    {
-      const length = this .length;
-
-      for (let i = 0; i < length; ++ i)
+      for (let i = 0; i < 9; ++ i)
          yield this [i];
    },
    copy: function ()
@@ -27129,93 +27109,78 @@ Matrix3 .prototype =
    },
 };
 
-Object .defineProperty (Matrix3 .prototype, "x",
+Object .defineProperties (Matrix3 .prototype,
 {
-   get: (function ()
+   order: { value: 3 },
+   length: { value: 9 },
+   x:
    {
-      const vector = new Numbers_Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [0], this [1], this [2]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix3 .prototype, "y",
-{
-   get: (function ()
-   {
-      const vector = new Numbers_Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [3], this [4], this [5]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix3 .prototype, "z",
-{
-   get: (function ()
-   {
-      const vector = new Numbers_Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [6], this [7], this [8]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix3 .prototype, "xAxis",
-{
-   get: (function ()
-   {
-      const vector = new Numbers_Vector2 (0, 0);
-
-      return function () { return vector .set (this [0], this [1]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix3 .prototype, "yAxis",
-{
-   get: (function ()
-   {
-      const vector = new Numbers_Vector2 (0, 0);
-
-      return function () { return vector .set (this [3], this [4]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix3 .prototype, "origin",
-{
-   get: (function ()
-   {
-      const vector = new Numbers_Vector2 (0, 0);
-
-      return function () { return vector .set (this [6], this [7]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix3 .prototype, "submatrix",
-{
-   get: (function ()
-   {
-      const matrix = new Numbers_Matrix2 ();
-
-      return function ()
+      get: (function ()
       {
-         matrix [0] = this [0]; matrix [1] = this [1];
-         matrix [2] = this [3]; matrix [3] = this [4];
-         return matrix;
-      };
-   })(),
-   enumerable: false,
-   configurable: false
+         const vector = new Numbers_Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [0], this [1], this [2]); };
+      })(),
+   },
+   y:
+   {
+      get: (function ()
+      {
+         const vector = new Numbers_Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [3], this [4], this [5]); };
+      })(),
+   },
+   z:
+   {
+      get: (function ()
+      {
+         const vector = new Numbers_Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [6], this [7], this [8]); };
+      })(),
+   },
+   xAxis:
+   {
+      get: (function ()
+      {
+         const vector = new Numbers_Vector2 (0, 0);
+
+         return function () { return vector .set (this [0], this [1]); };
+      })(),
+   },
+   yAxis:
+   {
+      get: (function ()
+      {
+         const vector = new Numbers_Vector2 (0, 0);
+
+         return function () { return vector .set (this [3], this [4]); };
+      })(),
+   },
+   origin:
+   {
+      get: (function ()
+      {
+         const vector = new Numbers_Vector2 (0, 0);
+
+         return function () { return vector .set (this [6], this [7]); };
+      })(),
+   },
+   submatrix:
+   {
+      get: (function ()
+      {
+         const matrix = new Numbers_Matrix2 ();
+
+         return function ()
+         {
+            matrix [0] = this [0]; matrix [1] = this [1];
+            matrix [2] = this [3]; matrix [3] = this [4];
+            return matrix;
+         };
+      })(),
+   },
 });
 
 Object .assign (Matrix3,
@@ -27610,7 +27575,6 @@ function Vector4 (x, y, z, w)
 Vector4 .prototype =
 {
    constructor: Vector4,
-   length: 4,
    [Symbol .iterator]: function* ()
    {
       yield this .x;
@@ -27825,36 +27789,29 @@ Vector4 .prototype =
    },
 };
 
-Object .defineProperty (Vector4 .prototype, "0",
+Object .defineProperties (Vector4 .prototype,
 {
-   get: function () { return this .x; },
-   set: function (value) { this .x = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Vector4 .prototype, "1",
-{
-   get: function () { return this .y; },
-   set: function (value) { this .y = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Vector4 .prototype, "2",
-{
-   get: function () { return this .z; },
-   set: function (value) { this .z = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Vector4 .prototype, "3",
-{
-   get: function () { return this .w; },
-   set: function (value) { this .w = value; },
-   enumerable: false,
-   configurable: false
+   length: { value: 4 },
+   "0":
+   {
+      get: function () { return this .x; },
+      set: function (value) { this .x = value; },
+   },
+   "1":
+   {
+      get: function () { return this .y; },
+      set: function (value) { this .y = value; },
+   },
+   "2":
+   {
+      get: function () { return this .z; },
+      set: function (value) { this .z = value; },
+   },
+   "3":
+   {
+      get: function () { return this .w; },
+      set: function (value) { this .w = value; },
+   },
 });
 
 Object .assign (Vector4,
@@ -27999,7 +27956,6 @@ function Quaternion (x, y, z, w)
 Quaternion .prototype =
 {
    constructor: Quaternion,
-   length: 4,
    [Symbol .iterator]: function* ()
    {
       yield this .x;
@@ -28341,60 +28297,47 @@ Quaternion .prototype =
    },
 };
 
-Object .defineProperty (Quaternion .prototype, "0",
+Object .defineProperties (Quaternion .prototype,
 {
-   get: function () { return this .x; },
-   set: function (value) { this .x = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Quaternion .prototype, "1",
-{
-   get: function () { return this .y; },
-   set: function (value) { this .y = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Quaternion .prototype, "2",
-{
-   get: function () { return this .z; },
-   set: function (value) { this .z = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Quaternion .prototype, "3",
-{
-   get: function () { return this .w; },
-   set: function (value) { this .w = value; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Quaternion .prototype, "real",
-{
-   get: function () { return this .w; },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Quaternion .prototype, "imag",
-{
-   get: (function ()
+   length: { value: 4 },
+   "0":
    {
-      const result = new Numbers_Vector3 (0, 0, 0);
-
-      return function ()
+      get: function () { return this .x; },
+      set: function (value) { this .x = value; },
+   },
+   "1":
+   {
+      get: function () { return this .y; },
+      set: function (value) { this .y = value; },
+   },
+   "2":
+   {
+      get: function () { return this .z; },
+      set: function (value) { this .z = value; },
+   },
+   "3":
+   {
+      get: function () { return this .w; },
+      set: function (value) { this .w = value; },
+   },
+   real:
+   {
+      get: function () { return this .w; },
+   },
+   imag:
+   {
+      get: (function ()
       {
-         return result .set (this .x,
-                             this .y,
-                             this .z);
-      };
-   })(),
-   enumerable: false,
-   configurable: false
+         const result = new Numbers_Vector3 (0, 0, 0);
+
+         return function ()
+         {
+            return result .set (this .x,
+                                this .y,
+                                this .z);
+         };
+      })(),
+   },
 });
 
 Object .assign (Quaternion,
@@ -28602,7 +28545,6 @@ function Rotation4 (x, y, z, angle)
 Rotation4 .prototype =
 {
    constructor: Rotation4,
-   length: 4,
    [Symbol .iterator]: function* ()
    {
       yield this [_x];
@@ -28873,7 +28815,6 @@ const x = {
       this .set (x, this [_y], this [_z], this [_angle]);
    },
    enumerable: true,
-   configurable: false
 };
 
 const y = {
@@ -28887,7 +28828,6 @@ const y = {
       this .set (this [_x], y, this [_z], this [_angle]);
    },
    enumerable: true,
-   configurable: false
 };
 
 const Rotation4_z = {
@@ -28901,7 +28841,6 @@ const Rotation4_z = {
       this .set (this [_x], this [_y], z, this [_angle]);
    },
    enumerable: true,
-   configurable: false
 };
 
 const angle = {
@@ -28915,23 +28854,29 @@ const angle = {
       this .set (this [_x], this [_y], this [_z], angle);
    },
    enumerable: true,
-   configurable: false
 };
 
-Object .defineProperty (Rotation4 .prototype, "x",     x);
-Object .defineProperty (Rotation4 .prototype, "y",     y);
-Object .defineProperty (Rotation4 .prototype, "z",     Rotation4_z);
-Object .defineProperty (Rotation4 .prototype, "angle", angle);
+Object .defineProperties (Rotation4 .prototype,
+{
+   length: { value: 4 },
+   x: x,
+   y: y,
+   z: Rotation4_z,
+   angle: angle,
+});
 
 x     .enumerable = false;
 y     .enumerable = false;
 Rotation4_z     .enumerable = false;
 angle .enumerable = false;
 
-Object .defineProperty (Rotation4 .prototype, "0", x);
-Object .defineProperty (Rotation4 .prototype, "1", y);
-Object .defineProperty (Rotation4 .prototype, "2", Rotation4_z);
-Object .defineProperty (Rotation4 .prototype, "3", angle);
+Object .defineProperties (Rotation4 .prototype,
+{
+   "0": x,
+   "1": y,
+   "2": Rotation4_z,
+   "3": angle,
+});
 
 Object .assign (Rotation4,
 {
@@ -29050,13 +28995,9 @@ function Matrix4_Matrix4 ()
 Matrix4_Matrix4 .prototype =
 {
    constructor: Matrix4_Matrix4,
-   order: 4,
-   length: 16,
    [Symbol .iterator]: function* ()
    {
-      const length = this .length;
-
-      for (let i = 0; i < length; ++ i)
+      for (let i = 0; i < 16; ++ i)
          yield this [i];
    },
    copy: function ()
@@ -29654,118 +29595,97 @@ Matrix4_Matrix4 .prototype =
    },
 };
 
-Object .defineProperty (Matrix4_Matrix4 .prototype, "x",
+Object .defineProperties (Matrix4_Matrix4 .prototype,
 {
-   get: (function ()
+   order: { value: 4 },
+   length: { value: 16 },
+   x:
    {
-      const vector = new Numbers_Vector4 (0, 0, 0, 0);
-
-      return function () { return vector .set (this [0], this [1], this [2], this [3]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4_Matrix4 .prototype, "y",
-{
-   get: (function ()
-   {
-      const vector = new Numbers_Vector4 (0, 0, 0, 0);
-
-      return function () { return vector .set (this [4], this [5], this [6], this [7]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4_Matrix4 .prototype, "z",
-{
-   get: (function ()
-   {
-      const vector = new Numbers_Vector4 (0, 0, 0, 0);
-
-      return function () { return vector .set (this [8], this [9], this [10], this [11]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4_Matrix4 .prototype, "w",
-{
-   get: (function ()
-   {
-      const vector = new Numbers_Vector4 (0, 0, 0, 0);
-
-      return function () { return vector .set (this [12], this [13], this [14], this [15]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4_Matrix4 .prototype, "xAxis",
-{
-   get: (function ()
-   {
-      const vector = new Numbers_Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [0], this [1], this [2]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4_Matrix4 .prototype, "yAxis",
-{
-   get: (function ()
-   {
-      const vector = new Numbers_Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [4], this [5], this [6]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4_Matrix4 .prototype, "zAxis",
-{
-   get: (function ()
-   {
-      const vector = new Numbers_Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [8], this [9], this [10]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4_Matrix4 .prototype, "origin",
-{
-   get: (function ()
-   {
-      const vector = new Numbers_Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [12], this [13], this [14]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4_Matrix4 .prototype, "submatrix",
-{
-   get: (function ()
-   {
-      const matrix = new Numbers_Matrix3 ();
-
-      return function ()
+      get: (function ()
       {
-         matrix [0] = this [0]; matrix [1] = this [1]; matrix [2] = this [ 2];
-         matrix [3] = this [4]; matrix [4] = this [5]; matrix [5] = this [ 6];
-         matrix [6] = this [8]; matrix [7] = this [9]; matrix [8] = this [10];
-         return matrix;
-      };
-   })(),
-   enumerable: false,
-   configurable: false
+         const vector = new Numbers_Vector4 (0, 0, 0, 0);
+
+         return function () { return vector .set (this [0], this [1], this [2], this [3]); };
+      })(),
+   },
+   y:
+   {
+      get: (function ()
+      {
+         const vector = new Numbers_Vector4 (0, 0, 0, 0);
+
+         return function () { return vector .set (this [4], this [5], this [6], this [7]); };
+      })(),
+   },
+   z:
+   {
+      get: (function ()
+      {
+         const vector = new Numbers_Vector4 (0, 0, 0, 0);
+
+         return function () { return vector .set (this [8], this [9], this [10], this [11]); };
+      })(),
+   },
+   w:
+   {
+      get: (function ()
+      {
+         const vector = new Numbers_Vector4 (0, 0, 0, 0);
+
+         return function () { return vector .set (this [12], this [13], this [14], this [15]); };
+      })(),
+   },
+   xAxis:
+   {
+      get: (function ()
+      {
+         const vector = new Numbers_Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [0], this [1], this [2]); };
+      })(),
+   },
+   yAxis:
+   {
+      get: (function ()
+      {
+         const vector = new Numbers_Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [4], this [5], this [6]); };
+      })(),
+   },
+   zAxis:
+   {
+      get: (function ()
+      {
+         const vector = new Numbers_Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [8], this [9], this [10]); };
+      })(),
+   },
+   origin:
+   {
+      get: (function ()
+      {
+         const vector = new Numbers_Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [12], this [13], this [14]); };
+      })(),
+   },
+   submatrix:
+   {
+      get: (function ()
+      {
+         const matrix = new Numbers_Matrix3 ();
+
+         return function ()
+         {
+            matrix [0] = this [0]; matrix [1] = this [1]; matrix [2] = this [ 2];
+            matrix [3] = this [4]; matrix [4] = this [5]; matrix [5] = this [ 6];
+            matrix [6] = this [8]; matrix [7] = this [9]; matrix [8] = this [10];
+            return matrix;
+         };
+      })(),
+   },
 });
 
 Object .assign (Matrix4_Matrix4,
@@ -35708,7 +35628,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var $ = __webpack_require__(917);
+/* provided dependency */ var $ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36206,7 +36126,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace.set ("x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(917);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36750,7 +36670,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(917);
+/* provided dependency */ var Notification_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36872,8 +36792,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(936);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(917);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(369);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41946,7 +41866,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 x_ite_Namespace.set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(917);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45128,7 +45048,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(917);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46983,7 +46903,7 @@ const X3DOptimizer_default_ = X3DOptimizer;
 x_ite_Namespace.set ("x_ite/Parser/X3DOptimizer", X3DOptimizer_default_);
 /* harmony default export */ const Parser_X3DOptimizer = (X3DOptimizer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(917);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49449,7 +49369,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(917);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49602,7 +49522,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(917);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51301,7 +51221,6 @@ function Complex (real, imag)
 Complex .prototype =
 {
    constructor: Complex,
-   length: 2,
    [Symbol .iterator]: function* ()
    {
       yield this .real;
@@ -51410,68 +51329,61 @@ Complex .prototype =
    },
 };
 
-Object .defineProperty (Complex .prototype, "0",
+Object .defineProperties (Complex .prototype,
 {
-   get: function ()
+   length: { value: 2 },
+   "0":
    {
-      return this .real;
-   },
-   set: function (value)
-   {
-      this .real = value;
-   },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Complex .prototype, "1",
-{
-   get: function ()
-   {
-      return this .imag;
-   },
-   set: function (value)
-   {
-      this .imag = value;
-   },
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Complex .prototype, "magnitude",
-{
-   get: function ()
-   {
-      if (this .real)
+      get: function ()
       {
-         if (this .imag)
-            return Math .hypot (this .real, this .imag);
-
-         return Math .abs (this .real);
-      }
-
-      return Math .abs (this .imag);
+         return this .real;
+      },
+      set: function (value)
+      {
+         this .real = value;
+      },
    },
-   set: function (magnitude)
+   "1":
    {
-      this .setPolar (magnitude, this .angle);
+      get: function ()
+      {
+         return this .imag;
+      },
+      set: function (value)
+      {
+         this .imag = value;
+      },
    },
-   enumerable: false,
-   configurable: false
-});
+   magnitude:
+   {
+      get: function ()
+      {
+         if (this .real)
+         {
+            if (this .imag)
+               return Math .hypot (this .real, this .imag);
 
-Object .defineProperty (Complex .prototype, "angle",
-{
-   get: function ()
-   {
-      return Math .atan2 (this .imag, this .real);
+            return Math .abs (this .real);
+         }
+
+         return Math .abs (this .imag);
+      },
+      set: function (magnitude)
+      {
+         this .setPolar (magnitude, this .angle);
+      },
    },
-   set: function (angle)
+   angle:
    {
-      this .setPolar (this .magnitude, angle);
+      get: function ()
+      {
+         return Math .atan2 (this .imag, this .real);
+      },
+      set: function (angle)
+      {
+         this .setPolar (this .magnitude, angle);
+      },
    },
-   enumerable: false,
-   configurable: false
 });
 
 Object .assign (Complex,
@@ -51701,33 +51613,33 @@ Box2 .prototype =
    },
 };
 
-Object .defineProperty (Box2 .prototype, "size",
+Object .defineProperties (Box2 .prototype,
 {
-   get: (function ()
+   size:
    {
-      const
-         min = new Numbers_Vector2 (0, 0),
-         max = new Numbers_Vector2 (0, 0);
-
-      return function ()
+      get: (function ()
       {
-         this .getAbsoluteExtents (min, max);
+         const
+            min = new Numbers_Vector2 (0, 0),
+            max = new Numbers_Vector2 (0, 0);
 
-         return max .subtract (min);
-      };
-   })(),
-   enumerable: true,
-   configurable: false
-});
+         return function ()
+         {
+            this .getAbsoluteExtents (min, max);
 
-Object .defineProperty (Box2 .prototype, "center",
-{
-   get: function ()
-   {
-      return this .matrix .origin;
+            return max .subtract (min);
+         };
+      })(),
+      enumerable: true,
    },
-   enumerable: true,
-   configurable: false
+   center:
+   {
+      get: function ()
+      {
+         return this .matrix .origin;
+      },
+      enumerable: true,
+   },
 });
 
 const Box2_default_ = Box2;
@@ -52092,8 +52004,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace.set ("standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(917);
-/* provided dependency */ var libtess = __webpack_require__(836);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(808);
+/* provided dependency */ var libtess = __webpack_require__(948);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54862,7 +54774,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace.set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(917);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55191,7 +55103,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(836);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(948);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -57041,33 +56953,33 @@ Box3 .prototype =
    },
 };
 
-Object .defineProperty (Box3 .prototype, "size",
+Object .defineProperties (Box3 .prototype,
 {
-   get: (function ()
+   size:
    {
-      const
-         min = new Numbers_Vector3 (0, 0, 0),
-         max = new Numbers_Vector3 (0, 0, 0);
-
-      return function ()
+      get: (function ()
       {
-         this .getAbsoluteExtents (min, max);
+         const
+            min = new Numbers_Vector3 (0, 0, 0),
+            max = new Numbers_Vector3 (0, 0, 0);
 
-         return max .subtract (min);
-      };
-   })(),
-   enumerable: true,
-   configurable: false
-});
+         return function ()
+         {
+            this .getAbsoluteExtents (min, max);
 
-Object .defineProperty (Box3 .prototype, "center",
-{
-   get: function ()
-   {
-      return this .matrix .origin;
+            return max .subtract (min);
+         };
+      })(),
+      enumerable: true,
    },
-   enumerable: true,
-   configurable: false
+   center:
+   {
+      get: function ()
+      {
+         return this .matrix .origin;
+      },
+      enumerable: true,
+   },
 });
 
 const Box3_default_ = Box3;
@@ -62475,7 +62387,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(917);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66815,7 +66727,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace.set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(917);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -71169,7 +71081,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(917);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -77294,8 +77206,8 @@ const OrientationChaser_default_ = OrientationChaser;
 x_ite_Namespace.set ("x_ite/Components/Followers/OrientationChaser", OrientationChaser_default_);
 /* harmony default export */ const Followers_OrientationChaser = (OrientationChaser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(132);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(917);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(97);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -78159,8 +78071,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(132);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(917);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(97);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79108,8 +79020,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(132);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(917);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(97);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79418,8 +79330,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(132);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(917);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(97);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -81051,8 +80963,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(132);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(917);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(97);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -82090,8 +82002,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(917);
-/* provided dependency */ var ResizeSensor = __webpack_require__(66);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(808);
+/* provided dependency */ var ResizeSensor = __webpack_require__(860);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -87984,7 +87896,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace.set ("x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(917);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90761,7 +90673,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace.set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(917);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113173,7 +113085,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(917);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116072,8 +115984,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(917);
-/* provided dependency */ var SuperGif = __webpack_require__(168);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(808);
+/* provided dependency */ var SuperGif = __webpack_require__(121);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117036,7 +116948,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(917);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117747,7 +117659,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(917);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(808);
 /*******************************************************************************
  * MIT License
  *
@@ -118988,7 +118900,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(917);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119917,7 +119829,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(917);
+/* provided dependency */ var Fallback_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120096,8 +120008,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(917);
-/* provided dependency */ var pako = __webpack_require__(480);
+/* provided dependency */ var jquery_$ = __webpack_require__(808);
+/* provided dependency */ var pako = __webpack_require__(385);
 jquery_$.decodeText = function (input)
 {
    if (typeof input === "string")
@@ -120129,14 +120041,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(836);
+/* provided dependency */ var libtess_libtess = __webpack_require__(948);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace.set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(917);
+/* provided dependency */ var X3D_$ = __webpack_require__(808);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

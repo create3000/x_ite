@@ -68,8 +68,6 @@ function Matrix4 ()
 Matrix4 .prototype =
 {
    constructor: Matrix4,
-   order: 4,
-   length: 16,
    [Symbol .iterator]: function* ()
    {
       for (let i = 0; i < 16; ++ i)
@@ -670,118 +668,97 @@ Matrix4 .prototype =
    },
 };
 
-Object .defineProperty (Matrix4 .prototype, "x",
+Object .defineProperties (Matrix4 .prototype,
 {
-   get: (function ()
+   order: { value: 4 },
+   length: { value: 16 },
+   x:
    {
-      const vector = new Vector4 (0, 0, 0, 0);
-
-      return function () { return vector .set (this [0], this [1], this [2], this [3]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4 .prototype, "y",
-{
-   get: (function ()
-   {
-      const vector = new Vector4 (0, 0, 0, 0);
-
-      return function () { return vector .set (this [4], this [5], this [6], this [7]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4 .prototype, "z",
-{
-   get: (function ()
-   {
-      const vector = new Vector4 (0, 0, 0, 0);
-
-      return function () { return vector .set (this [8], this [9], this [10], this [11]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4 .prototype, "w",
-{
-   get: (function ()
-   {
-      const vector = new Vector4 (0, 0, 0, 0);
-
-      return function () { return vector .set (this [12], this [13], this [14], this [15]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4 .prototype, "xAxis",
-{
-   get: (function ()
-   {
-      const vector = new Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [0], this [1], this [2]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4 .prototype, "yAxis",
-{
-   get: (function ()
-   {
-      const vector = new Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [4], this [5], this [6]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4 .prototype, "zAxis",
-{
-   get: (function ()
-   {
-      const vector = new Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [8], this [9], this [10]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4 .prototype, "origin",
-{
-   get: (function ()
-   {
-      const vector = new Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [12], this [13], this [14]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix4 .prototype, "submatrix",
-{
-   get: (function ()
-   {
-      const matrix = new Matrix3 ();
-
-      return function ()
+      get: (function ()
       {
-         matrix [0] = this [0]; matrix [1] = this [1]; matrix [2] = this [ 2];
-         matrix [3] = this [4]; matrix [4] = this [5]; matrix [5] = this [ 6];
-         matrix [6] = this [8]; matrix [7] = this [9]; matrix [8] = this [10];
-         return matrix;
-      };
-   })(),
-   enumerable: false,
-   configurable: false
+         const vector = new Vector4 (0, 0, 0, 0);
+
+         return function () { return vector .set (this [0], this [1], this [2], this [3]); };
+      })(),
+   },
+   y:
+   {
+      get: (function ()
+      {
+         const vector = new Vector4 (0, 0, 0, 0);
+
+         return function () { return vector .set (this [4], this [5], this [6], this [7]); };
+      })(),
+   },
+   z:
+   {
+      get: (function ()
+      {
+         const vector = new Vector4 (0, 0, 0, 0);
+
+         return function () { return vector .set (this [8], this [9], this [10], this [11]); };
+      })(),
+   },
+   w:
+   {
+      get: (function ()
+      {
+         const vector = new Vector4 (0, 0, 0, 0);
+
+         return function () { return vector .set (this [12], this [13], this [14], this [15]); };
+      })(),
+   },
+   xAxis:
+   {
+      get: (function ()
+      {
+         const vector = new Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [0], this [1], this [2]); };
+      })(),
+   },
+   yAxis:
+   {
+      get: (function ()
+      {
+         const vector = new Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [4], this [5], this [6]); };
+      })(),
+   },
+   zAxis:
+   {
+      get: (function ()
+      {
+         const vector = new Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [8], this [9], this [10]); };
+      })(),
+   },
+   origin:
+   {
+      get: (function ()
+      {
+         const vector = new Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [12], this [13], this [14]); };
+      })(),
+   },
+   submatrix:
+   {
+      get: (function ()
+      {
+         const matrix = new Matrix3 ();
+
+         return function ()
+         {
+            matrix [0] = this [0]; matrix [1] = this [1]; matrix [2] = this [ 2];
+            matrix [3] = this [4]; matrix [4] = this [5]; matrix [5] = this [ 6];
+            matrix [6] = this [8]; matrix [7] = this [9]; matrix [8] = this [10];
+            return matrix;
+         };
+      })(),
+   },
 });
 
 Object .assign (Matrix4,

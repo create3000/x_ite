@@ -67,7 +67,6 @@ function Color4 (r, g, b, a)
 Color4 .prototype =
 {
    constructor: Color4,
-   length: 4,
    [Symbol .iterator]: function* ()
    {
       yield this [_r];
@@ -136,44 +135,47 @@ const r = {
    get: function () { return this [_r]; },
    set: function (value) { this [_r] = clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
 const g = {
    get: function () { return this [_g]; },
    set: function (value) { this [_g] = clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
 const b = {
    get: function () { return this [_b]; },
    set: function (value) { this [_b] = clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
 const a = {
    get: function () { return this [_a]; },
    set: function (value) { this [_a] = clamp (value, 0, 1); },
    enumerable: true,
-   configurable: false
 };
 
-Object .defineProperty (Color4 .prototype, "r", r);
-Object .defineProperty (Color4 .prototype, "g", g);
-Object .defineProperty (Color4 .prototype, "b", b);
-Object .defineProperty (Color4 .prototype, "a", a);
+Object .defineProperties (Color4 .prototype,
+{
+   length: { value: 4 },
+   r: r,
+   g: g,
+   b: b,
+   a: a,
+});
 
 r .enumerable = false;
 g .enumerable = false;
 b .enumerable = false;
 a .enumerable = false;
 
-Object .defineProperty (Color4 .prototype, "0", r);
-Object .defineProperty (Color4 .prototype, "1", g);
-Object .defineProperty (Color4 .prototype, "2", b);
-Object .defineProperty (Color4 .prototype, "3", a);
+Object .defineProperties (Color4 .prototype,
+{
+   "0": r,
+   "1": g,
+   "2": b,
+   "3": a,
+});
 
 Object .assign (Color4,
 {

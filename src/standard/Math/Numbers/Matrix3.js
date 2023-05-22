@@ -66,8 +66,6 @@ function Matrix3 ()
 Matrix3 .prototype =
 {
    constructor: Matrix3,
-   order: 3,
-   length: 9,
    [Symbol .iterator]: function* ()
    {
       for (let i = 0; i < 9; ++ i)
@@ -576,93 +574,78 @@ Matrix3 .prototype =
    },
 };
 
-Object .defineProperty (Matrix3 .prototype, "x",
+Object .defineProperties (Matrix3 .prototype,
 {
-   get: (function ()
+   order: { value: 3 },
+   length: { value: 9 },
+   x:
    {
-      const vector = new Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [0], this [1], this [2]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix3 .prototype, "y",
-{
-   get: (function ()
-   {
-      const vector = new Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [3], this [4], this [5]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix3 .prototype, "z",
-{
-   get: (function ()
-   {
-      const vector = new Vector3 (0, 0, 0);
-
-      return function () { return vector .set (this [6], this [7], this [8]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix3 .prototype, "xAxis",
-{
-   get: (function ()
-   {
-      const vector = new Vector2 (0, 0);
-
-      return function () { return vector .set (this [0], this [1]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix3 .prototype, "yAxis",
-{
-   get: (function ()
-   {
-      const vector = new Vector2 (0, 0);
-
-      return function () { return vector .set (this [3], this [4]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix3 .prototype, "origin",
-{
-   get: (function ()
-   {
-      const vector = new Vector2 (0, 0);
-
-      return function () { return vector .set (this [6], this [7]); };
-   })(),
-   enumerable: false,
-   configurable: false
-});
-
-Object .defineProperty (Matrix3 .prototype, "submatrix",
-{
-   get: (function ()
-   {
-      const matrix = new Matrix2 ();
-
-      return function ()
+      get: (function ()
       {
-         matrix [0] = this [0]; matrix [1] = this [1];
-         matrix [2] = this [3]; matrix [3] = this [4];
-         return matrix;
-      };
-   })(),
-   enumerable: false,
-   configurable: false
+         const vector = new Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [0], this [1], this [2]); };
+      })(),
+   },
+   y:
+   {
+      get: (function ()
+      {
+         const vector = new Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [3], this [4], this [5]); };
+      })(),
+   },
+   z:
+   {
+      get: (function ()
+      {
+         const vector = new Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [6], this [7], this [8]); };
+      })(),
+   },
+   xAxis:
+   {
+      get: (function ()
+      {
+         const vector = new Vector2 (0, 0);
+
+         return function () { return vector .set (this [0], this [1]); };
+      })(),
+   },
+   yAxis:
+   {
+      get: (function ()
+      {
+         const vector = new Vector2 (0, 0);
+
+         return function () { return vector .set (this [3], this [4]); };
+      })(),
+   },
+   origin:
+   {
+      get: (function ()
+      {
+         const vector = new Vector2 (0, 0);
+
+         return function () { return vector .set (this [6], this [7]); };
+      })(),
+   },
+   submatrix:
+   {
+      get: (function ()
+      {
+         const matrix = new Matrix2 ();
+
+         return function ()
+         {
+            matrix [0] = this [0]; matrix [1] = this [1];
+            matrix [2] = this [3]; matrix [3] = this [4];
+            return matrix;
+         };
+      })(),
+   },
 });
 
 Object .assign (Matrix3,
