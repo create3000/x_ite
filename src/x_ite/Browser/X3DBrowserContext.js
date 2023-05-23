@@ -122,14 +122,14 @@ function X3DBrowserContext (element)
                           "displayEvents",  new SFTime (),
                           "finishedEvents", new SFTime ());
 
-   this [_changedTime]     = 0;
-   this [_previousTime]    = 0;
-   this [_renderCallback]  = this [_traverse] .bind (this);
-   this [_systemTime]      = new StopWatch ();
-   this [_browserTime]     = new StopWatch ();
-   this [_cameraTime]      = new StopWatch ();
-   this [_collisionTime]   = new StopWatch ();
-   this [_displayTime]     = new StopWatch ();
+   this [_changedTime]    = 0;
+   this [_previousTime]   = 0;
+   this [_renderCallback] = this [_traverse] .bind (this);
+   this [_systemTime]     = new StopWatch ();
+   this [_browserTime]    = new StopWatch ();
+   this [_cameraTime]     = new StopWatch ();
+   this [_collisionTime]  = new StopWatch ();
+   this [_displayTime]    = new StopWatch ();
 };
 
 X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),

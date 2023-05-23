@@ -57,7 +57,6 @@ import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
 import SupportedProfiles   from "../Configuration/SupportedProfiles.js";
 import SupportedComponents from "../Configuration/SupportedComponents.js";
 import SupportedNodes      from "../Configuration/SupportedNodes.js";
-import Scene               from "../Execution/Scene.js";
 import X3DScene            from "../Execution/X3DScene.js";
 import FileLoader          from "../InputOutput/FileLoader.js";
 import XMLParser           from "../Parser/XMLParser.js";
@@ -263,7 +262,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    createScene: function (profile, component1 /*, ...*/)
    {
-      const scene = new Scene (this);
+      const scene = new X3DScene (this);
 
       if (arguments .length)
       {

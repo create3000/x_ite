@@ -61,6 +61,7 @@ import SFNodeCache         from "../Fields/SFNodeCache.js";
 SupportedNodes .addAbstractType ("X3DScene", X3DScene);
 
 const
+   _browser              = Symbol .for ("X_ITE.X3DEventObject.browser"),
    _specificationVersion = Symbol (),
    _encoding             = Symbol (),
    _profile              = Symbol (),
@@ -68,13 +69,16 @@ const
    _worldURL             = Symbol (),
    _units                = Symbol (),
    _metadata             = Symbol (),
-   _exportedNodes        = Symbol ();
+   _exportedNodes        = Symbol (),
+   _loadingObjects       = Symbol ();
 
-const LATEST_VERSION = "4.0";
+const X3D_LATEST_VERSION = "4.0";
 
-function X3DScene (executionContext)
+function X3DScene (browser)
 {
-   X3DExecutionContext .call (this, executionContext);
+   this [_browser] = browser;
+
+   X3DExecutionContext .call (this, this);
 
    this .addType (X3DConstants .X3DScene)
 
@@ -82,9 +86,11 @@ function X3DScene (executionContext)
                           "components_changed",    new Fields .SFTime (),
                           "units_changed",         new Fields .SFTime (),
                           "metadata_changed",      new Fields .SFTime (),
-                          "exportedNodes_changed", new Fields .SFTime ())
+                          "exportedNodes_changed", new Fields .SFTime (),
+                          "initLoadCount",         new Fields .SFInt32 (),
+                          "loadCount",             new Fields .SFInt32 ())
 
-   this [_specificationVersion] = LATEST_VERSION;
+   this [_specificationVersion] = X3D_LATEST_VERSION;
    this [_encoding]             = "SCRIPTED";
    this [_profile]              = null;
    this [_components]           = new ComponentInfoArray ([ ]);
@@ -96,8 +102,9 @@ function X3DScene (executionContext)
    this [_units] .add ("length", new UnitInfo ("length", "metre",    1));
    this [_units] .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
-   this [_metadata]      = new Map ();
-   this [_exportedNodes] = new ExportedNodesArray ();
+   this [_metadata]       = new Map ();
+   this [_exportedNodes]  = new ExportedNodesArray ();
+   this [_loadingObjects] = new Set ();
 
    this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
@@ -255,7 +262,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       if (!name .length)
          throw new Error ("Couldn't add metadata: name is empty.");
 
-      if (! Array .isArray (values))
+      if (!Array .isArray (values))
          values = [String (values)];
 
       if (!values .length)
@@ -398,7 +405,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    {
       generator .string += generator .Indent ();
       generator .string += "#X3D V";
-      generator .string += LATEST_VERSION;
+      generator .string += X3D_LATEST_VERSION;
       generator .string += generator .Space ();
       generator .string += "utf8";
       generator .string += generator .Space ();
@@ -490,9 +497,9 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
          generator .string += generator .TidyBreak ();
          generator .string += generator .Indent ();
          generator .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
-         generator .string += LATEST_VERSION;
+         generator .string += X3D_LATEST_VERSION;
          generator .string += "//EN\" \"http://www.web3d.org/specifications/x3d-";
-         generator .string += LATEST_VERSION;
+         generator .string += X3D_LATEST_VERSION;
          generator .string += ".dtd\">";
          generator .string += generator .TidyBreak ();
       }
@@ -505,13 +512,13 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "version='";
-      generator .string += LATEST_VERSION;
+      generator .string += X3D_LATEST_VERSION;
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'";
       generator .string += generator .Space ();
       generator .string += "xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-";
-      generator .string += LATEST_VERSION;
+      generator .string += X3D_LATEST_VERSION;
       generator .string += ".xsd'>";
       generator .string += generator .TidyBreak ();
 
@@ -671,7 +678,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += LATEST_VERSION;
+      generator .string += X3D_LATEST_VERSION;
       generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
@@ -687,7 +694,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       generator .string += generator .TidySpace ();
       generator .string += '"';
       generator .string += "http://www.web3d.org/specifications/x3d-";
-      generator .string += LATEST_VERSION;
+      generator .string += X3D_LATEST_VERSION;
       generator .string += ".xsd";
       generator .string += '"';
       generator .string += ',';
@@ -704,7 +711,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       generator .string += generator .TidySpace ();
       generator .string += '"';
       generator .string += "http://www.web3d.org/specifications/x3d-";
-      generator .string += LATEST_VERSION;
+      generator .string += X3D_LATEST_VERSION;
       generator .string += "-JSONSchema.json";
       generator .string += '"';
       generator .string += ',';
@@ -957,6 +964,78 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       generator .string += generator .DecIndent ();
       generator .string += generator .Indent ();
       generator .string += '}';
+   },
+},
+{
+   setExecutionContext: function (value)
+   {
+      if (!this .isMainScene ())
+      {
+         const scene = this .getScene ();
+
+         for (const object of this [_loadingObjects])
+            scene .removeLoadingObject (object);
+      }
+
+      X3DExecutionContext .prototype .setExecutionContext .call (this, value);
+
+      if (!this .isMainScene ())
+      {
+         const scene = this .getScene ();
+
+         for (const object of this [_loadingObjects])
+            scene .addLoadingObject (object);
+      }
+   },
+   addInitLoadCount: function (node)
+   {
+      this ._initLoadCount = this ._initLoadCount .getValue () + 1;
+   },
+   removeInitLoadCount: function (node)
+   {
+      this ._initLoadCount = this ._initLoadCount .getValue () - 1;
+   },
+   getLoadingObjects: function ()
+   {
+      return this [_loadingObjects];
+   },
+   addLoadingObject: function (node)
+   {
+      if (this [_loadingObjects] .has (node))
+         return;
+
+      this [_loadingObjects] .add (node);
+
+      this ._loadCount = this [_loadingObjects] .size;
+
+      const
+         browser = this .getBrowser (),
+         scene   = this .getScene ();
+
+      if (this === browser .getExecutionContext () || this .loader === browser .loader)
+         browser .addLoadingObject (node);
+
+      if (!this .isMainScene ())
+         scene .addLoadingObject (node);
+   },
+   removeLoadingObject: function (node)
+   {
+      if (!this [_loadingObjects] .has (node))
+         return;
+
+      this [_loadingObjects] .delete (node);
+
+      this ._loadCount = this [_loadingObjects] .size;
+
+      const
+         browser = this .getBrowser (),
+         scene   = this .getScene ();
+
+      if (this === browser .getExecutionContext () || this .loader === browser .loader)
+         browser .removeLoadingObject (node);
+
+      if (!this .isMainScene ())
+         scene .removeLoadingObject (node);
    },
 });
 

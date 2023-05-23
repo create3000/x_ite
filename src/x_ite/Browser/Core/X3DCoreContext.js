@@ -54,7 +54,7 @@ import RenderingProperties from "./RenderingProperties.js";
 import Notification        from "./Notification.js";
 import ContextMenu         from "./ContextMenu.js";
 import URLs                from "../Networking/URLs.js";
-import Scene               from "../../Execution/Scene.js";
+import X3DScene            from "../../Execution/X3DScene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import _                   from "../../../locale/gettext.js";
@@ -270,9 +270,9 @@ X3DCoreContext .prototype =
       if (this [_privateScene])
          return this [_privateScene];
 
-      // Scene for default nodes.
+      // X3DScene for default nodes.
 
-      this [_privateScene] = new Scene (this);
+      this [_privateScene] = new X3DScene (this);
 
       this [_privateScene] .setPrivate (true);
       this [_privateScene] .setLive (true);
