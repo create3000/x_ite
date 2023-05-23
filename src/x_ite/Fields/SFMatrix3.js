@@ -85,10 +85,8 @@ function SFMatrix3Template (TypeName, Type, SFVec2, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFMatrix3 .prototype = Object .assign (Object .create (X3DField .prototype),
-      SFMatrixPrototypeTemplate (TypeName, Type, Matrix3, SFVec2, double),
+   SFMatrix3 .prototype = Object .assign (SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Type, Matrix3, SFVec2, double),
    {
-      constructor: SFMatrix3,
       setTransform: function (translation, rotation, scale, scaleOrientation, center)
       {
          translation      = translation      ? translation      .getValue () : null;

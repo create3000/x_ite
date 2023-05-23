@@ -69,10 +69,8 @@ function SFVec3Template (TypeName, Type, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFVec3 .prototype = Object .assign (Object .create (X3DField .prototype),
-      SFVecPrototypeTemplate (TypeName, Type, Vector3, double),
+   SFVec3 .prototype = Object .assign (SFVecPrototypeTemplate (SFVec3, TypeName, Type, Vector3, double),
    {
-      constructor: SFVec3,
       cross: function (vector)
       {
          return new (this .constructor) (Vector3 .cross (this .getValue (), vector .getValue ()));

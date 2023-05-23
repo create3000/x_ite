@@ -69,11 +69,7 @@ function SFVec2Template (TypeName, Type, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFVec2 .prototype = Object .assign (Object .create (X3DField .prototype),
-      SFVecPrototypeTemplate (TypeName, Type, Vector2, double),
-   {
-      constructor: SFVec2,
-   });
+   SFVec2 .prototype = SFVecPrototypeTemplate (SFVec2, TypeName, Type, Vector2, double);
 
    for (const key of Reflect .ownKeys (SFVec2 .prototype))
       Object .defineProperty (SFVec2 .prototype, key, { enumerable: false });
