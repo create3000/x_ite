@@ -216,6 +216,12 @@ Returns a browser option with the corresponding name.
          <td>MEDIUM</td>
       </tr>
       <tr>
+         <td>AutoUpdate</td>
+         <td>Whether the update control of the browser should be done automatically or not. (non standard)</td>
+         <td>Boolean</td>
+         <td>false</td>
+      </tr>
+      <tr>
          <td>Cache</td>
          <td>Whether or not files should be cached. (non standard)</td>
          <td>Boolean</td>
