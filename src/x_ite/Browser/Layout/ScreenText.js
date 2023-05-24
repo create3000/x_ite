@@ -393,11 +393,16 @@ ScreenText .prototype = Object .assign (Object .create (X3DTextGeometry .prototy
 
       renderContext .textureNode = this .textureNode;
    },
-   transformLine: function (line)
+   transformLine: (function ()
    {
-      // Apply screen nodes transformation in place here.
-      return line .multLineMatrix (Matrix4 .inverse (this .matrix));
-   },
+      const invMatrix = new Matrix4 ();
+
+      return function (line)
+      {
+         // Apply screen nodes transformation in place here.
+         return line .multLineMatrix (invMatrix .assign (this .matrix) .inverse ());
+      };
+   })(),
    transformMatrix: function (matrix)
    {
       // Apply screen nodes transformation in place here.

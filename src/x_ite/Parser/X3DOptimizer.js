@@ -66,7 +66,7 @@ X3DOptimizer .prototype = {
    },
    optimizeNodes: function (nodes, combine, removedNodes)
    {
-      return nodes .flatMap (node => this .optimizeNode (node, combine, removedNodes));
+      return [...nodes] .flatMap (node => this .optimizeNode (node, combine, removedNodes));
    },
    optimizeNode: function (node, combine, removedNodes)
    {

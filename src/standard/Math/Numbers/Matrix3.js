@@ -101,7 +101,7 @@ Matrix3 .prototype =
    },
    rotation: function ()
    {
-      return math .atan2 (this [1], this [0]);
+      return Math .atan2 (this [1], this [0]);
    },
    set1: function (r, c, value)
    {
@@ -666,22 +666,6 @@ Object .assign (Matrix3,
       return new Matrix3 (matrix [0], matrix [1], 0,
                           matrix [2], matrix [3], 0,
                           0, 0, 1);
-   },
-   transpose: function (matrix)
-   {
-      return matrix .copy () .transpose ();
-   },
-   inverse: function (matrix)
-   {
-      return matrix .copy () .inverse ();
-   },
-   multLeft: function (lhs, rhs)
-   {
-      return lhs .copy () .multLeft (rhs);
-   },
-   multRight: function (lhs, rhs)
-   {
-      return lhs .copy () .multRight (rhs);
    },
 });
 

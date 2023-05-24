@@ -786,22 +786,6 @@ Object .assign (Matrix4,
                           matrix [6], matrix [7], matrix [8], 0,
                           0, 0, 0, 1);
    },
-   transpose: function (matrix)
-   {
-      return matrix .copy () .transpose ();
-   },
-   inverse: function (matrix)
-   {
-      return matrix .copy () .inverse ();
-   },
-   multLeft: function (lhs, rhs)
-   {
-      return lhs .copy () .multLeft (rhs);
-   },
-   multRight: function (lhs, rhs)
-   {
-      return lhs .copy () .multRight (rhs);
-   },
 });
 
 const

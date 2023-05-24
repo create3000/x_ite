@@ -1177,7 +1177,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       m .scale (new Vector2 (1, -1));
 
       if (g .units === "userSpaceOnUse")
-         m .multLeft (Matrix3 .inverse (bbox .matrix));
+         m .multLeft (bbox .matrix .copy () .inverse ());
       else
          m .multLeft (new Matrix3 (2, 0, 0, 0, 2, 0, -1, -1, 1));
 
@@ -2690,7 +2690,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const
          scene        = this .getExecutionContext (),
          texCoordNode = scene .createNode ("TextureCoordinate"),
-         invMatrix    = Matrix3 .inverse (bbox .matrix);
+         invMatrix    = bbox .matrix .copy () .inverse ();
 
       for (const point of coordinateNode .point)
          texCoordNode .point .push (invMatrix .multVecMatrix (new Vector2 (point .x, point .y)) .add (Vector2 .One) .divide (2));

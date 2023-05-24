@@ -213,7 +213,7 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    {
       const
          viewpointNode = this .getViewpoint (),
-         bbox          = this .getBBox (new Box3 ()) .multRight (Matrix4 .inverse (viewpointNode .getModelMatrix ()));
+         bbox          = this .getBBox (new Box3 ()) .multRight (viewpointNode .getModelMatrix () .copy () .inverse ());
 
       viewpointNode .lookAt (this, bbox .center, viewpointNode .getLookAtDistance (bbox), factor, straighten);
    },
