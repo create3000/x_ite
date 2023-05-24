@@ -257,9 +257,9 @@ Quaternion .prototype =
       const
          { x: qx, y: qy, z: qz, w: qw } = this,
          { x: vx, y: vy, z: vz } = vector,
-         a  = qw * qw - qx * qx - qy * qy - qz * qz,
-         b  = 2 * (vx * qx + vy * qy + vz * qz),
-         c  = 2 * qw;
+         a = qw * qw - qx * qx - qy * qy - qz * qz,
+         b = 2 * (vx * qx + vy * qy + vz * qz),
+         c = 2 * qw;
 
       vector .x = a * vx + b * qx + c * (qy * vz - qz * vy);
       vector .y = a * vy + b * qy + c * (qz * vx - qx * vz);
@@ -272,9 +272,9 @@ Quaternion .prototype =
       const
          { x: qx, y: qy, z: qz, w: qw } = this,
          { x: vx, y: vy, z: vz } = vector,
-         a  = qw * qw - qx * qx - qy * qy - qz * qz,
-         b  = 2 * (vx * qx + vy * qy + vz * qz),
-         c  = 2 * qw;
+         a = qw * qw - qx * qx - qy * qy - qz * qz,
+         b = 2 * (vx * qx + vy * qy + vz * qz),
+         c = 2 * qw;
 
       vector .x = a * vx + b * qx - c * (qy * vz - qz * vy);
       vector .y = a * vy + b * qy - c * (qz * vx - qx * vz);
