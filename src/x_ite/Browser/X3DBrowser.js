@@ -813,18 +813,18 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       this .setLive (false);
       this .getExecutionContext () .setLive (false);
    },
-   print: function ()
+   print: function (... args)
    {
-      const string = Array .prototype .join .call (arguments, "");
+      const string = args .join ("");
 
       console .log (string);
 
       for (const element of this [_console])
          element .append (document .createTextNode (string));
    },
-   println: function ()
+   println: function (... args)
    {
-      const string = Array .prototype .join .call (arguments, "");
+      const string = args .join ("");
 
       console .log (string);
 
