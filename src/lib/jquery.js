@@ -26,10 +26,12 @@ $.toLowerCaseFirst = function (string)
 $.fn.isInViewport = function ()
 {
    const
-      elementTop     = $(this) .offset () .top,
-      elementBottom  = elementTop + $(this) .outerHeight (),
-      viewportTop    = $(window) .scrollTop (),
-      viewportBottom = viewportTop + $(window) .height ();
+      $this          = $(this),
+      $window        = $(window),
+      elementTop     = $this .offset () .top,
+      elementBottom  = elementTop + $this .outerHeight (),
+      viewportTop    = $window .scrollTop (),
+      viewportBottom = viewportTop + $window .height ();
 
    return elementBottom > viewportTop && elementTop < viewportBottom;
 };

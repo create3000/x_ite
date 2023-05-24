@@ -314,9 +314,15 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          function checkUpdate ()
          {
             if (element .isInViewport ())
-               browser .beginUpdate ();
+            {
+               if (!browser .isLive ())
+                  browser .beginUpdate ();
+            }
             else
-               browser .endUpdate ();
+            {
+               if (browser .isLive ())
+                  browser .endUpdate ();
+            }
          }
 
          $(window) .on (events, checkUpdate);
