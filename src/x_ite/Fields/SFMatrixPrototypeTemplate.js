@@ -108,19 +108,19 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Type, Matrix, SFVec, 
       },
       transpose: function ()
       {
-         return new (this .constructor) (Matrix .transpose (this .getValue ()));
+         return new (this .constructor) (this .getValue () .copy () .transpose ());
       },
       inverse: function ()
       {
-         return new (this .constructor) (Matrix .inverse (this .getValue ()));
+         return new (this .constructor) (this .getValue () .copy () .inverse ());
       },
       multLeft: function (matrix)
       {
-         return new (this .constructor) (Matrix .multLeft (this .getValue (), matrix .getValue ()));
+         return new (this .constructor) (this .getValue () .copy () .multLeft (matrix .getValue ()));
       },
       multRight: function (matrix)
       {
-         return new (this .constructor) (Matrix .multRight (this .getValue (), matrix .getValue ()));
+         return new (this .constructor) (this .getValue () .copy () .multRight (matrix .getValue ()));
       },
       multVecMatrix: function (vector)
       {

@@ -137,11 +137,11 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    inverse: function ()
    {
-      return new SFRotation (Rotation4 .inverse (this .getValue ()));
+      return new SFRotation (this .getValue () .copy () .inverse ());
    },
    multiply: function (rotation)
    {
-      return new SFRotation (Rotation4 .multRight (this .getValue (), rotation .getValue ()));
+      return new SFRotation (this .getValue () .copy () .multRight (rotation .getValue ()));
    },
    multVec: function (vector)
    {
@@ -149,7 +149,7 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    slerp: function (rotation, t)
    {
-      return new SFRotation (Rotation4 .slerp (this .getValue (), rotation .getValue (), t));
+      return new SFRotation (this .getValue () .copy () .slerp (rotation .getValue (), t));
    },
    toStream: function (generator)
    {

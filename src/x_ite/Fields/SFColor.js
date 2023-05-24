@@ -121,7 +121,7 @@ SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
          destination .getValue () .getHSV (d),
          Color3 .lerp (s, d, t, r),
 
-         result .setHSV (r [0], r [1], r [2], r [3]);
+         result .setHSV (r [0], r [1], r [2]);
 
          return result;
       };
