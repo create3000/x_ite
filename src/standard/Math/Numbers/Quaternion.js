@@ -104,12 +104,12 @@ Quaternion .prototype =
          var i = matrix [4] > matrix [8] ? 1 : 2;
       }
 
-      const scalerow = matrix [0] + matrix [4] + matrix [8];
+      const scaleRow = matrix [0] + matrix [4] + matrix [8];
 
-      if (scalerow > matrix [i * 3 + i])
+      if (scaleRow > matrix [i * 3 + i])
       {
          // Compute w first:
-         this [3] = Math .sqrt (scalerow + 1) / 2;
+         this [3] = Math .sqrt (scaleRow + 1) / 2;
 
          // And compute other values:
          const d = 4 * this [3];
