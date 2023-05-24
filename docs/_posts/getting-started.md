@@ -740,6 +740,10 @@ A String value containing the URL to load on page load. If no *src* attribute is
 
 A Boolean value (`true` or `false`) to indicate whether the Timings Panel should be displayed. The default value for the *timings* attribute is restored from the previous session, otherwise it is `false`.
 
+### update
+
+A Boolean value (`true`, `false`, `auto`) to indicate whether browser events should be processed. A value of `true` will effectively call `Browser.beginUpdate`, a value of `false` will call `Browser.endUpdate`. If the value is `auto`, the effective value is determined by the visibility of the \<x3d-canvas\> element.
+
 ### url
 
 An MFString value of URLs to load on page load. If no *url* attribute is specified or the attribute is empty, an empty scene will be displayed. If both *src* and *url* attributes are given, the last given attribute takes precedence.
