@@ -273,7 +273,7 @@ Decomposes the SFMatrix3d/f and returns the components in the passed *translatio
 
 Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
 
-A center with any value can be specified, around which rotation occurs, and scale takes place.
+A center of any value can be specified around which the rotation and scaling will take place.
 
 #### Number **determinant** ()
 
@@ -347,7 +347,7 @@ Decomposes the SFMatrix4d/f and returns the components in the passed *translatio
 
 Any of the rightmost parameters can be omitted. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
 
-A center with any value can be specified, around which rotation occurs, and scale takes place.
+A center of any value can be specified around which the rotation and scaling will take place.
 
 #### Number **determinant** ()
 
