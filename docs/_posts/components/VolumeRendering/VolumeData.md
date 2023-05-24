@@ -81,7 +81,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/VolumeRendering/VolumeData/VolumeData.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/VolumeRendering/VolumeData/VolumeData.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

@@ -47,7 +47,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Geometry2D/Polypoint2D/Polypoint2D.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Geometry2D/Polypoint2D/Polypoint2D.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

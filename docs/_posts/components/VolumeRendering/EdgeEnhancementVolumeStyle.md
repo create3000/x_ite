@@ -60,7 +60,7 @@ Input/Output field surfaceNormals.
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/EdgeEnhancementVolumeStyle.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/EdgeEnhancementVolumeStyle.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

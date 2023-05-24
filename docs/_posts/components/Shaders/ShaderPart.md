@@ -111,7 +111,7 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Shaders/ShaderPart/ShaderPart.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Shaders/ShaderPart/ShaderPart.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

@@ -62,7 +62,7 @@ Input/Output field trajectoryCurve.
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/NURBS/NurbsSweptSurface/NurbsSweptSurface.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/NURBS/NurbsSweptSurface/NurbsSweptSurface.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

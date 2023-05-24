@@ -140,7 +140,7 @@ Bounding box center: optional hint for position offset from origin of local coor
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

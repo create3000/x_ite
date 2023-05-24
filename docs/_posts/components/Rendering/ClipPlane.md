@@ -60,7 +60,7 @@ If (a,b,c,d) is the plane, with the first three components being a normalized ve
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Rendering/ClipPlane/ClipPlane.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Rendering/ClipPlane/ClipPlane.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

@@ -23,4 +23,15 @@ $.toLowerCaseFirst = function (string)
    return string [0] .toLowerCase () + string .slice (1);
 };
 
+$.fn.isInViewport = function ()
+{
+   const
+      elementTop     = $(this) .offset () .top,
+      elementBottom  = elementTop + $(this) .outerHeight (),
+      viewportTop    = $(window) .scrollTop (),
+      viewportBottom = viewportTop + $(window) .height ();
+
+   return elementBottom > viewportTop && elementTop < viewportBottom;
+};
+
 export default $;

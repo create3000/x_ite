@@ -71,7 +71,7 @@ When a key is pressed, the KeySensor sends an isActive event with value true. On
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/KeyDeviceSensor/KeySensor/KeySensor.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/KeyDeviceSensor/KeySensor/KeySensor.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

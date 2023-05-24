@@ -163,7 +163,7 @@ An ordered set of 2D points drawing a piecewise-linear curve and forming a plana
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Geometry3D/Extrusion/Extrusion.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Geometry3D/Extrusion/Extrusion.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

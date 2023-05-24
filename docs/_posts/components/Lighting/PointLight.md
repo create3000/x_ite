@@ -96,7 +96,7 @@ Size of the shadow map in pixels, must be power of two.
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Lighting/PointLight/PointLight.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Lighting/PointLight/PointLight.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

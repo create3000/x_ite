@@ -83,7 +83,7 @@ Input/Output field collidables.
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollisionCollection/CollisionCollection.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollisionCollection/CollisionCollection.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

@@ -137,7 +137,7 @@ DEF Summer Background {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/background1/background1.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/background1/background1.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/background1/screenshot.png" alt="Background 1"/>
 </x3d-canvas>
 
@@ -257,7 +257,7 @@ DEF Summer Background {
 
 ### Example
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/background2/background2.x3dv">
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/background2/background2.x3dv" update="auto">
   <img src="https://create3000.github.io/media/tutorials/scenes/background2/screenshot.png" alt="Background 1"/>
 </x3d-canvas>
 

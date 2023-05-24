@@ -85,7 +85,7 @@ Grouping nodes contain a list of children nodes.
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Grouping/Group/Group.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Grouping/Group/Group.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

@@ -374,6 +374,24 @@ X3DCoreContext .prototype =
             this .setBrowserOption ("Timings", this .parseBooleanAttribute (newValue, false));
             break;
          }
+         case "update":
+         {
+            if (newValue === "auto")
+            {
+               this .setBrowserOption ("AutoUpdate", true);
+            }
+            else
+            {
+               this .setBrowserOption ("AutoUpdate", false);
+
+               if (this .parseBooleanAttribute (newValue, true))
+                  this .beginUpdate ();
+               else
+                  this .endUpdate ();
+            }
+
+            break;
+         }
          case "url":
          {
             if (newValue)

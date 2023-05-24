@@ -68,7 +68,7 @@ Define scattering model for implementations using global illumination (NONE or H
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/VolumeRendering/ShadedVolumeStyle/ShadedVolumeStyle.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/VolumeRendering/ShadedVolumeStyle/ShadedVolumeStyle.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

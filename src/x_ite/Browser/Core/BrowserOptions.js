@@ -83,6 +83,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       new X3DFieldDefinition (X3DConstants .inputOutput, "QualityWhenMoving",      new Fields .SFString ("SAME")),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                new Fields .SFString ("GOURAUD")),
       new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "AutoUpdate",             new Fields .SFBool (false)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Cache",                  new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "ContentScale",           new Fields .SFDouble (1)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "ContextMenu",            new Fields .SFBool (true)),
@@ -126,6 +127,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       this ._TextureQuality         .addInterest ("set_textureQuality__",         this);
       this ._Shading                .addInterest ("set_shading__",                this);
       this ._StraightenHorizon      .addInterest ("set_straightenHorizon__",      this);
+      this ._AutoUpdate             .addInterest ("set_autoUpdate__",             this);
       this ._ContentScale           .addInterest ("set_contentScale__",           this);
       this ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
       this ._Multisampling          .addInterest ("set_multisampling__",          this);
@@ -143,6 +145,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    {
       const attributes = new Set ([
          "Antialiased",
+         "AutoUpdate",
          "Cache",
          "ContentScale",
          "ContextMenu",
@@ -295,6 +298,34 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       browser .getRenderingProperties () ._ContentScale = window .devicePixelRatio;
 
       browser .reshape ();
+   },
+   set_autoUpdate__: function (autoUpdate)
+   {
+      const
+         browser = this .getBrowser (),
+         element = browser .getElement ()
+
+      const events  = ["resize", "scroll", "load"]
+         .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
+         .join (" ")
+
+      if (autoUpdate .getValue ())
+      {
+         function checkUpdate ()
+         {
+            if (element .isInViewport ())
+               browser .beginUpdate ();
+            else
+               browser .endUpdate ();
+         }
+
+         $(window) .on (events, checkUpdate);
+         checkUpdate ()
+      }
+      else
+      {
+         $(window) .off (events);
+      }
    },
    set_contentScale__: function (contentScale)
    {

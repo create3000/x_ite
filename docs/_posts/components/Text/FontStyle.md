@@ -132,7 +132,7 @@ The justify field determines alignment of the above text layout relative to the 
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Text/FontStyle/FontStyle.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Text/FontStyle/FontStyle.x3d" update="auto"></x3d-canvas>
 
 ## See Also
 

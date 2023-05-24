@@ -124,7 +124,7 @@ Field textureProperties.
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Texturing3D/ImageTexture3D/ImageTexture3D.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Texturing3D/ImageTexture3D/ImageTexture3D.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

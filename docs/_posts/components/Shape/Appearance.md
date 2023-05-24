@@ -116,7 +116,7 @@ Single contained acousticProperties node that can specify additional acoustic at
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

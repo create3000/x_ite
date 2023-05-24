@@ -53,7 +53,7 @@ The color field defines an array of 4-tuple RGBA colors.
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Rendering/ColorRGBA/ColorRGBA.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Rendering/ColorRGBA/ColorRGBA.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

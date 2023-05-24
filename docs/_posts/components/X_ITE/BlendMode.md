@@ -87,7 +87,7 @@ Specifies the alpha blend equation, how the alpha component of the source and de
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/X_ITE/BlendMode/BlendMode.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/X_ITE/BlendMode/BlendMode.x3d" update="auto"></x3d-canvas>
 
 ## See Also
 

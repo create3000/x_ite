@@ -63,7 +63,7 @@ When the user begins typing, the StringSensor sends an isActive event with value
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/KeyDeviceSensor/StringSensor/StringSensor.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/KeyDeviceSensor/StringSensor/StringSensor.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

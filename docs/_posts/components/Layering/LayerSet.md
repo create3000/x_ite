@@ -70,7 +70,7 @@ The layers list defines a list of Layer nodes that contain the constituent parts
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Layering/LayerSet/LayerSet.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Layering/LayerSet/LayerSet.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

@@ -90,7 +90,7 @@ Nonlinearly interpolated output value computed by using current time fraction al
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Interpolation/SplineScalarInterpolator/SplineScalarInterpolator.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Interpolation/SplineScalarInterpolator/SplineScalarInterpolator.x3d" update="auto"></x3d-canvas>
 
 <table class="x3d-widgets"><tbody><tr><td><input id="key-velocity" type="checkbox" value="true"></input><label for="key-velocity">Key Velocity</label></td><td><input id="normalize-velocity" type="checkbox" value="true"></input><label for="normalize-velocity">Normalize Key Velocity
 </label></td></tr></tbody></table>

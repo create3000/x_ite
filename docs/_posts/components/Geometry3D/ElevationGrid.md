@@ -155,7 +155,7 @@ Grid array of height vertices with upward direction along +Y axis, with xDimensi
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Geometry3D/ElevationGrid/ElevationGrid.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Geometry3D/ElevationGrid/ElevationGrid.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

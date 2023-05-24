@@ -65,7 +65,7 @@ Linearly interpolated output value determined by current key time and correspond
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Interpolation/ScalarInterpolator/ScalarInterpolator.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Interpolation/ScalarInterpolator/ScalarInterpolator.x3d" update="auto"></x3d-canvas>
 
 ## See Also
 

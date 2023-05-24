@@ -51,7 +51,7 @@ Force field indicates strength and direction of the propelling force on the part
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/ParticleSystems/ForcePhysicsModel/ForcePhysicsModel.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/ParticleSystems/ForcePhysicsModel/ForcePhysicsModel.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

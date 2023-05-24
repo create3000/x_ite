@@ -89,7 +89,7 @@ Input/Output field fontStyle.
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Text/Text/Text.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Text/Text/Text.x3d" update="auto"></x3d-canvas>
 
 ## See Also
 

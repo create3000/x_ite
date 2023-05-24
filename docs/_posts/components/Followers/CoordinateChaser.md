@@ -69,7 +69,7 @@ Computed output value that approaches within tolerance of destination value, as 
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Followers/CoordinateChaser/CoordinateChaser.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Followers/CoordinateChaser/CoordinateChaser.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

@@ -83,7 +83,7 @@ Sends changed centerOfRotation values, likely caused by user interaction.
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/EnvironmentalSensor/ProximitySensor/ProximitySensor.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/EnvironmentalSensor/ProximitySensor/ProximitySensor.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

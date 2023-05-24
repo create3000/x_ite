@@ -121,7 +121,7 @@ Single contained Coordinate or CoordinateDouble node that can specify a list of 
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Rendering/IndexedTriangleSet/IndexedTriangleSet.x3d"></x3d-canvas>[/c3-source-example]
+<x3d-canvas src="https://create3000.github.io/media/examples/Rendering/IndexedTriangleSet/IndexedTriangleSet.x3d" update="auto"></x3d-canvas>[/c3-source-example]
 
 ## External Links
 

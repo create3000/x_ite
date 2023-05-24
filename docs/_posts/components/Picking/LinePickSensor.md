@@ -116,7 +116,7 @@ Output event containing 3D texture coordinates of surfaces computed by the picki
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Picking/LinePickSensor/LinePickSensor.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Picking/LinePickSensor/LinePickSensor.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

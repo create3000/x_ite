@@ -196,7 +196,7 @@ Transparency < .5 opaque, transparency > .5 transparent.
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Shape/Material/Material.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Shape/Material/Material.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 

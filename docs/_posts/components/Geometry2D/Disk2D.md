@@ -68,7 +68,7 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Geometry2D/Disk2D/Disk2D.x3d"></x3d-canvas>
+<x3d-canvas src="https://create3000.github.io/media/examples/Geometry2D/Disk2D/Disk2D.x3d" update="auto"></x3d-canvas>
 
 ## External Links
 
