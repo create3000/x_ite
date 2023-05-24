@@ -94,16 +94,14 @@ Quaternion .prototype =
    },
    setMatrix: function (matrix)
    {
-      let i;
-
       // First, find largest diagonal in matrix:
       if (matrix [0] > matrix [4])
       {
-         i = matrix [0] > matrix [8] ? 0 : 2;
+         var i = matrix [0] > matrix [8] ? 0 : 2;
       }
       else
       {
-         i = matrix [4] > matrix [8] ? 1 : 2;
+         var i = matrix [4] > matrix [8] ? 1 : 2;
       }
 
       const scalerow = matrix [0] + matrix [4] + matrix [8];
