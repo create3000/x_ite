@@ -10,7 +10,7 @@
             "problemMatcher": [],
         },
         {
-            "label": "Make Version",
+            "label": "Publish X_ITE",
             "type": "shell",
             "command": "make version",
             "problemMatcher": []
