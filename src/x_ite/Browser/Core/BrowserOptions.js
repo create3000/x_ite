@@ -301,17 +301,17 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    },
    set_autoUpdate__: function (autoUpdate)
    {
-      const
-         browser = this .getBrowser (),
-         element = browser .getElement ()
-
-      const events  = ["resize", "scroll", "load"]
+      const events = ["resize", "scroll", "load"]
          .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
          .join (" ")
 
       if (autoUpdate .getValue ())
       {
-         function checkUpdate ()
+         const
+            browser = this .getBrowser (),
+            element = browser .getElement ()
+
+         const checkUpdate = () =>
          {
             if (element .isInViewport ())
             {
@@ -323,7 +323,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
                if (browser .isLive ())
                   browser .endUpdate ();
             }
-         }
+         };
 
          $(window) .on (events, checkUpdate);
          checkUpdate ()
