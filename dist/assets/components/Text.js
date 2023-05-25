@@ -1,7 +1,7 @@
 /* X_ITE v8.7.5 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 530:
+/***/ 508:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -15475,9 +15475,8 @@ X3DTextGeometry .prototype =
 
       text ._origin .setValue (origin .set (min .x, max .y, 0));
 
-      this .bbox .set (min3 .set (min .x, min .y, 0),
-                       max3 .set (max .x, max .y, 0),
-                       true);
+      this .bbox .setExtents (min3 .set (min .x, min .y, 0),
+                              max3 .set (max .x, max .y, 0));
    },
    stringToGlyphs: function (font, line, normal, lineNumber)
    {
@@ -16047,7 +16046,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(530);
+/* provided dependency */ var opentype = __webpack_require__(508);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

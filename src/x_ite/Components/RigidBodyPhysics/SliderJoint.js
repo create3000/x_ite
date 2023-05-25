@@ -141,8 +141,8 @@ SliderJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prot
 
          axisRotation .setFromToVec (Vector3 .xAxis, this ._axis .getValue ());
 
-         matrixA .set (this .getBody1 () ._position .getValue (), Rotation4 .multRight (this .getBody1 () ._orientation .getValue (), axisRotation));
-         matrixB .set (this .getBody1 () ._position .getValue (), Rotation4 .multRight (this .getBody1 () ._orientation .getValue (), axisRotation));
+         matrixA .set (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
+         matrixB .set (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
 
          origin .setValue (matrixA [12], matrixA [13], matrixA [14]);
 

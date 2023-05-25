@@ -95,7 +95,9 @@ SquatInterpolator .prototype =
          }
       }
       else if (key .length > 0)
+      {
          s .push (keyValue [0] .getValue () .copy ());
+      }
    },
    interpolate: function (index0, index1, weight, keyValue)
    {

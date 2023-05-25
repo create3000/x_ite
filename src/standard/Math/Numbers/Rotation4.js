@@ -444,35 +444,6 @@ Object .defineProperties (Rotation4 .prototype,
 Object .assign (Rotation4,
 {
    Identity: new Rotation4 (),
-   inverse: function (rotation)
-   {
-      return rotation .copy () .inverse ();
-   },
-   multRight: function (lhs, rhs)
-   {
-      return lhs .copy () .multRight (rhs);
-   },
-   normalize: function (rotation)
-   {
-      return rotation .copy () .normalize ();
-   },
-   slerp: function (source, destination, t)
-   {
-      return source .copy () .slerp (destination, t);
-   },
-   squad: function (source, a, b, destination, t)
-   {
-      return source .copy () .squad (a, b, destination, t);
-   },
-   /*
-   bezier: function (source, a, b, destination, t)
-   {
-      const copy = Object .create (this .prototype);
-      copy [_quaternion] = Quaternion .bezier (source [_quaternion], a, b, destination [_quaternion], t);
-      copy .update ();
-      return copy;
-   },
-   */
    spline: function (r0, r1, r2)
    {
       const copy = Object .create (this .prototype);

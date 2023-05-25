@@ -202,7 +202,7 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
       if (this .behind)
          rotation .inverse ();
 
-      this ._rotation_changed = Rotation4 .multRight (this .startOffset, rotation);
+      this ._rotation_changed = this .startOffset .copy () .multRight (rotation);
    },
 });
 

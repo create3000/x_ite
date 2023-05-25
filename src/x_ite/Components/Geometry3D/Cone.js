@@ -174,7 +174,7 @@ Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
                u     = i / xDimension,
                theta = 2 * Math .PI * u,
                t     = Complex .Polar (-1, theta),
-               p     = Complex .multiply (t, bottomRadius);
+               p     = t .copy () .multiply (bottomRadius);
 
             texCoord .push (new Vector2 ((t .imag + 1) / 2, (t .real + 1) / 2));
             points   .push (new Vector3 (p .imag, y2, p .real));

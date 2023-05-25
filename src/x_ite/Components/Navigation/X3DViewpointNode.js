@@ -464,11 +464,11 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          translation = this ._positionOffset .getValue () .copy () .lerp (offset, factor),
          direction   = this .getPosition () .copy () .add (translation) .subtract (point);
 
-      let rotation = Rotation4 .multRight (this ._orientationOffset .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
+      let rotation = this ._orientationOffset .getValue () .copy () .multRight (new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
 
       if (straighten)
       {
-         rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
+         rotation = this .getOrientation () .copy () .inverse () .multRight (this .straightenHorizon (this .getOrientation () .copy () .multRight (rotation)));
       }
 
       this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, translation);
@@ -497,7 +497,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
-      const rotation = Rotation4 .multRight (Rotation4 .inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
+      const rotation = this .getOrientation () .copy () .inverse () .multRight (this .straightenHorizon (this .getUserOrientation ()));
 
       this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, this ._positionOffset);
       this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);

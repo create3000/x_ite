@@ -242,10 +242,6 @@ Object .assign (Complex,
    {
       return lhs .copy () .multiply (rhs);
    },
-   multComp: function (lhs, rhs)
-   {
-      return lhs .copy () .multComp (rhs);
-   },
 });
 
 export default Complex;

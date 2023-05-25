@@ -444,91 +444,45 @@ Object .defineProperties (Quaternion .prototype,
 
 Object .assign (Quaternion,
 {
-   negate: function (quat)
+   Identity: new Quaternion (0, 0, 0, 1),
+   spline: (function ()
    {
-      return quat .copy () .negate ();
-   },
-   inverse: function (quat)
-   {
-      return quat .copy () .inverse ();
-   },
-   add: function (lhs, rhs)
-   {
-      return lhs .copy () .add (rhs);
-   },
-   subtract: function (lhs, rhs)
-   {
-      return lhs .copy () .subtract (rhs);
-   },
-   multiply: function (lhs, rhs)
-   {
-      return lhs .copy () .multiply (rhs);
-   },
-   multLeft: function (lhs, rhs)
-   {
-      return lhs .copy () .multLeft (rhs);
-   },
-   multRight: function (lhs, rhs)
-   {
-      return lhs .copy () .multRight (rhs);
-   },
-   divide: function (lhs, rhs)
-   {
-      return lhs .copy () .divide (rhs);
-   },
-   normalize: function (quat)
-   {
-      return quat .copy () .normalize ();
-   },
-   slerp: function (source, destination, t)
-   {
-      return source .copy () .slerp (destination, t);
-   },
-   squad: function (source, a, b, destination, t)
-   {
-      return source .copy () .squad (a, b, destination, t);
-   },
-   /*
-   bezier: function (q0, a, b, q1, t)
-   {
-      return q0 .copy () .squad (a, b, q1, t);
-   },
-   */
-   spline: function (Q0, Q1, Q2)
-   {
-      q0 .assign (Q0);
-      q1 .assign (Q1);
-      q2 .assign (Q2);
+      const
+         q0   = new Quaternion (0, 0, 0, 1),
+         q1   = new Quaternion (0, 0, 0, 1),
+         q2   = new Quaternion (0, 0, 0, 1),
+         q1_i = new Quaternion (0, 0, 0, 1);
 
-      // If the dot product is smaller than 0 we must negate the quaternion to prevent flipping. If we negate all
-      // the terms we get a different quaternion but it represents the same rotation.
+      return function (Q0, Q1, Q2)
+      {
+         q0 .assign (Q0);
+         q1 .assign (Q1);
+         q2 .assign (Q2);
 
-      if (q0 .dot (q1) < 0)
-         q0 .negate ();
+         // If the dot product is smaller than 0 we must negate the quaternion to prevent flipping. If we negate all
+         // the terms we get a different quaternion but it represents the same rotation.
 
-      if (q2 .dot (q1) < 0)
-         q2 .negate ();
+         if (q0 .dot (q1) < 0)
+            q0 .negate ();
 
-      q1_i .assign (q1) .inverse ();
+         if (q2 .dot (q1) < 0)
+            q2 .negate ();
 
-      // The result must be normalized as it will be used in slerp and we can only slerp normalized vectors.
+         q1_i .assign (q1) .inverse ();
 
-      return q1 .multRight (
-         t1 .assign (q1_i) .multRight (q0) .log () .add (t2 .assign (q1_i) .multRight (q2) .log ()) .divide (-4) .exp ()
-      )
-      .normalize () .copy ();
-   },
+         // The result must be normalized as it will be used in slerp and we can only slerp normalized vectors.
+
+         return q1 .multRight (
+            t1 .assign (q1_i) .multRight (q0) .log () .add (t2 .assign (q1_i) .multRight (q2) .log ()) .divide (-4) .exp ()
+         )
+         .normalize () .copy ();
+      };
+   })(),
 });
 
 const
    t1 = new Quaternion (0, 0, 0, 1),
    t2 = new Quaternion (0, 0, 0, 1),
    t3 = new Quaternion (0, 0, 0, 1);
-
-const
-   q0   = new Quaternion (0, 0, 0, 1),
-   q1   = new Quaternion (0, 0, 0, 1),
-   q2   = new Quaternion (0, 0, 0, 1),
-   q1_i = new Quaternion (0, 0, 0, 1);
 
 export default Quaternion;

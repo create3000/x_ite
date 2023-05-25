@@ -268,7 +268,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
    {
       const
          axisRotation = this ._axisRotation .getValue (),
-         translation  = Rotation4 .inverse (axisRotation) .multVecRot (endPoint .add (this .startOffset) .subtract (this .startPoint));
+         translation  = axisRotation .copy () .inverse () .multVecRot (endPoint .add (this .startOffset) .subtract (this .startPoint));
 
       // X component
 
