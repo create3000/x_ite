@@ -748,10 +748,10 @@ A Boolean value (`true`, `false` or `auto`) to indicate whether browser events s
 
 An MFString value of URLs to load on page load. If no *url* attribute is specified or the attribute is empty, an empty scene will be displayed. If both *src* and *url* attributes are given, the last given attribute takes precedence.
 
-### Example
+### Example of Use
 
 ```html
-<x3d-canvas cache="true" src="path/to/your/X3D/world.x3d"></x3d-canvas>
+<x3d-canvas src="path/to/your/X3D/world.x3d" cache="true" update="auto"></x3d-canvas>
 ```
 
 ### More Options
