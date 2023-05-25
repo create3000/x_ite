@@ -303,13 +303,13 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    {
       const events = ["resize", "scroll", "load"]
          .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
-         .join (" ")
+         .join (" ");
 
       if (autoUpdate .getValue ())
       {
          const
             browser = this .getBrowser (),
-            element = browser .getElement ()
+            element = browser .getElement ();
 
          const checkUpdate = () =>
          {
@@ -326,7 +326,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          };
 
          $(window) .on (events, checkUpdate);
-         checkUpdate ()
+         checkUpdate ();
       }
       else
       {
