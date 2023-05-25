@@ -89,7 +89,7 @@ Cylinder3 .prototype =
 
       // find the given line un-translated
       const
-         point             = Vector3 .subtract (line .point, this .axis .point),
+         point             = line .point .copy () .subtract (this .axis .point),
          noTranslationLine = new Line3 (point, line .direction);
 
       // find the un-translated line in unit cylinder's space

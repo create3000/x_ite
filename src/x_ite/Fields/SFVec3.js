@@ -73,7 +73,7 @@ function SFVec3Template (TypeName, Type, double)
    {
       cross: function (vector)
       {
-         return new (this .constructor) (Vector3 .cross (this .getValue (), vector .getValue ()));
+         return new (this .constructor) (this .getValue () .copy () .cross (vector .getValue ()));
       },
    });
 

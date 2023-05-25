@@ -112,9 +112,8 @@ Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .protot
          else
          {
             const
-               scale           = Vector3 .divide (size, 2),
-               x               = scale .x,
-               y               = scale .y,
+               x               = Math .abs (size .x / 2),
+               y               = Math .abs (size .y / 2),
                defaultVertices = geometry .getVertices () .getValue (),
                vertexArray     = this .getVertices ();
 

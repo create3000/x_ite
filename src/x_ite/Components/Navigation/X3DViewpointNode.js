@@ -461,8 +461,8 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
       const
-         translation = Vector3 .lerp (this ._positionOffset .getValue (), offset, factor),
-         direction   = Vector3 .add (this .getPosition (), translation) .subtract (point);
+         translation = this ._positionOffset .getValue () .copy () .lerp (offset, factor),
+         direction   = this .getPosition () .copy () .add (translation) .subtract (point);
 
       let rotation = Rotation4 .multRight (this ._orientationOffset .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
 
@@ -479,7 +479,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       const relative = this .getRelativeTransformation (this);
 
       this ._fieldOfViewScale       = 1;
-      this ._centerOfRotationOffset = Vector3 .subtract (point, this .getCenterOfRotation ());
+      this ._centerOfRotationOffset = point .copy () .subtract (this .getCenterOfRotation ());
       this .nearDistance            = Math .min (distance / 2, 0.125);
       this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
 

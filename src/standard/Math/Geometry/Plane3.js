@@ -133,7 +133,7 @@ Plane3 .prototype =
    },
    getDistanceToPoint: function (point)
    {
-      return Vector3 .dot (point, this .normal) - this .distanceFromOrigin;
+      return point .dot (this .normal) - this .distanceFromOrigin;
    },
    intersectsLine: function (line, intersection)
    {

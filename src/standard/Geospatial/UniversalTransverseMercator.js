@@ -201,7 +201,6 @@ UniversalTransverseMercator .prototype =
 
       return result .set (northing, easting, geodetic .z);
    },
-   //lerp: Vector3 .lerp,
 };
 
 export default UniversalTransverseMercator;

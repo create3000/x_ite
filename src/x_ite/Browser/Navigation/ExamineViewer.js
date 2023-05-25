@@ -636,7 +636,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
             viewpoint            = this .getActiveViewpoint (),
             userPosition         = viewpoint .getUserPosition (),
             userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
-            direction            = Vector3 .subtract (userPosition, userCenterOfRotation),
+            direction            = userPosition .copy () .subtract (userCenterOfRotation),
             rotation             = this .getHorizonRotation (rotationChange),
             axis                 = viewpoint .getUpVector (true);
 
@@ -822,8 +822,8 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
       {
          const
             V = rotation .multVecRot (zAxis .assign (Vector3 .zAxis)),
-            N = Vector3 .cross (Vector3 .yAxis, V),
-            H = Vector3 .cross (N, Vector3 .yAxis),
+            N = Vector3 .yAxis .copy () .cross (V),
+            H = N .copy () .cross (Vector3 .yAxis),
             r = new Rotation4 (Vector3 .zAxis, H);
 
          return r;

@@ -109,14 +109,11 @@ Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
          else
          {
             const
-               scale           = Vector3 .divide (size, 2),
+               x               = Math .abs (size .x / 2),
+               y               = Math .abs (size .y / 2),
+               z               = Math .abs (size .z / 2),
                defaultVertices = geometry .getVertices () .getValue (),
                vertexArray     = this .getVertices ();
-
-            let
-               x = scale .x,
-               y = scale .y,
-               z = scale .z;
 
             for (let i = 0, length = defaultVertices .length; i < length; i += 4)
             {
@@ -125,10 +122,6 @@ Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
                                   z * defaultVertices [i + 2],
                                   1);
             }
-
-            x = Math .abs (x);
-            y = Math .abs (y);
-            z = Math .abs (z);
 
             this .getMin () .set (-x, -y, -z);
             this .getMax () .set ( x,  y,  z);

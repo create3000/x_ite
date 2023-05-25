@@ -129,8 +129,8 @@ Sphere3 .prototype =
          const
             rr   = r * r,
             V    = AB .cross (AC),
-            d    = Vector3 .dot (A, V),
-            e    = Vector3 .dot (V, V),
+            d    = A .dot (V),
+            e    = V .dot (V),
             sep1 = d * d > rr * e;
 
          if (sep1)
@@ -138,12 +138,12 @@ Sphere3 .prototype =
 
          // Testing if sphere lies outside a triangle vertex.
          const
-            aa   = Vector3 .dot (A, A),
-            ab   = Vector3 .dot (A, B),
-            ac   = Vector3 .dot (A, C),
-            bb   = Vector3 .dot (B, B),
-            bc   = Vector3 .dot (B, C),
-            cc   = Vector3 .dot (C, C),
+            aa   = A .dot (A),
+            ab   = A .dot (B),
+            ac   = A .dot (C),
+            bb   = B .dot (B),
+            bc   = B .dot (C),
+            cc   = C .dot (C),
             sep2 = (aa > rr) && (ab > aa) && (ac > aa),
             sep3 = (bb > rr) && (ab > bb) && (bc > bb),
             sep4 = (cc > rr) && (ac > cc) && (bc > cc);
@@ -161,9 +161,9 @@ Sphere3 .prototype =
             d1   = ab - aa,
             d2   = bc - bb,
             d3   = ac - cc,
-            e1   = Vector3 .dot (AB, AB),
-            e2   = Vector3 .dot (BC, BC),
-            e3   = Vector3 .dot (CA, CA);
+            e1   = AB .dot (AB),
+            e2   = BC .dot (BC),
+            e3   = CA .dot (CA);
 
          Q1 .assign (A) .multiply (e1) .subtract (AB .multiply (d1));
          Q2 .assign (B) .multiply (e2) .subtract (BC .multiply (d2));
@@ -173,9 +173,9 @@ Sphere3 .prototype =
             QC   = C .multiply (e1) .subtract (Q1),
             QA   = A .multiply (e2) .subtract (Q2),
             QB   = B .multiply (e3) .subtract (Q3),
-            sep5 = (Vector3 .dot (Q1, Q1) > rr * e1 * e1) && (Vector3 .dot (Q1, QC) > 0),
-            sep6 = (Vector3 .dot (Q2, Q2) > rr * e2 * e2) && (Vector3 .dot (Q2, QA) > 0),
-            sep7 = (Vector3 .dot (Q3, Q3) > rr * e3 * e3) && (Vector3 .dot (Q3, QB) > 0);
+            sep5 = (Q1 .dot (Q1) > rr * e1 * e1) && (Q1 .dot (QC) > 0),
+            sep6 = (Q2 .dot (Q2) > rr * e2 * e2) && (Q2 .dot (QA) > 0),
+            sep7 = (Q3 .dot (Q3) > rr * e3 * e3) && (Q3 .dot (QB) > 0);
 
          if (sep5 || sep6 || sep7)
             return false;

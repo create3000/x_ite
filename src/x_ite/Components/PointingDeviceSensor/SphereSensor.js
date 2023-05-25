@@ -115,7 +115,7 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
 
       if (this .sphere .intersectsLine (hitRay, trackPoint, exit))
       {
-         if ((Vector3 .subtract (hitRay .point, exit) .magnitude () < Vector3 .subtract (hitRay .point, trackPoint) .magnitude ()) - behind)
+         if ((hitRay .point .distance (exit) < hitRay .point .distance (trackPoint)) - behind)
             trackPoint .assign (exit);
 
          return true;
@@ -173,7 +173,7 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
 
          this .zPlane .intersectsLine (hitRay, tangentPoint);
 
-         hitRay .set (tangentPoint, Vector3 .subtract (this .sphere .center, tangentPoint) .normalize ());
+         hitRay .set (tangentPoint, this .sphere .center .copy () .subtract (tangentPoint) .normalize ());
 
          //console .log (hitRay .toString ());
 
@@ -183,12 +183,12 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
 
          const
             triNormal     = Triangle3 .normal (this .sphere .center, trackPoint, this .startPoint, new Vector3 (0, 0, 0)),
-            dirFromCenter = Vector3 .subtract (trackPoint, this .sphere .center) .normalize (),
-            normal        = Vector3 .cross (triNormal, dirFromCenter) .normalize ();
+            dirFromCenter = trackPoint .copy () .subtract (this .sphere .center) .normalize (),
+            normal        = triNormal .copy () .cross (dirFromCenter) .normalize ();
 
-         const point1 = Vector3 .subtract (trackPoint, normal .multiply (Vector3 .subtract (tangentPoint, trackPoint) .magnitude ()));
+         const point1 = trackPoint .copy () .subtract (normal .multiply (tangentPoint .copy () .subtract (trackPoint) .magnitude ()));
 
-         hitRay .set (point1, Vector3 .subtract (this .sphere .center, point1) .normalize ());
+         hitRay .set (point1, this .sphere .center .copy () .subtract (point1) .normalize ());
 
          this .getTrackPoint (hitRay, trackPoint, false);
       }
@@ -196,7 +196,7 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
       this ._trackPoint_changed = trackPoint;
 
       const
-         toVector = Vector3 .subtract (trackPoint, this .sphere .center),
+         toVector = trackPoint .copy () .subtract (this .sphere .center),
          rotation = new Rotation4 (this .fromVector, toVector);
 
       if (this .behind)

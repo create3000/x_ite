@@ -333,7 +333,6 @@ Namespace_default().set ("x_ite/Browser/Geometry2D/Circle2DOptions", Circle2DOpt
 /* harmony default export */ const Geometry2D_Circle2DOptions = (Circle2DOptions_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
 const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.5")] .require ("standard/Math/Numbers/Vector3");
-var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Disk2DOptions.js
 /*******************************************************************************
  *
@@ -1872,9 +1871,8 @@ Rectangle2D .prototype = Object .assign (Object .create ((X3DGeometryNode_defaul
          else
          {
             const
-               scale           = Vector3_default().divide (size, 2),
-               x               = scale .x,
-               y               = scale .y,
+               x               = Math .abs (size .x / 2),
+               y               = Math .abs (size .y / 2),
                defaultVertices = geometry .getVertices () .getValue (),
                vertexArray     = this .getVertices ();
 

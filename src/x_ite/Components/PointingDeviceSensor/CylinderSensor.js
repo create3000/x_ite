@@ -129,7 +129,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
 
       this .cylinder .intersectsLine (hitRay, enter, exit);
 
-      return Vector3 .subtract (hitPoint, enter) .magnitude () > Vector3 .subtract (hitPoint, exit) .magnitude ();
+      return hitPoint .distance (enter) > hitPoint .distance (exit);
    },
    getTrackPoint: function (hitRay, trackPoint)
    {
@@ -138,7 +138,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
       this .zPlane .intersectsLine (hitRay, zPoint);
 
       const
-         axisPoint = Vector3 .add (zPoint, this .cylinder .axis .getPerpendicularVectorToPoint (zPoint, new Vector3 (0, 0, 0))),
+         axisPoint = zPoint .copy () .add (this .cylinder .axis .getPerpendicularVectorToPoint (zPoint, new Vector3 (0, 0, 0))),
          distance  = this .sxPlane .getDistanceToPoint (zPoint) / this .cylinder .radius,
          section   = Math .floor ((distance + 1) / 2);
 
@@ -155,7 +155,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
    },
    getAngle: function (rotation)
    {
-      if (Vector3 .dot (rotation .getAxis (new Vector3 (0, 0, 0)), this .cylinder .axis .direction) > 0)
+      if (rotation .getAxis (new Vector3 (0, 0, 0)) .dot (this .cylinder .axis .direction) > 0)
          return rotation .angle;
 
       else
@@ -183,7 +183,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
             radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .magnitude ();
 
          this .cylinder = new Cylinder3 (axis, radius);
-         this .disk     = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
+         this .disk     = Math .abs (cameraBack .dot (yAxis)) > Math .cos (this ._diskAngle .getValue ());
          this .behind   = this .isBehind (hitRay, hitPoint);
          this .yPlane   = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
          this .zPlane   = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
@@ -191,10 +191,10 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
          // Compute normal like in Billboard with yAxis as axis of rotation.
          const
             billboardToViewer = this .invModelViewMatrix .origin,
-            sxNormal          = Vector3 .cross (yAxis, billboardToViewer) .normalize ();
+            sxNormal          = yAxis .copy () .cross (billboardToViewer) .normalize ();
 
          this .sxPlane  = new Plane3 (new Vector3 (0, 0, 0), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
-         this .szNormal = Vector3 .cross (sxNormal, yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
+         this .szNormal = sxNormal .copy () .cross (yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
 
          const trackPoint = new Vector3 (0, 0, 0);
 
