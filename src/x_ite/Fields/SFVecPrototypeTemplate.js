@@ -47,7 +47,7 @@
 
 import X3DField  from "../Base/X3DField.js";
 
-function SFVecPrototypeTemplate (Constructor, TypeName, Type, ValueType, double)
+function SFVecPrototypeTemplate (Constructor, TypeName, Type, Vector, double)
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
@@ -76,7 +76,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Type, ValueType, double)
       },
       isDefaultValue: function ()
       {
-         return this .getValue () .equals (ValueType .Zero);
+         return this .getValue () .equals (Vector .Zero);
       },
       set: function (value)
       {
