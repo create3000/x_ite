@@ -90,7 +90,7 @@ function X3DGeometryNode (executionContext)
 
    this .min                      = new Vector3 (0, 0, 0);
    this .max                      = new Vector3 (0, 0, 0);
-   this .bbox                     = new Box3 (this .min, this .max, true);
+   this .bbox                     = Box3 .Extents (this .min, this .max);
    this .solid                    = true;
    this .primitiveMode            = browser .getContext () .TRIANGLES;
    this .geometryType             = 3;

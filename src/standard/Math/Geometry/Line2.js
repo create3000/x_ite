@@ -146,7 +146,7 @@ Line2 .Points = function (point1, point2)
 {
    const line = Object .create (Line2 .prototype);
    line .point     = point1 .copy ();
-   line .direction = Vector2 .subtract (point2, point1) .normalize ();
+   line .direction = point2 .copy () .subtract (point1) .normalize ();
    return line;
 };
 

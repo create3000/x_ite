@@ -536,9 +536,8 @@ X3DTextGeometry .prototype =
 
       text ._origin .setValue (origin .set (min .x, max .y, 0));
 
-      this .bbox .set (min3 .set (min .x, min .y, 0),
-                       max3 .set (max .x, max .y, 0),
-                       true);
+      this .bbox .setExtents (min3 .set (min .x, min .y, 0),
+                              max3 .set (max .x, max .y, 0));
    },
    stringToGlyphs: function (font, line, normal, lineNumber)
    {

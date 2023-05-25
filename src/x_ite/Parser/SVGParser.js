@@ -918,7 +918,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          bbox          = new Box2 ();
 
       for (const points of contours)
-         bbox .add (new Box2 (Vector2 .min (... points), Vector2 .max (... points), true));
+         bbox .add (Box2 .Points (... points));
 
       this .groupNodes .push (transformNode);
 

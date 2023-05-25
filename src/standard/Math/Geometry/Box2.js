@@ -93,10 +93,11 @@ Box2 .prototype =
 
             return this;
          }
-         case 3:
-         {
-            return this .setExtents (arguments [0], arguments [1]);
-         }
+         // case 3:
+         // {
+         //    console .trace ()
+         //    return this .setExtents (arguments [0], arguments [1]);
+         // }
       }
    },
    setExtents: function (min, max)
@@ -136,7 +137,7 @@ Box2 .prototype =
          this .getExtents (lhs_min, lhs_max);
          box  .getExtents (rhs_min, rhs_max);
 
-         return this .set (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true);
+         return this .setExtents (lhs_min .min (rhs_min), lhs_max .max (rhs_max));
       };
    })(),
    multLeft: function (matrix)
@@ -202,6 +203,18 @@ Box2 .prototype =
       return this .size + ", " + this .center;
    },
 };
+
+Object .assign (Box2,
+{
+   Extents: function (min, max)
+   {
+      return new Box2 () .setExtents (min, max);
+   },
+   Points: function (... points)
+   {
+      return new Box2 () .setExtents (points [0] .copy () .min (... points), points [0] .copy () .max (... points));
+   },
+});
 
 Object .defineProperties (Box2 .prototype,
 {

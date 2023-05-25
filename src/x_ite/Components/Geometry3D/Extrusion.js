@@ -606,7 +606,7 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
                      point = points [index] .copy ();
 
                   point .index     = index;
-                  texCoord [index] = Vector2 .subtract (crossSection [numCapPoints - 1 - k] .getValue (), min) .divide (capMax);
+                  texCoord [index] = crossSection [numCapPoints - 1 - k] .getValue () .copy () .subtract (min) .divide (capMax);
                   polygon .push (convex ? index : point);
                }
 
@@ -646,7 +646,7 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
                      point = points [index] .copy ();
 
                   point .index     = index;
-                  texCoord [index] = Vector2 .subtract (crossSection [k] .getValue (), min) .divide (capMax);
+                  texCoord [index] = crossSection [k] .getValue () .copy () .subtract (min) .divide (capMax);
                   polygon .push (convex ? index : point);
                }
 
