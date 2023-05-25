@@ -82,8 +82,8 @@ WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype)
    {
       const
          localYAxis      = new Vector3 (0, 0, 0),
-         userOrientation = new Rotation4 (0, 0, 1, 0),
-         rotation        = new Rotation4 (0, 0, 1, 0);
+         userOrientation = new Rotation4 (),
+         rotation        = new Rotation4 ();
 
       return function (velocity)
       {

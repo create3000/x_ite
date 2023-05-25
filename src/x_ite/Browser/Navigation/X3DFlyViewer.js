@@ -410,9 +410,9 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          upVector           = new Vector3 (0, 0, 0),
          direction          = new Vector3 (0, 0, 0),
          axis               = new Vector3 (0, 0, 0),
-         userOrientation    = new Rotation4 (0, 0, 1, 0),
-         orientationOffset  = new Rotation4 (0, 0, 1, 0),
-         rubberBandRotation = new Rotation4 (0, 0, 1, 0);
+         userOrientation    = new Rotation4 (),
+         orientationOffset  = new Rotation4 (),
+         rubberBandRotation = new Rotation4 ();
 
       return function ()
       {
@@ -543,8 +543,8 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
    addRoll: (function ()
    {
       const
-         orientationOffset = new Rotation4 (0, 0, 1, 0),
-         roll              = new Rotation4 (0, 0, 1, 0);
+         orientationOffset = new Rotation4 (),
+         roll              = new Rotation4 ();
 
       return function (rollAngle)
       {
@@ -580,8 +580,8 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
    addRotation: (function ()
    {
       const
-         userOrientation   = new Rotation4 (0, 0, 1, 0),
-         orientationOffset = new Rotation4 (0, 0, 1, 0);
+         userOrientation   = new Rotation4 (),
+         orientationOffset = new Rotation4 ();
 
       return function (fromVector, toVector)
       {

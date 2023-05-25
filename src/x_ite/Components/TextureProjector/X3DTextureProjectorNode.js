@@ -118,7 +118,7 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create (X3DChildNod
          localXAxis = new Vector3 (0, 0, 0),
          localZAxis = new Vector3 (0, 0, 0),
          upVector   = new Vector3 (0, 0, 0),
-         rotation   = new Rotation4 (0, 0, 1, 0);
+         rotation   = new Rotation4 ();
 
       return function (orientation)
       {

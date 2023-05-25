@@ -47,8 +47,6 @@
 
 import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
 
-const result = new Rotation4 (0, 0, 1, 0);
-
 function SquatInterpolator ()
 {
    this .s = [ ];
@@ -99,12 +97,17 @@ SquatInterpolator .prototype =
          s .push (keyValue [0] .getValue () .copy ());
       }
    },
-   interpolate: function (index0, index1, weight, keyValue)
+   interpolate: (function ()
    {
-      return result .assign (keyValue [index0] .getValue ()) .squad (this .s [index0],
-                                                                     this .s [index1],
-                                                                     keyValue [index1] .getValue (), weight);
-   },
+      const result = new Rotation4 ();
+
+      return function (index0, index1, weight, keyValue)
+      {
+         return result .assign (keyValue [index0] .getValue ()) .squad (this .s [index0],
+                                                                        this .s [index1],
+                                                                        keyValue [index1] .getValue (), weight);
+      };
+   })(),
 };
 
 export default SquatInterpolator;

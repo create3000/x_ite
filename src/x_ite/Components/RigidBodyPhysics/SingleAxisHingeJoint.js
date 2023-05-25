@@ -216,7 +216,7 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointN
       var
          localAnchorPoint2 = new Vector3 (0, 0, 0),
          difference        = new Matrix4 (),
-         rotation          = new Rotation4 (0, 0, 1, 0);
+         rotation          = new Rotation4 ();
 
       return function ()
       {

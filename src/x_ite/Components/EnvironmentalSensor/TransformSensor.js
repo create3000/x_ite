@@ -213,7 +213,7 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
    {
       const
          position    = new Vector3 (0, 0, 0),
-         orientation = new Rotation4 (0, 0, 1, 0);
+         orientation = new Rotation4 ();
 
       return function ()
       {

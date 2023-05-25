@@ -349,9 +349,9 @@ X3DRenderObject .prototype =
       const
          projectionMatrix            = new Matrix4 (),
          cameraSpaceProjectionMatrix = new Matrix4 (),
-         localOrientation            = new Rotation4 (0, 0, 1, 0),
+         localOrientation            = new Rotation4 (),
          vector                      = new Vector3 (0, 0, 0),
-         rotation                    = new Rotation4 (0, 0, 1, 0);
+         rotation                    = new Rotation4 ();
 
       return function (direction)
       {
@@ -805,7 +805,7 @@ X3DRenderObject .prototype =
          projectionMatrix            = new Matrix4 (),
          cameraSpaceProjectionMatrix = new Matrix4 (),
          translation                 = new Vector3 (0, 0, 0),
-         rotation                    = new Rotation4 (0, 0, 1, 0);
+         rotation                    = new Rotation4 ();
 
       return function ()
       {

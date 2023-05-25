@@ -115,7 +115,7 @@ SliderJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prot
    addJoint: (function ()
    {
       var
-         axisRotation = new Rotation4 (0, 0, 1, 0),
+         axisRotation = new Rotation4 (),
          matrixA      = new Matrix4 (),
          matrixB      = new Matrix4 (),
          origin       = new Ammo .btVector3 (0, 0, 0),

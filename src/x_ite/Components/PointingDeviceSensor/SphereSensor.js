@@ -107,7 +107,7 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
       this .behind      = false;
       this .fromVector  = new Vector3 (0, 0, 0);
       this .startPoint  = new Vector3 (0, 0, 0);
-      this .startOffset = new Rotation4 (0, 0, 1, 0);
+      this .startOffset = new Rotation4 ();
    },
    getTrackPoint: function (hitRay, trackPoint, behind)
    {

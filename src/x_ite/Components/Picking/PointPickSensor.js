@@ -192,7 +192,7 @@ PointPickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .
          transform     = new Ammo .btTransform (),
          localScaling  = new Ammo .btVector3 (),
          translation   = new Vector3 (0, 0, 0),
-         rotation      = new Rotation4 (0, 0, 1, 0),
+         rotation      = new Rotation4 (),
          scale         = new Vector3 (1, 1, 1),
          pickedPoint   = new Fields .MFVec3f ();
 

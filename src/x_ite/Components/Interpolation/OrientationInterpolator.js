@@ -106,8 +106,8 @@ OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpol
    interpolate: (function ()
    {
       const
-         keyValue0 = new Rotation4 (0, 0, 1, 0),
-         keyValue1 = new Rotation4 (0, 0, 1, 0);
+         keyValue0 = new Rotation4 (),
+         keyValue1 = new Rotation4 ();
 
       return function (index0, index1, weight)
       {

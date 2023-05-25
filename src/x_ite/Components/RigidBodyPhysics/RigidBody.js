@@ -471,7 +471,7 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
          transform       = new Ammo .btTransform (),
          position        = new Vector3 (0, 0, 0),
          quaternion      = new Quaternion (0, 0, 0, 1),
-         orientation     = new Rotation4 (0, 0, 1, 0),
+         orientation     = new Rotation4 (),
          linearVelocity  = new Vector3 (0, 0, 0),
          angularVelocity = new Vector3 (0, 0, 0);
 

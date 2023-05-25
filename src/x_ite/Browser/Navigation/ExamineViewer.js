@@ -76,12 +76,12 @@ function ExamineViewer (executionContext, navigationInfo)
    X3DViewer .call (this, executionContext, navigationInfo);
 
    this .button                   = -1;
-   this .orientationOffset        = new Rotation4 (0, 0, 1, 0);
+   this .orientationOffset        = new Rotation4 ();
    this .fromVector               = new Vector3 (0, 0, 0);
    this .toVector                 = new Vector3 (0, 0, 0);
    this .fromPoint                = new Vector3 (0, 0, 0);
    this .toPoint                  = new Vector3 (0, 0, 0);
-   this .rotation                 = new Rotation4 (0, 0, 1, 0);
+   this .rotation                 = new Rotation4 ();
    this .direction                = new Vector3 (0, 0, 0);
    this .axis                     = new Vector3 (0, 0, 0);
    this .pressTime                = 0;
@@ -94,7 +94,7 @@ function ExamineViewer (executionContext, navigationInfo)
    this .dblTapInterval           = 0.4;
 
    this .initialPositionOffset    = new Vector3 (0, 0, 0);
-   this .initialOrientationOffset = new Rotation4 (0, 0, 1, 0);
+   this .initialOrientationOffset = new Rotation4 ();
    this .positionChaser           = new PositionChaser (executionContext);
    this .centerOfRotationChaser   = new PositionChaser (executionContext);
    this .rotationChaser           = new OrientationChaser (executionContext);
@@ -755,7 +755,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
       const
          distance = new Vector3 (0, 0, 0),
          d        = new Vector3 (0, 0, 0),
-         oob      = new Rotation4 (0, 0, 1, 0);
+         oob      = new Rotation4 ();
 
       return function (positionOffsetBefore, orientationOffsetBefore, orientationOffsetAfter)
       {
@@ -773,8 +773,8 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
    getOrientationOffset: (function ()
    {
       const
-         userOrientation   = new Rotation4 (0, 0, 1, 0),
-         orientationOffset = new Rotation4 (0, 0, 1, 0),
+         userOrientation   = new Rotation4 (),
+         orientationOffset = new Rotation4 (),
          zAxis             = new Vector3 (0, 0, 0);
 
       return function (rotation, orientationOffsetBefore, _throw)

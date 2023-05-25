@@ -370,7 +370,7 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
                   event .deltaY     = delta;
                   event .zoomFactor = Math .abs (delta) / $(window) .width ();
-                  
+
                   event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
                   event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
 
@@ -456,8 +456,8 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
    addRotation: (function ()
    {
       const
-         userOrientation   = new Rotation4 (0, 0, 1, 0),
-         orientationOffset = new Rotation4 (0, 0, 1, 0);
+         userOrientation   = new Rotation4 (),
+         orientationOffset = new Rotation4 ();
 
       return function (fromVector, toVector)
       {

@@ -75,7 +75,7 @@ function X3DViewpointNode (executionContext)
                           "fieldOfViewScale",       new Fields .SFFloat (1));
 
    this .userPosition         = new Vector3 (0, 1, 0);
-   this .userOrientation      = new Rotation4 (0, 0, 1, 0);
+   this .userOrientation      = new Rotation4 ();
    this .userCenterOfRotation = new Vector3 (0, 0, 0);
    this .modelMatrix          = new Matrix4 ();
    this .cameraSpaceMatrix    = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
@@ -384,9 +384,9 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
    {
       const
          position         = new Vector3 (0, 0, 0),
-         orientation      = new Rotation4 (0, 0, 1, 0),
+         orientation      = new Rotation4 (),
          scale            = new Vector3 (0, 0, 0),
-         scaleOrientation = new Rotation4 (0, 0, 1, 0);
+         scaleOrientation = new Rotation4 ();
 
       return function (fromViewpointNode)
       {
@@ -515,7 +515,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       const
          localXAxis  = new Vector3 (0, 0, 0),
          localZAxis  = new Vector3 (0, 0, 0),
-         rotation    = new Rotation4 (0, 0, 1, 0);
+         rotation    = new Rotation4 ();
 
       return function (orientation, upVector = this .getUpVector (true))
       {

@@ -103,7 +103,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
    offset: new Vector3 (0, 0, 0),
    scale: new Vector3 (1, 1, 1),
    currentTranslation: new Vector3 (0, 0, 0),
-   currentRotation: new Rotation4 (0, 0, 1, 0),
+   currentRotation: new Rotation4 (),
    currentScale: new Vector3 (0, 0, 0),
    modelViewMatrix: new Matrix4 (),
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([

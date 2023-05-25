@@ -53,8 +53,8 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 
 var
-   a        = new Rotation4 (0, 0, 1, 0),
-   rotation = new Rotation4 (0, 0, 1, 0);
+   a        = new Rotation4 (),
+   rotation = new Rotation4 ();
 
 function OrientationDamper (executionContext)
 {
@@ -102,7 +102,7 @@ OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .pr
    },
    getVector: function ()
    {
-      return new Rotation4 (0, 0, 1, 0);
+      return new Rotation4 ();
    },
    equals: function (lhs, rhs, tolerance)
    {

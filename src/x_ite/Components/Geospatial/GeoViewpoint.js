@@ -183,7 +183,7 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
    {
       const
          locationMatrix = new Matrix4 (),
-         geoOrientation = new Rotation4 (0, 0, 1, 0);
+         geoOrientation = new Rotation4 ();
 
       return function (value)
       {
@@ -200,7 +200,7 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
    {
       const
          locationMatrix = new Matrix4 (),
-         orientation    = new Rotation4 (0, 0, 1, 0);
+         orientation    = new Rotation4 ();
 
       return function ()
       {

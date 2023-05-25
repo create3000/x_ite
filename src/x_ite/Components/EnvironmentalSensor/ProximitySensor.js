@@ -149,7 +149,7 @@ ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
          invModelMatrix         = new Matrix4 (),
          centerOfRotationMatrix = new Matrix4 (),
          position               = new Vector3 (0, 0, 0),
-         orientation            = new Rotation4 (0, 0, 1, 0),
+         orientation            = new Rotation4 (),
          centerOfRotation       = new Vector3 (0, 0, 0);
 
       return function ()

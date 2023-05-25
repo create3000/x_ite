@@ -184,7 +184,7 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
 
          const
          vector3  = new Vector3 (0, 0, 0),
-         rotation = new Rotation4 (0, 0, 1, 0);
+         rotation = new Rotation4 ();
 
       return function ()
       {
