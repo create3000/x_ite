@@ -60,7 +60,7 @@ function CatmullRomSplineInterpolatorTemplate (Type)
       constructor: CatmullRomSplineInterpolatorInstance,
       create: function ()
       {
-         return new Type (0, 0, 0, 0);
+         return Type .Zero .copy ();
       },
       copy: function (value)
       {
