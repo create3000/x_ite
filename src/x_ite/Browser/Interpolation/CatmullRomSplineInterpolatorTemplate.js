@@ -68,15 +68,15 @@ function CatmullRomSplineInterpolatorTemplate (Type)
       },
       subtract: function (lhs, rhs)
       {
-         return Type .subtract (lhs, rhs);
+         return lhs .copy () .subtract (rhs);
       },
       multiply: function (lhs, rhs)
       {
-         return Type .multiply (lhs, rhs);
+         return lhs .copy () .multiply (rhs);
       },
       divide: function (lhs, rhs)
       {
-         return Type .divide (lhs, rhs);
+         return lhs .copy () .divide (rhs);
       },
       magnitude: function (value)
       {
