@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import X3DField  from "../Base/X3DField.js";
+import X3DField from "../Base/X3DField.js";
 
 function SFVecPrototypeTemplate (Constructor, TypeName, Type, Vector, double)
 {
