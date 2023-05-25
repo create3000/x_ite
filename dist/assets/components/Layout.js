@@ -424,7 +424,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
    offset: new (Vector3_default()) (0, 0, 0),
    scale: new (Vector3_default()) (1, 1, 1),
    currentTranslation: new (Vector3_default()) (0, 0, 0),
-   currentRotation: new (Rotation4_default()) (0, 0, 1, 0),
+   currentRotation: new (Rotation4_default()) (),
    currentScale: new (Vector3_default()) (0, 0, 0),
    modelViewMatrix: new (Matrix4_default()) (),
    [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([

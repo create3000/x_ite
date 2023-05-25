@@ -2704,7 +2704,7 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
          localAnchorPoint1 = new (Vector3_default()) (0, 0, 0),
          localAxis1        = new (Vector3_default()) (0, 0, 0),
          difference        = new (Matrix4_default()) (),
-         rotation          = new (Rotation4_default()) (0, 0, 1, 0);
+         rotation          = new (Rotation4_default()) ();
 
       return function ()
       {
@@ -2734,7 +2734,7 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
          localAnchorPoint2 = new (Vector3_default()) (0, 0, 0),
          localAxis2        = new (Vector3_default()) (0, 0, 0),
          difference        = new (Matrix4_default()) (),
-         rotation          = new (Rotation4_default()) (0, 0, 1, 0);
+         rotation          = new (Rotation4_default()) ();
 
       return function ()
       {
@@ -3370,7 +3370,7 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
          transform       = new AmmoClass.btTransform (),
          position        = new (Vector3_default()) (0, 0, 0),
          quaternion      = new (Quaternion_default()) (0, 0, 0, 1),
-         orientation     = new (Rotation4_default()) (0, 0, 1, 0),
+         orientation     = new (Rotation4_default()) (),
          linearVelocity  = new (Vector3_default()) (0, 0, 0),
          angularVelocity = new (Vector3_default()) (0, 0, 0);
 
@@ -4011,7 +4011,7 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
       var
          localAnchorPoint2 = new (Vector3_default()) (0, 0, 0),
          difference        = new (Matrix4_default()) (),
-         rotation          = new (Rotation4_default()) (0, 0, 1, 0);
+         rotation          = new (Rotation4_default()) ();
 
       return function ()
       {
@@ -4158,7 +4158,7 @@ SliderJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRig
    addJoint: (function ()
    {
       var
-         axisRotation = new (Rotation4_default()) (0, 0, 1, 0),
+         axisRotation = new (Rotation4_default()) (),
          matrixA      = new (Matrix4_default()) (),
          matrixB      = new (Matrix4_default()) (),
          origin       = new AmmoClass.btVector3 (0, 0, 0),

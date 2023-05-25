@@ -1556,7 +1556,7 @@ VolumePicker .prototype =
    {
       const
          translation = new (Vector3_default()) (0, 0, 0),
-         rotation    = new (Rotation4_default()) (0, 0, 1, 0),
+         rotation    = new (Rotation4_default()) (),
          scale       = new (Vector3_default()) (1, 1, 1),
          s           = new (AmmoClass_default()).btVector3 (0, 0, 0);
 
@@ -1836,7 +1836,7 @@ PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSens
          transform     = new (AmmoClass_default()).btTransform (),
          localScaling  = new (AmmoClass_default()).btVector3 (),
          translation   = new (Vector3_default()) (0, 0, 0),
-         rotation      = new (Rotation4_default()) (0, 0, 1, 0),
+         rotation      = new (Rotation4_default()) (),
          scale         = new (Vector3_default()) (1, 1, 1),
          pickedPoint   = new (Fields_default()).MFVec3f ();
 
