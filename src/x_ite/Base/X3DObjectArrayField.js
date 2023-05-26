@@ -192,6 +192,10 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return true;
    },
+   isDefaultValue: function ()
+   {
+      return this .length === 0;
+   },
    set: function (value)
    {
       const target = this [_target];
@@ -202,10 +206,6 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       for (let i = 0, length = value .length; i < length; ++ i)
          array [i] .set (value [i] instanceof X3DField ? value [i] .getValue () : value [i]);
-   },
-   isDefaultValue: function ()
-   {
-      return this .length === 0;
    },
    setValue: function (value)
    {
