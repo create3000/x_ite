@@ -405,6 +405,15 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 			generator .string += ']';
       }
    },
+   dispose: function ()
+   {
+      const target = this .getTarget ();
+
+      target .resize (0, undefined, false);
+      target .processInterests ();
+
+      X3DObjectArrayField .prototype .dispose .call (target);
+   },
 });
 
 for (const key of Reflect .ownKeys (MFNode .prototype))

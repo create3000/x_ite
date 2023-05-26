@@ -581,14 +581,6 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          generator .string += ']';
       }
    },
-   dispose: function ()
-   {
-      const target = this [_target]
-
-      target .resize (0, undefined, true);
-
-      X3DArrayField .prototype .dispose .call (target);
-   },
 });
 
 for (const key of Reflect .ownKeys (X3DObjectArrayField .prototype))
