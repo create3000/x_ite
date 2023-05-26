@@ -241,10 +241,14 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       if (array .length)
       {
-         const field = array .shift ();
+         const
+            field  = array .shift (),
+            result = field .valueOf ();
+
          target .removeChildObject (field);
          target .addEvent ();
-         return field .valueOf ();
+
+         return result;
       }
    },
    push: function (value)
@@ -274,10 +278,14 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       if (array .length)
       {
-         const field = array .pop ();
+         const
+            field  = array .pop (),
+            result = field .valueOf ();
+
          target .removeChildObject (field);
          target .addEvent ();
-         return field .valueOf ();
+
+         return result;
       }
    },
    splice: function (index, deleteCount, ... insertValues)
@@ -377,14 +385,15 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    {
       const
          target = this [_target],
-         values = target .getValue () .splice (first, last - first);
+         values = target .getValue () .splice (first, last - first),
+         result = new (target .constructor) (values);
 
       for (const value of values)
          target .removeChildObject (value);
 
       target .addEvent ();
 
-      return new (target .constructor) (values);
+      return result;
    },
    resize: function (size, value, silently)
    {
@@ -427,6 +436,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    removeChildObject: function (value)
    {
       value .removeParent (this [_proxy]);
+      value .dispose ();
    },
    reverse: function ()
    {
@@ -573,14 +583,9 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    },
    dispose: function ()
    {
-      const
-         target = this [_target],
-         array  = target .getValue ();
+      const target = this [_target]
 
-      for (const value of array)
-         target .removeChildObject (value);
-
-      array .length = 0;
+      target .resize (0, undefined, true);
 
       X3DArrayField .prototype .dispose .call (target);
    },
