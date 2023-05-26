@@ -50,8 +50,7 @@ import X3DArrayField from "./X3DArrayField.js";
 
 const
    _target = Symbol (),
-   _proxy  = Symbol (),
-   _find   = Symbol ();
+   _proxy  = Symbol ();
 
 const handler =
 {
@@ -319,53 +318,28 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       target .addEvent ();
    },
-   [_find]: function (first, last, value)
-   {
-      const
-         target = this [_target],
-         values = target .getValue ();
-
-      if (typeof value === "function")
-      {
-         for (let i = first; i < last; ++ i)
-         {
-            if (value (values [i] .valueOf ()))
-               return i;
-         }
-
-         return last;
-      }
-
-      for (let i = first; i < last; ++ i)
-      {
-         if (values [i] .equals (value))
-            return i;
-      }
-
-      return last;
-   },
    remove: function (first, last, value)
    {
       const
          target = this [_target],
-         values = target .getValue ();
+         array  = target .getValue ();
 
       if (typeof value === "function")
       {
-         first = target [_find] (first, last, value);
+         first = array .findIndex ((current, index) => index >= first && value (current .valueOf ()))
 
-         if (first !== last)
+         if (first !== -1)
          {
             for (let i = first; ++ i < last; )
             {
-               const current = values [i];
+               const current = array [i];
 
                if (!value (current .valueOf ()))
                {
-                  const tmp = values [first];
+                  const tmp = array [first];
 
-                  values [first ++] = current;
-                  values [i]        = tmp;
+                  array [first ++] = current;
+                  array [i]        = tmp;
                }
             }
          }
@@ -376,25 +350,25 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          return first;
       }
 
-      first = target [_find] (first, last, value);
+      first = array .findIndex ((current, index) => index >= first && current .equals (value))
 
-      if (first !== last)
+      if (first !== -1)
       {
          for (let i = first; ++ i < last; )
          {
-            const current = values [i];
+            const current = array [i];
 
             if (!current .equals (value))
             {
-               const tmp = values [first];
+               const tmp = array [first];
 
-               values [first ++] = current;
-               values [i]        = tmp;
+               array [first ++] = current;
+               array [i]        = tmp;
             }
          }
       }
 
-      if (first !== last)
+      if (first !== -1)
          target .addEvent ();
 
       return first;

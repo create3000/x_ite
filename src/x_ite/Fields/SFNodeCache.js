@@ -81,11 +81,11 @@ function dispose ()
       target = this [_target],
       value  = target .getValue ();
 
+   X3DField .prototype .dispose .call (target);
+
    cache .delete (value);
 
    value ?.dispose ();
-
-   X3DField .prototype .dispose .call (target);
 }
 
 export default SFNodeCache;
