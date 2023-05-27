@@ -178,7 +178,7 @@ X3DObject .prototype =
    },
    toStream: function (generator)
    {
-      generator .string = "[object " + this .getTypeName () + "]";
+      generator .string = `[object ${this .getTypeName ()}]`;
    },
    dispose: function ()
    {
@@ -217,7 +217,7 @@ Object .assign (X3DObject,
    })(),
    getInterestId: function (callbackName, object)
    {
-      return this .getId (object) + "." + this .getId (object [callbackName]);
+      return `${this .getId (object)}.${this .getId (object [callbackName])}`;
    },
 });
 
