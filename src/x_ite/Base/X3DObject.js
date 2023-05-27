@@ -217,31 +217,8 @@ Object .assign (X3DObject,
    })(),
    getInterestId: function (callbackName, object)
    {
-      if (typeof callbackName === "symbol")
-         return this .getId (object) + ".Symbol(" + SymbolId (callbackName) + ")";
-
-      return this .getId (object) + "." + String (callbackName);
+      return this .getId (object) + "." + this .getId (object [callbackName]);
    },
 });
-
-// In the future we can use getId, because WeakMap will accept Symbols as key.
-const SymbolId = (function ()
-{
-   const map = new Map ();
-
-   let counter = 0;
-
-   return function (object)
-   {
-      const id = map .get (object);
-
-      if (id !== undefined)
-         return id;
-
-      map .set (object, ++ counter);
-
-      return counter;
-   };
-})();
 
 export default X3DObject;
