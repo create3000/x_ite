@@ -201,7 +201,7 @@ Object .assign (X3DObject,
    {
       const map = new WeakMap ();
 
-      let counter = 0;
+      let counter = 0; // In the future we can use a bigint here (0n).
 
       return function (object)
       {
