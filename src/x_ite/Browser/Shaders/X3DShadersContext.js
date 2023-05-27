@@ -53,7 +53,6 @@ import ShaderPart     from "../../Components/Shaders/ShaderPart.js";
 const
    _wireframe      = Symbol (),
    _primitiveModes = Symbol (),
-   _defaultShader  = Symbol (),
    _shaderNodes    = Symbol ();
 
 function X3DShadersContext ()
