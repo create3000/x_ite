@@ -83,16 +83,9 @@ X3DObject .prototype =
    {
       return this [_name];
    },
-   getInterestId: function (callbackName, object)
-   {
-      if (typeof callbackName === "symbol")
-         return X3DObject .getId (object) + ".Symbol(" + SymbolId (callbackName) + ")";
-
-      return X3DObject .getId (object) + "." + String (callbackName);
-   },
    hasInterest: function (callbackName, object)
    {
-      return this [_interests] .has (this .getInterestId (callbackName, object));
+      return this [_interests] .has (X3DObject .getInterestId (callbackName, object));
    },
    addInterest: function (callbackName, object, ... args)
    {
@@ -103,14 +96,14 @@ X3DObject .prototype =
       }
 
       const
-         interestId = this .getInterestId (callbackName, object),
+         interestId = X3DObject .getInterestId (callbackName, object),
          callback   = object [callbackName];
 
       this [_interests] .set (interestId, callback .bind (object, ... args, this));
    },
    removeInterest: function (callbackName, object)
    {
-      this [_interests] .delete (this .getInterestId (callbackName, object));
+      this [_interests] .delete (X3DObject .getInterestId (callbackName, object));
    },
    getInterests: function ()
    {
@@ -222,6 +215,13 @@ Object .assign (X3DObject,
          return counter;
       };
    })(),
+   getInterestId: function (callbackName, object)
+   {
+      if (typeof callbackName === "symbol")
+         return this .getId (object) + ".Symbol(" + SymbolId (callbackName) + ")";
+
+      return this .getId (object) + "." + String (callbackName);
+   },
 });
 
 // In the future we can use getId, because WeakMap will accept Symbols as key.
