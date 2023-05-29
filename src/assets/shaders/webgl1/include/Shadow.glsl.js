@@ -286,7 +286,7 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
             texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (d0 .x, d1 .y), shadowCoord .z) +
             texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, d1 .y),   shadowCoord .z) +
             texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + d1,                  shadowCoord .z)
-         ) * ( 1.0 / 9.0 );
+         ) * (1.0 / 9.0);
 
          return light .shadowIntensity * value;
 
