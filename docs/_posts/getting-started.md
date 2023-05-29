@@ -742,7 +742,7 @@ A Boolean value (`true` or `false`) to indicate whether the Timings Panel should
 
 ### update
 
-A Boolean value (`true`, `false` or `auto`) to indicate whether browser events should be processed. The default value for the *update* attribute is `true`. A value of `true` will effectively call `Browser.beginUpdate`, a value of `false` will call `Browser.endUpdate`. If the value is `auto`, the effective value is determined by the visibility of the \<x3d-canvas\> element.
+A Boolean value (`true`, `false` or `auto`) to indicate whether browser events should be processed. The default value for the *update* attribute is `true`. A value of `true` will enable event processing, a value of `false` will stop event processing. If the value is `auto`, the effective value is determined by the visibility of the \<x3d-canvas\> element.
 
 ### url
 
