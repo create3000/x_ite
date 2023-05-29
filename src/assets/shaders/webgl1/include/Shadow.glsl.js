@@ -290,9 +290,9 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 
       #else // no percentage-closer filtering
 
-         vec4 shadowCoord = shadowMatrix * vec4 (vertex, 1.0);
+         vec4 shadowCoord = light .shadowMatrix * vec4 (vertex, 1.0);
 
-         shadowCoord .z   -= shadowBias;
+         shadowCoord .z   -= light .shadowBias;
          shadowCoord .xyz /= shadowCoord .w;
 
          float value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);
