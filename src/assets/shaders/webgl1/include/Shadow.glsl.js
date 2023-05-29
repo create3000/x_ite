@@ -245,8 +245,8 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
          if (any (greaterThan (abs (shadowCoord .xy - 0.5), vec2 (0.5))))
             return 0.0;
 
-         vec2 d0 = - texelSize .xy;
-         vec2 d1 =   texelSize .xy;
+         vec2 d0 = - texelSize;
+         vec2 d1 =   texelSize;
 
          float value = (
             texture2DCompare (index, shadowCoord .xy + d0,                  shadowCoord .z) +
@@ -273,8 +273,8 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
          if (any (greaterThan (abs (shadowCoord .xy - 0.5), vec2 (0.5))))
             return 0.0;
 
-         vec2 d0 = - texelSize .xy;
-         vec2 d1 =   texelSize .xy;
+         vec2 d0 = - texelSize;
+         vec2 d1 =   texelSize;
 
          float value = (
             texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + d0,                  shadowCoord .z) +
