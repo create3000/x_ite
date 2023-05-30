@@ -99,7 +99,7 @@ function X3DScene (browser)
 
    this [_units] .add ("angle",  new UnitInfo ("angle",  "radian",   1));
    this [_units] .add ("force",  new UnitInfo ("force",  "newton",   1));
-   this [_units] .add ("length", new UnitInfo ("length", "metre",    1));
+   this [_units] .add ("length", new UnitInfo ("length", "meter",    1));
    this [_units] .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
    this [_metadata]       = new Map ();
