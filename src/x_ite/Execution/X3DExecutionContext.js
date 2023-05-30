@@ -218,15 +218,10 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       for (;;)
       {
-         const proto = executionContext .protos .get (name);
+         const protoNode = executionContext .protos .get (name) ?? executionContext .externprotos .get (name);
 
-         if (proto)
-            return proto .createInstance (this, setup);
-
-         const externproto = executionContext .externprotos .get (name);
-
-         if (externproto)
-            return externproto .createInstance (this, setup);
+         if (protoNode)
+            return protoNode .createInstance (this, setup);
 
          if (executionContext .isScene ())
             break;
