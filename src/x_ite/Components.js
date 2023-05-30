@@ -74,13 +74,13 @@ class Components
       if (types)
       {
          for (const [typeName, type] of Object .entries (types))
-            SupportedNodes .addType (typeName, type);
+            SupportedNodes .addNodeType (typeName, type);
       }
 
       if (abstractTypes)
       {
          for (const [typeName, type] of Object .entries (abstractTypes))
-            SupportedNodes .addAbstractType (typeName, type);
+            SupportedNodes .addAbstractNodeType (typeName, type);
       }
 
       if (browserContext)

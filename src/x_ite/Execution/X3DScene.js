@@ -58,7 +58,7 @@ import X3DCast             from "../Base/X3DCast.js";
 import X3DConstants        from "../Base/X3DConstants.js";
 import SFNodeCache         from "../Fields/SFNodeCache.js";
 
-SupportedNodes .addAbstractType ("X3DScene", X3DScene);
+SupportedNodes .addAbstractNodeType ("X3DScene", X3DScene);
 
 const
    _browser              = Symbol .for ("X_ITE.X3DEventObject.browser"),

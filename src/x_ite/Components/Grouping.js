@@ -72,9 +72,9 @@ const AbstractTypes =
 };
 
 for (const typeName in Types)
-   SupportedNodes .addType (typeName, Types [typeName]);
+   SupportedNodes .addNodeType (typeName, Types [typeName]);
 
 for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
 
 export default undefined;
