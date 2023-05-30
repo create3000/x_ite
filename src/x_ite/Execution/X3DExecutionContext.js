@@ -307,11 +307,8 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       return getUniqueName (this [_namedNodes], name);
    },
-   addImportedNode: function (inlineNode, exportedName, importedName)
+   addImportedNode: function (inlineNode, exportedName, importedName = exportedName)
    {
-      if (importedName === undefined)
-         importedName = exportedName;
-
       exportedName = String (exportedName);
       importedName = String (importedName);
 
