@@ -269,7 +269,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       node .setName (name);
 
-      this [_namedNodes] .add (name, node);
+      this [_namedNodes] .add (name, SFNodeCache .get (node));
 
       this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
@@ -279,10 +279,10 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       const node = this [_namedNodes] .get (name);
 
-      if (!node)
+      if (!node || !node .getValue ())
          return;
 
-      node .setName ("");
+      node .getValue () .setName ("");
 
       this [_namedNodes] .remove (name);
 
@@ -295,7 +295,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       const node = this [_namedNodes] .get (name);
 
       if (node)
-         return SFNodeCache .get (node);
+         return node;
 
       throw new Error ("Named node '" + name + "' not found.");
    },
