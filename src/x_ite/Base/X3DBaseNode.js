@@ -242,6 +242,8 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    setup: function ()
    {
+      Object .freeze (this [_type]);
+
       for (const field of this [_fields])
          field .setTainted (false);
 

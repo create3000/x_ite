@@ -254,7 +254,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    })(),
    getSupportedNode: function (typeName)
    {
-      return SupportedNodes .getNodeType (String (typeName));
+      return SupportedNodes .getNodeTypes () .get (String (typeName));
    },
    getSupportedNodes: function ()
    {
@@ -262,7 +262,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    getAbstractNode: function (typeName)
    {
-      return SupportedNodes .getAbstractNodeType (String (typeName));
+      return SupportedNodes .getAbstractNodeTypes () .get (String (typeName));
    },
    getAbstractNodes: function ()
    {

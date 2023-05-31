@@ -75,10 +75,6 @@ const SupportedNodes =
             HTMLSupport .addFieldName (name)
       }
    },
-   getNodeType: function (typeName)
-   {
-      return nodeTypes .get (typeName);
-   },
    getNodeTypes ()
    {
       return nodeTypes;
@@ -88,10 +84,6 @@ const SupportedNodes =
       X3DConstants [typeName] = ++ nodeType;
 
       abstractNodeTypes .add (typeName, Type);
-   },
-   getAbstractNodeType: function (typeName)
-   {
-      return abstractNodeTypes .get (typeName);
    },
    getAbstractNodeTypes ()
    {
