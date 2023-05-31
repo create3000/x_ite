@@ -77,7 +77,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             const namedNode = executionContext .getNamedNodes () .get (this .getName ());
 
             if (namedNode)
-               return namedNode;
+               return namedNode .getValue ();
          }
 
          // Create copy.
@@ -110,7 +110,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                      }
                      catch (error)
                      {
-                        console .error (error .message);
+                        console .error (error);
                      }
                   }
                }
@@ -135,7 +135,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             }
             catch (error)
             {
-               console .log (error .message);
+               console .error (error);
             }
          }
 
