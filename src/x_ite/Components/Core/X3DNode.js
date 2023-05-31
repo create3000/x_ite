@@ -1290,7 +1290,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          {
             const parentContext = executionContext .getExecutionContext ();
 
-            for (const importedNode of parentContext .getImportedNodes ())
+            for (const importedNode of [... parentContext .getImportedNodes ()])
             {
                try
                {
@@ -1306,7 +1306,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
          // Remove exported node if any.
 
-         for (const exportedNode of executionContext .getExportedNodes ())
+         for (const exportedNode of [... executionContext .getExportedNodes ()])
          {
             if (exportedNode .getLocalNode () === this)
                executionContext .removeExportedNode (exportedNode .getExportedName ());
