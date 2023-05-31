@@ -1317,20 +1317,20 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       for (const firstParent of new Set (this .getParents ()))
       {
-         if (firstParent instanceof Fields .SFNode)
+         if (!(firstParent instanceof Fields .SFNode))
+            continue;
+
+         for (const secondParent of new Set (firstParent .getParents ()))
          {
-            for (const secondParent of new Set (firstParent .getParents ()))
-            {
-               if (secondParent instanceof Fields .MFNode)
-               {
-                  const length = secondParent .length;
+            if (!(secondParent instanceof Fields .MFNode))
+               continue;
 
-                  secondParent .erase (secondParent .remove (0, length, firstParent), length);
-               }
-            }
+            const length = secondParent .length;
 
-            firstParent .setValue (null);
+            secondParent .erase (secondParent .remove (0, length, firstParent), length);
          }
+
+         firstParent .setValue (null);
       }
 
       // Call super.dispose, where fields get disposed.
