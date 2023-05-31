@@ -457,6 +457,9 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       if (!(proto instanceof X3DProtoDeclaration))
          throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
 
+      if (proto .getExecutionContext () !== this)
+         throw new Error ("Couldn't add proto declaration: proto does not belong to this execution context.");
+
       if (this [_protos] .get (name))
          throw new Error ("Couldn't add proto declaration: proto '" + name + "' already in use.");
 
@@ -478,12 +481,15 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       name = String (name);
 
       if (!(proto instanceof X3DProtoDeclaration))
-         throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
+         throw new Error ("Couldn't update proto declaration: proto must be of type X3DProtoDeclaration.");
+
+      if (proto .getExecutionContext () !== this)
+         throw new Error ("Couldn't update proto declaration: proto does not belong to this execution context.");
 
       name = String (name);
 
       if (name .length === 0)
-         throw new Error ("Couldn't add proto declaration: proto name is empty.");
+         throw new Error ("Couldn't update proto declaration: proto name is empty.");
 
       this [_protos] .update (proto .getName (), name, proto);
       proto .setName (name);
@@ -524,6 +530,9 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       if (!(externproto instanceof X3DExternProtoDeclaration))
          throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
 
+      if (externproto .getExecutionContext () !== this)
+         throw new Error ("Couldn't add extern proto declaration: extern proto does not belong to this execution context.");
+
       if (this [_externprotos] .get (name))
          throw new Error ("Couldn't add extern proto declaration: extern proto '" + name + "' already in use.");
 
@@ -545,12 +554,15 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       name = String (name);
 
       if (!(externproto instanceof X3DExternProtoDeclaration))
-         throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
+         throw new Error ("Couldn't update extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
+
+      if (externproto .getExecutionContext () !== this)
+         throw new Error ("Couldn't update extern proto declaration: extern proto does not belong to this execution context.");
 
       name = String (name);
 
       if (name .length === 0)
-         throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
+         throw new Error ("Couldn't update extern proto declaration: extern proto name is empty.");
 
       this [_externprotos] .update (externproto .getName (), name, externproto);
       externproto .setName (name);
