@@ -701,29 +701,18 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       if (route .getExecutionContext () !== this)
          return;
 
-      if (!this .deleteSimpleRoute (route))
-         return;
-
+      this .deleteSimpleRoute (route);
       this .deleteImportedRoute (route .sourceNode, route .destinationNode, route);
    },
    deleteSimpleRoute: function (route)
    {
-      try
-      {
-         const id = X3DRoute .getId (route .getSourceField (), route .getDestinationField ());
+      const id = X3DRoute .getId (route .getSourceField (), route .getDestinationField ());
 
-         this [_routes] .remove (id);
-         route .disconnect ();
+      this [_routes] .remove (id);
 
-         this ._routes_changed = this .getBrowser () .getCurrentTime ();
+      route .disconnect ();
 
-         return true;
-      }
-      catch (error)
-      {
-         console .error (error);
-         return false;
-      }
+      this ._routes_changed = this .getBrowser () .getCurrentTime ();
    },
    deleteImportedRoute (sourceNode, destinationNode, route)
    {
