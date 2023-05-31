@@ -669,7 +669,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (sourceField .getType () !== destinationField .getType ())
             throw new Error ("ROUTE types " + sourceField .getTypeName () + " and " + destinationField .getTypeName () + " do not match.");
 
-         const id = sourceField .getId () + "." + destinationField .getId ();
+         const id = X3DRoute .getId (sourceField, destinationField);
 
          let route = this [_routes] .get (id);
 
@@ -710,10 +710,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       try
       {
-         const
-            sourceField      = route .getSourceField (),
-            destinationField = route .getDestinationField (),
-            id               = sourceField .getId () + "." + destinationField .getId ();
+         const id = X3DRoute .getId (route .getSourceField (), route .getDestinationField ());
 
          this [_routes] .remove (id);
          route .disconnect ();
@@ -788,9 +785,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       sourceField      = sourceNode      .getField (sourceField);
       destinationField = destinationNode .getField (destinationField);
 
-      const id = sourceField .getId () + "." + destinationField .getId ();
-
-      return this [_routes] .get (id);
+      return this [_routes] .get (X3DRoute .getId (sourceField, destinationField));
    },
    getRoutes: function ()
    {

@@ -297,4 +297,12 @@ Object .defineProperties (X3DRoute .prototype,
    },
 });
 
+Object .assign (X3DRoute,
+{
+   getId: function (sourceField, destinationField)
+   {
+      return sourceField .getId () + "." + destinationField .getId ();
+   },
+});
+
 export default X3DRoute;
