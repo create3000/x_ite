@@ -693,15 +693,18 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       // sourceNode, sourceField, destinationNode, destinationField
       if (arguments .length === 4)
-      {
-         route = this .getRoute .apply (this, arguments);
+         route = this .getRoute (... arguments);
 
-         if (!route)
-            return false;
-      }
+      if (!(route instanceof X3DRoute))
+         return;
 
-      if (this .deleteSimpleRoute (route))
-         this .deleteImportedRoute (route .sourceNode, route .destinationNode, route);
+      if (route .getExecutionContext () !== this)
+         return;
+
+      if (!this .deleteSimpleRoute (route))
+         return;
+
+      this .deleteImportedRoute (route .sourceNode, route .destinationNode, route);
    },
    deleteSimpleRoute: function (route)
    {
