@@ -236,10 +236,31 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    },
    addNamedNode: function (name, node)
    {
+      name = String (name);
+      node = X3DCast (X3DConstants .X3DNode, node, false);
+
+      if (!node)
+         throw new Error ("Couldn't add named node: node must be of type X3DNode.");
+
+      if (node .getExecutionContext () !== this)
+         throw new Error ("Couldn't add named node: node does not belong to this execution context.");
+
+      if (name .length === 0)
+         throw new Error ("Couldn't add named node: node name is empty.");
+
       if (this [_namedNodes] .has (name))
          throw new Error ("Couldn't add named node: node named '" + name + "' is already in use.");
 
-      this .updateNamedNode (name, node);
+      if (this [_namedNodes] .get (node .getName ()) ?.getValue () === node)
+         throw new Error ("Couldn't add named node: node named '" + node .getName () + "' is already added.");
+
+      // Add named node.
+
+      node .setName (name);
+
+      this [_namedNodes] .add (name, SFNodeCache .get (node));
+
+      this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
    updateNamedNode: function (name, node)
    {
@@ -439,6 +460,9 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       if (this [_protos] .get (name))
          throw new Error ("Couldn't add proto declaration: proto '" + name + "' already in use.");
 
+      if (this [_protos] .get (proto .getName ()) === proto)
+         throw new Error ("Couldn't add proto declaration: proto '" + proto .getName () + "' already added.");
+
       name = String (name);
 
       if (name .length === 0)
@@ -502,6 +526,9 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       if (this [_externprotos] .get (name))
          throw new Error ("Couldn't add extern proto declaration: extern proto '" + name + "' already in use.");
+
+      if (this [_externprotos] .get (externproto .getName ()) === externproto)
+         throw new Error ("Couldn't add extern proto declaration: extern proto '" + externproto .getName () + "' already added.");
 
       name = String (name);
 
