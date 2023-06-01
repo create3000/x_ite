@@ -50,7 +50,8 @@ import X3DObject from "./X3DObject.js";
 const
    _modificationTime = Symbol (),
    _tainted          = Symbol (),
-   _parents          = Symbol ();
+   _parents          = Symbol (),
+   _registry         = Symbol ();
 
 function X3DChildObject ()
 {
@@ -62,7 +63,8 @@ X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype
    constructor: X3DChildObject,
    [_modificationTime]: 0,
    [_tainted]: false,
-   [_parents]: new Set (),
+   [_parents]: new Map (),
+   [_registry]: null,
    setModificationTime: function (value)
    {
       this [_modificationTime] = value;
@@ -83,30 +85,45 @@ X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype
    {
       this .setModificationTime (Date .now ());
 
-      for (const parent of this [_parents])
-         parent .addEvent (this);
+      for (const parent of this [_parents] .values ())
+         parent .deref () ?.addEvent (this);
    },
    addEventObject: function (field, event)
    {
       this .setModificationTime (Date .now ());
 
-      for (const parent of this [_parents])
-         parent .addEventObject (this, event);
+      for (const parent of this [_parents] .values ())
+         parent .deref () ?.addEventObject (this, event);
    },
    addParent: function (parent)
    {
       if (this [_parents] === X3DChildObject .prototype [_parents])
-         this [_parents] = new Set ();
+      {
+         this [_parents]  = new Map ();
+         this [_registry] = new FinalizationRegistry (id => this [_parents] .delete (id));
+      }
 
-      this [_parents] .add (parent);
+      this [_parents] .set (parent .getId (), new WeakRef (parent));
+      this [_registry] .register (parent, parent .getId (), parent);
    },
    removeParent: function (parent)
    {
-      this [_parents] .delete (parent);
+      this [_parents] .delete (parent .getId ());
+      this [_registry] ?.unregister (parent);
    },
    getParents: function ()
    {
-      return this [_parents];
+      const parents = new Set ();
+
+      for (const weakRef of this [_parents] .values ())
+      {
+         const parent = weakRef .deref ();
+
+         if (parent)
+            parents .add (parent)
+      }
+
+      return parents;
    },
    dispose: function ()
    {
