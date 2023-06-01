@@ -483,6 +483,9 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          target = this [_target],
          length = target [_length];
 
+      if (arguments .length === 0)
+         return new (target .constructor) ();
+
       index = Math .min (index|0, length);
 
       if (arguments .length < 2)

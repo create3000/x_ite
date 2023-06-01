@@ -297,6 +297,9 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          array  = target .getValue (),
          length = array .length;
 
+      if (arguments .length === 0)
+         return new (target .constructor) ();
+
       if (arguments .length < 2)
          deleteCount = length;
 
