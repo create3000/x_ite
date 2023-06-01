@@ -53,7 +53,7 @@ import X3DExecutionContext     from "../Execution/X3DExecutionContext.js";
 import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
 import X3DConstants            from "../Base/X3DConstants.js";
 
-SupportedNodes .addAbstractType ("X3DProtoDeclaration", X3DProtoDeclaration);
+SupportedNodes .addAbstractNodeType ("X3DProtoDeclaration", X3DProtoDeclaration);
 
 const
    _body = Symbol ();

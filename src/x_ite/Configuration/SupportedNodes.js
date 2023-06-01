@@ -45,24 +45,25 @@
  *
  ******************************************************************************/
 
-import X3DConstants from "../Base/X3DConstants.js";
-import HTMLSupport  from "../Parser/HTMLSupport.js";
+import NodeTypeArray from "./NodeTypeArray.js";
+import X3DConstants  from "../Base/X3DConstants.js";
+import HTMLSupport   from "../Parser/HTMLSupport.js";
 
 const _fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions");
 
 const
-   types         = new Map (),
-   abstractTypes = new Map ();
+   nodeTypes         = new NodeTypeArray (),
+   abstractNodeTypes = new NodeTypeArray ();
 
 let nodeType = X3DConstants .X3DBaseNode;
 
 const SupportedNodes =
 {
-   addType: function (typeName, Type)
+   addNodeType: function (typeName, Type)
    {
       X3DConstants [typeName] = ++ nodeType; // Start with 1, as X3DBaseNode is 0.
 
-      types .set (typeName, Type);
+      nodeTypes .add (typeName, Type);
 
       HTMLSupport .addNodeTypeName (typeName);
 
@@ -74,27 +75,19 @@ const SupportedNodes =
             HTMLSupport .addFieldName (name)
       }
    },
-   getType: function (typeName)
+   getNodeTypes ()
    {
-      return types .get (typeName);
+      return nodeTypes;
    },
-   getTypes ()
-   {
-      return Array .from (types .values ());
-   },
-   addAbstractType: function (typeName, Type)
+   addAbstractNodeType: function (typeName, Type)
    {
       X3DConstants [typeName] = ++ nodeType;
 
-      abstractTypes .set (typeName, Type);
+      abstractNodeTypes .add (typeName, Type);
    },
-   getAbstractType: function (typeName)
+   getAbstractNodeTypes ()
    {
-      return abstractTypes .get (typeName);
-   },
-   getAbstractTypes ()
-   {
-      return Array .from (abstractTypes .values ());
+      return abstractNodeTypes;
    },
 };
 

@@ -62,7 +62,7 @@ import X3DCast                     from "../Base/X3DCast.js";
 import X3DConstants                from "../Base/X3DConstants.js";
 import SFNodeCache                 from "../Fields/SFNodeCache.js";
 
-SupportedNodes .addAbstractType ("X3DExecutionContext", X3DExecutionContext);
+SupportedNodes .addAbstractNodeType ("X3DExecutionContext", X3DExecutionContext);
 
 const
    _namedNodes     = Symbol (),
@@ -218,15 +218,10 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       for (;;)
       {
-         const proto = executionContext .protos .get (name);
+         const protoNode = executionContext .protos .get (name) ?? executionContext .externprotos .get (name);
 
-         if (proto)
-            return proto .createInstance (this, setup);
-
-         const externproto = executionContext .externprotos .get (name);
-
-         if (externproto)
-            return externproto .createInstance (this, setup);
+         if (protoNode)
+            return protoNode .createInstance (this, setup);
 
          if (executionContext .isScene ())
             break;
@@ -241,10 +236,31 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    },
    addNamedNode: function (name, node)
    {
+      name = String (name);
+      node = X3DCast (X3DConstants .X3DNode, node, false);
+
+      if (!node)
+         throw new Error ("Couldn't add named node: node must be of type X3DNode.");
+
+      if (node .getExecutionContext () !== this)
+         throw new Error ("Couldn't add named node: node does not belong to this execution context.");
+
+      if (name .length === 0)
+         throw new Error ("Couldn't add named node: node name is empty.");
+
       if (this [_namedNodes] .has (name))
          throw new Error ("Couldn't add named node: node named '" + name + "' is already in use.");
 
-      this .updateNamedNode (name, node);
+      if (this [_namedNodes] .get (node .getName ()) ?.getValue () === node)
+         throw new Error ("Couldn't add named node: node named '" + node .getName () + "' is already added.");
+
+      // Add named node.
+
+      node .setName (name);
+
+      this [_namedNodes] .add (name, SFNodeCache .get (node));
+
+      this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
    updateNamedNode: function (name, node)
    {
@@ -269,7 +285,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       node .setName (name);
 
-      this [_namedNodes] .add (name, node);
+      this [_namedNodes] .add (name, SFNodeCache .get (node));
 
       this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
@@ -279,10 +295,10 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       const node = this [_namedNodes] .get (name);
 
-      if (!node)
+      if (!node || !node .getValue ())
          return;
 
-      node .setName ("");
+      node .getValue () .setName ("");
 
       this [_namedNodes] .remove (name);
 
@@ -295,7 +311,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       const node = this [_namedNodes] .get (name);
 
       if (node)
-         return SFNodeCache .get (node);
+         return node;
 
       throw new Error ("Named node '" + name + "' not found.");
    },
@@ -307,11 +323,8 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       return getUniqueName (this [_namedNodes], name);
    },
-   addImportedNode: function (inlineNode, exportedName, importedName)
+   addImportedNode: function (inlineNode, exportedName, importedName = exportedName)
    {
-      if (importedName === undefined)
-         importedName = exportedName;
-
       exportedName = String (exportedName);
       importedName = String (importedName);
 
@@ -444,8 +457,14 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       if (!(proto instanceof X3DProtoDeclaration))
          throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
 
+      if (proto .getExecutionContext () !== this)
+         throw new Error ("Couldn't add proto declaration: proto does not belong to this execution context.");
+
       if (this [_protos] .get (name))
          throw new Error ("Couldn't add proto declaration: proto '" + name + "' already in use.");
+
+      if (this [_protos] .get (proto .getName ()) === proto)
+         throw new Error ("Couldn't add proto declaration: proto '" + proto .getName () + "' already added.");
 
       name = String (name);
 
@@ -462,12 +481,15 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       name = String (name);
 
       if (!(proto instanceof X3DProtoDeclaration))
-         throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
+         throw new Error ("Couldn't update proto declaration: proto must be of type X3DProtoDeclaration.");
+
+      if (proto .getExecutionContext () !== this)
+         throw new Error ("Couldn't update proto declaration: proto does not belong to this execution context.");
 
       name = String (name);
 
       if (name .length === 0)
-         throw new Error ("Couldn't add proto declaration: proto name is empty.");
+         throw new Error ("Couldn't update proto declaration: proto name is empty.");
 
       this [_protos] .update (proto .getName (), name, proto);
       proto .setName (name);
@@ -508,8 +530,14 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       if (!(externproto instanceof X3DExternProtoDeclaration))
          throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
 
+      if (externproto .getExecutionContext () !== this)
+         throw new Error ("Couldn't add extern proto declaration: extern proto does not belong to this execution context.");
+
       if (this [_externprotos] .get (name))
          throw new Error ("Couldn't add extern proto declaration: extern proto '" + name + "' already in use.");
+
+      if (this [_externprotos] .get (externproto .getName ()) === externproto)
+         throw new Error ("Couldn't add extern proto declaration: extern proto '" + externproto .getName () + "' already added.");
 
       name = String (name);
 
@@ -526,12 +554,15 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       name = String (name);
 
       if (!(externproto instanceof X3DExternProtoDeclaration))
-         throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
+         throw new Error ("Couldn't update extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
+
+      if (externproto .getExecutionContext () !== this)
+         throw new Error ("Couldn't update extern proto declaration: extern proto does not belong to this execution context.");
 
       name = String (name);
 
       if (name .length === 0)
-         throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
+         throw new Error ("Couldn't update extern proto declaration: extern proto name is empty.");
 
       this [_externprotos] .update (externproto .getName (), name, externproto);
       externproto .setName (name);
@@ -638,7 +669,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (sourceField .getType () !== destinationField .getType ())
             throw new Error ("ROUTE types " + sourceField .getTypeName () + " and " + destinationField .getTypeName () + " do not match.");
 
-         const id = sourceField .getId () + "." + destinationField .getId ();
+         const id = X3DRoute .getId (sourceField, destinationField);
 
          let route = this [_routes] .get (id);
 
@@ -662,37 +693,26 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       // sourceNode, sourceField, destinationNode, destinationField
       if (arguments .length === 4)
-      {
-         route = this .getRoute .apply (this, arguments);
+         route = this .getRoute (... arguments);
 
-         if (!route)
-            return false;
-      }
+      if (!(route instanceof X3DRoute))
+         return;
 
-      if (this .deleteSimpleRoute (route))
-         this .deleteImportedRoute (route .sourceNode, route .destinationNode, route);
+      if (route .getExecutionContext () !== this)
+         return;
+
+      this .deleteSimpleRoute (route);
+      this .deleteImportedRoute (route .sourceNode, route .destinationNode, route);
    },
    deleteSimpleRoute: function (route)
    {
-      try
-      {
-         const
-            sourceField      = route .getSourceField (),
-            destinationField = route .getDestinationField (),
-            id               = sourceField .getId () + "." + destinationField .getId ();
+      const id = X3DRoute .getId (route .getSourceField (), route .getDestinationField ());
 
-         this [_routes] .remove (id);
-         route .disconnect ();
+      this [_routes] .remove (id);
 
-         this ._routes_changed = this .getBrowser () .getCurrentTime ();
+      route .disconnect ();
 
-         return true;
-      }
-      catch (error)
-      {
-         console .error (error);
-         return false;
-      }
+      this ._routes_changed = this .getBrowser () .getCurrentTime ();
    },
    deleteImportedRoute (sourceNode, destinationNode, route)
    {
@@ -754,9 +774,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       sourceField      = sourceNode      .getField (sourceField);
       destinationField = destinationNode .getField (destinationField);
 
-      const id = sourceField .getId () + "." + destinationField .getId ();
-
-      return this [_routes] .get (id);
+      return this [_routes] .get (X3DRoute .getId (sourceField, destinationField));
    },
    getRoutes: function ()
    {

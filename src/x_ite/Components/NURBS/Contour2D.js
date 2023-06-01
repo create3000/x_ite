@@ -162,9 +162,7 @@ function remove (array, first, last, range, rfirst, rlast)
    for (let i = rfirst; i < rlast; ++ i)
       set .add (range [i]);
 
-   function compare (value) { return set .has (value); }
-
-   return array .remove (first, last, compare);
+   return array .remove (first, last, value => set .has (value));
 }
 
 export default Contour2D;

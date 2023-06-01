@@ -242,6 +242,8 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    setup: function ()
    {
+      Object .freeze (this [_type]);
+
       for (const field of this [_fields])
          field .setTainted (false);
 
@@ -502,14 +504,11 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    hasRoutes: function ()
    {
-      ///  Returns true if there are any routes from or to fields of this node otherwise false.
+      ///  Returns true if there are any routes from or to fields of this node, otherwise false.
 
       for (const field of this [_fields])
       {
-         if (field .getInputRoutes () .size)
-            return true;
-
-         if (field .getOutputRoutes () .size)
+         if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
             return true;
       }
 

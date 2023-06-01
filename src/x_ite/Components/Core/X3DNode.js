@@ -77,7 +77,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             const namedNode = executionContext .getNamedNodes () .get (this .getName ());
 
             if (namedNode)
-               return namedNode;
+               return namedNode .getValue ();
          }
 
          // Create copy.
@@ -110,7 +110,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                      }
                      catch (error)
                      {
-                        console .error (error .message);
+                        console .error (error);
                      }
                   }
                }
@@ -135,7 +135,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             }
             catch (error)
             {
-               console .log (error .message);
+               console .error (error);
             }
          }
 
@@ -1290,7 +1290,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          {
             const parentContext = executionContext .getExecutionContext ();
 
-            for (const importedNode of parentContext .getImportedNodes ())
+            for (const importedNode of [... parentContext .getImportedNodes ()])
             {
                try
                {
@@ -1306,7 +1306,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
          // Remove exported node if any.
 
-         for (const exportedNode of executionContext .getExportedNodes ())
+         for (const exportedNode of [... executionContext .getExportedNodes ()])
          {
             if (exportedNode .getLocalNode () === this)
                executionContext .removeExportedNode (exportedNode .getExportedName ());
@@ -1317,20 +1317,20 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       for (const firstParent of new Set (this .getParents ()))
       {
-         if (firstParent instanceof Fields .SFNode)
+         if (!(firstParent instanceof Fields .SFNode))
+            continue;
+
+         for (const secondParent of new Set (firstParent .getParents ()))
          {
-            for (const secondParent of new Set (firstParent .getParents ()))
-            {
-               if (secondParent instanceof Fields .MFNode)
-               {
-                  const length = secondParent .length;
+            if (!(secondParent instanceof Fields .MFNode))
+               continue;
 
-                  secondParent .erase (secondParent .remove (0, length, firstParent), length);
-               }
-            }
+            const length = secondParent .length;
 
-            firstParent .setValue (null);
+            secondParent .erase (secondParent .remove (0, length, firstParent .valueOf ()), length);
          }
+
+         firstParent .setValue (null);
       }
 
       // Call super.dispose, where fields get disposed.

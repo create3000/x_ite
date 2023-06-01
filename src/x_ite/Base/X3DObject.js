@@ -217,7 +217,7 @@ Object .assign (X3DObject,
    })(),
    getInterestId: function (callbackName, object)
    {
-      return `${this .getId (object)}.${this .getId (object [callbackName])}`;
+      return this .getId (object) + "." + this .getId (object [callbackName]);
    },
 });
 

@@ -179,7 +179,7 @@ function X3DTypedArrayField (args)
       this [_tmp]   = [ ]; // Array with components size.
    }
 
-   X3DTypedArrayField .prototype .push .call (this, ... args);
+   this .push (... args);
 
    return proxy;
 }
@@ -233,7 +233,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
 
       copy [_length] = target [_length];
 
-      X3DArrayField .prototype .set .call (copy, copyArray, target [_length]);
+      X3DArrayField .prototype .set .call (copy, copyArray);
 
       copy .setModificationTime (0);
 

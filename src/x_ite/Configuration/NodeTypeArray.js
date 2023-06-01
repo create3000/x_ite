@@ -45,50 +45,24 @@
  *
  ******************************************************************************/
 
-import X3DBrowserContext    from "./Browser/X3DBrowserContext.js";
-import SupportedNodes       from "./Configuration/SupportedNodes.js";
-import Core                 from "./Components/Core.js";
-import EnvironmentalEffects from "./Components/EnvironmentalEffects.js";
-import EnvironmentalSensor  from "./Components/EnvironmentalSensor.js";
-import Followers            from "./Components/Followers.js";
-import Geometry3D           from "./Components/Geometry3D.js";
-import Grouping             from "./Components/Grouping.js";
-import Interpolation        from "./Components/Interpolation.js";
-import Layering             from "./Components/Layering.js";
-import Lighting             from "./Components/Lighting.js";
-import Navigation           from "./Components/Navigation.js";
-import Networking           from "./Components/Networking.js";
-import PointingDeviceSensor from "./Components/PointingDeviceSensor.js";
-import Rendering            from "./Components/Rendering.js";
-import Shaders              from "./Components/Shaders.js";
-import Shape                from "./Components/Shape.js";
-import Sound                from "./Components/Sound.js";
-import Texturing            from "./Components/Texturing.js";
-import Time                 from "./Components/Time.js";
-import DEBUG                from "./DEBUG.js";
+import X3DInfoArray from "../Base/X3DInfoArray.js";
+import X3DNode      from "../Components/Core/X3DNode.js";
 
-class Components
+function NodeTypeArray (values)
 {
-   static addComponent ({ name, types, abstractTypes, browserContext })
-   {
-      if (types)
-      {
-         for (const [typeName, type] of Object .entries (types))
-            SupportedNodes .addNodeType (typeName, type);
-      }
-
-      if (abstractTypes)
-      {
-         for (const [typeName, type] of Object .entries (abstractTypes))
-            SupportedNodes .addAbstractNodeType (typeName, type);
-      }
-
-      if (browserContext)
-         X3DBrowserContext .addBrowserContext (browserContext);
-
-      if (DEBUG)
-         console .info (`Done loading external component '${name}'.`);
-   }
+   return X3DInfoArray .call (this, values, X3DNode);
 }
 
-export default Components;
+NodeTypeArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+{
+   constructor: NodeTypeArray,
+   getTypeName: function ()
+   {
+      return "NodeTypeArray";
+   },
+});
+
+for (const key of Reflect .ownKeys (NodeTypeArray .prototype))
+   Object .defineProperty (NodeTypeArray .prototype, key, { enumerable: false });
+
+export default NodeTypeArray;
