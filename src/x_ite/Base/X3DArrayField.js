@@ -62,9 +62,9 @@ X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    entries: Array .prototype .entries,
    every: Array .prototype .every,
    fill: Array .prototype .fill,
-   filter: function (callbackFn, thisArg)
+   filter: function (/* callbackFn, thisArg */)
    {
-      return new (this .constructor) (... Array .prototype .filter .call (this, callbackFn, thisArg));
+      return new (this .constructor) (... Array .prototype .filter .call (this, ... arguments));
    },
    find: Array .prototype .find,
    findIndex: Array .prototype .findIndex,
@@ -78,16 +78,16 @@ X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    join: Array .prototype .join,
    keys: Array .prototype .keys,
    lastIndexOf: Array .prototype .lastIndexOf,
-   map: function (callbackFn, thisArg)
+   map: function (/* callbackFn, thisArg */)
    {
-      return new (this .constructor) (... Array .prototype .map .call (this, callbackFn, thisArg));
+      return new (this .constructor) (... Array .prototype .map .call (this, ... arguments));
    },
    reduce: Array .prototype .reduce,
    reduceRight: Array .prototype .reduceRight,
    reverse: Array .prototype .reverse,
-   slice: function (start, end)
+   slice: function (/* start, end */)
    {
-      return new (this .constructor) (... Array .prototype .slice .call (this, start, end));
+      return new (this .constructor) (... Array .prototype .slice .call (this, ... arguments));
    },
    some: Array .prototype .some,
    sort: Array .prototype .sort,
@@ -95,15 +95,15 @@ X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       return this .copy () .reverse ();
    },
-   toSorted: function (compareFn)
+   toSorted: function (/* compareFn */)
    {
-      return this .copy () .sort (compareFn);
+      return this .copy () .sort (... arguments);
    },
-   toSpliced: function (start, deleteCount, ... insertValues)
+   toSpliced: function (/* start, deleteCount, ... insertValues */)
    {
       const copy = this .copy ();
 
-      copy .splice (start, deleteCount, ... insertValues);
+      copy .splice (... arguments);
 
       return copy;
    },
