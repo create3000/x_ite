@@ -85,11 +85,14 @@ function X3DBaseNode (executionContext)
    this [_initialized]       = false;
    this [_cloneCount]        = 0;
 
+   this [_fields]            .addParent (this);
+   this [_predefinedFields]  .addParent (this);
+   this [_userDefinedFields] .addParent (this);
+
    // Setup fields.
 
    this .addChildObjects ("name_changed",       new Fields .SFTime (),
                           "typeName_changed",   new Fields .SFTime (),
-                          "fields_changed",     new Fields .SFTime (),
                           "cloneCount_changed", new Fields .SFTime (),
                           "private",            new Fields .SFBool ())
 
@@ -326,9 +329,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       if (!this .isPrivate ())
          field .addCloneCount (1);
-
-      if (this [_initialized])
-         this ._fields_changed = this .getBrowser () .getCurrentTime ();
    },
    getField: (function ()
    {
@@ -396,9 +396,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
          if (!this .isPrivate ())
             field .removeCloneCount (1);
-
-         if (this [_initialized])
-            this ._fields_changed = this .getBrowser () .getCurrentTime ();
       }
    },
    canUserDefinedFields: function ()
@@ -421,9 +418,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       if (!this .isPrivate ())
          field .addCloneCount (1);
-
-      if (this [_initialized])
-         this ._fields_changed = this .getBrowser () .getCurrentTime ();
    },
    removeUserDefinedField: function (name)
    {
@@ -439,9 +433,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
          if (!this .isPrivate ())
             field .removeCloneCount (1);
-
-         if (this [_initialized])
-            this ._fields_changed = this .getBrowser () .getCurrentTime ();
       }
    },
    getUserDefinedFields: function ()
@@ -589,5 +580,24 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
 for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
    Object .defineProperty (X3DBaseNode .prototype, key, { enumerable: false });
+
+Object .defineProperties (X3DBaseNode .prototype,
+{
+   name_changed:
+   {
+      get: function () { return this ._name_changed; },
+      enumerable: false,
+   },
+   typeName_changed:
+   {
+      get: function () { return this ._typeName_changed; },
+      enumerable: false,
+   },
+   cloneCount_changed:
+   {
+      get: function () { return this ._cloneCount_changed; },
+      enumerable: false,
+   },
+});
 
 export default X3DBaseNode;

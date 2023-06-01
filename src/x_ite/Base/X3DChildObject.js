@@ -63,6 +63,18 @@ X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype
    [_modificationTime]: 0,
    [_tainted]: false,
    [_parents]: new Set (),
+   isInitializable: function ()
+   {
+      return true;
+   },
+   isInput: function ()
+   {
+      return false;
+   },
+   isOutput: function ()
+   {
+      return false;
+   },
    setModificationTime: function (value)
    {
       this [_modificationTime] = value;

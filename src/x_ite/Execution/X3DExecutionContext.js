@@ -78,14 +78,9 @@ function X3DExecutionContext (executionContext, outerNode = null)
 
    this .addType (X3DConstants .X3DExecutionContext)
 
-   this .addChildObjects ("rootNodes",             new Fields .MFNode (),
-                          "worldInfos",            new Fields .MFNode (),
-                          "sceneGraph_changed",    new Fields .SFTime (),
-                          "namedNodes_changed",    new Fields .SFTime (),
-                          "importedNodes_changed", new Fields .SFTime (),
-                          "protos_changed",        new Fields .SFTime (),
-                          "externprotos_changed",  new Fields .SFTime (),
-                          "routes_changed",        new Fields .SFTime ())
+   this .addChildObjects ("rootNodes",          new Fields .MFNode (),
+                          "worldInfos",         new Fields .MFNode (),
+                          "sceneGraph_changed", new Fields .SFTime ())
 
    this ._rootNodes .setAccessType (X3DConstants .initializeOnly);
    this ._rootNodes .addCloneCount (1);
@@ -96,6 +91,12 @@ function X3DExecutionContext (executionContext, outerNode = null)
    this [_protos]         = new ProtoDeclarationArray ();
    this [_externprotos]   = new ExternProtoDeclarationArray ();
    this [_routes]         = new RouteArray ();
+
+   this [_namedNodes]     .addParent (this);
+   this [_importedNodes]  .addParent (this);
+   this [_protos]         .addParent (this);
+   this [_externprotos]   .addParent (this);
+   this [_routes]         .addParent (this);
 }
 
 X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -259,8 +260,6 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       node .setName (name);
 
       this [_namedNodes] .add (name, SFNodeCache .get (node));
-
-      this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
    updateNamedNode: function (name, node)
    {
@@ -988,6 +987,16 @@ Object .defineProperties (X3DExecutionContext .prototype,
    units:
    {
       get: X3DExecutionContext .prototype .getUnits,
+      enumerable: true,
+   },
+   namedNodes:
+   {
+      get: X3DExecutionContext .prototype .getNamedNodes,
+      enumerable: true,
+   },
+   importedNodes:
+   {
+      get: X3DExecutionContext .prototype .getImportedNodes,
       enumerable: true,
    },
    rootNodes:

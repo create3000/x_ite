@@ -279,10 +279,7 @@ export default X3DObject;
 //    _values    = Symbol (),
 //    _userData  = Symbol ();
 
-// function X3DObject ()
-// {
-//    registry .register (this, this .getId ());
-// }
+// function X3DObject () { }
 
 // X3DObject .prototype =
 // {
@@ -427,7 +424,10 @@ export default X3DObject;
 // {
 //    getId: (function ()
 //    {
-//       const map = new WeakMap ();
+//       const
+//          map      = new WeakMap (),
+//          ids      = [ ],
+//          registry = new FinalizationRegistry (id => ids .push (id));
 
 //       let counter = 0n; // In the future we can use a bigint here (0n).
 
@@ -436,21 +436,17 @@ export default X3DObject;
 //          const id = map .get (object);
 
 //          if (id !== undefined)
-//             return id;
-
-//          if (ids .length)
 //          {
-//             const id = ids .pop ();
-
-//             map .set (object, id);
-
 //             return id;
 //          }
 //          else
 //          {
-//             map .set (object, ++ counter);
+//             const id = ids .pop () ?? ++ counter;
 
-//             return counter;
+//             map .set (object, id);
+//             registry .register (object, id);
+
+//             return id;
 //          }
 //       };
 //    })(),
@@ -459,9 +455,5 @@ export default X3DObject;
 //       return this .getId (object) + "." + this .getId (object [callbackName]);
 //    },
 // });
-
-// const
-//    ids      = [ ],
-//    registry = new FinalizationRegistry (id => ids .push (id));
 
 // export default X3DObject;

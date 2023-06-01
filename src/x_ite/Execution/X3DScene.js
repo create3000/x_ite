@@ -82,13 +82,10 @@ function X3DScene (browser)
 
    this .addType (X3DConstants .X3DScene)
 
-   this .addChildObjects ("profile_changed",       new Fields .SFTime (),
-                          "components_changed",    new Fields .SFTime (),
-                          "units_changed",         new Fields .SFTime (),
-                          "metadata_changed",      new Fields .SFTime (),
-                          "exportedNodes_changed", new Fields .SFTime (),
-                          "initLoadCount",         new Fields .SFInt32 (),
-                          "loadCount",             new Fields .SFInt32 ())
+   this .addChildObjects ("profile_changed",  new Fields .SFTime (),
+                          "metadata_changed", new Fields .SFTime (),
+                          "initLoadCount",    new Fields .SFInt32 (),
+                          "loadCount",        new Fields .SFInt32 ())
 
    this [_specificationVersion] = X3D_LATEST_VERSION;
    this [_encoding]             = "SCRIPTED";
@@ -105,6 +102,10 @@ function X3DScene (browser)
    this [_metadata]       = new Map ();
    this [_exportedNodes]  = new ExportedNodesArray ();
    this [_loadingObjects] = new Set ();
+
+   this [_components]    .addParent (this);
+   this [_units]         .addParent (this);
+   this [_exportedNodes] .addParent (this);
 
    this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
@@ -1057,6 +1058,11 @@ Object .defineProperties (X3DScene .prototype,
       get: X3DScene .prototype .getProfile,
       enumerable: true,
    },
+   profile_changed:
+   {
+      get: function () { return this ._profile_changed; },
+      enumerable: false,
+   },
    components:
    {
       get: X3DScene .prototype .getComponents,
@@ -1072,11 +1078,26 @@ Object .defineProperties (X3DScene .prototype,
       get: X3DScene .prototype .getUnits,
       enumerable: true,
    },
+   metadata_changed:
+   {
+      get: function () { return this ._metadata_changed; },
+      enumerable: false,
+   },
    rootNodes:
    {
       get: X3DScene .prototype .getRootNodes,
       set: X3DScene .prototype .setRootNodes,
       enumerable: true,
+   },
+   exportedNodes:
+   {
+      get: X3DScene .prototype .getExportedNodes,
+      enumerable: true,
+   },
+   sceneGraph_changed:
+   {
+      get: function () { return this ._sceneGraph_changed; },
+      enumerable: false,
    },
 });
 

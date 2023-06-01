@@ -168,11 +168,11 @@ function SFNode (value)
    {
       value .addParent (proxy);
 
-      X3DField .call (proxy, value);
+      X3DField .call (this, value);
    }
    else
    {
-      X3DField .call (proxy, null);
+      X3DField .call (this, null);
    }
 
    return proxy;

@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import X3DObject from "./X3DObject.js";
+import X3DChildObject from "./X3DChildObject.js";
 
 const
    _array = Symbol (),
@@ -112,7 +112,7 @@ function X3DInfoArray (values, ValueType)
 {
    const proxy = new Proxy (this, handler);
 
-   X3DObject .call (proxy);
+   X3DChildObject .call (this);
 
    this [_array] = [ ];
    this [_index] = new Map ();
@@ -131,7 +131,7 @@ function X3DInfoArray (values, ValueType)
    return proxy;
 }
 
-X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
+X3DInfoArray .prototype = Object .assign (Object .create (X3DChildObject .prototype),
 {
    constructor: X3DInfoArray,
    [Symbol .iterator]: function* ()
@@ -175,10 +175,14 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       this [_array] .push (value);
       this [_index] .set (key, value);
+
+      this .addEvent ();
    },
    addAlias: function (alias, key)
    {
       this [_index] .set (alias, this [_index] .get (key));
+
+      this .addEvent ();
    },
    update: function (oldKey, newKey, value)
    {
@@ -203,6 +207,8 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
       {
          this [_array] .push (value);
       }
+
+      this .addEvent ();
    },
    remove: function (key)
    {
@@ -219,6 +225,8 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       if (index > -1)
          this [_array] .splice (index, 1);
+
+      this .addEvent ();
    },
    at: Array .prototype .at,
    // concat: Array .prototype .concat,
@@ -279,6 +287,11 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
       array [index] = value;
 
       return new (this .constructor) (array);
+   },
+   processEvent: function ()
+   {
+      this .setTainted (false);
+      this .processInterests ();
    },
    toVRMLStream: function (generator)
    {

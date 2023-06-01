@@ -128,7 +128,7 @@ function X3DObjectArrayField (value)
 {
    const proxy = new Proxy (this, handler);
 
-   X3DArrayField .call (proxy, [ ]);
+   X3DArrayField .call (this, [ ]);
 
    this [_target] = this;
    this [_proxy]  = proxy;

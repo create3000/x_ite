@@ -168,7 +168,7 @@ function X3DTypedArrayField (args)
 {
    const proxy = new Proxy (this, handler);
 
-   X3DArrayField .call (proxy, new (this .getArrayType ()) (16));
+   X3DArrayField .call (this, new (this .getArrayType ()) (16));
 
    this [_target] = this;
    this [_proxy]  = proxy;
