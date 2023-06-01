@@ -352,6 +352,10 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
                }
             }
          }
+         else
+         {
+            first = last;
+         }
 
          if (first !== last)
             target .addEvent ();
@@ -376,8 +380,12 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
             }
          }
       }
+      else
+      {
+         first = last;
+      }
 
-      if (first !== -1)
+      if (first !== last)
          target .addEvent ();
 
       return first;
