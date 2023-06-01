@@ -198,13 +198,14 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    },
    set: function (value)
    {
-      const target = this [_target];
+      const
+         target    = this [_target],
+         array     = target .getValue (),
+         newLength = value .length;
 
-      target .resize (value .length, undefined, true);
+      target .resize (newLength, undefined, true);
 
-      const array = target .getValue ();
-
-      for (let i = 0, length = value .length; i < length; ++ i)
+      for (let i = 0; i < newLength; ++ i)
          array [i] .set (value [i] instanceof X3DField ? value [i] .getValue () : value [i]);
    },
    setValue: function (value)
@@ -351,6 +352,10 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
                }
             }
          }
+         else
+         {
+            first = last;
+         }
 
          if (first !== last)
             target .addEvent ();
@@ -375,8 +380,12 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
             }
          }
       }
+      else
+      {
+         first = last;
+      }
 
-      if (first !== -1)
+      if (first !== last)
          target .addEvent ();
 
       return first;
