@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import Generator from "../InputOutput/Generator.js";
+import X3DObject from "./X3DObject.js";
 
 const
    _array = Symbol (),
@@ -110,6 +110,10 @@ const handler =
 
 function X3DInfoArray (values, ValueType)
 {
+   const proxy = new Proxy (this, handler);
+
+   X3DObject .call (proxy);
+
    this [_array] = [ ];
    this [_index] = new Map ();
 
@@ -124,10 +128,11 @@ function X3DInfoArray (values, ValueType)
       }
    }
 
-   return new Proxy (this, handler);
+   return proxy;
 }
 
-X3DInfoArray .prototype = {
+X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
+{
    constructor: X3DInfoArray,
    [Symbol .iterator]: function* ()
    {
@@ -275,21 +280,6 @@ X3DInfoArray .prototype = {
 
       return new (this .constructor) (array);
    },
-   toString: function (options = Object .prototype)
-   {
-      const generator = new Generator (options);
-
-      if (options .scene)
-         generator .PushExecutionContext (options .scene);
-
-      this .toStream (generator);
-
-      return generator .string;
-   },
-   toStream: function (generator)
-   {
-      generator .string = "[object " + this .getTypeName () + "]";
-   },
    toVRMLStream: function (generator)
    {
       for (const value of this [_array])
@@ -329,7 +319,7 @@ X3DInfoArray .prototype = {
    {
       let lastProperty = false;
 
-      for (const [i, value] of this [_array] .entries ())
+      for (const value of this [_array])
       {
          try
          {
@@ -351,7 +341,7 @@ X3DInfoArray .prototype = {
 
       return lastProperty;
    },
-};
+});
 
 for (const key of Reflect .ownKeys (X3DInfoArray .prototype))
    Object .defineProperty (X3DInfoArray .prototype, key, { enumerable: false });
@@ -361,10 +351,6 @@ Object .defineProperties (X3DInfoArray .prototype,
    length:
    {
       get: function () { return this [_array] .length; },
-   },
-   [Symbol .toStringTag]:
-   {
-      get: function () { return this .getTypeName (); },
    },
 });
 

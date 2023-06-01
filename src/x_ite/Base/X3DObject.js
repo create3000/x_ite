@@ -178,7 +178,7 @@ X3DObject .prototype =
    },
    toStream: function (generator)
    {
-      generator .string = `[object ${this .getTypeName ()}]`;
+      generator .string = Object .prototype .toString .call (this);
    },
    dispose: function ()
    {
@@ -406,7 +406,7 @@ export default X3DObject;
 //    },
 //    toStream: function (generator)
 //    {
-//       generator .string = `[object ${this .getTypeName ()}]`;
+//       generator .string = Object .prototype .toString .call (this);
 //    },
 //    dispose: function ()
 //    {
