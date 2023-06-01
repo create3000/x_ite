@@ -353,13 +353,6 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       this .context = this .getContext (sourceText);
 
-      // Call initialize function.
-
-      const initialize = this .context .get ("initialize");
-
-      if (typeof initialize === "function")
-         this .call__ (initialize, "initialize");
-
       // Connect shutdown.
 
       const shutdown = this .context .get ("shutdown");
@@ -407,6 +400,13 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
             }
          }
       }
+
+      // Call initialize function.
+
+      const initialize = this .context .get ("initialize");
+
+      if (typeof initialize === "function")
+         this .call__ (initialize, "initialize");
    },
    call__: function (callback, name)
    {
