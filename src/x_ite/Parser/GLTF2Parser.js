@@ -157,11 +157,11 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       this .buffers = buffers;
    },
-   parseIntoScene: function (success, error)
+   parseIntoScene: function (resolve, reject)
    {
       this .rootObject (this .input)
-         .then (success)
-         .catch (error);
+         .then (resolve)
+         .catch (reject);
    },
    rootObject: async function (glTF)
    {

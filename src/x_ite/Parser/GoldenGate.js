@@ -66,7 +66,7 @@ function GoldenGate (scene)
 GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
 {
    constructor: GoldenGate,
-   parseIntoScene: function (x3dSyntax, success, error)
+   parseIntoScene: function (x3dSyntax, resolve, reject)
    {
       for (const Parser of GoldenGate .Parser)
       {
@@ -85,16 +85,16 @@ GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
                continue;
 
             parser .pushExecutionContext (this .getExecutionContext ());
-            parser .parseIntoScene (success, error);
+            parser .parseIntoScene (resolve, reject);
             parser .popExecutionContext ();
             return;
          }
-         catch (exception)
+         catch (error)
          {
-            if (error)
-               error (exception);
+            if (reject)
+               reject (error);
             else
-               throw exception;
+               throw error;
 
             return;
          }

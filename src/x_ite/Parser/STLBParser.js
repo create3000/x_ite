@@ -86,11 +86,11 @@ STLBParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .arrayBuffer = input;
       this .dataView    = new DataView (input);
    },
-   parseIntoScene: function (success, error)
+   parseIntoScene: function (resolve, reject)
    {
       this .stl ()
-         .then (success)
-         .catch (error);
+         .then (resolve)
+         .catch (reject);
    },
    stl: async function ()
    {

@@ -116,7 +116,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       return "";
    },
-   createX3DFromString: function (worldURL, string = "", success, error)
+   createX3DFromString: function (worldURL, string = "", resolve, reject)
    {
       try
       {
@@ -129,27 +129,27 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
          scene .setWorldURL (new URL (worldURL, this .getReferer ()) .href);
 
-         if (success)
-            success = this .setScene .bind (this, scene, success, error);
+         if (resolve)
+            resolve = this .setScene .bind (this, scene, resolve, reject);
 
-         new GoldenGate (scene) .parseIntoScene (string, success, error);
+         new GoldenGate (scene) .parseIntoScene (string, resolve, reject);
 
          return scene;
       }
-      catch (exception)
+      catch (error)
       {
-         if (error)
-            error (exception);
+         if (reject)
+            reject (error);
          else
-            throw exception;
+            throw error;
       }
    },
-   setScene: function (scene, success, error)
+   setScene: function (scene, resolve, reject)
    {
-      scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, success, error);
+      scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, resolve, reject);
       scene ._initLoadCount .addEvent ();
    },
-   set_initLoadCount__: function (scene, success, error, field)
+   set_initLoadCount__: function (scene, resolve, reject, field)
    {
       // Wait for extern protos to be loaded.
 
@@ -166,14 +166,14 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       {
          try
          {
-            success (scene);
+            resolve (scene);
          }
-         catch (exception)
+         catch (error)
          {
-            if (error)
-               error (exception);
+            if (reject)
+               reject (error);
             else
-               throw exception;
+               throw error;
          }
       });
 
@@ -304,11 +304,11 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       throw Error (response .statusText || response .status);
    },
-   loadDocumentError: function (exception)
+   loadDocumentError: function (error)
    {
-      // Output exception.
+      // Output error.
 
-      this .error (exception);
+      this .setError (error);
 
       // Try to load next URL.
 
@@ -322,15 +322,15 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
          this .callback (null);
       }
    },
-   error: function (exception)
+   setError: function (error)
    {
       if (this .URL .protocol === "data:")
-         console .warn (`Couldn't load data URL: ${exception .message}`);
+         console .warn (`Couldn't load data URL: ${error .message}`);
       else
-         console .warn (`Couldn't load URL '${decodeURI (this .URL .href)}': ${exception .message}`);
+         console .warn (`Couldn't load URL '${decodeURI (this .URL .href)}': ${error .message}`);
 
       if (DEBUG)
-         console .error (exception);
+         console .error (error);
    },
 });
 

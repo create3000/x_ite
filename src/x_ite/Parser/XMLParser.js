@@ -114,10 +114,10 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       else
          return true;
    },
-   parseIntoScene: function (success, error)
+   parseIntoScene: function (resolve, reject)
    {
-      this .success = success;
-      this .error   = error;
+      this .resolve = resolve;
+      this .reject  = reject;
 
       this .getScene () .setEncoding ("XML");
       this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
@@ -127,10 +127,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    xmlElement: function (xmlElement)
    {
       if (xmlElement === null)
-      {
-         if (this .success)
-            return this .success (this .getScene ());
-      }
+         return this .resolve ?.(this .getScene ());
 
       switch (xmlElement .nodeName)
       {
@@ -145,18 +142,14 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             }
             else
             {
-               if (this .success)
+               if (this .resolve)
                {
                   this .loadComponents () .then (() =>
                   {
                      this .childrenElements (xmlElement);
-                     this .success (this .getScene ());
+                     this .resolve (this .getScene ());
                   })
-                  .catch ((error) =>
-                  {
-                     if (this .error)
-                        this .error (error);
-                  });
+                  .catch (this .reject);
                }
                else
                {
@@ -174,18 +167,14 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          case "Scene":
          case "SCENE":
          {
-            if (this .success)
+            if (this .resolve)
             {
                this .loadComponents () .then (() =>
                {
                   this .sceneElement (xmlElement);
-                  this .success (this .getScene ());
+                  this .resolve (this .getScene ());
                })
-               .catch ((error) =>
-               {
-                  if (this .error)
-                     this .error (error);
-               });
+               .catch (this .reject);
             }
             else
             {
@@ -196,18 +185,14 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
          default:
          {
-            if (this .success)
+            if (this .resolve)
             {
                this .loadComponents () .then (() =>
                {
                   this .childrenElements (xmlElement);
-                  this .success (this .getScene ());
+                  this .resolve (this .getScene ());
                })
-               .catch ((error) =>
-               {
-                  if (this .error)
-                     this .error (error);
-               });
+               .catch (this .reject);
             }
             else
             {
@@ -254,22 +239,16 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (!this .xml)
          this .headElement (xmlElement);
 
-      if (this .success)
+      if (this .resolve)
       {
-         this .loadComponents () .then (function ()
+         this .loadComponents () .then (() =>
          {
             for (var i = 0; i < childNodes .length; ++ i)
                this .x3dElementChildScene (childNodes [i])
 
-            this .success (this .getScene ());
-         }
-         .bind (this))
-         .catch (function (error)
-         {
-            if (this .error)
-               this .error (error);
-         }
-         .bind (this));
+            this .resolve (this .getScene ());
+         })
+         .catch (this .reject);
       }
       else
       {

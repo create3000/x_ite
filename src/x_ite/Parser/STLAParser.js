@@ -119,11 +119,11 @@ STLAParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       this .input = string;
    },
-   parseIntoScene: function (success, error)
+   parseIntoScene: function (resolve, reject)
    {
       this .stl ()
-         .then (success)
-         .catch (error);
+         .then (resolve)
+         .catch (reject);
    },
    stl: async function ()
    {

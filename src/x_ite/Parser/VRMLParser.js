@@ -227,12 +227,12 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .lineNumber = 1;
       this .lastIndex  = 0;
    },
-   parseIntoScene: function (success, error)
+   parseIntoScene: function (resolve, reject)
    {
       try
       {
-         this .success = success;
-         this .error   = error;
+         this .resolve = resolve;
+         this .reject  = reject;
 
          this .getScene () .setEncoding ("VRML");
          this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
@@ -244,7 +244,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          throw new Error (this .getError (error));
       }
    },
-   exception: function (string)
+   throwOrWarn: function (string)
    {
       if (this .getBrowser () .isStrict ())
          throw new Error (string);
@@ -387,7 +387,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                this .getScene () .addComponent (this .getBrowser () .getComponent (componentName));
          }
 
-         if (this .success)
+         if (this .resolve)
          {
             this .loadComponents () .then (() =>
             {
@@ -398,15 +398,15 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   if (this .lastIndex < this .input .length)
                      throw new Error ("Unknown statement.");
 
-                  this .success (this .getScene ());
+                  this .resolve (this .getScene ());
                }
                catch (error)
                {
                   console .error (error);
-                  this .error (new Error (this .getError (error)));
+                  this .reject (new Error (this .getError (error)));
                }
             })
-            .catch (this .error .bind (this));
+            .catch (this .reject);
          }
          else
          {
@@ -1230,7 +1230,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                               }
                               catch (error)
                               {
-                                 this .exception (error .message);
+                                 this .throwOrWarn (error .message);
 
                                  return true;
                               }
@@ -1358,7 +1358,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                            }
                            catch (error)
                            {
-                              this .exception ("No such event or field '" + isId + "' inside PROTO " + this .getPrototype () .getName () + " interface declaration.");
+                              this .throwOrWarn ("No such event or field '" + isId + "' inside PROTO " + this .getPrototype () .getName () + " interface declaration.");
 
                               return true;
                            }
@@ -1485,7 +1485,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   }
                   catch (error)
                   {
-                     this .exception ("No such event or field '" + isId + "' inside PROTO " + this .getPrototype () .getName ());
+                     this .throwOrWarn ("No such event or field '" + isId + "' inside PROTO " + this .getPrototype () .getName ());
 
                      return true;
                   }

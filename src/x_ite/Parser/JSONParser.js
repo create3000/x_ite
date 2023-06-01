@@ -82,7 +82,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .input = undefined;
       }
    },
-   parseIntoScene: function (success, error)
+   parseIntoScene: function (resolve, reject)
    {
       /**
        * Load X3D JSON into an element.
@@ -98,7 +98,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const parser = new XMLParser (this .getScene ());
 
       parser .setInput (child);
-      parser .parseIntoScene (success, error);
+      parser .parseIntoScene (resolve, reject);
 
       this .getScene () .setEncoding ("JSON");
    },

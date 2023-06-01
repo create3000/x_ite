@@ -87,11 +87,11 @@ GLB2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .arrayBuffer = input;
       this .dataView    = new DataView (input);
    },
-   parseIntoScene: function (success, error)
+   parseIntoScene: function (resolve, reject)
    {
       this .glb ()
-         .then (success)
-         .catch (error);
+         .then (resolve)
+         .catch (reject);
    },
    glb: async function ()
    {

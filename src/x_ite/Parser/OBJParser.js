@@ -147,11 +147,11 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       this .input = string;
    },
-   parseIntoScene: function (success, error)
+   parseIntoScene: function (resolve, reject)
    {
       this .obj ()
-         .then (success)
-         .catch (error);
+         .then (resolve)
+         .catch (reject);
    },
    obj: async function ()
    {

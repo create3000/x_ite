@@ -232,11 +232,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .input = undefined;
       }
    },
-   parseIntoScene: function (success, error)
+   parseIntoScene: function (resolve, reject)
    {
       this .xmlElement (this .input)
-         .then (success)
-         .catch (error);
+         .then (resolve)
+         .catch (reject);
    },
    xmlElement: async function (xmlElement)
    {
