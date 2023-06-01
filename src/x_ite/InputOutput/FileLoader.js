@@ -141,7 +141,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
          if (error)
             error (exception);
          else
-            throw error;
+            throw exception;
       }
    },
    setScene: function (scene, success, error)
