@@ -185,7 +185,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNo
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .splice (pickedGeometries .remove (null));
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -238,7 +238,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNo
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .splice (pickedGeometries .remove (null));
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;

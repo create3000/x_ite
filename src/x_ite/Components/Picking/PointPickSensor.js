@@ -239,7 +239,7 @@ PointPickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .splice (pickedGeometries .remove (null));
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -303,7 +303,7 @@ PointPickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .splice (pickedGeometries .remove (null));
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;

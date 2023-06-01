@@ -99,7 +99,7 @@ Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
    set_addChildren__: function ()
    {
       this ._addChildren .setTainted (true);
-      this ._addChildren .splice (remove (this ._addChildren, this ._children));
+      this ._addChildren .assign (filter (this ._addChildren, this ._children));
 
       for (const child of this ._addChildren)
          this ._children .push (child);
@@ -110,7 +110,7 @@ Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
    set_removeChildren__: function ()
    {
       this ._removeChildren .setTainted (true);
-      this ._children .splice (remove (this ._children, this ._removeChildren));
+      this ._children .assign (filter (this ._children, this ._removeChildren));
 
       this ._removeChildren .length = 0;
       this ._removeChildren .setTainted (false);
@@ -149,11 +149,11 @@ Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
    }
 });
 
-function remove (array, remove)
+function filter (array, remove)
 {
    const set = new Set (remove);
 
-   return array .remove (value => set .has (value));
+   return array .filter (value => !set .has (value));
 }
 
 export default Contour2D;

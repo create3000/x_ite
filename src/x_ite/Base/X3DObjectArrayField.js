@@ -342,41 +342,6 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return result;
    },
-   remove: function (value)
-   {
-      const
-         target = this [_target],
-         array  = target .getValue (),
-         length = array .length,
-         cmp    = typeof value === "function" ? value : v => v === value;
-
-      let first = array .findIndex (current => cmp (current .valueOf ()));
-
-      if (first !== -1)
-      {
-         for (let i = first; ++ i < length; )
-         {
-            const current = array [i];
-
-            if (!cmp (current .valueOf ()))
-            {
-               const tmp = array [first];
-
-               array [first ++] = current;
-               array [i]        = tmp;
-            }
-         }
-      }
-      else
-      {
-         first = length;
-      }
-
-      if (first !== length)
-         target .addEvent ();
-
-      return first;
-   },
    resize: function (size, value, silently)
    {
       const

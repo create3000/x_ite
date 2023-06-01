@@ -164,7 +164,7 @@ Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    set_addChildren__: function ()
    {
       this ._addChildren .setTainted (true);
-      this ._addChildren .splice (remove (this ._addChildren, this ._children));
+      this ._addChildren .assign (filter (this ._addChildren, this ._children));
 
       for (const child of this ._addChildren)
          this ._children .push (child);
@@ -175,7 +175,7 @@ Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    set_removeChildren__: function ()
    {
       this ._removeChildren .setTainted (true);
-      this ._children .splice (remove (this ._children, this ._removeChildren));
+      this ._children .assign (filter (this ._children, this ._removeChildren));
 
       this ._removeChildren .length = 0;
       this ._removeChildren .setTainted (false);
@@ -214,11 +214,11 @@ Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    }
 });
 
-function remove (array, remove)
+function filter (array, remove)
 {
    const set = new Set (remove);
 
-   return array .remove (value => set .has (value));
+   return array .filter (value => !set .has (value));
 }
 
 const __default__ = Contour2D;
@@ -4233,7 +4233,7 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
    set_addGeometry__: function ()
    {
       this ._addGeometry .setTainted (true);
-      this ._addGeometry .splice (NurbsSet_remove (this ._addGeometry, this ._geometry));
+      this ._addGeometry .assign (NurbsSet_filter (this ._addGeometry, this ._geometry));
 
       for (const geometry of this ._addGeometry)
          this ._geometry .push (geometry);
@@ -4244,7 +4244,7 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
    set_removeGeometry__: function ()
    {
       this ._removeGeometry .setTainted (true);
-      this ._geometry .splice (NurbsSet_remove (this ._geometry, this ._removeGeometry));
+      this ._geometry .assign (NurbsSet_filter (this ._geometry, this ._removeGeometry));
 
       this ._removeGeometry .length = 0;
       this ._removeGeometry .setTainted (false);
@@ -4273,11 +4273,11 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
    },
 });
 
-function NurbsSet_remove (array, remove)
+function NurbsSet_filter (array, remove)
 {
    const set = new Set (remove);
 
-   return array .remove (value => set .has (value));
+   return array .filter (value => !set .has (value));
 }
 
 const NurbsSet_default_ = NurbsSet;
@@ -5172,7 +5172,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
    set_addTrimmingContour__: function ()
    {
       this ._addTrimmingContour .setTainted (true);
-      this ._addTrimmingContour .splice (NurbsTrimmedSurface_remove (this ._addTrimmingContour, this ._trimmingContour), this ._addTrimmingContour .length);
+      this ._addTrimmingContour .assign (NurbsTrimmedSurface_filter (this ._addTrimmingContour, this ._trimmingContour), this ._addTrimmingContour .length);
 
       for (const trimmingContour of this ._addTrimmingContour)
          this ._trimmingContour .push (trimmingContour);
@@ -5183,7 +5183,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
    set_removeTrimmingContour__: function ()
    {
       this ._removeTrimmingContour .setTainted (true);
-      this ._trimmingContour .splice (NurbsTrimmedSurface_remove (this ._trimmingContour, this ._removeTrimmingContour));
+      this ._trimmingContour .assign (NurbsTrimmedSurface_filter (this ._trimmingContour, this ._removeTrimmingContour));
 
       this ._removeTrimmingContour .length = 0;
       this ._removeTrimmingContour .setTainted (false);
@@ -5215,11 +5215,11 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
    },
 });
 
-function NurbsTrimmedSurface_remove (array, remove)
+function NurbsTrimmedSurface_filter (array, remove)
 {
    const set = new Set (remove);
 
-   return array .remove (value => set .has (value));
+   return array .filter (value => !set .has (value));
 }
 
 const NurbsTrimmedSurface_default_ = NurbsTrimmedSurface;

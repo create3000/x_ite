@@ -125,7 +125,7 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    set_addGeometry__: function ()
    {
       this ._addGeometry .setTainted (true);
-      this ._addGeometry .splice (remove (this ._addGeometry, this ._geometry));
+      this ._addGeometry .assign (filter (this ._addGeometry, this ._geometry));
 
       for (const geometry of this ._addGeometry)
          this ._geometry .push (geometry);
@@ -136,7 +136,7 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    set_removeGeometry__: function ()
    {
       this ._removeGeometry .setTainted (true);
-      this ._geometry .splice (remove (this ._geometry, this ._removeGeometry));
+      this ._geometry .assign (filter (this ._geometry, this ._removeGeometry));
 
       this ._removeGeometry .length = 0;
       this ._removeGeometry .setTainted (false);
@@ -165,11 +165,11 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    },
 });
 
-function remove (array, remove)
+function filter (array, remove)
 {
    const set = new Set (remove);
 
-   return array .remove (value => set .has (value));
+   return array .filter (value => !set .has (value));
 }
 
 export default NurbsSet;

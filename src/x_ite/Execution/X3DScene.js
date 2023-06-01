@@ -390,7 +390,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       const rootNodes = this .getRootNodes ();
 
-      rootNodes .splice (rootNodes .remove (node));
+      rootNodes .assign (rootNodes .filter (rootNode => rootNode !== node));
    },
    setRootNodes: function (value)
    {

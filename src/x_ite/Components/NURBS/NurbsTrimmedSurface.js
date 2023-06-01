@@ -113,7 +113,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurface
    set_addTrimmingContour__: function ()
    {
       this ._addTrimmingContour .setTainted (true);
-      this ._addTrimmingContour .splice (remove (this ._addTrimmingContour, this ._trimmingContour), this ._addTrimmingContour .length);
+      this ._addTrimmingContour .assign (filter (this ._addTrimmingContour, this ._trimmingContour), this ._addTrimmingContour .length);
 
       for (const trimmingContour of this ._addTrimmingContour)
          this ._trimmingContour .push (trimmingContour);
@@ -124,7 +124,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurface
    set_removeTrimmingContour__: function ()
    {
       this ._removeTrimmingContour .setTainted (true);
-      this ._trimmingContour .splice (remove (this ._trimmingContour, this ._removeTrimmingContour));
+      this ._trimmingContour .assign (filter (this ._trimmingContour, this ._removeTrimmingContour));
 
       this ._removeTrimmingContour .length = 0;
       this ._removeTrimmingContour .setTainted (false);
@@ -156,11 +156,11 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurface
    },
 });
 
-function remove (array, remove)
+function filter (array, remove)
 {
    const set = new Set (remove);
 
-   return array .remove (value => set .has (value));
+   return array .filter (value => !set .has (value));
 }
 
 export default NurbsTrimmedSurface;
