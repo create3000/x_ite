@@ -209,14 +209,14 @@ export default X3DChildObject;
 //       this .setModificationTime (Date .now ());
 
 //       for (const parent of this [_parents] .values ())
-//          parent .deref () ?.addEvent (this);
+//          parent .deref () .addEvent (this);
 //    },
 //    addEventObject: function (field, event)
 //    {
 //       this .setModificationTime (Date .now ());
 
 //       for (const parent of this [_parents] .values ())
-//          parent .deref () ?.addEventObject (this, event);
+//          parent .deref () .addEventObject (this, event);
 //    },
 //    addParent: function (parent)
 //    {
@@ -239,12 +239,7 @@ export default X3DChildObject;
 //       const parents = new Set ();
 
 //       for (const weakRef of this [_parents] .values ())
-//       {
-//          const parent = weakRef .deref ();
-
-//          if (parent)
-//             parents .add (parent)
-//       }
+//          parents .add (weakRef .deref ())
 
 //       return parents;
 //    },
