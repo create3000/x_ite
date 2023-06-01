@@ -1327,7 +1327,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
             const length = secondParent .length;
 
-            secondParent .erase (secondParent .remove (0, length, firstParent), length);
+            secondParent .erase (secondParent .remove (0, length, firstParent .valueOf ()), length);
          }
 
          firstParent .setValue (null);

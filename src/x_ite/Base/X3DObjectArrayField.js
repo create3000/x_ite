@@ -134,7 +134,7 @@ function X3DObjectArrayField (value)
    if (value [0] instanceof Array)
       value = value [0];
 
-   X3DObjectArrayField .prototype .push .apply (this, value);
+   this .push (... value);
 
    return proxy;
 }
@@ -164,8 +164,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          copy   = target .create (),
          array  = target .getValue ();
 
-      X3DObjectArrayField .prototype .push .apply (copy, array);
-
+      copy .push (... array);
       copy .setModificationTime (0);
 
       return copy;
@@ -323,47 +322,17 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          args .push (field);
       }
 
-      Array .prototype .splice .call (target .getValue (), index, 0, ... args);
-
+      target .getValue () .splice (index, 0, ... args);
       target .addEvent ();
    },
    remove: function (first, last, value)
    {
       const
          target = this [_target],
-         array  = target .getValue ();
+         array  = target .getValue (),
+         cmp    = typeof value === "function" ? value : v => v === value;
 
-      if (typeof value === "function")
-      {
-         first = array .findIndex ((current, index) => index >= first && value (current .valueOf ()))
-
-         if (first !== -1)
-         {
-            for (let i = first; ++ i < last; )
-            {
-               const current = array [i];
-
-               if (!value (current .valueOf ()))
-               {
-                  const tmp = array [first];
-
-                  array [first ++] = current;
-                  array [i]        = tmp;
-               }
-            }
-         }
-         else
-         {
-            first = last;
-         }
-
-         if (first !== last)
-            target .addEvent ();
-
-         return first;
-      }
-
-      first = array .findIndex ((current, index) => index >= first && current .equals (value))
+      first = array .findIndex ((current, index) => index >= first && cmp (current .valueOf ()));
 
       if (first !== -1)
       {
@@ -371,7 +340,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          {
             const current = array [i];
 
-            if (!current .equals (value))
+            if (!cmp (current .valueOf ()))
             {
                const tmp = array [first];
 
