@@ -1320,12 +1320,14 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          if (!(firstParent instanceof Fields .SFNode))
             continue;
 
+         const firstParentValueOf = firstParent .valueOf ();
+
          for (const secondParent of new Set (firstParent .getParents ()))
          {
             if (!(secondParent instanceof Fields .MFNode))
                continue;
 
-            secondParent .assign (secondParent .filter (value => value !== firstParent .valueOf ()))
+            secondParent .assign (secondParent .filter (value => value !== firstParentValueOf))
          }
 
          firstParent .setValue (null);
