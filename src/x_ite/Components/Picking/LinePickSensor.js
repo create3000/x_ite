@@ -198,7 +198,7 @@ LinePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .p
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .splice (pickedGeometries .remove (null));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -274,7 +274,7 @@ LinePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .p
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .splice (pickedGeometries .remove (null));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;

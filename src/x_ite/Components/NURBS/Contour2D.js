@@ -99,10 +99,7 @@ Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
    set_addChildren__: function ()
    {
       this ._addChildren .setTainted (true);
-
-      this ._addChildren .erase (remove (this ._addChildren, 0, this ._addChildren .length,
-                                         this ._children,    0, this ._children .length),
-                                 this ._addChildren .length);
+      this ._addChildren .splice (remove (this ._addChildren, this ._children));
 
       for (const child of this ._addChildren)
          this ._children .push (child);
@@ -113,10 +110,7 @@ Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
    set_removeChildren__: function ()
    {
       this ._removeChildren .setTainted (true);
-
-      this ._children .erase (remove (this ._children,       0, this ._children .length,
-                                      this ._removeChildren, 0, this ._removeChildren .length),
-                              this ._children .length);
+      this ._children .splice (remove (this ._children, this ._removeChildren));
 
       this ._removeChildren .length = 0;
       this ._removeChildren .setTainted (false);
@@ -155,14 +149,11 @@ Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
    }
 });
 
-function remove (array, first, last, range, rfirst, rlast)
+function remove (array, remove)
 {
-   const set = new Set ();
+   const set = new Set (remove);
 
-   for (let i = rfirst; i < rlast; ++ i)
-      set .add (range [i]);
-
-   return array .remove (first, last, value => set .has (value));
+   return array .remove (value => set .has (value));
 }
 
 export default Contour2D;

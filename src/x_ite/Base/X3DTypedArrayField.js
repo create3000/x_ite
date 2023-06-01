@@ -483,8 +483,12 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
          target = this [_target],
          length = target [_length];
 
-      if (index > length)
-         index = length;
+      index = Math .min (index|0, length);
+
+      if (arguments .length < 2)
+         deleteCount = length;
+
+      deleteCount = deleteCount|0;
 
       if (index + deleteCount > length)
          deleteCount = length - index;

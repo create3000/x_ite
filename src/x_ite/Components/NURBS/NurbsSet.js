@@ -125,10 +125,7 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    set_addGeometry__: function ()
    {
       this ._addGeometry .setTainted (true);
-
-      this ._addGeometry .erase (remove (this ._addGeometry, 0, this ._addGeometry .length,
-                                         this ._geometry,    0, this ._geometry .length),
-                                 this ._addGeometry .length);
+      this ._addGeometry .splice (remove (this ._addGeometry, this ._geometry));
 
       for (const geometry of this ._addGeometry)
          this ._geometry .push (geometry);
@@ -139,10 +136,7 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    set_removeGeometry__: function ()
    {
       this ._removeGeometry .setTainted (true);
-
-      this ._geometry .erase (remove (this ._geometry,       0, this ._geometry .length,
-                                      this ._removeGeometry, 0, this ._removeGeometry .length),
-                              this ._geometry .length);
+      this ._geometry .splice (remove (this ._geometry, this ._removeGeometry));
 
       this ._removeGeometry .length = 0;
       this ._removeGeometry .setTainted (false);
@@ -171,14 +165,11 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    },
 });
 
-function remove (array, first, last, range, rfirst, rlast)
+function remove (array, remove)
 {
-   const set = new Set ();
+   const set = new Set (remove);
 
-   for (let i = rfirst; i < rlast; ++ i)
-      set .add (range [i]);
-
-   return array .remove (first, last, value => set .has (value));
+   return array .remove (value => set .has (value));
 }
 
 export default NurbsSet;

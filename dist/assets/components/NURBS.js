@@ -164,10 +164,7 @@ Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    set_addChildren__: function ()
    {
       this ._addChildren .setTainted (true);
-
-      this ._addChildren .erase (remove (this ._addChildren, 0, this ._addChildren .length,
-                                         this ._children,    0, this ._children .length),
-                                 this ._addChildren .length);
+      this ._addChildren .splice (remove (this ._addChildren, this ._children));
 
       for (const child of this ._addChildren)
          this ._children .push (child);
@@ -178,10 +175,7 @@ Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    set_removeChildren__: function ()
    {
       this ._removeChildren .setTainted (true);
-
-      this ._children .erase (remove (this ._children,       0, this ._children .length,
-                                      this ._removeChildren, 0, this ._removeChildren .length),
-                              this ._children .length);
+      this ._children .splice (remove (this ._children, this ._removeChildren));
 
       this ._removeChildren .length = 0;
       this ._removeChildren .setTainted (false);
@@ -220,14 +214,11 @@ Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).proto
    }
 });
 
-function remove (array, first, last, range, rfirst, rlast)
+function remove (array, remove)
 {
-   const set = new Set ();
+   const set = new Set (remove);
 
-   for (let i = rfirst; i < rlast; ++ i)
-      set .add (range [i]);
-
-   return array .remove (first, last, value => set .has (value));
+   return array .remove (value => set .has (value));
 }
 
 const __default__ = Contour2D;
@@ -4242,10 +4233,7 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
    set_addGeometry__: function ()
    {
       this ._addGeometry .setTainted (true);
-
-      this ._addGeometry .erase (NurbsSet_remove (this ._addGeometry, 0, this ._addGeometry .length,
-                                         this ._geometry,    0, this ._geometry .length),
-                                 this ._addGeometry .length);
+      this ._addGeometry .splice (NurbsSet_remove (this ._addGeometry, this ._geometry));
 
       for (const geometry of this ._addGeometry)
          this ._geometry .push (geometry);
@@ -4256,10 +4244,7 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
    set_removeGeometry__: function ()
    {
       this ._removeGeometry .setTainted (true);
-
-      this ._geometry .erase (NurbsSet_remove (this ._geometry,       0, this ._geometry .length,
-                                      this ._removeGeometry, 0, this ._removeGeometry .length),
-                              this ._geometry .length);
+      this ._geometry .splice (NurbsSet_remove (this ._geometry, this ._removeGeometry));
 
       this ._removeGeometry .length = 0;
       this ._removeGeometry .setTainted (false);
@@ -4288,14 +4273,11 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
    },
 });
 
-function NurbsSet_remove (array, first, last, range, rfirst, rlast)
+function NurbsSet_remove (array, remove)
 {
-   const set = new Set ();
+   const set = new Set (remove);
 
-   for (let i = rfirst; i < rlast; ++ i)
-      set .add (range [i]);
-
-   return array .remove (first, last, value => set .has (value));
+   return array .remove (value => set .has (value));
 }
 
 const NurbsSet_default_ = NurbsSet;
@@ -5190,10 +5172,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
    set_addTrimmingContour__: function ()
    {
       this ._addTrimmingContour .setTainted (true);
-
-      this ._addTrimmingContour .erase (NurbsTrimmedSurface_remove (this ._addTrimmingContour, 0, this ._addTrimmingContour .length,
-                                                this ._trimmingContour,    0, this ._trimmingContour .length),
-                                        this ._addTrimmingContour .length);
+      this ._addTrimmingContour .splice (NurbsTrimmedSurface_remove (this ._addTrimmingContour, this ._trimmingContour), this ._addTrimmingContour .length);
 
       for (const trimmingContour of this ._addTrimmingContour)
          this ._trimmingContour .push (trimmingContour);
@@ -5204,10 +5183,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
    set_removeTrimmingContour__: function ()
    {
       this ._removeTrimmingContour .setTainted (true);
-
-      this ._trimmingContour .erase (NurbsTrimmedSurface_remove (this ._trimmingContour,       0, this ._trimmingContour .length,
-                                             this ._removeTrimmingContour, 0, this ._removeTrimmingContour .length),
-                                     this ._trimmingContour .length);
+      this ._trimmingContour .splice (NurbsTrimmedSurface_remove (this ._trimmingContour, this ._removeTrimmingContour));
 
       this ._removeTrimmingContour .length = 0;
       this ._removeTrimmingContour .setTainted (false);
@@ -5239,14 +5215,11 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
    },
 });
 
-function NurbsTrimmedSurface_remove (array, first, last, range, rfirst, rlast)
+function NurbsTrimmedSurface_remove (array, remove)
 {
-   const set = new Set ();
+   const set = new Set (remove);
 
-   for (let i = rfirst; i < rlast; ++ i)
-      set .add (range [i]);
-
-   return array .remove (first, last, value => set .has (value));
+   return array .remove (value => set .has (value));
 }
 
 const NurbsTrimmedSurface_default_ = NurbsTrimmedSurface;

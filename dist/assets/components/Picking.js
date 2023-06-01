@@ -1011,7 +1011,7 @@ LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSenso
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .splice (pickedGeometries .remove (null));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -1087,7 +1087,7 @@ LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSenso
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .splice (pickedGeometries .remove (null));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -1883,7 +1883,7 @@ PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSens
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .splice (pickedGeometries .remove (null));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -1947,7 +1947,7 @@ PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSens
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .splice (pickedGeometries .remove (null));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -2173,7 +2173,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPick
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .splice (pickedGeometries .remove (null));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -2226,7 +2226,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPick
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .splice (pickedGeometries .remove (null));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -2412,7 +2412,7 @@ VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSen
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .splice (pickedGeometries .remove (null));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -2465,7 +2465,7 @@ VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSen
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .splice (pickedGeometries .remove (null));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;

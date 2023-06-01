@@ -388,11 +388,9 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    {
       node = SFNodeCache .get (X3DCast (X3DConstants .X3DNode, node, false));
 
-      const
-         rootNodes = this .getRootNodes (),
-         length    = rootNodes .length;
+      const rootNodes = this .getRootNodes ();
 
-      rootNodes .erase (rootNodes .remove (0, length, node), length);
+      rootNodes .splice (rootNodes .remove (node));
    },
    setRootNodes: function (value)
    {

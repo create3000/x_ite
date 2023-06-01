@@ -50,7 +50,9 @@ import X3DArrayField from "./X3DArrayField.js";
 
 const
    _target = Symbol (),
-   _proxy  = Symbol ();
+   _proxy  = Symbol (),
+   _insert = Symbol (),
+   _erase  = Symbol ();
 
 const handler =
 {
@@ -292,32 +294,30 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    {
       const
          target = this [_target],
-         array  = target .getValue ();
+         array  = target .getValue (),
+         length = array .length;
 
-      if (index > array .length)
-         index = array .length;
+      if (arguments .length < 2)
+         deleteCount = length;
 
-      if (index + deleteCount > array .length)
-         deleteCount = array .length - index;
-
-      const result = target .erase (index, index + deleteCount);
+      const result = target [_erase] (index, deleteCount);
 
       if (insertValues .length)
-         target .insert (index, insertValues, 0, insertValues .length);
+         target [_insert] (index, insertValues);
 
       return result;
    },
-   insert: function (index, array, first, last)
+   [_insert]: function (index, array)
    {
       const
          target = this [_target],
          args   = [ ];
 
-      for (let i = first; i < last; ++ i)
+      for (const value of array)
       {
          const field = new (target .getSingleType ()) ();
 
-         field .setValue (array [i]);
+         field .setValue (value);
          target .addChildObject (field);
          args .push (field);
       }
@@ -325,18 +325,33 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
       target .getValue () .splice (index, 0, ... args);
       target .addEvent ();
    },
-   remove: function (first, last, value)
+   [_erase]: function (index, deleteCount)
+   {
+      const
+         target = this [_target],
+         values = target .getValue () .splice (index, deleteCount),
+         result = new (target .constructor) (values);
+
+      for (const value of values)
+         target .removeChildObject (value);
+
+      target .addEvent ();
+
+      return result;
+   },
+   remove: function (value)
    {
       const
          target = this [_target],
          array  = target .getValue (),
+         length = array .length,
          cmp    = typeof value === "function" ? value : v => v === value;
 
-      first = array .findIndex ((current, index) => index >= first && cmp (current .valueOf ()));
+      let first = array .findIndex (current => cmp (current .valueOf ()));
 
       if (first !== -1)
       {
-         for (let i = first; ++ i < last; )
+         for (let i = first; ++ i < length; )
          {
             const current = array [i];
 
@@ -351,27 +366,13 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
       }
       else
       {
-         first = last;
+         first = length;
       }
 
-      if (first !== last)
+      if (first !== length)
          target .addEvent ();
 
       return first;
-   },
-   erase: function (first, last)
-   {
-      const
-         target = this [_target],
-         values = target .getValue () .splice (first, last - first),
-         result = new (target .constructor) (values);
-
-      for (const value of values)
-         target .removeChildObject (value);
-
-      target .addEvent ();
-
-      return result;
    },
    resize: function (size, value, silently)
    {

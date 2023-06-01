@@ -1325,9 +1325,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             if (!(secondParent instanceof Fields .MFNode))
                continue;
 
-            const length = secondParent .length;
-
-            secondParent .erase (secondParent .remove (0, length, firstParent .valueOf ()), length);
+            secondParent .splice (secondParent .remove (firstParent .valueOf ()));
          }
 
          firstParent .setValue (null);
