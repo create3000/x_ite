@@ -65,6 +65,7 @@ const
    _initialized       = Symbol (),
    _live              = Symbol (),
    _set_live__        = Symbol (),
+   _private           = Symbol (),
    _cloneCount        = Symbol ();
 
 function X3DBaseNode (executionContext)
@@ -93,8 +94,7 @@ function X3DBaseNode (executionContext)
 
    this .addChildObjects ("name_changed",       new Fields .SFTime (),
                           "typeName_changed",   new Fields .SFTime (),
-                          "cloneCount_changed", new Fields .SFTime (),
-                          "private",            new Fields .SFBool ())
+                          "cloneCount_changed", new Fields .SFTime ())
 
    if (this .canUserDefinedFields ())
       this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
@@ -511,11 +511,11 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    isPrivate: function ()
    {
-      return this ._private .getValue ();
+      return this [_private];
    },
    setPrivate: function (value)
    {
-      this ._private = value;
+      this [_private] = value;
 
       if (value)
       {
@@ -527,10 +527,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
          for (const field of this [_fields])
             field .addCloneCount (1);
       }
-   },
-   getPrivate: function ()
-   {
-      return this ._private;
    },
    getCloneCount: function ()
    {
