@@ -102,7 +102,7 @@ X3DRoutingContext .prototype =
             this [_taintedNodes] .length = 0;
 
             for (const taintedNode of taintedNodes)
-               taintedNode .processEvents ();
+               taintedNode .processEvent ();
 
             // Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
             this [_taintedNodesTemp] = taintedNodes;

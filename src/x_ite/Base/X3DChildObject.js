@@ -120,6 +120,11 @@ X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype
    {
       return this [_parents];
    },
+   processEvent: function ()
+   {
+      this .setTainted (false);
+      this .processInterests ();
+   },
    dispose: function ()
    {
       this [_parents] .clear ();
@@ -254,6 +259,11 @@ export default X3DChildObject;
 //          parents .add (weakRef .deref ())
 
 //       return parents;
+//    },
+//    processEvent: function ()
+//    {
+//       this .setTainted (false);
+//       this .processInterests ();
 //    },
 //    dispose: function ()
 //    {

@@ -288,11 +288,6 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DChildObject .protot
 
       return new (this .constructor) (array);
    },
-   processEvent: function ()
-   {
-      this .setTainted (false);
-      this .processInterests ();
-   },
    toVRMLStream: function (generator)
    {
       for (const value of this [_array])

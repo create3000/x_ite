@@ -108,11 +108,6 @@ X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prot
       browser .addTaintedNode (this);
       browser .addBrowserEvent ();
    },
-   processEvents: function ()
-   {
-      this .setTainted (false);
-      this .processInterests ();
-   },
 });
 
 for (const key of Reflect .ownKeys (X3DEventObject .prototype))
