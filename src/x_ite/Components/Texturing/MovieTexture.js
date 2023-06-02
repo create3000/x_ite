@@ -54,7 +54,7 @@ import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import GifMedia             from "../../Browser/Texturing/GIFMedia.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
-import DEBUG                from "../../DEBUG.js";
+import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function MovieTexture (executionContext)
 {
@@ -204,7 +204,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    },
    setVideo: function ()
    {
-      if (DEBUG)
+      if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading movie '${decodeURI (this .URL .href)}'`);

@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import DEBUG from "../../DEBUG.js";
+import DEVELOPMENT from "../../DEVELOPMENT.js";
 
 const extensions = [
    "ANGLE_instanced_arrays",
@@ -155,7 +155,7 @@ const Context =
          gl .lineWidth                     = Function .prototype;
          gl .HAS_FEATURE_TRANSFORMED_LINES = gl .getVersion () >= 2;
 
-         if (DEBUG)
+         if (DEVELOPMENT)
             console .info ("Lines are transformed if necessary to obtain thick lines.");
       }
       else

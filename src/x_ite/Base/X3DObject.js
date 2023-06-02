@@ -47,7 +47,7 @@
 
 import Generator    from "../InputOutput/Generator.js";
 import MapUtilities from "../../standard/Utility/MapUtilities.js";
-import DEBUG        from "../DEBUG.js";
+import DEVELOPMENT  from "../DEVELOPMENT.js";
 
 const
    _name      = Symbol (),
@@ -198,7 +198,7 @@ Object .defineProperty (X3DObject .prototype, Symbol .toStringTag,
 
 Object .assign (X3DObject,
 {
-   getId: DEBUG ? (function ()
+   getId: DEVELOPMENT ? (function ()
    {
       const
          map      = new WeakMap (),

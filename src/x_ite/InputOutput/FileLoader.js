@@ -45,11 +45,11 @@
  *
  ******************************************************************************/
 
-import X3DObject  from "../Base/X3DObject.js";
-import Fields     from "../Fields.js";
-import GoldenGate from "../Parser/GoldenGate.js";
-import X3DWorld   from "../Execution/X3DWorld.js";
-import DEBUG      from "../DEBUG.js";
+import X3DObject   from "../Base/X3DObject.js";
+import Fields      from "../Fields.js";
+import GoldenGate  from "../Parser/GoldenGate.js";
+import X3DWorld    from "../Execution/X3DWorld.js";
+import DEVELOPMENT from "../DEVELOPMENT.js";
 
 const
    ECMAScript = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
@@ -177,7 +177,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
          }
       });
 
-      if (DEBUG)
+      if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading scene '${decodeURI (this .URL .href)}'`);
@@ -329,7 +329,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       else
          console .warn (`Couldn't load URL '${decodeURI (this .URL .href)}': ${error .message}`);
 
-      if (DEBUG)
+      if (DEVELOPMENT)
          console .error (error);
    },
 });

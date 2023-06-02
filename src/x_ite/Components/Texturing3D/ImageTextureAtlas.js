@@ -51,7 +51,7 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DTexture3DNode     from "./X3DTexture3DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import DEBUG                from "../../DEBUG.js";
+import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function ImageTextureAtlas (executionContext)
 {
@@ -150,7 +150,7 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
    },
    setImage: function ()
    {
-      if (DEBUG)
+      if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading image '${decodeURI (this .URL .href)}'`);
@@ -217,7 +217,7 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
       }
       catch (error)
       {
-         if (DEBUG)
+         if (DEVELOPMENT)
             console .log (error)
 
          // Catch security error from cross origin requests.

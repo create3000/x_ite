@@ -65,7 +65,7 @@ import Shape                from "./Components/Shape.js";
 import Sound                from "./Components/Sound.js";
 import Texturing            from "./Components/Texturing.js";
 import Time                 from "./Components/Time.js";
-import DEBUG                from "./DEBUG.js";
+import DEVELOPMENT          from "./DEVELOPMENT.js";
 
 class Components
 {
@@ -86,7 +86,7 @@ class Components
       if (browserContext)
          X3DBrowserContext .addBrowserContext (browserContext);
 
-      if (DEBUG)
+      if (DEVELOPMENT)
          console .info (`Done loading external component '${name}'.`);
    }
 }

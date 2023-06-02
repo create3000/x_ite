@@ -52,7 +52,7 @@ import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
-import DEBUG                from "../../DEBUG.js";
+import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function ImageTexture (executionContext)
 {
@@ -150,7 +150,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    },
    setImage: async function ()
    {
-      if (DEBUG)
+      if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading image '${decodeURI (this .URL .href)}'`);

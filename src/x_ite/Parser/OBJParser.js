@@ -51,7 +51,7 @@ import Expressions  from "./Expressions.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../standard/Math/Numbers/Vector3.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
-import DEBUG        from "../DEBUG.js";
+import DEVELOPMENT  from "../DEVELOPMENT.js";
 
 // http://paulbourke.net/dataformats/obj/
 // https://people.sc.fsu.edu/~jburkardt/data/obj/obj.html
@@ -755,7 +755,7 @@ MaterialParser .prototype =
       }
       catch (error)
       {
-         if (DEBUG)
+         if (DEVELOPMENT)
             console .log (error);
       }
    },

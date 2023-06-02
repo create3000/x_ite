@@ -140,7 +140,7 @@ VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .proto
    },
    createShader: function (options, vs, fs)
    {
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    console .log ("Creating VolumeData Shader ...");
 
       const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
@@ -158,7 +158,7 @@ VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .proto
       fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
       fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
 
       const vertexShader = new ShaderPart (this .getExecutionContext ());

@@ -53,7 +53,7 @@ import X3DUrlObject              from "../Networking/X3DUrlObject.js";
 import X3DConstants              from "../../Base/X3DConstants.js";
 import Vector2                   from "../../../standard/Math/Numbers/Vector2.js";
 import Algorithm                 from "../../../standard/Math/Algorithm.js";
-import DEBUG                     from "../../DEBUG.js";
+import DEVELOPMENT               from "../../DEVELOPMENT.js";
 
 const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
@@ -168,7 +168,7 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
    },
    setImage: function ()
    {
-      if (DEBUG)
+      if (DEVELOPMENT)
       {
           if (this .URL .protocol !== "data:")
             console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'`);

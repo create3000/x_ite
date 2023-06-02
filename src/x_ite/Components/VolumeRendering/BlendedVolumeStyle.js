@@ -51,7 +51,6 @@ import FieldDefinitionArray               from "../../Base/FieldDefinitionArray.
 import X3DComposableVolumeRenderStyleNode from "./X3DComposableVolumeRenderStyleNode.js";
 import X3DConstants                       from "../../Base/X3DConstants.js";
 import X3DCast                            from "../../Base/X3DCast.js";
-import DEBUG                              from "../../DEBUG.js";
 
 function BlendedVolumeStyle (executionContext)
 {

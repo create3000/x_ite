@@ -78,7 +78,7 @@ DicomParser .prototype =
       this .getTansferSyntax ();
       this .getPixelData ();
 
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    console .log (this);
 
       return this .dicom;

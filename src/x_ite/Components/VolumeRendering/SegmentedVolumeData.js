@@ -164,7 +164,7 @@ SegmentedVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNo
    },
    createShader: function (options, vs, fs)
    {
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    console .log ("Creating SegmentedVolumeData Shader ...");
 
       const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
@@ -218,7 +218,7 @@ SegmentedVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNo
       fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
       fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
 
       const vertexShader = new ShaderPart (this .getExecutionContext ());

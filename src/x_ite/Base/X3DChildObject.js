@@ -45,8 +45,8 @@
  *
  ******************************************************************************/
 
-import X3DObject from "./X3DObject.js";
-import DEBUG     from "../DEBUG.js";
+import X3DObject   from "./X3DObject.js";
+import DEVELOPMENT from "../DEVELOPMENT.js";
 
 const
    _modificationTime = Symbol (),
@@ -59,7 +59,7 @@ function X3DChildObject ()
    X3DObject .call (this);
 }
 
-if (DEBUG)
+if (DEVELOPMENT)
 {
    X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
    {

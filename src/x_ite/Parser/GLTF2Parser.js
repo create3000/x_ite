@@ -56,7 +56,7 @@ import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import Color4       from "../../standard/Math/Numbers/Color4.js";
 import Algorithm    from "../../standard/Math/Algorithm.js";
-import DEBUG        from "../DEBUG.js"
+import DEVELOPMENT  from "../DEVELOPMENT.js"
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 // https://github.com/KhronosGroup/glTF-Sample-Models
@@ -1645,7 +1645,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          .filter (input => input && input .array .length)
          .reduce ((value, input) => Math .max (value, input .array .at (-1)), 0);
 
-      timeSensorNode ._loop          = DEBUG;
+      timeSensorNode ._loop          = DEVELOPMENT;
       timeSensorNode ._cycleInterval = cycleInterval;
 
       return channels
