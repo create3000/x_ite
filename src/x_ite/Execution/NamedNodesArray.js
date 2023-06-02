@@ -46,7 +46,7 @@
  ******************************************************************************/
 
 import X3DInfoArray from "../Base/X3DInfoArray.js";
-import X3DBaseNode  from "../Base/X3DBaseNode.js"
+import SFNode       from "../Fields/SFNode.js";
 
 function NamedNodesArray (values)
 {
@@ -56,7 +56,7 @@ function NamedNodesArray (values)
    {
       for (const value of values)
       {
-         if (!(value instanceof X3DBaseNode))
+         if (!(value instanceof SFNode))
             throw new TypeError (`Wrong type in construction of ${this .getTypeName ()}.`);
 
          this .add (value .getName (), value);

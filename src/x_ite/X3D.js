@@ -60,7 +60,10 @@ import UnitInfo                    from "./Configuration/UnitInfo.js";
 import UnitInfoArray               from "./Configuration/UnitInfoArray.js";
 import X3DExecutionContext         from "./Execution/X3DExecutionContext.js";
 import X3DScene                    from "./Execution/X3DScene.js";
+import NamedNodesArray             from "./Execution/NamedNodesArray.js";
+import ImportedNodesArray          from "./Execution/ImportedNodesArray.js";
 import X3DImportedNode             from "./Execution/X3DImportedNode.js";
+import ExportedNodesArray          from "./Execution/ExportedNodesArray.js";
 import X3DExportedNode             from "./Execution/X3DExportedNode.js";
 import ExternProtoDeclarationArray from "./Prototype/ExternProtoDeclarationArray.js";
 import ProtoDeclarationArray       from "./Prototype/ProtoDeclarationArray.js";
@@ -188,18 +191,20 @@ Object .assign (X3D,
    ProfileInfoArray:            ProfileInfoArray,
    UnitInfo:                    UnitInfo,
    UnitInfoArray:               UnitInfoArray,
+   NamedNodesArray:             NamedNodesArray,             // non-standard
+   ImportedNodesArray:          ImportedNodesArray,          // non-standard
+   X3DImportedNode:             X3DImportedNode,             // non-standard
+   ExportedNodesArray:          ExportedNodesArray,          // non-standard
+   X3DExportedNode:             X3DExportedNode,             // non-standard
    ExternProtoDeclarationArray: ExternProtoDeclarationArray,
    ProtoDeclarationArray:       ProtoDeclarationArray,
    X3DExternProtoDeclaration:   X3DExternProtoDeclaration,
    X3DProtoDeclaration:         X3DProtoDeclaration,
+   X3DProtoDeclarationNode:     X3DProtoDeclarationNode,     // non-standard
    RouteArray:                  RouteArray,
    X3DRoute:                    X3DRoute,
 
-   // Additional classes
-   X3DBaseNode:                 X3DBaseNode,
-   X3DExportedNode:             X3DExportedNode,
-   X3DImportedNode:             X3DImportedNode,
-   X3DProtoDeclarationNode:     X3DProtoDeclarationNode,
+   X3DBaseNode:                 X3DBaseNode,                 // non-standard
 
    X3DFieldDefinition:          X3DFieldDefinition,
    FieldDefinitionArray:        FieldDefinitionArray,

@@ -1339,4 +1339,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    },
 });
 
+for (const key of Reflect .ownKeys (X3DNode .prototype))
+   Object .defineProperty (X3DNode .prototype, key, { enumerable: false });
+
 export default X3DNode;

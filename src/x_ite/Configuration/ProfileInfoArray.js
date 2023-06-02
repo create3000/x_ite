@@ -51,7 +51,7 @@ import ProfileInfo        from "./ProfileInfo.js";
 
 function ProfileInfoArray (values)
 {
-   return X3DInfoArray .call (this, values, X3DInfoArray);
+   return X3DInfoArray .call (this, values, ProfileInfo);
 }
 
 ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

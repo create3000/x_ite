@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DBaseNode                 from "../../Base/X3DBaseNode.js";
 import X3DFieldDefinition          from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray        from "../../Base/FieldDefinitionArray.js";
 import X3DField                    from "../../Base/X3DField.js";
@@ -57,12 +58,18 @@ import ProfileInfo                 from "../../Configuration/ProfileInfo.js";
 import ProfileInfoArray            from "../../Configuration/ProfileInfoArray.js";
 import UnitInfo                    from "../../Configuration/UnitInfo.js";
 import UnitInfoArray               from "../../Configuration/UnitInfoArray.js";
+import NamedNodesArray             from "../../Execution/NamedNodesArray.js";
+import ImportedNodesArray          from "../../Execution/ImportedNodesArray.js";
+import X3DImportedNode             from "../../Execution/X3DImportedNode.js";
+import ExportedNodesArray          from "../../Execution/ExportedNodesArray.js";
+import X3DExportedNode             from "../../Execution/X3DExportedNode.js";
 import X3DExecutionContext         from "../../Execution/X3DExecutionContext.js";
 import X3DScene                    from "../../Execution/X3DScene.js";
 import ExternProtoDeclarationArray from "../../Prototype/ExternProtoDeclarationArray.js";
 import ProtoDeclarationArray       from "../../Prototype/ProtoDeclarationArray.js";
 import X3DExternProtoDeclaration   from "../../Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration         from "../../Prototype/X3DProtoDeclaration.js";
+import X3DProtoDeclarationNode     from "../../Prototype/X3DProtoDeclarationNode.js";
 import RouteArray                  from "../../Routing/RouteArray.js";
 import X3DRoute                    from "../../Routing/X3DRoute.js";
 import evaluate                    from "../../Browser/Scripting/evaluate.js";
@@ -262,12 +269,20 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          ProfileInfoArray:            { value: ProfileInfoArray },
          UnitInfo:                    { value: UnitInfo },
          UnitInfoArray:               { value: UnitInfoArray },
+         NamedNodesArray:             { value: NamedNodesArray },             // non-standard
+         ImportedNodesArray:          { value: ImportedNodesArray },          // non-standard
+         X3DImportedNode:             { value: X3DImportedNode },             // non-standard
+         ExportedNodesArray:          { value: ExportedNodesArray },          // non-standard
+         X3DExportedNode:             { value: X3DExportedNode },             // non-standard
          ExternProtoDeclarationArray: { value: ExternProtoDeclarationArray },
          ProtoDeclarationArray:       { value: ProtoDeclarationArray },
          X3DExternProtoDeclaration:   { value: X3DExternProtoDeclaration },
          X3DProtoDeclaration:         { value: X3DProtoDeclaration },
+         X3DProtoDeclarationNode:     { value: X3DProtoDeclarationNode },     // non-standard
          RouteArray:                  { value: RouteArray },
          X3DRoute:                    { value: X3DRoute },
+
+         X3DBaseNode: { value: X3DBaseNode },                                 // non-standard
 
          X3DFieldDefinition:   { value: X3DFieldDefinition },
          FieldDefinitionArray: { value: FieldDefinitionArray },

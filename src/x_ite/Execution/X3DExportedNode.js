@@ -176,7 +176,7 @@ Object .defineProperties (X3DExportedNode .prototype,
    {
       get: function ()
       {
-         return SFNodeCache .get (this [_exportedName]);
+         return this [_exportedName];
       },
       enumerable: true,
    },

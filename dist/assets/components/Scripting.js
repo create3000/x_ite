@@ -75,6 +75,9 @@ var __webpack_exports__ = {};
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
 const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DBaseNode\")"
+const X3DBaseNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Base/X3DBaseNode");
+var X3DBaseNode_default = /*#__PURE__*/__webpack_require__.n(X3DBaseNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
 const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
@@ -111,6 +114,21 @@ var UnitInfo_default = /*#__PURE__*/__webpack_require__.n(UnitInfo_namespaceObje
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Configuration/UnitInfoArray\")"
 const UnitInfoArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Configuration/UnitInfoArray");
 var UnitInfoArray_default = /*#__PURE__*/__webpack_require__.n(UnitInfoArray_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Execution/NamedNodesArray\")"
+const NamedNodesArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Execution/NamedNodesArray");
+var NamedNodesArray_default = /*#__PURE__*/__webpack_require__.n(NamedNodesArray_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Execution/ImportedNodesArray\")"
+const ImportedNodesArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Execution/ImportedNodesArray");
+var ImportedNodesArray_default = /*#__PURE__*/__webpack_require__.n(ImportedNodesArray_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Execution/X3DImportedNode\")"
+const X3DImportedNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Execution/X3DImportedNode");
+var X3DImportedNode_default = /*#__PURE__*/__webpack_require__.n(X3DImportedNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Execution/ExportedNodesArray\")"
+const ExportedNodesArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Execution/ExportedNodesArray");
+var ExportedNodesArray_default = /*#__PURE__*/__webpack_require__.n(ExportedNodesArray_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Execution/X3DExportedNode\")"
+const X3DExportedNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Execution/X3DExportedNode");
+var X3DExportedNode_default = /*#__PURE__*/__webpack_require__.n(X3DExportedNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Execution/X3DExecutionContext\")"
 const X3DExecutionContext_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Execution/X3DExecutionContext");
 var X3DExecutionContext_default = /*#__PURE__*/__webpack_require__.n(X3DExecutionContext_namespaceObject);
@@ -129,6 +147,9 @@ var X3DExternProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(X3DEx
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Prototype/X3DProtoDeclaration\")"
 const X3DProtoDeclaration_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Prototype/X3DProtoDeclaration");
 var X3DProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(X3DProtoDeclaration_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Prototype/X3DProtoDeclarationNode\")"
+const X3DProtoDeclarationNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Prototype/X3DProtoDeclarationNode");
+var X3DProtoDeclarationNode_default = /*#__PURE__*/__webpack_require__.n(X3DProtoDeclarationNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Routing/RouteArray\")"
 const RouteArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Routing/RouteArray");
 var RouteArray_default = /*#__PURE__*/__webpack_require__.n(RouteArray_namespaceObject);
@@ -369,6 +390,13 @@ var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespace
 
 
 
+
+
+
+
+
+
+
 function Script (executionContext)
 {
    Scripting_X3DScriptNode.call (this, executionContext);
@@ -561,12 +589,20 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
          ProfileInfoArray:            { value: (ProfileInfoArray_default()) },
          UnitInfo:                    { value: (UnitInfo_default()) },
          UnitInfoArray:               { value: (UnitInfoArray_default()) },
+         NamedNodesArray:             { value: (NamedNodesArray_default()) },             // non-standard
+         ImportedNodesArray:          { value: (ImportedNodesArray_default()) },          // non-standard
+         X3DImportedNode:             { value: (X3DImportedNode_default()) },             // non-standard
+         ExportedNodesArray:          { value: (ExportedNodesArray_default()) },          // non-standard
+         X3DExportedNode:             { value: (X3DExportedNode_default()) },             // non-standard
          ExternProtoDeclarationArray: { value: (ExternProtoDeclarationArray_default()) },
          ProtoDeclarationArray:       { value: (ProtoDeclarationArray_default()) },
          X3DExternProtoDeclaration:   { value: (X3DExternProtoDeclaration_default()) },
          X3DProtoDeclaration:         { value: (X3DProtoDeclaration_default()) },
+         X3DProtoDeclarationNode:     { value: (X3DProtoDeclarationNode_default()) },     // non-standard
          RouteArray:                  { value: (RouteArray_default()) },
          X3DRoute:                    { value: (X3DRoute_default()) },
+
+         X3DBaseNode: { value: (X3DBaseNode_default()) },                                 // non-standard
 
          X3DFieldDefinition:   { value: (X3DFieldDefinition_default()) },
          FieldDefinitionArray: { value: (FieldDefinitionArray_default()) },

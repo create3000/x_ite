@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import X3DNode      from "../Components/Core/X3DNode.js";
+import X3DObject    from "../Base/X3DObject.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import SFNodeCache  from "../Fields/SFNodeCache.js";
 
@@ -174,6 +175,10 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
             break;
          }
       }
+   },
+   toStream: function (generator)
+   {
+      X3DObject .prototype .toStream (generator);
    },
    toVRMLStream: function (generator)
    {
