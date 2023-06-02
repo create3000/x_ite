@@ -45,28 +45,21 @@
  *
  ******************************************************************************/
 
-import SupportedNodes             from "../Configuration/SupportedNodes.js";
 import ProximitySensor            from "./EnvironmentalSensor/ProximitySensor.js";
 import TransformSensor            from "./EnvironmentalSensor/TransformSensor.js";
 import VisibilitySensor           from "./EnvironmentalSensor/VisibilitySensor.js";
 import X3DEnvironmentalSensorNode from "./EnvironmentalSensor/X3DEnvironmentalSensorNode.js";
 
-const Types =
-{
-   ProximitySensor:  ProximitySensor,
-   TransformSensor:  TransformSensor,
-   VisibilitySensor: VisibilitySensor,
+export default {
+   name: "EnvironmentalSensor",
+   concreteNodes:
+   {
+      ProximitySensor:  ProximitySensor,
+      TransformSensor:  TransformSensor,
+      VisibilitySensor: VisibilitySensor,
+   },
+   abstractNodes:
+   {
+      X3DEnvironmentalSensorNode: X3DEnvironmentalSensorNode,
+   },
 };
-
-const AbstractTypes =
-{
-   X3DEnvironmentalSensorNode: X3DEnvironmentalSensorNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

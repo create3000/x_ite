@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import SupportedNodes           from "../Configuration/SupportedNodes.js";
 import ClipPlane                from "./Rendering/ClipPlane.js";
 import Color                    from "./Rendering/Color.js";
 import ColorRGBA                from "./Rendering/ColorRGBA.js";
@@ -68,39 +67,33 @@ import X3DGeometryNode          from "./Rendering/X3DGeometryNode.js";
 import X3DLineGeometryNode      from "./Rendering/X3DLineGeometryNode.js";
 import X3DNormalNode            from "./Rendering/X3DNormalNode.js";
 
-const Types =
-{
-   ClipPlane:               ClipPlane,
-   Color:                   Color,
-   ColorRGBA:               ColorRGBA,
-   Coordinate:              Coordinate,
-   IndexedLineSet:          IndexedLineSet,
-   IndexedTriangleFanSet:   IndexedTriangleFanSet,
-   IndexedTriangleSet:      IndexedTriangleSet,
-   IndexedTriangleStripSet: IndexedTriangleStripSet,
-   LineSet:                 LineSet,
-   Normal:                  Normal,
-   PointSet:                PointSet,
-   TriangleFanSet:          TriangleFanSet,
-   TriangleSet:             TriangleSet,
-   TriangleStripSet:        TriangleStripSet,
+export default {
+   name: "Rendering",
+   concreteNodes:
+   {
+      ClipPlane:               ClipPlane,
+      Color:                   Color,
+      ColorRGBA:               ColorRGBA,
+      Coordinate:              Coordinate,
+      IndexedLineSet:          IndexedLineSet,
+      IndexedTriangleFanSet:   IndexedTriangleFanSet,
+      IndexedTriangleSet:      IndexedTriangleSet,
+      IndexedTriangleStripSet: IndexedTriangleStripSet,
+      LineSet:                 LineSet,
+      Normal:                  Normal,
+      PointSet:                PointSet,
+      TriangleFanSet:          TriangleFanSet,
+      TriangleSet:             TriangleSet,
+      TriangleStripSet:        TriangleStripSet,
+   },
+   abstractNodes:
+   {
+      X3DColorNode:             X3DColorNode,
+      X3DComposedGeometryNode:  X3DComposedGeometryNode,
+      X3DCoordinateNode:        X3DCoordinateNode,
+      X3DGeometricPropertyNode: X3DGeometricPropertyNode,
+      X3DGeometryNode:          X3DGeometryNode,
+      X3DLineGeometryNode:      X3DLineGeometryNode,
+      X3DNormalNode:            X3DNormalNode,
+   },
 };
-
-const AbstractTypes =
-{
-   X3DColorNode:             X3DColorNode,
-   X3DComposedGeometryNode:  X3DComposedGeometryNode,
-   X3DCoordinateNode:        X3DCoordinateNode,
-   X3DGeometricPropertyNode: X3DGeometricPropertyNode,
-   X3DGeometryNode:          X3DGeometryNode,
-   X3DLineGeometryNode:      X3DLineGeometryNode,
-   X3DNormalNode:            X3DNormalNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

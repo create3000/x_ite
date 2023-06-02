@@ -858,14 +858,14 @@ Namespace_default().set ("x_ite/Components/KeyDeviceSensor/StringSensor", String
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "KeyDeviceSensor",
-   types:
+   concreteNodes:
    {
       KeySensor:    KeyDeviceSensor_KeySensor,
       StringSensor: KeyDeviceSensor_StringSensor,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DKeyDeviceSensorNode: KeyDeviceSensor_X3DKeyDeviceSensorNode,
    },

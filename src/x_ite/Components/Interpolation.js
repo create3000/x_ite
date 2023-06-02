@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import SupportedNodes               from "../Configuration/SupportedNodes.js";
 import ColorInterpolator            from "./Interpolation/ColorInterpolator.js";
 import CoordinateInterpolator       from "./Interpolation/CoordinateInterpolator.js";
 import CoordinateInterpolator2D     from "./Interpolation/CoordinateInterpolator2D.js";
@@ -61,32 +60,26 @@ import SplineScalarInterpolator     from "./Interpolation/SplineScalarInterpolat
 import SquadOrientationInterpolator from "./Interpolation/SquadOrientationInterpolator.js";
 import X3DInterpolatorNode          from "./Interpolation/X3DInterpolatorNode.js";
 
-const Types =
-{
-   ColorInterpolator:            ColorInterpolator,
-   CoordinateInterpolator:       CoordinateInterpolator,
-   CoordinateInterpolator2D:     CoordinateInterpolator2D,
-   EaseInEaseOut:                EaseInEaseOut,
-   NormalInterpolator:           NormalInterpolator,
-   OrientationInterpolator:      OrientationInterpolator,
-   PositionInterpolator:         PositionInterpolator,
-   PositionInterpolator2D:       PositionInterpolator2D,
-   ScalarInterpolator:           ScalarInterpolator,
-   SplinePositionInterpolator:   SplinePositionInterpolator,
-   SplinePositionInterpolator2D: SplinePositionInterpolator2D,
-   SplineScalarInterpolator:     SplineScalarInterpolator,
-   SquadOrientationInterpolator: SquadOrientationInterpolator,
+export default {
+   name: "Interpolation",
+   concreteNodes:
+   {
+      ColorInterpolator:            ColorInterpolator,
+      CoordinateInterpolator:       CoordinateInterpolator,
+      CoordinateInterpolator2D:     CoordinateInterpolator2D,
+      EaseInEaseOut:                EaseInEaseOut,
+      NormalInterpolator:           NormalInterpolator,
+      OrientationInterpolator:      OrientationInterpolator,
+      PositionInterpolator:         PositionInterpolator,
+      PositionInterpolator2D:       PositionInterpolator2D,
+      ScalarInterpolator:           ScalarInterpolator,
+      SplinePositionInterpolator:   SplinePositionInterpolator,
+      SplinePositionInterpolator2D: SplinePositionInterpolator2D,
+      SplineScalarInterpolator:     SplineScalarInterpolator,
+      SquadOrientationInterpolator: SquadOrientationInterpolator,
+   },
+   abstractNodes:
+   {
+      X3DInterpolatorNode: X3DInterpolatorNode,
+   },
 };
-
-const AbstractTypes =
-{
-   X3DInterpolatorNode: X3DInterpolatorNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

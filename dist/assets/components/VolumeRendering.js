@@ -3990,9 +3990,9 @@ Namespace_default().set ("x_ite/Components/VolumeRendering/VolumeData", VolumeDa
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "VolumeRendering",
-   types:
+   concreteNodes:
    {
       BlendedVolumeStyle:               VolumeRendering_BlendedVolumeStyle,
       BoundaryEnhancementVolumeStyle:   VolumeRendering_BoundaryEnhancementVolumeStyle,
@@ -4008,7 +4008,7 @@ Components_default().addComponent ({
       ToneMappedVolumeStyle:            VolumeRendering_ToneMappedVolumeStyle,
       VolumeData:                       VolumeRendering_VolumeData,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DComposableVolumeRenderStyleNode: VolumeRendering_X3DComposableVolumeRenderStyleNode,
       X3DVolumeDataNode:                  VolumeRendering_X3DVolumeDataNode,

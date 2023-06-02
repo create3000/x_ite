@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import SupportedNodes from "../Configuration/SupportedNodes.js";
 import Box            from "./Geometry3D/Box.js";
 import Cone           from "./Geometry3D/Cone.js";
 import Cylinder       from "./Geometry3D/Cylinder.js";
@@ -54,25 +53,19 @@ import Extrusion      from "./Geometry3D/Extrusion.js";
 import IndexedFaceSet from "./Geometry3D/IndexedFaceSet.js";
 import Sphere         from "./Geometry3D/Sphere.js";
 
-const Types =
-{
-   Box:            Box,
-   Cone:           Cone,
-   Cylinder:       Cylinder,
-   ElevationGrid:  ElevationGrid,
-   Extrusion:      Extrusion,
-   IndexedFaceSet: IndexedFaceSet,
-   Sphere:         Sphere,
+export default {
+   name: "Geometry3D",
+   concreteNodes:
+   {
+      Box:            Box,
+      Cone:           Cone,
+      Cylinder:       Cylinder,
+      ElevationGrid:  ElevationGrid,
+      Extrusion:      Extrusion,
+      IndexedFaceSet: IndexedFaceSet,
+      Sphere:         Sphere,
+   },
+   abstractNodes:
+   {
+   },
 };
-
-const AbstractTypes =
-{
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

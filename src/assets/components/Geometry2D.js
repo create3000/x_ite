@@ -56,9 +56,9 @@ import Polypoint2D          from "../../x_ite/Components/Geometry2D/Polypoint2D.
 import Rectangle2D          from "../../x_ite/Components/Geometry2D/Rectangle2D.js";
 import TriangleSet2D        from "../../x_ite/Components/Geometry2D/TriangleSet2D.js";
 
-Components .addComponent ({
+Components .add ({
    name: "Geometry2D",
-   types:
+   concreteNodes:
    {
       Arc2D:         Arc2D,
       ArcClose2D:    ArcClose2D,
@@ -69,7 +69,7 @@ Components .addComponent ({
       Rectangle2D:   Rectangle2D,
       TriangleSet2D: TriangleSet2D,
    },
-   abstractTypes:
+   abstractNodes:
    {
    },
    browserContext: X3DGeometry2DContext,

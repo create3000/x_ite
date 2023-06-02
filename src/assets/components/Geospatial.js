@@ -59,9 +59,9 @@ import GeoTransform            from "../../x_ite/Components/Geospatial/GeoTransf
 import GeoViewpoint            from "../../x_ite/Components/Geospatial/GeoViewpoint.js";
 import X3DGeospatialObject     from "../../x_ite/Components/Geospatial/X3DGeospatialObject.js";
 
-Components .addComponent ({
+Components .add ({
    name: "Geospatial",
-   types:
+   concreteNodes:
    {
       GeoCoordinate:           GeoCoordinate,
       GeoElevationGrid:        GeoElevationGrid,
@@ -75,7 +75,7 @@ Components .addComponent ({
       GeoTransform:            GeoTransform,
       GeoViewpoint:            GeoViewpoint,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DGeospatialObject: X3DGeospatialObject,
    },

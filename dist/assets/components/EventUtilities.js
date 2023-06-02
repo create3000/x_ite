@@ -1076,9 +1076,9 @@ Namespace_default().set ("x_ite/Components/EventUtilities/TimeTrigger", TimeTrig
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "EventUtilities",
-   types:
+   concreteNodes:
    {
       BooleanFilter:    EventUtilities_BooleanFilter,
       BooleanSequencer: EventUtilities_BooleanSequencer,
@@ -1088,7 +1088,7 @@ Components_default().addComponent ({
       IntegerTrigger:   EventUtilities_IntegerTrigger,
       TimeTrigger:      EventUtilities_TimeTrigger,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DSequencerNode: EventUtilities_X3DSequencerNode,
       X3DTriggerNode:   EventUtilities_X3DTriggerNode,

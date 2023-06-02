@@ -947,9 +947,9 @@ Namespace_default().set ("x_ite/Components/DIS/TransmitterPdu", TransmitterPdu_d
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "DIS",
-   types:
+   concreteNodes:
    {
       DISEntityManager:     DIS_DISEntityManager,
       DISEntityTypeMapping: DIS_DISEntityTypeMapping,
@@ -958,7 +958,7 @@ Components_default().addComponent ({
       SignalPdu:            DIS_SignalPdu,
       TransmitterPdu:       DIS_TransmitterPdu,
    },
-   abstractTypes:
+   abstractNodes:
    {
    },
 });

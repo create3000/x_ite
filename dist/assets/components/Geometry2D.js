@@ -2093,9 +2093,9 @@ Namespace_default().set ("x_ite/Components/Geometry2D/TriangleSet2D", TriangleSe
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "Geometry2D",
-   types:
+   concreteNodes:
    {
       Arc2D:         Geometry2D_Arc2D,
       ArcClose2D:    Geometry2D_ArcClose2D,
@@ -2106,7 +2106,7 @@ Components_default().addComponent ({
       Rectangle2D:   Geometry2D_Rectangle2D,
       TriangleSet2D: Geometry2D_TriangleSet2D,
    },
-   abstractTypes:
+   abstractNodes:
    {
    },
    browserContext: Geometry2D_X3DGeometry2DContext,

@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import SupportedNodes           from "../Configuration/SupportedNodes.js";
 import Group                    from "./Grouping/Group.js";
 import StaticGroup              from "./Grouping/StaticGroup.js";
 import Switch                   from "./Grouping/Switch.js";
@@ -55,26 +54,20 @@ import X3DGroupingNode          from "./Grouping/X3DGroupingNode.js";
 import X3DTransformMatrix3DNode from "./Grouping/X3DTransformMatrix3DNode.js";
 import X3DTransformNode         from "./Grouping/X3DTransformNode.js";
 
-const Types =
-{
-   Group:       Group,
-   StaticGroup: StaticGroup,
-   Switch:      Switch,
-   Transform:   Transform,
+export default {
+   name: "Grouping",
+   concreteNodes:
+   {
+      Group:       Group,
+      StaticGroup: StaticGroup,
+      Switch:      Switch,
+      Transform:   Transform,
+   },
+   abstractNodes:
+   {
+      X3DBoundedObject:         X3DBoundedObject,
+      X3DGroupingNode:          X3DGroupingNode,
+      X3DTransformMatrix3DNode: X3DTransformMatrix3DNode,
+      X3DTransformNode:         X3DTransformNode,
+   },
 };
-
-const AbstractTypes =
-{
-   X3DBoundedObject:         X3DBoundedObject,
-   X3DGroupingNode:          X3DGroupingNode,
-   X3DTransformMatrix3DNode: X3DTransformMatrix3DNode,
-   X3DTransformNode:         X3DTransformNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import SupportedNodes          from "../Configuration/SupportedNodes.js";
 import Analyser                from "./Sound/Analyser.js";
 import AudioClip               from "./Sound/AudioClip.js";
 import AudioDestination        from "./Sound/AudioDestination.js";
@@ -73,44 +72,38 @@ import X3DSoundNode            from "./Sound/X3DSoundNode.js";
 import X3DSoundProcessingNode  from "./Sound/X3DSoundProcessingNode.js";
 import X3DSoundSourceNode      from "./Sound/X3DSoundSourceNode.js";
 
-const Types =
-{
-   Analyser:               Analyser,
-   AudioClip:              AudioClip,
-   AudioDestination:       AudioDestination,
-   BiquadFilter:           BiquadFilter,
-   BufferAudioSource:      BufferAudioSource,
-   ChannelMerger:          ChannelMerger,
-   ChannelSelector:        ChannelSelector,
-   ChannelSplitter:        ChannelSplitter,
-   Convolver:              Convolver,
-   Delay:                  Delay,
-   DynamicsCompressor:     DynamicsCompressor,
-   Gain:                   Gain,
-   ListenerPointSource:    ListenerPointSource,
-   MicrophoneSource:       MicrophoneSource,
-   OscillatorSource:       OscillatorSource,
-   PeriodicWave:           PeriodicWave,
-   Sound:                  Sound,
-   SpatialSound:           SpatialSound,
-   StreamAudioDestination: StreamAudioDestination,
-   StreamAudioSource:      StreamAudioSource,
-   WaveShaper:             WaveShaper,
+export default {
+   name: "Sound",
+   concreteNodes:
+   {
+      Analyser:               Analyser,
+      AudioClip:              AudioClip,
+      AudioDestination:       AudioDestination,
+      BiquadFilter:           BiquadFilter,
+      BufferAudioSource:      BufferAudioSource,
+      ChannelMerger:          ChannelMerger,
+      ChannelSelector:        ChannelSelector,
+      ChannelSplitter:        ChannelSplitter,
+      Convolver:              Convolver,
+      Delay:                  Delay,
+      DynamicsCompressor:     DynamicsCompressor,
+      Gain:                   Gain,
+      ListenerPointSource:    ListenerPointSource,
+      MicrophoneSource:       MicrophoneSource,
+      OscillatorSource:       OscillatorSource,
+      PeriodicWave:           PeriodicWave,
+      Sound:                  Sound,
+      SpatialSound:           SpatialSound,
+      StreamAudioDestination: StreamAudioDestination,
+      StreamAudioSource:      StreamAudioSource,
+      WaveShaper:             WaveShaper,
+   },
+   abstractNodes:
+   {
+      X3DSoundChannelNode:     X3DSoundChannelNode,
+      X3DSoundDestinationNode: X3DSoundDestinationNode,
+      X3DSoundNode:            X3DSoundNode,
+      X3DSoundProcessingNode:  X3DSoundProcessingNode,
+      X3DSoundSourceNode:      X3DSoundSourceNode,
+   },
 };
-
-const AbstractTypes =
-{
-   X3DSoundChannelNode:     X3DSoundChannelNode,
-   X3DSoundDestinationNode: X3DSoundDestinationNode,
-   X3DSoundNode:            X3DSoundNode,
-   X3DSoundProcessingNode:  X3DSoundProcessingNode,
-   X3DSoundSourceNode:      X3DSoundSourceNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

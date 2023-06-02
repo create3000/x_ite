@@ -45,30 +45,30 @@
  *
  ******************************************************************************/
 
-import NodeTypeArray      from "./NodeTypeArray.js";
+import ConcreteNodesArray from "./ConcreteNodesArray.js";
 import AbstractNodesArray from "./AbstractNodesArray.js";
 
 const
-   nodeTypes         = new NodeTypeArray (),
-   abstractNodeTypes = new AbstractNodesArray ();
+   concreteNodes = new ConcreteNodesArray (),
+   abstractNodes = new AbstractNodesArray ();
 
 const SupportedNodes =
 {
-   addNodeType: function (typeName, Type)
+   addConcreteNode: function (typeName, Type)
    {
-      nodeTypes .add (typeName, Type);
+      concreteNodes .add (typeName, Type);
    },
-   getNodeTypes ()
+   getConcreteNodes ()
    {
-      return nodeTypes;
+      return concreteNodes;
    },
-   addAbstractNodeType: function (typeName, Type)
+   addAbstractNode: function (typeName, Type)
    {
-      abstractNodeTypes .add (typeName, Type);
+      abstractNodes .add (typeName, Type);
    },
-   getAbstractNodeTypes ()
+   getAbstractNodes ()
    {
-      return abstractNodeTypes;
+      return abstractNodes;
    },
 };
 

@@ -51,17 +51,17 @@ import HTMLSupport  from "../Parser/HTMLSupport.js";
 
 const _nodeType = Symbol .for ("X_ITE.nodeType");
 
-function NodeTypeArray (values)
+function ConcreteNodesArray (values)
 {
    return X3DInfoArray .call (this, values, Function);
 }
 
-NodeTypeArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+ConcreteNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
-   constructor: NodeTypeArray,
+   constructor: ConcreteNodesArray,
    getTypeName: function ()
    {
-      return "NodeTypeArray";
+      return "ConcreteNodesArray";
    },
    add: function (typeName, Type)
    {
@@ -69,17 +69,17 @@ NodeTypeArray .prototype = Object .assign (Object .create (X3DInfoArray .prototy
 
       X3DInfoArray .prototype .add .call (this, typeName, Type);
 
-      HTMLSupport .addNodeType (typeName, Type);
+      HTMLSupport .addConcreteNode (typeName, Type);
    },
    update: function (oldTypeName, typeName, Type)
    {
       X3DInfoArray .prototype .update .call (this, oldTypeName, typeName, Type);
 
-      HTMLSupport .addNodeType (typeName, Type);
+      HTMLSupport .addConcreteNode (typeName, Type);
    },
 });
 
-for (const key of Reflect .ownKeys (NodeTypeArray .prototype))
-   Object .defineProperty (NodeTypeArray .prototype, key, { enumerable: false });
+for (const key of Reflect .ownKeys (ConcreteNodesArray .prototype))
+   Object .defineProperty (ConcreteNodesArray .prototype, key, { enumerable: false });
 
-export default NodeTypeArray;
+export default ConcreteNodesArray;

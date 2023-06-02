@@ -53,9 +53,9 @@ import HAnimMotion    from "../../x_ite/Components/HAnim/HAnimMotion.js";
 import HAnimSegment   from "../../x_ite/Components/HAnim/HAnimSegment.js";
 import HAnimSite      from "../../x_ite/Components/HAnim/HAnimSite.js";
 
-Components .addComponent ({
+Components .add ({
    name: "HAnim",
-   types:
+   concreteNodes:
    {
       HAnimDisplacer: HAnimDisplacer,
       HAnimHumanoid:  HAnimHumanoid,
@@ -64,7 +64,7 @@ Components .addComponent ({
       HAnimSegment:   HAnimSegment,
       HAnimSite:      HAnimSite,
    },
-   abstractTypes:
+   abstractNodes:
    {
    },
 });

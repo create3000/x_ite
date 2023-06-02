@@ -53,9 +53,9 @@ import ReceiverPdu          from "../../x_ite/Components/DIS/ReceiverPdu.js";
 import SignalPdu            from "../../x_ite/Components/DIS/SignalPdu.js";
 import TransmitterPdu       from "../../x_ite/Components/DIS/TransmitterPdu.js";
 
-Components .addComponent ({
+Components .add ({
    name: "DIS",
-   types:
+   concreteNodes:
    {
       DISEntityManager:     DISEntityManager,
       DISEntityTypeMapping: DISEntityTypeMapping,
@@ -64,7 +64,7 @@ Components .addComponent ({
       SignalPdu:            SignalPdu,
       TransmitterPdu:       TransmitterPdu,
    },
-   abstractTypes:
+   abstractNodes:
    {
    },
 });

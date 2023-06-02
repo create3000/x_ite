@@ -54,9 +54,9 @@ import IndexedQuadSet               from "../../x_ite/Components/CADGeometry/Ind
 import QuadSet                      from "../../x_ite/Components/CADGeometry/QuadSet.js";
 import X3DProductStructureChildNode from "../../x_ite/Components/CADGeometry/X3DProductStructureChildNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "CADGeometry",
-   types:
+   concreteNodes:
    {
       CADAssembly:    CADAssembly,
       CADFace:        CADFace,
@@ -65,7 +65,7 @@ Components .addComponent ({
       IndexedQuadSet: IndexedQuadSet,
       QuadSet:        QuadSet,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DProductStructureChildNode: X3DProductStructureChildNode,
    },

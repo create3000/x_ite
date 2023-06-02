@@ -875,13 +875,13 @@ Namespace_default().set ("x_ite/Components/Scripting/Script", Script_default_);
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "Scripting",
-   types:
+   concreteNodes:
    {
       Script: Scripting_Script,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DScriptNode: Scripting_X3DScriptNode,
    },

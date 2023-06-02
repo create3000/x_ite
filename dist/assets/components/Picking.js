@@ -2545,9 +2545,9 @@ Namespace_default().set ("x_ite/Components/Picking/VolumePickSensor", VolumePick
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "Picking",
-   types:
+   concreteNodes:
    {
       LinePickSensor:      Picking_LinePickSensor,
       PickableGroup:       Picking_PickableGroup,
@@ -2555,7 +2555,7 @@ Components_default().addComponent ({
       PrimitivePickSensor: Picking_PrimitivePickSensor,
       VolumePickSensor:    Picking_VolumePickSensor,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DPickSensorNode: Picking_X3DPickSensorNode,
       X3DPickableObject: Picking_X3DPickableObject,

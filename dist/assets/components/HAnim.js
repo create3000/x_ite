@@ -1156,9 +1156,9 @@ Namespace_default().set ("x_ite/Components/HAnim/HAnimSite", HAnimSite_default_)
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "HAnim",
-   types:
+   concreteNodes:
    {
       HAnimDisplacer: HAnim_HAnimDisplacer,
       HAnimHumanoid:  HAnim_HAnimHumanoid,
@@ -1167,7 +1167,7 @@ Components_default().addComponent ({
       HAnimSegment:   HAnim_HAnimSegment,
       HAnimSite:      HAnim_HAnimSite,
    },
-   abstractTypes:
+   abstractNodes:
    {
    },
 });

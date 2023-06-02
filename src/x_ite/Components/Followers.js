@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import SupportedNodes    from "../Configuration/SupportedNodes.js";
 import ColorChaser       from "./Followers/ColorChaser.js";
 import ColorDamper       from "./Followers/ColorDamper.js";
 import CoordinateChaser  from "./Followers/CoordinateChaser.js";
@@ -64,35 +63,29 @@ import X3DChaserNode     from "./Followers/X3DChaserNode.js";
 import X3DDamperNode     from "./Followers/X3DDamperNode.js";
 import X3DFollowerNode   from "./Followers/X3DFollowerNode.js";
 
-const Types =
-{
-   ColorChaser:       ColorChaser,
-   ColorDamper:       ColorDamper,
-   CoordinateChaser:  CoordinateChaser,
-   CoordinateDamper:  CoordinateDamper,
-   OrientationChaser: OrientationChaser,
-   OrientationDamper: OrientationDamper,
-   PositionChaser:    PositionChaser,
-   PositionChaser2D:  PositionChaser2D,
-   PositionDamper:    PositionDamper,
-   PositionDamper2D:  PositionDamper2D,
-   ScalarChaser:      ScalarChaser,
-   ScalarDamper:      ScalarDamper,
-   TexCoordChaser2D:  TexCoordChaser2D,
-   TexCoordDamper2D:  TexCoordDamper2D,
+export default {
+   name: "Followers",
+   concreteNodes:
+   {
+      ColorChaser:       ColorChaser,
+      ColorDamper:       ColorDamper,
+      CoordinateChaser:  CoordinateChaser,
+      CoordinateDamper:  CoordinateDamper,
+      OrientationChaser: OrientationChaser,
+      OrientationDamper: OrientationDamper,
+      PositionChaser:    PositionChaser,
+      PositionChaser2D:  PositionChaser2D,
+      PositionDamper:    PositionDamper,
+      PositionDamper2D:  PositionDamper2D,
+      ScalarChaser:      ScalarChaser,
+      ScalarDamper:      ScalarDamper,
+      TexCoordChaser2D:  TexCoordChaser2D,
+      TexCoordDamper2D:  TexCoordDamper2D,
+   },
+   abstractNodes:
+   {
+      X3DChaserNode: X3DChaserNode,
+      X3DDamperNode: X3DDamperNode,
+      X3DFollowerNode: X3DFollowerNode,
+   },
 };
-
-const AbstractTypes =
-{
-   X3DChaserNode: X3DChaserNode,
-   X3DDamperNode: X3DDamperNode,
-   X3DFollowerNode: X3DFollowerNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

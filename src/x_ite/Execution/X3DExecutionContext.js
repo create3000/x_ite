@@ -62,7 +62,7 @@ import X3DCast                     from "../Base/X3DCast.js";
 import X3DConstants                from "../Base/X3DConstants.js";
 import SFNodeCache                 from "../Fields/SFNodeCache.js";
 
-SupportedNodes .addAbstractNodeType ("X3DExecutionContext", X3DExecutionContext);
+SupportedNodes .addAbstractNode ("X3DExecutionContext", X3DExecutionContext);
 
 const
    _namedNodes     = Symbol (),
@@ -168,7 +168,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       if (setup === false)
       {
-         const Type = this .getBrowser () .getSupportedNode (typeName);
+         const Type = this .getBrowser () .getConcreteNode (typeName);
 
          if (!Type)
             return null;
@@ -188,7 +188,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       }
       else
       {
-         const Type = this .getBrowser () .getSupportedNode (typeName);
+         const Type = this .getBrowser () .getConcreteNode (typeName);
 
          if (!Type)
             throw new Error (`Unknown node type '${typeName}'.`);

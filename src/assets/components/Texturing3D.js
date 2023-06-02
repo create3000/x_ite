@@ -56,9 +56,9 @@ import TextureTransform3D       from "../../x_ite/Components/Texturing3D/Texture
 import TextureTransformMatrix3D from "../../x_ite/Components/Texturing3D/TextureTransformMatrix3D.js";
 import X3DTexture3DNode         from "../../x_ite/Components/Texturing3D/X3DTexture3DNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "Texturing3D",
-   types:
+   concreteNodes:
    {
       ComposedTexture3D:        ComposedTexture3D,
       ImageTexture3D:           ImageTexture3D,
@@ -69,7 +69,7 @@ Components .addComponent ({
       TextureTransform3D:       TextureTransform3D,
       TextureTransformMatrix3D: TextureTransformMatrix3D,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DTexture3DNode: X3DTexture3DNode, // Not implemented yet.
    },

@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import SupportedNodes              from "../Configuration/SupportedNodes.js";
 import CylinderSensor              from "./PointingDeviceSensor/CylinderSensor.js";
 import PlaneSensor                 from "./PointingDeviceSensor/PlaneSensor.js";
 import SphereSensor                from "./PointingDeviceSensor/SphereSensor.js";
@@ -54,25 +53,19 @@ import X3DDragSensorNode           from "./PointingDeviceSensor/X3DDragSensorNod
 import X3DPointingDeviceSensorNode from "./PointingDeviceSensor/X3DPointingDeviceSensorNode.js";
 import X3DTouchSensorNode          from "./PointingDeviceSensor/X3DTouchSensorNode.js";
 
-const Types =
-{
-   CylinderSensor: CylinderSensor,
-   PlaneSensor:    PlaneSensor,
-   SphereSensor:   SphereSensor,
-   TouchSensor:    TouchSensor,
+export default {
+   name: "PointingDeviceSensor",
+   concreteNodes:
+   {
+      CylinderSensor: CylinderSensor,
+      PlaneSensor:    PlaneSensor,
+      SphereSensor:   SphereSensor,
+      TouchSensor:    TouchSensor,
+   },
+   abstractNodes:
+   {
+      X3DDragSensorNode:           X3DDragSensorNode,
+      X3DPointingDeviceSensorNode: X3DPointingDeviceSensorNode,
+      X3DTouchSensorNode:          X3DTouchSensorNode,
+   },
 };
-
-const AbstractTypes =
-{
-   X3DDragSensorNode:           X3DDragSensorNode,
-   X3DPointingDeviceSensorNode: X3DPointingDeviceSensorNode,
-   X3DTouchSensorNode:          X3DTouchSensorNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

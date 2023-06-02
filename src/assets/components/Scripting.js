@@ -49,13 +49,13 @@ import Components          from "../../x_ite/Components.js";
 import Script              from "../../x_ite/Components/Scripting/Script.js";
 import X3DScriptNode       from "../../x_ite/Components/Scripting/X3DScriptNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "Scripting",
-   types:
+   concreteNodes:
    {
       Script: Script,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DScriptNode: X3DScriptNode,
    },

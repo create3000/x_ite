@@ -64,9 +64,9 @@ import X3DNBodyCollidableNode     from "../../x_ite/Components/RigidBodyPhysics/
 import X3DNBodyCollisionSpaceNode from "../../x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode.js";
 import X3DRigidJointNode          from "../../x_ite/Components/RigidBodyPhysics/X3DRigidJointNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "RigidBodyPhysics",
-   types:
+   concreteNodes:
    {
       BallJoint:            BallJoint,
       CollidableOffset:     CollidableOffset,
@@ -83,7 +83,7 @@ Components .addComponent ({
       SliderJoint:          SliderJoint,
       UniversalJoint:       UniversalJoint,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DNBodyCollidableNode:     X3DNBodyCollidableNode,
       X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,

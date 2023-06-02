@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import SupportedNodes   from "../Configuration/SupportedNodes.js";
 import Billboard        from "./Navigation/Billboard.js";
 import Collision        from "./Navigation/Collision.js";
 import LOD              from "./Navigation/LOD.js";
@@ -55,26 +54,20 @@ import Viewpoint        from "./Navigation/Viewpoint.js";
 import ViewpointGroup   from "./Navigation/ViewpointGroup.js";
 import X3DViewpointNode from "./Navigation/X3DViewpointNode.js";
 
-const Types =
-{
-   Billboard:      Billboard,
-   Collision:      Collision,
-   LOD:            LOD,
-   NavigationInfo: NavigationInfo,
-   OrthoViewpoint: OrthoViewpoint,
-   Viewpoint:      Viewpoint,
-   ViewpointGroup: ViewpointGroup,
+export default {
+   name: "Navigation",
+   concreteNodes:
+   {
+      Billboard:      Billboard,
+      Collision:      Collision,
+      LOD:            LOD,
+      NavigationInfo: NavigationInfo,
+      OrthoViewpoint: OrthoViewpoint,
+      Viewpoint:      Viewpoint,
+      ViewpointGroup: ViewpointGroup,
+   },
+   abstractNodes:
+   {
+      X3DViewpointNode: X3DViewpointNode,
+   },
 };
-
-const AbstractTypes =
-{
-   X3DViewpointNode: X3DViewpointNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

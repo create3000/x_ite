@@ -5294,9 +5294,9 @@ Namespace_default().set ("x_ite/Components/NURBS/NurbsTrimmedSurface", NurbsTrim
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "NURBS",
-   types:
+   concreteNodes:
    {
       Contour2D:                    NURBS_Contour2D,
       ContourPolyline2D:            NURBS_ContourPolyline2D,
@@ -5313,7 +5313,7 @@ Components_default().addComponent ({
       NurbsTextureCoordinate:       NURBS_NurbsTextureCoordinate,
       NurbsTrimmedSurface:          NURBS_NurbsTrimmedSurface,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DNurbsControlCurveNode:    NURBS_X3DNurbsControlCurveNode,
       X3DNurbsSurfaceGeometryNode: NURBS_X3DNurbsSurfaceGeometryNode,

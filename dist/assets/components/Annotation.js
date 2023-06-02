@@ -825,9 +825,9 @@ Namespace_default().set ("x_ite/Components/Annotation/URLAnnotation", URLAnnotat
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "Annotation",
-   types:
+   concreteNodes:
    {
       AnnotationLayer:  Annotation_AnnotationLayer,
       AnnotationTarget: Annotation_AnnotationTarget,
@@ -836,7 +836,7 @@ Components_default().addComponent ({
       TextAnnotation:   Annotation_TextAnnotation,
       URLAnnotation:    Annotation_URLAnnotation,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DAnnotationNode: Annotation_X3DAnnotationNode,
    },

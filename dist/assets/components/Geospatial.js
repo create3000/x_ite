@@ -3723,9 +3723,9 @@ Namespace_default().set ("x_ite/Components/Geospatial/GeoViewpoint", GeoViewpoin
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "Geospatial",
-   types:
+   concreteNodes:
    {
       GeoCoordinate:           Geospatial_GeoCoordinate,
       GeoElevationGrid:        Geospatial_GeoElevationGrid,
@@ -3739,7 +3739,7 @@ Components_default().addComponent ({
       GeoTransform:            Geospatial_GeoTransform,
       GeoViewpoint:            Geospatial_GeoViewpoint,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DGeospatialObject: Geospatial_X3DGeospatialObject,
    },

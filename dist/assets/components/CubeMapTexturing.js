@@ -1272,15 +1272,15 @@ Namespace_default().set ("x_ite/Components/CubeMapTexturing/ImageCubeMapTexture"
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "CubeMapTexturing",
-   types:
+   concreteNodes:
    {
       ComposedCubeMapTexture:  CubeMapTexturing_ComposedCubeMapTexture,
       GeneratedCubeMapTexture: CubeMapTexturing_GeneratedCubeMapTexture,
       ImageCubeMapTexture:     CubeMapTexturing_ImageCubeMapTexture,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DEnvironmentTextureNode: CubeMapTexturing_X3DEnvironmentTextureNode,
    },

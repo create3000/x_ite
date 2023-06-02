@@ -252,21 +252,21 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          return loadComponents (this, [... argument], new Set ());
       };
    })(),
-   getSupportedNode: function (typeName)
+   getConcreteNode: function (typeName)
    {
-      return SupportedNodes .getNodeTypes () .get (String (typeName));
+      return SupportedNodes .getConcreteNodes () .get (String (typeName));
    },
-   getSupportedNodes: function ()
+   getConcreteNodes: function ()
    {
-      return SupportedNodes .getNodeTypes ();
+      return SupportedNodes .getConcreteNodes ();
    },
    getAbstractNode: function (typeName)
    {
-      return SupportedNodes .getAbstractNodeTypes () .get (String (typeName));
+      return SupportedNodes .getAbstractNodes () .get (String (typeName));
    },
    getAbstractNodes: function ()
    {
-      return SupportedNodes .getAbstractNodeTypes ();
+      return SupportedNodes .getAbstractNodes ();
    },
    createScene: function (profile, component1 /*, ...*/)
    {

@@ -813,14 +813,14 @@ Namespace_default().set ("x_ite/Components/TextureProjector/TextureProjectorPara
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "TextureProjector",
-   types:
+   concreteNodes:
    {
       TextureProjector:         TextureProjector_TextureProjector,
       TextureProjectorParallel: TextureProjector_TextureProjectorParallel,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DTextureProjectorNode: TextureProjector_X3DTextureProjectorNode,
    },

@@ -67,28 +67,51 @@ import Texturing            from "./Components/Texturing.js";
 import Time                 from "./Components/Time.js";
 import DEVELOPMENT          from "./DEVELOPMENT.js";
 
+let external = false;
+
 class Components
 {
-   static addComponent ({ name, types, abstractTypes, browserContext })
+   static add ({ name, concreteNodes, abstractNodes, browserContext })
    {
-      if (types)
+      if (concreteNodes)
       {
-         for (const [typeName, type] of Object .entries (types))
-            SupportedNodes .addNodeType (typeName, type);
+         for (const [typeName, type] of Object .entries (concreteNodes))
+            SupportedNodes .addConcreteNode (typeName, type);
       }
 
-      if (abstractTypes)
+      if (abstractNodes)
       {
-         for (const [typeName, type] of Object .entries (abstractTypes))
-            SupportedNodes .addAbstractNodeType (typeName, type);
+         for (const [typeName, type] of Object .entries (abstractNodes))
+            SupportedNodes .addAbstractNode (typeName, type);
       }
 
       if (browserContext)
          X3DBrowserContext .addBrowserContext (browserContext);
 
-      if (DEVELOPMENT)
+      if (DEVELOPMENT && external)
          console .info (`Done loading external component '${name}'.`);
    }
 }
+
+Components .add (Core);
+Components .add (EnvironmentalEffects);
+Components .add (EnvironmentalSensor);
+Components .add (Followers);
+Components .add (Geometry3D);
+Components .add (Grouping);
+Components .add (Interpolation);
+Components .add (Layering);
+Components .add (Lighting);
+Components .add (Navigation);
+Components .add (Networking);
+Components .add (PointingDeviceSensor);
+Components .add (Rendering);
+Components .add (Shaders);
+Components .add (Shape);
+Components .add (Sound);
+Components .add (Texturing);
+Components .add (Time);
+
+external = true;
 
 export default Components;

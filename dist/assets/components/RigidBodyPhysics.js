@@ -4442,9 +4442,9 @@ Namespace_default().set ("x_ite/Components/RigidBodyPhysics/UniversalJoint", Uni
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "RigidBodyPhysics",
-   types:
+   concreteNodes:
    {
       BallJoint:            RigidBodyPhysics_BallJoint,
       CollidableOffset:     RigidBodyPhysics_CollidableOffset,
@@ -4461,7 +4461,7 @@ Components_default().addComponent ({
       SliderJoint:          RigidBodyPhysics_SliderJoint,
       UniversalJoint:       RigidBodyPhysics_UniversalJoint,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DNBodyCollidableNode:     RigidBodyPhysics_X3DNBodyCollidableNode,
       X3DNBodyCollisionSpaceNode: RigidBodyPhysics_X3DNBodyCollisionSpaceNode,

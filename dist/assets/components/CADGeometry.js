@@ -1009,9 +1009,9 @@ Namespace_default().set ("x_ite/Components/CADGeometry/QuadSet", QuadSet_default
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "CADGeometry",
-   types:
+   concreteNodes:
    {
       CADAssembly:    CADGeometry_CADAssembly,
       CADFace:        CADGeometry_CADFace,
@@ -1020,7 +1020,7 @@ Components_default().addComponent ({
       IndexedQuadSet: CADGeometry_IndexedQuadSet,
       QuadSet:        CADGeometry_QuadSet,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DProductStructureChildNode: CADGeometry_X3DProductStructureChildNode,
    },

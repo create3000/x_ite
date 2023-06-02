@@ -64,9 +64,9 @@ import X3DNurbsControlCurveNode     from "../../x_ite/Components/NURBS/X3DNurbsC
 import X3DNurbsSurfaceGeometryNode  from "../../x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js";
 import X3DParametricGeometryNode    from "../../x_ite/Components/NURBS/X3DParametricGeometryNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "NURBS",
-   types:
+   concreteNodes:
    {
       Contour2D:                    Contour2D,
       ContourPolyline2D:            ContourPolyline2D,
@@ -83,7 +83,7 @@ Components .addComponent ({
       NurbsTextureCoordinate:       NurbsTextureCoordinate,
       NurbsTrimmedSurface:          NurbsTrimmedSurface,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DNurbsControlCurveNode:    X3DNurbsControlCurveNode,
       X3DNurbsSurfaceGeometryNode: X3DNurbsSurfaceGeometryNode,

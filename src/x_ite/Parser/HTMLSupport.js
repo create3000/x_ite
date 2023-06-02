@@ -40,7 +40,7 @@ const
 
 const HTMLSupport =
 {
-   addNodeType: function (typeName, Type)
+   addConcreteNode: function (typeName, Type)
    {
       HTMLSupport .addNodeTypeName (typeName);
 

@@ -1,7 +1,7 @@
 /* X_ITE v8.7.8 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 659:
+/***/ 881:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -16046,7 +16046,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(659);
+/* provided dependency */ var opentype = __webpack_require__(881);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16405,14 +16405,14 @@ Namespace_default().set ("x_ite/Components/Text/Text", Text_default_);
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "Text",
-   types:
+   concreteNodes:
    {
       FontStyle: Text_FontStyle,
       Text: Text_Text,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DFontStyleNode: Text_X3DFontStyleNode,
    },

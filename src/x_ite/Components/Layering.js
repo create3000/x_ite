@@ -45,30 +45,23 @@
  *
  ******************************************************************************/
 
-import SupportedNodes  from "../Configuration/SupportedNodes.js";
 import Layer           from "./Layering/Layer.js";
 import LayerSet        from "./Layering/LayerSet.js";
 import Viewport        from "./Layering/Viewport.js";
 import X3DLayerNode    from "./Layering/X3DLayerNode.js";
 import X3DViewportNode from "./Layering/X3DViewportNode.js";
 
-const Types =
-{
-   Layer:    Layer,
-   LayerSet: LayerSet,
-   Viewport: Viewport,
+export default {
+   name: "Layering",
+   concreteNodes:
+   {
+      Layer:    Layer,
+      LayerSet: LayerSet,
+      Viewport: Viewport,
+   },
+   abstractNodes:
+   {
+      X3DLayerNode:    X3DLayerNode,
+      X3DViewportNode: X3DViewportNode,
+   },
 };
-
-const AbstractTypes =
-{
-   X3DLayerNode:    X3DLayerNode,
-   X3DViewportNode: X3DViewportNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

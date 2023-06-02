@@ -50,14 +50,14 @@ import TextureProjector         from "../../x_ite/Components/TextureProjector/Te
 import TextureProjectorParallel from "../../x_ite/Components/TextureProjector/TextureProjectorParallel.js";
 import X3DTextureProjectorNode  from "../../x_ite/Components/TextureProjector/X3DTextureProjectorNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "TextureProjector",
-   types:
+   concreteNodes:
    {
       TextureProjector:         TextureProjector,
       TextureProjectorParallel: TextureProjectorParallel,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DTextureProjectorNode: X3DTextureProjectorNode,
    },

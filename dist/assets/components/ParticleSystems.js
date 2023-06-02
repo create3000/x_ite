@@ -4988,9 +4988,9 @@ Namespace_default().set ("x_ite/Components/ParticleSystems/WindPhysicsModel", Wi
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "ParticleSystems",
-   types:
+   concreteNodes:
    {
       BoundedPhysicsModel: ParticleSystems_BoundedPhysicsModel,
       ConeEmitter:         ParticleSystems_ConeEmitter,
@@ -5003,7 +5003,7 @@ Components_default().addComponent ({
       VolumeEmitter:       ParticleSystems_VolumeEmitter,
       WindPhysicsModel:    ParticleSystems_WindPhysicsModel,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DParticleEmitterNode:      ParticleSystems_X3DParticleEmitterNode,
       X3DParticlePhysicsModelNode: ParticleSystems_X3DParticlePhysicsModelNode,

@@ -2009,9 +2009,9 @@ Namespace_default().set ("x_ite/Components/Layout/ScreenGroup", ScreenGroup_defa
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "Layout",
-   types:
+   concreteNodes:
    {
       Layout:          Layout_Layout,
       LayoutGroup:     Layout_LayoutGroup,
@@ -2019,7 +2019,7 @@ Components_default().addComponent ({
       ScreenFontStyle: Layout_ScreenFontStyle,
       ScreenGroup:     Layout_ScreenGroup,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DLayoutNode: Layout_X3DLayoutNode,
    },

@@ -64,9 +64,9 @@ import X3DComposableVolumeRenderStyleNode from "../../x_ite/Components/VolumeRen
 import X3DVolumeDataNode                  from "../../x_ite/Components/VolumeRendering/X3DVolumeDataNode.js";
 import X3DVolumeRenderStyleNode           from "../../x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "VolumeRendering",
-   types:
+   concreteNodes:
    {
       BlendedVolumeStyle:               BlendedVolumeStyle,
       BoundaryEnhancementVolumeStyle:   BoundaryEnhancementVolumeStyle,
@@ -82,7 +82,7 @@ Components .addComponent ({
       ToneMappedVolumeStyle:            ToneMappedVolumeStyle,
       VolumeData:                       VolumeData,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DComposableVolumeRenderStyleNode: X3DComposableVolumeRenderStyleNode,
       X3DVolumeDataNode:                  X3DVolumeDataNode,

@@ -54,9 +54,9 @@ import TextAnnotation    from "../../x_ite/Components/Annotation/TextAnnotation.
 import URLAnnotation     from "../../x_ite/Components/Annotation/URLAnnotation.js";
 import X3DAnnotationNode from "../../x_ite/Components/Annotation/X3DAnnotationNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "Annotation",
-   types:
+   concreteNodes:
    {
       AnnotationLayer:  AnnotationLayer,
       AnnotationTarget: AnnotationTarget,
@@ -65,7 +65,7 @@ Components .addComponent ({
       TextAnnotation:   TextAnnotation,
       URLAnnotation:    URLAnnotation,
    },
-   abstractTypes:
+   abstractNodes:
    {
       X3DAnnotationNode: X3DAnnotationNode,
    },
