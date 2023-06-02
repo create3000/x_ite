@@ -205,6 +205,18 @@ export default X3DChildObject;
 //    [_tainted]: false,
 //    [_parents]: new Map (),
 //    [_registry]: null,
+//    isInitializable: function ()
+//    {
+//       return true;
+//    },
+//    isInput: function ()
+//    {
+//       return false;
+//    },
+//    isOutput: function ()
+//    {
+//       return false;
+//    },
 //    setModificationTime: function (value)
 //    {
 //       this [_modificationTime] = value;
