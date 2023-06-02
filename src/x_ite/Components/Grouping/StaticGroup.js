@@ -139,7 +139,7 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
    },
    set_optimize__: function ()
    {
-      if (this .getBrowser () .getBrowserOption ("OptimizeStaticGroup"))
+      if (this .getBrowser () .getBrowserOption ("OptimizeStaticGroups"))
       {
          delete this .traverse;
       }
