@@ -239,13 +239,16 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
          }
       }
    },
-   create: function (executionContext)
+   create: function (executionContext = this [_executionContext])
    {
-      return new (this .constructor) (executionContext || this [_executionContext]);
+      return new (this .constructor) (executionContext);
    },
    setup: function ()
    {
       Object .freeze (this [_type]);
+
+      for (const field of this [_childObjects])
+         field .setTainted (false);
 
       for (const field of this [_fields])
          field .setTainted (false);
@@ -291,6 +294,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       this [_childObjects] .push (field);
 
+      field .setTainted (true);
       field .addParent (this);
       field .setName (name);
 
