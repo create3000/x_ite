@@ -168,12 +168,12 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       if (setup === false)
       {
-         const Type = this .getBrowser () .getConcreteNode (typeName);
+         const ConcreteNode = this .getBrowser () .getConcreteNode (typeName);
 
-         if (!Type)
+         if (!ConcreteNode)
             return null;
 
-         const specificationRange = Type .prototype .getSpecificationRange ();
+         const specificationRange = ConcreteNode .prototype .getSpecificationRange ();
 
          if (this .getSpecificationVersion () < specificationRange [0])
             return null;
@@ -181,19 +181,19 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (this .getSpecificationVersion () > specificationRange [1])
             return null;
 
-         if (!this .hasComponent (Type .prototype .getComponentName ()))
+         if (!this .hasComponent (ConcreteNode .prototype .getComponentName ()))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
-         return new Type (this);
+         return new ConcreteNode (this);
       }
       else
       {
-         const Type = this .getBrowser () .getConcreteNode (typeName);
+         const ConcreteNode = this .getBrowser () .getConcreteNode (typeName);
 
-         if (!Type)
+         if (!ConcreteNode)
             throw new Error (`Unknown node type '${typeName}'.`);
 
-         const specificationRange = Type .prototype .getSpecificationRange ();
+         const specificationRange = ConcreteNode .prototype .getSpecificationRange ();
 
          if (this .getSpecificationVersion () < specificationRange [0])
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
@@ -201,10 +201,10 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (this .getSpecificationVersion () > specificationRange [1])
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
-         if (!this .hasComponent (Type .prototype .getComponentName ()))
+         if (!this .hasComponent (ConcreteNode .prototype .getComponentName ()))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
-         const baseNode = new Type (this);
+         const baseNode = new ConcreteNode (this);
 
          baseNode .setup ();
 
