@@ -50,7 +50,7 @@ let
    loadState    = 0,
    fieldType    = 0;
 
-const _nodeType = Symbol .for ("X_ITE.nodeType");
+const _NODE_TYPE = Symbol .for ("X_ITE.NODE_TYPE");
 
 const X3DConstants =
 {
@@ -130,7 +130,7 @@ const X3DConstants =
 
    X3DBaseNode: 0,
 
-   [_nodeType]: 0,
+   [_NODE_TYPE]: 0,
 };
 
 export default X3DConstants;

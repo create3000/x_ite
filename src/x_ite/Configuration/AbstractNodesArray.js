@@ -48,7 +48,7 @@
 import X3DInfoArray from "../Base/X3DInfoArray.js";
 import X3DConstants from "../Base/X3DConstants.js";
 
-const _nodeType = Symbol .for ("X_ITE.nodeType");
+const _NODE_TYPE = Symbol .for ("X_ITE.NODE_TYPE");
 
 function AbstractNodesArray (values)
 {
@@ -64,7 +64,7 @@ AbstractNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .pr
    },
    add: function (typeName, Type)
    {
-      X3DConstants [typeName] = ++ X3DConstants [_nodeType];
+      X3DConstants [typeName] = ++ X3DConstants [_NODE_TYPE];
 
       X3DInfoArray .prototype .add .call (this, typeName, Type);
    },
