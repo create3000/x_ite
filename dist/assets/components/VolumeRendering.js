@@ -575,8 +575,6 @@ const X3DVolumeRenderingContext_default_ = X3DVolumeRenderingContext;
 
 Namespace_default().set ("x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext", X3DVolumeRenderingContext_default_);
 /* harmony default export */ const VolumeRendering_X3DVolumeRenderingContext = (X3DVolumeRenderingContext_default_);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/DEBUG\")"
-const DEBUG_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/DEBUG");
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/BlendedVolumeStyle.js
 /*******************************************************************************
  *
@@ -624,7 +622,6 @@ const DEBUG_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require 
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -2400,7 +2397,7 @@ IsoSurfaceVolumeData .prototype = Object .assign (Object .create (VolumeRenderin
    },
    createShader: function (options, vs, fs)
    {
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    console .log ("Creating VolumeData Shader ...");
 
       const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
@@ -2543,7 +2540,7 @@ IsoSurfaceVolumeData .prototype = Object .assign (Object .create (VolumeRenderin
       fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
       fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
 
       const vertexShader = new (ShaderPart_default()) (this .getExecutionContext ());
@@ -2986,7 +2983,7 @@ SegmentedVolumeData .prototype = Object .assign (Object .create (VolumeRendering
    },
    createShader: function (options, vs, fs)
    {
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    console .log ("Creating SegmentedVolumeData Shader ...");
 
       const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
@@ -3040,7 +3037,7 @@ SegmentedVolumeData .prototype = Object .assign (Object .create (VolumeRendering
       fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
       fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
 
       const vertexShader = new (ShaderPart_default()) (this .getExecutionContext ());
@@ -3862,7 +3859,7 @@ VolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolum
    },
    createShader: function (options, vs, fs)
    {
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    console .log ("Creating VolumeData Shader ...");
 
       const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
@@ -3880,7 +3877,7 @@ VolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolum
       fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
       fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
 
       const vertexShader = new (ShaderPart_default()) (this .getExecutionContext ());

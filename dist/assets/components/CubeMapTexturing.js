@@ -942,9 +942,9 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector2\")"
 const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("standard/Math/Numbers/Vector2");
 var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/DEBUG\")"
-const DEBUG_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/DEBUG");
-var DEBUG_default = /*#__PURE__*/__webpack_require__.n(DEBUG_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/DEVELOPMENT\")"
+const DEVELOPMENT_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/DEVELOPMENT");
+var DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(DEVELOPMENT_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js
 /* provided dependency */ var $ = __webpack_require__(355);
 /*******************************************************************************
@@ -1117,7 +1117,7 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturin
    },
    setImage: function ()
    {
-      if ((DEBUG_default()))
+      if ((DEVELOPMENT_default()))
       {
           if (this .URL .protocol !== "data:")
             console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'`);

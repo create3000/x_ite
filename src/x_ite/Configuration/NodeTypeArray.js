@@ -50,7 +50,7 @@ import X3DNode      from "../Components/Core/X3DNode.js";
 
 function NodeTypeArray (values)
 {
-   return X3DInfoArray .call (this, values, X3DNode);
+   return X3DInfoArray .call (this, values, Function);
 }
 
 NodeTypeArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
