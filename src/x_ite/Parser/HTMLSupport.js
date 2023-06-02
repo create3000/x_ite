@@ -30,7 +30,9 @@
  *
  ******************************************************************************/
 
-// Maps are set when component is registered.
+import X3DConstants from "../Base/X3DConstants.js";
+
+const _fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions");
 
 const
    nodeTypeNames = new Map (), // (TYPENAME -> TypeName)
@@ -38,6 +40,16 @@ const
 
 const HTMLSupport =
 {
+   addNodeType: function (typeName, Type)
+   {
+      HTMLSupport .addNodeTypeName (typeName);
+
+      for (const { name, accessType } of Type .prototype [_fieldDefinitions])
+      {
+         if (accessType & X3DConstants .initializeOnly)
+            HTMLSupport .addFieldName (name)
+      }
+   },
    addNodeTypeName: function (typeName)
    {
       nodeTypeNames .set (typeName,                 typeName);

@@ -92,7 +92,6 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool ()),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Notifications",          new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Multisampling",          new Fields .SFInt32 (4)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "OptimizeStaticGroups",   new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
       new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                new Fields .SFBool ()),
    ]),

@@ -47,39 +47,30 @@
 
 import X3DInfoArray from "../Base/X3DInfoArray.js";
 import X3DConstants from "../Base/X3DConstants.js";
-import HTMLSupport  from "../Parser/HTMLSupport.js";
 
 const _nodeType = Symbol .for ("X_ITE.nodeType");
 
-function NodeTypeArray (values)
+function AbstractNodesArray (values)
 {
    return X3DInfoArray .call (this, values, Function);
 }
 
-NodeTypeArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+AbstractNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
-   constructor: NodeTypeArray,
+   constructor: AbstractNodesArray,
    getTypeName: function ()
    {
-      return "NodeTypeArray";
+      return "AbstractNodesArray";
    },
    add: function (typeName, Type)
    {
-      X3DConstants [typeName] = ++ X3DConstants [_nodeType]; // Start with 1, as X3DBaseNode is 0.
+      X3DConstants [typeName] = ++ X3DConstants [_nodeType];
 
       X3DInfoArray .prototype .add .call (this, typeName, Type);
-
-      HTMLSupport .addNodeType (typeName, Type);
-   },
-   update: function (oldTypeName, typeName, Type)
-   {
-      X3DInfoArray .prototype .update .call (this, oldTypeName, typeName, Type);
-
-      HTMLSupport .addNodeType (typeName, Type);
    },
 });
 
-for (const key of Reflect .ownKeys (NodeTypeArray .prototype))
-   Object .defineProperty (NodeTypeArray .prototype, key, { enumerable: false });
+for (const key of Reflect .ownKeys (AbstractNodesArray .prototype))
+   Object .defineProperty (AbstractNodesArray .prototype, key, { enumerable: false });
 
-export default NodeTypeArray;
+export default AbstractNodesArray;

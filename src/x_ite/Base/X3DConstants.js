@@ -50,6 +50,8 @@ let
    loadState    = 0,
    fieldType    = 0;
 
+const _nodeType = Symbol .for ("X_ITE.nodeType");
+
 const X3DConstants =
 {
    // Browser event
@@ -124,9 +126,11 @@ const X3DConstants =
    MFVec4d:     fieldType ++,
    MFVec4f:     fieldType ++,
 
-   // Abstract node
+   // Abstract nodes and nodes types are added later.
 
    X3DBaseNode: 0,
+
+   [_nodeType]: 0,
 };
 
 export default X3DConstants;
