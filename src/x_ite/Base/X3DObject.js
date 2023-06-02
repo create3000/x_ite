@@ -202,10 +202,10 @@ Object .assign (X3DObject,
    {
       const
          map      = new WeakMap (),
-         ids      = [ ],
-         registry = new FinalizationRegistry (id => ids .push (id));
+         cache    = [ ],
+         registry = new FinalizationRegistry (id => cache .push (id));
 
-      let counter = 0n; // In the future we can use a bigint here (0n).
+      let counter = 0n;
 
       return function (object)
       {
@@ -217,7 +217,7 @@ Object .assign (X3DObject,
          }
          else
          {
-            const id = ids .pop () ?? ++ counter;
+            const id = cache .pop () ?? ++ counter;
 
             map .set (object, id);
             registry .register (object, id);
@@ -229,7 +229,7 @@ Object .assign (X3DObject,
    {
       const map = new WeakMap ();
 
-      let counter = 0; // In the future we can use a bigint here (0n).
+      let counter = 0;
 
       return function (object)
       {
