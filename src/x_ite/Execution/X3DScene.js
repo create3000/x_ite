@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import SupportedNodes      from "../Configuration/SupportedNodes.js";
+import AbstractNodes       from "../Configuration/AbstractNodes.js";
 import Fields              from "../Fields.js";
 import X3DExecutionContext from "./X3DExecutionContext.js";
 import { getUniqueName }   from "./NamedNodesHandling.js";
@@ -58,7 +58,7 @@ import X3DCast             from "../Base/X3DCast.js";
 import X3DConstants        from "../Base/X3DConstants.js";
 import SFNodeCache         from "../Fields/SFNodeCache.js";
 
-SupportedNodes .addAbstractNode ("X3DScene", X3DScene);
+AbstractNodes .add ("X3DScene", X3DScene);
 
 const
    _browser              = Symbol .for ("X_ITE.X3DEventObject.browser"),

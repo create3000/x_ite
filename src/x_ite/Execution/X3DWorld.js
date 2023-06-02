@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import SupportedNodes from "../Configuration/SupportedNodes.js";
+import AbstractNodes  from "../Configuration/AbstractNodes.js";
 import SFNode         from "../Fields/SFNode.js";
 import X3DBaseNode    from "../Base/X3DBaseNode.js";
 import LayerSet       from "../Components/Layering/LayerSet.js";
@@ -53,7 +53,7 @@ import Layer          from "../Components/Layering/Layer.js";
 import X3DCast        from "../Base/X3DCast.js";
 import X3DConstants   from "../Base/X3DConstants.js";
 
-SupportedNodes .addAbstractNode ("X3DWorld", X3DWorld);
+AbstractNodes .add ("X3DWorld", X3DWorld);
 
 function X3DWorld (executionContext)
 {

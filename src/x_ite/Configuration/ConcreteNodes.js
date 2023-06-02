@@ -45,31 +45,6 @@
  *
  ******************************************************************************/
 
-import ConcreteNodesArray from "./ConcreteNodesArray.js";
-import AbstractNodesArray from "./AbstractNodesArray.js";
+import ConcreteNodesArray from "./ConcreteNodesArray.js"
 
-const
-   concreteNodes = new ConcreteNodesArray (),
-   abstractNodes = new AbstractNodesArray ();
-
-const SupportedNodes =
-{
-   addConcreteNode: function (typeName, Type)
-   {
-      concreteNodes .add (typeName, Type);
-   },
-   getConcreteNodes ()
-   {
-      return concreteNodes;
-   },
-   addAbstractNode: function (typeName, Type)
-   {
-      abstractNodes .add (typeName, Type);
-   },
-   getAbstractNodes ()
-   {
-      return abstractNodes;
-   },
-};
-
-export default SupportedNodes;
+export default new ConcreteNodesArray ();

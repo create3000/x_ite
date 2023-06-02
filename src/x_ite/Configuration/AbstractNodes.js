@@ -45,61 +45,6 @@
  *
  ******************************************************************************/
 
-import AbstractNodes        from "../Configuration/AbstractNodes.js";
-import Fields               from "../Fields.js";
-import X3DBaseNode          from "../Base/X3DBaseNode.js";
-import X3DPrototypeInstance from "../Components/Core/X3DPrototypeInstance.js";
-import SFNodeCache          from "../Fields/SFNodeCache.js";
-import X3DConstants         from "../Base/X3DConstants.js";
+import AbstractNodesArray from "./AbstractNodesArray.js"
 
-AbstractNodes .add ("X3DProtoDeclarationNode", X3DProtoDeclarationNode);
-
-function X3DProtoDeclarationNode (executionContext)
-{
-   X3DBaseNode .call (this, executionContext);
-
-   this .addType (X3DConstants .X3DProtoDeclarationNode);
-
-   this .addChildObjects ("updateInstances", new Fields .SFTime ());
-}
-
-X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-{
-   constructor: X3DProtoDeclarationNode,
-   canUserDefinedFields: function ()
-   {
-      return true;
-   },
-   createInstance: function (executionContext, setup = true /* non-public argument */)
-   {
-      if (setup === false)
-      {
-         return new X3DPrototypeInstance (executionContext, this);
-      }
-      else
-      {
-         const instance = new X3DPrototypeInstance (executionContext, this);
-
-         instance .setup ();
-
-         return SFNodeCache .get (instance);
-      }
-   },
-   newInstance: function ()
-   {
-      return this .createInstance (this .getExecutionContext ());
-   },
-   requestUpdateInstances: function ()
-   {
-      this ._updateInstances = this .getBrowser () .getCurrentTime ();
-   },
-   updateInstances: function ()
-   {
-      this ._updateInstances .processEvent ();
-   },
-});
-
-for (const key of Reflect .ownKeys (X3DProtoDeclarationNode .prototype))
-   Object .defineProperty (X3DProtoDeclarationNode .prototype, key, { enumerable: false });
-
-export default X3DProtoDeclarationNode;
+export default new AbstractNodesArray ();

@@ -56,7 +56,8 @@ import ComponentInfo       from "../Configuration/ComponentInfo.js";
 import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
 import SupportedProfiles   from "../Configuration/SupportedProfiles.js";
 import SupportedComponents from "../Configuration/SupportedComponents.js";
-import SupportedNodes      from "../Configuration/SupportedNodes.js";
+import AbstractNodes       from "../Configuration/AbstractNodes.js"
+import ConcreteNodes       from "../Configuration/ConcreteNodes.js"
 import X3DScene            from "../Execution/X3DScene.js";
 import FileLoader          from "../InputOutput/FileLoader.js";
 import XMLParser           from "../Parser/XMLParser.js";
@@ -254,19 +255,19 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    })(),
    getConcreteNode: function (typeName)
    {
-      return SupportedNodes .getConcreteNodes () .get (String (typeName));
+      return ConcreteNodes .get (String (typeName));
    },
    getConcreteNodes: function ()
    {
-      return SupportedNodes .getConcreteNodes ();
+      return ConcreteNodes;
    },
    getAbstractNode: function (typeName)
    {
-      return SupportedNodes .getAbstractNodes () .get (String (typeName));
+      return AbstractNodes .get (String (typeName));
    },
    getAbstractNodes: function ()
    {
-      return SupportedNodes .getAbstractNodes ();
+      return AbstractNodes;
    },
    createScene: function (profile, component1 /*, ...*/)
    {

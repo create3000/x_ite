@@ -45,8 +45,6 @@
  *
  ******************************************************************************/
 
-import X3DBrowserContext    from "./Browser/X3DBrowserContext.js";
-import SupportedNodes       from "./Configuration/SupportedNodes.js";
 import Core                 from "./Components/Core.js";
 import EnvironmentalEffects from "./Components/EnvironmentalEffects.js";
 import EnvironmentalSensor  from "./Components/EnvironmentalSensor.js";
@@ -65,6 +63,9 @@ import Shape                from "./Components/Shape.js";
 import Sound                from "./Components/Sound.js";
 import Texturing            from "./Components/Texturing.js";
 import Time                 from "./Components/Time.js";
+import AbstractNodes        from "./Configuration/AbstractNodes.js"
+import ConcreteNodes        from "./Configuration/ConcreteNodes.js"
+import X3DBrowserContext    from "./Browser/X3DBrowserContext.js";
 import DEVELOPMENT          from "./DEVELOPMENT.js";
 
 let external = false;
@@ -76,13 +77,13 @@ class Components
       if (concreteNodes)
       {
          for (const [typeName, type] of Object .entries (concreteNodes))
-            SupportedNodes .addConcreteNode (typeName, type);
+            ConcreteNodes .add (typeName, type);
       }
 
       if (abstractNodes)
       {
          for (const [typeName, type] of Object .entries (abstractNodes))
-            SupportedNodes .addAbstractNode (typeName, type);
+            AbstractNodes .add (typeName, type);
       }
 
       if (browserContext)

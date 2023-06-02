@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import SupportedNodes          from "../Configuration/SupportedNodes.js";
+import AbstractNodes           from "../Configuration/AbstractNodes.js";
 import Fields                  from "../Fields.js";
 import X3DFieldDefinition      from "../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray    from "../Base/FieldDefinitionArray.js";
@@ -53,7 +53,7 @@ import X3DExecutionContext     from "../Execution/X3DExecutionContext.js";
 import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
 import X3DConstants            from "../Base/X3DConstants.js";
 
-SupportedNodes .addAbstractNode ("X3DProtoDeclaration", X3DProtoDeclaration);
+AbstractNodes .add ("X3DProtoDeclaration", X3DProtoDeclaration);
 
 const
    _body = Symbol ();
