@@ -330,7 +330,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
       const
          target = this [_target],
          values = target .getValue () .splice (index, deleteCount),
-         result = new (target .constructor) (values);
+         result = new (target .constructor) (... values);
 
       for (const value of values)
          target .removeChildObject (value);
