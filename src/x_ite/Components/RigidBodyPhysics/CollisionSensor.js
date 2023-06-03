@@ -253,18 +253,22 @@ Object .defineProperties (CollisionSensor,
    typeName:
    {
       value: "CollisionSensor",
+      enumerate: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -276,6 +280,7 @@ Object .defineProperties (CollisionSensor,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "contacts",      new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "collider",      new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

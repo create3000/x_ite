@@ -164,18 +164,22 @@ Object .defineProperties (Normal,
    typeName:
    {
       value: "Normal",
+      enumerate: true,
    },
    componentName:
    {
       value: "Rendering",
+      enumerate: true,
    },
    containerField:
    {
       value: "normal",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -183,6 +187,7 @@ Object .defineProperties (Normal,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "vector",   new Fields .MFVec3f ()),
       ]),
+      enumerate: true,
    },
 });
 

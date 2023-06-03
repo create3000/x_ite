@@ -150,18 +150,22 @@ Object .defineProperties (NurbsSet,
    typeName:
    {
       value: "NurbsSet",
+      enumerate: true,
    },
    componentName:
    {
       value: "NURBS",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -176,6 +180,7 @@ Object .defineProperties (NurbsSet,
          new X3DFieldDefinition (X3DConstants .inputOnly,      "removeGeometry",    new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",          new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

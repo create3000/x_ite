@@ -263,18 +263,22 @@ Object .defineProperties (CylinderSensor,
    typeName:
    {
       value: "CylinderSensor",
+      enumerate: true,
    },
    componentName:
    {
       value: "PointingDeviceSensor",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -293,6 +297,7 @@ Object .defineProperties (CylinderSensor,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",             new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",           new Fields .SFBool ()),
       ]),
+      enumerate: true,
    },
 });
 

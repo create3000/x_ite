@@ -145,18 +145,22 @@ Object .defineProperties (CollisionSpace,
    typeName:
    {
       value: "CollisionSpace",
+      enumerate: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -170,6 +174,7 @@ Object .defineProperties (CollisionSpace,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "collidables", new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

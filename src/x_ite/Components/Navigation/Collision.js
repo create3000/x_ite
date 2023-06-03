@@ -145,18 +145,22 @@ Object .defineProperties (Collision,
    typeName:
    {
       value: "Collision",
+      enumerate: true,
    },
    componentName:
    {
       value: "Navigation",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -174,6 +178,7 @@ Object .defineProperties (Collision,
          new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

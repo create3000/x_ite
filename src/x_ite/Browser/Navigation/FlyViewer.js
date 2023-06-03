@@ -86,12 +86,14 @@ Object .defineProperties (FlyViewer,
    typeName:
    {
       value: "FlyViewer",
+      enumerate: true,
    },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
       ]),
+      enumerate: true,
    },
 });
 

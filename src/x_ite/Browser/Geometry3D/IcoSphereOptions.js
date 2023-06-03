@@ -108,6 +108,7 @@ Object .defineProperties (IcoSphereOptions,
    typeName:
    {
       value: "IcoSphereOptions",
+      enumerate: true,
    },
 });
 

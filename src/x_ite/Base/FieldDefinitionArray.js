@@ -66,6 +66,7 @@ Object .defineProperties (FieldDefinitionArray,
    typeName:
    {
       value: "FieldDefinitionArray",
+      enumerate: true,
    },
 });
 

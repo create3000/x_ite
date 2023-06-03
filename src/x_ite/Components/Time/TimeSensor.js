@@ -180,18 +180,22 @@ Object .defineProperties (TimeSensor,
    typeName:
    {
       value: "TimeSensor",
+      enumerate: true,
    },
    componentName:
    {
       value: "Time",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -212,6 +216,7 @@ Object .defineProperties (TimeSensor,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "fraction_changed", new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "time",             new Fields .SFTime ()),
       ]),
+      enumerate: true,
    },
 });
 

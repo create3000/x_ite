@@ -280,18 +280,22 @@ Object .defineProperties (Inline,
    typeName:
    {
       value: "Inline",
+      enumerate: true,
    },
    componentName:
    {
       value: "Networking",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -308,6 +312,7 @@ Object .defineProperties (Inline,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",             new Fields .SFVec3f (-1, -1, -1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",           new Fields .SFVec3f ()),
       ]),
+      enumerate: true,
    },
 });
 

@@ -208,18 +208,22 @@ Object .defineProperties (PolylineEmitter,
    typeName:
    {
       value: "PolylineEmitter",
+      enumerate: true,
    },
    componentName:
    {
       value: "ParticleSystems",
+      enumerate: true,
    },
    containerField:
    {
       value: "emitter",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -234,6 +238,7 @@ Object .defineProperties (PolylineEmitter,
          new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",  new Fields .MFInt32 (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "coord",       new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

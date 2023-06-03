@@ -218,18 +218,22 @@ Object .defineProperties (SurfaceEmitter,
    typeName:
    {
       value: "SurfaceEmitter",
+      enumerate: true,
    },
    componentName:
    {
       value: "ParticleSystems",
+      enumerate: true,
    },
    containerField:
    {
       value: "emitter",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -242,6 +246,7 @@ Object .defineProperties (SurfaceEmitter,
          new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "surface",     new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

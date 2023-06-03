@@ -78,18 +78,22 @@ Object .defineProperties (BooleanTrigger,
    typeName:
    {
       value: "BooleanTrigger",
+      enumerate: true,
    },
    componentName:
    {
       value: "EventUtilities",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -98,6 +102,7 @@ Object .defineProperties (BooleanTrigger,
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_triggerTime", new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTrue",     new Fields .SFBool ()),
       ]),
+      enumerate: true,
    },
 });
 

@@ -68,18 +68,22 @@ Object .defineProperties (PeriodicWave,
    typeName:
    {
       value: "PeriodicWave",
+      enumerate: true,
    },
    componentName:
    {
       value: "Sound",
+      enumerate: true,
    },
    containerField:
    {
       value: "periodicWave",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -91,6 +95,7 @@ Object .defineProperties (PeriodicWave,
          new X3DFieldDefinition (X3DConstants .inputOutput, "optionsImag",   new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "type",          new Fields .SFString ("square")),
       ]),
+      enumerate: true,
    },
 });
 

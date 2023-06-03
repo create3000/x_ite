@@ -70,18 +70,22 @@ Object .defineProperties (HAnimDisplacer,
    typeName:
    {
       value: "HAnimDisplacer",
+      enumerate: true,
    },
    componentName:
    {
       value: "HAnim",
+      enumerate: true,
    },
    containerField:
    {
       value: "displacers",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -93,6 +97,7 @@ Object .defineProperties (HAnimDisplacer,
          new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "displacements", new Fields .MFVec3f ()),
       ]),
+      enumerate: true,
    },
 });
 

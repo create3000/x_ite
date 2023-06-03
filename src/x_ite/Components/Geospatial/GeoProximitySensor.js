@@ -123,18 +123,22 @@ Object .defineProperties (GeoProximitySensor,
    typeName:
    {
       value: "GeoProximitySensor",
+      enumerate: true,
    },
    componentName:
    {
       value: "Geospatial",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -153,6 +157,7 @@ Object .defineProperties (GeoProximitySensor,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "orientation_changed",      new Fields .SFRotation ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "centerOfRotation_changed", new Fields .SFVec3f ()),
       ]),
+      enumerate: true,
    },
 });
 

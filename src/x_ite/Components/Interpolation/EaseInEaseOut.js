@@ -117,18 +117,22 @@ Object .defineProperties (EaseInEaseOut,
    typeName:
    {
       value: "EaseInEaseOut",
+      enumerate: true,
    },
    componentName:
    {
       value: "Interpolation",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -139,6 +143,7 @@ Object .defineProperties (EaseInEaseOut,
          new X3DFieldDefinition (X3DConstants .inputOutput, "easeInEaseOut",            new Fields .MFVec2f ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "modifiedFraction_changed", new Fields .SFFloat ()),
       ]),
+      enumerate: true,
    },
 });
 

@@ -72,18 +72,22 @@ Object .defineProperties (URLAnnotation,
    typeName:
    {
       value: "URLAnnotation",
+      enumerate: true,
    },
    componentName:
    {
       value: "Annotation",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -94,6 +98,7 @@ Object .defineProperties (URLAnnotation,
          new X3DFieldDefinition (X3DConstants .inputOutput, "displayPolicy",     new Fields .SFString ("NEVER")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "url",               new Fields .MFString ()),
       ]),
+      enumerate: true,
    },
 });
 

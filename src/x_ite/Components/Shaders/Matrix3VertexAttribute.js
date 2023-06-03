@@ -112,18 +112,22 @@ Object .defineProperties (Matrix3VertexAttribute,
    typeName:
    {
       value: "Matrix3VertexAttribute",
+      enumerate: true,
    },
    componentName:
    {
       value: "Shaders",
+      enumerate: true,
    },
    containerField:
    {
       value: "attrib",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -132,6 +136,7 @@ Object .defineProperties (Matrix3VertexAttribute,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "name",     new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "value",    new Fields .MFMatrix3f ()),
       ]),
+      enumerate: true,
    },
 });
 

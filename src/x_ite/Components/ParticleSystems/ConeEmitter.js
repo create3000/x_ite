@@ -126,18 +126,22 @@ Object .defineProperties (ConeEmitter,
    typeName:
    {
       value: "ConeEmitter",
+      enumerate: true,
    },
    componentName:
    {
       value: "ParticleSystems",
+      enumerate: true,
    },
    containerField:
    {
       value: "emitter",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -152,6 +156,7 @@ Object .defineProperties (ConeEmitter,
          new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
       ]),
+      enumerate: true,
    },
 });
 

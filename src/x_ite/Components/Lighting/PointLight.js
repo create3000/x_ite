@@ -302,18 +302,22 @@ Object .defineProperties (PointLight,
    typeName:
    {
       value: "PointLight",
+      enumerate: true,
    },
    componentName:
    {
       value: "Lighting",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -334,6 +338,7 @@ Object .defineProperties (PointLight,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
          new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
       ]),
+      enumerate: true,
    },
 });
 

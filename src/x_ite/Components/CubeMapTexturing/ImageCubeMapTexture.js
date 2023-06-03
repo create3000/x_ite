@@ -244,18 +244,22 @@ Object .defineProperties (ImageCubeMapTexture,
    typeName:
    {
       value: "ImageCubeMapTexture",
+      enumerate: true,
    },
    componentName:
    {
       value: "CubeMapTexturing",
+      enumerate: true,
    },
    containerField:
    {
       value: "texture",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -268,6 +272,7 @@ Object .defineProperties (ImageCubeMapTexture,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

@@ -280,6 +280,7 @@ Object .defineProperties (BrowserTimings,
    typeName:
    {
       value: "BrowserTimings",
+      enumerate: true,
    },
 });
 

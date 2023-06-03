@@ -318,18 +318,22 @@ Object .defineProperties (BlendedVolumeStyle,
    typeName:
    {
       value: "BlendedVolumeStyle",
+      enumerate: true,
    },
    componentName:
    {
       value: "VolumeRendering",
+      enumerate: true,
    },
    containerField:
    {
       value: "renderStyle",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -345,6 +349,7 @@ Object .defineProperties (BlendedVolumeStyle,
          new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "voxels",                  new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

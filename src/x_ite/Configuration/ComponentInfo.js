@@ -131,6 +131,7 @@ Object .defineProperties (ComponentInfo,
    typeName:
    {
       value: "ComponentInfo",
+      enumerate: true,
    },
 });
 

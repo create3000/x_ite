@@ -81,18 +81,22 @@ Object .defineProperties (DISEntityTypeMapping,
    typeName:
    {
       value: "DISEntityTypeMapping",
+      enumerate: true,
    },
    componentName:
    {
       value: "DIS",
+      enumerate: true,
    },
    containerField:
    {
       value: "mapping",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -110,6 +114,7 @@ Object .defineProperties (DISEntityTypeMapping,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "specific",             new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "subcategory",          new Fields .SFInt32 ()),
       ]),
+      enumerate: true,
    },
 });
 

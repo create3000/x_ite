@@ -66,6 +66,7 @@ Object .defineProperties (FieldArray,
    typeName:
    {
       value: "FieldArray",
+      enumerate: true,
    },
 });
 

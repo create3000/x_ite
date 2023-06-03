@@ -194,18 +194,22 @@ Object .defineProperties (ArcClose2D,
    typeName:
    {
       value: "ArcClose2D",
+      enumerate: true,
    },
    componentName:
    {
       value: "Geometry2D",
+      enumerate: true,
    },
    containerField:
    {
       value: "geometry",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -217,6 +221,7 @@ Object .defineProperties (ArcClose2D,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",      new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
       ]),
+      enumerate: true,
    },
 });
 

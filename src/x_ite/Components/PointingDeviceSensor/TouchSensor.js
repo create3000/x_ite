@@ -70,18 +70,22 @@ Object .defineProperties (TouchSensor,
    typeName:
    {
       value: "TouchSensor",
+      enumerate: true,
    },
    componentName:
    {
       value: "PointingDeviceSensor",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -96,6 +100,7 @@ Object .defineProperties (TouchSensor,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",            new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "touchTime",           new Fields .SFTime ()),
       ]),
+      enumerate: true,
    },
 });
 

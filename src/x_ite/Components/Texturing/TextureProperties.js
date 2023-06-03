@@ -187,18 +187,22 @@ Object .defineProperties (TextureProperties,
    typeName:
    {
       value: "TextureProperties",
+      enumerate: true,
    },
    componentName:
    {
       value: "Texturing",
+      enumerate: true,
    },
    containerField:
    {
       value: "textureProperties",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -216,6 +220,7 @@ Object .defineProperties (TextureProperties,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "textureCompression",  new Fields .SFString ("FASTEST")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "texturePriority",     new Fields .SFFloat ()),
       ]),
+      enumerate: true,
    },
 });
 

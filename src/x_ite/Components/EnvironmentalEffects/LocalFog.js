@@ -97,18 +97,22 @@ Object .defineProperties (LocalFog,
    typeName:
    {
       value: "LocalFog",
+      enumerate: true,
    },
    componentName:
    {
       value: "EnvironmentalEffects",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -119,6 +123,7 @@ Object .defineProperties (LocalFog,
          new X3DFieldDefinition (X3DConstants .inputOutput, "color",           new Fields .SFColor (1, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityRange", new Fields .SFFloat ()),
       ]),
+      enumerate: true,
    },
 });
 

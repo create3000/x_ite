@@ -76,18 +76,22 @@ Object .defineProperties (EspduTransform,
    typeName:
    {
       value: "EspduTransform",
+      enumerate: true,
    },
    componentName:
    {
       value: "DIS",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -184,6 +188,7 @@ Object .defineProperties (EspduTransform,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "timestamp",                                  new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "rtpHeaderExpected",                          new Fields .SFBool ()),
       ]),
+      enumerate: true,
    },
 });
 

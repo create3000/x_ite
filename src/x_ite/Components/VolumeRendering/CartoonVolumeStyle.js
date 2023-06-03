@@ -278,18 +278,22 @@ Object .defineProperties (CartoonVolumeStyle,
    typeName:
    {
       value: "CartoonVolumeStyle",
+      enumerate: true,
    },
    componentName:
    {
       value: "VolumeRendering",
+      enumerate: true,
    },
    containerField:
    {
       value: "renderStyle",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -301,6 +305,7 @@ Object .defineProperties (CartoonVolumeStyle,
          new X3DFieldDefinition (X3DConstants .inputOutput, "parallelColor",   new Fields .SFColorRGBA (0, 0, 0, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceNormals",  new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

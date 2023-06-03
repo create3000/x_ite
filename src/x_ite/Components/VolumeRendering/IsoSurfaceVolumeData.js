@@ -327,18 +327,22 @@ Object .defineProperties (IsoSurfaceVolumeData,
    typeName:
    {
       value: "IsoSurfaceVolumeData",
+      enumerate: true,
    },
    componentName:
    {
       value: "VolumeRendering",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -356,6 +360,7 @@ Object .defineProperties (IsoSurfaceVolumeData,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "gradients",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "voxels",           new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

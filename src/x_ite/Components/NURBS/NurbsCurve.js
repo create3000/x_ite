@@ -200,18 +200,22 @@ Object .defineProperties (NurbsCurve,
    typeName:
    {
       value: "NurbsCurve",
+      enumerate: true,
    },
    componentName:
    {
       value: "NURBS",
+      enumerate: true,
    },
    containerField:
    {
       value: "geometry",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -224,6 +228,7 @@ Object .defineProperties (NurbsCurve,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

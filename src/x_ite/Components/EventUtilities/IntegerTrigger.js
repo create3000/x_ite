@@ -78,18 +78,22 @@ Object .defineProperties (IntegerTrigger,
    typeName:
    {
       value: "IntegerTrigger",
+      enumerate: true,
    },
    componentName:
    {
       value: "EventUtilities",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -99,6 +103,7 @@ Object .defineProperties (IntegerTrigger,
          new X3DFieldDefinition (X3DConstants .inputOutput, "integerKey",   new Fields .SFInt32 (-1)),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerValue", new Fields .SFInt32 ()),
       ]),
+      enumerate: true,
    },
 });
 

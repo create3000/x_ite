@@ -73,18 +73,22 @@ Object .defineProperties (PositionDamper,
    typeName:
    {
       value: "PositionDamper",
+      enumerate: true,
    },
    componentName:
    {
       value: "Followers",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -100,6 +104,7 @@ Object .defineProperties (PositionDamper,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
       ]),
+      enumerate: true,
    },
 });
 

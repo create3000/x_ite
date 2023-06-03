@@ -149,18 +149,22 @@ Object .defineProperties (Text,
    typeName:
    {
       value: "Text",
+      enumerate: true,
    },
    componentName:
    {
       value: "Text",
+      enumerate: true,
    },
    containerField:
    {
       value: "geometry",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -175,6 +179,7 @@ Object .defineProperties (Text,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "lineBounds", new Fields .MFVec2f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "fontStyle",  new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

@@ -314,18 +314,22 @@ Object .defineProperties (OrthoViewpoint,
    typeName:
    {
       value: "OrthoViewpoint",
+      enumerate: true,
    },
    componentName:
    {
       value: "Navigation",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -346,6 +350,7 @@ Object .defineProperties (OrthoViewpoint,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "navigationInfo",    new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

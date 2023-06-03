@@ -362,18 +362,22 @@ Object .defineProperties (Material,
    typeName:
    {
       value: "Material",
+      enumerate: true,
    },
    componentName:
    {
       value: "Shape",
+      enumerate: true,
    },
    containerField:
    {
       value: "material",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -402,6 +406,7 @@ Object .defineProperties (Material,
          new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",            new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",             new Fields .SFFloat ()),
       ]),
+      enumerate: true,
    },
 });
 

@@ -125,18 +125,22 @@ Object .defineProperties (MultiTextureTransform,
    typeName:
    {
       value: "MultiTextureTransform",
+      enumerate: true,
    },
    componentName:
    {
       value: "Texturing",
+      enumerate: true,
    },
    containerField:
    {
       value: "textureTransform",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -144,6 +148,7 @@ Object .defineProperties (MultiTextureTransform,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

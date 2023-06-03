@@ -149,18 +149,22 @@ Object .defineProperties (NurbsSwungSurface,
    typeName:
    {
       value: "NurbsSwungSurface",
+      enumerate: true,
    },
    componentName:
    {
       value: "NURBS",
+      enumerate: true,
    },
    containerField:
    {
       value: "geometry",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -171,6 +175,7 @@ Object .defineProperties (NurbsSwungSurface,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "profileCurve",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "trajectoryCurve", new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

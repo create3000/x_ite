@@ -76,18 +76,22 @@ Object .defineProperties (Contact,
    typeName:
    {
       value: "Contact",
+      enumerate: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -110,6 +114,7 @@ Object .defineProperties (Contact,
          new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                    new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

@@ -82,18 +82,22 @@ Object .defineProperties (Polyline2D,
    typeName:
    {
       value: "Polyline2D",
+      enumerate: true,
    },
    componentName:
    {
       value: "Geometry2D",
+      enumerate: true,
    },
    containerField:
    {
       value: "geometry",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -101,6 +105,7 @@ Object .defineProperties (Polyline2D,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "lineSegments", new Fields .MFVec2f ()),
       ]),
+      enumerate: true,
    },
 });
 

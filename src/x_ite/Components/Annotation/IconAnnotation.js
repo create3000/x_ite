@@ -83,18 +83,22 @@ Object .defineProperties (IconAnnotation,
    typeName:
    {
       value: "IconAnnotation",
+      enumerate: true,
    },
    componentName:
    {
       value: "Annotation",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -107,6 +111,7 @@ Object .defineProperties (IconAnnotation,
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
       ]),
+      enumerate: true,
    },
 });
 

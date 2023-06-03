@@ -205,18 +205,22 @@ Object .defineProperties (ImageTextureAtlas,
    typeName:
    {
       value: "ImageTextureAtlas",
+      enumerate: true,
    },
    componentName:
    {
       value: "Texturing3D",
+      enumerate: true,
    },
    containerField:
    {
       value: "texture",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -235,6 +239,7 @@ Object .defineProperties (ImageTextureAtlas,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",              new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

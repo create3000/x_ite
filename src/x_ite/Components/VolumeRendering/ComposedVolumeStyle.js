@@ -174,18 +174,22 @@ Object .defineProperties (ComposedVolumeStyle,
    typeName:
    {
       value: "ComposedVolumeStyle",
+      enumerate: true,
    },
    componentName:
    {
       value: "VolumeRendering",
+      enumerate: true,
    },
    containerField:
    {
       value: "renderStyle",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -194,6 +198,7 @@ Object .defineProperties (ComposedVolumeStyle,
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle", new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

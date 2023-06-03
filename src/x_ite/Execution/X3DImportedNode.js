@@ -559,6 +559,7 @@ Object .defineProperties (X3DImportedNode,
    typeName:
    {
       value: "X3DImportedNode",
+      enumerate: true,
    },
 });
 

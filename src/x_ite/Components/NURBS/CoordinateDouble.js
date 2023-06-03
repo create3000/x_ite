@@ -68,18 +68,22 @@ Object .defineProperties (CoordinateDouble,
    typeName:
    {
       value: "CoordinateDouble",
+      enumerate: true,
    },
    componentName:
    {
       value: "NURBS",
+      enumerate: true,
    },
    containerField:
    {
       value: "coord",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -87,6 +91,7 @@ Object .defineProperties (CoordinateDouble,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3d ()),
       ]),
+      enumerate: true,
    },
 });
 

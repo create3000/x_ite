@@ -360,18 +360,22 @@ Object .defineProperties (HAnimHumanoid,
    typeName:
    {
       value: "HAnimHumanoid",
+      enumerate: true,
    },
    componentName:
    {
       value: "HAnim",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -408,6 +412,7 @@ Object .defineProperties (HAnimHumanoid,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "skinCoord",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "skin",                  new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

@@ -917,6 +917,7 @@ Object .defineProperties (X3DBrowser,
    typeName:
    {
       value: "X3DBrowser",
+      enumerate: true,
    },
 });
 

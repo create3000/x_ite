@@ -477,18 +477,22 @@ Object .defineProperties (Script,
    typeName:
    {
       value: "Script",
+      enumerate: true,
    },
    componentName:
    {
       value: "Scripting",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -502,6 +506,7 @@ Object .defineProperties (Script,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "directOutput",         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "mustEvaluate",         new Fields .SFBool ()),
       ]),
+      enumerate: true,
    },
 });
 

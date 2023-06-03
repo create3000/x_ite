@@ -81,18 +81,22 @@ Object .defineProperties (MetadataInteger,
    typeName:
    {
       value: "MetadataInteger",
+      enumerate: true,
    },
    componentName:
    {
       value: "Core",
+      enumerate: true,
    },
    containerField:
    {
       value: "metadata",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -102,6 +106,7 @@ Object .defineProperties (MetadataInteger,
          new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "value",     new Fields .MFInt32 ()),
       ]),
+      enumerate: true,
    },
 });
 

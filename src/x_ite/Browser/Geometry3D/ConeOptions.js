@@ -66,6 +66,7 @@ Object .defineProperties (ConeOptions,
    typeName:
    {
       value: "ConeOptions",
+      enumerate: true,
    },
 });
 

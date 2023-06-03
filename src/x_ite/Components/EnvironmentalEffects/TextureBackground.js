@@ -91,18 +91,22 @@ Object .defineProperties (TextureBackground,
    typeName:
    {
       value: "TextureBackground",
+      enumerate: true,
    },
    componentName:
    {
       value: "EnvironmentalEffects",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -123,6 +127,7 @@ Object .defineProperties (TextureBackground,
          new X3DFieldDefinition (X3DConstants .inputOutput, "topTexture",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "bottomTexture", new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

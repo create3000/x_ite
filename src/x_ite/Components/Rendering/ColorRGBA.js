@@ -137,18 +137,22 @@ Object .defineProperties (ColorRGBA,
    typeName:
    {
       value: "ColorRGBA",
+      enumerate: true,
    },
    componentName:
    {
       value: "Rendering",
+      enumerate: true,
    },
    containerField:
    {
       value: "color",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -156,6 +160,7 @@ Object .defineProperties (ColorRGBA,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .MFColorRGBA ()),
       ]),
+      enumerate: true,
    },
 });
 

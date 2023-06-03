@@ -242,18 +242,22 @@ Object .defineProperties (SegmentedVolumeData,
    typeName:
    {
       value: "SegmentedVolumeData",
+      enumerate: true,
    },
    componentName:
    {
       value: "VolumeRendering",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -269,6 +273,7 @@ Object .defineProperties (SegmentedVolumeData,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle",        new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "voxels",             new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

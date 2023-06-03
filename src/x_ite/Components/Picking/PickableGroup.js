@@ -186,18 +186,22 @@ Object .defineProperties (PickableGroup,
    typeName:
    {
       value: "PickableGroup",
+      enumerate: true,
    },
    componentName:
    {
       value: "Picking",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -213,6 +217,7 @@ Object .defineProperties (PickableGroup,
          new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

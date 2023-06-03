@@ -230,18 +230,22 @@ Object .defineProperties (LoadSensor,
    typeName:
    {
       value: "LoadSensor",
+      enumerate: true,
    },
    componentName:
    {
       value: "Networking",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -255,6 +259,7 @@ Object .defineProperties (LoadSensor,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "loadTime", new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "children", new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

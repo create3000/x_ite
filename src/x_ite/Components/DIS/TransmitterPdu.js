@@ -81,18 +81,22 @@ Object .defineProperties (TransmitterPdu,
    typeName:
    {
       value: "TransmitterPdu",
+      enumerate: true,
    },
    componentName:
    {
       value: "DIS",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -145,6 +149,7 @@ Object .defineProperties (TransmitterPdu,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isStandAlone",                       new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "timestamp",                          new Fields .SFTime ()),
       ]),
+      enumerate: true,
    },
 });
 

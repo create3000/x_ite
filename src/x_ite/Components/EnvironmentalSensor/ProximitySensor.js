@@ -243,18 +243,22 @@ Object .defineProperties (ProximitySensor,
    typeName:
    {
       value: "ProximitySensor",
+      enumerate: true,
    },
    componentName:
    {
       value: "EnvironmentalSensor",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -270,6 +274,7 @@ Object .defineProperties (ProximitySensor,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "orientation_changed",      new Fields .SFRotation ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "centerOfRotation_changed", new Fields .SFVec3f ()),
       ]),
+      enumerate: true,
    },
 });
 

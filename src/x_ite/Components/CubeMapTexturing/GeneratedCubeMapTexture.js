@@ -263,18 +263,22 @@ Object .defineProperties (GeneratedCubeMapTexture,
    typeName:
    {
       value: "GeneratedCubeMapTexture",
+      enumerate: true,
    },
    componentName:
    {
       value: "CubeMapTexturing",
+      enumerate: true,
    },
    containerField:
    {
       value: "texture",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -285,6 +289,7 @@ Object .defineProperties (GeneratedCubeMapTexture,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "size",              new Fields .SFInt32 (128)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

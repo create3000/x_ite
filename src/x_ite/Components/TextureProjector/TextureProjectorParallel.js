@@ -230,18 +230,22 @@ Object .defineProperties (TextureProjectorParallel,
    typeName:
    {
       value: "TextureProjectorParallel",
+      enumerate: true,
    },
    componentName:
    {
       value: "TextureProjector",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -259,6 +263,7 @@ Object .defineProperties (TextureProjectorParallel,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "aspectRatio",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "texture",      new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

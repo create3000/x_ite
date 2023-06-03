@@ -92,18 +92,22 @@ Object .defineProperties (PackagedShader,
    typeName:
    {
       value: "PackagedShader",
+      enumerate: true,
    },
    componentName:
    {
       value: "Shaders",
+      enumerate: true,
    },
    containerField:
    {
       value: "shaders",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -119,6 +123,7 @@ Object .defineProperties (PackagedShader,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
       ]),
+      enumerate: true,
    },
 });
 

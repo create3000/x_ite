@@ -112,18 +112,22 @@ Object .defineProperties (TriangleSet2D,
    typeName:
    {
       value: "TriangleSet2D",
+      enumerate: true,
    },
    componentName:
    {
       value: "Geometry2D",
+      enumerate: true,
    },
    containerField:
    {
       value: "geometry",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -132,6 +136,7 @@ Object .defineProperties (TriangleSet2D,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "vertices", new Fields .MFVec2f ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
       ]),
+      enumerate: true,
    },
 });
 

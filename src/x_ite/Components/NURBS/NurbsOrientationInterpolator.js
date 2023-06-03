@@ -195,18 +195,22 @@ Object .defineProperties (NurbsOrientationInterpolator,
    typeName:
    {
       value: "NurbsOrientationInterpolator",
+      enumerate: true,
    },
    componentName:
    {
       value: "NURBS",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -219,6 +223,7 @@ Object .defineProperties (NurbsOrientationInterpolator,
          new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
       ]),
+      enumerate: true,
    },
 });
 

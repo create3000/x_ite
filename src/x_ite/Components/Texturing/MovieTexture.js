@@ -238,18 +238,22 @@ Object .defineProperties (MovieTexture,
    typeName:
    {
       value: "MovieTexture",
+      enumerate: true,
    },
    componentName:
    {
       value: "Texturing",
+      enumerate: true,
    },
    containerField:
    {
       value: "texture",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -277,6 +281,7 @@ Object .defineProperties (MovieTexture,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

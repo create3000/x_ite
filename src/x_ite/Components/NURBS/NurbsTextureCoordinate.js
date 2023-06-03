@@ -120,18 +120,22 @@ Object .defineProperties (NurbsTextureCoordinate,
    typeName:
    {
       value: "NurbsTextureCoordinate",
+      enumerate: true,
    },
    componentName:
    {
       value: "NURBS",
+      enumerate: true,
    },
    containerField:
    {
       value: "texCoord",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -146,6 +150,7 @@ Object .defineProperties (NurbsTextureCoordinate,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .MFVec2f ()),
       ]),
+      enumerate: true,
    },
 });
 

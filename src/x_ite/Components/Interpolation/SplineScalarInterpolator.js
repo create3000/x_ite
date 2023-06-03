@@ -112,18 +112,22 @@ Object .defineProperties (SplineScalarInterpolator,
    typeName:
    {
       value: "SplineScalarInterpolator",
+      enumerate: true,
    },
    componentName:
    {
       value: "Interpolation",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -137,6 +141,7 @@ Object .defineProperties (SplineScalarInterpolator,
          new X3DFieldDefinition (X3DConstants .inputOutput, "normalizeVelocity", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed",     new Fields .SFFloat ()),
       ]),
+      enumerate: true,
    },
 });
 

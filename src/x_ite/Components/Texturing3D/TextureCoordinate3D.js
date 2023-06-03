@@ -149,18 +149,22 @@ Object .defineProperties (TextureCoordinate3D,
    typeName:
    {
       value: "TextureCoordinate3D",
+      enumerate: true,
    },
    componentName:
    {
       value: "Texturing3D",
+      enumerate: true,
    },
    containerField:
    {
       value: "texCoord",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -169,6 +173,7 @@ Object .defineProperties (TextureCoordinate3D,
          new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
       ]),
+      enumerate: true,
    },
 });
 

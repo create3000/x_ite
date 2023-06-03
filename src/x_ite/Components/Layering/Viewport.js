@@ -144,18 +144,22 @@ Object .defineProperties (Viewport,
    typeName:
    {
       value: "Viewport",
+      enumerate: true,
    },
    componentName:
    {
       value: "Layering",
+      enumerate: true,
    },
    containerField:
    {
       value: "viewport",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -170,6 +174,7 @@ Object .defineProperties (Viewport,
          new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

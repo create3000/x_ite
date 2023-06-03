@@ -1023,6 +1023,7 @@ Object .defineProperties (X3DExecutionContext,
    typeName:
    {
       value: "X3DExecutionContext",
+      enumerate: true,
    },
 });
 

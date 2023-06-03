@@ -83,18 +83,22 @@ Object .defineProperties (GeoMetadata,
    typeName:
    {
       value: "GeoMetadata",
+      enumerate: true,
    },
    componentName:
    {
       value: "Geospatial",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -107,6 +111,7 @@ Object .defineProperties (GeoMetadata,
          new X3DFieldDefinition (X3DConstants .inputOutput, "summary",              new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "data",                 new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

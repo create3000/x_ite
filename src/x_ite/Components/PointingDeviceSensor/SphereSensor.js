@@ -184,18 +184,22 @@ Object .defineProperties (SphereSensor,
    typeName:
    {
       value: "SphereSensor",
+      enumerate: true,
    },
    componentName:
    {
       value: "PointingDeviceSensor",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -210,6 +214,7 @@ Object .defineProperties (SphereSensor,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",             new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",           new Fields .SFBool ()),
       ]),
+      enumerate: true,
    },
 });
 

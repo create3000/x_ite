@@ -79,18 +79,22 @@ Object .defineProperties (BooleanToggle,
    typeName:
    {
       value: "BooleanToggle",
+      enumerate: true,
    },
    componentName:
    {
       value: "EventUtilities",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -99,6 +103,7 @@ Object .defineProperties (BooleanToggle,
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "toggle",      new Fields .SFBool ()),
       ]),
+      enumerate: true,
    },
 });
 

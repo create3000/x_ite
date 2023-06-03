@@ -170,18 +170,22 @@ Object .defineProperties (Shape,
    typeName:
    {
       value: "Shape",
+      enumerate: true,
    },
    componentName:
    {
       value: "Shape",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -195,6 +199,7 @@ Object .defineProperties (Shape,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",    new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

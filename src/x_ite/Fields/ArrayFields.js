@@ -420,6 +420,7 @@ Object .defineProperties (MFNode,
    typeName:
    {
       value: "MFNode",
+      enumerate: true,
    },
 });
 
@@ -485,6 +486,7 @@ Object .defineProperties (MFString,
    typeName:
    {
       value: "MFString",
+      enumerate: true,
    },
 });
 
@@ -532,6 +534,7 @@ function MFImageTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Comp
       typeName:
       {
          value: TypeName,
+         enumerate: true,
       },
    });
 
@@ -578,6 +581,7 @@ function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, C
       typeName:
       {
          value: TypeName,
+         enumerate: true,
       },
    });
 

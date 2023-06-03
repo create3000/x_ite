@@ -280,6 +280,7 @@ Object .defineProperties (QuadSphereOptions,
    typeName:
    {
       value: "QuadSphereOptions",
+      enumerate: true,
    },
 });
 

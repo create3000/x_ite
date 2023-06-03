@@ -559,12 +559,14 @@ Object .defineProperties (X3DProtoDeclaration,
    typeName:
    {
       value: "X3DProtoDeclaration",
+      enumerate: true,
    },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

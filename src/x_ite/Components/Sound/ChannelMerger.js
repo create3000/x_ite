@@ -68,18 +68,22 @@ Object .defineProperties (ChannelMerger,
    typeName:
    {
       value: "ChannelMerger",
+      enumerate: true,
    },
    componentName:
    {
       value: "Sound",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -96,6 +100,7 @@ Object .defineProperties (ChannelMerger,
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "children",              new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

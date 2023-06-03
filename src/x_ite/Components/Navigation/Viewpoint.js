@@ -158,18 +158,22 @@ Object .defineProperties (Viewpoint,
    typeName:
    {
       value: "Viewpoint",
+      enumerate: true,
    },
    componentName:
    {
       value: "Navigation",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -190,6 +194,7 @@ Object .defineProperties (Viewpoint,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "navigationInfo",    new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

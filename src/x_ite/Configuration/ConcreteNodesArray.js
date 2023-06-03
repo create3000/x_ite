@@ -83,6 +83,7 @@ Object .defineProperties (ConcreteNodesArray,
    typeName:
    {
       value: "ConcreteNodesArray",
+      enumerate: true,
    },
 });
 

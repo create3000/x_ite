@@ -70,18 +70,22 @@ Object .defineProperties (Coordinate,
    typeName:
    {
       value: "Coordinate",
+      enumerate: true,
    },
    componentName:
    {
       value: "Rendering",
+      enumerate: true,
    },
    containerField:
    {
       value: "coord",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -89,6 +93,7 @@ Object .defineProperties (Coordinate,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
       ]),
+      enumerate: true,
    },
 });
 

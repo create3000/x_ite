@@ -192,6 +192,7 @@ Object .defineProperties (SFColorRGBA,
    typeName:
    {
       value: "SFColorRGBA",
+      enumerate: true,
    },
 });
 

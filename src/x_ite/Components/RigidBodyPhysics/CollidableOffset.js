@@ -225,18 +225,22 @@ Object .defineProperties (CollidableOffset,
    typeName:
    {
       value: "CollidableOffset",
+      enumerate: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -251,6 +255,7 @@ Object .defineProperties (CollidableOffset,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "collidable",  new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

@@ -66,6 +66,7 @@ Object .defineProperties (CylinderOptions,
    typeName:
    {
       value: "CylinderOptions",
+      enumerate: true,
    },
 });
 

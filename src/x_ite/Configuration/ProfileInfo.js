@@ -86,6 +86,7 @@ Object .defineProperties (ProfileInfo,
    typeName:
    {
       value: "ProfileInfo",
+      enumerate: true,
    },
 });
 

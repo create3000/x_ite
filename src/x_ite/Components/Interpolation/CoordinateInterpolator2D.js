@@ -97,18 +97,22 @@ Object .defineProperties (CoordinateInterpolator2D,
    typeName:
    {
       value: "CoordinateInterpolator2D",
+      enumerate: true,
    },
    componentName:
    {
       value: "Interpolation",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -119,6 +123,7 @@ Object .defineProperties (CoordinateInterpolator2D,
          new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec2f ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .MFVec2f ()),
       ]),
+      enumerate: true,
    },
 });
 

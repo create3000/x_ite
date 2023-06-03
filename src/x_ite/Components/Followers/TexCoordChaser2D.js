@@ -78,18 +78,22 @@ Object .defineProperties (TexCoordChaser2D,
    typeName:
    {
       value: "TexCoordChaser2D",
+      enumerate: true,
    },
    componentName:
    {
       value: "Followers",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -103,6 +107,7 @@ Object .defineProperties (TexCoordChaser2D,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .MFVec2f ()),
       ]),
+      enumerate: true,
    },
 });
 

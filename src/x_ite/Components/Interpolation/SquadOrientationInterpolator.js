@@ -104,18 +104,22 @@ Object .defineProperties (SquadOrientationInterpolator,
    typeName:
    {
       value: "SquadOrientationInterpolator",
+      enumerate: true,
    },
    componentName:
    {
       value: "Interpolation",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -127,6 +131,7 @@ Object .defineProperties (SquadOrientationInterpolator,
          new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
       ]),
+      enumerate: true,
    },
 });
 

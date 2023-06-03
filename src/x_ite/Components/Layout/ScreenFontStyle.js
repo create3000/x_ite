@@ -83,18 +83,22 @@ Object .defineProperties (ScreenFontStyle,
    typeName:
    {
       value: "ScreenFontStyle",
+      enumerate: true,
    },
    componentName:
    {
       value: "Layout",
+      enumerate: true,
    },
    containerField:
    {
       value: "fontStyle",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -110,6 +114,7 @@ Object .defineProperties (ScreenFontStyle,
          new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
       ]),
+      enumerate: true,
    },
 });
 

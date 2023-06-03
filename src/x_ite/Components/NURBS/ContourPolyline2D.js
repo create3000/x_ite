@@ -136,18 +136,22 @@ Object .defineProperties (ContourPolyline2D,
    typeName:
    {
       value: "ContourPolyline2D",
+      enumerate: true,
    },
    componentName:
    {
       value: "NURBS",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -155,6 +159,7 @@ Object .defineProperties (ContourPolyline2D,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint", new Fields .MFVec2d ()),
       ]),
+      enumerate: true,
    },
 });
 

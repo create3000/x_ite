@@ -101,18 +101,22 @@ Object .defineProperties (Circle2D,
    typeName:
    {
       value: "Circle2D",
+      enumerate: true,
    },
    componentName:
    {
       value: "Geometry2D",
+      enumerate: true,
    },
    containerField:
    {
       value: "geometry",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -120,6 +124,7 @@ Object .defineProperties (Circle2D,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
       ]),
+      enumerate: true,
    },
 });
 

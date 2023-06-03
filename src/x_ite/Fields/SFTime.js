@@ -103,6 +103,7 @@ Object .defineProperties (SFTime,
    typeName:
    {
       value: "SFTime",
+      enumerate: true,
    },
 });
 

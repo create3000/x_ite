@@ -70,6 +70,7 @@ Object .defineProperties (ComponentInfoArray,
    typeName:
    {
       value: "ComponentInfoArray",
+      enumerate: true,
    },
 });
 

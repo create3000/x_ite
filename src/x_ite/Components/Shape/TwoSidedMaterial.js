@@ -251,18 +251,22 @@ Object .defineProperties (TwoSidedMaterial,
    typeName:
    {
       value: "TwoSidedMaterial",
+      enumerate: true,
    },
    componentName:
    {
       value: "Shape",
+      enumerate: true,
    },
    containerField:
    {
       value: "material",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -282,6 +286,7 @@ Object .defineProperties (TwoSidedMaterial,
          new X3DFieldDefinition (X3DConstants .inputOutput, "backShininess",        new Fields .SFFloat (0.2)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "backTransparency",     new Fields .SFFloat ()),
       ]),
+      enumerate: true,
    },
 });
 

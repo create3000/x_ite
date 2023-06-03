@@ -95,18 +95,22 @@ Object .defineProperties (QuadSet,
    typeName:
    {
       value: "QuadSet",
+      enumerate: true,
    },
    componentName:
    {
       value: "CADGeometry",
+      enumerate: true,
    },
    containerField:
    {
       value: "geometry",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -123,6 +127,7 @@ Object .defineProperties (QuadSet,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

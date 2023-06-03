@@ -384,18 +384,22 @@ Object .defineProperties (GeoElevationGrid,
    typeName:
    {
       value: "GeoElevationGrid",
+      enumerate: true,
    },
    componentName:
    {
       value: "Geospatial",
+      enumerate: true,
    },
    containerField:
    {
       value: "geometry",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -419,6 +423,7 @@ Object .defineProperties (GeoElevationGrid,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "height",          new Fields .MFDouble (0, 0)),
       ]),
+      enumerate: true,
    },
 });
 

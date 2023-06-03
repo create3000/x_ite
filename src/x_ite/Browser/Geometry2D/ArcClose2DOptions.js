@@ -65,6 +65,7 @@ Object .defineProperties (ArcClose2DOptions,
    typeName:
    {
       value: "ArcClose2DOptions",
+      enumerate: true,
    },
 });
 

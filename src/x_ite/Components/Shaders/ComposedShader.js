@@ -195,18 +195,22 @@ Object .defineProperties (ComposedShader,
    typeName:
    {
       value: "ComposedShader",
+      enumerate: true,
    },
    componentName:
    {
       value: "Shaders",
+      enumerate: true,
    },
    containerField:
    {
       value: "shaders",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -218,6 +222,7 @@ Object .defineProperties (ComposedShader,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "language",   new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "parts",      new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

@@ -126,18 +126,22 @@ Object .defineProperties (NormalInterpolator,
    typeName:
    {
       value: "NormalInterpolator",
+      enumerate: true,
    },
    componentName:
    {
       value: "Interpolation",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -148,6 +152,7 @@ Object .defineProperties (NormalInterpolator,
          new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .MFVec3f ()),
       ]),
+      enumerate: true,
    },
 });
 

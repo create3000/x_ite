@@ -345,18 +345,22 @@ Object .defineProperties (RigidBodyCollection,
    typeName:
    {
       value: "RigidBodyCollection",
+      enumerate: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -379,6 +383,7 @@ Object .defineProperties (RigidBodyCollection,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bodies",                  new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "joints",                  new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

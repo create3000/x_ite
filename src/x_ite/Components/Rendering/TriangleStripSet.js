@@ -112,18 +112,22 @@ Object .defineProperties (TriangleStripSet,
    typeName:
    {
       value: "TriangleStripSet",
+      enumerate: true,
    },
    componentName:
    {
       value: "Rendering",
+      enumerate: true,
    },
    containerField:
    {
       value: "geometry",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -141,6 +145,7 @@ Object .defineProperties (TriangleStripSet,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

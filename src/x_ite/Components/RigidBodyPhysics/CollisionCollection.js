@@ -176,18 +176,22 @@ Object .defineProperties (CollisionCollection,
    typeName:
    {
       value: "CollisionCollection",
+      enumerate: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
+      enumerate: true,
    },
    containerField:
    {
       value: "collider",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -204,6 +208,7 @@ Object .defineProperties (CollisionCollection,
          new X3DFieldDefinition (X3DConstants .inputOutput, "softnessErrorCorrection",  new Fields .SFFloat (0.8)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "collidables",              new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

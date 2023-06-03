@@ -187,18 +187,22 @@ Object .defineProperties (PixelTexture3D,
    typeName:
    {
       value: "PixelTexture3D",
+      enumerate: true,
    },
    componentName:
    {
       value: "Texturing3D",
+      enumerate: true,
    },
    containerField:
    {
       value: "texture",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -211,6 +215,7 @@ Object .defineProperties (PixelTexture3D,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

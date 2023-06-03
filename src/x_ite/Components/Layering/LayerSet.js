@@ -177,18 +177,22 @@ Object .defineProperties (LayerSet,
    typeName:
    {
       value: "LayerSet",
+      enumerate: true,
    },
    componentName:
    {
       value: "Layering",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -198,6 +202,7 @@ Object .defineProperties (LayerSet,
          new X3DFieldDefinition (X3DConstants .inputOutput, "order",       new Fields .MFInt32 (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "layers",      new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

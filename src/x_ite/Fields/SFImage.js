@@ -366,6 +366,7 @@ Object .defineProperties (SFImage,
    typeName:
    {
       value: "SFImage",
+      enumerate: true,
    },
 });
 

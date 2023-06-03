@@ -310,18 +310,22 @@ Object .defineProperties (MultiTexture,
    typeName:
    {
       value: "MultiTexture",
+      enumerate: true,
    },
    componentName:
    {
       value: "Texturing",
+      enumerate: true,
    },
    containerField:
    {
       value: "texture",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -335,6 +339,7 @@ Object .defineProperties (MultiTexture,
          new X3DFieldDefinition (X3DConstants .inputOutput, "function",    new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "texture",     new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

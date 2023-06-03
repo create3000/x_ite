@@ -103,18 +103,22 @@ Object .defineProperties (ScreenGroup,
    typeName:
    {
       value: "ScreenGroup",
+      enumerate: true,
    },
    componentName:
    {
       value: "Layout",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -128,6 +132,7 @@ Object .defineProperties (ScreenGroup,
          new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

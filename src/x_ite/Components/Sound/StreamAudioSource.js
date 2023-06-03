@@ -71,18 +71,22 @@ Object .defineProperties (StreamAudioSource,
    typeName:
    {
       value: "StreamAudioSource",
+      enumerate: true,
    },
    componentName:
    {
       value: "Sound",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -102,6 +106,7 @@ Object .defineProperties (StreamAudioSource,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",      new Fields .SFTime ()),
       ]),
+      enumerate: true,
    },
 });
 

@@ -81,18 +81,22 @@ Object .defineProperties (Polypoint2D,
    typeName:
    {
       value: "Polypoint2D",
+      enumerate: true,
    },
    componentName:
    {
       value: "Geometry2D",
+      enumerate: true,
    },
    containerField:
    {
       value: "geometry",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -100,6 +104,7 @@ Object .defineProperties (Polypoint2D,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
       ]),
+      enumerate: true,
    },
 });
 

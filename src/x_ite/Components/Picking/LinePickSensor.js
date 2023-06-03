@@ -299,18 +299,22 @@ Object .defineProperties (LinePickSensor,
    typeName:
    {
       value: "LinePickSensor",
+      enumerate: true,
    },
    componentName:
    {
       value: "Picking",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -329,6 +333,7 @@ Object .defineProperties (LinePickSensor,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "pickTarget",              new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedGeometry",          new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

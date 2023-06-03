@@ -68,18 +68,22 @@ Object .defineProperties (Analyser,
    typeName:
    {
       value: "Analyser",
+      enumerate: true,
    },
    componentName:
    {
       value: "Sound",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -110,6 +114,7 @@ Object .defineProperties (Analyser,
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "children",              new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

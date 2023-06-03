@@ -102,18 +102,22 @@ Object .defineProperties (BoundedPhysicsModel,
    typeName:
    {
       value: "BoundedPhysicsModel",
+      enumerate: true,
    },
    componentName:
    {
       value: "ParticleSystems",
+      enumerate: true,
    },
    containerField:
    {
       value: "physics",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -122,6 +126,7 @@ Object .defineProperties (BoundedPhysicsModel,
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "geometry", new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

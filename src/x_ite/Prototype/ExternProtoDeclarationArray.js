@@ -66,6 +66,7 @@ Object .defineProperties (ExternProtoDeclarationArray,
    typeName:
    {
       value: "ExternProtoDeclarationArray",
+      enumerate: true,
    },
 });
 

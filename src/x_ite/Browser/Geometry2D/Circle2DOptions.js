@@ -100,6 +100,7 @@ Object .defineProperties (Circle2DOptions,
    typeName:
    {
       value: "Circle2DOptions",
+      enumerate: true,
    },
 });
 

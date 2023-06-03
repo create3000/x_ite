@@ -150,18 +150,22 @@ Object .defineProperties (NurbsSurfaceInterpolator,
    typeName:
    {
       value: "NurbsSurfaceInterpolator",
+      enumerate: true,
    },
    componentName:
    {
       value: "NURBS",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -179,6 +183,7 @@ Object .defineProperties (NurbsSurfaceInterpolator,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "normal_changed",   new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "position_changed", new Fields .SFVec3f ()),
       ]),
+      enumerate: true,
    },
 });
 

@@ -106,6 +106,7 @@ Object .defineProperties (SFBool,
    typeName:
    {
       value: "SFBool",
+      enumerate: true,
    },
 });
 

@@ -422,18 +422,22 @@ Object .defineProperties (GeoLOD,
    typeName:
    {
       value: "GeoLOD",
+      enumerate: true,
    },
    componentName:
    {
       value: "Geospatial",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -456,6 +460,7 @@ Object .defineProperties (GeoLOD,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "rootNode",      new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "children",      new Fields .MFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

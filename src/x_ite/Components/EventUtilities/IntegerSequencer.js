@@ -82,18 +82,22 @@ Object .defineProperties (IntegerSequencer,
    typeName:
    {
       value: "IntegerSequencer",
+      enumerate: true,
    },
    componentName:
    {
       value: "EventUtilities",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -106,6 +110,7 @@ Object .defineProperties (IntegerSequencer,
          new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFInt32 ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFInt32 ()),
       ]),
+      enumerate: true,
    },
 });
 

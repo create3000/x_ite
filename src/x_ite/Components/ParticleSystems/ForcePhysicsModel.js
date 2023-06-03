@@ -90,18 +90,22 @@ Object .defineProperties (ForcePhysicsModel,
    typeName:
    {
       value: "ForcePhysicsModel",
+      enumerate: true,
    },
    componentName:
    {
       value: "ParticleSystems",
+      enumerate: true,
    },
    containerField:
    {
       value: "physics",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -110,6 +114,7 @@ Object .defineProperties (ForcePhysicsModel,
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "force",    new Fields .SFVec3f (0, -9.8, 0)),
       ]),
+      enumerate: true,
    },
 });
 

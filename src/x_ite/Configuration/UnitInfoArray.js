@@ -79,6 +79,7 @@ Object .defineProperties (UnitInfoArray,
    typeName:
    {
       value: "UnitInfoArray",
+      enumerate: true,
    },
 });
 

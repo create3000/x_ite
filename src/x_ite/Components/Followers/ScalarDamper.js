@@ -89,18 +89,22 @@ Object .defineProperties (ScalarDamper,
    typeName:
    {
       value: "ScalarDamper",
+      enumerate: true,
    },
    componentName:
    {
       value: "Followers",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -116,6 +120,7 @@ Object .defineProperties (ScalarDamper,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFFloat ()),
       ]),
+      enumerate: true,
    },
 });
 

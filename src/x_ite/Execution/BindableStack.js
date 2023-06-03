@@ -159,6 +159,7 @@ Object .defineProperties (BindableStack,
    typeName:
    {
       value: "BindableStack",
+      enumerate: true,
    },
 });
 

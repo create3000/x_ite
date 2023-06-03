@@ -116,18 +116,22 @@ Object .defineProperties (Sphere,
    typeName:
    {
       value: "Sphere",
+      enumerate: true,
    },
    componentName:
    {
       value: "Geometry3D",
+      enumerate: true,
    },
    containerField:
    {
       value: "geometry",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -136,6 +140,7 @@ Object .defineProperties (Sphere,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
       ]),
+      enumerate: true,
    },
 });
 

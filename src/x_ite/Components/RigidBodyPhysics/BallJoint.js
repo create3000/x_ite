@@ -177,18 +177,22 @@ Object .defineProperties (BallJoint,
    typeName:
    {
       value: "BallJoint",
+      enumerate: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
+      enumerate: true,
    },
    containerField:
    {
       value: "joints",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -201,6 +205,7 @@ Object .defineProperties (BallJoint,
          new X3DFieldDefinition (X3DConstants .inputOutput, "body1",            new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "body2",            new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

@@ -79,6 +79,7 @@ Object .defineProperties (NamedNodesArray,
    typeName:
    {
       value: "NamedNodesArray",
+      enumerate: true,
    },
 });
 

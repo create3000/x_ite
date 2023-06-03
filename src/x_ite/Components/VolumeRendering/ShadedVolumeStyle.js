@@ -246,18 +246,22 @@ Object .defineProperties (ShadedVolumeStyle,
    typeName:
    {
       value: "ShadedVolumeStyle",
+      enumerate: true,
    },
    componentName:
    {
       value: "VolumeRendering",
+      enumerate: true,
    },
    containerField:
    {
       value: "renderStyle",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -270,6 +274,7 @@ Object .defineProperties (ShadedVolumeStyle,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "material",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceNormals", new Fields .SFNode ()),
       ]),
+      enumerate: true,
    },
 });
 

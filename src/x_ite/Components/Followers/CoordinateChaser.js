@@ -78,18 +78,22 @@ Object .defineProperties (CoordinateChaser,
    typeName:
    {
       value: "CoordinateChaser",
+      enumerate: true,
    },
    componentName:
    {
       value: "Followers",
+      enumerate: true,
    },
    containerField:
    {
       value: "children",
+      enumerate: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
    },
    fieldDefinitions:
    {
@@ -103,6 +107,7 @@ Object .defineProperties (CoordinateChaser,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .MFVec3f ()),
       ]),
+      enumerate: true,
    },
 });
 

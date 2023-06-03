@@ -107,6 +107,7 @@ Object .defineProperties (SFDouble,
    typeName:
    {
       value: "SFDouble",
+      enumerate: true,
    },
 });
 
