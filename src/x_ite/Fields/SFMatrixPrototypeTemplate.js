@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
-import X3DField from "../Base/X3DField.js";
+import X3DField     from "../Base/X3DField.js";
+import X3DConstants from "../Base/X3DConstants.js";
 
-function SFMatrixPrototypeTemplate (Constructor, TypeName, Type, Matrix, SFVec, double)
+function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double)
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
@@ -58,6 +59,11 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Type, Matrix, SFVec, 
          value: TypeName,
          enumerate: true,
       },
+   type:
+   {
+      value: X3DConstants [TypeName],
+      enumerate: true,
+   },
    });
 
    return Object .assign (Object .create (X3DField .prototype),
@@ -66,10 +72,6 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Type, Matrix, SFVec, 
       [Symbol .iterator]: function* ()
       {
          yield* this .getValue ();
-      },
-      getType: function ()
-      {
-         return Type;
       },
       copy: function ()
       {

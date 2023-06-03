@@ -48,10 +48,9 @@
 import X3DField                  from "../Base/X3DField.js";
 import SFMatrixPrototypeTemplate from "./SFMatrixPrototypeTemplate.js";
 import SFVec2                    from "./SFVec2.js";
-import X3DConstants              from "../Base/X3DConstants.js";
 import Matrix3                   from "../../standard/Math/Numbers/Matrix3.js";
 
-function SFMatrix3Template (TypeName, Type, SFVec2, double)
+function SFMatrix3Template (TypeName, SFVec2, double)
 {
    function SFMatrix3 (m00, m01, m02,
                        m10, m11, m12,
@@ -85,7 +84,7 @@ function SFMatrix3Template (TypeName, Type, SFVec2, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFMatrix3 .prototype = Object .assign (SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Type, Matrix3, SFVec2, double),
+   SFMatrix3 .prototype = Object .assign (SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Matrix3, SFVec2, double),
    {
       setTransform: function (translation, rotation, scale, scaleOrientation, center)
       {
@@ -126,8 +125,8 @@ function SFMatrix3Template (TypeName, Type, SFVec2, double)
 }
 
 const SFMatrix3 = {
-   SFMatrix3d: SFMatrix3Template ("SFMatrix3d", X3DConstants .SFMatrix3d, SFVec2 .SFVec2d, true),
-   SFMatrix3f: SFMatrix3Template ("SFMatrix3f", X3DConstants .SFMatrix3f, SFVec2 .SFVec2f, false),
+   SFMatrix3d: SFMatrix3Template ("SFMatrix3d", SFVec2 .SFVec2d, true),
+   SFMatrix3f: SFMatrix3Template ("SFMatrix3f", SFVec2 .SFVec2f, false),
 };
 
 export default SFMatrix3;

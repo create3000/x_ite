@@ -76,10 +76,6 @@ SFString .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       return new SFString (this .getValue ());
    },
-   getType: function ()
-   {
-      return X3DConstants .SFString;
-   },
    isDefaultValue: function ()
    {
       return this .getValue () === "";
@@ -133,6 +129,11 @@ Object .defineProperties (SFString,
    typeName:
    {
       value: "SFString",
+      enumerate: true,
+   },
+   type:
+   {
+      value: X3DConstants .SFString,
       enumerate: true,
    },
 });

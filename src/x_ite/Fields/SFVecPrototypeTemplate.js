@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
-import X3DField from "../Base/X3DField.js";
+import X3DField     from "../Base/X3DField.js";
+import X3DConstants from "../Base/X3DConstants.js";
 
-function SFVecPrototypeTemplate (Constructor, TypeName, Type, Vector, double)
+function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
@@ -58,6 +59,11 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Type, Vector, double)
          value: TypeName,
          enumerate: true,
       },
+   type:
+   {
+      value: X3DConstants [TypeName],
+      enumerate: true,
+   },
    });
 
    return Object .assign (Object .create (X3DField .prototype),
@@ -66,10 +72,6 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Type, Vector, double)
       [Symbol .iterator]: function* ()
       {
          yield* this .getValue ();
-      },
-      getType: function ()
-      {
-         return Type;
       },
       copy: function ()
       {

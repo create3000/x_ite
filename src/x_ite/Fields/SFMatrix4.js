@@ -48,10 +48,9 @@
 import X3DField                  from "../Base/X3DField.js";
 import SFMatrixPrototypeTemplate from "./SFMatrixPrototypeTemplate.js";
 import SFVec3                    from "./SFVec3.js";
-import X3DConstants              from "../Base/X3DConstants.js";
 import Matrix4                   from "../../standard/Math/Numbers/Matrix4.js";
 
-function SFMatrix4Template (TypeName, Type, SFVec3, double)
+function SFMatrix4Template (TypeName, SFVec3, double)
 {
    function SFMatrix4 (m00, m01, m02, m03,
                        m10, m11, m12, m13,
@@ -89,7 +88,7 @@ function SFMatrix4Template (TypeName, Type, SFVec3, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFMatrix4 .prototype = SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Type, Matrix4, SFVec3, double);
+   SFMatrix4 .prototype = SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Matrix4, SFVec3, double);
 
    for (const key of Reflect .ownKeys (SFMatrix4 .prototype))
       Object .defineProperty (SFMatrix4 .prototype, key, { enumerable: false });
@@ -118,9 +117,9 @@ function SFMatrix4Template (TypeName, Type, SFVec3, double)
 }
 
 const SFMatrix4 = {
-   SFMatrix4d: SFMatrix4Template ("SFMatrix4d", X3DConstants .SFMatrix4d, SFVec3 .SFVec3d, true),
-   SFMatrix4f: SFMatrix4Template ("SFMatrix4f", X3DConstants .SFMatrix4f, SFVec3 .SFVec3f, false),
-   VrmlMatrix: SFMatrix4Template ("VrmlMatrix", X3DConstants .VrmlMatrix, SFVec3 .SFVec3f, false),
+   SFMatrix4d: SFMatrix4Template ("SFMatrix4d", SFVec3 .SFVec3d, true),
+   SFMatrix4f: SFMatrix4Template ("SFMatrix4f", SFVec3 .SFVec3f, false),
+   VrmlMatrix: SFMatrix4Template ("VrmlMatrix", SFVec3 .SFVec3f, false),
 };
 
 export default SFMatrix4;

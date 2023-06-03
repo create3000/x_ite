@@ -60,10 +60,6 @@ SFFloat .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       return new SFFloat (this .getValue ());
    },
-   getType: function ()
-   {
-      return X3DConstants .SFFloat;
-   },
    isDefaultValue: function ()
    {
       return this .getValue () === 0;
@@ -107,6 +103,11 @@ Object .defineProperties (SFFloat,
    typeName:
    {
       value: "SFFloat",
+      enumerate: true,
+   },
+   type:
+   {
+      value: X3DConstants .SFFloat,
       enumerate: true,
    },
 });

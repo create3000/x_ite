@@ -108,10 +108,6 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
    {
       return 1;
    },
-   getType: function ()
-   {
-      return X3DConstants .MFNode;
-   },
    copy: function (instance)
    {
       if (instance)
@@ -422,6 +418,11 @@ Object .defineProperties (MFNode,
       value: "MFNode",
       enumerate: true,
    },
+   type:
+   {
+      value: X3DConstants .MFNode,
+      enumerate: true,
+   },
 });
 
 function MFString (... args)
@@ -447,10 +448,6 @@ MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .proto
    getComponents: function ()
    {
       return 1;
-   },
-   getType: function ()
-   {
-      return X3DConstants .MFString;
    },
    toXMLStream: function (generator, sourceText)
    {
@@ -488,13 +485,18 @@ Object .defineProperties (MFString,
       value: "MFString",
       enumerate: true,
    },
+   type:
+   {
+      value: X3DConstants .MFString,
+      enumerate: true,
+   },
 });
 
 /**
  * MFImage
  */
 
-function MFImageTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+function MFImageTemplate (TypeName, SingleType, ValueType, ArrayType, Components)
 {
    function ArrayField (... args)
    {
@@ -520,10 +522,6 @@ function MFImageTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Comp
       {
          return Components;
       },
-      getType: function ()
-      {
-         return Type;
-      },
    });
 
    for (const key of Reflect .ownKeys (ArrayField .prototype))
@@ -536,12 +534,17 @@ function MFImageTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Comp
          value: TypeName,
          enumerate: true,
       },
+      type:
+      {
+         value: X3DConstants [TypeName],
+         enumerate: true,
+      },
    });
 
    return ArrayField;
 }
 
-function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Components)
 {
    function ArrayField (... args)
    {
@@ -567,10 +570,6 @@ function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, C
       {
          return Components;
       },
-      getType: function ()
-      {
-         return Type;
-      },
    });
 
    for (const key of Reflect .ownKeys (ArrayField .prototype))
@@ -583,36 +582,41 @@ function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, C
          value: TypeName,
          enumerate: true,
       },
+      type:
+      {
+         value: X3DConstants [TypeName],
+         enumerate: true,
+      },
    });
 
    return ArrayField;
 }
 
-const Value = (value) => value;
+const Value = value => value;
 
 const ArrayFields =
 {
-   MFBool:      TypedArrayTemplate ("MFBool",      X3DConstants .MFBool,      SFBool,      Boolean,     Uint8Array,   1),
-   MFColor:     TypedArrayTemplate ("MFColor",     X3DConstants .MFColor,     SFColor,     SFColor,     Float32Array, 3),
-   MFColorRGBA: TypedArrayTemplate ("MFColorRGBA", X3DConstants .MFColorRGBA, SFColorRGBA, SFColorRGBA, Float32Array, 4),
-   MFDouble:    TypedArrayTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble,    Value,       Float64Array, 1),
-   MFFloat:     TypedArrayTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat,     Value,       Float32Array, 1),
-   MFImage:     MFImageTemplate    ("MFImage",     X3DConstants .MFImage,     undefined,   undefined,   Array,        1),
-   MFInt32:     TypedArrayTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32,     Value,       Int32Array,   1),
-   MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  X3DConstants .MFMatrix3d,  SFMatrix3d,  SFMatrix3d,  Float64Array, 9),
-   MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  X3DConstants .MFMatrix3f,  SFMatrix3f,  SFMatrix3f,  Float32Array, 9),
-   MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  X3DConstants .MFMatrix4d,  SFMatrix4d,  SFMatrix4d,  Float64Array, 16),
-   MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  X3DConstants .MFMatrix4f,  SFMatrix4f,  SFMatrix4f,  Float32Array, 16),
+   MFBool:      TypedArrayTemplate ("MFBool",      SFBool,      Boolean,     Uint8Array,   1),
+   MFColor:     TypedArrayTemplate ("MFColor",     SFColor,     SFColor,     Float32Array, 3),
+   MFColorRGBA: TypedArrayTemplate ("MFColorRGBA", SFColorRGBA, SFColorRGBA, Float32Array, 4),
+   MFDouble:    TypedArrayTemplate ("MFDouble",    SFDouble,    Value,       Float64Array, 1),
+   MFFloat:     TypedArrayTemplate ("MFFloat",     SFFloat,     Value,       Float32Array, 1),
+   MFImage:     MFImageTemplate    ("MFImage",     undefined,   undefined,   Array,        1),
+   MFInt32:     TypedArrayTemplate ("MFInt32",     SFInt32,     Value,       Int32Array,   1),
+   MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  SFMatrix3d,  SFMatrix3d,  Float64Array, 9),
+   MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  SFMatrix3f,  SFMatrix3f,  Float32Array, 9),
+   MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  SFMatrix4d,  SFMatrix4d,  Float64Array, 16),
+   MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  SFMatrix4f,  SFMatrix4f,  Float32Array, 16),
    MFNode:      MFNode,
-   MFRotation:  TypedArrayTemplate ("MFRotation",  X3DConstants .MFRotation,  SFRotation,  SFRotation,  Float64Array, 4),
+   MFRotation:  TypedArrayTemplate ("MFRotation",  SFRotation,  SFRotation,  Float64Array, 4),
    MFString:    MFString,
-   MFTime:      TypedArrayTemplate ("MFTime",      X3DConstants .MFTime,      SFTime,      Value,       Float64Array, 1),
-   MFVec2d:     TypedArrayTemplate ("MFVec2d",     X3DConstants .MFVec2d,     SFVec2d,     SFVec2d,     Float64Array, 2),
-   MFVec2f:     TypedArrayTemplate ("MFVec2f",     X3DConstants .MFVec2f,     SFVec2f,     SFVec2f,     Float32Array, 2),
-   MFVec3d:     TypedArrayTemplate ("MFVec3d",     X3DConstants .MFVec3d,     SFVec3d,     SFVec3d,     Float64Array, 3),
-   MFVec3f:     TypedArrayTemplate ("MFVec3f",     X3DConstants .MFVec3f,     SFVec3f,     SFVec3f,     Float32Array, 3),
-   MFVec4d:     TypedArrayTemplate ("MFVec4d",     X3DConstants .MFVec4d,     SFVec4d,     SFVec4d,     Float64Array, 4),
-   MFVec4f:     TypedArrayTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f,     SFVec4f,     Float32Array, 4),
+   MFTime:      TypedArrayTemplate ("MFTime",      SFTime,      Value,       Float64Array, 1),
+   MFVec2d:     TypedArrayTemplate ("MFVec2d",     SFVec2d,     SFVec2d,     Float64Array, 2),
+   MFVec2f:     TypedArrayTemplate ("MFVec2f",     SFVec2f,     SFVec2f,     Float32Array, 2),
+   MFVec3d:     TypedArrayTemplate ("MFVec3d",     SFVec3d,     SFVec3d,     Float64Array, 3),
+   MFVec3f:     TypedArrayTemplate ("MFVec3f",     SFVec3f,     SFVec3f,     Float32Array, 3),
+   MFVec4d:     TypedArrayTemplate ("MFVec4d",     SFVec4d,     SFVec4d,     Float64Array, 4),
+   MFVec4f:     TypedArrayTemplate ("MFVec4f",     SFVec4f,     SFVec4f,     Float32Array, 4),
 };
 
 export default ArrayFields;

@@ -47,10 +47,9 @@
 
 import X3DField               from "../Base/X3DField.js";
 import SFVecPrototypeTemplate from "./SFVecPrototypeTemplate.js";
-import X3DConstants           from "../Base/X3DConstants.js";
 import Vector2                from "../../standard/Math/Numbers/Vector2.js";
 
-function SFVec2Template (TypeName, Type, double)
+function SFVec2Template (TypeName, double)
 {
    function SFVec2 (x, y)
    {
@@ -69,7 +68,7 @@ function SFVec2Template (TypeName, Type, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFVec2 .prototype = SFVecPrototypeTemplate (SFVec2, TypeName, Type, Vector2, double);
+   SFVec2 .prototype = SFVecPrototypeTemplate (SFVec2, TypeName, Vector2, double);
 
    for (const key of Reflect .ownKeys (SFVec2 .prototype))
       Object .defineProperty (SFVec2 .prototype, key, { enumerable: false });
@@ -110,8 +109,8 @@ function SFVec2Template (TypeName, Type, double)
 }
 
 const SFVec2 = {
-   SFVec2d: SFVec2Template ("SFVec2d", X3DConstants .SFVec2d, true),
-   SFVec2f: SFVec2Template ("SFVec2f", X3DConstants .SFVec2f, false),
+   SFVec2d: SFVec2Template ("SFVec2d", true),
+   SFVec2f: SFVec2Template ("SFVec2f", false),
 };
 
 export default SFVec2;

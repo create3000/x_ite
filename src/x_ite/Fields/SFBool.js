@@ -68,10 +68,6 @@ SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       X3DField .prototype .set .call (this, !! value);
    },
-   getType: function ()
-   {
-      return X3DConstants .SFBool;
-   },
    valueOf: function ()
    {
       return this .getValue ();
@@ -106,6 +102,11 @@ Object .defineProperties (SFBool,
    typeName:
    {
       value: "SFBool",
+      enumerate: true,
+   },
+   type:
+   {
+      value: X3DConstants .SFBool,
       enumerate: true,
    },
 });

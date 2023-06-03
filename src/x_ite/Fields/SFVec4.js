@@ -47,10 +47,9 @@
 
 import X3DField               from "../Base/X3DField.js";
 import SFVecPrototypeTemplate from "./SFVecPrototypeTemplate.js";
-import X3DConstants           from "../Base/X3DConstants.js";
 import Vector4                from "../../standard/Math/Numbers/Vector4.js";
 
-function SFVec4Template (TypeName, Type, double)
+function SFVec4Template (TypeName, double)
 {
    function SFVec4 (x, y, z, w)
    {
@@ -69,7 +68,7 @@ function SFVec4Template (TypeName, Type, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFVec4 .prototype = SFVecPrototypeTemplate (SFVec4, TypeName, Type, Vector4, double);
+   SFVec4 .prototype = SFVecPrototypeTemplate (SFVec4, TypeName, Vector4, double);
 
    for (const key of Reflect .ownKeys (SFVec4 .prototype))
       Object .defineProperty (SFVec4 .prototype, key, { enumerable: false });
@@ -138,8 +137,8 @@ function SFVec4Template (TypeName, Type, double)
 }
 
 const SFVec4 = {
-   SFVec4d: SFVec4Template ("SFVec4d", X3DConstants .SFVec4d, true),
-   SFVec4f: SFVec4Template ("SFVec4f", X3DConstants .SFVec4f, false),
+   SFVec4d: SFVec4Template ("SFVec4d", true),
+   SFVec4f: SFVec4Template ("SFVec4f", false),
 };
 
 export default SFVec4;

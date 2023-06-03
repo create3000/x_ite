@@ -194,10 +194,6 @@ SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       this .getValue () .assign (image);
    },
-   getType: function ()
-   {
-      return X3DConstants .SFImage;
-   },
    toStream: function (generator)
    {
       const array = this .array;
@@ -366,6 +362,11 @@ Object .defineProperties (SFImage,
    typeName:
    {
       value: "SFImage",
+      enumerate: true,
+   },
+   type:
+   {
+      value: X3DConstants .SFImage,
       enumerate: true,
    },
 });

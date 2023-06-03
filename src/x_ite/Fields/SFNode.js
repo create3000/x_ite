@@ -195,10 +195,6 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       return new SFNode ();
    },
-   getType: function ()
-   {
-      return X3DConstants .SFNode;
-   },
    equals: function (node)
    {
       const target = this [_target];
@@ -486,6 +482,11 @@ Object .defineProperties (SFNode,
    typeName:
    {
       value: "SFNode",
+      enumerate: true,
+   },
+   type:
+   {
+      value: X3DConstants .SFNode,
       enumerate: true,
    },
 });
