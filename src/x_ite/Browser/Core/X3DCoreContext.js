@@ -177,7 +177,8 @@ X3DCoreContext .prototype =
             },
             set: (value) =>
             {
-               this .loadURL (new Fields .MFString (value), new Fields .MFString ());
+               this .loadURL (new Fields .MFString (value))
+                  .catch (error => console .error (error));
             },
             enumerable: true,
          },
@@ -189,7 +190,8 @@ X3DCoreContext .prototype =
             },
             set: (value) =>
             {
-               this .loadURL (value, new Fields .MFString ());
+               this .loadURL (value)
+                  .catch (error => console .error (error));
             },
             enumerable: true,
          },
