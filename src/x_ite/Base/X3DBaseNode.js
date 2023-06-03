@@ -77,6 +77,7 @@ function X3DBaseNode (executionContext)
 
    this [_executionContext]  = executionContext;
    this [_type]              = [ X3DConstants .X3DBaseNode ];
+   this [_fieldDefinitions]  = this .constructor .fieldDefinitions ?? this .getFieldDefinitions ();
    this [_fields]            = new FieldArray ();
    this [_predefinedFields]  = new FieldArray ();
    this [_aliases]           = new Map ();
@@ -97,9 +98,7 @@ function X3DBaseNode (executionContext)
                           "cloneCount_changed", new Fields .SFTime ())
 
    if (this .canUserDefinedFields ())
-      this [_fieldDefinitions] = new FieldDefinitionArray (this .constructor .fieldDefinitions);
-   else
-      this [_fieldDefinitions] = this .constructor .fieldDefinitions ?? this .getFieldDefinitions ();
+      this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
 
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addField (fieldDefinition);
