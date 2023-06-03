@@ -269,7 +269,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       return AbstractNodes;
    },
-   createScene: function (profile, component1 /*, ...*/)
+   createScene: function (profile, ... components)
    {
       const scene = new X3DScene (this);
 
@@ -280,10 +280,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
          scene .setProfile (profile);
 
-         for (let i = 1, length = arguments .length; i < length; ++ i)
+         for (const component of components)
          {
-            const component = arguments [i];
-
             if (!(component instanceof ComponentInfo))
                throw new Error ("Couldn't create scene: component must be of type ComponentInfo.");
 
