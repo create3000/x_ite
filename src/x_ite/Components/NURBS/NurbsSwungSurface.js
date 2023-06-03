@@ -65,10 +65,6 @@ function NurbsSwungSurface (executionContext)
 NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
 {
    constructor: NurbsSwungSurface,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);

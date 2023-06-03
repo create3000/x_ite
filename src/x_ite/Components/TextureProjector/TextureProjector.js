@@ -154,10 +154,6 @@ function TextureProjector (executionContext)
 TextureProjector .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
 {
    constructor: TextureProjector,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DTextureProjectorNode .prototype .initialize .call (this);

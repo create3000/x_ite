@@ -61,10 +61,6 @@ function PeriodicWave (executionContext)
 PeriodicWave .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
 {
    constructor: PeriodicWave,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (PeriodicWave,

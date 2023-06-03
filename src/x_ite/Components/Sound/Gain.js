@@ -61,10 +61,6 @@ function Gain (executionContext)
 Gain .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
 {
    constructor: Gain,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (Gain,

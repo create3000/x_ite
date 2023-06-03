@@ -67,10 +67,6 @@ function PointSet (executionContext)
 PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prototype),
 {
    constructor: PointSet,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DPointGeometryNode .prototype .initialize .call (this);

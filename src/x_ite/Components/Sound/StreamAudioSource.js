@@ -64,10 +64,6 @@ function StreamAudioSource (executionContext)
 StreamAudioSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
 {
    constructor: StreamAudioSource,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (StreamAudioSource,

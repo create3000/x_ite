@@ -69,10 +69,6 @@ function Contact (executionContext)
 Contact .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: Contact,
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
 });
 
 Object .defineProperties (Contact,

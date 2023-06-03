@@ -62,10 +62,6 @@ function ScalarDamper (executionContext)
 ScalarDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 {
    constructor: ScalarDamper,
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    getVector: function ()
    {
       return 0;

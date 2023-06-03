@@ -61,10 +61,6 @@ function CADLayer (executionContext)
 CADLayer .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: CADLayer,
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
 });
 
 Object .defineProperties (CADLayer,

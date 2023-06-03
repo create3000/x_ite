@@ -63,10 +63,6 @@ function Coordinate (executionContext)
 Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
 {
    constructor: Coordinate,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (Coordinate,

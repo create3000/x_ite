@@ -64,10 +64,6 @@ CADPart .prototype = Object .assign (Object .create (X3DTransformNode .prototype
    //X3DProductStructureChildNode .prototype,
 {
    constructor: CADPart,
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
 });
 
 Object .defineProperties (CADPart,

@@ -67,10 +67,6 @@ function Cylinder (executionContext)
 Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Cylinder,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    set_live__: function ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);

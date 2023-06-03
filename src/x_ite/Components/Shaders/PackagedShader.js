@@ -67,10 +67,6 @@ PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
    X3DProgrammableShaderObject .prototype,
 {
    constructor: PackagedShader,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    getSourceText: function ()
    {
       return this ._url;

@@ -62,10 +62,6 @@ function Shape (executionContext)
 Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 {
    constructor: Shape,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DShapeNode .prototype .initialize .call (this);

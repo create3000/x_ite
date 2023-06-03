@@ -112,10 +112,6 @@ function PolylineEmitter (executionContext)
 PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: PolylineEmitter,
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);

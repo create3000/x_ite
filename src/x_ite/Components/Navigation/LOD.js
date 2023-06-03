@@ -77,10 +77,6 @@ function LOD (executionContext)
 LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: LOD,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DGroupingNode .prototype .initialize .call (this);

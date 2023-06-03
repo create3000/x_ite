@@ -65,10 +65,6 @@ function PointProperties (executionContext)
 PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: PointProperties,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);

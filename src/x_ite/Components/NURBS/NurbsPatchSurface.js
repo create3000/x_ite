@@ -61,10 +61,6 @@ function NurbsPatchSurface (executionContext)
 NurbsPatchSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
 {
    constructor: NurbsPatchSurface,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (NurbsPatchSurface,

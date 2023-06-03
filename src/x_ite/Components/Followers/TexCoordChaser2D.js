@@ -67,10 +67,6 @@ TexCoordChaser2D .prototype = Object .assign (Object .create (X3DChaserNode .pro
    X3DArrayChaserObject .prototype,
 {
    constructor: TexCoordChaser2D,
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    getVector: function ()
    {
       return new Vector2 (0, 0);

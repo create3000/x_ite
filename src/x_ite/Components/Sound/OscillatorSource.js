@@ -64,10 +64,6 @@ function OscillatorSource (executionContext)
 OscillatorSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
 {
    constructor: OscillatorSource,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (OscillatorSource,

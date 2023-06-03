@@ -64,10 +64,6 @@ GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype)
    X3DUrlObject .prototype,
 {
    constructor: GeoMetadata,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DInfoNode  .prototype .initialize .call (this);

@@ -63,10 +63,6 @@ function TouchSensor (executionContext)
 TouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
 {
    constructor: TouchSensor,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (TouchSensor,

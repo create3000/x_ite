@@ -81,10 +81,6 @@ function PointEmitter (executionContext)
 PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: PointEmitter,
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);

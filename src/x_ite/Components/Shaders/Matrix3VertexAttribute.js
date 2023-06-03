@@ -62,10 +62,6 @@ function Matrix3VertexAttribute (executionContext)
 Matrix3VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 {
    constructor: Matrix3VertexAttribute,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DVertexAttributeNode .prototype .initialize .call (this);

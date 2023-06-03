@@ -64,10 +64,6 @@ function SplineScalarInterpolator (executionContext)
 SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: SplineScalarInterpolator,
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);

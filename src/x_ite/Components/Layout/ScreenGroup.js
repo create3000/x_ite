@@ -65,10 +65,6 @@ function ScreenGroup (executionContext)
 ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: ScreenGroup,
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getBBox: function (bbox, shadows)
    {
       return this .getSubBBox (bbox, shadows) .multRight (this .matrix);

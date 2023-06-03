@@ -76,10 +76,6 @@ function ElevationGrid (executionContext)
 ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: ElevationGrid,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DGeometryNode .prototype .initialize .call (this);

@@ -64,10 +64,6 @@ function Box (executionContext)
 Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Box,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    build: (function ()
    {
       const defaultSize = new Vector3 (2, 2, 2);

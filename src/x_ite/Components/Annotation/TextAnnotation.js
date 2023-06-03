@@ -61,10 +61,6 @@ function TextAnnotation (executionContext)
 TextAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .prototype),
 {
    constructor: TextAnnotation,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DAnnotationNode .prototype .initialize .call (this);

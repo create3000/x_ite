@@ -65,10 +65,6 @@ function TriangleSet2D (executionContext)
 TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: TriangleSet2D,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    build: function ()
    {
       const

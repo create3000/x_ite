@@ -77,10 +77,6 @@ function MultiTexture (executionContext)
 MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
 {
    constructor: MultiTexture,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DTextureNode .prototype .initialize .call (this);

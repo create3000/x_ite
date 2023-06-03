@@ -62,10 +62,6 @@ function TextureBackground (executionContext)
 TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
 {
    constructor: TextureBackground,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DBackgroundNode .prototype .initialize .call (this);

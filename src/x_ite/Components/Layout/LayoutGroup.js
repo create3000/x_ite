@@ -71,10 +71,6 @@ function LayoutGroup (executionContext)
 LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: LayoutGroup,
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       X3DGroupingNode .prototype .initialize .call (this);

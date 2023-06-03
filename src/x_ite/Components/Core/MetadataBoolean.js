@@ -64,10 +64,6 @@ MetadataBoolean .prototype = Object .assign (Object .create (X3DNode .prototype)
    X3DMetadataObject .prototype,
 {
    constructor: MetadataBoolean,
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       X3DNode           .prototype .initialize .call (this);

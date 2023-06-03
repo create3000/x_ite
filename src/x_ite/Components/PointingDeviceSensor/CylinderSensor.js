@@ -73,10 +73,6 @@ function CylinderSensor (executionContext)
 CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 {
    constructor: CylinderSensor,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DDragSensorNode .prototype .initialize .call (this);

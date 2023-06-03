@@ -61,10 +61,6 @@ function BooleanFilter (executionContext)
 BooleanFilter .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: BooleanFilter,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DChildNode .prototype .initialize .call (this);

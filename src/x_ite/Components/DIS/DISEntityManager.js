@@ -64,10 +64,6 @@ function DISEntityManager (executionContext)
 DISEntityManager .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: DISEntityManager,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (DISEntityManager,

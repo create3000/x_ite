@@ -63,10 +63,6 @@ function Circle2D (executionContext)
 Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: Circle2D,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    set_live__: function ()
    {
       X3DLineGeometryNode .prototype .set_live__ .call (this);

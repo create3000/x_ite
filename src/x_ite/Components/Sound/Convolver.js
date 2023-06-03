@@ -61,10 +61,6 @@ function Convolver (executionContext)
 Convolver .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
 {
    constructor: Convolver,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (Convolver,

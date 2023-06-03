@@ -63,10 +63,6 @@ function HAnimSegment (executionContext)
 HAnimSegment .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: HAnimSegment,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (HAnimSegment,

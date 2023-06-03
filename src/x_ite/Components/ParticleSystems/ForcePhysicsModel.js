@@ -64,10 +64,6 @@ function ForcePhysicsModel (executionContext)
 ForcePhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
 {
    constructor: ForcePhysicsModel,
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    addForce: (function ()
    {
       const force = new Vector3 (0, 0, 0);

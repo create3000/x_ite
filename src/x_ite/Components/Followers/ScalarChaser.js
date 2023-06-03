@@ -62,10 +62,6 @@ function ScalarChaser (executionContext)
 ScalarChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 {
    constructor: ScalarChaser,
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getVector: function ()
    {
       return 0;

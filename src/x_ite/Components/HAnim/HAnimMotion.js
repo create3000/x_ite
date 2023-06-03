@@ -61,10 +61,6 @@ function HAnimMotion (executionContext)
 HAnimMotion .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: HAnimMotion,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DChildNode .prototype .initialize .call (this);

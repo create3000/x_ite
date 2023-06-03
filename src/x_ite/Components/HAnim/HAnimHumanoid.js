@@ -86,10 +86,6 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
    X3DBoundedObject .prototype,
 {
    constructor: HAnimHumanoid,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DChildNode     .prototype .initialize .call (this);

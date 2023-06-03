@@ -67,10 +67,6 @@ function SegmentedVolumeData (executionContext)
 SegmentedVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
 {
    constructor: SegmentedVolumeData,
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       X3DVolumeDataNode .prototype .initialize .call (this);

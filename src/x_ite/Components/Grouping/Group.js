@@ -61,10 +61,6 @@ function Group (executionContext)
 Group .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: Group,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (Group,

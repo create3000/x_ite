@@ -61,10 +61,6 @@ function IntegerSequencer (executionContext)
 IntegerSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
 {
    constructor: IntegerSequencer,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DSequencerNode .prototype .initialize .call (this);

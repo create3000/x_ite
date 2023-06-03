@@ -67,10 +67,6 @@ function Rectangle2D (executionContext)
 Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Rectangle2D,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    build: (function ()
    {
       const defaultSize = new Vector2 (2, 2);

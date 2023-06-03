@@ -66,10 +66,6 @@ function Disk2D (executionContext)
 Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Disk2D,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DGeometryNode .prototype .initialize .call (this);

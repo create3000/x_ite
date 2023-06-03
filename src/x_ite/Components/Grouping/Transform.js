@@ -61,10 +61,6 @@ function Transform (executionContext)
 Transform .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
 {
    constructor: Transform,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (Transform,

@@ -78,10 +78,6 @@ function SingleAxisHingeJoint (executionContext)
 SingleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
 {
    constructor: SingleAxisHingeJoint,
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       X3DRigidJointNode .prototype .initialize .call (this);

@@ -61,10 +61,6 @@ function IndexedQuadSet (executionContext)
 IndexedQuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedQuadSet,
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
    initialize: function ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);

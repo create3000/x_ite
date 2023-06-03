@@ -62,10 +62,6 @@ function PositionInterpolator2D (executionContext)
 PositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: PositionInterpolator2D,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);

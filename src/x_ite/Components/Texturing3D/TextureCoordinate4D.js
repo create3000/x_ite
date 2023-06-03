@@ -62,10 +62,6 @@ function TextureCoordinate4D (executionContext)
 TextureCoordinate4D .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
 {
    constructor: TextureCoordinate4D,
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
    initialize: function ()
    {
       X3DSingleTextureCoordinateNode .prototype .initialize .call (this);

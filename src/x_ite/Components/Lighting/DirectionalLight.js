@@ -243,10 +243,6 @@ function DirectionalLight (executionContext)
 DirectionalLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 {
    constructor: DirectionalLight,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    getLights: function ()
    {
       return DirectionalLights;

@@ -63,10 +63,6 @@ function Polypoint2D (executionContext)
 Polypoint2D .prototype = Object .assign (Object .create (X3DPointGeometryNode .prototype),
 {
    constructor: Polypoint2D,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    build: function ()
    {
       const

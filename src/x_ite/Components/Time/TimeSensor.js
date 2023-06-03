@@ -74,10 +74,6 @@ TimeSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype
    X3DTimeDependentNode .prototype,
 {
    constructor: TimeSensor,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DSensorNode        .prototype .initialize .call (this);

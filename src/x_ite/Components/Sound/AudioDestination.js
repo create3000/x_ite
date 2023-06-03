@@ -61,10 +61,6 @@ function AudioDestination (executionContext)
 AudioDestination .prototype = Object .assign (Object .create (X3DSoundDestinationNode .prototype),
 {
    constructor: AudioDestination,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (AudioDestination,

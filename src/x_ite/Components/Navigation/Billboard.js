@@ -67,10 +67,6 @@ function Billboard (executionContext)
 Billboard .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: Billboard,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    getBBox: function (bbox, shadows)
    {
       return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .matrix);

@@ -64,10 +64,6 @@ TransmitterPdu .prototype = Object .assign (Object .create (X3DSensorNode .proto
    X3DBoundedObject .prototype,
 {
    constructor: TransmitterPdu,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DSensorNode    .prototype .initialize .call (this);

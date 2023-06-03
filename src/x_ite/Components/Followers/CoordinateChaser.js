@@ -67,10 +67,6 @@ CoordinateChaser .prototype = Object .assign (Object .create (X3DChaserNode .pro
    X3DArrayChaserObject .prototype,
 {
    constructor: CoordinateChaser,
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    getVector: function ()
    {
       return new Vector3 (0, 0, 0);

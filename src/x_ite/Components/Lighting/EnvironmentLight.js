@@ -102,10 +102,6 @@ function EnvironmentLight (executionContext)
 EnvironmentLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 {
    constructor: EnvironmentLight,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
    getLights: function ()
    {
       return EnvironmentLights;

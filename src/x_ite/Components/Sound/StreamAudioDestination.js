@@ -61,10 +61,6 @@ function StreamAudioDestination (executionContext)
 StreamAudioDestination .prototype = Object .assign (Object .create (X3DSoundDestinationNode .prototype),
 {
    constructor: StreamAudioDestination,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (StreamAudioDestination,

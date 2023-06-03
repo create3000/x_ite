@@ -76,10 +76,6 @@ function NurbsOrientationInterpolator (executionContext)
 NurbsOrientationInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: NurbsOrientationInterpolator,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DChildNode .prototype .initialize .call (this);

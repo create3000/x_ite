@@ -61,10 +61,6 @@ function QuadSet (executionContext)
 QuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: QuadSet,
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
    getTriangleIndex: (function ()
    {
       // Define two triangles.

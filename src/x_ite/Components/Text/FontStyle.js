@@ -64,10 +64,6 @@ function FontStyle (executionContext)
 FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
 {
    constructor: FontStyle,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    getTextGeometry: function (text)
    {
       return new PolygonText (text, this);

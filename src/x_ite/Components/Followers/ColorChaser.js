@@ -69,10 +69,6 @@ function ColorChaser (executionContext)
 ColorChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 {
    constructor: ColorChaser,
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    getVector: function ()
    {
       return new Vector3 (0, 0, 0);

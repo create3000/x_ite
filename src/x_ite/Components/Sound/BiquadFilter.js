@@ -61,10 +61,6 @@ function BiquadFilter (executionContext)
 BiquadFilter .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
 {
    constructor: BiquadFilter,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (BiquadFilter,

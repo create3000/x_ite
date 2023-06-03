@@ -68,10 +68,6 @@ Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
    X3DFogObject .prototype,
 {
    constructor: Fog,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DBindableNode .prototype .initialize .call (this);

@@ -61,10 +61,6 @@ function DynamicsCompressor (executionContext)
 DynamicsCompressor .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
 {
    constructor: DynamicsCompressor,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (DynamicsCompressor,

@@ -90,10 +90,6 @@ function RigidBody (executionContext)
 RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: RigidBody,
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       X3DNode .prototype .initialize .call (this);

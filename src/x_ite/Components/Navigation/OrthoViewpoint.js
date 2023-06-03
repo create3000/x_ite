@@ -77,10 +77,6 @@ function OrthoViewpoint (executionContext)
 OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
 {
    constructor: OrthoViewpoint,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DViewpointNode .prototype .initialize .call (this);

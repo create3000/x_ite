@@ -61,10 +61,6 @@ function ChannelMerger (executionContext)
 ChannelMerger .prototype = Object .assign (Object .create (X3DSoundChannelNode .prototype),
 {
    constructor: ChannelMerger,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (ChannelMerger,

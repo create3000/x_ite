@@ -67,10 +67,6 @@ GeoLocation .prototype = Object .assign (Object .create (X3DTransformMatrix3DNod
    X3DGeospatialObject .prototype,
 {
    constructor: GeoLocation,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DTransformMatrix3DNode .prototype .initialize .call (this);

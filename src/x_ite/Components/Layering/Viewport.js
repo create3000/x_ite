@@ -69,10 +69,6 @@ function Viewport (executionContext)
 Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype),
 {
    constructor: Viewport,
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getRectangle: function ()
    {
       const

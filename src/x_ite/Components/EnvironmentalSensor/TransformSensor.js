@@ -80,10 +80,6 @@ function TransformSensor (executionContext)
 TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
 {
    constructor: TransformSensor,
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);

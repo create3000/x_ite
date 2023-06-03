@@ -64,10 +64,6 @@ function MicrophoneSource (executionContext)
 MicrophoneSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
 {
    constructor: MicrophoneSource,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (MicrophoneSource,

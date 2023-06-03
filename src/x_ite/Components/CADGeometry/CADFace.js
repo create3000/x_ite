@@ -69,10 +69,6 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
    X3DBoundedObject .prototype,
 {
    constructor: CADFace,
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
    initialize: function ()
    {
       X3DProductStructureChildNode .prototype .initialize .call (this);

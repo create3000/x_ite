@@ -61,10 +61,6 @@ function BooleanTrigger (executionContext)
 BooleanTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
 {
    constructor: BooleanTrigger,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DTriggerNode .prototype .initialize .call (this);

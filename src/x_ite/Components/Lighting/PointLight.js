@@ -279,10 +279,6 @@ function PointLight (executionContext)
 PointLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 {
    constructor: PointLight,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    getAttenuation: function ()
    {
       return this ._attenuation .getValue ();

@@ -66,10 +66,6 @@ GeoCoordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .pr
    X3DGeospatialObject .prototype,
 {
    constructor: GeoCoordinate,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DCoordinateNode   .prototype .initialize .call (this);

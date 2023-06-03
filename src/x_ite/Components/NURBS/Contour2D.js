@@ -64,10 +64,6 @@ function Contour2D (executionContext)
 Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: Contour2D,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DNode .prototype .initialize .call (this);

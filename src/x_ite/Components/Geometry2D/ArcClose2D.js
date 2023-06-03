@@ -69,10 +69,6 @@ function ArcClose2D (executionContext)
 ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: ArcClose2D,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    set_live__: function ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);

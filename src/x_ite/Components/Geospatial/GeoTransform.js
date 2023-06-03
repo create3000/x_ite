@@ -71,10 +71,6 @@ GeoTransform .prototype = Object .assign (Object .create (X3DTransformMatrix3DNo
    X3DGeospatialObject .prototype,
 {
    constructor: GeoTransform,
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DTransformMatrix3DNode .prototype .initialize .call (this);

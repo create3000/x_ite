@@ -62,10 +62,6 @@ function Background (executionContext)
 Background .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
 {
    constructor: Background,
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DBackgroundNode .prototype .initialize .call (this);

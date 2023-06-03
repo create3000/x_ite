@@ -61,10 +61,6 @@ function ChannelSplitter (executionContext)
 ChannelSplitter .prototype = Object .assign (Object .create (X3DSoundChannelNode .prototype),
 {
    constructor: ChannelSplitter,
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
 });
 
 Object .defineProperties (ChannelSplitter,
