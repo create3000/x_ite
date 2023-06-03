@@ -61,10 +61,6 @@ function ProjectionVolumeStyle (executionContext)
 ProjectionVolumeStyle .prototype = Object .assign (Object .create (X3DVolumeRenderStyleNode .prototype),
 {
    constructor: ProjectionVolumeStyle,
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
    getSpecificationRange: function ()
    {
       return ["3.3", "Infinity"];

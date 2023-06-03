@@ -71,10 +71,6 @@ function CollisionCollection (executionContext)
 CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: CollisionCollection,
-   getContainerField: function ()
-   {
-      return "collider";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

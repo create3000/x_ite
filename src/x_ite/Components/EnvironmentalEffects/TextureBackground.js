@@ -62,10 +62,6 @@ function TextureBackground (executionContext)
 TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
 {
    constructor: TextureBackground,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

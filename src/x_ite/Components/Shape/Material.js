@@ -70,10 +70,6 @@ function Material (executionContext)
 Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
 {
    constructor: Material,
-   getContainerField: function ()
-   {
-      return "material";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

@@ -107,10 +107,6 @@ function ClipPlane (executionContext)
 ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: ClipPlane,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

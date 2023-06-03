@@ -62,10 +62,6 @@ function TextureCoordinate3D (executionContext)
 TextureCoordinate3D .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
 {
    constructor: TextureCoordinate3D,
-   getContainerField: function ()
-   {
-      return "texCoord";
-   },
    getSpecificationRange: function ()
    {
       return ["3.1", "Infinity"];

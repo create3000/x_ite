@@ -64,10 +64,6 @@ function Box (executionContext)
 Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Box,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

@@ -61,10 +61,6 @@ function AcousticProperties (executionContext)
 AcousticProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: AcousticProperties,
-   getContainerField: function ()
-   {
-      return "AcousticProperties";
-   },
    getSpecificationRange: function ()
    {
       return ["4.0", "Infinity"];

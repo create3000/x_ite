@@ -175,10 +175,6 @@ function TextureProjectorParallel (executionContext)
 TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
 {
    constructor: TextureProjectorParallel,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["4.0", "Infinity"];

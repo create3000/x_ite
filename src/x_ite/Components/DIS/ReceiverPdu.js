@@ -64,10 +64,6 @@ ReceiverPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototyp
    X3DBoundedObject .prototype,
 {
    constructor: ReceiverPdu,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

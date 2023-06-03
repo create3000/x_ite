@@ -67,10 +67,6 @@ function Arc2D (executionContext)
 Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: Arc2D,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

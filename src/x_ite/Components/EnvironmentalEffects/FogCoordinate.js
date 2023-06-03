@@ -63,10 +63,6 @@ function FogCoordinate (executionContext)
 FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 {
    constructor: FogCoordinate,
-   getContainerField: function ()
-   {
-      return "fogCoord";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

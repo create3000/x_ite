@@ -61,10 +61,6 @@ function CoordinateDouble (executionContext)
 CoordinateDouble .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
 {
    constructor: CoordinateDouble,
-   getContainerField: function ()
-   {
-      return "coord";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

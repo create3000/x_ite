@@ -69,10 +69,6 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
    X3DUrlObject .prototype,
 {
    constructor: ImageTextureAtlas,
-   getContainerField: function ()
-   {
-      return "texture";
-   },
    getSpecificationRange: function ()
    {
       return ["4.0", "Infinity"];

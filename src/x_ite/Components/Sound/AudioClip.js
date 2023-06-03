@@ -70,10 +70,6 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
    X3DUrlObject .prototype,
 {
    constructor: AudioClip,
-   getContainerField: function ()
-   {
-      return "source";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

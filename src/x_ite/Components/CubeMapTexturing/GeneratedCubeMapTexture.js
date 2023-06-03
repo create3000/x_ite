@@ -76,10 +76,6 @@ function GeneratedCubeMapTexture (executionContext)
 GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
 {
    constructor: GeneratedCubeMapTexture,
-   getContainerField: function ()
-   {
-      return "texture";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

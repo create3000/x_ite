@@ -78,10 +78,6 @@ function ProximitySensor (executionContext)
 ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
 {
    constructor: ProximitySensor,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

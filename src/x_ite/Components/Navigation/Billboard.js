@@ -67,10 +67,6 @@ function Billboard (executionContext)
 Billboard .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: Billboard,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

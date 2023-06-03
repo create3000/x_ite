@@ -65,10 +65,6 @@ function CollisionSpace (executionContext)
 CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpaceNode .prototype),
 {
    constructor: CollisionSpace,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

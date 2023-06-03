@@ -78,10 +78,6 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: Inline,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

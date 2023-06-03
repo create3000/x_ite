@@ -80,10 +80,6 @@ function DoubleAxisHingeJoint (executionContext)
 DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
 {
    constructor: DoubleAxisHingeJoint,
-   getContainerField: function ()
-   {
-      return "joints";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

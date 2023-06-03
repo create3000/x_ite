@@ -64,10 +64,6 @@ function NurbsTrimmedSurface (executionContext)
 NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
 {
    constructor: NurbsTrimmedSurface,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

@@ -62,10 +62,6 @@ function ScalarInterpolator (executionContext)
 ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: ScalarInterpolator,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

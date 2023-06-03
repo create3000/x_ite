@@ -73,10 +73,6 @@ NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNod
    X3DLineGeometryNode .prototype,
 {
    constructor: NurbsCurve,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

@@ -70,10 +70,6 @@ function Switch (executionContext)
 Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: Switch,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

@@ -62,10 +62,6 @@ function ScalarChaser (executionContext)
 ScalarChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 {
    constructor: ScalarChaser,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

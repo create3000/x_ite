@@ -81,10 +81,6 @@ function PlaneSensor (executionContext)
 PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 {
    constructor: PlaneSensor,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

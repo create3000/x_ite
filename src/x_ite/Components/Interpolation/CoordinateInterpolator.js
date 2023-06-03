@@ -62,10 +62,6 @@ function CoordinateInterpolator (executionContext)
 CoordinateInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: CoordinateInterpolator,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

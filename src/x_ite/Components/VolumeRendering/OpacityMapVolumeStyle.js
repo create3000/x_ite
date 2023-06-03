@@ -62,10 +62,6 @@ function OpacityMapVolumeStyle (executionContext)
 OpacityMapVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: OpacityMapVolumeStyle,
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
    getSpecificationRange: function ()
    {
       return ["3.3", "Infinity"];

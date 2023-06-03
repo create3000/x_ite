@@ -61,10 +61,6 @@ function HAnimSite (executionContext)
 HAnimSite .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
 {
    constructor: HAnimSite,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

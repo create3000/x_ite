@@ -61,10 +61,6 @@ function IntegerTrigger (executionContext)
 IntegerTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
 {
    constructor: IntegerTrigger,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

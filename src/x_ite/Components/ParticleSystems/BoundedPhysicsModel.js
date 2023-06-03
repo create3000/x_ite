@@ -62,10 +62,6 @@ function BoundedPhysicsModel (executionContext)
 BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
 {
    constructor: BoundedPhysicsModel,
-   getContainerField: function ()
-   {
-      return "physics";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

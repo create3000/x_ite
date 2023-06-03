@@ -131,10 +131,6 @@ function VolumeEmitter (executionContext)
 VolumeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: VolumeEmitter,
-   getContainerField: function ()
-   {
-      return "emitter";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

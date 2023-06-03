@@ -79,10 +79,6 @@ function Sound (executionContext)
 Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
 {
    constructor: Sound,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

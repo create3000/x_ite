@@ -74,10 +74,6 @@ function SliderJoint (executionContext)
 SliderJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
 {
    constructor: SliderJoint,
-   getContainerField: function ()
-   {
-      return "joints";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

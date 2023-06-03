@@ -67,10 +67,6 @@ function ComposedTexture3D (executionContext)
 ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
 {
    constructor: ComposedTexture3D,
-   getContainerField: function ()
-   {
-      return "texture";
-   },
    getSpecificationRange: function ()
    {
       return ["3.1", "Infinity"];

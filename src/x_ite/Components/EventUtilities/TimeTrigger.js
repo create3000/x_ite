@@ -61,10 +61,6 @@ function TimeTrigger (executionContext)
 TimeTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
 {
    constructor: TimeTrigger,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

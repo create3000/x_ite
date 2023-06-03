@@ -67,10 +67,6 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: NurbsSet,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

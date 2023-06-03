@@ -70,10 +70,6 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
 {
    constructor: ComposedShader,
    wireframe: false,
-   getContainerField: function ()
-   {
-      return "shaders";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

@@ -72,10 +72,6 @@ function OrientationChaser (executionContext)
 OrientationChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 {
    constructor: OrientationChaser,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

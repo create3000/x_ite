@@ -64,10 +64,6 @@ function GeoOrigin (executionContext)
 GeoOrigin .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: GeoOrigin,
-   getContainerField: function ()
-   {
-      return "geoOrigin";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

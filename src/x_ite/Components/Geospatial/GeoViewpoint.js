@@ -79,10 +79,6 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
    X3DGeospatialObject .prototype,
 {
    constructor: GeoViewpoint,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

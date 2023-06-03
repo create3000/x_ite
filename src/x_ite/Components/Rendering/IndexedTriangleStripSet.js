@@ -63,10 +63,6 @@ function IndexedTriangleStripSet (executionContext)
 IndexedTriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedTriangleStripSet,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

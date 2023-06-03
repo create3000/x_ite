@@ -65,10 +65,6 @@ function NurbsSweptSurface (executionContext)
 NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
 {
    constructor: NurbsSweptSurface,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

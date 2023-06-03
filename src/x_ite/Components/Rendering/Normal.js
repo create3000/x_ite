@@ -62,10 +62,6 @@ function Normal (executionContext)
 Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
 {
    constructor: Normal,
-   getContainerField: function ()
-   {
-      return "normal";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

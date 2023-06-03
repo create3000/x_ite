@@ -64,10 +64,6 @@ DISEntityTypeMapping .prototype = Object .assign (Object .create (X3DInfoNode .p
    X3DUrlObject .prototype,
 {
    constructor: DISEntityTypeMapping,
-   getContainerField: function ()
-   {
-      return "mapping";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

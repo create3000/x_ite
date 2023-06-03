@@ -64,10 +64,6 @@ function NurbsTextureCoordinate (executionContext)
 NurbsTextureCoordinate .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: NurbsTextureCoordinate,
-   getContainerField: function ()
-   {
-      return "texCoord";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

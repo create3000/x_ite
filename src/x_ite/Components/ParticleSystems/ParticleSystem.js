@@ -138,10 +138,6 @@ function ParticleSystem (executionContext)
 ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 {
    constructor: ParticleSystem,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

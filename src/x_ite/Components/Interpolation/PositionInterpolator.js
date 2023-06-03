@@ -62,10 +62,6 @@ function PositionInterpolator (executionContext)
 PositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: PositionInterpolator,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

@@ -65,10 +65,6 @@ function ScreenGroup (executionContext)
 ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: ScreenGroup,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

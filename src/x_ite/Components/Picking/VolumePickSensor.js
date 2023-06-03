@@ -69,10 +69,6 @@ function VolumePickSensor (executionContext)
 VolumePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
 {
    constructor: VolumePickSensor,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

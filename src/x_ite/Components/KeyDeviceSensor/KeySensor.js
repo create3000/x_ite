@@ -84,10 +84,6 @@ function KeySensor (executionContext)
 KeySensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
 {
    constructor: KeySensor,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

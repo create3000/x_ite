@@ -75,10 +75,6 @@ function ExplosionEmitter (executionContext)
 ExplosionEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: ExplosionEmitter,
-   getContainerField: function ()
-   {
-      return "emitter";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

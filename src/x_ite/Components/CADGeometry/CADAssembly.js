@@ -64,10 +64,6 @@ CADAssembly .prototype = Object .assign (Object .create (X3DGroupingNode .protot
    //X3DProductStructureChildNode .prototype,
 {
    constructor: CADAssembly,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.1", "Infinity"];

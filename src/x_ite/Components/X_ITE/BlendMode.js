@@ -65,10 +65,6 @@ function BlendMode (executionContext)
 BlendMode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: BlendMode,
-   getContainerField: function ()
-   {
-      return "blendMode";
-   },
    getSpecificationRange: function ()
    {
       return ["3.3", "Infinity"];

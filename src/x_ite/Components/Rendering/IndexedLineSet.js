@@ -67,10 +67,6 @@ function IndexedLineSet (executionContext)
 IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: IndexedLineSet,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

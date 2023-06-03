@@ -67,10 +67,6 @@ CoordinateDamper .prototype = Object .assign (Object .create (X3DDamperNode .pro
    X3DArrayFollowerObject .prototype,
 {
    constructor: CoordinateDamper,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

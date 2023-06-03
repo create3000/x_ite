@@ -72,10 +72,6 @@ function OrientationDamper (executionContext)
 OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 {
    constructor: OrientationDamper,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

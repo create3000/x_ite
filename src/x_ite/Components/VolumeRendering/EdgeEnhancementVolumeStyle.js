@@ -62,10 +62,6 @@ function EdgeEnhancementVolumeStyle (executionContext)
 EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: EdgeEnhancementVolumeStyle,
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
    getSpecificationRange: function ()
    {
       return ["3.3", "Infinity"];

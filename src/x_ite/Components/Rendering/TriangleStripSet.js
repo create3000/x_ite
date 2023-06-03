@@ -63,10 +63,6 @@ function TriangleStripSet (executionContext)
 TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: TriangleStripSet,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

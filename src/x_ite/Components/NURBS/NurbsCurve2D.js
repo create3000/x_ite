@@ -71,10 +71,6 @@ function NurbsCurve2D (executionContext)
 NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
 {
    constructor: NurbsCurve2D,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

@@ -68,10 +68,6 @@ function LayerSet (executionContext)
 LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: LayerSet,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

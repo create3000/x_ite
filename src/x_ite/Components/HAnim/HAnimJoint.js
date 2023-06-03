@@ -71,10 +71,6 @@ function HAnimJoint (executionContext)
 HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
 {
    constructor: HAnimJoint,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

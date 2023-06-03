@@ -68,10 +68,6 @@ function PrimitivePickSensor (executionContext)
 PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
 {
    constructor: PrimitivePickSensor,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

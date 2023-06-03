@@ -66,10 +66,6 @@ function PixelTexture (executionContext)
 PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
 {
    constructor: PixelTexture,
-   getContainerField: function ()
-   {
-      return "texture";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

@@ -69,10 +69,6 @@ function ColorDamper (executionContext)
 ColorDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 {
    constructor: ColorDamper,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

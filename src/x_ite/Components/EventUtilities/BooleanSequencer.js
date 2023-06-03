@@ -61,10 +61,6 @@ function BooleanSequencer (executionContext)
 BooleanSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
 {
    constructor: BooleanSequencer,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

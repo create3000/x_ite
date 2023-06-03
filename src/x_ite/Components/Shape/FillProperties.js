@@ -67,10 +67,6 @@ function FillProperties (executionContext)
 FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: FillProperties,
-   getContainerField: function ()
-   {
-      return "fillProperties";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

@@ -66,10 +66,6 @@ function ListenerPointSource (executionContext)
 ListenerPointSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
 {
    constructor: ListenerPointSource,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["4.0", "Infinity"];

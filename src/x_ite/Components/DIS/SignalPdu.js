@@ -64,10 +64,6 @@ SignalPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototype)
    X3DBoundedObject .prototype,
 {
    constructor: SignalPdu,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

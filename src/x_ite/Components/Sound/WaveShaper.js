@@ -61,10 +61,6 @@ function WaveShaper (executionContext)
 WaveShaper .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
 {
    constructor: WaveShaper,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["4.0", "Infinity"];

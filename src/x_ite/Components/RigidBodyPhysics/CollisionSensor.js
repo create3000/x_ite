@@ -66,10 +66,6 @@ function CollisionSensor (executionContext)
 CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 {
    constructor: CollisionSensor,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

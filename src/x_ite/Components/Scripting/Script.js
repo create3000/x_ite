@@ -87,10 +87,6 @@ function Script (executionContext)
 Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 {
    constructor: Script,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

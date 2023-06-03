@@ -89,10 +89,6 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    X3DGeospatialObject .prototype,
 {
    constructor: GeoLOD,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

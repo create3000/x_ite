@@ -64,10 +64,6 @@ EspduTransform .prototype = Object .assign (Object .create (X3DGroupingNode .pro
    X3DSensorNode .prototype,
 {
    constructor: EspduTransform,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

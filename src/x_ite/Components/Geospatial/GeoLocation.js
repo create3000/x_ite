@@ -67,10 +67,6 @@ GeoLocation .prototype = Object .assign (Object .create (X3DTransformMatrix3DNod
    X3DGeospatialObject .prototype,
 {
    constructor: GeoLocation,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

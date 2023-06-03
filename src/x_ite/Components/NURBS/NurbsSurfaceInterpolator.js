@@ -67,10 +67,6 @@ function NurbsSurfaceInterpolator (executionContext)
 NurbsSurfaceInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: NurbsSurfaceInterpolator,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

@@ -70,10 +70,6 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create (X3DInterpol
    X3DGeospatialObject .prototype,
 {
    constructor: GeoPositionInterpolator,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

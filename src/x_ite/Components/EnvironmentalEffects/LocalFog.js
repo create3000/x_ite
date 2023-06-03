@@ -64,10 +64,6 @@ LocalFog .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    X3DFogObject .prototype,
 {
    constructor: LocalFog,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

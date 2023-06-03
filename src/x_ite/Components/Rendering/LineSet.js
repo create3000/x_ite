@@ -67,10 +67,6 @@ function LineSet (executionContext)
 LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: LineSet,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

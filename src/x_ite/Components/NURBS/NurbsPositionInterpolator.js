@@ -74,10 +74,6 @@ function NurbsPositionInterpolator (executionContext)
 NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: NurbsPositionInterpolator,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

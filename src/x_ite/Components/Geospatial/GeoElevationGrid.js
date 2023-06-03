@@ -75,10 +75,6 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
    X3DGeospatialObject .prototype,
 {
    constructor: GeoElevationGrid,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

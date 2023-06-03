@@ -69,10 +69,6 @@ function Appearance (executionContext)
 Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
 {
    constructor: Appearance,
-   getContainerField: function ()
-   {
-      return "appearance";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

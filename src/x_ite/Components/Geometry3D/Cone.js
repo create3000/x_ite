@@ -67,10 +67,6 @@ function Cone (executionContext)
 Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Cone,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

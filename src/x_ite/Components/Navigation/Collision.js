@@ -69,10 +69,6 @@ Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototyp
    X3DSensorNode .prototype,
 {
    constructor: Collision,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

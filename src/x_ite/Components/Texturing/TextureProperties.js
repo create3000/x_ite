@@ -69,10 +69,6 @@ function TextureProperties (executionContext)
 TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: TextureProperties,
-   getContainerField: function ()
-   {
-      return "textureProperties";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

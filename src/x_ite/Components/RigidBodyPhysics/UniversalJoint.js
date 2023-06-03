@@ -67,10 +67,6 @@ function UniversalJoint (executionContext)
 UniversalJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
 {
    constructor: UniversalJoint,
-   getContainerField: function ()
-   {
-      return "joints";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

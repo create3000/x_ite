@@ -83,10 +83,6 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: ShaderPart,
-   getContainerField: function ()
-   {
-      return "parts";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

@@ -66,10 +66,6 @@ function Layer (executionContext)
 Layer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
 {
    constructor: Layer,
-   getContainerField: function ()
-   {
-      return "layers";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

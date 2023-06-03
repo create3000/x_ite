@@ -62,10 +62,6 @@ function FloatVertexAttribute (executionContext)
 FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 {
    constructor: FloatVertexAttribute,
-   getContainerField: function ()
-   {
-      return "attrib";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

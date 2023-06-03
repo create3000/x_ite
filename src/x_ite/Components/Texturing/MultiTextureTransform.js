@@ -67,10 +67,6 @@ function MultiTextureTransform (executionContext)
 MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
 {
    constructor: MultiTextureTransform,
-   getContainerField: function ()
-   {
-      return "textureTransform";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

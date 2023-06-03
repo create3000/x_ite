@@ -278,10 +278,6 @@ function SpotLight (executionContext)
 SpotLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 {
    constructor: SpotLight,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["2.0", "Infinity"];

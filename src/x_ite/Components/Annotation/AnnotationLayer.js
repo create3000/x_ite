@@ -66,10 +66,6 @@ function AnnotationLayer (executionContext)
 AnnotationLayer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
 {
    constructor: AnnotationLayer,
-   getContainerField: function ()
-   {
-      return "layers";
-   },
    getSpecificationRange: function ()
    {
       return ["4.0", "Infinity"];

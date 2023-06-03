@@ -66,10 +66,6 @@ function VolumeData (executionContext)
 VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
 {
    constructor: VolumeData,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.3", "Infinity"];

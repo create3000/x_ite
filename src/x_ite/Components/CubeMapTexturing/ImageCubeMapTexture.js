@@ -82,10 +82,6 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
    X3DUrlObject .prototype,
 {
    constructor: ImageCubeMapTexture,
-   getContainerField: function ()
-   {
-      return "texture";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

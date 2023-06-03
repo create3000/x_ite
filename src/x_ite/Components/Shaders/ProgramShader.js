@@ -61,10 +61,6 @@ function ProgramShader (executionContext)
 ProgramShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
 {
    constructor: ProgramShader,
-   getContainerField: function ()
-   {
-      return "shaders";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

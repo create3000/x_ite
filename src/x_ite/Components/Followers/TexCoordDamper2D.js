@@ -67,10 +67,6 @@ TexCoordDamper2D .prototype = Object .assign (Object .create (X3DDamperNode .pro
    X3DArrayFollowerObject .prototype,
 {
    constructor: TexCoordDamper2D,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

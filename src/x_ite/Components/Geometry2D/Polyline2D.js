@@ -63,10 +63,6 @@ function Polyline2D (executionContext)
 Polyline2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: Polyline2D,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

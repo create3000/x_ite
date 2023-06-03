@@ -64,10 +64,6 @@ function SplinePositionInterpolator2D (executionContext)
 SplinePositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: SplinePositionInterpolator2D,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

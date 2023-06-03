@@ -63,10 +63,6 @@ function TriangleFanSet (executionContext)
 TriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: TriangleFanSet,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

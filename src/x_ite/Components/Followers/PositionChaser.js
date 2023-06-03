@@ -62,10 +62,6 @@ function PositionChaser (executionContext)
 PositionChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 {
    constructor: PositionChaser,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

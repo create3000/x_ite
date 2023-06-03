@@ -65,10 +65,6 @@ function PhysicalMaterial (executionContext)
 PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
 {
    constructor: PhysicalMaterial,
-   getContainerField: function ()
-   {
-      return "material";
-   },
    getSpecificationRange: function ()
    {
       return ["4.0", "Infinity"];

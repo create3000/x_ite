@@ -72,10 +72,6 @@ function CollidableShape (executionContext)
 CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
 {
    constructor: CollidableShape,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.2", "Infinity"];

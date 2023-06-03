@@ -63,10 +63,6 @@ function IndexedTriangleFanSet (executionContext)
 IndexedTriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedTriangleFanSet,
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

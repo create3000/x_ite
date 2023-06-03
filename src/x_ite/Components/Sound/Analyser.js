@@ -61,10 +61,6 @@ function Analyser (executionContext)
 Analyser .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
 {
    constructor: Analyser,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["4.0", "Infinity"];

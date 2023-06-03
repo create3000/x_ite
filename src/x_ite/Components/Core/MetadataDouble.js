@@ -64,10 +64,6 @@ MetadataDouble .prototype = Object .assign (Object .create (X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
    constructor: MetadataDouble,
-   getContainerField: function ()
-   {
-      return "metadata";
-   },
    getSpecificationRange: function ()
    {
       return ["3.0", "Infinity"];

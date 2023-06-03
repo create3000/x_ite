@@ -66,10 +66,6 @@ function IsoSurfaceVolumeData (executionContext)
 IsoSurfaceVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
 {
    constructor: IsoSurfaceVolumeData,
-   getContainerField: function ()
-   {
-      return "children";
-   },
    getSpecificationRange: function ()
    {
       return ["3.3", "Infinity"];
