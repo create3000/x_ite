@@ -118,4 +118,36 @@ Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
    },
 });
 
+Object .defineProperties (Fog,
+{
+   typeName:
+   {
+      value: "Fog",
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",        new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fogType",         new Fields .SFString ("LINEAR")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "color",           new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityRange", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",         new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",        new Fields .SFTime ()),
+      ]),
+   },
+});
+
 export default Fog;

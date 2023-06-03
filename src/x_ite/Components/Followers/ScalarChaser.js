@@ -122,4 +122,37 @@ ScalarChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototy
    },
 });
 
+Object .defineProperties (ScalarChaser,
+{
+   typeName:
+   {
+      value: "ScalarChaser",
+   },
+   componentName:
+   {
+      value: "Followers",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFFloat ()),
+      ]),
+   },
+});
+
 export default ScalarChaser;

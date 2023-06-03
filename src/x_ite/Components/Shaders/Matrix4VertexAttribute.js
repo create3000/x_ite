@@ -127,4 +127,32 @@ Matrix4VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAtt
    },
 });
 
+Object .defineProperties (Matrix4VertexAttribute,
+{
+   typeName:
+   {
+      value: "Matrix4VertexAttribute",
+   },
+   componentName:
+   {
+      value: "Shaders",
+   },
+   containerField:
+   {
+      value: "attrib",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "name",     new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "value",    new Fields .MFMatrix4f ()),
+      ]),
+   },
+});
+
 export default Matrix4VertexAttribute;

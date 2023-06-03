@@ -142,4 +142,37 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create (X3DInterpol
    },
 });
 
+Object .defineProperties (GeoPositionInterpolator,
+{
+   typeName:
+   {
+      value: "GeoPositionInterpolator",
+   },
+   componentName:
+   {
+      value: "Geospatial",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",        new Fields .MFString ("GD", "WE")),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_fraction",     new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "key",              new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "keyValue",         new Fields .MFVec3d ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",    new Fields .SFVec3d ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "geovalue_changed", new Fields .SFVec3d ()),
+      ]),
+   },
+});
+
 export default GeoPositionInterpolator;

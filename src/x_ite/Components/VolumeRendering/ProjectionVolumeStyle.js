@@ -216,4 +216,33 @@ ProjectionVolumeStyle .prototype = Object .assign (Object .create (X3DVolumeRend
    },
 });
 
+Object .defineProperties (ProjectionVolumeStyle,
+{
+   typeName:
+   {
+      value: "ProjectionVolumeStyle",
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+   },
+   containerField:
+   {
+      value: "renderStyle",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "type",               new Fields .SFString ("MAX")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "intensityThreshold", new Fields .SFFloat (0)),
+      ]),
+   },
+});
+
 export default ProjectionVolumeStyle;

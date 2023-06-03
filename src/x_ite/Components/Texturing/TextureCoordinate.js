@@ -165,4 +165,32 @@ TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureC
    },
 });
 
+Object .defineProperties (TextureCoordinate,
+{
+   typeName:
+   {
+      value: "TextureCoordinate",
+   },
+   componentName:
+   {
+      value: "Texturing",
+   },
+   containerField:
+   {
+      value: "texCoord",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
+      ]),
+   },
+});
+
 export default TextureCoordinate;

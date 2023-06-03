@@ -165,4 +165,32 @@ TextureCoordinate4D .prototype = Object .assign (Object .create (X3DSingleTextur
    },
 });
 
+Object .defineProperties (TextureCoordinate4D,
+{
+   typeName:
+   {
+      value: "TextureCoordinate4D",
+   },
+   componentName:
+   {
+      value: "Texturing3D",
+   },
+   containerField:
+   {
+      value: "texCoord",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.1", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec4f ()),
+      ]),
+   },
+});
+
 export default TextureCoordinate4D;

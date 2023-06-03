@@ -151,4 +151,31 @@ ContourPolyline2D .prototype = Object .assign (Object .create (X3DNurbsControlCu
    },
 });
 
+Object .defineProperties (ContourPolyline2D,
+{
+   typeName:
+   {
+      value: "ContourPolyline2D",
+   },
+   componentName:
+   {
+      value: "NURBS",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint", new Fields .MFVec2d ()),
+      ]),
+   },
+});
+
 export default ContourPolyline2D;

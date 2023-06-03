@@ -128,4 +128,32 @@ TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prot
    },
 });
 
+Object .defineProperties (TriangleSet2D,
+{
+   typeName:
+   {
+      value: "TriangleSet2D",
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+   },
+   containerField:
+   {
+      value: "geometry",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "vertices", new Fields .MFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
+      ]),
+   },
+});
+
 export default TriangleSet2D;

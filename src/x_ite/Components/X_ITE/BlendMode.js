@@ -192,4 +192,37 @@ BlendMode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .p
    },
 });
 
+Object .defineProperties (BlendMode,
+{
+   typeName:
+   {
+      value: "BlendMode",
+   },
+   componentName:
+   {
+      value: "X_ITE",
+   },
+   containerField:
+   {
+      value: "blendMode",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "blendColor",              new Fields .SFColorRGBA ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "sourceColorFactor",       new Fields .SFString ("SRC_ALPHA")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "sourceAlphaFactor",       new Fields .SFString ("ONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "destinationColorFactor",  new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "destinationAlphaFactor",  new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "colorEquation",           new Fields .SFString ("FUNC_ADD")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "alphaEquation",           new Fields .SFString ("FUNC_ADD")),
+      ]),
+   },
+});
+
 export default BlendMode;

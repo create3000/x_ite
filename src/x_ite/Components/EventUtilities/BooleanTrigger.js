@@ -94,4 +94,32 @@ BooleanTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prot
    },
 });
 
+Object .defineProperties (BooleanTrigger,
+{
+   typeName:
+   {
+      value: "BooleanTrigger",
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_triggerTime", new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTrue",     new Fields .SFBool ()),
+      ]),
+   },
+});
+
 export default BooleanTrigger;

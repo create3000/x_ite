@@ -289,4 +289,42 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
    },
 });
 
+Object .defineProperties (CylinderSensor,
+{
+   typeName:
+   {
+      value: "CylinderSensor",
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",        new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axisRotation",       new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "diskAngle",          new Fields .SFFloat (0.261792)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle",           new Fields .SFFloat (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "offset",             new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed", new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "rotation_changed",   new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",           new Fields .SFBool ()),
+      ]),
+   },
+});
+
 export default CylinderSensor;

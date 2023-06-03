@@ -140,4 +140,34 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DC
    },
 });
 
+Object .defineProperties (BoundaryEnhancementVolumeStyle,
+{
+   typeName:
+   {
+      value: "BoundaryEnhancementVolumeStyle",
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+   },
+   containerField:
+   {
+      value: "renderStyle",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "retainedOpacity", new Fields .SFFloat (0.2)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "boundaryOpacity", new Fields .SFFloat (0.9)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "opacityFactor",   new Fields .SFFloat (2)),
+      ]),
+   },
+});
+
 export default BoundaryEnhancementVolumeStyle;

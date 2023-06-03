@@ -106,4 +106,41 @@ DISEntityTypeMapping .prototype = Object .assign (Object .create (X3DInfoNode .p
    },
 });
 
+Object .defineProperties (DISEntityTypeMapping,
+{
+   typeName:
+   {
+      value: "DISEntityTypeMapping",
+   },
+   componentName:
+   {
+      value: "DIS",
+   },
+   containerField:
+   {
+      value: "mapping",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "category",             new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "country",              new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "domain",               new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "extra",                new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "kind",                 new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "specific",             new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "subcategory",          new Fields .SFInt32 ()),
+      ]),
+   },
+});
+
 export default DISEntityTypeMapping;

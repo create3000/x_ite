@@ -148,4 +148,33 @@ Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototyp
    },
 });
 
+Object .defineProperties (Arc2D,
+{
+   typeName:
+   {
+      value: "Arc2D",
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+   },
+   containerField:
+   {
+      value: "geometry",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "startAngle", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",   new Fields .SFFloat (1.5708)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",     new Fields .SFFloat (1)),
+      ]),
+   },
+});
+
 export default Arc2D;

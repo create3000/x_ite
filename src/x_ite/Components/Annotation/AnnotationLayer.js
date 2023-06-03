@@ -95,4 +95,34 @@ AnnotationLayer .prototype = Object .assign (Object .create (X3DLayerNode .proto
    },
 });
 
+Object .defineProperties (AnnotationLayer,
+{
+   typeName:
+   {
+      value: "AnnotationLayer",
+   },
+   componentName:
+   {
+      value: "Annotation",
+   },
+   containerField:
+   {
+      value: "layers",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "isPickable",   new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "layoutPolicy", new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "shownGroupID", new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "viewport",     new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default AnnotationLayer;

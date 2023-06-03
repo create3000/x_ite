@@ -152,4 +152,31 @@ ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
    },
 });
 
+Object .defineProperties (ColorRGBA,
+{
+   typeName:
+   {
+      value: "ColorRGBA",
+   },
+   componentName:
+   {
+      value: "Rendering",
+   },
+   containerField:
+   {
+      value: "color",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .MFColorRGBA ()),
+      ]),
+   },
+});
+
 export default ColorRGBA;

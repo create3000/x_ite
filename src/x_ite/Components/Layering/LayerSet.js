@@ -194,4 +194,33 @@ LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
    },
 });
 
+Object .defineProperties (LayerSet,
+{
+   typeName:
+   {
+      value: "LayerSet",
+   },
+   componentName:
+   {
+      value: "Layering",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "activeLayer", new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "order",       new Fields .MFInt32 (0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "layers",      new Fields .MFNode ()),
+      ]),
+   },
+});
+
 export default LayerSet;

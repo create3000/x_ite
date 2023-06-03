@@ -95,4 +95,32 @@ BooleanToggle .prototype = Object .assign (Object .create (X3DChildNode .prototy
    },
 });
 
+Object .defineProperties (BooleanToggle,
+{
+   typeName:
+   {
+      value: "BooleanToggle",
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "toggle",      new Fields .SFBool ()),
+      ]),
+   },
+});
+
 export default BooleanToggle;

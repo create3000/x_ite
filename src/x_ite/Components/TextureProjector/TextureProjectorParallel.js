@@ -255,4 +255,41 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTexture
    },
 });
 
+Object .defineProperties (TextureProjectorParallel,
+{
+   typeName:
+   {
+      value: "TextureProjectorParallel",
+   },
+   componentName:
+   {
+      value: "TextureProjector",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "on",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "global",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "location",     new Fields .SFVec3f (0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",    new Fields .SFVec3f (0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "upVector",     new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView" , new Fields .MFFloat (-1, -1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "nearDistance", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "farDistance",  new Fields .SFFloat (10)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "aspectRatio",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "texture",      new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default TextureProjectorParallel;

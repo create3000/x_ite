@@ -96,4 +96,32 @@ WorldInfo .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
    },
 });
 
+Object .defineProperties (WorldInfo,
+{
+   typeName:
+   {
+      value: "WorldInfo",
+   },
+   componentName:
+   {
+      value: "Core",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "title",    new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "info",     new Fields .MFString ()),
+      ]),
+   },
+});
+
 export default WorldInfo;

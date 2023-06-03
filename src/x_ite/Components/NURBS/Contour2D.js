@@ -156,4 +156,33 @@ function filter (array, remove)
    return array .filter (value => !set .has (value));
 }
 
+Object .defineProperties (Contour2D,
+{
+   typeName:
+   {
+      value: "Contour2D",
+   },
+   componentName:
+   {
+      value: "NURBS",
+   },
+   containerField:
+   {
+      value: "trimmingContour",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "children",       new Fields .MFNode ()),
+      ]),
+   },
+});
+
 export default Contour2D;

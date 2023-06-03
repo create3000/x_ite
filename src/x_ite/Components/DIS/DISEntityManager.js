@@ -92,4 +92,37 @@ DISEntityManager .prototype = Object .assign (Object .create (X3DChildNode .prot
    },
 });
 
+Object .defineProperties (DISEntityManager,
+{
+   typeName:
+   {
+      value: "DISEntityManager",
+   },
+   componentName:
+   {
+      value: "DIS",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "address",         new Fields .SFString ("localhost")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "applicationID",   new Fields .SFInt32 (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "children",        new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "port",            new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "siteID",          new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "addedEntities",   new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "removedEntities", new Fields .MFNode ()),
+      ]),
+   },
+});
+
 export default DISEntityManager;

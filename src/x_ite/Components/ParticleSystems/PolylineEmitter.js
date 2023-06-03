@@ -230,4 +230,38 @@ PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterN
    },
 });
 
+Object .defineProperties (PolylineEmitter,
+{
+   typeName:
+   {
+      value: "PolylineEmitter",
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+   },
+   containerField:
+   {
+      value: "emitter",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",  new Fields .MFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "coord",       new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default PolylineEmitter;

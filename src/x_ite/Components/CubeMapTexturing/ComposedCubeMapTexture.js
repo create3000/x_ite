@@ -236,4 +236,38 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
    },
 });
 
+Object .defineProperties (ComposedCubeMapTexture,
+{
+   typeName:
+   {
+      value: "ComposedCubeMapTexture",
+   },
+   componentName:
+   {
+      value: "CubeMapTexturing",
+   },
+   containerField:
+   {
+      value: "texture",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.1", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "frontTexture",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "backTexture",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "leftTexture",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rightTexture",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bottomTexture",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "topTexture",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default ComposedCubeMapTexture;

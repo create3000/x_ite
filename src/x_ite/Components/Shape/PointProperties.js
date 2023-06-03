@@ -151,4 +151,34 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
    },
 });
 
+Object .defineProperties (PointProperties,
+{
+   typeName:
+   {
+      value: "PointProperties",
+   },
+   componentName:
+   {
+      value: "Shape",
+   },
+   containerField:
+   {
+      value: "pointProperties",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeScaleFactor", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMinValue",    new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMaxValue",    new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "attenuation",          new Fields .MFFloat (1, 0, 0)),
+      ]),
+   },
+});
+
 export default PointProperties;

@@ -102,4 +102,36 @@ IntegerSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .
    },
 });
 
+Object .defineProperties (IntegerSequencer,
+{
+   typeName:
+   {
+      value: "IntegerSequencer",
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "previous",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "next",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFInt32 ()),
+      ]),
+   },
+});
+
 export default IntegerSequencer;

@@ -103,4 +103,36 @@ GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype)
    },
 });
 
+Object .defineProperties (GeoMetadata,
+{
+   typeName:
+   {
+      value: "GeoMetadata",
+   },
+   componentName:
+   {
+      value: "Geospatial",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "summary",              new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "data",                 new Fields .MFNode ()),
+      ]),
+   },
+});
+
 export default GeoMetadata;

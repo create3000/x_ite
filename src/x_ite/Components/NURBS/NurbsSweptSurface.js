@@ -167,4 +167,34 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeom
    },
 });
 
+Object .defineProperties (NurbsSweptSurface,
+{
+   typeName:
+   {
+      value: "NurbsSweptSurface",
+   },
+   componentName:
+   {
+      value: "NURBS",
+   },
+   containerField:
+   {
+      value: "geometry",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",               new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "crossSectionCurve", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "trajectoryCurve",   new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default NurbsSweptSurface;

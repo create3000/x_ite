@@ -243,4 +243,36 @@ function traverse (type, renderObject)
    }
 }
 
+Object .defineProperties (ViewpointGroup,
+{
+   typeName:
+   {
+      value: "ViewpointGroup",
+   },
+   componentName:
+   {
+      value: "Navigation",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "displayed",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "size",              new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "center",            new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "children",          new Fields .MFNode ()),
+      ]),
+   },
+});
+
 export default ViewpointGroup;

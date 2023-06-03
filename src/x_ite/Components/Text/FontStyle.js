@@ -102,4 +102,39 @@ FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototy
    },
 });
 
+Object .defineProperties (FontStyle,
+{
+   typeName:
+   {
+      value: "FontStyle",
+   },
+   componentName:
+   {
+      value: "Text",
+   },
+   containerField:
+   {
+      value: "fontStyle",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "language",    new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "family",      new Fields .MFString ("SERIF")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "style",       new Fields .SFString ("PLAIN")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "size",        new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "spacing",     new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "horizontal",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "leftToRight", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
+      ]),
+   },
+});
+
 export default FontStyle;

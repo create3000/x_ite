@@ -48,7 +48,7 @@ Object .defineProperties ($typeName,
    },
    specificationRange:
    {
-      value: Object .freeze ($specificationRange)
+      value: Object .freeze ($specificationRange),
    },
    fieldDefinitions:
    {
@@ -59,8 +59,9 @@ EOT
 
    $file =~ s/export default/$statics\nexport default/s;
 
-   say $file;
-   exit;
+   open FILE, ">", $filename;
+   print FILE $file;
+   close FILE;
 }
 
-static $_ foreach sort `find /Users/holger/Desktop/X_ITE/x_ite/src/x_ite/Components -type f`;
+static $_ foreach sort `find /Users/holger/Desktop/X_ITE/x_ite/src/x_ite/Components -type f -mindepth 2`;

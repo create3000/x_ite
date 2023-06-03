@@ -243,4 +243,33 @@ Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    { },
 });
 
+Object .defineProperties (Disk2D,
+{
+   typeName:
+   {
+      value: "Disk2D",
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+   },
+   containerField:
+   {
+      value: "geometry",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "innerRadius", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "outerRadius", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
+      ]),
+   },
+});
+
 export default Disk2D;

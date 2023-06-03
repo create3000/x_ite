@@ -115,4 +115,39 @@ PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
    },
 });
 
+Object .defineProperties (PackagedShader,
+{
+   typeName:
+   {
+      value: "PackagedShader",
+   },
+   componentName:
+   {
+      value: "Shaders",
+   },
+   containerField:
+   {
+      value: "shaders",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "language",             new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+      ]),
+   },
+});
+
 export default PackagedShader;

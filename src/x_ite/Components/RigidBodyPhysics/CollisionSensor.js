@@ -272,4 +272,35 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
    },
 });
 
+Object .defineProperties (CollisionSensor,
+{
+   typeName:
+   {
+      value: "CollisionSensor",
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "intersections", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "contacts",      new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "collider",      new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default CollisionSensor;

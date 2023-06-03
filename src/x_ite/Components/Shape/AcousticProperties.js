@@ -88,4 +88,36 @@ AcousticProperties .prototype = Object .assign (Object .create (X3DAppearanceChi
    },
 });
 
+Object .defineProperties (AcousticProperties,
+{
+   typeName:
+   {
+      value: "AcousticProperties",
+   },
+   componentName:
+   {
+      value: "Shape",
+   },
+   containerField:
+   {
+      value: "AcousticProperties",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "absorption", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "refraction", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "diffuse",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specular",   new Fields .SFFloat ()),
+      ]),
+   },
+});
+
 export default AcousticProperties;

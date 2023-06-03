@@ -90,4 +90,34 @@ AnnotationTarget .prototype = Object .assign (Object .create (X3DChildNode .prot
    },
 });
 
+Object .defineProperties (AnnotationTarget,
+{
+   typeName:
+   {
+      value: "AnnotationTarget",
+   },
+   componentName:
+   {
+      value: "Annotation",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "referencePoint", new Fields .SFVec3f (0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "leadLineStyle",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "marker",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "annotations",    new Fields .MFNode ()),
+      ]),
+   },
+});
+
 export default AnnotationTarget;

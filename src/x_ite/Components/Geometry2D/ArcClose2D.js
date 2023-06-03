@@ -213,4 +213,35 @@ ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototy
    })(),
 });
 
+Object .defineProperties (ArcClose2D,
+{
+   typeName:
+   {
+      value: "ArcClose2D",
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+   },
+   containerField:
+   {
+      value: "geometry",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "closureType", new Fields .SFString ("PIE")),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "startAngle",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",    new Fields .SFFloat (1.5708)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",      new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
+      ]),
+   },
+});
+
 export default ArcClose2D;

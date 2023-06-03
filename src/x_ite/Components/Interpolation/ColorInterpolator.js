@@ -118,4 +118,34 @@ ColorInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNo
    })(),
 });
 
+Object .defineProperties (ColorInterpolator,
+{
+   typeName:
+   {
+      value: "ColorInterpolator",
+   },
+   componentName:
+   {
+      value: "Interpolation",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFColor ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFColor ()),
+      ]),
+   },
+});
+
 export default ColorInterpolator;

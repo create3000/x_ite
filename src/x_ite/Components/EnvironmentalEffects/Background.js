@@ -145,4 +145,44 @@ Background .prototype = Object .assign (Object .create (X3DBackgroundNode .proto
    }
 });
 
+Object .defineProperties (Background,
+{
+   typeName:
+   {
+      value: "Background",
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",     new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "frontUrl",     new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "backUrl",      new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "leftUrl",      new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "rightUrl",     new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "topUrl",       new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "bottomUrl",    new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "skyAngle",     new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "skyColor",     new Fields .MFColor (new Fields .SFColor ())),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "groundAngle",  new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "groundColor",  new Fields .MFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transparency", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",     new Fields .SFTime ()),
+      ]),
+   },
+});
+
 export default Background;

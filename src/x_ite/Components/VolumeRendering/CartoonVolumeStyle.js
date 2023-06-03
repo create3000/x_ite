@@ -297,4 +297,35 @@ CartoonVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVol
    },
 });
 
+Object .defineProperties (CartoonVolumeStyle,
+{
+   typeName:
+   {
+      value: "CartoonVolumeStyle",
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+   },
+   containerField:
+   {
+      value: "renderStyle",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "colorSteps",      new Fields .SFInt32 (4)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "orthogonalColor", new Fields .SFColorRGBA (1, 1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "parallelColor",   new Fields .SFColorRGBA (0, 0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceNormals",  new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default CartoonVolumeStyle;

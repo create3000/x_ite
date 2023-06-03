@@ -166,4 +166,33 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
    },
 });
 
+Object .defineProperties (LineProperties,
+{
+   typeName:
+   {
+      value: "LineProperties",
+   },
+   componentName:
+   {
+      value: "Shape",
+   },
+   containerField:
+   {
+      value: "lineProperties",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "applied",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "linetype",             new Fields .SFInt32 (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "linewidthScaleFactor", new Fields .SFFloat ()),
+      ]),
+   },
+});
+
 export default LineProperties;

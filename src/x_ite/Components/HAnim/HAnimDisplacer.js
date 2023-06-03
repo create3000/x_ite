@@ -89,4 +89,35 @@ HAnimDisplacer .prototype = Object .assign (Object .create (X3DGeometricProperty
    },
 });
 
+Object .defineProperties (HAnimDisplacer,
+{
+   typeName:
+   {
+      value: "HAnimDisplacer",
+   },
+   componentName:
+   {
+      value: "HAnim",
+   },
+   containerField:
+   {
+      value: "displacers",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",   new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "name",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",    new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "displacements", new Fields .MFVec3f ()),
+      ]),
+   },
+});
+
 export default HAnimDisplacer;

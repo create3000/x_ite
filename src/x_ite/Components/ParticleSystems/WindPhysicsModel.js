@@ -128,4 +128,35 @@ WindPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysics
    })(),
 });
 
+Object .defineProperties (WindPhysicsModel,
+{
+   typeName:
+   {
+      value: "WindPhysicsModel",
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+   },
+   containerField:
+   {
+      value: "physics",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",      new Fields .SFFloat (0.1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "gustiness",  new Fields .SFFloat (0.1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "turbulence", new Fields .SFFloat ()),
+      ]),
+   },
+});
+
 export default WindPhysicsModel;

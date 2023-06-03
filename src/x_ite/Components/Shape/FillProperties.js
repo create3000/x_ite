@@ -165,4 +165,34 @@ FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
    },
 });
 
+Object .defineProperties (FillProperties,
+{
+   typeName:
+   {
+      value: "FillProperties",
+   },
+   componentName:
+   {
+      value: "Shape",
+   },
+   containerField:
+   {
+      value: "fillProperties",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "filled",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "hatched",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "hatchColor", new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "hatchStyle", new Fields .SFInt32 (1)),
+      ]),
+   },
+});
+
 export default FillProperties;

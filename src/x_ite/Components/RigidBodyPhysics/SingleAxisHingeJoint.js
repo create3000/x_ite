@@ -239,4 +239,44 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointN
    })(),
 });
 
+Object .defineProperties (SingleAxisHingeJoint,
+{
+   typeName:
+   {
+      value: "SingleAxisHingeJoint",
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+   },
+   containerField:
+   {
+      value: "joints",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",         new Fields .MFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",         new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis",                new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle",            new Fields .SFFloat (-3.14159)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle",            new Fields .SFFloat (3.14159)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle",            new Fields .SFFloat (-3.14159)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pickable",            new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "angle",               new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "angleRate",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body1",               new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body2",               new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default SingleAxisHingeJoint;

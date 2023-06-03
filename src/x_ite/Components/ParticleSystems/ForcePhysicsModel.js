@@ -106,4 +106,32 @@ ForcePhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysic
    })(),
 });
 
+Object .defineProperties (ForcePhysicsModel,
+{
+   typeName:
+   {
+      value: "ForcePhysicsModel",
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+   },
+   containerField:
+   {
+      value: "physics",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "force",    new Fields .SFVec3f (0, -9.8, 0)),
+      ]),
+   },
+});
+
 export default ForcePhysicsModel;

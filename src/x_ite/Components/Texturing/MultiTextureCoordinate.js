@@ -186,4 +186,31 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
    },
 });
 
+Object .defineProperties (MultiTextureCoordinate,
+{
+   typeName:
+   {
+      value: "MultiTextureCoordinate",
+   },
+   componentName:
+   {
+      value: "Texturing",
+   },
+   containerField:
+   {
+      value: "texCoord",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "texCoord", new Fields .MFNode ()),
+      ]),
+   },
+});
+
 export default MultiTextureCoordinate;

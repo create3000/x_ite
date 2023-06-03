@@ -264,4 +264,36 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
    },
 });
 
+Object .defineProperties (ImageCubeMapTexture,
+{
+   typeName:
+   {
+      value: "ImageCubeMapTexture",
+   },
+   componentName:
+   {
+      value: "CubeMapTexturing",
+   },
+   containerField:
+   {
+      value: "texture",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default ImageCubeMapTexture;

@@ -98,4 +98,33 @@ MetadataSet .prototype = Object .assign (Object .create (X3DNode .prototype),
    },
 });
 
+Object .defineProperties (MetadataSet,
+{
+   typeName:
+   {
+      value: "MetadataSet",
+   },
+   componentName:
+   {
+      value: "Core",
+   },
+   containerField:
+   {
+      value: "metadata",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "value",     new Fields .MFNode ()),
+      ]),
+   },
+});
+
 export default MetadataSet;

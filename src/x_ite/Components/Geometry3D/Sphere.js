@@ -132,4 +132,32 @@ Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    },
 });
 
+Object .defineProperties (Sphere,
+{
+   typeName:
+   {
+      value: "Sphere",
+   },
+   componentName:
+   {
+      value: "Geometry3D",
+   },
+   containerField:
+   {
+      value: "geometry",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
+      ]),
+   },
+});
+
 export default Sphere;

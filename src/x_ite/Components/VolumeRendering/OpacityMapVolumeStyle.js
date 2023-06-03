@@ -165,4 +165,32 @@ OpacityMapVolumeStyle .prototype = Object .assign (Object .create (X3DComposable
    },
 });
 
+Object .defineProperties (OpacityMapVolumeStyle,
+{
+   typeName:
+   {
+      value: "OpacityMapVolumeStyle",
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+   },
+   containerField:
+   {
+      value: "renderStyle",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transferFunction", new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default OpacityMapVolumeStyle;

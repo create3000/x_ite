@@ -281,4 +281,34 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironm
    })(),
 });
 
+Object .defineProperties (GeneratedCubeMapTexture,
+{
+   typeName:
+   {
+      value: "GeneratedCubeMapTexture",
+   },
+   componentName:
+   {
+      value: "CubeMapTexturing",
+   },
+   containerField:
+   {
+      value: "texture",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "update",            new Fields .SFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "size",              new Fields .SFInt32 (128)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default GeneratedCubeMapTexture;

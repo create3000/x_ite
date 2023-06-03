@@ -85,4 +85,31 @@ Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .proto
    },
 });
 
+Object .defineProperties (Coordinate,
+{
+   typeName:
+   {
+      value: "Coordinate",
+   },
+   componentName:
+   {
+      value: "Rendering",
+   },
+   containerField:
+   {
+      value: "coord",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
+      ]),
+   },
+});
+
 export default Coordinate;

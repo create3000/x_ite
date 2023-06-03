@@ -115,4 +115,34 @@ LocalFog .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    },
 });
 
+Object .defineProperties (LocalFog,
+{
+   typeName:
+   {
+      value: "LocalFog",
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fogType",         new Fields .SFString ("LINEAR")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "color",           new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityRange", new Fields .SFFloat ()),
+      ]),
+   },
+});
+
 export default LocalFog;

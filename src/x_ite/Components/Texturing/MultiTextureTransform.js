@@ -140,4 +140,31 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
    },
 });
 
+Object .defineProperties (MultiTextureTransform,
+{
+   typeName:
+   {
+      value: "MultiTextureTransform",
+   },
+   componentName:
+   {
+      value: "Texturing",
+   },
+   containerField:
+   {
+      value: "textureTransform",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .MFNode ()),
+      ]),
+   },
+});
+
 export default MultiTextureTransform;

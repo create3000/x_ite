@@ -190,4 +190,32 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVo
    }
 });
 
+Object .defineProperties (ComposedVolumeStyle,
+{
+   typeName:
+   {
+      value: "ComposedVolumeStyle",
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+   },
+   containerField:
+   {
+      value: "renderStyle",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle", new Fields .MFNode ()),
+      ]),
+   },
+});
+
 export default ComposedVolumeStyle;

@@ -137,4 +137,33 @@ FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttri
    },
 });
 
+Object .defineProperties (FloatVertexAttribute,
+{
+   typeName:
+   {
+      value: "FloatVertexAttribute",
+   },
+   componentName:
+   {
+      value: "Shaders",
+   },
+   containerField:
+   {
+      value: "attrib",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "name",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "numComponents", new Fields .SFInt32 (4)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "value",         new Fields .MFFloat ()),
+      ]),
+   },
+});
+
 export default FloatVertexAttribute;

@@ -331,4 +331,37 @@ MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .protot
    },
 });
 
+Object .defineProperties (MultiTexture,
+{
+   typeName:
+   {
+      value: "MultiTexture",
+   },
+   componentName:
+   {
+      value: "Texturing",
+   },
+   containerField:
+   {
+      value: "texture",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "color",       new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "alpha",       new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mode",        new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "source",      new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "function",    new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "texture",     new Fields .MFNode ()),
+      ]),
+   },
+});
+
 export default MultiTexture;

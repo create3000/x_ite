@@ -171,4 +171,38 @@ Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    },
 });
 
+Object .defineProperties (Text,
+{
+   typeName:
+   {
+      value: "Text",
+   },
+   componentName:
+   {
+      value: "Text",
+   },
+   containerField:
+   {
+      value: "geometry",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "string",     new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "length",     new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "maxExtent",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "origin",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "textBounds", new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "lineBounds", new Fields .MFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fontStyle",  new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default Text;

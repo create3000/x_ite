@@ -167,4 +167,32 @@ ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    },
 });
 
+Object .defineProperties (ClipPlane,
+{
+   typeName:
+   {
+      value: "ClipPlane",
+   },
+   componentName:
+   {
+      value: "Rendering",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "plane",    new Fields .SFVec4f (0, 1, 0, 0)),
+      ]),
+   },
+});
+
 export default ClipPlane;

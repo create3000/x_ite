@@ -96,4 +96,31 @@ Polypoint2D .prototype = Object .assign (Object .create (X3DPointGeometryNode .p
    },
 });
 
+Object .defineProperties (Polypoint2D,
+{
+   typeName:
+   {
+      value: "Polypoint2D",
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+   },
+   containerField:
+   {
+      value: "geometry",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
+      ]),
+   },
+});
+
 export default Polypoint2D;

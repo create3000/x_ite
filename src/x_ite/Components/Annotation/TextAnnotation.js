@@ -91,4 +91,35 @@ TextAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .p
    },
 });
 
+Object .defineProperties (TextAnnotation,
+{
+   typeName:
+   {
+      value: "TextAnnotation",
+   },
+   componentName:
+   {
+      value: "Annotation",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "annotationGroupID", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "displayPolicy",     new Fields .SFString ("NEVER")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "contentType",       new Fields .SFString ("text/plain")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "text",              new Fields .SFString ()),
+      ]),
+   },
+});
+
 export default TextAnnotation;

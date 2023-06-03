@@ -134,4 +134,32 @@ Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .protot
    })(),
 });
 
+Object .defineProperties (Rectangle2D,
+{
+   typeName:
+   {
+      value: "Rectangle2D",
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+   },
+   containerField:
+   {
+      value: "geometry",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec2f (2, 2)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
+      ]),
+   },
+});
+
 export default Rectangle2D;

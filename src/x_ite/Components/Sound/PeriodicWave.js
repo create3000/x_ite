@@ -87,4 +87,35 @@ PeriodicWave .prototype = Object .assign (Object .create (X3DSoundNode .prototyp
    },
 });
 
+Object .defineProperties (PeriodicWave,
+{
+   typeName:
+   {
+      value: "PeriodicWave",
+   },
+   componentName:
+   {
+      value: "Sound",
+   },
+   containerField:
+   {
+      value: "periodicWave",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",   new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "optionsReal",   new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "optionsImag",   new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "type",          new Fields .SFString ("square")),
+      ]),
+   },
+});
+
 export default PeriodicWave;

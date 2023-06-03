@@ -204,4 +204,35 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prot
    },
 });
 
+Object .defineProperties (PointSet,
+{
+   typeName:
+   {
+      value: "PointSet",
+   },
+   componentName:
+   {
+      value: "Rendering",
+   },
+   containerField:
+   {
+      value: "geometry",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "attrib",   new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fogCoord", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normal",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "coord",    new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default PointSet;

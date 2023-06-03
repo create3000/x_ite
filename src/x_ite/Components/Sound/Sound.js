@@ -288,4 +288,43 @@ Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
    })(),
 });
 
+Object .defineProperties (Sound,
+{
+   typeName:
+   {
+      value: "Sound",
+   },
+   componentName:
+   {
+      value: "Sound",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "spatialize",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",   new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "location",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "minBack",     new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "minFront",    new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "maxBack",     new Fields .SFFloat (10)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "maxFront",    new Fields .SFFloat (10)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "priority",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "source",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",    new Fields .MFNode ()),
+      ]),
+   },
+});
+
 export default Sound;

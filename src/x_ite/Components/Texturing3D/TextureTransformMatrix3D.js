@@ -100,4 +100,32 @@ TextureTransformMatrix3D .prototype = Object .assign (Object .create (X3DSingleT
    },
 });
 
+Object .defineProperties (TextureTransformMatrix3D,
+{
+   typeName:
+   {
+      value: "TextureTransformMatrix3D",
+   },
+   componentName:
+   {
+      value: "Texturing3D",
+   },
+   containerField:
+   {
+      value: "textureTransform",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.1", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "matrix",   new Fields .SFMatrix4f ()),
+      ]),
+   },
+});
+
 export default TextureTransformMatrix3D;

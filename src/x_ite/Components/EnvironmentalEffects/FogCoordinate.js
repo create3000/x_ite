@@ -139,4 +139,31 @@ FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyN
    },
 });
 
+Object .defineProperties (FogCoordinate,
+{
+   typeName:
+   {
+      value: "FogCoordinate",
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+   },
+   containerField:
+   {
+      value: "fogCoord",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "depth",    new Fields .MFFloat ()),
+      ]),
+   },
+});
+
 export default FogCoordinate;

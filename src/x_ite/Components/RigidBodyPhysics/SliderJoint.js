@@ -217,4 +217,41 @@ SliderJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prot
    },
 });
 
+Object .defineProperties (SliderJoint,
+{
+   typeName:
+   {
+      value: "SliderJoint",
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+   },
+   containerField:
+   {
+      value: "joints",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",         new Fields .MFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis",                new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minSeparation",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxSeparation",       new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "sliderForce",         new Fields .SFFloat (0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "separation",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "separationRate",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body1",               new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body2",               new Fields .SFNode ()),
+      ]),
+   },
+});
+
 export default SliderJoint;

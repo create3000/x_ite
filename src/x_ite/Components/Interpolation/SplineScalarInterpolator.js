@@ -133,4 +133,37 @@ SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpo
    },
 });
 
+Object .defineProperties (SplineScalarInterpolator,
+{
+   typeName:
+   {
+      value: "SplineScalarInterpolator",
+   },
+   componentName:
+   {
+      value: "Interpolation",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "closed",            new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",               new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",          new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyVelocity",       new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalizeVelocity", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed",     new Fields .SFFloat ()),
+      ]),
+   },
+});
+
 export default SplineScalarInterpolator;

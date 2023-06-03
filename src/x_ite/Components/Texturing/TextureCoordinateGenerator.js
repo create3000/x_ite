@@ -149,4 +149,33 @@ TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingl
    },
 });
 
+Object .defineProperties (TextureCoordinateGenerator,
+{
+   typeName:
+   {
+      value: "TextureCoordinateGenerator",
+   },
+   componentName:
+   {
+      value: "Texturing",
+   },
+   containerField:
+   {
+      value: "texCoord",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",   new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mode",      new Fields .SFString ("SPHERE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "parameter", new Fields .MFFloat ()),
+      ]),
+   },
+});
+
 export default TextureCoordinateGenerator;
