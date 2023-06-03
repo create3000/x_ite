@@ -260,11 +260,6 @@ Object .defineProperties (SFRotation,
       value: "SFRotation",
       enumerate: true,
    },
-   type:
-   {
-      value: X3DConstants .SFRotation,
-      enumerate: true,
-   },
 });
 
 export default SFRotation;

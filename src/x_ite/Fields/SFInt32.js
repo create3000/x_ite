@@ -101,11 +101,6 @@ Object .defineProperties (SFInt32,
       value: "SFInt32",
       enumerate: true,
    },
-   type:
-   {
-      value: X3DConstants .SFInt32,
-      enumerate: true,
-   },
 });
 
 export default SFInt32;

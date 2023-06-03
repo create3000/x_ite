@@ -115,7 +115,7 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
    },
    getType: function ()
    {
-      return this .constructor .type;
+      return X3DConstants [this .constructor .typeName];
    },
    setAccessType: function (value)
    {

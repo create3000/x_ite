@@ -105,11 +105,6 @@ Object .defineProperties (SFDouble,
       value: "SFDouble",
       enumerate: true,
    },
-   type:
-   {
-      value: X3DConstants .SFDouble,
-      enumerate: true,
-   },
 });
 
 export default SFDouble;

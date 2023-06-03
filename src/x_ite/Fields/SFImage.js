@@ -364,11 +364,6 @@ Object .defineProperties (SFImage,
       value: "SFImage",
       enumerate: true,
    },
-   type:
-   {
-      value: X3DConstants .SFImage,
-      enumerate: true,
-   },
 });
 
 export default SFImage;

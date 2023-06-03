@@ -104,11 +104,6 @@ Object .defineProperties (SFBool,
       value: "SFBool",
       enumerate: true,
    },
-   type:
-   {
-      value: X3DConstants .SFBool,
-      enumerate: true,
-   },
 });
 
 export default SFBool;

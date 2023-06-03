@@ -131,11 +131,6 @@ Object .defineProperties (SFString,
       value: "SFString",
       enumerate: true,
    },
-   type:
-   {
-      value: X3DConstants .SFString,
-      enumerate: true,
-   },
 });
 
 export default SFString;

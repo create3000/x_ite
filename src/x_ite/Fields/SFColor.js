@@ -223,11 +223,6 @@ Object .defineProperties (SFColor,
       value: "SFColor",
       enumerate: true,
    },
-   type:
-   {
-      value: X3DConstants .SFColor,
-      enumerate: true,
-   },
 });
 
 export default SFColor;

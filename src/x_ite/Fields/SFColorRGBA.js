@@ -190,11 +190,6 @@ Object .defineProperties (SFColorRGBA,
       value: "SFColorRGBA",
       enumerate: true,
    },
-   type:
-   {
-      value: X3DConstants .SFColorRGBA,
-      enumerate: true,
-   },
 });
 
 export default SFColorRGBA;

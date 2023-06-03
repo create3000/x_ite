@@ -101,11 +101,6 @@ Object .defineProperties (SFTime,
       value: "SFTime",
       enumerate: true,
    },
-   type:
-   {
-      value: X3DConstants .SFTime,
-      enumerate: true,
-   },
 });
 
 export default SFTime;

@@ -105,11 +105,6 @@ Object .defineProperties (SFFloat,
       value: "SFFloat",
       enumerate: true,
    },
-   type:
-   {
-      value: X3DConstants .SFFloat,
-      enumerate: true,
-   },
 });
 
 export default SFFloat;

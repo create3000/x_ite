@@ -59,11 +59,6 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double
          value: TypeName,
          enumerate: true,
       },
-   type:
-   {
-      value: X3DConstants [TypeName],
-      enumerate: true,
-   },
    });
 
    return Object .assign (Object .create (X3DField .prototype),

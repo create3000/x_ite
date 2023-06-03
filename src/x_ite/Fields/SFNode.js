@@ -484,11 +484,6 @@ Object .defineProperties (SFNode,
       value: "SFNode",
       enumerate: true,
    },
-   type:
-   {
-      value: X3DConstants .SFNode,
-      enumerate: true,
-   },
 });
 
 export default SFNode;

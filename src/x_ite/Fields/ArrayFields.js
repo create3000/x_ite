@@ -406,11 +406,6 @@ Object .defineProperties (MFNode,
       value: "MFNode",
       enumerate: true,
    },
-   type:
-   {
-      value: X3DConstants .MFNode,
-      enumerate: true,
-   },
 });
 
 function MFString (... args)
@@ -461,11 +456,6 @@ Object .defineProperties (MFString,
       value: "MFString",
       enumerate: true,
    },
-   type:
-   {
-      value: X3DConstants .MFString,
-      enumerate: true,
-   },
 });
 
 /**
@@ -494,11 +484,6 @@ Object .defineProperties (MFImage,
    typeName:
    {
       value: "MFImage",
-      enumerate: true,
-   },
-   type:
-   {
-      value: X3DConstants .MFImage,
       enumerate: true,
    },
 });
@@ -539,11 +524,6 @@ function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Compone
       typeName:
       {
          value: TypeName,
-         enumerate: true,
-      },
-      type:
-      {
-         value: X3DConstants [TypeName],
          enumerate: true,
       },
    });
