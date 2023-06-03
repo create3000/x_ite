@@ -69,6 +69,8 @@ import Algorithm           from "../../standard/Math/Algorithm.js";
 import MapUtilities        from "../../standard/Utility/MapUtilities.js";
 import _                   from "../../locale/gettext.js";
 
+AbstractNodes .add ("X3DBrowser", X3DBrowser);
+
 const
    _DOMIntegration   = Symbol (),
    _reject           = Symbol (),
@@ -85,6 +87,8 @@ function X3DBrowser (element)
       throw new Error ("Couldn't create browser, element has already a browser.");
 
    X3DBrowserContext .call (this, element);
+
+   this .addType (X3DConstants .X3DBrowser);
 
    this [_browserCallbacks] = new Map ();
    this [_console]          = document .getElementsByClassName ("x_ite-console");
