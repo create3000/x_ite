@@ -73,10 +73,6 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    X3DUrlObject .prototype,
 {
    constructor: MovieTexture,
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
    getContainerField: function ()
    {
       return "texture";

@@ -67,10 +67,6 @@ function UniversalJoint (executionContext)
 UniversalJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
 {
    constructor: UniversalJoint,
-   getComponentName: function ()
-   {
-      return "RigidBodyPhysics";
-   },
    getContainerField: function ()
    {
       return "joints";

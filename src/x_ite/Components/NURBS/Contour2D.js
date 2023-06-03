@@ -64,10 +64,6 @@ function Contour2D (executionContext)
 Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: Contour2D,
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
    getContainerField: function ()
    {
       return "trimmingContour";

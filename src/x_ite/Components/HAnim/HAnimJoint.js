@@ -71,10 +71,6 @@ function HAnimJoint (executionContext)
 HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
 {
    constructor: HAnimJoint,
-   getComponentName: function ()
-   {
-      return "HAnim";
-   },
    getContainerField: function ()
    {
       return "children";

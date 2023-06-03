@@ -65,10 +65,6 @@ function CollisionSpace (executionContext)
 CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpaceNode .prototype),
 {
    constructor: CollisionSpace,
-   getComponentName: function ()
-   {
-      return "RigidBodyPhysics";
-   },
    getContainerField: function ()
    {
       return "children";

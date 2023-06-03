@@ -63,10 +63,6 @@ function Coordinate (executionContext)
 Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
 {
    constructor: Coordinate,
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
    getContainerField: function ()
    {
       return "coord";

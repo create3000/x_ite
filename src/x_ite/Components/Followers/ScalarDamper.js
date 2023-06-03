@@ -62,10 +62,6 @@ function ScalarDamper (executionContext)
 ScalarDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 {
    constructor: ScalarDamper,
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
    getContainerField: function ()
    {
       return "children";

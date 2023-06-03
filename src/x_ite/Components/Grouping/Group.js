@@ -61,10 +61,6 @@ function Group (executionContext)
 Group .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: Group,
-   getComponentName: function ()
-   {
-      return "Grouping";
-   },
    getContainerField: function ()
    {
       return "children";

@@ -61,10 +61,6 @@ function HAnimSite (executionContext)
 HAnimSite .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
 {
    constructor: HAnimSite,
-   getComponentName: function ()
-   {
-      return "HAnim";
-   },
    getContainerField: function ()
    {
       return "children";

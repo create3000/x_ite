@@ -89,10 +89,6 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    X3DGeospatialObject .prototype,
 {
    constructor: GeoLOD,
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
    getContainerField: function ()
    {
       return "children";

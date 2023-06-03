@@ -75,10 +75,6 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
    X3DGeospatialObject .prototype,
 {
    constructor: GeoElevationGrid,
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
    getContainerField: function ()
    {
       return "geometry";

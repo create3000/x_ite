@@ -61,10 +61,6 @@ function NurbsPatchSurface (executionContext)
 NurbsPatchSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
 {
    constructor: NurbsPatchSurface,
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
    getContainerField: function ()
    {
       return "geometry";

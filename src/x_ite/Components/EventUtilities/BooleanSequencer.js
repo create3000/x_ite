@@ -61,10 +61,6 @@ function BooleanSequencer (executionContext)
 BooleanSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
 {
    constructor: BooleanSequencer,
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
    getContainerField: function ()
    {
       return "children";

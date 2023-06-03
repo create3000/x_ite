@@ -131,10 +131,6 @@ function VolumeEmitter (executionContext)
 VolumeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: VolumeEmitter,
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
    getContainerField: function ()
    {
       return "emitter";

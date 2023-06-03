@@ -61,10 +61,6 @@ function CADLayer (executionContext)
 CADLayer .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: CADLayer,
-   getComponentName: function ()
-   {
-      return "CADGeometry";
-   },
    getContainerField: function ()
    {
       return "children";

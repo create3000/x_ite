@@ -61,10 +61,6 @@ function WorldInfo (executionContext)
 WorldInfo .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
 {
    constructor: WorldInfo,
-   getComponentName: function ()
-   {
-      return "Core";
-   },
    getContainerField: function ()
    {
       return "children";

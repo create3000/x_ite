@@ -107,10 +107,6 @@ function ClipPlane (executionContext)
 ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: ClipPlane,
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
    getContainerField: function ()
    {
       return "children";

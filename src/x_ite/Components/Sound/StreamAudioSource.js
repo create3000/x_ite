@@ -64,10 +64,6 @@ function StreamAudioSource (executionContext)
 StreamAudioSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
 {
    constructor: StreamAudioSource,
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
    getContainerField: function ()
    {
       return "children";

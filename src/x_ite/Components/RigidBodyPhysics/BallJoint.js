@@ -70,10 +70,6 @@ function BallJoint (executionContext)
 BallJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
 {
    constructor: BallJoint,
-   getComponentName: function ()
-   {
-      return "RigidBodyPhysics";
-   },
    getContainerField: function ()
    {
       return "joints";

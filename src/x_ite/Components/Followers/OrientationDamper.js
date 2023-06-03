@@ -72,10 +72,6 @@ function OrientationDamper (executionContext)
 OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 {
    constructor: OrientationDamper,
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
    getContainerField: function ()
    {
       return "children";

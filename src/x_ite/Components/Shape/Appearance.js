@@ -69,10 +69,6 @@ function Appearance (executionContext)
 Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
 {
    constructor: Appearance,
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
    getContainerField: function ()
    {
       return "appearance";

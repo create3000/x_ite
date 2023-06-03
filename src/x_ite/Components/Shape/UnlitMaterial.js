@@ -61,10 +61,6 @@ function UnlitMaterial (executionContext)
 UnlitMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
 {
    constructor: UnlitMaterial,
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
    getContainerField: function ()
    {
       return "material";

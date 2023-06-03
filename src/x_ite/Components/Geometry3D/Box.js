@@ -64,10 +64,6 @@ function Box (executionContext)
 Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Box,
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
    getContainerField: function ()
    {
       return "geometry";

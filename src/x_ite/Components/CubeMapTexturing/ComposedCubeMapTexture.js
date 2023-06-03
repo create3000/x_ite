@@ -78,10 +78,6 @@ function ComposedCubeMapTexture (executionContext)
 ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
 {
    constructor: ComposedCubeMapTexture,
-   getComponentName: function ()
-   {
-      return "CubeMapTexturing";
-   },
    getContainerField: function ()
    {
       return "texture";

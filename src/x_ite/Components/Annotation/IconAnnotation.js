@@ -64,10 +64,6 @@ IconAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .p
    X3DUrlObject .prototype,
 {
    constructor: IconAnnotation,
-   getComponentName: function ()
-   {
-      return "Annotation";
-   },
    getContainerField: function ()
    {
       return "children";

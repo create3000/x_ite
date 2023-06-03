@@ -64,10 +64,6 @@ SignalPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototype)
    X3DBoundedObject .prototype,
 {
    constructor: SignalPdu,
-   getComponentName: function ()
-   {
-      return "DIS";
-   },
    getContainerField: function ()
    {
       return "children";

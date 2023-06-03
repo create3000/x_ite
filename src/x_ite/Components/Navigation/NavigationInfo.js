@@ -78,10 +78,6 @@ function NavigationInfo (executionContext)
 NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 {
    constructor: NavigationInfo,
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
    getContainerField: function ()
    {
       return "children";

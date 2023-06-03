@@ -73,10 +73,6 @@ function TwoSidedMaterial (executionContext)
 TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
 {
    constructor: TwoSidedMaterial,
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
    getContainerField: function ()
    {
       return "material";

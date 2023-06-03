@@ -175,10 +175,6 @@ function TextureProjectorParallel (executionContext)
 TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
 {
    constructor: TextureProjectorParallel,
-   getComponentName: function ()
-   {
-      return "TextureProjector";
-   },
    getContainerField: function ()
    {
       return "children";

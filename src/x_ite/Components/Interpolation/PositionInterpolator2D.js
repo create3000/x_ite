@@ -62,10 +62,6 @@ function PositionInterpolator2D (executionContext)
 PositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: PositionInterpolator2D,
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
    getContainerField: function ()
    {
       return "children";

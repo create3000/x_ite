@@ -61,10 +61,6 @@ function Transform (executionContext)
 Transform .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
 {
    constructor: Transform,
-   getComponentName: function ()
-   {
-      return "Grouping";
-   },
    getContainerField: function ()
    {
       return "children";

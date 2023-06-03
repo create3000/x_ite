@@ -278,10 +278,6 @@ function SpotLight (executionContext)
 SpotLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 {
    constructor: SpotLight,
-   getComponentName: function ()
-   {
-      return "Lighting";
-   },
    getContainerField: function ()
    {
       return "children";

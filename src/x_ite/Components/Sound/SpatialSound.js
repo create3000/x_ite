@@ -63,10 +63,6 @@ function SpatialSound (executionContext)
 SpatialSound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
 {
    constructor: SpatialSound,
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
    getContainerField: function ()
    {
       return "children";

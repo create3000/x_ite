@@ -77,10 +77,6 @@ function OrthoViewpoint (executionContext)
 OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
 {
    constructor: OrthoViewpoint,
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
    getContainerField: function ()
    {
       return "children";

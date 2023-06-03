@@ -73,10 +73,6 @@ function CylinderSensor (executionContext)
 CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 {
    constructor: CylinderSensor,
-   getComponentName: function ()
-   {
-      return "PointingDeviceSensor";
-   },
    getContainerField: function ()
    {
       return "children";

@@ -61,10 +61,6 @@ function HAnimMotion (executionContext)
 HAnimMotion .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: HAnimMotion,
-   getComponentName: function ()
-   {
-      return "HAnim";
-   },
    getContainerField: function ()
    {
       return "children";

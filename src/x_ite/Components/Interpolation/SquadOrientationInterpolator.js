@@ -67,10 +67,6 @@ function SquadOrientationInterpolator (executionContext)
 SquadOrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: SquadOrientationInterpolator,
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
    getContainerField: function ()
    {
       return "children";

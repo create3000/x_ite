@@ -66,10 +66,6 @@ function PixelTexture (executionContext)
 PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
 {
    constructor: PixelTexture,
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
    getContainerField: function ()
    {
       return "texture";

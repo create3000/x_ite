@@ -62,10 +62,6 @@ function ShadedVolumeStyle (executionContext)
 ShadedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: ShadedVolumeStyle,
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
    getContainerField: function ()
    {
       return "renderStyle";

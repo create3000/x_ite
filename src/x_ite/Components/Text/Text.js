@@ -68,10 +68,6 @@ function Text (executionContext)
 Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Text,
-   getComponentName: function ()
-   {
-      return "Text";
-   },
    getContainerField: function ()
    {
       return "geometry";

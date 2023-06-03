@@ -98,10 +98,6 @@ function SurfaceEmitter (executionContext)
 SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: SurfaceEmitter,
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
    getContainerField: function ()
    {
       return "emitter";

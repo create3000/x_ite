@@ -61,10 +61,6 @@ function QuadSet (executionContext)
 QuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: QuadSet,
-   getComponentName: function ()
-   {
-      return "CADGeometry";
-   },
    getContainerField: function ()
    {
       return "geometry";

@@ -70,10 +70,6 @@ function Extrusion (executionContext)
 Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Extrusion,
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
    getContainerField: function ()
    {
       return "geometry";

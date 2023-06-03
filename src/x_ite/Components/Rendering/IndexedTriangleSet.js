@@ -61,10 +61,6 @@ function IndexedTriangleSet (executionContext)
 IndexedTriangleSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedTriangleSet,
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
    getContainerField: function ()
    {
       return "geometry";

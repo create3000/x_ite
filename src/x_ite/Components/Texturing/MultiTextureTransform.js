@@ -67,10 +67,6 @@ function MultiTextureTransform (executionContext)
 MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
 {
    constructor: MultiTextureTransform,
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
    getContainerField: function ()
    {
       return "textureTransform";

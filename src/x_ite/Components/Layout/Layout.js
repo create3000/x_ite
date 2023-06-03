@@ -106,10 +106,6 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
    currentRotation: new Rotation4 (),
    currentScale: new Vector3 (0, 0, 0),
    modelViewMatrix: new Matrix4 (),
-   getComponentName: function ()
-   {
-      return "Layout";
-   },
    getContainerField: function ()
    {
       return "layout";

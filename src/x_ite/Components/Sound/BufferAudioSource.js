@@ -66,10 +66,6 @@ BufferAudioSource .prototype = Object .assign (Object .create (X3DSoundSourceNod
    X3DUrlObject .prototype,
 {
    constructor: BufferAudioSource,
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
    getContainerField: function ()
    {
       return "children";

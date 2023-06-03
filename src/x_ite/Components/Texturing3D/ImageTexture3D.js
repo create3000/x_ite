@@ -67,10 +67,6 @@ ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
    X3DUrlObject .prototype,
 {
    constructor: ImageTexture3D,
-   getComponentName: function ()
-   {
-      return "Texturing3D";
-   },
    getContainerField: function ()
    {
       return "texture";

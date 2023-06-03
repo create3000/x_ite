@@ -72,10 +72,6 @@ function PointPickSensor (executionContext)
 PointPickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
 {
    constructor: PointPickSensor,
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
    getContainerField: function ()
    {
       return "children";

@@ -67,10 +67,6 @@ function MultiTextureCoordinate (executionContext)
 MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
 {
    constructor: MultiTextureCoordinate,
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
    getContainerField: function ()
    {
       return "texCoord";

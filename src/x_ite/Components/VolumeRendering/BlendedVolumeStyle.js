@@ -62,10 +62,6 @@ function BlendedVolumeStyle (executionContext)
 BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: BlendedVolumeStyle,
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
    getContainerField: function ()
    {
       return "renderStyle";

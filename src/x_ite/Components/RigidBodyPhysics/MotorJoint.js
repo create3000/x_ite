@@ -73,10 +73,6 @@ function MotorJoint (executionContext)
 MotorJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
 {
    constructor: MotorJoint,
-   getComponentName: function ()
-   {
-      return "RigidBodyPhysics";
-   },
    getContainerField: function ()
    {
       return "joints";

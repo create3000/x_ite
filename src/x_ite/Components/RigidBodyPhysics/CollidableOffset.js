@@ -65,10 +65,6 @@ function CollidableOffset (executionContext)
 CollidableOffset .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
 {
    constructor: CollidableOffset,
-   getComponentName: function ()
-   {
-      return "RigidBodyPhysics";
-   },
    getContainerField: function ()
    {
       return "children";

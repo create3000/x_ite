@@ -64,10 +64,6 @@ function ForcePhysicsModel (executionContext)
 ForcePhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
 {
    constructor: ForcePhysicsModel,
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
    getContainerField: function ()
    {
       return "physics";

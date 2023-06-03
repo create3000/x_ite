@@ -64,10 +64,6 @@ ReceiverPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototyp
    X3DBoundedObject .prototype,
 {
    constructor: ReceiverPdu,
-   getComponentName: function ()
-   {
-      return "DIS";
-   },
    getContainerField: function ()
    {
       return "children";

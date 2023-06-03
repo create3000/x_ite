@@ -62,10 +62,6 @@ function Shape (executionContext)
 Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 {
    constructor: Shape,
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
    getContainerField: function ()
    {
       return "children";

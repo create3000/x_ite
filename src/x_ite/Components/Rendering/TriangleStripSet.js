@@ -63,10 +63,6 @@ function TriangleStripSet (executionContext)
 TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: TriangleStripSet,
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
    getContainerField: function ()
    {
       return "geometry";

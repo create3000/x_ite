@@ -64,10 +64,6 @@ MetadataFloat .prototype = Object .assign (Object .create (X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
    constructor: MetadataFloat,
-   getComponentName: function ()
-   {
-      return "Core";
-   },
    getContainerField: function ()
    {
       return "metadata";

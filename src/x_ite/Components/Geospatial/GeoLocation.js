@@ -67,10 +67,6 @@ GeoLocation .prototype = Object .assign (Object .create (X3DTransformMatrix3DNod
    X3DGeospatialObject .prototype,
 {
    constructor: GeoLocation,
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
    getContainerField: function ()
    {
       return "children";

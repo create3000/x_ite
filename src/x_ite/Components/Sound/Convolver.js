@@ -61,10 +61,6 @@ function Convolver (executionContext)
 Convolver .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
 {
    constructor: Convolver,
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
    getContainerField: function ()
    {
       return "children";

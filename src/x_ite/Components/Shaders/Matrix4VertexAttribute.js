@@ -61,10 +61,6 @@ function Matrix4VertexAttribute (executionContext)
 Matrix4VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 {
    constructor: Matrix4VertexAttribute,
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
    getContainerField: function ()
    {
       return "attrib";

@@ -61,10 +61,6 @@ function StringSensor (executionContext)
 StringSensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
 {
    constructor: StringSensor,
-   getComponentName: function ()
-   {
-      return "KeyDeviceSensor";
-   },
    getContainerField: function ()
    {
       return "children";

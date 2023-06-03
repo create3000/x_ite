@@ -70,10 +70,6 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: Anchor,
-   getComponentName: function ()
-   {
-      return "Networking";
-   },
    getContainerField: function ()
    {
       return "children";

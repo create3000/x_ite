@@ -69,10 +69,6 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
    X3DUrlObject .prototype,
 {
    constructor: ImageTextureAtlas,
-   getComponentName: function ()
-   {
-      return "Texturing3D";
-   },
    getContainerField: function ()
    {
       return "texture";

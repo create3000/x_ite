@@ -61,10 +61,6 @@ function IndexedQuadSet (executionContext)
 IndexedQuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedQuadSet,
-   getComponentName: function ()
-   {
-      return "CADGeometry";
-   },
    getContainerField: function ()
    {
       return "geometry";

@@ -67,10 +67,6 @@ function SegmentedVolumeData (executionContext)
 SegmentedVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
 {
    constructor: SegmentedVolumeData,
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
    getContainerField: function ()
    {
       return "children";

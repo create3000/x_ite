@@ -64,10 +64,6 @@ LocalFog .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    X3DFogObject .prototype,
 {
    constructor: LocalFog,
-   getComponentName: function ()
-   {
-      return "EnvironmentalEffects";
-   },
    getContainerField: function ()
    {
       return "children";

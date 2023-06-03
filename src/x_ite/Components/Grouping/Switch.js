@@ -70,10 +70,6 @@ function Switch (executionContext)
 Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: Switch,
-   getComponentName: function ()
-   {
-      return "Grouping";
-   },
    getContainerField: function ()
    {
       return "children";

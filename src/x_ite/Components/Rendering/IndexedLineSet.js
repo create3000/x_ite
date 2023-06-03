@@ -67,10 +67,6 @@ function IndexedLineSet (executionContext)
 IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: IndexedLineSet,
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
    getContainerField: function ()
    {
       return "geometry";

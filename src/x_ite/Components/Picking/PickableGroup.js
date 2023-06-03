@@ -66,10 +66,6 @@ PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prot
    X3DPickableObject .prototype,
 {
    constructor: PickableGroup,
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
    getContainerField: function ()
    {
       return "children";

@@ -61,10 +61,6 @@ function TextureTransformMatrix3D (executionContext)
 TextureTransformMatrix3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
 {
    constructor: TextureTransformMatrix3D,
-   getComponentName: function ()
-   {
-      return "Texturing3D";
-   },
    getContainerField: function ()
    {
       return "textureTransform";

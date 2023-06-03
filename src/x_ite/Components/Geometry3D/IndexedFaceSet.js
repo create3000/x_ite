@@ -66,10 +66,6 @@ function IndexedFaceSet (executionContext)
 IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedFaceSet,
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
    getContainerField: function ()
    {
       return "geometry";

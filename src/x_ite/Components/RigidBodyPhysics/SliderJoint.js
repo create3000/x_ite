@@ -74,10 +74,6 @@ function SliderJoint (executionContext)
 SliderJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
 {
    constructor: SliderJoint,
-   getComponentName: function ()
-   {
-      return "RigidBodyPhysics";
-   },
    getContainerField: function ()
    {
       return "joints";

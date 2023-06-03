@@ -68,10 +68,6 @@ function VisibilitySensor (executionContext)
 VisibilitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
 {
    constructor: VisibilitySensor,
-   getComponentName: function ()
-   {
-      return "EnvironmentalSensor";
-   },
    getContainerField: function ()
    {
       return "children";

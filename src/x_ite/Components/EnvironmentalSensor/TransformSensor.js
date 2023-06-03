@@ -80,10 +80,6 @@ function TransformSensor (executionContext)
 TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
 {
    constructor: TransformSensor,
-   getComponentName: function ()
-   {
-      return "EnvironmentalSensor";
-   },
    getContainerField: function ()
    {
       return "children";

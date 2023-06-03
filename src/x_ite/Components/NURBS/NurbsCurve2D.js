@@ -71,10 +71,6 @@ function NurbsCurve2D (executionContext)
 NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
 {
    constructor: NurbsCurve2D,
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
    getContainerField: function ()
    {
       return "children";

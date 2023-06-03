@@ -68,10 +68,6 @@ function LayerSet (executionContext)
 LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: LayerSet,
-   getComponentName: function ()
-   {
-      return "Layering";
-   },
    getContainerField: function ()
    {
       return "children";

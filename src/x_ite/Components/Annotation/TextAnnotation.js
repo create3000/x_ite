@@ -61,10 +61,6 @@ function TextAnnotation (executionContext)
 TextAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .prototype),
 {
    constructor: TextAnnotation,
-   getComponentName: function ()
-   {
-      return "Annotation";
-   },
    getContainerField: function ()
    {
       return "children";

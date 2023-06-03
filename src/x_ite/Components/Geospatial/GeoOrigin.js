@@ -64,10 +64,6 @@ function GeoOrigin (executionContext)
 GeoOrigin .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: GeoOrigin,
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
    getContainerField: function ()
    {
       return "geoOrigin";

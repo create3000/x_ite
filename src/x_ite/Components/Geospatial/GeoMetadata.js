@@ -64,10 +64,6 @@ GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype)
    X3DUrlObject .prototype,
 {
    constructor: GeoMetadata,
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
    getContainerField: function ()
    {
       return "children";

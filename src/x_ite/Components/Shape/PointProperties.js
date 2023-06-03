@@ -65,10 +65,6 @@ function PointProperties (executionContext)
 PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: PointProperties,
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
    getContainerField: function ()
    {
       return "pointProperties";

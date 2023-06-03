@@ -61,10 +61,6 @@ function Delay (executionContext)
 Delay .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
 {
    constructor: Delay,
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
    getContainerField: function ()
    {
       return "children";

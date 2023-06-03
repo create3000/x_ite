@@ -78,10 +78,6 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: Inline,
-   getComponentName: function ()
-   {
-      return "Networking";
-   },
    getContainerField: function ()
    {
       return "children";

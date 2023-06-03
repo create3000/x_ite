@@ -61,10 +61,6 @@ function ChannelMerger (executionContext)
 ChannelMerger .prototype = Object .assign (Object .create (X3DSoundChannelNode .prototype),
 {
    constructor: ChannelMerger,
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
    getContainerField: function ()
    {
       return "children";

@@ -62,10 +62,6 @@ function FloatVertexAttribute (executionContext)
 FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 {
    constructor: FloatVertexAttribute,
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
    getContainerField: function ()
    {
       return "attrib";

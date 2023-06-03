@@ -67,10 +67,6 @@ CoordinateChaser .prototype = Object .assign (Object .create (X3DChaserNode .pro
    X3DArrayChaserObject .prototype,
 {
    constructor: CoordinateChaser,
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
    getContainerField: function ()
    {
       return "children";

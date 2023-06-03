@@ -62,10 +62,6 @@ function PositionChaser2D (executionContext)
 PositionChaser2D .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 {
    constructor: PositionChaser2D,
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
    getContainerField: function ()
    {
       return "children";

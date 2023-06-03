@@ -61,10 +61,6 @@ function IntegerTrigger (executionContext)
 IntegerTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
 {
    constructor: IntegerTrigger,
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
    getContainerField: function ()
    {
       return "children";

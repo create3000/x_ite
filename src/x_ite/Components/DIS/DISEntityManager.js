@@ -64,10 +64,6 @@ function DISEntityManager (executionContext)
 DISEntityManager .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: DISEntityManager,
-   getComponentName: function ()
-   {
-      return "DIS";
-   },
    getContainerField: function ()
    {
       return "children";

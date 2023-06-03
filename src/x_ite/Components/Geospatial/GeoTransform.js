@@ -71,10 +71,6 @@ GeoTransform .prototype = Object .assign (Object .create (X3DTransformMatrix3DNo
    X3DGeospatialObject .prototype,
 {
    constructor: GeoTransform,
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
    getContainerField: function ()
    {
       return "children";

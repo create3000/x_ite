@@ -69,10 +69,6 @@ function TextureProperties (executionContext)
 TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: TextureProperties,
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
    getContainerField: function ()
    {
       return "textureProperties";

@@ -67,10 +67,6 @@ TexCoordChaser2D .prototype = Object .assign (Object .create (X3DChaserNode .pro
    X3DArrayChaserObject .prototype,
 {
    constructor: TexCoordChaser2D,
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
    getContainerField: function ()
    {
       return "children";
