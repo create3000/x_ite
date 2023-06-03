@@ -365,7 +365,10 @@ X3DCoreContext .prototype =
          case "src":
          {
             if (newValue)
-               this .loadURL (new Fields .MFString (newValue), new Fields .MFString ());
+            {
+               this .loadURL (new Fields .MFString (newValue))
+                  .catch (error => console .error (error));
+            }
 
             break;
          }
@@ -395,7 +398,10 @@ X3DCoreContext .prototype =
          case "url":
          {
             if (newValue)
-               this .loadURL (this .parseUrlAttribute (newValue), new Fields .MFString ());
+            {
+               this .loadURL (this .parseUrlAttribute (newValue))
+                  .catch (error => console .error (error));
+            }
 
             break;
          }
