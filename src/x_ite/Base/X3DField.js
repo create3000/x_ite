@@ -98,10 +98,6 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
       this .set (field .getValue ());
       this .addEvent ();
    },
-   getType: function ()
-   {
-      return this .constructor .type;
-   },
    set: function (value)
    {
       // Sets internal value without generating event.
@@ -116,6 +112,10 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
    getValue: function ()
    {
       return this [_value];
+   },
+   getType: function ()
+   {
+      return this .constructor .type;
    },
    setAccessType: function (value)
    {
