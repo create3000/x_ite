@@ -197,14 +197,6 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
 });
 
-Object .defineProperties (X3DViewer,
-{
-   typeName:
-   {
-      value: "X3DViewer",
-   },
-});
-
 function tbProjectToSphere (r, x, y)
 {
    const d = Math .hypot (x, y);
