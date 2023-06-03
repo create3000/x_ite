@@ -178,7 +178,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
    },
    toStream: function (generator)
    {
-      X3DObject .prototype .toStream (generator);
+      X3DObject .prototype .toStream .call (this, generator);
    },
    toVRMLStream: function (generator)
    {
@@ -551,6 +551,14 @@ Object .defineProperties (X3DImportedNode .prototype,
          return this [_importedName];
       },
       enumerable: true,
+   },
+});
+
+Object .defineProperties (X3DImportedNode,
+{
+   typeName:
+   {
+      value: "X3DImportedNode",
    },
 });
 

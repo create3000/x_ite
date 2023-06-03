@@ -190,4 +190,12 @@ Object .defineProperties (X3DExportedNode .prototype,
    },
 });
 
+Object .defineProperties (X3DExportedNode,
+{
+   typeName:
+   {
+      value: "X3DExportedNode",
+   },
+});
+
 export default X3DExportedNode;
