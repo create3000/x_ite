@@ -76,14 +76,14 @@ class Components
    {
       if (concreteNodes)
       {
-         for (const [typeName, type] of Object .entries (concreteNodes))
-            ConcreteNodes .add (typeName, type);
+         for (const [typeName, ConcreteNode] of Object .entries (concreteNodes))
+            ConcreteNodes .add (typeName, ConcreteNode);
       }
 
       if (abstractNodes)
       {
-         for (const [typeName, type] of Object .entries (abstractNodes))
-            AbstractNodes .add (typeName, type);
+         for (const [typeName, AbstractNode] of Object .entries (abstractNodes))
+            AbstractNodes .add (typeName, AbstractNode);
       }
 
       if (browserContext)

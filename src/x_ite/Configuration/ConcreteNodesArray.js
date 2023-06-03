@@ -63,19 +63,19 @@ ConcreteNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .pr
    {
       return "ConcreteNodesArray";
    },
-   add: function (typeName, Type)
+   add: function (typeName, ConcreteNode)
    {
       X3DConstants [typeName] = ++ X3DConstants [_NODE_TYPE]; // Start with 1, as X3DBaseNode is 0.
 
-      X3DInfoArray .prototype .add .call (this, typeName, Type);
+      X3DInfoArray .prototype .add .call (this, typeName, ConcreteNode);
 
-      HTMLSupport .addConcreteNode (typeName, Type);
+      HTMLSupport .addConcreteNode (typeName, ConcreteNode);
    },
-   update: function (oldTypeName, typeName, Type)
+   update: function (oldTypeName, typeName, ConcreteNode)
    {
-      X3DInfoArray .prototype .update .call (this, oldTypeName, typeName, Type);
+      X3DInfoArray .prototype .update .call (this, oldTypeName, typeName, ConcreteNode);
 
-      HTMLSupport .addConcreteNode (typeName, Type);
+      HTMLSupport .addConcreteNode (typeName, ConcreteNode);
    },
 });
 
