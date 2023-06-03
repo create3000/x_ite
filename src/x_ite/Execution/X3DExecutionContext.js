@@ -169,7 +169,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (!ConcreteNode)
             return null;
 
-         const specificationRange = ConcreteNode .prototype .getSpecificationRange ();
+         const specificationRange = ConcreteNode .specificationRange;
 
          if (this .getSpecificationVersion () < specificationRange [0])
             return null;
@@ -177,7 +177,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (this .getSpecificationVersion () > specificationRange [1])
             return null;
 
-         if (!this .hasComponent (ConcreteNode .prototype .getComponentName ()))
+         if (!this .hasComponent (ConcreteNode .componentName))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
          return new ConcreteNode (this);
@@ -189,7 +189,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (!ConcreteNode)
             throw new Error (`Unknown node type '${typeName}'.`);
 
-         const specificationRange = ConcreteNode .prototype .getSpecificationRange ();
+         const specificationRange = ConcreteNode .specificationRange;
 
          if (this .getSpecificationVersion () < specificationRange [0])
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
@@ -197,7 +197,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          if (this .getSpecificationVersion () > specificationRange [1])
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
-         if (!this .hasComponent (ConcreteNode .prototype .getComponentName ()))
+         if (!this .hasComponent (ConcreteNode .componentName))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
          const baseNode = new ConcreteNode (this);
