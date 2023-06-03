@@ -66,14 +66,6 @@ function CollisionSensor (executionContext)
 CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 {
    constructor: CollisionSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",      new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "intersections", new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "contacts",      new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "collider",      new Fields .SFNode ()),
-   ]),
    getTypeName: function ()
    {
       return "CollisionSensor";

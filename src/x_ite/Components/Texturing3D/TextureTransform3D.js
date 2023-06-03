@@ -66,14 +66,6 @@ function TextureTransform3D (executionContext)
 TextureTransform3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
 {
    constructor: TextureTransform3D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",     new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "translation", new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "rotation",    new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "scale",       new Fields .SFVec3f (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "center",      new Fields .SFVec3f ()),
-   ]),
    getTypeName: function ()
    {
       return "TextureTransform3D";

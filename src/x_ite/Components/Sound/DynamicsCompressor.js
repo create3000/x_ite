@@ -61,34 +61,6 @@ function DynamicsCompressor (executionContext)
 DynamicsCompressor .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
 {
    constructor: DynamicsCompressor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",              new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",           new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",               new Fields .SFBool (true)),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "attack",                new Fields .SFFloat (0.003)), // TODO: SFTime
-      new X3DFieldDefinition (X3DConstants .inputOutput, "knee",                  new Fields .SFFloat (30)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "ratio",                 new Fields .SFFloat (12)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "reduction",             new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "release",               new Fields .SFTime (0.25)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "threshold",             new Fields .SFFloat (-24)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
-
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "channelCount",          new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("max")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("speakers")),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",             new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",            new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",             new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",              new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",              new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",              new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",           new Fields .SFTime ()),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput, "children",              new Fields .MFNode ()),
-   ]),
    getTypeName: function ()
    {
       return "DynamicsCompressor";

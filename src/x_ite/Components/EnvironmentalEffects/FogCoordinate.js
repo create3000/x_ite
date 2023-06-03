@@ -63,10 +63,6 @@ function FogCoordinate (executionContext)
 FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 {
    constructor: FogCoordinate,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "depth",    new Fields .MFFloat ()),
-   ]),
    getTypeName: function ()
    {
       return "FogCoordinate";

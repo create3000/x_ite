@@ -68,17 +68,6 @@ function SphereSensor (executionContext)
 SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 {
    constructor: SphereSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",        new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",         new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "offset",             new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed", new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "rotation_changed",   new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",             new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",           new Fields .SFBool ()),
-   ]),
    getTypeName: function ()
    {
       return "SphereSensor";

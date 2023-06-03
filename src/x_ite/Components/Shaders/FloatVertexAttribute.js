@@ -62,12 +62,6 @@ function FloatVertexAttribute (executionContext)
 FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 {
    constructor: FloatVertexAttribute,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "name",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "numComponents", new Fields .SFInt32 (4)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "value",         new Fields .MFFloat ()),
-   ]),
    getTypeName: function ()
    {
       return "FloatVertexAttribute";

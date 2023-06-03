@@ -67,15 +67,6 @@ function ComposedTexture3D (executionContext)
 ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
 {
    constructor: ComposedTexture3D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "texture",           new Fields .MFNode ()),
-   ]),
    getTypeName: function ()
    {
       return "ComposedTexture3D";

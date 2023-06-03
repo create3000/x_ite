@@ -61,11 +61,6 @@ function BooleanToggle (executionContext)
 BooleanToggle .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: BooleanToggle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "toggle",      new Fields .SFBool ()),
-   ]),
    getTypeName: function ()
    {
       return "BooleanToggle";

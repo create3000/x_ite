@@ -45,23 +45,22 @@
  *
  ******************************************************************************/
 
+import Fields              from "../../Fields.js";
 import X3DChildObject      from "../../Base/X3DChildObject.js";
 import X3DNode             from "./X3DNode.js";
 import X3DExecutionContext from "../../Execution/X3DExecutionContext.js";
 import X3DConstants        from "../../Base/X3DConstants.js";
 
 const
-   _protoNode        = Symbol (),
-   _protoFields      = Symbol (),
-   _fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
-   _body             = Symbol ();
+   _protoNode   = Symbol (),
+   _protoFields = Symbol (),
+   _body        = Symbol ();
 
 function X3DPrototypeInstance (executionContext, protoNode)
 {
-   this [_protoNode]        = protoNode;
-   this [_protoFields]      = new Map ([... protoNode .getFields ()] .map (f => [f, f .getName ()]));
-   this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
-   this [_body]             = null;
+   this [_protoNode]   = protoNode;
+   this [_protoFields] = new Map ([... protoNode .getFields ()] .map (f => [f, f .getName ()]));
+   this [_body]        = null;
 
    X3DNode .call (this, executionContext);
 
@@ -79,30 +78,9 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
    {
       return this [_protoNode] .getName ();
    },
-   getComponentName: function ()
+   getFieldDefinitions: function ()
    {
-      return "Core";
-   },
-   getContainerField: function ()
-   {
-      // Determine container field from proto.
-
-      // const proto = this [_protoNode];
-
-      // if (!proto .isExternProto)
-      // {
-      //    const rootNodes = proto .getBody () .getRootNodes ();
-
-      //    if (rootNodes .length)
-      //    {
-      //       const rootNode = rootNodes [0];
-
-      //       if (rootNode)
-      //          return rootNode .getValue () .getContainerField ();
-      //    }
-      // }
-
-      return "children";
+      return this [_protoNode] .getFieldDefinitions ();
    },
    initialize: function ()
    {
@@ -1021,5 +999,31 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
       X3DNode .prototype .dispose .call (this);
    },
 });
+
+Object .defineProperties (X3DPrototypeInstance,
+   {
+      typeName:
+      {
+         value: "X3DPrototypeInstance",
+      },
+      componentName:
+      {
+         value: "Core",
+      },
+      containerField:
+      {
+         value: "children",
+      },
+      specificationRange:
+      {
+         value: Object .freeze (["2.0", "Infinity"]),
+      },
+      fieldDefinitions:
+      {
+         value: new FieldDefinitionArray ([
+            new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         ]),
+      },
+   });
 
 export default X3DPrototypeInstance;

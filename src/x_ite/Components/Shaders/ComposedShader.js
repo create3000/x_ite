@@ -69,14 +69,6 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
    X3DProgrammableShaderObject .prototype,
 {
    constructor: ComposedShader,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",   new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",    new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "language",   new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "parts",      new Fields .MFNode ()),
-   ]),
    wireframe: false,
    getTypeName: function ()
    {

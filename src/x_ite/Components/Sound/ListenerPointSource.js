@@ -66,26 +66,6 @@ function ListenerPointSource (executionContext)
 ListenerPointSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
 {
    constructor: ListenerPointSource,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput, "position",             new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",          new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                 new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "dopplerEnabled",       new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "interauralDistance",   new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "trackCurrentView",     new Fields .SFBool ()),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",            new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",           new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",            new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",             new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",             new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",             new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",          new Fields .SFTime ()),
-   ]),
    getTypeName: function ()
    {
       return "ListenerPointSource";

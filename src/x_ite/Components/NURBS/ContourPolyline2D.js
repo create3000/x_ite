@@ -64,10 +64,6 @@ function ContourPolyline2D (executionContext)
 ContourPolyline2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
 {
    constructor: ContourPolyline2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint", new Fields .MFVec2d ()),
-   ]),
    getTypeName: function ()
    {
       return "ContourPolyline2D";

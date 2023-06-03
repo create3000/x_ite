@@ -64,12 +64,6 @@ function Contour2D (executionContext)
 Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: Contour2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "addChildren",    new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "removeChildren", new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "children",       new Fields .MFNode ()),
-   ]),
    getTypeName: function ()
    {
       return "Contour2D";

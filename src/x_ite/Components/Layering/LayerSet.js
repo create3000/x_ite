@@ -68,12 +68,6 @@ function LayerSet (executionContext)
 LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: LayerSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "activeLayer", new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "order",       new Fields .MFInt32 (0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "layers",      new Fields .MFNode ()),
-   ]),
    getTypeName: function ()
    {
       return "LayerSet";

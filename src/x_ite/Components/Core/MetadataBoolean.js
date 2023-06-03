@@ -64,12 +64,6 @@ MetadataBoolean .prototype = Object .assign (Object .create (X3DNode .prototype)
    X3DMetadataObject .prototype,
 {
    constructor: MetadataBoolean,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "value",     new Fields .MFBool ()),
-   ]),
    getTypeName: function ()
    {
       return "MetadataBoolean";

@@ -90,32 +90,6 @@ function RigidBody (executionContext)
 RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: RigidBody,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "fixed",                new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "position",             new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",          new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "linearVelocity",       new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "angularVelocity",      new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "useFiniteRotation",    new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "finiteRotationAxis",   new Fields .SFVec3f (0, 1, 0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoDamp",             new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "linearDampingFactor",  new Fields .SFFloat (0.001)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "angularDampingFactor", new Fields .SFFloat (0.001)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "mass",                 new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfMass",         new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "massDensityModel",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "useGlobalGravity",     new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "forces",               new Fields .MFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "torques",              new Fields .MFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "inertia",              new Fields .SFMatrix3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoDisable",          new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "disableTime",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "disableLinearSpeed",   new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "disableAngularSpeed",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "geometry",             new Fields .MFNode ()),
-   ]),
    getTypeName: function ()
    {
       return "RigidBody";

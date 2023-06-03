@@ -65,12 +65,6 @@ function TextureCoordinateGenerator (executionContext)
 TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
 {
    constructor: TextureCoordinateGenerator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",   new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "mode",      new Fields .SFString ("SPHERE")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "parameter", new Fields .MFFloat ()),
-   ]),
    getTypeName: function ()
    {
       return "TextureCoordinateGenerator";

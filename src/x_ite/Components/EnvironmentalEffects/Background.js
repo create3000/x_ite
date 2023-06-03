@@ -62,23 +62,6 @@ function Background (executionContext)
 Background .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
 {
    constructor: Background,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",     new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "frontUrl",     new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "backUrl",      new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "leftUrl",      new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "rightUrl",     new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "topUrl",       new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "bottomUrl",    new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "skyAngle",     new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "skyColor",     new Fields .MFColor (new Fields .SFColor ())),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "groundAngle",  new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "groundColor",  new Fields .MFColor ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "transparency", new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",      new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",     new Fields .SFTime ()),
-   ]),
    getTypeName: function ()
    {
       return "Background";

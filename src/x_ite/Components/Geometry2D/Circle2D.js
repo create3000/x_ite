@@ -63,10 +63,6 @@ function Circle2D (executionContext)
 Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: Circle2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
-   ]),
    getTypeName: function ()
    {
       return "Circle2D";

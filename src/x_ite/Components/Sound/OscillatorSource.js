@@ -64,24 +64,6 @@ function OscillatorSource (executionContext)
 OscillatorSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
 {
    constructor: OscillatorSource,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",   new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput, "gain",          new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "detune",        new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "frequency",     new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "periodicWave",  new Fields .SFNode ()),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",     new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",    new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",     new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",      new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",      new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",      new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",   new Fields .SFTime ()),
-   ]),
    getTypeName: function ()
    {
       return "OscillatorSource";

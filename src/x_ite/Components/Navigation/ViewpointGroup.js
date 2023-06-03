@@ -71,15 +71,6 @@ function ViewpointGroup (executionContext)
 ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: ViewpointGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "displayed",         new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "size",              new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "center",            new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "children",          new Fields .MFNode ()),
-   ]),
    getTypeName: function ()
    {
       return "ViewpointGroup";

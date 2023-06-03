@@ -61,20 +61,6 @@ function ChannelSelector (executionContext)
 ChannelSelector .prototype = Object .assign (Object .create (X3DSoundChannelNode .prototype),
 {
    constructor: ChannelSelector,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "channelSelection",      new Fields .SFInt32 (0)),
-
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "channelCount",          new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("max")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("speakers")),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput, "children",              new Fields .MFNode ()),
-   ]),
    getTypeName: function ()
    {
       return "ChannelSelector";

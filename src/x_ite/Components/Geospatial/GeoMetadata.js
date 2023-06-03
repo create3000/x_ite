@@ -64,15 +64,6 @@ GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype)
    X3DUrlObject .prototype,
 {
    constructor: GeoMetadata,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "summary",              new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "data",                 new Fields .MFNode ()),
-   ]),
    getTypeName: function ()
    {
       return "GeoMetadata";

@@ -63,14 +63,6 @@ function HAnimDisplacer (executionContext)
 HAnimDisplacer .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 {
    constructor: HAnimDisplacer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",   new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "name",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",    new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "displacements", new Fields .MFVec3f ()),
-   ]),
    getTypeName: function ()
    {
       return "HAnimDisplacer";

@@ -68,17 +68,6 @@ function Text (executionContext)
 Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Text,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "string",     new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "length",     new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "maxExtent",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",      new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "origin",     new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "textBounds", new Fields .SFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "lineBounds", new Fields .MFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "fontStyle",  new Fields .SFNode ()),
-   ]),
    getTypeName: function ()
    {
       return "Text";

@@ -69,21 +69,6 @@ function Appearance (executionContext)
 Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
 {
    constructor: Appearance,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "alphaMode",          new Fields .SFString ("AUTO")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "alphaCutoff",        new Fields .SFFloat (0.5)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "pointProperties",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "material",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "backMaterial",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "texture",            new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform",   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "shaders",            new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "blendMode",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "acousticProperties", new Fields .SFNode ()),
-   ]),
    getTypeName: function ()
    {
       return "Appearance";

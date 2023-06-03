@@ -61,15 +61,6 @@ function BooleanSequencer (executionContext)
 BooleanSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
 {
    constructor: BooleanSequencer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "previous",      new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "next",          new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFBool ()),
-   ]),
    getTypeName: function ()
    {
       return "BooleanSequencer";
