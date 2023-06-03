@@ -1,7 +1,7 @@
 /* X_ITE v8.7.8 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 926:
+/***/ 422:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -16001,34 +16001,6 @@ function FontStyle (executionContext)
 FontStyle .prototype = Object .assign (Object .create (Text_X3DFontStyleNode.prototype),
 {
    constructor: FontStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "language",    new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "family",      new (Fields_default()).MFString ("SERIF")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "style",       new (Fields_default()).SFString ("PLAIN")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "size",        new (Fields_default()).SFFloat (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "spacing",     new (Fields_default()).SFFloat (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "horizontal",  new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "leftToRight", new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "topToBottom", new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "justify",     new (Fields_default()).MFString ("BEGIN")),
-   ]),
-   getTypeName: function ()
-   {
-      return "FontStyle";
-   },
-   getComponentName: function ()
-   {
-      return "Text";
-   },
-   getContainerField: function ()
-   {
-      return "fontStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    getTextGeometry: function (text)
    {
       return new Text_PolygonText (text, this);
@@ -16039,6 +16011,46 @@ FontStyle .prototype = Object .assign (Object .create (Text_X3DFontStyleNode.pro
    },
 });
 
+Object .defineProperties (FontStyle,
+{
+   typeName:
+   {
+      value: "FontStyle",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Text",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "fontStyle",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "language",    new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "family",      new (Fields_default()).MFString ("SERIF")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "style",       new (Fields_default()).SFString ("PLAIN")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "size",        new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "spacing",     new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "horizontal",  new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "leftToRight", new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "topToBottom", new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "justify",     new (Fields_default()).MFString ("BEGIN")),
+      ]),
+      enumerate: true,
+   },
+});
+
 const FontStyle_default_ = FontStyle;
 ;
 
@@ -16046,7 +16058,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(926);
+/* provided dependency */ var opentype = __webpack_require__(422);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16243,33 +16255,6 @@ function Text (executionContext)
 Text .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
 {
    constructor: Text,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",   new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "string",     new (Fields_default()).MFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "length",     new (Fields_default()).MFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "maxExtent",  new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",      new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "origin",     new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "textBounds", new (Fields_default()).SFVec2f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "lineBounds", new (Fields_default()).MFVec2f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fontStyle",  new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Text";
-   },
-   getComponentName: function ()
-   {
-      return "Text";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DGeometryNode_default().prototype.initialize.call (this);
@@ -16343,6 +16328,45 @@ Text .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).pr
    {
       // Apply sceen nodes transformation in place here.
       return this .textGeometry .transformMatrix (matrix);
+   },
+});
+
+Object .defineProperties (Text,
+{
+   typeName:
+   {
+      value: "Text",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Text",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",   new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "string",     new (Fields_default()).MFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "length",     new (Fields_default()).MFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "maxExtent",  new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",      new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "origin",     new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "textBounds", new (Fields_default()).SFVec2f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "lineBounds", new (Fields_default()).MFVec2f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fontStyle",  new (Fields_default()).SFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 

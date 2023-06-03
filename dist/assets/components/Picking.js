@@ -881,37 +881,6 @@ function LinePickSensor (executionContext)
 LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSensorNode.prototype),
 {
    constructor: LinePickSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                 new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",              new (Fields_default()).MFString ("ALL")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",          new (Fields_default()).SFString ("MATCH_ANY")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType",        new (Fields_default()).SFString ("BOUNDS")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",               new (Fields_default()).SFString ("CLOSEST")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedTextureCoordinate", new (Fields_default()).MFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedNormal",            new (Fields_default()).MFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedPoint",             new (Fields_default()).MFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",              new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",          new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LinePickSensor";
-   },
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Picking_X3DPickSensorNode.prototype.initialize.call (this);
@@ -1138,6 +1107,49 @@ LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSenso
    })(),
 });
 
+Object .defineProperties (LinePickSensor,
+{
+   typeName:
+   {
+      value: "LinePickSensor",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                 new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",              new (Fields_default()).MFString ("ALL")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",          new (Fields_default()).SFString ("MATCH_ANY")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType",        new (Fields_default()).SFString ("BOUNDS")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",               new (Fields_default()).SFString ("CLOSEST")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedTextureCoordinate", new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedNormal",            new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedPoint",             new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",              new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",          new (Fields_default()).MFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const LinePickSensor_default_ = LinePickSensor;
 ;
 
@@ -1302,34 +1314,6 @@ PickableGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defa
    Picking_X3DPickableObject.prototype,
 {
    constructor: PickableGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickable",       new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",     new (Fields_default()).MFString ("ALL")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PickableGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       X3DGroupingNode_default().prototype.initialize.call (this);
@@ -1442,6 +1426,46 @@ PickableGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defa
    {
       Picking_X3DPickableObject.prototype.dispose.call (this);
       X3DGroupingNode_default().prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (PickableGroup,
+{
+   typeName:
+   {
+      value: "PickableGroup",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickable",       new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",     new (Fields_default()).MFString ("ALL")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -1716,35 +1740,6 @@ function PointPickSensor (executionContext)
 PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSensorNode.prototype),
 {
    constructor: PointPickSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType", new (Fields_default()).SFString ("BOUNDS")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",        new (Fields_default()).SFString ("CLOSEST")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",         new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedPoint",      new (Fields_default()).MFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",  new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PointPickSensor";
-   },
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Picking_X3DPickSensorNode.prototype.initialize.call (this);
@@ -1980,6 +1975,47 @@ PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSens
    })(),
 });
 
+Object .defineProperties (PointPickSensor,
+{
+   typeName:
+   {
+      value: "PointPickSensor",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType", new (Fields_default()).SFString ("BOUNDS")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",        new (Fields_default()).SFString ("CLOSEST")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",         new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedPoint",      new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",  new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const PointPickSensor_default_ = PointPickSensor;
 ;
 
@@ -2056,34 +2092,6 @@ function PrimitivePickSensor (executionContext)
 PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSensorNode.prototype),
 {
    constructor: PrimitivePickSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType", new (Fields_default()).SFString ("BOUNDS")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",        new (Fields_default()).SFString ("CLOSEST")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",         new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",  new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PrimitivePickSensor";
-   },
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Picking_X3DPickSensorNode.prototype.initialize.call (this);
@@ -2244,6 +2252,46 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPick
    })(),
 });
 
+Object .defineProperties (PrimitivePickSensor,
+{
+   typeName:
+   {
+      value: "PrimitivePickSensor",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType", new (Fields_default()).SFString ("BOUNDS")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",        new (Fields_default()).SFString ("CLOSEST")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",         new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",  new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const PrimitivePickSensor_default_ = PrimitivePickSensor;
 ;
 
@@ -2321,34 +2369,6 @@ function VolumePickSensor (executionContext)
 VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSensorNode.prototype),
 {
    constructor: VolumePickSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType", new (Fields_default()).SFString ("BOUNDS")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",        new (Fields_default()).SFString ("CLOSEST")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",         new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",  new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "VolumePickSensor";
-   },
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Picking_X3DPickSensorNode.prototype.initialize.call (this);
@@ -2481,6 +2501,46 @@ VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSen
          Picking_X3DPickSensorNode.prototype.process.call (this);
       };
    })(),
+});
+
+Object .defineProperties (VolumePickSensor,
+{
+   typeName:
+   {
+      value: "VolumePickSensor",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType", new (Fields_default()).SFString ("BOUNDS")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",        new (Fields_default()).SFString ("CLOSEST")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",         new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",  new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
+      ]),
+      enumerate: true,
+   },
 });
 
 const VolumePickSensor_default_ = VolumePickSensor;

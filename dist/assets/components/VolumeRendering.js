@@ -331,27 +331,6 @@ function OpacityMapVolumeStyle (executionContext)
 OpacityMapVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: OpacityMapVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "transferFunction", new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "OpacityMapVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -431,6 +410,39 @@ OpacityMapVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
       string += "   textureColor = getOpacityMapStyle_" + this .getId () + " (textureColor);\n";
 
       return string;
+   },
+});
+
+Object .defineProperties (OpacityMapVolumeStyle,
+{
+   typeName:
+   {
+      value: "OpacityMapVolumeStyle",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "transferFunction", new (Fields_default()).SFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -640,34 +652,6 @@ function BlendedVolumeStyle (executionContext)
 BlendedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: BlendedVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",                 new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightConstant1",         new (Fields_default()).SFFloat (0.5)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightConstant2",         new (Fields_default()).SFFloat (0.5)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightFunction1",         new (Fields_default()).SFString ("CONSTANT")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightFunction2",         new (Fields_default()).SFString ("CONSTANT")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightTransferFunction1", new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightTransferFunction2", new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "renderStyle",             new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "voxels",                  new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "BlendedVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -919,6 +903,46 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
    },
 });
 
+Object .defineProperties (BlendedVolumeStyle,
+{
+   typeName:
+   {
+      value: "BlendedVolumeStyle",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",                 new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightConstant1",         new (Fields_default()).SFFloat (0.5)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightConstant2",         new (Fields_default()).SFFloat (0.5)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightFunction1",         new (Fields_default()).SFString ("CONSTANT")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightFunction2",         new (Fields_default()).SFString ("CONSTANT")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightTransferFunction1", new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightTransferFunction2", new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "renderStyle",             new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "voxels",                  new (Fields_default()).SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const BlendedVolumeStyle_default_ = BlendedVolumeStyle;
 ;
 
@@ -988,29 +1012,6 @@ function BoundaryEnhancementVolumeStyle (executionContext)
 BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: BoundaryEnhancementVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",         new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "retainedOpacity", new (Fields_default()).SFFloat (0.2)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "boundaryOpacity", new (Fields_default()).SFFloat (0.9)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "opacityFactor",   new (Fields_default()).SFFloat (2)),
-   ]),
-   getTypeName: function ()
-   {
-      return "BoundaryEnhancementVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    addShaderFields: function (shaderNode)
    {
       if (! this ._enabled .getValue ())
@@ -1064,6 +1065,41 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (Volu
       string += "   textureColor = getBoundaryEnhancementStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
       return string;
+   },
+});
+
+Object .defineProperties (BoundaryEnhancementVolumeStyle,
+{
+   typeName:
+   {
+      value: "BoundaryEnhancementVolumeStyle",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",         new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "retainedOpacity", new (Fields_default()).SFFloat (0.2)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "boundaryOpacity", new (Fields_default()).SFFloat (0.9)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "opacityFactor",   new (Fields_default()).SFFloat (2)),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -1137,30 +1173,6 @@ function CartoonVolumeStyle (executionContext)
 CartoonVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: CartoonVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",         new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "colorSteps",      new (Fields_default()).SFInt32 (4)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "orthogonalColor", new (Fields_default()).SFColorRGBA (1, 1, 1, 1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "parallelColor",   new (Fields_default()).SFColorRGBA (0, 0, 0, 1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals",  new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "CartoonVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -1372,6 +1384,42 @@ CartoonVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
    },
 });
 
+Object .defineProperties (CartoonVolumeStyle,
+{
+   typeName:
+   {
+      value: "CartoonVolumeStyle",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",         new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "colorSteps",      new (Fields_default()).SFInt32 (4)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "orthogonalColor", new (Fields_default()).SFColorRGBA (1, 1, 1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "parallelColor",   new (Fields_default()).SFColorRGBA (0, 0, 0, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals",  new (Fields_default()).SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const CartoonVolumeStyle_default_ = CartoonVolumeStyle;
 ;
 
@@ -1444,27 +1492,6 @@ function ComposedVolumeStyle (executionContext)
 ComposedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: ComposedVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",     new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "renderStyle", new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ComposedVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -1570,6 +1597,39 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering
    }
 });
 
+Object .defineProperties (ComposedVolumeStyle,
+{
+   typeName:
+   {
+      value: "ComposedVolumeStyle",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",     new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "renderStyle", new (Fields_default()).MFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const ComposedVolumeStyle_default_ = ComposedVolumeStyle;
 ;
 
@@ -1640,29 +1700,6 @@ function EdgeEnhancementVolumeStyle (executionContext)
 EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: EdgeEnhancementVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",          new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",           new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "edgeColor",         new (Fields_default()).SFColorRGBA (0, 0, 0, 1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "gradientThreshold", new (Fields_default()).SFFloat (0.4)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals",    new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "EdgeEnhancementVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -1741,6 +1778,41 @@ EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRe
       string += "   textureColor = getEdgeEnhacementStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
       return string;
+   },
+});
+
+Object .defineProperties (EdgeEnhancementVolumeStyle,
+{
+   typeName:
+   {
+      value: "EdgeEnhancementVolumeStyle",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",          new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",           new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "edgeColor",         new (Fields_default()).SFColorRGBA (0, 0, 0, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "gradientThreshold", new (Fields_default()).SFFloat (0.4)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals",    new (Fields_default()).SFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -1920,18 +1992,6 @@ function VolumeMaterial (executionContext, volumeDataNode)
 VolumeMaterial .prototype = Object .assign (Object .create ((UnlitMaterial_default()).prototype),
 {
    constructor: VolumeMaterial,
-   getTypeName: function ()
-   {
-      return "VolumeMaterial";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "material";
-   },
    getVolumeShaders: function ()
    {
       return this .volumeShaderNodes;
@@ -1982,6 +2042,29 @@ VolumeMaterial .prototype = Object .assign (Object .create ((UnlitMaterial_defau
    setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       this .volumeDataNode .setShaderUniforms (gl, shaderObject);
+   },
+});
+
+Object .defineProperties (VolumeMaterial,
+{
+   typeName:
+   {
+      value: "VolumeMaterial",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "material",
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: (UnlitMaterial_default()).fieldDefinitions,
    },
 });
 
@@ -2301,36 +2384,6 @@ function IsoSurfaceVolumeData (executionContext)
 IsoSurfaceVolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeDataNode.prototype),
 {
    constructor: IsoSurfaceVolumeData,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "dimensions",       new (Fields_default()).SFVec3f (1, 1, 1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "contourStepSize",  new (Fields_default()).SFFloat (0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceValues",    new (Fields_default()).MFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceTolerance", new (Fields_default()).SFFloat (0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",      new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",       new (Fields_default()).SFVec3f (0, 0, 0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",         new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "renderStyle",      new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "gradients",        new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "voxels",           new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "IsoSurfaceVolumeData";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       VolumeRendering_X3DVolumeDataNode.prototype.initialize.call (this);
@@ -2587,6 +2640,48 @@ IsoSurfaceVolumeData .prototype = Object .assign (Object .create (VolumeRenderin
    },
 });
 
+Object .defineProperties (IsoSurfaceVolumeData,
+{
+   typeName:
+   {
+      value: "IsoSurfaceVolumeData",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "dimensions",       new (Fields_default()).SFVec3f (1, 1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "contourStepSize",  new (Fields_default()).SFFloat (0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceValues",    new (Fields_default()).MFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceTolerance", new (Fields_default()).SFFloat (0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",      new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",       new (Fields_default()).SFVec3f (0, 0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",         new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "renderStyle",      new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "gradients",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "voxels",           new (Fields_default()).SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const IsoSurfaceVolumeData_default_ = IsoSurfaceVolumeData;
 ;
 
@@ -2656,28 +2751,6 @@ function ProjectionVolumeStyle (executionContext)
 ProjectionVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeRenderStyleNode.prototype),
 {
    constructor: ProjectionVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",           new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",            new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "type",               new (Fields_default()).SFString ("MAX")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "intensityThreshold", new (Fields_default()).SFFloat (0)),
-   ]),
-   getTypeName: function ()
-   {
-      return "ProjectionVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    addShaderFields: function (shaderNode)
    {
       if (! this ._enabled .getValue ())
@@ -2811,6 +2884,40 @@ ProjectionVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
    },
 });
 
+Object .defineProperties (ProjectionVolumeStyle,
+{
+   typeName:
+   {
+      value: "ProjectionVolumeStyle",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",           new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",            new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "type",               new (Fields_default()).SFString ("MAX")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "intensityThreshold", new (Fields_default()).SFFloat (0)),
+      ]),
+      enumerate: true,
+   },
+});
+
 const ProjectionVolumeStyle_default_ = ProjectionVolumeStyle;
 ;
 
@@ -2886,34 +2993,6 @@ function SegmentedVolumeData (executionContext)
 SegmentedVolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeDataNode.prototype),
 {
    constructor: SegmentedVolumeData,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",           new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "dimensions",         new (Fields_default()).SFVec3f (1, 1, 1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "segmentEnabled",     new (Fields_default()).MFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",            new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",        new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",         new (Fields_default()).SFVec3f (0, 0, 0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",           new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "segmentIdentifiers", new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "renderStyle",        new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "voxels",             new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SegmentedVolumeData";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       VolumeRendering_X3DVolumeDataNode.prototype.initialize.call (this);
@@ -3084,6 +3163,46 @@ SegmentedVolumeData .prototype = Object .assign (Object .create (VolumeRendering
    },
 });
 
+Object .defineProperties (SegmentedVolumeData,
+{
+   typeName:
+   {
+      value: "SegmentedVolumeData",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",           new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "dimensions",         new (Fields_default()).SFVec3f (1, 1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "segmentEnabled",     new (Fields_default()).MFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",            new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",        new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",         new (Fields_default()).SFVec3f (0, 0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",           new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "segmentIdentifiers", new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "renderStyle",        new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "voxels",             new (Fields_default()).SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const SegmentedVolumeData_default_ = SegmentedVolumeData;
 ;
 
@@ -3154,31 +3273,6 @@ function ShadedVolumeStyle (executionContext)
 ShadedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: ShadedVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",        new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "lighting",       new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadows",        new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "phaseFunction",  new (Fields_default()).SFString ("Henyey-Greenstein")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "material",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceNormals", new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ShadedVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -3358,6 +3452,43 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X
    },
 });
 
+Object .defineProperties (ShadedVolumeStyle,
+{
+   typeName:
+   {
+      value: "ShadedVolumeStyle",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",        new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "lighting",       new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadows",        new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "phaseFunction",  new (Fields_default()).SFString ("Henyey-Greenstein")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "material",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceNormals", new (Fields_default()).SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const ShadedVolumeStyle_default_ = ShadedVolumeStyle;
 ;
 
@@ -3428,30 +3559,6 @@ function SilhouetteEnhancementVolumeStyle (executionContext)
 SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: SilhouetteEnhancementVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                  new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",                   new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "silhouetteRetainedOpacity", new (Fields_default()).SFFloat (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "silhouetteBoundaryOpacity", new (Fields_default()).SFFloat (0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "silhouetteSharpness",       new (Fields_default()).SFFloat (0.5)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals",            new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SilhouetteEnhancementVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -3531,6 +3638,42 @@ SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (Vo
    },
 });
 
+Object .defineProperties (SilhouetteEnhancementVolumeStyle,
+{
+   typeName:
+   {
+      value: "SilhouetteEnhancementVolumeStyle",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                  new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",                   new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "silhouetteRetainedOpacity", new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "silhouetteBoundaryOpacity", new (Fields_default()).SFFloat (0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "silhouetteSharpness",       new (Fields_default()).SFFloat (0.5)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals",            new (Fields_default()).SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const SilhouetteEnhancementVolumeStyle_default_ = SilhouetteEnhancementVolumeStyle;
 ;
 
@@ -3601,29 +3744,6 @@ function ToneMappedVolumeStyle (executionContext)
 ToneMappedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: ToneMappedVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",        new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coolColor",      new (Fields_default()).SFColorRGBA (0, 0, 1, 0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "warmColor",      new (Fields_default()).SFColorRGBA (1, 1, 0, 0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals", new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ToneMappedVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -3711,6 +3831,41 @@ ToneMappedVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
    },
 });
 
+Object .defineProperties (ToneMappedVolumeStyle,
+{
+   typeName:
+   {
+      value: "ToneMappedVolumeStyle",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",        new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coolColor",      new (Fields_default()).SFColorRGBA (0, 0, 1, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "warmColor",      new (Fields_default()).SFColorRGBA (1, 1, 0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals", new (Fields_default()).SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const ToneMappedVolumeStyle_default_ = ToneMappedVolumeStyle;
 ;
 
@@ -3785,32 +3940,6 @@ function VolumeData (executionContext)
 VolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeDataNode.prototype),
 {
    constructor: VolumeData,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "dimensions",  new (Fields_default()).SFVec3f (1, 1, 1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",     new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay", new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",  new (Fields_default()).SFVec3f (0, 0, 0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",    new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "renderStyle", new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "voxels",      new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "VolumeData";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       VolumeRendering_X3DVolumeDataNode.prototype.initialize.call (this);
@@ -3915,6 +4044,44 @@ VolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolum
       shaderNode .setup ();
 
       return shaderNode;
+   },
+});
+
+Object .defineProperties (VolumeData,
+{
+   typeName:
+   {
+      value: "VolumeData",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "dimensions",  new (Fields_default()).SFVec3f (1, 1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",     new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay", new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",  new (Fields_default()).SFVec3f (0, 0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",    new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "renderStyle", new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "voxels",      new (Fields_default()).SFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 

@@ -101,35 +101,32 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 
 
-function ArcClose2DOptions (executionContext)
+function Arc2DOptions (executionContext)
 {
    X3DBaseNode_default().call (this, executionContext);
 
    this .addChildObjects ("dimension", new (Fields_default()).SFInt32 (40))
 }
 
-ArcClose2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
+Arc2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
 {
-   constructor: ArcClose2DOptions,
-   getTypeName: function ()
+   constructor: Arc2DOptions,
+});
+
+Object .defineProperties (Arc2DOptions,
+{
+   typeName:
    {
-      return "ArcClose2DOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "arcClose2DOptions";
+      value: "Arc2DOptions",
+      enumerate: true,
    },
 });
 
-const __default__ = ArcClose2DOptions;
+const __default__ = Arc2DOptions;
 ;
 
 Namespace_default().set ("x_ite/Browser/Geometry2D/Arc2DOptions", __default__);
-/* harmony default export */ const Arc2DOptions = (__default__);
+/* harmony default export */ const Geometry2D_Arc2DOptions = (__default__);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/ArcClose2DOptions.js
 /*******************************************************************************
  *
@@ -181,31 +178,28 @@ Namespace_default().set ("x_ite/Browser/Geometry2D/Arc2DOptions", __default__);
 
 
 
-function ArcClose2DOptions_Arc2DOptions (executionContext)
+function ArcClose2DOptions (executionContext)
 {
    X3DBaseNode_default().call (this, executionContext);
 
    this .addChildObjects ("dimension", new (Fields_default()).SFInt32 (40))
 }
 
-ArcClose2DOptions_Arc2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
+ArcClose2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
 {
-   constructor: ArcClose2DOptions_Arc2DOptions,
-   getTypeName: function ()
+   constructor: ArcClose2DOptions,
+});
+
+Object .defineProperties (ArcClose2DOptions,
+{
+   typeName:
    {
-      return "Arc2DOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "arc2DOptions";
+      value: "ArcClose2DOptions",
+      enumerate: true,
    },
 });
 
-const ArcClose2DOptions_default_ = ArcClose2DOptions_Arc2DOptions;
+const ArcClose2DOptions_default_ = ArcClose2DOptions;
 ;
 
 Namespace_default().set ("x_ite/Browser/Geometry2D/ArcClose2DOptions", ArcClose2DOptions_default_);
@@ -281,18 +275,6 @@ function Circle2DOptions (executionContext)
 Circle2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
 {
    constructor: Circle2DOptions,
-   getTypeName: function ()
-   {
-      return "Circle2DOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "circle2DOptions";
-   },
    initialize: function ()
    {
       this .addInterest ("build", this);
@@ -323,6 +305,15 @@ Circle2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_defaul
       }
 
       vertices .shrinkToFit ();
+   },
+});
+
+Object .defineProperties (Circle2DOptions,
+{
+   typeName:
+   {
+      value: "Circle2DOptions",
+      enumerate: true,
    },
 });
 
@@ -402,18 +393,6 @@ function Disk2DOptions (executionContext)
 Disk2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
 {
    constructor: Disk2DOptions,
-   getTypeName: function ()
-   {
-      return "Disk2DOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "circle2DOptions";
-   },
    initialize: function ()
    {
       this .addInterest ("build", this);
@@ -497,6 +476,15 @@ Disk2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default(
    })(),
 });
 
+Object .defineProperties (Disk2DOptions,
+{
+   typeName:
+   {
+      value: "Disk2DOptions",
+      enumerate: true,
+   },
+});
+
 const Disk2DOptions_default_ = Disk2DOptions;
 ;
 
@@ -573,18 +561,6 @@ function Rectangle2DOptions (executionContext)
 Rectangle2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
 {
    constructor: Rectangle2DOptions,
-   getTypeName: function ()
-   {
-      return "Rectangle2DOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "rectangle2DOptions";
-   },
    initialize: function ()
    {
       X3DBaseNode_default().prototype.initialize.call (this);
@@ -624,6 +600,15 @@ Rectangle2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_def
       geometry .setup ();
 
       return this .geometry;
+   },
+});
+
+Object .defineProperties (Rectangle2DOptions,
+{
+   typeName:
+   {
+      value: "Rectangle2DOptions",
+      enumerate: true,
    },
 });
 
@@ -700,7 +685,7 @@ X3DGeometry2DContext .prototype =
    },
    getArc2DOptions: function ()
    {
-      return getOptionNode .call (this, "getArc2DOptions", Arc2DOptions);
+      return getOptionNode .call (this, "getArc2DOptions", Geometry2D_Arc2DOptions);
    },
    getArcClose2DOptions: function ()
    {
@@ -859,28 +844,6 @@ function Arc2D (executionContext)
 Arc2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default()).prototype),
 {
    constructor: Arc2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",   new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "startAngle", new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "endAngle",   new (Fields_default()).SFFloat (1.5708)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "radius",     new (Fields_default()).SFFloat (1)),
-   ]),
-   getTypeName: function ()
-   {
-      return "Arc2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    set_live__: function ()
    {
       X3DLineGeometryNode_default().prototype.set_live__.call (this);
@@ -937,6 +900,40 @@ Arc2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default(
 
       this .getMin () .set (-radius, -radius, 0);
       this .getMax () .set ( radius,  radius, 0);
+   },
+});
+
+Object .defineProperties (Arc2D,
+{
+   typeName:
+   {
+      value: "Arc2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",   new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "startAngle", new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "endAngle",   new (Fields_default()).SFFloat (1.5708)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "radius",     new (Fields_default()).SFFloat (1)),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -1017,30 +1014,6 @@ function ArcClose2D (executionContext)
 ArcClose2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
 {
    constructor: ArcClose2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "closureType", new (Fields_default()).SFString ("PIE")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "startAngle",  new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "endAngle",    new (Fields_default()).SFFloat (1.5708)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "radius",      new (Fields_default()).SFFloat (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",       new (Fields_default()).SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ArcClose2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    set_live__: function ()
    {
       X3DGeometryNode_default().prototype.set_live__.call (this);
@@ -1161,6 +1134,42 @@ ArcClose2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default
    })(),
 });
 
+Object .defineProperties (ArcClose2D,
+{
+   typeName:
+   {
+      value: "ArcClose2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "closureType", new (Fields_default()).SFString ("PIE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "startAngle",  new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "endAngle",    new (Fields_default()).SFFloat (1.5708)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "radius",      new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",       new (Fields_default()).SFBool ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const ArcClose2D_default_ = ArcClose2D;
 ;
 
@@ -1232,26 +1241,6 @@ function Circle2D (executionContext)
 Circle2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default()).prototype),
 {
    constructor: Circle2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata", new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "radius",   new (Fields_default()).SFFloat (1)),
-   ]),
-   getTypeName: function ()
-   {
-      return "Circle2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    set_live__: function ()
    {
       X3DLineGeometryNode_default().prototype.set_live__.call (this);
@@ -1282,6 +1271,38 @@ Circle2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_defau
 
       this .getMin () .set (-radius, -radius, 0);
       this .getMax () .set ( radius,  radius, 0);
+   },
+});
+
+Object .defineProperties (Circle2D,
+{
+   typeName:
+   {
+      value: "Circle2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata", new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "radius",   new (Fields_default()).SFFloat (1)),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -1362,28 +1383,6 @@ function Disk2D (executionContext)
 Disk2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
 {
    constructor: Disk2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "innerRadius", new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "outerRadius", new (Fields_default()).SFFloat (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",       new (Fields_default()).SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Disk2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       X3DGeometryNode_default().prototype.initialize.call (this);
@@ -1539,6 +1538,40 @@ Disk2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).
    { },
 });
 
+Object .defineProperties (Disk2D,
+{
+   typeName:
+   {
+      value: "Disk2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "innerRadius", new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "outerRadius", new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",       new (Fields_default()).SFBool ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const Disk2D_default_ = Disk2D;
 ;
 
@@ -1610,26 +1643,6 @@ function Polyline2D (executionContext)
 Polyline2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default()).prototype),
 {
    constructor: Polyline2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",     new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "lineSegments", new (Fields_default()).MFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Polyline2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    build: function ()
    {
       const
@@ -1641,6 +1654,38 @@ Polyline2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_def
          vertexArray .push (lineSegments [i + 0], lineSegments [i + 1], 0, 1);
          vertexArray .push (lineSegments [i + 2], lineSegments [i + 3], 0, 1);
       }
+   },
+});
+
+Object .defineProperties (Polyline2D,
+{
+   typeName:
+   {
+      value: "Polyline2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",     new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "lineSegments", new (Fields_default()).MFVec2f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -1715,26 +1760,6 @@ function Polypoint2D (executionContext)
 Polypoint2D .prototype = Object .assign (Object .create ((X3DPointGeometryNode_default()).prototype),
 {
    constructor: Polypoint2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "point",    new (Fields_default()).MFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Polypoint2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    build: function ()
    {
       const
@@ -1745,6 +1770,38 @@ Polypoint2D .prototype = Object .assign (Object .create ((X3DPointGeometryNode_d
       {
          vertexArray .push (point [i], point [i + 1], 0, 1);
       }
+   },
+});
+
+Object .defineProperties (Polypoint2D,
+{
+   typeName:
+   {
+      value: "Polypoint2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "point",    new (Fields_default()).MFVec2f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -1826,27 +1883,6 @@ function Rectangle2D (executionContext)
 Rectangle2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
 {
    constructor: Rectangle2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata", new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "size",     new (Fields_default()).SFVec2f (2, 2)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",    new (Fields_default()).SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Rectangle2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    build: (function ()
    {
       const defaultSize = new (Vector2_default()) (2, 2);
@@ -1891,6 +1927,39 @@ Rectangle2D .prototype = Object .assign (Object .create ((X3DGeometryNode_defaul
          this .setSolid (this ._solid .getValue ());
       };
    })(),
+});
+
+Object .defineProperties (Rectangle2D,
+{
+   typeName:
+   {
+      value: "Rectangle2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata", new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "size",     new (Fields_default()).SFVec2f (2, 2)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",    new (Fields_default()).SFBool ()),
+      ]),
+      enumerate: true,
+   },
 });
 
 const Rectangle2D_default_ = Rectangle2D;
@@ -1966,27 +2035,6 @@ function TriangleSet2D (executionContext)
 TriangleSet2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
 {
    constructor: TriangleSet2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata", new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "vertices", new (Fields_default()).MFVec2f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",    new (Fields_default()).SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TriangleSet2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    build: function ()
    {
       const
@@ -2026,6 +2074,39 @@ TriangleSet2D .prototype = Object .assign (Object .create ((X3DGeometryNode_defa
       }
 
       this .getMultiTexCoords () .push (texCoordArray);
+   },
+});
+
+Object .defineProperties (TriangleSet2D,
+{
+   typeName:
+   {
+      value: "TriangleSet2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata", new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "vertices", new (Fields_default()).MFVec2f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",    new (Fields_default()).SFBool ()),
+      ]),
+      enumerate: true,
    },
 });
 

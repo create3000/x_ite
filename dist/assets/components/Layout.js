@@ -427,31 +427,6 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
    currentRotation: new (Rotation4_default()) (),
    currentScale: new (Vector3_default()) (0, 0, 0),
    modelViewMatrix: new (Matrix4_default()) (),
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "align",       new (Fields_default()).MFString ("CENTER", "CENTER")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "offsetUnits", new (Fields_default()).MFString ("WORLD", "WORLD")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "offset",      new (Fields_default()).MFFloat (0, 0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sizeUnits",   new (Fields_default()).MFString ("WORLD", "WORLD")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "size",        new (Fields_default()).MFFloat (1, 1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "scaleMode",   new (Fields_default()).MFString ("NONE", "NONE")),
-   ]),
-   getTypeName: function ()
-   {
-      return "Layout";
-   },
-   getComponentName: function ()
-   {
-      return "Layout";
-   },
-   getContainerField: function ()
-   {
-      return "layout";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Layout_X3DLayoutNode.prototype.initialize.call (this);
@@ -949,6 +924,43 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
    },
 });
 
+Object .defineProperties (Layout,
+{
+   typeName:
+   {
+      value: "Layout",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "layout",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "align",       new (Fields_default()).MFString ("CENTER", "CENTER")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "offsetUnits", new (Fields_default()).MFString ("WORLD", "WORLD")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "offset",      new (Fields_default()).MFFloat (0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sizeUnits",   new (Fields_default()).MFString ("WORLD", "WORLD")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "size",        new (Fields_default()).MFFloat (1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "scaleMode",   new (Fields_default()).MFString ("NONE", "NONE")),
+      ]),
+      enumerate: true,
+   },
+});
+
 const Layout_default_ = Layout;
 ;
 
@@ -1034,34 +1046,6 @@ function LayoutGroup (executionContext)
 LayoutGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
 {
    constructor: LayoutGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "layout",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "viewport",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LayoutGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Layout";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       X3DGroupingNode_default().prototype.initialize.call (this);
@@ -1134,6 +1118,46 @@ LayoutGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defaul
             return;
          }
       }
+   },
+});
+
+Object .defineProperties (LayoutGroup,
+{
+   typeName:
+   {
+      value: "LayoutGroup",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "layout",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "viewport",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -1217,33 +1241,6 @@ function LayoutLayer (executionContext)
 LayoutLayer .prototype = Object .assign (Object .create ((X3DLayerNode_default()).prototype),
 {
    constructor: LayoutLayer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pickable",       new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "objectType",     new (Fields_default()).MFString ("ALL")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "visible",        new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "layout",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "viewport",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "addChildren",    new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "removeChildren", new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "children",       new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LayoutLayer";
-   },
-   getComponentName: function ()
-   {
-      return "Layout";
-   },
-   getContainerField: function ()
-   {
-      return "layers";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       X3DLayerNode_default().prototype.initialize.call (this);
@@ -1258,6 +1255,45 @@ LayoutLayer .prototype = Object .assign (Object .create ((X3DLayerNode_default()
 
       this .getGroup () .setPrivate (true);
       this .getGroup () .setup ();
+   },
+});
+
+Object .defineProperties (LayoutLayer,
+{
+   typeName:
+   {
+      value: "LayoutLayer",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "layers",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pickable",       new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "objectType",     new (Fields_default()).MFString ("ALL")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "visible",        new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "layout",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "viewport",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "addChildren",    new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "removeChildren", new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "children",       new (Fields_default()).MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -1771,34 +1807,6 @@ function ScreenFontStyle (executionContext)
 ScreenFontStyle .prototype = Object .assign (Object .create ((X3DFontStyleNode_default()).prototype),
 {
    constructor: ScreenFontStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "language",    new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "family",      new (Fields_default()).MFString ("SERIF")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "style",       new (Fields_default()).SFString ("PLAIN")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pointSize",   new (Fields_default()).SFFloat (12)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "spacing",     new (Fields_default()).SFFloat (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "horizontal",  new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "leftToRight", new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "topToBottom", new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "justify",     new (Fields_default()).MFString ("BEGIN")),
-   ]),
-   getTypeName: function ()
-   {
-      return "ScreenFontStyle";
-   },
-   getComponentName: function ()
-   {
-      return "Layout";
-   },
-   getContainerField: function ()
-   {
-      return "fontStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       X3DFontStyleNode_default().prototype.initialize.call (this);
@@ -1812,6 +1820,46 @@ ScreenFontStyle .prototype = Object .assign (Object .create ((X3DFontStyleNode_d
    getScale: function ()
    {
       return this ._pointSize .getValue () * this .getBrowser () .getPixelPerPoint ();
+   },
+});
+
+Object .defineProperties (ScreenFontStyle,
+{
+   typeName:
+   {
+      value: "ScreenFontStyle",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "fontStyle",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "language",    new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "family",      new (Fields_default()).MFString ("SERIF")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "style",       new (Fields_default()).SFString ("PLAIN")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pointSize",   new (Fields_default()).SFFloat (12)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "spacing",     new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "horizontal",  new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "leftToRight", new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "topToBottom", new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "justify",     new (Fields_default()).MFString ("BEGIN")),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -1888,32 +1936,6 @@ function ScreenGroup (executionContext)
 ScreenGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
 {
    constructor: ScreenGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ScreenGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Layout";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getBBox: function (bbox, shadows)
    {
       return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
@@ -1944,6 +1966,44 @@ ScreenGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defaul
       X3DGroupingNode_default().prototype.traverse.call (this, type, renderObject);
 
       modelViewMatrix .pop ();
+   },
+});
+
+Object .defineProperties (ScreenGroup,
+{
+   typeName:
+   {
+      value: "ScreenGroup",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 

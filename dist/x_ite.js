@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 23:
+/***/ 13:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(790);
+/* provided dependency */ var jQuery = __webpack_require__(6);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 422:
+/***/ 319:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(790);
+/* provided dependency */ var jQuery = __webpack_require__(6);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 121:
+/***/ 442:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(790)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(6)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 790:
+/***/ 6:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11523,7 +11523,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 737:
+/***/ 699:
 /***/ ((module) => {
 
 /**
@@ -16302,7 +16302,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 639:
+/***/ 178:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19547,7 +19547,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 774:
+/***/ 744:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -21963,7 +21963,7 @@ X3DObject .prototype =
    },
    getTypeName: function ()
    {
-      return "X3DObject";
+      return this .constructor .typeName;
    },
    setName: function (value)
    {
@@ -22084,9 +22084,12 @@ X3DObject .prototype =
 for (const key of Reflect .ownKeys (X3DObject .prototype))
    Object .defineProperty (X3DObject .prototype, key, { enumerable: false });
 
-Object .defineProperty (X3DObject .prototype, Symbol .toStringTag,
+Object .defineProperties (X3DObject .prototype,
 {
-   get: function () { return this .getTypeName (); },
+   [Symbol .toStringTag]:
+   {
+      get: function () { return this .getTypeName (); },
+   },
 });
 
 Object .assign (X3DObject,
@@ -22675,14 +22678,19 @@ function X3DFieldDefinition (accessType, name, value)
 X3DFieldDefinition .prototype = Object .assign (Object .create (Base_X3DObject.prototype),
 {
    constructor: X3DFieldDefinition,
-   getTypeName: function ()
-   {
-      return "X3DFieldDefinition";
-   },
 });
 
 for (const key of Reflect .ownKeys (X3DFieldDefinition .prototype))
    Object .defineProperty (X3DFieldDefinition .prototype, key, { enumerable: false });
+
+Object .defineProperties (X3DFieldDefinition,
+{
+   typeName:
+   {
+      value: "X3DFieldDefinition",
+      enumerate: true,
+   },
+});
 
 const X3DFieldDefinition_default_ = X3DFieldDefinition;
 ;
@@ -23118,14 +23126,19 @@ function FieldDefinitionArray (values)
 FieldDefinitionArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.prototype),
 {
    constructor: FieldDefinitionArray,
-   getTypeName: function ()
-   {
-      return "FieldDefinitionArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (FieldDefinitionArray .prototype))
    Object .defineProperty (FieldDefinitionArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (FieldDefinitionArray,
+{
+   typeName:
+   {
+      value: "FieldDefinitionArray",
+      enumerate: true,
+   },
+});
 
 const FieldDefinitionArray_default_ = FieldDefinitionArray;
 ;
@@ -23247,6 +23260,10 @@ X3DField .prototype = Object .assign (Object .create (Base_X3DChildObject.protot
    getValue: function ()
    {
       return this [_value];
+   },
+   getType: function ()
+   {
+      return this .constructor .type;
    },
    setAccessType: function (value)
    {
@@ -23624,14 +23641,19 @@ function FieldArray (values)
 FieldArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.prototype),
 {
    constructor: FieldArray,
-   getTypeName: function ()
-   {
-      return "FieldArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (FieldArray .prototype))
    Object .defineProperty (FieldArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (FieldArray,
+{
+   typeName:
+   {
+      value: "FieldArray",
+      enumerate: true,
+   },
+});
 
 const FieldArray_default_ = FieldArray;
 ;
@@ -23709,14 +23731,6 @@ SFBool .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    {
       Base_X3DField.prototype.set.call (this, !! value);
    },
-   getTypeName: function ()
-   {
-      return "SFBool";
-   },
-   getType: function ()
-   {
-      return Base_X3DConstants.SFBool;
-   },
    valueOf: function ()
    {
       return this .getValue ();
@@ -23745,6 +23759,20 @@ SFBool .prototype = Object .assign (Object .create (Base_X3DField.prototype),
 
 for (const key of Reflect .ownKeys (SFBool .prototype))
    Object .defineProperty (SFBool .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFBool,
+{
+   typeName:
+   {
+      value: "SFBool",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.SFBool,
+      enumerate: true,
+   },
+});
 
 const SFBool_default_ = SFBool;
 ;
@@ -24095,14 +24123,6 @@ SFColor .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    {
       return new SFColor (this .getValue () .copy ());
    },
-   getTypeName: function ()
-   {
-      return "SFColor";
-   },
-   getType: function ()
-   {
-      return Base_X3DConstants.SFColor;
-   },
    equals: function (color)
    {
       return this .getValue () .equals (color .getValue ());
@@ -24240,6 +24260,20 @@ Object .defineProperties (SFColor .prototype,
    r: Object .assign ({ enumerable: true }, SFColor_r),
    g: Object .assign ({ enumerable: true }, SFColor_g),
    b: Object .assign ({ enumerable: true }, SFColor_b),
+});
+
+Object .defineProperties (SFColor,
+{
+   typeName:
+   {
+      value: "SFColor",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.SFColor,
+      enumerate: true,
+   },
 });
 
 const SFColor_default_ = SFColor;
@@ -24522,14 +24556,6 @@ SFColorRGBA .prototype = Object .assign (Object .create (Base_X3DField.prototype
    {
       return new SFColorRGBA (this .getValue () .copy ());
    },
-   getTypeName: function ()
-   {
-      return "SFColorRGBA";
-   },
-   getType: function ()
-   {
-      return Base_X3DConstants.SFColorRGBA;
-   },
    equals: Fields_SFColor.prototype.equals,
    isDefaultValue: function ()
    {
@@ -24635,6 +24661,20 @@ Object .defineProperties (SFColorRGBA .prototype,
    a: Object .assign ({ enumerable: true }, SFColorRGBA_a),
 });
 
+Object .defineProperties (SFColorRGBA,
+{
+   typeName:
+   {
+      value: "SFColorRGBA",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.SFColorRGBA,
+      enumerate: true,
+   },
+});
+
 const SFColorRGBA_default_ = SFColorRGBA;
 ;
 
@@ -24703,14 +24743,6 @@ SFDouble .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    {
       return new SFDouble (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFDouble";
-   },
-   getType: function ()
-   {
-      return Base_X3DConstants.SFDouble;
-   },
    isDefaultValue: function ()
    {
       return this .getValue () === 0;
@@ -24748,6 +24780,20 @@ SFDouble .prototype = Object .assign (Object .create (Base_X3DField.prototype),
 
 for (const key of Reflect .ownKeys (SFDouble .prototype))
    Object .defineProperty (SFDouble .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFDouble,
+{
+   typeName:
+   {
+      value: "SFDouble",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.SFDouble,
+      enumerate: true,
+   },
+});
 
 const SFDouble_default_ = SFDouble;
 ;
@@ -24817,14 +24863,6 @@ SFFloat .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    {
       return new SFFloat (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFFloat";
-   },
-   getType: function ()
-   {
-      return Base_X3DConstants.SFFloat;
-   },
    isDefaultValue: function ()
    {
       return this .getValue () === 0;
@@ -24862,6 +24900,20 @@ SFFloat .prototype = Object .assign (Object .create (Base_X3DField.prototype),
 
 for (const key of Reflect .ownKeys (SFFloat .prototype))
    Object .defineProperty (SFFloat .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFFloat,
+{
+   typeName:
+   {
+      value: "SFFloat",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.SFFloat,
+      enumerate: true,
+   },
+});
 
 const SFFloat_default_ = SFFloat;
 ;
@@ -24931,14 +24983,6 @@ SFInt32 .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    {
       return new SFInt32 (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFInt32";
-   },
-   getType: function ()
-   {
-      return Base_X3DConstants.SFInt32;
-   },
    isDefaultValue: function ()
    {
       return this .getValue () === 0;
@@ -24972,6 +25016,20 @@ SFInt32 .prototype = Object .assign (Object .create (Base_X3DField.prototype),
 
 for (const key of Reflect .ownKeys (SFInt32 .prototype))
    Object .defineProperty (SFInt32 .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFInt32,
+{
+   typeName:
+   {
+      value: "SFInt32",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.SFInt32,
+      enumerate: true,
+   },
+});
 
 const SFInt32_default_ = SFInt32;
 ;
@@ -25028,9 +25086,24 @@ x_ite_Namespace.set ("x_ite/Fields/SFInt32", SFInt32_default_);
 
 
 
-function SFMatrixPrototypeTemplate (Constructor, TypeName, Type, Matrix, SFVec, double)
+
+function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double)
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
+
+   Object .defineProperties (Constructor,
+   {
+      typeName:
+      {
+         value: TypeName,
+         enumerate: true,
+      },
+   type:
+   {
+      value: Base_X3DConstants [TypeName],
+      enumerate: true,
+   },
+   });
 
    return Object .assign (Object .create (Base_X3DField.prototype),
    {
@@ -25038,14 +25111,6 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Type, Matrix, SFVec, 
       [Symbol .iterator]: function* ()
       {
          yield* this .getValue ();
-      },
-      getTypeName: function ()
-      {
-         return TypeName;
-      },
-      getType: function ()
-      {
-         return Type;
       },
       copy: function ()
       {
@@ -25224,9 +25289,24 @@ x_ite_Namespace.set ("x_ite/Fields/SFMatrixPrototypeTemplate", SFMatrixPrototype
 
 
 
-function SFVecPrototypeTemplate (Constructor, TypeName, Type, Vector, double)
+
+function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
+
+   Object .defineProperties (Constructor,
+   {
+      typeName:
+      {
+         value: TypeName,
+         enumerate: true,
+      },
+   type:
+   {
+      value: Base_X3DConstants [TypeName],
+      enumerate: true,
+   },
+   });
 
    return Object .assign (Object .create (Base_X3DField.prototype),
    {
@@ -25234,14 +25314,6 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Type, Vector, double)
       [Symbol .iterator]: function* ()
       {
          yield* this .getValue ();
-      },
-      getTypeName: function ()
-      {
-         return TypeName;
-      },
-      getType: function ()
-      {
-         return Type;
       },
       copy: function ()
       {
@@ -25676,8 +25748,7 @@ x_ite_Namespace.set ("standard/Math/Numbers/Vector2", Vector2_default_);
 
 
 
-
-function SFVec2Template (TypeName, Type, double)
+function SFVec2Template (TypeName, double)
 {
    function SFVec2 (x, y)
    {
@@ -25696,7 +25767,7 @@ function SFVec2Template (TypeName, Type, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFVec2 .prototype = Fields_SFVecPrototypeTemplate (SFVec2, TypeName, Type, Numbers_Vector2, double);
+   SFVec2 .prototype = Fields_SFVecPrototypeTemplate (SFVec2, TypeName, Numbers_Vector2, double);
 
    for (const key of Reflect .ownKeys (SFVec2 .prototype))
       Object .defineProperty (SFVec2 .prototype, key, { enumerable: false });
@@ -25737,8 +25808,8 @@ function SFVec2Template (TypeName, Type, double)
 }
 
 const SFVec2 = {
-   SFVec2d: SFVec2Template ("SFVec2d", Base_X3DConstants.SFVec2d, true),
-   SFVec2f: SFVec2Template ("SFVec2f", Base_X3DConstants.SFVec2f, false),
+   SFVec2d: SFVec2Template ("SFVec2d", true),
+   SFVec2f: SFVec2Template ("SFVec2f", false),
 };
 
 const SFVec2_default_ = SFVec2;
@@ -27251,8 +27322,7 @@ x_ite_Namespace.set ("standard/Math/Numbers/Matrix3", Matrix3_default_);
 
 
 
-
-function SFMatrix3Template (TypeName, Type, SFVec2, double)
+function SFMatrix3Template (TypeName, SFVec2, double)
 {
    function SFMatrix3 (m00, m01, m02,
                        m10, m11, m12,
@@ -27286,7 +27356,7 @@ function SFMatrix3Template (TypeName, Type, SFVec2, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFMatrix3 .prototype = Object .assign (Fields_SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Type, Numbers_Matrix3, SFVec2, double),
+   SFMatrix3 .prototype = Object .assign (Fields_SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Numbers_Matrix3, SFVec2, double),
    {
       setTransform: function (translation, rotation, scale, scaleOrientation, center)
       {
@@ -27327,8 +27397,8 @@ function SFMatrix3Template (TypeName, Type, SFVec2, double)
 }
 
 const SFMatrix3 = {
-   SFMatrix3d: SFMatrix3Template ("SFMatrix3d", Base_X3DConstants.SFMatrix3d, Fields_SFVec2.SFVec2d, true),
-   SFMatrix3f: SFMatrix3Template ("SFMatrix3f", Base_X3DConstants.SFMatrix3f, Fields_SFVec2.SFVec2f, false),
+   SFMatrix3d: SFMatrix3Template ("SFMatrix3d", Fields_SFVec2.SFVec2d, true),
+   SFMatrix3f: SFMatrix3Template ("SFMatrix3f", Fields_SFVec2.SFVec2f, false),
 };
 
 const SFMatrix3_default_ = SFMatrix3;
@@ -27388,8 +27458,7 @@ x_ite_Namespace.set ("x_ite/Fields/SFMatrix3", SFMatrix3_default_);
 
 
 
-
-function SFVec3Template (TypeName, Type, double)
+function SFVec3Template (TypeName, double)
 {
    function SFVec3 (x, y, z)
    {
@@ -27408,7 +27477,7 @@ function SFVec3Template (TypeName, Type, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFVec3 .prototype = Object .assign (Fields_SFVecPrototypeTemplate (SFVec3, TypeName, Type, Numbers_Vector3, double),
+   SFVec3 .prototype = Object .assign (Fields_SFVecPrototypeTemplate (SFVec3, TypeName, Numbers_Vector3, double),
    {
       cross: function (vector)
       {
@@ -27469,8 +27538,8 @@ function SFVec3Template (TypeName, Type, double)
 }
 
 const SFVec3 = {
-   SFVec3d: SFVec3Template ("SFVec3d", Base_X3DConstants.SFVec3d, true),
-   SFVec3f: SFVec3Template ("SFVec3f", Base_X3DConstants.SFVec3f, false),
+   SFVec3d: SFVec3Template ("SFVec3d", true),
+   SFVec3f: SFVec3Template ("SFVec3f", false),
 };
 
 const SFVec3_default_ = SFVec3;
@@ -29598,8 +29667,7 @@ x_ite_Namespace.set ("standard/Math/Numbers/Matrix4", Matrix4_default_);
 
 
 
-
-function SFMatrix4Template (TypeName, Type, SFVec3, double)
+function SFMatrix4Template (TypeName, SFVec3, double)
 {
    function SFMatrix4 (m00, m01, m02, m03,
                        m10, m11, m12, m13,
@@ -29637,7 +29705,7 @@ function SFMatrix4Template (TypeName, Type, SFVec3, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFMatrix4 .prototype = Fields_SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Type, Numbers_Matrix4, SFVec3, double);
+   SFMatrix4 .prototype = Fields_SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Numbers_Matrix4, SFVec3, double);
 
    for (const key of Reflect .ownKeys (SFMatrix4 .prototype))
       Object .defineProperty (SFMatrix4 .prototype, key, { enumerable: false });
@@ -29666,9 +29734,9 @@ function SFMatrix4Template (TypeName, Type, SFVec3, double)
 }
 
 const SFMatrix4 = {
-   SFMatrix4d: SFMatrix4Template ("SFMatrix4d", Base_X3DConstants.SFMatrix4d, Fields_SFVec3.SFVec3d, true),
-   SFMatrix4f: SFMatrix4Template ("SFMatrix4f", Base_X3DConstants.SFMatrix4f, Fields_SFVec3.SFVec3f, false),
-   VrmlMatrix: SFMatrix4Template ("VrmlMatrix", Base_X3DConstants.VrmlMatrix, Fields_SFVec3.SFVec3f, false),
+   SFMatrix4d: SFMatrix4Template ("SFMatrix4d", Fields_SFVec3.SFVec3d, true),
+   SFMatrix4f: SFMatrix4Template ("SFMatrix4f", Fields_SFVec3.SFVec3f, false),
+   VrmlMatrix: SFMatrix4Template ("VrmlMatrix", Fields_SFVec3.SFVec3f, false),
 };
 
 const SFMatrix4_default_ = SFMatrix4;
@@ -29970,14 +30038,6 @@ SFNode .prototype = Object .assign (Object .create (Base_X3DField.prototype),
 
       return new SFNode ();
    },
-   getTypeName: function ()
-   {
-      return "SFNode";
-   },
-   getType: function ()
-   {
-      return Base_X3DConstants.SFNode;
-   },
    equals: function (node)
    {
       const target = this [SFNode_target];
@@ -30260,6 +30320,20 @@ SFNode .prototype = Object .assign (Object .create (Base_X3DField.prototype),
 for (const key of Reflect .ownKeys (SFNode .prototype))
    Object .defineProperty (SFNode .prototype, key, { enumerable: false });
 
+Object .defineProperties (SFNode,
+{
+   typeName:
+   {
+      value: "SFNode",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.SFNode,
+      enumerate: true,
+   },
+});
+
 const SFNode_default_ = SFNode;
 ;
 
@@ -30372,14 +30446,6 @@ SFRotation .prototype = Object .assign (Object .create (Base_X3DField.prototype)
    isDefaultValue: function ()
    {
       return this .getValue () .equals (Numbers_Rotation4.Identity);
-   },
-   getTypeName: function ()
-   {
-      return "SFRotation";
-   },
-   getType: function ()
-   {
-      return Base_X3DConstants.SFRotation;
    },
    set: function (value)
    {
@@ -30529,6 +30595,20 @@ Object .defineProperties (SFRotation .prototype,
    angle: Object .assign ({ enumerable: true }, SFRotation_angle),
 });
 
+Object .defineProperties (SFRotation,
+{
+   typeName:
+   {
+      value: "SFRotation",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.SFRotation,
+      enumerate: true,
+   },
+});
+
 const SFRotation_default_ = SFRotation;
 ;
 
@@ -30613,14 +30693,6 @@ SFString .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    {
       return new SFString (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFString";
-   },
-   getType: function ()
-   {
-      return Base_X3DConstants.SFString;
-   },
    isDefaultValue: function ()
    {
       return this .getValue () === "";
@@ -30666,6 +30738,20 @@ Object .defineProperty (SFString .prototype, "length",
    get: function ()
    {
       return this .getValue () .length;
+   },
+});
+
+Object .defineProperties (SFString,
+{
+   typeName:
+   {
+      value: "SFString",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.SFString,
+      enumerate: true,
    },
 });
 
@@ -30737,14 +30823,6 @@ SFTime .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    {
       return new SFTime (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFTime";
-   },
-   getType: function ()
-   {
-      return Base_X3DConstants.SFTime;
-   },
    isDefaultValue: function ()
    {
       return this .getValue () === 0;
@@ -30778,6 +30856,20 @@ SFTime .prototype = Object .assign (Object .create (Base_X3DField.prototype),
 
 for (const key of Reflect .ownKeys (SFTime .prototype))
    Object .defineProperty (SFTime .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFTime,
+{
+   typeName:
+   {
+      value: "SFTime",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.SFTime,
+      enumerate: true,
+   },
+});
 
 const SFTime_default_ = SFTime;
 ;
@@ -30836,8 +30928,7 @@ x_ite_Namespace.set ("x_ite/Fields/SFTime", SFTime_default_);
 
 
 
-
-function SFVec4Template (TypeName, Type, double)
+function SFVec4Template (TypeName, double)
 {
    function SFVec4 (x, y, z, w)
    {
@@ -30856,7 +30947,7 @@ function SFVec4Template (TypeName, Type, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFVec4 .prototype = Fields_SFVecPrototypeTemplate (SFVec4, TypeName, Type, Numbers_Vector4, double);
+   SFVec4 .prototype = Fields_SFVecPrototypeTemplate (SFVec4, TypeName, Numbers_Vector4, double);
 
    for (const key of Reflect .ownKeys (SFVec4 .prototype))
       Object .defineProperty (SFVec4 .prototype, key, { enumerable: false });
@@ -30925,8 +31016,8 @@ function SFVec4Template (TypeName, Type, double)
 }
 
 const SFVec4 = {
-   SFVec4d: SFVec4Template ("SFVec4d", Base_X3DConstants.SFVec4d, true),
-   SFVec4f: SFVec4Template ("SFVec4f", Base_X3DConstants.SFVec4f, false),
+   SFVec4d: SFVec4Template ("SFVec4d", true),
+   SFVec4f: SFVec4Template ("SFVec4f", false),
 };
 
 const SFVec4_default_ = SFVec4;
@@ -32732,26 +32823,6 @@ MFNode .prototype = Object .assign (Object .create (Base_X3DObjectArrayField.pro
    {
       return Fields_SFNode;
    },
-   getValueType: function ()
-   {
-      return Fields_SFNode;
-   },
-   getArrayType: function ()
-   {
-      return Array;
-   },
-   getComponents: function ()
-   {
-      return 1;
-   },
-   getTypeName: function ()
-   {
-      return "MFNode";
-   },
-   getType: function ()
-   {
-      return Base_X3DConstants.MFNode;
-   },
    copy: function (instance)
    {
       if (instance)
@@ -33055,6 +33126,20 @@ MFNode .prototype = Object .assign (Object .create (Base_X3DObjectArrayField.pro
 for (const key of Reflect .ownKeys (MFNode .prototype))
    Object .defineProperty (MFNode .prototype, key, { enumerable: false });
 
+Object .defineProperties (MFNode,
+{
+   typeName:
+   {
+      value: "MFNode",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.MFNode,
+      enumerate: true,
+   },
+});
+
 function MFString (... args)
 {
    return Base_X3DObjectArrayField.call (this, args);
@@ -33063,29 +33148,9 @@ function MFString (... args)
 MFString .prototype = Object .assign (Object .create (Base_X3DObjectArrayField.prototype),
 {
    constructor: MFString,
-   getValueType: function ()
-   {
-      return String;
-   },
    getSingleType: function ()
    {
       return Fields_SFString;
-   },
-   getArrayType: function ()
-   {
-      return Array;
-   },
-   getComponents: function ()
-   {
-      return 1;
-   },
-   getTypeName: function ()
-   {
-      return "MFString";
-   },
-   getType: function ()
-   {
-      return Base_X3DConstants.MFString;
    },
    toXMLStream: function (generator, sourceText)
    {
@@ -33116,53 +33181,56 @@ MFString .prototype = Object .assign (Object .create (Base_X3DObjectArrayField.p
 for (const key of Reflect .ownKeys (MFString .prototype))
    Object .defineProperty (MFString .prototype, key, { enumerable: false });
 
+Object .defineProperties (MFString,
+{
+   typeName:
+   {
+      value: "MFString",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.MFString,
+      enumerate: true,
+   },
+});
+
 /**
  * MFImage
  */
 
-function MFImageTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+function MFImage (... args)
 {
-   function ArrayField (... args)
-   {
-      return Base_X3DObjectArrayField.call (this, args);
-   }
-
-   ArrayField .prototype = Object .assign (Object .create (Base_X3DObjectArrayField.prototype),
-   {
-      constructor: ArrayField,
-      getSingleType: function ()
-      {
-         return Fields_SFImage;
-      },
-      getValueType: function ()
-      {
-         return Fields_SFImage;
-      },
-      getArrayType: function ()
-      {
-         return ArrayType;
-      },
-      getComponents: function ()
-      {
-         return Components;
-      },
-      getTypeName: function ()
-      {
-         return TypeName;
-      },
-      getType: function ()
-      {
-         return Type;
-      },
-   });
-
-   for (const key of Reflect .ownKeys (ArrayField .prototype))
-      Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
-
-   return ArrayField;
+   return Base_X3DObjectArrayField.call (this, args);
 }
 
-function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+MFImage .prototype = Object .assign (Object .create (Base_X3DObjectArrayField.prototype),
+{
+   constructor: MFImage,
+   getSingleType: function ()
+   {
+      return Fields_SFImage;
+   },
+});
+
+for (const key of Reflect .ownKeys (MFImage .prototype))
+   Object .defineProperty (MFImage .prototype, key, { enumerable: false });
+
+Object .defineProperties (MFImage,
+{
+   typeName:
+   {
+      value: "MFImage",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.MFImage,
+      enumerate: true,
+   },
+});
+
+function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Components)
 {
    function ArrayField (... args)
    {
@@ -33188,47 +33256,53 @@ function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, C
       {
          return Components;
       },
-      getTypeName: function ()
-      {
-         return TypeName;
-      },
-      getType: function ()
-      {
-         return Type;
-      },
    });
 
    for (const key of Reflect .ownKeys (ArrayField .prototype))
       Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
 
+   Object .defineProperties (ArrayField,
+   {
+      typeName:
+      {
+         value: TypeName,
+         enumerate: true,
+      },
+      type:
+      {
+         value: Base_X3DConstants [TypeName],
+         enumerate: true,
+      },
+   });
+
    return ArrayField;
 }
 
-const Value = (value) => value;
+const Value = value => value;
 
 const ArrayFields =
 {
-   MFBool:      TypedArrayTemplate ("MFBool",      Base_X3DConstants.MFBool,      Fields_SFBool,      Boolean,     Uint8Array,   1),
-   MFColor:     TypedArrayTemplate ("MFColor",     Base_X3DConstants.MFColor,     Fields_SFColor,     Fields_SFColor,     Float32Array, 3),
-   MFColorRGBA: TypedArrayTemplate ("MFColorRGBA", Base_X3DConstants.MFColorRGBA, Fields_SFColorRGBA, Fields_SFColorRGBA, Float32Array, 4),
-   MFDouble:    TypedArrayTemplate ("MFDouble",    Base_X3DConstants.MFDouble,    Fields_SFDouble,    Value,       Float64Array, 1),
-   MFFloat:     TypedArrayTemplate ("MFFloat",     Base_X3DConstants.MFFloat,     Fields_SFFloat,     Value,       Float32Array, 1),
-   MFImage:     MFImageTemplate    ("MFImage",     Base_X3DConstants.MFImage,     undefined,   undefined,   Array,        1),
-   MFInt32:     TypedArrayTemplate ("MFInt32",     Base_X3DConstants.MFInt32,     Fields_SFInt32,     Value,       Int32Array,   1),
-   MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  Base_X3DConstants.MFMatrix3d,  SFMatrix3d,  SFMatrix3d,  Float64Array, 9),
-   MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  Base_X3DConstants.MFMatrix3f,  ArrayFields_SFMatrix3f,  ArrayFields_SFMatrix3f,  Float32Array, 9),
-   MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  Base_X3DConstants.MFMatrix4d,  SFMatrix4d,  SFMatrix4d,  Float64Array, 16),
-   MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  Base_X3DConstants.MFMatrix4f,  SFMatrix4f,  SFMatrix4f,  Float32Array, 16),
+   MFBool:      TypedArrayTemplate ("MFBool",      Fields_SFBool,      Boolean,     Uint8Array,   1),
+   MFColor:     TypedArrayTemplate ("MFColor",     Fields_SFColor,     Fields_SFColor,     Float32Array, 3),
+   MFColorRGBA: TypedArrayTemplate ("MFColorRGBA", Fields_SFColorRGBA, Fields_SFColorRGBA, Float32Array, 4),
+   MFDouble:    TypedArrayTemplate ("MFDouble",    Fields_SFDouble,    Value,       Float64Array, 1),
+   MFFloat:     TypedArrayTemplate ("MFFloat",     Fields_SFFloat,     Value,       Float32Array, 1),
+   MFImage:     MFImage,
+   MFInt32:     TypedArrayTemplate ("MFInt32",     Fields_SFInt32,     Value,       Int32Array,   1),
+   MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  SFMatrix3d,  SFMatrix3d,  Float64Array, 9),
+   MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  ArrayFields_SFMatrix3f,  ArrayFields_SFMatrix3f,  Float32Array, 9),
+   MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  SFMatrix4d,  SFMatrix4d,  Float64Array, 16),
+   MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  SFMatrix4f,  SFMatrix4f,  Float32Array, 16),
    MFNode:      MFNode,
-   MFRotation:  TypedArrayTemplate ("MFRotation",  Base_X3DConstants.MFRotation,  Fields_SFRotation,  Fields_SFRotation,  Float64Array, 4),
+   MFRotation:  TypedArrayTemplate ("MFRotation",  Fields_SFRotation,  Fields_SFRotation,  Float64Array, 4),
    MFString:    MFString,
-   MFTime:      TypedArrayTemplate ("MFTime",      Base_X3DConstants.MFTime,      Fields_SFTime,      Value,       Float64Array, 1),
-   MFVec2d:     TypedArrayTemplate ("MFVec2d",     Base_X3DConstants.MFVec2d,     SFVec2d,     SFVec2d,     Float64Array, 2),
-   MFVec2f:     TypedArrayTemplate ("MFVec2f",     Base_X3DConstants.MFVec2f,     SFVec2f,     SFVec2f,     Float32Array, 2),
-   MFVec3d:     TypedArrayTemplate ("MFVec3d",     Base_X3DConstants.MFVec3d,     SFVec3d,     SFVec3d,     Float64Array, 3),
-   MFVec3f:     TypedArrayTemplate ("MFVec3f",     Base_X3DConstants.MFVec3f,     ArrayFields_SFVec3f,     ArrayFields_SFVec3f,     Float32Array, 3),
-   MFVec4d:     TypedArrayTemplate ("MFVec4d",     Base_X3DConstants.MFVec4d,     SFVec4d,     SFVec4d,     Float64Array, 4),
-   MFVec4f:     TypedArrayTemplate ("MFVec4f",     Base_X3DConstants.MFVec4f,     SFVec4f,     SFVec4f,     Float32Array, 4),
+   MFTime:      TypedArrayTemplate ("MFTime",      Fields_SFTime,      Value,       Float64Array, 1),
+   MFVec2d:     TypedArrayTemplate ("MFVec2d",     SFVec2d,     SFVec2d,     Float64Array, 2),
+   MFVec2f:     TypedArrayTemplate ("MFVec2f",     SFVec2f,     SFVec2f,     Float32Array, 2),
+   MFVec3d:     TypedArrayTemplate ("MFVec3d",     SFVec3d,     SFVec3d,     Float64Array, 3),
+   MFVec3f:     TypedArrayTemplate ("MFVec3f",     ArrayFields_SFVec3f,     ArrayFields_SFVec3f,     Float32Array, 3),
+   MFVec4d:     TypedArrayTemplate ("MFVec4d",     SFVec4d,     SFVec4d,     Float64Array, 4),
+   MFVec4f:     TypedArrayTemplate ("MFVec4f",     SFVec4f,     SFVec4f,     Float32Array, 4),
 };
 
 const ArrayFields_default_ = ArrayFields;
@@ -33433,14 +33507,6 @@ SFImage .prototype = Object .assign (Object .create (Base_X3DField.prototype),
    {
       this .getValue () .assign (image);
    },
-   getTypeName: function ()
-   {
-      return "SFImage";
-   },
-   getType: function ()
-   {
-      return Base_X3DConstants.SFImage;
-   },
    toStream: function (generator)
    {
       const array = this .array;
@@ -33604,6 +33670,20 @@ Object .defineProperties (SFImage .prototype,
    array:  Object .assign ({ enumerable: true }, array),
 });
 
+Object .defineProperties (SFImage,
+{
+   typeName:
+   {
+      value: "SFImage",
+      enumerate: true,
+   },
+   type:
+   {
+      value: Base_X3DConstants.SFImage,
+      enumerate: true,
+   },
+});
+
 const SFImage_default_ = SFImage;
 ;
 
@@ -33743,8 +33823,6 @@ x_ite_Namespace.set ("x_ite/Fields", Fields_default_);
 
 
 
-const _fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions");
-
 const
    nodeTypeNames = new Map (), // (TYPENAME -> TypeName)
    fieldNames    = new Map (); // (fieldname -> fieldName)
@@ -33755,7 +33833,7 @@ const HTMLSupport =
    {
       HTMLSupport .addNodeTypeName (typeName);
 
-      for (const { name, accessType } of ConcreteNode .prototype [_fieldDefinitions])
+      for (const { name, accessType } of ConcreteNode .fieldDefinitions)
       {
          if (accessType & Base_X3DConstants.initializeOnly)
             HTMLSupport .addFieldName (name)
@@ -33845,7 +33923,7 @@ x_ite_Namespace.set ("x_ite/Parser/HTMLSupport", HTMLSupport_default_);
 const
    _executionContext  = Symbol (),
    _type              = Symbol (),
-   X3DBaseNode_fieldDefinitions  = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
+   X3DBaseNode_fieldDefinitions  = Symbol (),
    _fields            = Symbol (),
    _predefinedFields  = Symbol (),
    _aliases           = Symbol (),
@@ -33866,6 +33944,7 @@ function X3DBaseNode (executionContext)
 
    this [_executionContext]  = executionContext;
    this [_type]              = [ Base_X3DConstants.X3DBaseNode ];
+   this [X3DBaseNode_fieldDefinitions]  = this .constructor .fieldDefinitions ?? this .getFieldDefinitions ();
    this [_fields]            = new Base_FieldArray ();
    this [_predefinedFields]  = new Base_FieldArray ();
    this [_aliases]           = new Map ();
@@ -34510,6 +34589,18 @@ function X3DNode (executionContext)
 X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: X3DNode,
+   getComponentName: function ()
+   {
+      return this .constructor .componentName;
+   },
+   getContainerField: function ()
+   {
+      return this .constructor .containerField;
+   },
+   getSpecificationRange: function ()
+   {
+      return this .constructor .specificationRange;
+   },
    copy: function (instance)
    {
       if (!instance || instance .getType () .includes (Base_X3DConstants.X3DExecutionContext))
@@ -35931,28 +36022,6 @@ MetadataBoolean .prototype = Object .assign (Object .create (Core_X3DNode.protot
    Core_X3DMetadataObject.prototype,
 {
    constructor: MetadataBoolean,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "name",      new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MetadataBoolean";
-   },
-   getComponentName: function ()
-   {
-      return "Core";
-   },
-   getContainerField: function ()
-   {
-      return "metadata";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DNode.prototype.initialize.call (this);
@@ -35962,6 +36031,40 @@ MetadataBoolean .prototype = Object .assign (Object .create (Core_X3DNode.protot
    {
       Core_X3DMetadataObject.prototype.dispose.call (this);
       Core_X3DNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (MetadataBoolean,
+{
+   typeName:
+   {
+      value: "MetadataBoolean",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "metadata",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "name",      new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFBool ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -36037,28 +36140,6 @@ MetadataDouble .prototype = Object .assign (Object .create (Core_X3DNode.prototy
    Core_X3DMetadataObject.prototype,
 {
    constructor: MetadataDouble,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "name",      new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFDouble ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MetadataDouble";
-   },
-   getComponentName: function ()
-   {
-      return "Core";
-   },
-   getContainerField: function ()
-   {
-      return "metadata";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DNode.prototype.initialize.call (this);
@@ -36068,6 +36149,40 @@ MetadataDouble .prototype = Object .assign (Object .create (Core_X3DNode.prototy
    {
       Core_X3DMetadataObject.prototype.dispose.call (this);
       Core_X3DNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (MetadataDouble,
+{
+   typeName:
+   {
+      value: "MetadataDouble",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "metadata",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "name",      new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFDouble ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -36143,28 +36258,6 @@ MetadataFloat .prototype = Object .assign (Object .create (Core_X3DNode.prototyp
    Core_X3DMetadataObject.prototype,
 {
    constructor: MetadataFloat,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "name",      new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MetadataFloat";
-   },
-   getComponentName: function ()
-   {
-      return "Core";
-   },
-   getContainerField: function ()
-   {
-      return "metadata";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DNode.prototype.initialize.call (this);
@@ -36174,6 +36267,40 @@ MetadataFloat .prototype = Object .assign (Object .create (Core_X3DNode.prototyp
    {
       Core_X3DMetadataObject.prototype.dispose.call (this);
       Core_X3DNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (MetadataFloat,
+{
+   typeName:
+   {
+      value: "MetadataFloat",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "metadata",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "name",      new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFFloat ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -36249,28 +36376,6 @@ MetadataInteger .prototype = Object .assign (Object .create (Core_X3DNode.protot
    Core_X3DMetadataObject.prototype,
 {
    constructor: MetadataInteger,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "name",      new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFInt32 ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MetadataInteger";
-   },
-   getComponentName: function ()
-   {
-      return "Core";
-   },
-   getContainerField: function ()
-   {
-      return "metadata";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DNode.prototype.initialize.call (this);
@@ -36280,6 +36385,40 @@ MetadataInteger .prototype = Object .assign (Object .create (Core_X3DNode.protot
    {
       Core_X3DMetadataObject.prototype.dispose.call (this);
       Core_X3DNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (MetadataInteger,
+{
+   typeName:
+   {
+      value: "MetadataInteger",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "metadata",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "name",      new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFInt32 ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -36355,28 +36494,6 @@ MetadataSet .prototype = Object .assign (Object .create (Core_X3DNode.prototype)
    Core_X3DMetadataObject.prototype,
 {
    constructor: MetadataSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "name",      new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MetadataSet";
-   },
-   getComponentName: function ()
-   {
-      return "Core";
-   },
-   getContainerField: function ()
-   {
-      return "metadata";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DNode.prototype.initialize.call (this);
@@ -36386,6 +36503,40 @@ MetadataSet .prototype = Object .assign (Object .create (Core_X3DNode.prototype)
    {
       Core_X3DMetadataObject.prototype.dispose.call (this);
       Core_X3DNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (MetadataSet,
+{
+   typeName:
+   {
+      value: "MetadataSet",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "metadata",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "name",      new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -36461,28 +36612,6 @@ MetadataString .prototype = Object .assign (Object .create (Core_X3DNode.prototy
    Core_X3DMetadataObject.prototype,
 {
    constructor: MetadataString,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "name",      new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFString ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MetadataString";
-   },
-   getComponentName: function ()
-   {
-      return "Core";
-   },
-   getContainerField: function ()
-   {
-      return "metadata";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DNode.prototype.initialize.call (this);
@@ -36492,6 +36621,40 @@ MetadataString .prototype = Object .assign (Object .create (Core_X3DNode.prototy
    {
       Core_X3DMetadataObject.prototype.dispose.call (this);
       Core_X3DNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (MetadataString,
+{
+   typeName:
+   {
+      value: "MetadataString",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "metadata",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "name",      new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFString ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -36728,27 +36891,6 @@ function WorldInfo (executionContext)
 WorldInfo .prototype = Object .assign (Object .create (Core_X3DInfoNode.prototype),
 {
    constructor: WorldInfo,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "title",    new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "info",     new x_ite_Fields.MFString ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "WorldInfo";
-   },
-   getComponentName: function ()
-   {
-      return "Core";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DInfoNode.prototype.initialize.call (this);
@@ -36760,6 +36902,39 @@ WorldInfo .prototype = Object .assign (Object .create (Core_X3DInfoNode.prototyp
       this .getExecutionContext () .removeWorldInfo (this);
 
       Core_X3DInfoNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (WorldInfo,
+{
+   typeName:
+   {
+      value: "WorldInfo",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "title",    new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "info",     new x_ite_Fields.MFString ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -36904,10 +37079,6 @@ function AbstractNodesArray (values)
 AbstractNodesArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.prototype),
 {
    constructor: AbstractNodesArray,
-   getTypeName: function ()
-   {
-      return "AbstractNodesArray";
-   },
    add: function (typeName, Type)
    {
       Base_X3DConstants [typeName] = ++ Base_X3DConstants [_NODE_TYPE];
@@ -36918,6 +37089,15 @@ AbstractNodesArray .prototype = Object .assign (Object .create (Base_X3DInfoArra
 
 for (const key of Reflect .ownKeys (AbstractNodesArray .prototype))
    Object .defineProperty (AbstractNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (AbstractNodesArray,
+{
+   typeName:
+   {
+      value: "AbstractNodesArray",
+      enumerate: true,
+   },
+});
 
 const AbstractNodesArray_default_ = AbstractNodesArray;
 ;
@@ -37051,14 +37231,19 @@ function NamedNodesArray (values)
 NamedNodesArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.prototype),
 {
    constructor: NamedNodesArray,
-   getTypeName: function ()
-   {
-      return "NamedNodesArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (NamedNodesArray .prototype))
    Object .defineProperty (NamedNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (NamedNodesArray,
+{
+   typeName:
+   {
+      value: "NamedNodesArray",
+      enumerate: true,
+   },
+});
 
 const NamedNodesArray_default_ = NamedNodesArray;
 ;
@@ -37246,7 +37431,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
    },
    toStream: function (generator)
    {
-      Base_X3DObject.prototype.toStream (generator);
+      Base_X3DObject.prototype.toStream.call (this, generator);
    },
    toVRMLStream: function (generator)
    {
@@ -37622,6 +37807,15 @@ Object .defineProperties (X3DImportedNode .prototype,
    },
 });
 
+Object .defineProperties (X3DImportedNode,
+{
+   typeName:
+   {
+      value: "X3DImportedNode",
+      enumerate: true,
+   },
+});
+
 const X3DImportedNode_default_ = X3DImportedNode;
 ;
 
@@ -37686,14 +37880,19 @@ function ImportedNodesArray (values)
 ImportedNodesArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.prototype),
 {
    constructor: ImportedNodesArray,
-   getTypeName: function ()
-   {
-      return "ImportedNodesArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (ImportedNodesArray .prototype))
    Object .defineProperty (ImportedNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ImportedNodesArray,
+{
+   typeName:
+   {
+      value: "ImportedNodesArray",
+      enumerate: true,
+   },
+});
 
 const ImportedNodesArray_default_ = ImportedNodesArray;
 ;
@@ -37885,13 +38084,6 @@ function X3DProtoDeclaration (executionContext)
 X3DProtoDeclaration .prototype = Object .assign (Object .create (Prototype_X3DProtoDeclarationNode.prototype),
 {
    constructor: X3DProtoDeclaration,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "X3DProtoDeclaration";
-   },
    initialize: function ()
    {
       Prototype_X3DProtoDeclarationNode.prototype.initialize.call (this);
@@ -38374,6 +38566,22 @@ Object .defineProperties (X3DProtoDeclaration .prototype,
    },
 });
 
+Object .defineProperties (X3DProtoDeclaration,
+{
+   typeName:
+   {
+      value: "X3DProtoDeclaration",
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 ;
 
@@ -38662,7 +38870,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 x_ite_Namespace.set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var $ = __webpack_require__(790);
+/* provided dependency */ var $ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41844,7 +42052,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(790);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43835,7 +44043,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(790);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46301,7 +46509,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(790);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46454,7 +46662,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(790);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48958,8 +49166,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace.set ("standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(790);
-/* provided dependency */ var libtess = __webpack_require__(737);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(6);
+/* provided dependency */ var libtess = __webpack_require__(699);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51728,7 +51936,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace.set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(790);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52057,7 +52265,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(737);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(699);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55481,10 +55689,6 @@ function BindableStack (executionContext, defaultNode)
 BindableStack .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: BindableStack,
-   getTypeName: function ()
-   {
-      return "BindableStack";
-   },
    get: function ()
    {
       return this .nodes;
@@ -55582,6 +55786,15 @@ BindableStack .prototype = Object .assign (Object .create (Base_X3DBaseNode.prot
 for (const key of Reflect .ownKeys (BindableStack .prototype))
    Object .defineProperty (BindableStack .prototype, key, { enumerable: false });
 
+Object .defineProperties (BindableStack,
+{
+   typeName:
+   {
+      value: "BindableStack",
+      enumerate: true,
+   },
+});
+
 const BindableStack_default_ = BindableStack;
 ;
 
@@ -55652,10 +55865,6 @@ function BindableList (executionContext, defaultNode)
 BindableList .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: BindableList,
-   getTypeName: function ()
-   {
-      return "BindableList";
-   },
    get: function ()
    {
       return this .nodes;
@@ -55789,6 +55998,15 @@ function equals (lhs, rhs)
    return true;
 }
 
+Object .defineProperties (BindableList,
+{
+   typeName:
+   {
+      value: "BindableList",
+      enumerate: true,
+   },
+});
+
 const BindableList_default_ = BindableList;
 ;
 
@@ -55875,36 +56093,6 @@ function NavigationInfo (executionContext)
 NavigationInfo .prototype = Object .assign (Object .create (Core_X3DBindableNode.prototype),
 {
    constructor: NavigationInfo,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_bind",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "type",               new x_ite_Fields.MFString ("EXAMINE", "ANY")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "avatarSize",         new x_ite_Fields.MFFloat (0.25, 1.6, 0.75)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "speed",              new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "headlight",          new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "visibilityLimit",    new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transitionType",     new x_ite_Fields.MFString ("LINEAR")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transitionTime",     new x_ite_Fields.SFTime (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "transitionComplete", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",            new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",           new x_ite_Fields.SFTime ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "NavigationInfo";
-   },
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DBindableNode.prototype.initialize.call (this);
@@ -56125,6 +56313,48 @@ NavigationInfo .prototype = Object .assign (Object .create (Core_X3DBindableNode
 
       renderObject .getLayer () .getNavigationInfos () .push (this);
    }
+});
+
+Object .defineProperties (NavigationInfo,
+{
+   typeName:
+   {
+      value: "NavigationInfo",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Navigation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_bind",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "type",               new x_ite_Fields.MFString ("EXAMINE", "ANY")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "avatarSize",         new x_ite_Fields.MFFloat (0.25, 1.6, 0.75)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "speed",              new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "headlight",          new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "visibilityLimit",    new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transitionType",     new x_ite_Fields.MFString ("LINEAR")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transitionTime",     new x_ite_Fields.SFTime (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "transitionComplete", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",            new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",           new x_ite_Fields.SFTime ()),
+      ]),
+      enumerate: true,
+   },
 });
 
 const NavigationInfo_default_ = NavigationInfo;
@@ -56449,31 +56679,6 @@ Fog .prototype = Object .assign (Object .create (Core_X3DBindableNode.prototype)
    EnvironmentalEffects_X3DFogObject.prototype,
 {
    constructor: Fog,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_bind",        new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fogType",         new x_ite_Fields.SFString ("LINEAR")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",           new x_ite_Fields.SFColor (1, 1, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "visibilityRange", new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",         new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",        new x_ite_Fields.SFTime ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Fog";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalEffects";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DBindableNode.prototype.initialize.call (this);
@@ -56496,6 +56701,43 @@ Fog .prototype = Object .assign (Object .create (Core_X3DBindableNode.prototype)
    {
       EnvironmentalEffects_X3DFogObject.prototype.dispose.call (this);
       Core_X3DBindableNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (Fog,
+{
+   typeName:
+   {
+      value: "Fog",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_bind",        new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fogType",         new x_ite_Fields.SFString ("LINEAR")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",           new x_ite_Fields.SFColor (1, 1, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "visibilityRange", new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",         new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",        new x_ite_Fields.SFTime ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -59336,7 +59578,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(790);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59408,33 +59650,6 @@ ImageTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
    Networking_X3DUrlObject.prototype,
 {
    constructor: ImageTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatS",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatT",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "textureProperties",    new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ImageTexture";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Texturing_X3DTexture2DNode.prototype.initialize.call (this);
@@ -59619,6 +59834,45 @@ ImageTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
    },
 });
 
+Object .defineProperties (ImageTexture,
+{
+   typeName:
+   {
+      value: "ImageTexture",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatS",              new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatT",              new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "textureProperties",    new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const ImageTexture_default_ = ImageTexture;
 ;
 
@@ -59689,39 +59943,6 @@ function Background (executionContext)
 Background .prototype = Object .assign (Object .create (EnvironmentalEffects_X3DBackgroundNode.prototype),
 {
    constructor: Background,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",     new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_bind",     new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "frontUrl",     new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backUrl",      new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "leftUrl",      new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "rightUrl",     new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "topUrl",       new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "bottomUrl",    new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "skyAngle",     new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "skyColor",     new x_ite_Fields.MFColor (new x_ite_Fields.SFColor ())),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "groundAngle",  new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "groundColor",  new x_ite_Fields.MFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency", new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",      new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",     new x_ite_Fields.SFTime ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Background";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalEffects";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       EnvironmentalEffects_X3DBackgroundNode.prototype.initialize.call (this);
@@ -59770,6 +59991,51 @@ Background .prototype = Object .assign (Object .create (EnvironmentalEffects_X3D
       this .set_texture__ (topTexture,    4);
       this .set_texture__ (bottomTexture, 5);
    }
+});
+
+Object .defineProperties (Background,
+{
+   typeName:
+   {
+      value: "Background",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",     new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_bind",     new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "frontUrl",     new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backUrl",      new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "leftUrl",      new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "rightUrl",     new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "topUrl",       new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "bottomUrl",    new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "skyAngle",     new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "skyColor",     new x_ite_Fields.MFColor (new x_ite_Fields.SFColor ())),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "groundAngle",  new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "groundColor",  new x_ite_Fields.MFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency", new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",      new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",     new x_ite_Fields.SFTime ()),
+      ]),
+      enumerate: true,
+   },
 });
 
 const Background_default_ = Background;
@@ -60682,39 +60948,6 @@ TimeSensor .prototype = Object .assign (Object .create (Core_X3DSensorNode.proto
    Time_X3DTimeDependentNode.prototype,
 {
    constructor: TimeSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",         new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",      new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",          new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "cycleInterval",    new x_ite_Fields.SFTime (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loop",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",        new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",       new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",        new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",         new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",         new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",         new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "cycleTime",        new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",      new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "fraction_changed", new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "time",             new x_ite_Fields.SFTime ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TimeSensor";
-   },
-   getComponentName: function ()
-   {
-      return "Time";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DSensorNode.prototype.initialize.call (this);
@@ -60813,6 +61046,51 @@ TimeSensor .prototype = Object .assign (Object .create (Core_X3DSensorNode.proto
    {
       Time_X3DTimeDependentNode.prototype.dispose.call (this);
       Core_X3DSensorNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (TimeSensor,
+{
+   typeName:
+   {
+      value: "TimeSensor",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Time",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",         new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",      new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",          new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "cycleInterval",    new x_ite_Fields.SFTime (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loop",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",        new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",       new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",        new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",         new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",         new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",         new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "cycleTime",        new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",      new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "fraction_changed", new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "time",             new x_ite_Fields.SFTime ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -61014,29 +61292,6 @@ function EaseInEaseOut (executionContext)
 EaseInEaseOut .prototype = Object .assign (Object .create (Interpolation_X3DInterpolatorNode.prototype),
 {
    constructor: EaseInEaseOut,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",                 new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",             new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",                      new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "easeInEaseOut",            new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "modifiedFraction_changed", new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "EaseInEaseOut";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -61085,6 +61340,41 @@ EaseInEaseOut .prototype = Object .assign (Object .create (Interpolation_X3DInte
             this ._modifiedFraction_changed = 1 - ((t * w * w) / easeIn);
          }
       }
+   },
+});
+
+Object .defineProperties (EaseInEaseOut,
+{
+   typeName:
+   {
+      value: "EaseInEaseOut",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",                 new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",             new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",                      new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "easeInEaseOut",            new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "modifiedFraction_changed", new x_ite_Fields.SFFloat ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -61158,29 +61448,6 @@ function PositionInterpolator (executionContext)
 PositionInterpolator .prototype = Object .assign (Object .create (Interpolation_X3DInterpolatorNode.prototype),
 {
    constructor: PositionInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PositionInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -61205,6 +61472,41 @@ PositionInterpolator .prototype = Object .assign (Object .create (Interpolation_
          this ._value_changed = keyValue .assign (this ._keyValue [index0] .getValue ()) .lerp (this ._keyValue [index1] .getValue (), weight);
       };
    })(),
+});
+
+Object .defineProperties (PositionInterpolator,
+{
+   typeName:
+   {
+      value: "PositionInterpolator",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFVec3f ()),
+      ]),
+      enumerate: true,
+   },
 });
 
 const PositionInterpolator_default_ = PositionInterpolator;
@@ -61280,29 +61582,6 @@ function OrientationInterpolator (executionContext)
 OrientationInterpolator .prototype = Object .assign (Object .create (Interpolation_X3DInterpolatorNode.prototype),
 {
    constructor: OrientationInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFRotation ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "OrientationInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -61333,6 +61612,41 @@ OrientationInterpolator .prototype = Object .assign (Object .create (Interpolati
          this ._value_changed = keyValue0 .slerp (keyValue1, weight);
       };
    }) (),
+});
+
+Object .defineProperties (OrientationInterpolator,
+{
+   typeName:
+   {
+      value: "OrientationInterpolator",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFRotation ()),
+      ]),
+      enumerate: true,
+   },
 });
 
 const OrientationInterpolator_default_ = OrientationInterpolator;
@@ -61405,29 +61719,6 @@ function ScalarInterpolator (executionContext)
 ScalarInterpolator .prototype = Object .assign (Object .create (Interpolation_X3DInterpolatorNode.prototype),
 {
    constructor: ScalarInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ScalarInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -61446,6 +61737,41 @@ ScalarInterpolator .prototype = Object .assign (Object .create (Interpolation_X3
    interpolate: function (index0, index1, weight)
    {
       this ._value_changed = Algorithm.lerp (this ._keyValue [index0], this ._keyValue [index1], weight);
+   },
+});
+
+Object .defineProperties (ScalarInterpolator,
+{
+   typeName:
+   {
+      value: "ScalarInterpolator",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFFloat ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -62113,39 +62439,6 @@ function Viewpoint (executionContext)
 Viewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpointNode.prototype),
 {
    constructor: Viewpoint,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_bind",          new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",       new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "position",          new x_ite_Fields.SFVec3f (0, 0, 10)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "orientation",       new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "centerOfRotation",  new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fieldOfView",       new x_ite_Fields.SFFloat (0.7854)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "nearDistance",      new x_ite_Fields.SFFloat (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "farDistance",       new x_ite_Fields.SFFloat (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "viewAll",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "jump",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "retainUserOffsets", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",          new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "navigationInfo",    new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Viewpoint";
-   },
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    getRelativeTransformation: function (fromViewpointNode)
    {
       const relative = Navigation_X3DViewpointNode.prototype.getRelativeTransformation.call (this, fromViewpointNode);
@@ -62226,6 +62519,51 @@ Viewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpointNo
    getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
    {
       return Geometry_Camera.perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
+   },
+});
+
+Object .defineProperties (Viewpoint,
+{
+   typeName:
+   {
+      value: "Viewpoint",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Navigation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_bind",          new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",       new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "position",          new x_ite_Fields.SFVec3f (0, 0, 10)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "orientation",       new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "centerOfRotation",  new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fieldOfView",       new x_ite_Fields.SFFloat (0.7854)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "nearDistance",      new x_ite_Fields.SFFloat (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "farDistance",       new x_ite_Fields.SFFloat (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "viewAll",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "jump",              new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "retainUserOffsets", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",          new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "navigationInfo",    new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -63153,31 +63491,43 @@ function Group (executionContext)
 Group .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.prototype),
 {
    constructor: Group,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",       new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",        new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",    new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",       new x_ite_Fields.SFVec3f (-1, -1, -1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",     new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",    new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
+});
+
+Object .defineProperties (Group,
+{
+   typeName:
    {
-      return "Group";
+      value: "Group",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Grouping";
+      value: "Grouping",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "children";
+      value: "children",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["2.0", "Infinity"];
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",       new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",        new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",    new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",       new x_ite_Fields.SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",     new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",    new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -63255,32 +63605,6 @@ function Layer (executionContext)
 Layer .prototype = Object .assign (Object .create (Layering_X3DLayerNode.prototype),
 {
    constructor: Layer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",       new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pickable",       new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "objectType",     new x_ite_Fields.MFString ("ALL")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "visible",        new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "viewport",       new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "addChildren",    new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "removeChildren", new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",       new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Layer";
-   },
-   getComponentName: function ()
-   {
-      return "Layering";
-   },
-   getContainerField: function ()
-   {
-      return "layers";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Layering_X3DLayerNode.prototype.initialize.call (this);
@@ -63292,6 +63616,44 @@ Layer .prototype = Object .assign (Object .create (Layering_X3DLayerNode.prototy
       this .getGroup () ._children = this ._children;
       this .getGroup () .setPrivate (true);
       this .getGroup () .setup ();
+   },
+});
+
+Object .defineProperties (Layer,
+{
+   typeName:
+   {
+      value: "Layer",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Layering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "layers",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",       new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pickable",       new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "objectType",     new x_ite_Fields.MFString ("ALL")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "visible",        new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "viewport",       new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "addChildren",    new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "removeChildren", new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",       new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -63371,28 +63733,6 @@ function LayerSet (executionContext)
 LayerSet .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
 {
    constructor: LayerSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",    new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "activeLayer", new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "order",       new x_ite_Fields.MFInt32 (0)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "layers",      new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LayerSet";
-   },
-   getComponentName: function ()
-   {
-      return "Layering";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DNode.prototype.initialize.call (this);
@@ -63497,6 +63837,40 @@ LayerSet .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
    },
 });
 
+Object .defineProperties (LayerSet,
+{
+   typeName:
+   {
+      value: "LayerSet",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Layering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",    new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "activeLayer", new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "order",       new x_ite_Fields.MFInt32 (0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "layers",      new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const LayerSet_default_ = LayerSet;
 ;
 
@@ -63576,10 +63950,6 @@ function X3DWorld (executionContext)
 X3DWorld .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: X3DWorld,
-   getTypeName: function ()
-   {
-      return "X3DWorld";
-   },
    initialize: function ()
    {
       Base_X3DBaseNode.prototype.initialize.call (this);
@@ -63659,13 +64029,22 @@ X3DWorld .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype
 for (const key of Reflect .ownKeys (X3DWorld .prototype))
    Object .defineProperty (X3DWorld .prototype, key, { enumerable: false });
 
+Object .defineProperties (X3DWorld,
+{
+   typeName:
+   {
+      value: "X3DWorld",
+      enumerate: true,
+   },
+});
+
 const X3DWorld_default_ = X3DWorld;
 ;
 
 x_ite_Namespace.set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(790);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -64090,13 +64469,6 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (Prototype
    Networking_X3DUrlObject.prototype,
 {
    constructor: X3DExternProtoDeclaration,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "X3DExternProtoDeclaration";
-   },
    initialize: function ()
    {
       Prototype_X3DProtoDeclarationNode.prototype.initialize.call (this);
@@ -64450,6 +64822,22 @@ Object .defineProperties (X3DExternProtoDeclaration .prototype,
    },
 });
 
+Object .defineProperties (X3DExternProtoDeclaration,
+{
+   typeName:
+   {
+      value: "X3DExternProtoDeclaration",
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const X3DExternProtoDeclaration_default_ = X3DExternProtoDeclaration;
 ;
 
@@ -64514,14 +64902,19 @@ function ExternProtoDeclarationArray (values)
 ExternProtoDeclarationArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.prototype),
 {
    constructor: ExternProtoDeclarationArray,
-   getTypeName: function ()
-   {
-      return "ExternProtoDeclarationArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (ExternProtoDeclarationArray .prototype))
    Object .defineProperty (ExternProtoDeclarationArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ExternProtoDeclarationArray,
+{
+   typeName:
+   {
+      value: "ExternProtoDeclarationArray",
+      enumerate: true,
+   },
+});
 
 const ExternProtoDeclarationArray_default_ = ExternProtoDeclarationArray;
 ;
@@ -64587,14 +64980,19 @@ function ProtoDeclarationArray (values)
 ProtoDeclarationArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.prototype),
 {
    constructor: ProtoDeclarationArray,
-   getTypeName: function ()
-   {
-      return "ProtoDeclarationArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (ProtoDeclarationArray .prototype))
    Object .defineProperty (ProtoDeclarationArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ProtoDeclarationArray,
+{
+   typeName:
+   {
+      value: "ProtoDeclarationArray",
+      enumerate: true,
+   },
+});
 
 const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 ;
@@ -64681,10 +65079,6 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
 X3DRoute .prototype = Object .assign (Object .create (Base_X3DObject.prototype),
 {
    constructor: X3DRoute,
-   getTypeName: function ()
-   {
-      return "X3DRoute";
-   },
    getExecutionContext: function ()
    {
       return this [X3DRoute_executionContext];
@@ -64901,6 +65295,15 @@ Object .defineProperties (X3DRoute .prototype,
    },
 });
 
+Object .defineProperties (X3DRoute,
+{
+   typeName:
+   {
+      value: "X3DRoute",
+      enumerate: true,
+   },
+});
+
 Object .assign (X3DRoute,
 {
    getId: function (sourceField, destinationField)
@@ -64973,14 +65376,19 @@ function RouteArray (values)
 RouteArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.prototype),
 {
    constructor: RouteArray,
-   getTypeName: function ()
-   {
-      return "RouteArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (RouteArray .prototype))
    Object .defineProperty (RouteArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (RouteArray,
+{
+   typeName:
+   {
+      value: "RouteArray",
+      enumerate: true,
+   },
+});
 
 const RouteArray_default_ = RouteArray;
 ;
@@ -65107,10 +65515,6 @@ X3DExecutionContext .prototype = Object .assign (Object .create (Base_X3DBaseNod
    {
       return false;
    },
-   getTypeName: function ()
-   {
-      return "X3DExecutionContext";
-   },
    getOuterNode: function ()
    {
       // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
@@ -65163,7 +65567,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (Base_X3DBaseNod
          if (!ConcreteNode)
             return null;
 
-         const specificationRange = ConcreteNode .prototype .getSpecificationRange ();
+         const specificationRange = ConcreteNode .specificationRange;
 
          if (this .getSpecificationVersion () < specificationRange [0])
             return null;
@@ -65171,7 +65575,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (Base_X3DBaseNod
          if (this .getSpecificationVersion () > specificationRange [1])
             return null;
 
-         if (!this .hasComponent (ConcreteNode .prototype .getComponentName ()))
+         if (!this .hasComponent (ConcreteNode .componentName))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
          return new ConcreteNode (this);
@@ -65183,7 +65587,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (Base_X3DBaseNod
          if (!ConcreteNode)
             throw new Error (`Unknown node type '${typeName}'.`);
 
-         const specificationRange = ConcreteNode .prototype .getSpecificationRange ();
+         const specificationRange = ConcreteNode .specificationRange;
 
          if (this .getSpecificationVersion () < specificationRange [0])
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
@@ -65191,7 +65595,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (Base_X3DBaseNod
          if (this .getSpecificationVersion () > specificationRange [1])
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
-         if (!this .hasComponent (ConcreteNode .prototype .getComponentName ()))
+         if (!this .hasComponent (ConcreteNode .componentName))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
          const baseNode = new ConcreteNode (this);
@@ -66012,6 +66416,15 @@ Object .defineProperties (X3DExecutionContext .prototype,
    },
 });
 
+Object .defineProperties (X3DExecutionContext,
+{
+   typeName:
+   {
+      value: "X3DExecutionContext",
+      enumerate: true,
+   },
+});
+
 const X3DExecutionContext_default_ = X3DExecutionContext;
 ;
 
@@ -66070,18 +66483,17 @@ x_ite_Namespace.set ("x_ite/Execution/X3DExecutionContext", X3DExecutionContext_
 
 
 
+
 const
-   _protoNode        = Symbol (),
-   _protoFields      = Symbol (),
-   X3DPrototypeInstance_fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
-   X3DPrototypeInstance_body             = Symbol ();
+   _protoNode   = Symbol (),
+   _protoFields = Symbol (),
+   X3DPrototypeInstance_body        = Symbol ();
 
 function X3DPrototypeInstance (executionContext, protoNode)
 {
-   this [_protoNode]        = protoNode;
-   this [_protoFields]      = new Map ([... protoNode .getFields ()] .map (f => [f, f .getName ()]));
-   this [X3DPrototypeInstance_fieldDefinitions] = protoNode .getFieldDefinitions ();
-   this [X3DPrototypeInstance_body]             = null;
+   this [_protoNode]   = protoNode;
+   this [_protoFields] = new Map ([... protoNode .getFields ()] .map (f => [f, f .getName ()]));
+   this [X3DPrototypeInstance_body]        = null;
 
    Core_X3DNode.call (this, executionContext);
 
@@ -66099,30 +66511,9 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
    {
       return this [_protoNode] .getName ();
    },
-   getComponentName: function ()
+   getFieldDefinitions: function ()
    {
-      return "Core";
-   },
-   getContainerField: function ()
-   {
-      // Determine container field from proto.
-
-      // const proto = this [_protoNode];
-
-      // if (!proto .isExternProto)
-      // {
-      //    const rootNodes = proto .getBody () .getRootNodes ();
-
-      //    if (rootNodes .length)
-      //    {
-      //       const rootNode = rootNodes [0];
-
-      //       if (rootNode)
-      //          return rootNode .getValue () .getContainerField ();
-      //    }
-      // }
-
-      return "children";
+      return this [_protoNode] .getFieldDefinitions ();
    },
    initialize: function ()
    {
@@ -66289,7 +66680,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
          // Get field from new proto node.
 
          this [_protoFields]      = new Map ([... protoNode .getFields ()] .map (f => [f, f .getName ()]));
-         this [X3DPrototypeInstance_fieldDefinitions] = protoNode .getFieldDefinitions ();
+         this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
       }
 
       this [_protoNode] = protoNode;
@@ -67042,6 +67433,30 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (Core_X3DNode.p
    },
 });
 
+Object .defineProperties (X3DPrototypeInstance,
+{
+   typeName:
+   {
+      value: "X3DPrototypeInstance",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+});
+
 const X3DPrototypeInstance_default_ = X3DPrototypeInstance;
 ;
 
@@ -67271,26 +67686,6 @@ function FogCoordinate (executionContext)
 FogCoordinate .prototype = Object .assign (Object .create (Rendering_X3DGeometricPropertyNode.prototype),
 {
    constructor: FogCoordinate,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "depth",    new x_ite_Fields.MFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "FogCoordinate";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalEffects";
-   },
-   getContainerField: function ()
-   {
-      return "fogCoord";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DGeometricPropertyNode.prototype.initialize.call (this);
@@ -67344,6 +67739,38 @@ FogCoordinate .prototype = Object .assign (Object .create (Rendering_X3DGeometri
          for (let index = 0; index < min; ++ index)
             array .push (0);
       }
+   },
+});
+
+Object .defineProperties (FogCoordinate,
+{
+   typeName:
+   {
+      value: "FogCoordinate",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "fogCoord",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "depth",    new x_ite_Fields.MFFloat ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -67419,29 +67846,6 @@ LocalFog .prototype = Object .assign (Object .create (Core_X3DChildNode.prototyp
    EnvironmentalEffects_X3DFogObject.prototype,
 {
    constructor: LocalFog,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",         new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fogType",         new x_ite_Fields.SFString ("LINEAR")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",           new x_ite_Fields.SFColor (1, 1, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "visibilityRange", new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LocalFog";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalEffects";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DChildNode.prototype.initialize.call (this);
@@ -67467,6 +67871,41 @@ LocalFog .prototype = Object .assign (Object .create (Core_X3DChildNode.prototyp
    {
       EnvironmentalEffects_X3DFogObject.prototype.dispose.call (this);
       Core_X3DChildNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (LocalFog,
+{
+   typeName:
+   {
+      value: "LocalFog",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",         new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fogType",         new x_ite_Fields.SFString ("LINEAR")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",           new x_ite_Fields.SFColor (1, 1, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "visibilityRange", new x_ite_Fields.SFFloat ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -67540,39 +67979,6 @@ function TextureBackground (executionContext)
 TextureBackground .prototype = Object .assign (Object .create (EnvironmentalEffects_X3DBackgroundNode.prototype),
 {
    constructor: TextureBackground,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_bind",      new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "skyAngle",      new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "skyColor",      new x_ite_Fields.MFColor (new x_ite_Fields.SFColor ())),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "groundAngle",   new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "groundColor",   new x_ite_Fields.MFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency",  new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",       new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",      new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "frontTexture",  new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backTexture",   new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "leftTexture",   new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "rightTexture",  new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "topTexture",    new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "bottomTexture", new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TextureBackground";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalEffects";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       EnvironmentalEffects_X3DBackgroundNode.prototype.initialize.call (this);
@@ -67594,6 +68000,51 @@ TextureBackground .prototype = Object .assign (Object .create (EnvironmentalEffe
    set_texture__: function (index, textureNode)
    {
       EnvironmentalEffects_X3DBackgroundNode.prototype.set_texture__.call (this, Base_X3DCast (Base_X3DConstants.X3DTextureNode, textureNode), index);
+   },
+});
+
+Object .defineProperties (TextureBackground,
+{
+   typeName:
+   {
+      value: "TextureBackground",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_bind",      new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "skyAngle",      new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "skyColor",      new x_ite_Fields.MFColor (new x_ite_Fields.SFColor ())),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "groundAngle",   new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "groundColor",   new x_ite_Fields.MFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency",  new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",       new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",      new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "frontTexture",  new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backTexture",   new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "leftTexture",   new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "rightTexture",  new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "topTexture",    new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "bottomTexture", new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -67894,34 +68345,6 @@ function ProximitySensor (executionContext)
 ProximitySensor .prototype = Object .assign (Object .create (EnvironmentalSensor_X3DEnvironmentalSensorNode.prototype),
 {
    constructor: ProximitySensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",                 new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",                  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "size",                     new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "center",                   new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "enterTime",                new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "exitTime",                 new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",                 new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "position_changed",         new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "orientation_changed",      new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "centerOfRotation_changed", new x_ite_Fields.SFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ProximitySensor";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       EnvironmentalSensor_X3DEnvironmentalSensorNode.prototype.initialize.call (this);
@@ -68082,6 +68505,46 @@ ProximitySensor .prototype = Object .assign (Object .create (EnvironmentalSensor
    },
 });
 
+Object .defineProperties (ProximitySensor,
+{
+   typeName:
+   {
+      value: "ProximitySensor",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalSensor",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",                 new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",                  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "size",                     new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "center",                   new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "enterTime",                new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "exitTime",                 new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",                 new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "position_changed",         new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "orientation_changed",      new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "centerOfRotation_changed", new x_ite_Fields.SFVec3f ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const ProximitySensor_default_ = ProximitySensor;
 ;
 
@@ -68170,34 +68633,6 @@ function TransformSensor (executionContext)
 TransformSensor .prototype = Object .assign (Object .create (EnvironmentalSensor_X3DEnvironmentalSensorNode.prototype),
 {
    constructor: TransformSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",            new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",             new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "size",                new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "center",              new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "enterTime",           new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "exitTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",            new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "position_changed",    new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "orientation_changed", new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "targetObject",        new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TransformSensor";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       EnvironmentalSensor_X3DEnvironmentalSensorNode.prototype.initialize.call (this);
@@ -68395,6 +68830,46 @@ TransformSensor .prototype = Object .assign (Object .create (EnvironmentalSensor
    },
 });
 
+Object .defineProperties (TransformSensor,
+{
+   typeName:
+   {
+      value: "TransformSensor",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalSensor",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",            new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",             new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "size",                new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "center",              new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "enterTime",           new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "exitTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",            new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "position_changed",    new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "orientation_changed", new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "targetObject",        new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const TransformSensor_default_ = TransformSensor;
 ;
 
@@ -68471,31 +68946,6 @@ function VisibilitySensor (executionContext)
 VisibilitySensor .prototype = Object .assign (Object .create (EnvironmentalSensor_X3DEnvironmentalSensorNode.prototype),
 {
    constructor: VisibilitySensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",   new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "size",      new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "center",    new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "enterTime", new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "exitTime",  new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",  new x_ite_Fields.SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "VisibilitySensor";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       EnvironmentalSensor_X3DEnvironmentalSensorNode.prototype.initialize.call (this);
@@ -68564,6 +69014,43 @@ VisibilitySensor .prototype = Object .assign (Object .create (EnvironmentalSenso
          }
       };
    })(),
+});
+
+Object .defineProperties (VisibilitySensor,
+{
+   typeName:
+   {
+      value: "VisibilitySensor",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalSensor",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",   new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "size",      new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "center",    new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "enterTime", new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "exitTime",  new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",  new x_ite_Fields.SFBool ()),
+      ]),
+      enumerate: true,
+   },
 });
 
 const VisibilitySensor_default_ = VisibilitySensor;
@@ -69089,32 +69576,6 @@ function ColorChaser (executionContext)
 ColorChaser .prototype = Object .assign (Object .create (Followers_X3DChaserNode.prototype),
 {
    constructor: ColorChaser,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFColor ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ColorChaser";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    getVector: function ()
    {
       return new Numbers_Vector3 (0, 0, 0);
@@ -69150,6 +69611,44 @@ ColorChaser .prototype = Object .assign (Object .create (Followers_X3DChaserNode
       //step .x = Algorithm .interval (step .x, 0, 2 * Math .PI);
 
       Numbers_Color3.lerp (this .output, deltaOut, t, this .output);
+   },
+});
+
+Object .defineProperties (ColorChaser,
+{
+   typeName:
+   {
+      value: "ColorChaser",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFColor ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -69398,34 +69897,6 @@ function ColorDamper (executionContext)
 ColorDamper .prototype = Object .assign (Object .create (Followers_X3DDamperNode.prototype),
 {
    constructor: ColorDamper,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFColor ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ColorDamper";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getVector: function ()
    {
       return new Numbers_Vector3 (0, 0, 0);
@@ -69457,6 +69928,46 @@ ColorDamper .prototype = Object .assign (Object .create (Followers_X3DDamperNode
    interpolate: function (source, destination, weight)
    {
       return Numbers_Color3.lerp (source, destination, weight, ColorDamper_vector);
+   },
+});
+
+Object .defineProperties (ColorDamper,
+{
+   typeName:
+   {
+      value: "ColorDamper",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFColor ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -69799,35 +70310,47 @@ CoordinateChaser .prototype = Object .assign (Object .create (Followers_X3DChase
    X3DArrayChaserObject .prototype,
 {
    constructor: CoordinateChaser,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.MFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.MFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.MFVec3f (new Numbers_Vector3 (0, 0, 0))),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.MFVec3f (new Numbers_Vector3 (0, 0, 0))),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.MFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "CoordinateChaser";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    getVector: function ()
    {
       return new Numbers_Vector3 (0, 0, 0);
+   },
+});
+
+Object .defineProperties (CoordinateChaser,
+{
+   typeName:
+   {
+      value: "CoordinateChaser",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.MFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.MFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.MFVec3f (new Numbers_Vector3 (0, 0, 0))),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.MFVec3f (new Numbers_Vector3 (0, 0, 0))),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.MFVec3f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -69906,37 +70429,49 @@ CoordinateDamper .prototype = Object .assign (Object .create (Followers_X3DDampe
    X3DArrayFollowerObject .prototype,
 {
    constructor: CoordinateDamper,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.MFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.MFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.MFVec3f (new Numbers_Vector3 (0, 0, 0))),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.MFVec3f (new Numbers_Vector3 (0, 0, 0))),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.MFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "CoordinateDamper";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getVector: function ()
    {
       return new Numbers_Vector3 (0, 0, 0);
+   },
+});
+
+Object .defineProperties (CoordinateDamper,
+{
+   typeName:
+   {
+      value: "CoordinateDamper",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.MFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.MFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.MFVec3f (new Numbers_Vector3 (0, 0, 0))),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.MFVec3f (new Numbers_Vector3 (0, 0, 0))),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.MFVec3f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -70020,32 +70555,6 @@ function OrientationChaser (executionContext)
 OrientationChaser .prototype = Object .assign (Object .create (Followers_X3DChaserNode.prototype),
 {
    constructor: OrientationChaser,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFRotation ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "OrientationChaser";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getVector: function ()
    {
       return new Numbers_Rotation4 ();
@@ -70065,6 +70574,44 @@ OrientationChaser .prototype = Object .assign (Object .create (Followers_X3DChas
       this .deltaOut .assign (value2) .inverse () .multRight (value1) .multLeft (this .output);
 
       this .output .slerp (this .deltaOut, t);
+   },
+});
+
+Object .defineProperties (OrientationChaser,
+{
+   typeName:
+   {
+      value: "OrientationChaser",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFRotation ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -70148,34 +70695,6 @@ function OrientationDamper (executionContext)
 OrientationDamper .prototype = Object .assign (Object .create (Followers_X3DDamperNode.prototype),
 {
    constructor: OrientationDamper,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFRotation ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "OrientationDamper";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getVector: function ()
    {
       return new Numbers_Rotation4 ();
@@ -70189,6 +70708,46 @@ OrientationDamper .prototype = Object .assign (Object .create (Followers_X3DDamp
    interpolate: function (source, destination, weight)
    {
       return OrientationDamper_rotation .assign (source) .slerp (destination, weight);
+   },
+});
+
+Object .defineProperties (OrientationDamper,
+{
+   typeName:
+   {
+      value: "OrientationDamper",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFRotation ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -70262,35 +70821,47 @@ function PositionChaser (executionContext)
 PositionChaser .prototype = Object .assign (Object .create (Followers_X3DChaserNode.prototype),
 {
    constructor: PositionChaser,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PositionChaser";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getVector: function ()
    {
       return new Numbers_Vector3 (0, 0, 0);
+   },
+});
+
+Object .defineProperties (PositionChaser,
+{
+   typeName:
+   {
+      value: "PositionChaser",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFVec3f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -70364,35 +70935,47 @@ function PositionChaser2D (executionContext)
 PositionChaser2D .prototype = Object .assign (Object .create (Followers_X3DChaserNode.prototype),
 {
    constructor: PositionChaser2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PositionChaser2D";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getVector: function ()
    {
       return new Numbers_Vector2 (0, 0);
+   },
+});
+
+Object .defineProperties (PositionChaser2D,
+{
+   typeName:
+   {
+      value: "PositionChaser2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFVec2f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -70466,37 +71049,49 @@ function PositionDamper (executionContext)
 PositionDamper .prototype = Object .assign (Object .create (Followers_X3DDamperNode.prototype),
 {
    constructor: PositionDamper,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PositionDamper";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getVector: function ()
    {
       return new Numbers_Vector3 (0, 0, 0);
+   },
+});
+
+Object .defineProperties (PositionDamper,
+{
+   typeName:
+   {
+      value: "PositionDamper",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -70570,37 +71165,49 @@ function PositionDamper2D (executionContext)
 PositionDamper2D .prototype = Object .assign (Object .create (Followers_X3DDamperNode.prototype),
 {
    constructor: PositionDamper2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PositionDamper2D";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getVector: function ()
    {
       return new Numbers_Vector2 (0, 0);
+   },
+});
+
+Object .defineProperties (PositionDamper2D,
+{
+   typeName:
+   {
+      value: "PositionDamper2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFVec2f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -70674,32 +71281,6 @@ function ScalarChaser (executionContext)
 ScalarChaser .prototype = Object .assign (Object .create (Followers_X3DChaserNode.prototype),
 {
    constructor: ScalarChaser,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ScalarChaser";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getVector: function ()
    {
       return 0;
@@ -70731,6 +71312,44 @@ ScalarChaser .prototype = Object .assign (Object .create (Followers_X3DChaserNod
    step: function (value1, value2, t)
    {
       this .output += (value1 - value2) * t;
+   },
+});
+
+Object .defineProperties (ScalarChaser,
+{
+   typeName:
+   {
+      value: "ScalarChaser",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFFloat ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -70804,34 +71423,6 @@ function ScalarDamper (executionContext)
 ScalarDamper .prototype = Object .assign (Object .create (Followers_X3DDamperNode.prototype),
 {
    constructor: ScalarDamper,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ScalarDamper";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    getVector: function ()
    {
       return 0;
@@ -70851,6 +71442,46 @@ ScalarDamper .prototype = Object .assign (Object .create (Followers_X3DDamperNod
    interpolate: function (source, destination, weight)
    {
       return Algorithm.lerp (source, destination, weight);
+   },
+});
+
+Object .defineProperties (ScalarDamper,
+{
+   typeName:
+   {
+      value: "ScalarDamper",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFFloat ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -70929,35 +71560,47 @@ TexCoordChaser2D .prototype = Object .assign (Object .create (Followers_X3DChase
    TexCoordChaser2D_X3DArrayChaserObject .prototype,
 {
    constructor: TexCoordChaser2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.MFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TexCoordChaser2D";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
    getVector: function ()
    {
       return new Numbers_Vector2 (0, 0);
+   },
+});
+
+Object .defineProperties (TexCoordChaser2D,
+{
+   typeName:
+   {
+      value: "TexCoordChaser2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "duration",           new x_ite_Fields.SFTime (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.MFVec2f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -71036,37 +71679,49 @@ TexCoordDamper2D .prototype = Object .assign (Object .create (Followers_X3DDampe
    TexCoordDamper2D_X3DArrayFollowerObject .prototype,
 {
    constructor: TexCoordDamper2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.MFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TexCoordDamper2D";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getVector: function ()
    {
       return new Numbers_Vector2 (0, 0, 0);
+   },
+});
+
+Object .defineProperties (TexCoordDamper2D,
+{
+   typeName:
+   {
+      value: "TexCoordDamper2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_value",          new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_destination",    new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialValue",       new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "initialDestination", new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "order",              new x_ite_Fields.SFInt32 (3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tau",                new x_ite_Fields.SFTime (0.3)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "tolerance",          new x_ite_Fields.SFFloat (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.MFVec2f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -71238,27 +71893,6 @@ function Box (executionContext)
 Box .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.prototype),
 {
    constructor: Box,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "size",     new x_ite_Fields.SFVec3f (2, 2, 2)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",    new x_ite_Fields.SFBool (true)),
-   ]),
-   getTypeName: function ()
-   {
-      return "Box";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    build: (function ()
    {
       const defaultSize = new Numbers_Vector3 (2, 2, 2);
@@ -71304,6 +71938,39 @@ Box .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.proto
          this .setSolid (this ._solid .getValue ());
       };
    })(),
+});
+
+Object .defineProperties (Box,
+{
+   typeName:
+   {
+      value: "Box",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry3D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "size",     new x_ite_Fields.SFVec3f (2, 2, 2)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",    new x_ite_Fields.SFBool (true)),
+      ]),
+      enumerate: true,
+   },
 });
 
 const Box_default_ = Box;
@@ -71381,30 +72048,6 @@ function Cone (executionContext)
 Cone .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.prototype),
 {
    constructor: Cone,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",     new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "side",         new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bottom",       new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "height",       new x_ite_Fields.SFFloat (2)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bottomRadius", new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",        new x_ite_Fields.SFBool (true)),
-   ]),
-   getTypeName: function ()
-   {
-      return "Cone";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    set_live__: function ()
    {
       Rendering_X3DGeometryNode.prototype.set_live__.call (this);
@@ -71548,6 +72191,42 @@ Cone .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.prot
    },
 });
 
+Object .defineProperties (Cone,
+{
+   typeName:
+   {
+      value: "Cone",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry3D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",     new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "side",         new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bottom",       new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "height",       new x_ite_Fields.SFFloat (2)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bottomRadius", new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",        new x_ite_Fields.SFBool (true)),
+      ]),
+      enumerate: true,
+   },
+});
+
 const Cone_default_ = Cone;
 ;
 
@@ -71623,31 +72302,6 @@ function Cylinder (executionContext)
 Cylinder .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.prototype),
 {
    constructor: Cylinder,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "top",      new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "side",     new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bottom",   new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "height",   new x_ite_Fields.SFFloat (2)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "radius",   new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",    new x_ite_Fields.SFBool (true)),
-   ]),
-   getTypeName: function ()
-   {
-      return "Cylinder";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    set_live__: function ()
    {
       Rendering_X3DGeometryNode.prototype.set_live__.call (this);
@@ -71851,6 +72505,43 @@ Cylinder .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.
    },
 });
 
+Object .defineProperties (Cylinder,
+{
+   typeName:
+   {
+      value: "Cylinder",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry3D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "top",      new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "side",     new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bottom",   new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "height",   new x_ite_Fields.SFFloat (2)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "radius",   new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",    new x_ite_Fields.SFBool (true)),
+      ]),
+      enumerate: true,
+   },
+});
+
 const Cylinder_default_ = Cylinder;
 ;
 
@@ -71935,41 +72626,6 @@ function ElevationGrid (executionContext)
 ElevationGrid .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.prototype),
 {
    constructor: ElevationGrid,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_height",      new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "xDimension",      new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "zDimension",      new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "xSpacing",        new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "zSpacing",        new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "creaseAngle",     new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "height",          new x_ite_Fields.MFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ElevationGrid";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DGeometryNode.prototype.initialize.call (this);
@@ -72278,6 +72934,53 @@ ElevationGrid .prototype = Object .assign (Object .create (Rendering_X3DGeometry
    },
 });
 
+Object .defineProperties (ElevationGrid,
+{
+   typeName:
+   {
+      value: "ElevationGrid",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry3D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_height",      new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "xDimension",      new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "zDimension",      new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "xSpacing",        new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "zSpacing",        new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "creaseAngle",     new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "height",          new x_ite_Fields.MFFloat ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const ElevationGrid_default_ = ElevationGrid;
 ;
 
@@ -72356,39 +73059,6 @@ function Extrusion (executionContext)
 Extrusion .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.prototype),
 {
    constructor: Extrusion,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",         new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_crossSection", new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_orientation",  new x_ite_Fields.MFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_scale",        new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_spine",        new x_ite_Fields.MFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "beginCap",         new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "endCap",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",            new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "convex",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "creaseAngle",      new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "crossSection",     new x_ite_Fields.MFVec2f (new Numbers_Vector2 (1, 1), new Numbers_Vector2 (1, -1), new Numbers_Vector2 (-1, -1), new Numbers_Vector2 (-1, 1), new Numbers_Vector2 (1, 1))),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "orientation",      new x_ite_Fields.MFRotation (new Numbers_Rotation4 ())),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "scale",            new x_ite_Fields.MFVec2f (new Numbers_Vector2 (1, 1))),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "spine",            new x_ite_Fields.MFVec3f (new Numbers_Vector3 (0, 0, 0), new Numbers_Vector3 (0, 1, 0))),
-   ]),
-   getTypeName: function ()
-   {
-      return "Extrusion";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DGeometryNode.prototype.initialize.call (this);
@@ -72992,6 +73662,51 @@ Extrusion .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode
    },
 });
 
+Object .defineProperties (Extrusion,
+{
+   typeName:
+   {
+      value: "Extrusion",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry3D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",         new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_crossSection", new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_orientation",  new x_ite_Fields.MFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_scale",        new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_spine",        new x_ite_Fields.MFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "beginCap",         new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "endCap",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",            new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",              new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "convex",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "creaseAngle",      new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "crossSection",     new x_ite_Fields.MFVec2f (new Numbers_Vector2 (1, 1), new Numbers_Vector2 (1, -1), new Numbers_Vector2 (-1, -1), new Numbers_Vector2 (-1, 1), new Numbers_Vector2 (1, 1))),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "orientation",      new x_ite_Fields.MFRotation (new Numbers_Rotation4 ())),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "scale",            new x_ite_Fields.MFVec2f (new Numbers_Vector2 (1, 1))),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "spine",            new x_ite_Fields.MFVec3f (new Numbers_Vector3 (0, 0, 0), new Numbers_Vector3 (0, 1, 0))),
+      ]),
+      enumerate: true,
+   },
+});
+
 const Extrusion_default_ = Extrusion;
 ;
 
@@ -73420,45 +74135,6 @@ function IndexedFaceSet (executionContext)
 IndexedFaceSet .prototype = Object .assign (Object .create (Rendering_X3DComposedGeometryNode.prototype),
 {
    constructor: IndexedFaceSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_colorIndex",    new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_texCoordIndex", new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_normalIndex",   new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_coordIndex",    new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",             new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",               new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "convex",            new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "creaseAngle",       new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",    new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex",   new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorIndex",        new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "texCoordIndex",     new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalIndex",       new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "coordIndex",        new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",            new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",            new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",             new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "IndexedFaceSet";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DComposedGeometryNode.prototype.initialize.call (this);
@@ -73828,6 +74504,57 @@ IndexedFaceSet .prototype = Object .assign (Object .create (Rendering_X3DCompose
    })(),
 });
 
+Object .defineProperties (IndexedFaceSet,
+{
+   typeName:
+   {
+      value: "IndexedFaceSet",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry3D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_colorIndex",    new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_texCoordIndex", new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_normalIndex",   new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_coordIndex",    new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",             new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",               new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "convex",            new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "creaseAngle",       new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",    new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex",   new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorIndex",        new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "texCoordIndex",     new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalIndex",       new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "coordIndex",        new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",            new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",            new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",             new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const IndexedFaceSet_default_ = IndexedFaceSet;
 ;
 
@@ -73899,27 +74626,6 @@ function Sphere (executionContext)
 Sphere .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.prototype),
 {
    constructor: Sphere,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "radius",   new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",    new x_ite_Fields.SFBool (true)),
-   ]),
-   getTypeName: function ()
-   {
-      return "Sphere";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    set_live__: function ()
    {
       Rendering_X3DGeometryNode.prototype.set_live__.call (this);
@@ -73965,6 +74671,39 @@ Sphere .prototype = Object .assign (Object .create (Rendering_X3DGeometryNode.pr
       }
 
       this .setSolid (this ._solid .getValue ());
+   },
+});
+
+Object .defineProperties (Sphere,
+{
+   typeName:
+   {
+      value: "Sphere",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geometry3D",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "radius",   new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",    new x_ite_Fields.SFBool (true)),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -74133,30 +74872,6 @@ StaticGroup .prototype = Object .assign (Object .create (Core_X3DChildNode.proto
    Grouping_X3DBoundedObject.prototype,
 {
    constructor: StaticGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",    new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",     new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",    new x_ite_Fields.SFVec3f (-1, -1, -1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",  new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "children",    new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "StaticGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Grouping";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DChildNode.prototype.initialize.call (this);
@@ -74282,6 +74997,42 @@ StaticGroup .prototype = Object .assign (Object .create (Core_X3DChildNode.proto
    },
 });
 
+Object .defineProperties (StaticGroup,
+{
+   typeName:
+   {
+      value: "StaticGroup",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Grouping",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",    new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",     new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",    new x_ite_Fields.SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",  new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "children",    new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const StaticGroup_default_ = StaticGroup;
 ;
 
@@ -74360,33 +75111,6 @@ function Switch (executionContext)
 Switch .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.prototype),
 {
    constructor: Switch,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",       new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "whichChoice",    new x_ite_Fields.SFInt32 (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",        new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",    new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",       new x_ite_Fields.SFVec3f (-1, -1, -1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",     new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",    new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Switch";
-   },
-   getComponentName: function ()
-   {
-      return "Grouping";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Grouping_X3DGroupingNode.prototype.initialize.call (this);
@@ -74530,6 +75254,45 @@ Switch .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.pro
             return;
          }
       }
+   },
+});
+
+Object .defineProperties (Switch,
+{
+   typeName:
+   {
+      value: "Switch",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Grouping",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",       new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "whichChoice",    new x_ite_Fields.SFInt32 (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",        new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",    new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",       new x_ite_Fields.SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",     new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",    new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -74816,36 +75579,48 @@ function Transform (executionContext)
 Transform .prototype = Object .assign (Object .create (Grouping_X3DTransformNode.prototype),
 {
    constructor: Transform,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",         new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "translation",      new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "rotation",         new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "scale",            new x_ite_Fields.SFVec3f (1, 1, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "scaleOrientation", new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "center",           new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",          new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",      new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",         new x_ite_Fields.SFVec3f (-1, -1, -1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",       new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",      new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren",   new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",         new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
+});
+
+Object .defineProperties (Transform,
+{
+   typeName:
    {
-      return "Transform";
+      value: "Transform",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Grouping";
+      value: "Grouping",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "children";
+      value: "children",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["2.0", "Infinity"];
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",         new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "translation",      new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "rotation",         new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "scale",            new x_ite_Fields.SFVec3f (1, 1, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "scaleOrientation", new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "center",           new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",          new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",      new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",         new x_ite_Fields.SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",       new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",      new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren",   new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",         new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -74999,29 +75774,6 @@ function ColorInterpolator (executionContext)
 ColorInterpolator .prototype = Object .assign (Object .create (Interpolation_X3DInterpolatorNode.prototype),
 {
    constructor: ColorInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFColor ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ColorInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -75051,6 +75803,41 @@ ColorInterpolator .prototype = Object .assign (Object .create (Interpolation_X3D
          this ._value_changed .setHSV (value [0], value [1], value [2]);
       };
    })(),
+});
+
+Object .defineProperties (ColorInterpolator,
+{
+   typeName:
+   {
+      value: "ColorInterpolator",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFColor ()),
+      ]),
+      enumerate: true,
+   },
 });
 
 const ColorInterpolator_default_ = ColorInterpolator;
@@ -75123,29 +75910,6 @@ function CoordinateInterpolator (executionContext)
 CoordinateInterpolator .prototype = Object .assign (Object .create (Interpolation_X3DInterpolatorNode.prototype),
 {
    constructor: CoordinateInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.MFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "CoordinateInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    set_keyValue__: function () { },
    interpolate: function (index0, index1, weight)
    {
@@ -75176,6 +75940,41 @@ CoordinateInterpolator .prototype = Object .assign (Object .create (Interpolatio
       }
 
       this ._value_changed .addEvent ();
+   },
+});
+
+Object .defineProperties (CoordinateInterpolator,
+{
+   typeName:
+   {
+      value: "CoordinateInterpolator",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.MFVec3f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -75249,29 +76048,6 @@ function CoordinateInterpolator2D (executionContext)
 CoordinateInterpolator2D .prototype = Object .assign (Object .create (Interpolation_X3DInterpolatorNode.prototype),
 {
    constructor: CoordinateInterpolator2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.MFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "CoordinateInterpolator2D";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    set_keyValue__: function () { },
    interpolate: function (index0, index1, weight)
    {
@@ -75299,6 +76075,41 @@ CoordinateInterpolator2D .prototype = Object .assign (Object .create (Interpolat
       }
 
       this ._value_changed .addEvent ();
+   },
+});
+
+Object .defineProperties (CoordinateInterpolator2D,
+{
+   typeName:
+   {
+      value: "CoordinateInterpolator2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.MFVec2f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -75373,29 +76184,6 @@ function NormalInterpolator (executionContext)
 NormalInterpolator .prototype = Object .assign (Object .create (Interpolation_X3DInterpolatorNode.prototype),
 {
    constructor: NormalInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.MFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "NormalInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -75452,6 +76240,41 @@ NormalInterpolator .prototype = Object .assign (Object .create (Interpolation_X3
          this ._value_changed .addEvent ();
       };
    })(),
+});
+
+Object .defineProperties (NormalInterpolator,
+{
+   typeName:
+   {
+      value: "NormalInterpolator",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.MFVec3f ()),
+      ]),
+      enumerate: true,
+   },
 });
 
 const NormalInterpolator_default_ = NormalInterpolator;
@@ -75524,29 +76347,6 @@ function PositionInterpolator2D (executionContext)
 PositionInterpolator2D .prototype = Object .assign (Object .create (Interpolation_X3DInterpolatorNode.prototype),
 {
    constructor: PositionInterpolator2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PositionInterpolator2D";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -75571,6 +76371,41 @@ PositionInterpolator2D .prototype = Object .assign (Object .create (Interpolatio
          this ._value_changed = keyValue .assign (this ._keyValue [index0] .getValue ()) .lerp (this ._keyValue [index1] .getValue (), weight);
       };
    })(),
+});
+
+Object .defineProperties (PositionInterpolator2D,
+{
+   typeName:
+   {
+      value: "PositionInterpolator2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFVec2f ()),
+      ]),
+      enumerate: true,
+   },
 });
 
 const PositionInterpolator2D_default_ = PositionInterpolator2D;
@@ -76008,32 +76843,6 @@ function SplinePositionInterpolator (executionContext)
 SplinePositionInterpolator .prototype = Object .assign (Object .create (Interpolation_X3DInterpolatorNode.prototype),
 {
    constructor: SplinePositionInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",      new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "closed",            new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",               new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",          new x_ite_Fields.MFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyVelocity",       new x_ite_Fields.MFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalizeVelocity", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed",     new x_ite_Fields.SFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SplinePositionInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -76074,6 +76883,44 @@ SplinePositionInterpolator .prototype = Object .assign (Object .create (Interpol
    interpolate: function (index0, index1, weight)
    {
       this ._value_changed = this .spline .interpolate (index0, index1, weight, this ._keyValue);
+   },
+});
+
+Object .defineProperties (SplinePositionInterpolator,
+{
+   typeName:
+   {
+      value: "SplinePositionInterpolator",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",      new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "closed",            new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",               new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",          new x_ite_Fields.MFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyVelocity",       new x_ite_Fields.MFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalizeVelocity", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed",     new x_ite_Fields.SFVec3f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -76207,32 +77054,6 @@ function SplinePositionInterpolator2D (executionContext)
 SplinePositionInterpolator2D .prototype = Object .assign (Object .create (Interpolation_X3DInterpolatorNode.prototype),
 {
    constructor: SplinePositionInterpolator2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",      new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "closed",            new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",               new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",          new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyVelocity",       new x_ite_Fields.MFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalizeVelocity", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed",     new x_ite_Fields.SFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SplinePositionInterpolator2D";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -76273,6 +77094,44 @@ SplinePositionInterpolator2D .prototype = Object .assign (Object .create (Interp
    interpolate: function (index0, index1, weight)
    {
       this ._value_changed = this .spline .interpolate (index0, index1, weight, this ._keyValue);
+   },
+});
+
+Object .defineProperties (SplinePositionInterpolator2D,
+{
+   typeName:
+   {
+      value: "SplinePositionInterpolator2D",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",      new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "closed",            new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",               new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",          new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyVelocity",       new x_ite_Fields.MFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalizeVelocity", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed",     new x_ite_Fields.SFVec2f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -76441,32 +77300,6 @@ function SplineScalarInterpolator (executionContext)
 SplineScalarInterpolator .prototype = Object .assign (Object .create (Interpolation_X3DInterpolatorNode.prototype),
 {
    constructor: SplineScalarInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",      new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "closed",            new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",               new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",          new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyVelocity",       new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalizeVelocity", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed",     new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SplineScalarInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -76507,6 +77340,44 @@ SplineScalarInterpolator .prototype = Object .assign (Object .create (Interpolat
    interpolate: function (index0, index1, weight)
    {
       this ._value_changed = this .spline .interpolate (index0, index1, weight, this ._keyValue);
+   },
+});
+
+Object .defineProperties (SplineScalarInterpolator,
+{
+   typeName:
+   {
+      value: "SplineScalarInterpolator",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",      new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "closed",            new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",               new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",          new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyVelocity",       new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalizeVelocity", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed",     new x_ite_Fields.SFFloat ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -76703,30 +77574,6 @@ function SquadOrientationInterpolator (executionContext)
 SquadOrientationInterpolator .prototype = Object .assign (Object .create (Interpolation_X3DInterpolatorNode.prototype),
 {
    constructor: SquadOrientationInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "closed",        new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFRotation ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SquadOrientationInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Interpolation_X3DInterpolatorNode.prototype.initialize.call (this);
@@ -76756,6 +77603,42 @@ SquadOrientationInterpolator .prototype = Object .assign (Object .create (Interp
       {
          console .error (error);
       }
+   },
+});
+
+Object .defineProperties (SquadOrientationInterpolator,
+{
+   typeName:
+   {
+      value: "SquadOrientationInterpolator",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_fraction",  new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "closed",        new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "key",           new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFRotation ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -76994,33 +77877,6 @@ function Viewport (executionContext)
 Viewport .prototype = Object .assign (Object .create (Layering_X3DViewportNode.prototype),
 {
    constructor: Viewport,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",       new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "clipBoundary",   new x_ite_Fields.MFFloat (0, 1, 0, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",        new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",    new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",       new x_ite_Fields.SFVec3f (-1, -1, -1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",     new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",    new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Viewport";
-   },
-   getComponentName: function ()
-   {
-      return "Layering";
-   },
-   getContainerField: function ()
-   {
-      return "viewport";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    getRectangle: function ()
    {
       const
@@ -77088,6 +77944,45 @@ Viewport .prototype = Object .assign (Object .create (Layering_X3DViewportNode.p
    pop: function (renderObject)
    {
       ViewVolumes .push (renderObject .getViewVolumes () .pop ());
+   },
+});
+
+Object .defineProperties (Viewport,
+{
+   typeName:
+   {
+      value: "Viewport",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Layering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "viewport",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",       new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "clipBoundary",   new x_ite_Fields.MFFloat (0, 1, 0, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",        new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",    new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",       new x_ite_Fields.SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",     new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",    new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -77628,40 +78523,52 @@ function DirectionalLight (executionContext)
 DirectionalLight .prototype = Object .assign (Object .create (Lighting_X3DLightNode.prototype),
 {
    constructor: DirectionalLight,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",         new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "global",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "on",               new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",            new x_ite_Fields.SFColor (1, 1, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",        new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "ambientIntensity", new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "direction",        new x_ite_Fields.SFVec3f (0, 0, -1)),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadows",         new  x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowColor",     new  x_ite_Fields.SFColor ()),        // Color of shadows.
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowIntensity", new  x_ite_Fields.SFFloat (1)),       // Intensity of shadow color in the range (0, 1).
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowBias",      new  x_ite_Fields.SFFloat (0.005)),   // Bias of the shadow.
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "shadowMapSize",   new  x_ite_Fields.SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
-   ]),
-   getTypeName: function ()
-   {
-      return "DirectionalLight";
-   },
-   getComponentName: function ()
-   {
-      return "Lighting";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    getLights: function ()
    {
       return DirectionalLights;
+   },
+});
+
+Object .defineProperties (DirectionalLight,
+{
+   typeName:
+   {
+      value: "DirectionalLight",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Lighting",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",         new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "global",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "on",               new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",            new x_ite_Fields.SFColor (1, 1, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",        new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "ambientIntensity", new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "direction",        new x_ite_Fields.SFVec3f (0, 0, -1)),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadows",         new  x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowColor",     new  x_ite_Fields.SFColor ()),        // Color of shadows.
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowIntensity", new  x_ite_Fields.SFFloat (1)),       // Intensity of shadow color in the range (0, 1).
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowBias",      new  x_ite_Fields.SFFloat (0.005)),   // Bias of the shadow.
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "shadowMapSize",   new  x_ite_Fields.SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
+      ]),
+      enumerate: true,
    },
 });
 
@@ -77775,45 +78682,57 @@ function EnvironmentLight (executionContext)
 EnvironmentLight .prototype = Object .assign (Object .create (Lighting_X3DLightNode.prototype),
 {
    constructor: EnvironmentLight,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",            new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "global",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "on",                  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "rotation",            new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",               new x_ite_Fields.SFColor (1, 1, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",           new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "ambientIntensity",    new x_ite_Fields.SFFloat ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "diffuseCoefficients", new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "diffuse",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "diffuseTexture",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "specularTexture",     new x_ite_Fields.SFNode ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadows",             new  x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowColor",         new  x_ite_Fields.SFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowIntensity",     new  x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowBias",          new  x_ite_Fields.SFFloat (0.005)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "shadowMapSize",       new  x_ite_Fields.SFInt32 (1024)),
-   ]),
-   getTypeName: function ()
-   {
-      return "EnvironmentLight";
-   },
-   getComponentName: function ()
-   {
-      return "Lighting";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
    getLights: function ()
    {
       return EnvironmentLights;
+   },
+});
+
+Object .defineProperties (EnvironmentLight,
+{
+   typeName:
+   {
+      value: "EnvironmentLight",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Lighting",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",            new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "global",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "on",                  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "rotation",            new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",               new x_ite_Fields.SFColor (1, 1, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",           new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "ambientIntensity",    new x_ite_Fields.SFFloat ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "diffuseCoefficients", new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "diffuse",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "diffuseTexture",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "specularTexture",     new x_ite_Fields.SFNode ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadows",             new  x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowColor",         new  x_ite_Fields.SFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowIntensity",     new  x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowBias",          new  x_ite_Fields.SFFloat (0.005)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "shadowMapSize",       new  x_ite_Fields.SFInt32 (1024)),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -78104,39 +79023,6 @@ function PointLight (executionContext)
 PointLight .prototype = Object .assign (Object .create (Lighting_X3DLightNode.prototype),
 {
    constructor: PointLight,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",         new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "global",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "on",               new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",            new x_ite_Fields.SFColor (1, 1, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",        new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "ambientIntensity", new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attenuation",      new x_ite_Fields.SFVec3f (1, 0, 0)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "location",         new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "radius",           new x_ite_Fields.SFFloat (100)),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadows",         new  x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowColor",     new  x_ite_Fields.SFColor ()),        // Color of shadows.
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowIntensity", new  x_ite_Fields.SFFloat (1)),        // Intensity of shadow color in the range (0, 1).
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowBias",      new  x_ite_Fields.SFFloat (0.005)),   // Bias of the shadow.
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "shadowMapSize",   new  x_ite_Fields.SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
-   ]),
-   getTypeName: function ()
-   {
-      return "PointLight";
-   },
-   getComponentName: function ()
-   {
-      return "Lighting";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    getAttenuation: function ()
    {
       return this ._attenuation .getValue ();
@@ -78152,6 +79038,51 @@ PointLight .prototype = Object .assign (Object .create (Lighting_X3DLightNode.pr
    getLights: function ()
    {
       return PointLights;
+   },
+});
+
+Object .defineProperties (PointLight,
+{
+   typeName:
+   {
+      value: "PointLight",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Lighting",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",         new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "global",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "on",               new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",            new x_ite_Fields.SFColor (1, 1, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",        new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "ambientIntensity", new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attenuation",      new x_ite_Fields.SFVec3f (1, 0, 0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "location",         new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "radius",           new x_ite_Fields.SFFloat (100)),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadows",         new  x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowColor",     new  x_ite_Fields.SFColor ()),        // Color of shadows.
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowIntensity", new  x_ite_Fields.SFFloat (1)),        // Intensity of shadow color in the range (0, 1).
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowBias",      new  x_ite_Fields.SFFloat (0.005)),   // Bias of the shadow.
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "shadowMapSize",   new  x_ite_Fields.SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
+      ]),
+      enumerate: true,
    },
 });
 
@@ -78441,42 +79372,6 @@ function SpotLight (executionContext)
 SpotLight .prototype = Object .assign (Object .create (Lighting_X3DLightNode.prototype),
 {
    constructor: SpotLight,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",         new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "global",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "on",               new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",            new x_ite_Fields.SFColor (1, 1, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",        new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "ambientIntensity", new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attenuation",      new x_ite_Fields.SFVec3f (1, 0, 0)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "location",         new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "direction",        new x_ite_Fields.SFVec3f (0, 0, -1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "radius",           new x_ite_Fields.SFFloat (100)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "beamWidth",        new x_ite_Fields.SFFloat (0.785398)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "cutOffAngle",      new x_ite_Fields.SFFloat (1.5708)),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadows",         new  x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowColor",     new  x_ite_Fields.SFColor ()),        // Color of shadows.
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowIntensity", new  x_ite_Fields.SFFloat (1)),       // Intensity of shadow color in the range (0, 1).
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowBias",      new  x_ite_Fields.SFFloat (0.005)),   // Bias of the shadow.
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "shadowMapSize",   new  x_ite_Fields.SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
-   ]),
-   getTypeName: function ()
-   {
-      return "SpotLight";
-   },
-   getComponentName: function ()
-   {
-      return "Lighting";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    getAttenuation: function ()
    {
       return this ._attenuation .getValue ();
@@ -78509,6 +79404,54 @@ SpotLight .prototype = Object .assign (Object .create (Lighting_X3DLightNode.pro
    getLights: function ()
    {
       return SpotLights;
+   },
+});
+
+Object .defineProperties (SpotLight,
+{
+   typeName:
+   {
+      value: "SpotLight",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Lighting",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",         new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "global",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "on",               new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",            new x_ite_Fields.SFColor (1, 1, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",        new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "ambientIntensity", new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attenuation",      new x_ite_Fields.SFVec3f (1, 0, 0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "location",         new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "direction",        new x_ite_Fields.SFVec3f (0, 0, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "radius",           new x_ite_Fields.SFFloat (100)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "beamWidth",        new x_ite_Fields.SFFloat (0.785398)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "cutOffAngle",      new x_ite_Fields.SFFloat (1.5708)),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadows",         new  x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowColor",     new  x_ite_Fields.SFColor ()),        // Color of shadows.
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowIntensity", new  x_ite_Fields.SFFloat (1)),       // Intensity of shadow color in the range (0, 1).
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowBias",      new  x_ite_Fields.SFFloat (0.005)),   // Bias of the shadow.
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "shadowMapSize",   new  x_ite_Fields.SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
+      ]),
+      enumerate: true,
    },
 });
 
@@ -78659,33 +79602,6 @@ function Billboard (executionContext)
 Billboard .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.prototype),
 {
    constructor: Billboard,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",       new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "axisOfRotation", new x_ite_Fields.SFVec3f (0, 1, 0)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",        new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",    new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",       new x_ite_Fields.SFVec3f (-1, -1, -1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",     new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",    new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Billboard";
-   },
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    getBBox: function (bbox, shadows)
    {
       return Grouping_X3DGroupingNode.prototype.getBBox.call (this, bbox, shadows) .multRight (this .matrix);
@@ -78766,6 +79682,45 @@ Billboard .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.
    },
 });
 
+Object .defineProperties (Billboard,
+{
+   typeName:
+   {
+      value: "Billboard",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Navigation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",       new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "axisOfRotation", new x_ite_Fields.SFVec3f (0, 1, 0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",        new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",    new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",       new x_ite_Fields.SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",     new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",    new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const Billboard_default_ = Billboard;
 ;
 
@@ -78843,36 +79798,6 @@ Collision .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.
    Core_X3DSensorNode.prototype,
 {
    constructor: Collision,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",       new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "enabled",        new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",       new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "collideTime",    new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",        new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",    new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",       new x_ite_Fields.SFVec3f (-1, -1, -1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",     new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "proxy",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",    new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Collision";
-   },
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Grouping_X3DGroupingNode.prototype.initialize.call (this);
@@ -78941,6 +79866,48 @@ Collision .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.
    {
       // X3DSensorNode .prototype .dispose .call (this); // We can only call the base of a *Objects.
       Grouping_X3DGroupingNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (Collision,
+{
+   typeName:
+   {
+      value: "Collision",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Navigation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",       new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "enabled",        new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",       new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "collideTime",    new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",        new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",    new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",       new x_ite_Fields.SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",     new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "proxy",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",    new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -79029,36 +79996,6 @@ function LOD (executionContext)
 LOD .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.prototype),
 {
    constructor: LOD,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",         new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "forceTransitions", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "center",           new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "range",            new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "level_changed",    new x_ite_Fields.SFInt32 (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",          new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",      new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",         new x_ite_Fields.SFVec3f (-1, -1, -1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",       new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",      new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren",   new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",         new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LOD";
-   },
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Grouping_X3DGroupingNode.prototype.initialize.call (this);
@@ -79273,6 +80210,48 @@ LOD .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.protot
    })(),
 });
 
+Object .defineProperties (LOD,
+{
+   typeName:
+   {
+      value: "LOD",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Navigation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",         new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "forceTransitions", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "center",           new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "range",            new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "level_changed",    new x_ite_Fields.SFInt32 (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",          new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",      new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",         new x_ite_Fields.SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",       new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",      new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren",   new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",         new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const LOD_default_ = LOD;
 ;
 
@@ -79358,39 +80337,6 @@ function OrthoViewpoint (executionContext)
 OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpointNode.prototype),
 {
    constructor: OrthoViewpoint,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_bind",          new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",       new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "position",          new x_ite_Fields.SFVec3f (0, 0, 10)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "orientation",       new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "centerOfRotation",  new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fieldOfView",       new x_ite_Fields.MFFloat (-1, -1, 1, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "nearDistance",      new x_ite_Fields.SFFloat (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "farDistance",       new x_ite_Fields.SFFloat (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "viewAll",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "jump",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "retainUserOffsets", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",          new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "navigationInfo",    new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "OrthoViewpoint";
-   },
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Navigation_X3DViewpointNode.prototype.initialize.call (this);
@@ -79623,6 +80569,51 @@ OrthoViewpoint .prototype = Object .assign (Object .create (Navigation_X3DViewpo
    },
 });
 
+Object .defineProperties (OrthoViewpoint,
+{
+   typeName:
+   {
+      value: "OrthoViewpoint",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Navigation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "set_bind",          new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",       new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "position",          new x_ite_Fields.SFVec3f (0, 0, 10)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "orientation",       new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "centerOfRotation",  new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fieldOfView",       new x_ite_Fields.MFFloat (-1, -1, 1, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "nearDistance",      new x_ite_Fields.SFFloat (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "farDistance",       new x_ite_Fields.SFFloat (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "viewAll",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "jump",              new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "retainUserOffsets", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",          new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "navigationInfo",    new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const OrthoViewpoint_default_ = OrthoViewpoint;
 ;
 
@@ -79702,31 +80693,6 @@ function ViewpointGroup (executionContext)
 ViewpointGroup .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype),
 {
    constructor: ViewpointGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",       new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "displayed",         new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "retainUserOffsets", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "size",              new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "center",            new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",          new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ViewpointGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DChildNode.prototype.initialize.call (this);
@@ -79873,6 +80839,43 @@ function traverse (type, renderObject)
       }
    }
 }
+
+Object .defineProperties (ViewpointGroup,
+{
+   typeName:
+   {
+      value: "ViewpointGroup",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Navigation",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",       new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "displayed",         new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "retainUserOffsets", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "size",              new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "center",            new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",          new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
 
 const ViewpointGroup_default_ = ViewpointGroup;
 ;
@@ -80335,32 +81338,44 @@ function TouchSensor (executionContext)
 TouchSensor .prototype = Object .assign (Object .create (PointingDeviceSensor_X3DTouchSensorNode.prototype),
 {
    constructor: TouchSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",            new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",         new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",             new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "hitTexCoord_changed", new x_ite_Fields.SFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "hitNormal_changed",   new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "hitPoint_changed",    new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isOver",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",            new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "touchTime",           new x_ite_Fields.SFTime ()),
-   ]),
-   getTypeName: function ()
+});
+
+Object .defineProperties (TouchSensor,
+{
+   typeName:
    {
-      return "TouchSensor";
+      value: "TouchSensor",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "PointingDeviceSensor";
+      value: "PointingDeviceSensor",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "children";
+      value: "children",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["2.0", "Infinity"];
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",            new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",         new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",             new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "hitTexCoord_changed", new x_ite_Fields.SFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "hitNormal_changed",   new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "hitPoint_changed",    new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isOver",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",            new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "touchTime",           new x_ite_Fields.SFTime ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -80442,38 +81457,6 @@ Anchor .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.pro
    Networking_X3DUrlObject.prototype,
 {
    constructor: Anchor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "parameter",            new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",          new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",             new x_ite_Fields.SFVec3f (-1, -1, -1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",           new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",          new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren",       new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",             new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Anchor";
-   },
-   getComponentName: function ()
-   {
-      return "Networking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Grouping_X3DGroupingNode.prototype.initialize.call (this);
@@ -80578,6 +81561,50 @@ Anchor .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.pro
    },
 });
 
+Object .defineProperties (Anchor,
+{
+   typeName:
+   {
+      value: "Anchor",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Networking",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "parameter",            new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",              new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",          new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",             new x_ite_Fields.SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",           new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "addChildren",          new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren",       new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",             new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const Anchor_default_ = Anchor;
 ;
 
@@ -80664,35 +81691,6 @@ Inline .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype)
    Grouping_X3DBoundedObject.prototype,
 {
    constructor: Inline,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "global",               new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",          new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",             new x_ite_Fields.SFVec3f (-1, -1, -1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",           new x_ite_Fields.SFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Inline";
-   },
-   getComponentName: function ()
-   {
-      return "Networking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DChildNode.prototype.initialize.call (this);
@@ -80890,6 +81888,47 @@ Inline .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype)
    },
 });
 
+Object .defineProperties (Inline,
+{
+   typeName:
+   {
+      value: "Inline",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Networking",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "global",               new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",              new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay",          new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",             new x_ite_Fields.SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",           new x_ite_Fields.SFVec3f ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const Inline_default_ = Inline;
 ;
 
@@ -81035,32 +82074,6 @@ function LoadSensor (executionContext)
 LoadSensor .prototype = Object .assign (Object .create (Networking_X3DNetworkSensorNode.prototype),
 {
    constructor: LoadSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "timeOut",  new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isLoaded", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "progress", new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "loadTime", new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children", new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LoadSensor";
-   },
-   getComponentName: function ()
-   {
-      return "Networking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Networking_X3DNetworkSensorNode.prototype.initialize.call (this);
@@ -81214,6 +82227,44 @@ LoadSensor .prototype = Object .assign (Object .create (Networking_X3DNetworkSen
       clearTimeout (this .timeOutId);
 
       this .timeOutId = undefined;
+   },
+});
+
+Object .defineProperties (LoadSensor,
+{
+   typeName:
+   {
+      value: "LoadSensor",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Networking",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "timeOut",  new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isLoaded", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "progress", new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "loadTime", new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children", new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -81605,37 +82656,6 @@ function CylinderSensor (executionContext)
 CylinderSensor .prototype = Object .assign (Object .create (PointingDeviceSensor_X3DDragSensorNode.prototype),
 {
    constructor: CylinderSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",        new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",            new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "axisRotation",       new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "diskAngle",          new x_ite_Fields.SFFloat (0.261792)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "minAngle",           new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "maxAngle",           new x_ite_Fields.SFFloat (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "offset",             new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoOffset",         new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "trackPoint_changed", new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "rotation_changed",   new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isOver",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",           new x_ite_Fields.SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "CylinderSensor";
-   },
-   getComponentName: function ()
-   {
-      return "PointingDeviceSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       PointingDeviceSensor_X3DDragSensorNode.prototype.initialize.call (this);
@@ -81818,6 +82838,49 @@ CylinderSensor .prototype = Object .assign (Object .create (PointingDeviceSensor
          if (! this ._rotation_changed .getValue () .equals (rotation))
             this ._rotation_changed = rotation;
       }
+   },
+});
+
+Object .defineProperties (CylinderSensor,
+{
+   typeName:
+   {
+      value: "CylinderSensor",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",        new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",            new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "axisRotation",       new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "diskAngle",          new x_ite_Fields.SFFloat (0.261792)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "minAngle",           new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "maxAngle",           new x_ite_Fields.SFFloat (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "offset",             new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoOffset",         new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "trackPoint_changed", new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "rotation_changed",   new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isOver",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",           new x_ite_Fields.SFBool ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -82068,36 +83131,6 @@ function PlaneSensor (executionContext)
 PlaneSensor .prototype = Object .assign (Object .create (PointingDeviceSensor_X3DDragSensorNode.prototype),
 {
    constructor: PlaneSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",            new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",         new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",             new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "axisRotation",        new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoOffset",          new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "offset",              new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "minPosition",         new x_ite_Fields.SFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "maxPosition",         new x_ite_Fields.SFVec2f (-1, -1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "trackPoint_changed",  new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "translation_changed", new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isOver",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",            new x_ite_Fields.SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PlaneSensor";
-   },
-   getComponentName: function ()
-   {
-      return "PointingDeviceSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       PointingDeviceSensor_X3DDragSensorNode.prototype.initialize.call (this);
@@ -82274,6 +83307,48 @@ PlaneSensor .prototype = Object .assign (Object .create (PointingDeviceSensor_X3
 
       if (! this ._translation_changed .getValue () .equals (translation))
          this ._translation_changed = translation;
+   },
+});
+
+Object .defineProperties (PlaneSensor,
+{
+   typeName:
+   {
+      value: "PlaneSensor",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",            new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",         new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",             new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "axisRotation",        new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoOffset",          new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "offset",              new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "minPosition",         new x_ite_Fields.SFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "maxPosition",         new x_ite_Fields.SFVec2f (-1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "trackPoint_changed",  new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "translation_changed", new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isOver",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",            new x_ite_Fields.SFBool ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -82550,33 +83625,6 @@ function SphereSensor (executionContext)
 SphereSensor .prototype = Object .assign (Object .create (PointingDeviceSensor_X3DDragSensorNode.prototype),
 {
    constructor: SphereSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",        new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",            new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoOffset",         new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "offset",             new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "trackPoint_changed", new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "rotation_changed",   new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isOver",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",           new x_ite_Fields.SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SphereSensor";
-   },
-   getComponentName: function ()
-   {
-      return "PointingDeviceSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       PointingDeviceSensor_X3DDragSensorNode.prototype.initialize.call (this);
@@ -82685,6 +83733,45 @@ SphereSensor .prototype = Object .assign (Object .create (PointingDeviceSensor_X
          rotation .inverse ();
 
       this ._rotation_changed = this .startOffset .copy () .multRight (rotation);
+   },
+});
+
+Object .defineProperties (SphereSensor,
+{
+   typeName:
+   {
+      value: "SphereSensor",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",        new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",            new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoOffset",         new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "offset",             new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "trackPoint_changed", new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "rotation_changed",   new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isOver",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",           new x_ite_Fields.SFBool ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -82879,27 +83966,6 @@ function ClipPlane (executionContext)
 ClipPlane .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype),
 {
    constructor: ClipPlane,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "plane",    new x_ite_Fields.SFVec4f (0, 1, 0, 0)),
-   ]),
-   getTypeName: function ()
-   {
-      return "ClipPlane";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DChildNode.prototype.initialize.call (this);
@@ -82936,6 +84002,39 @@ ClipPlane .prototype = Object .assign (Object .create (Core_X3DChildNode.prototy
 
          -- renderObject .getLocalObjectsCount () [0];
       }
+   },
+});
+
+Object .defineProperties (ClipPlane,
+{
+   typeName:
+   {
+      value: "ClipPlane",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "plane",    new x_ite_Fields.SFVec4f (0, 1, 0, 0)),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -83090,26 +84189,6 @@ function Color (executionContext)
 Color .prototype = Object .assign (Object .create (Rendering_X3DColorNode.prototype),
 {
    constructor: Color,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",    new x_ite_Fields.MFColor ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Color";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "color";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DColorNode.prototype.initialize.call (this);
@@ -83175,6 +84254,38 @@ Color .prototype = Object .assign (Object .create (Rendering_X3DColorNode.protot
       }
 
       return array;
+   },
+});
+
+Object .defineProperties (Color,
+{
+   typeName:
+   {
+      value: "Color",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "color",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",    new x_ite_Fields.MFColor ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -83249,26 +84360,6 @@ function ColorRGBA (executionContext)
 ColorRGBA .prototype = Object .assign (Object .create (Rendering_X3DColorNode.prototype),
 {
    constructor: ColorRGBA,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",    new x_ite_Fields.MFColorRGBA ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ColorRGBA";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "color";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DColorNode.prototype.initialize.call (this);
@@ -83335,6 +84426,38 @@ ColorRGBA .prototype = Object .assign (Object .create (Rendering_X3DColorNode.pr
       }
 
       return array;
+   },
+});
+
+Object .defineProperties (ColorRGBA,
+{
+   typeName:
+   {
+      value: "ColorRGBA",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "color",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",    new x_ite_Fields.MFColorRGBA ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -83594,25 +84717,37 @@ function Coordinate (executionContext)
 Coordinate .prototype = Object .assign (Object .create (Rendering_X3DCoordinateNode.prototype),
 {
    constructor: Coordinate,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "point",    new x_ite_Fields.MFVec3f ()),
-   ]),
-   getTypeName: function ()
+});
+
+Object .defineProperties (Coordinate,
+{
+   typeName:
    {
-      return "Coordinate";
+      value: "Coordinate",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Rendering";
+      value: "Rendering",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "coord";
+      value: "coord",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["2.0", "Infinity"];
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "point",    new x_ite_Fields.MFVec3f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -84153,35 +85288,6 @@ function IndexedLineSet (executionContext)
 IndexedLineSet .prototype = Object .assign (Object .create (Rendering_X3DLineGeometryNode.prototype),
 {
    constructor: IndexedLineSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",       new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_colorIndex", new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_coordIndex", new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex", new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorIndex",     new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "coordIndex",     new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",         new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",       new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",         new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",          new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "IndexedLineSet";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DLineGeometryNode.prototype.initialize.call (this);
@@ -84376,6 +85482,47 @@ IndexedLineSet .prototype = Object .assign (Object .create (Rendering_X3DLineGeo
    },
 });
 
+Object .defineProperties (IndexedLineSet,
+{
+   typeName:
+   {
+      value: "IndexedLineSet",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",       new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_colorIndex", new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_coordIndex", new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex", new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorIndex",     new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "coordIndex",     new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",         new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",       new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",         new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",          new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const IndexedLineSet_default_ = IndexedLineSet;
 ;
 
@@ -84447,37 +85594,6 @@ function IndexedTriangleFanSet (executionContext)
 IndexedTriangleFanSet .prototype = Object .assign (Object .create (Rendering_X3DComposedGeometryNode.prototype),
 {
    constructor: IndexedTriangleFanSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_index",       new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "index",           new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "IndexedTriangleFanSet";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DComposedGeometryNode.prototype.initialize.call (this);
@@ -84532,6 +85648,49 @@ IndexedTriangleFanSet .prototype = Object .assign (Object .create (Rendering_X3D
    build: function ()
    {
       Rendering_X3DComposedGeometryNode.prototype.build.call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);
+   },
+});
+
+Object .defineProperties (IndexedTriangleFanSet,
+{
+   typeName:
+   {
+      value: "IndexedTriangleFanSet",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_index",       new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "index",           new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -84604,37 +85763,6 @@ function IndexedTriangleSet (executionContext)
 IndexedTriangleSet .prototype = Object .assign (Object .create (Rendering_X3DComposedGeometryNode.prototype),
 {
    constructor: IndexedTriangleSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_index",       new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "index",           new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "IndexedTriangleSet";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    getPolygonIndex: function (i)
    {
       return this ._index [i];
@@ -84648,6 +85776,49 @@ IndexedTriangleSet .prototype = Object .assign (Object .create (Rendering_X3DCom
    build: function ()
    {
       Rendering_X3DComposedGeometryNode.prototype.build.call (this, 3, this ._index .length, 3, this ._index .length);
+   },
+});
+
+Object .defineProperties (IndexedTriangleSet,
+{
+   typeName:
+   {
+      value: "IndexedTriangleSet",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_index",       new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "index",           new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -84722,37 +85893,6 @@ function IndexedTriangleStripSet (executionContext)
 IndexedTriangleStripSet .prototype = Object .assign (Object .create (Rendering_X3DComposedGeometryNode.prototype),
 {
    constructor: IndexedTriangleStripSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_index",       new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "index",           new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "IndexedTriangleStripSet";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DComposedGeometryNode.prototype.initialize.call (this);
@@ -84815,6 +85955,49 @@ IndexedTriangleStripSet .prototype = Object .assign (Object .create (Rendering_X
    build: function ()
    {
       Rendering_X3DComposedGeometryNode.prototype.build.call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);
+   },
+});
+
+Object .defineProperties (IndexedTriangleStripSet,
+{
+   typeName:
+   {
+      value: "IndexedTriangleStripSet",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "set_index",       new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "index",           new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -84893,31 +86076,6 @@ function LineSet (executionContext)
 LineSet .prototype = Object .assign (Object .create (Rendering_X3DLineGeometryNode.prototype),
 {
    constructor: LineSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",    new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "vertexCount", new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "attrib",      new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fogCoord",    new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",       new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normal",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "coord",       new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LineSet";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DLineGeometryNode.prototype.initialize.call (this);
@@ -85046,6 +86204,43 @@ LineSet .prototype = Object .assign (Object .create (Rendering_X3DLineGeometryNo
          else
             index += count;
       }
+   },
+});
+
+Object .defineProperties (LineSet,
+{
+   typeName:
+   {
+      value: "LineSet",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",    new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "vertexCount", new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "attrib",      new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fogCoord",    new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",       new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normal",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "coord",       new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -85187,26 +86382,6 @@ function Normal (executionContext)
 Normal .prototype = Object .assign (Object .create (Rendering_X3DNormalNode.prototype),
 {
    constructor: Normal,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "vector",   new x_ite_Fields.MFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Normal";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "normal";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DNormalNode.prototype.initialize.call (this);
@@ -85301,6 +86476,38 @@ Normal .prototype = Object .assign (Object .create (Rendering_X3DNormalNode.prot
       }
 
       return array;
+   },
+});
+
+Object .defineProperties (Normal,
+{
+   typeName:
+   {
+      value: "Normal",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "normal",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "vector",   new x_ite_Fields.MFVec3f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -85550,30 +86757,6 @@ function PointSet (executionContext)
 PointSet .prototype = Object .assign (Object .create (Rendering_X3DPointGeometryNode.prototype),
 {
    constructor: PointSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "attrib",   new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fogCoord", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",    new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normal",   new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "coord",    new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PointSet";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DPointGeometryNode.prototype.initialize.call (this);
@@ -85687,6 +86870,42 @@ PointSet .prototype = Object .assign (Object .create (Rendering_X3DPointGeometry
    },
 });
 
+Object .defineProperties (PointSet,
+{
+   typeName:
+   {
+      value: "PointSet",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "attrib",   new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fogCoord", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",    new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normal",   new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "coord",    new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const PointSet_default_ = PointSet;
 ;
 
@@ -85758,36 +86977,6 @@ function TriangleFanSet (executionContext)
 TriangleFanSet .prototype = Object .assign (Object .create (Rendering_X3DComposedGeometryNode.prototype),
 {
    constructor: TriangleFanSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fanCount",        new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TriangleFanSet";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DComposedGeometryNode.prototype.initialize.call (this);
@@ -85825,6 +87014,48 @@ TriangleFanSet .prototype = Object .assign (Object .create (Rendering_X3DCompose
    build: function ()
    {
       Rendering_X3DComposedGeometryNode.prototype.build.call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);
+   },
+});
+
+Object .defineProperties (TriangleFanSet,
+{
+   typeName:
+   {
+      value: "TriangleFanSet",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fanCount",        new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -85897,35 +87128,6 @@ function TriangleSet (executionContext)
 TriangleSet .prototype = Object .assign (Object .create (Rendering_X3DComposedGeometryNode.prototype),
 {
    constructor: TriangleSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TriangleSet";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    build: function ()
    {
       if (! this .getCoord ())
@@ -85936,6 +87138,47 @@ TriangleSet .prototype = Object .assign (Object .create (Rendering_X3DComposedGe
    createNormals: function (verticesPerPolygon, polygonsSize)
    {
       return this .createFaceNormals (verticesPerPolygon, polygonsSize);
+   },
+});
+
+Object .defineProperties (TriangleSet,
+{
+   typeName:
+   {
+      value: "TriangleSet",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -86010,36 +87253,6 @@ function TriangleStripSet (executionContext)
 TriangleStripSet .prototype = Object .assign (Object .create (Rendering_X3DComposedGeometryNode.prototype),
 {
    constructor: TriangleStripSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "stripCount",      new x_ite_Fields.MFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TriangleStripSet";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Rendering_X3DComposedGeometryNode.prototype.initialize.call (this);
@@ -86081,6 +87294,48 @@ TriangleStripSet .prototype = Object .assign (Object .create (Rendering_X3DCompo
    build: function ()
    {
       Rendering_X3DComposedGeometryNode.prototype.build.call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);
+   },
+});
+
+Object .defineProperties (TriangleStripSet,
+{
+   typeName:
+   {
+      value: "TriangleStripSet",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ccw",             new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "colorPerVertex",  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "normalPerVertex", new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "stripCount",      new x_ite_Fields.MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "attrib",          new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "fogCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "color",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texCoord",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -86291,7 +87546,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace.set ("x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(790);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -87692,31 +88947,7 @@ ComposedShader .prototype = Object .assign (Object .create (Shaders_X3DShaderNod
    Shaders_X3DProgrammableShaderObject.prototype,
 {
    constructor: ComposedShader,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",   new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "activate",   new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isSelected", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isValid",    new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "language",   new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "parts",      new x_ite_Fields.MFNode ()),
-   ]),
    wireframe: false,
-   getTypeName: function ()
-   {
-      return "ComposedShader";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "shaders";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Shaders_X3DShaderNode.prototype.initialize.call (this);
@@ -87834,6 +89065,42 @@ ComposedShader .prototype = Object .assign (Object .create (Shaders_X3DShaderNod
    {
       Shaders_X3DProgrammableShaderObject.prototype.dispose.call (this);
       Shaders_X3DShaderNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (ComposedShader,
+{
+   typeName:
+   {
+      value: "ComposedShader",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "shaders",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",   new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "activate",   new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isSelected", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isValid",    new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "language",   new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "parts",      new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -87988,28 +89255,6 @@ function FloatVertexAttribute (executionContext)
 FloatVertexAttribute .prototype = Object .assign (Object .create (Shaders_X3DVertexAttributeNode.prototype),
 {
    constructor: FloatVertexAttribute,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "name",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "numComponents", new x_ite_Fields.SFInt32 (4)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "value",         new x_ite_Fields.MFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "FloatVertexAttribute";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "attrib";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Shaders_X3DVertexAttributeNode.prototype.initialize.call (this);
@@ -88060,6 +89305,40 @@ FloatVertexAttribute .prototype = Object .assign (Object .create (Shaders_X3DVer
    enable: function (gl, shaderNode, buffer)
    {
       shaderNode .enableFloatAttrib (gl, this ._name .getValue (), buffer, this .numComponents, 0, 0);
+   },
+});
+
+Object .defineProperties (FloatVertexAttribute,
+{
+   typeName:
+   {
+      value: "FloatVertexAttribute",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "attrib",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "name",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "numComponents", new x_ite_Fields.SFInt32 (4)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "value",         new x_ite_Fields.MFFloat ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -88133,27 +89412,6 @@ function Matrix3VertexAttribute (executionContext)
 Matrix3VertexAttribute .prototype = Object .assign (Object .create (Shaders_X3DVertexAttributeNode.prototype),
 {
    constructor: Matrix3VertexAttribute,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "name",     new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "value",    new x_ite_Fields.MFMatrix3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Matrix3VertexAttribute";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "attrib";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Shaders_X3DVertexAttributeNode.prototype.initialize.call (this);
@@ -88196,6 +89454,39 @@ Matrix3VertexAttribute .prototype = Object .assign (Object .create (Shaders_X3DV
    enable: function (gl, shaderNode, buffer)
    {
       shaderNode .enableMatrix3Attrib (gl, this ._name .getValue (), buffer, 0, 0);
+   },
+});
+
+Object .defineProperties (Matrix3VertexAttribute,
+{
+   typeName:
+   {
+      value: "Matrix3VertexAttribute",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "attrib",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "name",     new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "value",    new x_ite_Fields.MFMatrix3f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -88268,27 +89559,6 @@ function Matrix4VertexAttribute (executionContext)
 Matrix4VertexAttribute .prototype = Object .assign (Object .create (Shaders_X3DVertexAttributeNode.prototype),
 {
    constructor: Matrix4VertexAttribute,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "name",     new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "value",    new x_ite_Fields.MFMatrix4f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Matrix4VertexAttribute";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "attrib";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Shaders_X3DVertexAttributeNode.prototype.initialize.call (this);
@@ -88331,6 +89601,39 @@ Matrix4VertexAttribute .prototype = Object .assign (Object .create (Shaders_X3DV
    enable: function (gl, shaderNode, buffer)
    {
       shaderNode .enableMatrix4Attrib (gl, this ._name .getValue (), buffer, 0, 0);
+   },
+});
+
+Object .defineProperties (Matrix4VertexAttribute,
+{
+   typeName:
+   {
+      value: "Matrix4VertexAttribute",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "attrib",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "name",     new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "value",    new x_ite_Fields.MFMatrix4f ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -88409,34 +89712,6 @@ PackagedShader .prototype = Object .assign (Object .create (Shaders_X3DShaderNod
    Shaders_X3DProgrammableShaderObject.prototype,
 {
    constructor: PackagedShader,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "activate",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isSelected",           new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isValid",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "language",             new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
-   ]),
-   getTypeName: function ()
-   {
-      return "PackagedShader";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "shaders";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    getSourceText: function ()
    {
       return this ._url;
@@ -88454,6 +89729,46 @@ PackagedShader .prototype = Object .assign (Object .create (Shaders_X3DShaderNod
       Shaders_X3DProgrammableShaderObject.prototype.dispose.call (this);
       Networking_X3DUrlObject.prototype.dispose.call (this);
       Shaders_X3DShaderNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (PackagedShader,
+{
+   typeName:
+   {
+      value: "PackagedShader",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "shaders",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "activate",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isSelected",           new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isValid",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "language",             new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -88526,29 +89841,41 @@ function ProgramShader (executionContext)
 ProgramShader .prototype = Object .assign (Object .create (Shaders_X3DShaderNode.prototype),
 {
    constructor: ProgramShader,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",   new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "activate",   new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isSelected", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isValid",    new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "language",   new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "programs",   new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
+});
+
+Object .defineProperties (ProgramShader,
+{
+   typeName:
    {
-      return "ProgramShader";
+      value: "ProgramShader",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Shaders";
+      value: "Shaders",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "shaders";
+      value: "shaders",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["3.0", "Infinity"];
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",   new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "activate",   new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isSelected", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isValid",    new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "language",   new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "programs",   new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -94920,7 +96247,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace.set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(790);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95006,31 +96333,6 @@ ShaderPart .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
    Networking_X3DUrlObject.prototype,
 {
    constructor: ShaderPart,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "type",                 new x_ite_Fields.SFString ("VERTEX")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
-   ]),
-   getTypeName: function ()
-   {
-      return "ShaderPart";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "parts";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Core_X3DNode.prototype.initialize.call (this);
@@ -95147,6 +96449,43 @@ ShaderPart .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
    },
 });
 
+Object .defineProperties (ShaderPart,
+{
+   typeName:
+   {
+      value: "ShaderPart",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "parts",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "type",                 new x_ite_Fields.SFString ("VERTEX")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
+      ]),
+      enumerate: true,
+   },
+});
+
 const ShaderPart_default_ = ShaderPart;
 ;
 
@@ -95222,31 +96561,6 @@ ShaderProgram .prototype = Object .assign (Object .create (Core_X3DNode.prototyp
    Shaders_X3DProgrammableShaderObject.prototype,
 {
    constructor: ShaderProgram,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "type",                 new x_ite_Fields.SFString ("VERTEX")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
-   ]),
-   getTypeName: function ()
-   {
-      return "ShaderProgram";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "programs";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    getSourceText: function ()
    {
       return this ._url;
@@ -95264,6 +96578,43 @@ ShaderProgram .prototype = Object .assign (Object .create (Core_X3DNode.prototyp
       Shaders_X3DProgrammableShaderObject.prototype.dispose.call (this);
       Networking_X3DUrlObject.prototype.dispose.call (this);
       Core_X3DNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (ShaderProgram,
+{
+   typeName:
+   {
+      value: "ShaderProgram",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "programs",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "type",                 new x_ite_Fields.SFString ("VERTEX")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -95420,30 +96771,42 @@ function AcousticProperties (executionContext)
 AcousticProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceChildNode.prototype),
 {
    constructor: AcousticProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",   new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",    new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "absorption", new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "refraction", new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "diffuse",    new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "specular",   new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
+});
+
+Object .defineProperties (AcousticProperties,
+{
+   typeName:
    {
-      return "AcousticProperties";
+      value: "AcousticProperties",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Shape";
+      value: "Shape",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "AcousticProperties";
+      value: "AcousticProperties",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["4.0", "Infinity"];
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",   new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",    new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "absorption", new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "refraction", new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "diffuse",    new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "specular",   new x_ite_Fields.SFFloat ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -95606,37 +96969,6 @@ function Appearance (executionContext)
 Appearance .prototype = Object .assign (Object .create (Shape_X3DAppearanceNode.prototype),
 {
    constructor: Appearance,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "alphaMode",          new x_ite_Fields.SFString ("AUTO")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "alphaCutoff",        new x_ite_Fields.SFFloat (0.5)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointProperties",    new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "lineProperties",     new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fillProperties",     new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "material",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backMaterial",       new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "texture",            new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "textureTransform",   new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "shaders",            new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "blendMode",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "acousticProperties", new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Appearance";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "appearance";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Shape_X3DAppearanceNode.prototype.initialize.call (this);
@@ -95981,6 +97313,49 @@ Appearance .prototype = Object .assign (Object .create (Shape_X3DAppearanceNode.
    },
 });
 
+Object .defineProperties (Appearance,
+{
+   typeName:
+   {
+      value: "Appearance",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "appearance",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "alphaMode",          new x_ite_Fields.SFString ("AUTO")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "alphaCutoff",        new x_ite_Fields.SFFloat (0.5)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointProperties",    new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "lineProperties",     new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fillProperties",     new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "material",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backMaterial",       new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "texture",            new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "textureTransform",   new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "shaders",            new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "blendMode",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "acousticProperties", new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const Appearance_default_ = Appearance;
 ;
 
@@ -96056,29 +97431,6 @@ function FillProperties (executionContext)
 FillProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceChildNode.prototype),
 {
    constructor: FillProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",   new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "filled",     new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "hatched",    new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "hatchColor", new x_ite_Fields.SFColor (1, 1, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "hatchStyle", new x_ite_Fields.SFInt32 (1)),
-   ]),
-   getTypeName: function ()
-   {
-      return "FillProperties";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "fillProperties";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Shape_X3DAppearanceChildNode.prototype.initialize.call (this);
@@ -96154,6 +97506,41 @@ FillProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
    },
 });
 
+Object .defineProperties (FillProperties,
+{
+   typeName:
+   {
+      value: "FillProperties",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "fillProperties",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",   new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "filled",     new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "hatched",    new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "hatchColor", new x_ite_Fields.SFColor (1, 1, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "hatchStyle", new x_ite_Fields.SFInt32 (1)),
+      ]),
+      enumerate: true,
+   },
+});
+
 const FillProperties_default_ = FillProperties;
 ;
 
@@ -96223,28 +97610,6 @@ function LineProperties (executionContext)
 LineProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceChildNode.prototype),
 {
    constructor: LineProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "applied",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "linetype",             new x_ite_Fields.SFInt32 (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "linewidthScaleFactor", new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LineProperties";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "lineProperties";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Shape_X3DAppearanceChildNode.prototype.initialize.call (this);
@@ -96325,6 +97690,40 @@ LineProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
          gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, 16);
          gl .uniform1f (shaderObject .x3d_LineStippleScale,       1);
       }
+   },
+});
+
+Object .defineProperties (LineProperties,
+{
+   typeName:
+   {
+      value: "LineProperties",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "lineProperties",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "applied",              new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "linetype",             new x_ite_Fields.SFInt32 (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "linewidthScaleFactor", new x_ite_Fields.SFFloat ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -96933,47 +98332,6 @@ function Material (executionContext)
 Material .prototype = Object .assign (Object .create (Shape_X3DOneSidedMaterialNode.prototype),
 {
    constructor: Material,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",                 new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ambientIntensity",         new x_ite_Fields.SFFloat (0.2)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ambientTextureMapping",    new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ambientTexture",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "diffuseColor",             new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "diffuseTextureMapping",    new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "diffuseTexture",           new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "specularColor",            new x_ite_Fields.SFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "specularTextureMapping",   new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "specularTexture",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveColor",            new x_ite_Fields.SFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveTextureMapping",   new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveTexture",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "shininess",                new x_ite_Fields.SFFloat (0.2)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "shininessTextureMapping",  new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "shininessTexture",         new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "occlusionStrength",        new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "occlusionTextureMapping",  new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "occlusionTexture",         new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalScale",              new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTextureMapping",     new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTexture",            new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency",             new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Material";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "material";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Shape_X3DOneSidedMaterialNode.prototype.initialize.call (this);
@@ -97261,6 +98619,59 @@ function getMaterialKey (shadows)
    }
 }
 
+Object .defineProperties (Material,
+{
+   typeName:
+   {
+      value: "Material",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "material",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",                 new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ambientIntensity",         new x_ite_Fields.SFFloat (0.2)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ambientTextureMapping",    new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ambientTexture",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "diffuseColor",             new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "diffuseTextureMapping",    new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "diffuseTexture",           new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "specularColor",            new x_ite_Fields.SFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "specularTextureMapping",   new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "specularTexture",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveColor",            new x_ite_Fields.SFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveTextureMapping",   new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveTexture",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "shininess",                new x_ite_Fields.SFFloat (0.2)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "shininessTextureMapping",  new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "shininessTexture",         new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "occlusionStrength",        new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "occlusionTextureMapping",  new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "occlusionTexture",         new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalScale",              new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTextureMapping",     new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTexture",            new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency",             new x_ite_Fields.SFFloat ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const Material_default_ = Material;
 ;
 
@@ -97334,42 +98745,6 @@ function PhysicalMaterial (executionContext)
 PhysicalMaterial .prototype = Object .assign (Object .create (Shape_X3DOneSidedMaterialNode.prototype),
 {
    constructor: PhysicalMaterial,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",                        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "baseColor",                       new x_ite_Fields.SFColor (1, 1, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "baseTextureMapping",              new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "baseTexture",                     new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveColor",                   new x_ite_Fields.SFColor (0, 0, 0)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveTextureMapping",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveTexture",                 new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metallic",                        new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "roughness",                       new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metallicRoughnessTextureMapping", new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metallicRoughnessTexture",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "occlusionStrength",               new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "occlusionTextureMapping",         new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "occlusionTexture",                new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalScale",                     new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTextureMapping",            new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTexture",                   new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency",                    new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PhysicalMaterial";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "material";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
    initialize: function ()
    {
       Shape_X3DOneSidedMaterialNode.prototype.initialize.call (this);
@@ -97563,6 +98938,54 @@ PhysicalMaterial .prototype = Object .assign (Object .create (Shape_X3DOneSidedM
    },
 });
 
+Object .defineProperties (PhysicalMaterial,
+{
+   typeName:
+   {
+      value: "PhysicalMaterial",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "material",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",                        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "baseColor",                       new x_ite_Fields.SFColor (1, 1, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "baseTextureMapping",              new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "baseTexture",                     new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveColor",                   new x_ite_Fields.SFColor (0, 0, 0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveTextureMapping",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveTexture",                 new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metallic",                        new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "roughness",                       new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metallicRoughnessTextureMapping", new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metallicRoughnessTexture",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "occlusionStrength",               new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "occlusionTextureMapping",         new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "occlusionTexture",                new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalScale",                     new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTextureMapping",            new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTexture",                   new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency",                    new x_ite_Fields.SFFloat ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const PhysicalMaterial_default_ = PhysicalMaterial;
 ;
 
@@ -97636,29 +99059,6 @@ function PointProperties (executionContext)
 PointProperties .prototype = Object .assign (Object .create (Shape_X3DAppearanceChildNode.prototype),
 {
    constructor: PointProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeScaleFactor", new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeMinValue",    new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeMaxValue",    new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "attenuation",          new x_ite_Fields.MFFloat (1, 0, 0)),
-   ]),
-   getTypeName: function ()
-   {
-      return "PointProperties";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "pointProperties";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
    initialize: function ()
    {
       Shape_X3DAppearanceChildNode.prototype.initialize.call (this);
@@ -97719,6 +99119,41 @@ PointProperties .prototype = Object .assign (Object .create (Shape_X3DAppearance
       gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMinValue,    this .pointSizeMinValue);
       gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMaxValue,    this .pointSizeMaxValue);
       gl .uniform3fv (shaderObject .x3d_PointPropertiesAttenuation,          this .attenuation);
+   },
+});
+
+Object .defineProperties (PointProperties,
+{
+   typeName:
+   {
+      value: "PointProperties",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "pointProperties",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeScaleFactor", new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeMinValue",    new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeMaxValue",    new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "attenuation",          new x_ite_Fields.MFFloat (1, 0, 0)),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -97995,32 +99430,6 @@ function Shape (executionContext)
 Shape .prototype = Object .assign (Object .create (Shape_X3DShapeNode.prototype),
 {
    constructor: Shape,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",    new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",     new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "castShadow",  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",    new x_ite_Fields.SFVec3f (-1, -1, -1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",  new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "appearance",  new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "geometry",    new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Shape";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Shape_X3DShapeNode.prototype.initialize.call (this);
@@ -98124,6 +99533,44 @@ Shape .prototype = Object .assign (Object .create (Shape_X3DShapeNode.prototype)
    },
 });
 
+Object .defineProperties (Shape,
+{
+   typeName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",    new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "visible",     new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "castShadow",  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "bboxDisplay", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",    new x_ite_Fields.SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",  new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "appearance",  new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "geometry",    new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const Shape_default_ = Shape;
 ;
 
@@ -98205,38 +99652,6 @@ function TwoSidedMaterial (executionContext)
 TwoSidedMaterial .prototype = Object .assign (Object .create (Shape_X3DMaterialNode.prototype),
 {
    constructor: TwoSidedMaterial,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "separateBackColor",    new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ambientIntensity",     new x_ite_Fields.SFFloat (0.2)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "diffuseColor",         new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "specularColor",        new x_ite_Fields.SFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveColor",        new x_ite_Fields.SFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "shininess",            new x_ite_Fields.SFFloat (0.2)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency",         new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backAmbientIntensity", new x_ite_Fields.SFFloat (0.2)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backDiffuseColor",     new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backSpecularColor",    new x_ite_Fields.SFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backEmissiveColor",    new x_ite_Fields.SFColor ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backShininess",        new x_ite_Fields.SFFloat (0.2)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backTransparency",     new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TwoSidedMaterial";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "material";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    initialize: function ()
    {
       Shape_X3DMaterialNode.prototype.initialize.call (this);
@@ -98410,6 +99825,50 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (Shape_X3DMaterialN
    },
 });
 
+Object .defineProperties (TwoSidedMaterial,
+{
+   typeName:
+   {
+      value: "TwoSidedMaterial",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "material",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "separateBackColor",    new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ambientIntensity",     new x_ite_Fields.SFFloat (0.2)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "diffuseColor",         new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "specularColor",        new x_ite_Fields.SFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveColor",        new x_ite_Fields.SFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "shininess",            new x_ite_Fields.SFFloat (0.2)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency",         new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backAmbientIntensity", new x_ite_Fields.SFFloat (0.2)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backDiffuseColor",     new x_ite_Fields.SFColor (0.8, 0.8, 0.8)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backSpecularColor",    new x_ite_Fields.SFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backEmissiveColor",    new x_ite_Fields.SFColor ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backShininess",        new x_ite_Fields.SFFloat (0.2)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backTransparency",     new x_ite_Fields.SFFloat ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const TwoSidedMaterial_default_ = TwoSidedMaterial;
 ;
 
@@ -98479,32 +99938,6 @@ function UnlitMaterial (executionContext)
 UnlitMaterial .prototype = Object .assign (Object .create (Shape_X3DOneSidedMaterialNode.prototype),
 {
    constructor: UnlitMaterial,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",               new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveColor",          new x_ite_Fields.SFColor (1, 1, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveTextureMapping", new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveTexture",        new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalScale",            new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTextureMapping",   new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTexture",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency",           new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "UnlitMaterial";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "material";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
    initialize: function ()
    {
       Shape_X3DOneSidedMaterialNode.prototype.initialize.call (this);
@@ -98543,6 +99976,44 @@ UnlitMaterial .prototype = Object .assign (Object .create (Shape_X3DOneSidedMate
       browser .getShaders () .set (key, shaderNode);
 
       return shaderNode;
+   },
+});
+
+Object .defineProperties (UnlitMaterial,
+{
+   typeName:
+   {
+      value: "UnlitMaterial",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "material",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",               new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveColor",          new x_ite_Fields.SFColor (1, 1, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveTextureMapping", new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "emissiveTexture",        new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalScale",            new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTextureMapping",   new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTexture",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency",           new x_ite_Fields.SFFloat ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -98791,48 +100262,60 @@ function Analyser (executionContext)
 Analyser .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
 {
    constructor: Analyser,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fftSize",               new x_ite_Fields.SFInt32 (2048)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "frequencyBinCount",     new x_ite_Fields.SFInt32 (1024)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "minDecibels",           new x_ite_Fields.SFFloat (-100)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "maxDecibels",           new x_ite_Fields.SFFloat (-30)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "smoothingTimeConstant", new x_ite_Fields.SFFloat (0.8)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
+Object .defineProperties (Analyser,
+{
+   typeName:
    {
-      return "Analyser";
+      value: "Analyser",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Sound";
+      value: "Sound",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "children";
+      value: "children",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["4.0", "Infinity"];
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "fftSize",               new x_ite_Fields.SFInt32 (2048)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "frequencyBinCount",     new x_ite_Fields.SFInt32 (1024)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "minDecibels",           new x_ite_Fields.SFFloat (-100)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "maxDecibels",           new x_ite_Fields.SFFloat (-30)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "smoothingTimeConstant", new x_ite_Fields.SFFloat (0.8)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -99061,7 +100544,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(790);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99134,42 +100617,6 @@ AudioClip .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.
    Networking_X3DUrlObject.prototype,
 {
    constructor: AudioClip,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "load",                 new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "url",                  new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoRefresh",          new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                 new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pitch",                new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loop",                 new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",           new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",          new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "duration_changed",     new x_ite_Fields.SFTime (-1)),
-   ]),
-   getTypeName: function ()
-   {
-      return "AudioClip";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "source";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Sound_X3DSoundSourceNode.prototype.initialize.call (this);
@@ -99259,6 +100706,54 @@ AudioClip .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.
    {
       Networking_X3DUrlObject.prototype.dispose.call (this);
       Sound_X3DSoundSourceNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (AudioClip,
+{
+   typeName:
+   {
+      value: "AudioClip",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "source",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "load",                 new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "url",                  new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoRefresh",          new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                 new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pitch",                new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loop",                 new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",           new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",          new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "duration_changed",     new x_ite_Fields.SFTime (-1)),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -99467,37 +100962,49 @@ function AudioDestination (executionContext)
 AudioDestination .prototype = Object .assign (Object .create (Sound_X3DSoundDestinationNode.prototype),
 {
    constructor: AudioDestination,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "maxChannelCount",       new x_ite_Fields.SFInt32 (2)),
+Object .defineProperties (AudioDestination,
+{
+   typeName:
+   {
+      value: "AudioDestination",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "maxChannelCount",       new x_ite_Fields.SFInt32 (2)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "mediaDeviceID",         new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "AudioDestination";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "mediaDeviceID",         new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -99570,47 +101077,59 @@ function BiquadFilter (executionContext)
 BiquadFilter .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
 {
    constructor: BiquadFilter,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "detune",                new x_ite_Fields.SFFloat (0)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "frequency",             new x_ite_Fields.SFFloat (350)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "qualityFactor",         new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "type",                  new x_ite_Fields.SFString ("lowpass")),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
+Object .defineProperties (BiquadFilter,
+{
+   typeName:
    {
-      return "BiquadFilter";
+      value: "BiquadFilter",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Sound";
+      value: "Sound",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "children";
+      value: "children",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["4.0", "Infinity"];
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "detune",                new x_ite_Fields.SFFloat (0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "frequency",             new x_ite_Fields.SFFloat (350)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "qualityFactor",         new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "type",                  new x_ite_Fields.SFString ("lowpass")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -99688,56 +101207,6 @@ BufferAudioSource .prototype = Object .assign (Object .create (Sound_X3DSoundSou
    Networking_X3DUrlObject.prototype,
 {
    constructor: BufferAudioSource,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "load",                 new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "url",                  new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoRefresh",          new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                 new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "buffer",               new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "detune",               new x_ite_Fields.SFFloat (0)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "bufferDuration",       new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loopStart",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loopEnd",              new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "numberOfChannels",     new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "playbackRate",         new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "sampleRate",           new x_ite_Fields.SFFloat (0)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bufferLength",         new x_ite_Fields.SFInt32 ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loop",                 new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",           new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",          new x_ite_Fields.SFTime ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "BufferAudioSource";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
    initialize: function ()
    {
       Sound_X3DSoundSourceNode.prototype.initialize.call (this);
@@ -99747,6 +101216,68 @@ BufferAudioSource .prototype = Object .assign (Object .create (Sound_X3DSoundSou
    {
       Networking_X3DUrlObject.prototype.dispose.call (this);
       Sound_X3DSoundSourceNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (BufferAudioSource,
+{
+   typeName:
+   {
+      value: "BufferAudioSource",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "load",                 new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "url",                  new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoRefresh",          new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                 new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "buffer",               new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "detune",               new x_ite_Fields.SFFloat (0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "bufferDuration",       new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loopStart",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loopEnd",              new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "numberOfChannels",     new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "playbackRate",         new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "sampleRate",           new x_ite_Fields.SFFloat (0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bufferLength",         new x_ite_Fields.SFInt32 ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "loop",                 new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",           new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",          new x_ite_Fields.SFTime ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -99887,34 +101418,46 @@ function ChannelMerger (executionContext)
 ChannelMerger .prototype = Object .assign (Object .create (Sound_X3DSoundChannelNode.prototype),
 {
    constructor: ChannelMerger,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+Object .defineProperties (ChannelMerger,
+{
+   typeName:
+   {
+      value: "ChannelMerger",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ChannelMerger";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -99987,35 +101530,47 @@ function ChannelSelector (executionContext)
 ChannelSelector .prototype = Object .assign (Object .create (Sound_X3DSoundChannelNode.prototype),
 {
    constructor: ChannelSelector,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelSelection",      new x_ite_Fields.SFInt32 (0)),
+Object .defineProperties (ChannelSelector,
+{
+   typeName:
+   {
+      value: "ChannelSelector",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelSelection",      new x_ite_Fields.SFInt32 (0)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ChannelSelector";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -100088,35 +101643,47 @@ function ChannelSplitter (executionContext)
 ChannelSplitter .prototype = Object .assign (Object .create (Sound_X3DSoundChannelNode.prototype),
 {
    constructor: ChannelSplitter,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+Object .defineProperties (ChannelSplitter,
+{
+   typeName:
+   {
+      value: "ChannelSplitter",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "outputs",               new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ChannelSplitter";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "outputs",               new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -100189,45 +101756,57 @@ function Convolver (executionContext)
 Convolver .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
 {
    constructor: Convolver,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "buffer",                new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalize",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
+Object .defineProperties (Convolver,
+{
+   typeName:
    {
-      return "Convolver";
+      value: "Convolver",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Sound";
+      value: "Sound",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "children";
+      value: "children",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["4.0", "Infinity"];
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "buffer",                new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalize",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -100300,45 +101879,57 @@ function Delay (executionContext)
 Delay .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
 {
    constructor: Delay,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "delayTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "maxDelayTime",          new x_ite_Fields.SFTime (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
+Object .defineProperties (Delay,
+{
+   typeName:
    {
-      return "Delay";
+      value: "Delay",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Sound";
+      value: "Sound",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "children";
+      value: "children",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["4.0", "Infinity"];
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "delayTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "maxDelayTime",          new x_ite_Fields.SFTime (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -100411,49 +102002,61 @@ function DynamicsCompressor (executionContext)
 DynamicsCompressor .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
 {
    constructor: DynamicsCompressor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",              new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",           new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",               new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "attack",                new x_ite_Fields.SFFloat (0.003)), // TODO: SFTime
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "knee",                  new x_ite_Fields.SFFloat (30)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ratio",                 new x_ite_Fields.SFFloat (12)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reduction",             new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "release",               new x_ite_Fields.SFTime (0.25)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "threshold",             new x_ite_Fields.SFFloat (-24)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
+Object .defineProperties (DynamicsCompressor,
+{
+   typeName:
    {
-      return "DynamicsCompressor";
+      value: "DynamicsCompressor",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Sound";
+      value: "Sound",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "children";
+      value: "children",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["4.0", "Infinity"];
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",              new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",           new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",               new x_ite_Fields.SFBool (true)),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "attack",                new x_ite_Fields.SFFloat (0.003)), // TODO: SFTime
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "knee",                  new x_ite_Fields.SFFloat (30)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ratio",                 new x_ite_Fields.SFFloat (12)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reduction",             new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "release",               new x_ite_Fields.SFTime (0.25)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "threshold",             new x_ite_Fields.SFFloat (-24)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -100526,43 +102129,55 @@ function Gain (executionContext)
 Gain .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
 {
    constructor: Gain,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",              new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",           new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",               new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
+Object .defineProperties (Gain,
+{
+   typeName:
    {
-      return "Gain";
+      value: "Gain",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Sound";
+      value: "Sound",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "children";
+      value: "children",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["4.0", "Infinity"];
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",              new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",           new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",               new x_ite_Fields.SFBool (true)),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -100640,41 +102255,53 @@ function ListenerPointSource (executionContext)
 ListenerPointSource .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.prototype),
 {
    constructor: ListenerPointSource,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "position",             new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "orientation",          new x_ite_Fields.SFRotation ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                 new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "dopplerEnabled",       new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "interauralDistance",   new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "trackCurrentView",     new x_ite_Fields.SFBool ()),
+Object .defineProperties (ListenerPointSource,
+{
+   typeName:
+   {
+      value: "ListenerPointSource",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",           new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",          new x_ite_Fields.SFTime ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ListenerPointSource";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "position",             new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "orientation",          new x_ite_Fields.SFRotation ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                 new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "dopplerEnabled",       new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "interauralDistance",   new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "trackCurrentView",     new x_ite_Fields.SFBool ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",           new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",          new x_ite_Fields.SFTime ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -100750,37 +102377,49 @@ function MicrophoneSource (executionContext)
 MicrophoneSource .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.prototype),
 {
    constructor: MicrophoneSource,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",   new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",       new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",          new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mediaDeviceID", new x_ite_Fields.SFString ()),
+Object .defineProperties (MicrophoneSource,
+{
+   typeName:
+   {
+      value: "MicrophoneSource",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",   new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",       new x_ite_Fields.SFBool (true)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",     new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",    new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",     new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",      new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",      new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",      new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",   new x_ite_Fields.SFTime ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MicrophoneSource";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",          new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mediaDeviceID", new x_ite_Fields.SFString ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",     new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",    new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",     new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",      new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",      new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",      new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",   new x_ite_Fields.SFTime ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -100856,39 +102495,51 @@ function OscillatorSource (executionContext)
 OscillatorSource .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.prototype),
 {
    constructor: OscillatorSource,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",   new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",       new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",          new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "detune",        new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "frequency",     new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "periodicWave",  new x_ite_Fields.SFNode ()),
+Object .defineProperties (OscillatorSource,
+{
+   typeName:
+   {
+      value: "OscillatorSource",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",   new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",       new x_ite_Fields.SFBool (true)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",     new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",    new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",     new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",      new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",      new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",      new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",   new x_ite_Fields.SFTime ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "OscillatorSource";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",          new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "detune",        new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "frequency",     new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "periodicWave",  new x_ite_Fields.SFNode ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",     new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",    new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",     new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",      new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",      new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",      new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",   new x_ite_Fields.SFTime ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -100961,29 +102612,41 @@ function PeriodicWave (executionContext)
 PeriodicWave .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype),
 {
    constructor: PeriodicWave,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",   new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",       new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "optionsReal",   new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "optionsImag",   new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "type",          new x_ite_Fields.SFString ("square")),
-   ]),
-   getTypeName: function ()
+});
+
+Object .defineProperties (PeriodicWave,
+{
+   typeName:
    {
-      return "PeriodicWave";
+      value: "PeriodicWave",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Sound";
+      value: "Sound",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "periodicWave";
+      value: "periodicWave",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["4.0", "Infinity"];
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",   new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",       new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "optionsReal",   new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "optionsImag",   new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "type",          new x_ite_Fields.SFString ("square")),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -101074,38 +102737,6 @@ function Sound (executionContext)
 Sound .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype),
 {
    constructor: Sound,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",    new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description", new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "enabled",     new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "spatialize",  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",   new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "location",    new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "direction",   new x_ite_Fields.SFVec3f (0, 0, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "minBack",     new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "minFront",    new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "maxBack",     new x_ite_Fields.SFFloat (10)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "maxFront",    new x_ite_Fields.SFFloat (10)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "priority",    new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "source",      new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",    new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Sound";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Sound_X3DSoundNode.prototype.initialize.call (this);
@@ -101283,6 +102914,50 @@ Sound .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype)
    })(),
 });
 
+Object .defineProperties (Sound,
+{
+   typeName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",    new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description", new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "enabled",     new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "spatialize",  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",   new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "location",    new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "direction",   new x_ite_Fields.SFVec3f (0, 0, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "minBack",     new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "minFront",    new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "maxBack",     new x_ite_Fields.SFFloat (10)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "maxFront",    new x_ite_Fields.SFFloat (10)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "priority",    new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "source",      new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",    new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const Sound_default_ = Sound;
 ;
 
@@ -101354,44 +103029,56 @@ function SpatialSound (executionContext)
 SpatialSound .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype),
 {
    constructor: SpatialSound,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",    new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description", new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "enabled",     new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "spatialize",        new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coneInnerAngle",    new x_ite_Fields.SFFloat (6.2832)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coneOuterAngle",    new x_ite_Fields.SFFloat (6.2832)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coneOuterGain",     new x_ite_Fields.SFFloat (0)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "direction",         new x_ite_Fields.SFVec3f (0, 0, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "distanceModel",     new x_ite_Fields.SFString ("INVERSE")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "dopplerEnabled",    new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "enableHRTF",        new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "gain",              new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",         new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "location",          new x_ite_Fields.SFVec3f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "maxDistance",       new x_ite_Fields.SFFloat (10000)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "priority",          new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "referenceDistance", new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "rolloffFactor",     new x_ite_Fields.SFFloat (1)),
+Object .defineProperties (SpatialSound,
+{
+   typeName:
+   {
+      value: "SpatialSound",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",    new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description", new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "enabled",     new x_ite_Fields.SFBool (true)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",    new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SpatialSound";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "spatialize",        new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coneInnerAngle",    new x_ite_Fields.SFFloat (6.2832)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coneOuterAngle",    new x_ite_Fields.SFFloat (6.2832)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coneOuterGain",     new x_ite_Fields.SFFloat (0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "direction",         new x_ite_Fields.SFVec3f (0, 0, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "distanceModel",     new x_ite_Fields.SFString ("INVERSE")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "dopplerEnabled",    new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "enableHRTF",        new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "gain",              new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "intensity",         new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "location",          new x_ite_Fields.SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "maxDistance",       new x_ite_Fields.SFFloat (10000)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "priority",          new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "referenceDistance", new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "rolloffFactor",     new x_ite_Fields.SFFloat (1)),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",    new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -101464,37 +103151,49 @@ function StreamAudioDestination (executionContext)
 StreamAudioDestination .prototype = Object .assign (Object .create (Sound_X3DSoundDestinationNode.prototype),
 {
    constructor: StreamAudioDestination,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",              new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",           new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",               new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "streamIdentifier",      new x_ite_Fields.MFString ()),
+Object .defineProperties (StreamAudioDestination,
+{
+   typeName:
+   {
+      value: "StreamAudioDestination",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",              new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",           new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",               new x_ite_Fields.SFBool (true)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "streamIdentifier",      new x_ite_Fields.MFString ()),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "mediaDeviceID",         new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "StreamAudioDestination";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "mediaDeviceID",         new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -101570,37 +103269,49 @@ function StreamAudioSource (executionContext)
 StreamAudioSource .prototype = Object .assign (Object .create (Sound_X3DSoundSourceNode.prototype),
 {
    constructor: StreamAudioSource,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",         new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",      new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",          new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",             new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "streamIdentifier", new x_ite_Fields.MFString ()),
+Object .defineProperties (StreamAudioSource,
+{
+   typeName:
+   {
+      value: "StreamAudioSource",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",         new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",      new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",          new x_ite_Fields.SFBool (true)),
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",        new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",       new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",        new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",         new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",         new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",         new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",      new x_ite_Fields.SFTime ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "StreamAudioSource";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",             new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "streamIdentifier", new x_ite_Fields.MFString ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",        new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",       new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",        new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",         new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",         new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",         new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",      new x_ite_Fields.SFTime ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -101673,45 +103384,57 @@ function WaveShaper (executionContext)
 WaveShaper .prototype = Object .assign (Object .create (Sound_X3DSoundProcessingNode.prototype),
 {
    constructor: WaveShaper,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+});
 
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "curve",                 new x_ite_Fields.MFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "oversample",            new x_ite_Fields.SFString ("none")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
-
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
+Object .defineProperties (WaveShaper,
+{
+   typeName:
    {
-      return "WaveShaper";
+      value: "WaveShaper",
+      enumerate: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Sound";
+      value: "Sound",
+      enumerate: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "children";
+      value: "children",
+      enumerate: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["4.0", "Infinity"];
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",              new x_ite_Fields.SFBool (true)),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "gain",                  new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "curve",                 new x_ite_Fields.MFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "oversample",            new x_ite_Fields.SFString ("none")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "tailTime",              new x_ite_Fields.SFTime ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "channelCount",          new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelCountMode",      new x_ite_Fields.SFString ("max")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "channelInterpretation", new x_ite_Fields.SFString ("speakers")),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "startTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "resumeTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pauseTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "stopTime",              new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isPaused",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",           new x_ite_Fields.SFTime ()),
+
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -101953,8 +103676,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(790);
-/* provided dependency */ var SuperGif = __webpack_require__(774);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(6);
+/* provided dependency */ var SuperGif = __webpack_require__(744);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102030,46 +103753,6 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
    Networking_X3DUrlObject.prototype,
 {
    constructor: MovieTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "enabled",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "gain",                 new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "speed",                new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "pitch",                new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "loop",                 new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "startTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "resumeTime",           new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "pauseTime",            new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "stopTime",             new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isPaused",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "elapsedTime",          new x_ite_Fields.SFTime ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "duration_changed",     new x_ite_Fields.SFTime (-1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatS",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatT",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "textureProperties",    new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MovieTexture";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Texturing_X3DTexture2DNode.prototype.initialize.call (this);
@@ -102230,6 +103913,58 @@ MovieTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
    },
 });
 
+Object .defineProperties (MovieTexture,
+{
+   typeName:
+   {
+      value: "MovieTexture",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",             new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",          new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "enabled",              new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "load",                 new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "url",                  new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "gain",                 new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "speed",                new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "pitch",                new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "loop",                 new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "startTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "resumeTime",           new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "pauseTime",            new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "stopTime",             new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isPaused",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "elapsedTime",          new x_ite_Fields.SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "duration_changed",     new x_ite_Fields.SFTime (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatS",              new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatT",              new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "textureProperties",    new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const MovieTexture_default_ = MovieTexture;
 ;
 
@@ -102315,32 +104050,6 @@ function MultiTexture (executionContext)
 MultiTexture .prototype = Object .assign (Object .create (Texturing_X3DTextureNode.prototype),
 {
    constructor: MultiTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",    new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description", new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",       new x_ite_Fields.SFColor (1, 1, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "alpha",       new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mode",        new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "source",      new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "function",    new x_ite_Fields.MFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "texture",     new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MultiTexture";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Texturing_X3DTextureNode.prototype.initialize.call (this);
@@ -102569,6 +104278,44 @@ MultiTexture .prototype = Object .assign (Object .create (Texturing_X3DTextureNo
    },
 });
 
+Object .defineProperties (MultiTexture,
+{
+   typeName:
+   {
+      value: "MultiTexture",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",    new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "description", new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",       new x_ite_Fields.SFColor (1, 1, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "alpha",       new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mode",        new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "source",      new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "function",    new x_ite_Fields.MFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "texture",     new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const MultiTexture_default_ = MultiTexture;
 ;
 
@@ -102712,26 +104459,6 @@ function MultiTextureCoordinate (executionContext)
 MultiTextureCoordinate .prototype = Object .assign (Object .create (Texturing_X3DTextureCoordinateNode.prototype),
 {
    constructor: MultiTextureCoordinate,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "texCoord", new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MultiTextureCoordinate";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texCoord";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Texturing_X3DTextureCoordinateNode.prototype.initialize.call (this);
@@ -102828,6 +104555,38 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (Texturing_X3
       {
          this .getBrowser () .getDefaultTextureCoordinate () .setShaderUniforms (gl, shaderObject, 0);
       }
+   },
+});
+
+Object .defineProperties (MultiTextureCoordinate,
+{
+   typeName:
+   {
+      value: "MultiTextureCoordinate",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "texCoord",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "texCoord", new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -102974,26 +104733,6 @@ function MultiTextureTransform (executionContext)
 MultiTextureTransform .prototype = Object .assign (Object .create (Texturing_X3DTextureTransformNode.prototype),
 {
    constructor: MultiTextureTransform,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",         new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "textureTransform", new x_ite_Fields.MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MultiTextureTransform";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "textureTransform";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Texturing_X3DTextureTransformNode.prototype.initialize.call (this);
@@ -103047,13 +104786,45 @@ MultiTextureTransform .prototype = Object .assign (Object .create (Texturing_X3D
    },
 });
 
+Object .defineProperties (MultiTextureTransform,
+{
+   typeName:
+   {
+      value: "MultiTextureTransform",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "textureTransform",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",         new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "textureTransform", new x_ite_Fields.MFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const MultiTextureTransform_default_ = MultiTextureTransform;
 ;
 
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(790);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103122,30 +104893,6 @@ function PixelTexture (executionContext)
 PixelTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2DNode.prototype),
 {
    constructor: PixelTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",          new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",       new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "image",             new x_ite_Fields.SFImage (0, 0, 0, new x_ite_Fields.MFInt32 ())),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatS",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatT",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "textureProperties", new x_ite_Fields.SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PixelTexture";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Texturing_X3DTexture2DNode.prototype.initialize.call (this);
@@ -103326,6 +105073,42 @@ PixelTexture .prototype = Object .assign (Object .create (Texturing_X3DTexture2D
    },
 });
 
+Object .defineProperties (PixelTexture,
+{
+   typeName:
+   {
+      value: "PixelTexture",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",          new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "description",       new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "image",             new x_ite_Fields.SFImage (0, 0, 0, new x_ite_Fields.MFInt32 ())),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatS",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatT",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "textureProperties", new x_ite_Fields.SFNode ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const PixelTexture_default_ = PixelTexture;
 ;
 
@@ -103489,27 +105272,6 @@ function TextureCoordinate (executionContext)
 TextureCoordinate .prototype = Object .assign (Object .create (Texturing_X3DSingleTextureCoordinateNode.prototype),
 {
    constructor: TextureCoordinate,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mapping",  new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "point",    new x_ite_Fields.MFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TextureCoordinate";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texCoord";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Texturing_X3DSingleTextureCoordinateNode.prototype.initialize.call (this);
@@ -103592,6 +105354,39 @@ TextureCoordinate .prototype = Object .assign (Object .create (Texturing_X3DSing
    },
 });
 
+Object .defineProperties (TextureCoordinate,
+{
+   typeName:
+   {
+      value: "TextureCoordinate",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "texCoord",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mapping",  new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "point",    new x_ite_Fields.MFVec2f ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const TextureCoordinate_default_ = TextureCoordinate;
 ;
 
@@ -103665,28 +105460,6 @@ function TextureCoordinateGenerator (executionContext)
 TextureCoordinateGenerator .prototype = Object .assign (Object .create (Texturing_X3DSingleTextureCoordinateNode.prototype),
 {
    constructor: TextureCoordinateGenerator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mapping",   new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mode",      new x_ite_Fields.SFString ("SPHERE")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "parameter", new x_ite_Fields.MFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TextureCoordinateGenerator";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texCoord";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    initialize: function ()
    {
       Texturing_X3DSingleTextureCoordinateNode.prototype.initialize.call (this);
@@ -103746,6 +105519,40 @@ TextureCoordinateGenerator .prototype = Object .assign (Object .create (Texturin
    {
       gl .uniform1i  (shaderObject .x3d_TextureCoordinateGeneratorMode [channel],      this .mode);
       gl .uniform1fv (shaderObject .x3d_TextureCoordinateGeneratorParameter [channel], this .parameter);
+   },
+});
+
+Object .defineProperties (TextureCoordinateGenerator,
+{
+   typeName:
+   {
+      value: "TextureCoordinateGenerator",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "texCoord",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",  new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mapping",   new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mode",      new x_ite_Fields.SFString ("SPHERE")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "parameter", new x_ite_Fields.MFFloat ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -103826,36 +105633,6 @@ function TextureProperties (executionContext)
 TextureProperties .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
 {
    constructor: TextureProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",            new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "borderColor",         new x_ite_Fields.SFColorRGBA ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "borderWidth",         new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "anisotropicDegree",   new x_ite_Fields.SFFloat (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "generateMipMaps",     new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "minificationFilter",  new x_ite_Fields.SFString ("FASTEST")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "magnificationFilter", new x_ite_Fields.SFString ("FASTEST")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "boundaryModeS",       new x_ite_Fields.SFString ("REPEAT")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "boundaryModeT",       new x_ite_Fields.SFString ("REPEAT")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "boundaryModeR",       new x_ite_Fields.SFString ("REPEAT")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "textureCompression",  new x_ite_Fields.SFString ("FASTEST")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texturePriority",     new x_ite_Fields.SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TextureProperties";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "textureProperties";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    getBorderWidth: function ()
    {
       // https://stackoverflow.com/questions/27760277/webgl-border-color-shader?lq=1
@@ -103967,6 +105744,48 @@ TextureProperties .prototype = Object .assign (Object .create (Core_X3DNode.prot
          return gl .RGBA;
       };
    })(),
+});
+
+Object .defineProperties (TextureProperties,
+{
+   typeName:
+   {
+      value: "TextureProperties",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "textureProperties",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "metadata",            new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "borderColor",         new x_ite_Fields.SFColorRGBA ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "borderWidth",         new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "anisotropicDegree",   new x_ite_Fields.SFFloat (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "generateMipMaps",     new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "minificationFilter",  new x_ite_Fields.SFString ("FASTEST")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "magnificationFilter", new x_ite_Fields.SFString ("FASTEST")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "boundaryModeS",       new x_ite_Fields.SFString ("REPEAT")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "boundaryModeT",       new x_ite_Fields.SFString ("REPEAT")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "boundaryModeR",       new x_ite_Fields.SFString ("REPEAT")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "textureCompression",  new x_ite_Fields.SFString ("FASTEST")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texturePriority",     new x_ite_Fields.SFFloat ()),
+      ]),
+      enumerate: true,
+   },
 });
 
 const TextureProperties_default_ = TextureProperties;
@@ -104136,30 +105955,6 @@ function TextureTransform (executionContext)
 TextureTransform .prototype = Object .assign (Object .create (Texturing_X3DSingleTextureTransformNode.prototype),
 {
    constructor: TextureTransform,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",    new x_ite_Fields.SFNode ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mapping",     new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "translation", new x_ite_Fields.SFVec2f ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "rotation",    new x_ite_Fields.SFFloat ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "scale",       new x_ite_Fields.SFVec2f (1, 1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "center",      new x_ite_Fields.SFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TextureTransform";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "textureTransform";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    initialize: function ()
    {
       Texturing_X3DSingleTextureTransformNode.prototype.initialize.call (this);
@@ -104214,6 +106009,42 @@ TextureTransform .prototype = Object .assign (Object .create (Texturing_X3DSingl
          this .setMatrix (matrix4);
       };
    })(),
+});
+
+Object .defineProperties (TextureTransform,
+{
+   typeName:
+   {
+      value: "TextureTransform",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+   containerField:
+   {
+      value: "textureTransform",
+      enumerate: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",    new x_ite_Fields.SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mapping",     new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "translation", new x_ite_Fields.SFVec2f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "rotation",    new x_ite_Fields.SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "scale",       new x_ite_Fields.SFVec2f (1, 1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "center",      new x_ite_Fields.SFVec2f ()),
+      ]),
+      enumerate: true,
+   },
 });
 
 const TextureTransform_default_ = TextureTransform;
@@ -104445,10 +106276,6 @@ function ConcreteNodesArray (values)
 ConcreteNodesArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.prototype),
 {
    constructor: ConcreteNodesArray,
-   getTypeName: function ()
-   {
-      return "ConcreteNodesArray";
-   },
    add: function (typeName, ConcreteNode)
    {
       Base_X3DConstants [typeName] = ++ Base_X3DConstants [ConcreteNodesArray_NODE_TYPE]; // Start with 1, as X3DBaseNode is 0.
@@ -104467,6 +106294,15 @@ ConcreteNodesArray .prototype = Object .assign (Object .create (Base_X3DInfoArra
 
 for (const key of Reflect .ownKeys (ConcreteNodesArray .prototype))
    Object .defineProperty (ConcreteNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ConcreteNodesArray,
+{
+   typeName:
+   {
+      value: "ConcreteNodesArray",
+      enumerate: true,
+   },
+});
 
 const ConcreteNodesArray_default_ = ConcreteNodesArray;
 ;
@@ -105298,7 +107134,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(790);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105361,18 +107197,6 @@ function BrowserTimings (executionContext)
 BrowserTimings .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: BrowserTimings,
-   getTypeName: function ()
-   {
-      return "BrowserTimings";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "browserTimings";
-   },
    initialize: function ()
    {
       Base_X3DBaseNode.prototype.initialize.call (this);
@@ -105588,6 +107412,15 @@ BrowserTimings .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
    },
 });
 
+Object .defineProperties (BrowserTimings,
+{
+   typeName:
+   {
+      value: "BrowserTimings",
+      enumerate: true,
+   },
+});
+
 const f2 = (function ()
 {
    const format = new Intl .NumberFormat (navigator .language || navigator .userLanguage, {
@@ -105732,7 +107565,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace.set ("x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(790);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105807,41 +107640,6 @@ function BrowserOptions (executionContext)
 BrowserOptions .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: BrowserOptions,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "SplashScreen",           new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Dashboard",              new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Rubberband",             new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "EnableInlineViewpoints", new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Antialiased",            new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "TextureQuality",         new x_ite_Fields.SFString ("MEDIUM")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "PrimitiveQuality",       new x_ite_Fields.SFString ("MEDIUM")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "QualityWhenMoving",      new x_ite_Fields.SFString ("SAME")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Shading",                new x_ite_Fields.SFString ("GOURAUD")),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "MotionBlur",             new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "AutoUpdate",             new x_ite_Fields.SFBool (false)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Cache",                  new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ContentScale",           new x_ite_Fields.SFDouble (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ContextMenu",            new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Debug",                  new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Gravity",                new x_ite_Fields.SFDouble (9.80665)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "LogarithmicDepthBuffer", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Notifications",          new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Multisampling",          new x_ite_Fields.SFInt32 (4)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "StraightenHorizon",      new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Timings",                new x_ite_Fields.SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "BrowserOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "browserOptions";
-   },
    initialize: function ()
    {
       Base_X3DBaseNode.prototype.initialize.call (this);
@@ -106105,6 +107903,42 @@ BrowserOptions .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
    },
 });
 
+Object .defineProperties (BrowserOptions,
+{
+   typeName:
+   {
+      value: "BrowserOptions",
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "SplashScreen",           new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Dashboard",              new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Rubberband",             new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "EnableInlineViewpoints", new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Antialiased",            new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "TextureQuality",         new x_ite_Fields.SFString ("MEDIUM")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "PrimitiveQuality",       new x_ite_Fields.SFString ("MEDIUM")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "QualityWhenMoving",      new x_ite_Fields.SFString ("SAME")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Shading",                new x_ite_Fields.SFString ("GOURAUD")),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "MotionBlur",             new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "AutoUpdate",             new x_ite_Fields.SFBool (false)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Cache",                  new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ContentScale",           new x_ite_Fields.SFDouble (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "ContextMenu",            new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Debug",                  new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Gravity",                new x_ite_Fields.SFDouble (9.80665)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "LogarithmicDepthBuffer", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Notifications",          new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Multisampling",          new x_ite_Fields.SFInt32 (4)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "StraightenHorizon",      new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Timings",                new x_ite_Fields.SFBool ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const BrowserOptions_default_ = BrowserOptions;
 ;
 
@@ -106172,27 +108006,28 @@ function BrowserProperties (executionContext)
 BrowserProperties .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: BrowserProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ABSTRACT_NODES",        new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "CONCRETE_NODES",        new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "EXTERNAL_INTERACTIONS", new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "PROTOTYPE_CREATE",      new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "DOM_IMPORT",            new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "XML_ENCODING",          new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "CLASSIC_VRML_ENCODING", new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "BINARY_ENCODING",       new x_ite_Fields.SFBool ()),
-   ]),
-   getTypeName: function ()
+});
+
+Object .defineProperties (BrowserProperties,
+{
+   typeName:
    {
-      return "BrowserProperties";
+      value: "BrowserProperties",
+      enumerate: true,
    },
-   getComponentName: function ()
+   fieldDefinitions:
    {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "browserProperties";
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "ABSTRACT_NODES",        new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "CONCRETE_NODES",        new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "EXTERNAL_INTERACTIONS", new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "PROTOTYPE_CREATE",      new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "DOM_IMPORT",            new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "XML_ENCODING",          new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "CLASSIC_VRML_ENCODING", new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "BINARY_ENCODING",       new x_ite_Fields.SFBool ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -106265,31 +108100,6 @@ function RenderingProperties (executionContext)
 RenderingProperties .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: RenderingProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "Shading",                new x_ite_Fields.SFString ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "MaxTextureSize",         new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "TextureUnits",           new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "MaxLights",              new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "Antialiased",            new x_ite_Fields.SFBool (true)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "ColorDepth",             new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "TextureMemory",          new x_ite_Fields.SFDouble ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "ContentScale",           new x_ite_Fields.SFDouble (1)),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "LogarithmicDepthBuffer", new x_ite_Fields.SFBool ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "MaxSamples",             new x_ite_Fields.SFInt32 ()),
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "Multisampling",          new x_ite_Fields.SFInt32 (4)),
-   ]),
-   getTypeName: function ()
-   {
-      return "RenderingProperties";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "renderingProperties";
-   },
    initialize: function ()
    {
       Base_X3DBaseNode.prototype.initialize.call (this);
@@ -106305,13 +108115,39 @@ RenderingProperties .prototype = Object .assign (Object .create (Base_X3DBaseNod
    },
 });
 
+Object .defineProperties (RenderingProperties,
+{
+   typeName:
+   {
+      value: "RenderingProperties",
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "Shading",                new x_ite_Fields.SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "MaxTextureSize",         new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "TextureUnits",           new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "MaxLights",              new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "Antialiased",            new x_ite_Fields.SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "ColorDepth",             new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "TextureMemory",          new x_ite_Fields.SFDouble ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "ContentScale",           new x_ite_Fields.SFDouble (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "LogarithmicDepthBuffer", new x_ite_Fields.SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "MaxSamples",             new x_ite_Fields.SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "Multisampling",          new x_ite_Fields.SFInt32 (4)),
+      ]),
+      enumerate: true,
+   }
+});
+
 const RenderingProperties_default_ = RenderingProperties;
 ;
 
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(790);
+/* provided dependency */ var Notification_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106385,14 +108221,6 @@ function Notification (executionContext)
 Notification .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: Notification,
-   getTypeName: function ()
-   {
-      return "Notification";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
    initialize: function ()
    {
       Base_X3DBaseNode.prototype.initialize.call (this);
@@ -106427,14 +108255,23 @@ Notification .prototype = Object .assign (Object .create (Base_X3DBaseNode.proto
    },
 });
 
+Object .defineProperties (Notification,
+{
+   typeName:
+   {
+      value: "Notification",
+      enumerate: true,
+   },
+});
+
 const Notification_default_ = Notification;
 ;
 
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(422);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(790);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(319);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106499,18 +108336,6 @@ function ContextMenu (executionContext)
 ContextMenu .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: ContextMenu,
-   getTypeName: function ()
-   {
-      return "ContextMenu";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "contextMenu";
-   },
    initialize: function ()
    {
       Base_X3DBaseNode.prototype.initialize.call (this);
@@ -107185,6 +109010,15 @@ ContextMenu .prototype = Object .assign (Object .create (Base_X3DBaseNode.protot
    },
 });
 
+Object .defineProperties (ContextMenu,
+{
+   typeName:
+   {
+      value: "ContextMenu",
+      enumerate: true,
+   },
+});
+
 const ContextMenu_default_ = ContextMenu;
 ;
 
@@ -107257,10 +109091,6 @@ function ComponentInfo ({ name, level, title, providerUrl, external = false, dep
 ComponentInfo .prototype = Object .assign (Object .create (Base_X3DObject.prototype),
 {
    constructor: ComponentInfo,
-   getTypeName: function ()
-   {
-      return "ComponentInfo";
-   },
    toVRMLStream: function (generator)
    {
       generator .string += generator .Indent ();
@@ -107322,6 +109152,15 @@ ComponentInfo .prototype = Object .assign (Object .create (Base_X3DObject.protot
 
 for (const key of Reflect .ownKeys (ComponentInfo .prototype))
    Object .defineProperty (ComponentInfo .prototype, key, { enumerable: false });
+
+Object .defineProperties (ComponentInfo,
+{
+   typeName:
+   {
+      value: "ComponentInfo",
+      enumerate: true,
+   },
+});
 
 const ComponentInfo_default_ = ComponentInfo;
 ;
@@ -107387,10 +109226,6 @@ function ComponentInfoArray (values)
 ComponentInfoArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.prototype),
 {
    constructor: ComponentInfoArray,
-   getTypeName: function ()
-   {
-      return "ComponentInfoArray";
-   },
    addComponent: function (value)
    {
       this .add (value .name, new Configuration_ComponentInfo (value));
@@ -107399,6 +109234,15 @@ ComponentInfoArray .prototype = Object .assign (Object .create (Base_X3DInfoArra
 
 for (const key of Reflect .ownKeys (ComponentInfoArray .prototype))
    Object .defineProperty (ComponentInfoArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ComponentInfoArray,
+{
+   typeName:
+   {
+      value: "ComponentInfoArray",
+      enumerate: true,
+   },
+});
 
 const ComponentInfoArray_default_ = ComponentInfoArray;
 ;
@@ -107468,10 +109312,6 @@ function UnitInfo (category, name, conversionFactor)
 UnitInfo .prototype = Object .assign (Object .create (Base_X3DObject.prototype),
 {
    constructor: UnitInfo,
-   getTypeName: function ()
-   {
-      return "UnitInfo";
-   },
    toVRMLStream: function (generator)
    {
       generator .string += generator .Indent ();
@@ -107559,6 +109399,15 @@ Object .defineProperty (UnitInfo .prototype, "conversion_factor",
    get: function () { return this .conversionFactor; },
 });
 
+Object .defineProperties (UnitInfo,
+{
+   typeName:
+   {
+      value: "UnitInfo",
+      enumerate: true,
+   },
+});
+
 const UnitInfo_default_ = UnitInfo;
 ;
 
@@ -107636,14 +109485,19 @@ function UnitInfoArray (values)
 UnitInfoArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.prototype),
 {
    constructor: UnitInfoArray,
-   getTypeName: function ()
-   {
-      return "UnitInfoArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (UnitInfoArray .prototype))
    Object .defineProperty (UnitInfoArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (UnitInfoArray,
+{
+   typeName:
+   {
+      value: "UnitInfoArray",
+      enumerate: true,
+   },
+});
 
 const UnitInfoArray_default_ = UnitInfoArray;
 ;
@@ -107843,6 +109697,15 @@ Object .defineProperties (X3DExportedNode .prototype,
    },
 });
 
+Object .defineProperties (X3DExportedNode,
+{
+   typeName:
+   {
+      value: "X3DExportedNode",
+      enumerate: true,
+   },
+});
+
 const X3DExportedNode_default_ = X3DExportedNode;
 ;
 
@@ -107907,14 +109770,19 @@ function ExportedNodesArray (values)
 ExportedNodesArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.prototype),
 {
    constructor: ExportedNodesArray,
-   getTypeName: function ()
-   {
-      return "ExportedNodesArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (ExportedNodesArray .prototype))
    Object .defineProperty (ExportedNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ExportedNodesArray,
+{
+   typeName:
+   {
+      value: "ExportedNodesArray",
+      enumerate: true,
+   },
+});
 
 const ExportedNodesArray_default_ = ExportedNodesArray;
 ;
@@ -108039,10 +109907,6 @@ function X3DScene (browser)
 X3DScene .prototype = Object .assign (Object .create (Execution_X3DExecutionContext.prototype),
 {
    constructor: X3DScene,
-   getTypeName: function ()
-   {
-      return "X3DScene";
-   },
    isMainScene: function ()
    {
       return this === this .getExecutionContext ();
@@ -109025,6 +110889,15 @@ Object .defineProperties (X3DScene .prototype,
    },
 });
 
+Object .defineProperties (X3DScene,
+{
+   typeName:
+   {
+      value: "X3DScene",
+      enumerate: true,
+   },
+});
+
 const X3DScene_default_ = X3DScene;
 ;
 
@@ -109168,7 +111041,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(790);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109348,7 +111221,8 @@ X3DCoreContext .prototype =
             },
             set: (value) =>
             {
-               this .loadURL (new x_ite_Fields.MFString (value), new x_ite_Fields.MFString ());
+               this .loadURL (new x_ite_Fields.MFString (value))
+                  .catch (error => console .error (error));
             },
             enumerable: true,
          },
@@ -109360,7 +111234,8 @@ X3DCoreContext .prototype =
             },
             set: (value) =>
             {
-               this .loadURL (value, new x_ite_Fields.MFString ());
+               this .loadURL (value)
+                  .catch (error => console .error (error));
             },
             enumerable: true,
          },
@@ -109536,7 +111411,10 @@ X3DCoreContext .prototype =
          case "src":
          {
             if (newValue)
-               this .loadURL (new x_ite_Fields.MFString (newValue), new x_ite_Fields.MFString ());
+            {
+               this .loadURL (new x_ite_Fields.MFString (newValue))
+                  .catch (error => console .error (error));
+            }
 
             break;
          }
@@ -109566,7 +111444,10 @@ X3DCoreContext .prototype =
          case "url":
          {
             if (newValue)
-               this .loadURL (this .parseUrlAttribute (newValue), new x_ite_Fields.MFString ());
+            {
+               this .loadURL (this .parseUrlAttribute (newValue))
+                  .catch (error => console .error (error));
+            }
 
             break;
          }
@@ -110054,18 +111935,6 @@ function BoxOptions (executionContext)
 BoxOptions .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: BoxOptions,
-   getTypeName: function ()
-   {
-      return "BoxOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "boxOptions";
-   },
    initialize: function ()
    {
       Base_X3DBaseNode.prototype.initialize.call (this);
@@ -110116,6 +111985,15 @@ BoxOptions .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototy
       geometry .setup ();
 
       return this .geometry;
+   },
+});
+
+Object .defineProperties (BoxOptions,
+{
+   typeName:
+   {
+      value: "BoxOptions",
+      enumerate: true,
    },
 });
 
@@ -110186,17 +112064,14 @@ function ConeOptions (executionContext)
 ConeOptions .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: ConeOptions,
-   getTypeName: function ()
+});
+
+Object .defineProperties (ConeOptions,
+{
+   typeName:
    {
-      return "ConeOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "coneOptions";
+      value: "ConeOptions",
+      enumerate: true,
    },
 });
 
@@ -110267,17 +112142,14 @@ function CylinderOptions (executionContext)
 CylinderOptions .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: CylinderOptions,
-   getTypeName: function ()
+});
+
+Object .defineProperties (CylinderOptions,
+{
+   typeName:
    {
-      return "CylinderOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "cylinderOptions";
+      value: "CylinderOptions",
+      enumerate: true,
    },
 });
 
@@ -110354,18 +112226,6 @@ function QuadSphereOptions (executionContext)
 QuadSphereOptions .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: QuadSphereOptions,
-   getTypeName: function ()
-   {
-      return "QuadSphereOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "quadSphereOptions";
-   },
    initialize: function ()
    {
       Base_X3DBaseNode.prototype.initialize.call (this);
@@ -110573,6 +112433,15 @@ QuadSphereOptions .prototype = Object .assign (Object .create (Base_X3DBaseNode.
       texCoord .setup ();
       coord    .setup ();
       geometry .setup ();
+   },
+});
+
+Object .defineProperties (QuadSphereOptions,
+{
+   typeName:
+   {
+      value: "QuadSphereOptions",
+      enumerate: true,
    },
 });
 
@@ -111054,11 +112923,6 @@ function X3DViewer (executionContext, navigationInfo)
 X3DViewer .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: X3DViewer,
-   getTypeName: function ()
-   {
-      return "X3DViewer";
-   },
-
    getActiveLayer: function ()
    {
       return this .getBrowser () .getActiveLayer ();
@@ -111215,8 +113079,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(121);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(790);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(442);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111324,9 +113188,6 @@ function ExamineViewer (executionContext, navigationInfo)
 ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.prototype),
 {
    constructor: ExamineViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
-   ]),
    initialize: function ()
    {
       Navigation_X3DViewer.prototype.initialize.call (this);
@@ -112074,14 +113935,30 @@ ExamineViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.
    },
 });
 
+Object .defineProperties (ExamineViewer,
+{
+   typeName:
+   {
+      value: "ExamineViewer",
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const ExamineViewer_default_ = ExamineViewer;
 ;
 
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(121);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(790);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(442);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112877,9 +114754,6 @@ function WalkViewer (executionContext, navigationInfo)
 WalkViewer .prototype = Object .assign (Object .create (Navigation_X3DFlyViewer.prototype),
 {
    constructor: WalkViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
-   ]),
    initialize: function ()
    {
       Navigation_X3DFlyViewer.prototype.initialize.call (this);
@@ -112928,6 +114802,22 @@ WalkViewer .prototype = Object .assign (Object .create (Navigation_X3DFlyViewer.
       this .getBrowser () .removeCollision (this);
 
       Navigation_X3DFlyViewer.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (WalkViewer,
+{
+   typeName:
+   {
+      value: "WalkViewer",
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -112998,9 +114888,6 @@ function FlyViewer (executionContext, navigationInfo)
 FlyViewer .prototype = Object .assign (Object .create (Navigation_X3DFlyViewer.prototype),
 {
    constructor: FlyViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
-   ]),
    addCollision: function ()
    {
       this .getBrowser () .addCollision (this);
@@ -113023,14 +114910,30 @@ FlyViewer .prototype = Object .assign (Object .create (Navigation_X3DFlyViewer.p
    },
 });
 
+Object .defineProperties (FlyViewer,
+{
+   typeName:
+   {
+      value: "FlyViewer",
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const FlyViewer_default_ = FlyViewer;
 ;
 
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(121);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(790);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(442);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113108,9 +115011,6 @@ function PlaneViewer (executionContext, navigationInfo)
 PlaneViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.prototype),
 {
    constructor: PlaneViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
-   ]),
    initialize: function ()
    {
       Navigation_X3DViewer.prototype.initialize.call (this);
@@ -113261,6 +115161,22 @@ PlaneViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.pr
    },
 });
 
+Object .defineProperties (PlaneViewer,
+{
+   typeName:
+   {
+      value: "PlaneViewer",
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
+      ]),
+      enumerate: true,
+   },
+});
+
 const PlaneViewer_default_ = PlaneViewer;
 ;
 
@@ -113328,9 +115244,22 @@ function NoneViewer (executionContext, navigationInfo)
 NoneViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.prototype),
 {
    constructor: NoneViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
-   ]),
+});
+
+Object .defineProperties (NoneViewer,
+{
+   typeName:
+   {
+      value: "NoneViewer",
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
+      ]),
+      enumerate: true,
+   },
 });
 
 const NoneViewer_default_ = NoneViewer;
@@ -113339,8 +115268,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(121);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(790);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(442);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113429,9 +115358,6 @@ function LookAtViewer (executionContext, navigationInfo)
 LookAtViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.prototype),
 {
    constructor: LookAtViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new Base_FieldDefinitionArray ([
-      new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
-   ]),
    initialize: function ()
    {
       Navigation_X3DViewer.prototype.initialize.call (this);
@@ -113847,6 +115773,22 @@ LookAtViewer .prototype = Object .assign (Object .create (Navigation_X3DViewer.p
    {
       this .getBrowser () .getSurface () .off (".LookAtViewer");
       LookAtViewer_$(document) .off (".LookAtViewer" + this .getId ());
+   },
+});
+
+Object .defineProperties (LookAtViewer,
+{
+   typeName:
+   {
+      value: "LookAtViewer",
+      enumerate: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
+      ]),
+      enumerate: true,
    },
 });
 
@@ -114470,8 +116412,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(121);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(790);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(442);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114537,10 +116479,6 @@ function PointingDevice (executionContext)
 PointingDevice .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype),
 {
    constructor: PointingDevice,
-   getTypeName: function ()
-   {
-      return "PointingDevice";
-   },
    initialize: function ()
    {
       const element = this .getBrowser () .getSurface ();
@@ -114753,6 +116691,15 @@ PointingDevice .prototype = Object .assign (Object .create (Base_X3DBaseNode.pro
    showContextMenu: function (event)
    {
       this .getBrowser () .getContextMenu () .show (event);
+   },
+});
+
+Object .defineProperties (PointingDevice,
+{
+   typeName:
+   {
+      value: "PointingDevice",
+      enumerate: true,
    },
 });
 
@@ -115509,8 +117456,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(790);
-/* provided dependency */ var ResizeSensor = __webpack_require__(23);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(6);
+/* provided dependency */ var ResizeSensor = __webpack_require__(13);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117437,7 +119384,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(790);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(6);
 /*******************************************************************************
  * MIT License
  *
@@ -117967,10 +119914,6 @@ function ProfileInfo (name, title, providerUrl, components)
 ProfileInfo .prototype = Object .assign (Object .create (Base_X3DObject.prototype),
 {
    constructor: ProfileInfo,
-   getTypeName: function ()
-   {
-      return "ProfileInfo";
-   },
    toVRMLStream: function (generator)
    {
       generator .string += generator .Indent ();
@@ -117990,6 +119933,15 @@ ProfileInfo .prototype = Object .assign (Object .create (Base_X3DObject.prototyp
 
 for (const key of Reflect .ownKeys (ProfileInfo .prototype))
    Object .defineProperty (ProfileInfo .prototype, key, { enumerable: false });
+
+Object .defineProperties (ProfileInfo,
+{
+   typeName:
+   {
+      value: "ProfileInfo",
+      enumerate: true,
+   },
+});
 
 const ProfileInfo_default_ = ProfileInfo;
 ;
@@ -118056,10 +120008,6 @@ function ProfileInfoArray (values)
 ProfileInfoArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.prototype),
 {
    constructor: ProfileInfoArray,
-   getTypeName: function ()
-   {
-      return "ProfileInfoArray";
-   },
    addProfile: function (profile)
    {
       this .add (profile .name, new Configuration_ProfileInfo (profile .name,
@@ -118071,6 +120019,15 @@ ProfileInfoArray .prototype = Object .assign (Object .create (Base_X3DInfoArray.
 
 for (const key of Reflect .ownKeys (ProfileInfoArray .prototype))
    Object .defineProperty (ProfileInfoArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ProfileInfoArray,
+{
+   typeName:
+   {
+      value: "ProfileInfoArray",
+      enumerate: true,
+   },
+});
 
 const ProfileInfoArray_default_ = ProfileInfoArray;
 ;
@@ -118678,7 +120635,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(790);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118750,6 +120707,8 @@ x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_
 
 
 
+AbstractNodes.add ("X3DBrowser", X3DBrowser);
+
 const
    _DOMIntegration   = Symbol (),
    _reject           = Symbol (),
@@ -118767,6 +120726,8 @@ function X3DBrowser (element)
 
    Browser_X3DBrowserContext.call (this, element);
 
+   this .addType (Base_X3DConstants.X3DBrowser);
+
    this [_browserCallbacks] = new Map ();
    this [_console]          = document .getElementsByClassName ("x_ite-console");
 
@@ -118776,18 +120737,6 @@ function X3DBrowser (element)
 X3DBrowser .prototype = Object .assign (Object .create (Browser_X3DBrowserContext.prototype),
 {
    constructor: X3DBrowser,
-   getTypeName: function ()
-   {
-      return "X3DBrowser";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "browser";
-   },
    initialize: function ()
    {
       Browser_X3DBrowserContext.prototype.initialize.call (this);
@@ -119601,13 +121550,22 @@ Object .defineProperties (X3DBrowser .prototype,
    },
 });
 
+Object .defineProperties (X3DBrowser,
+{
+   typeName:
+   {
+      value: "X3DBrowser",
+      enumerate: true,
+   },
+});
+
 const X3DBrowser_default_ = X3DBrowser;
 ;
 
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(790);
+/* provided dependency */ var Fallback_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119786,8 +121744,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(790);
-/* provided dependency */ var pako = __webpack_require__(639);
+/* provided dependency */ var jquery_$ = __webpack_require__(6);
+/* provided dependency */ var pako = __webpack_require__(178);
 jquery_$.decodeText = function (input)
 {
    if (typeof input === "string")
@@ -119832,14 +121790,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(737);
+/* provided dependency */ var libtess_libtess = __webpack_require__(699);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace.set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(790);
+/* provided dependency */ var X3D_$ = __webpack_require__(6);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
