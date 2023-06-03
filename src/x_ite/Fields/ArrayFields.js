@@ -96,18 +96,6 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
    {
       return SFNode;
    },
-   getValueType: function ()
-   {
-      return SFNode;
-   },
-   getArrayType: function ()
-   {
-      return Array;
-   },
-   getComponents: function ()
-   {
-      return 1;
-   },
    copy: function (instance)
    {
       if (instance)
@@ -433,21 +421,9 @@ function MFString (... args)
 MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
 {
    constructor: MFString,
-   getValueType: function ()
-   {
-      return String;
-   },
    getSingleType: function ()
    {
       return SFString;
-   },
-   getArrayType: function ()
-   {
-      return Array;
-   },
-   getComponents: function ()
-   {
-      return 1;
    },
    toXMLStream: function (generator, sourceText)
    {
@@ -496,53 +472,36 @@ Object .defineProperties (MFString,
  * MFImage
  */
 
-function MFImageTemplate (TypeName, SingleType, ValueType, ArrayType, Components)
+function MFImage (... args)
 {
-   function ArrayField (... args)
-   {
-      return X3DObjectArrayField .call (this, args);
-   }
-
-   ArrayField .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
-   {
-      constructor: ArrayField,
-      getSingleType: function ()
-      {
-         return SFImage;
-      },
-      getValueType: function ()
-      {
-         return SFImage;
-      },
-      getArrayType: function ()
-      {
-         return ArrayType;
-      },
-      getComponents: function ()
-      {
-         return Components;
-      },
-   });
-
-   for (const key of Reflect .ownKeys (ArrayField .prototype))
-      Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
-
-   Object .defineProperties (ArrayField,
-   {
-      typeName:
-      {
-         value: TypeName,
-         enumerate: true,
-      },
-      type:
-      {
-         value: X3DConstants [TypeName],
-         enumerate: true,
-      },
-   });
-
-   return ArrayField;
+   return X3DObjectArrayField .call (this, args);
 }
+
+MFImage .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
+{
+   constructor: MFImage,
+   getSingleType: function ()
+   {
+      return SFImage;
+   },
+});
+
+for (const key of Reflect .ownKeys (MFImage .prototype))
+   Object .defineProperty (MFImage .prototype, key, { enumerable: false });
+
+Object .defineProperties (MFImage,
+{
+   typeName:
+   {
+      value: "MFImage",
+      enumerate: true,
+   },
+   type:
+   {
+      value: X3DConstants .MFImage,
+      enumerate: true,
+   },
+});
 
 function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Components)
 {
@@ -601,7 +560,7 @@ const ArrayFields =
    MFColorRGBA: TypedArrayTemplate ("MFColorRGBA", SFColorRGBA, SFColorRGBA, Float32Array, 4),
    MFDouble:    TypedArrayTemplate ("MFDouble",    SFDouble,    Value,       Float64Array, 1),
    MFFloat:     TypedArrayTemplate ("MFFloat",     SFFloat,     Value,       Float32Array, 1),
-   MFImage:     MFImageTemplate    ("MFImage",     undefined,   undefined,   Array,        1),
+   MFImage:     MFImage,
    MFInt32:     TypedArrayTemplate ("MFInt32",     SFInt32,     Value,       Int32Array,   1),
    MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  SFMatrix3d,  SFMatrix3d,  Float64Array, 9),
    MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  SFMatrix3f,  SFMatrix3f,  Float32Array, 9),
