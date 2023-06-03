@@ -133,9 +133,6 @@ function X3DObjectArrayField (value)
    this [_target] = this;
    this [_proxy]  = proxy;
 
-   if (value [0] instanceof Array)
-      value = value [0];
-
    this .push (... value);
 
    return proxy;
