@@ -190,7 +190,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   box-sizing: border-box;
   border: 0;
   border-radius: 10px;
-  padding: 2px 2px 4px 2px;
+  padding: 3px 2px 4px 2px;
   width: 100%;
   background: rgba(0,0,0,0.38196601);
   color: white;
