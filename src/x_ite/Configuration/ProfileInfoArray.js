@@ -57,10 +57,6 @@ function ProfileInfoArray (values)
 ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
    constructor: ProfileInfoArray,
-   getTypeName: function ()
-   {
-      return "ProfileInfoArray";
-   },
    addProfile: function (profile)
    {
       this .add (profile .name, new ProfileInfo (profile .name,
@@ -72,5 +68,13 @@ ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prot
 
 for (const key of Reflect .ownKeys (ProfileInfoArray .prototype))
    Object .defineProperty (ProfileInfoArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ProfileInfoArray,
+{
+   typeName:
+   {
+      value: "ProfileInfoArray",
+   },
+});
 
 export default ProfileInfoArray;

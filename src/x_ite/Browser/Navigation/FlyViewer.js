@@ -59,9 +59,6 @@ function FlyViewer (executionContext, navigationInfo)
 FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
 {
    constructor: FlyViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-   ]),
    addCollision: function ()
    {
       this .getBrowser () .addCollision (this);
@@ -81,6 +78,20 @@ FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
    constrainPanDirection: function (direction)
    {
       return direction;
+   },
+});
+
+Object .defineProperties (FlyViewer,
+{
+   typeName:
+   {
+      value: "FlyViewer",
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
    },
 });
 

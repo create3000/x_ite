@@ -77,10 +77,6 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
 X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
 {
    constructor: X3DRoute,
-   getTypeName: function ()
-   {
-      return "X3DRoute";
-   },
    getExecutionContext: function ()
    {
       return this [_executionContext];
@@ -294,6 +290,14 @@ Object .defineProperties (X3DRoute .prototype,
          return this [_destinationField] .getName ();
       },
       enumerable: true,
+   },
+});
+
+Object .defineProperties (X3DRoute,
+{
+   typeName:
+   {
+      value: "X3DRoute",
    },
 });
 

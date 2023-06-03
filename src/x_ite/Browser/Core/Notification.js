@@ -71,14 +71,6 @@ function Notification (executionContext)
 Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: Notification,
-   getTypeName: function ()
-   {
-      return "Notification";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
    initialize: function ()
    {
       X3DBaseNode .prototype .initialize .call (this);
@@ -110,6 +102,14 @@ Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype
          .animate ({ "delay": 1 }, 5000)
          .animate ({ width: 0 })
          .fadeOut (0);
+   },
+});
+
+Object .defineProperties (Notification,
+{
+   typeName:
+   {
+      value: "Notification",
    },
 });
 

@@ -76,10 +76,6 @@ SFString .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       return new SFString (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFString";
-   },
    getType: function ()
    {
       return X3DConstants .SFString;
@@ -129,6 +125,14 @@ Object .defineProperty (SFString .prototype, "length",
    get: function ()
    {
       return this .getValue () .length;
+   },
+});
+
+Object .defineProperties (SFString,
+{
+   typeName:
+   {
+      value: "SFString",
    },
 });
 

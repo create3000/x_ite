@@ -51,16 +51,20 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Type, Matrix, SFVec, 
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
+   Object .defineProperties (Constructor,
+   {
+      typeName:
+      {
+         value: TypeName,
+      },
+   });
+
    return Object .assign (Object .create (X3DField .prototype),
    {
       constructor: Constructor,
       [Symbol .iterator]: function* ()
       {
          yield* this .getValue ();
-      },
-      getTypeName: function ()
-      {
-         return TypeName;
       },
       getType: function ()
       {

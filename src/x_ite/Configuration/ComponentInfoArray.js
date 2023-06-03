@@ -56,10 +56,6 @@ function ComponentInfoArray (values)
 ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
    constructor: ComponentInfoArray,
-   getTypeName: function ()
-   {
-      return "ComponentInfoArray";
-   },
    addComponent: function (value)
    {
       this .add (value .name, new ComponentInfo (value));
@@ -68,5 +64,13 @@ ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .pr
 
 for (const key of Reflect .ownKeys (ComponentInfoArray .prototype))
    Object .defineProperty (ComponentInfoArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ComponentInfoArray,
+{
+   typeName:
+   {
+      value: "ComponentInfoArray",
+   },
+});
 
 export default ComponentInfoArray;

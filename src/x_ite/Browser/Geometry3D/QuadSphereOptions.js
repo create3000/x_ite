@@ -65,18 +65,6 @@ function QuadSphereOptions (executionContext)
 QuadSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: QuadSphereOptions,
-   getTypeName: function ()
-   {
-      return "QuadSphereOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "quadSphereOptions";
-   },
    initialize: function ()
    {
       X3DBaseNode .prototype .initialize .call (this);
@@ -284,6 +272,14 @@ QuadSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prot
       texCoord .setup ();
       coord    .setup ();
       geometry .setup ();
+   },
+});
+
+Object .defineProperties (QuadSphereOptions,
+{
+   typeName:
+   {
+      value: "QuadSphereOptions",
    },
 });
 

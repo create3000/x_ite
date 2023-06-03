@@ -60,18 +60,6 @@ function BrowserTimings (executionContext)
 BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: BrowserTimings,
-   getTypeName: function ()
-   {
-      return "BrowserTimings";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "browserTimings";
-   },
    initialize: function ()
    {
       X3DBaseNode .prototype .initialize .call (this);
@@ -284,6 +272,14 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          return _("m/s");
 
       return _("km/h");
+   },
+});
+
+Object .defineProperties (BrowserTimings,
+{
+   typeName:
+   {
+      value: "BrowserTimings",
    },
 });
 

@@ -60,10 +60,6 @@ SFDouble .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       return new SFDouble (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFDouble";
-   },
    getType: function ()
    {
       return X3DConstants .SFDouble;
@@ -105,5 +101,13 @@ SFDouble .prototype = Object .assign (Object .create (X3DField .prototype),
 
 for (const key of Reflect .ownKeys (SFDouble .prototype))
    Object .defineProperty (SFDouble .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFDouble,
+{
+   typeName:
+   {
+      value: "SFDouble",
+   },
+});
 
 export default SFDouble;

@@ -60,10 +60,6 @@ function UnitInfo (category, name, conversionFactor)
 UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 {
    constructor: UnitInfo,
-   getTypeName: function ()
-   {
-      return "UnitInfo";
-   },
    toVRMLStream: function (generator)
    {
       generator .string += generator .Indent ();
@@ -149,6 +145,14 @@ for (const key of Reflect .ownKeys (UnitInfo .prototype))
 Object .defineProperty (UnitInfo .prototype, "conversion_factor",
 {
    get: function () { return this .conversionFactor; },
+});
+
+Object .defineProperties (UnitInfo,
+{
+   typeName:
+   {
+      value: "UnitInfo",
+   },
 });
 
 export default UnitInfo;

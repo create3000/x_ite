@@ -105,10 +105,6 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       return this .getValue () .equals (Rotation4 .Identity);
    },
-   getTypeName: function ()
-   {
-      return "SFRotation";
-   },
    getType: function ()
    {
       return X3DConstants .SFRotation;
@@ -259,6 +255,14 @@ Object .defineProperties (SFRotation .prototype,
    y: Object .assign ({ enumerable: true }, y),
    z: Object .assign ({ enumerable: true }, z),
    angle: Object .assign ({ enumerable: true }, angle),
+});
+
+Object .defineProperties (SFRotation,
+{
+   typeName:
+   {
+      value: "SFRotation",
+   },
 });
 
 export default SFRotation;

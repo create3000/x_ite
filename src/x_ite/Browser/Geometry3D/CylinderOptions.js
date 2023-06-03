@@ -59,17 +59,13 @@ function CylinderOptions (executionContext)
 CylinderOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: CylinderOptions,
-   getTypeName: function ()
+});
+
+Object .defineProperties (CylinderOptions,
+{
+   typeName:
    {
-      return "CylinderOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "cylinderOptions";
+      value: "CylinderOptions",
    },
 });
 

@@ -105,9 +105,6 @@ function ExamineViewer (executionContext, navigationInfo)
 ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 {
    constructor: ExamineViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-   ]),
    initialize: function ()
    {
       X3DViewer .prototype .initialize .call (this);
@@ -852,6 +849,20 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
 
       browser .getSurface () .off (".ExamineViewer");
       $(document) .off (".ExamineViewer" + this .getId ());
+   },
+});
+
+Object .defineProperties (ExamineViewer,
+{
+   typeName:
+   {
+      value: "ExamineViewer",
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
    },
 });
 

@@ -99,18 +99,6 @@ function X3DBrowser (element)
 X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .prototype),
 {
    constructor: X3DBrowser,
-   getTypeName: function ()
-   {
-      return "X3DBrowser";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "browser";
-   },
    initialize: function ()
    {
       X3DBrowserContext .prototype .initialize .call (this);
@@ -921,6 +909,14 @@ Object .defineProperties (X3DBrowser .prototype,
          return SupportedComponents;
       },
       enumerable: true,
+   },
+});
+
+Object .defineProperties (X3DBrowser,
+{
+   typeName:
+   {
+      value: "X3DBrowser",
    },
 });
 

@@ -58,10 +58,6 @@ function AbstractNodesArray (values)
 AbstractNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
    constructor: AbstractNodesArray,
-   getTypeName: function ()
-   {
-      return "AbstractNodesArray";
-   },
    add: function (typeName, Type)
    {
       X3DConstants [typeName] = ++ X3DConstants [_NODE_TYPE];
@@ -72,5 +68,13 @@ AbstractNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .pr
 
 for (const key of Reflect .ownKeys (AbstractNodesArray .prototype))
    Object .defineProperty (AbstractNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (AbstractNodesArray,
+{
+   typeName:
+   {
+      value: "AbstractNodesArray",
+   },
+});
 
 export default AbstractNodesArray;

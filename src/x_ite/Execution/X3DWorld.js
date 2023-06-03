@@ -71,10 +71,6 @@ function X3DWorld (executionContext)
 X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: X3DWorld,
-   getTypeName: function ()
-   {
-      return "X3DWorld";
-   },
    initialize: function ()
    {
       X3DBaseNode .prototype .initialize .call (this);
@@ -153,5 +149,13 @@ X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
 for (const key of Reflect .ownKeys (X3DWorld .prototype))
    Object .defineProperty (X3DWorld .prototype, key, { enumerable: false });
+
+Object .defineProperties (X3DWorld,
+{
+   typeName:
+   {
+      value: "X3DWorld",
+   },
+});
 
 export default X3DWorld;

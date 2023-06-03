@@ -64,10 +64,6 @@ function ComponentInfo ({ name, level, title, providerUrl, external = false, dep
 ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 {
    constructor: ComponentInfo,
-   getTypeName: function ()
-   {
-      return "ComponentInfo";
-   },
    toVRMLStream: function (generator)
    {
       generator .string += generator .Indent ();
@@ -129,5 +125,13 @@ ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype)
 
 for (const key of Reflect .ownKeys (ComponentInfo .prototype))
    Object .defineProperty (ComponentInfo .prototype, key, { enumerable: false });
+
+Object .defineProperties (ComponentInfo,
+{
+   typeName:
+   {
+      value: "ComponentInfo",
+   },
+});
 
 export default ComponentInfo;

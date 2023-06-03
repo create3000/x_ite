@@ -56,13 +56,17 @@ function FieldArray (values)
 FieldArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
    constructor: FieldArray,
-   getTypeName: function ()
-   {
-      return "FieldArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (FieldArray .prototype))
    Object .defineProperty (FieldArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (FieldArray,
+{
+   typeName:
+   {
+      value: "FieldArray",
+   },
+});
 
 export default FieldArray;

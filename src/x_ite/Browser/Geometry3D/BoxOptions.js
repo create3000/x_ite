@@ -59,18 +59,6 @@ function BoxOptions (executionContext)
 BoxOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: BoxOptions,
-   getTypeName: function ()
-   {
-      return "BoxOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "boxOptions";
-   },
    initialize: function ()
    {
       X3DBaseNode .prototype .initialize .call (this);
@@ -121,6 +109,14 @@ BoxOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       geometry .setup ();
 
       return this .geometry;
+   },
+});
+
+Object .defineProperties (BoxOptions,
+{
+   typeName:
+   {
+      value: "BoxOptions",
    },
 });
 

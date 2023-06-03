@@ -75,9 +75,6 @@ function PlaneViewer (executionContext, navigationInfo)
 PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 {
    constructor: PlaneViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-   ]),
    initialize: function ()
    {
       X3DViewer .prototype .initialize .call (this);
@@ -225,6 +222,20 @@ PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
    {
       this .getBrowser () .getSurface () .off (".PlaneViewer");
       $(document) .off (".PlaneViewer" + this .getId ());
+   },
+});
+
+Object .defineProperties (PlaneViewer,
+{
+   typeName:
+   {
+      value: "PlaneViewer",
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
    },
 });
 

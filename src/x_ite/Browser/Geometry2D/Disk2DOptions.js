@@ -66,18 +66,6 @@ function Disk2DOptions (executionContext)
 Disk2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: Disk2DOptions,
-   getTypeName: function ()
-   {
-      return "Disk2DOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "circle2DOptions";
-   },
    initialize: function ()
    {
       this .addInterest ("build", this);
@@ -159,6 +147,14 @@ Disk2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
          diskVertices   .shrinkToFit ();
       };
    })(),
+});
+
+Object .defineProperties (Disk2DOptions,
+{
+   typeName:
+   {
+      value: "Disk2DOptions",
+   },
 });
 
 export default Disk2DOptions;

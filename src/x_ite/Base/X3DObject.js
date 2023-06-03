@@ -70,7 +70,7 @@ X3DObject .prototype =
    },
    getTypeName: function ()
    {
-      return "X3DObject";
+      return this .constructor .typeName;
    },
    setName: function (value)
    {

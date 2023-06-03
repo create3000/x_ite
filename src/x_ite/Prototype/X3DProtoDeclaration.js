@@ -72,13 +72,6 @@ function X3DProtoDeclaration (executionContext)
 X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
 {
    constructor: X3DProtoDeclaration,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "X3DProtoDeclaration";
-   },
    initialize: function ()
    {
       X3DProtoDeclarationNode .prototype .initialize .call (this);
@@ -558,6 +551,20 @@ Object .defineProperties (X3DProtoDeclaration .prototype,
    {
       value: false,
       enumerable: true,
+   },
+});
+
+Object .defineProperties (X3DProtoDeclaration,
+{
+   typeName:
+   {
+      value: "X3DProtoDeclaration",
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      ]),
    },
 });
 

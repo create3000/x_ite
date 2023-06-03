@@ -77,10 +77,6 @@ SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       return new SFColor (this .getValue () .copy ());
    },
-   getTypeName: function ()
-   {
-      return "SFColor";
-   },
    getType: function ()
    {
       return X3DConstants .SFColor;
@@ -222,6 +218,14 @@ Object .defineProperties (SFColor .prototype,
    r: Object .assign ({ enumerable: true }, r),
    g: Object .assign ({ enumerable: true }, g),
    b: Object .assign ({ enumerable: true }, b),
+});
+
+Object .defineProperties (SFColor,
+{
+   typeName:
+   {
+      value: "SFColor",
+   },
 });
 
 export default SFColor;

@@ -60,18 +60,6 @@ function VolumeMaterial (executionContext, volumeDataNode)
 VolumeMaterial .prototype = Object .assign (Object .create (UnlitMaterial .prototype),
 {
    constructor: VolumeMaterial,
-   getTypeName: function ()
-   {
-      return "VolumeMaterial";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "material";
-   },
    getVolumeShaders: function ()
    {
       return this .volumeShaderNodes;
@@ -122,6 +110,26 @@ VolumeMaterial .prototype = Object .assign (Object .create (UnlitMaterial .proto
    setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       this .volumeDataNode .setShaderUniforms (gl, shaderObject);
+   },
+});
+
+Object .defineProperties (VolumeMaterial,
+{
+   typeName:
+   {
+      value: "VolumeMaterial",
+   },
+   componentName:
+   {
+      value: "Shape",
+   },
+   containerField:
+   {
+      value: "material",
+   },
+   fieldDefinitions:
+   {
+      value: UnlitMaterial .fieldDefinitions,
    },
 });
 

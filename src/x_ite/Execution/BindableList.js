@@ -62,10 +62,6 @@ function BindableList (executionContext, defaultNode)
 BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: BindableList,
-   getTypeName: function ()
-   {
-      return "BindableList";
-   },
    get: function ()
    {
       return this .nodes;
@@ -198,5 +194,13 @@ function equals (lhs, rhs)
 
    return true;
 }
+
+Object .defineProperties (BindableList,
+{
+   typeName:
+   {
+      value: "BindableList",
+   },
+});
 
 export default BindableList;

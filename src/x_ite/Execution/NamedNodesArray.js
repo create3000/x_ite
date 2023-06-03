@@ -69,13 +69,17 @@ function NamedNodesArray (values)
 NamedNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
    constructor: NamedNodesArray,
-   getTypeName: function ()
-   {
-      return "NamedNodesArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (NamedNodesArray .prototype))
    Object .defineProperty (NamedNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (NamedNodesArray,
+{
+   typeName:
+   {
+      value: "NamedNodesArray",
+   },
+});
 
 export default NamedNodesArray;

@@ -62,18 +62,6 @@ function Circle2DOptions (executionContext)
 Circle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: Circle2DOptions,
-   getTypeName: function ()
-   {
-      return "Circle2DOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "circle2DOptions";
-   },
    initialize: function ()
    {
       this .addInterest ("build", this);
@@ -104,6 +92,14 @@ Circle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .protot
       }
 
       vertices .shrinkToFit ();
+   },
+});
+
+Object .defineProperties (Circle2DOptions,
+{
+   typeName:
+   {
+      value: "Circle2DOptions",
    },
 });
 

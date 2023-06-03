@@ -117,10 +117,6 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       return false;
    },
-   getTypeName: function ()
-   {
-      return "X3DExecutionContext";
-   },
    getOuterNode: function ()
    {
       // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
@@ -1019,6 +1015,14 @@ Object .defineProperties (X3DExecutionContext .prototype,
    {
       get: X3DExecutionContext .prototype .getRoutes,
       enumerable: true,
+   },
+});
+
+Object .defineProperties (X3DExecutionContext,
+{
+   typeName:
+   {
+      value: "X3DExecutionContext",
    },
 });
 

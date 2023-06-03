@@ -108,10 +108,6 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
    {
       return 1;
    },
-   getTypeName: function ()
-   {
-      return "MFNode";
-   },
    getType: function ()
    {
       return X3DConstants .MFNode;
@@ -419,6 +415,14 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 for (const key of Reflect .ownKeys (MFNode .prototype))
    Object .defineProperty (MFNode .prototype, key, { enumerable: false });
 
+Object .defineProperties (MFNode,
+{
+   typeName:
+   {
+      value: "MFNode",
+   },
+});
+
 function MFString (... args)
 {
    return X3DObjectArrayField .call (this, args);
@@ -442,10 +446,6 @@ MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .proto
    getComponents: function ()
    {
       return 1;
-   },
-   getTypeName: function ()
-   {
-      return "MFString";
    },
    getType: function ()
    {
@@ -480,6 +480,14 @@ MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .proto
 for (const key of Reflect .ownKeys (MFString .prototype))
    Object .defineProperty (MFString .prototype, key, { enumerable: false });
 
+Object .defineProperties (MFString,
+{
+   typeName:
+   {
+      value: "MFString",
+   },
+});
+
 /**
  * MFImage
  */
@@ -510,10 +518,6 @@ function MFImageTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Comp
       {
          return Components;
       },
-      getTypeName: function ()
-      {
-         return TypeName;
-      },
       getType: function ()
       {
          return Type;
@@ -522,6 +526,14 @@ function MFImageTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Comp
 
    for (const key of Reflect .ownKeys (ArrayField .prototype))
       Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
+
+   Object .defineProperties (ArrayField,
+   {
+      typeName:
+      {
+         value: TypeName,
+      },
+   });
 
    return ArrayField;
 }
@@ -552,10 +564,6 @@ function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, C
       {
          return Components;
       },
-      getTypeName: function ()
-      {
-         return TypeName;
-      },
       getType: function ()
       {
          return Type;
@@ -564,6 +572,14 @@ function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, C
 
    for (const key of Reflect .ownKeys (ArrayField .prototype))
       Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
+
+   Object .defineProperties (ArrayField,
+   {
+      typeName:
+      {
+         value: TypeName,
+      },
+   });
 
    return ArrayField;
 }

@@ -56,13 +56,17 @@ function ExportedNodesArray (values)
 ExportedNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
    constructor: ExportedNodesArray,
-   getTypeName: function ()
-   {
-      return "ExportedNodesArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (ExportedNodesArray .prototype))
    Object .defineProperty (ExportedNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ExportedNodesArray,
+{
+   typeName:
+   {
+      value: "ExportedNodesArray",
+   },
+});
 
 export default ExportedNodesArray;

@@ -69,13 +69,17 @@ function UnitInfoArray (values)
 UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
    constructor: UnitInfoArray,
-   getTypeName: function ()
-   {
-      return "UnitInfoArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (UnitInfoArray .prototype))
    Object .defineProperty (UnitInfoArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (UnitInfoArray,
+{
+   typeName:
+   {
+      value: "UnitInfoArray",
+   },
+});
 
 export default UnitInfoArray;

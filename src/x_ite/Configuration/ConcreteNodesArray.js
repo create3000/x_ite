@@ -59,10 +59,6 @@ function ConcreteNodesArray (values)
 ConcreteNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
    constructor: ConcreteNodesArray,
-   getTypeName: function ()
-   {
-      return "ConcreteNodesArray";
-   },
    add: function (typeName, ConcreteNode)
    {
       X3DConstants [typeName] = ++ X3DConstants [_NODE_TYPE]; // Start with 1, as X3DBaseNode is 0.
@@ -81,5 +77,13 @@ ConcreteNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .pr
 
 for (const key of Reflect .ownKeys (ConcreteNodesArray .prototype))
    Object .defineProperty (ConcreteNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ConcreteNodesArray,
+{
+   typeName:
+   {
+      value: "ConcreteNodesArray",
+   },
+});
 
 export default ConcreteNodesArray;

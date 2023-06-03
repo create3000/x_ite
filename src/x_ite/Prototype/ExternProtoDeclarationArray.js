@@ -56,13 +56,17 @@ function ExternProtoDeclarationArray (values)
 ExternProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
    constructor: ExternProtoDeclarationArray,
-   getTypeName: function ()
-   {
-      return "ExternProtoDeclarationArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (ExternProtoDeclarationArray .prototype))
    Object .defineProperty (ExternProtoDeclarationArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ExternProtoDeclarationArray,
+{
+   typeName:
+   {
+      value: "ExternProtoDeclarationArray",
+   },
+});
 
 export default ExternProtoDeclarationArray;

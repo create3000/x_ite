@@ -59,17 +59,13 @@ function ConeOptions (executionContext)
 ConeOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: ConeOptions,
-   getTypeName: function ()
+});
+
+Object .defineProperties (ConeOptions,
+{
+   typeName:
    {
-      return "ConeOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "coneOptions";
+      value: "ConeOptions",
    },
 });
 

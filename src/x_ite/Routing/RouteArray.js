@@ -56,13 +56,17 @@ function RouteArray (values)
 RouteArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
    constructor: RouteArray,
-   getTypeName: function ()
-   {
-      return "RouteArray";
-   },
 });
 
 for (const key of Reflect .ownKeys (RouteArray .prototype))
    Object .defineProperty (RouteArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (RouteArray,
+{
+   typeName:
+   {
+      value: "RouteArray",
+   },
+});
 
 export default RouteArray;

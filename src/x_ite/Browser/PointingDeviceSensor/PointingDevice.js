@@ -63,10 +63,6 @@ function PointingDevice (executionContext)
 PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: PointingDevice,
-   getTypeName: function ()
-   {
-      return "PointingDevice";
-   },
    initialize: function ()
    {
       const element = this .getBrowser () .getSurface ();
@@ -279,6 +275,14 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
    showContextMenu: function (event)
    {
       this .getBrowser () .getContextMenu () .show (event);
+   },
+});
+
+Object .defineProperties (PointingDevice,
+{
+   typeName:
+   {
+      value: "PointingDevice",
    },
 });
 

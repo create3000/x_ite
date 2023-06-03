@@ -32,8 +32,6 @@
 
 import X3DConstants from "../Base/X3DConstants.js";
 
-const _fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions");
-
 const
    nodeTypeNames = new Map (), // (TYPENAME -> TypeName)
    fieldNames    = new Map (); // (fieldname -> fieldName)
@@ -44,7 +42,7 @@ const HTMLSupport =
    {
       HTMLSupport .addNodeTypeName (typeName);
 
-      for (const { name, accessType } of ConcreteNode .prototype [_fieldDefinitions])
+      for (const { name, accessType } of ConcreteNode .fieldDefinitions)
       {
          if (accessType & X3DConstants .initializeOnly)
             HTMLSupport .addFieldName (name)

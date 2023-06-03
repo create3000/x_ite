@@ -63,18 +63,6 @@ function IcoSphereOptions (executionContext)
 IcoSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: IcoSphereOptions,
-   getTypeName: function ()
-   {
-      return "IcoSphereOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "quadSphereOptions";
-   },
    initialize: function ()
    {
       X3DBaseNode .prototype .initialize .call (this);
@@ -112,6 +100,14 @@ IcoSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .proto
       texCoord .setup ();
       coord    .setup ();
       geometry .setup ();
+   },
+});
+
+Object .defineProperties (IcoSphereOptions,
+{
+   typeName:
+   {
+      value: "IcoSphereOptions",
    },
 });
 

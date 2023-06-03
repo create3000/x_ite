@@ -62,18 +62,6 @@ function ContextMenu (executionContext)
 ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: ContextMenu,
-   getTypeName: function ()
-   {
-      return "ContextMenu";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "contextMenu";
-   },
    initialize: function ()
    {
       X3DBaseNode .prototype .initialize .call (this);
@@ -745,6 +733,14 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
       }
 
       return li;
+   },
+});
+
+Object .defineProperties (ContextMenu,
+{
+   typeName:
+   {
+      value: "ContextMenu",
    },
 });
 

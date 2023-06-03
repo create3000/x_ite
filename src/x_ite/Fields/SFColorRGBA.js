@@ -78,10 +78,6 @@ SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       return new SFColorRGBA (this .getValue () .copy ());
    },
-   getTypeName: function ()
-   {
-      return "SFColorRGBA";
-   },
    getType: function ()
    {
       return X3DConstants .SFColorRGBA;
@@ -189,6 +185,14 @@ Object .defineProperties (SFColorRGBA .prototype,
    g: Object .assign ({ enumerable: true }, g),
    b: Object .assign ({ enumerable: true }, b),
    a: Object .assign ({ enumerable: true }, a),
+});
+
+Object .defineProperties (SFColorRGBA,
+{
+   typeName:
+   {
+      value: "SFColorRGBA",
+   },
 });
 
 export default SFColorRGBA;

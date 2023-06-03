@@ -61,9 +61,6 @@ function WalkViewer (executionContext, navigationInfo)
 WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
 {
    constructor: WalkViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-   ]),
    initialize: function ()
    {
       X3DFlyViewer .prototype .initialize .call (this);
@@ -112,6 +109,20 @@ WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype)
       this .getBrowser () .removeCollision (this);
 
       X3DFlyViewer .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (WalkViewer,
+{
+   typeName:
+   {
+      value: "WalkViewer",
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
    },
 });
 

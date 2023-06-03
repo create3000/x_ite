@@ -77,13 +77,6 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
    X3DUrlObject .prototype,
 {
    constructor: X3DExternProtoDeclaration,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "X3DExternProtoDeclaration";
-   },
    initialize: function ()
    {
       X3DProtoDeclarationNode .prototype .initialize .call (this);
@@ -434,6 +427,20 @@ Object .defineProperties (X3DExternProtoDeclaration .prototype,
    {
       get: X3DExternProtoDeclaration .prototype .checkLoadState,
       enumerable: true,
+   },
+});
+
+Object .defineProperties (X3DExternProtoDeclaration,
+{
+   typeName:
+   {
+      value: "X3DExternProtoDeclaration",
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      ]),
    },
 });
 

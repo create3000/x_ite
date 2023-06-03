@@ -60,6 +60,18 @@ function X3DNode (executionContext)
 X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: X3DNode,
+   getComponentName: function ()
+   {
+      return this .constructor .componentName;
+   },
+   getContainerField: function ()
+   {
+      return this .constructor .containerField;
+   },
+   getSpecificationRange: function ()
+   {
+      return this .constructor .specificationRange;
+   },
    copy: function (instance)
    {
       if (!instance || instance .getType () .includes (X3DConstants .X3DExecutionContext))

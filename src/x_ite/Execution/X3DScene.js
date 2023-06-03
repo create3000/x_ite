@@ -115,10 +115,6 @@ function X3DScene (browser)
 X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
 {
    constructor: X3DScene,
-   getTypeName: function ()
-   {
-      return "X3DScene";
-   },
    isMainScene: function ()
    {
       return this === this .getExecutionContext ();
@@ -1098,6 +1094,14 @@ Object .defineProperties (X3DScene .prototype,
    {
       get: function () { return this ._sceneGraph_changed; },
       enumerable: false,
+   },
+});
+
+Object .defineProperties (X3DScene,
+{
+   typeName:
+   {
+      value: "X3DScene",
    },
 });
 

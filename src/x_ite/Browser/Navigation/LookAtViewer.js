@@ -86,9 +86,6 @@ function LookAtViewer (executionContext, navigationInfo)
 LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 {
    constructor: LookAtViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-   ]),
    initialize: function ()
    {
       X3DViewer .prototype .initialize .call (this);
@@ -504,6 +501,20 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
    {
       this .getBrowser () .getSurface () .off (".LookAtViewer");
       $(document) .off (".LookAtViewer" + this .getId ());
+   },
+});
+
+Object .defineProperties (LookAtViewer,
+{
+   typeName:
+   {
+      value: "LookAtViewer",
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
    },
 });
 

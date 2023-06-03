@@ -194,10 +194,6 @@ SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       this .getValue () .assign (image);
    },
-   getTypeName: function ()
-   {
-      return "SFImage";
-   },
    getType: function ()
    {
       return X3DConstants .SFImage;
@@ -363,6 +359,14 @@ Object .defineProperties (SFImage .prototype,
    height: Object .assign ({ enumerable: true }, height),
    comp:   Object .assign ({ enumerable: true }, comp),
    array:  Object .assign ({ enumerable: true }, array),
+});
+
+Object .defineProperties (SFImage,
+{
+   typeName:
+   {
+      value: "SFImage",
+   },
 });
 
 export default SFImage;

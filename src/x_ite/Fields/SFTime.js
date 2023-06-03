@@ -60,10 +60,6 @@ SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       return new SFTime (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFTime";
-   },
    getType: function ()
    {
       return X3DConstants .SFTime;
@@ -101,5 +97,13 @@ SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
 
 for (const key of Reflect .ownKeys (SFTime .prototype))
    Object .defineProperty (SFTime .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFTime,
+{
+   typeName:
+   {
+      value: "SFTime",
+   },
+});
 
 export default SFTime;

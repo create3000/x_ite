@@ -997,29 +997,23 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 });
 
 Object .defineProperties (X3DPrototypeInstance,
+{
+   typeName:
    {
-      typeName:
-      {
-         value: "X3DPrototypeInstance",
-      },
-      componentName:
-      {
-         value: "Core",
-      },
-      containerField:
-      {
-         value: "children",
-      },
-      specificationRange:
-      {
-         value: Object .freeze (["2.0", "Infinity"]),
-      },
-      fieldDefinitions:
-      {
-         value: new FieldDefinitionArray ([
-            new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-         ]),
-      },
-   });
+      value: "X3DPrototypeInstance",
+   },
+   componentName:
+   {
+      value: "Core",
+   },
+   containerField:
+   {
+      value: "children",
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+   },
+});
 
 export default X3DPrototypeInstance;

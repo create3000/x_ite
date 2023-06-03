@@ -61,10 +61,6 @@ function ProfileInfo (name, title, providerUrl, components)
 ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 {
    constructor: ProfileInfo,
-   getTypeName: function ()
-   {
-      return "ProfileInfo";
-   },
    toVRMLStream: function (generator)
    {
       generator .string += generator .Indent ();
@@ -84,5 +80,13 @@ ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 
 for (const key of Reflect .ownKeys (ProfileInfo .prototype))
    Object .defineProperty (ProfileInfo .prototype, key, { enumerable: false });
+
+Object .defineProperties (ProfileInfo,
+{
+   typeName:
+   {
+      value: "ProfileInfo",
+   },
+});
 
 export default ProfileInfo;

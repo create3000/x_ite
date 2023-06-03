@@ -68,10 +68,6 @@ SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       X3DField .prototype .set .call (this, !! value);
    },
-   getTypeName: function ()
-   {
-      return "SFBool";
-   },
    getType: function ()
    {
       return X3DConstants .SFBool;
@@ -104,5 +100,13 @@ SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
 
 for (const key of Reflect .ownKeys (SFBool .prototype))
    Object .defineProperty (SFBool .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFBool,
+{
+   typeName:
+   {
+      value: "SFBool",
+   },
+});
 
 export default SFBool;

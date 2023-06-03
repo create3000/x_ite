@@ -60,10 +60,6 @@ SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       return new SFInt32 (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFInt32";
-   },
    getType: function ()
    {
       return X3DConstants .SFInt32;
@@ -101,5 +97,13 @@ SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),
 
 for (const key of Reflect .ownKeys (SFInt32 .prototype))
    Object .defineProperty (SFInt32 .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFInt32,
+{
+   typeName:
+   {
+      value: "SFInt32",
+   },
+});
 
 export default SFInt32;
