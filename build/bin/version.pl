@@ -30,7 +30,7 @@ sub docs
 	my $config        = `cat '$CWD/docs/_config.yml'`;
 	my $contentLength = `gzip -5 dist/x_ite.min.js --stdout | wc -c`;
 
-	$contentLength =~ s/^\s+|\s+$//g;
+	$contentLength =~ s/^\s+|\s+$//sg;
 	$contentLength = int ($contentLength / 1000);
 
 	$config =~ s|\bversion:\s*[\d\.]+|version: $VERSION|sgo;
