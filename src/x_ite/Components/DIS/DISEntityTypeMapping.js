@@ -64,10 +64,6 @@ DISEntityTypeMapping .prototype = Object .assign (Object .create (X3DInfoNode .p
    X3DUrlObject .prototype,
 {
    constructor: DISEntityTypeMapping,
-   getTypeName: function ()
-   {
-      return "DISEntityTypeMapping";
-   },
    getComponentName: function ()
    {
       return "DIS";

@@ -62,10 +62,6 @@ function PositionDamper (executionContext)
 PositionDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 {
    constructor: PositionDamper,
-   getTypeName: function ()
-   {
-      return "PositionDamper";
-   },
    getComponentName: function ()
    {
       return "Followers";

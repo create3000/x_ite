@@ -61,10 +61,6 @@ function EaseInEaseOut (executionContext)
 EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: EaseInEaseOut,
-   getTypeName: function ()
-   {
-      return "EaseInEaseOut";
-   },
    getComponentName: function ()
    {
       return "Interpolation";

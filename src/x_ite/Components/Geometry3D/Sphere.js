@@ -63,10 +63,6 @@ function Sphere (executionContext)
 Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Sphere,
-   getTypeName: function ()
-   {
-      return "Sphere";
-   },
    getComponentName: function ()
    {
       return "Geometry3D";

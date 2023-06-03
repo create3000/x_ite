@@ -65,10 +65,6 @@ function OrientationInterpolator (executionContext)
 OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: OrientationInterpolator,
-   getTypeName: function ()
-   {
-      return "OrientationInterpolator";
-   },
    getComponentName: function ()
    {
       return "Interpolation";

@@ -81,10 +81,6 @@ function PlaneSensor (executionContext)
 PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 {
    constructor: PlaneSensor,
-   getTypeName: function ()
-   {
-      return "PlaneSensor";
-   },
    getComponentName: function ()
    {
       return "PointingDeviceSensor";

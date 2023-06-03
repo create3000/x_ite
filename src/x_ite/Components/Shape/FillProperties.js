@@ -67,10 +67,6 @@ function FillProperties (executionContext)
 FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: FillProperties,
-   getTypeName: function ()
-   {
-      return "FillProperties";
-   },
    getComponentName: function ()
    {
       return "Shape";

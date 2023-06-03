@@ -62,10 +62,6 @@ function SilhouetteEnhancementVolumeStyle (executionContext)
 SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: SilhouetteEnhancementVolumeStyle,
-   getTypeName: function ()
-   {
-      return "SilhouetteEnhancementVolumeStyle";
-   },
    getComponentName: function ()
    {
       return "VolumeRendering";

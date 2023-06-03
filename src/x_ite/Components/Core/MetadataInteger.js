@@ -64,10 +64,6 @@ MetadataInteger .prototype = Object .assign (Object .create (X3DNode .prototype)
    X3DMetadataObject .prototype,
 {
    constructor: MetadataInteger,
-   getTypeName: function ()
-   {
-      return "MetadataInteger";
-   },
    getComponentName: function ()
    {
       return "Core";

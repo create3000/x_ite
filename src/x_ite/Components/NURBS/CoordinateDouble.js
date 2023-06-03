@@ -61,10 +61,6 @@ function CoordinateDouble (executionContext)
 CoordinateDouble .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
 {
    constructor: CoordinateDouble,
-   getTypeName: function ()
-   {
-      return "CoordinateDouble";
-   },
    getComponentName: function ()
    {
       return "NURBS";

@@ -62,10 +62,6 @@ function ScreenFontStyle (executionContext)
 ScreenFontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
 {
    constructor: ScreenFontStyle,
-   getTypeName: function ()
-   {
-      return "ScreenFontStyle";
-   },
    getComponentName: function ()
    {
       return "Layout";

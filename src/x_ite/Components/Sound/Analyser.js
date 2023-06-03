@@ -61,10 +61,6 @@ function Analyser (executionContext)
 Analyser .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
 {
    constructor: Analyser,
-   getTypeName: function ()
-   {
-      return "Analyser";
-   },
    getComponentName: function ()
    {
       return "Sound";

@@ -56,7 +56,7 @@ import HTMLSupport          from "../Parser/HTMLSupport.js";
 const
    _executionContext  = Symbol (),
    _type              = Symbol (),
-   _fieldDefinitions  = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
+   _fieldDefinitions  = Symbol (),
    _fields            = Symbol (),
    _predefinedFields  = Symbol (),
    _aliases           = Symbol (),
@@ -98,6 +98,8 @@ function X3DBaseNode (executionContext)
 
    if (this .canUserDefinedFields ())
       this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
+   else
+      this [_fieldDefinitions] = this .constructor .fieldDefinitions ?? this [_fieldDefinitions];
 
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addField (fieldDefinition);
@@ -107,12 +109,28 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 {
    constructor: X3DBaseNode,
    [_fieldDefinitions]: new FieldDefinitionArray ([ ]),
+   getTypeName: function ()
+   {
+      return this .constructor .typeName;
+   },
    setName: function (value)
    {
       X3DEventObject .prototype .setName .call (this, value)
 
       if (this [_initialized])
          this ._name_changed = this .getBrowser () .getCurrentTime ();
+   },
+   getComponentName: function ()
+   {
+      return this .constructor .componentName;
+   },
+   getContainerField: function ()
+   {
+      return this .constructor .containerField;
+   },
+   getSpecificationRange: function ()
+   {
+      return this .constructor .specificationRange;
    },
    getMainScene: function ()
    {

@@ -64,10 +64,6 @@ MetadataString .prototype = Object .assign (Object .create (X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
    constructor: MetadataString,
-   getTypeName: function ()
-   {
-      return "MetadataString";
-   },
    getComponentName: function ()
    {
       return "Core";

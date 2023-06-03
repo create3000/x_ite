@@ -66,10 +66,6 @@ GeoCoordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .pr
    X3DGeospatialObject .prototype,
 {
    constructor: GeoCoordinate,
-   getTypeName: function ()
-   {
-      return "GeoCoordinate";
-   },
    getComponentName: function ()
    {
       return "Geospatial";

@@ -61,10 +61,6 @@ function PeriodicWave (executionContext)
 PeriodicWave .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
 {
    constructor: PeriodicWave,
-   getTypeName: function ()
-   {
-      return "PeriodicWave";
-   },
    getComponentName: function ()
    {
       return "Sound";

@@ -62,10 +62,6 @@ function ToneMappedVolumeStyle (executionContext)
 ToneMappedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: ToneMappedVolumeStyle,
-   getTypeName: function ()
-   {
-      return "ToneMappedVolumeStyle";
-   },
    getComponentName: function ()
    {
       return "VolumeRendering";

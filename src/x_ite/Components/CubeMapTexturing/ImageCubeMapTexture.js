@@ -82,10 +82,6 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
    X3DUrlObject .prototype,
 {
    constructor: ImageCubeMapTexture,
-   getTypeName: function ()
-   {
-      return "ImageCubeMapTexture";
-   },
    getComponentName: function ()
    {
       return "CubeMapTexturing";

@@ -69,10 +69,6 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
    X3DBoundedObject .prototype,
 {
    constructor: CADFace,
-   getTypeName: function ()
-   {
-      return "CADFace";
-   },
    getComponentName: function ()
    {
       return "CADGeometry";

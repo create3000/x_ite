@@ -61,10 +61,6 @@ function DynamicsCompressor (executionContext)
 DynamicsCompressor .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
 {
    constructor: DynamicsCompressor,
-   getTypeName: function ()
-   {
-      return "DynamicsCompressor";
-   },
    getComponentName: function ()
    {
       return "Sound";

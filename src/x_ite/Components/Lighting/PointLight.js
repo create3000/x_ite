@@ -279,10 +279,6 @@ function PointLight (executionContext)
 PointLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 {
    constructor: PointLight,
-   getTypeName: function ()
-   {
-      return "PointLight";
-   },
    getComponentName: function ()
    {
       return "Lighting";

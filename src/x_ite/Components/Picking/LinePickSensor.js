@@ -68,10 +68,6 @@ function LinePickSensor (executionContext)
 LinePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
 {
    constructor: LinePickSensor,
-   getTypeName: function ()
-   {
-      return "LinePickSensor";
-   },
    getComponentName: function ()
    {
       return "Picking";

@@ -65,10 +65,6 @@ function TextureCoordinateGenerator (executionContext)
 TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
 {
    constructor: TextureCoordinateGenerator,
-   getTypeName: function ()
-   {
-      return "TextureCoordinateGenerator";
-   },
    getComponentName: function ()
    {
       return "Texturing";

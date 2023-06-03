@@ -83,10 +83,6 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: ShaderPart,
-   getTypeName: function ()
-   {
-      return "ShaderPart";
-   },
    getComponentName: function ()
    {
       return "Shaders";

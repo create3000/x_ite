@@ -64,10 +64,6 @@ function OscillatorSource (executionContext)
 OscillatorSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
 {
    constructor: OscillatorSource,
-   getTypeName: function ()
-   {
-      return "OscillatorSource";
-   },
    getComponentName: function ()
    {
       return "Sound";

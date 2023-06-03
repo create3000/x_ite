@@ -74,10 +74,6 @@ function NurbsPositionInterpolator (executionContext)
 NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: NurbsPositionInterpolator,
-   getTypeName: function ()
-   {
-      return "NurbsPositionInterpolator";
-   },
    getComponentName: function ()
    {
       return "NURBS";

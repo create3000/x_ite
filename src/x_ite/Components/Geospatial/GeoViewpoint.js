@@ -79,10 +79,6 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
    X3DGeospatialObject .prototype,
 {
    constructor: GeoViewpoint,
-   getTypeName: function ()
-   {
-      return "GeoViewpoint";
-   },
    getComponentName: function ()
    {
       return "Geospatial";

@@ -64,10 +64,6 @@ function SplinePositionInterpolator (executionContext)
 SplinePositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: SplinePositionInterpolator,
-   getTypeName: function ()
-   {
-      return "SplinePositionInterpolator";
-   },
    getComponentName: function ()
    {
       return "Interpolation";

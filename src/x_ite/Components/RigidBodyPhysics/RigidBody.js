@@ -90,10 +90,6 @@ function RigidBody (executionContext)
 RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: RigidBody,
-   getTypeName: function ()
-   {
-      return "RigidBody";
-   },
    getComponentName: function ()
    {
       return "RigidBodyPhysics";

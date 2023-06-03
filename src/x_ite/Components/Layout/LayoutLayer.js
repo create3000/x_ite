@@ -66,10 +66,6 @@ function LayoutLayer (executionContext)
 LayoutLayer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
 {
    constructor: LayoutLayer,
-   getTypeName: function ()
-   {
-      return "LayoutLayer";
-   },
    getComponentName: function ()
    {
       return "Layout";

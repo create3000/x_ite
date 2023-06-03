@@ -61,10 +61,6 @@ function BooleanTrigger (executionContext)
 BooleanTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
 {
    constructor: BooleanTrigger,
-   getTypeName: function ()
-   {
-      return "BooleanTrigger";
-   },
    getComponentName: function ()
    {
       return "EventUtilities";

@@ -69,10 +69,6 @@ function Contact (executionContext)
 Contact .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: Contact,
-   getTypeName: function ()
-   {
-      return "Contact";
-   },
    getComponentName: function ()
    {
       return "RigidBodyPhysics";

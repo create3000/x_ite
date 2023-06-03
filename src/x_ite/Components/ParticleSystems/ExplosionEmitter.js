@@ -75,10 +75,6 @@ function ExplosionEmitter (executionContext)
 ExplosionEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: ExplosionEmitter,
-   getTypeName: function ()
-   {
-      return "ExplosionEmitter";
-   },
    getComponentName: function ()
    {
       return "ParticleSystems";

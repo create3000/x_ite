@@ -81,10 +81,6 @@ function PointEmitter (executionContext)
 PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: PointEmitter,
-   getTypeName: function ()
-   {
-      return "PointEmitter";
-   },
    getComponentName: function ()
    {
       return "ParticleSystems";

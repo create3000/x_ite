@@ -68,10 +68,6 @@ Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
    X3DFogObject .prototype,
 {
    constructor: Fog,
-   getTypeName: function ()
-   {
-      return "Fog";
-   },
    getComponentName: function ()
    {
       return "EnvironmentalEffects";

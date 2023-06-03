@@ -70,10 +70,6 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
    X3DUrlObject .prototype,
 {
    constructor: AudioClip,
-   getTypeName: function ()
-   {
-      return "AudioClip";
-   },
    getComponentName: function ()
    {
       return "Sound";

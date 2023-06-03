@@ -61,10 +61,6 @@ function Color (executionContext)
 Color .prototype = Object .assign (Object .create (X3DColorNode .prototype),
 {
    constructor: Color,
-   getTypeName: function ()
-   {
-      return "Color";
-   },
    getComponentName: function ()
    {
       return "Rendering";

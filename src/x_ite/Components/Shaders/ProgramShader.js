@@ -61,10 +61,6 @@ function ProgramShader (executionContext)
 ProgramShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
 {
    constructor: ProgramShader,
-   getTypeName: function ()
-   {
-      return "ProgramShader";
-   },
    getComponentName: function ()
    {
       return "Shaders";

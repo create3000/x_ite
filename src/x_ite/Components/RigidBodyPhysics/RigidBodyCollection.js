@@ -88,10 +88,6 @@ function RigidBodyCollection (executionContext)
 RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: RigidBodyCollection,
-   getTypeName: function ()
-   {
-      return "RigidBodyCollection";
-   },
    getComponentName: function ()
    {
       return "RigidBodyPhysics";

@@ -64,10 +64,6 @@ MetadataDouble .prototype = Object .assign (Object .create (X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
    constructor: MetadataDouble,
-   getTypeName: function ()
-   {
-      return "MetadataDouble";
-   },
    getComponentName: function ()
    {
       return "Core";

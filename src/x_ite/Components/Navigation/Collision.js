@@ -69,10 +69,6 @@ Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototyp
    X3DSensorNode .prototype,
 {
    constructor: Collision,
-   getTypeName: function ()
-   {
-      return "Collision";
-   },
    getComponentName: function ()
    {
       return "Navigation";

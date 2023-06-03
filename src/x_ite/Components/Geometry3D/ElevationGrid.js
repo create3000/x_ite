@@ -76,10 +76,6 @@ function ElevationGrid (executionContext)
 ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: ElevationGrid,
-   getTypeName: function ()
-   {
-      return "ElevationGrid";
-   },
    getComponentName: function ()
    {
       return "Geometry3D";

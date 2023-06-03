@@ -88,10 +88,6 @@ function ConeEmitter (executionContext)
 ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: ConeEmitter,
-   getTypeName: function ()
-   {
-      return "ConeEmitter";
-   },
    getComponentName: function ()
    {
       return "ParticleSystems";

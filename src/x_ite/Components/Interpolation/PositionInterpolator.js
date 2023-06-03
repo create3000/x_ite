@@ -62,10 +62,6 @@ function PositionInterpolator (executionContext)
 PositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: PositionInterpolator,
-   getTypeName: function ()
-   {
-      return "PositionInterpolator";
-   },
    getComponentName: function ()
    {
       return "Interpolation";

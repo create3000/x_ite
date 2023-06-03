@@ -64,10 +64,6 @@ MetadataBoolean .prototype = Object .assign (Object .create (X3DNode .prototype)
    X3DMetadataObject .prototype,
 {
    constructor: MetadataBoolean,
-   getTypeName: function ()
-   {
-      return "MetadataBoolean";
-   },
    getComponentName: function ()
    {
       return "Core";

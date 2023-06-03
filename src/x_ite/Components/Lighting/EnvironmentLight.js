@@ -102,10 +102,6 @@ function EnvironmentLight (executionContext)
 EnvironmentLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 {
    constructor: EnvironmentLight,
-   getTypeName: function ()
-   {
-      return "EnvironmentLight";
-   },
    getComponentName: function ()
    {
       return "Lighting";

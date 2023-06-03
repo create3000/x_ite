@@ -76,10 +76,6 @@ function GeneratedCubeMapTexture (executionContext)
 GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
 {
    constructor: GeneratedCubeMapTexture,
-   getTypeName: function ()
-   {
-      return "GeneratedCubeMapTexture";
-   },
    getComponentName: function ()
    {
       return "CubeMapTexturing";

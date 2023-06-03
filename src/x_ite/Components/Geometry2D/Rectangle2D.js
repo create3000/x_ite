@@ -67,10 +67,6 @@ function Rectangle2D (executionContext)
 Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Rectangle2D,
-   getTypeName: function ()
-   {
-      return "Rectangle2D";
-   },
    getComponentName: function ()
    {
       return "Geometry2D";

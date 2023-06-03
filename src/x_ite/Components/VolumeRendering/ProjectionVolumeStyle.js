@@ -61,10 +61,6 @@ function ProjectionVolumeStyle (executionContext)
 ProjectionVolumeStyle .prototype = Object .assign (Object .create (X3DVolumeRenderStyleNode .prototype),
 {
    constructor: ProjectionVolumeStyle,
-   getTypeName: function ()
-   {
-      return "ProjectionVolumeStyle";
-   },
    getComponentName: function ()
    {
       return "VolumeRendering";

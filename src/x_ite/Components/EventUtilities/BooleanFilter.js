@@ -61,10 +61,6 @@ function BooleanFilter (executionContext)
 BooleanFilter .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: BooleanFilter,
-   getTypeName: function ()
-   {
-      return "BooleanFilter";
-   },
    getComponentName: function ()
    {
       return "EventUtilities";

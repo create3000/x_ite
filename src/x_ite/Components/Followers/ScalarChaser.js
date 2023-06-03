@@ -62,10 +62,6 @@ function ScalarChaser (executionContext)
 ScalarChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 {
    constructor: ScalarChaser,
-   getTypeName: function ()
-   {
-      return "ScalarChaser";
-   },
    getComponentName: function ()
    {
       return "Followers";

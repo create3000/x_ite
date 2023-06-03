@@ -66,10 +66,6 @@ function IsoSurfaceVolumeData (executionContext)
 IsoSurfaceVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
 {
    constructor: IsoSurfaceVolumeData,
-   getTypeName: function ()
-   {
-      return "IsoSurfaceVolumeData";
-   },
    getComponentName: function ()
    {
       return "VolumeRendering";

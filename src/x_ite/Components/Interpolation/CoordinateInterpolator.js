@@ -62,10 +62,6 @@ function CoordinateInterpolator (executionContext)
 CoordinateInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: CoordinateInterpolator,
-   getTypeName: function ()
-   {
-      return "CoordinateInterpolator";
-   },
    getComponentName: function ()
    {
       return "Interpolation";

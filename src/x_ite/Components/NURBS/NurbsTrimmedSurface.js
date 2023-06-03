@@ -64,10 +64,6 @@ function NurbsTrimmedSurface (executionContext)
 NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
 {
    constructor: NurbsTrimmedSurface,
-   getTypeName: function ()
-   {
-      return "NurbsTrimmedSurface";
-   },
    getComponentName: function ()
    {
       return "NURBS";

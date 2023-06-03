@@ -63,10 +63,6 @@ function ColorRGBA (executionContext)
 ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
 {
    constructor: ColorRGBA,
-   getTypeName: function ()
-   {
-      return "ColorRGBA";
-   },
    getComponentName: function ()
    {
       return "Rendering";

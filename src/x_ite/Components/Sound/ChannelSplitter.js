@@ -61,10 +61,6 @@ function ChannelSplitter (executionContext)
 ChannelSplitter .prototype = Object .assign (Object .create (X3DSoundChannelNode .prototype),
 {
    constructor: ChannelSplitter,
-   getTypeName: function ()
-   {
-      return "ChannelSplitter";
-   },
    getComponentName: function ()
    {
       return "Sound";

@@ -61,10 +61,6 @@ function BooleanToggle (executionContext)
 BooleanToggle .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: BooleanToggle,
-   getTypeName: function ()
-   {
-      return "BooleanToggle";
-   },
    getComponentName: function ()
    {
       return "EventUtilities";

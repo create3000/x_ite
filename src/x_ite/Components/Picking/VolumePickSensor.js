@@ -69,10 +69,6 @@ function VolumePickSensor (executionContext)
 VolumePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
 {
    constructor: VolumePickSensor,
-   getTypeName: function ()
-   {
-      return "VolumePickSensor";
-   },
    getComponentName: function ()
    {
       return "Picking";

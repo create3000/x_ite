@@ -71,10 +71,6 @@ function CollisionCollection (executionContext)
 CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: CollisionCollection,
-   getTypeName: function ()
-   {
-      return "CollisionCollection";
-   },
    getComponentName: function ()
    {
       return "RigidBodyPhysics";

@@ -61,10 +61,6 @@ function ChannelSelector (executionContext)
 ChannelSelector .prototype = Object .assign (Object .create (X3DSoundChannelNode .prototype),
 {
    constructor: ChannelSelector,
-   getTypeName: function ()
-   {
-      return "ChannelSelector";
-   },
    getComponentName: function ()
    {
       return "Sound";

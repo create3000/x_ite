@@ -64,10 +64,6 @@ function MicrophoneSource (executionContext)
 MicrophoneSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
 {
    constructor: MicrophoneSource,
-   getTypeName: function ()
-   {
-      return "MicrophoneSource";
-   },
    getComponentName: function ()
    {
       return "Sound";

@@ -63,10 +63,6 @@ function Circle2D (executionContext)
 Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: Circle2D,
-   getTypeName: function ()
-   {
-      return "Circle2D";
-   },
    getComponentName: function ()
    {
       return "Geometry2D";

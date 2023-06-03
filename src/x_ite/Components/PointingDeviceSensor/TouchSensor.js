@@ -63,10 +63,6 @@ function TouchSensor (executionContext)
 TouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
 {
    constructor: TouchSensor,
-   getTypeName: function ()
-   {
-      return "TouchSensor";
-   },
    getComponentName: function ()
    {
       return "PointingDeviceSensor";

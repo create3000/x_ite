@@ -63,10 +63,6 @@ function IndexedTriangleFanSet (executionContext)
 IndexedTriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedTriangleFanSet,
-   getTypeName: function ()
-   {
-      return "IndexedTriangleFanSet";
-   },
    getComponentName: function ()
    {
       return "Rendering";

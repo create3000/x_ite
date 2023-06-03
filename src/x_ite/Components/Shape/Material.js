@@ -70,10 +70,6 @@ function Material (executionContext)
 Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
 {
    constructor: Material,
-   getTypeName: function ()
-   {
-      return "Material";
-   },
    getComponentName: function ()
    {
       return "Shape";

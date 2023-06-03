@@ -65,10 +65,6 @@ function ScreenGroup (executionContext)
 ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: ScreenGroup,
-   getTypeName: function ()
-   {
-      return "ScreenGroup";
-   },
    getComponentName: function ()
    {
       return "Layout";

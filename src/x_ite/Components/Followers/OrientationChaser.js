@@ -72,10 +72,6 @@ function OrientationChaser (executionContext)
 OrientationChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 {
    constructor: OrientationChaser,
-   getTypeName: function ()
-   {
-      return "OrientationChaser";
-   },
    getComponentName: function ()
    {
       return "Followers";

@@ -64,10 +64,6 @@ function FontStyle (executionContext)
 FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
 {
    constructor: FontStyle,
-   getTypeName: function ()
-   {
-      return "FontStyle";
-   },
    getComponentName: function ()
    {
       return "Text";

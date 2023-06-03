@@ -61,10 +61,6 @@ function IntegerSequencer (executionContext)
 IntegerSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
 {
    constructor: IntegerSequencer,
-   getTypeName: function ()
-   {
-      return "IntegerSequencer";
-   },
    getComponentName: function ()
    {
       return "EventUtilities";

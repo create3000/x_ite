@@ -62,10 +62,6 @@ function OpacityMapVolumeStyle (executionContext)
 OpacityMapVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: OpacityMapVolumeStyle,
-   getTypeName: function ()
-   {
-      return "OpacityMapVolumeStyle";
-   },
    getComponentName: function ()
    {
       return "VolumeRendering";

@@ -61,10 +61,6 @@ function BiquadFilter (executionContext)
 BiquadFilter .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
 {
    constructor: BiquadFilter,
-   getTypeName: function ()
-   {
-      return "BiquadFilter";
-   },
    getComponentName: function ()
    {
       return "Sound";

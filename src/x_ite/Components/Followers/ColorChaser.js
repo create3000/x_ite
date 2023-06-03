@@ -69,10 +69,6 @@ function ColorChaser (executionContext)
 ColorChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 {
    constructor: ColorChaser,
-   getTypeName: function ()
-   {
-      return "ColorChaser";
-   },
    getComponentName: function ()
    {
       return "Followers";

@@ -62,10 +62,6 @@ function TextureBackground (executionContext)
 TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
 {
    constructor: TextureBackground,
-   getTypeName: function ()
-   {
-      return "TextureBackground";
-   },
    getComponentName: function ()
    {
       return "EnvironmentalEffects";

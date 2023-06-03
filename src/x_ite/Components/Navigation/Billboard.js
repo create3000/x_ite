@@ -67,10 +67,6 @@ function Billboard (executionContext)
 Billboard .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: Billboard,
-   getTypeName: function ()
-   {
-      return "Billboard";
-   },
    getComponentName: function ()
    {
       return "Navigation";

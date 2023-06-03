@@ -87,10 +87,6 @@ function Script (executionContext)
 Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 {
    constructor: Script,
-   getTypeName: function ()
-   {
-      return "Script";
-   },
    getComponentName: function ()
    {
       return "Scripting";

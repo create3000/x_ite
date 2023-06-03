@@ -112,10 +112,6 @@ function PolylineEmitter (executionContext)
 PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: PolylineEmitter,
-   getTypeName: function ()
-   {
-      return "PolylineEmitter";
-   },
    getComponentName: function ()
    {
       return "ParticleSystems";

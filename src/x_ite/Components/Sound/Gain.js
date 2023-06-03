@@ -61,10 +61,6 @@ function Gain (executionContext)
 Gain .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
 {
    constructor: Gain,
-   getTypeName: function ()
-   {
-      return "Gain";
-   },
    getComponentName: function ()
    {
       return "Sound";

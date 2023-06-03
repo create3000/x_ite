@@ -62,10 +62,6 @@ function BoundedPhysicsModel (executionContext)
 BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
 {
    constructor: BoundedPhysicsModel,
-   getTypeName: function ()
-   {
-      return "BoundedPhysicsModel";
-   },
    getComponentName: function ()
    {
       return "ParticleSystems";

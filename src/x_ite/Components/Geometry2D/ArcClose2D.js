@@ -69,10 +69,6 @@ function ArcClose2D (executionContext)
 ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: ArcClose2D,
-   getTypeName: function ()
-   {
-      return "ArcClose2D";
-   },
    getComponentName: function ()
    {
       return "Geometry2D";

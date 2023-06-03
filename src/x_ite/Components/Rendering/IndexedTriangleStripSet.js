@@ -63,10 +63,6 @@ function IndexedTriangleStripSet (executionContext)
 IndexedTriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedTriangleStripSet,
-   getTypeName: function ()
-   {
-      return "IndexedTriangleStripSet";
-   },
    getComponentName: function ()
    {
       return "Rendering";

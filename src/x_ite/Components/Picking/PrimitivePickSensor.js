@@ -68,10 +68,6 @@ function PrimitivePickSensor (executionContext)
 PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
 {
    constructor: PrimitivePickSensor,
-   getTypeName: function ()
-   {
-      return "PrimitivePickSensor";
-   },
    getComponentName: function ()
    {
       return "Picking";

@@ -154,10 +154,6 @@ function TextureProjector (executionContext)
 TextureProjector .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
 {
    constructor: TextureProjector,
-   getTypeName: function ()
-   {
-      return "TextureProjector";
-   },
    getComponentName: function ()
    {
       return "TextureProjector";

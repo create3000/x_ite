@@ -61,10 +61,6 @@ function AnnotationTarget (executionContext)
 AnnotationTarget .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: AnnotationTarget,
-   getTypeName: function ()
-   {
-      return "AnnotationTarget";
-   },
    getComponentName: function ()
    {
       return "Annotation";

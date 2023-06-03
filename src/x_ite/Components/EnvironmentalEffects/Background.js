@@ -62,10 +62,6 @@ function Background (executionContext)
 Background .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
 {
    constructor: Background,
-   getTypeName: function ()
-   {
-      return "Background";
-   },
    getComponentName: function ()
    {
       return "EnvironmentalEffects";

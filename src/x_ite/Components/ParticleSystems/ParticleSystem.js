@@ -138,10 +138,6 @@ function ParticleSystem (executionContext)
 ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 {
    constructor: ParticleSystem,
-   getTypeName: function ()
-   {
-      return "ParticleSystem";
-   },
    getComponentName: function ()
    {
       return "ParticleSystems";

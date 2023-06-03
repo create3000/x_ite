@@ -70,10 +70,6 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
 {
    constructor: ComposedShader,
    wireframe: false,
-   getTypeName: function ()
-   {
-      return "ComposedShader";
-   },
    getComponentName: function ()
    {
       return "Shaders";

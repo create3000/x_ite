@@ -71,10 +71,6 @@ function LayoutGroup (executionContext)
 LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: LayoutGroup,
-   getTypeName: function ()
-   {
-      return "LayoutGroup";
-   },
    getComponentName: function ()
    {
       return "Layout";

@@ -67,10 +67,6 @@ function LineSet (executionContext)
 LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: LineSet,
-   getTypeName: function ()
-   {
-      return "LineSet";
-   },
    getComponentName: function ()
    {
       return "Rendering";

@@ -62,10 +62,6 @@ function PositionChaser (executionContext)
 PositionChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 {
    constructor: PositionChaser,
-   getTypeName: function ()
-   {
-      return "PositionChaser";
-   },
    getComponentName: function ()
    {
       return "Followers";

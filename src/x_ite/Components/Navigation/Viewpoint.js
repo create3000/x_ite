@@ -70,10 +70,6 @@ function Viewpoint (executionContext)
 Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
 {
    constructor: Viewpoint,
-   getTypeName: function ()
-   {
-      return "Viewpoint";
-   },
    getComponentName: function ()
    {
       return "Navigation";

@@ -68,10 +68,6 @@ function SphereSensor (executionContext)
 SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 {
    constructor: SphereSensor,
-   getTypeName: function ()
-   {
-      return "SphereSensor";
-   },
    getComponentName: function ()
    {
       return "PointingDeviceSensor";

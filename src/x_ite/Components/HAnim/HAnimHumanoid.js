@@ -86,10 +86,6 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
    X3DBoundedObject .prototype,
 {
    constructor: HAnimHumanoid,
-   getTypeName: function ()
-   {
-      return "HAnimHumanoid";
-   },
    getComponentName: function ()
    {
       return "HAnim";

@@ -66,10 +66,6 @@ function Layer (executionContext)
 Layer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
 {
    constructor: Layer,
-   getTypeName: function ()
-   {
-      return "Layer";
-   },
    getComponentName: function ()
    {
       return "Layering";

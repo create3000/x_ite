@@ -65,10 +65,6 @@ function TriangleSet2D (executionContext)
 TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: TriangleSet2D,
-   getTypeName: function ()
-   {
-      return "TriangleSet2D";
-   },
    getComponentName: function ()
    {
       return "Geometry2D";

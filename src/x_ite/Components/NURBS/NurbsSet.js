@@ -67,10 +67,6 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: NurbsSet,
-   getTypeName: function ()
-   {
-      return "NurbsSet";
-   },
    getComponentName: function ()
    {
       return "NURBS";

@@ -74,10 +74,6 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
    {
       return new X3DPrototypeInstance (executionContext, this [_protoNode]);
    },
-   getTypeName: function ()
-   {
-      return this [_protoNode] .getName ();
-   },
    getFieldDefinitions: function ()
    {
       return this [_protoNode] .getFieldDefinitions ();

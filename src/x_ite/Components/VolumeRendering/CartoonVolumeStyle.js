@@ -62,10 +62,6 @@ function CartoonVolumeStyle (executionContext)
 CartoonVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: CartoonVolumeStyle,
-   getTypeName: function ()
-   {
-      return "CartoonVolumeStyle";
-   },
    getComponentName: function ()
    {
       return "VolumeRendering";

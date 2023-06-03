@@ -67,10 +67,6 @@ PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
    X3DProgrammableShaderObject .prototype,
 {
    constructor: PackagedShader,
-   getTypeName: function ()
-   {
-      return "PackagedShader";
-   },
    getComponentName: function ()
    {
       return "Shaders";

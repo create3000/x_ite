@@ -65,10 +65,6 @@ function PhysicalMaterial (executionContext)
 PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
 {
    constructor: PhysicalMaterial,
-   getTypeName: function ()
-   {
-      return "PhysicalMaterial";
-   },
    getComponentName: function ()
    {
       return "Shape";

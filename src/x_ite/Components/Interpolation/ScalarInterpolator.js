@@ -62,10 +62,6 @@ function ScalarInterpolator (executionContext)
 ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: ScalarInterpolator,
-   getTypeName: function ()
-   {
-      return "ScalarInterpolator";
-   },
    getComponentName: function ()
    {
       return "Interpolation";

@@ -61,10 +61,6 @@ function BoundaryEnhancementVolumeStyle (executionContext)
 BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: BoundaryEnhancementVolumeStyle,
-   getTypeName: function ()
-   {
-      return "BoundaryEnhancementVolumeStyle";
-   },
    getComponentName: function ()
    {
       return "VolumeRendering";

@@ -77,10 +77,6 @@ function LOD (executionContext)
 LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: LOD,
-   getTypeName: function ()
-   {
-      return "LOD";
-   },
    getComponentName: function ()
    {
       return "Navigation";

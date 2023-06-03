@@ -61,10 +61,6 @@ function AudioDestination (executionContext)
 AudioDestination .prototype = Object .assign (Object .create (X3DSoundDestinationNode .prototype),
 {
    constructor: AudioDestination,
-   getTypeName: function ()
-   {
-      return "AudioDestination";
-   },
    getComponentName: function ()
    {
       return "Sound";

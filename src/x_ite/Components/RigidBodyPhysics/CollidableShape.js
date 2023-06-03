@@ -72,10 +72,6 @@ function CollidableShape (executionContext)
 CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
 {
    constructor: CollidableShape,
-   getTypeName: function ()
-   {
-      return "CollidableShape";
-   },
    getComponentName: function ()
    {
       return "RigidBodyPhysics";

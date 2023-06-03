@@ -65,10 +65,6 @@ function BlendMode (executionContext)
 BlendMode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: BlendMode,
-   getTypeName: function ()
-   {
-      return "BlendMode";
-   },
    getComponentName: function ()
    {
       return "X_ITE";

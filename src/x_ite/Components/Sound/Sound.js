@@ -79,10 +79,6 @@ function Sound (executionContext)
 Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
 {
    constructor: Sound,
-   getTypeName: function ()
-   {
-      return "Sound";
-   },
    getComponentName: function ()
    {
       return "Sound";

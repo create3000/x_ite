@@ -67,10 +67,6 @@ function Cylinder (executionContext)
 Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Cylinder,
-   getTypeName: function ()
-   {
-      return "Cylinder";
-   },
    getComponentName: function ()
    {
       return "Geometry3D";

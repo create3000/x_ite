@@ -66,10 +66,6 @@ function VolumeData (executionContext)
 VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
 {
    constructor: VolumeData,
-   getTypeName: function ()
-   {
-      return "VolumeData";
-   },
    getComponentName: function ()
    {
       return "VolumeRendering";

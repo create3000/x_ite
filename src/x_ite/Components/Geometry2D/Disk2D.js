@@ -66,10 +66,6 @@ function Disk2D (executionContext)
 Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Disk2D,
-   getTypeName: function ()
-   {
-      return "Disk2D";
-   },
    getComponentName: function ()
    {
       return "Geometry2D";

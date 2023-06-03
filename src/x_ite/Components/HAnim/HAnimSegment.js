@@ -63,10 +63,6 @@ function HAnimSegment (executionContext)
 HAnimSegment .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: HAnimSegment,
-   getTypeName: function ()
-   {
-      return "HAnimSegment";
-   },
    getComponentName: function ()
    {
       return "HAnim";

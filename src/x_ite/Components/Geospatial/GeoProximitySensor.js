@@ -76,10 +76,6 @@ GeoProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmental
    X3DGeospatialObject .prototype,
 {
    constructor: GeoProximitySensor,
-   getTypeName: function ()
-   {
-      return "GeoProximitySensor";
-   },
    getComponentName: function ()
    {
       return "Geospatial";

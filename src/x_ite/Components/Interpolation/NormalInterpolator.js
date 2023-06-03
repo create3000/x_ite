@@ -63,10 +63,6 @@ function NormalInterpolator (executionContext)
 NormalInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: NormalInterpolator,
-   getTypeName: function ()
-   {
-      return "NormalInterpolator";
-   },
    getComponentName: function ()
    {
       return "Interpolation";

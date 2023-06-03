@@ -64,10 +64,6 @@ CADPart .prototype = Object .assign (Object .create (X3DTransformNode .prototype
    //X3DProductStructureChildNode .prototype,
 {
    constructor: CADPart,
-   getTypeName: function ()
-   {
-      return "CADPart";
-   },
    getComponentName: function ()
    {
       return "CADGeometry";

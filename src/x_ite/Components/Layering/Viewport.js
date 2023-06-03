@@ -69,10 +69,6 @@ function Viewport (executionContext)
 Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype),
 {
    constructor: Viewport,
-   getTypeName: function ()
-   {
-      return "Viewport";
-   },
    getComponentName: function ()
    {
       return "Layering";

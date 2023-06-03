@@ -62,10 +62,6 @@ function TextureCoordinate3D (executionContext)
 TextureCoordinate3D .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
 {
    constructor: TextureCoordinate3D,
-   getTypeName: function ()
-   {
-      return "TextureCoordinate3D";
-   },
    getComponentName: function ()
    {
       return "Texturing3D";

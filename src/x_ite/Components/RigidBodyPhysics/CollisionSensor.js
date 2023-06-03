@@ -66,10 +66,6 @@ function CollisionSensor (executionContext)
 CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 {
    constructor: CollisionSensor,
-   getTypeName: function ()
-   {
-      return "CollisionSensor";
-   },
    getComponentName: function ()
    {
       return "RigidBodyPhysics";

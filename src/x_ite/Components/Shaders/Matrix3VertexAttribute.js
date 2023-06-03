@@ -62,10 +62,6 @@ function Matrix3VertexAttribute (executionContext)
 Matrix3VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 {
    constructor: Matrix3VertexAttribute,
-   getTypeName: function ()
-   {
-      return "Matrix3VertexAttribute";
-   },
    getComponentName: function ()
    {
       return "Shaders";

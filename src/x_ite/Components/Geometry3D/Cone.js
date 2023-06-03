@@ -67,10 +67,6 @@ function Cone (executionContext)
 Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Cone,
-   getTypeName: function ()
-   {
-      return "Cone";
-   },
    getComponentName: function ()
    {
       return "Geometry3D";

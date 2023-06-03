@@ -67,10 +67,6 @@ ShaderProgram .prototype = Object .assign (Object .create (X3DNode .prototype),
    X3DProgrammableShaderObject .prototype,
 {
    constructor: ShaderProgram,
-   getTypeName: function ()
-   {
-      return "ShaderProgram";
-   },
    getComponentName: function ()
    {
       return "Shaders";

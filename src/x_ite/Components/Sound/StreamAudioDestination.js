@@ -61,10 +61,6 @@ function StreamAudioDestination (executionContext)
 StreamAudioDestination .prototype = Object .assign (Object .create (X3DSoundDestinationNode .prototype),
 {
    constructor: StreamAudioDestination,
-   getTypeName: function ()
-   {
-      return "StreamAudioDestination";
-   },
    getComponentName: function ()
    {
       return "Sound";

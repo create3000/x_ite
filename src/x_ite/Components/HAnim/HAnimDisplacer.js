@@ -63,10 +63,6 @@ function HAnimDisplacer (executionContext)
 HAnimDisplacer .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 {
    constructor: HAnimDisplacer,
-   getTypeName: function ()
-   {
-      return "HAnimDisplacer";
-   },
    getComponentName: function ()
    {
       return "HAnim";

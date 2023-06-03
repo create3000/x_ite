@@ -64,10 +64,6 @@ function ComposedVolumeStyle (executionContext)
 ComposedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: ComposedVolumeStyle,
-   getTypeName: function ()
-   {
-      return "ComposedVolumeStyle";
-   },
    getComponentName: function ()
    {
       return "VolumeRendering";

@@ -64,10 +64,6 @@ GroupAnnotation .prototype = Object .assign (Object .create (X3DGroupingNode .pr
    X3DAnnotationNode .prototype,
 {
    constructor: GroupAnnotation,
-   getTypeName: function ()
-   {
-      return "GroupAnnotation";
-   },
    getComponentName: function ()
    {
       return "Annotation";

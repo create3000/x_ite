@@ -81,10 +81,6 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
    X3DBoundedObject .prototype,
 {
    constructor: StaticGroup,
-   getTypeName: function ()
-   {
-      return "StaticGroup";
-   },
    getComponentName: function ()
    {
       return "Grouping";

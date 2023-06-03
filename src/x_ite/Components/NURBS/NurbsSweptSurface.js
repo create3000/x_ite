@@ -65,10 +65,6 @@ function NurbsSweptSurface (executionContext)
 NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
 {
    constructor: NurbsSweptSurface,
-   getTypeName: function ()
-   {
-      return "NurbsSweptSurface";
-   },
    getComponentName: function ()
    {
       return "NURBS";

@@ -64,10 +64,6 @@ EspduTransform .prototype = Object .assign (Object .create (X3DGroupingNode .pro
    X3DSensorNode .prototype,
 {
    constructor: EspduTransform,
-   getTypeName: function ()
-   {
-      return "EspduTransform";
-   },
    getComponentName: function ()
    {
       return "DIS";

@@ -64,10 +64,6 @@ function SplineScalarInterpolator (executionContext)
 SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: SplineScalarInterpolator,
-   getTypeName: function ()
-   {
-      return "SplineScalarInterpolator";
-   },
    getComponentName: function ()
    {
       return "Interpolation";

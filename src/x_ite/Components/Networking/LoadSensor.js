@@ -69,10 +69,6 @@ function LoadSensor (executionContext)
 LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .prototype),
 {
    constructor: LoadSensor,
-   getTypeName: function ()
-   {
-      return "LoadSensor";
-   },
    getComponentName: function ()
    {
       return "Networking";

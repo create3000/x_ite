@@ -71,10 +71,6 @@ function ViewpointGroup (executionContext)
 ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: ViewpointGroup,
-   getTypeName: function ()
-   {
-      return "ViewpointGroup";
-   },
    getComponentName: function ()
    {
       return "Navigation";

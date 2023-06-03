@@ -67,10 +67,6 @@ GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .
    X3DGeospatialObject .prototype,
 {
    constructor: GeoTouchSensor,
-   getTypeName: function ()
-   {
-      return "GeoTouchSensor";
-   },
    getComponentName: function ()
    {
       return "Geospatial";

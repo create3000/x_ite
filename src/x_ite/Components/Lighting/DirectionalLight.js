@@ -243,10 +243,6 @@ function DirectionalLight (executionContext)
 DirectionalLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 {
    constructor: DirectionalLight,
-   getTypeName: function ()
-   {
-      return "DirectionalLight";
-   },
    getComponentName: function ()
    {
       return "Lighting";

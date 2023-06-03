@@ -64,10 +64,6 @@ function ColorInterpolator (executionContext)
 ColorInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: ColorInterpolator,
-   getTypeName: function ()
-   {
-      return "ColorInterpolator";
-   },
    getComponentName: function ()
    {
       return "Interpolation";

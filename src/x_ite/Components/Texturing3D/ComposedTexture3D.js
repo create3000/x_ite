@@ -67,10 +67,6 @@ function ComposedTexture3D (executionContext)
 ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
 {
    constructor: ComposedTexture3D,
-   getTypeName: function ()
-   {
-      return "ComposedTexture3D";
-   },
    getComponentName: function ()
    {
       return "Texturing3D";

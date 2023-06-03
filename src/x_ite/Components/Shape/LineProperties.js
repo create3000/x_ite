@@ -61,10 +61,6 @@ function LineProperties (executionContext)
 LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: LineProperties,
-   getTypeName: function ()
-   {
-      return "LineProperties";
-   },
    getComponentName: function ()
    {
       return "Shape";
