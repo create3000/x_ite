@@ -195,18 +195,6 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          }
       }
    },
-   toVRMLString: function ()
-   {
-      const target = this .getTarget ();
-
-      target .addCloneCount (1);
-
-      const string = X3DObjectArrayField .prototype .toVRMLString .call (target);
-
-      target .removeCloneCount (1);
-
-      return string;
-   },
    toVRMLStream: function (generator)
    {
       const
@@ -254,18 +242,6 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
             break;
          }
       }
-   },
-   toXMLString: function ()
-   {
-      const target = this .getTarget ();
-
-      target .addCloneCount (1);
-
-      const string = X3DObjectArrayField .prototype .toXMLString .call (target);
-
-      target .removeCloneCount (1);
-
-      return string;
    },
    toXMLStream: function (generator)
    {
