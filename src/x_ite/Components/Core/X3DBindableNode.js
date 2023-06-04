@@ -67,4 +67,16 @@ X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .proto
    { },
 });
 
+Object .defineProperties (X3DBindableNode,
+{
+   typeName:
+   {
+      value: "X3DBindableNode",
+   },
+   componentName:
+   {
+      value: "Core",
+   },
+});
+
 export default X3DBindableNode;

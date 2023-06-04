@@ -116,4 +116,16 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSens
    },
 });
 
+Object .defineProperties (X3DPointingDeviceSensorNode,
+{
+   typeName:
+   {
+      value: "X3DPointingDeviceSensorNode",
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+   },
+});
+
 export default X3DPointingDeviceSensorNode;

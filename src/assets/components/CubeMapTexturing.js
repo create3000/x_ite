@@ -54,15 +54,15 @@ import X3DEnvironmentTextureNode from "../../x_ite/Components/CubeMapTexturing/X
 Components .add ({
    name: "CubeMapTexturing",
    concreteNodes:
-   {
-      ComposedCubeMapTexture:  ComposedCubeMapTexture,
-      GeneratedCubeMapTexture: GeneratedCubeMapTexture,
-      ImageCubeMapTexture:     ImageCubeMapTexture,
-   },
+   [
+      ComposedCubeMapTexture,
+      GeneratedCubeMapTexture,
+      ImageCubeMapTexture,
+   ],
    abstractNodes:
-   {
-      X3DEnvironmentTextureNode: X3DEnvironmentTextureNode,
-   },
+   [
+      X3DEnvironmentTextureNode,
+   ],
 });
 
 export default undefined;

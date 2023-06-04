@@ -59,19 +59,19 @@ import TriangleSet2D        from "../../x_ite/Components/Geometry2D/TriangleSet2
 Components .add ({
    name: "Geometry2D",
    concreteNodes:
-   {
-      Arc2D:         Arc2D,
-      ArcClose2D:    ArcClose2D,
-      Circle2D:      Circle2D,
-      Disk2D:        Disk2D,
-      Polyline2D:    Polyline2D,
-      Polypoint2D:   Polypoint2D,
-      Rectangle2D:   Rectangle2D,
-      TriangleSet2D: TriangleSet2D,
-   },
+   [
+      Arc2D,
+      ArcClose2D,
+      Circle2D,
+      Disk2D,
+      Polyline2D,
+      Polypoint2D,
+      Rectangle2D,
+      TriangleSet2D,
+   ],
    abstractNodes:
-   {
-   },
+   [
+   ],
    browserContext: X3DGeometry2DContext,
 });
 

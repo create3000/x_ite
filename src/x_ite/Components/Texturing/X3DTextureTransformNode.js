@@ -60,4 +60,16 @@ X3DTextureTransformNode .prototype = Object .assign (Object .create (X3DAppearan
    constructor: X3DTextureTransformNode,
 });
 
+Object .defineProperties (X3DTextureTransformNode,
+{
+   typeName:
+   {
+      value: "X3DTextureTransformNode",
+   },
+   componentName:
+   {
+      value: "Texturing",
+   },
+});
+
 export default X3DTextureTransformNode;

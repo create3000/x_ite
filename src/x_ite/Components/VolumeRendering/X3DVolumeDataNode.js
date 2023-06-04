@@ -225,4 +225,16 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create (X3DChildNode .pro
    },
 });
 
+Object .defineProperties (X3DVolumeDataNode,
+{
+   typeName:
+   {
+      value: "X3DVolumeDataNode",
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+   },
+});
+
 export default X3DVolumeDataNode;

@@ -79,4 +79,16 @@ X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix
    },
 });
 
+Object .defineProperties (X3DTransformNode,
+{
+   typeName:
+   {
+      value: "X3DTransformNode",
+   },
+   componentName:
+   {
+      value: "Grouping",
+   },
+});
+
 export default X3DTransformNode;

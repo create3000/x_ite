@@ -195,4 +195,16 @@ X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
    },
 });
 
+Object .defineProperties (X3DShapeNode,
+{
+   typeName:
+   {
+      value: "X3DShapeNode",
+   },
+   componentName:
+   {
+      value: "Shape",
+   },
+});
+
 export default X3DShapeNode;

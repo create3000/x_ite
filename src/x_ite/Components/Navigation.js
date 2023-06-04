@@ -57,17 +57,17 @@ import X3DViewpointNode from "./Navigation/X3DViewpointNode.js";
 export default {
    name: "Navigation",
    concreteNodes:
-   {
-      Billboard:      Billboard,
-      Collision:      Collision,
-      LOD:            LOD,
-      NavigationInfo: NavigationInfo,
-      OrthoViewpoint: OrthoViewpoint,
-      Viewpoint:      Viewpoint,
-      ViewpointGroup: ViewpointGroup,
-   },
+   [
+      Billboard,
+      Collision,
+      LOD,
+      NavigationInfo,
+      OrthoViewpoint,
+      Viewpoint,
+      ViewpointGroup,
+   ],
    abstractNodes:
-   {
-      X3DViewpointNode: X3DViewpointNode,
-   },
+   [
+      X3DViewpointNode,
+   ],
 };

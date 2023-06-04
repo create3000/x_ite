@@ -156,4 +156,16 @@ X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNo
    },
 });
 
+Object .defineProperties (X3DTexture2DNode,
+{
+   typeName:
+   {
+      value: "X3DTexture2DNode",
+   },
+   componentName:
+   {
+      value: "Texturing",
+   },
+});
+
 export default X3DTexture2DNode;

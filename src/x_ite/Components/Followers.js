@@ -66,26 +66,26 @@ import X3DFollowerNode   from "./Followers/X3DFollowerNode.js";
 export default {
    name: "Followers",
    concreteNodes:
-   {
-      ColorChaser:       ColorChaser,
-      ColorDamper:       ColorDamper,
-      CoordinateChaser:  CoordinateChaser,
-      CoordinateDamper:  CoordinateDamper,
-      OrientationChaser: OrientationChaser,
-      OrientationDamper: OrientationDamper,
-      PositionChaser:    PositionChaser,
-      PositionChaser2D:  PositionChaser2D,
-      PositionDamper:    PositionDamper,
-      PositionDamper2D:  PositionDamper2D,
-      ScalarChaser:      ScalarChaser,
-      ScalarDamper:      ScalarDamper,
-      TexCoordChaser2D:  TexCoordChaser2D,
-      TexCoordDamper2D:  TexCoordDamper2D,
-   },
+   [
+      ColorChaser,
+      ColorDamper,
+      CoordinateChaser,
+      CoordinateDamper,
+      OrientationChaser,
+      OrientationDamper,
+      PositionChaser,
+      PositionChaser2D,
+      PositionDamper,
+      PositionDamper2D,
+      ScalarChaser,
+      ScalarDamper,
+      TexCoordChaser2D,
+      TexCoordDamper2D,
+   ],
    abstractNodes:
-   {
-      X3DChaserNode: X3DChaserNode,
-      X3DDamperNode: X3DDamperNode,
-      X3DFollowerNode: X3DFollowerNode,
-   },
+   [
+      X3DChaserNode,
+      X3DDamperNode,
+      X3DFollowerNode,
+   ],
 };

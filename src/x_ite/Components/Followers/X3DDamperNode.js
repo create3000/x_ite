@@ -160,4 +160,16 @@ X3DDamperNode .prototype = Object .assign (Object .create (X3DFollowerNode .prot
    },
 });
 
+Object .defineProperties (X3DDamperNode,
+{
+   typeName:
+   {
+      value: "X3DDamperNode",
+   },
+   componentName:
+   {
+      value: "Followers",
+   },
+});
+
 export default X3DDamperNode;

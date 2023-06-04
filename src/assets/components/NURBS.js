@@ -67,28 +67,28 @@ import X3DParametricGeometryNode    from "../../x_ite/Components/NURBS/X3DParame
 Components .add ({
    name: "NURBS",
    concreteNodes:
-   {
-      Contour2D:                    Contour2D,
-      ContourPolyline2D:            ContourPolyline2D,
-      CoordinateDouble:             CoordinateDouble,
-      NurbsCurve:                   NurbsCurve,
-      NurbsCurve2D:                 NurbsCurve2D,
-      NurbsOrientationInterpolator: NurbsOrientationInterpolator,
-      NurbsPatchSurface:            NurbsPatchSurface,
-      NurbsPositionInterpolator:    NurbsPositionInterpolator,
-      NurbsSet:                     NurbsSet,
-      NurbsSurfaceInterpolator:     NurbsSurfaceInterpolator,
-      NurbsSweptSurface:            NurbsSweptSurface,
-      NurbsSwungSurface:            NurbsSwungSurface,
-      NurbsTextureCoordinate:       NurbsTextureCoordinate,
-      NurbsTrimmedSurface:          NurbsTrimmedSurface,
-   },
+   [
+      Contour2D,
+      ContourPolyline2D,
+      CoordinateDouble,
+      NurbsCurve,
+      NurbsCurve2D,
+      NurbsOrientationInterpolator,
+      NurbsPatchSurface,
+      NurbsPositionInterpolator,
+      NurbsSet,
+      NurbsSurfaceInterpolator,
+      NurbsSweptSurface,
+      NurbsSwungSurface,
+      NurbsTextureCoordinate,
+      NurbsTrimmedSurface,
+   ],
    abstractNodes:
-   {
-      X3DNurbsControlCurveNode:    X3DNurbsControlCurveNode,
-      X3DNurbsSurfaceGeometryNode: X3DNurbsSurfaceGeometryNode,
-      X3DParametricGeometryNode:   X3DParametricGeometryNode,
-   },
+   [
+      X3DNurbsControlCurveNode,
+      X3DNurbsSurfaceGeometryNode,
+      X3DParametricGeometryNode,
+   ],
 });
 
 export default undefined;

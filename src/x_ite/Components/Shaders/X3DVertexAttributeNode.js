@@ -73,4 +73,16 @@ X3DVertexAttributeNode .prototype = Object .assign (Object .create (X3DGeometric
    },
 });
 
+Object .defineProperties (X3DVertexAttributeNode,
+{
+   typeName:
+   {
+      value: "X3DVertexAttributeNode",
+   },
+   componentName:
+   {
+      value: "Shaders",
+   },
+});
+
 export default X3DVertexAttributeNode;

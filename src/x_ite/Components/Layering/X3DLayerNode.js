@@ -391,4 +391,16 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    },
 });
 
+Object .defineProperties (X3DLayerNode,
+{
+   typeName:
+   {
+      value: "X3DLayerNode",
+   },
+   componentName:
+   {
+      value: "Layering",
+   },
+});
+
 export default X3DLayerNode;

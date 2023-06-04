@@ -204,4 +204,16 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create (X3DChildNod
    },
 });
 
+Object .defineProperties (X3DTextureProjectorNode,
+{
+   typeName:
+   {
+      value: "X3DTextureProjectorNode",
+   },
+   componentName:
+   {
+      value: "TextureProjector",
+   },
+});
+
 export default X3DTextureProjectorNode;

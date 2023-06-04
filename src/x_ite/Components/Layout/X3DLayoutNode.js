@@ -60,4 +60,16 @@ X3DLayoutNode .prototype = Object .assign (Object .create (X3DChildNode .prototy
    constructor: X3DLayoutNode,
 });
 
+Object .defineProperties (X3DLayoutNode,
+{
+   typeName:
+   {
+      value: "X3DLayoutNode",
+   },
+   componentName:
+   {
+      value: "Layout",
+   },
+});
+
 export default X3DLayoutNode;

@@ -125,4 +125,16 @@ X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DSingle
    },
 });
 
+Object .defineProperties (X3DEnvironmentTextureNode,
+{
+   typeName:
+   {
+      value: "X3DEnvironmentTextureNode",
+   },
+   componentName:
+   {
+      value: "CubeMapTexturing",
+   },
+});
+
 export default X3DEnvironmentTextureNode;

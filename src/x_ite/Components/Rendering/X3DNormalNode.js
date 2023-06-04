@@ -60,4 +60,16 @@ X3DNormalNode .prototype = Object .assign (Object .create (X3DGeometricPropertyN
    constructor: X3DNormalNode,
 });
 
+Object .defineProperties (X3DNormalNode,
+{
+   typeName:
+   {
+      value: "X3DNormalNode",
+   },
+   componentName:
+   {
+      value: "Rendering",
+   },
+});
+
 export default X3DNormalNode;

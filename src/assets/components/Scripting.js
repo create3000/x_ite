@@ -52,13 +52,13 @@ import X3DScriptNode       from "../../x_ite/Components/Scripting/X3DScriptNode.
 Components .add ({
    name: "Scripting",
    concreteNodes:
-   {
-      Script: Script,
-   },
+   [
+      Script,
+   ],
    abstractNodes:
-   {
-      X3DScriptNode: X3DScriptNode,
-   },
+   [
+      X3DScriptNode,
+   ],
 });
 
 export default undefined;

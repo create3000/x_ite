@@ -90,4 +90,16 @@ X3DTouchSensorNode .prototype = Object .assign (Object .create (X3DPointingDevic
    })(),
 });
 
+Object .defineProperties (X3DTouchSensorNode,
+{
+   typeName:
+   {
+      value: "X3DTouchSensorNode",
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+   },
+});
+
 export default X3DTouchSensorNode;

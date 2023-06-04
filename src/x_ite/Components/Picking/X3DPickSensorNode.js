@@ -428,4 +428,16 @@ X3DPickSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .pr
    },
 });
 
+Object .defineProperties (X3DPickSensorNode,
+{
+   typeName:
+   {
+      value: "X3DPickSensorNode",
+   },
+   componentName:
+   {
+      value: "Picking",
+   },
+});
+
 export default X3DPickSensorNode;

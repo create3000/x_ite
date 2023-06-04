@@ -51,11 +51,11 @@ import X3DTimeDependentNode from "./Time/X3DTimeDependentNode.js";
 export default {
    name: "Time",
    concreteNodes:
-   {
-      TimeSensor: TimeSensor,
-   },
+   [
+      TimeSensor,
+   ],
    abstractNodes:
-   {
-      X3DTimeDependentNode: X3DTimeDependentNode,
-   },
+   [
+      X3DTimeDependentNode,
+   ],
 };

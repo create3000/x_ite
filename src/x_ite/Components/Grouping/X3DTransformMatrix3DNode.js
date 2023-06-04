@@ -119,4 +119,16 @@ X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupin
    groupTraverse: X3DGroupingNode .prototype .traverse,
 });
 
+Object .defineProperties (X3DTransformMatrix3DNode,
+{
+   typeName:
+   {
+      value: "X3DTransformMatrix3DNode",
+   },
+   componentName:
+   {
+      value: "Grouping",
+   },
+});
+
 export default X3DTransformMatrix3DNode;

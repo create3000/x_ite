@@ -151,4 +151,16 @@ X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode
    },
 });
 
+Object .defineProperties (X3DNBodyCollidableNode,
+{
+   typeName:
+   {
+      value: "X3DNBodyCollidableNode",
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+   },
+});
+
 export default X3DNBodyCollidableNode;

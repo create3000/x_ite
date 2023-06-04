@@ -57,17 +57,17 @@ import X3DTransformNode         from "./Grouping/X3DTransformNode.js";
 export default {
    name: "Grouping",
    concreteNodes:
-   {
-      Group:       Group,
-      StaticGroup: StaticGroup,
-      Switch:      Switch,
-      Transform:   Transform,
-   },
+   [
+      Group,
+      StaticGroup,
+      Switch,
+      Transform,
+   ],
    abstractNodes:
-   {
-      X3DBoundedObject:         X3DBoundedObject,
-      X3DGroupingNode:          X3DGroupingNode,
-      X3DTransformMatrix3DNode: X3DTransformMatrix3DNode,
-      X3DTransformNode:         X3DTransformNode,
-   },
+   [
+      X3DBoundedObject,
+      X3DGroupingNode,
+      X3DTransformMatrix3DNode,
+      X3DTransformNode,
+   ],
 };

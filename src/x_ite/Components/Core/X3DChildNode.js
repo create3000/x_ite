@@ -88,4 +88,16 @@ X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
    },
 });
 
+Object .defineProperties (X3DChildNode,
+{
+   typeName:
+   {
+      value: "X3DChildNode",
+   },
+   componentName:
+   {
+      value: "Core",
+   },
+});
+
 export default X3DChildNode;

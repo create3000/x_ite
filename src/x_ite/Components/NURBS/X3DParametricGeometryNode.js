@@ -65,4 +65,16 @@ X3DParametricGeometryNode .prototype = Object .assign (Object .create (X3DGeomet
    },
 });
 
+Object .defineProperties (X3DParametricGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DParametricGeometryNode",
+   },
+   componentName:
+   {
+      value: "NURBS",
+   },
+});
+
 export default X3DParametricGeometryNode;

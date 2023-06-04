@@ -135,4 +135,16 @@ X3DFollowerNode .prototype = Object .assign (Object .create (X3DChildNode .proto
    },
 });
 
+Object .defineProperties (X3DFollowerNode,
+{
+   typeName:
+   {
+      value: "X3DFollowerNode",
+   },
+   componentName:
+   {
+      value: "Followers",
+   },
+});
+
 export default X3DFollowerNode;

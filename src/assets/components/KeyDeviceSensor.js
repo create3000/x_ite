@@ -54,14 +54,14 @@ import X3DKeyDeviceSensorNode    from "../../x_ite/Components/KeyDeviceSensor/X3
 Components .add ({
    name: "KeyDeviceSensor",
    concreteNodes:
-   {
-      KeySensor:    KeySensor,
-      StringSensor: StringSensor,
-   },
+   [
+      KeySensor,
+      StringSensor,
+   ],
    abstractNodes:
-   {
-      X3DKeyDeviceSensorNode: X3DKeyDeviceSensorNode,
-   },
+   [
+      X3DKeyDeviceSensorNode,
+   ],
    browserContext: X3DKeyDeviceSensorContext,
 });
 

@@ -59,20 +59,20 @@ import X3DTriggerNode   from "../../x_ite/Components/EventUtilities/X3DTriggerNo
 Components .add ({
    name: "EventUtilities",
    concreteNodes:
-   {
-      BooleanFilter:    BooleanFilter,
-      BooleanSequencer: BooleanSequencer,
-      BooleanToggle:    BooleanToggle,
-      BooleanTrigger:   BooleanTrigger,
-      IntegerSequencer: IntegerSequencer,
-      IntegerTrigger:   IntegerTrigger,
-      TimeTrigger:      TimeTrigger,
-   },
+   [
+      BooleanFilter,
+      BooleanSequencer,
+      BooleanToggle,
+      BooleanTrigger,
+      IntegerSequencer,
+      IntegerTrigger,
+      TimeTrigger,
+   ],
    abstractNodes:
-   {
-      X3DSequencerNode: X3DSequencerNode,
-      X3DTriggerNode:   X3DTriggerNode,
-   },
+   [
+      X3DSequencerNode,
+      X3DTriggerNode,
+   ],
 });
 
 export default undefined;

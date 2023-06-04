@@ -578,4 +578,16 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
    }
 });
 
+Object .defineProperties (X3DViewpointNode,
+{
+   typeName:
+   {
+      value: "X3DViewpointNode",
+   },
+   componentName:
+   {
+      value: "Navigation",
+   },
+});
+
 export default X3DViewpointNode;

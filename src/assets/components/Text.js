@@ -54,14 +54,14 @@ import X3DFontStyleNode from "../../x_ite/Components/Text/X3DFontStyleNode.js";
 Components .add ({
    name: "Text",
    concreteNodes:
-   {
-      FontStyle: FontStyle,
-      Text: Text,
-   },
+   [
+      FontStyle,
+      Text,
+   ],
    abstractNodes:
-   {
-      X3DFontStyleNode: X3DFontStyleNode,
-   },
+   [
+      X3DFontStyleNode,
+   ],
    browserContext: X3DTextContext,
 });
 

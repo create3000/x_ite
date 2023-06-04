@@ -53,14 +53,14 @@ import X3DTextureProjectorNode  from "../../x_ite/Components/TextureProjector/X3
 Components .add ({
    name: "TextureProjector",
    concreteNodes:
-   {
-      TextureProjector:         TextureProjector,
-      TextureProjectorParallel: TextureProjectorParallel,
-   },
+   [
+      TextureProjector,
+      TextureProjectorParallel,
+   ],
    abstractNodes:
-   {
-      X3DTextureProjectorNode: X3DTextureProjectorNode,
-   },
+   [
+      X3DTextureProjectorNode,
+   ],
 });
 
 export default undefined;

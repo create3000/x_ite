@@ -66,26 +66,26 @@ import X3DTextureTransformNode        from "./Texturing/X3DTextureTransformNode.
 export default {
    name: "Texturing",
    concreteNodes:
-   {
-      ImageTexture:               ImageTexture,
-      MovieTexture:               MovieTexture,
-      MultiTexture:               MultiTexture,
-      MultiTextureCoordinate:     MultiTextureCoordinate,
-      MultiTextureTransform:      MultiTextureTransform,
-      PixelTexture:               PixelTexture,
-      TextureCoordinate:          TextureCoordinate,
-      TextureCoordinateGenerator: TextureCoordinateGenerator,
-      TextureProperties:          TextureProperties,
-      TextureTransform:           TextureTransform,
-   },
+   [
+      ImageTexture,
+      MovieTexture,
+      MultiTexture,
+      MultiTextureCoordinate,
+      MultiTextureTransform,
+      PixelTexture,
+      TextureCoordinate,
+      TextureCoordinateGenerator,
+      TextureProperties,
+      TextureTransform,
+   ],
    abstractNodes:
-   {
-      X3DSingleTextureCoordinateNode: X3DSingleTextureCoordinateNode,
-      X3DSingleTextureNode:           X3DSingleTextureNode,
-      X3DSingleTextureTransformNode:  X3DSingleTextureTransformNode,
-      X3DTexture2DNode:               X3DTexture2DNode,
-      X3DTextureCoordinateNode:       X3DTextureCoordinateNode,
-      X3DTextureNode:                 X3DTextureNode,
-      X3DTextureTransformNode:        X3DTextureTransformNode,
-   },
+   [
+      X3DSingleTextureCoordinateNode,
+      X3DSingleTextureNode,
+      X3DSingleTextureTransformNode,
+      X3DTexture2DNode,
+      X3DTextureCoordinateNode,
+      X3DTextureNode,
+      X3DTextureTransformNode,
+   ],
 };

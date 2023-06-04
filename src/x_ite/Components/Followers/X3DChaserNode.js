@@ -225,4 +225,16 @@ X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prot
    },
 });
 
+Object .defineProperties (X3DChaserNode,
+{
+   typeName:
+   {
+      value: "X3DChaserNode",
+   },
+   componentName:
+   {
+      value: "Followers",
+   },
+});
+
 export default X3DChaserNode;

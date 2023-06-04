@@ -56,17 +56,17 @@ import TransmitterPdu       from "../../x_ite/Components/DIS/TransmitterPdu.js";
 Components .add ({
    name: "DIS",
    concreteNodes:
-   {
-      DISEntityManager:     DISEntityManager,
-      DISEntityTypeMapping: DISEntityTypeMapping,
-      EspduTransform:       EspduTransform,
-      ReceiverPdu:          ReceiverPdu,
-      SignalPdu:            SignalPdu,
-      TransmitterPdu:       TransmitterPdu,
-   },
+   [
+      DISEntityManager,
+      DISEntityTypeMapping,
+      EspduTransform,
+      ReceiverPdu,
+      SignalPdu,
+      TransmitterPdu,
+   ],
    abstractNodes:
-   {
-   },
+   [
+   ],
 });
 
 export default undefined;

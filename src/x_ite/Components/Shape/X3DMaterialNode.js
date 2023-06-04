@@ -313,4 +313,16 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
    },
 });
 
+Object .defineProperties (X3DMaterialNode,
+{
+   typeName:
+   {
+      value: "X3DMaterialNode",
+   },
+   componentName:
+   {
+      value: "Shape",
+   },
+});
+
 export default X3DMaterialNode;

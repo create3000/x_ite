@@ -593,4 +593,16 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
    },
 });
 
+Object .defineProperties (X3DBackgroundNode,
+{
+   typeName:
+   {
+      value: "X3DBackgroundNode",
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+   },
+});
+
 export default X3DBackgroundNode;

@@ -135,4 +135,16 @@ X3DBoundedObject .prototype =
    dispose: function () { },
 };
 
+Object .defineProperties (X3DBoundedObject,
+{
+   typeName:
+   {
+      value: "X3DBoundedObject",
+   },
+   componentName:
+   {
+      value: "Grouping",
+   },
+});
+
 export default X3DBoundedObject;

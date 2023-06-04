@@ -60,4 +60,16 @@ X3DTriggerNode .prototype = Object .assign (Object .create (X3DChildNode .protot
    constructor: X3DTriggerNode,
 });
 
+Object .defineProperties (X3DTriggerNode,
+{
+   typeName:
+   {
+      value: "X3DTriggerNode",
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+   },
+});
+
 export default X3DTriggerNode;

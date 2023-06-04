@@ -60,20 +60,20 @@ import X3DVertexAttributeNode      from "./Shaders/X3DVertexAttributeNode.js";
 export default {
    name: "Shaders",
    concreteNodes:
-   {
-      ComposedShader:         ComposedShader,
-      FloatVertexAttribute:   FloatVertexAttribute,
-      Matrix3VertexAttribute: Matrix3VertexAttribute,
-      Matrix4VertexAttribute: Matrix4VertexAttribute,
-      PackagedShader:         PackagedShader,
-      ProgramShader:          ProgramShader,
-      ShaderPart:             ShaderPart,
-      ShaderProgram:          ShaderProgram,
-   },
+   [
+      ComposedShader,
+      FloatVertexAttribute,
+      Matrix3VertexAttribute,
+      Matrix4VertexAttribute,
+      PackagedShader,
+      ProgramShader,
+      ShaderPart,
+      ShaderProgram,
+   ],
    abstractNodes:
-   {
-      X3DProgrammableShaderObject: X3DProgrammableShaderObject,
-      X3DShaderNode:               X3DShaderNode,
-      X3DVertexAttributeNode:      X3DVertexAttributeNode,
-   },
+   [
+      X3DProgrammableShaderObject,
+      X3DShaderNode,
+      X3DVertexAttributeNode,
+   ],
 };

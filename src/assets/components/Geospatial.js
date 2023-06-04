@@ -62,23 +62,23 @@ import X3DGeospatialObject     from "../../x_ite/Components/Geospatial/X3DGeospa
 Components .add ({
    name: "Geospatial",
    concreteNodes:
-   {
-      GeoCoordinate:           GeoCoordinate,
-      GeoElevationGrid:        GeoElevationGrid,
-      GeoLOD:                  GeoLOD,
-      GeoLocation:             GeoLocation,
-      GeoMetadata:             GeoMetadata,
-      GeoOrigin:               GeoOrigin,
-      GeoPositionInterpolator: GeoPositionInterpolator,
-      GeoProximitySensor:      GeoProximitySensor,
-      GeoTouchSensor:          GeoTouchSensor,
-      GeoTransform:            GeoTransform,
-      GeoViewpoint:            GeoViewpoint,
-   },
+   [
+      GeoCoordinate,
+      GeoElevationGrid,
+      GeoLOD,
+      GeoLocation,
+      GeoMetadata,
+      GeoOrigin,
+      GeoPositionInterpolator,
+      GeoProximitySensor,
+      GeoTouchSensor,
+      GeoTransform,
+      GeoViewpoint,
+   ],
    abstractNodes:
-   {
-      X3DGeospatialObject: X3DGeospatialObject,
-   },
+   [
+      X3DGeospatialObject,
+   ],
 });
 
 export default undefined;

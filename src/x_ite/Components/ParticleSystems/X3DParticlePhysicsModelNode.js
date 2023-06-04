@@ -62,4 +62,16 @@ X3DParticlePhysicsModelNode .prototype = Object .assign (Object .create (X3DNode
    { },
 });
 
+Object .defineProperties (X3DParticlePhysicsModelNode,
+{
+   typeName:
+   {
+      value: "X3DParticlePhysicsModelNode",
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+   },
+});
+
 export default X3DParticlePhysicsModelNode;

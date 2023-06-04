@@ -121,4 +121,16 @@ X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .p
    interpolate: function () { },
 });
 
+Object .defineProperties (X3DInterpolatorNode,
+{
+   typeName:
+   {
+      value: "X3DInterpolatorNode",
+   },
+   componentName:
+   {
+      value: "Interpolation",
+   },
+});
+
 export default X3DInterpolatorNode;

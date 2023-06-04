@@ -64,4 +64,16 @@ X3DAnnotationNode .prototype = Object .assign (Object .create (X3DChildNode .pro
    },
 });
 
+Object .defineProperties (X3DAnnotationNode,
+{
+   typeName:
+   {
+      value: "X3DAnnotationNode",
+   },
+   componentName:
+   {
+      value: "Annotation",
+   },
+});
+
 export default X3DAnnotationNode;

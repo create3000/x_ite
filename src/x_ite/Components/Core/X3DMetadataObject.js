@@ -59,4 +59,16 @@ X3DMetadataObject .prototype =
    dispose: function () { },
 };
 
+Object .defineProperties (X3DMetadataObject,
+{
+   typeName:
+   {
+      value: "X3DMetadataObject",
+   },
+   componentName:
+   {
+      value: "Core",
+   },
+});
+
 export default X3DMetadataObject;

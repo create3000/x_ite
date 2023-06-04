@@ -54,14 +54,14 @@ import X3DUrlObject         from "./Networking/X3DUrlObject.js";
 export default {
    name: "Networking",
    concreteNodes:
-   {
-      Anchor:     Anchor,
-      Inline:     Inline,
-      LoadSensor: LoadSensor,
-   },
+   [
+      Anchor,
+      Inline,
+      LoadSensor,
+   ],
    abstractNodes:
-   {
-      X3DNetworkSensorNode: X3DNetworkSensorNode,
-      X3DUrlObject:         X3DUrlObject,
-   },
+   [
+      X3DNetworkSensorNode,
+      X3DUrlObject,
+   ],
 };

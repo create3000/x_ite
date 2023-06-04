@@ -1321,4 +1321,16 @@ X3DProgrammableShaderObject .prototype =
    dispose: function () { },
 };
 
+Object .defineProperties (X3DProgrammableShaderObject,
+{
+   typeName:
+   {
+      value: "X3DProgrammableShaderObject",
+   },
+   componentName:
+   {
+      value: "Shaders",
+   },
+});
+
 export default X3DProgrammableShaderObject;

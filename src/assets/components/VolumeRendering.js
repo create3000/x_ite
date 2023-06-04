@@ -67,27 +67,27 @@ import X3DVolumeRenderStyleNode           from "../../x_ite/Components/VolumeRen
 Components .add ({
    name: "VolumeRendering",
    concreteNodes:
-   {
-      BlendedVolumeStyle:               BlendedVolumeStyle,
-      BoundaryEnhancementVolumeStyle:   BoundaryEnhancementVolumeStyle,
-      CartoonVolumeStyle:               CartoonVolumeStyle,
-      ComposedVolumeStyle:              ComposedVolumeStyle,
-      EdgeEnhancementVolumeStyle:       EdgeEnhancementVolumeStyle,
-      IsoSurfaceVolumeData:             IsoSurfaceVolumeData,
-      OpacityMapVolumeStyle:            OpacityMapVolumeStyle,
-      ProjectionVolumeStyle:            ProjectionVolumeStyle,
-      SegmentedVolumeData:              SegmentedVolumeData,
-      ShadedVolumeStyle:                ShadedVolumeStyle,
-      SilhouetteEnhancementVolumeStyle: SilhouetteEnhancementVolumeStyle,
-      ToneMappedVolumeStyle:            ToneMappedVolumeStyle,
-      VolumeData:                       VolumeData,
-   },
+   [
+      BlendedVolumeStyle,
+      BoundaryEnhancementVolumeStyle,
+      CartoonVolumeStyle,
+      ComposedVolumeStyle,
+      EdgeEnhancementVolumeStyle,
+      IsoSurfaceVolumeData,
+      OpacityMapVolumeStyle,
+      ProjectionVolumeStyle,
+      SegmentedVolumeData,
+      ShadedVolumeStyle,
+      SilhouetteEnhancementVolumeStyle,
+      ToneMappedVolumeStyle,
+      VolumeData,
+   ],
    abstractNodes:
-   {
-      X3DComposableVolumeRenderStyleNode: X3DComposableVolumeRenderStyleNode,
-      X3DVolumeDataNode:                  X3DVolumeDataNode,
-      X3DVolumeRenderStyleNode:           X3DVolumeRenderStyleNode,
-   },
+   [
+      X3DComposableVolumeRenderStyleNode,
+      X3DVolumeDataNode,
+      X3DVolumeRenderStyleNode,
+   ],
    browserContext: X3DVolumeRenderingContext,
 });
 

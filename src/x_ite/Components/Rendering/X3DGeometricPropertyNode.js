@@ -60,4 +60,16 @@ X3DGeometricPropertyNode .prototype = Object .assign (Object .create (X3DNode .p
    constructor: X3DGeometricPropertyNode,
 });
 
+Object .defineProperties (X3DGeometricPropertyNode,
+{
+   typeName:
+   {
+      value: "X3DGeometricPropertyNode",
+   },
+   componentName:
+   {
+      value: "Rendering",
+   },
+});
+
 export default X3DGeometricPropertyNode;

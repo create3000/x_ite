@@ -56,16 +56,16 @@ import X3DFogObject      from "./EnvironmentalEffects/X3DFogObject.js";
 export default {
    name: "EnvironmentalEffects",
    concreteNodes:
-   {
-      Background:        Background,
-      Fog:               Fog,
-      FogCoordinate:     FogCoordinate,
-      LocalFog:          LocalFog,
-      TextureBackground: TextureBackground,
-   },
+   [
+      Background,
+      Fog,
+      FogCoordinate,
+      LocalFog,
+      TextureBackground,
+   ],
    abstractNodes:
-   {
-      X3DBackgroundNode: X3DBackgroundNode,
-      X3DFogObject:      X3DFogObject,
-   },
+   [
+      X3DBackgroundNode,
+      X3DFogObject,
+   ],
 };

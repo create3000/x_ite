@@ -704,4 +704,16 @@ function filter (array, remove)
    return array .filter (value => !set .has (value));
 }
 
+Object .defineProperties (X3DGroupingNode,
+{
+   typeName:
+   {
+      value: "X3DGroupingNode",
+   },
+   componentName:
+   {
+      value: "Grouping",
+   },
+});
+
 export default X3DGroupingNode;

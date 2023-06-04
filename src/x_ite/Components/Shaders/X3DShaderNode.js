@@ -89,4 +89,16 @@ X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNod
    },
 });
 
+Object .defineProperties (X3DShaderNode,
+{
+   typeName:
+   {
+      value: "X3DShaderNode",
+   },
+   componentName:
+   {
+      value: "Shaders",
+   },
+});
+
 export default X3DShaderNode;

@@ -256,4 +256,16 @@ function getStandardLocationMatrix (geoPoint, result)
                        t .x, t .y, t .z, 1);
 }
 
+Object .defineProperties (X3DGeospatialObject,
+{
+   typeName:
+   {
+      value: "X3DGeospatialObject",
+   },
+   componentName:
+   {
+      value: "Geospatial",
+   },
+});
+
 export default X3DGeospatialObject;

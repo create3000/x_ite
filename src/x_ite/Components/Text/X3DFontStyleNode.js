@@ -257,4 +257,16 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
    },
 });
 
+Object .defineProperties (X3DFontStyleNode,
+{
+   typeName:
+   {
+      value: "X3DFontStyleNode",
+   },
+   componentName:
+   {
+      value: "Text",
+   },
+});
+
 export default X3DFontStyleNode;

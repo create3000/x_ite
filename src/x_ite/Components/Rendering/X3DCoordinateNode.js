@@ -177,4 +177,16 @@ X3DCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPrope
    })(),
 });
 
+Object .defineProperties (X3DCoordinateNode,
+{
+   typeName:
+   {
+      value: "X3DCoordinateNode",
+   },
+   componentName:
+   {
+      value: "Rendering",
+   },
+});
+
 export default X3DCoordinateNode;

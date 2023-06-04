@@ -376,4 +376,16 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DPara
    })(),
 });
 
+Object .defineProperties (X3DNurbsSurfaceGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DNurbsSurfaceGeometryNode",
+   },
+   componentName:
+   {
+      value: "NURBS",
+   },
+});
+
 export default X3DNurbsSurfaceGeometryNode;

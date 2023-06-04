@@ -53,13 +53,13 @@ import X3DEnvironmentalSensorNode from "./EnvironmentalSensor/X3DEnvironmentalSe
 export default {
    name: "EnvironmentalSensor",
    concreteNodes:
-   {
-      ProximitySensor:  ProximitySensor,
-      TransformSensor:  TransformSensor,
-      VisibilitySensor: VisibilitySensor,
-   },
+   [
+      ProximitySensor,
+      TransformSensor,
+      VisibilitySensor,
+   ],
    abstractNodes:
-   {
-      X3DEnvironmentalSensorNode: X3DEnvironmentalSensorNode,
-   },
+   [
+      X3DEnvironmentalSensorNode,
+   ],
 };

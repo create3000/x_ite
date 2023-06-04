@@ -122,4 +122,16 @@ X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create (X3DNode .p
    },
 });
 
+Object .defineProperties (X3DVolumeRenderStyleNode,
+{
+   typeName:
+   {
+      value: "X3DVolumeRenderStyleNode",
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+   },
+});
+
 export default X3DVolumeRenderStyleNode;

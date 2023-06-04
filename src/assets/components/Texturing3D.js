@@ -59,20 +59,20 @@ import X3DTexture3DNode         from "../../x_ite/Components/Texturing3D/X3DText
 Components .add ({
    name: "Texturing3D",
    concreteNodes:
-   {
-      ComposedTexture3D:        ComposedTexture3D,
-      ImageTexture3D:           ImageTexture3D,
-      ImageTextureAtlas:        ImageTextureAtlas, // non-standard
-      PixelTexture3D:           PixelTexture3D,
-      TextureCoordinate3D:      TextureCoordinate3D,
-      TextureCoordinate4D:      TextureCoordinate4D,
-      TextureTransform3D:       TextureTransform3D,
-      TextureTransformMatrix3D: TextureTransformMatrix3D,
-   },
+   [
+      ComposedTexture3D,
+      ImageTexture3D,
+      ImageTextureAtlas, // non-standard
+      PixelTexture3D,
+      TextureCoordinate3D,
+      TextureCoordinate4D,
+      TextureTransform3D,
+      TextureTransformMatrix3D,
+   ],
    abstractNodes:
-   {
-      X3DTexture3DNode: X3DTexture3DNode, // Not implemented yet.
-   },
+   [
+      X3DTexture3DNode,
+   ],
 });
 
 export default undefined;

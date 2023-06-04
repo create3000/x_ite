@@ -163,4 +163,16 @@ X3DPointGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNod
    },
 });
 
+Object .defineProperties (X3DPointGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DPointGeometryNode",
+   },
+   componentName:
+   {
+      value: "Rendering",
+   },
+});
+
 export default X3DPointGeometryNode;

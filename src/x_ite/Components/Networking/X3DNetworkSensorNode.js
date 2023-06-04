@@ -60,4 +60,16 @@ X3DNetworkSensorNode .prototype = Object .assign (Object .create (X3DSensorNode 
    constructor: X3DNetworkSensorNode,
 });
 
+Object .defineProperties (X3DNetworkSensorNode,
+{
+   typeName:
+   {
+      value: "X3DNetworkSensorNode",
+   },
+   componentName:
+   {
+      value: "Networking",
+   },
+});
+
 export default X3DNetworkSensorNode;

@@ -127,4 +127,16 @@ X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (X3DSenso
    update: function () { },
 });
 
+Object .defineProperties (X3DEnvironmentalSensorNode,
+{
+   typeName:
+   {
+      value: "X3DEnvironmentalSensorNode",
+   },
+   componentName:
+   {
+      value: "EnvironmentalSensor",
+   },
+});
+
 export default X3DEnvironmentalSensorNode;

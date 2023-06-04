@@ -60,4 +60,16 @@ X3DSensorNode .prototype = Object .assign (Object .create (X3DChildNode .prototy
    constructor: X3DSensorNode,
 });
 
+Object .defineProperties (X3DSensorNode,
+{
+   typeName:
+   {
+      value: "X3DSensorNode",
+   },
+   componentName:
+   {
+      value: "Core",
+   },
+});
+
 export default X3DSensorNode;

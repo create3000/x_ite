@@ -274,4 +274,16 @@ X3DUrlObject .prototype =
    dispose: function () { },
 };
 
+Object .defineProperties (X3DUrlObject,
+{
+   typeName:
+   {
+      value: "X3DUrlObject",
+   },
+   componentName:
+   {
+      value: "Networking",
+   },
+});
+
 export default X3DUrlObject;

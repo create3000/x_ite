@@ -56,16 +56,16 @@ import Sphere         from "./Geometry3D/Sphere.js";
 export default {
    name: "Geometry3D",
    concreteNodes:
-   {
-      Box:            Box,
-      Cone:           Cone,
-      Cylinder:       Cylinder,
-      ElevationGrid:  ElevationGrid,
-      Extrusion:      Extrusion,
-      IndexedFaceSet: IndexedFaceSet,
-      Sphere:         Sphere,
-   },
+   [
+      Box,
+      Cone,
+      Cylinder,
+      ElevationGrid,
+      Extrusion,
+      IndexedFaceSet,
+      Sphere,
+   ],
    abstractNodes:
-   {
-   },
+   [
+   ],
 };

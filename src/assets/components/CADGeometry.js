@@ -57,18 +57,18 @@ import X3DProductStructureChildNode from "../../x_ite/Components/CADGeometry/X3D
 Components .add ({
    name: "CADGeometry",
    concreteNodes:
-   {
-      CADAssembly:    CADAssembly,
-      CADFace:        CADFace,
-      CADLayer:       CADLayer,
-      CADPart:        CADPart,
-      IndexedQuadSet: IndexedQuadSet,
-      QuadSet:        QuadSet,
-   },
+   [
+      CADAssembly,
+      CADFace,
+      CADLayer,
+      CADPart,
+      IndexedQuadSet,
+      QuadSet,
+   ],
    abstractNodes:
-   {
-      X3DProductStructureChildNode: X3DProductStructureChildNode,
-   },
+   [
+      X3DProductStructureChildNode,
+   ],
 });
 
 export default undefined;

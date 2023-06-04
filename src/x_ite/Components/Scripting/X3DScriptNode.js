@@ -73,4 +73,16 @@ X3DScriptNode .prototype = Object .assign (Object .create (X3DChildNode .prototy
    },
 });
 
+Object .defineProperties (X3DScriptNode,
+{
+   typeName:
+   {
+      value: "X3DScriptNode",
+   },
+   componentName:
+   {
+      value: "Scripting",
+   },
+});
+
 export default X3DScriptNode;

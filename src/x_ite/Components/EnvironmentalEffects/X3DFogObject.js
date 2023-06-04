@@ -161,4 +161,16 @@ X3DFogObject .prototype =
    dispose: function () { },
 };
 
+Object .defineProperties (X3DFogObject,
+{
+   typeName:
+   {
+      value: "X3DFogObject",
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+   },
+});
+
 export default X3DFogObject;

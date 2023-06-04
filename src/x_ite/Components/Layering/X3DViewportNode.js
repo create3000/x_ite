@@ -60,4 +60,16 @@ X3DViewportNode .prototype = Object .assign (Object .create (X3DGroupingNode .pr
    constructor: X3DViewportNode,
 });
 
+Object .defineProperties (X3DViewportNode,
+{
+   typeName:
+   {
+      value: "X3DViewportNode",
+   },
+   componentName:
+   {
+      value: "Layering",
+   },
+});
+
 export default X3DViewportNode;

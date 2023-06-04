@@ -982,4 +982,16 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .pro
    },
 });
 
+Object .defineProperties (X3DParticleEmitterNode,
+{
+   typeName:
+   {
+      value: "X3DParticleEmitterNode",
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+   },
+});
+
 export default X3DParticleEmitterNode;

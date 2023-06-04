@@ -205,4 +205,16 @@ X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototyp
    },
 });
 
+Object .defineProperties (X3DRigidJointNode,
+{
+   typeName:
+   {
+      value: "X3DRigidJointNode",
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+   },
+});
+
 export default X3DRigidJointNode;

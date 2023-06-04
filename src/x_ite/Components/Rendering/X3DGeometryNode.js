@@ -1202,4 +1202,16 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
    },
 });
 
+Object .defineProperties (X3DGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DGeometryNode",
+   },
+   componentName:
+   {
+      value: "Rendering",
+   },
+});
+
 export default X3DGeometryNode;

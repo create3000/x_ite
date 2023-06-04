@@ -60,4 +60,16 @@ X3DComposableVolumeRenderStyleNode .prototype = Object .assign (Object .create (
    constructor: X3DComposableVolumeRenderStyleNode,
 });
 
+Object .defineProperties (X3DComposableVolumeRenderStyleNode,
+{
+   typeName:
+   {
+      value: "X3DComposableVolumeRenderStyleNode",
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+   },
+});
+
 export default X3DComposableVolumeRenderStyleNode;

@@ -57,17 +57,17 @@ import X3DLayoutNode    from "../../x_ite/Components/Layout/X3DLayoutNode.js";
 Components .add ({
    name: "Layout",
    concreteNodes:
-   {
-      Layout:          Layout,
-      LayoutGroup:     LayoutGroup,
-      LayoutLayer:     LayoutLayer,
-      ScreenFontStyle: ScreenFontStyle,
-      ScreenGroup:     ScreenGroup,
-   },
+   [
+      Layout,
+      LayoutGroup,
+      LayoutLayer,
+      ScreenFontStyle,
+      ScreenGroup,
+   ],
    abstractNodes:
-   {
-      X3DLayoutNode: X3DLayoutNode,
-   },
+   [
+      X3DLayoutNode,
+   ],
    browserContext: X3DLayoutContext,
 });
 

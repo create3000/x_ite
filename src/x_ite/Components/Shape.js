@@ -64,24 +64,24 @@ import X3DShapeNode            from "./Shape/X3DShapeNode.js";
 export default {
    name: "Shape",
    concreteNodes:
-   {
-      AcousticProperties: AcousticProperties,
-      Appearance:         Appearance,
-      FillProperties:     FillProperties,
-      LineProperties:     LineProperties,
-      Material:           Material,
-      PhysicalMaterial:   PhysicalMaterial,
-      PointProperties:    PointProperties,
-      Shape:              Shape,
-      TwoSidedMaterial:   TwoSidedMaterial,
-      UnlitMaterial:      UnlitMaterial,
-   },
+   [
+      AcousticProperties,
+      Appearance,
+      FillProperties,
+      LineProperties,
+      Material,
+      PhysicalMaterial,
+      PointProperties,
+      Shape,
+      TwoSidedMaterial,
+      UnlitMaterial,
+   ],
    abstractNodes:
-   {
-      X3DAppearanceChildNode:  X3DAppearanceChildNode,
-      X3DAppearanceNode:       X3DAppearanceNode,
-      X3DMaterialNode:         X3DMaterialNode,
-      X3DOneSidedMaterialNode: X3DOneSidedMaterialNode,
-      X3DShapeNode:            X3DShapeNode,
-   },
+   [
+      X3DAppearanceChildNode,
+      X3DAppearanceNode,
+      X3DMaterialNode,
+      X3DOneSidedMaterialNode,
+      X3DShapeNode,
+   ],
 };

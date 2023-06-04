@@ -83,4 +83,16 @@ X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (X3DTe
    },
 });
 
+Object .defineProperties (X3DSingleTextureTransformNode,
+{
+   typeName:
+   {
+      value: "X3DSingleTextureTransformNode",
+   },
+   componentName:
+   {
+      value: "Texturing",
+   },
+});
+
 export default X3DSingleTextureTransformNode;

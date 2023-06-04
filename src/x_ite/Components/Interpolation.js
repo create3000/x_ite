@@ -63,23 +63,23 @@ import X3DInterpolatorNode          from "./Interpolation/X3DInterpolatorNode.js
 export default {
    name: "Interpolation",
    concreteNodes:
-   {
-      ColorInterpolator:            ColorInterpolator,
-      CoordinateInterpolator:       CoordinateInterpolator,
-      CoordinateInterpolator2D:     CoordinateInterpolator2D,
-      EaseInEaseOut:                EaseInEaseOut,
-      NormalInterpolator:           NormalInterpolator,
-      OrientationInterpolator:      OrientationInterpolator,
-      PositionInterpolator:         PositionInterpolator,
-      PositionInterpolator2D:       PositionInterpolator2D,
-      ScalarInterpolator:           ScalarInterpolator,
-      SplinePositionInterpolator:   SplinePositionInterpolator,
-      SplinePositionInterpolator2D: SplinePositionInterpolator2D,
-      SplineScalarInterpolator:     SplineScalarInterpolator,
-      SquadOrientationInterpolator: SquadOrientationInterpolator,
-   },
+   [
+      ColorInterpolator,
+      CoordinateInterpolator,
+      CoordinateInterpolator2D,
+      EaseInEaseOut,
+      NormalInterpolator,
+      OrientationInterpolator,
+      PositionInterpolator,
+      PositionInterpolator2D,
+      ScalarInterpolator,
+      SplinePositionInterpolator,
+      SplinePositionInterpolator2D,
+      SplineScalarInterpolator,
+      SquadOrientationInterpolator,
+   ],
    abstractNodes:
-   {
-      X3DInterpolatorNode: X3DInterpolatorNode,
-   },
+   [
+      X3DInterpolatorNode,
+   ],
 };

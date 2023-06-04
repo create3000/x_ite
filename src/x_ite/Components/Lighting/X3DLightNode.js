@@ -206,4 +206,16 @@ X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
    },
 });
 
+Object .defineProperties (X3DLightNode,
+{
+   typeName:
+   {
+      value: "X3DLightNode",
+   },
+   componentName:
+   {
+      value: "Lighting",
+   },
+});
+
 export default X3DLightNode;

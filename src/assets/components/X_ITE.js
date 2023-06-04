@@ -51,11 +51,12 @@ import BlendMode  from "../../x_ite/Components/X_ITE/BlendMode.js";
 Components .add ({
    name: "X_ITE",
    concreteNodes:
-   {
-      BlendMode: BlendMode,
-   },
+   [
+      BlendMode,
+   ],
    abstractNodes:
-   { },
+   [
+   ],
 });
 
 export default undefined;

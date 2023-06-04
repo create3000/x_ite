@@ -67,28 +67,28 @@ import X3DRigidJointNode          from "../../x_ite/Components/RigidBodyPhysics/
 Components .add ({
    name: "RigidBodyPhysics",
    concreteNodes:
-   {
-      BallJoint:            BallJoint,
-      CollidableOffset:     CollidableOffset,
-      CollidableShape:      CollidableShape,
-      CollisionCollection:  CollisionCollection,
-      CollisionSensor:      CollisionSensor,
-      CollisionSpace:       CollisionSpace,
-      Contact:              Contact,
-      DoubleAxisHingeJoint: DoubleAxisHingeJoint,
-      MotorJoint:           MotorJoint,
-      RigidBody:            RigidBody,
-      RigidBodyCollection:  RigidBodyCollection,
-      SingleAxisHingeJoint: SingleAxisHingeJoint,
-      SliderJoint:          SliderJoint,
-      UniversalJoint:       UniversalJoint,
-   },
+   [
+      BallJoint,
+      CollidableOffset,
+      CollidableShape,
+      CollisionCollection,
+      CollisionSensor,
+      CollisionSpace,
+      Contact,
+      DoubleAxisHingeJoint,
+      MotorJoint,
+      RigidBody,
+      RigidBodyCollection,
+      SingleAxisHingeJoint,
+      SliderJoint,
+      UniversalJoint,
+   ],
    abstractNodes:
-   {
-      X3DNBodyCollidableNode:     X3DNBodyCollidableNode,
-      X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,
-      X3DRigidJointNode:          X3DRigidJointNode,
-   },
+   [
+      X3DNBodyCollidableNode,
+      X3DNBodyCollisionSpaceNode,
+      X3DRigidJointNode,
+   ],
 });
 
 export default undefined;

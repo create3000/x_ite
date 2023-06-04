@@ -60,4 +60,16 @@ X3DProductStructureChildNode .prototype = Object .assign (Object .create (X3DChi
    constructor: X3DProductStructureChildNode,
 });
 
+Object .defineProperties (X3DProductStructureChildNode,
+{
+   typeName:
+   {
+      value: "X3DProductStructureChildNode",
+   },
+   componentName:
+   {
+      value: "CADGeometry",
+   },
+});
+
 export default X3DProductStructureChildNode;

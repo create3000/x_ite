@@ -454,4 +454,16 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
    },
 });
 
+Object .defineProperties (X3DLineGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DLineGeometryNode",
+   },
+   componentName:
+   {
+      value: "Rendering",
+   },
+});
+
 export default X3DLineGeometryNode;

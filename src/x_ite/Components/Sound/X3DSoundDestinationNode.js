@@ -60,4 +60,16 @@ X3DSoundDestinationNode .prototype = Object .assign (Object .create (X3DSoundNod
    constructor: X3DSoundDestinationNode,
 });
 
+Object .defineProperties (X3DSoundDestinationNode,
+{
+   typeName:
+   {
+      value: "X3DSoundDestinationNode",
+   },
+   componentName:
+   {
+      value: "Sound",
+   },
+});
+
 export default X3DSoundDestinationNode;

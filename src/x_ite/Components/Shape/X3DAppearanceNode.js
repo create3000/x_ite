@@ -74,4 +74,16 @@ X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototyp
    },
 });
 
+Object .defineProperties (X3DAppearanceNode,
+{
+   typeName:
+   {
+      value: "X3DAppearanceNode",
+   },
+   componentName:
+   {
+      value: "Shape",
+   },
+});
+
 export default X3DAppearanceNode;

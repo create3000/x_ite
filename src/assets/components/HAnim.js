@@ -56,17 +56,17 @@ import HAnimSite      from "../../x_ite/Components/HAnim/HAnimSite.js";
 Components .add ({
    name: "HAnim",
    concreteNodes:
-   {
-      HAnimDisplacer: HAnimDisplacer,
-      HAnimHumanoid:  HAnimHumanoid,
-      HAnimJoint:     HAnimJoint,
-      HAnimMotion:    HAnimMotion,
-      HAnimSegment:   HAnimSegment,
-      HAnimSite:      HAnimSite,
-   },
+   [
+      HAnimDisplacer,
+      HAnimHumanoid,
+      HAnimJoint,
+      HAnimMotion,
+      HAnimSegment,
+      HAnimSite,
+   ],
    abstractNodes:
-   {
-   },
+   [
+   ],
 });
 
 export default undefined;

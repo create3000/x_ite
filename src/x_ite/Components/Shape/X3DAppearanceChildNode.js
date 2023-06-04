@@ -60,4 +60,16 @@ X3DAppearanceChildNode .prototype = Object .assign (Object .create (X3DNode .pro
    constructor: X3DAppearanceChildNode,
 });
 
+Object .defineProperties (X3DAppearanceChildNode,
+{
+   typeName:
+   {
+      value: "X3DAppearanceChildNode",
+   },
+   componentName:
+   {
+      value: "Shape",
+   },
+});
+
 export default X3DAppearanceChildNode;

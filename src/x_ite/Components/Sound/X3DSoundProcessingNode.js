@@ -76,4 +76,16 @@ X3DSoundProcessingNode .prototype = Object .assign (Object .create (X3DChildNode
    },
 });
 
+Object .defineProperties (X3DSoundProcessingNode,
+{
+   typeName:
+   {
+      value: "X3DSoundProcessingNode",
+   },
+   componentName:
+   {
+      value: "Sound",
+   },
+});
+
 export default X3DSoundProcessingNode;

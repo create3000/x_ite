@@ -74,4 +74,16 @@ X3DTextureNode .prototype = Object .assign (Object .create (X3DAppearanceChildNo
    },
 });
 
+Object .defineProperties (X3DTextureNode,
+{
+   typeName:
+   {
+      value: "X3DTextureNode",
+   },
+   componentName:
+   {
+      value: "Texturing",
+   },
+});
+
 export default X3DTextureNode;

@@ -137,4 +137,16 @@ X3DSequencerNode .prototype = Object .assign (Object .create (X3DChildNode .prot
    },
 });
 
+Object .defineProperties (X3DSequencerNode,
+{
+   typeName:
+   {
+      value: "X3DSequencerNode",
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+   },
+});
+
 export default X3DSequencerNode;

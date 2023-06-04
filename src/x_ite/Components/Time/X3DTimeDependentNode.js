@@ -353,4 +353,16 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
    },
 });
 
+Object .defineProperties (X3DTimeDependentNode,
+{
+   typeName:
+   {
+      value: "X3DTimeDependentNode",
+   },
+   componentName:
+   {
+      value: "Time",
+   },
+});
+
 export default X3DTimeDependentNode;

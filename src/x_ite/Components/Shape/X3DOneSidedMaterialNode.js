@@ -198,4 +198,16 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterial
    },
 });
 
+Object .defineProperties (X3DOneSidedMaterialNode,
+{
+   typeName:
+   {
+      value: "X3DOneSidedMaterialNode",
+   },
+   componentName:
+   {
+      value: "Shape",
+   },
+});
+
 export default X3DOneSidedMaterialNode;

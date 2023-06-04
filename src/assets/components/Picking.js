@@ -57,18 +57,18 @@ import X3DPickableObject   from "../../x_ite/Components/Picking/X3DPickableObjec
 Components .add ({
    name: "Picking",
    concreteNodes:
-   {
-      LinePickSensor:      LinePickSensor,
-      PickableGroup:       PickableGroup,
-      PointPickSensor:     PointPickSensor,
-      PrimitivePickSensor: PrimitivePickSensor,
-      VolumePickSensor:    VolumePickSensor,
-   },
+   [
+      LinePickSensor,
+      PickableGroup,
+      PointPickSensor,
+      PrimitivePickSensor,
+      VolumePickSensor,
+   ],
    abstractNodes:
-   {
-      X3DPickSensorNode: X3DPickSensorNode,
-      X3DPickableObject: X3DPickableObject,
-   },
+   [
+      X3DPickSensorNode,
+      X3DPickableObject,
+   ],
 });
 
 export default undefined;

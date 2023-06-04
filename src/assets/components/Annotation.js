@@ -57,18 +57,18 @@ import X3DAnnotationNode from "../../x_ite/Components/Annotation/X3DAnnotationNo
 Components .add ({
    name: "Annotation",
    concreteNodes:
-   {
-      AnnotationLayer:  AnnotationLayer,
-      AnnotationTarget: AnnotationTarget,
-      GroupAnnotation:  GroupAnnotation,
-      IconAnnotation:   IconAnnotation,
-      TextAnnotation:   TextAnnotation,
-      URLAnnotation:    URLAnnotation,
-   },
+   [
+      AnnotationLayer,
+      AnnotationTarget,
+      GroupAnnotation,
+      IconAnnotation,
+      TextAnnotation,
+      URLAnnotation,
+   ],
    abstractNodes:
-   {
-      X3DAnnotationNode: X3DAnnotationNode,
-   },
+   [
+      X3DAnnotationNode,
+   ],
 });
 
 export default undefined;

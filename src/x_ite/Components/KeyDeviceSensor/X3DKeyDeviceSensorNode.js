@@ -104,4 +104,16 @@ X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNod
    release: function () { },
 });
 
+Object .defineProperties (X3DKeyDeviceSensorNode,
+{
+   typeName:
+   {
+      value: "X3DKeyDeviceSensorNode",
+   },
+   componentName:
+   {
+      value: "KeyDeviceSensor",
+   },
+});
+
 export default X3DKeyDeviceSensorNode;

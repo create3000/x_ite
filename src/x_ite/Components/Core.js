@@ -63,23 +63,23 @@ import X3DSensorNode        from "./Core/X3DSensorNode.js";
 export default {
    name: "Core",
    concreteNodes:
-   {
-      MetadataBoolean: MetadataBoolean,
-      MetadataDouble:  MetadataDouble,
-      MetadataFloat:   MetadataFloat,
-      MetadataInteger: MetadataInteger,
-      MetadataSet:     MetadataSet,
-      MetadataString:  MetadataString,
-      WorldInfo:       WorldInfo,
-   },
+   [
+      MetadataBoolean,
+      MetadataDouble,
+      MetadataFloat,
+      MetadataInteger,
+      MetadataSet,
+      MetadataString,
+      WorldInfo,
+   ],
    abstractNodes:
-   {
-      X3DBindableNode:      X3DBindableNode,
-      X3DChildNode:         X3DChildNode,
-      X3DInfoNode:          X3DInfoNode,
-      X3DMetadataObject:    X3DMetadataObject,
-      X3DNode:              X3DNode,
-      X3DPrototypeInstance: X3DPrototypeInstance,
-      X3DSensorNode:        X3DSensorNode,
-   },
+   [
+      X3DBindableNode,
+      X3DChildNode,
+      X3DInfoNode,
+      X3DMetadataObject,
+      X3DNode,
+      X3DPrototypeInstance,
+      X3DSensorNode,
+   ],
 };

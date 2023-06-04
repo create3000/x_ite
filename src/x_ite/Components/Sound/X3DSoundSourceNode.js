@@ -211,4 +211,16 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
    },
 });
 
+Object .defineProperties (X3DSoundSourceNode,
+{
+   typeName:
+   {
+      value: "X3DSoundSourceNode",
+   },
+   componentName:
+   {
+      value: "Sound",
+   },
+});
+
 export default X3DSoundSourceNode;

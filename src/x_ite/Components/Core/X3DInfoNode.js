@@ -60,4 +60,16 @@ X3DInfoNode .prototype = Object .assign (Object .create (X3DChildNode .prototype
    constructor: X3DInfoNode,
 });
 
+Object .defineProperties (X3DInfoNode,
+{
+   typeName:
+   {
+      value: "X3DInfoNode",
+   },
+   componentName:
+   {
+      value: "Core",
+   },
+});
+
 export default X3DInfoNode;

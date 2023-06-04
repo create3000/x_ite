@@ -62,4 +62,16 @@ X3DDragSensorNode .prototype = Object .assign (Object .create (X3DPointingDevice
    constructor: X3DDragSensorNode,
 });
 
+Object .defineProperties (X3DDragSensorNode,
+{
+   typeName:
+   {
+      value: "X3DDragSensorNode",
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+   },
+});
+
 export default X3DDragSensorNode;

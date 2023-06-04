@@ -56,16 +56,16 @@ import X3DTouchSensorNode          from "./PointingDeviceSensor/X3DTouchSensorNo
 export default {
    name: "PointingDeviceSensor",
    concreteNodes:
-   {
-      CylinderSensor: CylinderSensor,
-      PlaneSensor:    PlaneSensor,
-      SphereSensor:   SphereSensor,
-      TouchSensor:    TouchSensor,
-   },
+   [
+      CylinderSensor,
+      PlaneSensor,
+      SphereSensor,
+      TouchSensor,
+   ],
    abstractNodes:
-   {
-      X3DDragSensorNode:           X3DDragSensorNode,
-      X3DPointingDeviceSensorNode: X3DPointingDeviceSensorNode,
-      X3DTouchSensorNode:          X3DTouchSensorNode,
-   },
+   [
+      X3DDragSensorNode,
+      X3DPointingDeviceSensorNode,
+      X3DTouchSensorNode,
+   ],
 };

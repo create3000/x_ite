@@ -60,4 +60,16 @@ X3DTextureCoordinateNode .prototype = Object .assign (Object .create (X3DGeometr
    constructor: X3DTextureCoordinateNode,
 });
 
+Object .defineProperties (X3DTextureCoordinateNode,
+{
+   typeName:
+   {
+      value: "X3DTextureCoordinateNode",
+   },
+   componentName:
+   {
+      value: "Texturing",
+   },
+});
+
 export default X3DTextureCoordinateNode;

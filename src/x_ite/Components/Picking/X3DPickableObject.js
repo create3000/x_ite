@@ -79,4 +79,16 @@ X3DPickableObject .prototype =
    dispose: function () { },
 };
 
+Object .defineProperties (X3DPickableObject,
+{
+   typeName:
+   {
+      value: "X3DPickableObject",
+   },
+   componentName:
+   {
+      value: "Picking",
+   },
+});
+
 export default X3DPickableObject;

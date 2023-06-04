@@ -60,4 +60,16 @@ X3DSoundChannelNode .prototype = Object .assign (Object .create (X3DSoundNode .p
    constructor: X3DSoundChannelNode,
 });
 
+Object .defineProperties (X3DSoundChannelNode,
+{
+   typeName:
+   {
+      value: "X3DSoundChannelNode",
+   },
+   componentName:
+   {
+      value: "Sound",
+   },
+});
+
 export default X3DSoundChannelNode;

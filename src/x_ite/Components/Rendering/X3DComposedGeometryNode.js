@@ -346,4 +346,16 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
    })(),
 });
 
+Object .defineProperties (X3DComposedGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DComposedGeometryNode",
+   },
+   componentName:
+   {
+      value: "Rendering",
+   },
+});
+
 export default X3DComposedGeometryNode;

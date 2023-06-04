@@ -60,4 +60,16 @@ X3DNurbsControlCurveNode .prototype = Object .assign (Object .create (X3DNode .p
    constructor: X3DNurbsControlCurveNode,
 });
 
+Object .defineProperties (X3DNurbsControlCurveNode,
+{
+   typeName:
+   {
+      value: "X3DNurbsControlCurveNode",
+   },
+   componentName:
+   {
+      value: "NURBS",
+   },
+});
+
 export default X3DNurbsControlCurveNode;

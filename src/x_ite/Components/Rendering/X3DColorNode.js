@@ -74,4 +74,16 @@ X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNo
    },
 });
 
+Object .defineProperties (X3DColorNode,
+{
+   typeName:
+   {
+      value: "X3DColorNode",
+   },
+   componentName:
+   {
+      value: "Rendering",
+   },
+});
+
 export default X3DColorNode;

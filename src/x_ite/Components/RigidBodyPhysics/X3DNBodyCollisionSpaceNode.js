@@ -73,4 +73,16 @@ X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create (X3DNode 
    },
 });
 
+Object .defineProperties (X3DNBodyCollisionSpaceNode,
+{
+   typeName:
+   {
+      value: "X3DNBodyCollisionSpaceNode",
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+   },
+});
+
 export default X3DNBodyCollisionSpaceNode;

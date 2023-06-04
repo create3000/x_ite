@@ -85,4 +85,16 @@ X3DSingleTextureCoordinateNode .prototype = Object .assign (Object .create (X3DT
    },
 });
 
+Object .defineProperties (X3DSingleTextureCoordinateNode,
+{
+   typeName:
+   {
+      value: "X3DSingleTextureCoordinateNode",
+   },
+   componentName:
+   {
+      value: "Texturing",
+   },
+});
+
 export default X3DSingleTextureCoordinateNode;
