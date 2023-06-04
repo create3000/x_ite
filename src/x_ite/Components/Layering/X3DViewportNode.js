@@ -65,10 +65,12 @@ Object .defineProperties (X3DViewportNode,
    typeName:
    {
       value: "X3DViewportNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Layering",
+      enumerate: true,
    },
 });
 

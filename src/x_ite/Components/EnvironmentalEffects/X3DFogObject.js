@@ -166,10 +166,12 @@ Object .defineProperties (X3DFogObject,
    typeName:
    {
       value: "X3DFogObject",
+      enumerate: true,
    },
    componentName:
    {
       value: "EnvironmentalEffects",
+      enumerate: true,
    },
 });
 

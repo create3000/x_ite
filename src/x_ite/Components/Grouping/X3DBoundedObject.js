@@ -140,10 +140,12 @@ Object .defineProperties (X3DBoundedObject,
    typeName:
    {
       value: "X3DBoundedObject",
+      enumerate: true,
    },
    componentName:
    {
       value: "Grouping",
+      enumerate: true,
    },
 });
 

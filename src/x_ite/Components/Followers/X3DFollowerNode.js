@@ -140,10 +140,12 @@ Object .defineProperties (X3DFollowerNode,
    typeName:
    {
       value: "X3DFollowerNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Followers",
+      enumerate: true,
    },
 });
 

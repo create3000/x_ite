@@ -363,6 +363,20 @@ X3DAnnotationNode .prototype = Object .assign (Object .create ((X3DChildNode_def
    },
 });
 
+Object .defineProperties (X3DAnnotationNode,
+{
+   typeName:
+   {
+      value: "X3DAnnotationNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Annotation",
+      enumerate: true,
+   },
+});
+
 const X3DAnnotationNode_default_ = X3DAnnotationNode;
 ;
 
@@ -900,18 +914,18 @@ Namespace_default().set ("x_ite/Components/Annotation/URLAnnotation", URLAnnotat
 Components_default().add ({
    name: "Annotation",
    concreteNodes:
-   {
-      AnnotationLayer:  Annotation_AnnotationLayer,
-      AnnotationTarget: Annotation_AnnotationTarget,
-      GroupAnnotation:  Annotation_GroupAnnotation,
-      IconAnnotation:   Annotation_IconAnnotation,
-      TextAnnotation:   Annotation_TextAnnotation,
-      URLAnnotation:    Annotation_URLAnnotation,
-   },
+   [
+      Annotation_AnnotationLayer,
+      Annotation_AnnotationTarget,
+      Annotation_GroupAnnotation,
+      Annotation_IconAnnotation,
+      Annotation_TextAnnotation,
+      Annotation_URLAnnotation,
+   ],
    abstractNodes:
-   {
-      X3DAnnotationNode: Annotation_X3DAnnotationNode,
-   },
+   [
+      Annotation_X3DAnnotationNode,
+   ],
 });
 
 const Annotation_default_ = undefined;

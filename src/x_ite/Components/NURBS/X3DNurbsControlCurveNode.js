@@ -65,10 +65,12 @@ Object .defineProperties (X3DNurbsControlCurveNode,
    typeName:
    {
       value: "X3DNurbsControlCurveNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "NURBS",
+      enumerate: true,
    },
 });
 

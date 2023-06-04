@@ -1359,10 +1359,12 @@ Object .defineProperties (X3DNode,
    typeName:
    {
       value: "X3DNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Core",
+      enumerate: true,
    },
 });
 

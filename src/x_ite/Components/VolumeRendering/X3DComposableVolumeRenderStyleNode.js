@@ -65,10 +65,12 @@ Object .defineProperties (X3DComposableVolumeRenderStyleNode,
    typeName:
    {
       value: "X3DComposableVolumeRenderStyleNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "VolumeRendering",
+      enumerate: true,
    },
 });
 

@@ -156,10 +156,12 @@ Object .defineProperties (X3DNBodyCollidableNode,
    typeName:
    {
       value: "X3DNBodyCollidableNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
+      enumerate: true,
    },
 });
 

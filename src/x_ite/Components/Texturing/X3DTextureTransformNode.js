@@ -65,10 +65,12 @@ Object .defineProperties (X3DTextureTransformNode,
    typeName:
    {
       value: "X3DTextureTransformNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Texturing",
+      enumerate: true,
    },
 });
 

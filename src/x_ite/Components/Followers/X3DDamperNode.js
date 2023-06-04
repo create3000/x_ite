@@ -165,10 +165,12 @@ Object .defineProperties (X3DDamperNode,
    typeName:
    {
       value: "X3DDamperNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Followers",
+      enumerate: true,
    },
 });
 

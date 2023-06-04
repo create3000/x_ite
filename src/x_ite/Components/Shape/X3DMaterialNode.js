@@ -318,10 +318,12 @@ Object .defineProperties (X3DMaterialNode,
    typeName:
    {
       value: "X3DMaterialNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Shape",
+      enumerate: true,
    },
 });
 

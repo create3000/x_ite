@@ -72,10 +72,12 @@ Object .defineProperties (X3DBindableNode,
    typeName:
    {
       value: "X3DBindableNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Core",
+      enumerate: true,
    },
 });
 

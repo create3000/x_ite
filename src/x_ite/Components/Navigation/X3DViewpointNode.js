@@ -583,10 +583,12 @@ Object .defineProperties (X3DViewpointNode,
    typeName:
    {
       value: "X3DViewpointNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Navigation",
+      enumerate: true,
    },
 });
 

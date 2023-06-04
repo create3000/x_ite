@@ -1581,6 +1581,20 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create ((X3DNode_def
    },
 });
 
+Object .defineProperties (X3DParticleEmitterNode,
+{
+   typeName:
+   {
+      value: "X3DParticleEmitterNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerate: true,
+   },
+});
+
 const X3DParticleEmitterNode_default_ = X3DParticleEmitterNode;
 ;
 
@@ -1888,6 +1902,20 @@ X3DParticlePhysicsModelNode .prototype = Object .assign (Object .create ((X3DNod
    constructor: X3DParticlePhysicsModelNode,
    addForce: function ()
    { },
+});
+
+Object .defineProperties (X3DParticlePhysicsModelNode,
+{
+   typeName:
+   {
+      value: "X3DParticlePhysicsModelNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerate: true,
+   },
 });
 
 const X3DParticlePhysicsModelNode_default_ = X3DParticlePhysicsModelNode;
@@ -5111,23 +5139,23 @@ Namespace_default().set ("x_ite/Components/ParticleSystems/WindPhysicsModel", Wi
 Components_default().add ({
    name: "ParticleSystems",
    concreteNodes:
-   {
-      BoundedPhysicsModel: ParticleSystems_BoundedPhysicsModel,
-      ConeEmitter:         ParticleSystems_ConeEmitter,
-      ExplosionEmitter:    ParticleSystems_ExplosionEmitter,
-      ForcePhysicsModel:   ParticleSystems_ForcePhysicsModel,
-      ParticleSystem:      ParticleSystems_ParticleSystem,
-      PointEmitter:        ParticleSystems_PointEmitter,
-      PolylineEmitter:     ParticleSystems_PolylineEmitter,
-      SurfaceEmitter:      ParticleSystems_SurfaceEmitter,
-      VolumeEmitter:       ParticleSystems_VolumeEmitter,
-      WindPhysicsModel:    ParticleSystems_WindPhysicsModel,
-   },
+   [
+      ParticleSystems_BoundedPhysicsModel,
+      ParticleSystems_ConeEmitter,
+      ParticleSystems_ExplosionEmitter,
+      ParticleSystems_ForcePhysicsModel,
+      ParticleSystems_ParticleSystem,
+      ParticleSystems_PointEmitter,
+      ParticleSystems_PolylineEmitter,
+      ParticleSystems_SurfaceEmitter,
+      ParticleSystems_VolumeEmitter,
+      ParticleSystems_WindPhysicsModel,
+   ],
    abstractNodes:
-   {
-      X3DParticleEmitterNode:      ParticleSystems_X3DParticleEmitterNode,
-      X3DParticlePhysicsModelNode: ParticleSystems_X3DParticlePhysicsModelNode,
-   },
+   [
+      ParticleSystems_X3DParticleEmitterNode,
+      ParticleSystems_X3DParticlePhysicsModelNode,
+   ],
    browserContext: ParticleSystems_X3DParticleSystemsContext,
 });
 

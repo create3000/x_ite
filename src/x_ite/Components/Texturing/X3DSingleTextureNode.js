@@ -184,10 +184,12 @@ Object .defineProperties (X3DSingleTextureNode,
    typeName:
    {
       value: "X3DSingleTextureNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Texturing",
+      enumerate: true,
    },
 });
 

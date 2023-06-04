@@ -121,10 +121,12 @@ Object .defineProperties (X3DPointingDeviceSensorNode,
    typeName:
    {
       value: "X3DPointingDeviceSensorNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "PointingDeviceSensor",
+      enumerate: true,
    },
 });
 

@@ -65,10 +65,12 @@ Object .defineProperties (X3DSoundDestinationNode,
    typeName:
    {
       value: "X3DSoundDestinationNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Sound",
+      enumerate: true,
    },
 });
 

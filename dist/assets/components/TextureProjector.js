@@ -278,6 +278,20 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNo
    },
 });
 
+Object .defineProperties (X3DTextureProjectorNode,
+{
+   typeName:
+   {
+      value: "X3DTextureProjectorNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "TextureProjector",
+      enumerate: true,
+   },
+});
+
 const __default__ = X3DTextureProjectorNode;
 ;
 
@@ -840,14 +854,14 @@ Namespace_default().set ("x_ite/Components/TextureProjector/TextureProjectorPara
 Components_default().add ({
    name: "TextureProjector",
    concreteNodes:
-   {
-      TextureProjector:         TextureProjector_TextureProjector,
-      TextureProjectorParallel: TextureProjector_TextureProjectorParallel,
-   },
+   [
+      TextureProjector_TextureProjector,
+      TextureProjector_TextureProjectorParallel,
+   ],
    abstractNodes:
-   {
-      X3DTextureProjectorNode: TextureProjector_X3DTextureProjectorNode,
-   },
+   [
+      TextureProjector_X3DTextureProjectorNode,
+   ],
 });
 
 const components_TextureProjector_default_ = undefined;

@@ -1,7 +1,7 @@
 /* X_ITE v8.7.8 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 294:
+/***/ 711:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14916,6 +14916,20 @@ X3DFontStyleNode .prototype = Object .assign (Object .create ((X3DNode_default()
    },
 });
 
+Object .defineProperties (X3DFontStyleNode,
+{
+   typeName:
+   {
+      value: "X3DFontStyleNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Text",
+      enumerate: true,
+   },
+});
+
 const X3DFontStyleNode_default_ = X3DFontStyleNode;
 ;
 
@@ -16058,7 +16072,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(294);
+/* provided dependency */ var opentype = __webpack_require__(711);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16432,14 +16446,14 @@ Namespace_default().set ("x_ite/Components/Text/Text", Text_default_);
 Components_default().add ({
    name: "Text",
    concreteNodes:
-   {
-      FontStyle: Text_FontStyle,
-      Text: Text_Text,
-   },
+   [
+      Text_FontStyle,
+      Text_Text,
+   ],
    abstractNodes:
-   {
-      X3DFontStyleNode: Text_X3DFontStyleNode,
-   },
+   [
+      Text_X3DFontStyleNode,
+   ],
    browserContext: Text_X3DTextContext,
 });
 

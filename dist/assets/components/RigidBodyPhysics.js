@@ -322,6 +322,20 @@ X3DRigidJointNode .prototype = Object .assign (Object .create ((X3DNode_default(
    },
 });
 
+Object .defineProperties (X3DRigidJointNode,
+{
+   typeName:
+   {
+      value: "X3DRigidJointNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+      enumerate: true,
+   },
+});
+
 const __default__ = X3DRigidJointNode;
 ;
 
@@ -801,6 +815,20 @@ X3DNBodyCollidableNode .prototype = Object .assign (Object .create ((X3DChildNod
    {
       X3DBoundedObject_default().prototype.dispose.call (this);
       X3DChildNode_default().prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (X3DNBodyCollidableNode,
+{
+   typeName:
+   {
+      value: "X3DNBodyCollidableNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+      enumerate: true,
    },
 });
 
@@ -2238,6 +2266,20 @@ X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create ((X3DNode
    {
       X3DBoundedObject_default().prototype.dispose.call (this);
       X3DNode_default().prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (X3DNBodyCollisionSpaceNode,
+{
+   typeName:
+   {
+      value: "X3DNBodyCollisionSpaceNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+      enumerate: true,
    },
 });
 
@@ -4613,28 +4655,28 @@ Namespace_default().set ("x_ite/Components/RigidBodyPhysics/UniversalJoint", Uni
 Components_default().add ({
    name: "RigidBodyPhysics",
    concreteNodes:
-   {
-      BallJoint:            RigidBodyPhysics_BallJoint,
-      CollidableOffset:     RigidBodyPhysics_CollidableOffset,
-      CollidableShape:      RigidBodyPhysics_CollidableShape,
-      CollisionCollection:  RigidBodyPhysics_CollisionCollection,
-      CollisionSensor:      RigidBodyPhysics_CollisionSensor,
-      CollisionSpace:       RigidBodyPhysics_CollisionSpace,
-      Contact:              RigidBodyPhysics_Contact,
-      DoubleAxisHingeJoint: RigidBodyPhysics_DoubleAxisHingeJoint,
-      MotorJoint:           RigidBodyPhysics_MotorJoint,
-      RigidBody:            RigidBodyPhysics_RigidBody,
-      RigidBodyCollection:  RigidBodyPhysics_RigidBodyCollection,
-      SingleAxisHingeJoint: RigidBodyPhysics_SingleAxisHingeJoint,
-      SliderJoint:          RigidBodyPhysics_SliderJoint,
-      UniversalJoint:       RigidBodyPhysics_UniversalJoint,
-   },
+   [
+      RigidBodyPhysics_BallJoint,
+      RigidBodyPhysics_CollidableOffset,
+      RigidBodyPhysics_CollidableShape,
+      RigidBodyPhysics_CollisionCollection,
+      RigidBodyPhysics_CollisionSensor,
+      RigidBodyPhysics_CollisionSpace,
+      RigidBodyPhysics_Contact,
+      RigidBodyPhysics_DoubleAxisHingeJoint,
+      RigidBodyPhysics_MotorJoint,
+      RigidBodyPhysics_RigidBody,
+      RigidBodyPhysics_RigidBodyCollection,
+      RigidBodyPhysics_SingleAxisHingeJoint,
+      RigidBodyPhysics_SliderJoint,
+      RigidBodyPhysics_UniversalJoint,
+   ],
    abstractNodes:
-   {
-      X3DNBodyCollidableNode:     RigidBodyPhysics_X3DNBodyCollidableNode,
-      X3DNBodyCollisionSpaceNode: RigidBodyPhysics_X3DNBodyCollisionSpaceNode,
-      X3DRigidJointNode:          RigidBodyPhysics_X3DRigidJointNode,
-   },
+   [
+      RigidBodyPhysics_X3DNBodyCollidableNode,
+      RigidBodyPhysics_X3DNBodyCollisionSpaceNode,
+      RigidBodyPhysics_X3DRigidJointNode,
+   ],
 });
 
 const RigidBodyPhysics_default_ = undefined;

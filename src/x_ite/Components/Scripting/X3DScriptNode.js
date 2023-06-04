@@ -78,10 +78,12 @@ Object .defineProperties (X3DScriptNode,
    typeName:
    {
       value: "X3DScriptNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Scripting",
+      enumerate: true,
    },
 });
 

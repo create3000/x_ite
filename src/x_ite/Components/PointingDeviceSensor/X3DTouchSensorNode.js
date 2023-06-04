@@ -95,10 +95,12 @@ Object .defineProperties (X3DTouchSensorNode,
    typeName:
    {
       value: "X3DTouchSensorNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "PointingDeviceSensor",
+      enumerate: true,
    },
 });
 

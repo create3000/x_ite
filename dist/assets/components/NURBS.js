@@ -301,6 +301,20 @@ X3DNurbsControlCurveNode .prototype = Object .assign (Object .create ((X3DNode_d
    constructor: X3DNurbsControlCurveNode,
 });
 
+Object .defineProperties (X3DNurbsControlCurveNode,
+{
+   typeName:
+   {
+      value: "X3DNurbsControlCurveNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerate: true,
+   },
+});
+
 const X3DNurbsControlCurveNode_default_ = X3DNurbsControlCurveNode;
 ;
 
@@ -1136,6 +1150,20 @@ X3DParametricGeometryNode .prototype = Object .assign (Object .create ((X3DGeome
    getKnots: function (result, closed, order, dimension, knot)
    {
       return NURBS_NURBS.getKnots (result, closed, order, dimension, knot);
+   },
+});
+
+Object .defineProperties (X3DParametricGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DParametricGeometryNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerate: true,
    },
 });
 
@@ -3851,6 +3879,20 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
    })(),
 });
 
+Object .defineProperties (X3DNurbsSurfaceGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DNurbsSurfaceGeometryNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerate: true,
+   },
+});
+
 const X3DNurbsSurfaceGeometryNode_default_ = X3DNurbsSurfaceGeometryNode;
 ;
 
@@ -5465,28 +5507,28 @@ Namespace_default().set ("x_ite/Components/NURBS/NurbsTrimmedSurface", NurbsTrim
 Components_default().add ({
    name: "NURBS",
    concreteNodes:
-   {
-      Contour2D:                    NURBS_Contour2D,
-      ContourPolyline2D:            NURBS_ContourPolyline2D,
-      CoordinateDouble:             NURBS_CoordinateDouble,
-      NurbsCurve:                   NURBS_NurbsCurve,
-      NurbsCurve2D:                 NURBS_NurbsCurve2D,
-      NurbsOrientationInterpolator: NURBS_NurbsOrientationInterpolator,
-      NurbsPatchSurface:            NURBS_NurbsPatchSurface,
-      NurbsPositionInterpolator:    NURBS_NurbsPositionInterpolator,
-      NurbsSet:                     NURBS_NurbsSet,
-      NurbsSurfaceInterpolator:     NURBS_NurbsSurfaceInterpolator,
-      NurbsSweptSurface:            NURBS_NurbsSweptSurface,
-      NurbsSwungSurface:            NURBS_NurbsSwungSurface,
-      NurbsTextureCoordinate:       NURBS_NurbsTextureCoordinate,
-      NurbsTrimmedSurface:          NURBS_NurbsTrimmedSurface,
-   },
+   [
+      NURBS_Contour2D,
+      NURBS_ContourPolyline2D,
+      NURBS_CoordinateDouble,
+      NURBS_NurbsCurve,
+      NURBS_NurbsCurve2D,
+      NURBS_NurbsOrientationInterpolator,
+      NURBS_NurbsPatchSurface,
+      NURBS_NurbsPositionInterpolator,
+      NURBS_NurbsSet,
+      NURBS_NurbsSurfaceInterpolator,
+      NURBS_NurbsSweptSurface,
+      NURBS_NurbsSwungSurface,
+      NURBS_NurbsTextureCoordinate,
+      NURBS_NurbsTrimmedSurface,
+   ],
    abstractNodes:
-   {
-      X3DNurbsControlCurveNode:    NURBS_X3DNurbsControlCurveNode,
-      X3DNurbsSurfaceGeometryNode: NURBS_X3DNurbsSurfaceGeometryNode,
-      X3DParametricGeometryNode:   NURBS_X3DParametricGeometryNode,
-   },
+   [
+      NURBS_X3DNurbsControlCurveNode,
+      NURBS_X3DNurbsSurfaceGeometryNode,
+      NURBS_X3DParametricGeometryNode,
+   ],
 });
 
 const components_NURBS_default_ = undefined;

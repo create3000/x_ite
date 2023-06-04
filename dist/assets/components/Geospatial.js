@@ -1284,6 +1284,20 @@ function getStandardLocationMatrix (geoPoint, result)
                        t .x, t .y, t .z, 1);
 }
 
+Object .defineProperties (X3DGeospatialObject,
+{
+   typeName:
+   {
+      value: "X3DGeospatialObject",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerate: true,
+   },
+});
+
 const X3DGeospatialObject_default_ = X3DGeospatialObject;
 ;
 
@@ -3858,23 +3872,23 @@ Namespace_default().set ("x_ite/Components/Geospatial/GeoViewpoint", GeoViewpoin
 Components_default().add ({
    name: "Geospatial",
    concreteNodes:
-   {
-      GeoCoordinate:           Geospatial_GeoCoordinate,
-      GeoElevationGrid:        Geospatial_GeoElevationGrid,
-      GeoLOD:                  Geospatial_GeoLOD,
-      GeoLocation:             Geospatial_GeoLocation,
-      GeoMetadata:             Geospatial_GeoMetadata,
-      GeoOrigin:               Geospatial_GeoOrigin,
-      GeoPositionInterpolator: Geospatial_GeoPositionInterpolator,
-      GeoProximitySensor:      Geospatial_GeoProximitySensor,
-      GeoTouchSensor:          Geospatial_GeoTouchSensor,
-      GeoTransform:            Geospatial_GeoTransform,
-      GeoViewpoint:            Geospatial_GeoViewpoint,
-   },
+   [
+      Geospatial_GeoCoordinate,
+      Geospatial_GeoElevationGrid,
+      Geospatial_GeoLOD,
+      Geospatial_GeoLocation,
+      Geospatial_GeoMetadata,
+      Geospatial_GeoOrigin,
+      Geospatial_GeoPositionInterpolator,
+      Geospatial_GeoProximitySensor,
+      Geospatial_GeoTouchSensor,
+      Geospatial_GeoTransform,
+      Geospatial_GeoViewpoint,
+   ],
    abstractNodes:
-   {
-      X3DGeospatialObject: Geospatial_X3DGeospatialObject,
-   },
+   [
+      Geospatial_X3DGeospatialObject,
+   ],
 });
 
 const components_Geospatial_default_ = undefined;

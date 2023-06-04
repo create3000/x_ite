@@ -64,10 +64,12 @@ Object .defineProperties (X3DMetadataObject,
    typeName:
    {
       value: "X3DMetadataObject",
+      enumerate: true,
    },
    componentName:
    {
       value: "Core",
+      enumerate: true,
    },
 });
 

@@ -1022,17 +1022,17 @@ Namespace_default().set ("x_ite/Components/DIS/TransmitterPdu", TransmitterPdu_d
 Components_default().add ({
    name: "DIS",
    concreteNodes:
-   {
-      DISEntityManager:     DIS_DISEntityManager,
-      DISEntityTypeMapping: DIS_DISEntityTypeMapping,
-      EspduTransform:       DIS_EspduTransform,
-      ReceiverPdu:          DIS_ReceiverPdu,
-      SignalPdu:            DIS_SignalPdu,
-      TransmitterPdu:       DIS_TransmitterPdu,
-   },
+   [
+      DIS_DISEntityManager,
+      DIS_DISEntityTypeMapping,
+      DIS_EspduTransform,
+      DIS_ReceiverPdu,
+      DIS_SignalPdu,
+      DIS_TransmitterPdu,
+   ],
    abstractNodes:
-   {
-   },
+   [
+   ],
 });
 
 const DIS_default_ = undefined;

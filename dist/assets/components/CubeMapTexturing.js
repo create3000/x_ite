@@ -221,6 +221,20 @@ X3DEnvironmentTextureNode .prototype = Object .assign (Object .create ((X3DSingl
    },
 });
 
+Object .defineProperties (X3DEnvironmentTextureNode,
+{
+   typeName:
+   {
+      value: "X3DEnvironmentTextureNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "CubeMapTexturing",
+      enumerate: true,
+   },
+});
+
 const __default__ = X3DEnvironmentTextureNode;
 ;
 
@@ -1311,15 +1325,15 @@ Namespace_default().set ("x_ite/Components/CubeMapTexturing/ImageCubeMapTexture"
 Components_default().add ({
    name: "CubeMapTexturing",
    concreteNodes:
-   {
-      ComposedCubeMapTexture:  CubeMapTexturing_ComposedCubeMapTexture,
-      GeneratedCubeMapTexture: CubeMapTexturing_GeneratedCubeMapTexture,
-      ImageCubeMapTexture:     CubeMapTexturing_ImageCubeMapTexture,
-   },
+   [
+      CubeMapTexturing_ComposedCubeMapTexture,
+      CubeMapTexturing_GeneratedCubeMapTexture,
+      CubeMapTexturing_ImageCubeMapTexture,
+   ],
    abstractNodes:
-   {
-      X3DEnvironmentTextureNode: CubeMapTexturing_X3DEnvironmentTextureNode,
-   },
+   [
+      CubeMapTexturing_X3DEnvironmentTextureNode,
+   ],
 });
 
 const CubeMapTexturing_default_ = undefined;

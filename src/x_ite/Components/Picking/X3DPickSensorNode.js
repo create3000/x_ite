@@ -433,10 +433,12 @@ Object .defineProperties (X3DPickSensorNode,
    typeName:
    {
       value: "X3DPickSensorNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Picking",
+      enumerate: true,
    },
 });
 

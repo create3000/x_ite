@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 40:
+/***/ 561:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(536);
+/* provided dependency */ var jQuery = __webpack_require__(299);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 334:
+/***/ 808:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(536);
+/* provided dependency */ var jQuery = __webpack_require__(299);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 372:
+/***/ 300:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(536)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(299)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 536:
+/***/ 299:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11523,7 +11523,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 520:
+/***/ 818:
 /***/ ((module) => {
 
 /**
@@ -16302,7 +16302,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 175:
+/***/ 851:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19547,7 +19547,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 303:
+/***/ 787:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -35795,6 +35795,20 @@ X3DNode .prototype = Object .assign (Object .create (Base_X3DBaseNode.prototype)
 for (const key of Reflect .ownKeys (X3DNode .prototype))
    Object .defineProperty (X3DNode .prototype, key, { enumerable: false });
 
+Object .defineProperties (X3DNode,
+{
+   typeName:
+   {
+      value: "X3DNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
+});
+
 const X3DNode_default_ = X3DNode;
 ;
 
@@ -35861,6 +35875,20 @@ X3DMetadataObject .prototype =
    initialize: function () { },
    dispose: function () { },
 };
+
+Object .defineProperties (X3DMetadataObject,
+{
+   typeName:
+   {
+      value: "X3DMetadataObject",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
+});
 
 const X3DMetadataObject_default_ = X3DMetadataObject;
 ;
@@ -36666,6 +36694,20 @@ X3DChildNode .prototype = Object .assign (Object .create (Core_X3DNode.prototype
    },
 });
 
+Object .defineProperties (X3DChildNode,
+{
+   typeName:
+   {
+      value: "X3DChildNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
+});
+
 const X3DChildNode_default_ = X3DChildNode;
 ;
 
@@ -36732,6 +36774,20 @@ function X3DInfoNode (executionContext)
 X3DInfoNode .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype),
 {
    constructor: X3DInfoNode,
+});
+
+Object .defineProperties (X3DInfoNode,
+{
+   typeName:
+   {
+      value: "X3DInfoNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
 });
 
 const X3DInfoNode_default_ = X3DInfoNode;
@@ -36923,6 +36979,20 @@ X3DBindableNode .prototype = Object .assign (Object .create (Core_X3DChildNode.p
    },
    transitionStart: function ()
    { },
+});
+
+Object .defineProperties (X3DBindableNode,
+{
+   typeName:
+   {
+      value: "X3DBindableNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
 });
 
 const X3DBindableNode_default_ = X3DBindableNode;
@@ -37916,6 +37986,15 @@ X3DProtoDeclarationNode .prototype = Object .assign (Object .create (Base_X3DBas
 for (const key of Reflect .ownKeys (X3DProtoDeclarationNode .prototype))
    Object .defineProperty (X3DProtoDeclarationNode .prototype, key, { enumerable: false });
 
+Object .defineProperties (X3DProtoDeclarationNode,
+{
+   typeName:
+   {
+      value: "X3DProtoDeclarationNode",
+      enumerate: true,
+   },
+});
+
 const X3DProtoDeclarationNode_default_ = X3DProtoDeclarationNode;
 ;
 
@@ -38776,13 +38855,27 @@ X3DUrlObject .prototype =
    dispose: function () { },
 };
 
+Object .defineProperties (X3DUrlObject,
+{
+   typeName:
+   {
+      value: "X3DUrlObject",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Networking",
+      enumerate: true,
+   },
+});
+
 const X3DUrlObject_default_ = X3DUrlObject;
 ;
 
 x_ite_Namespace.set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var $ = __webpack_require__(536);
+/* provided dependency */ var $ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41964,7 +42057,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(536);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43955,7 +44048,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(536);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46421,7 +46514,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(536);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46574,7 +46667,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(536);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49078,8 +49171,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace.set ("standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(536);
-/* provided dependency */ var libtess = __webpack_require__(520);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(299);
+/* provided dependency */ var libtess = __webpack_require__(818);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51848,7 +51941,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace.set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(536);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52177,7 +52270,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(520);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(818);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -56515,6 +56608,20 @@ X3DFogObject .prototype =
    dispose: function () { },
 };
 
+Object .defineProperties (X3DFogObject,
+{
+   typeName:
+   {
+      value: "X3DFogObject",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+      enumerate: true,
+   },
+});
+
 const X3DFogObject_default_ = X3DFogObject;
 ;
 
@@ -58027,6 +58134,20 @@ X3DGeometryNode .prototype = Object .assign (Object .create (Core_X3DNode.protot
    },
 });
 
+Object .defineProperties (X3DGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DGeometryNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+});
+
 const X3DGeometryNode_default_ = X3DGeometryNode;
 ;
 
@@ -58903,6 +59024,20 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (Core_X3DBindableN
    },
 });
 
+Object .defineProperties (X3DBackgroundNode,
+{
+   typeName:
+   {
+      value: "X3DBackgroundNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+      enumerate: true,
+   },
+});
+
 const X3DBackgroundNode_default_ = X3DBackgroundNode;
 ;
 
@@ -58969,6 +59104,20 @@ function X3DAppearanceChildNode (executionContext)
 X3DAppearanceChildNode .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
 {
    constructor: X3DAppearanceChildNode,
+});
+
+Object .defineProperties (X3DAppearanceChildNode,
+{
+   typeName:
+   {
+      value: "X3DAppearanceChildNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
 });
 
 const X3DAppearanceChildNode_default_ = X3DAppearanceChildNode;
@@ -59050,6 +59199,20 @@ X3DTextureNode .prototype = Object .assign (Object .create (Shape_X3DAppearanceC
    isTransparent: function ()
    {
       return this ._transparent .getValue ();
+   },
+});
+
+Object .defineProperties (X3DTextureNode,
+{
+   typeName:
+   {
+      value: "X3DTextureNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
    },
 });
 
@@ -59320,6 +59483,20 @@ X3DSingleTextureNode .prototype = Object .assign (Object .create (Texturing_X3DT
    })(),
 });
 
+Object .defineProperties (X3DSingleTextureNode,
+{
+   typeName:
+   {
+      value: "X3DSingleTextureNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+});
+
 const X3DSingleTextureNode_default_ = X3DSingleTextureNode;
 ;
 
@@ -59484,13 +59661,27 @@ X3DTexture2DNode .prototype = Object .assign (Object .create (Texturing_X3DSingl
    },
 });
 
+Object .defineProperties (X3DTexture2DNode,
+{
+   typeName:
+   {
+      value: "X3DTexture2DNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+});
+
 const X3DTexture2DNode_default_ = X3DTexture2DNode;
 ;
 
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(536);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -60349,6 +60540,20 @@ X3DLayerNode .prototype = Object .assign (Object .create (Core_X3DNode.prototype
    },
 });
 
+Object .defineProperties (X3DLayerNode,
+{
+   typeName:
+   {
+      value: "X3DLayerNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Layering",
+      enumerate: true,
+   },
+});
+
 const X3DLayerNode_default_ = X3DLayerNode;
 ;
 
@@ -60415,6 +60620,20 @@ function X3DSensorNode (executionContext)
 X3DSensorNode .prototype = Object .assign (Object .create (Core_X3DChildNode.prototype),
 {
    constructor: X3DSensorNode,
+});
+
+Object .defineProperties (X3DSensorNode,
+{
+   typeName:
+   {
+      value: "X3DSensorNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerate: true,
+   },
 });
 
 const X3DSensorNode_default_ = X3DSensorNode;
@@ -60778,6 +60997,20 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (Core_X3DChildN
    },
 });
 
+Object .defineProperties (X3DTimeDependentNode,
+{
+   typeName:
+   {
+      value: "X3DTimeDependentNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Time",
+      enumerate: true,
+   },
+});
+
 const X3DTimeDependentNode_default_ = X3DTimeDependentNode;
 ;
 
@@ -61133,6 +61366,20 @@ X3DInterpolatorNode .prototype = Object .assign (Object .create (Core_X3DChildNo
    },
    set_keyValue__: function () { },
    interpolate: function () { },
+});
+
+Object .defineProperties (X3DInterpolatorNode,
+{
+   typeName:
+   {
+      value: "X3DInterpolatorNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerate: true,
+   },
 });
 
 const X3DInterpolatorNode_default_ = X3DInterpolatorNode;
@@ -62273,6 +62520,20 @@ X3DViewpointNode .prototype = Object .assign (Object .create (Core_X3DBindableNo
    }
 });
 
+Object .defineProperties (X3DViewpointNode,
+{
+   typeName:
+   {
+      value: "X3DViewpointNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Navigation",
+      enumerate: true,
+   },
+});
+
 const X3DViewpointNode_default_ = X3DViewpointNode;
 ;
 
@@ -62621,6 +62882,20 @@ X3DBoundedObject .prototype =
    },
    dispose: function () { },
 };
+
+Object .defineProperties (X3DBoundedObject,
+{
+   typeName:
+   {
+      value: "X3DBoundedObject",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Grouping",
+      enumerate: true,
+   },
+});
 
 const X3DBoundedObject_default_ = X3DBoundedObject;
 ;
@@ -63334,6 +63609,20 @@ function filter (array, remove)
    return array .filter (value => !set .has (value));
 }
 
+Object .defineProperties (X3DGroupingNode,
+{
+   typeName:
+   {
+      value: "X3DGroupingNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Grouping",
+      enumerate: true,
+   },
+});
+
 const X3DGroupingNode_default_ = X3DGroupingNode;
 ;
 
@@ -63956,7 +64245,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace.set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(536);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65395,12 +65684,12 @@ function X3DExecutionContext (executionContext, outerNode = null)
    this ._rootNodes .setAccessType (Base_X3DConstants.initializeOnly);
    this ._rootNodes .addCloneCount (1);
 
-   this [_outerNode]      = outerNode;
-   this [_namedNodes]     = new Execution_NamedNodesArray ();
-   this [_importedNodes]  = new Execution_ImportedNodesArray ();
-   this [_protos]         = new Prototype_ProtoDeclarationArray ();
-   this [_externprotos]   = new Prototype_ExternProtoDeclarationArray ();
-   this [X3DExecutionContext_routes]         = new Routing_RouteArray ();
+   this [_outerNode]     = outerNode;
+   this [_namedNodes]    = new Execution_NamedNodesArray ();
+   this [_importedNodes] = new Execution_ImportedNodesArray ();
+   this [_protos]        = new Prototype_ProtoDeclarationArray ();
+   this [_externprotos]  = new Prototype_ExternProtoDeclarationArray ();
+   this [X3DExecutionContext_routes]        = new Routing_RouteArray ();
 
    this [_namedNodes]     .addParent (this);
    this [_importedNodes]  .addParent (this);
@@ -67440,25 +67729,25 @@ x_ite_Namespace.set ("x_ite/Components/Core/X3DPrototypeInstance", X3DPrototypeI
 const Core_default_ = {
    name: "Core",
    concreteNodes:
-   {
-      MetadataBoolean: Core_MetadataBoolean,
-      MetadataDouble:  Core_MetadataDouble,
-      MetadataFloat:   Core_MetadataFloat,
-      MetadataInteger: Core_MetadataInteger,
-      MetadataSet:     Core_MetadataSet,
-      MetadataString:  Core_MetadataString,
-      WorldInfo:       Core_WorldInfo,
-   },
+   [
+      Core_MetadataBoolean,
+      Core_MetadataDouble,
+      Core_MetadataFloat,
+      Core_MetadataInteger,
+      Core_MetadataSet,
+      Core_MetadataString,
+      Core_WorldInfo,
+   ],
    abstractNodes:
-   {
-      X3DBindableNode:      Core_X3DBindableNode,
-      X3DChildNode:         Core_X3DChildNode,
-      X3DInfoNode:          Core_X3DInfoNode,
-      X3DMetadataObject:    Core_X3DMetadataObject,
-      X3DNode:              Core_X3DNode,
-      X3DPrototypeInstance: Core_X3DPrototypeInstance,
-      X3DSensorNode:        Core_X3DSensorNode,
-   },
+   [
+      Core_X3DBindableNode,
+      Core_X3DChildNode,
+      Core_X3DInfoNode,
+      Core_X3DMetadataObject,
+      Core_X3DNode,
+      Core_X3DPrototypeInstance,
+      Core_X3DSensorNode,
+   ],
 };
 ;
 
@@ -67525,6 +67814,20 @@ function X3DGeometricPropertyNode (executionContext)
 X3DGeometricPropertyNode .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
 {
    constructor: X3DGeometricPropertyNode,
+});
+
+Object .defineProperties (X3DGeometricPropertyNode,
+{
+   typeName:
+   {
+      value: "X3DGeometricPropertyNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
 });
 
 const X3DGeometricPropertyNode_default_ = X3DGeometricPropertyNode;
@@ -68024,18 +68327,18 @@ x_ite_Namespace.set ("x_ite/Components/EnvironmentalEffects/TextureBackground", 
 const EnvironmentalEffects_default_ = {
    name: "EnvironmentalEffects",
    concreteNodes:
-   {
-      Background:        EnvironmentalEffects_Background,
-      Fog:               EnvironmentalEffects_Fog,
-      FogCoordinate:     EnvironmentalEffects_FogCoordinate,
-      LocalFog:          EnvironmentalEffects_LocalFog,
-      TextureBackground: EnvironmentalEffects_TextureBackground,
-   },
+   [
+      EnvironmentalEffects_Background,
+      EnvironmentalEffects_Fog,
+      EnvironmentalEffects_FogCoordinate,
+      EnvironmentalEffects_LocalFog,
+      EnvironmentalEffects_TextureBackground,
+   ],
    abstractNodes:
-   {
-      X3DBackgroundNode: EnvironmentalEffects_X3DBackgroundNode,
-      X3DFogObject:      EnvironmentalEffects_X3DFogObject,
-   },
+   [
+      EnvironmentalEffects_X3DBackgroundNode,
+      EnvironmentalEffects_X3DFogObject,
+   ],
 };
 ;
 
@@ -68169,6 +68472,20 @@ X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (Core_X3D
       return this .currentTraversed;
    },
    update: function () { },
+});
+
+Object .defineProperties (X3DEnvironmentalSensorNode,
+{
+   typeName:
+   {
+      value: "X3DEnvironmentalSensorNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalSensor",
+      enumerate: true,
+   },
 });
 
 const X3DEnvironmentalSensorNode_default_ = X3DEnvironmentalSensorNode;
@@ -69026,15 +69343,15 @@ x_ite_Namespace.set ("x_ite/Components/EnvironmentalSensor/VisibilitySensor", Vi
 const EnvironmentalSensor_default_ = {
    name: "EnvironmentalSensor",
    concreteNodes:
-   {
-      ProximitySensor:  EnvironmentalSensor_ProximitySensor,
-      TransformSensor:  EnvironmentalSensor_TransformSensor,
-      VisibilitySensor: EnvironmentalSensor_VisibilitySensor,
-   },
+   [
+      EnvironmentalSensor_ProximitySensor,
+      EnvironmentalSensor_TransformSensor,
+      EnvironmentalSensor_VisibilitySensor,
+   ],
    abstractNodes:
-   {
-      X3DEnvironmentalSensorNode: EnvironmentalSensor_X3DEnvironmentalSensorNode,
-   },
+   [
+      EnvironmentalSensor_X3DEnvironmentalSensorNode,
+   ],
 };
 ;
 
@@ -69175,6 +69492,20 @@ X3DFollowerNode .prototype = Object .assign (Object .create (Core_X3DChildNode.p
 
          this .set_live__ ();
       }
+   },
+});
+
+Object .defineProperties (X3DFollowerNode,
+{
+   typeName:
+   {
+      value: "X3DFollowerNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
    },
 });
 
@@ -69408,6 +69739,20 @@ X3DChaserNode .prototype = Object .assign (Object .create (Followers_X3DFollower
       }
 
       return fraction;
+   },
+});
+
+Object .defineProperties (X3DChaserNode,
+{
+   typeName:
+   {
+      value: "X3DChaserNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
    },
 });
 
@@ -69729,6 +70074,20 @@ X3DDamperNode .prototype = Object .assign (Object .create (Followers_X3DFollower
          buffer [i] = this .duplicate (value);
 
       buffer .length = length;
+   },
+});
+
+Object .defineProperties (X3DDamperNode,
+{
+   typeName:
+   {
+      value: "X3DDamperNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerate: true,
    },
 });
 
@@ -71711,28 +72070,28 @@ x_ite_Namespace.set ("x_ite/Components/Followers/TexCoordDamper2D", TexCoordDamp
 const Followers_default_ = {
    name: "Followers",
    concreteNodes:
-   {
-      ColorChaser:       Followers_ColorChaser,
-      ColorDamper:       Followers_ColorDamper,
-      CoordinateChaser:  Followers_CoordinateChaser,
-      CoordinateDamper:  Followers_CoordinateDamper,
-      OrientationChaser: Followers_OrientationChaser,
-      OrientationDamper: Followers_OrientationDamper,
-      PositionChaser:    Followers_PositionChaser,
-      PositionChaser2D:  Followers_PositionChaser2D,
-      PositionDamper:    Followers_PositionDamper,
-      PositionDamper2D:  Followers_PositionDamper2D,
-      ScalarChaser:      Followers_ScalarChaser,
-      ScalarDamper:      Followers_ScalarDamper,
-      TexCoordChaser2D:  Followers_TexCoordChaser2D,
-      TexCoordDamper2D:  Followers_TexCoordDamper2D,
-   },
+   [
+      Followers_ColorChaser,
+      Followers_ColorDamper,
+      Followers_CoordinateChaser,
+      Followers_CoordinateDamper,
+      Followers_OrientationChaser,
+      Followers_OrientationDamper,
+      Followers_PositionChaser,
+      Followers_PositionChaser2D,
+      Followers_PositionDamper,
+      Followers_PositionDamper2D,
+      Followers_ScalarChaser,
+      Followers_ScalarDamper,
+      Followers_TexCoordChaser2D,
+      Followers_TexCoordDamper2D,
+   ],
    abstractNodes:
-   {
-      X3DChaserNode: Followers_X3DChaserNode,
-      X3DDamperNode: Followers_X3DDamperNode,
-      X3DFollowerNode: Followers_X3DFollowerNode,
-   },
+   [
+      Followers_X3DChaserNode,
+      Followers_X3DDamperNode,
+      Followers_X3DFollowerNode,
+   ],
 };
 ;
 
@@ -73973,6 +74332,20 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (Rendering_X
    })(),
 });
 
+Object .defineProperties (X3DComposedGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DComposedGeometryNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+});
+
 const X3DComposedGeometryNode_default_ = X3DComposedGeometryNode;
 ;
 
@@ -74683,18 +75056,18 @@ x_ite_Namespace.set ("x_ite/Components/Geometry3D/Sphere", Sphere_default_);
 const Geometry3D_default_ = {
    name: "Geometry3D",
    concreteNodes:
-   {
-      Box:            Geometry3D_Box,
-      Cone:           Geometry3D_Cone,
-      Cylinder:       Geometry3D_Cylinder,
-      ElevationGrid:  Geometry3D_ElevationGrid,
-      Extrusion:      Geometry3D_Extrusion,
-      IndexedFaceSet: Geometry3D_IndexedFaceSet,
-      Sphere:         Geometry3D_Sphere,
-   },
+   [
+      Geometry3D_Box,
+      Geometry3D_Cone,
+      Geometry3D_Cylinder,
+      Geometry3D_ElevationGrid,
+      Geometry3D_Extrusion,
+      Geometry3D_IndexedFaceSet,
+      Geometry3D_Sphere,
+   ],
    abstractNodes:
-   {
-   },
+   [
+   ],
 };
 ;
 
@@ -75335,6 +75708,20 @@ X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (Grouping_X
    groupTraverse: Grouping_X3DGroupingNode.prototype.traverse,
 });
 
+Object .defineProperties (X3DTransformMatrix3DNode,
+{
+   typeName:
+   {
+      value: "X3DTransformMatrix3DNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Grouping",
+      enumerate: true,
+   },
+});
+
 const X3DTransformMatrix3DNode_default_ = X3DTransformMatrix3DNode;
 ;
 
@@ -75419,6 +75806,20 @@ X3DTransformNode .prototype = Object .assign (Object .create (Grouping_X3DTransf
                           this ._scale            .getValue (),
                           this ._scaleOrientation .getValue (),
                           this ._center           .getValue ());
+   },
+});
+
+Object .defineProperties (X3DTransformNode,
+{
+   typeName:
+   {
+      value: "X3DTransformNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Grouping",
+      enumerate: true,
    },
 });
 
@@ -75601,19 +76002,19 @@ x_ite_Namespace.set ("x_ite/Components/Grouping/Transform", Transform_default_);
 const Grouping_default_ = {
    name: "Grouping",
    concreteNodes:
-   {
-      Group:       Grouping_Group,
-      StaticGroup: Grouping_StaticGroup,
-      Switch:      Grouping_Switch,
-      Transform:   Grouping_Transform,
-   },
+   [
+      Grouping_Group,
+      Grouping_StaticGroup,
+      Grouping_Switch,
+      Grouping_Transform,
+   ],
    abstractNodes:
-   {
-      X3DBoundedObject:         Grouping_X3DBoundedObject,
-      X3DGroupingNode:          Grouping_X3DGroupingNode,
-      X3DTransformMatrix3DNode: Grouping_X3DTransformMatrix3DNode,
-      X3DTransformNode:         Grouping_X3DTransformNode,
-   },
+   [
+      Grouping_X3DBoundedObject,
+      Grouping_X3DGroupingNode,
+      Grouping_X3DTransformMatrix3DNode,
+      Grouping_X3DTransformNode,
+   ],
 };
 ;
 
@@ -77625,25 +78026,25 @@ x_ite_Namespace.set ("x_ite/Components/Interpolation/SquadOrientationInterpolato
 const Interpolation_default_ = {
    name: "Interpolation",
    concreteNodes:
-   {
-      ColorInterpolator:            Interpolation_ColorInterpolator,
-      CoordinateInterpolator:       Interpolation_CoordinateInterpolator,
-      CoordinateInterpolator2D:     Interpolation_CoordinateInterpolator2D,
-      EaseInEaseOut:                Interpolation_EaseInEaseOut,
-      NormalInterpolator:           Interpolation_NormalInterpolator,
-      OrientationInterpolator:      Interpolation_OrientationInterpolator,
-      PositionInterpolator:         Interpolation_PositionInterpolator,
-      PositionInterpolator2D:       Interpolation_PositionInterpolator2D,
-      ScalarInterpolator:           Interpolation_ScalarInterpolator,
-      SplinePositionInterpolator:   Interpolation_SplinePositionInterpolator,
-      SplinePositionInterpolator2D: Interpolation_SplinePositionInterpolator2D,
-      SplineScalarInterpolator:     Interpolation_SplineScalarInterpolator,
-      SquadOrientationInterpolator: Interpolation_SquadOrientationInterpolator,
-   },
+   [
+      Interpolation_ColorInterpolator,
+      Interpolation_CoordinateInterpolator,
+      Interpolation_CoordinateInterpolator2D,
+      Interpolation_EaseInEaseOut,
+      Interpolation_NormalInterpolator,
+      Interpolation_OrientationInterpolator,
+      Interpolation_PositionInterpolator,
+      Interpolation_PositionInterpolator2D,
+      Interpolation_ScalarInterpolator,
+      Interpolation_SplinePositionInterpolator,
+      Interpolation_SplinePositionInterpolator2D,
+      Interpolation_SplineScalarInterpolator,
+      Interpolation_SquadOrientationInterpolator,
+   ],
    abstractNodes:
-   {
-      X3DInterpolatorNode: Interpolation_X3DInterpolatorNode,
-   },
+   [
+      Interpolation_X3DInterpolatorNode,
+   ],
 };
 ;
 
@@ -77710,6 +78111,20 @@ function X3DViewportNode (executionContext)
 X3DViewportNode .prototype = Object .assign (Object .create (Grouping_X3DGroupingNode.prototype),
 {
    constructor: X3DViewportNode,
+});
+
+Object .defineProperties (X3DViewportNode,
+{
+   typeName:
+   {
+      value: "X3DViewportNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Layering",
+      enumerate: true,
+   },
 });
 
 const X3DViewportNode_default_ = X3DViewportNode;
@@ -77960,16 +78375,16 @@ x_ite_Namespace.set ("x_ite/Components/Layering/Viewport", Viewport_default_);
 const Layering_default_ = {
    name: "Layering",
    concreteNodes:
-   {
-      Layer:    Layering_Layer,
-      LayerSet: Layering_LayerSet,
-      Viewport: Layering_Viewport,
-   },
+   [
+      Layering_Layer,
+      Layering_LayerSet,
+      Layering_Viewport,
+   ],
    abstractNodes:
-   {
-      X3DLayerNode:    Layering_X3DLayerNode,
-      X3DViewportNode: Layering_X3DViewportNode,
-   },
+   [
+      Layering_X3DLayerNode,
+      Layering_X3DViewportNode,
+   ],
 };
 ;
 
@@ -78181,6 +78596,20 @@ X3DLightNode .prototype = Object .assign (Object .create (Core_X3DChildNode.prot
       renderObject .popLocalShadows ();
 
       -- renderObject .getLocalObjectsCount () [1];
+   },
+});
+
+Object .defineProperties (X3DLightNode,
+{
+   typeName:
+   {
+      value: "X3DLightNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Lighting",
+      enumerate: true,
    },
 });
 
@@ -79429,16 +79858,16 @@ x_ite_Namespace.set ("x_ite/Components/Lighting/SpotLight", SpotLight_default_);
 const Lighting_default_ = {
    name: "Lighting",
    concreteNodes:
-   {
-      DirectionalLight: Lighting_DirectionalLight,
-      EnvironmentLight: Lighting_EnvironmentLight,
-      PointLight:       Lighting_PointLight,
-      SpotLight:        Lighting_SpotLight,
-   },
+   [
+      Lighting_DirectionalLight,
+      Lighting_EnvironmentLight,
+      Lighting_PointLight,
+      Lighting_SpotLight,
+   ],
    abstractNodes:
-   {
-      X3DLightNode: Lighting_X3DLightNode,
-   },
+   [
+      Lighting_X3DLightNode,
+   ],
 };
 ;
 
@@ -80854,19 +81283,19 @@ x_ite_Namespace.set ("x_ite/Components/Navigation/ViewpointGroup", ViewpointGrou
 const Navigation_default_ = {
    name: "Navigation",
    concreteNodes:
-   {
-      Billboard:      Navigation_Billboard,
-      Collision:      Navigation_Collision,
-      LOD:            Navigation_LOD,
-      NavigationInfo: Navigation_NavigationInfo,
-      OrthoViewpoint: Navigation_OrthoViewpoint,
-      Viewpoint:      Navigation_Viewpoint,
-      ViewpointGroup: Navigation_ViewpointGroup,
-   },
+   [
+      Navigation_Billboard,
+      Navigation_Collision,
+      Navigation_LOD,
+      Navigation_NavigationInfo,
+      Navigation_OrthoViewpoint,
+      Navigation_Viewpoint,
+      Navigation_ViewpointGroup,
+   ],
    abstractNodes:
-   {
-      X3DViewpointNode: Navigation_X3DViewpointNode,
-   },
+   [
+      Navigation_X3DViewpointNode,
+   ],
 };
 ;
 
@@ -81081,6 +81510,20 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (Core_X3
    },
 });
 
+Object .defineProperties (X3DPointingDeviceSensorNode,
+{
+   typeName:
+   {
+      value: "X3DPointingDeviceSensorNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+      enumerate: true,
+   },
+});
+
 const X3DPointingDeviceSensorNode_default_ = X3DPointingDeviceSensorNode;
 ;
 
@@ -81177,6 +81620,20 @@ X3DTouchSensorNode .prototype = Object .assign (Object .create (PointingDeviceSe
          }
       };
    })(),
+});
+
+Object .defineProperties (X3DTouchSensorNode,
+{
+   typeName:
+   {
+      value: "X3DTouchSensorNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+      enumerate: true,
+   },
 });
 
 const X3DTouchSensorNode_default_ = X3DTouchSensorNode;
@@ -81909,6 +82366,20 @@ X3DNetworkSensorNode .prototype = Object .assign (Object .create (Core_X3DSensor
    constructor: X3DNetworkSensorNode,
 });
 
+Object .defineProperties (X3DNetworkSensorNode,
+{
+   typeName:
+   {
+      value: "X3DNetworkSensorNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Networking",
+      enumerate: true,
+   },
+});
+
 const X3DNetworkSensorNode_default_ = X3DNetworkSensorNode;
 ;
 
@@ -82242,16 +82713,16 @@ x_ite_Namespace.set ("x_ite/Components/Networking/LoadSensor", LoadSensor_defaul
 const Networking_default_ = {
    name: "Networking",
    concreteNodes:
-   {
-      Anchor:     Networking_Anchor,
-      Inline:     Networking_Inline,
-      LoadSensor: Networking_LoadSensor,
-   },
+   [
+      Networking_Anchor,
+      Networking_Inline,
+      Networking_LoadSensor,
+   ],
    abstractNodes:
-   {
-      X3DNetworkSensorNode: Networking_X3DNetworkSensorNode,
-      X3DUrlObject:         Networking_X3DUrlObject,
-   },
+   [
+      Networking_X3DNetworkSensorNode,
+      Networking_X3DUrlObject,
+   ],
 };
 ;
 
@@ -82320,6 +82791,20 @@ function X3DDragSensorNode (executionContext)
 X3DDragSensorNode .prototype = Object .assign (Object .create (PointingDeviceSensor_X3DPointingDeviceSensorNode.prototype),
 {
    constructor: X3DDragSensorNode,
+});
+
+Object .defineProperties (X3DDragSensorNode,
+{
+   typeName:
+   {
+      value: "X3DDragSensorNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+      enumerate: true,
+   },
 });
 
 const X3DDragSensorNode_default_ = X3DDragSensorNode;
@@ -83751,18 +84236,18 @@ x_ite_Namespace.set ("x_ite/Components/PointingDeviceSensor/SphereSensor", Spher
 const PointingDeviceSensor_default_ = {
    name: "PointingDeviceSensor",
    concreteNodes:
-   {
-      CylinderSensor: PointingDeviceSensor_CylinderSensor,
-      PlaneSensor:    PointingDeviceSensor_PlaneSensor,
-      SphereSensor:   PointingDeviceSensor_SphereSensor,
-      TouchSensor:    PointingDeviceSensor_TouchSensor,
-   },
+   [
+      PointingDeviceSensor_CylinderSensor,
+      PointingDeviceSensor_PlaneSensor,
+      PointingDeviceSensor_SphereSensor,
+      PointingDeviceSensor_TouchSensor,
+   ],
    abstractNodes:
-   {
-      X3DDragSensorNode:           PointingDeviceSensor_X3DDragSensorNode,
-      X3DPointingDeviceSensorNode: PointingDeviceSensor_X3DPointingDeviceSensorNode,
-      X3DTouchSensorNode:          PointingDeviceSensor_X3DTouchSensorNode,
-   },
+   [
+      PointingDeviceSensor_X3DDragSensorNode,
+      PointingDeviceSensor_X3DPointingDeviceSensorNode,
+      PointingDeviceSensor_X3DTouchSensorNode,
+   ],
 };
 ;
 
@@ -84029,6 +84514,20 @@ X3DColorNode .prototype = Object .assign (Object .create (Rendering_X3DGeometric
    isTransparent: function ()
    {
       return this ._transparent .getValue ();
+   },
+});
+
+Object .defineProperties (X3DColorNode,
+{
+   typeName:
+   {
+      value: "X3DColorNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
    },
 });
 
@@ -84556,6 +85055,20 @@ X3DCoordinateNode .prototype = Object .assign (Object .create (Rendering_X3DGeom
          return new Numbers_Vector3 (0, 0, 0);
       };
    })(),
+});
+
+Object .defineProperties (X3DCoordinateNode,
+{
+   typeName:
+   {
+      value: "X3DCoordinateNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
 });
 
 const X3DCoordinateNode_default_ = X3DCoordinateNode;
@@ -85122,6 +85635,20 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (Rendering_X3DGe
       blendModeNode ?.disable (gl);
 
       gl .lineWidth (1);
+   },
+});
+
+Object .defineProperties (X3DLineGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DLineGeometryNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
    },
 });
 
@@ -86224,6 +86751,20 @@ X3DNormalNode .prototype = Object .assign (Object .create (Rendering_X3DGeometri
    constructor: X3DNormalNode,
 });
 
+Object .defineProperties (X3DNormalNode,
+{
+   typeName:
+   {
+      value: "X3DNormalNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
+   },
+});
+
 const X3DNormalNode_default_ = X3DNormalNode;
 ;
 
@@ -86591,6 +87132,20 @@ X3DPointGeometryNode .prototype = Object .assign (Object .create (Rendering_X3DG
       gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
       blendModeNode ?.disable (gl);
+   },
+});
+
+Object .defineProperties (X3DPointGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DPointGeometryNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerate: true,
    },
 });
 
@@ -87329,32 +87884,32 @@ x_ite_Namespace.set ("x_ite/Components/Rendering/TriangleStripSet", TriangleStri
 const Rendering_default_ = {
    name: "Rendering",
    concreteNodes:
-   {
-      ClipPlane:               Rendering_ClipPlane,
-      Color:                   Rendering_Color,
-      ColorRGBA:               Rendering_ColorRGBA,
-      Coordinate:              Rendering_Coordinate,
-      IndexedLineSet:          Rendering_IndexedLineSet,
-      IndexedTriangleFanSet:   Rendering_IndexedTriangleFanSet,
-      IndexedTriangleSet:      Rendering_IndexedTriangleSet,
-      IndexedTriangleStripSet: Rendering_IndexedTriangleStripSet,
-      LineSet:                 Rendering_LineSet,
-      Normal:                  Rendering_Normal,
-      PointSet:                Rendering_PointSet,
-      TriangleFanSet:          Rendering_TriangleFanSet,
-      TriangleSet:             Rendering_TriangleSet,
-      TriangleStripSet:        Rendering_TriangleStripSet,
-   },
+   [
+      Rendering_ClipPlane,
+      Rendering_Color,
+      Rendering_ColorRGBA,
+      Rendering_Coordinate,
+      Rendering_IndexedLineSet,
+      Rendering_IndexedTriangleFanSet,
+      Rendering_IndexedTriangleSet,
+      Rendering_IndexedTriangleStripSet,
+      Rendering_LineSet,
+      Rendering_Normal,
+      Rendering_PointSet,
+      Rendering_TriangleFanSet,
+      Rendering_TriangleSet,
+      Rendering_TriangleStripSet,
+   ],
    abstractNodes:
-   {
-      X3DColorNode:             Rendering_X3DColorNode,
-      X3DComposedGeometryNode:  Rendering_X3DComposedGeometryNode,
-      X3DCoordinateNode:        Rendering_X3DCoordinateNode,
-      X3DGeometricPropertyNode: Rendering_X3DGeometricPropertyNode,
-      X3DGeometryNode:          Rendering_X3DGeometryNode,
-      X3DLineGeometryNode:      Rendering_X3DLineGeometryNode,
-      X3DNormalNode:            Rendering_X3DNormalNode,
-   },
+   [
+      Rendering_X3DColorNode,
+      Rendering_X3DComposedGeometryNode,
+      Rendering_X3DCoordinateNode,
+      Rendering_X3DGeometricPropertyNode,
+      Rendering_X3DGeometryNode,
+      Rendering_X3DLineGeometryNode,
+      Rendering_X3DNormalNode,
+   ],
 };
 ;
 
@@ -87452,13 +88007,27 @@ X3DShaderNode .prototype = Object .assign (Object .create (Shape_X3DAppearanceCh
    },
 });
 
+Object .defineProperties (X3DShaderNode,
+{
+   typeName:
+   {
+      value: "X3DShaderNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerate: true,
+   },
+});
+
 const X3DShaderNode_default_ = X3DShaderNode;
 ;
 
 x_ite_Namespace.set ("x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(536);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -88782,6 +89351,20 @@ X3DProgrammableShaderObject .prototype =
    dispose: function () { },
 };
 
+Object .defineProperties (X3DProgrammableShaderObject,
+{
+   typeName:
+   {
+      value: "X3DProgrammableShaderObject",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerate: true,
+   },
+});
+
 const X3DProgrammableShaderObject_default_ = X3DProgrammableShaderObject;
 ;
 
@@ -89094,6 +89677,20 @@ X3DVertexAttributeNode .prototype = Object .assign (Object .create (Rendering_X3
    set_attribute__: function ()
    {
       this ._attribute_changed = this .getBrowser () .getCurrentTime ();
+   },
+});
+
+Object .defineProperties (X3DVertexAttributeNode,
+{
+   typeName:
+   {
+      value: "X3DVertexAttributeNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerate: true,
    },
 });
 
@@ -96159,7 +96756,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace.set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(536);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96598,22 +97195,22 @@ x_ite_Namespace.set ("x_ite/Components/Shaders/ShaderProgram", ShaderProgram_def
 const Components_Shaders_default_ = {
    name: "Shaders",
    concreteNodes:
-   {
-      ComposedShader:         Shaders_ComposedShader,
-      FloatVertexAttribute:   Shaders_FloatVertexAttribute,
-      Matrix3VertexAttribute: Shaders_Matrix3VertexAttribute,
-      Matrix4VertexAttribute: Shaders_Matrix4VertexAttribute,
-      PackagedShader:         Shaders_PackagedShader,
-      ProgramShader:          Shaders_ProgramShader,
-      ShaderPart:             Shaders_ShaderPart,
-      ShaderProgram:          Shaders_ShaderProgram,
-   },
+   [
+      Shaders_ComposedShader,
+      Shaders_FloatVertexAttribute,
+      Shaders_Matrix3VertexAttribute,
+      Shaders_Matrix4VertexAttribute,
+      Shaders_PackagedShader,
+      Shaders_ProgramShader,
+      Shaders_ShaderPart,
+      Shaders_ShaderProgram,
+   ],
    abstractNodes:
-   {
-      X3DProgrammableShaderObject: Shaders_X3DProgrammableShaderObject,
-      X3DShaderNode:               Shaders_X3DShaderNode,
-      X3DVertexAttributeNode:      Shaders_X3DVertexAttributeNode,
-   },
+   [
+      Shaders_X3DProgrammableShaderObject,
+      Shaders_X3DShaderNode,
+      Shaders_X3DVertexAttributeNode,
+   ],
 };
 ;
 
@@ -96801,6 +97398,20 @@ X3DAppearanceNode .prototype = Object .assign (Object .create (Core_X3DNode.prot
    isTransparent: function ()
    {
       return this ._transparent .getValue ();
+   },
+});
+
+Object .defineProperties (X3DAppearanceNode,
+{
+   typeName:
+   {
+      value: "X3DAppearanceNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
    },
 });
 
@@ -97960,6 +98571,20 @@ X3DMaterialNode .prototype = Object .assign (Object .create (Shape_X3DAppearance
    },
 });
 
+Object .defineProperties (X3DMaterialNode,
+{
+   typeName:
+   {
+      value: "X3DMaterialNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
+});
+
 const X3DMaterialNode_default_ = X3DMaterialNode;
 ;
 
@@ -98163,6 +98788,20 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (Shape_X3DMa
             gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (normalTextureMapping) ?? 0);
          }
       }
+   },
+});
+
+Object .defineProperties (X3DOneSidedMaterialNode,
+{
+   typeName:
+   {
+      value: "X3DOneSidedMaterialNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
    },
 });
 
@@ -99272,6 +99911,20 @@ X3DShapeNode .prototype = Object .assign (Object .create (Core_X3DChildNode.prot
    },
 });
 
+Object .defineProperties (X3DShapeNode,
+{
+   typeName:
+   {
+      value: "X3DShapeNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerate: true,
+   },
+});
+
 const X3DShapeNode_default_ = X3DShapeNode;
 ;
 
@@ -100001,26 +100654,26 @@ x_ite_Namespace.set ("x_ite/Components/Shape/UnlitMaterial", UnlitMaterial_defau
 const Components_Shape_default_ = {
    name: "Shape",
    concreteNodes:
-   {
-      AcousticProperties: Shape_AcousticProperties,
-      Appearance:         Shape_Appearance,
-      FillProperties:     Shape_FillProperties,
-      LineProperties:     Shape_LineProperties,
-      Material:           Shape_Material,
-      PhysicalMaterial:   Shape_PhysicalMaterial,
-      PointProperties:    Shape_PointProperties,
-      Shape:              Shape_Shape,
-      TwoSidedMaterial:   Shape_TwoSidedMaterial,
-      UnlitMaterial:      Shape_UnlitMaterial,
-   },
+   [
+      Shape_AcousticProperties,
+      Shape_Appearance,
+      Shape_FillProperties,
+      Shape_LineProperties,
+      Shape_Material,
+      Shape_PhysicalMaterial,
+      Shape_PointProperties,
+      Shape_Shape,
+      Shape_TwoSidedMaterial,
+      Shape_UnlitMaterial,
+   ],
    abstractNodes:
-   {
-      X3DAppearanceChildNode:  Shape_X3DAppearanceChildNode,
-      X3DAppearanceNode:       Shape_X3DAppearanceNode,
-      X3DMaterialNode:         Shape_X3DMaterialNode,
-      X3DOneSidedMaterialNode: Shape_X3DOneSidedMaterialNode,
-      X3DShapeNode:            Shape_X3DShapeNode,
-   },
+   [
+      Shape_X3DAppearanceChildNode,
+      Shape_X3DAppearanceNode,
+      Shape_X3DMaterialNode,
+      Shape_X3DOneSidedMaterialNode,
+      Shape_X3DShapeNode,
+   ],
 };
 ;
 
@@ -100102,6 +100755,20 @@ X3DSoundProcessingNode .prototype = Object .assign (Object .create (Core_X3DChil
    {
       Time_X3DTimeDependentNode.prototype.dispose.call (this);
       Core_X3DChildNode.prototype.dispose.call (this);
+   },
+});
+
+Object .defineProperties (X3DSoundProcessingNode,
+{
+   typeName:
+   {
+      value: "X3DSoundProcessingNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
    },
 });
 
@@ -100450,13 +101117,27 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (Core_X3DChildNod
    },
 });
 
+Object .defineProperties (X3DSoundSourceNode,
+{
+   typeName:
+   {
+      value: "X3DSoundSourceNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+});
+
 const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 ;
 
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(536);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100737,6 +101418,20 @@ X3DSoundNode .prototype = Object .assign (Object .create (Core_X3DChildNode.prot
    constructor: X3DSoundNode,
 });
 
+Object .defineProperties (X3DSoundNode,
+{
+   typeName:
+   {
+      value: "X3DSoundNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
+});
+
 const X3DSoundNode_default_ = X3DSoundNode;
 ;
 
@@ -100803,6 +101498,20 @@ function X3DSoundDestinationNode (executionContext)
 X3DSoundDestinationNode .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype),
 {
    constructor: X3DSoundDestinationNode,
+});
+
+Object .defineProperties (X3DSoundDestinationNode,
+{
+   typeName:
+   {
+      value: "X3DSoundDestinationNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
 });
 
 const X3DSoundDestinationNode_default_ = X3DSoundDestinationNode;
@@ -101259,6 +101968,20 @@ function X3DSoundChannelNode (executionContext)
 X3DSoundChannelNode .prototype = Object .assign (Object .create (Sound_X3DSoundNode.prototype),
 {
    constructor: X3DSoundChannelNode,
+});
+
+Object .defineProperties (X3DSoundChannelNode,
+{
+   typeName:
+   {
+      value: "X3DSoundChannelNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerate: true,
+   },
 });
 
 const X3DSoundChannelNode_default_ = X3DSoundChannelNode;
@@ -103433,37 +104156,37 @@ x_ite_Namespace.set ("x_ite/Components/Sound/WaveShaper", WaveShaper_default_);
 const Components_Sound_default_ = {
    name: "Sound",
    concreteNodes:
-   {
-      Analyser:               Sound_Analyser,
-      AudioClip:              Sound_AudioClip,
-      AudioDestination:       Sound_AudioDestination,
-      BiquadFilter:           Sound_BiquadFilter,
-      BufferAudioSource:      Sound_BufferAudioSource,
-      ChannelMerger:          Sound_ChannelMerger,
-      ChannelSelector:        Sound_ChannelSelector,
-      ChannelSplitter:        Sound_ChannelSplitter,
-      Convolver:              Sound_Convolver,
-      Delay:                  Sound_Delay,
-      DynamicsCompressor:     Sound_DynamicsCompressor,
-      Gain:                   Sound_Gain,
-      ListenerPointSource:    Sound_ListenerPointSource,
-      MicrophoneSource:       Sound_MicrophoneSource,
-      OscillatorSource:       Sound_OscillatorSource,
-      PeriodicWave:           Sound_PeriodicWave,
-      Sound:                  Sound_Sound,
-      SpatialSound:           Sound_SpatialSound,
-      StreamAudioDestination: Sound_StreamAudioDestination,
-      StreamAudioSource:      Sound_StreamAudioSource,
-      WaveShaper:             Sound_WaveShaper,
-   },
+   [
+      Sound_Analyser,
+      Sound_AudioClip,
+      Sound_AudioDestination,
+      Sound_BiquadFilter,
+      Sound_BufferAudioSource,
+      Sound_ChannelMerger,
+      Sound_ChannelSelector,
+      Sound_ChannelSplitter,
+      Sound_Convolver,
+      Sound_Delay,
+      Sound_DynamicsCompressor,
+      Sound_Gain,
+      Sound_ListenerPointSource,
+      Sound_MicrophoneSource,
+      Sound_OscillatorSource,
+      Sound_PeriodicWave,
+      Sound_Sound,
+      Sound_SpatialSound,
+      Sound_StreamAudioDestination,
+      Sound_StreamAudioSource,
+      Sound_WaveShaper,
+   ],
    abstractNodes:
-   {
-      X3DSoundChannelNode:     Sound_X3DSoundChannelNode,
-      X3DSoundDestinationNode: Sound_X3DSoundDestinationNode,
-      X3DSoundNode:            Sound_X3DSoundNode,
-      X3DSoundProcessingNode:  Sound_X3DSoundProcessingNode,
-      X3DSoundSourceNode:      Sound_X3DSoundSourceNode,
-   },
+   [
+      Sound_X3DSoundChannelNode,
+      Sound_X3DSoundDestinationNode,
+      Sound_X3DSoundNode,
+      Sound_X3DSoundProcessingNode,
+      Sound_X3DSoundSourceNode,
+   ],
 };
 ;
 
@@ -103588,8 +104311,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(536);
-/* provided dependency */ var SuperGif = __webpack_require__(303);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(299);
+/* provided dependency */ var SuperGif = __webpack_require__(787);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104296,6 +105019,20 @@ X3DTextureCoordinateNode .prototype = Object .assign (Object .create (Rendering_
    constructor: X3DTextureCoordinateNode,
 });
 
+Object .defineProperties (X3DTextureCoordinateNode,
+{
+   typeName:
+   {
+      value: "X3DTextureCoordinateNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+});
+
 const X3DTextureCoordinateNode_default_ = X3DTextureCoordinateNode;
 ;
 
@@ -104570,6 +105307,20 @@ X3DTextureTransformNode .prototype = Object .assign (Object .create (Shape_X3DAp
    constructor: X3DTextureTransformNode,
 });
 
+Object .defineProperties (X3DTextureTransformNode,
+{
+   typeName:
+   {
+      value: "X3DTextureTransformNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+});
+
 const X3DTextureTransformNode_default_ = X3DTextureTransformNode;
 ;
 
@@ -104736,7 +105487,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(536);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105111,6 +105862,20 @@ X3DSingleTextureCoordinateNode .prototype = Object .assign (Object .create (Text
    setShaderUniforms: function (gl, shaderObject, channel = 0)
    {
       gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [channel], 0);
+   },
+});
+
+Object .defineProperties (X3DSingleTextureCoordinateNode,
+{
+   typeName:
+   {
+      value: "X3DSingleTextureCoordinateNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
    },
 });
 
@@ -105791,6 +106556,20 @@ X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (Textu
    },
 });
 
+Object .defineProperties (X3DSingleTextureTransformNode,
+{
+   typeName:
+   {
+      value: "X3DSingleTextureTransformNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerate: true,
+   },
+});
+
 const X3DSingleTextureTransformNode_default_ = X3DSingleTextureTransformNode;
 ;
 
@@ -106033,28 +106812,28 @@ x_ite_Namespace.set ("x_ite/Components/Texturing/TextureTransform", TextureTrans
 const Texturing_default_ = {
    name: "Texturing",
    concreteNodes:
-   {
-      ImageTexture:               Texturing_ImageTexture,
-      MovieTexture:               Texturing_MovieTexture,
-      MultiTexture:               Texturing_MultiTexture,
-      MultiTextureCoordinate:     Texturing_MultiTextureCoordinate,
-      MultiTextureTransform:      Texturing_MultiTextureTransform,
-      PixelTexture:               Texturing_PixelTexture,
-      TextureCoordinate:          Texturing_TextureCoordinate,
-      TextureCoordinateGenerator: Texturing_TextureCoordinateGenerator,
-      TextureProperties:          Texturing_TextureProperties,
-      TextureTransform:           Texturing_TextureTransform,
-   },
+   [
+      Texturing_ImageTexture,
+      Texturing_MovieTexture,
+      Texturing_MultiTexture,
+      Texturing_MultiTextureCoordinate,
+      Texturing_MultiTextureTransform,
+      Texturing_PixelTexture,
+      Texturing_TextureCoordinate,
+      Texturing_TextureCoordinateGenerator,
+      Texturing_TextureProperties,
+      Texturing_TextureTransform,
+   ],
    abstractNodes:
-   {
-      X3DSingleTextureCoordinateNode: Texturing_X3DSingleTextureCoordinateNode,
-      X3DSingleTextureNode:           Texturing_X3DSingleTextureNode,
-      X3DSingleTextureTransformNode:  Texturing_X3DSingleTextureTransformNode,
-      X3DTexture2DNode:               Texturing_X3DTexture2DNode,
-      X3DTextureCoordinateNode:       Texturing_X3DTextureCoordinateNode,
-      X3DTextureNode:                 Texturing_X3DTextureNode,
-      X3DTextureTransformNode:        Texturing_X3DTextureTransformNode,
-   },
+   [
+      Texturing_X3DSingleTextureCoordinateNode,
+      Texturing_X3DSingleTextureNode,
+      Texturing_X3DSingleTextureTransformNode,
+      Texturing_X3DTexture2DNode,
+      Texturing_X3DTextureCoordinateNode,
+      Texturing_X3DTextureNode,
+      Texturing_X3DTextureTransformNode,
+   ],
 };
 ;
 
@@ -106114,13 +106893,13 @@ x_ite_Namespace.set ("x_ite/Components/Texturing", Texturing_default_);
 const Time_default_ = {
    name: "Time",
    concreteNodes:
-   {
-      TimeSensor: Time_TimeSensor,
-   },
+   [
+      Time_TimeSensor,
+   ],
    abstractNodes:
-   {
-      X3DTimeDependentNode: Time_X3DTimeDependentNode,
-   },
+   [
+      Time_X3DTimeDependentNode,
+   ],
 };
 ;
 
@@ -107046,7 +107825,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(536);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107477,7 +108256,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace.set ("x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(536);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108059,7 +108838,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(536);
+/* provided dependency */ var Notification_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108182,8 +108961,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(334);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(536);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(808);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110953,7 +111732,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(536);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112991,8 +113770,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(372);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(536);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(300);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113869,8 +114648,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(372);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(536);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(300);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114844,8 +115623,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(372);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(536);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(300);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115180,8 +115959,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(372);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(536);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(300);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116324,8 +117103,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(372);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(536);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(300);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117368,8 +118147,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(536);
-/* provided dependency */ var ResizeSensor = __webpack_require__(40);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(299);
+/* provided dependency */ var ResizeSensor = __webpack_require__(561);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119251,14 +120030,14 @@ class Components
    {
       if (concreteNodes)
       {
-         for (const [typeName, ConcreteNode] of Object .entries (concreteNodes))
-            ConcreteNodes.add (typeName, ConcreteNode);
+         for (const ConcreteNode of concreteNodes)
+            ConcreteNodes.add (ConcreteNode .typeName, ConcreteNode);
       }
 
       if (abstractNodes)
       {
-         for (const [typeName, AbstractNode] of Object .entries (abstractNodes))
-            AbstractNodes.add (typeName, AbstractNode);
+         for (const AbstractNode of abstractNodes)
+            AbstractNodes.add (AbstractNode .typeName, AbstractNode);
       }
 
       if (browserContext)
@@ -119296,7 +120075,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(536);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(299);
 /*******************************************************************************
  * MIT License
  *
@@ -120547,7 +121326,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(536);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121477,7 +122256,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(536);
+/* provided dependency */ var Fallback_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121656,8 +122435,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(536);
-/* provided dependency */ var pako = __webpack_require__(175);
+/* provided dependency */ var jquery_$ = __webpack_require__(299);
+/* provided dependency */ var pako = __webpack_require__(851);
 jquery_$.decodeText = function (input)
 {
    if (typeof input === "string")
@@ -121702,14 +122481,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(520);
+/* provided dependency */ var libtess_libtess = __webpack_require__(818);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace.set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(536);
+/* provided dependency */ var X3D_$ = __webpack_require__(299);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

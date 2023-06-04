@@ -203,10 +203,12 @@ Object .defineProperties (X3DOneSidedMaterialNode,
    typeName:
    {
       value: "X3DOneSidedMaterialNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Shape",
+      enumerate: true,
    },
 });
 

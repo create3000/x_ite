@@ -124,10 +124,12 @@ Object .defineProperties (X3DTransformMatrix3DNode,
    typeName:
    {
       value: "X3DTransformMatrix3DNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Grouping",
+      enumerate: true,
    },
 });
 

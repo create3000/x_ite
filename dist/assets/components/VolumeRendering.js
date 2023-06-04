@@ -190,6 +190,20 @@ X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create ((X3DNode_d
    },
 });
 
+Object .defineProperties (X3DVolumeRenderStyleNode,
+{
+   typeName:
+   {
+      value: "X3DVolumeRenderStyleNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+});
+
 const __default__ = X3DVolumeRenderStyleNode;
 ;
 
@@ -256,6 +270,20 @@ function X3DComposableVolumeRenderStyleNode (executionContext)
 X3DComposableVolumeRenderStyleNode .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeRenderStyleNode.prototype),
 {
    constructor: X3DComposableVolumeRenderStyleNode,
+});
+
+Object .defineProperties (X3DComposableVolumeRenderStyleNode,
+{
+   typeName:
+   {
+      value: "X3DComposableVolumeRenderStyleNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
 });
 
 const X3DComposableVolumeRenderStyleNode_default_ = X3DComposableVolumeRenderStyleNode;
@@ -2304,6 +2332,20 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create ((X3DChildNode_def
    },
 });
 
+Object .defineProperties (X3DVolumeDataNode,
+{
+   typeName:
+   {
+      value: "X3DVolumeDataNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerate: true,
+   },
+});
+
 const X3DVolumeDataNode_default_ = X3DVolumeDataNode;
 ;
 
@@ -4160,27 +4202,27 @@ Namespace_default().set ("x_ite/Components/VolumeRendering/VolumeData", VolumeDa
 Components_default().add ({
    name: "VolumeRendering",
    concreteNodes:
-   {
-      BlendedVolumeStyle:               VolumeRendering_BlendedVolumeStyle,
-      BoundaryEnhancementVolumeStyle:   VolumeRendering_BoundaryEnhancementVolumeStyle,
-      CartoonVolumeStyle:               VolumeRendering_CartoonVolumeStyle,
-      ComposedVolumeStyle:              VolumeRendering_ComposedVolumeStyle,
-      EdgeEnhancementVolumeStyle:       VolumeRendering_EdgeEnhancementVolumeStyle,
-      IsoSurfaceVolumeData:             VolumeRendering_IsoSurfaceVolumeData,
-      OpacityMapVolumeStyle:            VolumeRendering_OpacityMapVolumeStyle,
-      ProjectionVolumeStyle:            VolumeRendering_ProjectionVolumeStyle,
-      SegmentedVolumeData:              VolumeRendering_SegmentedVolumeData,
-      ShadedVolumeStyle:                VolumeRendering_ShadedVolumeStyle,
-      SilhouetteEnhancementVolumeStyle: VolumeRendering_SilhouetteEnhancementVolumeStyle,
-      ToneMappedVolumeStyle:            VolumeRendering_ToneMappedVolumeStyle,
-      VolumeData:                       VolumeRendering_VolumeData,
-   },
+   [
+      VolumeRendering_BlendedVolumeStyle,
+      VolumeRendering_BoundaryEnhancementVolumeStyle,
+      VolumeRendering_CartoonVolumeStyle,
+      VolumeRendering_ComposedVolumeStyle,
+      VolumeRendering_EdgeEnhancementVolumeStyle,
+      VolumeRendering_IsoSurfaceVolumeData,
+      VolumeRendering_OpacityMapVolumeStyle,
+      VolumeRendering_ProjectionVolumeStyle,
+      VolumeRendering_SegmentedVolumeData,
+      VolumeRendering_ShadedVolumeStyle,
+      VolumeRendering_SilhouetteEnhancementVolumeStyle,
+      VolumeRendering_ToneMappedVolumeStyle,
+      VolumeRendering_VolumeData,
+   ],
    abstractNodes:
-   {
-      X3DComposableVolumeRenderStyleNode: VolumeRendering_X3DComposableVolumeRenderStyleNode,
-      X3DVolumeDataNode:                  VolumeRendering_X3DVolumeDataNode,
-      X3DVolumeRenderStyleNode:           VolumeRendering_X3DVolumeRenderStyleNode,
-   },
+   [
+      VolumeRendering_X3DComposableVolumeRenderStyleNode,
+      VolumeRendering_X3DVolumeDataNode,
+      VolumeRendering_X3DVolumeRenderStyleNode,
+   ],
    browserContext: VolumeRendering_X3DVolumeRenderingContext,
 });
 

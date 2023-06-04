@@ -230,10 +230,12 @@ Object .defineProperties (X3DChaserNode,
    typeName:
    {
       value: "X3DChaserNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Followers",
+      enumerate: true,
    },
 });
 

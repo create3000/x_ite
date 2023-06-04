@@ -78,10 +78,12 @@ Object .defineProperties (X3DNBodyCollisionSpaceNode,
    typeName:
    {
       value: "X3DNBodyCollisionSpaceNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
+      enumerate: true,
    },
 });
 

@@ -126,10 +126,12 @@ Object .defineProperties (X3DInterpolatorNode,
    typeName:
    {
       value: "X3DInterpolatorNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Interpolation",
+      enumerate: true,
    },
 });
 

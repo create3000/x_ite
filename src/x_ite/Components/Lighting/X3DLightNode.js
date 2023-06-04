@@ -211,10 +211,12 @@ Object .defineProperties (X3DLightNode,
    typeName:
    {
       value: "X3DLightNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Lighting",
+      enumerate: true,
    },
 });
 

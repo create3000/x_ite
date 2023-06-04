@@ -796,6 +796,20 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
    },
 });
 
+Object .defineProperties (X3DPickSensorNode,
+{
+   typeName:
+   {
+      value: "X3DPickSensorNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerate: true,
+   },
+});
+
 const X3DPickSensorNode_default_ = X3DPickSensorNode;
 ;
 
@@ -1239,6 +1253,20 @@ X3DPickableObject .prototype =
    },
    dispose: function () { },
 };
+
+Object .defineProperties (X3DPickableObject,
+{
+   typeName:
+   {
+      value: "X3DPickableObject",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerate: true,
+   },
+});
 
 const X3DPickableObject_default_ = X3DPickableObject;
 ;
@@ -2608,18 +2636,18 @@ Namespace_default().set ("x_ite/Components/Picking/VolumePickSensor", VolumePick
 Components_default().add ({
    name: "Picking",
    concreteNodes:
-   {
-      LinePickSensor:      Picking_LinePickSensor,
-      PickableGroup:       Picking_PickableGroup,
-      PointPickSensor:     Picking_PointPickSensor,
-      PrimitivePickSensor: Picking_PrimitivePickSensor,
-      VolumePickSensor:    Picking_VolumePickSensor,
-   },
+   [
+      Picking_LinePickSensor,
+      Picking_PickableGroup,
+      Picking_PointPickSensor,
+      Picking_PrimitivePickSensor,
+      Picking_VolumePickSensor,
+   ],
    abstractNodes:
-   {
-      X3DPickSensorNode: Picking_X3DPickSensorNode,
-      X3DPickableObject: Picking_X3DPickableObject,
-   },
+   [
+      Picking_X3DPickSensorNode,
+      Picking_X3DPickableObject,
+   ],
 });
 
 const Picking_default_ = undefined;

@@ -84,10 +84,12 @@ Object .defineProperties (X3DTransformNode,
    typeName:
    {
       value: "X3DTransformNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Grouping",
+      enumerate: true,
    },
 });
 

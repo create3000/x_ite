@@ -125,6 +125,20 @@ X3DProductStructureChildNode .prototype = Object .assign (Object .create ((X3DCh
    constructor: X3DProductStructureChildNode,
 });
 
+Object .defineProperties (X3DProductStructureChildNode,
+{
+   typeName:
+   {
+      value: "X3DProductStructureChildNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "CADGeometry",
+      enumerate: true,
+   },
+});
+
 const __default__ = X3DProductStructureChildNode;
 ;
 
@@ -1084,18 +1098,18 @@ Namespace_default().set ("x_ite/Components/CADGeometry/QuadSet", QuadSet_default
 Components_default().add ({
    name: "CADGeometry",
    concreteNodes:
-   {
-      CADAssembly:    CADGeometry_CADAssembly,
-      CADFace:        CADGeometry_CADFace,
-      CADLayer:       CADGeometry_CADLayer,
-      CADPart:        CADGeometry_CADPart,
-      IndexedQuadSet: CADGeometry_IndexedQuadSet,
-      QuadSet:        CADGeometry_QuadSet,
-   },
+   [
+      CADGeometry_CADAssembly,
+      CADGeometry_CADFace,
+      CADGeometry_CADLayer,
+      CADGeometry_CADPart,
+      CADGeometry_IndexedQuadSet,
+      CADGeometry_QuadSet,
+   ],
    abstractNodes:
-   {
-      X3DProductStructureChildNode: CADGeometry_X3DProductStructureChildNode,
-   },
+   [
+      CADGeometry_X3DProductStructureChildNode,
+   ],
 });
 
 const CADGeometry_default_ = undefined;

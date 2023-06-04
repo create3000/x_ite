@@ -268,6 +268,20 @@ X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create ((X3DSensorNo
    release: function () { },
 });
 
+Object .defineProperties (X3DKeyDeviceSensorNode,
+{
+   typeName:
+   {
+      value: "X3DKeyDeviceSensorNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "KeyDeviceSensor",
+      enumerate: true,
+   },
+});
+
 const X3DKeyDeviceSensorNode_default_ = X3DKeyDeviceSensorNode;
 ;
 
@@ -885,14 +899,14 @@ Namespace_default().set ("x_ite/Components/KeyDeviceSensor/StringSensor", String
 Components_default().add ({
    name: "KeyDeviceSensor",
    concreteNodes:
-   {
-      KeySensor:    KeyDeviceSensor_KeySensor,
-      StringSensor: KeyDeviceSensor_StringSensor,
-   },
+   [
+      KeyDeviceSensor_KeySensor,
+      KeyDeviceSensor_StringSensor,
+   ],
    abstractNodes:
-   {
-      X3DKeyDeviceSensorNode: KeyDeviceSensor_X3DKeyDeviceSensorNode,
-   },
+   [
+      KeyDeviceSensor_X3DKeyDeviceSensorNode,
+   ],
    browserContext: KeyDeviceSensor_X3DKeyDeviceSensorContext,
 });
 

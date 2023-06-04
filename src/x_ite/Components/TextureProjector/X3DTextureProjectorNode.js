@@ -209,10 +209,12 @@ Object .defineProperties (X3DTextureProjectorNode,
    typeName:
    {
       value: "X3DTextureProjectorNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "TextureProjector",
+      enumerate: true,
    },
 });
 

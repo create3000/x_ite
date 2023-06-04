@@ -327,11 +327,12 @@ Namespace_default().set ("x_ite/Components/X_ITE/BlendMode", __default__);
 Components_default().add ({
    name: "X_ITE",
    concreteNodes:
-   {
-      BlendMode: X_ITE_BlendMode,
-   },
+   [
+      X_ITE_BlendMode,
+   ],
    abstractNodes:
-   { },
+   [
+   ],
 });
 
 const X_ITE_default_ = undefined;

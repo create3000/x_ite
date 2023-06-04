@@ -130,10 +130,12 @@ Object .defineProperties (X3DEnvironmentTextureNode,
    typeName:
    {
       value: "X3DEnvironmentTextureNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "CubeMapTexturing",
+      enumerate: true,
    },
 });
 

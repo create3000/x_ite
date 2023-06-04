@@ -132,10 +132,12 @@ Object .defineProperties (X3DEnvironmentalSensorNode,
    typeName:
    {
       value: "X3DEnvironmentalSensorNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "EnvironmentalSensor",
+      enumerate: true,
    },
 });
 

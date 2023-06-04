@@ -2177,19 +2177,19 @@ Namespace_default().set ("x_ite/Components/Geometry2D/TriangleSet2D", TriangleSe
 Components_default().add ({
    name: "Geometry2D",
    concreteNodes:
-   {
-      Arc2D:         Geometry2D_Arc2D,
-      ArcClose2D:    Geometry2D_ArcClose2D,
-      Circle2D:      Geometry2D_Circle2D,
-      Disk2D:        Geometry2D_Disk2D,
-      Polyline2D:    Geometry2D_Polyline2D,
-      Polypoint2D:   Geometry2D_Polypoint2D,
-      Rectangle2D:   Geometry2D_Rectangle2D,
-      TriangleSet2D: Geometry2D_TriangleSet2D,
-   },
+   [
+      Geometry2D_Arc2D,
+      Geometry2D_ArcClose2D,
+      Geometry2D_Circle2D,
+      Geometry2D_Disk2D,
+      Geometry2D_Polyline2D,
+      Geometry2D_Polypoint2D,
+      Geometry2D_Rectangle2D,
+      Geometry2D_TriangleSet2D,
+   ],
    abstractNodes:
-   {
-   },
+   [
+   ],
    browserContext: Geometry2D_X3DGeometry2DContext,
 });
 

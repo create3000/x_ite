@@ -1231,17 +1231,17 @@ Namespace_default().set ("x_ite/Components/HAnim/HAnimSite", HAnimSite_default_)
 Components_default().add ({
    name: "HAnim",
    concreteNodes:
-   {
-      HAnimDisplacer: HAnim_HAnimDisplacer,
-      HAnimHumanoid:  HAnim_HAnimHumanoid,
-      HAnimJoint:     HAnim_HAnimJoint,
-      HAnimMotion:    HAnim_HAnimMotion,
-      HAnimSegment:   HAnim_HAnimSegment,
-      HAnimSite:      HAnim_HAnimSite,
-   },
+   [
+      HAnim_HAnimDisplacer,
+      HAnim_HAnimHumanoid,
+      HAnim_HAnimJoint,
+      HAnim_HAnimMotion,
+      HAnim_HAnimSegment,
+      HAnim_HAnimSite,
+   ],
    abstractNodes:
-   {
-   },
+   [
+   ],
 });
 
 const HAnim_default_ = undefined;

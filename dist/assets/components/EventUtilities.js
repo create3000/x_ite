@@ -326,6 +326,20 @@ X3DSequencerNode .prototype = Object .assign (Object .create ((X3DChildNode_defa
    },
 });
 
+Object .defineProperties (X3DSequencerNode,
+{
+   typeName:
+   {
+      value: "X3DSequencerNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerate: true,
+   },
+});
+
 const X3DSequencerNode_default_ = X3DSequencerNode;
 ;
 
@@ -629,6 +643,20 @@ function X3DTriggerNode (executionContext)
 X3DTriggerNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
 {
    constructor: X3DTriggerNode,
+});
+
+Object .defineProperties (X3DTriggerNode,
+{
+   typeName:
+   {
+      value: "X3DTriggerNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerate: true,
+   },
 });
 
 const X3DTriggerNode_default_ = X3DTriggerNode;
@@ -1163,20 +1191,20 @@ Namespace_default().set ("x_ite/Components/EventUtilities/TimeTrigger", TimeTrig
 Components_default().add ({
    name: "EventUtilities",
    concreteNodes:
-   {
-      BooleanFilter:    EventUtilities_BooleanFilter,
-      BooleanSequencer: EventUtilities_BooleanSequencer,
-      BooleanToggle:    EventUtilities_BooleanToggle,
-      BooleanTrigger:   EventUtilities_BooleanTrigger,
-      IntegerSequencer: EventUtilities_IntegerSequencer,
-      IntegerTrigger:   EventUtilities_IntegerTrigger,
-      TimeTrigger:      EventUtilities_TimeTrigger,
-   },
+   [
+      EventUtilities_BooleanFilter,
+      EventUtilities_BooleanSequencer,
+      EventUtilities_BooleanToggle,
+      EventUtilities_BooleanTrigger,
+      EventUtilities_IntegerSequencer,
+      EventUtilities_IntegerTrigger,
+      EventUtilities_TimeTrigger,
+   ],
    abstractNodes:
-   {
-      X3DSequencerNode: EventUtilities_X3DSequencerNode,
-      X3DTriggerNode:   EventUtilities_X3DTriggerNode,
-   },
+   [
+      EventUtilities_X3DSequencerNode,
+      EventUtilities_X3DTriggerNode,
+   ],
 });
 
 const EventUtilities_default_ = undefined;

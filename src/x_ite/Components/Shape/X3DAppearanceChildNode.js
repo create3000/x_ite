@@ -65,10 +65,12 @@ Object .defineProperties (X3DAppearanceChildNode,
    typeName:
    {
       value: "X3DAppearanceChildNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Shape",
+      enumerate: true,
    },
 });
 

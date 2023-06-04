@@ -94,10 +94,12 @@ Object .defineProperties (X3DShaderNode,
    typeName:
    {
       value: "X3DShaderNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Shaders",
+      enumerate: true,
    },
 });
 

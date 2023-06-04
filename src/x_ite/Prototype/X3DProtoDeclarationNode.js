@@ -102,4 +102,13 @@ X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode
 for (const key of Reflect .ownKeys (X3DProtoDeclarationNode .prototype))
    Object .defineProperty (X3DProtoDeclarationNode .prototype, key, { enumerable: false });
 
+Object .defineProperties (X3DProtoDeclarationNode,
+{
+   typeName:
+   {
+      value: "X3DProtoDeclarationNode",
+      enumerate: true,
+   },
+});
+
 export default X3DProtoDeclarationNode;

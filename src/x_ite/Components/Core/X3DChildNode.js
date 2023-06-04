@@ -93,10 +93,12 @@ Object .defineProperties (X3DChildNode,
    typeName:
    {
       value: "X3DChildNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Core",
+      enumerate: true,
    },
 });
 

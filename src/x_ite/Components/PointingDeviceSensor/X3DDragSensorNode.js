@@ -67,10 +67,12 @@ Object .defineProperties (X3DDragSensorNode,
    typeName:
    {
       value: "X3DDragSensorNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "PointingDeviceSensor",
+      enumerate: true,
    },
 });
 

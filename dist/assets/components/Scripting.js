@@ -308,6 +308,20 @@ X3DScriptNode .prototype = Object .assign (Object .create ((X3DChildNode_default
    },
 });
 
+Object .defineProperties (X3DScriptNode,
+{
+   typeName:
+   {
+      value: "X3DScriptNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Scripting",
+      enumerate: true,
+   },
+});
+
 const X3DScriptNode_default_ = X3DScriptNode;
 ;
 
@@ -890,13 +904,13 @@ Namespace_default().set ("x_ite/Components/Scripting/Script", Script_default_);
 Components_default().add ({
    name: "Scripting",
    concreteNodes:
-   {
-      Script: Scripting_Script,
-   },
+   [
+      Scripting_Script,
+   ],
    abstractNodes:
-   {
-      X3DScriptNode: Scripting_X3DScriptNode,
-   },
+   [
+      Scripting_X3DScriptNode,
+   ],
 });
 
 const Scripting_default_ = undefined;

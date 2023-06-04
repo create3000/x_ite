@@ -351,10 +351,12 @@ Object .defineProperties (X3DComposedGeometryNode,
    typeName:
    {
       value: "X3DComposedGeometryNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Rendering",
+      enumerate: true,
    },
 });
 

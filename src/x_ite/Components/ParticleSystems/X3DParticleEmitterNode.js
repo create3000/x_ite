@@ -987,10 +987,12 @@ Object .defineProperties (X3DParticleEmitterNode,
    typeName:
    {
       value: "X3DParticleEmitterNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "ParticleSystems",
+      enumerate: true,
    },
 });
 

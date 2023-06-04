@@ -65,10 +65,12 @@ Object .defineProperties (X3DProductStructureChildNode,
    typeName:
    {
       value: "X3DProductStructureChildNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "CADGeometry",
+      enumerate: true,
    },
 });
 

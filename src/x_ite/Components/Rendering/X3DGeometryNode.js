@@ -1207,10 +1207,12 @@ Object .defineProperties (X3DGeometryNode,
    typeName:
    {
       value: "X3DGeometryNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Rendering",
+      enumerate: true,
    },
 });
 

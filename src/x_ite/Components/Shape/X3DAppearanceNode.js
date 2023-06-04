@@ -79,10 +79,12 @@ Object .defineProperties (X3DAppearanceNode,
    typeName:
    {
       value: "X3DAppearanceNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Shape",
+      enumerate: true,
    },
 });
 

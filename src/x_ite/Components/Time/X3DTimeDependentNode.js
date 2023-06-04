@@ -358,10 +358,12 @@ Object .defineProperties (X3DTimeDependentNode,
    typeName:
    {
       value: "X3DTimeDependentNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Time",
+      enumerate: true,
    },
 });
 

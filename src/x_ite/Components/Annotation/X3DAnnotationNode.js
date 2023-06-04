@@ -69,10 +69,12 @@ Object .defineProperties (X3DAnnotationNode,
    typeName:
    {
       value: "X3DAnnotationNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Annotation",
+      enumerate: true,
    },
 });
 

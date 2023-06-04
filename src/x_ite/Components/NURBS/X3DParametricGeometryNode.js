@@ -70,10 +70,12 @@ Object .defineProperties (X3DParametricGeometryNode,
    typeName:
    {
       value: "X3DParametricGeometryNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "NURBS",
+      enumerate: true,
    },
 });
 

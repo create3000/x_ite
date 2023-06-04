@@ -78,10 +78,12 @@ Object .defineProperties (X3DVertexAttributeNode,
    typeName:
    {
       value: "X3DVertexAttributeNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Shaders",
+      enumerate: true,
    },
 });
 

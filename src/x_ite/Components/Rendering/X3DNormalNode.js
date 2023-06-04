@@ -65,10 +65,12 @@ Object .defineProperties (X3DNormalNode,
    typeName:
    {
       value: "X3DNormalNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Rendering",
+      enumerate: true,
    },
 });
 

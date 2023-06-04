@@ -304,6 +304,20 @@ X3DLayoutNode .prototype = Object .assign (Object .create ((X3DChildNode_default
    constructor: X3DLayoutNode,
 });
 
+Object .defineProperties (X3DLayoutNode,
+{
+   typeName:
+   {
+      value: "X3DLayoutNode",
+      enumerate: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerate: true,
+   },
+});
+
 const X3DLayoutNode_default_ = X3DLayoutNode;
 ;
 
@@ -2072,17 +2086,17 @@ Namespace_default().set ("x_ite/Components/Layout/ScreenGroup", ScreenGroup_defa
 Components_default().add ({
    name: "Layout",
    concreteNodes:
-   {
-      Layout:          Layout_Layout,
-      LayoutGroup:     Layout_LayoutGroup,
-      LayoutLayer:     Layout_LayoutLayer,
-      ScreenFontStyle: Layout_ScreenFontStyle,
-      ScreenGroup:     Layout_ScreenGroup,
-   },
+   [
+      Layout_Layout,
+      Layout_LayoutGroup,
+      Layout_LayoutLayer,
+      Layout_ScreenFontStyle,
+      Layout_ScreenGroup,
+   ],
    abstractNodes:
-   {
-      X3DLayoutNode: Layout_X3DLayoutNode,
-   },
+   [
+      Layout_X3DLayoutNode,
+   ],
    browserContext: Layout_X3DLayoutContext,
 });
 

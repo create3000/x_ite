@@ -90,10 +90,12 @@ Object .defineProperties (X3DSingleTextureCoordinateNode,
    typeName:
    {
       value: "X3DSingleTextureCoordinateNode",
+      enumerate: true,
    },
    componentName:
    {
       value: "Texturing",
+      enumerate: true,
    },
 });
 
