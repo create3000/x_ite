@@ -140,7 +140,7 @@ const Context =
          }
       }
 
-      if (gl)
+      if (!gl)
          throw new Error ("Couldn't create WebGL context.");
 
       // Feature detection:
