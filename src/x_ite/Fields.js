@@ -71,24 +71,17 @@ const Fields = {
    SFFloat:     SFFloat,
    SFImage:     SFImage,
    SFInt32:     SFInt32,
-   SFMatrix3d:  SFMatrix3 .SFMatrix3d,
-   SFMatrix3f:  SFMatrix3 .SFMatrix3f,
-   SFMatrix4d:  SFMatrix4 .SFMatrix4d,
-   SFMatrix4f:  SFMatrix4 .SFMatrix4f,
+   ... SFMatrix3,
+   ... SFMatrix4,
    SFNode:      SFNode,
    SFRotation:  SFRotation,
    SFString:    SFString,
    SFTime:      SFTime,
-   SFVec2d:     SFVec2 .SFVec2d,
-   SFVec2f:     SFVec2 .SFVec2f,
-   SFVec3d:     SFVec3 .SFVec3d,
-   SFVec3f:     SFVec3 .SFVec3f,
-   SFVec4d:     SFVec4 .SFVec4d,
-   SFVec4f:     SFVec4 .SFVec4f,
+   ... SFVec2,
+   ... SFVec3,
+   ... SFVec4,
 
-   VrmlMatrix:  SFMatrix4 .VrmlMatrix,
-
-   ... ArrayFields
+   ... ArrayFields,
 };
 
 export default Fields;

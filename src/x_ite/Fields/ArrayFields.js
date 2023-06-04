@@ -63,7 +63,6 @@ import SFVec3              from "./SFVec3.js";
 import SFVec4              from "./SFVec4.js";
 import X3DObjectArrayField from "../Base/X3DObjectArrayField.js";
 import X3DTypedArrayField  from "../Base/X3DTypedArrayField.js";
-import X3DConstants        from "../Base/X3DConstants.js";
 
 const
    SFMatrix3d = SFMatrix3 .SFMatrix3d,

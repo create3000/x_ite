@@ -45,25 +45,12 @@
  *
  ******************************************************************************/
 
-import X3DField     from "../Base/X3DField.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import X3DField from "../Base/X3DField.js";
 
 function SFString (value)
 {
    return X3DField .call (this, arguments .length ? "" + value : "");
 }
-
-Object .assign (SFString,
-{
-   unescape: function (string)
-   {
-      return string .replace (/\\([\\"])/g, "$1");
-   },
-   escape: function (string)
-   {
-      return string .replace (/([\\"])/g, "\\$1");
-   },
-});
 
 SFString .prototype = Object .assign (Object .create (X3DField .prototype),
 {
@@ -130,6 +117,18 @@ Object .defineProperties (SFString,
    {
       value: "SFString",
       enumerable: true,
+   },
+});
+
+Object .assign (SFString,
+{
+   unescape: function (string)
+   {
+      return string .replace (/\\([\\"])/g, "$1");
+   },
+   escape: function (string)
+   {
+      return string .replace (/([\\"])/g, "\\$1");
    },
 });
 
