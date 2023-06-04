@@ -47,11 +47,11 @@
 
 // Everything went wrong when the Error function is called.
 
-const Fallback =
+class Fallback
 {
-   error: function (error, fallbacks)
+   static error (error, fallbacks)
    {
-      $(function ()
+      $(() =>
       {
          const elements = $("x3d-canvas, X3DCanvas");
 
@@ -62,10 +62,10 @@ const Fallback =
             if (typeof fallback === "function")
                fallback (elements, error);
          }
-      }
-      .bind (this));
-   },
-   show: function (elements, error)
+      });
+   }
+
+   static show (elements, error)
    {
       console .error (error);
 
@@ -79,7 +79,7 @@ const Fallback =
          if (e .shadowRoot)
             e .shadowRoot .appendChild (document .createElement ("slot"));
       });
-   },
-};
+   }
+}
 
 export default Fallback;

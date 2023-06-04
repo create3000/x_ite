@@ -112,7 +112,7 @@ const Context =
 
       let gl = null;
 
-      if (version >= 2 && ! gl)
+      if (version >= 2 && !gl)
       {
          gl = canvas .getContext ("webgl2", { ... options, antialias: false });
 
@@ -120,7 +120,7 @@ const Context =
             gl .getVersion = function () { return 2; };
       }
 
-      if (version >= 1 && ! gl)
+      if (version >= 1 && !gl)
       {
          gl = canvas .getContext ("webgl",              options) ||
               canvas .getContext ("experimental-webgl", options);
@@ -140,7 +140,7 @@ const Context =
          }
       }
 
-      if (! gl)
+      if (!gl)
          throw new Error ("Couldn't create WebGL context.");
 
       // Feature detection:

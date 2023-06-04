@@ -92,7 +92,7 @@ let initialized = false;
  */
 function X3D (callback, fallback)
 {
-   return new Promise (function (resolve, reject)
+   return new Promise ((resolve, reject) =>
    {
       if (typeof callback === "function")
          callbacks .done (callback);
