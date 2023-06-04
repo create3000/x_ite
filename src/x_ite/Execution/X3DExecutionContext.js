@@ -85,12 +85,12 @@ function X3DExecutionContext (executionContext, outerNode = null)
    this ._rootNodes .setAccessType (X3DConstants .initializeOnly);
    this ._rootNodes .addCloneCount (1);
 
-   this [_outerNode]      = outerNode;
-   this [_namedNodes]     = new NamedNodesArray ();
-   this [_importedNodes]  = new ImportedNodesArray ();
-   this [_protos]         = new ProtoDeclarationArray ();
-   this [_externprotos]   = new ExternProtoDeclarationArray ();
-   this [_routes]         = new RouteArray ();
+   this [_outerNode]     = outerNode;
+   this [_namedNodes]    = new NamedNodesArray ();
+   this [_importedNodes] = new ImportedNodesArray ();
+   this [_protos]        = new ProtoDeclarationArray ();
+   this [_externprotos]  = new ExternProtoDeclarationArray ();
+   this [_routes]        = new RouteArray ();
 
    this [_namedNodes]     .addParent (this);
    this [_importedNodes]  .addParent (this);
