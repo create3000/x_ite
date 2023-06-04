@@ -67,10 +67,7 @@ SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       X3DField .prototype .set .call (this, !! value);
    },
-   valueOf: function ()
-   {
-      return this .getValue ();
-   },
+   valueOf: X3DField .prototype .getValue,
    toStream: function (generator)
    {
       generator .string += this .getValue () ? "TRUE" : "FALSE";
