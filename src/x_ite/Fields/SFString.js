@@ -82,7 +82,7 @@ SFString .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator, sourceText)
+   toXMLStream: function (generator, sourceText = false)
    {
       generator .string += sourceText
          ? generator .XMLEncodeSourceText (this .getValue ())

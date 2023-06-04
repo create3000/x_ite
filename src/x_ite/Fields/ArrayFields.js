@@ -419,7 +419,7 @@ MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .proto
    {
       return SFString;
    },
-   toXMLStream: function (generator, sourceText)
+   toXMLStream: function (generator, sourceText = false)
    {
       const
          target = this .getTarget (),
