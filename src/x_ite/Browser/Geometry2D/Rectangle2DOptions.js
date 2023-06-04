@@ -106,7 +106,7 @@ Object .defineProperties (Rectangle2DOptions,
    typeName:
    {
       value: "Rectangle2DOptions",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

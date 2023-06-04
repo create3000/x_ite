@@ -80,22 +80,22 @@ Object .defineProperties (WorldInfo,
    typeName:
    {
       value: "WorldInfo",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -104,7 +104,7 @@ Object .defineProperties (WorldInfo,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "title",    new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "info",     new Fields .MFString ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

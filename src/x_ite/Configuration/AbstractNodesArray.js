@@ -74,7 +74,7 @@ Object .defineProperties (AbstractNodesArray,
    typeName:
    {
       value: "AbstractNodesArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

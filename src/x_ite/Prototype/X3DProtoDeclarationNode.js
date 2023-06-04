@@ -107,7 +107,7 @@ Object .defineProperties (X3DProtoDeclarationNode,
    typeName:
    {
       value: "X3DProtoDeclarationNode",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

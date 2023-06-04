@@ -132,22 +132,22 @@ Object .defineProperties (NurbsTrimmedSurface,
    typeName:
    {
       value: "NurbsTrimmedSurface",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -171,7 +171,7 @@ Object .defineProperties (NurbsTrimmedSurface,
          new X3DFieldDefinition (X3DConstants .inputOnly,      "removeTrimmingContour", new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "trimmingContour",       new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

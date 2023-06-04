@@ -1102,7 +1102,7 @@ Object .defineProperties (X3DScene,
    typeName:
    {
       value: "X3DScene",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

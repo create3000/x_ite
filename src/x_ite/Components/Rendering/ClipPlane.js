@@ -151,22 +151,22 @@ Object .defineProperties (ClipPlane,
    typeName:
    {
       value: "ClipPlane",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -175,7 +175,7 @@ Object .defineProperties (ClipPlane,
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "plane",    new Fields .SFVec4f (0, 1, 0, 0)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

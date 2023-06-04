@@ -68,22 +68,22 @@ Object .defineProperties (Transform,
    typeName:
    {
       value: "Transform",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Grouping",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -102,7 +102,7 @@ Object .defineProperties (Transform,
          new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

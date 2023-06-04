@@ -211,22 +211,22 @@ Object .defineProperties (StaticGroup,
    typeName:
    {
       value: "StaticGroup",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Grouping",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -238,7 +238,7 @@ Object .defineProperties (StaticGroup,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "children",    new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

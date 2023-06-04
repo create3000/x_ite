@@ -149,22 +149,22 @@ Object .defineProperties (LineProperties,
    typeName:
    {
       value: "LineProperties",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "lineProperties",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -174,7 +174,7 @@ Object .defineProperties (LineProperties,
          new X3DFieldDefinition (X3DConstants .inputOutput, "linetype",             new Fields .SFInt32 (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "linewidthScaleFactor", new Fields .SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

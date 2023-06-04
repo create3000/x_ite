@@ -109,12 +109,12 @@ Object .defineProperties (X3DKeyDeviceSensorNode,
    typeName:
    {
       value: "X3DKeyDeviceSensorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "KeyDeviceSensor",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

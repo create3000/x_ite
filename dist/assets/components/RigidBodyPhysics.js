@@ -327,12 +327,12 @@ Object .defineProperties (X3DRigidJointNode,
    typeName:
    {
       value: "X3DRigidJointNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -621,22 +621,22 @@ Object .defineProperties (BallJoint,
    typeName:
    {
       value: "BallJoint",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "joints",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -649,7 +649,7 @@ Object .defineProperties (BallJoint,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body1",            new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body2",            new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -823,12 +823,12 @@ Object .defineProperties (X3DNBodyCollidableNode,
    typeName:
    {
       value: "X3DNBodyCollidableNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1068,22 +1068,22 @@ Object .defineProperties (CollidableOffset,
    typeName:
    {
       value: "CollidableOffset",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1098,7 +1098,7 @@ Object .defineProperties (CollidableOffset,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",  new (Fields_default()).SFVec3f ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "collidable",  new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1571,22 +1571,22 @@ Object .defineProperties (CollidableShape,
    typeName:
    {
       value: "CollidableShape",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1601,7 +1601,7 @@ Object .defineProperties (CollidableShape,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",  new (Fields_default()).SFVec3f ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "shape",       new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1857,22 +1857,22 @@ Object .defineProperties (CollisionCollection,
    typeName:
    {
       value: "CollisionCollection",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "collider",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1889,7 +1889,7 @@ Object .defineProperties (CollisionCollection,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "softnessErrorCorrection",  new (Fields_default()).SFFloat (0.8)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "collidables",              new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2157,22 +2157,22 @@ Object .defineProperties (CollisionSensor,
    typeName:
    {
       value: "CollisionSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2184,7 +2184,7 @@ Object .defineProperties (CollisionSensor,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "contacts",      new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "collider",      new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2274,12 +2274,12 @@ Object .defineProperties (X3DNBodyCollisionSpaceNode,
    typeName:
    {
       value: "X3DNBodyCollisionSpaceNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2436,22 +2436,22 @@ Object .defineProperties (CollisionSpace,
    typeName:
    {
       value: "CollisionSpace",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2465,7 +2465,7 @@ Object .defineProperties (CollisionSpace,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",  new (Fields_default()).SFVec3f ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "collidables", new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2553,22 +2553,22 @@ Object .defineProperties (Contact,
    typeName:
    {
       value: "Contact",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2591,7 +2591,7 @@ Object .defineProperties (Contact,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body1",                    new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body2",                    new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2847,22 +2847,22 @@ Object .defineProperties (DoubleAxisHingeJoint,
    typeName:
    {
       value: "DoubleAxisHingeJoint",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "joints",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2894,7 +2894,7 @@ Object .defineProperties (DoubleAxisHingeJoint,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body1",                     new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body2",                     new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2986,22 +2986,22 @@ Object .defineProperties (MotorJoint,
    typeName:
    {
       value: "MotorJoint",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "joints",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3034,7 +3034,7 @@ Object .defineProperties (MotorJoint,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "motor3AngleRate",      new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "autoCalc",             new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3516,22 +3516,22 @@ Object .defineProperties (RigidBody,
    typeName:
    {
       value: "RigidBody",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "bodies",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3561,7 +3561,7 @@ Object .defineProperties (RigidBody,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "disableAngularSpeed",  new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "geometry",             new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3918,22 +3918,22 @@ Object .defineProperties (RigidBodyCollection,
    typeName:
    {
       value: "RigidBodyCollection",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3956,7 +3956,7 @@ Object .defineProperties (RigidBodyCollection,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bodies",                  new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "joints",                  new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -4180,22 +4180,22 @@ Object .defineProperties (SingleAxisHingeJoint,
    typeName:
    {
       value: "SingleAxisHingeJoint",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "joints",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -4216,7 +4216,7 @@ Object .defineProperties (SingleAxisHingeJoint,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body1",               new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body2",               new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -4421,22 +4421,22 @@ Object .defineProperties (SliderJoint,
    typeName:
    {
       value: "SliderJoint",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "joints",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -4454,7 +4454,7 @@ Object .defineProperties (SliderJoint,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body1",               new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body2",               new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -4540,22 +4540,22 @@ Object .defineProperties (UniversalJoint,
    typeName:
    {
       value: "UniversalJoint",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "joints",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -4576,7 +4576,7 @@ Object .defineProperties (UniversalJoint,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body1",                new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body2",                new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

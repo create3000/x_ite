@@ -117,7 +117,7 @@ Object .defineProperties (BoxOptions,
    typeName:
    {
       value: "BoxOptions",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

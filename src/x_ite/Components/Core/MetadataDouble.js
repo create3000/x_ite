@@ -81,22 +81,22 @@ Object .defineProperties (MetadataDouble,
    typeName:
    {
       value: "MetadataDouble",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "metadata",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -106,7 +106,7 @@ Object .defineProperties (MetadataDouble,
          new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "value",     new Fields .MFDouble ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

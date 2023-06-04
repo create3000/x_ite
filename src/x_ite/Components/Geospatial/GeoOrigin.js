@@ -87,22 +87,22 @@ Object .defineProperties (GeoOrigin,
    typeName:
    {
       value: "GeoOrigin",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geoOrigin",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -112,7 +112,7 @@ Object .defineProperties (GeoOrigin,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "geoCoords", new Fields .SFVec3d ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "rotateYUp", new Fields .SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

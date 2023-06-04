@@ -129,7 +129,7 @@ Object .defineProperties (SFString,
    typeName:
    {
       value: "SFString",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

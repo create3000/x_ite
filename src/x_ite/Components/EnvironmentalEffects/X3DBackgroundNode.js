@@ -598,12 +598,12 @@ Object .defineProperties (X3DBackgroundNode,
    typeName:
    {
       value: "X3DBackgroundNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalEffects",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

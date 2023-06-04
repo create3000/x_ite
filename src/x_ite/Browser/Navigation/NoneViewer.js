@@ -66,14 +66,14 @@ Object .defineProperties (NoneViewer,
    typeName:
    {
       value: "NoneViewer",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

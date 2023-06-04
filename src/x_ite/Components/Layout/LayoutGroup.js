@@ -151,22 +151,22 @@ Object .defineProperties (LayoutGroup,
    typeName:
    {
       value: "LayoutGroup",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layout",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -182,7 +182,7 @@ Object .defineProperties (LayoutGroup,
          new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

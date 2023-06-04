@@ -70,22 +70,22 @@ Object .defineProperties (HAnimSegment,
    typeName:
    {
       value: "HAnimSegment",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "HAnim",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -106,7 +106,7 @@ Object .defineProperties (HAnimSegment,
          new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

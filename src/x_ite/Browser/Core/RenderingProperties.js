@@ -81,7 +81,7 @@ Object .defineProperties (RenderingProperties,
    typeName:
    {
       value: "RenderingProperties",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -98,7 +98,7 @@ Object .defineProperties (RenderingProperties,
          new X3DFieldDefinition (X3DConstants .outputOnly, "MaxSamples",             new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .outputOnly, "Multisampling",          new Fields .SFInt32 (4)),
       ]),
-      enumerate: true,
+      enumerable: true,
    }
 });
 

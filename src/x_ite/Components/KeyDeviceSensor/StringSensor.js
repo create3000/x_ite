@@ -131,22 +131,22 @@ Object .defineProperties (StringSensor,
    typeName:
    {
       value: "StringSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "KeyDeviceSensor",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -158,7 +158,7 @@ Object .defineProperties (StringSensor,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "finalText",       new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",        new Fields .SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -71,7 +71,7 @@ Object .defineProperties (X3DFieldDefinition,
    typeName:
    {
       value: "X3DFieldDefinition",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

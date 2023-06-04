@@ -208,22 +208,22 @@ Object .defineProperties (VolumePickSensor,
    typeName:
    {
       value: "VolumePickSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Picking",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -239,7 +239,7 @@ Object .defineProperties (VolumePickSensor,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "pickTarget",       new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedGeometry",   new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

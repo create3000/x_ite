@@ -124,22 +124,22 @@ Object .defineProperties (FogCoordinate,
    typeName:
    {
       value: "FogCoordinate",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalEffects",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "fogCoord",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -147,7 +147,7 @@ Object .defineProperties (FogCoordinate,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "depth",    new Fields .MFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

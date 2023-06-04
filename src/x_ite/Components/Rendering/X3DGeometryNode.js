@@ -116,41 +116,44 @@ function X3DGeometryNode (executionContext)
       this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
 }
 
-// Function to select ether Array or MFFloat for color/normal/vertex arrays.
-X3DGeometryNode .createArray = function ()
+Object .defineProperty (X3DGeometryNode, "createArray",
 {
-   if (ARRAY_TYPE == "MFFloat")
-      return new Fields .MFFloat ();
-
-   const array = [ ];
-
-   array .typedArray = new Float32Array ();
-
-   array .assign = function (value)
+   // Function to select ether Array or MFFloat for color/normal/vertex arrays.
+   value: function ()
    {
-      const length = value .length;
+      if (ARRAY_TYPE == "MFFloat")
+         return new Fields .MFFloat ();
 
-      for (let i = 0; i < length; ++ i)
-         this [i] = value [i];
+      const array = [ ];
 
-      this .length = length;
-   };
+      array .typedArray = new Float32Array ();
 
-   array .getValue = function ()
-   {
-      return this .typedArray;
-   };
+      array .assign = function (value)
+      {
+         const length = value .length;
 
-   array .shrinkToFit = function ()
-   {
-      if (this .length === this .typedArray .length)
-         this .typedArray .set (this);
-      else
-         this .typedArray = new Float32Array (this);
-   };
+         for (let i = 0; i < length; ++ i)
+            this [i] = value [i];
 
-   return array;
-}
+         this .length = length;
+      };
+
+      array .getValue = function ()
+      {
+         return this .typedArray;
+      };
+
+      array .shrinkToFit = function ()
+      {
+         if (this .length === this .typedArray .length)
+            this .typedArray .set (this);
+         else
+            this .typedArray = new Float32Array (this);
+      };
+
+      return array;
+   },
+})
 
 X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
@@ -1207,12 +1210,12 @@ Object .defineProperties (X3DGeometryNode,
    typeName:
    {
       value: "X3DGeometryNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

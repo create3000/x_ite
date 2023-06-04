@@ -678,22 +678,22 @@ Object .defineProperties (Extrusion,
    typeName:
    {
       value: "Extrusion",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -714,7 +714,7 @@ Object .defineProperties (Extrusion,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "scale",            new Fields .MFVec2f (new Vector2 (1, 1))),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "spine",            new Fields .MFVec3f (new Vector3 (0, 0, 0), new Vector3 (0, 1, 0))),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

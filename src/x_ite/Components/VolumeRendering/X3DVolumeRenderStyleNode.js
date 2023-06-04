@@ -127,12 +127,12 @@ Object .defineProperties (X3DVolumeRenderStyleNode,
    typeName:
    {
       value: "X3DVolumeRenderStyleNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

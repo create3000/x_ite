@@ -235,22 +235,22 @@ Object .defineProperties (BlendMode,
    typeName:
    {
       value: "BlendMode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "X_ITE",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "blendMode",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -264,7 +264,7 @@ Object .defineProperties (BlendMode,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "colorEquation",           new (Fields_default()).SFString ("FUNC_ADD")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "alphaEquation",           new (Fields_default()).SFString ("FUNC_ADD")),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

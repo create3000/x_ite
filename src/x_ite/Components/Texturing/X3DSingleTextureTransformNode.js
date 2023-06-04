@@ -88,12 +88,12 @@ Object .defineProperties (X3DSingleTextureTransformNode,
    typeName:
    {
       value: "X3DSingleTextureTransformNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

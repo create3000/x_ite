@@ -459,12 +459,12 @@ Object .defineProperties (X3DLineGeometryNode,
    typeName:
    {
       value: "X3DLineGeometryNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

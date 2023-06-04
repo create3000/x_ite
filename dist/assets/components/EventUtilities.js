@@ -148,22 +148,22 @@ Object .defineProperties (BooleanFilter,
    typeName:
    {
       value: "BooleanFilter",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -174,7 +174,7 @@ Object .defineProperties (BooleanFilter,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "inputFalse",  new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "inputNegate", new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -331,12 +331,12 @@ Object .defineProperties (X3DSequencerNode,
    typeName:
    {
       value: "X3DSequencerNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -430,22 +430,22 @@ Object .defineProperties (BooleanSequencer,
    typeName:
    {
       value: "BooleanSequencer",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -458,7 +458,7 @@ Object .defineProperties (BooleanSequencer,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "keyValue",      new (Fields_default()).MFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -549,22 +549,22 @@ Object .defineProperties (BooleanToggle,
    typeName:
    {
       value: "BooleanToggle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -573,7 +573,7 @@ Object .defineProperties (BooleanToggle,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean", new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "toggle",      new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -650,12 +650,12 @@ Object .defineProperties (X3DTriggerNode,
    typeName:
    {
       value: "X3DTriggerNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -745,22 +745,22 @@ Object .defineProperties (BooleanTrigger,
    typeName:
    {
       value: "BooleanTrigger",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -769,7 +769,7 @@ Object .defineProperties (BooleanTrigger,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_triggerTime", new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "triggerTrue",     new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -863,22 +863,22 @@ Object .defineProperties (IntegerSequencer,
    typeName:
    {
       value: "IntegerSequencer",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -891,7 +891,7 @@ Object .defineProperties (IntegerSequencer,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "keyValue",      new (Fields_default()).MFInt32 ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFInt32 ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -981,22 +981,22 @@ Object .defineProperties (IntegerTrigger,
    typeName:
    {
       value: "IntegerTrigger",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1006,7 +1006,7 @@ Object .defineProperties (IntegerTrigger,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "integerKey",   new (Fields_default()).SFInt32 (-1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "triggerValue", new (Fields_default()).SFInt32 ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1096,22 +1096,22 @@ Object .defineProperties (TimeTrigger,
    typeName:
    {
       value: "TimeTrigger",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1120,7 +1120,7 @@ Object .defineProperties (TimeTrigger,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean", new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "triggerTime", new (Fields_default()).SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

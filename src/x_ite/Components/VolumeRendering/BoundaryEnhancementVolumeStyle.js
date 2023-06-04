@@ -122,22 +122,22 @@ Object .defineProperties (BoundaryEnhancementVolumeStyle,
    typeName:
    {
       value: "BoundaryEnhancementVolumeStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "renderStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -148,7 +148,7 @@ Object .defineProperties (BoundaryEnhancementVolumeStyle,
          new X3DFieldDefinition (X3DConstants .inputOutput, "boundaryOpacity", new Fields .SFFloat (0.9)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "opacityFactor",   new Fields .SFFloat (2)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

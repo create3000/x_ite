@@ -282,22 +282,22 @@ Object .defineProperties (TransformSensor,
    typeName:
    {
       value: "TransformSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalSensor",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -313,7 +313,7 @@ Object .defineProperties (TransformSensor,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "orientation_changed", new Fields .SFRotation ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "targetObject",        new Fields .SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

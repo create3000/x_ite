@@ -121,22 +121,22 @@ Object .defineProperties (GeoPositionInterpolator,
    typeName:
    {
       value: "GeoPositionInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -150,7 +150,7 @@ Object .defineProperties (GeoPositionInterpolator,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",    new Fields .SFVec3d ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "geovalue_changed", new Fields .SFVec3d ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -79,12 +79,12 @@ Object .defineProperties (X3DColorNode,
    typeName:
    {
       value: "X3DColorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

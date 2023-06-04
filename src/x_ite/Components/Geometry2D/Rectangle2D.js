@@ -118,22 +118,22 @@ Object .defineProperties (Rectangle2D,
    typeName:
    {
       value: "Rectangle2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry2D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -142,7 +142,7 @@ Object .defineProperties (Rectangle2D,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec2f (2, 2)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -86,22 +86,22 @@ Object .defineProperties (BooleanFilter,
    typeName:
    {
       value: "BooleanFilter",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -112,7 +112,7 @@ Object .defineProperties (BooleanFilter,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "inputFalse",  new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "inputNegate", new Fields .SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

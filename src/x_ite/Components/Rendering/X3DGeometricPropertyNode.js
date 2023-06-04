@@ -65,12 +65,12 @@ Object .defineProperties (X3DGeometricPropertyNode,
    typeName:
    {
       value: "X3DGeometricPropertyNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

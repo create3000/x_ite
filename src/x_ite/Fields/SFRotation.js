@@ -258,7 +258,7 @@ Object .defineProperties (SFRotation,
    typeName:
    {
       value: "SFRotation",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

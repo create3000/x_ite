@@ -110,7 +110,7 @@ Object .defineProperties (Notification,
    typeName:
    {
       value: "Notification",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -1326,12 +1326,12 @@ Object .defineProperties (X3DProgrammableShaderObject,
    typeName:
    {
       value: "X3DProgrammableShaderObject",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

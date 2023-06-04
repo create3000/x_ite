@@ -66,7 +66,7 @@ Object .defineProperties (ImportedNodesArray,
    typeName:
    {
       value: "ImportedNodesArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

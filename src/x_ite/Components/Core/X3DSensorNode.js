@@ -65,12 +65,12 @@ Object .defineProperties (X3DSensorNode,
    typeName:
    {
       value: "X3DSensorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

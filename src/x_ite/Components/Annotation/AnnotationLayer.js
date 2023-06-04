@@ -77,22 +77,22 @@ Object .defineProperties (AnnotationLayer,
    typeName:
    {
       value: "AnnotationLayer",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Annotation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "layers",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -103,7 +103,7 @@ Object .defineProperties (AnnotationLayer,
          new X3DFieldDefinition (X3DConstants .inputOutput, "shownGroupID", new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "viewport",     new Fields .SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

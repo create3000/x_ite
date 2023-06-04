@@ -1586,12 +1586,12 @@ Object .defineProperties (X3DParticleEmitterNode,
    typeName:
    {
       value: "X3DParticleEmitterNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1724,22 +1724,22 @@ Object .defineProperties (PointEmitter,
    typeName:
    {
       value: "PointEmitter",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "emitter",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1753,7 +1753,7 @@ Object .defineProperties (PointEmitter,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1909,12 +1909,12 @@ Object .defineProperties (X3DParticlePhysicsModelNode,
    typeName:
    {
       value: "X3DParticlePhysicsModelNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2031,22 +2031,22 @@ Object .defineProperties (BoundedPhysicsModel,
    typeName:
    {
       value: "BoundedPhysicsModel",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "physics",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2055,7 +2055,7 @@ Object .defineProperties (BoundedPhysicsModel,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",  new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "geometry", new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2193,22 +2193,22 @@ Object .defineProperties (ConeEmitter,
    typeName:
    {
       value: "ConeEmitter",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "emitter",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2223,7 +2223,7 @@ Object .defineProperties (ConeEmitter,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2338,22 +2338,22 @@ Object .defineProperties (ExplosionEmitter,
    typeName:
    {
       value: "ExplosionEmitter",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "emitter",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2366,7 +2366,7 @@ Object .defineProperties (ExplosionEmitter,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2468,22 +2468,22 @@ Object .defineProperties (ForcePhysicsModel,
    typeName:
    {
       value: "ForcePhysicsModel",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "physics",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2492,7 +2492,7 @@ Object .defineProperties (ForcePhysicsModel,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",  new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "force",    new (Fields_default()).SFVec3f (0, -9.8, 0)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -4060,22 +4060,22 @@ Object .defineProperties (ParticleSystem,
    typeName:
    {
       value: "ParticleSystem",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -4103,7 +4103,7 @@ Object .defineProperties (ParticleSystem,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "appearance",        new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geometry",          new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -4326,22 +4326,22 @@ Object .defineProperties (PolylineEmitter,
    typeName:
    {
       value: "PolylineEmitter",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "emitter",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -4356,7 +4356,7 @@ Object .defineProperties (PolylineEmitter,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coordIndex",  new (Fields_default()).MFInt32 (-1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coord",       new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -4589,22 +4589,22 @@ Object .defineProperties (SurfaceEmitter,
    typeName:
    {
       value: "SurfaceEmitter",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "emitter",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -4617,7 +4617,7 @@ Object .defineProperties (SurfaceEmitter,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surface",     new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -4882,22 +4882,22 @@ Object .defineProperties (VolumeEmitter,
    typeName:
    {
       value: "VolumeEmitter",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "emitter",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -4913,7 +4913,7 @@ Object .defineProperties (VolumeEmitter,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coordIndex",  new (Fields_default()).MFInt32 (-1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coord",       new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -5037,22 +5037,22 @@ Object .defineProperties (WindPhysicsModel,
    typeName:
    {
       value: "WindPhysicsModel",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "physics",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -5064,7 +5064,7 @@ Object .defineProperties (WindPhysicsModel,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "gustiness",  new (Fields_default()).SFFloat (0.1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "turbulence", new (Fields_default()).SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -92,22 +92,22 @@ Object .defineProperties (ShaderProgram,
    typeName:
    {
       value: "ShaderProgram",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "programs",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -120,7 +120,7 @@ Object .defineProperties (ShaderProgram,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

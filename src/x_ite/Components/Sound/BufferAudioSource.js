@@ -83,22 +83,22 @@ Object .defineProperties (BufferAudioSource,
    typeName:
    {
       value: "BufferAudioSource",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -136,7 +136,7 @@ Object .defineProperties (BufferAudioSource,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",             new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",          new Fields .SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

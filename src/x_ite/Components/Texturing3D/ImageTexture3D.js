@@ -146,22 +146,22 @@ Object .defineProperties (ImageTexture3D,
    typeName:
    {
       value: "ImageTexture3D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texture",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -177,7 +177,7 @@ Object .defineProperties (ImageTexture3D,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",              new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

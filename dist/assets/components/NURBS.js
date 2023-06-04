@@ -204,22 +204,22 @@ Object .defineProperties (Contour2D,
    typeName:
    {
       value: "Contour2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "trimmingContour",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -229,7 +229,7 @@ Object .defineProperties (Contour2D,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "removeChildren", new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "children",       new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -306,12 +306,12 @@ Object .defineProperties (X3DNurbsControlCurveNode,
    typeName:
    {
       value: "X3DNurbsControlCurveNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -462,22 +462,22 @@ Object .defineProperties (ContourPolyline2D,
    typeName:
    {
       value: "ContourPolyline2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -485,7 +485,7 @@ Object .defineProperties (ContourPolyline2D,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",     new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "controlPoint", new (Fields_default()).MFVec2d ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -568,22 +568,22 @@ Object .defineProperties (CoordinateDouble,
    typeName:
    {
       value: "CoordinateDouble",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "coord",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -591,7 +591,7 @@ Object .defineProperties (CoordinateDouble,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "point",    new (Fields_default()).MFVec3d ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1158,12 +1158,12 @@ Object .defineProperties (X3DParametricGeometryNode,
    typeName:
    {
       value: "X3DParametricGeometryNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2998,22 +2998,22 @@ Object .defineProperties (NurbsCurve,
    typeName:
    {
       value: "NurbsCurve",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3026,7 +3026,7 @@ Object .defineProperties (NurbsCurve,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",       new (Fields_default()).MFDouble ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint", new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3216,22 +3216,22 @@ Object .defineProperties (NurbsCurve2D,
    typeName:
    {
       value: "NurbsCurve2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3244,7 +3244,7 @@ Object .defineProperties (NurbsCurve2D,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",       new (Fields_default()).MFDouble ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint", new (Fields_default()).MFVec2d ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3460,22 +3460,22 @@ Object .defineProperties (NurbsOrientationInterpolator,
    typeName:
    {
       value: "NurbsOrientationInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3488,7 +3488,7 @@ Object .defineProperties (NurbsOrientationInterpolator,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "controlPoint",  new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFRotation ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3884,12 +3884,12 @@ Object .defineProperties (X3DNurbsSurfaceGeometryNode,
    typeName:
    {
       value: "X3DNurbsSurfaceGeometryNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3969,22 +3969,22 @@ Object .defineProperties (NurbsPatchSurface,
    typeName:
    {
       value: "NurbsPatchSurface",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -4005,7 +4005,7 @@ Object .defineProperties (NurbsPatchSurface,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",      new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint",  new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -4203,22 +4203,22 @@ Object .defineProperties (NurbsPositionInterpolator,
    typeName:
    {
       value: "NurbsPositionInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -4231,7 +4231,7 @@ Object .defineProperties (NurbsPositionInterpolator,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "controlPoint",  new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -4396,22 +4396,22 @@ Object .defineProperties (NurbsSet,
    typeName:
    {
       value: "NurbsSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -4426,7 +4426,7 @@ Object .defineProperties (NurbsSet,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeGeometry",    new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geometry",          new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -4673,22 +4673,22 @@ Object .defineProperties (NurbsSurfaceInterpolator,
    typeName:
    {
       value: "NurbsSurfaceInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -4706,7 +4706,7 @@ Object .defineProperties (NurbsSurfaceInterpolator,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "normal_changed",   new (Fields_default()).SFVec3f ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "position_changed", new (Fields_default()).SFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -4870,22 +4870,22 @@ Object .defineProperties (NurbsSweptSurface,
    typeName:
    {
       value: "NurbsSweptSurface",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -4896,7 +4896,7 @@ Object .defineProperties (NurbsSweptSurface,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "crossSectionCurve", new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "trajectoryCurve",   new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -5057,22 +5057,22 @@ Object .defineProperties (NurbsSwungSurface,
    typeName:
    {
       value: "NurbsSwungSurface",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -5083,7 +5083,7 @@ Object .defineProperties (NurbsSwungSurface,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "profileCurve",    new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "trajectoryCurve", new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -5215,22 +5215,22 @@ Object .defineProperties (NurbsTextureCoordinate,
    typeName:
    {
       value: "NurbsTextureCoordinate",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texCoord",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -5245,7 +5245,7 @@ Object .defineProperties (NurbsTextureCoordinate,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",       new (Fields_default()).MFDouble ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint", new (Fields_default()).MFVec2f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -5389,22 +5389,22 @@ Object .defineProperties (NurbsTrimmedSurface,
    typeName:
    {
       value: "NurbsTrimmedSurface",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -5428,7 +5428,7 @@ Object .defineProperties (NurbsTrimmedSurface,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeTrimmingContour", new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "trimmingContour",       new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

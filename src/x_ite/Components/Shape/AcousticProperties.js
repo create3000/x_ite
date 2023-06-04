@@ -68,22 +68,22 @@ Object .defineProperties (AcousticProperties,
    typeName:
    {
       value: "AcousticProperties",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "AcousticProperties",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -96,7 +96,7 @@ Object .defineProperties (AcousticProperties,
          new X3DFieldDefinition (X3DConstants .inputOutput, "diffuse",    new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "specular",   new Fields .SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

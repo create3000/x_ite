@@ -68,22 +68,22 @@ Object .defineProperties (ProgramShader,
    typeName:
    {
       value: "ProgramShader",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "shaders",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -95,7 +95,7 @@ Object .defineProperties (ProgramShader,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "language",   new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "programs",   new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

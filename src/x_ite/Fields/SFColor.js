@@ -221,7 +221,7 @@ Object .defineProperties (SFColor,
    typeName:
    {
       value: "SFColor",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

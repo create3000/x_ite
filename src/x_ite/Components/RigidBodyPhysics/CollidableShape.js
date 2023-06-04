@@ -461,22 +461,22 @@ Object .defineProperties (CollidableShape,
    typeName:
    {
       value: "CollidableShape",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -491,7 +491,7 @@ Object .defineProperties (CollidableShape,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "shape",       new Fields .SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

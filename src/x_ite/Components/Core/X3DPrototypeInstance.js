@@ -1005,22 +1005,22 @@ Object .defineProperties (X3DPrototypeInstance,
    typeName:
    {
       value: "X3DPrototypeInstance",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -99,7 +99,7 @@ Object .defineProperties (SFInt32,
    typeName:
    {
       value: "SFInt32",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

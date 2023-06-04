@@ -68,22 +68,22 @@ Object .defineProperties (StreamAudioDestination,
    typeName:
    {
       value: "StreamAudioDestination",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -103,7 +103,7 @@ Object .defineProperties (StreamAudioDestination,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",              new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "children",              new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

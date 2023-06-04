@@ -279,12 +279,12 @@ Object .defineProperties (X3DUrlObject,
    typeName:
    {
       value: "X3DUrlObject",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Networking",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

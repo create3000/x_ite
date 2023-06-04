@@ -167,22 +167,22 @@ Object .defineProperties (AudioClip,
    typeName:
    {
       value: "AudioClip",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "source",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -206,7 +206,7 @@ Object .defineProperties (AudioClip,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",          new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "duration_changed",     new Fields .SFTime (-1)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

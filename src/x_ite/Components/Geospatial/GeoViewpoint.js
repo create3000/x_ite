@@ -231,22 +231,22 @@ Object .defineProperties (GeoViewpoint,
    typeName:
    {
       value: "GeoViewpoint",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -272,7 +272,7 @@ Object .defineProperties (GeoViewpoint,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "bindTime",          new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "navigationInfo",    new Fields .SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

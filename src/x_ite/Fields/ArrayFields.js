@@ -404,7 +404,7 @@ Object .defineProperties (MFNode,
    typeName:
    {
       value: "MFNode",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -454,7 +454,7 @@ Object .defineProperties (MFString,
    typeName:
    {
       value: "MFString",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -484,7 +484,7 @@ Object .defineProperties (MFImage,
    typeName:
    {
       value: "MFImage",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -524,7 +524,7 @@ function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Compone
       typeName:
       {
          value: TypeName,
-         enumerate: true,
+         enumerable: true,
       },
    });
 

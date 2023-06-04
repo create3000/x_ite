@@ -65,12 +65,12 @@ Object .defineProperties (X3DInfoNode,
    typeName:
    {
       value: "X3DInfoNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -66,7 +66,7 @@ Object .defineProperties (ProtoDeclarationArray,
    typeName:
    {
       value: "ProtoDeclarationArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

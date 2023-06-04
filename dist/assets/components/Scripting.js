@@ -313,12 +313,12 @@ Object .defineProperties (X3DScriptNode,
    typeName:
    {
       value: "X3DScriptNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Scripting",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -811,22 +811,22 @@ Object .defineProperties (Script,
    typeName:
    {
       value: "Script",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Scripting",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -840,7 +840,7 @@ Object .defineProperties (Script,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "directOutput",         new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "mustEvaluate",         new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

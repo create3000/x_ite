@@ -381,12 +381,12 @@ Object .defineProperties (X3DNurbsSurfaceGeometryNode,
    typeName:
    {
       value: "X3DNurbsSurfaceGeometryNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "NURBS",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

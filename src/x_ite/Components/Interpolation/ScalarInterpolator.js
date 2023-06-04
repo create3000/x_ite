@@ -88,22 +88,22 @@ Object .defineProperties (ScalarInterpolator,
    typeName:
    {
       value: "ScalarInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -114,7 +114,7 @@ Object .defineProperties (ScalarInterpolator,
          new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

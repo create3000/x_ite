@@ -283,12 +283,12 @@ Object .defineProperties (X3DTextureProjectorNode,
    typeName:
    {
       value: "X3DTextureProjectorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "TextureProjector",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -481,22 +481,22 @@ Object .defineProperties (TextureProjector,
    typeName:
    {
       value: "TextureProjector",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "TextureProjector",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -514,7 +514,7 @@ Object .defineProperties (TextureProjector,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "aspectRatio",  new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "texture",      new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -756,22 +756,22 @@ Object .defineProperties (TextureProjectorParallel,
    typeName:
    {
       value: "TextureProjectorParallel",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "TextureProjector",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -789,7 +789,7 @@ Object .defineProperties (TextureProjectorParallel,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "aspectRatio",  new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "texture",      new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

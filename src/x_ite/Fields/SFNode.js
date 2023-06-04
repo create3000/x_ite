@@ -482,7 +482,7 @@ Object .defineProperties (SFNode,
    typeName:
    {
       value: "SFNode",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -283,7 +283,7 @@ Object .defineProperties (PointingDevice,
    typeName:
    {
       value: "PointingDevice",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

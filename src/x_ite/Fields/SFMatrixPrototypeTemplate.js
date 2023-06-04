@@ -57,7 +57,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double
       typeName:
       {
          value: TypeName,
-         enumerate: true,
+         enumerable: true,
       },
    });
 

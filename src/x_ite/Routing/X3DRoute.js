@@ -298,7 +298,7 @@ Object .defineProperties (X3DRoute,
    typeName:
    {
       value: "X3DRoute",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

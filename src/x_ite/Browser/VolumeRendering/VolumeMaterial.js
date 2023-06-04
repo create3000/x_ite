@@ -118,17 +118,17 @@ Object .defineProperties (VolumeMaterial,
    typeName:
    {
       value: "VolumeMaterial",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "material",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {

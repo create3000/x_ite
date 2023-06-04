@@ -214,22 +214,22 @@ Object .defineProperties (ComposedCubeMapTexture,
    typeName:
    {
       value: "ComposedCubeMapTexture",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CubeMapTexturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texture",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -244,7 +244,7 @@ Object .defineProperties (ComposedCubeMapTexture,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "topTexture",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

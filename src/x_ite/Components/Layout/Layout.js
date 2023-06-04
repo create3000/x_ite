@@ -608,22 +608,22 @@ Object .defineProperties (Layout,
    typeName:
    {
       value: "Layout",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layout",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "layout",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -636,7 +636,7 @@ Object .defineProperties (Layout,
          new X3DFieldDefinition (X3DConstants .inputOutput, "size",        new Fields .MFFloat (1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "scaleMode",   new Fields .MFString ("NONE", "NONE")),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

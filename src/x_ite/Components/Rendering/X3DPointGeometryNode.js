@@ -168,12 +168,12 @@ Object .defineProperties (X3DPointGeometryNode,
    typeName:
    {
       value: "X3DPointGeometryNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

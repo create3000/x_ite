@@ -389,22 +389,22 @@ Object .defineProperties (ElevationGrid,
    typeName:
    {
       value: "ElevationGrid",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -427,7 +427,7 @@ Object .defineProperties (ElevationGrid,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "height",          new Fields .MFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

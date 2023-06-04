@@ -131,22 +131,22 @@ Object .defineProperties (Arc2D,
    typeName:
    {
       value: "Arc2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry2D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -156,7 +156,7 @@ Object .defineProperties (Arc2D,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",   new Fields .SFFloat (1.5708)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",     new Fields .SFFloat (1)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

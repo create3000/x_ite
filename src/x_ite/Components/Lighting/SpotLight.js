@@ -318,22 +318,22 @@ Object .defineProperties (SpotLight,
    typeName:
    {
       value: "SpotLight",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Lighting",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -357,7 +357,7 @@ Object .defineProperties (SpotLight,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
          new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -145,22 +145,22 @@ Object .defineProperties (AnnotationLayer,
    typeName:
    {
       value: "AnnotationLayer",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Annotation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "layers",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -171,7 +171,7 @@ Object .defineProperties (AnnotationLayer,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "shownGroupID", new (Fields_default()).MFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "viewport",     new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -258,22 +258,22 @@ Object .defineProperties (AnnotationTarget,
    typeName:
    {
       value: "AnnotationTarget",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Annotation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -284,7 +284,7 @@ Object .defineProperties (AnnotationTarget,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "marker",         new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "annotations",    new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -368,12 +368,12 @@ Object .defineProperties (X3DAnnotationNode,
    typeName:
    {
       value: "X3DAnnotationNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Annotation",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -466,22 +466,22 @@ Object .defineProperties (GroupAnnotation,
    typeName:
    {
       value: "GroupAnnotation",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Annotation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -498,7 +498,7 @@ Object .defineProperties (GroupAnnotation,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",    new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",          new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -596,22 +596,22 @@ Object .defineProperties (IconAnnotation,
    typeName:
    {
       value: "IconAnnotation",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Annotation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -624,7 +624,7 @@ Object .defineProperties (IconAnnotation,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefresh",          new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -708,22 +708,22 @@ Object .defineProperties (TextAnnotation,
    typeName:
    {
       value: "TextAnnotation",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Annotation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -735,7 +735,7 @@ Object .defineProperties (TextAnnotation,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "contentType",       new (Fields_default()).SFString ("text/plain")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "text",              new (Fields_default()).SFString ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -819,22 +819,22 @@ Object .defineProperties (URLAnnotation,
    typeName:
    {
       value: "URLAnnotation",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Annotation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -845,7 +845,7 @@ Object .defineProperties (URLAnnotation,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "displayPolicy",     new (Fields_default()).SFString ("NEVER")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "url",               new (Fields_default()).MFString ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

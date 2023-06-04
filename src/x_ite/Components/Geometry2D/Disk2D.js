@@ -226,22 +226,22 @@ Object .defineProperties (Disk2D,
    typeName:
    {
       value: "Disk2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry2D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -251,7 +251,7 @@ Object .defineProperties (Disk2D,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "outerRadius", new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

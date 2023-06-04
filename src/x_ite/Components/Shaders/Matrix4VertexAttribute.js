@@ -111,22 +111,22 @@ Object .defineProperties (Matrix4VertexAttribute,
    typeName:
    {
       value: "Matrix4VertexAttribute",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "attrib",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -135,7 +135,7 @@ Object .defineProperties (Matrix4VertexAttribute,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "name",     new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "value",    new Fields .MFMatrix4f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

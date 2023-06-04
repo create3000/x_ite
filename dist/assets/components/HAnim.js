@@ -132,22 +132,22 @@ Object .defineProperties (HAnimDisplacer,
    typeName:
    {
       value: "HAnimDisplacer",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "HAnim",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "displacers",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -159,7 +159,7 @@ Object .defineProperties (HAnimDisplacer,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weight",        new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "displacements", new (Fields_default()).MFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -555,22 +555,22 @@ Object .defineProperties (HAnimHumanoid,
    typeName:
    {
       value: "HAnimHumanoid",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "HAnim",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -607,7 +607,7 @@ Object .defineProperties (HAnimHumanoid,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "skinCoord",             new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "skin",                  new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -759,22 +759,22 @@ Object .defineProperties (HAnimJoint,
    typeName:
    {
       value: "HAnimJoint",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "HAnim",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -802,7 +802,7 @@ Object .defineProperties (HAnimJoint,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",   new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",         new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -886,22 +886,22 @@ Object .defineProperties (HAnimMotion,
    typeName:
    {
       value: "HAnimMotion",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "HAnim",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -926,7 +926,7 @@ Object .defineProperties (HAnimMotion,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "elapsedTime",     new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "frameCount",      new (Fields_default()).SFInt32 ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1011,22 +1011,22 @@ Object .defineProperties (HAnimSegment,
    typeName:
    {
       value: "HAnimSegment",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "HAnim",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1047,7 +1047,7 @@ Object .defineProperties (HAnimSegment,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",   new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",         new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1127,22 +1127,22 @@ Object .defineProperties (HAnimSite,
    typeName:
    {
       value: "HAnimSite",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "HAnim",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1163,7 +1163,7 @@ Object .defineProperties (HAnimSite,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",   new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",         new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

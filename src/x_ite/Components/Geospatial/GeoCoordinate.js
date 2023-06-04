@@ -207,22 +207,22 @@ Object .defineProperties (GeoCoordinate,
    typeName:
    {
       value: "GeoCoordinate",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "coord",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -232,7 +232,7 @@ Object .defineProperties (GeoCoordinate,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem", new Fields .MFString ("GD", "WE")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "point",     new Fields .MFVec3d ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

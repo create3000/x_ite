@@ -195,12 +195,12 @@ Object .defineProperties (X3DVolumeRenderStyleNode,
    typeName:
    {
       value: "X3DVolumeRenderStyleNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -277,12 +277,12 @@ Object .defineProperties (X3DComposableVolumeRenderStyleNode,
    typeName:
    {
       value: "X3DComposableVolumeRenderStyleNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -446,22 +446,22 @@ Object .defineProperties (OpacityMapVolumeStyle,
    typeName:
    {
       value: "OpacityMapVolumeStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "renderStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -470,7 +470,7 @@ Object .defineProperties (OpacityMapVolumeStyle,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",         new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "transferFunction", new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -936,22 +936,22 @@ Object .defineProperties (BlendedVolumeStyle,
    typeName:
    {
       value: "BlendedVolumeStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "renderStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -967,7 +967,7 @@ Object .defineProperties (BlendedVolumeStyle,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "renderStyle",             new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "voxels",                  new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1101,22 +1101,22 @@ Object .defineProperties (BoundaryEnhancementVolumeStyle,
    typeName:
    {
       value: "BoundaryEnhancementVolumeStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "renderStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1127,7 +1127,7 @@ Object .defineProperties (BoundaryEnhancementVolumeStyle,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "boundaryOpacity", new (Fields_default()).SFFloat (0.9)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "opacityFactor",   new (Fields_default()).SFFloat (2)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1417,22 +1417,22 @@ Object .defineProperties (CartoonVolumeStyle,
    typeName:
    {
       value: "CartoonVolumeStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "renderStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1444,7 +1444,7 @@ Object .defineProperties (CartoonVolumeStyle,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "parallelColor",   new (Fields_default()).SFColorRGBA (0, 0, 0, 1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals",  new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1630,22 +1630,22 @@ Object .defineProperties (ComposedVolumeStyle,
    typeName:
    {
       value: "ComposedVolumeStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "renderStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1654,7 +1654,7 @@ Object .defineProperties (ComposedVolumeStyle,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",     new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "renderStyle", new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1814,22 +1814,22 @@ Object .defineProperties (EdgeEnhancementVolumeStyle,
    typeName:
    {
       value: "EdgeEnhancementVolumeStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "renderStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1840,7 +1840,7 @@ Object .defineProperties (EdgeEnhancementVolumeStyle,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "gradientThreshold", new (Fields_default()).SFFloat (0.4)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals",    new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2078,17 +2078,17 @@ Object .defineProperties (VolumeMaterial,
    typeName:
    {
       value: "VolumeMaterial",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "material",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2337,12 +2337,12 @@ Object .defineProperties (X3DVolumeDataNode,
    typeName:
    {
       value: "X3DVolumeDataNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2687,22 +2687,22 @@ Object .defineProperties (IsoSurfaceVolumeData,
    typeName:
    {
       value: "IsoSurfaceVolumeData",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2720,7 +2720,7 @@ Object .defineProperties (IsoSurfaceVolumeData,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "gradients",        new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "voxels",           new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2931,22 +2931,22 @@ Object .defineProperties (ProjectionVolumeStyle,
    typeName:
    {
       value: "ProjectionVolumeStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "renderStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2956,7 +2956,7 @@ Object .defineProperties (ProjectionVolumeStyle,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "type",               new (Fields_default()).SFString ("MAX")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "intensityThreshold", new (Fields_default()).SFFloat (0)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3210,22 +3210,22 @@ Object .defineProperties (SegmentedVolumeData,
    typeName:
    {
       value: "SegmentedVolumeData",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3241,7 +3241,7 @@ Object .defineProperties (SegmentedVolumeData,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "renderStyle",        new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "voxels",             new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3499,22 +3499,22 @@ Object .defineProperties (ShadedVolumeStyle,
    typeName:
    {
       value: "ShadedVolumeStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "renderStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3527,7 +3527,7 @@ Object .defineProperties (ShadedVolumeStyle,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "material",       new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceNormals", new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3685,22 +3685,22 @@ Object .defineProperties (SilhouetteEnhancementVolumeStyle,
    typeName:
    {
       value: "SilhouetteEnhancementVolumeStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "renderStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3712,7 +3712,7 @@ Object .defineProperties (SilhouetteEnhancementVolumeStyle,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "silhouetteSharpness",       new (Fields_default()).SFFloat (0.5)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals",            new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3878,22 +3878,22 @@ Object .defineProperties (ToneMappedVolumeStyle,
    typeName:
    {
       value: "ToneMappedVolumeStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "renderStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3904,7 +3904,7 @@ Object .defineProperties (ToneMappedVolumeStyle,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "warmColor",      new (Fields_default()).SFColorRGBA (1, 1, 0, 0)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals", new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -4094,22 +4094,22 @@ Object .defineProperties (VolumeData,
    typeName:
    {
       value: "VolumeData",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -4123,7 +4123,7 @@ Object .defineProperties (VolumeData,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "renderStyle", new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "voxels",      new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

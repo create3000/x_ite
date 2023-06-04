@@ -88,22 +88,22 @@ Object .defineProperties (LayoutLayer,
    typeName:
    {
       value: "LayoutLayer",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layout",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "layers",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -118,7 +118,7 @@ Object .defineProperties (LayoutLayer,
          new X3DFieldDefinition (X3DConstants .inputOnly,   "removeChildren", new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "children",       new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

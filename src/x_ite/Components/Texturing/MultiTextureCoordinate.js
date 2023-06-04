@@ -171,22 +171,22 @@ Object .defineProperties (MultiTextureCoordinate,
    typeName:
    {
       value: "MultiTextureCoordinate",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texCoord",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -194,7 +194,7 @@ Object .defineProperties (MultiTextureCoordinate,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "texCoord", new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

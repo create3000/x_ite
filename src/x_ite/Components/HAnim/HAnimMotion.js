@@ -72,22 +72,22 @@ Object .defineProperties (HAnimMotion,
    typeName:
    {
       value: "HAnimMotion",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "HAnim",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -112,7 +112,7 @@ Object .defineProperties (HAnimMotion,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",     new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "frameCount",      new Fields .SFInt32 ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

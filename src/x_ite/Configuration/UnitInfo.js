@@ -152,7 +152,7 @@ Object .defineProperties (UnitInfo,
    typeName:
    {
       value: "UnitInfo",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

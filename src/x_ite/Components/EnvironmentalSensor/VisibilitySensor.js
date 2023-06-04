@@ -143,22 +143,22 @@ Object .defineProperties (VisibilitySensor,
    typeName:
    {
       value: "VisibilitySensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalSensor",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -171,7 +171,7 @@ Object .defineProperties (VisibilitySensor,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "exitTime",  new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",  new Fields .SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

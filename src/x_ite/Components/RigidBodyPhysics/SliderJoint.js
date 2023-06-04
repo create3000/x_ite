@@ -192,22 +192,22 @@ Object .defineProperties (SliderJoint,
    typeName:
    {
       value: "SliderJoint",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "joints",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -225,7 +225,7 @@ Object .defineProperties (SliderJoint,
          new X3DFieldDefinition (X3DConstants .inputOutput, "body1",               new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "body2",               new Fields .SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

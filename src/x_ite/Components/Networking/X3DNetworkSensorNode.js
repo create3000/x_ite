@@ -65,12 +65,12 @@ Object .defineProperties (X3DNetworkSensorNode,
    typeName:
    {
       value: "X3DNetworkSensorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Networking",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

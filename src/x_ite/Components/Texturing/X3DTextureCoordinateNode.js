@@ -65,12 +65,12 @@ Object .defineProperties (X3DTextureCoordinateNode,
    typeName:
    {
       value: "X3DTextureCoordinateNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

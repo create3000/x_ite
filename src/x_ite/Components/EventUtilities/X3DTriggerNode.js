@@ -65,12 +65,12 @@ Object .defineProperties (X3DTriggerNode,
    typeName:
    {
       value: "X3DTriggerNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -109,22 +109,22 @@ Object .defineProperties (WindPhysicsModel,
    typeName:
    {
       value: "WindPhysicsModel",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "physics",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -136,7 +136,7 @@ Object .defineProperties (WindPhysicsModel,
          new X3DFieldDefinition (X3DConstants .inputOutput, "gustiness",  new Fields .SFFloat (0.1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "turbulence", new Fields .SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

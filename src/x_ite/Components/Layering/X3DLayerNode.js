@@ -396,12 +396,12 @@ Object .defineProperties (X3DLayerNode,
    typeName:
    {
       value: "X3DLayerNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

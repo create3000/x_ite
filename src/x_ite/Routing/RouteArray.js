@@ -66,7 +66,7 @@ Object .defineProperties (RouteArray,
    typeName:
    {
       value: "RouteArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -103,7 +103,7 @@ Object .defineProperties (SFFloat,
    typeName:
    {
       value: "SFFloat",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

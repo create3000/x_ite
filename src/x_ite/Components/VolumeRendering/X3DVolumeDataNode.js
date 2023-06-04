@@ -230,12 +230,12 @@ Object .defineProperties (X3DVolumeDataNode,
    typeName:
    {
       value: "X3DVolumeDataNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

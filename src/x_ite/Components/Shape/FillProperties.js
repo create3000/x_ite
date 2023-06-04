@@ -147,22 +147,22 @@ Object .defineProperties (FillProperties,
    typeName:
    {
       value: "FillProperties",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "fillProperties",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -173,7 +173,7 @@ Object .defineProperties (FillProperties,
          new X3DFieldDefinition (X3DConstants .inputOutput, "hatchColor", new Fields .SFColor (1, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "hatchStyle", new Fields .SFInt32 (1)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

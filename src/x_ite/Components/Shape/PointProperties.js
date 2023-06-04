@@ -133,22 +133,22 @@ Object .defineProperties (PointProperties,
    typeName:
    {
       value: "PointProperties",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "pointProperties",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -159,7 +159,7 @@ Object .defineProperties (PointProperties,
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMaxValue",    new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "attenuation",          new Fields .MFFloat (1, 0, 0)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

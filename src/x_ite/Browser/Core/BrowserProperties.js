@@ -66,7 +66,7 @@ Object .defineProperties (BrowserProperties,
    typeName:
    {
       value: "BrowserProperties",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -80,7 +80,7 @@ Object .defineProperties (BrowserProperties,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "CLASSIC_VRML_ENCODING", new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "BINARY_ENCODING",       new Fields .SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

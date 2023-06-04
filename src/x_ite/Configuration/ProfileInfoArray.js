@@ -74,7 +74,7 @@ Object .defineProperties (ProfileInfoArray,
    typeName:
    {
       value: "ProfileInfoArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

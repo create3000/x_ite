@@ -103,22 +103,22 @@ Object .defineProperties (ExplosionEmitter,
    typeName:
    {
       value: "ExplosionEmitter",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "emitter",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -131,7 +131,7 @@ Object .defineProperties (ExplosionEmitter,
          new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

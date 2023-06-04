@@ -84,22 +84,22 @@ Object .defineProperties (TextureTransformMatrix3D,
    typeName:
    {
       value: "TextureTransformMatrix3D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "textureTransform",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -108,7 +108,7 @@ Object .defineProperties (TextureTransformMatrix3D,
          new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "matrix",   new Fields .SFMatrix4f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

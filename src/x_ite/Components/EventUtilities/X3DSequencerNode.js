@@ -142,12 +142,12 @@ Object .defineProperties (X3DSequencerNode,
    typeName:
    {
       value: "X3DSequencerNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

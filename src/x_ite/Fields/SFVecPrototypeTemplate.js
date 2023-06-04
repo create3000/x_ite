@@ -57,7 +57,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
       typeName:
       {
          value: TypeName,
-         enumerate: true,
+         enumerable: true,
       },
    });
 

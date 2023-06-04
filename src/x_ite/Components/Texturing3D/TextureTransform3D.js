@@ -118,22 +118,22 @@ Object .defineProperties (TextureTransform3D,
    typeName:
    {
       value: "TextureTransform3D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "textureTransform",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -145,7 +145,7 @@ Object .defineProperties (TextureTransform3D,
          new X3DFieldDefinition (X3DConstants .inputOutput, "scale",       new Fields .SFVec3f (1, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "center",      new Fields .SFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

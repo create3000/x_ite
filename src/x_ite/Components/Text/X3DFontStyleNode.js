@@ -262,12 +262,12 @@ Object .defineProperties (X3DFontStyleNode,
    typeName:
    {
       value: "X3DFontStyleNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Text",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

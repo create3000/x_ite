@@ -216,12 +216,12 @@ Object .defineProperties (X3DSoundSourceNode,
    typeName:
    {
       value: "X3DSoundSourceNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -134,22 +134,22 @@ Object .defineProperties (Color,
    typeName:
    {
       value: "Color",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "color",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -157,7 +157,7 @@ Object .defineProperties (Color,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .MFColor ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

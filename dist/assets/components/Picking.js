@@ -801,12 +801,12 @@ Object .defineProperties (X3DPickSensorNode,
    typeName:
    {
       value: "X3DPickSensorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Picking",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1126,22 +1126,22 @@ Object .defineProperties (LinePickSensor,
    typeName:
    {
       value: "LinePickSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Picking",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1160,7 +1160,7 @@ Object .defineProperties (LinePickSensor,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",              new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",          new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1259,12 +1259,12 @@ Object .defineProperties (X3DPickableObject,
    typeName:
    {
       value: "X3DPickableObject",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Picking",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1462,22 +1462,22 @@ Object .defineProperties (PickableGroup,
    typeName:
    {
       value: "PickableGroup",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Picking",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1493,7 +1493,7 @@ Object .defineProperties (PickableGroup,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2008,22 +2008,22 @@ Object .defineProperties (PointPickSensor,
    typeName:
    {
       value: "PointPickSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Picking",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2040,7 +2040,7 @@ Object .defineProperties (PointPickSensor,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2285,22 +2285,22 @@ Object .defineProperties (PrimitivePickSensor,
    typeName:
    {
       value: "PrimitivePickSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Picking",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2316,7 +2316,7 @@ Object .defineProperties (PrimitivePickSensor,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2536,22 +2536,22 @@ Object .defineProperties (VolumePickSensor,
    typeName:
    {
       value: "VolumePickSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Picking",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2567,7 +2567,7 @@ Object .defineProperties (VolumePickSensor,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

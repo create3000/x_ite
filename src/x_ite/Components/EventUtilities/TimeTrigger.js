@@ -78,22 +78,22 @@ Object .defineProperties (TimeTrigger,
    typeName:
    {
       value: "TimeTrigger",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -102,7 +102,7 @@ Object .defineProperties (TimeTrigger,
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTime", new Fields .SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

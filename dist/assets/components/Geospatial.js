@@ -1289,12 +1289,12 @@ Object .defineProperties (X3DGeospatialObject,
    typeName:
    {
       value: "X3DGeospatialObject",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1516,22 +1516,22 @@ Object .defineProperties (GeoCoordinate,
    typeName:
    {
       value: "GeoCoordinate",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "coord",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1541,7 +1541,7 @@ Object .defineProperties (GeoCoordinate,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem", new (Fields_default()).MFString ("GD", "WE")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "point",     new (Fields_default()).MFVec3d ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1943,22 +1943,22 @@ Object .defineProperties (GeoElevationGrid,
    typeName:
    {
       value: "GeoElevationGrid",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1982,7 +1982,7 @@ Object .defineProperties (GeoElevationGrid,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "normal",          new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "height",          new (Fields_default()).MFDouble (0, 0)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2434,22 +2434,22 @@ Object .defineProperties (GeoLOD,
    typeName:
    {
       value: "GeoLOD",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2472,7 +2472,7 @@ Object .defineProperties (GeoLOD,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rootNode",      new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "children",      new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2579,22 +2579,22 @@ Object .defineProperties (GeoLocation,
    typeName:
    {
       value: "GeoLocation",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2611,7 +2611,7 @@ Object .defineProperties (GeoLocation,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2712,22 +2712,22 @@ Object .defineProperties (GeoMetadata,
    typeName:
    {
       value: "GeoMetadata",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2740,7 +2740,7 @@ Object .defineProperties (GeoMetadata,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "summary",              new (Fields_default()).MFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "data",                 new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2842,22 +2842,22 @@ Object .defineProperties (GeoOrigin,
    typeName:
    {
       value: "GeoOrigin",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geoOrigin",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2867,7 +2867,7 @@ Object .defineProperties (GeoOrigin,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geoCoords", new (Fields_default()).SFVec3d ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rotateYUp", new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3003,22 +3003,22 @@ Object .defineProperties (GeoPositionInterpolator,
    typeName:
    {
       value: "GeoPositionInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3032,7 +3032,7 @@ Object .defineProperties (GeoPositionInterpolator,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "value_changed",    new (Fields_default()).SFVec3d ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "geovalue_changed", new (Fields_default()).SFVec3d ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3173,22 +3173,22 @@ Object .defineProperties (GeoProximitySensor,
    typeName:
    {
       value: "GeoProximitySensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3207,7 +3207,7 @@ Object .defineProperties (GeoProximitySensor,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "orientation_changed",      new (Fields_default()).SFRotation ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "centerOfRotation_changed", new (Fields_default()).SFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3318,22 +3318,22 @@ Object .defineProperties (GeoTouchSensor,
    typeName:
    {
       value: "GeoTouchSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3351,7 +3351,7 @@ Object .defineProperties (GeoTouchSensor,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",            new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "touchTime",           new (Fields_default()).SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3466,22 +3466,22 @@ Object .defineProperties (GeoTransform,
    typeName:
    {
       value: "GeoTransform",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3502,7 +3502,7 @@ Object .defineProperties (GeoTransform,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",   new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",         new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -3757,22 +3757,22 @@ Object .defineProperties (GeoViewpoint,
    typeName:
    {
       value: "GeoViewpoint",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -3798,7 +3798,7 @@ Object .defineProperties (GeoViewpoint,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "bindTime",          new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "navigationInfo",    new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -113,22 +113,22 @@ Object .defineProperties (EnvironmentLight,
    typeName:
    {
       value: "EnvironmentLight",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Lighting",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -152,7 +152,7 @@ Object .defineProperties (EnvironmentLight,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",          new  Fields .SFFloat (0.005)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",       new  Fields .SFInt32 (1024)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

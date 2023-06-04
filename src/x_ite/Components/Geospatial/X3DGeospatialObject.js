@@ -261,12 +261,12 @@ Object .defineProperties (X3DGeospatialObject,
    typeName:
    {
       value: "X3DGeospatialObject",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geospatial",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

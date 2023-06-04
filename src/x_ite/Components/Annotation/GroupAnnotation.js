@@ -81,22 +81,22 @@ Object .defineProperties (GroupAnnotation,
    typeName:
    {
       value: "GroupAnnotation",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Annotation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -113,7 +113,7 @@ Object .defineProperties (GroupAnnotation,
          new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",    new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "children",          new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

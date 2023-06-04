@@ -340,7 +340,7 @@ Object .defineProperties (BrowserOptions,
    typeName:
    {
       value: "BrowserOptions",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -367,7 +367,7 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                new Fields .SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

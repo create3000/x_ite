@@ -273,12 +273,12 @@ Object .defineProperties (X3DKeyDeviceSensorNode,
    typeName:
    {
       value: "X3DKeyDeviceSensorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "KeyDeviceSensor",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -632,22 +632,22 @@ Object .defineProperties (KeySensor,
    typeName:
    {
       value: "KeySensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "KeyDeviceSensor",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -663,7 +663,7 @@ Object .defineProperties (KeySensor,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "keyRelease",       new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isActive",         new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -806,22 +806,22 @@ Object .defineProperties (StringSensor,
    typeName:
    {
       value: "StringSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "KeyDeviceSensor",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -833,7 +833,7 @@ Object .defineProperties (StringSensor,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "finalText",       new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isActive",        new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -1,7 +1,7 @@
 /* X_ITE v8.7.8 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 711:
+/***/ 198:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14921,12 +14921,12 @@ Object .defineProperties (X3DFontStyleNode,
    typeName:
    {
       value: "X3DFontStyleNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Text",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -16030,22 +16030,22 @@ Object .defineProperties (FontStyle,
    typeName:
    {
       value: "FontStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Text",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "fontStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -16061,7 +16061,7 @@ Object .defineProperties (FontStyle,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "topToBottom", new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "justify",     new (Fields_default()).MFString ("BEGIN")),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -16072,7 +16072,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(711);
+/* provided dependency */ var opentype = __webpack_require__(198);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16350,22 +16350,22 @@ Object .defineProperties (Text,
    typeName:
    {
       value: "Text",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Text",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -16380,7 +16380,7 @@ Object .defineProperties (Text,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "lineBounds", new (Fields_default()).MFVec2f ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fontStyle",  new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

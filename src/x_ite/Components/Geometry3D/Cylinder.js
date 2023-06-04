@@ -275,22 +275,22 @@ Object .defineProperties (Cylinder,
    typeName:
    {
       value: "Cylinder",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -303,7 +303,7 @@ Object .defineProperties (Cylinder,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

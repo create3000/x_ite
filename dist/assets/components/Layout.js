@@ -309,12 +309,12 @@ Object .defineProperties (X3DLayoutNode,
    typeName:
    {
       value: "X3DLayoutNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layout",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -943,22 +943,22 @@ Object .defineProperties (Layout,
    typeName:
    {
       value: "Layout",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layout",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "layout",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -971,7 +971,7 @@ Object .defineProperties (Layout,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "size",        new (Fields_default()).MFFloat (1, 1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "scaleMode",   new (Fields_default()).MFString ("NONE", "NONE")),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1140,22 +1140,22 @@ Object .defineProperties (LayoutGroup,
    typeName:
    {
       value: "LayoutGroup",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layout",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1171,7 +1171,7 @@ Object .defineProperties (LayoutGroup,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1277,22 +1277,22 @@ Object .defineProperties (LayoutLayer,
    typeName:
    {
       value: "LayoutLayer",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layout",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "layers",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1307,7 +1307,7 @@ Object .defineProperties (LayoutLayer,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "removeChildren", new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "children",       new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1842,22 +1842,22 @@ Object .defineProperties (ScreenFontStyle,
    typeName:
    {
       value: "ScreenFontStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layout",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "fontStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1873,7 +1873,7 @@ Object .defineProperties (ScreenFontStyle,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "topToBottom", new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "justify",     new (Fields_default()).MFString ("BEGIN")),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1988,22 +1988,22 @@ Object .defineProperties (ScreenGroup,
    typeName:
    {
       value: "ScreenGroup",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layout",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2017,7 +2017,7 @@ Object .defineProperties (ScreenGroup,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

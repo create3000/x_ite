@@ -154,7 +154,7 @@ Object .defineProperties (Disk2DOptions,
    typeName:
    {
       value: "Disk2DOptions",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

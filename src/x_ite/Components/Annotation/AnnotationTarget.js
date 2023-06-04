@@ -72,22 +72,22 @@ Object .defineProperties (AnnotationTarget,
    typeName:
    {
       value: "AnnotationTarget",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Annotation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -98,7 +98,7 @@ Object .defineProperties (AnnotationTarget,
          new X3DFieldDefinition (X3DConstants .inputOutput, "marker",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "annotations",    new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

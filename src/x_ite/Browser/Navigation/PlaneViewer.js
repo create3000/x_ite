@@ -230,14 +230,14 @@ Object .defineProperties (PlaneViewer,
    typeName:
    {
       value: "PlaneViewer",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

@@ -118,7 +118,7 @@ Object .defineProperties (Arc2DOptions,
    typeName:
    {
       value: "Arc2DOptions",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -195,7 +195,7 @@ Object .defineProperties (ArcClose2DOptions,
    typeName:
    {
       value: "ArcClose2DOptions",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -313,7 +313,7 @@ Object .defineProperties (Circle2DOptions,
    typeName:
    {
       value: "Circle2DOptions",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -481,7 +481,7 @@ Object .defineProperties (Disk2DOptions,
    typeName:
    {
       value: "Disk2DOptions",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -608,7 +608,7 @@ Object .defineProperties (Rectangle2DOptions,
    typeName:
    {
       value: "Rectangle2DOptions",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -908,22 +908,22 @@ Object .defineProperties (Arc2D,
    typeName:
    {
       value: "Arc2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry2D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -933,7 +933,7 @@ Object .defineProperties (Arc2D,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "endAngle",   new (Fields_default()).SFFloat (1.5708)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "radius",     new (Fields_default()).SFFloat (1)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1139,22 +1139,22 @@ Object .defineProperties (ArcClose2D,
    typeName:
    {
       value: "ArcClose2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry2D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1166,7 +1166,7 @@ Object .defineProperties (ArcClose2D,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "radius",      new (Fields_default()).SFFloat (1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",       new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1279,22 +1279,22 @@ Object .defineProperties (Circle2D,
    typeName:
    {
       value: "Circle2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry2D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1302,7 +1302,7 @@ Object .defineProperties (Circle2D,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata", new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "radius",   new (Fields_default()).SFFloat (1)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1543,22 +1543,22 @@ Object .defineProperties (Disk2D,
    typeName:
    {
       value: "Disk2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry2D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1568,7 +1568,7 @@ Object .defineProperties (Disk2D,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "outerRadius", new (Fields_default()).SFFloat (1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",       new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1662,22 +1662,22 @@ Object .defineProperties (Polyline2D,
    typeName:
    {
       value: "Polyline2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry2D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1685,7 +1685,7 @@ Object .defineProperties (Polyline2D,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",     new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "lineSegments", new (Fields_default()).MFVec2f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1778,22 +1778,22 @@ Object .defineProperties (Polypoint2D,
    typeName:
    {
       value: "Polypoint2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry2D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1801,7 +1801,7 @@ Object .defineProperties (Polypoint2D,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "point",    new (Fields_default()).MFVec2f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1934,22 +1934,22 @@ Object .defineProperties (Rectangle2D,
    typeName:
    {
       value: "Rectangle2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry2D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1958,7 +1958,7 @@ Object .defineProperties (Rectangle2D,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "size",     new (Fields_default()).SFVec2f (2, 2)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",    new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -2082,22 +2082,22 @@ Object .defineProperties (TriangleSet2D,
    typeName:
    {
       value: "TriangleSet2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry2D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -2106,7 +2106,7 @@ Object .defineProperties (TriangleSet2D,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "vertices", new (Fields_default()).MFVec2f ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",    new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

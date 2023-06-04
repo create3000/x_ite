@@ -65,12 +65,12 @@ Object .defineProperties (X3DLayoutNode,
    typeName:
    {
       value: "X3DLayoutNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layout",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

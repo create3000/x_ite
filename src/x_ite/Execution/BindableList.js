@@ -200,7 +200,7 @@ Object .defineProperties (BindableList,
    typeName:
    {
       value: "BindableList",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

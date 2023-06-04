@@ -130,12 +130,12 @@ Object .defineProperties (X3DProductStructureChildNode,
    typeName:
    {
       value: "X3DProductStructureChildNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CADGeometry",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -218,22 +218,22 @@ Object .defineProperties (CADAssembly,
    typeName:
    {
       value: "CADAssembly",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CADGeometry",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -248,7 +248,7 @@ Object .defineProperties (CADAssembly,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -484,22 +484,22 @@ Object .defineProperties (CADFace,
    typeName:
    {
       value: "CADFace",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CADGeometry",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -512,7 +512,7 @@ Object .defineProperties (CADFace,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",  new (Fields_default()).SFVec3f ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shape",       new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -592,22 +592,22 @@ Object .defineProperties (CADLayer,
    typeName:
    {
       value: "CADLayer",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CADGeometry",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -622,7 +622,7 @@ Object .defineProperties (CADLayer,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -708,22 +708,22 @@ Object .defineProperties (CADPart,
    typeName:
    {
       value: "CADPart",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CADGeometry",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -743,7 +743,7 @@ Object .defineProperties (CADPart,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",   new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",         new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -856,22 +856,22 @@ Object .defineProperties (IndexedQuadSet,
    typeName:
    {
       value: "IndexedQuadSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CADGeometry",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -890,7 +890,7 @@ Object .defineProperties (IndexedQuadSet,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "normal",          new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "coord",           new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -997,22 +997,22 @@ Object .defineProperties (QuadSet,
    typeName:
    {
       value: "QuadSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CADGeometry",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1029,7 +1029,7 @@ Object .defineProperties (QuadSet,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "normal",          new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "coord",           new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

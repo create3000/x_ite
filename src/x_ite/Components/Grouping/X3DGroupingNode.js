@@ -709,12 +709,12 @@ Object .defineProperties (X3DGroupingNode,
    typeName:
    {
       value: "X3DGroupingNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Grouping",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

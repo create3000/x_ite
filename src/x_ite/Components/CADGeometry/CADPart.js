@@ -71,22 +71,22 @@ Object .defineProperties (CADPart,
    typeName:
    {
       value: "CADPart",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CADGeometry",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -106,7 +106,7 @@ Object .defineProperties (CADPart,
          new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

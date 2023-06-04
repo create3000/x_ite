@@ -72,22 +72,22 @@ Object .defineProperties (TextAnnotation,
    typeName:
    {
       value: "TextAnnotation",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Annotation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -99,7 +99,7 @@ Object .defineProperties (TextAnnotation,
          new X3DFieldDefinition (X3DConstants .inputOutput, "contentType",       new Fields .SFString ("text/plain")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "text",              new Fields .SFString ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

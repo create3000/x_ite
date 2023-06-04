@@ -1037,22 +1037,22 @@ Object .defineProperties (ParticleSystem,
    typeName:
    {
       value: "ParticleSystem",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1080,7 +1080,7 @@ Object .defineProperties (ParticleSystem,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",          new Fields .SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

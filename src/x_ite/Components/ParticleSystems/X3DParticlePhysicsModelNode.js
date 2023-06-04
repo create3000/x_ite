@@ -67,12 +67,12 @@ Object .defineProperties (X3DParticlePhysicsModelNode,
    typeName:
    {
       value: "X3DParticlePhysicsModelNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "ParticleSystems",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

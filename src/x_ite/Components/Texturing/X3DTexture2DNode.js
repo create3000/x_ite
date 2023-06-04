@@ -161,12 +161,12 @@ Object .defineProperties (X3DTexture2DNode,
    typeName:
    {
       value: "X3DTexture2DNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

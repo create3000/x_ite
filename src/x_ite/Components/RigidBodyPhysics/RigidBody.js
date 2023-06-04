@@ -467,22 +467,22 @@ Object .defineProperties (RigidBody,
    typeName:
    {
       value: "RigidBody",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "bodies",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -512,7 +512,7 @@ Object .defineProperties (RigidBody,
          new X3DFieldDefinition (X3DConstants .inputOutput, "disableAngularSpeed",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "geometry",             new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

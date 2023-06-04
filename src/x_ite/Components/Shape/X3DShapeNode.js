@@ -200,12 +200,12 @@ Object .defineProperties (X3DShapeNode,
    typeName:
    {
       value: "X3DShapeNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

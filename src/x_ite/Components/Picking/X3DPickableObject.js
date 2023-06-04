@@ -84,12 +84,12 @@ Object .defineProperties (X3DPickableObject,
    typeName:
    {
       value: "X3DPickableObject",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Picking",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

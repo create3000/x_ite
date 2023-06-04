@@ -79,22 +79,22 @@ Object .defineProperties (FontStyle,
    typeName:
    {
       value: "FontStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Text",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "fontStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -110,7 +110,7 @@ Object .defineProperties (FontStyle,
          new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

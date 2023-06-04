@@ -218,22 +218,22 @@ Object .defineProperties (CADFace,
    typeName:
    {
       value: "CADFace",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CADGeometry",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -246,7 +246,7 @@ Object .defineProperties (CADFace,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shape",       new Fields .SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

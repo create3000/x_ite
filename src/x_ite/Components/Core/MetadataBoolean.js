@@ -81,22 +81,22 @@ Object .defineProperties (MetadataBoolean,
    typeName:
    {
       value: "MetadataBoolean",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "metadata",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -106,7 +106,7 @@ Object .defineProperties (MetadataBoolean,
          new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "value",     new Fields .MFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

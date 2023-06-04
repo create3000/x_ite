@@ -223,22 +223,22 @@ Object .defineProperties (ViewpointGroup,
    typeName:
    {
       value: "ViewpointGroup",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Navigation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -251,7 +251,7 @@ Object .defineProperties (ViewpointGroup,
          new X3DFieldDefinition (X3DConstants .inputOutput, "center",            new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "children",          new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

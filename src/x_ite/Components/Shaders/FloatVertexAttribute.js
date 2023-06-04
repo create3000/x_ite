@@ -120,22 +120,22 @@ Object .defineProperties (FloatVertexAttribute,
    typeName:
    {
       value: "FloatVertexAttribute",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "attrib",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -145,7 +145,7 @@ Object .defineProperties (FloatVertexAttribute,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "numComponents", new Fields .SFInt32 (4)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "value",         new Fields .MFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

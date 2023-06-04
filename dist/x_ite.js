@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 561:
+/***/ 52:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(299);
+/* provided dependency */ var jQuery = __webpack_require__(684);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 808:
+/***/ 395:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(299);
+/* provided dependency */ var jQuery = __webpack_require__(684);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 300:
+/***/ 153:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(299)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(684)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 299:
+/***/ 684:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11523,7 +11523,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 818:
+/***/ 498:
 /***/ ((module) => {
 
 /**
@@ -16302,7 +16302,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 851:
+/***/ 307:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19547,7 +19547,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 787:
+/***/ 64:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -22688,7 +22688,7 @@ Object .defineProperties (X3DFieldDefinition,
    typeName:
    {
       value: "X3DFieldDefinition",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -23136,7 +23136,7 @@ Object .defineProperties (FieldDefinitionArray,
    typeName:
    {
       value: "FieldDefinitionArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -23651,7 +23651,7 @@ Object .defineProperties (FieldArray,
    typeName:
    {
       value: "FieldArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -23765,7 +23765,7 @@ Object .defineProperties (SFBool,
    typeName:
    {
       value: "SFBool",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -24262,7 +24262,7 @@ Object .defineProperties (SFColor,
    typeName:
    {
       value: "SFColor",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -24656,7 +24656,7 @@ Object .defineProperties (SFColorRGBA,
    typeName:
    {
       value: "SFColorRGBA",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -24771,7 +24771,7 @@ Object .defineProperties (SFDouble,
    typeName:
    {
       value: "SFDouble",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -24886,7 +24886,7 @@ Object .defineProperties (SFFloat,
    typeName:
    {
       value: "SFFloat",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -24997,7 +24997,7 @@ Object .defineProperties (SFInt32,
    typeName:
    {
       value: "SFInt32",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -25066,7 +25066,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double
       typeName:
       {
          value: TypeName,
-         enumerate: true,
+         enumerable: true,
       },
    });
 
@@ -25264,7 +25264,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
       typeName:
       {
          value: TypeName,
-         enumerate: true,
+         enumerable: true,
       },
    });
 
@@ -30285,7 +30285,7 @@ Object .defineProperties (SFNode,
    typeName:
    {
       value: "SFNode",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -30555,7 +30555,7 @@ Object .defineProperties (SFRotation,
    typeName:
    {
       value: "SFRotation",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -30696,7 +30696,7 @@ Object .defineProperties (SFString,
    typeName:
    {
       value: "SFString",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -30807,7 +30807,7 @@ Object .defineProperties (SFTime,
    typeName:
    {
       value: "SFTime",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -33068,7 +33068,7 @@ Object .defineProperties (MFNode,
    typeName:
    {
       value: "MFNode",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -33118,7 +33118,7 @@ Object .defineProperties (MFString,
    typeName:
    {
       value: "MFString",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -33148,7 +33148,7 @@ Object .defineProperties (MFImage,
    typeName:
    {
       value: "MFImage",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -33188,7 +33188,7 @@ function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Compone
       typeName:
       {
          value: TypeName,
-         enumerate: true,
+         enumerable: true,
       },
    });
 
@@ -33592,7 +33592,7 @@ Object .defineProperties (SFImage,
    typeName:
    {
       value: "SFImage",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -35800,12 +35800,12 @@ Object .defineProperties (X3DNode,
    typeName:
    {
       value: "X3DNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -35881,12 +35881,12 @@ Object .defineProperties (X3DMetadataObject,
    typeName:
    {
       value: "X3DMetadataObject",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -35979,22 +35979,22 @@ Object .defineProperties (MetadataBoolean,
    typeName:
    {
       value: "MetadataBoolean",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "metadata",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -36004,7 +36004,7 @@ Object .defineProperties (MetadataBoolean,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -36097,22 +36097,22 @@ Object .defineProperties (MetadataDouble,
    typeName:
    {
       value: "MetadataDouble",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "metadata",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -36122,7 +36122,7 @@ Object .defineProperties (MetadataDouble,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFDouble ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -36215,22 +36215,22 @@ Object .defineProperties (MetadataFloat,
    typeName:
    {
       value: "MetadataFloat",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "metadata",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -36240,7 +36240,7 @@ Object .defineProperties (MetadataFloat,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -36333,22 +36333,22 @@ Object .defineProperties (MetadataInteger,
    typeName:
    {
       value: "MetadataInteger",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "metadata",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -36358,7 +36358,7 @@ Object .defineProperties (MetadataInteger,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFInt32 ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -36451,22 +36451,22 @@ Object .defineProperties (MetadataSet,
    typeName:
    {
       value: "MetadataSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "metadata",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -36476,7 +36476,7 @@ Object .defineProperties (MetadataSet,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -36569,22 +36569,22 @@ Object .defineProperties (MetadataString,
    typeName:
    {
       value: "MetadataString",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "metadata",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -36594,7 +36594,7 @@ Object .defineProperties (MetadataString,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "reference", new x_ite_Fields.SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "value",     new x_ite_Fields.MFString ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -36699,12 +36699,12 @@ Object .defineProperties (X3DChildNode,
    typeName:
    {
       value: "X3DChildNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -36781,12 +36781,12 @@ Object .defineProperties (X3DInfoNode,
    typeName:
    {
       value: "X3DInfoNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -36878,22 +36878,22 @@ Object .defineProperties (WorldInfo,
    typeName:
    {
       value: "WorldInfo",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -36902,7 +36902,7 @@ Object .defineProperties (WorldInfo,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "title",    new x_ite_Fields.SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "info",     new x_ite_Fields.MFString ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -36986,12 +36986,12 @@ Object .defineProperties (X3DBindableNode,
    typeName:
    {
       value: "X3DBindableNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -37077,7 +37077,7 @@ Object .defineProperties (AbstractNodesArray,
    typeName:
    {
       value: "AbstractNodesArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -37223,7 +37223,7 @@ Object .defineProperties (NamedNodesArray,
    typeName:
    {
       value: "NamedNodesArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -37794,7 +37794,7 @@ Object .defineProperties (X3DImportedNode,
    typeName:
    {
       value: "X3DImportedNode",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -37872,7 +37872,7 @@ Object .defineProperties (ImportedNodesArray,
    typeName:
    {
       value: "ImportedNodesArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -37991,7 +37991,7 @@ Object .defineProperties (X3DProtoDeclarationNode,
    typeName:
    {
       value: "X3DProtoDeclarationNode",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -38562,14 +38562,14 @@ Object .defineProperties (X3DProtoDeclaration,
    typeName:
    {
       value: "X3DProtoDeclaration",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -38860,12 +38860,12 @@ Object .defineProperties (X3DUrlObject,
    typeName:
    {
       value: "X3DUrlObject",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Networking",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -38875,7 +38875,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 x_ite_Namespace.set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var $ = __webpack_require__(299);
+/* provided dependency */ var $ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42057,7 +42057,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(299);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44048,7 +44048,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(299);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46514,7 +46514,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(299);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46667,7 +46667,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(299);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49171,8 +49171,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace.set ("standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(299);
-/* provided dependency */ var libtess = __webpack_require__(818);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(684);
+/* provided dependency */ var libtess = __webpack_require__(498);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51941,7 +51941,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace.set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(299);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52270,7 +52270,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(818);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(498);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55796,7 +55796,7 @@ Object .defineProperties (BindableStack,
    typeName:
    {
       value: "BindableStack",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -56008,7 +56008,7 @@ Object .defineProperties (BindableList,
    typeName:
    {
       value: "BindableList",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -56325,22 +56325,22 @@ Object .defineProperties (NavigationInfo,
    typeName:
    {
       value: "NavigationInfo",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Navigation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -56358,7 +56358,7 @@ Object .defineProperties (NavigationInfo,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",            new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",           new x_ite_Fields.SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -56613,12 +56613,12 @@ Object .defineProperties (X3DFogObject,
    typeName:
    {
       value: "X3DFogObject",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalEffects",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -56728,22 +56728,22 @@ Object .defineProperties (Fog,
    typeName:
    {
       value: "Fog",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalEffects",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -56756,7 +56756,7 @@ Object .defineProperties (Fog,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",         new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",        new x_ite_Fields.SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -57048,41 +57048,44 @@ function X3DGeometryNode (executionContext)
       this .planes [i] = new Geometry_Plane3 (Numbers_Vector3.Zero, Numbers_Vector3.zAxis);
 }
 
-// Function to select ether Array or MFFloat for color/normal/vertex arrays.
-X3DGeometryNode .createArray = function ()
+Object .defineProperty (X3DGeometryNode, "createArray",
 {
-   if (ARRAY_TYPE == "MFFloat")
-      return new x_ite_Fields.MFFloat ();
-
-   const array = [ ];
-
-   array .typedArray = new Float32Array ();
-
-   array .assign = function (value)
+   // Function to select ether Array or MFFloat for color/normal/vertex arrays.
+   value: function ()
    {
-      const length = value .length;
+      if (ARRAY_TYPE == "MFFloat")
+         return new x_ite_Fields.MFFloat ();
 
-      for (let i = 0; i < length; ++ i)
-         this [i] = value [i];
+      const array = [ ];
 
-      this .length = length;
-   };
+      array .typedArray = new Float32Array ();
 
-   array .getValue = function ()
-   {
-      return this .typedArray;
-   };
+      array .assign = function (value)
+      {
+         const length = value .length;
 
-   array .shrinkToFit = function ()
-   {
-      if (this .length === this .typedArray .length)
-         this .typedArray .set (this);
-      else
-         this .typedArray = new Float32Array (this);
-   };
+         for (let i = 0; i < length; ++ i)
+            this [i] = value [i];
 
-   return array;
-}
+         this .length = length;
+      };
+
+      array .getValue = function ()
+      {
+         return this .typedArray;
+      };
+
+      array .shrinkToFit = function ()
+      {
+         if (this .length === this .typedArray .length)
+            this .typedArray .set (this);
+         else
+            this .typedArray = new Float32Array (this);
+      };
+
+      return array;
+   },
+})
 
 X3DGeometryNode .prototype = Object .assign (Object .create (Core_X3DNode.prototype),
 {
@@ -58139,12 +58142,12 @@ Object .defineProperties (X3DGeometryNode,
    typeName:
    {
       value: "X3DGeometryNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -59029,12 +59032,12 @@ Object .defineProperties (X3DBackgroundNode,
    typeName:
    {
       value: "X3DBackgroundNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalEffects",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -59111,12 +59114,12 @@ Object .defineProperties (X3DAppearanceChildNode,
    typeName:
    {
       value: "X3DAppearanceChildNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -59207,12 +59210,12 @@ Object .defineProperties (X3DTextureNode,
    typeName:
    {
       value: "X3DTextureNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -59488,12 +59491,12 @@ Object .defineProperties (X3DSingleTextureNode,
    typeName:
    {
       value: "X3DSingleTextureNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -59666,12 +59669,12 @@ Object .defineProperties (X3DTexture2DNode,
    typeName:
    {
       value: "X3DTexture2DNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -59681,7 +59684,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(299);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59942,22 +59945,22 @@ Object .defineProperties (ImageTexture,
    typeName:
    {
       value: "ImageTexture",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texture",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -59972,7 +59975,7 @@ Object .defineProperties (ImageTexture,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatT",              new x_ite_Fields.SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "textureProperties",    new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -60101,22 +60104,22 @@ Object .defineProperties (Background,
    typeName:
    {
       value: "Background",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalEffects",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -60137,7 +60140,7 @@ Object .defineProperties (Background,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isBound",      new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",     new x_ite_Fields.SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -60545,12 +60548,12 @@ Object .defineProperties (X3DLayerNode,
    typeName:
    {
       value: "X3DLayerNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -60627,12 +60630,12 @@ Object .defineProperties (X3DSensorNode,
    typeName:
    {
       value: "X3DSensorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -61002,12 +61005,12 @@ Object .defineProperties (X3DTimeDependentNode,
    typeName:
    {
       value: "X3DTimeDependentNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Time",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -61199,22 +61202,22 @@ Object .defineProperties (TimeSensor,
    typeName:
    {
       value: "TimeSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Time",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -61235,7 +61238,7 @@ Object .defineProperties (TimeSensor,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "fraction_changed", new x_ite_Fields.SFFloat ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "time",             new x_ite_Fields.SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -61373,12 +61376,12 @@ Object .defineProperties (X3DInterpolatorNode,
    typeName:
    {
       value: "X3DInterpolatorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -61507,22 +61510,22 @@ Object .defineProperties (EaseInEaseOut,
    typeName:
    {
       value: "EaseInEaseOut",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -61533,7 +61536,7 @@ Object .defineProperties (EaseInEaseOut,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "easeInEaseOut",            new x_ite_Fields.MFVec2f ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "modifiedFraction_changed", new x_ite_Fields.SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -61638,22 +61641,22 @@ Object .defineProperties (PositionInterpolator,
    typeName:
    {
       value: "PositionInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -61664,7 +61667,7 @@ Object .defineProperties (PositionInterpolator,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec3f ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -61778,22 +61781,22 @@ Object .defineProperties (OrientationInterpolator,
    typeName:
    {
       value: "OrientationInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -61804,7 +61807,7 @@ Object .defineProperties (OrientationInterpolator,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFRotation ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFRotation ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -61904,22 +61907,22 @@ Object .defineProperties (ScalarInterpolator,
    typeName:
    {
       value: "ScalarInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -61930,7 +61933,7 @@ Object .defineProperties (ScalarInterpolator,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFFloat ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -62525,12 +62528,12 @@ Object .defineProperties (X3DViewpointNode,
    typeName:
    {
       value: "X3DViewpointNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Navigation",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -62700,22 +62703,22 @@ Object .defineProperties (Viewpoint,
    typeName:
    {
       value: "Viewpoint",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Navigation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -62736,7 +62739,7 @@ Object .defineProperties (Viewpoint,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",          new x_ite_Fields.SFTime ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "navigationInfo",    new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -62888,12 +62891,12 @@ Object .defineProperties (X3DBoundedObject,
    typeName:
    {
       value: "X3DBoundedObject",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Grouping",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -63614,12 +63617,12 @@ Object .defineProperties (X3DGroupingNode,
    typeName:
    {
       value: "X3DGroupingNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Grouping",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -63699,22 +63702,22 @@ Object .defineProperties (Group,
    typeName:
    {
       value: "Group",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Grouping",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -63728,7 +63731,7 @@ Object .defineProperties (Group,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -63825,22 +63828,22 @@ Object .defineProperties (Layer,
    typeName:
    {
       value: "Layer",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "layers",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -63854,7 +63857,7 @@ Object .defineProperties (Layer,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,   "removeChildren", new x_ite_Fields.MFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",       new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -64043,22 +64046,22 @@ Object .defineProperties (LayerSet,
    typeName:
    {
       value: "LayerSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -64068,7 +64071,7 @@ Object .defineProperties (LayerSet,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "order",       new x_ite_Fields.MFInt32 (0)),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "layers",      new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -64235,7 +64238,7 @@ Object .defineProperties (X3DWorld,
    typeName:
    {
       value: "X3DWorld",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -64245,7 +64248,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace.set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(299);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65028,14 +65031,14 @@ Object .defineProperties (X3DExternProtoDeclaration,
    typeName:
    {
       value: "X3DExternProtoDeclaration",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -65113,7 +65116,7 @@ Object .defineProperties (ExternProtoDeclarationArray,
    typeName:
    {
       value: "ExternProtoDeclarationArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -65191,7 +65194,7 @@ Object .defineProperties (ProtoDeclarationArray,
    typeName:
    {
       value: "ProtoDeclarationArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -65501,7 +65504,7 @@ Object .defineProperties (X3DRoute,
    typeName:
    {
       value: "X3DRoute",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -65587,7 +65590,7 @@ Object .defineProperties (RouteArray,
    typeName:
    {
       value: "RouteArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -66622,7 +66625,7 @@ Object .defineProperties (X3DExecutionContext,
    typeName:
    {
       value: "X3DExecutionContext",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -67639,22 +67642,22 @@ Object .defineProperties (X3DPrototypeInstance,
    typeName:
    {
       value: "X3DPrototypeInstance",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Core",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -67821,12 +67824,12 @@ Object .defineProperties (X3DGeometricPropertyNode,
    typeName:
    {
       value: "X3DGeometricPropertyNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -67962,22 +67965,22 @@ Object .defineProperties (FogCoordinate,
    typeName:
    {
       value: "FogCoordinate",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalEffects",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "fogCoord",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -67985,7 +67988,7 @@ Object .defineProperties (FogCoordinate,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "depth",    new x_ite_Fields.MFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -68094,22 +68097,22 @@ Object .defineProperties (LocalFog,
    typeName:
    {
       value: "LocalFog",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalEffects",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -68120,7 +68123,7 @@ Object .defineProperties (LocalFog,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",           new x_ite_Fields.SFColor (1, 1, 1)),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "visibilityRange", new x_ite_Fields.SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -68223,22 +68226,22 @@ Object .defineProperties (TextureBackground,
    typeName:
    {
       value: "TextureBackground",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalEffects",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -68259,7 +68262,7 @@ Object .defineProperties (TextureBackground,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "topTexture",    new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "bottomTexture", new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -68479,12 +68482,12 @@ Object .defineProperties (X3DEnvironmentalSensorNode,
    typeName:
    {
       value: "X3DEnvironmentalSensorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalSensor",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -68739,22 +68742,22 @@ Object .defineProperties (ProximitySensor,
    typeName:
    {
       value: "ProximitySensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalSensor",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -68770,7 +68773,7 @@ Object .defineProperties (ProximitySensor,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "orientation_changed",      new x_ite_Fields.SFRotation ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "centerOfRotation_changed", new x_ite_Fields.SFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -69064,22 +69067,22 @@ Object .defineProperties (TransformSensor,
    typeName:
    {
       value: "TransformSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalSensor",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -69095,7 +69098,7 @@ Object .defineProperties (TransformSensor,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "orientation_changed", new x_ite_Fields.SFRotation ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "targetObject",        new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -69250,22 +69253,22 @@ Object .defineProperties (VisibilitySensor,
    typeName:
    {
       value: "VisibilitySensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EnvironmentalSensor",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -69278,7 +69281,7 @@ Object .defineProperties (VisibilitySensor,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "exitTime",  new x_ite_Fields.SFTime ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",  new x_ite_Fields.SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -69500,12 +69503,12 @@ Object .defineProperties (X3DFollowerNode,
    typeName:
    {
       value: "X3DFollowerNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -69747,12 +69750,12 @@ Object .defineProperties (X3DChaserNode,
    typeName:
    {
       value: "X3DChaserNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -69876,22 +69879,22 @@ Object .defineProperties (ColorChaser,
    typeName:
    {
       value: "ColorChaser",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -69905,7 +69908,7 @@ Object .defineProperties (ColorChaser,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFColor ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -70082,12 +70085,12 @@ Object .defineProperties (X3DDamperNode,
    typeName:
    {
       value: "X3DDamperNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -70207,22 +70210,22 @@ Object .defineProperties (ColorDamper,
    typeName:
    {
       value: "ColorDamper",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -70238,7 +70241,7 @@ Object .defineProperties (ColorDamper,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFColor ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -70592,22 +70595,22 @@ Object .defineProperties (CoordinateChaser,
    typeName:
    {
       value: "CoordinateChaser",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -70621,7 +70624,7 @@ Object .defineProperties (CoordinateChaser,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.MFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -70711,22 +70714,22 @@ Object .defineProperties (CoordinateDamper,
    typeName:
    {
       value: "CoordinateDamper",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -70742,7 +70745,7 @@ Object .defineProperties (CoordinateDamper,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.MFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -70853,22 +70856,22 @@ Object .defineProperties (OrientationChaser,
    typeName:
    {
       value: "OrientationChaser",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -70882,7 +70885,7 @@ Object .defineProperties (OrientationChaser,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFRotation ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -70987,22 +70990,22 @@ Object .defineProperties (OrientationDamper,
    typeName:
    {
       value: "OrientationDamper",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -71018,7 +71021,7 @@ Object .defineProperties (OrientationDamper,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFRotation ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -71103,22 +71106,22 @@ Object .defineProperties (PositionChaser,
    typeName:
    {
       value: "PositionChaser",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -71132,7 +71135,7 @@ Object .defineProperties (PositionChaser,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -71217,22 +71220,22 @@ Object .defineProperties (PositionChaser2D,
    typeName:
    {
       value: "PositionChaser2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -71246,7 +71249,7 @@ Object .defineProperties (PositionChaser2D,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFVec2f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -71331,22 +71334,22 @@ Object .defineProperties (PositionDamper,
    typeName:
    {
       value: "PositionDamper",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -71362,7 +71365,7 @@ Object .defineProperties (PositionDamper,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFVec3f ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -71447,22 +71450,22 @@ Object .defineProperties (PositionDamper2D,
    typeName:
    {
       value: "PositionDamper2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -71478,7 +71481,7 @@ Object .defineProperties (PositionDamper2D,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFVec2f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -71591,22 +71594,22 @@ Object .defineProperties (ScalarChaser,
    typeName:
    {
       value: "ScalarChaser",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -71620,7 +71623,7 @@ Object .defineProperties (ScalarChaser,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -71721,22 +71724,22 @@ Object .defineProperties (ScalarDamper,
    typeName:
    {
       value: "ScalarDamper",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -71752,7 +71755,7 @@ Object .defineProperties (ScalarDamper,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -71842,22 +71845,22 @@ Object .defineProperties (TexCoordChaser2D,
    typeName:
    {
       value: "TexCoordChaser2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -71871,7 +71874,7 @@ Object .defineProperties (TexCoordChaser2D,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.MFVec2f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -71961,22 +71964,22 @@ Object .defineProperties (TexCoordDamper2D,
    typeName:
    {
       value: "TexCoordDamper2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -71992,7 +71995,7 @@ Object .defineProperties (TexCoordDamper2D,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "isActive",           new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,     "value_changed",      new x_ite_Fields.MFVec2f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -72216,22 +72219,22 @@ Object .defineProperties (Box,
    typeName:
    {
       value: "Box",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -72240,7 +72243,7 @@ Object .defineProperties (Box,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "size",     new x_ite_Fields.SFVec3f (2, 2, 2)),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",    new x_ite_Fields.SFBool (true)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -72467,22 +72470,22 @@ Object .defineProperties (Cone,
    typeName:
    {
       value: "Cone",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -72494,7 +72497,7 @@ Object .defineProperties (Cone,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bottomRadius", new x_ite_Fields.SFFloat (1)),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",        new x_ite_Fields.SFBool (true)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -72781,22 +72784,22 @@ Object .defineProperties (Cylinder,
    typeName:
    {
       value: "Cylinder",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -72809,7 +72812,7 @@ Object .defineProperties (Cylinder,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "radius",   new x_ite_Fields.SFFloat (1)),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",    new x_ite_Fields.SFBool (true)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -73210,22 +73213,22 @@ Object .defineProperties (ElevationGrid,
    typeName:
    {
       value: "ElevationGrid",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -73248,7 +73251,7 @@ Object .defineProperties (ElevationGrid,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "height",          new x_ite_Fields.MFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -73938,22 +73941,22 @@ Object .defineProperties (Extrusion,
    typeName:
    {
       value: "Extrusion",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -73974,7 +73977,7 @@ Object .defineProperties (Extrusion,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "scale",            new x_ite_Fields.MFVec2f (new Numbers_Vector2 (1, 1))),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "spine",            new x_ite_Fields.MFVec3f (new Numbers_Vector3 (0, 0, 0), new Numbers_Vector3 (0, 1, 0))),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -74337,12 +74340,12 @@ Object .defineProperties (X3DComposedGeometryNode,
    typeName:
    {
       value: "X3DComposedGeometryNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -74794,22 +74797,22 @@ Object .defineProperties (IndexedFaceSet,
    typeName:
    {
       value: "IndexedFaceSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -74836,7 +74839,7 @@ Object .defineProperties (IndexedFaceSet,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",            new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",             new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -74964,22 +74967,22 @@ Object .defineProperties (Sphere,
    typeName:
    {
       value: "Sphere",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Geometry3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -74988,7 +74991,7 @@ Object .defineProperties (Sphere,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "radius",   new x_ite_Fields.SFFloat (1)),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "solid",    new x_ite_Fields.SFBool (true)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -75287,22 +75290,22 @@ Object .defineProperties (StaticGroup,
    typeName:
    {
       value: "StaticGroup",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Grouping",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -75314,7 +75317,7 @@ Object .defineProperties (StaticGroup,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",  new x_ite_Fields.SFVec3f ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "children",    new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -75547,22 +75550,22 @@ Object .defineProperties (Switch,
    typeName:
    {
       value: "Switch",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Grouping",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -75577,7 +75580,7 @@ Object .defineProperties (Switch,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -75713,12 +75716,12 @@ Object .defineProperties (X3DTransformMatrix3DNode,
    typeName:
    {
       value: "X3DTransformMatrix3DNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Grouping",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -75814,12 +75817,12 @@ Object .defineProperties (X3DTransformNode,
    typeName:
    {
       value: "X3DTransformNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Grouping",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -75899,22 +75902,22 @@ Object .defineProperties (Transform,
    typeName:
    {
       value: "Transform",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Grouping",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -75933,7 +75936,7 @@ Object .defineProperties (Transform,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren",   new x_ite_Fields.MFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",         new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -76123,22 +76126,22 @@ Object .defineProperties (ColorInterpolator,
    typeName:
    {
       value: "ColorInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -76149,7 +76152,7 @@ Object .defineProperties (ColorInterpolator,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFColor ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFColor ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -76261,22 +76264,22 @@ Object .defineProperties (CoordinateInterpolator,
    typeName:
    {
       value: "CoordinateInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -76287,7 +76290,7 @@ Object .defineProperties (CoordinateInterpolator,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec3f ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.MFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -76396,22 +76399,22 @@ Object .defineProperties (CoordinateInterpolator2D,
    typeName:
    {
       value: "CoordinateInterpolator2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -76422,7 +76425,7 @@ Object .defineProperties (CoordinateInterpolator2D,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec2f ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.MFVec2f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -76560,22 +76563,22 @@ Object .defineProperties (NormalInterpolator,
    typeName:
    {
       value: "NormalInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -76586,7 +76589,7 @@ Object .defineProperties (NormalInterpolator,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec3f ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.MFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -76691,22 +76694,22 @@ Object .defineProperties (PositionInterpolator2D,
    typeName:
    {
       value: "PositionInterpolator2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -76717,7 +76720,7 @@ Object .defineProperties (PositionInterpolator2D,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFVec2f ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFVec2f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -77204,22 +77207,22 @@ Object .defineProperties (SplinePositionInterpolator,
    typeName:
    {
       value: "SplinePositionInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -77233,7 +77236,7 @@ Object .defineProperties (SplinePositionInterpolator,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalizeVelocity", new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed",     new x_ite_Fields.SFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -77415,22 +77418,22 @@ Object .defineProperties (SplinePositionInterpolator2D,
    typeName:
    {
       value: "SplinePositionInterpolator2D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -77444,7 +77447,7 @@ Object .defineProperties (SplinePositionInterpolator2D,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalizeVelocity", new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed",     new x_ite_Fields.SFVec2f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -77661,22 +77664,22 @@ Object .defineProperties (SplineScalarInterpolator,
    typeName:
    {
       value: "SplineScalarInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -77690,7 +77693,7 @@ Object .defineProperties (SplineScalarInterpolator,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalizeVelocity", new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed",     new x_ite_Fields.SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -77924,22 +77927,22 @@ Object .defineProperties (SquadOrientationInterpolator,
    typeName:
    {
       value: "SquadOrientationInterpolator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Interpolation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -77951,7 +77954,7 @@ Object .defineProperties (SquadOrientationInterpolator,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "keyValue",      new x_ite_Fields.MFRotation ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "value_changed", new x_ite_Fields.SFRotation ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -78118,12 +78121,12 @@ Object .defineProperties (X3DViewportNode,
    typeName:
    {
       value: "X3DViewportNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -78279,22 +78282,22 @@ Object .defineProperties (Viewport,
    typeName:
    {
       value: "Viewport",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Layering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "viewport",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -78309,7 +78312,7 @@ Object .defineProperties (Viewport,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -78604,12 +78607,12 @@ Object .defineProperties (X3DLightNode,
    typeName:
    {
       value: "X3DLightNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Lighting",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -78875,22 +78878,22 @@ Object .defineProperties (DirectionalLight,
    typeName:
    {
       value: "DirectionalLight",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Lighting",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -78909,7 +78912,7 @@ Object .defineProperties (DirectionalLight,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowBias",      new  x_ite_Fields.SFFloat (0.005)),   // Bias of the shadow.
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "shadowMapSize",   new  x_ite_Fields.SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -79034,22 +79037,22 @@ Object .defineProperties (EnvironmentLight,
    typeName:
    {
       value: "EnvironmentLight",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Lighting",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -79073,7 +79076,7 @@ Object .defineProperties (EnvironmentLight,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowBias",          new  x_ite_Fields.SFFloat (0.005)),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "shadowMapSize",       new  x_ite_Fields.SFInt32 (1024)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -79387,22 +79390,22 @@ Object .defineProperties (PointLight,
    typeName:
    {
       value: "PointLight",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Lighting",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -79423,7 +79426,7 @@ Object .defineProperties (PointLight,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowBias",      new  x_ite_Fields.SFFloat (0.005)),   // Bias of the shadow.
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "shadowMapSize",   new  x_ite_Fields.SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -79753,22 +79756,22 @@ Object .defineProperties (SpotLight,
    typeName:
    {
       value: "SpotLight",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Lighting",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -79792,7 +79795,7 @@ Object .defineProperties (SpotLight,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "shadowBias",      new  x_ite_Fields.SFFloat (0.005)),   // Bias of the shadow.
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "shadowMapSize",   new  x_ite_Fields.SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -80028,22 +80031,22 @@ Object .defineProperties (Billboard,
    typeName:
    {
       value: "Billboard",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Navigation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -80058,7 +80061,7 @@ Object .defineProperties (Billboard,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -80215,22 +80218,22 @@ Object .defineProperties (Collision,
    typeName:
    {
       value: "Collision",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Navigation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -80248,7 +80251,7 @@ Object .defineProperties (Collision,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren", new x_ite_Fields.MFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",       new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -80556,22 +80559,22 @@ Object .defineProperties (LOD,
    typeName:
    {
       value: "LOD",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Navigation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -80589,7 +80592,7 @@ Object .defineProperties (LOD,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren",   new x_ite_Fields.MFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",         new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -80915,22 +80918,22 @@ Object .defineProperties (OrthoViewpoint,
    typeName:
    {
       value: "OrthoViewpoint",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Navigation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -80951,7 +80954,7 @@ Object .defineProperties (OrthoViewpoint,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "bindTime",          new x_ite_Fields.SFTime ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "navigationInfo",    new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -81186,22 +81189,22 @@ Object .defineProperties (ViewpointGroup,
    typeName:
    {
       value: "ViewpointGroup",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Navigation",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -81214,7 +81217,7 @@ Object .defineProperties (ViewpointGroup,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "center",            new x_ite_Fields.SFVec3f ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",          new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -81515,12 +81518,12 @@ Object .defineProperties (X3DPointingDeviceSensorNode,
    typeName:
    {
       value: "X3DPointingDeviceSensorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "PointingDeviceSensor",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -81627,12 +81630,12 @@ Object .defineProperties (X3DTouchSensorNode,
    typeName:
    {
       value: "X3DTouchSensorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "PointingDeviceSensor",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -81714,22 +81717,22 @@ Object .defineProperties (TouchSensor,
    typeName:
    {
       value: "TouchSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "PointingDeviceSensor",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -81744,7 +81747,7 @@ Object .defineProperties (TouchSensor,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",            new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "touchTime",           new x_ite_Fields.SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -81935,22 +81938,22 @@ Object .defineProperties (Anchor,
    typeName:
    {
       value: "Anchor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Networking",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -81970,7 +81973,7 @@ Object .defineProperties (Anchor,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOnly,      "removeChildren",       new x_ite_Fields.MFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",             new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -82262,22 +82265,22 @@ Object .defineProperties (Inline,
    typeName:
    {
       value: "Inline",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Networking",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -82294,7 +82297,7 @@ Object .defineProperties (Inline,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxSize",             new x_ite_Fields.SFVec3f (-1, -1, -1)),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "bboxCenter",           new x_ite_Fields.SFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -82371,12 +82374,12 @@ Object .defineProperties (X3DNetworkSensorNode,
    typeName:
    {
       value: "X3DNetworkSensorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Networking",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -82618,22 +82621,22 @@ Object .defineProperties (LoadSensor,
    typeName:
    {
       value: "LoadSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Networking",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -82647,7 +82650,7 @@ Object .defineProperties (LoadSensor,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "loadTime", new x_ite_Fields.SFTime ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children", new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -82798,12 +82801,12 @@ Object .defineProperties (X3DDragSensorNode,
    typeName:
    {
       value: "X3DDragSensorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "PointingDeviceSensor",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -83243,22 +83246,22 @@ Object .defineProperties (CylinderSensor,
    typeName:
    {
       value: "CylinderSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "PointingDeviceSensor",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -83277,7 +83280,7 @@ Object .defineProperties (CylinderSensor,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isOver",             new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",           new x_ite_Fields.SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -83712,22 +83715,22 @@ Object .defineProperties (PlaneSensor,
    typeName:
    {
       value: "PlaneSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "PointingDeviceSensor",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -83745,7 +83748,7 @@ Object .defineProperties (PlaneSensor,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isOver",              new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",            new x_ite_Fields.SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -84138,22 +84141,22 @@ Object .defineProperties (SphereSensor,
    typeName:
    {
       value: "SphereSensor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "PointingDeviceSensor",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -84168,7 +84171,7 @@ Object .defineProperties (SphereSensor,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isOver",             new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",           new x_ite_Fields.SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -84407,22 +84410,22 @@ Object .defineProperties (ClipPlane,
    typeName:
    {
       value: "ClipPlane",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -84431,7 +84434,7 @@ Object .defineProperties (ClipPlane,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "enabled",  new x_ite_Fields.SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "plane",    new x_ite_Fields.SFVec4f (0, 1, 0, 0)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -84522,12 +84525,12 @@ Object .defineProperties (X3DColorNode,
    typeName:
    {
       value: "X3DColorNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -84673,22 +84676,22 @@ Object .defineProperties (Color,
    typeName:
    {
       value: "Color",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "color",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -84696,7 +84699,7 @@ Object .defineProperties (Color,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",    new x_ite_Fields.MFColor ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -84845,22 +84848,22 @@ Object .defineProperties (ColorRGBA,
    typeName:
    {
       value: "ColorRGBA",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "color",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -84868,7 +84871,7 @@ Object .defineProperties (ColorRGBA,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "color",    new x_ite_Fields.MFColorRGBA ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -85062,12 +85065,12 @@ Object .defineProperties (X3DCoordinateNode,
    typeName:
    {
       value: "X3DCoordinateNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -85149,22 +85152,22 @@ Object .defineProperties (Coordinate,
    typeName:
    {
       value: "Coordinate",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "coord",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -85172,7 +85175,7 @@ Object .defineProperties (Coordinate,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "point",    new x_ite_Fields.MFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -85643,12 +85646,12 @@ Object .defineProperties (X3DLineGeometryNode,
    typeName:
    {
       value: "X3DLineGeometryNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -85926,22 +85929,22 @@ Object .defineProperties (IndexedLineSet,
    typeName:
    {
       value: "IndexedLineSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -85958,7 +85961,7 @@ Object .defineProperties (IndexedLineSet,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",         new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",          new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -86095,22 +86098,22 @@ Object .defineProperties (IndexedTriangleFanSet,
    typeName:
    {
       value: "IndexedTriangleFanSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -86129,7 +86132,7 @@ Object .defineProperties (IndexedTriangleFanSet,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -86223,22 +86226,22 @@ Object .defineProperties (IndexedTriangleSet,
    typeName:
    {
       value: "IndexedTriangleSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -86257,7 +86260,7 @@ Object .defineProperties (IndexedTriangleSet,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -86402,22 +86405,22 @@ Object .defineProperties (IndexedTriangleStripSet,
    typeName:
    {
       value: "IndexedTriangleStripSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -86436,7 +86439,7 @@ Object .defineProperties (IndexedTriangleStripSet,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -86651,22 +86654,22 @@ Object .defineProperties (LineSet,
    typeName:
    {
       value: "LineSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -86679,7 +86682,7 @@ Object .defineProperties (LineSet,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normal",      new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "coord",       new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -86756,12 +86759,12 @@ Object .defineProperties (X3DNormalNode,
    typeName:
    {
       value: "X3DNormalNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -86937,22 +86940,22 @@ Object .defineProperties (Normal,
    typeName:
    {
       value: "Normal",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "normal",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -86960,7 +86963,7 @@ Object .defineProperties (Normal,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "vector",   new x_ite_Fields.MFVec3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -87140,12 +87143,12 @@ Object .defineProperties (X3DPointGeometryNode,
    typeName:
    {
       value: "X3DPointGeometryNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -87342,22 +87345,22 @@ Object .defineProperties (PointSet,
    typeName:
    {
       value: "PointSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -87369,7 +87372,7 @@ Object .defineProperties (PointSet,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normal",   new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "coord",    new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -87489,22 +87492,22 @@ Object .defineProperties (TriangleFanSet,
    typeName:
    {
       value: "TriangleFanSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -87522,7 +87525,7 @@ Object .defineProperties (TriangleFanSet,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -87613,22 +87616,22 @@ Object .defineProperties (TriangleSet,
    typeName:
    {
       value: "TriangleSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -87645,7 +87648,7 @@ Object .defineProperties (TriangleSet,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -87769,22 +87772,22 @@ Object .defineProperties (TriangleStripSet,
    typeName:
    {
       value: "TriangleStripSet",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "geometry",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -87802,7 +87805,7 @@ Object .defineProperties (TriangleStripSet,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "normal",          new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "coord",           new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -88012,12 +88015,12 @@ Object .defineProperties (X3DShaderNode,
    typeName:
    {
       value: "X3DShaderNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -88027,7 +88030,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace.set ("x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(299);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89356,12 +89359,12 @@ Object .defineProperties (X3DProgrammableShaderObject,
    typeName:
    {
       value: "X3DProgrammableShaderObject",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -89568,22 +89571,22 @@ Object .defineProperties (ComposedShader,
    typeName:
    {
       value: "ComposedShader",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "shaders",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -89595,7 +89598,7 @@ Object .defineProperties (ComposedShader,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "language",   new x_ite_Fields.SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "parts",      new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -89685,12 +89688,12 @@ Object .defineProperties (X3DVertexAttributeNode,
    typeName:
    {
       value: "X3DVertexAttributeNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -89822,22 +89825,22 @@ Object .defineProperties (FloatVertexAttribute,
    typeName:
    {
       value: "FloatVertexAttribute",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "attrib",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -89847,7 +89850,7 @@ Object .defineProperties (FloatVertexAttribute,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "numComponents", new x_ite_Fields.SFInt32 (4)),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "value",         new x_ite_Fields.MFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -89971,22 +89974,22 @@ Object .defineProperties (Matrix3VertexAttribute,
    typeName:
    {
       value: "Matrix3VertexAttribute",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "attrib",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -89995,7 +89998,7 @@ Object .defineProperties (Matrix3VertexAttribute,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "name",     new x_ite_Fields.SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "value",    new x_ite_Fields.MFMatrix3f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -90118,22 +90121,22 @@ Object .defineProperties (Matrix4VertexAttribute,
    typeName:
    {
       value: "Matrix4VertexAttribute",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "attrib",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -90142,7 +90145,7 @@ Object .defineProperties (Matrix4VertexAttribute,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "name",     new x_ite_Fields.SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "value",    new x_ite_Fields.MFMatrix4f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -90246,22 +90249,22 @@ Object .defineProperties (PackagedShader,
    typeName:
    {
       value: "PackagedShader",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "shaders",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -90277,7 +90280,7 @@ Object .defineProperties (PackagedShader,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -90357,22 +90360,22 @@ Object .defineProperties (ProgramShader,
    typeName:
    {
       value: "ProgramShader",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "shaders",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -90384,7 +90387,7 @@ Object .defineProperties (ProgramShader,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "language",   new x_ite_Fields.SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "programs",   new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -96756,7 +96759,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace.set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(299);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96963,22 +96966,22 @@ Object .defineProperties (ShaderPart,
    typeName:
    {
       value: "ShaderPart",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "parts",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -96991,7 +96994,7 @@ Object .defineProperties (ShaderPart,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -97095,22 +97098,22 @@ Object .defineProperties (ShaderProgram,
    typeName:
    {
       value: "ShaderProgram",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shaders",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "programs",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -97123,7 +97126,7 @@ Object .defineProperties (ShaderProgram,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefresh",          new x_ite_Fields.SFTime ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields.SFTime (3600)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -97287,22 +97290,22 @@ Object .defineProperties (AcousticProperties,
    typeName:
    {
       value: "AcousticProperties",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "AcousticProperties",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -97315,7 +97318,7 @@ Object .defineProperties (AcousticProperties,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "diffuse",    new x_ite_Fields.SFFloat ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "specular",   new x_ite_Fields.SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -97406,12 +97409,12 @@ Object .defineProperties (X3DAppearanceNode,
    typeName:
    {
       value: "X3DAppearanceNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -97841,22 +97844,22 @@ Object .defineProperties (Appearance,
    typeName:
    {
       value: "Appearance",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "appearance",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -97875,7 +97878,7 @@ Object .defineProperties (Appearance,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "blendMode",          new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "acousticProperties", new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -98034,22 +98037,22 @@ Object .defineProperties (FillProperties,
    typeName:
    {
       value: "FillProperties",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "fillProperties",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -98060,7 +98063,7 @@ Object .defineProperties (FillProperties,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "hatchColor", new x_ite_Fields.SFColor (1, 1, 1)),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "hatchStyle", new x_ite_Fields.SFInt32 (1)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -98221,22 +98224,22 @@ Object .defineProperties (LineProperties,
    typeName:
    {
       value: "LineProperties",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "lineProperties",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -98246,7 +98249,7 @@ Object .defineProperties (LineProperties,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "linetype",             new x_ite_Fields.SFInt32 (1)),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "linewidthScaleFactor", new x_ite_Fields.SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -98576,12 +98579,12 @@ Object .defineProperties (X3DMaterialNode,
    typeName:
    {
       value: "X3DMaterialNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -98796,12 +98799,12 @@ Object .defineProperties (X3DOneSidedMaterialNode,
    typeName:
    {
       value: "X3DOneSidedMaterialNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -99175,22 +99178,22 @@ Object .defineProperties (Material,
    typeName:
    {
       value: "Material",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "material",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -99219,7 +99222,7 @@ Object .defineProperties (Material,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTexture",            new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency",             new x_ite_Fields.SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -99494,22 +99497,22 @@ Object .defineProperties (PhysicalMaterial,
    typeName:
    {
       value: "PhysicalMaterial",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "material",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -99533,7 +99536,7 @@ Object .defineProperties (PhysicalMaterial,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTexture",                   new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency",                    new x_ite_Fields.SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -99678,22 +99681,22 @@ Object .defineProperties (PointProperties,
    typeName:
    {
       value: "PointProperties",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "pointProperties",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -99704,7 +99707,7 @@ Object .defineProperties (PointProperties,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "pointSizeMaxValue",    new x_ite_Fields.SFFloat (1)),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "attenuation",          new x_ite_Fields.MFFloat (1, 0, 0)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -99916,12 +99919,12 @@ Object .defineProperties (X3DShapeNode,
    typeName:
    {
       value: "X3DShapeNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -100103,22 +100106,22 @@ Object .defineProperties (Shape,
    typeName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -100132,7 +100135,7 @@ Object .defineProperties (Shape,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "appearance",  new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "geometry",    new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -100395,22 +100398,22 @@ Object .defineProperties (TwoSidedMaterial,
    typeName:
    {
       value: "TwoSidedMaterial",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "material",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -100430,7 +100433,7 @@ Object .defineProperties (TwoSidedMaterial,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backShininess",        new x_ite_Fields.SFFloat (0.2)),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "backTransparency",     new x_ite_Fields.SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -100549,22 +100552,22 @@ Object .defineProperties (UnlitMaterial,
    typeName:
    {
       value: "UnlitMaterial",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "material",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -100578,7 +100581,7 @@ Object .defineProperties (UnlitMaterial,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "normalTexture",          new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "transparency",           new x_ite_Fields.SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -100763,12 +100766,12 @@ Object .defineProperties (X3DSoundProcessingNode,
    typeName:
    {
       value: "X3DSoundProcessingNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -100848,22 +100851,22 @@ Object .defineProperties (Analyser,
    typeName:
    {
       value: "Analyser",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -100894,7 +100897,7 @@ Object .defineProperties (Analyser,
 
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -101122,12 +101125,12 @@ Object .defineProperties (X3DSoundSourceNode,
    typeName:
    {
       value: "X3DSoundSourceNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -101137,7 +101140,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(299);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101307,22 +101310,22 @@ Object .defineProperties (AudioClip,
    typeName:
    {
       value: "AudioClip",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "source",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -101346,7 +101349,7 @@ Object .defineProperties (AudioClip,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",          new x_ite_Fields.SFTime ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "duration_changed",     new x_ite_Fields.SFTime (-1)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -101423,12 +101426,12 @@ Object .defineProperties (X3DSoundNode,
    typeName:
    {
       value: "X3DSoundNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -101505,12 +101508,12 @@ Object .defineProperties (X3DSoundDestinationNode,
    typeName:
    {
       value: "X3DSoundDestinationNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -101590,22 +101593,22 @@ Object .defineProperties (AudioDestination,
    typeName:
    {
       value: "AudioDestination",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -101625,7 +101628,7 @@ Object .defineProperties (AudioDestination,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -101705,22 +101708,22 @@ Object .defineProperties (BiquadFilter,
    typeName:
    {
       value: "BiquadFilter",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -101750,7 +101753,7 @@ Object .defineProperties (BiquadFilter,
 
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -101845,22 +101848,22 @@ Object .defineProperties (BufferAudioSource,
    typeName:
    {
       value: "BufferAudioSource",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -101898,7 +101901,7 @@ Object .defineProperties (BufferAudioSource,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",             new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",          new x_ite_Fields.SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -101975,12 +101978,12 @@ Object .defineProperties (X3DSoundChannelNode,
    typeName:
    {
       value: "X3DSoundChannelNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -102060,22 +102063,22 @@ Object .defineProperties (ChannelMerger,
    typeName:
    {
       value: "ChannelMerger",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -102092,7 +102095,7 @@ Object .defineProperties (ChannelMerger,
 
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -102172,22 +102175,22 @@ Object .defineProperties (ChannelSelector,
    typeName:
    {
       value: "ChannelSelector",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -102205,7 +102208,7 @@ Object .defineProperties (ChannelSelector,
 
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -102285,22 +102288,22 @@ Object .defineProperties (ChannelSplitter,
    typeName:
    {
       value: "ChannelSplitter",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -102318,7 +102321,7 @@ Object .defineProperties (ChannelSplitter,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "outputs",               new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -102398,22 +102401,22 @@ Object .defineProperties (Convolver,
    typeName:
    {
       value: "Convolver",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -102441,7 +102444,7 @@ Object .defineProperties (Convolver,
 
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -102521,22 +102524,22 @@ Object .defineProperties (Delay,
    typeName:
    {
       value: "Delay",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -102564,7 +102567,7 @@ Object .defineProperties (Delay,
 
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -102644,22 +102647,22 @@ Object .defineProperties (DynamicsCompressor,
    typeName:
    {
       value: "DynamicsCompressor",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -102691,7 +102694,7 @@ Object .defineProperties (DynamicsCompressor,
 
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -102771,22 +102774,22 @@ Object .defineProperties (Gain,
    typeName:
    {
       value: "Gain",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -102812,7 +102815,7 @@ Object .defineProperties (Gain,
 
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -102897,22 +102900,22 @@ Object .defineProperties (ListenerPointSource,
    typeName:
    {
       value: "ListenerPointSource",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -102936,7 +102939,7 @@ Object .defineProperties (ListenerPointSource,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",             new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",          new x_ite_Fields.SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -103019,22 +103022,22 @@ Object .defineProperties (MicrophoneSource,
    typeName:
    {
       value: "MicrophoneSource",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -103054,7 +103057,7 @@ Object .defineProperties (MicrophoneSource,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",      new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",   new x_ite_Fields.SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -103137,22 +103140,22 @@ Object .defineProperties (OscillatorSource,
    typeName:
    {
       value: "OscillatorSource",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -103174,7 +103177,7 @@ Object .defineProperties (OscillatorSource,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",      new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",   new x_ite_Fields.SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -103254,22 +103257,22 @@ Object .defineProperties (PeriodicWave,
    typeName:
    {
       value: "PeriodicWave",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "periodicWave",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -103281,7 +103284,7 @@ Object .defineProperties (PeriodicWave,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "optionsImag",   new x_ite_Fields.MFFloat ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "type",          new x_ite_Fields.SFString ("square")),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -103554,22 +103557,22 @@ Object .defineProperties (Sound,
    typeName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -103589,7 +103592,7 @@ Object .defineProperties (Sound,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "source",      new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",    new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -103671,22 +103674,22 @@ Object .defineProperties (SpatialSound,
    typeName:
    {
       value: "SpatialSound",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -103713,7 +103716,7 @@ Object .defineProperties (SpatialSound,
 
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "children",    new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -103793,22 +103796,22 @@ Object .defineProperties (StreamAudioDestination,
    typeName:
    {
       value: "StreamAudioDestination",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -103828,7 +103831,7 @@ Object .defineProperties (StreamAudioDestination,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",              new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -103911,22 +103914,22 @@ Object .defineProperties (StreamAudioSource,
    typeName:
    {
       value: "StreamAudioSource",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -103946,7 +103949,7 @@ Object .defineProperties (StreamAudioSource,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "isActive",         new x_ite_Fields.SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly,  "elapsedTime",      new x_ite_Fields.SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -104026,22 +104029,22 @@ Object .defineProperties (WaveShaper,
    typeName:
    {
       value: "WaveShaper",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Sound",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["4.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -104069,7 +104072,7 @@ Object .defineProperties (WaveShaper,
 
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "children",              new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -104311,8 +104314,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(299);
-/* provided dependency */ var SuperGif = __webpack_require__(787);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(684);
+/* provided dependency */ var SuperGif = __webpack_require__(64);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104553,22 +104556,22 @@ Object .defineProperties (MovieTexture,
    typeName:
    {
       value: "MovieTexture",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texture",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -104596,7 +104599,7 @@ Object .defineProperties (MovieTexture,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatT",              new x_ite_Fields.SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "textureProperties",    new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -104918,22 +104921,22 @@ Object .defineProperties (MultiTexture,
    typeName:
    {
       value: "MultiTexture",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texture",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -104947,7 +104950,7 @@ Object .defineProperties (MultiTexture,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "function",    new x_ite_Fields.MFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "texture",     new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -105024,12 +105027,12 @@ Object .defineProperties (X3DTextureCoordinateNode,
    typeName:
    {
       value: "X3DTextureCoordinateNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -105212,22 +105215,22 @@ Object .defineProperties (MultiTextureCoordinate,
    typeName:
    {
       value: "MultiTextureCoordinate",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texCoord",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -105235,7 +105238,7 @@ Object .defineProperties (MultiTextureCoordinate,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata", new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "texCoord", new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -105312,12 +105315,12 @@ Object .defineProperties (X3DTextureTransformNode,
    typeName:
    {
       value: "X3DTextureTransformNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -105454,22 +105457,22 @@ Object .defineProperties (MultiTextureTransform,
    typeName:
    {
       value: "MultiTextureTransform",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "textureTransform",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -105477,7 +105480,7 @@ Object .defineProperties (MultiTextureTransform,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "metadata",         new x_ite_Fields.SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "textureTransform", new x_ite_Fields.MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -105487,7 +105490,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(299);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105741,22 +105744,22 @@ Object .defineProperties (PixelTexture,
    typeName:
    {
       value: "PixelTexture",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texture",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -105768,7 +105771,7 @@ Object .defineProperties (PixelTexture,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "repeatT",           new x_ite_Fields.SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "textureProperties", new x_ite_Fields.SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -105870,12 +105873,12 @@ Object .defineProperties (X3DSingleTextureCoordinateNode,
    typeName:
    {
       value: "X3DSingleTextureCoordinateNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -106036,22 +106039,22 @@ Object .defineProperties (TextureCoordinate,
    typeName:
    {
       value: "TextureCoordinate",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texCoord",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -106060,7 +106063,7 @@ Object .defineProperties (TextureCoordinate,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mapping",  new x_ite_Fields.SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "point",    new x_ite_Fields.MFVec2f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -106204,22 +106207,22 @@ Object .defineProperties (TextureCoordinateGenerator,
    typeName:
    {
       value: "TextureCoordinateGenerator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texCoord",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -106229,7 +106232,7 @@ Object .defineProperties (TextureCoordinateGenerator,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "mode",      new x_ite_Fields.SFString ("SPHERE")),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "parameter", new x_ite_Fields.MFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -106428,22 +106431,22 @@ Object .defineProperties (TextureProperties,
    typeName:
    {
       value: "TextureProperties",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "textureProperties",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -106461,7 +106464,7 @@ Object .defineProperties (TextureProperties,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "textureCompression",  new x_ite_Fields.SFString ("FASTEST")),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput,    "texturePriority",     new x_ite_Fields.SFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -106561,12 +106564,12 @@ Object .defineProperties (X3DSingleTextureTransformNode,
    typeName:
    {
       value: "X3DSingleTextureTransformNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -106707,22 +106710,22 @@ Object .defineProperties (TextureTransform,
    typeName:
    {
       value: "TextureTransform",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "textureTransform",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -106734,7 +106737,7 @@ Object .defineProperties (TextureTransform,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "scale",       new x_ite_Fields.SFVec2f (1, 1)),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "center",      new x_ite_Fields.SFVec2f ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -106991,7 +106994,7 @@ Object .defineProperties (ConcreteNodesArray,
    typeName:
    {
       value: "ConcreteNodesArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -107825,7 +107828,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(299);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108108,7 +108111,7 @@ Object .defineProperties (BrowserTimings,
    typeName:
    {
       value: "BrowserTimings",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -108256,7 +108259,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace.set ("x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(299);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108599,7 +108602,7 @@ Object .defineProperties (BrowserOptions,
    typeName:
    {
       value: "BrowserOptions",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -108626,7 +108629,7 @@ Object .defineProperties (BrowserOptions,
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "StraightenHorizon",      new x_ite_Fields.SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants.inputOutput, "Timings",                new x_ite_Fields.SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -108704,7 +108707,7 @@ Object .defineProperties (BrowserProperties,
    typeName:
    {
       value: "BrowserProperties",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -108718,7 +108721,7 @@ Object .defineProperties (BrowserProperties,
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "CLASSIC_VRML_ENCODING", new x_ite_Fields.SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants.initializeOnly, "BINARY_ENCODING",       new x_ite_Fields.SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -108811,7 +108814,7 @@ Object .defineProperties (RenderingProperties,
    typeName:
    {
       value: "RenderingProperties",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -108828,7 +108831,7 @@ Object .defineProperties (RenderingProperties,
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "MaxSamples",             new x_ite_Fields.SFInt32 ()),
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "Multisampling",          new x_ite_Fields.SFInt32 (4)),
       ]),
-      enumerate: true,
+      enumerable: true,
    }
 });
 
@@ -108838,7 +108841,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(299);
+/* provided dependency */ var Notification_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108951,7 +108954,7 @@ Object .defineProperties (Notification,
    typeName:
    {
       value: "Notification",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -108961,8 +108964,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(808);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(299);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(395);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109706,7 +109709,7 @@ Object .defineProperties (ContextMenu,
    typeName:
    {
       value: "ContextMenu",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -109849,7 +109852,7 @@ Object .defineProperties (ComponentInfo,
    typeName:
    {
       value: "ComponentInfo",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -109931,7 +109934,7 @@ Object .defineProperties (ComponentInfoArray,
    typeName:
    {
       value: "ComponentInfoArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -110095,7 +110098,7 @@ Object .defineProperties (UnitInfo,
    typeName:
    {
       value: "UnitInfo",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -110186,7 +110189,7 @@ Object .defineProperties (UnitInfoArray,
    typeName:
    {
       value: "UnitInfoArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -110393,7 +110396,7 @@ Object .defineProperties (X3DExportedNode,
    typeName:
    {
       value: "X3DExportedNode",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -110471,7 +110474,7 @@ Object .defineProperties (ExportedNodesArray,
    typeName:
    {
       value: "ExportedNodesArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -111585,7 +111588,7 @@ Object .defineProperties (X3DScene,
    typeName:
    {
       value: "X3DScene",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -111732,7 +111735,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(299);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112684,7 +112687,7 @@ Object .defineProperties (BoxOptions,
    typeName:
    {
       value: "BoxOptions",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -112762,7 +112765,7 @@ Object .defineProperties (ConeOptions,
    typeName:
    {
       value: "ConeOptions",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -112840,7 +112843,7 @@ Object .defineProperties (CylinderOptions,
    typeName:
    {
       value: "CylinderOptions",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -113132,7 +113135,7 @@ Object .defineProperties (QuadSphereOptions,
    typeName:
    {
       value: "QuadSphereOptions",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -113770,8 +113773,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(300);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(299);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(153);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114631,14 +114634,14 @@ Object .defineProperties (ExamineViewer,
    typeName:
    {
       value: "ExamineViewer",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -114648,8 +114651,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(300);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(299);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(153);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115501,14 +115504,14 @@ Object .defineProperties (WalkViewer,
    typeName:
    {
       value: "WalkViewer",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -115606,14 +115609,14 @@ Object .defineProperties (FlyViewer,
    typeName:
    {
       value: "FlyViewer",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -115623,8 +115626,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(300);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(299);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(153);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115857,14 +115860,14 @@ Object .defineProperties (PlaneViewer,
    typeName:
    {
       value: "PlaneViewer",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -115942,14 +115945,14 @@ Object .defineProperties (NoneViewer,
    typeName:
    {
       value: "NoneViewer",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -115959,8 +115962,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(300);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(299);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(153);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116472,14 +116475,14 @@ Object .defineProperties (LookAtViewer,
    typeName:
    {
       value: "LookAtViewer",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
          new Base_X3DFieldDefinition (Base_X3DConstants.outputOnly, "isActive", new x_ite_Fields.SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -117103,8 +117106,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(300);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(299);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(153);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117390,7 +117393,7 @@ Object .defineProperties (PointingDevice,
    typeName:
    {
       value: "PointingDevice",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -118147,8 +118150,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(299);
-/* provided dependency */ var ResizeSensor = __webpack_require__(561);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(684);
+/* provided dependency */ var ResizeSensor = __webpack_require__(52);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120075,7 +120078,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(299);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(684);
 /*******************************************************************************
  * MIT License
  *
@@ -120630,7 +120633,7 @@ Object .defineProperties (ProfileInfo,
    typeName:
    {
       value: "ProfileInfo",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -120716,7 +120719,7 @@ Object .defineProperties (ProfileInfoArray,
    typeName:
    {
       value: "ProfileInfoArray",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -121326,7 +121329,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(299);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122246,7 +122249,7 @@ Object .defineProperties (X3DBrowser,
    typeName:
    {
       value: "X3DBrowser",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -122256,7 +122259,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace.set ("x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fallback.js
-/* provided dependency */ var Fallback_$ = __webpack_require__(299);
+/* provided dependency */ var Fallback_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122435,8 +122438,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(299);
-/* provided dependency */ var pako = __webpack_require__(851);
+/* provided dependency */ var jquery_$ = __webpack_require__(684);
+/* provided dependency */ var pako = __webpack_require__(307);
 jquery_$.decodeText = function (input)
 {
    if (typeof input === "string")
@@ -122481,14 +122484,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(818);
+/* provided dependency */ var libtess_libtess = __webpack_require__(498);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace.set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(299);
+/* provided dependency */ var X3D_$ = __webpack_require__(684);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

@@ -108,22 +108,22 @@ Object .defineProperties (ColorDamper,
    typeName:
    {
       value: "ColorDamper",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Followers",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.2", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -139,7 +139,7 @@ Object .defineProperties (ColorDamper,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFColor ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

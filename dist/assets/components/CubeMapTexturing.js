@@ -226,12 +226,12 @@ Object .defineProperties (X3DEnvironmentTextureNode,
    typeName:
    {
       value: "X3DEnvironmentTextureNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CubeMapTexturing",
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -463,22 +463,22 @@ Object .defineProperties (ComposedCubeMapTexture,
    typeName:
    {
       value: "ComposedCubeMapTexture",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CubeMapTexturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texture",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -493,7 +493,7 @@ Object .defineProperties (ComposedCubeMapTexture,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "topTexture",        new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties", new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -939,22 +939,22 @@ Object .defineProperties (GeneratedCubeMapTexture,
    typeName:
    {
       value: "GeneratedCubeMapTexture",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CubeMapTexturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texture",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -965,7 +965,7 @@ Object .defineProperties (GeneratedCubeMapTexture,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "size",              new (Fields_default()).SFInt32 (128)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties", new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -1231,22 +1231,22 @@ Object .defineProperties (ImageCubeMapTexture,
    typeName:
    {
       value: "ImageCubeMapTexture",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "CubeMapTexturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texture",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -1259,7 +1259,7 @@ Object .defineProperties (ImageCubeMapTexture,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties",    new (Fields_default()).SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

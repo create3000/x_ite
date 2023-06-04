@@ -418,22 +418,22 @@ Object .defineProperties (Appearance,
    typeName:
    {
       value: "Appearance",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Shape",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "appearance",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["2.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -452,7 +452,7 @@ Object .defineProperties (Appearance,
          new X3DFieldDefinition (X3DConstants .inputOutput, "blendMode",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "acousticProperties", new Fields .SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

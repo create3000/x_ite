@@ -182,12 +182,12 @@ Object .defineProperties (X3DCoordinateNode,
    typeName:
    {
       value: "X3DCoordinateNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Rendering",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

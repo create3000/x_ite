@@ -435,14 +435,14 @@ Object .defineProperties (X3DExternProtoDeclaration,
    typeName:
    {
       value: "X3DExternProtoDeclaration",
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

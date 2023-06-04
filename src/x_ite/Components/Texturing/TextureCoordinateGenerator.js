@@ -132,22 +132,22 @@ Object .defineProperties (TextureCoordinateGenerator,
    typeName:
    {
       value: "TextureCoordinateGenerator",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texCoord",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -157,7 +157,7 @@ Object .defineProperties (TextureCoordinateGenerator,
          new X3DFieldDefinition (X3DConstants .inputOutput, "mode",      new Fields .SFString ("SPHERE")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "parameter", new Fields .MFFloat ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

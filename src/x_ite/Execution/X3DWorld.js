@@ -155,7 +155,7 @@ Object .defineProperties (X3DWorld,
    typeName:
    {
       value: "X3DWorld",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

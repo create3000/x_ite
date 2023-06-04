@@ -741,7 +741,7 @@ Object .defineProperties (ContextMenu,
    typeName:
    {
       value: "ContextMenu",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

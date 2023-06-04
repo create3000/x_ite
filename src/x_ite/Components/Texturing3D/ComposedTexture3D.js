@@ -167,22 +167,22 @@ Object .defineProperties (ComposedTexture3D,
    typeName:
    {
       value: "ComposedTexture3D",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "Texturing3D",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "texture",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.1", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -195,7 +195,7 @@ Object .defineProperties (ComposedTexture3D,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "texture",           new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

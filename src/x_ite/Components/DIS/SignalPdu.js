@@ -81,22 +81,22 @@ Object .defineProperties (SignalPdu,
    typeName:
    {
       value: "SignalPdu",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "DIS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -133,7 +133,7 @@ Object .defineProperties (SignalPdu,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isStandAlone",       new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "timestamp",          new Fields .SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

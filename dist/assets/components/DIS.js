@@ -133,22 +133,22 @@ Object .defineProperties (DISEntityManager,
    typeName:
    {
       value: "DISEntityManager",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "DIS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -162,7 +162,7 @@ Object .defineProperties (DISEntityManager,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "addedEntities",   new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "removedEntities", new (Fields_default()).MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -261,22 +261,22 @@ Object .defineProperties (DISEntityTypeMapping,
    typeName:
    {
       value: "DISEntityTypeMapping",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "DIS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "mapping",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -294,7 +294,7 @@ Object .defineProperties (DISEntityTypeMapping,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "specific",             new (Fields_default()).SFInt32 ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "subcategory",          new (Fields_default()).SFInt32 ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -388,22 +388,22 @@ Object .defineProperties (EspduTransform,
    typeName:
    {
       value: "EspduTransform",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "DIS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -500,7 +500,7 @@ Object .defineProperties (EspduTransform,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "timestamp",                                  new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rtpHeaderExpected",                          new (Fields_default()).SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -596,22 +596,22 @@ Object .defineProperties (ReceiverPdu,
    typeName:
    {
       value: "ReceiverPdu",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "DIS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -648,7 +648,7 @@ Object .defineProperties (ReceiverPdu,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isStandAlone",             new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "timestamp",                new (Fields_default()).SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -741,22 +741,22 @@ Object .defineProperties (SignalPdu,
    typeName:
    {
       value: "SignalPdu",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "DIS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -793,7 +793,7 @@ Object .defineProperties (SignalPdu,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isStandAlone",       new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "timestamp",          new (Fields_default()).SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
@@ -886,22 +886,22 @@ Object .defineProperties (TransmitterPdu,
    typeName:
    {
       value: "TransmitterPdu",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "DIS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -954,7 +954,7 @@ Object .defineProperties (TransmitterPdu,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isStandAlone",                       new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "timestamp",                          new (Fields_default()).SFTime ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

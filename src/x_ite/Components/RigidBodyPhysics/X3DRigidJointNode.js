@@ -210,12 +210,12 @@ Object .defineProperties (X3DRigidJointNode,
    typeName:
    {
       value: "X3DRigidJointNode",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "RigidBodyPhysics",
-      enumerate: true,
+      enumerable: true,
    },
 });
 

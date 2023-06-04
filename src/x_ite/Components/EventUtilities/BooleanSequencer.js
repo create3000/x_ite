@@ -82,22 +82,22 @@ Object .defineProperties (BooleanSequencer,
    typeName:
    {
       value: "BooleanSequencer",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "EventUtilities",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -110,7 +110,7 @@ Object .defineProperties (BooleanSequencer,
          new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFBool ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

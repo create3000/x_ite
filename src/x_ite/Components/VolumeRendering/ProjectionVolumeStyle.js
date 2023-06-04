@@ -199,22 +199,22 @@ Object .defineProperties (ProjectionVolumeStyle,
    typeName:
    {
       value: "ProjectionVolumeStyle",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "VolumeRendering",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "renderStyle",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.3", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -224,7 +224,7 @@ Object .defineProperties (ProjectionVolumeStyle,
          new X3DFieldDefinition (X3DConstants .inputOutput, "type",               new Fields .SFString ("MAX")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "intensityThreshold", new Fields .SFFloat (0)),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 

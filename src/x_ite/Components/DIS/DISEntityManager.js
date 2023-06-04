@@ -71,22 +71,22 @@ Object .defineProperties (DISEntityManager,
    typeName:
    {
       value: "DISEntityManager",
-      enumerate: true,
+      enumerable: true,
    },
    componentName:
    {
       value: "DIS",
-      enumerate: true,
+      enumerable: true,
    },
    containerField:
    {
       value: "children",
-      enumerate: true,
+      enumerable: true,
    },
    specificationRange:
    {
       value: Object .freeze (["3.0", "Infinity"]),
-      enumerate: true,
+      enumerable: true,
    },
    fieldDefinitions:
    {
@@ -100,7 +100,7 @@ Object .defineProperties (DISEntityManager,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "addedEntities",   new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "removedEntities", new Fields .MFNode ()),
       ]),
-      enumerate: true,
+      enumerable: true,
    },
 });
 
