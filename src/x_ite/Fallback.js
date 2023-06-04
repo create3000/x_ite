@@ -69,16 +69,17 @@ class Fallback
    {
       console .error (error);
 
-      // X3DCanvas
+      // <X3DCanvas>
       elements .children (".x_ite-private-browser") .hide ();
       elements .children (":not(.x_ite-private-browser)") .show ();
 
-      // x3d-canvas
-      elements .each (function (i, e)
+      // <x3d-canvas>
+      for (const element of elements)
       {
-         if (e .shadowRoot)
-            e .shadowRoot .appendChild (document .createElement ("slot"));
-      });
+         $(element .shadowRoot)
+            .append ($("<slot></slot>"))
+            .children (".x_ite-private-browser") .remove ();
+      };
    }
 }
 

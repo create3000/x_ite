@@ -46,19 +46,27 @@
  ******************************************************************************/
 
 import X3DBrowser from "./Browser/X3DBrowser.js";
+import Fallback   from "./Fallback.js";
 
 class X3DCanvasElement extends HTMLElement
 {
    constructor ()
    {
-      super ();
+      try
+      {
+         super ();
 
-      new X3DBrowser (this)
+         new X3DBrowser (this)
+      }
+      catch (error)
+      {
+         Fallback .show ($(this), error);
+      }
    }
 
    connectedCallback ()
    {
-      this .browser .connectedCallback ();
+      this .browser ?.connectedCallback ();
    }
 
    static get observedAttributes ()
@@ -88,22 +96,22 @@ class X3DCanvasElement extends HTMLElement
 
    attributeChangedCallback (name, oldValue, newValue)
    {
-      this .browser .attributeChangedCallback (name, oldValue, newValue);
+      this .browser ?.attributeChangedCallback (name, oldValue, newValue);
    }
 
    captureStream (... args)
    {
-      return this .browser .getCanvas () [0] .captureStream (... args);
+      return this .browser ?.getCanvas () [0] .captureStream (... args);
    }
 
    toBlob (... args)
    {
-      return this .browser .getCanvas () [0] .toBlob (... args);
+      return this .browser ?.getCanvas () [0] .toBlob (... args);
    }
 
    toDataURL (... args)
    {
-      return this .browser .getCanvas () [0] .toDataURL (... args);
+      return this .browser ?.getCanvas () [0] .toDataURL (... args);
    }
 }
 

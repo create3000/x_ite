@@ -125,11 +125,14 @@ function X3D (callback, fallback)
 
             // End Legacy
 
-            callbacks .resolve ();
+            if ([... $("x3d-canvas")] .some (canvas => !canvas .browser))
+               fallbacks .resolve (new Error ("Couldn't create browser."));
+            else
+               callbacks .resolve ();
          }
          catch (error)
          {
-            Fallback .show ($("x3d-canvas, X3DCanvas"), error);
+            Fallback .show ($("X3DCanvas"), error);
             fallbacks .resolve (error);
          }
       });
