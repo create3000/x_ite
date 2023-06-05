@@ -48,8 +48,9 @@
 import X3DChildObject from "./X3DChildObject.js";
 
 const
-   _array = Symbol (),
-   _index = Symbol ();
+   _array     = Symbol (),
+   _index     = Symbol (),
+   _valueType = Symbol ();
 
 const handler =
 {
@@ -108,22 +109,18 @@ const handler =
    },
 };
 
-function X3DInfoArray (values, ValueType)
+function X3DInfoArray (values, valueType)
 {
    const proxy = new Proxy (this, handler);
 
    X3DChildObject .call (this);
 
-   this [_array] = [ ];
-   this [_index] = new Map ();
+   this [_array]     = [ ];
+   this [_index]     = new Map ();
+   this [_valueType] = valueType;
 
    for (const [key, value] of values)
-   {
-      if (!(value instanceof ValueType))
-         throw new TypeError (`Wrong type in construction of ${this .getTypeName ()}.`);
-
       this .add (key, value);
-   }
 
    return proxy;
 }
@@ -171,7 +168,10 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DChildObject .protot
    add: function (key, value)
    {
       if (this [_index] .has (key))
-         return;
+         throw new Error (`Couldn't add value to ${this .getTypeName ()}, key already exists.`);
+
+      if (!(value instanceof this [_valueType]))
+         throw new Error (`Couldn't add value to ${this .getTypeName ()}, value has wrong type.`);
 
       this [_array] .push (value);
       this [_index] .set (key, value);
@@ -187,6 +187,9 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DChildObject .protot
    update: function (oldKey, newKey, value)
    {
       // TODO: update alias.
+
+      if (!(value instanceof this [_valueType]))
+         throw new Error (`Couldn't update value of ${this .getTypeName ()}, value has wrong type.`);
 
       const oldValue = this [_index] .get (oldKey);
 
