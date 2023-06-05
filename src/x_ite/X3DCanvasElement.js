@@ -46,7 +46,6 @@
  ******************************************************************************/
 
 import X3DBrowser from "./Browser/X3DBrowser.js";
-import Fallback   from "./Fallback.js";
 
 class X3DCanvasElement extends HTMLElement
 {
@@ -60,7 +59,11 @@ class X3DCanvasElement extends HTMLElement
       }
       catch (error)
       {
-         Fallback .show ($(this), error);
+         console .error (error);
+
+         $(this .shadowRoot)
+            .append ($("<slot></slot>"))
+            .children (".x_ite-private-browser") .remove ();
       }
    }
 

@@ -73,7 +73,7 @@ import X3DProtoDeclarationNode     from "./Prototype/X3DProtoDeclarationNode.js"
 import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
-import Fallback                    from "./Fallback.js";
+import Legacy                      from "./Browser/Legacy.js";
 import MicroTime                   from "../standard/Time/MicroTime.js";
 import jQuery                      from "../lib/jquery.js";
 import libtess                     from "../lib/libtess.js";
@@ -112,27 +112,16 @@ function X3D (callback, fallback)
       {
          try
          {
-            // Begin Legacy
+            Legacy .elements ($("X3DCanvas"), X3DBrowser);
 
-            const elements = $("X3DCanvas");
-
-            if (elements .length)
-            {
-               console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
-
-               $.map (elements, element => new X3DBrowser (element));
-            }
-
-            // End Legacy
-
-            if ([... $("x3d-canvas")] .some (canvas => !canvas .browser))
-               fallbacks .resolve (new Error ("Couldn't create browser."));
-            else
+            if ([... $("x3d-canvas")] .every (canvas => canvas .browser))
                callbacks .resolve ();
+            else
+               fallbacks .resolve (new Error ("Couldn't create browser."));
          }
          catch (error)
          {
-            Fallback .show ($("X3DCanvas"), error);
+            Legacy .error ($("X3DCanvas"), error);
             fallbacks .resolve (error);
          }
       });

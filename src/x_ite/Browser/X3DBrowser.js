@@ -50,7 +50,7 @@ import Fields              from "../Fields.js";
 import Components          from "../Components.js";
 import X3DBrowserContext   from "./X3DBrowserContext.js";
 import DOMIntegration      from "./DOMIntegration.js";
-import legacy              from "./Legacy.js";
+import Legacy              from "./Legacy.js";
 import ProfileInfo         from "../Configuration/ProfileInfo.js";
 import ComponentInfo       from "../Configuration/ComponentInfo.js";
 import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
@@ -107,7 +107,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       this [_DOMIntegration] = new DOMIntegration (this);
 
-      legacy .call (this);
+      Legacy .browser (this);
 
       // Process events from context creation. This will setup nodes like
       // geometry option nodes before any node is created.

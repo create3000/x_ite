@@ -45,20 +45,42 @@
  *
  ******************************************************************************/
 
-function legacy ()
+class Legacy
 {
-   const element = this .getElement ();
+   static elements (elements, X3DBrowser)
+   {
+      if (elements .length)
+      {
+         console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
 
-   if (element .prop ("nodeName") .toUpperCase () !== "X3DCANVAS")
-      return;
+         $.map (elements, element => new X3DBrowser (element));
+      }
+   }
 
-   if (element .attr ("src"))
-      this .attributeChangedCallback ("src", undefined, element .attr ("src"));
-   else if (element .attr ("url"))
-      this .attributeChangedCallback ("url", undefined, element .attr ("url"));
+   static browser (browser)
+   {
+      const element = browser .getElement ();
 
-   // Make element focusable.
-   element .attr ("tabindex", element .attr ("tabindex") ?? 0);
+      if (element .prop ("nodeName") .toUpperCase () !== "X3DCANVAS")
+         return;
+
+      if (element .attr ("src"))
+         browser .attributeChangedCallback ("src", undefined, element .attr ("src"));
+      else if (element .attr ("url"))
+         browser .attributeChangedCallback ("url", undefined, element .attr ("url"));
+
+      // Make element focusable.
+      element .attr ("tabindex", element .attr ("tabindex") ?? 0);
+   }
+
+   static error (elements, error)
+   {
+      console .error (error);
+
+      // <X3DCanvas>
+      elements .children (".x_ite-private-browser") .hide ();
+      elements .children (":not(.x_ite-private-browser)") .show ();
+   }
 }
 
-export default legacy;
+export default Legacy;
