@@ -1369,12 +1369,22 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                            {
                               if (reference .isReference (accessType))
                               {
-                                 var field = supportedField .create ();
+                                 var field = baseNode .getUserDefinedFields () .get (fieldId);
 
-                                 baseNode .addUserDefinedField (accessType, fieldId, field);
+                                 if (!field)
+                                 {
+                                    var field = supportedField .create ();
 
-                                 field .addReference (reference);
-                                 return true;
+                                    baseNode .addUserDefinedField (accessType, fieldId, field);
+                                 }
+
+                                 if (accessType === field .getAccessType () && reference .getType () === field .getType ())
+                                 {
+                                    field .addReference (reference);
+                                    return true;
+                                 }
+
+                                 throw new Error ("Couldn't add field '" + fieldId + "', field already exists with different access type or data type.");
                               }
 
                               throw new Error ("Field '" + fieldId + "' and '" + reference .getName () + "' in PROTO '" + this .getPrototype () .getName () + "' are incompatible as an IS mapping.");
@@ -1400,6 +1410,19 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (field)
       {
+         var existingField = baseNode .getUserDefinedFields () .get (field .getName ());
+
+         if (existingField)
+         {
+            if (existingField .getAccessType () === field .getAccessType () && existingField .getType () === field .getType ())
+            {
+               existingField .assign (field);
+               return true;
+            }
+
+            throw new Error ("Couldn't set value for field '" + field .getName () + "', field already exists with different access type or data type.");
+         }
+
          baseNode .addUserDefinedField (field .getAccessType (), field .getName (), field);
          return true;
       }
