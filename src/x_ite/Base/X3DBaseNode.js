@@ -409,6 +409,9 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    addUserDefinedField: function (accessType, name, field)
    {
+      if (!this .canUserDefinedFields ())
+         throw new Error ("Couldn't add user-defined field, node does not support this.");
+
       if (this [_userDefinedFields] .has (name))
          this .removeUserDefinedField (name);
 
@@ -416,6 +419,9 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       field .addParent (this);
       field .setName (name);
       field .setAccessType (accessType);
+
+      this [_fieldDefinitions] .remove (name);
+      this [_fields]           .remove (name);
 
       this [_fieldDefinitions]  .add (name, new X3DFieldDefinition (accessType, name, field));
       this [_fields]            .add (name, field);
@@ -487,7 +493,12 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    isDefaultValue: function (field)
    {
-      const fieldDefinition = this .getFieldDefinitions () .get (field .getName ());
+      if (this [_fields] .get (field .getName ()) === field)
+         var fieldDefinition = this [_fieldDefinitions] .get (field .getName ());
+      else if (this .constructor .fieldDefinitions)
+         var fieldDefinition = this .constructor .fieldDefinitions .get (field .getName ());
+      else
+         var fieldDefinition = null;
 
       if (fieldDefinition)
          return fieldDefinition .value .equals (field);

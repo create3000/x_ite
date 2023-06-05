@@ -325,12 +325,9 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
    setError: function (error)
    {
       if (this .URL .protocol === "data:")
-         console .warn (`Couldn't load data URL: ${error .message}`);
+         console .error (`Couldn't load data URL.`, error);
       else
-         console .warn (`Couldn't load URL '${decodeURI (this .URL .href)}': ${error .message}`);
-
-      if (DEVELOPMENT)
-         console .error (error);
+         console .error (`Couldn't load URL '${decodeURI (this .URL .href)}'.`, error);
    },
 });
 

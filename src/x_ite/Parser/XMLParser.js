@@ -599,7 +599,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
       catch (error)
       {
-         //console .error (error);
+         console .error (error);
       }
    },
    protoBodyElement: function (xmlElement)
