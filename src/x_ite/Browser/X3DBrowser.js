@@ -245,6 +245,18 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          return loadComponents (this, [... argument], new Set ());
       };
    })(),
+   addConcreteNode: function (typeName, ConcreteNode)
+   {
+      ConcreteNodes .add (String (typeName), ConcreteNode);
+   },
+   updateConcreteNode: function (typeName, ConcreteNode)
+   {
+      ConcreteNodes .update (String (typeName), String (typeName), ConcreteNode);
+   },
+   removeConcreteNode: function (typeName)
+   {
+      ConcreteNodes .remove (String (typeName));
+   },
    getConcreteNode: function (typeName)
    {
       return ConcreteNodes .get (String (typeName));
@@ -252,6 +264,18 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    getConcreteNodes: function ()
    {
       return ConcreteNodes;
+   },
+   addAbstractNode: function (typeName, AbstractNode)
+   {
+      AbstractNodes .add (String (typeName), AbstractNode);
+   },
+   updateAbstractNode: function (typeName, AbstractNode)
+   {
+      AbstractNodes .update (String (typeName), String (typeName), AbstractNode);
+   },
+   removeAbstractNode: function (typeName)
+   {
+      AbstractNodes .remove (String (typeName));
    },
    getAbstractNode: function (typeName)
    {
