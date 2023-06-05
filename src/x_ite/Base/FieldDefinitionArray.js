@@ -48,9 +48,9 @@
 import X3DInfoArray       from "./X3DInfoArray.js";
 import X3DFieldDefinition from "./X3DFieldDefinition.js"
 
-function FieldDefinitionArray (values)
+function FieldDefinitionArray (values = [ ])
 {
-   return X3DInfoArray .call (this, values, X3DFieldDefinition);
+   return X3DInfoArray .call (this, Array .prototype .map .call (values, value => [value .name, value]), X3DFieldDefinition);
 }
 
 FieldDefinitionArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

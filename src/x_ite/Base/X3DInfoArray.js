@@ -117,15 +117,12 @@ function X3DInfoArray (values, ValueType)
    this [_array] = [ ];
    this [_index] = new Map ();
 
-   if (values)
+   for (const [key, value] of values)
    {
-      for (const value of values)
-      {
-         if (!(value instanceof ValueType))
-            throw new TypeError (`Wrong type in construction of ${this .getTypeName ()}.`);
+      if (!(value instanceof ValueType))
+         throw new TypeError (`Wrong type in construction of ${this .getTypeName ()}.`);
 
-         this .add (value .name, value);
-      }
+      this .add (key, value);
    }
 
    return proxy;

@@ -48,9 +48,9 @@
 import X3DInfoArray from "../Base/X3DInfoArray.js";
 import X3DRoute     from "./X3DRoute.js";
 
-function RouteArray (values)
+function RouteArray (values = [ ])
 {
-   return X3DInfoArray .call (this, values, X3DRoute);
+   return X3DInfoArray .call (this, Array .prototype .map .call (values, value => [value .getId (), value]), X3DRoute);
 }
 
 RouteArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

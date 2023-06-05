@@ -51,9 +51,9 @@ import HTMLSupport  from "../Parser/HTMLSupport.js";
 
 const _NODE_TYPE = Symbol .for ("X_ITE.NODE_TYPE");
 
-function ConcreteNodesArray (values)
+function ConcreteNodesArray (values = [ ])
 {
-   return X3DInfoArray .call (this, values, Function);
+   return X3DInfoArray .call (this, Array .prototype .map .call (values, value => [value .typeName, value]), Function);
 }
 
 ConcreteNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

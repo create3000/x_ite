@@ -48,9 +48,9 @@
 import X3DInfoArray        from "../Base/X3DInfoArray.js";
 import X3DProtoDeclaration from "./X3DProtoDeclaration.js"
 
-function ProtoDeclarationArray (values)
+function ProtoDeclarationArray (values = [ ])
 {
-   return X3DInfoArray .call (this, values, X3DProtoDeclaration);
+   return X3DInfoArray .call (this, Array .prototype .map .call (values, value => [value .name, value]), X3DProtoDeclaration);
 }
 
 ProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

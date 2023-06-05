@@ -48,22 +48,9 @@
 import X3DInfoArray from "../Base/X3DInfoArray.js";
 import SFNode       from "../Fields/SFNode.js";
 
-function NamedNodesArray (values)
+function NamedNodesArray (values = [ ])
 {
-   const proxy = X3DInfoArray .call (this);
-
-   if (values)
-   {
-      for (const value of values)
-      {
-         if (!(value instanceof SFNode))
-            throw new TypeError (`Wrong type in construction of ${this .getTypeName ()}.`);
-
-         this .add (value .getName (), value);
-      }
-   }
-
-   return proxy;
+   return X3DInfoArray .call (this, Array .prototype .map .call (values, value => [value .getNodeName (), value]), SFNode);
 }
 
 NamedNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

@@ -81,6 +81,10 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       return this [_executionContext];
    },
+   getId: function ()
+   {
+      return X3DRoute .getId (this [_sourceField], this [_destinationField]);
+   },
    getSourceNode: function ()
    {
       ///  SAI

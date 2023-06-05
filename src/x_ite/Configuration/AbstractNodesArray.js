@@ -50,9 +50,9 @@ import X3DConstants from "../Base/X3DConstants.js";
 
 const _NODE_TYPE = Symbol .for ("X_ITE.NODE_TYPE");
 
-function AbstractNodesArray (values)
+function AbstractNodesArray (values = [ ])
 {
-   return X3DInfoArray .call (this, values, Function);
+   return X3DInfoArray .call (this, Array .prototype .map .call (values, value => [value .typeName, value]), Function);
 }
 
 AbstractNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
