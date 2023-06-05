@@ -173,6 +173,9 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DChildObject .protot
    },
    add: function (key, value)
    {
+      if (this [_index] .has (key))
+         return;
+
       this [_array] .push (value);
       this [_index] .set (key, value);
 
