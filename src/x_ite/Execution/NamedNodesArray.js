@@ -50,7 +50,7 @@ import SFNode       from "../Fields/SFNode.js";
 
 function NamedNodesArray (values = [ ])
 {
-   return X3DInfoArray .call (this, Array .prototype .map .call (values, value => [value .getNodeName (), value]), SFNode);
+   return X3DInfoArray .call (this, Array .from (values, value => [value .getNodeName (), value]), SFNode);
 }
 
 NamedNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

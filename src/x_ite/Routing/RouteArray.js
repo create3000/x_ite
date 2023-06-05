@@ -50,7 +50,7 @@ import X3DRoute     from "./X3DRoute.js";
 
 function RouteArray (values = [ ])
 {
-   return X3DInfoArray .call (this, Array .prototype .map .call (values, value => [value .getId (), value]), X3DRoute);
+   return X3DInfoArray .call (this, Array .from (values, value => [value .getId (), value]), X3DRoute);
 }
 
 RouteArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

@@ -50,7 +50,7 @@ import X3DExportedNode from "./X3DExportedNode.js"
 
 function ExportedNodesArray (values = [ ])
 {
-   return X3DInfoArray .call (this, Array .prototype .map .call (values, value => [value .getExportedName (), value]), X3DExportedNode);
+   return X3DInfoArray .call (this, Array .from (values, value => [value .getExportedName (), value]), X3DExportedNode);
 }
 
 ExportedNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

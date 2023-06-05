@@ -50,7 +50,7 @@ import ComponentInfo from "./ComponentInfo.js";
 
 function ComponentInfoArray (values = [ ])
 {
-   return X3DInfoArray .call (this, Array .prototype .map .call (values, value => [value .name, value]), ComponentInfo);
+   return X3DInfoArray .call (this, Array .from (values, value => [value .name, value]), ComponentInfo);
 }
 
 ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

@@ -50,7 +50,7 @@ import UnitInfo     from "./UnitInfo.js"
 
 function UnitInfoArray (values = [ ])
 {
-   return X3DInfoArray .call (this, Array .prototype .map .call (values, value => [value .category, value]), UnitInfo);
+   return X3DInfoArray .call (this, Array .from (values, value => [value .category, value]), UnitInfo);
 }
 
 UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
