@@ -710,7 +710,7 @@ X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .p
       }
       else
       {
-         const result = Array .prototype .map .call (target [_proxy], value => value .copy ())
+         const result = Array .from (target [_proxy], value => value .copy ())
             .sort (compareFn ?? ((a, b) =>
          {
             for (let c = 0; c < components; ++ c)
