@@ -51,9 +51,9 @@ import URLs                from "../Browser/Networking/URLs.js";
 
 const SupportedProfiles = new ProfileInfoArray ();
 
-SupportedProfiles .addProfile ({
+SupportedProfiles .add ("CADInterchange",
+{
    title: "Computer-Aided Design (CAD) interchange",
-   name: "CADInterchange",
    providerUrl: URLs .getProviderUrl (),
    components: [
       SupportedComponents .get ("CADGeometry"),
@@ -69,18 +69,18 @@ SupportedProfiles .addProfile ({
    ],
 });
 
-SupportedProfiles .addProfile ({
+SupportedProfiles .add ("Core",
+{
    title: "Core",
-   name: "Core",
    providerUrl: URLs .getProviderUrl (),
    components: [
       SupportedComponents .get ("Core"),
    ],
 });
 
-SupportedProfiles .addProfile ({
+SupportedProfiles .add ("Full",
+{
    title: "Full",
-   name: "Full",
    providerUrl: URLs .getProviderUrl (),
    components: [
       //SupportedComponents .get ("Annotation"),
@@ -123,9 +123,9 @@ SupportedProfiles .addProfile ({
    ],
 });
 
-SupportedProfiles .addProfile ({
+SupportedProfiles .add ("Immersive",
+{
    title: "Immersive",
-   name: "Immersive",
    providerUrl: URLs .getProviderUrl (),
    components: [
       SupportedComponents .get ("Core"),
@@ -151,9 +151,9 @@ SupportedProfiles .addProfile ({
    ],
 });
 
-SupportedProfiles .addProfile ({
+SupportedProfiles .add ("Interactive",
+{
    title: "Interactive",
-   name: "Interactive",
    providerUrl: URLs .getProviderUrl (),
    components: [
       SupportedComponents .get ("Core"),
@@ -175,9 +175,9 @@ SupportedProfiles .addProfile ({
    ],
 });
 
-SupportedProfiles .addProfile ({
+SupportedProfiles .add ("Interchange",
+{
    title: "Interchange",
-   name: "Interchange",
    providerUrl: URLs .getProviderUrl (),
    components: [
       SupportedComponents .get ("Core"),
@@ -195,9 +195,9 @@ SupportedProfiles .addProfile ({
    ],
 });
 
-SupportedProfiles .addProfile ({
+SupportedProfiles .add ("MedicalInterchange",
+{
    title: "Medical interchange",
-   name: "MedicalInterchange",
    providerUrl: URLs .getProviderUrl (),
    components: [
       SupportedComponents .get ("Core"),
@@ -220,9 +220,9 @@ SupportedProfiles .addProfile ({
    ],
 });
 
-SupportedProfiles .addProfile ({
+SupportedProfiles .add ("MPEG-4",
+{
    title: "MPEG-4 interactive",
-   name: "MPEG-4",
    providerUrl: URLs .getProviderUrl (),
    components: [
       SupportedComponents .get ("Core"),

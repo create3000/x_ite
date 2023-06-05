@@ -48,7 +48,7 @@
 import X3DObject from "../Base/X3DObject.js";
 import URLs      from "../Browser/Networking/URLs.js";
 
-function ComponentInfo ({ name, level, title, providerUrl, external = false, dependencies = [ ] })
+function ComponentInfo (name, level, title, providerUrl, external = false, dependencies = [ ])
 {
    Object .defineProperties (this,
    {

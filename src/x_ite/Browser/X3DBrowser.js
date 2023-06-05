@@ -190,14 +190,12 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       if (component)
       {
-         return new ComponentInfo ({
-            name: name,
-            level: Algorithm .clamp (level || component .level, 1, component .level),
-            title: component .title,
-            providerUrl: component .providerUrl,
-            external: component .external,
-            dependencies: component .dependencies,
-         });
+         return new ComponentInfo (name,
+            Algorithm .clamp (level || component .level, 1, component .level),
+            component .title,
+            component .providerUrl,
+            component .external,
+            component .dependencies);
       }
 
       throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
@@ -208,18 +206,18 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    loadComponents: (function ()
    {
-      function loadComponents (browser, componentNames, seen)
+      function loadComponents (componentNames, seen)
       {
-         return Promise .all (componentNames .map (name => loadComponent (browser, name, seen)))
+         return Promise .all (componentNames .map (name => loadComponent (name, seen)))
       }
 
-      async function loadComponent (browser, name, seen)
+      async function loadComponent (name, seen)
       {
          if (seen .has (name)) return; seen .add (name);
 
-         const component = browser .getSupportedComponents () .get (name);
+         const component = SupportedComponents .get (name);
 
-         await loadComponents (browser, component .dependencies, seen);
+         await loadComponents (component .dependencies, seen);
 
          if (!component .external)
             return;
@@ -242,7 +240,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             return this .loadComponents ([argument .name]);
 
          // Load array of component names.
-         return loadComponents (this, [... argument], new Set ());
+         return loadComponents ([... argument], new Set ());
       };
    })(),
    addConcreteNode: function (typeName, ConcreteNode)

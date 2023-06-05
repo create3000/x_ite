@@ -56,9 +56,9 @@ function ComponentInfoArray (values)
 ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
    constructor: ComponentInfoArray,
-   addComponent: function (value)
+   add: function (name, { level, title, providerUrl, external = false, dependencies = [ ] })
    {
-      this .add (value .name, new ComponentInfo (value));
+      X3DInfoArray .prototype .add .call (this, name, new ComponentInfo (name, level, title, providerUrl, external, dependencies));
    },
 });
 
