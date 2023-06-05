@@ -56,6 +56,8 @@ import ComponentInfo               from "../../Configuration/ComponentInfo.js";
 import ComponentInfoArray          from "../../Configuration/ComponentInfoArray.js";
 import ProfileInfo                 from "../../Configuration/ProfileInfo.js";
 import ProfileInfoArray            from "../../Configuration/ProfileInfoArray.js";
+import ConcreteNodesArray          from "../../Configuration/ConcreteNodesArray.js";
+import AbstractNodesArray          from "../../Configuration/AbstractNodesArray.js";
 import UnitInfo                    from "../../Configuration/UnitInfo.js";
 import UnitInfoArray               from "../../Configuration/UnitInfoArray.js";
 import NamedNodesArray             from "../../Execution/NamedNodesArray.js";
@@ -241,6 +243,8 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          ComponentInfoArray:          { value: ComponentInfoArray },
          ProfileInfo:                 { value: ProfileInfo },
          ProfileInfoArray:            { value: ProfileInfoArray },
+         ConcreteNodesArray:          { value: ConcreteNodesArray },
+         AbstractNodesArray:          { value: AbstractNodesArray },
          UnitInfo:                    { value: UnitInfo },
          UnitInfoArray:               { value: UnitInfoArray },
          NamedNodesArray:             { value: NamedNodesArray },             // non-standard

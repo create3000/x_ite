@@ -56,6 +56,8 @@ import ComponentInfo               from "./Configuration/ComponentInfo.js";
 import ComponentInfoArray          from "./Configuration/ComponentInfoArray.js";
 import ProfileInfo                 from "./Configuration/ProfileInfo.js";
 import ProfileInfoArray            from "./Configuration/ProfileInfoArray.js";
+import ConcreteNodesArray          from "./Configuration/ConcreteNodesArray.js";
+import AbstractNodesArray          from "./Configuration/AbstractNodesArray.js";
 import UnitInfo                    from "./Configuration/UnitInfo.js";
 import UnitInfoArray               from "./Configuration/UnitInfoArray.js";
 import X3DExecutionContext         from "./Execution/X3DExecutionContext.js";
@@ -181,6 +183,8 @@ Object .assign (X3D,
    ComponentInfoArray:          ComponentInfoArray,
    ProfileInfo:                 ProfileInfo,
    ProfileInfoArray:            ProfileInfoArray,
+   ConcreteNodesArray:          ConcreteNodesArray,
+   AbstractNodesArray:          AbstractNodesArray,
    UnitInfo:                    UnitInfo,
    UnitInfoArray:               UnitInfoArray,
    NamedNodesArray:             NamedNodesArray,             // non-standard

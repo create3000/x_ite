@@ -880,12 +880,7 @@ Object .defineProperties (X3DBrowser .prototype,
    },
    version:
    {
-      get: X3DBrowser .prototype .getVersion,
-      enumerable: true,
-   },
-   providerUrl:
-   {
-      get: X3DBrowser .prototype .getProviderUrl,
+      value: VERSION,
       enumerable: true,
    },
    currentFrameRate:
@@ -920,18 +915,22 @@ Object .defineProperties (X3DBrowser .prototype,
    },
    supportedProfiles:
    {
-      get: function ()
-      {
-         return SupportedProfiles;
-      },
+      value: SupportedProfiles,
       enumerable: true,
    },
    supportedComponents:
    {
-      get: function ()
-      {
-         return SupportedComponents;
-      },
+      value: SupportedComponents,
+      enumerable: true,
+   },
+   concreteNodes:
+   {
+      value: ConcreteNodes,
+      enumerable: true,
+   },
+   abstractNodes:
+   {
+      value: AbstractNodes,
       enumerable: true,
    },
 });
