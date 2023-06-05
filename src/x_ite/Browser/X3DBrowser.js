@@ -208,7 +208,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    {
       function loadComponents (componentNames, seen)
       {
-         return Promise .all (componentNames .map (name => loadComponent (name, seen)))
+         return Promise .all (Array .from (componentNames, name => loadComponent (name, seen)))
       }
 
       async function loadComponent (name, seen)
@@ -228,19 +228,19 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             await import (/* webpackIgnore: true */ component .providerUrl);
       }
 
-      return function (argument)
+      return function (arg)
       {
-         if (argument instanceof ProfileInfo)
-            return this .loadComponents (argument .components);
+         if (arg instanceof ProfileInfo)
+            return this .loadComponents (arg .components);
 
-         if (argument instanceof ComponentInfoArray)
-            return this .loadComponents (Array .from (argument, ({name}) => name));
+         if (arg instanceof ComponentInfoArray)
+            return this .loadComponents (Array .from (arg, ({name}) => name));
 
-         if (argument instanceof ComponentInfo)
-            return this .loadComponents ([argument .name]);
+         if (arg instanceof ComponentInfo)
+            return this .loadComponents ([arg .name]);
 
          // Load array of component names.
-         return loadComponents ([... argument], new Set ());
+         return loadComponents (arg, new Set ());
       };
    })(),
    addConcreteNode: function (typeName, ConcreteNode)
