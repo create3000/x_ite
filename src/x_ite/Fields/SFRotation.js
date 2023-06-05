@@ -144,15 +144,15 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    toStream: function (generator)
    {
-      const rotation = this .getValue ();
+      const { x, y, z, angle } = this .getValue ();
 
-      generator .string += generator .DoubleFormat (rotation .x);
+      generator .string += generator .DoubleFormat (x);
       generator .string += generator .TidySpace ();
-      generator .string += generator .DoubleFormat (rotation .y);
+      generator .string += generator .DoubleFormat (y);
       generator .string += generator .TidySpace ();
-      generator .string += generator .DoubleFormat (rotation .z);
+      generator .string += generator .DoubleFormat (z);
       generator .string += generator .TidySpace ();
-      generator .string += generator .DoubleFormat (generator .ToUnit ("angle", rotation .angle));
+      generator .string += generator .DoubleFormat (generator .ToUnit ("angle", angle));
    },
    toVRMLStream: function (generator)
    {
@@ -174,18 +174,18 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    toJSONStreamValue: function (generator)
    {
-      const rotation = this .getValue ();
+      const { x, y, z, angle } = this .getValue ();
 
-      generator .string += generator .JSONNumber (generator .DoubleFormat (rotation .x));
+      generator .string += generator .JSONNumber (generator .DoubleFormat (x));
       generator .string += ',';
       generator .string += generator .TidySpace ();
-      generator .string += generator .JSONNumber (generator .DoubleFormat (rotation .y));
+      generator .string += generator .JSONNumber (generator .DoubleFormat (y));
       generator .string += ',';
       generator .string += generator .TidySpace ();
-      generator .string += generator .JSONNumber (generator .DoubleFormat (rotation .z));
+      generator .string += generator .JSONNumber (generator .DoubleFormat (z));
       generator .string += ',';
       generator .string += generator .TidySpace ();
-      generator .string += generator .JSONNumber (generator .DoubleFormat (generator .ToUnit ("angle", rotation .angle)));
+      generator .string += generator .JSONNumber (generator .DoubleFormat (generator .ToUnit ("angle", angle)));
    },
 });
 
