@@ -335,23 +335,19 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    addCloneCount: function (count)
    {
-      const
-         target = this [_target],
-         value  = target .getValue ();
+      const target = this [_target];
 
       target [_cloneCount] += count;
 
-      value ?.addCloneCount (count);
+      target .getValue () ?.addCloneCount (count);
    },
    removeCloneCount: function (count)
    {
-      const
-         target = this [_target],
-         value  = target .getValue ();
+      const target = this [_target];
 
       target [_cloneCount] -= count;
 
-      value ?.removeCloneCount (count);
+      target .getValue () ?.removeCloneCount (count);
    },
    getNodeUserData: function (key)
    {
