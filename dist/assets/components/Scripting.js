@@ -108,6 +108,12 @@ var ProfileInfo_default = /*#__PURE__*/__webpack_require__.n(ProfileInfo_namespa
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Configuration/ProfileInfoArray\")"
 const ProfileInfoArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Configuration/ProfileInfoArray");
 var ProfileInfoArray_default = /*#__PURE__*/__webpack_require__.n(ProfileInfoArray_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Configuration/ConcreteNodesArray\")"
+const ConcreteNodesArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Configuration/ConcreteNodesArray");
+var ConcreteNodesArray_default = /*#__PURE__*/__webpack_require__.n(ConcreteNodesArray_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Configuration/AbstractNodesArray\")"
+const AbstractNodesArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Configuration/AbstractNodesArray");
+var AbstractNodesArray_default = /*#__PURE__*/__webpack_require__.n(AbstractNodesArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Configuration/UnitInfo\")"
 const UnitInfo_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/Configuration/UnitInfo");
 var UnitInfo_default = /*#__PURE__*/__webpack_require__.n(UnitInfo_namespaceObject);
@@ -411,6 +417,8 @@ var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespace
 
 
 
+
+
 function Script (executionContext)
 {
    Scripting_X3DScriptNode.call (this, executionContext);
@@ -575,6 +583,8 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
          ComponentInfoArray:          { value: (ComponentInfoArray_default()) },
          ProfileInfo:                 { value: (ProfileInfo_default()) },
          ProfileInfoArray:            { value: (ProfileInfoArray_default()) },
+         ConcreteNodesArray:          { value: (ConcreteNodesArray_default()) },          // non-standard
+         AbstractNodesArray:          { value: (AbstractNodesArray_default()) },          // non-standard
          UnitInfo:                    { value: (UnitInfo_default()) },
          UnitInfoArray:               { value: (UnitInfoArray_default()) },
          NamedNodesArray:             { value: (NamedNodesArray_default()) },             // non-standard
