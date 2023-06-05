@@ -1369,19 +1369,9 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                            {
                               if (reference .isReference (accessType))
                               {
-                                 try
-                                 {
-                                    var field = baseNode .getField (fieldId);
+                                 var field = supportedField .create ();
 
-                                    if (! (accessType === field .getAccessType () && reference .getType () === field .getType ()))
-                                    {
-                                       field = this .createUserDefinedField (baseNode, accessType, fieldId, supportedField);
-                                    }
-                                 }
-                                 catch (error)
-                                 {
-                                    var field = this .createUserDefinedField (baseNode, accessType, fieldId, supportedField);
-                                 }
+                                 baseNode .addUserDefinedField (accessType, fieldId, field);
 
                                  field .addReference (reference);
                                  return true;
@@ -1410,38 +1400,11 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (field)
       {
-         try
-         {
-            if (field .getAccessType () === X3DConstants .inputOutput)
-            {
-               var existingField = baseNode .getField (field .getName ());
-
-               if (existingField .getAccessType () === X3DConstants .inputOutput)
-               {
-                  if (field .getType () === existingField .getType ())
-                  {
-                     existingField .setValue (field);
-                     return true;
-                  }
-               }
-            }
-         }
-         catch (error)
-         { }
-
          baseNode .addUserDefinedField (field .getAccessType (), field .getName (), field);
          return true;
       }
 
       return this .nodeBodyElement (baseNode);
-   },
-   createUserDefinedField: function (baseNode, accessType, fieldId, supportedField)
-   {
-      var field = supportedField .create ();
-
-      baseNode .addUserDefinedField (accessType, fieldId, field);
-
-      return field;
    },
    nodeBody: function (baseNode)
    {
