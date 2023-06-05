@@ -234,7 +234,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             return this .loadComponents (argument .components);
 
          if (argument instanceof ComponentInfoArray)
-            return this .loadComponents ([... argument] .map (({name}) => name));
+            return this .loadComponents (Array .from (argument, ({name}) => name));
 
          if (argument instanceof ComponentInfo)
             return this .loadComponents ([argument .name]);

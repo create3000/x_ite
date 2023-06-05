@@ -59,7 +59,7 @@ const
 function X3DPrototypeInstance (executionContext, protoNode)
 {
    this [_protoNode]   = protoNode;
-   this [_protoFields] = new Map ([... protoNode .getFields ()] .map (f => [f, f .getName ()]));
+   this [_protoFields] = new Map (Array .from (protoNode .getFields (), f => [f, f .getName ()]));
    this [_body]        = null;
 
    X3DNode .call (this, executionContext);
@@ -175,14 +175,14 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       const
          oldProtoFields = this [_protoFields],
-         oldFields      = new Map ([... this .getFields ()] .map (f => [f .getName (), f]));
+         oldFields      = new Map (Array .from (this .getFields (), f => [f .getName (), f]));
 
       for (const field of oldFields .values ())
          this .removeField (field .getName ());
 
       // Add new fields.
 
-      this [_protoFields] = new Map ([... this [_protoNode] .getFields ()] .map (f => [f, f .getName ()]));
+      this [_protoFields] = new Map (Array .from (this [_protoNode] .getFields (), f => [f, f .getName ()]));
 
       for (const fieldDefinition of this .getFieldDefinitions ())
          this .addField (fieldDefinition);
@@ -246,7 +246,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
          // Get field from new proto node.
 
-         this [_protoFields]      = new Map ([... protoNode .getFields ()] .map (f => [f, f .getName ()]));
+         this [_protoFields]      = new Map (Array .from (protoNode .getFields (), f => [f, f .getName ()]));
          this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
       }
 
