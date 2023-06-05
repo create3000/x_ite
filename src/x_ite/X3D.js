@@ -183,8 +183,8 @@ Object .assign (X3D,
    ComponentInfoArray:          ComponentInfoArray,
    ProfileInfo:                 ProfileInfo,
    ProfileInfoArray:            ProfileInfoArray,
-   ConcreteNodesArray:          ConcreteNodesArray,
-   AbstractNodesArray:          AbstractNodesArray,
+   ConcreteNodesArray:          ConcreteNodesArray,          // non-standard
+   AbstractNodesArray:          AbstractNodesArray,          // non-standard
    UnitInfo:                    UnitInfo,
    UnitInfoArray:               UnitInfoArray,
    NamedNodesArray:             NamedNodesArray,             // non-standard

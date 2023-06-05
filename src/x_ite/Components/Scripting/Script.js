@@ -243,8 +243,8 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          ComponentInfoArray:          { value: ComponentInfoArray },
          ProfileInfo:                 { value: ProfileInfo },
          ProfileInfoArray:            { value: ProfileInfoArray },
-         ConcreteNodesArray:          { value: ConcreteNodesArray },
-         AbstractNodesArray:          { value: AbstractNodesArray },
+         ConcreteNodesArray:          { value: ConcreteNodesArray },          // non-standard
+         AbstractNodesArray:          { value: AbstractNodesArray },          // non-standard
          UnitInfo:                    { value: UnitInfo },
          UnitInfoArray:               { value: UnitInfoArray },
          NamedNodesArray:             { value: NamedNodesArray },             // non-standard
