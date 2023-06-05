@@ -51,7 +51,9 @@ import SFMatrix3 from "./SFMatrix3.js";
 import Rotation4 from "../../standard/Math/Numbers/Rotation4.js";
 
 const
+   SFVec3d    = SFVec3 .SFVec3d,
    SFVec3f    = SFVec3 .SFVec3f,
+   SFMatrix3d = SFMatrix3 .SFMatrix3d,
    SFMatrix3f = SFMatrix3 .SFMatrix3f;
 
 function SFRotation (x, y, z, angle)
@@ -64,14 +66,14 @@ function SFRotation (x, y, z, angle)
       }
       case 1:
       {
-         if (arguments [0] instanceof SFMatrix3f)
+         if ((arguments [0] instanceof SFMatrix3d) || (arguments [0] instanceof SFMatrix3f))
             return X3DField .call (this, new Rotation4 () .setMatrix (arguments [0] .getValue ()));
 
          return X3DField .call (this, arguments [0]);
       }
       case 2:
       {
-         if (arguments [1] instanceof SFVec3f)
+         if ((arguments [1] instanceof SFVec3d) || (arguments [1] instanceof SFVec3f))
             return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
 
          return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), +arguments [1]));
@@ -136,7 +138,7 @@ SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    },
    multVec: function (vector)
    {
-      return new SFVec3f (this .getValue () .multVecRot (vector .getValue () .copy ()));
+      return new (vector .constructor) (this .getValue () .multVecRot (vector .getValue () .copy ()));
    },
    slerp: function (rotation, t)
    {
