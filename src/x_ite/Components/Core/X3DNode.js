@@ -672,7 +672,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                   if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
                   {
                      if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
-                        mustOutputValue = !this .isDefaultValue (field);
+                        mustOutputValue = true;
                   }
                }
 
@@ -1060,7 +1060,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
                {
                   if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
-                     mustOutputValue = !this .isDefaultValue (field);
+                     mustOutputValue = true;
                }
             }
 
