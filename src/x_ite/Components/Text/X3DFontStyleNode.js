@@ -86,11 +86,12 @@ function X3DFontStyleNode (executionContext)
 
    this .addType (X3DConstants .X3DFontStyleNode);
 
-   this .addChildObjects ("load",                 new Fields .SFBool (true),
+   this .addChildObjects ("url",                  this ._family,
+                          "load",                 new Fields .SFBool (true),
                           "autoRefresh",          new Fields .SFTime (),
                           "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
-   this .addAlias ("url", this ._family);
+   this ._family .setName ("family");
 
    this .familyStack = [ ];
    this .alignments  = [ ];

@@ -182,10 +182,10 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DChildObject .protot
    add: function (key, value)
    {
       if (this [_index] .has (key))
-         throw new Error (`Couldn't add value to ${this .getTypeName ()}, key already exists.`);
+         throw new Error (`Couldn't add value to ${this .getTypeName ()}, key '${key}' already exists.`);
 
       if (!(value instanceof this [_valueType]))
-         throw new Error (`Couldn't add value to ${this .getTypeName ()}, value has wrong type.`);
+         throw new Error (`Couldn't add value to ${this .getTypeName ()}, value for key '${key}' has wrong type.`);
 
       this [_array] .push (value);
       this [_index] .set (key, value);
@@ -203,7 +203,7 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DChildObject .protot
       // TODO: update alias.
 
       if (!(value instanceof this [_valueType]))
-         throw new Error (`Couldn't update value of ${this .getTypeName ()}, value has wrong type.`);
+         throw new Error (`Couldn't update value of ${this .getTypeName ()}, value for key '${key}' has wrong type.`);
 
       const oldValue = this [_index] .get (oldKey);
 

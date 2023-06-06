@@ -285,7 +285,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       return copy;
    },
-   addChildObjects: function (name, field)
+   addChildObjects: function (/* name, field, ... */)
    {
       for (let i = 0, length = arguments .length; i < length; i += 2)
          this .addChildObject (arguments [i], arguments [i + 1]);
@@ -328,7 +328,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
          get: function () { return field; },
          set: function (value) { field .setValue (value); },
 			configurable: true,
-         enumerable: false,
       });
 
       if (!this .isPrivate ())
@@ -338,12 +337,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       this [_predefinedFields] .alias (alias, field .getName ());
       this [_fields]           .alias (alias, field .getName ());
-
-      Object .defineProperty (this, "_" + alias,
-      {
-         get: function () { return field; },
-         set: function (value) { field .setValue (value); },
-      });
 
       if (field .isInitializable ())
          HTMLSupport .addFieldName (alias);
@@ -357,9 +350,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
          field .removeParent (this);
 
          this [_predefinedFields] .remove (name);
-
-         if (this [_fields] .get () === field)
-            this [_fields] .remove (name);
+         this [_fields]           .remove (name);
 
          delete this ["_" + field .getName ()];
 
