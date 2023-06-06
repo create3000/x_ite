@@ -139,7 +139,7 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DChildObject .protot
    assign: function (array)
    {
       if (!(array instanceof this .constructor))
-         throw new Error ("Couldn't assign array, wrong type.");
+         throw new Error ("Couldn't assign info array, wrong type.");
 
       this [_array] = Array .from (array [_array]);
       this [_index] = new Map (array [_index]);
