@@ -90,12 +90,7 @@ function X3DBaseNode (executionContext)
    if (this .canUserDefinedFields ())
       this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
 
-   this [_fieldDefinitions]  .addParent (this);
-   this [_fields]            .addParent (this);
-   this [_predefinedFields]  .addParent (this);
-   this [_userDefinedFields] .addParent (this);
-
-   // Setup fields.
+   // Create fields.
 
    this .addChildObjects ("name_changed",       new Fields .SFTime (),
                           "typeName_changed",   new Fields .SFTime (),
@@ -248,6 +243,11 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    setup: function ()
    {
       Object .freeze (this [_type]);
+
+      this [_fieldDefinitions]  .addParent (this);
+      this [_fields]            .addParent (this);
+      this [_predefinedFields]  .addParent (this);
+      this [_userDefinedFields] .addParent (this);
 
       for (const field of this [_childObjects])
          field .setTainted (false);
