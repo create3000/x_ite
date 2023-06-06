@@ -38,9 +38,9 @@ const
 
 const HTMLSupport =
 {
-   addConcreteNode: function (typeName, ConcreteNode)
+   addConcreteNode: function (ConcreteNode)
    {
-      HTMLSupport .addNodeTypeName (typeName);
+      HTMLSupport .addNodeTypeName (ConcreteNode .typeName);
 
       for (const { name, accessType } of ConcreteNode .fieldDefinitions)
       {
