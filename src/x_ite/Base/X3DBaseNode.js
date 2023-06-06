@@ -501,7 +501,13 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
          var fieldDefinition = null;
 
       if (fieldDefinition)
+      {
+         // User-defined fields are their own field definition value.
+         if (fieldDefinition .value === field)
+            return false;
+
          return fieldDefinition .value .equals (field);
+      }
 
       return !field .getModificationTime ();
    },
