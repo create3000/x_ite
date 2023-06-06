@@ -87,6 +87,7 @@ function X3DBaseNode (executionContext)
    this [_initialized]       = false;
    this [_cloneCount]        = 0;
 
+   this [_fieldDefinitions]  .addParent (this);
    this [_fields]            .addParent (this);
    this [_predefinedFields]  .addParent (this);
    this [_userDefinedFields] .addParent (this);

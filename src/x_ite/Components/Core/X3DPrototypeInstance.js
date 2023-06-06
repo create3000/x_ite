@@ -245,6 +245,8 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
          this [_protoFields]      = new Map (Array .from (protoNode .getFields (), f => [f, f .getName ()]));
          this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
+
+         this [_fieldDefinitions] .addParent (this);
       }
 
       this [_protoNode] = protoNode;
