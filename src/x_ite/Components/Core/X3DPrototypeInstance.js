@@ -45,10 +45,11 @@
  *
  ******************************************************************************/
 
-import X3DChildObject      from "../../Base/X3DChildObject.js";
-import X3DNode             from "./X3DNode.js";
-import X3DExecutionContext from "../../Execution/X3DExecutionContext.js";
-import X3DConstants        from "../../Base/X3DConstants.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DChildObject       from "../../Base/X3DChildObject.js";
+import X3DNode              from "./X3DNode.js";
+import X3DExecutionContext  from "../../Execution/X3DExecutionContext.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
 
 const
    _fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
@@ -59,8 +60,7 @@ const
 function X3DPrototypeInstance (executionContext, protoNode)
 {
    this [_protoNode]        = protoNode;
-   this [_protoFields]      = new Map (Array .from (protoNode .getFields (), f => [f, f .getName ()]));
-   this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
+   this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
    this [_body]             = null;
 
    X3DNode .call (this, executionContext);
@@ -168,6 +168,8 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
    },
    update: function ()
    {
+      this [_fieldDefinitions] .assign (this [_protoNode] .getFieldDefinitions ());
+
       // Remove old fields.
 
       const
@@ -228,27 +230,16 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
    },
    setProtoNode: function (protoNode)
    {
-      if (protoNode !== this [_protoNode])
-      {
-         // Disconnect old proto node.
+      // Disconnect old proto node.
 
-         const protoNode = this [_protoNode];
+      this [_protoNode] ._name_changed .removeFieldInterest (this ._typeName_changed);
+      this [_protoNode] ._updateInstances .removeInterest ("construct", this);
+      this [_protoNode] ._updateInstances .removeInterest ("update",    this);
 
-         protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
-         protoNode ._updateInstances .removeInterest ("construct", this);
-         protoNode ._updateInstances .removeInterest ("update",    this);
+      // Get fields from new proto node.
 
-         this [_fieldDefinitions] .removeParent (this);
-
-         // Get fields from new proto node.
-
-         this [_protoFields]      = new Map (Array .from (protoNode .getFields (), f => [f, f .getName ()]));
-         this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
-
-         this [_fieldDefinitions] .addParent (this);
-      }
-
-      this [_protoNode] = protoNode;
+      this [_protoNode]   = protoNode;
+      this [_protoFields] = new Map (Array .from (protoNode .getFields (), f => [f, f .getName ()]));
 
       protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
 
