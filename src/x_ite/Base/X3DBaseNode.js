@@ -87,6 +87,9 @@ function X3DBaseNode (executionContext)
    this [_initialized]       = false;
    this [_cloneCount]        = 0;
 
+   if (this .canUserDefinedFields ())
+      this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
+
    this [_fieldDefinitions]  .addParent (this);
    this [_fields]            .addParent (this);
    this [_predefinedFields]  .addParent (this);
@@ -97,9 +100,6 @@ function X3DBaseNode (executionContext)
    this .addChildObjects ("name_changed",       new Fields .SFTime (),
                           "typeName_changed",   new Fields .SFTime (),
                           "cloneCount_changed", new Fields .SFTime ())
-
-   if (this .canUserDefinedFields ())
-      this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
 
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addField (fieldDefinition);
