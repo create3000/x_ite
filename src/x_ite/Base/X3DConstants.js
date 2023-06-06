@@ -134,7 +134,7 @@ class X3DConstants
       if (this [typeName])
          return;
 
-         this [typeName] = ++ NODE_TYPE;
+      this [typeName] = ++ NODE_TYPE;
    }
 
    [Symbol .toStringTag] = "X3DConstants"
