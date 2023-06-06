@@ -345,18 +345,20 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       const field = this [_predefinedFields] .get (name);
 
-      if (field)
-      {
-         field .removeParent (this);
+      if (!field)
+         return;
 
-         this [_predefinedFields] .remove (name);
-         this [_fields]           .remove (name);
+      field .removeParent (this);
 
-         delete this ["_" + field .getName ()];
+      this [_predefinedFields] .remove (name);
 
-         if (!this .isPrivate ())
-            field .removeCloneCount (1);
-      }
+      if (this [_fields] .get (name) === field)
+         this [_fields] .remove (name);
+
+      delete this ["_" + field .getName ()];
+
+      if (!this .isPrivate ())
+         field .removeCloneCount (1);
    },
    getField: function (name)
    {
@@ -401,17 +403,17 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       const field = this [_userDefinedFields] .get (name);
 
-      if (field)
-      {
-         field .removeParent (this);
+      if (!field)
+         return;
 
-         this [_fieldDefinitions]  .remove (name);
-         this [_userDefinedFields] .remove (name);
-         this [_fields]            .remove (name);
+      field .removeParent (this);
 
-         if (!this .isPrivate ())
-            field .removeCloneCount (1);
-      }
+      this [_fieldDefinitions]  .remove (name);
+      this [_userDefinedFields] .remove (name);
+      this [_fields]            .remove (name);
+
+      if (!this .isPrivate ())
+         field .removeCloneCount (1);
    },
    getUserDefinedField: function (name)
    {
